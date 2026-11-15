@@ -25,7 +25,7 @@ variable "repo_slug" {
 variable "github_repo" {
   description = "owner/name of the repository allowed to assume the deploy role."
   type        = string
-  default     = "ankits1802/science-behind-craft"
+  default     = "cxacraftecosystem-ui/KalaVigyan"
 }
 
 variable "github_deploy_ref" {

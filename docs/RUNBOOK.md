@@ -13,11 +13,11 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | HTTPS API | `https://d89rsltpszebp.cloudfront.net`, CloudFront `E3J72POLWOPQ8T`, origin `kalavigyan-ec2-origin`, http-only to the origin, header `X-Origin-Verify`, CachingDisabled + AllViewerExceptHostHeader, PriceClass_200 |
 | Media bucket | `kalavigyan-media-626159998512`: private, public access blocked, versioned, SSE-S3, TLS-only policy, CORS for `https://kalavigyan.vercel.app` + localhost:3000 |
 | Terraform state | `s3://kalavigyan-tfstate-626159998512/kalavigyan/infra.tfstate` (versioned, private, S3 lockfile). DR's and FR's state are not touched. |
-| IAM | user `kalavigyan-media` (API's S3 key), role + instance profile `kalavigyan-box`, role `kalavigyan-deploy` (GitHub OIDC, `repo:ankits1802/science-behind-craft:ref:refs/heads/main` only) |
+| IAM | user `kalavigyan-media` (API's S3 key), role + instance profile `kalavigyan-box`, role `kalavigyan-deploy` (GitHub OIDC, `repo:cxacraftecosystem-ui/KalaVigyan:ref:refs/heads/main` only) |
 | Parameter Store | `/kalavigyan/env/*` (SecureString, one parameter per env key, the box's source of truth). `/kalavigyan/db-password` (Supabase DB password backup) |
 | Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11. Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc` |
 | Web | Vercel project `kalavigyan` (`prj_5hRNy7S9CS4fkhVVBRW5mbmAAUSd`), team `team_pcTf4Alb2DCIwq2IZcdu00dS`, root `frontend`, Node 26.x, no Git link, `https://kalavigyan.vercel.app` |
-| Repository | `github.com/ankits1802/science-behind-craft` (private) |
+| Repository | `github.com/cxacraftecosystem-ui/KalaVigyan` (deploys); mirror `github.com/ankits1802/science-behind-craft` (public, no deploys) |
 
 ### On the box
 
@@ -61,7 +61,7 @@ Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME
 | `MAIL_FROM_ADDRESS` | Parameter Store, once an SES identity is chosen for KalaVigyan mail |
 | Google OAuth client | Add `https://kalavigyan.vercel.app` to the client's Authorized JavaScript origins |
 
-To change a secret: `gh secret set NAME --repo ankits1802/science-behind-craft`, then run **Deploy backend**. The deploy copies changed GitHub secrets into Parameter Store and re-renders the box `.env`. For config that is not a GitHub secret:
+To change a secret: `gh secret set NAME --repo cxacraftecosystem-ui/KalaVigyan`, then run **Deploy backend**. The deploy copies changed GitHub secrets into Parameter Store and re-renders the box `.env`. For config that is not a GitHub secret:
 
 ```bash
 aws ssm put-parameter --region ap-south-1 --name /kalavigyan/env/NAME --type SecureString --overwrite --cli-input-json file://value.json
