@@ -12,6 +12,8 @@ RUN_AS=kalavigyan
 
 say() { printf '%s\n' "$*" >&2; }
 die() { say "::error::$*"; exit 1; }
+NGINX_SWITCH_SECONDS="${NGINX_SWITCH_SECONDS:-20}"
+
 other() { if [ "$1" = 8000 ]; then echo 8001; else echo 8000; fi; }
 active() { systemctl is-active --quiet "$1" 2>/dev/null; }
 
@@ -73,6 +75,15 @@ wait_healthy() {
   done
 }
 
+nginx_answers_health() {
+  local waited=0
+  until curl -fsS -m 5 -o /dev/null http://127.0.0.1/health; do
+    [ "$waited" -lt "$NGINX_SWITCH_SECONDS" ] || return 1
+    sleep 1
+    waited=$((waited + 1))
+  done
+}
+
 switch_nginx() {
   local port="$1" backup
   backup="$(mktemp)"
@@ -83,7 +94,7 @@ switch_nginx() {
     die "nginx refused the switch to $port; its config is as it was"
   fi
   systemctl reload nginx
-  if ! curl -fsS -m 10 -o /dev/null http://127.0.0.1/health; then
+  if ! nginx_answers_health; then
     cp "$backup" "$SITE"; rm -f "$backup"
     systemctl reload nginx
     die "nginx did not answer /health after the switch to $port; it was switched back"
