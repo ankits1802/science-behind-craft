@@ -25,7 +25,7 @@ MASTER_EMAIL = os.environ["MASTER_ADMIN_EMAIL"].lower()
 
 
 def unique_email(prefix: str) -> str:
-    return f"{prefix}-{uuid.uuid4().hex[:10]}@kalavigyan.test"
+    return f"{prefix}-{uuid.uuid4().hex[:10]}@example.com"
 
 
 def code(secret: str, steps_ahead: int = 0) -> str:

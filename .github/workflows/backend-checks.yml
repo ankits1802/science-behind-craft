@@ -56,7 +56,7 @@ jobs:
       - name: Migration renders offline
         env:
           DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test
-          MASTER_ADMIN_EMAIL: owner@kalavigyan.test
+          MASTER_ADMIN_EMAIL: owner@example.com
         run: |
           export JWT_SECRET="$(openssl rand -base64 48)"
           echo "::add-mask::$JWT_SECRET"
@@ -83,7 +83,7 @@ jobs:
           --health-retries 20
     env:
       DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test
-      MASTER_ADMIN_EMAIL: owner@kalavigyan.test
+      MASTER_ADMIN_EMAIL: owner@example.com
       APP_ENV: test
       RUN_DB_TESTS: "1"
     defaults:

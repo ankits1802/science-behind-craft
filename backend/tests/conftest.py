@@ -2,7 +2,7 @@ import os
 
 os.environ.setdefault("DATABASE_URL", "postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test")
 os.environ.setdefault("JWT_SECRET", "test-only-signing-key-" + "k" * 40)
-os.environ.setdefault("MASTER_ADMIN_EMAIL", "owner@kalavigyan.test")
+os.environ.setdefault("MASTER_ADMIN_EMAIL", "owner@example.com")
 os.environ.setdefault("APP_ENV", "test")
 os.environ.setdefault("SECRETS_ENCRYPTION_KEY", "")
 os.environ.setdefault("TWO_FACTOR_ENCRYPTION_KEY", "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=")
