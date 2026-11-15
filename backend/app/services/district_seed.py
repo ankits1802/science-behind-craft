@@ -9,8 +9,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 DATA = Path(__file__).resolve().parents[1] / "data"
 SHAPES_PATH = DATA / "district-shapes.json"
 REGISTER_PATH = DATA / "lgd_register.json"
-SHAPES_SHA256 = "aec1d4c75d9ba77acdc18b223f3382aca5c6ead9724bb263ad62b09079aad417"
-REGISTER_SHA256 = "ce841e1855ee460dbc0933467cd6932f5eb9e052972c9ea74f474f9ce8821f87"
+SHAPES_SHA256 = "5432b41d6d6bc55d8fcae5030178a4ceaefab5d46f5770461552216cb802bc6c"
+REGISTER_SHA256 = "2ff0acab5446b7d0710a10b372ab7f71055454a8155c5c82fb08dc997fd1cd21"
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 LOOKUP = {ch: i for i, ch in enumerate(ALPHABET)}
