@@ -1,0 +1,176 @@
+export type UserRole = "MASTER_ADMIN" | "PROFESSOR" | "RESEARCHER" | "STUDENT";
+
+export type RecordStatus = "DRAFT" | "PENDING" | "APPROVED" | "REJECTED" | "NEEDS_REVISION";
+
+export type PageResult<T> = {
+  items: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+};
+
+export type User = {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  avatarUrl?: string | null;
+  authProvider?: string;
+  affiliation?: string | null;
+  mustChangePassword?: boolean;
+  passwordSetAt?: string | null;
+  hasPassword?: boolean;
+  twoFactorEnabled?: boolean;
+  twoFactorEnabledAt?: string | null;
+  twoFactorRequired?: boolean;
+  emailVerifiedAt?: string | null;
+  firstLoginAt?: string | null;
+  lastLoginAt?: string | null;
+  isActive?: boolean;
+  suspendedAt?: string | null;
+};
+
+export type EvidenceLevel = "VERIFIED" | "REVIEWED" | "PROVISIONAL" | "HYPOTHESIS" | "UNAVAILABLE";
+
+export type EvidenceKind = "QUOTED" | "INFERRED";
+
+export type AnswerMode = "VERIFIED" | "HYBRID" | "DEEP";
+
+export type SourceReliability = "A" | "B" | "C" | "D";
+
+export type SourceRef = {
+  id: string;
+  kind: string;
+  title: string;
+  authors: string[];
+  year: number | null;
+  doi: string | null;
+  url: string | null;
+  publisher: string | null;
+  licence: string | null;
+  attribution: string | null;
+  reliability: SourceReliability | null;
+};
+
+export type Citation = {
+  id: string;
+  claimId: string;
+  sourceId: string;
+  quote: string | null;
+  locator: string | null;
+  context: string | null;
+  evidence: EvidenceKind;
+  level: EvidenceLevel;
+};
+
+export type AnswerSentence = {
+  id: string;
+  text: string;
+  level: EvidenceLevel;
+  citations: Citation[];
+  translated?: boolean;
+};
+
+export type AnswerSection = {
+  id: string;
+  heading: string;
+  sentences: AnswerSentence[];
+};
+
+export type AnswerReaction = {
+  id: string;
+  label: string;
+  equation: string;
+  balanced: boolean;
+  level: EvidenceLevel;
+  conditions: string | null;
+  citations: Citation[];
+};
+
+export type CraftRef = {
+  slug: string;
+  name: string;
+  path?: string | null;
+};
+
+export type CraftMatch =
+  | { status: "RESOLVED"; craft: CraftRef }
+  | { status: "AMBIGUOUS"; candidates: CraftRef[] }
+  | { status: "NONE" };
+
+export type AnswerPayload = {
+  answerId: string | null;
+  question: string;
+  mode: AnswerMode;
+  craft: CraftRef | null;
+  sections: AnswerSection[];
+  openQuestions: AnswerSection[];
+  reactions: AnswerReaction[];
+  sources: SourceRef[];
+  followUps: string[];
+};
+
+export type CraftLocationPrecision = "STATE" | "DISTRICT" | "POINT";
+
+export type CraftLocation = {
+  id: string;
+  precision: CraftLocationPrecision;
+  placeLabel: string;
+  stateName: string | null;
+  districtName: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  level: EvidenceLevel;
+};
+
+export type CraftFacetClaim = {
+  id: string;
+  text: string;
+  level: EvidenceLevel;
+  citations: Citation[];
+};
+
+export type CraftProcessStage = {
+  id: string;
+  ordinal: number;
+  name: string;
+  stageType: string;
+  durationText: string | null;
+  claims: CraftFacetClaim[];
+};
+
+export type CraftMaterial = {
+  id: string;
+  name: string;
+  description: string | null;
+  claims: CraftFacetClaim[];
+};
+
+export type CraftProfile = {
+  craft: CraftRef & {
+    id: string;
+    localName: string | null;
+    giStatus: "GI" | "NON_GI" | null;
+    stateOfPractice: string[];
+    stateOfOrigin: string[];
+    description: string | null;
+    categoryName: string | null;
+    subCategoryName: string | null;
+  };
+  overview: CraftFacetClaim[];
+  locations: CraftLocation[];
+  stages: CraftProcessStage[];
+  materials: CraftMaterial[];
+  science: AnswerReaction[];
+  sources: SourceRef[];
+};
+
+export type CraftMapPoint = {
+  key: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  total: number;
+  crafts: CraftRef[];
+};

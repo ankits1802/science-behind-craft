@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart a stalled KalaVigyan API slot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/api-watchdog.sh kv-api

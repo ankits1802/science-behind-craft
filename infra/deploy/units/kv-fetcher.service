@@ -1,0 +1,45 @@
+[Unit]
+Description=KalaVigyan URL fetch and parse sandbox
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=|/opt/kalavigyan/current/backend/app/fetcher.py
+ConditionPathExists=|/opt/kalavigyan/current/backend/app/fetcher/__main__.py
+
+[Service]
+User=kalavigyan
+Group=kalavigyan
+WorkingDirectory=/opt/kalavigyan/current/backend
+Environment=MALLOC_ARENA_MAX=2
+Environment=PYTHONUNBUFFERED=1
+Environment=FETCHER_HOST=127.0.0.1
+Environment=FETCHER_PORT=8090
+EnvironmentFile=/opt/kalavigyan/fetcher.env
+Environment=KV_PROCESS=fetcher
+ExecStart=/opt/kalavigyan/current/backend/.venv/bin/python -m app.fetcher
+MemoryAccounting=yes
+MemoryHigh=600M
+MemoryMax=768M
+TasksMax=64
+LimitNOFILE=1024
+LimitFSIZE=256M
+CPUQuota=100%
+Restart=always
+RestartSec=5
+KillMode=control-group
+TimeoutStopSec=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+IPAddressDeny=169.254.0.0/16 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 fd00::/8 fe80::/10
+InaccessiblePaths=-/opt/kalavigyan/.env -/etc/kalavigyan -/root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,157 @@
+name: Frontend checks
+
+on:
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  static:
+    name: Typecheck, lint and unit specs
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install npm 12
+        run: npm install --global npm@12 && npm --version
+
+      - name: Install
+        run: npm ci
+
+      - name: Audit the lockfile
+        run: npm audit --audit-level=low
+
+      - name: No comments in source
+        run: |
+          set -euo pipefail
+          found=$(grep -rnE '^\s*//|/\*|\{/\*' --include='*.ts' --include='*.tsx' --include='*.css' --include='*.mjs' app components lib e2e proxy.ts next.config.ts playwright.config.ts eslint.config.mjs \
+            | grep -vE 'eslint-disable|@ts-expect-error|"[^"]*/\*[^"]*"' || true)
+          if [ -n "$found" ]; then echo "$found"; echo "Remove the comments above."; exit 1; fi
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint . --max-warnings=0
+
+      - name: Unit specs
+        run: npm run test:unit
+
+  build:
+    name: Production build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install npm 12
+        run: npm install --global npm@12 && npm --version
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        env:
+          API_ORIGIN: http://127.0.0.1:8000
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+        run: npm run build
+
+      - name: Keep the build
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: frontend-build
+          path: |
+            frontend/.next
+            !frontend/.next/cache
+          include-hidden-files: true
+          retention-days: 1
+
+  smoke:
+    name: Smoke in a browser
+    needs: build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install npm 12
+        run: npm install --global npm@12 && npm --version
+
+      - name: Install
+        run: npm ci
+
+      - name: Fetch the build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: frontend-build
+          path: frontend/.next
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run the smoke specs against the built site
+        env:
+          E2E_SMOKE: "1"
+          E2E_BASE_URL: http://localhost:3000
+          API_ORIGIN: http://127.0.0.1:8000
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+        run: npm run test:smoke
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: frontend-smoke
+          path: frontend/test-results
+          if-no-files-found: ignore

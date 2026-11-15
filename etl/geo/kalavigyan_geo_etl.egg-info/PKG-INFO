@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: kalavigyan-geo-etl
+Version: 0.0.1
+Summary: Per-district environment statistics from open datasets for KalaVigyan.
+Requires-Python: >=3.14
+Requires-Dist: numpy>=2.5.4
+Requires-Dist: pandas>=3.1.1
+Requires-Dist: pyarrow>=26.0.1
+Requires-Dist: shapely>=2.2.0
+Requires-Dist: pyproj>=3.8.0
+Requires-Dist: geopandas>=1.2.0
+Requires-Dist: pyogrio>=0.13.0
+Requires-Dist: rasterio>=1.5.2
+Requires-Dist: exactextract>=0.3.0
+Requires-Dist: requests>=2.34.2
+Requires-Dist: defusedxml>=0.7.1
+Requires-Dist: psycopg[binary]>=3.3.9

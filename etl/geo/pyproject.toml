@@ -1,0 +1,42 @@
+[project]
+name = "kalavigyan-geo-etl"
+version = "0.0.1"
+description = "Per-district environment statistics from open datasets for KalaVigyan."
+requires-python = ">=3.14"
+dependencies = [
+    "numpy>=2.5.4",
+    "pandas>=3.1.1",
+    "pyarrow>=26.0.1",
+    "shapely>=2.2.0",
+    "pyproj>=3.8.0",
+    "geopandas>=1.2.0",
+    "pyogrio>=0.13.0",
+    "rasterio>=1.5.2",
+    "exactextract>=0.3.0",
+    "requests>=2.34.2",
+    "defusedxml>=0.7.1",
+    "psycopg[binary]>=3.3.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[build-system]
+requires = ["setuptools>=84"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["geo_etl", "geo_etl.layers"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,29 @@
+[Unit]
+Description=KalaVigyan API on port %i
+After=network-online.target redis-server.service
+Wants=network-online.target
+
+[Service]
+User=kalavigyan
+Group=kalavigyan
+WorkingDirectory=/opt/kalavigyan/slot-%i/backend
+Environment=API_WORKERS=1
+Environment=MALLOC_ARENA_MAX=2
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/opt/kalavigyan/.env
+Environment=KV_PROCESS=api
+ExecStart=/opt/kalavigyan/slot-%i/backend/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port %i --workers ${API_WORKERS} --no-proxy-headers --timeout-graceful-shutdown 15
+MemoryAccounting=yes
+MemoryHigh=2400M
+MemoryMax=3000M
+Restart=always
+RestartSec=3
+KillMode=control-group
+TimeoutStopSec=25
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

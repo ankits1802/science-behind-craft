@@ -1,0 +1,48 @@
+{
+  "name": "kalavigyan-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "26.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:unit": "playwright test --project=unit",
+    "test:smoke": "playwright test --project=desktop --project=phone"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "any-ascii": "^0.3.3",
+    "framer-motion": "^14.14.0",
+    "gsap": "^3.15.1",
+    "katex": "^0.19.1",
+    "lucide-react": "^1.73.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-day-picker": "^10.0.2",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "eslint": "^10.15.0",
+    "eslint-config-next": "^16.4.6",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^4.3.5",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "minimatch": "^11.0.8"
+  }
+}

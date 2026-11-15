@@ -1,0 +1,228 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP="${APP:-/opt/kalavigyan}"
+SITE="${NGINX_SITE:-/etc/nginx/sites-available/kalavigyan}"
+ENV_FILE="${ENV_FILE:-$APP/.env}"
+HEALTH_LIMIT="${HEALTH_LIMIT:-300}"
+DRAIN="${DRAIN:-5}"
+UNIT=kv-api
+WORKERS=(kv-worker kv-fetcher)
+RUN_AS=kalavigyan
+
+say() { printf '%s\n' "$*" >&2; }
+die() { say "::error::$*"; exit 1; }
+other() { if [ "$1" = 8000 ]; then echo 8001; else echo 8000; fi; }
+active() { systemctl is-active --quiet "$1" 2>/dev/null; }
+
+live_port() {
+  local p
+  p="$(sed -nE 's#^[[:space:]]*proxy_pass http://127\.0\.0\.1:([0-9]+);.*#\1#p' "$SITE" | head -n1)"
+  case "$p" in 8000|8001) echo "$p" ;; *) die "$SITE proxies to '${p:-nothing}', not 127.0.0.1:8000 or :8001" ;; esac
+}
+
+live_unit() {
+  if active "$UNIT@$1"; then echo "$UNIT@$1"; fi
+}
+
+point() { ln -sfn "$2" "$1.tmp" && mv -Tf "$1.tmp" "$1"; }
+
+migrate() {
+  local tree="$1" tries="$2" attempt
+  if [ ! -f "$tree/alembic.ini" ]; then
+    say "no alembic.ini in $tree; no migrations to run"
+    return 0
+  fi
+  for attempt in $(seq 1 "$tries"); do
+    if (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m alembic upgrade head"); then
+      return 0
+    fi
+    say "migrate attempt $attempt/$tries failed"
+    [ "$attempt" = "$tries" ] || sleep 10
+  done
+  return 1
+}
+
+wait_healthy() {
+  local port="$1" start now next_note
+  start="$(date +%s)"; next_note=$((start + 20))
+  while :; do
+    if curl -fsS -m 5 "http://127.0.0.1:$port/health" >/dev/null 2>&1; then
+      say "port $port answered /health after $(( $(date +%s) - start ))s"; return 0
+    fi
+    now="$(date +%s)"
+    if [ "$now" -ge $((start + HEALTH_LIMIT)) ]; then return 1; fi
+    if [ "$now" -ge "$next_note" ]; then
+      say "waiting for /health on $port: $((now - start))s of ${HEALTH_LIMIT}s; $UNIT@$port is $(systemctl is-active "$UNIT@$port" 2>/dev/null || true)"
+      next_note=$((now + 20))
+    fi
+    sleep 2
+  done
+}
+
+switch_nginx() {
+  local port="$1" backup
+  backup="$(mktemp)"
+  cp "$SITE" "$backup"
+  sed -i -E "s#^([[:space:]]*proxy_pass http://127\.0\.0\.1:)[0-9]+;#\1$port;#" "$SITE"
+  if [ "$(live_port)" != "$port" ] || ! nginx -t >/dev/null 2>&1; then
+    cp "$backup" "$SITE"; rm -f "$backup"
+    die "nginx refused the switch to $port; its config is as it was"
+  fi
+  systemctl reload nginx
+  if ! curl -fsS -m 10 -o /dev/null http://127.0.0.1/health; then
+    cp "$backup" "$SITE"; rm -f "$backup"
+    systemctl reload nginx
+    die "nginx did not answer /health after the switch to $port; it was switched back"
+  fi
+  rm -f "$backup"
+  say "nginx now proxies to $port"
+}
+
+stop_workers() {
+  local w
+  workers_were=()
+  for w in "${WORKERS[@]}"; do
+    if active "$w"; then workers_were+=("$w"); fi
+    systemctl stop "$w" 2>/dev/null || true
+  done
+}
+
+start_workers() {
+  local w
+  for w in "${WORKERS[@]}"; do
+    systemctl enable "$w" >/dev/null 2>&1 || true
+    systemctl restart "$w" 2>/dev/null || say "::warning::$w did not start; read: journalctl -u $w -n 80"
+  done
+  workers_restarted=yes
+}
+
+promote() {
+  local port="$1" old="$2" rel
+  rel="$(readlink -f "$APP/slot-$port")"
+  switch_nginx "$port"
+  handed_over=yes
+  systemctl enable "$UNIT@$port" >/dev/null 2>&1 || say "::warning::could not enable $UNIT@$port"
+  if [ -n "$old" ] && [ "$old" != "$UNIT@$port" ]; then
+    sleep "$DRAIN"
+    systemctl stop "$old" || say "::warning::could not stop $old"
+    systemctl disable "$old" >/dev/null 2>&1 || true
+  fi
+  point "$APP/current" "$rel"
+  touch "$rel/.released"
+  say "current -> $(readlink "$APP/current")"
+}
+
+start_and_promote() {
+  systemctl reset-failed "$UNIT@$cand" 2>/dev/null || true
+  systemctl start "$UNIT@$cand"
+  cand_started=yes
+  if ! wait_healthy "$cand"; then
+    say "$UNIT@$cand did not answer /health within ${HEALTH_LIMIT}s:"
+    journalctl -u "$UNIT@$cand" -n 80 --no-pager || true
+    die "the new release did not start. nginx still proxies to $(other "$cand")."
+  fi
+  promote "$cand" "$old_unit"
+  start_workers
+}
+
+on_exit() {
+  local rc=$? w
+  if [ "$handed_over" != yes ]; then
+    if [ "$cand_started" = yes ]; then systemctl stop "$UNIT@$cand" 2>/dev/null || true; fi
+    if [ "$old_stopped" = yes ] && [ -n "$old_unit" ]; then
+      say "restarting $old_unit, which was stopped for the migration"
+      systemctl start "$old_unit" || true
+    fi
+  fi
+  if [ "$workers_restarted" != yes ]; then
+    for w in "${workers_were[@]}"; do systemctl start "$w" 2>/dev/null || true; done
+  fi
+  exit "$rc"
+}
+
+begin() {
+  workers_were=(); old_stopped=no; cand_started=no; handed_over=no; workers_restarted=no
+  trap 'on_exit' EXIT
+}
+
+cmd_release() {
+  local id="${1:-}" rel tree live
+  [ -n "$id" ] || die "release needs the release id"
+  rel="$APP/releases/$id"; tree="$rel/backend"
+  [ -x "$tree/.venv/bin/python" ] || die "$tree has no venv"
+  [ -s "$ENV_FILE" ] || die "$ENV_FILE is missing or empty"
+  live="$(live_port)"
+  cand="$(other "$live")"
+  old_unit="$(live_unit "$live")"
+  if [ "$(readlink -f "$APP/slot-$live" 2>/dev/null || true)" = "$(readlink -f "$rel")" ] && [ -n "$old_unit" ]; then
+    die "$rel is already what port $live serves"
+  fi
+  if active "$UNIT@$cand"; then
+    say "stopping $UNIT@$cand: it is running but nginx does not send it traffic"
+    systemctl stop "$UNIT@$cand"
+  fi
+  point "$APP/slot-$cand" "$rel"
+  say "live port $live ($(readlink -f "$APP/current" 2>/dev/null || echo nothing)); this release goes to $cand"
+  begin
+  stop_workers
+  if ! migrate "$tree" 3; then
+    if [ -n "$old_unit" ]; then
+      say "::warning::migrations failed three times with $old_unit serving; stopping it to free its pooler sessions and trying again"
+      systemctl stop "$old_unit" || true
+      old_stopped=yes
+      sleep 5
+    fi
+    migrate "$tree" 5 || die "migrations failed. nginx still proxies to $live."
+  fi
+  start_and_promote
+  say "released: nginx -> $cand, current -> $(readlink "$APP/current")"
+}
+
+cmd_rollback() {
+  local live target
+  live="$(live_port)"; cand="$(other "$live")"
+  if [ -n "${1:-}" ]; then
+    target="$APP/releases/$1"
+    [ -d "$target" ] || die "no release $1 under $APP/releases"
+    point "$APP/slot-$cand" "$target"
+  fi
+  target="$(readlink -f "$APP/slot-$cand" 2>/dev/null || true)"
+  [ -x "$target/backend/.venv/bin/python" ] || die "port $cand has no runnable release behind it (${target:-none}); name one: rollback <release>"
+  old_unit="$(live_unit "$live")"
+  begin
+  stop_workers
+  if active "$UNIT@$cand"; then systemctl stop "$UNIT@$cand"; fi
+  start_and_promote
+  say "rolled back: nginx -> $cand ($target)"
+}
+
+cmd_restart() {
+  local live unit
+  live="$(live_port)"; unit="$(live_unit "$live")"
+  [ -n "$unit" ] || unit="$UNIT@$live"
+  systemctl restart "$unit"
+  wait_healthy "$live" || die "$unit did not answer /health within ${HEALTH_LIMIT}s"
+  for w in "${WORKERS[@]}"; do systemctl restart "$w" 2>/dev/null || true; done
+}
+
+cmd_status() {
+  local live
+  live="$(live_port)"
+  echo "nginx proxies to: $live"
+  echo "live unit:        $(live_unit "$live")"
+  echo "current ->        $(readlink -f "$APP/current" 2>/dev/null || echo missing)"
+  for p in 8000 8001; do
+    echo "port $p:        $(systemctl is-active "$UNIT@$p" 2>/dev/null || true), $(readlink -f "$APP/slot-$p" 2>/dev/null || echo 'no release')"
+  done
+  for w in "${WORKERS[@]}"; do echo "$w: $(systemctl is-active "$w" 2>/dev/null || true)"; done
+}
+
+[ "$(id -u)" = 0 ] || die "run as root (SSM runs commands as root)"
+case "${1:-}" in
+  release) shift; cmd_release "$@" ;;
+  rollback) shift; cmd_rollback "$@" ;;
+  restart) cmd_restart ;;
+  status) cmd_status ;;
+  *) die "usage: blue_green.sh release <id> | rollback [release] | restart | status" ;;
+esac

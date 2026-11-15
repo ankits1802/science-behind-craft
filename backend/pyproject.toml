@@ -1,0 +1,59 @@
+[project]
+name = "kalavigyan-backend"
+version = "0.0.1"
+description = "KalaVigyan API: craft research with cited answers."
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.163.1",
+    "uvicorn[standard]>=0.54.0",
+    "pydantic>=2.14.3",
+    "pydantic-settings>=2.16.3",
+    "email-validator>=2.4.0",
+    "sqlalchemy[asyncio]>=2.1.8",
+    "alembic>=1.20.1",
+    "psycopg[binary]>=3.3.9",
+    "pgvector>=0.5.1",
+    "geoalchemy2>=0.21.0",
+    "PyJWT>=2.15.1",
+    "bcrypt>=5.0.0",
+    "cryptography>=50.0.2",
+    "google-auth>=2.62.2",
+    "requests>=2.34.2",
+    "httpx>=0.28.1",
+    "segno>=1.6.6",
+    "anthropic>=2.8.0",
+    "openai>=3.51.0",
+    "google-genai>=3.3.0",
+    "boto3>=1.44.3",
+    "anyascii>=0.3.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.5",
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 110
+target-version = "py314"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "UP", "B", "C4", "SIM", "RET", "DTZ", "PIE", "RUF", "PLE", "PLW"]
+ignore = ["B008", "PLW0603", "RUF001", "RUF002", "RUF003", "E501", "RUF012"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+markers = ["db: needs a Postgres with pgvector and PostGIS at DATABASE_URL"]

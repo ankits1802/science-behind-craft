@@ -9,9 +9,10 @@ Repo: `C:/dev/IIT/science-behind-craft`. Today it holds only `.claude/skills/{fi
 
 - **The knowledge base grows; it is never finished.** Accuracy and precision over speed. A learner can wait: when the stored knowledge cannot answer well, the question runs live research (scholarly APIs, Wikipedia/Wikidata, PubChem, SearXNG with Brave fallback), and what it finds is written back as cited claims so the next answer is faster. A background job keeps widening coverage across all 455 crafts within the monthly ceiling. No one-off bulk pre-build deadline.
 - **No review gates.** Nothing waits for approval to be shown. Evidence levels stay as labels (quoted source, model-inferred hypothesis); professors can still correct, retract or mark claims verified, but no answer, claim or media is blocked on them.
+- **Research is not limited to the sources named in this plan.** The named APIs are starting points; live research searches the open web and any reachable scholarly, government, museum, archive or institutional source, follows references, and cites whatever it actually used.
 - **Every answer is cited.** Each sentence links to its sources, with the quoted passage and a link out so users can read further. A sentence without a source is not shown.
 - **Open datasets only** for geography and environment (§17.1). No registration-dependent data.
-- **Accuracy test set**: a fixed set of questions with known answers and sources, generated from the craft data and corrected by the owner over time, run in CI on every change so a change that makes answers less accurate is caught.
+- **Accuracy checks are small**: 1–2 known-answer questions run at a time, on demand when a change touches answering, not a large suite on every change. The owner corrects answers as they come up.
 - **Infrastructure**: new EC2 (ap-south-1), private S3 bucket and new Supabase project, provisioned for this project.
 
 ## 1. Product and users
@@ -98,7 +99,7 @@ Next.js 16 web (Vercel) --JWT--> FastAPI API (EC2 t3.medium ap-south-1, blue/gre
   Postgres 17 on Supabase (vector, postgis, pg_trgm, unaccent, citext; RLS on, anon revoked)
   S3 private bucket, presigned GET
   Providers via app/providers: Gemini, Anthropic, OpenAI, DeepSeek; ElevenLabs
-  Search adapters: OpenAlex, Crossref, Semantic Scholar, CORE, Wikipedia/Wikidata, PubChem; SearXNG with Brave fallback
+  Search adapters: OpenAlex, Crossref, Semantic Scholar, CORE, Unpaywall, Wikipedia/Wikidata, PubChem; SearXNG with Brave fallback
 ```
 
 Backend modules: `api/`, `core/`, `providers/` (adapters, router, budgets), `crafts/`, `retrieval/`, `websearch/`, `evidence/`, `science/`, `geo/`, `voice/`, `media/`, `enrichment/`, `review/`, `governance/`, `naming.py`, `worker.py`. Job queue is a Postgres table claimed with `SELECT … FOR UPDATE SKIP LOCKED`, woken by `LISTEN/NOTIFY` with a 30 s fallback poll. No Redis.
@@ -336,6 +337,8 @@ Decision S2: the "API Key Manager" is the Settings hub of designer-portal and do
 - Quota and dollars reserved before the call, settled from actual usage; one `UsageEvent` per call.
 - **Hard ceilings, enforced here as refusals**: global monthly USD ceiling across every task (`AppSetting`), media sub-cap, per-role daily USD cap. At 80% of the global ceiling, deep → hybrid and composer → cheaper route; at 100%, paid calls refuse and the UI shows the verified-only mode.
 - Providers with `dataClass=PUBLIC_TEXT_ONLY` (DeepSeek) accept only tasks tagged `public_text`; enforced by a router check and a test.
+
+Providers without a configured key are skipped by the router, so the app runs on Gemini alone; Anthropic, OpenAI and DeepSeek are optional fallbacks that join their rows when a key is added.
 
 Default routes (editable at /admin/routing):
 
@@ -617,7 +620,7 @@ All 455 crafts are answerable on day 7: stored knowledge where it exists, live r
 |---|---|---|
 | Craft descriptions, aliases, regions, images | Wikipedia, Wikidata (SPARQL), Wikimedia Commons | CC BY-SA / CC0 |
 | GI status | ipindia GI registry list (public), already merged in the master list | public record |
-| Papers | OpenAlex, Crossref, Semantic Scholar, CORE, arXiv, Europe PMC | CC0 metadata / OA full text |
+| Papers | OpenAlex, Crossref, Semantic Scholar, CORE, Unpaywall (legal OA copy by DOI), arXiv, Europe PMC, Zenodo, DOAJ; paywalled papers cited by abstract + DOI | CC0 metadata / OA full text |
 | Compounds, formulas, hazards | PubChem PUG REST | public domain |
 | Soil | ISRIC SoilGrids 250 m (WCS) | CC BY 4.0 |
 | Climate | WorldClim 2.1, CHIRPS rainfall, ERA5-Land | CC BY / open |
@@ -627,6 +630,10 @@ All 455 crafts are answerable on day 7: stored knowledge where it exists, live r
 | Places | OpenStreetMap, existing DR district boundaries and LGD register | ODbL / existing |
 
 All rasters are reduced to per-district statistics in Actions (rasterio, geopandas, exactextract) and stored in PostGIS; nothing is queried live.
+
+### 17.1a Publisher full text (dormant until keys exist)
+
+Adapters for Elsevier (ScienceDirect/Scopus API), Springer Nature (Open Access + TDM API) and Wiley (TDM token) sit behind `ManagedSecret` keys `ELSEVIER_API_KEY` (+ optional `ELSEVIER_INSTTOKEN`), `SPRINGER_NATURE_API_KEY`, `WILEY_TDM_TOKEN`. With no key set the adapter is skipped silently and nothing in the UI mentions it. With a key: full text is fetched only for DOIs Unpaywall reports as closed, used for quote extraction, and stored as short quoted passages plus DOI link, never as a redistributable full copy. Springer Nature's open-access API key is free and self-serve, so that one is enabled from day one.
 
 ### 17.2 Continuous enrichment across all 455
 

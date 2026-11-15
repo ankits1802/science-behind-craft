@@ -1,0 +1,181 @@
+import { API_BASE, APP_PLATFORM, APP_VERSION, APP_VERSION_CODE, ApiError, describeApiBody, statusFallback } from "@/lib/api";
+import type { AnswerMode, AnswerPayload, AnswerReaction, AnswerSection, AnswerSentence, CraftMatch, SourceRef } from "@/lib/types";
+
+export const ANSWER_STREAM_PATH = "/answers/stream";
+
+export type AskRequest = {
+  question: string;
+  mode: AnswerMode;
+  craftSlug?: string | null;
+  language?: string | null;
+  conversationId?: string | null;
+};
+
+export type AnswerEvent =
+  | { type: "match"; data: CraftMatch }
+  | { type: "source"; data: SourceRef }
+  | { type: "section"; data: { id: string; heading: string } }
+  | { type: "sentence"; data: { sectionId: string; sentence: AnswerSentence } }
+  | { type: "open_question"; data: { sectionId: string; heading?: string; sentence: AnswerSentence } }
+  | { type: "reaction"; data: AnswerReaction }
+  | { type: "follow_ups"; data: { items: string[] } }
+  | { type: "done"; data: { answerId: string | null } }
+  | { type: "error"; data: { message: string } };
+
+export type AnswerPhase = "idle" | "matching" | "streaming" | "done" | "ambiguous" | "failed";
+
+export type AnswerState = {
+  phase: AnswerPhase;
+  match: CraftMatch | null;
+  payload: AnswerPayload;
+  error: string | null;
+};
+
+export function emptyAnswer(question = "", mode: AnswerMode = "HYBRID"): AnswerState {
+  return {
+    phase: "idle",
+    match: null,
+    error: null,
+    payload: {
+      answerId: null,
+      question,
+      mode,
+      craft: null,
+      sections: [],
+      openQuestions: [],
+      reactions: [],
+      sources: [],
+      followUps: []
+    }
+  };
+}
+
+function appendSentence(sections: AnswerSection[], sectionId: string, sentence: AnswerSentence, heading = ""): AnswerSection[] {
+  if (sentence.citations.length === 0) return sections;
+  const index = sections.findIndex((section) => section.id === sectionId);
+  if (index < 0) return [...sections, { id: sectionId, heading, sentences: [sentence] }];
+  const target = sections[index];
+  if (target.sentences.some((existing) => existing.id === sentence.id)) return sections;
+  const next = [...sections];
+  next[index] = { ...target, sentences: [...target.sentences, sentence] };
+  return next;
+}
+
+export function reduceAnswer(state: AnswerState, event: AnswerEvent): AnswerState {
+  const payload = state.payload;
+  switch (event.type) {
+    case "match": {
+      const match = event.data;
+      if (match.status === "AMBIGUOUS") return { ...state, match, phase: "ambiguous" };
+      return {
+        ...state,
+        match,
+        phase: "streaming",
+        payload: { ...payload, craft: match.status === "RESOLVED" ? match.craft : null }
+      };
+    }
+    case "source":
+      if (payload.sources.some((source) => source.id === event.data.id)) return state;
+      return { ...state, payload: { ...payload, sources: [...payload.sources, event.data] } };
+    case "section":
+      if (payload.sections.some((section) => section.id === event.data.id)) return state;
+      return { ...state, phase: "streaming", payload: { ...payload, sections: [...payload.sections, { ...event.data, sentences: [] }] } };
+    case "sentence":
+      return { ...state, phase: "streaming", payload: { ...payload, sections: appendSentence(payload.sections, event.data.sectionId, event.data.sentence) } };
+    case "open_question":
+      return {
+        ...state,
+        payload: {
+          ...payload,
+          openQuestions: appendSentence(payload.openQuestions, event.data.sectionId, event.data.sentence, event.data.heading ?? "")
+        }
+      };
+    case "reaction":
+      if (payload.reactions.some((reaction) => reaction.id === event.data.id)) return state;
+      return { ...state, payload: { ...payload, reactions: [...payload.reactions, event.data] } };
+    case "follow_ups":
+      return { ...state, payload: { ...payload, followUps: event.data.items } };
+    case "done":
+      if (state.phase === "failed") return state;
+      return {
+        ...state,
+        phase: state.phase === "ambiguous" ? "ambiguous" : "done",
+        payload: { ...payload, answerId: event.data.answerId ?? payload.answerId }
+      };
+    case "error":
+      return { ...state, phase: "failed", error: event.data.message };
+    default:
+      return state;
+  }
+}
+
+const KNOWN_EVENTS = new Set(["match", "source", "section", "sentence", "open_question", "reaction", "follow_ups", "done", "error"]);
+
+export function parseSseBlock(block: string): AnswerEvent | null {
+  let name = "message";
+  const data: string[] = [];
+  for (const raw of block.split("\n")) {
+    const line = raw.endsWith("\r") ? raw.slice(0, -1) : raw;
+    if (!line || line.startsWith(":")) continue;
+    const colon = line.indexOf(":");
+    const field = colon < 0 ? line : line.slice(0, colon);
+    const value = colon < 0 ? "" : line.slice(colon + 1).replace(/^ /, "");
+    if (field === "event") name = value;
+    else if (field === "data") data.push(value);
+  }
+  if (!KNOWN_EVENTS.has(name) || data.length === 0) return null;
+  try {
+    return { type: name, data: JSON.parse(data.join("\n")) } as AnswerEvent;
+  } catch {
+    return null;
+  }
+}
+
+export function splitSseBuffer(buffer: string): { blocks: string[]; rest: string } {
+  const normalised = buffer.replace(/\r\n/g, "\n");
+  const parts = normalised.split("\n\n");
+  const rest = parts.pop() ?? "";
+  return { blocks: parts, rest };
+}
+
+export async function streamAnswer(request: AskRequest, onEvent: (event: AnswerEvent) => void, signal?: AbortSignal): Promise<void> {
+  const headers = new Headers({ "Content-Type": "application/json", Accept: "text/event-stream" });
+  headers.set("X-Client-Time", new Date().toISOString());
+  headers.set("X-App-Version", APP_VERSION);
+  headers.set("X-App-Platform", APP_PLATFORM);
+  if (APP_VERSION_CODE) headers.set("X-App-Version-Code", APP_VERSION_CODE);
+
+  const response = await fetch(`${API_BASE}/api${ANSWER_STREAM_PATH}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(request),
+    cache: "no-store",
+    signal
+  });
+
+  if (!response.ok || !response.body) {
+    const contentType = response.headers.get("content-type") ?? "";
+    const body = contentType.includes("application/json") ? await response.json().catch(() => null) : await response.text().catch(() => "");
+    throw new ApiError(response.status, describeApiBody(body, statusFallback(response.status, "Couldn't answer that. Try again.")), body, response.headers);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const { blocks, rest } = splitSseBuffer(buffer);
+    buffer = rest;
+    for (const block of blocks) {
+      const event = parseSseBlock(block);
+      if (event) onEvent(event);
+    }
+  }
+  buffer += decoder.decode();
+  if (buffer.trim()) {
+    const event = parseSseBlock(buffer);
+    if (event) onEvent(event);
+  }
+}

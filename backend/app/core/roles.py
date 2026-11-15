@@ -1,0 +1,154 @@
+from enum import StrEnum
+from typing import Any
+
+MASTER_ADMIN = "MASTER_ADMIN"
+PROFESSOR = "PROFESSOR"
+RESEARCHER = "RESEARCHER"
+STUDENT = "STUDENT"
+
+ROLE_RANK: dict[str, int] = {
+    STUDENT: 15,
+    RESEARCHER: 30,
+    PROFESSOR: 40,
+    MASTER_ADMIN: 60,
+}
+
+ROLE_LABELS: dict[str, str] = {
+    STUDENT: "Student",
+    RESEARCHER: "Researcher",
+    PROFESSOR: "Professor",
+    MASTER_ADMIN: "Master Admin",
+}
+
+ROLES_BY_RANK: tuple[str, ...] = tuple(sorted(ROLE_RANK, key=lambda role: -ROLE_RANK[role]))
+
+TWO_FACTOR_REQUIRED_ROLES = frozenset({PROFESSOR, MASTER_ADMIN})
+
+
+class Capability(StrEnum):
+    ASK_STANDARD = "ASK_STANDARD"
+    ASK_DEEP = "ASK_DEEP"
+    VOICE = "VOICE"
+    GENERATE_IMAGE = "GENERATE_IMAGE"
+    GENERATE_VIDEO = "GENERATE_VIDEO"
+    SAVE_EXPORT = "SAVE_EXPORT"
+    READ_RESEARCHER_QUOTES = "READ_RESEARCHER_QUOTES"
+    PROPOSE_KNOWLEDGE = "PROPOSE_KNOWLEDGE"
+    RUN_ENRICHMENT = "RUN_ENRICHMENT"
+    ACCEPT_ALIASES = "ACCEPT_ALIASES"
+    MARK_CLAIM_LEVEL = "MARK_CLAIM_LEVEL"
+    RETRACT_CLAIM = "RETRACT_CLAIM"
+    SHARE_MEDIA = "SHARE_MEDIA"
+    HANDLE_OBJECTIONS = "HANDLE_OBJECTIONS"
+    MANAGE_ACCESS = "MANAGE_ACCESS"
+    LIST_USERS = "LIST_USERS"
+    INVITE_PROFESSORS = "INVITE_PROFESSORS"
+    CHANGE_ROLES = "CHANGE_ROLES"
+    DISABLE_USERS = "DISABLE_USERS"
+    MANAGE_KEYS = "MANAGE_KEYS"
+    MANAGE_ROUTING = "MANAGE_ROUTING"
+    MANAGE_QUOTAS = "MANAGE_QUOTAS"
+    MANAGE_CEILINGS = "MANAGE_CEILINGS"
+    MANAGE_DATASETS = "MANAGE_DATASETS"
+    VIEW_USAGE = "VIEW_USAGE"
+    VIEW_EVALUATION = "VIEW_EVALUATION"
+    VIEW_AUDIT_LOG = "VIEW_AUDIT_LOG"
+
+
+CAPABILITY_MIN_ROLE: dict[Capability, str] = {
+    Capability.ASK_STANDARD: STUDENT,
+    Capability.ASK_DEEP: RESEARCHER,
+    Capability.VOICE: STUDENT,
+    Capability.GENERATE_IMAGE: STUDENT,
+    Capability.GENERATE_VIDEO: RESEARCHER,
+    Capability.SAVE_EXPORT: STUDENT,
+    Capability.READ_RESEARCHER_QUOTES: RESEARCHER,
+    Capability.PROPOSE_KNOWLEDGE: RESEARCHER,
+    Capability.RUN_ENRICHMENT: RESEARCHER,
+    Capability.ACCEPT_ALIASES: RESEARCHER,
+    Capability.MARK_CLAIM_LEVEL: PROFESSOR,
+    Capability.RETRACT_CLAIM: PROFESSOR,
+    Capability.SHARE_MEDIA: PROFESSOR,
+    Capability.HANDLE_OBJECTIONS: PROFESSOR,
+    Capability.MANAGE_ACCESS: PROFESSOR,
+    Capability.LIST_USERS: PROFESSOR,
+    Capability.INVITE_PROFESSORS: MASTER_ADMIN,
+    Capability.CHANGE_ROLES: MASTER_ADMIN,
+    Capability.DISABLE_USERS: MASTER_ADMIN,
+    Capability.MANAGE_KEYS: MASTER_ADMIN,
+    Capability.MANAGE_ROUTING: MASTER_ADMIN,
+    Capability.MANAGE_QUOTAS: MASTER_ADMIN,
+    Capability.MANAGE_CEILINGS: MASTER_ADMIN,
+    Capability.MANAGE_DATASETS: MASTER_ADMIN,
+    Capability.VIEW_USAGE: MASTER_ADMIN,
+    Capability.VIEW_EVALUATION: PROFESSOR,
+    Capability.VIEW_AUDIT_LOG: MASTER_ADMIN,
+}
+
+DAILY_ALLOWANCES: dict[str, dict[str, int | None]] = {
+    STUDENT: {"VOICE_SECONDS": 600, "IMAGE": 5, "VIDEO": 0},
+    RESEARCHER: {"VOICE_SECONDS": 1800, "IMAGE": 30, "VIDEO": 5},
+    PROFESSOR: {"VOICE_SECONDS": 1800, "IMAGE": 50, "VIDEO": 10},
+    MASTER_ADMIN: {"VOICE_SECONDS": None, "IMAGE": None, "VIDEO": None},
+}
+
+
+def role_value(user_or_role: Any) -> str:
+    if isinstance(user_or_role, str):
+        return user_or_role
+    role = user_or_role.get("role") if isinstance(user_or_role, dict) else getattr(user_or_role, "role", None)
+    return str(getattr(role, "value", role) or "")
+
+
+def role_rank(user_or_role: Any) -> int:
+    return ROLE_RANK.get(role_value(user_or_role), 0)
+
+
+def has_rank(user_or_role: Any, role: str) -> bool:
+    return role_rank(user_or_role) >= ROLE_RANK[role]
+
+
+def is_known_role(role: Any) -> bool:
+    return isinstance(role, str) and role in ROLE_RANK
+
+
+def is_master_admin(user_or_role: Any) -> bool:
+    return role_value(user_or_role) == MASTER_ADMIN
+
+
+def can(user_or_role: Any, capability: Capability) -> bool:
+    minimum = CAPABILITY_MIN_ROLE[capability]
+    return has_rank(user_or_role, minimum)
+
+
+def capabilities_of(user_or_role: Any) -> list[str]:
+    return sorted(cap.value for cap in Capability if can(user_or_role, cap))
+
+
+def assignable_roles(actor: Any) -> list[str]:
+    if is_master_admin(actor):
+        return list(ROLES_BY_RANK)
+    if can(actor, Capability.MANAGE_ACCESS):
+        own = role_rank(actor)
+        return [role for role in ROLES_BY_RANK if ROLE_RANK[role] < own]
+    return []
+
+
+def may_assign(actor: Any, role: str | None) -> bool:
+    if role is None:
+        return can(actor, Capability.MANAGE_ACCESS)
+    return role in assignable_roles(actor)
+
+
+def may_manage_target(actor: Any, target: Any) -> bool:
+    if is_master_admin(actor):
+        return True
+    return role_rank(actor) > role_rank(target)
+
+
+def requires_two_factor(user_or_role: Any) -> bool:
+    return role_value(user_or_role) in TWO_FACTOR_REQUIRED_ROLES
+
+
+def daily_allowance(user_or_role: Any, resource: str) -> int | None:
+    return DAILY_ALLOWANCES.get(role_value(user_or_role), DAILY_ALLOWANCES[STUDENT]).get(resource)

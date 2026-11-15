@@ -1,0 +1,43 @@
+[project]
+name = "kalavigyan-craft-etl"
+version = "0.0.1"
+description = "Craft identity data for KalaVigyan: Wikidata links, aliases and seed claims."
+requires-python = ">=3.14"
+dependencies = [
+    "httpx>=0.28.1",
+    "anyascii>=0.3.3",
+    "indic-transliteration>=2.3.82",
+    "rapidfuzz>=3.14.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+extend-exclude = [".venv", ".cache"]
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "UP", "B", "C4", "SIM", "RET", "DTZ", "BLE", "PIE", "RUF", "PLE", "PLW"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "PLW0603", "PLW2901"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["app"]
+known-local-folder = ["traditions", "aliases", "seed_claims", "wikidata_link"]
+section-order = ["future", "standard-library", "third-party", "paths", "first-party", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+paths = ["common"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+filterwarnings = ['ignore::DeprecationWarning:indic_transliteration.*']

@@ -1,0 +1,128 @@
+name: Backend checks
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - "shared/**"
+      - ".github/workflows/backend-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "shared/**"
+      - ".github/workflows/backend-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.14"
+  UV_LOCKED: "1"
+
+jobs:
+  lint-and-unit:
+    name: Lint and unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - name: Install
+        run: uv sync --locked
+      - name: Ruff lint
+        run: uv run ruff check .
+      - name: Ruff format
+        run: uv run ruff format --check .
+      - name: Unit tests
+        run: uv run pytest -q
+      - name: Migration renders offline
+        env:
+          DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test
+          MASTER_ADMIN_EMAIL: owner@kalavigyan.test
+        run: |
+          export JWT_SECRET="$(openssl rand -base64 48)"
+          echo "::add-mask::$JWT_SECRET"
+          uv run alembic upgrade head --sql > /dev/null
+
+  database:
+    name: Migrations and database tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    needs: lint-and-unit
+    services:
+      postgres:
+        image: postgis/postgis:17-3.7
+        env:
+          POSTGRES_USER: kalavigyan
+          POSTGRES_PASSWORD: kalavigyan
+          POSTGRES_DB: kalavigyan_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kalavigyan -d kalavigyan_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test
+      MASTER_ADMIN_EMAIL: owner@kalavigyan.test
+      APP_ENV: test
+      RUN_DB_TESTS: "1"
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      - name: Add pgvector to the PostGIS service
+        working-directory: .
+        run: |
+          docker exec "${{ job.services.postgres.id }}" bash -c \
+            "apt-get update -qq && apt-get install -y -qq --no-install-recommends postgresql-17-pgvector"
+          docker exec "${{ job.services.postgres.id }}" psql -U kalavigyan -d kalavigyan_test -v ON_ERROR_STOP=1 \
+            -c "CREATE EXTENSION IF NOT EXISTS vector" -c "CREATE EXTENSION IF NOT EXISTS postgis" \
+            -c "SELECT extname, extversion FROM pg_extension ORDER BY extname"
+      - name: Generate per-run keys
+        run: |
+          jwt="$(openssl rand -base64 48 | tr -d '\n')"
+          totp="$(openssl rand -base64 32 | tr -d '\n')"
+          fernet="$(openssl rand -base64 32 | tr '+/' '-_' | tr -d '\n')"
+          echo "::add-mask::$jwt"
+          echo "::add-mask::$totp"
+          echo "::add-mask::$fernet"
+          {
+            echo "JWT_SECRET=$jwt"
+            echo "TWO_FACTOR_ENCRYPTION_KEY=$totp"
+            echo "SECRETS_ENCRYPTION_KEY=$fernet"
+          } >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - name: Install
+        run: uv sync --locked
+      - name: Alembic upgrade head
+        run: uv run alembic upgrade head
+      - name: Alembic downgrade and upgrade again
+        run: |
+          uv run alembic downgrade base
+          uv run alembic upgrade head
+      - name: Database tests
+        run: uv run pytest -q -m db tests/db

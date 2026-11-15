@@ -1,0 +1,30 @@
+[Unit]
+Description=KalaVigyan worker (media, enrichment, ingest refresh, purge)
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=|/opt/kalavigyan/current/backend/app/worker.py
+ConditionPathExists=|/opt/kalavigyan/current/backend/app/worker/__main__.py
+
+[Service]
+User=kalavigyan
+Group=kalavigyan
+WorkingDirectory=/opt/kalavigyan/current/backend
+Environment=MALLOC_ARENA_MAX=2
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/opt/kalavigyan/.env
+Environment=KV_PROCESS=worker
+ExecStart=/opt/kalavigyan/current/backend/.venv/bin/python -m app.worker
+MemoryAccounting=yes
+MemoryHigh=1500M
+MemoryMax=1800M
+Restart=always
+RestartSec=10
+KillMode=control-group
+TimeoutStopSec=30
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

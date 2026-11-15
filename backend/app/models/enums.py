@@ -1,0 +1,288 @@
+from app.models.base import pg_enum
+
+USER_ROLES = ("MASTER_ADMIN", "PROFESSOR", "RESEARCHER", "STUDENT")
+AUTH_PROVIDERS = ("LOCAL", "GOOGLE")
+ACCESS_STATUSES = ("ACTIVE", "PENDING", "REJECTED", "SUSPENDED")
+CREDENTIAL_LINK_PURPOSES = ("INVITE", "RESET")
+ROLE_REQUEST_STATUSES = ("PENDING", "APPROVED", "REJECTED")
+CONSENT_KINDS = ("PRIVACY_NOTICE", "VOICE_NOTICE")
+DATA_REQUEST_KINDS = ("EXPORT", "DELETE")
+DATA_REQUEST_STATUSES = ("PENDING", "RUNNING", "COMPLETED", "FAILED")
+ACTOR_KINDS = ("USER", "SYSTEM")
+AUTH_NONCE_PURPOSES = ("GOOGLE_SIGN_IN", "GOOGLE_LINK")
+
+AI_PROVIDERS = ("OPENAI", "GEMINI", "ANTHROPIC", "DEEPSEEK")
+AI_TASKS = (
+    "PROOFREAD",
+    "EXPAND",
+    "SUMMARISE",
+    "TRANSLATE",
+    "TRANSCRIBE",
+    "CAPTION",
+    "PLAN",
+    "COMPOSE",
+    "WEB_READ",
+    "EXTRACT",
+    "EMBED",
+    "IMAGE",
+    "VIDEO",
+    "VOICE_TURN",
+    "EVAL_JUDGE",
+)
+PROVIDER_DATA_CLASSES = ("PUBLIC_TEXT_ONLY", "ANY")
+USAGE_OUTCOMES = (
+    "RESERVED",
+    "OK",
+    "ERROR",
+    "REFUSED_CEILING",
+    "REFUSED_QUOTA",
+    "REFUSED_PROVIDER",
+    "CANCELLED",
+)
+QUOTA_RESOURCES = ("TEXT_Q", "DEEP_Q", "VOICE_SECONDS", "IMAGE", "VIDEO", "ENRICHMENT_USD", "USD_DAY")
+
+CRAFT_STATUSES = ("ACTIVE", "LEGACY", "MERGED")
+GI_STATUSES = ("GI", "NON_GI")
+ALIAS_SOURCES = (
+    "MASTER",
+    "CROSS_PORTAL_CODE",
+    "CURATED",
+    "IMMERSIVE",
+    "CXA",
+    "DR_SYNC",
+    "PROPOSED",
+    "WIKIDATA",
+    "TRANSLITERATION",
+)
+ALIAS_STATUSES = ("PROPOSED", "ACTIVE", "REJECTED")
+LOCATION_PRECISIONS = ("STATE", "DISTRICT", "POINT")
+BOUNDARY_SOURCES = ("SOI_1M", "KAGGLE_INDICATIVE")
+EVIDENCE_LEVELS = ("VERIFIED", "REVIEWED", "PROVISIONAL", "HYPOTHESIS")
+ENV_STATS = (
+    "DISTRICT_MEAN",
+    "DISTRICT_P10",
+    "DISTRICT_P90",
+    "UNCERTAINTY_Q05_MEAN",
+    "UNCERTAINTY_Q95_MEAN",
+    "SHARE",
+    "CLASS",
+    "NORMAL",
+)
+
+SOURCE_KINDS = (
+    "PAPER",
+    "BOOK",
+    "BOOK_CHAPTER",
+    "WEB_PAGE",
+    "ENCYCLOPEDIA",
+    "DATASET",
+    "GI_JOURNAL",
+    "GOVERNMENT_REPORT",
+    "COMPOUND_RECORD",
+    "FIELD_TESTIMONY",
+    "OTHER",
+)
+RELIABILITIES = ("A", "B", "C", "D")
+SOURCE_STORAGES = ("FULL_TEXT", "EXCERPT", "LINK_ONLY")
+SOURCE_ORIGINS = ("IMPORT", "ENRICHMENT", "LIVE_RESEARCH")
+SENSITIVITIES = ("OPEN", "ATTRIBUTE_REQUIRED", "RESTRICTED")
+CHUNK_ACLS = ("PUBLIC", "RESEARCHER")
+CONCEPT_TYPES = (
+    "MATERIAL",
+    "TOOL",
+    "PROCESS_STAGE",
+    "MECHANISM",
+    "ENVIRONMENTAL_CONDITION",
+    "ARTISAN_DECISION",
+    "OUTCOME",
+    "OPEN_QUESTION",
+    "TRADITION",
+    "DESIGN_PRINCIPLE",
+    "HISTORICAL_CONTEXT",
+    "COMPARISON",
+    "EXPLANATION",
+    "ARTISAN_ACTION",
+    "SENSORY_CUE",
+    "PROPERTY",
+    "CHANGE",
+    "CONCEPT",
+)
+CONCEPT_RELATIONS = (
+    "PRECEDES",
+    "USES",
+    "PRODUCES",
+    "SCIENTIFICALLY_EXPLAINED_BY",
+    "AFFECTED_BY",
+    "PART_OF",
+    "DEPENDS_ON",
+    "CAUSES",
+    "ENABLES",
+    "EXPLAINS",
+    "REQUIRES",
+    "PRACTITIONER_EXPLAINS",
+    "HAS_PROPERTY",
+    "CONTRASTS_WITH",
+    "ASSOCIATED_WITH",
+    "SIMILAR_TO",
+    "USED_FOR",
+    "PREVENTS",
+    "MODIFIES",
+)
+STAGE_TYPES = (
+    "PREP",
+    "SCOUR",
+    "MORDANT",
+    "DYE",
+    "RESIST",
+    "PRINT",
+    "WASH",
+    "DRY",
+    "SHAPE",
+    "CARVE",
+    "FIRE",
+    "CAST",
+    "FINISH",
+    "OTHER",
+)
+MATERIAL_KINDS = (
+    "FIBRE",
+    "DYE",
+    "MORDANT",
+    "MINERAL",
+    "CLAY",
+    "METAL",
+    "WOOD",
+    "RESIN",
+    "FUEL",
+    "WATER",
+    "OTHER",
+)
+MATERIAL_ROLES = ("INPUT", "MORDANT", "DYE", "RESIST", "BINDER", "FLUX", "FUEL", "TOOL", "PRODUCT", "OTHER")
+REACTION_KINDS = (
+    "REDOX",
+    "ACID_BASE",
+    "COMPLEXATION",
+    "PRECIPITATION",
+    "DEHYDRATION",
+    "DEHYDROXYLATION",
+    "PHASE_CHANGE",
+    "POLYMERISATION",
+    "HYDROLYSIS",
+    "OTHER",
+)
+CLAIM_ORIGINS = ("IMPORT", "RESEARCHER", "ENRICHMENT", "MODEL", "LIVE_RESEARCH")
+CLAIM_STATUSES = ("DRAFT", "PROPOSED", "IN_REVIEW", "APPROVED", "REJECTED", "RETRACTED")
+QUOTE_CHECKS = ("PASS", "FAIL", "NA")
+SOURCE_RELATIONS = ("DIRECT", "CONTEXTUAL", "ANALOGOUS", "GENERAL_PRINCIPLE")
+LIVE_TIERS = ("T3", "T4")
+JOB_STATUSES = ("QUEUED", "RUNNING", "SUCCEEDED", "FAILED", "BLOCKED", "CANCELLED")
+OBJECTION_KINDS = ("FACTUAL", "ATTRIBUTION", "SACRED_OR_RESTRICTED", "DEPICTION", "OTHER")
+OBJECTION_STATUSES = ("OPEN", "ACKNOWLEDGED", "UPHELD", "DISMISSED")
+ANSWER_MODES = ("VERIFIED", "HYBRID", "DEEP")
+CHANNELS = ("TEXT", "VOICE")
+MESSAGE_ROLES = ("USER", "ASSISTANT", "SYSTEM")
+MEDIA_KINDS = ("IMAGE", "VIDEO")
+MEDIA_VISIBILITIES = ("PRIVATE", "CRAFT_SHARED")
+EVAL_RUN_STATUSES = ("QUEUED", "RUNNING", "SUCCEEDED", "FAILED")
+
+UserRole = pg_enum("UserRole", USER_ROLES)
+AuthProvider = pg_enum("AuthProvider", AUTH_PROVIDERS)
+AccessStatus = pg_enum("AccessStatus", ACCESS_STATUSES)
+CredentialLinkPurpose = pg_enum("CredentialLinkPurpose", CREDENTIAL_LINK_PURPOSES)
+RoleRequestStatus = pg_enum("RoleRequestStatus", ROLE_REQUEST_STATUSES)
+ConsentKind = pg_enum("ConsentKind", CONSENT_KINDS)
+DataRequestKind = pg_enum("DataRequestKind", DATA_REQUEST_KINDS)
+DataRequestStatus = pg_enum("DataRequestStatus", DATA_REQUEST_STATUSES)
+ActorKind = pg_enum("ActorKind", ACTOR_KINDS)
+AuthNoncePurpose = pg_enum("AuthNoncePurpose", AUTH_NONCE_PURPOSES)
+AiProvider = pg_enum("AiProvider", AI_PROVIDERS)
+AiTask = pg_enum("AiTask", AI_TASKS)
+ProviderDataClass = pg_enum("ProviderDataClass", PROVIDER_DATA_CLASSES)
+UsageOutcome = pg_enum("UsageOutcome", USAGE_OUTCOMES)
+QuotaResource = pg_enum("QuotaResource", QUOTA_RESOURCES)
+CraftStatus = pg_enum("CraftStatus", CRAFT_STATUSES)
+GiStatus = pg_enum("GiStatus", GI_STATUSES)
+AliasSource = pg_enum("AliasSource", ALIAS_SOURCES)
+AliasStatus = pg_enum("AliasStatus", ALIAS_STATUSES)
+LocationPrecision = pg_enum("LocationPrecision", LOCATION_PRECISIONS)
+BoundarySource = pg_enum("BoundarySource", BOUNDARY_SOURCES)
+EvidenceLevel = pg_enum("EvidenceLevel", EVIDENCE_LEVELS)
+EnvStat = pg_enum("EnvStat", ENV_STATS)
+SourceKind = pg_enum("SourceKind", SOURCE_KINDS)
+Reliability = pg_enum("Reliability", RELIABILITIES)
+SourceStorage = pg_enum("SourceStorage", SOURCE_STORAGES)
+SourceOrigin = pg_enum("SourceOrigin", SOURCE_ORIGINS)
+Sensitivity = pg_enum("Sensitivity", SENSITIVITIES)
+ChunkAcl = pg_enum("ChunkAcl", CHUNK_ACLS)
+ConceptType = pg_enum("ConceptType", CONCEPT_TYPES)
+ConceptRelation = pg_enum("ConceptRelation", CONCEPT_RELATIONS)
+StageType = pg_enum("StageType", STAGE_TYPES)
+MaterialKind = pg_enum("MaterialKind", MATERIAL_KINDS)
+MaterialRole = pg_enum("MaterialRole", MATERIAL_ROLES)
+ReactionKind = pg_enum("ReactionKind", REACTION_KINDS)
+ClaimOrigin = pg_enum("ClaimOrigin", CLAIM_ORIGINS)
+ClaimStatus = pg_enum("ClaimStatus", CLAIM_STATUSES)
+QuoteCheck = pg_enum("QuoteCheck", QUOTE_CHECKS)
+SourceRelation = pg_enum("SourceRelation", SOURCE_RELATIONS)
+LiveTier = pg_enum("LiveTier", LIVE_TIERS)
+JobStatus = pg_enum("JobStatus", JOB_STATUSES)
+ObjectionKind = pg_enum("ObjectionKind", OBJECTION_KINDS)
+ObjectionStatus = pg_enum("ObjectionStatus", OBJECTION_STATUSES)
+AnswerMode = pg_enum("AnswerMode", ANSWER_MODES)
+Channel = pg_enum("Channel", CHANNELS)
+MessageRole = pg_enum("MessageRole", MESSAGE_ROLES)
+MediaKind = pg_enum("MediaKind", MEDIA_KINDS)
+MediaVisibility = pg_enum("MediaVisibility", MEDIA_VISIBILITIES)
+EvalRunStatus = pg_enum("EvalRunStatus", EVAL_RUN_STATUSES)
+
+ALL_ENUMS = (
+    UserRole,
+    AuthProvider,
+    AccessStatus,
+    CredentialLinkPurpose,
+    RoleRequestStatus,
+    ConsentKind,
+    DataRequestKind,
+    DataRequestStatus,
+    ActorKind,
+    AuthNoncePurpose,
+    AiProvider,
+    AiTask,
+    ProviderDataClass,
+    UsageOutcome,
+    QuotaResource,
+    CraftStatus,
+    GiStatus,
+    AliasSource,
+    AliasStatus,
+    LocationPrecision,
+    BoundarySource,
+    EvidenceLevel,
+    EnvStat,
+    SourceKind,
+    Reliability,
+    SourceStorage,
+    SourceOrigin,
+    Sensitivity,
+    ChunkAcl,
+    ConceptType,
+    ConceptRelation,
+    StageType,
+    MaterialKind,
+    MaterialRole,
+    ReactionKind,
+    ClaimOrigin,
+    ClaimStatus,
+    QuoteCheck,
+    SourceRelation,
+    LiveTier,
+    JobStatus,
+    ObjectionKind,
+    ObjectionStatus,
+    AnswerMode,
+    Channel,
+    MessageRole,
+    MediaKind,
+    MediaVisibility,
+    EvalRunStatus,
+)

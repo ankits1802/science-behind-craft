@@ -1,0 +1,170 @@
+from typing import Any
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.api.routes.secrets import require_step_up
+from app.core.db import get_session
+from app.core.deps import require
+from app.core.roles import ROLE_RANK, Capability
+from app.models import User
+from app.schemas.admin import AppSettingsUpdate, RouteOrderUpdate, RouteTestRequest
+from app.services import app_settings, audit, managed_secrets, route_policy
+from app.services.ai_providers import ROUTABLE_TASKS, AiTask, catalogue, spec_for, task_of
+
+router = APIRouter(prefix="/settings", tags=["settings"])
+
+routing_manager = require(Capability.MANAGE_ROUTING)
+ceiling_manager = require(Capability.MANAGE_CEILINGS)
+
+
+def _task_or_404(task: str) -> AiTask:
+    resolved = task_of(task)
+    if resolved is None or resolved not in ROUTABLE_TASKS:
+        raise HTTPException(
+            status.HTTP_404_NOT_FOUND,
+            f"Unknown task {task!r}. Routable tasks: {', '.join(t.value for t in ROUTABLE_TASKS)}",
+        )
+    return resolved
+
+
+def _join(names: list[str]) -> str:
+    if len(names) <= 1:
+        return names[0] if names else ""
+    return f"{', '.join(names[:-1])} and {names[-1]}"
+
+
+@router.get("/ai-catalogue")
+async def ai_catalogue(_: User = Depends(routing_manager)) -> dict[str, Any]:
+    return {"providers": catalogue(), "tasks": [t.value for t in ROUTABLE_TASKS]}
+
+
+@router.get("/ai-routing")
+async def get_all_routing(
+    _: User = Depends(routing_manager), session: AsyncSession = Depends(get_session)
+) -> dict[str, Any]:
+    return {"tasks": [await route_policy.task_state(session, task) for task in ROUTABLE_TASKS]}
+
+
+@router.get("/ai-routing/{task}")
+async def get_task_routing(
+    task: str, _: User = Depends(routing_manager), session: AsyncSession = Depends(get_session)
+) -> dict[str, Any]:
+    return await route_policy.task_state(session, _task_or_404(task))
+
+
+@router.put("/ai-routing/{task}")
+async def update_task_routing(
+    task: str,
+    payload: RouteOrderUpdate,
+    actor: User = Depends(routing_manager),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, Any]:
+    resolved = _task_or_404(task)
+    entries = [entry.model_dump() | {"provider": entry.provider.upper()} for entry in payload.routes]
+    problem = route_policy.validate_entries(resolved, entries)
+    if problem:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"routes: {problem}")
+    states = await route_policy.key_states(session)
+    rankable = {provider for provider, state in states.items() if state["rankable"]}
+    ranked = route_policy.freeze_unrankable(entries, rankable)
+    sank = [
+        states[e["provider"]]["keyLabel"]
+        for e in entries
+        if e["provider"] not in rankable and ranked.index(e) > entries.index(e)
+    ]
+    note = None
+    if sank:
+        names = sorted(set(sank))
+        verb = "has" if len(names) == 1 else "have"
+        note = f"{_join(names)} {verb} not passed a key test, so moved below the routes that have. Test and reorder."
+    await route_policy.save_order(session, resolved, ranked, actor.id)
+    await audit.record(
+        session,
+        action="routing.updated",
+        actor=actor,
+        target_type="RoutePolicy",
+        target_id=resolved.value,
+        detail={"routes": [f"{e['provider']}:{e['model']}" for e in ranked]},
+    )
+    await session.commit()
+    return await route_policy.task_state(session, resolved, normalised=bool(sank), note=note)
+
+
+@router.post("/ai-routing/{task}/test")
+async def test_task_provider(
+    task: str,
+    payload: RouteTestRequest,
+    actor: User = Depends(routing_manager),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, Any]:
+    resolved = _task_or_404(task)
+    spec = spec_for(payload.provider)
+    if spec is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Unknown provider {payload.provider!r}")
+    result = await managed_secrets.test_secret(session, spec.managed_key)
+    await audit.record(
+        session,
+        action="routing.provider_tested",
+        actor=actor,
+        target_type="ManagedSecret",
+        target_id=spec.managed_key,
+        detail={"status": result["lastStatus"], "task": resolved.value},
+    )
+    await session.commit()
+    return await route_policy.task_state(session, resolved)
+
+
+@router.get("/ai-budget")
+async def get_budget(
+    _: User = Depends(ceiling_manager), session: AsyncSession = Depends(get_session)
+) -> dict[str, Any]:
+    return app_settings.public_view(await app_settings.load_all(session))
+
+
+@router.put("/ai-budget")
+async def update_budget(
+    payload: AppSettingsUpdate,
+    actor: User = Depends(ceiling_manager),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, Any]:
+    await require_step_up(session, actor, payload.twoFactorCode)
+    changes: dict[str, Any] = {}
+    if payload.monthlyCeilingUsd is not None:
+        changes[app_settings.MONTHLY_CEILING_USD] = payload.monthlyCeilingUsd
+    if payload.mediaCapUsd is not None:
+        changes[app_settings.MEDIA_CAP_USD] = payload.mediaCapUsd
+    if payload.roleDailyUsd is not None:
+        unknown = set(payload.roleDailyUsd) - set(ROLE_RANK)
+        if unknown:
+            raise HTTPException(
+                status.HTTP_422_UNPROCESSABLE_ENTITY, f"Unknown roles: {', '.join(sorted(unknown))}"
+            )
+        changes[app_settings.ROLE_DAILY_USD] = payload.roleDailyUsd
+    if payload.degradeAtFraction is not None:
+        changes[app_settings.DEGRADE_AT_FRACTION] = payload.degradeAtFraction
+    if payload.signUpMode is not None:
+        changes[app_settings.SIGN_UP_MODE] = payload.signUpMode
+    if payload.domainAllowlist is not None:
+        changes[app_settings.DOMAIN_ALLOWLIST] = sorted(
+            {d.strip().lower() for d in payload.domainAllowlist if d.strip()}
+        )
+    current = await app_settings.load_all(session)
+    media = changes.get(app_settings.MEDIA_CAP_USD, current[app_settings.MEDIA_CAP_USD])
+    monthly = changes.get(app_settings.MONTHLY_CEILING_USD, current[app_settings.MONTHLY_CEILING_USD])
+    if media > monthly:
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY, "The media cap can't exceed the monthly ceiling."
+        )
+    for key, value in changes.items():
+        await app_settings.set_value(session, key, value, actor.id)
+    if changes:
+        await audit.record(
+            session,
+            action="settings.ai_budget_updated",
+            actor=actor,
+            target_type="AppSetting",
+            detail={"keys": sorted(changes)},
+        )
+    await session.commit()
+    return app_settings.public_view(await app_settings.load_all(session))

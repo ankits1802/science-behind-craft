@@ -1,0 +1,173 @@
+name: Deploy backend
+
+on:
+  workflow_run:
+    workflows: [Checks]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit to deploy (empty = head of main)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-backend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 50
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      INSTANCE_ID: ${{ vars.EC2_INSTANCE_ID }}
+      BUCKET: ${{ vars.MEDIA_BUCKET }}
+      API_BASE_URL: ${{ vars.API_BASE_URL }}
+      PARAM_PATH: /kalavigyan/env
+    steps:
+      - name: Check out the commit to deploy
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 1
+
+      - name: Name the release
+        run: |
+          set -euo pipefail
+          sha="$(git rev-parse HEAD)"
+          echo "SHA=$sha" >> "$GITHUB_ENV"
+          echo "KEY=deploy/backend/$sha/KalaVigyan_API_Release-Build_${sha:0:12}.tar.gz" >> "$GITHUB_ENV"
+          for v in AWS_REGION INSTANCE_ID BUCKET API_BASE_URL; do
+            [ -n "${!v}" ] || { echo "::error::repository variable for $v is not set (see docs/RUNBOOK.md)"; exit 1; }
+          done
+
+      - name: Refuse a tree that cannot start
+        run: |
+          set -euo pipefail
+          test -f backend/pyproject.toml || { echo "::error::backend/pyproject.toml is missing"; exit 1; }
+          test -f backend/app/main.py || { echo "::error::backend/app/main.py is missing; the box runs app.main:app"; exit 1; }
+          test -f backend/uv.lock || echo "::warning::backend/uv.lock is missing; the box will resolve dependencies itself"
+          bash -n infra/deploy/release.sh infra/deploy/blue_green.sh infra/deploy/render_env.sh infra/deploy/api-watchdog.sh
+
+      - name: Assume the deploy role
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: deploy-backend-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Copy the repository secrets into Parameter Store
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SECRETS_ENCRYPTION_KEY: ${{ secrets.SECRETS_ENCRYPTION_KEY }}
+          TWO_FACTOR_ENCRYPTION_KEY: ${{ secrets.TWO_FACTOR_ENCRYPTION_KEY }}
+          ORIGIN_VERIFY_SECRET: ${{ secrets.ORIGIN_VERIFY_SECRET }}
+          AWS_ACCESS_KEY_ID_APP: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY_APP: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          MASTER_ADMIN_EMAIL: ${{ secrets.MASTER_ADMIN_EMAIL }}
+          MASTER_ADMIN_NAME: ${{ secrets.MASTER_ADMIN_NAME }}
+        run: |
+          set -euo pipefail
+          sync() {
+            local name="$1" from="${2:-$1}" current
+            if [ -z "${!from:-}" ]; then
+              echo "$name: not set in GitHub; Parameter Store keeps what it has"
+              return 0
+            fi
+            current="$(aws ssm get-parameter --name "$PARAM_PATH/$name" --with-decryption --query Parameter.Value --output text 2>/dev/null || true)"
+            if [ "$current" = "${!from}" ]; then
+              echo "$name: unchanged"
+              return 0
+            fi
+            jq -n --arg n "$PARAM_PATH/$name" --arg k "$from" '{Name: $n, Value: env[$k], Type: "SecureString", Overwrite: true}' \
+              | aws ssm put-parameter --cli-input-json file:///dev/stdin > /dev/null
+            echo "$name: updated"
+          }
+          for name in DATABASE_URL JWT_SECRET SECRETS_ENCRYPTION_KEY TWO_FACTOR_ENCRYPTION_KEY ORIGIN_VERIFY_SECRET \
+                      GEMINI_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY DEEPSEEK_API_KEY ELEVENLABS_API_KEY BRAVE_API_KEY \
+                      GOOGLE_CLIENT_ID MASTER_ADMIN_EMAIL MASTER_ADMIN_NAME; do
+            sync "$name"
+          done
+          sync AWS_ACCESS_KEY_ID AWS_ACCESS_KEY_ID_APP
+          sync AWS_SECRET_ACCESS_KEY AWS_SECRET_ACCESS_KEY_APP
+
+      - name: Upload the release tarball
+        run: |
+          set -euo pipefail
+          git archive --format=tar.gz -o "$RUNNER_TEMP/release.tar.gz" HEAD backend infra/deploy
+          ls -l "$RUNNER_TEMP/release.tar.gz"
+          aws s3 cp --only-show-errors "$RUNNER_TEMP/release.tar.gz" "s3://$BUCKET/$KEY"
+
+      - name: Release on the box (blue/green through SSM)
+        run: |
+          set -euo pipefail
+          script=$(cat <<EOF
+          set -euo pipefail
+          work="\$(mktemp -d /var/tmp/kv-release.XXXXXX)"
+          trap 'rm -rf "\$work"' EXIT
+          aws s3 cp --only-show-errors "s3://$BUCKET/$KEY" - | cat > "\$work/release.tar.gz"
+          tar -xzf "\$work/release.tar.gz" -C "\$work" infra/deploy
+          bash "\$work/infra/deploy/release.sh" "$SHA" "\$work/release.tar.gz"
+          EOF
+          )
+          jq -n --arg s "$script" '{commands: [$s], executionTimeout: ["2700"]}' > "$RUNNER_TEMP/params.json"
+          cid="$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name AWS-RunShellScript \
+            --comment "deploy ${SHA:0:12} run ${GITHUB_RUN_ID}" \
+            --timeout-seconds 600 \
+            --parameters "file://$RUNNER_TEMP/params.json" \
+            --output-s3-bucket-name "$BUCKET" \
+            --output-s3-key-prefix "deploy/logs/$SHA" \
+            --query Command.CommandId --output text)"
+          echo "SSM command $cid"
+          echo "CID=$cid" >> "$GITHUB_ENV"
+          deadline=$(( $(date +%s) + 2760 ))
+          while :; do
+            sleep 15
+            status="$(aws ssm get-command-invocation --command-id "$cid" --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)"
+            case "$status" in
+              Pending|InProgress|Delayed) ;;
+              *) break ;;
+            esac
+            [ "$(date +%s)" -lt "$deadline" ] || { echo "::error::the release did not finish in 46 minutes"; status=TimedOut; break; }
+          done
+          echo "status: $status"
+          base="deploy/logs/$SHA/$cid/$INSTANCE_ID/awsrunShellScript/0.awsrunShellScript"
+          for stream in stdout stderr; do
+            echo "::group::box $stream"
+            aws s3 cp --only-show-errors "s3://$BUCKET/$base/$stream" - 2>/dev/null \
+              || aws ssm get-command-invocation --command-id "$cid" --instance-id "$INSTANCE_ID" \
+                   --query "$( [ "$stream" = stdout ] && echo StandardOutputContent || echo StandardErrorContent )" --output text
+            echo "::endgroup::"
+          done
+          [ "$status" = Success ] || { echo "::error::release on the box ended $status; nginx still serves the previous release unless the log above says otherwise"; exit 1; }
+
+      - name: Smoke the API through CloudFront
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 24); do
+            code="$(curl -s -o /dev/null -w '%{http_code}' -m 10 "$API_BASE_URL/health" || true)"
+            if [ "$code" = 200 ]; then echo "$API_BASE_URL/health answered 200"; exit 0; fi
+            echo "attempt $i: $code"
+            sleep 5
+          done
+          echo "::error::$API_BASE_URL/health did not answer 200 (403 means CloudFront's X-Origin-Verify and ORIGIN_VERIFY_SECRET differ)"
+          exit 1

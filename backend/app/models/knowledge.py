@@ -1,0 +1,553 @@
+import uuid
+from datetime import datetime
+from decimal import Decimal
+from typing import Any
+
+from pgvector.sqlalchemy import Vector
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Computed,
+    DateTime,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    text as sql_text,
+)
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, TSVECTOR, UUID
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.models import enums as e
+from app.models.base import Base, created_at, updated_at, uuid_pk
+from app.models.crafts import EMBEDDING_DIMENSIONS
+
+QUOTE_MAX_CHARS = 300
+
+
+class Source(Base):
+    __tablename__ = "Source"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    kind: Mapped[str] = mapped_column(e.SourceKind, nullable=False)
+    title: Mapped[str] = mapped_column(Text, nullable=False)
+    authors: Mapped[list[Any]] = mapped_column(JSONB, nullable=False, server_default=sql_text("'[]'::jsonb"))
+    year: Mapped[int | None] = mapped_column(Integer)
+    doi: Mapped[str | None] = mapped_column(String(255))
+    url: Mapped[str | None] = mapped_column(Text)
+    publisher: Mapped[str | None] = mapped_column(String(300))
+    licence: Mapped[str | None] = mapped_column(String(200))
+    reliability: Mapped[str] = mapped_column(e.Reliability, nullable=False, server_default="C")
+    storage: Mapped[str] = mapped_column(e.SourceStorage, nullable=False, server_default="LINK_ONLY")
+    snapshotKey: Mapped[str | None] = mapped_column(Text)
+    sha256: Mapped[str | None] = mapped_column(String(64))
+    retrievedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    addedById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    origin: Mapped[str] = mapped_column(e.SourceOrigin, nullable=False, server_default="IMPORT")
+    sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
+    attribution: Mapped[str | None] = mapped_column(Text)
+    evidenceKind: Mapped[str | None] = mapped_column(String(80))
+    notes: Mapped[str | None] = mapped_column(Text)
+    externalIds: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        Index("Source_doi_key", "doi", unique=True, postgresql_where=sql_text("doi IS NOT NULL")),
+        Index(None, "url"),
+        Index(None, "origin"),
+    )
+
+
+class Chunk(Base):
+    __tablename__ = "Chunk"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    sourceId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Source.id", ondelete="CASCADE"), nullable=False
+    )
+    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    locator: Mapped[str | None] = mapped_column(String(300))
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    tsv: Mapped[Any] = mapped_column(
+        TSVECTOR, Computed("to_tsvector('english'::regconfig, coalesce(\"text\", ''))", persisted=True)
+    )
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
+    lang: Mapped[str] = mapped_column(String(16), nullable=False, server_default="en")
+    acl: Mapped[str] = mapped_column(e.ChunkAcl, nullable=False, server_default="PUBLIC")
+    sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        UniqueConstraint("sourceId", "ordinal"),
+        Index("Chunk_tsv_gin_idx", "tsv", postgresql_using="gin"),
+        Index(
+            "Chunk_embedding_hnsw_idx",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_ops={"embedding": "vector_cosine_ops"},
+        ),
+        Index(None, "acl", "sensitivity"),
+    )
+
+
+class Concept(Base):
+    __tablename__ = "Concept"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    craftId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="CASCADE")
+    )
+    subCategoryId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("CraftSubCategory.id", ondelete="CASCADE")
+    )
+    type: Mapped[str] = mapped_column(e.ConceptType, nullable=False)
+    name: Mapped[str] = mapped_column(String(300), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text)
+    originRef: Mapped[str | None] = mapped_column(Text)
+    sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "craftId", "type"), Index(None, "subCategoryId"))
+
+
+class ConceptEdge(Base):
+    __tablename__ = "ConceptEdge"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    srcId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="CASCADE"), nullable=False
+    )
+    dstId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="CASCADE"), nullable=False
+    )
+    relation: Mapped[str] = mapped_column(e.ConceptRelation, nullable=False)
+    sourceRelation: Mapped[str | None] = mapped_column(String(80))
+    claimId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (UniqueConstraint("srcId", "dstId", "relation"), Index(None, "dstId"))
+
+
+class Process(Base):
+    __tablename__ = "Process"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    craftId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="CASCADE"), nullable=False
+    )
+    name: Mapped[str] = mapped_column(String(300), nullable=False)
+    variant: Mapped[str | None] = mapped_column(String(200))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "craftId"),)
+
+
+class ProcessStage(Base):
+    __tablename__ = "ProcessStage"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    processId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Process.id", ondelete="CASCADE"), nullable=False
+    )
+    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    conceptId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="SET NULL")
+    )
+    name: Mapped[str] = mapped_column(String(300), nullable=False)
+    stageType: Mapped[str] = mapped_column(e.StageType, nullable=False, server_default="OTHER")
+    durationText: Mapped[str | None] = mapped_column(String(200))
+    tempMinC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))
+    tempMaxC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))
+    phMin: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))
+    phMax: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))
+    medium: Mapped[str | None] = mapped_column(String(200))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (UniqueConstraint("processId", "ordinal"),)
+
+
+class Compound(Base):
+    __tablename__ = "Compound"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    pubchemCid: Mapped[int | None] = mapped_column(Integer, unique=True)
+    name: Mapped[str] = mapped_column(String(300), nullable=False)
+    formula: Mapped[str | None] = mapped_column(String(200))
+    iupacName: Mapped[str | None] = mapped_column(Text)
+    smiles: Mapped[str | None] = mapped_column(Text)
+    inchiKey: Mapped[str | None] = mapped_column(String(27), unique=True)
+    molecularWeight: Mapped[Decimal | None] = mapped_column(Numeric(12, 4))
+    synonyms: Mapped[list[str]] = mapped_column(
+        ARRAY(Text), nullable=False, server_default=sql_text("ARRAY[]::text[]")
+    )
+    hazards: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    sourceId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Source.id", ondelete="SET NULL")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "formula"),)
+
+
+class Material(Base):
+    __tablename__ = "Material"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    name: Mapped[str] = mapped_column(String(300), nullable=False)
+    nameNorm: Mapped[str] = mapped_column(String(300), nullable=False, unique=True)
+    kind: Mapped[str] = mapped_column(e.MaterialKind, nullable=False, server_default="OTHER")
+    description: Mapped[str | None] = mapped_column(Text)
+    conceptId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="SET NULL")
+    )
+    compoundId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Compound.id", ondelete="SET NULL")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+
+class StageMaterial(Base):
+    __tablename__ = "StageMaterial"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    stageId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("ProcessStage.id", ondelete="CASCADE"), nullable=False
+    )
+    materialId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Material.id", ondelete="CASCADE"), nullable=False
+    )
+    role: Mapped[str] = mapped_column(e.MaterialRole, nullable=False, server_default="INPUT")
+    quantityText: Mapped[str | None] = mapped_column(String(200))
+    claimId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (UniqueConstraint("stageId", "materialId", "role"), Index(None, "materialId"))
+
+
+class Reaction(Base):
+    __tablename__ = "Reaction"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    stageId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("ProcessStage.id", ondelete="CASCADE"), nullable=False
+    )
+    kind: Mapped[str] = mapped_column(e.ReactionKind, nullable=False, server_default="OTHER")
+    species: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
+    )
+    equationInput: Mapped[str | None] = mapped_column(Text)
+    equationBalanced: Mapped[str | None] = mapped_column(Text)
+    coefficients: Mapped[list[int] | None] = mapped_column(ARRAY(Integer))
+    balanced: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("false"))
+    conditions: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
+    )
+    checkerVersion: Mapped[str | None] = mapped_column(String(40))
+    deltaHKjMol: Mapped[Decimal | None] = mapped_column(Numeric(12, 3))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "stageId"),)
+
+
+class Claim(Base):
+    __tablename__ = "Claim"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    subjectType: Mapped[str] = mapped_column(String(40), nullable=False)
+    subjectId: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    predicate: Mapped[str] = mapped_column(String(120), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    textLang: Mapped[str] = mapped_column(String(16), nullable=False, server_default="en")
+    valueNum: Mapped[Decimal | None] = mapped_column(Numeric(18, 6))
+    valueUnit: Mapped[str | None] = mapped_column(String(40))
+    evidenceLevel: Mapped[str] = mapped_column(e.EvidenceLevel, nullable=False)
+    levelReason: Mapped[str | None] = mapped_column(Text)
+    origin: Mapped[str] = mapped_column(e.ClaimOrigin, nullable=False)
+    status: Mapped[str] = mapped_column(e.ClaimStatus, nullable=False, server_default="APPROVED")
+    version: Mapped[int] = mapped_column(Integer, nullable=False, server_default=sql_text("1"))
+    supersedesId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    createdById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    createdByKind: Mapped[str] = mapped_column(e.ActorKind, nullable=False, server_default="SYSTEM")
+    sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
+    sourcesDiffer: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("false"))
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
+    tsv: Mapped[Any] = mapped_column(
+        TSVECTOR, Computed("to_tsvector('english'::regconfig, coalesce(\"text\", ''))", persisted=True)
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        Index(None, "subjectType", "subjectId", "evidenceLevel", "status"),
+        Index("Claim_tsv_gin_idx", "tsv", postgresql_using="gin"),
+        Index(
+            "Claim_embedding_hnsw_idx",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_ops={"embedding": "vector_cosine_ops"},
+        ),
+        Index(None, "supersedesId"),
+    )
+
+
+class ClaimSource(Base):
+    __tablename__ = "ClaimSource"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    claimId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="CASCADE"), nullable=False
+    )
+    sourceId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Source.id", ondelete="RESTRICT"), nullable=False
+    )
+    chunkId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Chunk.id", ondelete="SET NULL")
+    )
+    locator: Mapped[str | None] = mapped_column(String(300))
+    quote: Mapped[str | None] = mapped_column(String(QUOTE_MAX_CHARS))
+    quoteCheck: Mapped[str] = mapped_column(e.QuoteCheck, nullable=False, server_default="NA")
+    checkedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    relation: Mapped[str] = mapped_column(e.SourceRelation, nullable=False, server_default="DIRECT")
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "claimId"), Index(None, "sourceId"))
+
+
+class ReviewEvent(Base):
+    __tablename__ = "ReviewEvent"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    claimId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="CASCADE"), nullable=False
+    )
+    actorId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    actorKind: Mapped[str] = mapped_column(e.ActorKind, nullable=False)
+    systemActor: Mapped[str | None] = mapped_column(String(40))
+    fromStatus: Mapped[str | None] = mapped_column(e.ClaimStatus)
+    toStatus: Mapped[str | None] = mapped_column(e.ClaimStatus)
+    fromLevel: Mapped[str | None] = mapped_column(e.EvidenceLevel)
+    toLevel: Mapped[str | None] = mapped_column(e.EvidenceLevel)
+    note: Mapped[str | None] = mapped_column(Text)
+    createdAt: Mapped[datetime] = created_at()
+
+    __table_args__ = (Index(None, "claimId", "createdAt"), Index(None, "actorId"))
+
+
+class LiveCandidate(Base):
+    __tablename__ = "LiveCandidate"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    answerId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Answer.id", ondelete="CASCADE")
+    )
+    userId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="CASCADE")
+    )
+    tier: Mapped[str] = mapped_column(e.LiveTier, nullable=False)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    webFetchId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("WebFetch.id", ondelete="SET NULL")
+    )
+    sourceLabel: Mapped[str | None] = mapped_column(String(300))
+    quote: Mapped[str] = mapped_column(String(QUOTE_MAX_CHARS), nullable=False)
+    quoteCheck: Mapped[str] = mapped_column(e.QuoteCheck, nullable=False, server_default="NA")
+    facet: Mapped[str | None] = mapped_column(String(120))
+    writtenBackClaimId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    expiresAt: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=sql_text("now() + interval '30 days'")
+    )
+    createdAt: Mapped[datetime] = created_at()
+
+    __table_args__ = (Index(None, "answerId"), Index(None, "userId"), Index(None, "expiresAt"))
+
+
+class EnrichmentJob(Base):
+    __tablename__ = "EnrichmentJob"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    craftId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="CASCADE"), nullable=False
+    )
+    requestedById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    mode: Mapped[str] = mapped_column(String(40), nullable=False, server_default="T3")
+    facets: Mapped[list[Any]] = mapped_column(JSONB, nullable=False, server_default=sql_text("'[]'::jsonb"))
+    budgetUsd: Mapped[Decimal] = mapped_column(Numeric(10, 4), nullable=False, server_default=sql_text("2"))
+    spentUsd: Mapped[Decimal] = mapped_column(Numeric(10, 4), nullable=False, server_default=sql_text("0"))
+    status: Mapped[str] = mapped_column(e.JobStatus, nullable=False, server_default="QUEUED")
+    error: Mapped[str | None] = mapped_column(Text)
+    startedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finishedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        CheckConstraint('"budgetUsd" <= 10', name="budget_max"),
+        Index(None, "craftId", "status"),
+    )
+
+
+class EnrichmentProposal(Base):
+    __tablename__ = "EnrichmentProposal"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    jobId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("EnrichmentJob.id", ondelete="CASCADE"), nullable=False
+    )
+    claimId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="CASCADE"), nullable=False
+    )
+    dedupeOfClaimId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    checks: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "jobId"), Index(None, "claimId"))
+
+
+class Objection(Base):
+    __tablename__ = "Objection"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    craftId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="SET NULL")
+    )
+    claimId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
+    )
+    mediaAssetId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("MediaAsset.id", ondelete="SET NULL")
+    )
+    answerId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Answer.id", ondelete="SET NULL")
+    )
+    raisedById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    contactEmail: Mapped[str | None] = mapped_column(String(320))
+    kind: Mapped[str] = mapped_column(e.ObjectionKind, nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    status: Mapped[str] = mapped_column(e.ObjectionStatus, nullable=False, server_default="OPEN")
+    ackDueAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    decideDueAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    decidedById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    decidedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    decisionNote: Mapped[str | None] = mapped_column(Text)
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "status"), Index(None, "craftId"))
+
+
+class WebFetch(Base):
+    __tablename__ = "WebFetch"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    finalUrl: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[int | None] = mapped_column(Integer)
+    contentType: Mapped[str | None] = mapped_column(String(120))
+    bytes: Mapped[int | None] = mapped_column(Integer)
+    sha256: Mapped[str | None] = mapped_column(String(64), unique=True)
+    snapshotKey: Mapped[str | None] = mapped_column(Text)
+    fetchedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    blockedReason: Mapped[str | None] = mapped_column(String(200))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (Index(None, "url"),)
+
+
+class EvalCase(Base):
+    __tablename__ = "EvalCase"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    suite: Mapped[str] = mapped_column(String(60), nullable=False)
+    externalId: Mapped[str] = mapped_column(String(120), nullable=False)
+    craftSlug: Mapped[str | None] = mapped_column(String(200))
+    input: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    expected: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    authorId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    active: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("true"))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (UniqueConstraint("suite", "externalId"),)
+
+
+class EvalRun(Base):
+    __tablename__ = "EvalRun"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    suite: Mapped[str] = mapped_column(String(60), nullable=False)
+    gitSha: Mapped[str | None] = mapped_column(String(40))
+    status: Mapped[str] = mapped_column(e.EvalRunStatus, nullable=False, server_default="QUEUED")
+    budgetUsd: Mapped[Decimal | None] = mapped_column(Numeric(10, 4))
+    costUsd: Mapped[Decimal] = mapped_column(Numeric(10, 6), nullable=False, server_default=sql_text("0"))
+    summary: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    reportKey: Mapped[str | None] = mapped_column(Text)
+    startedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finishedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+
+class EvalResult(Base):
+    __tablename__ = "EvalResult"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    runId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("EvalRun.id", ondelete="CASCADE"), nullable=False
+    )
+    caseId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("EvalCase.id", ondelete="CASCADE"), nullable=False
+    )
+    passed: Mapped[bool | None] = mapped_column(Boolean)
+    score: Mapped[float | None] = mapped_column(Float)
+    metrics: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
+    )
+    output: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    createdAt: Mapped[datetime] = created_at()
+
+    __table_args__ = (UniqueConstraint("runId", "caseId"),)
