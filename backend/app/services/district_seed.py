@@ -31,7 +31,7 @@ DISTRICT_UPSERT = text(
     "ELSE ST_SetSRID(ST_MakePoint(CAST(:lon AS double precision), CAST(:lat AS double precision)), 4326) END, "
     "CAST('KAGGLE_INDICATIVE' AS \"BoundarySource\"), true "
     "FROM (SELECT ST_Multi(ST_CollectionExtract(ST_MakeValid("
-    "ST_BuildArea(ST_GeomFromText(CAST(:lines AS text), 4326))), 3)) AS geom) AS built "
+    "ST_BuildArea(ST_UnaryUnion(ST_GeomFromText(CAST(:lines AS text), 4326)))), 3)) AS geom) AS built "
     "ON CONFLICT (lgd) DO UPDATE SET "
     '"stateLgd" = EXCLUDED."stateLgd", name = EXCLUDED.name, geom = EXCLUDED.geom, '
     'centroid = EXCLUDED.centroid, "updatedAt" = now() '
