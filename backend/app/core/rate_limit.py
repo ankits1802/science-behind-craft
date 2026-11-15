@@ -49,8 +49,30 @@ class SlidingWindow:
 
 _windows = SlidingWindow()
 
+WEB_PROXY_SECRET_HEADER = "x-web-proxy-secret"
+VIEWER_ADDRESS_HEADER = "x-viewer-address"
+
+
+def trusted_viewer_address(connection: HTTPConnection) -> str | None:
+    secret = (get_settings().web_proxy_secret or "").strip()
+    if not secret:
+        return None
+    sent = connection.headers.get(WEB_PROXY_SECRET_HEADER)
+    viewer = connection.headers.get(VIEWER_ADDRESS_HEADER)
+    if sent is None or viewer is None:
+        return None
+    if not hmac.compare_digest(sent.strip().encode("utf-8"), secret.encode("utf-8")):
+        return None
+    try:
+        return str(ip_address(viewer.strip()))
+    except ValueError:
+        return None
+
 
 def client_ip(connection: HTTPConnection) -> str:
+    viewer = trusted_viewer_address(connection)
+    if viewer:
+        return viewer
     direct = connection.client.host if connection.client else ""
     try:
         trusted = ip_address(direct).is_loopback if direct else False
@@ -105,6 +127,10 @@ def code_attempt(user_id: str) -> tuple[bool, float]:
 
 def refund_code(user_id: str) -> None:
     _windows.refund(f"code:{user_id}")
+
+
+def ask_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"ask:{user_id}", 30, 600)
 
 
 def reset_all() -> None:

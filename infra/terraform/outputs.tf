@@ -29,7 +29,7 @@ output "security_group_id" {
 }
 
 output "media_bucket" {
-  description = "Private media bucket (AWS_S3_BUCKET)."
+  description = "Private media bucket (S3_BUCKET)."
   value       = aws_s3_bucket.media.bucket
 }
 

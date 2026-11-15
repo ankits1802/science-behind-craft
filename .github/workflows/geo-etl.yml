@@ -1,0 +1,216 @@
+name: Geo ETL
+
+on:
+  workflow_dispatch:
+    inputs:
+      datasets:
+        description: "Layers, comma separated: soilgrids,worldcover,hansen,chelsa,chirps,copdem,hydrorivers,mrds,glim or all"
+        type: string
+        default: all
+      states:
+        description: "State LGD codes, comma separated, or all"
+        type: string
+        default: all
+      shards:
+        description: "Shards per raster layer, 1 to 24, balanced by state area"
+        type: number
+        default: 6
+      load:
+        description: "Upsert the combined tables into the database"
+        type: boolean
+        default: false
+      allow_failures:
+        description: "Keep a part whose districts partly failed; failures stay listed in the summary"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: geo-etl
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.14"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  GDAL_DISABLE_READDIR_ON_OPEN: EMPTY_DIR
+  GDAL_HTTP_MAX_RETRY: "6"
+  GDAL_HTTP_RETRY_DELAY: "5"
+  GDAL_HTTP_TIMEOUT: "120"
+  CPL_VSIL_CURL_CACHE_SIZE: "200000000"
+
+jobs:
+  plan:
+    name: Plan the extract matrix
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - id: plan
+        env:
+          DATASETS: ${{ inputs.datasets }}
+          SHARDS: ${{ inputs.shards }}
+        shell: python
+        run: |
+          import json
+          import os
+          import sys
+
+          raster = ["soilgrids", "worldcover", "hansen", "chelsa", "chirps", "copdem"]
+          vector = ["hydrorivers", "mrds", "glim"]
+          known = raster + vector
+          text = os.environ["DATASETS"].replace(" ", "").lower()
+          chosen = known if text in ("", "all") else [v for v in text.split(",") if v]
+          unknown = sorted(set(chosen) - set(known))
+          if unknown:
+              sys.exit(f"unknown datasets: {', '.join(unknown)}; expected {', '.join(known)} or all")
+          shards = int(float(os.environ["SHARDS"] or "1"))
+          if not 1 <= shards <= 24:
+              sys.exit(f"shards must be 1 to 24, got {shards}")
+          include = []
+          for layer in [k for k in known if k in chosen]:
+              if layer in raster and shards > 1:
+                  include += [{"layer": layer, "shard": f"{i}/{shards}", "part": f"{layer}-shard{i}of{shards}"} for i in range(1, shards + 1)]
+              else:
+                  include.append({"layer": layer, "shard": "", "part": layer})
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"matrix={json.dumps({'include': include})}\n")
+              out.write(f"count={len(include)}\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write(f"{len(include)} extract jobs: {', '.join(i['part'] for i in include)}\n")
+
+  extract:
+    name: Extract ${{ matrix.part }}
+    needs: plan
+    runs-on: ubuntu-26.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+      - name: Restore the download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/kalavigyan-geo
+          key: kalavigyan-geo-${{ matrix.part }}-${{ hashFiles('etl/geo/geo_etl/catalog.py') }}-${{ github.run_id }}
+          restore-keys: |
+            kalavigyan-geo-${{ matrix.part }}-${{ hashFiles('etl/geo/geo_etl/catalog.py') }}-
+            kalavigyan-geo-${{ matrix.part }}-
+      - name: Extract
+        env:
+          LAYER: ${{ matrix.layer }}
+          SHARD: ${{ matrix.shard }}
+          STATES: ${{ inputs.states }}
+          ALLOW_FAILURES: ${{ inputs.allow_failures }}
+        run: |
+          args=(extract --datasets "$LAYER" --states "${STATES:-all}" --parts out/parts --cache "$HOME/.cache/kalavigyan-geo")
+          if [ -n "$SHARD" ]; then args+=(--shard "$SHARD"); fi
+          if [ "$ALLOW_FAILURES" = "true" ]; then args+=(--allow-failures); fi
+          python -m geo_etl "${args[@]}"
+      - name: Upload the part
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: geo-part-${{ matrix.part }}
+          path: etl/geo/out/parts/
+          if-no-files-found: error
+          retention-days: 7
+
+  combine:
+    name: Combine parts
+    needs: [plan, extract]
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+      - name: Download the parts
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: geo-part-*
+          path: etl/geo/out/parts
+          merge-multiple: true
+      - name: Combine
+        env:
+          EXPECTED: ${{ needs.plan.outputs.count }}
+        run: |
+          found=$(find out/parts -maxdepth 1 -name '*.json' | wc -l)
+          echo "parts: $found of $EXPECTED"
+          python -m geo_etl combine --parts out/parts --out out
+      - name: Validate for loading
+        run: python load.py --out out --dry-run
+      - name: Summary
+        run: |
+          python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          s = json.load(open("out/district_env_summary.json", encoding="utf-8"))
+          print(f"{s['rows']} values over {s['districts']} districts, {s['geologyRows']} geology rows")
+          print()
+          print("| layer | shard | rows | failures | seconds |")
+          print("|---|---|---|---|---|")
+          for layer in s["layers"]:
+              print(f"| {layer['layer']} | {layer['shard'] or ''} | {layer['rows']} | {layer['failureCount']} | {layer['seconds']} |")
+          EOF
+      - name: Upload the outputs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: geo-district-env
+          path: |
+            etl/geo/out/district_env.parquet
+            etl/geo/out/district_geology.parquet
+            etl/geo/out/district_env_summary.json
+            etl/geo/out/KalaVigyan_Dataset_*_District-Stats.csv
+          if-no-files-found: error
+          retention-days: 90
+
+  load:
+    name: Load into the database
+    needs: combine
+    if: ${{ inputs.load }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+      - name: Download the outputs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: geo-district-env
+          path: etl/geo/out
+      - name: Upsert
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python load.py --out out

@@ -43,6 +43,19 @@ migrate() {
   return 1
 }
 
+seed() {
+  local tree="$1" module
+  if [ ! -f "$tree/alembic.ini" ]; then
+    return 0
+  fi
+  for module in app.scripts.seed_crafts app.scripts.seed_claims app.scripts.seed_districts; do
+    if ! (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m $module" >&2); then
+      return 1
+    fi
+    say "$module done"
+  done
+}
+
 wait_healthy() {
   local port="$1" start now next_note
   start="$(date +%s)"; next_note=$((start + 20))
@@ -175,6 +188,7 @@ cmd_release() {
     fi
     migrate "$tree" 5 || die "migrations failed. nginx still proxies to $live."
   fi
+  seed "$tree" || die "seeding failed. nginx still proxies to $live."
   start_and_promote
   say "released: nginx -> $cand, current -> $(readlink "$APP/current")"
 }

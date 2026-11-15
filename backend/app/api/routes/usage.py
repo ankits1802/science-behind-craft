@@ -13,6 +13,7 @@ from app.models import UsageEvent, User
 from app.providers import budget
 from app.providers.router import Principal, current_spend
 from app.services import app_settings
+from app.services.ai_providers import TASK_LABELS, spec_for, task_of
 
 router = APIRouter(prefix="/usage", tags=["usage"])
 
@@ -155,6 +156,119 @@ async def usage_summary(
                 "calls": calls,
             }
             for uid, name, email, role, cost, calls in top_users
+        ],
+    }
+
+
+def _instant(value: str | None, *, fallback: datetime) -> datetime:
+    if not value:
+        return fallback
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "from and to must be ISO dates") from exc
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=budget.BUDGET_TIMEZONE)
+    return parsed.astimezone(UTC)
+
+
+def _task_label(task: str) -> str:
+    resolved = task_of(task)
+    return TASK_LABELS.get(resolved, task) if resolved is not None else task
+
+
+@router.get("/report")
+async def usage_report(
+    date_from: str | None = Query(default=None, alias="from", max_length=40),
+    date_to: str | None = Query(default=None, alias="to", max_length=40),
+    _: User = Depends(usage_reader),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, Any]:
+    _label, month_start, _end = _month_bounds(None)
+    now = datetime.now(UTC)
+    start = _instant(date_from, fallback=month_start)
+    end = _instant(date_to, fallback=now)
+    if end < start:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "to must be after from")
+    settled = UsageEvent.outcome != "RESERVED"
+    window = (UsageEvent.createdAt >= start, UsageEvent.createdAt <= end, settled)
+    failed = func.sum(case((UsageEvent.outcome == "ERROR", 1), else_=0))
+    cost = func.coalesce(func.sum(UsageEvent.costUsd), 0)
+    ceilings = budget.Ceilings.from_settings(await app_settings.load_all(session))
+    month_spent = (
+        await session.execute(
+            select(cost).where(UsageEvent.createdAt >= month_start, UsageEvent.createdAt <= now, settled)
+        )
+    ).scalar_one()
+    totals = (await session.execute(select(cost, func.count(), failed).where(*window))).one()
+    by_task = (
+        await session.execute(
+            select(
+                UsageEvent.task,
+                func.count(),
+                failed,
+                func.coalesce(func.sum(UsageEvent.inputTokens), 0),
+                func.coalesce(func.sum(UsageEvent.outputTokens), 0),
+                cost,
+            )
+            .where(*window)
+            .group_by(UsageEvent.task)
+            .order_by(cost.desc())
+        )
+    ).all()
+    p95 = func.percentile_cont(0.95).within_group(UsageEvent.latencyMs)
+    by_provider = (
+        await session.execute(
+            select(UsageEvent.provider, UsageEvent.model, func.count(), failed, cost, p95)
+            .where(*window)
+            .group_by(UsageEvent.provider, UsageEvent.model)
+            .order_by(cost.desc())
+        )
+    ).all()
+    day = func.date_trunc("day", func.timezone("Asia/Kolkata", UsageEvent.createdAt))
+    by_day = (
+        await session.execute(select(day, func.count(), cost).where(*window).group_by(day).order_by(day))
+    ).all()
+
+    def provider_name(provider: str | None) -> str:
+        spec = spec_for(provider) if provider else None
+        return spec.label if spec else (provider or "Unknown")
+
+    return {
+        "from": start.isoformat(),
+        "to": end.isoformat(),
+        "ceilingUsd": float(ceilings.monthly_usd),
+        "spentThisMonthUsd": _money(month_spent),
+        "spentUsd": _money(totals[0]),
+        "calls": int(totals[1] or 0),
+        "failures": int(totals[2] or 0),
+        "byTask": [
+            {
+                "task": task,
+                "label": _task_label(task),
+                "calls": int(calls),
+                "failures": int(fails or 0),
+                "inputTokens": int(tin),
+                "outputTokens": int(tout),
+                "costUsd": _money(spent),
+            }
+            for task, calls, fails, tin, tout, spent in by_task
+        ],
+        "byProvider": [
+            {
+                "provider": provider or "UNKNOWN",
+                "name": provider_name(provider),
+                "model": model or "",
+                "calls": int(calls),
+                "failures": int(fails or 0),
+                "costUsd": _money(spent),
+                "p95LatencyMs": round(latency) if latency is not None else None,
+            }
+            for provider, model, calls, fails, spent, latency in by_provider
+        ],
+        "byDay": [
+            {"day": d.date().isoformat(), "calls": int(calls), "costUsd": _money(spent)}
+            for d, calls, spent in by_day
         ],
     }
 

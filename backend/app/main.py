@@ -105,6 +105,7 @@ def create_app() -> FastAPI:
             "X-Request-ID",
             "X-Two-Factor-Code",
             "Idempotency-Key",
+            "If-None-Match",
         ],
         expose_headers=[
             ACCESS_STATUS_HEADER,
@@ -115,6 +116,7 @@ def create_app() -> FastAPI:
             PASSWORD_CHANGE_REQUIRED_HEADER,
             REQUEST_ID_HEADER,
             "Retry-After",
+            "ETag",
         ],
         max_age=600,
     )

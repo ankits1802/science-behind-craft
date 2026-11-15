@@ -26,14 +26,15 @@ VERCEL_TEAM = "cxacraftecosystem-8028s-projects"
 VERCEL_PROJECT = "kalavigyan"
 INFRA = Path(__file__).resolve().parents[1]
 
-GENERATED = ("JWT_SECRET", "SECRETS_ENCRYPTION_KEY", "TWO_FACTOR_ENCRYPTION_KEY")
+GENERATED = ("JWT_SECRET", "SECRETS_ENCRYPTION_KEY", "TWO_FACTOR_ENCRYPTION_KEY", "WEB_PROXY_SECRET")
 COPYABLE = (
     "GEMINI_API_KEY",
     "ANTHROPIC_API_KEY",
     "OPENAI_API_KEY",
     "DEEPSEEK_API_KEY",
     "ELEVENLABS_API_KEY",
-    "BRAVE_API_KEY",
+    "BRAVE_SEARCH_API_KEY",
+    "TURNSTILE_SECRET_KEY",
     "GOOGLE_CLIENT_ID",
     "MASTER_ADMIN_EMAIL",
     "MASTER_ADMIN_NAME",
@@ -44,9 +45,18 @@ GITHUB_SECRETS = (
     "SECRETS_ENCRYPTION_KEY",
     "TWO_FACTOR_ENCRYPTION_KEY",
     "ORIGIN_VERIFY_SECRET",
+    "WEB_PROXY_SECRET",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
     *COPYABLE,
+)
+STALE = (
+    "AWS_S3_BUCKET",
+    "BRAVE_API_KEY",
+    "NEXT_PUBLIC_APP_URL",
+    "DATABASE_USE_TRANSACTION_POOLER",
+    "TWO_FACTOR_KEY_REQUIRED",
+    "MEDIA_PRESIGNED_READS",
 )
 
 
@@ -89,9 +99,16 @@ class Params:
         current[key] = value
         return True
 
+    def drop(self, key, current):
+        if key not in current:
+            return False
+        self.ssm.delete_parameter(Name=f"{ENV_PATH}/{key}")
+        current.pop(key, None)
+        return True
+
 
 def generated_value(key):
-    if key == "JWT_SECRET":
+    if key in ("JWT_SECRET", "WEB_PROXY_SECRET"):
         return secrets.token_urlsafe(64)
     return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
 
@@ -167,7 +184,7 @@ def gh_token():
 
 def gh(args, stdin=None):
     env = {**os.environ, "GH_TOKEN": gh_token()}
-    r = subprocess.run(["gh", *args], input=stdin, capture_output=True, text=True, env=env)
+    r = subprocess.run(["gh", *args], check=False, input=stdin, capture_output=True, text=True, env=env)
     if r.returncode != 0:
         raise SystemExit(f"gh {' '.join(args[:3])} failed: {r.stderr.strip()[:300]}")
 
@@ -223,15 +240,12 @@ def main():
         {
             "APP_ENV": "production",
             "AWS_REGION": REGION,
-            "AWS_S3_BUCKET": tf["media_bucket"],
-            "MEDIA_PRESIGNED_READS": "true",
+            "S3_BUCKET": tf["media_bucket"],
             "BACKEND_CORS_ORIGINS": WEB_ORIGIN,
-            "NEXT_PUBLIC_APP_URL": WEB_ORIGIN,
+            "PUBLIC_WEB_URL": WEB_ORIGIN,
             "PUBLIC_API_URL": tf["api_base_url"],
             "FORWARDED_CLIENT_HOPS": "2",
-            "DATABASE_USE_TRANSACTION_POOLER": "false",
             "DATABASE_CONNECTION_LIMIT": "5",
-            "TWO_FACTOR_KEY_REQUIRED": "true",
             "REDIS_URL": "redis://127.0.0.1:6379/0",
             "SEARXNG_URL": "http://127.0.0.1:8888",
             "FETCHER_URL": "http://127.0.0.1:8090",
@@ -239,6 +253,8 @@ def main():
             "MAIL_FROM_NAME": "KalaVigyan",
         }
     )
+    if current.get("BRAVE_API_KEY") and not current.get("BRAVE_SEARCH_API_KEY"):
+        wanted["BRAVE_SEARCH_API_KEY"] = current["BRAVE_API_KEY"]
     missing = [k for k in COPYABLE if not current.get(k)]
     if a.copy_from_instance and missing:
         copied = copy_from_instance(a.copy_from_instance, a.copy_env_file, missing)
@@ -246,7 +262,10 @@ def main():
         wanted.update(copied)
 
     changed = [k for k, v in wanted.items() if params.put(k, v, current)]
+    dropped = [k for k in STALE if params.drop(k, current)]
     log(f"Parameter Store: {len(changed)} written ({', '.join(sorted(changed)) or 'none'}), {len(current)} total")
+    if dropped:
+        log(f"Parameter Store: removed unused {', '.join(dropped)}")
     still_missing = [k for k in COPYABLE if not current.get(k)]
 
     if not a.skip_github:
@@ -274,15 +293,17 @@ def main():
         envs = {"NEXT_PUBLIC_API_URL": tf["api_base_url"], "NEXT_PUBLIC_APP_URL": WEB_ORIGIN}
         if current.get("GOOGLE_CLIENT_ID"):
             envs["NEXT_PUBLIC_GOOGLE_CLIENT_ID"] = current["GOOGLE_CLIENT_ID"]
-        for key, value in envs.items():
+        server_only = {"WEB_PROXY_SECRET": current["WEB_PROXY_SECRET"]}
+        for key, value in {**envs, **server_only}.items():
+            kind = "sensitive" if key in server_only else "encrypted"
             st, out = vercel(
                 "POST",
                 f"/v10/projects/{VERCEL_PROJECT}/env?upsert=true",
-                {"key": key, "value": value, "type": "encrypted", "target": ["production", "preview"]},
+                {"key": key, "value": value, "type": kind, "target": ["production", "preview"]},
             )
             if st not in (200, 201):
                 raise SystemExit(f"Vercel env {key} failed: {st} {out}")
-        log(f"Vercel: {', '.join(envs)}")
+        log(f"Vercel: {', '.join([*envs, *server_only])}")
 
     if not a.skip_box:
         render = (INFRA / "deploy" / "render_env.sh").read_text(encoding="utf-8")

@@ -43,7 +43,12 @@ async def ai_catalogue(_: User = Depends(routing_manager)) -> dict[str, Any]:
 async def get_all_routing(
     _: User = Depends(routing_manager), session: AsyncSession = Depends(get_session)
 ) -> dict[str, Any]:
-    return {"tasks": [await route_policy.task_state(session, task) for task in ROUTABLE_TASKS]}
+    return {
+        "tasks": [await route_policy.task_state(session, task) for task in ROUTABLE_TASKS],
+        "providers": route_policy.provider_rows_for_routing(
+            catalogue(), await route_policy.key_states(session)
+        ),
+    }
 
 
 @router.get("/ai-routing/{task}")

@@ -51,4 +51,5 @@ def serialize_user(user: User, *, access_status: str | None = None) -> dict[str,
     payload["capabilities"] = capabilities_of(user)
     if access_status is not None:
         payload["accessStatus"] = access_status
+        payload["isActive"] = user.deletedAt is None and access_status not in ("SUSPENDED", "REJECTED")
     return payload

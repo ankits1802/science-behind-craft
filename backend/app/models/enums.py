@@ -67,6 +67,12 @@ ENV_STATS = (
     "SHARE",
     "CLASS",
     "NORMAL",
+    "DISTRICT_MIN",
+    "DISTRICT_MAX",
+    "TOTAL",
+    "DENSITY",
+    "DISTANCE",
+    "COUNT",
 )
 
 SOURCE_KINDS = (

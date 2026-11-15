@@ -250,7 +250,7 @@ export async function apiFetchWithHeaders<T>(
         } catch {
         }
       }
-    } else if (response.status === 401 && token && typeof window !== "undefined") {
+    } else if (response.status === 401 && token && typeof window !== "undefined" && !stepUpRefusal(response.headers)) {
       endSession();
 
       if ((options.redirectOn401 ?? true) && !SIGNED_OUT_PATHS.has(window.location.pathname)) {
@@ -261,6 +261,10 @@ export async function apiFetchWithHeaders<T>(
   }
 
   return { body: body as T, headers: response.headers };
+}
+
+function stepUpRefusal(headers: Headers): boolean {
+  return (headers.get("x-two-factor-required") ?? "").trim() === "1";
 }
 
 export function buildQuery(params: Record<string, string | number | undefined | null>) {

@@ -345,4 +345,8 @@ class DistrictGeology(Base):
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
-    __table_args__ = (Index(None, "districtLgd"), Index(None, "datasetId"))
+    __table_args__ = (
+        UniqueConstraint("districtLgd", "datasetId", "lithology"),
+        Index(None, "districtLgd"),
+        Index(None, "datasetId"),
+    )

@@ -5,13 +5,16 @@ on:
     paths:
       - "backend/**"
       - "shared/**"
+      - "infra/deploy/**"
       - ".github/workflows/backend-checks.yml"
   push:
     branches: [main]
     paths:
       - "backend/**"
       - "shared/**"
+      - "infra/deploy/**"
       - ".github/workflows/backend-checks.yml"
+      - ".github/workflows/deploy-backend.yml"
   workflow_dispatch:
 
 permissions:
@@ -28,17 +31,17 @@ env:
 jobs:
   lint-and-unit:
     name: Lint and unit tests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     defaults:
       run:
         working-directory: backend
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
         with:
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
@@ -61,7 +64,7 @@ jobs:
 
   database:
     name: Migrations and database tests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 25
     needs: lint-and-unit
     services:
@@ -87,7 +90,7 @@ jobs:
       run:
         working-directory: backend
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Add pgvector to the PostGIS service
         working-directory: .
         run: |
@@ -109,10 +112,10 @@ jobs:
             echo "TWO_FACTOR_ENCRYPTION_KEY=$totp"
             echo "SECRETS_ENCRYPTION_KEY=$fernet"
           } >> "$GITHUB_ENV"
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
         with:
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
@@ -124,5 +127,11 @@ jobs:
         run: |
           uv run alembic downgrade base
           uv run alembic upgrade head
+      - name: Seed the craft catalogue
+        run: uv run python -m app.scripts.seed_crafts
+      - name: Seed the claims
+        run: uv run python -m app.scripts.seed_claims
+      - name: Seed states and districts
+        run: uv run python -m app.scripts.seed_districts
       - name: Database tests
         run: uv run pytest -q -m db tests/db

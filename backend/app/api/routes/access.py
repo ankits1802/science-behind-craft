@@ -15,6 +15,7 @@ from app.core.roles import (
     ROLE_RANK,
     Capability,
     assignable_roles,
+    can,
     is_master_admin,
     may_assign,
     may_manage_target,
@@ -127,6 +128,36 @@ async def _assert_may_bar(session: AsyncSession, actor: User, row: AccessRoster)
         and ROLE_RANK.get(row.admitRole, 0) >= ROLE_RANK.get(actor.role, 0)
     ):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "You can't change access for this role.")
+
+
+async def _assert_may_change(session: AsyncSession, actor: User, row: AccessRoster) -> None:
+    if is_master_admin(actor):
+        return
+    if normalise_email(row.email) == normalise_email(get_settings().master_admin_email):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "The master admin's access can't be changed.")
+    account = await _account_at(session, row.email)
+    if account is not None and not may_manage_target(actor, account):
+        raise HTTPException(
+            status.HTTP_403_FORBIDDEN, "You can't change access for an account at or above your role."
+        )
+    if row.admitRole and ROLE_RANK.get(row.admitRole, 0) >= ROLE_RANK.get(actor.role, 0):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "You can't change access for this role.")
+
+
+async def _assert_may_reinstate(session: AsyncSession, actor: User, row: AccessRoster) -> None:
+    if access_roster.status_of(row) not in access_roster.BARRED:
+        account = await _account_at(session, row.email)
+        if account is not None and not may_manage_target(actor, account):
+            raise HTTPException(
+                status.HTTP_403_FORBIDDEN, "You can't change access for an account at or above your role."
+            )
+        return
+    if not can(actor, Capability.DISABLE_USERS):
+        raise HTTPException(
+            status.HTTP_403_FORBIDDEN,
+            "Only the master admin can restore access that was suspended or refused.",
+        )
+    await _assert_may_bar(session, actor, row)
 
 
 async def _apply_role_to_account(
@@ -309,6 +340,7 @@ async def decide_access_request(
         )
         await session.commit()
         return await _payload(session, row, accountPromotionHeld=None)
+    await _assert_may_reinstate(session, actor, row)
     granted = payload.role or access_roster.role_of(row) or role_for_email(row.email)
     _assert_assignable(actor, granted)
     row = await access_roster.admit(
@@ -342,6 +374,7 @@ async def update_access_entry(
     values = payload.model_dump(exclude_unset=True)
     held = None
     if "role" in values:
+        await _assert_may_change(session, actor, row)
         _assert_assignable(actor, values["role"])
         row.admitRole = values["role"]
         if access_roster.admits(row):

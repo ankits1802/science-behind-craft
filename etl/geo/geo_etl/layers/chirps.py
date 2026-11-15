@@ -82,14 +82,15 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         finite = [v for v in yearly if np.isfinite(v)]
         if len(finite) == options.chirps_years:
             rows.add(district, "annual_precipitation", period, "NORMAL", float(np.mean(finite)), "mm/year")
-            rows.add(
-                district,
-                "annual_precipitation_cv",
-                period,
-                "NORMAL",
-                float(np.std(finite) / np.mean(finite)) if np.mean(finite) > 0 else None,
-                "fraction",
-            )
+            if len(finite) >= 2 and np.mean(finite) > 0:
+                rows.add(
+                    district,
+                    "annual_precipitation_cv",
+                    period,
+                    "NORMAL",
+                    float(np.std(finite) / np.mean(finite)),
+                    "fraction",
+                )
         by_month: dict[int, list[float]] = {}
         for (_, month), table in monthly.items():
             if lgd in table.index:

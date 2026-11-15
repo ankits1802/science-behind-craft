@@ -71,6 +71,16 @@ def invite_link_mail(to: str, link: str, minutes: int) -> Mail:
     return Mail(to=to, subject="Set your KalaVigyan password", text=text)
 
 
+def signup_link_mail(to: str, link: str, minutes: int) -> Mail:
+    hours = max(1, minutes // 60)
+    text = (
+        f"Someone asked for a KalaVigyan account for {to}.\n\n"
+        f"Open this link within {hours} hours to confirm the address and choose your password:\n{link}\n\n"
+        "An administrator then reviews the request. If you did not ask for this, ignore this email."
+    )
+    return Mail(to=to, subject="Confirm your KalaVigyan sign-up", text=text)
+
+
 def password_changed_mail(to: str) -> Mail:
     text = (
         f"The password for the KalaVigyan account {to} was just changed. Every other device was signed out.\n\n"

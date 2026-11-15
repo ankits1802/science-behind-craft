@@ -27,7 +27,7 @@ concurrency:
 jobs:
   checks:
     name: Craft data checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     defaults:
       run:
@@ -51,7 +51,7 @@ jobs:
     name: Regenerate Wikidata links and aliases
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     needs: checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
     defaults:
       run:

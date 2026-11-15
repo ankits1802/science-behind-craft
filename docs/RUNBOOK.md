@@ -56,8 +56,10 @@ Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME
 
 | Name | Where |
 |---|---|
-| `VERCEL_TOKEN` | GitHub secret. Create it at vercel.com → Account → Tokens, scoped to the team. Deploy frontend fails until it exists. |
-| `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `BRAVE_API_KEY` | GitHub secrets. The next backend deploy copies them into Parameter Store and the box. |
+| `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `BRAVE_SEARCH_API_KEY` | GitHub secrets. The next backend deploy copies them into Parameter Store and the box. |
+| `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` | Create a Cloudflare Turnstile widget for `kalavigyan.vercel.app`. The secret is a GitHub secret and the site key a GitHub variable; each deploy copies both into Parameter Store. Until both exist, production email sign-up is closed and the page offers Google only. |
+| `WEB_PROXY_SECRET` | Re-run `seed_secrets.py` once: it generates the value and writes Parameter Store, the GitHub secret and the Vercel env (Sensitive). It also deletes the retired names `AWS_S3_BUCKET`, `BRAVE_API_KEY`, `NEXT_PUBLIC_APP_URL`, `DATABASE_USE_TRANSACTION_POOLER`, `TWO_FACTOR_KEY_REQUIRED` and `MEDIA_PRESIGNED_READS` from Parameter Store. |
+| `CORE_API_KEY` | Rotate it with CORE: a settings error on the laptop printed the start of the old value. The backend now hides input values in settings errors. |
 | `MAIL_FROM_ADDRESS` | Parameter Store, once an SES identity is chosen for KalaVigyan mail |
 | Google OAuth client | Add `https://kalavigyan.vercel.app` to the client's Authorized JavaScript origins |
 
@@ -74,7 +76,7 @@ Never rotate `TWO_FACTOR_ENCRYPTION_KEY` or `SECRETS_ENCRYPTION_KEY` by overwrit
 
 ## Deploy
 
-Automatic: a push to `main` → `Checks` → **Deploy backend** → **Deploy frontend**. Both can also be run from the Actions tab (`workflow_dispatch`, optional `ref`).
+Automatic: a push to `main` that touches `backend/**`, `shared/**`, `infra/deploy/**`, `backend-checks.yml` or `deploy-backend.yml` → **Backend checks** → **Deploy backend**. Vercel builds the web app from `main` on its own.
 
 Deploy backend (`.github/workflows/deploy-backend.yml`):
 
@@ -82,7 +84,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Copies changed secrets into `/kalavigyan/env`.
 3. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
 4. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, builds the venv with uv, then `blue_green.sh release <sha>`:
-   1. migrate (`alembic upgrade head`) while the old colour serves;
+   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves;
    2. start the other colour;
    3. wait for `/health`;
    4. switch nginx;
@@ -94,7 +96,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Running the same sha again re-renders the env and restarts the live colour.
 
-Deploy frontend (`.github/workflows/deploy-frontend.yml`): `vercel pull` → assert root `frontend` and `NEXT_PUBLIC_API_URL` → `vercel build --prod` → `vercel deploy --prebuilt --prod` → smoke `https://kalavigyan.vercel.app/`.
+Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there is no Actions deploy.
 
 ## Roll back
 

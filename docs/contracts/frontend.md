@@ -30,7 +30,7 @@ Not called, by design: `GET /secrets/{key}/reveal` (PLAN §9, §15).
 
 Changes to DR shapes the client assumes:
 
-- `PUT /secrets/{key}` body is `{value, twoFactorCode}` and `DELETE /secrets/{key}` carries `{twoFactorCode}`: a six-digit TOTP step-up (PLAN §12, keys rotate with TOTP step-up). A wrong code is a 403 with a sentence in `detail`.
+- `PUT /secrets/{key}` body is `{value, twoFactorCode}` and `DELETE /secrets/{key}` carries `{twoFactorCode}`: a six-digit TOTP step-up (PLAN §12, keys rotate with TOTP step-up). A wrong or missing code is a 401 with `x-two-factor-required: 1` and a sentence in `detail`; `apiFetch` keeps the session for that 401.
 - `User` adds `affiliation`, `twoFactorRequired` (true for PROFESSOR and MASTER_ADMIN until two-step is on; the shell then shows only the setup card), `isActive`, `suspendedAt`.
 - `POST /auth/login` with Google also takes `googleNonce`, the value from §4.1; the API verifies it once, with `aud`, `iss`, `exp` and `email_verified`.
 
@@ -39,27 +39,28 @@ Changes to DR shapes the client assumes:
 ### 4.1 Auth and sign-up
 
 - `POST /auth/google/nonce` → `{nonce}`. Public. A fresh single-use nonce per attempt; the client passes it to `google.accounts.id.initialize({nonce})` and back with the ID token.
-- `POST /auth/signup` body `{name, email, password, affiliation, requestedRole, profileUrl|null, privacyNoticeVersion|null}` → `202 {status: "PENDING", email}`. Creates a PENDING roster entry and a `RoleRequest`. Refusals carry `x-access-status` like sign-in. `requestedRole` is one of `STUDENT`, `RESEARCHER`, `PROFESSOR`.
+- `GET /auth/config` → `{signUpOpen, turnstileRequired, turnstileSiteKey|null, googleEnabled, googleClientId|null, mailAvailable}`. The sign-up page draws the email form only when `signUpOpen`, and the Turnstile widget when `turnstileRequired` and a site key is given; otherwise it offers Google only.
+- `POST /auth/signup` body `{name, email, affiliation, requestedRole, profileUrl|null, ageAttested: true, privacyNoticeVersion|null, turnstileToken|null}` → `202 {status: "EMAIL_SENT", email}`, the same for every address. No password: the emailed link (`/set-password?token=`) confirms the address and sets it, and only then is the PENDING request recorded. `requestedRole` is one of `STUDENT`, `RESEARCHER`, `PROFESSOR`. Password sign-in into a never-confirmed account answers 401 with `x-sign-in-hint: EMAIL_UNVERIFIED`.
 - `GET /privacy/notice` → `{version, title, body (Markdown), publishedAt|null}`. Public.
 
 ### 4.2 Manage users
 
 - `POST /users/{id}/suspend` → `User` (with `suspendedAt` set; the account's sessions end).
-- `POST /users/{id}/reactivate` → `User`.
+- `POST /users/{id}/restore` → `User` (DR's name; master admin only).
 
 ### 4.3 AI routing (generalised DR transcription-provider order)
 
-- `GET /settings/routing` → `{tasks: TaskRoute[], providers: RouteProvider[]}`
+- `GET /settings/ai-routing` → `{tasks: TaskRoute[], providers: RouteProvider[]}` (DR's path; the backend task state carries more fields than listed here)
   - `TaskRoute = {task, label, publicText, routes: RouteRow[], effectiveChain: string[], normalisedNote|null}`
   - `RouteRow = {provider, model, enabled, keyState, testedAt|null, testError|null}`, order = ordinal
   - `RouteProvider = {id, name, keyName, keyState, publicTextOnly, models: [{id, label, tasks: string[]}]}`
-  - `provider` ∈ `GEMINI`, `ANTHROPIC`, `OPENAI`, `DEEPSEEK`, `ELEVENLABS`; `keyState` ∈ `NO_KEY`, `UNTESTED`, `PASSING`, `FAILING`
-- `PUT /settings/routing/{task}` body `{routes: [{provider, model, enabled}]}` → `TaskRoute`. The server may normalise (drop an unsupported model, a public-text-only provider on a private task) and say so in `normalisedNote`.
-- `POST /settings/routing/{task}/test` body `{provider, model}` → `TaskRoute` with that row's verdict.
+  - `provider` ∈ `GEMINI`, `ANTHROPIC`, `OPENAI`, `DEEPSEEK`, `ELEVENLABS`; `keyState` ∈ `ABSENT`, `UNTESTED`, `PASSING`, `FAILING`
+- `PUT /settings/ai-routing/{task}` body `{routes: [{provider, model, enabled}]}` → `TaskRoute`. The server may normalise (drop an unsupported model, a public-text-only provider on a private task) and say so in `normalisedNote`.
+- `POST /settings/ai-routing/{task}/test` body `{provider, model}` → `TaskRoute` with that row's verdict (the backend tests the provider's key).
 
 ### 4.4 Usage
 
-`GET /settings/usage?from=ISO&to=ISO` → `{from, to, ceilingUsd, spentThisMonthUsd, spentUsd, calls, failures, byTask: [{task,label,calls,failures,inputTokens,outputTokens,costUsd}], byProvider: [{provider,name,model,calls,failures,costUsd,p95LatencyMs|null}], byDay: [{day,calls,costUsd}]}`. Money fields may be Decimal strings.
+`GET /usage/report?from=ISO&to=ISO` → `{from, to, ceilingUsd, spentThisMonthUsd, spentUsd, calls, failures, byTask: [{task,label,calls,failures,inputTokens,outputTokens,costUsd}], byProvider: [{provider,name,model,calls,failures,costUsd,p95LatencyMs|null}], byDay: [{day,calls,costUsd}]}`. Money fields may be Decimal strings.
 
 ### 4.5 Asking
 

@@ -154,10 +154,34 @@ def snap_bounds(
     return xmin, ymin, xmax, ymax
 
 
+QUANTILES = {"p10": 0.1, "p90": 0.9}
+CELL_VALUES = "cellvalues"
+CELL_WEIGHTS = "cellweights"
+
+
+def weighted_quantile(values: np.ndarray, weights: np.ndarray, q: float) -> float:
+    values = np.asarray(values, dtype="float64")
+    weights = np.asarray(weights, dtype="float64")
+    keep = np.isfinite(values) & np.isfinite(weights) & (weights > 0)
+    if not keep.any():
+        return float("nan")
+    order = np.argsort(values[keep], kind="stable")
+    ordered = values[keep][order]
+    cumulative = np.cumsum(weights[keep][order])
+    index = int(np.searchsorted(cumulative, q * cumulative[-1], side="left"))
+    return float(ordered[min(index, len(ordered) - 1)])
+
+
 def zonal(grid: Grid, frame: gpd.GeoDataFrame, ops: list[str]) -> pd.DataFrame:
     local = frame[["districtLgd", "geometry"]].to_crs(grid.crs)
-    result = exact_extract(grid.source(), local, ops, include_cols=["districtLgd"], output="pandas")
-    return pd.DataFrame(result)
+    table = pd.DataFrame(exact_extract(grid.source(), local, ops, include_cols=["districtLgd"], output="pandas"))
+    if CELL_VALUES in table.columns:
+        for name, q in QUANTILES.items():
+            table[name] = [
+                weighted_quantile(v, w, q) for v, w in zip(table[CELL_VALUES], table[CELL_WEIGHTS], strict=True)
+            ]
+        table = table.drop(columns=[CELL_VALUES, CELL_WEIGHTS])
+    return table
 
 
 def geographic(grid: Grid) -> bool:
@@ -172,8 +196,8 @@ def continuous_ops(grid: Grid) -> list[str]:
     w = weight(grid)
     return [
         f"mean=mean(coverage_weight={w})",
-        f"p10=quantile(q=0.1,coverage_weight={w})",
-        f"p90=quantile(q=0.9,coverage_weight={w})",
+        f"{CELL_VALUES}=values",
+        f"{CELL_WEIGHTS}=coverage(coverage_weight={w})",
         "pixels=count(coverage_weight=fraction)",
     ]
 

@@ -6,6 +6,7 @@ import os
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 OUT = Path(__file__).resolve().parent / "out"
@@ -54,17 +55,41 @@ def clean(value):
         return None
     if isinstance(value, float) and math.isnan(value):
         return None
-    if pd.isna(value) if not isinstance(value, (list, dict, str, bytes)) else False:
+    if pd.api.types.is_scalar(value) and pd.isna(value):
         return None
-    if hasattr(value, "item"):
+    if isinstance(value, np.generic):
         return value.item()
     return value
 
 
+def json_text(value):
+    value = clean(value)
+    if value is None or isinstance(value, str):
+        return value
+    if hasattr(value, "tolist"):
+        value = value.tolist()
+    return json.dumps(value)
+
+
+def fit_values(values: pd.DataFrame) -> pd.DataFrame:
+    if "pixelCount" not in values:
+        return values
+    counts = pd.to_numeric(values["pixelCount"], errors="coerce").round()
+    return values.assign(pixelCount=counts.astype("Int64"))
+
+
+def fit_geology(geology: pd.DataFrame) -> pd.DataFrame:
+    if not len(geology):
+        return geology
+    if "mineralOccurrences" in geology:
+        geology = geology.assign(mineralOccurrences=geology["mineralOccurrences"].map(json_text))
+    return geology
+
+
 def read_inputs(out: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    values = pd.read_parquet(out / "district_env.parquet")
+    values = fit_values(pd.read_parquet(out / "district_env.parquet"))
     geology_path = out / "district_geology.parquet"
-    geology = pd.read_parquet(geology_path) if geology_path.exists() else pd.DataFrame()
+    geology = fit_geology(pd.read_parquet(geology_path)) if geology_path.exists() else pd.DataFrame()
     summary = json.loads((out / "district_env_summary.json").read_text(encoding="utf-8"))
     return values, geology, summary
 
@@ -94,6 +119,8 @@ def validate(values: pd.DataFrame, geology: pd.DataFrame, datasets: list[dict]) 
         unknown = set(geology["datasetCode"]) - codes
         if unknown:
             problems.append(f"geology cites datasets missing from the summary: {sorted(unknown)}")
+        if geology["lithology"].isna().any():
+            problems.append("geology rows without lithology")
         if int(geology.duplicated(["districtLgd", "datasetCode", "lithology"], keep=False).sum()):
             problems.append("duplicate geology keys")
     return problems
@@ -106,6 +133,16 @@ def table_columns(cur, table: str) -> dict[str, str]:
         (table,),
     )
     return {name: kind for name, kind in cur.fetchall()}
+
+
+def has_unique(cur, table: str, key: list[str]) -> bool:
+    cur.execute(
+        "select array(select a.attname from unnest(i.indkey) k join pg_attribute a "
+        "on a.attrelid = i.indrelid and a.attnum = k) from pg_index i "
+        "where i.indrelid = %s::regclass and i.indisunique and i.indpred is null",
+        (quote(table),),
+    )
+    return any(sorted(row[0]) == sorted(key) for row in cur.fetchall())
 
 
 def require(table: str, present: dict[str, str], required: set[str]) -> None:
@@ -165,16 +202,19 @@ def upsert(cur, table: str, frame: pd.DataFrame, key: list[str], columns: list[s
         updates = f'{updates}, "updatedAt" = now()' if updates else '"updatedAt" = now()'
     id_cols = "id, " if "id" in present else ""
     id_vals = "gen_random_uuid(), " if "id" in present else ""
-    cur.execute(
-        f"insert into {target} ({id_cols}{insert_cols}) select {id_vals}{insert_cols} from {stage} "
-        f"on conflict ({conflict}) do update set {updates}"
-    )
+    insert = f"insert into {target} ({id_cols}{insert_cols}) select {id_vals}{insert_cols} from {stage}"
+    if has_unique(cur, table, key):
+        cur.execute(f"{insert} on conflict ({conflict}) do update set {updates}")
+    else:
+        same = " and ".join(f"s.{quote(c)} is not distinct from t.{quote(c)}" for c in key)
+        cur.execute(f"delete from {target} t where exists (select 1 from {stage} s where {same})")
+        cur.execute(insert)
     written = cur.rowcount
     pruned = 0
     if prune:
         match = " and ".join(f"s.{quote(c)} is not distinct from t.{quote(c)}" for c in key)
         cur.execute(
-            f"delete from {target} t where (t.\"datasetId\", t.\"districtLgd\") in "
+            f'delete from {target} t where (t."datasetId", t."districtLgd") in '
             f'(select distinct "datasetId", "districtLgd" from {stage}) '
             f"and not exists (select 1 from {stage} s where {match})"
         )
@@ -183,7 +223,9 @@ def upsert(cur, table: str, frame: pd.DataFrame, key: list[str], columns: list[s
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Upsert etl/geo/out into EnvDataset, DistrictEnvValue, DistrictGeology")
+    parser = argparse.ArgumentParser(
+        description="Upsert etl/geo/out into EnvDataset, DistrictEnvValue, DistrictGeology"
+    )
     parser.add_argument("--out", default=str(OUT))
     parser.add_argument("--dsn-env", default="DATABASE_URL")
     parser.add_argument("--prune", action="store_true")
@@ -211,6 +253,13 @@ def main(argv: list[str] | None = None) -> int:
     with psycopg.connect(dsn) as conn, conn.cursor() as cur:
         ids = upsert_datasets(cur, datasets)
         allowed = known_districts(cur)
+        if allowed is not None and not allowed:
+            print(
+                f"{DISTRICT_TABLE} is empty: run python -m app.scripts.seed_districts in backend/ first",
+                file=sys.stderr,
+            )
+            conn.rollback()
+            return 3
         values = values.assign(datasetId=values["datasetCode"].map(ids))
         if len(geology):
             geology = geology.assign(datasetId=geology["datasetCode"].map(ids))

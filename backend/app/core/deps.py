@@ -40,6 +40,7 @@ API_PREFIX = "/api"
 PASSWORD_CHANGE_ALLOWED_ROUTES: frozenset[tuple[str, str]] = frozenset(
     {
         ("GET", f"{API_PREFIX}/auth/me"),
+        ("GET", f"{API_PREFIX}/me"),
         ("POST", f"{API_PREFIX}/auth/change-password"),
         ("POST", f"{API_PREFIX}/auth/logout"),
     }

@@ -9,12 +9,14 @@ Errors are `{"detail": "<sentence>"}` (FastAPI); validation errors are FastAPI's
 | Header | When | Meaning |
 |---|---|---|
 | `X-Access-Status` | 403/503 from `/auth/login`, `/auth/two-factor/verify` | `PENDING`, `REJECTED`, `SUSPENDED`, `NOT_RECORDED` (queue full, 503). Same values as DR `lib/accessRoster.ts`. |
-| `X-Two-Factor-Setup-Required: 1` | 403 from any route except the 2FA setup routes, `/auth/me`, `/auth/change-password`, `/auth/logout` | PROFESSOR or MASTER_ADMIN without TOTP. Send the user to the 2FA setup screen. |
-| `X-Password-Change-Required: 1` | 401 from any route except `/auth/me`, `/auth/change-password`, `/auth/logout` | `mustChangePassword` is set. |
+| `X-Two-Factor-Setup-Required: 1` | 403 from any route except the 2FA setup routes, `/auth/me`, `/me`, `/auth/change-password`, `/auth/logout` | PROFESSOR or MASTER_ADMIN without TOTP. Send the user to the 2FA setup screen. |
+| `X-Password-Change-Required: 1` | 401 from any route except `/auth/me`, `/me`, `/auth/change-password`, `/auth/logout` | `mustChangePassword` is set. |
 | `X-Two-Factor-Required: 1` | 401 from key or budget changes; 400 from change-password without a password | Ask for a TOTP code and resend. |
 | `X-Session-Token` | 200 from `/auth/change-password`, `/auth/two-factor/enable`, `/auth/two-factor/disable` | Replace the stored token with this one. |
 | `X-Sign-In-Hint: PASSWORD_NOT_SET` | 401 from password login | Account exists without a password. |
+| `X-Sign-In-Hint: EMAIL_UNVERIFIED` | 401 from password login | The address was never confirmed (no emailed link opened, no Google sign-in, no admin-issued password, never signed in). |
 | `Retry-After` | 429 | Seconds. |
+| `ETag` | 200/304 from `/crafts/catalogue` | Send it back as `If-None-Match`; a match answers 304 with no body. |
 
 ## User object (`serialize_user`)
 
@@ -36,11 +38,11 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 
 | Method | Path | Body | Response |
 |---|---|---|---|
-| GET | `/auth/config` | | `{googleEnabled, googleClientId, turnstileRequired, mailAvailable}`. Draw the Google button only when `googleEnabled`. |
+| GET | `/auth/config` | | `{googleEnabled, googleClientId, turnstileRequired, turnstileSiteKey, mailAvailable, signUpOpen}`. Draw the Google button only when `googleEnabled`; draw the email sign-up form only when `signUpOpen` (mail configured, and in production a Turnstile secret and site key); render the Turnstile widget with `turnstileSiteKey` when `turnstileRequired`. |
 | POST | `/auth/google/nonce` | | `{nonce, expiresAt, clientId}`. 404 when Google is off. Pass `nonce` to `google.accounts.id.initialize({nonce})`; the backend checks it once from the ID token's `nonce` claim. |
-| POST | `/auth/login` | `{email, password}` or `{googleIdToken}` | `{accessToken, tokenType:"bearer", user}` or `{two_factor_required:true, challenge_token}`. 401 bad credentials, 403 + `X-Access-Status`, 429 + `Retry-After`. An unknown Google address creates a PENDING roster request. |
+| POST | `/auth/login` | `{email, password}` or `{googleIdToken, googleNonce?}` | `{accessToken, tokenType:"bearer", user}` or `{two_factor_required:true, challenge_token}`. 401 bad credentials or `X-Sign-In-Hint`, 403 + `X-Access-Status`, 429 + `Retry-After`. An unknown Google address creates a PENDING roster request. Google sign-in into an account whose address was never verified first clears any password and 2FA on it (bumping `tokenVersion` and revoking outstanding links), then marks it verified and adopts the roster `admitRole`. |
 | POST | `/auth/two-factor/verify` | `{challenge_token, code}` (6 digits or a recovery code) | Same as a successful login. 401 wrong or dead challenge, 429 locked. |
-| POST | `/auth/signup` | `{email, name, password (>=10), affiliation?, ageAttested:true, privacyNoticeVersion, turnstileToken?}` | 202 `{accessStatus:"PENDING"|"ACTIVE", email}`. The account exists but cannot sign in until an admin approves the roster row. 409 if the address has an account. |
+| POST | `/auth/signup` | `{email, name, affiliation?, requestedRole:"STUDENT"|"RESEARCHER"|"PROFESSOR", profileUrl?, note?, ageAttested:true, privacyNoticeVersion, turnstileToken?}` | 202 `{status:"EMAIL_SENT", email}`, identical whether or not the address already has an account (no enumeration). No password is taken. A new address gets an unverified `User` (default role, no password), a `ConsentRecord` and a PENDING `RoleRequest`; an INVITE link (`/set-password?token=`, 3 days) is mailed. Opening it sets the password and `emailVerifiedAt`, adopts the roster `admitRole` if the row is ACTIVE, and only then adds a PENDING roster row (subject to `ACCESS_PENDING_MAX`). An existing unverified address without a password gets a fresh link; any other existing address gets nothing. 503 when mail is not configured, or in production when Turnstile is not configured; 400 when the Turnstile check fails; 422 without `ageAttested`. |
 | POST | `/auth/logout` | | `{ok:true}` (stateless; drop the token) |
 | GET | `/auth/me` | | user object with `accessStatus` |
 | POST | `/auth/consent` | `{kind:"PRIVACY_NOTICE"|"VOICE_NOTICE", noticeVersion}` | `{kind, noticeVersion, acceptedAt}` |
@@ -64,6 +66,14 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 | POST | `/auth/two-factor/enable` | `{code}` | `{recovery_codes: string[10], accessToken}` + `X-Session-Token` (the old token stops working) |
 | POST | `/auth/two-factor/disable` | `{code}` | `{ok:true, accessToken}`; 409 for PROFESSOR and MASTER_ADMIN (mandatory) |
 | POST | `/auth/two-factor/recovery-codes` | `{code}` (TOTP only) | `{recovery_codes}` |
+
+## Me and preferences (`/api`)
+
+| Method | Path | Body | Response |
+|---|---|---|---|
+| GET | `/me` | | Same as `GET /auth/me`: user object with `accessStatus`. Allowed while a password change or 2FA setup is pending. |
+| GET | `/preferences/me` | | `{theme:"system"|"light"|"dark", reducedMotion, largerText, highContrast, updatedAt}`. The row is created with defaults (`system`, all false) on first read. |
+| PUT | `/preferences/me` | `{theme?, reducedMotion?, largerText?, highContrast?}` | Same shape as GET. Omitted or null fields keep their value; unknown fields and other theme values are 422. Blocked (401/403 + header) while a password change or 2FA setup is pending. |
 
 ## Access roster (`/api/access`), DR `/access/roster` semantics
 
@@ -107,8 +117,31 @@ Keys: GEMINI_API_KEY, ANTHROPIC_API_KEY, OPENAI_API_KEY, DEEPSEEK_API_KEY, ELEVE
 |---|---|---|---|
 | GET | `/secrets` | | key row[] |
 | PUT | `/secrets/{key}` | `{value, twoFactorCode}` | key row; 401 + `X-Two-Factor-Required` without a valid code; 404 unknown key |
-| DELETE | `/secrets/{key}` | header `X-Two-Factor-Code` | key row |
+| DELETE | `/secrets/{key}` | body `{twoFactorCode}` (the web proxy forwards bodies, not this header); header `X-Two-Factor-Code` also accepted | key row; 401 + `X-Two-Factor-Required` without a valid code |
 | POST | `/secrets/{key}/test` | | key row with the fresh verdict |
+
+## Craft catalogue (`/api/crafts`)
+
+| Method | Path | Body / query | Response |
+|---|---|---|---|
+| GET | `/crafts/catalogue` | `includeInactive` (bool, PROFESSOR and above; 403 otherwise). Header `If-None-Match` | DR `CraftCatalogue`: `{version, categories:[{id, slug, name, sortOrder, subCategories:[{id, slug, name, sortOrder, craftCount}]}], crafts:[{id, slug, name, localName, categoryId, subCategoryId, sourceSerial, stateOfOrigin[], stateOfPractice[], giStatus: "GI"|"NON_GI"|null, isCatchAll, craftCode, aliases[]}]}`. With `includeInactive` each craft also has `status` (`ACTIVE`/`LEGACY`/`MERGED`), `mergedIntoId`, `referenceCount` (null for active crafts). |
+
+- Any signed-in role may read it. Headers `ETag: "<version>"` and `Cache-Control: private, no-cache`; a matching `If-None-Match` (strong, weak `W/` or `*`, comma lists) answers 304 with the same headers and no body.
+- Read from the database (`CraftCategory`, `CraftSubCategory`, `Craft`, `CraftSpelling`, active `CraftAlias`). Categories by `sortOrder, name`; crafts active first, then category order, sub-category order, `sourceSerial`, name, id. `craftCount` counts active crafts.
+- `aliases` are normalised spellings: every `CraftSpelling` sharing the craft's `craftCode` plus every active `CraftAlias.aliasNorm`, minus the craft's own normalised name, sorted.
+- `version` is a SHA-256 over the rows and their `updatedAt`, so any edit or alias change moves the ETag. The DB-free `craft_master_loader.build_catalogue()` gives the same shape (its `version` differs) for tests and offline fixtures.
+- Seeding: run `uv run python -m app.scripts.seed_crafts` in `backend/` after `uv run alembic upgrade head`. It upserts `seed_plan()` from the vendored JSON in `backend/app/data/` (9 categories, 36 sub-categories, 455 crafts, 50 `CraftCode`, 174 `CraftSpelling`, 2170 `CraftAlias`) and prints the counts as JSON. Re-running is safe: rows match on slug, code, spelling and (`craftId`, `aliasNorm`), existing ids and statuses are kept, and nothing is deleted. CI runs it after the migrations in `backend-checks.yml`, and `tests/db/test_craft_seed.py` seeds twice on emptied craft tables and checks the counts and ids do not change. Deploy: `infra/deploy/blue_green.sh` (infra lane) should run `./.venv/bin/python -m app.scripts.seed_crafts` from `backend/` with the env loaded, right after its `alembic upgrade head` and before the new colour starts; a non-zero exit should stop the release like a failed migration.
+- Seed knowledge: run `uv run python -m app.scripts.seed_claims` in `backend/` after `seed_crafts`. It loads `backend/app/data/seed_claims.json` (`craft_master_loader.SEED_CLAIMS_FILE`) into `Source` (122, `evidenceKind` from the row, seed id and `importRef` in `externalIds`), `Concept` (582, `originRef` = seed key, `craftId`/`subCategoryId` resolved by slug), `ConceptEdge` (767, `relation` plus the upstream `sourceRelation`; `claimId` points at the edge's first EDGE claim), `Process` ("Seed process", variant `seed_claims`, one per craft with stages) and `ProcessStage` (67 stages that carry an ordinal), `Claim` (1,914, row values as given: `status`, `evidenceLevel`, `levelReason`, `origin=IMPORT`, `createdByKind=SYSTEM`), `ClaimSource` (3,015 citations with `locator`, `quote` up to 300 chars, `quoteCheck`, `relation`) and one `ReviewEvent` per claim (`actorKind=SYSTEM`, `systemActor=import`, `toStatus`/`toLevel` from the claim, `note` = `seed import <seed id>`). Every id is `uuid5(ID_NAMESPACE, "seed-claims:<kind>:<seed id>")` and every insert is `ON CONFLICT DO NOTHING`, so a re-run adds nothing and never overwrites a later correction. It prints `{"total", "inserted", "unresolvedSlugs"}` as JSON and exits 2 when a craft or sub-category slug is missing (run `seed_crafts` first). `--dry-run` builds the plan from the file with no database and prints the totals. Seed claims arrive as `status=PROPOSED` (crafts lane contract); per §0 nothing is gated on status, so retrieval and answering must not filter claims to `APPROVED`, only drop `REJECTED` and `RETRACTED`. Edge `ordinal`, `conditions`, `determinism` and concept `localTerms`, `category`, `provenanceKind`, `compares` have no columns and are not stored. `tests/db/test_claim_seed.py` checks the plan without a database (run with `RUN_DB_TESTS=1 -m "not db"`, since the `tests/db` folder name is skipped by default) and, against Postgres, seeds crafts then claims twice on emptied tables. Deploy and CI should run it right after `seed_crafts`.
+
+## Knowledge, privacy and map (`/api`)
+
+| Method | Path | Auth | Response |
+|---|---|---|---|
+| GET | `/privacy/notice` | public | `{version, title, body (Markdown, from app/data/privacy_notice.md), publishedAt}`. `version` is what signup sends as `privacyNoticeVersion`. |
+| GET | `/crafts/{slug}/profile` | signed in | Frontend contract §4.6 `CraftProfile` (`craft` also carries `path`). A MERGED slug answers with its target's profile; unknown slug 404. `science` is `[]` until reactions are stored. Claims with status DRAFT, REJECTED or RETRACTED, non-OPEN sensitivity, or no visible citation are left out; PROPOSED seed claims show. |
+| GET | `/map/crafts` | signed in | `[{key, name, latitude, longitude, total, crafts:[{slug, name, path}]}]`: one point per state of practice (a point on the state's surface, from `AdminState.geom`) plus one per district or point `CraftLocation`. |
+| GET | `/answers/config` | signed in | `{modes:["VERIFIED"], defaultMode:"VERIFIED", voice:{configured:false, languages:[]}, languages:[{code:"en", label:"English"}]}`. |
+| POST | `/answers/stream` | signed in, 30 per 10 min per user (429 + `Retry-After`) | `text/event-stream` per frontend contract §4.5, built from stored claims only: `match`, then `source` before first use, `section`, `sentence`, `open_question` (HYPOTHESIS claims), `follow_ups`, `done`. The craft comes from `craftSlug` or an alias match on the question (more than one equally long match is AMBIGUOUS, at most 5 candidates). Modes other than VERIFIED are 422. |
 
 ## Settings hub (`/api/settings`)
 
@@ -129,10 +162,10 @@ Task state:
 | Method | Path | Body | Response |
 |---|---|---|---|
 | GET | `/settings/ai-catalogue` | | `{providers:[{provider, label, managedKey, consoleUrl, pricingUrl, dataClass, defaultModel, models:[{id, label, note, pricePerMTok:[in,out]|null, pricePerUnit, unit, priceVerified, tasks}]}], tasks}` |
-| GET | `/settings/ai-routing` | | `{tasks: taskState[]}` |
+| GET | `/settings/ai-routing` | | `{tasks: taskState[], providers: [{id, name, keyName, keyState:"ABSENT"|"UNTESTED"|"PASSING"|"FAILING", publicTextOnly, models:[{id, label, tasks[]}]}]}` |
 | GET | `/settings/ai-routing/{task}` | | task state |
 | PUT | `/settings/ai-routing/{task}` | `{routes:[{provider, model, enabled?, maxOutputTokens?, temperature?}]}` (1-8) | task state; routes whose key has not passed a test sink below passing ones (`normalised`, `normalisedNote`); 422 for an unsupported provider/model pair |
-| POST | `/settings/ai-routing/{task}/test` | `{provider}` | task state after testing that provider's key |
+| POST | `/settings/ai-routing/{task}/test` | `{provider, model?}` | task state after testing that provider's key |
 | GET | `/settings/ai-budget` | | `{monthlyCeilingUsd, mediaCapUsd, roleDailyUsd:{ROLE: number|null}, degradeAtFraction, signUpMode, domainAllowlist}` (MANAGE_CEILINGS) |
 | PUT | `/settings/ai-budget` | any of the above + `twoFactorCode` | same shape; 422 if media cap exceeds the monthly ceiling |
 
@@ -143,6 +176,7 @@ Defaults (seeded in `AppSetting`): ceiling $800/month, media sub-cap $150/month,
 | Method | Path | Response |
 |---|---|---|
 | GET | `/usage/summary?month=YYYY-MM` (VIEW_USAGE) | `{month, monthlyCeilingUsd, mediaCapUsd, spentUsd, mediaSpentUsd, reservedUsd, fraction, degraded, calls, refusedCalls, failedCalls, byTask, byProvider, byModel, byRole: [{key, costUsd, calls, inputTokens, outputTokens, ok}], byDay:[{day, costUsd, calls}], topUsers:[{userId, name, email, role, costUsd, calls}]}` |
+| GET | `/usage/report?from=ISO&to=ISO` (VIEW_USAGE) | `{from, to, ceilingUsd, spentThisMonthUsd, spentUsd, calls, failures, byTask:[{task, label, calls, failures, inputTokens, outputTokens, costUsd}], byProvider:[{provider, name, model, calls, failures, costUsd, p95LatencyMs|null}], byDay:[{day, calls, costUsd}]}`. `from` defaults to the start of the IST month, `to` to now; a date without a zone is read as IST; days are IST. Reserved (unsettled) events are left out. 422 when `to` is before `from`. |
 | GET | `/usage/me` | `{todayUsd, dailyCapUsd, allowances:{VOICE_SECONDS, IMAGE, VIDEO}, platformDegraded}` |
 
 ## AI router (for the answering, voice, media and enrichment lanes)
@@ -166,6 +200,6 @@ DR columns not carried: Aadhaar columns on `User`, `Craft.workshopId` (no Worksh
 ## Assumptions about other lanes
 
 - Frontend: the DR screens it ports call these paths with the `/api` prefix. DR's `/secrets/{key}/reveal` and `/settings/transcription-providers` do not exist here; use `/settings/ai-routing` instead. Secrets changes must collect a TOTP code. Suspension of an account is `/users/{id}/suspend`, not a roster DELETE (both work).
-- Data/ETL lane: owns the craft seed (455 crafts, `CraftCode`, `CraftSpelling`, `CraftAlias`) and district tables; this lane only creates the tables. The vendored JSON in `backend/app/data/` is left untouched.
-- Infra lane: provides `DATABASE_URL` (Supabase session pooler, port 5432) and the names in `backend/.env.example` on the box. First master admin: `MASTER_ADMIN_EMAIL` signs in with Google, or the operator runs `python -m app.scripts.seed_admin` (password read from stdin) in `backend/`.
+- Data/ETL lane: owns the district and environmental tables and the source corpus. The craft seed (455 crafts, `CraftCode`, `CraftSpelling`, `CraftAlias`) belongs to this lane: `app/services/craft_seed.py` and `app/scripts/seed_crafts.py`, fed by the vendored JSON in `backend/app/data/`. The ETL lane reads crafts by slug or `craftCode` and must not insert or rename catalogue rows; changes to the catalogue go through the vendored JSON and the seeder.
+- Infra lane: provides `DATABASE_URL` (Supabase session pooler, port 5432) and the names in `backend/.env.example` on the box. `blue_green.sh` runs `seed_crafts`, `seed_claims` and `seed_districts` after `alembic upgrade head` and stops the release if one fails; `backend-checks.yml` runs the same three before the DB tests. Client IP for rate limits: `x-viewer-address` when `x-web-proxy-secret` matches `WEB_PROXY_SECRET` (hmac compare), otherwise the `FORWARDED_CLIENT_HOPS` rule. Settings errors name fields only (`hide_input_in_errors`, `SettingsError`). The bucket and Brave key are read as `S3_BUCKET` and `BRAVE_SEARCH_API_KEY` (old `AWS_S3_BUCKET` and `BRAVE_API_KEY` still accepted). First master admin: `MASTER_ADMIN_EMAIL` signs in with Google, or the operator runs `python -m app.scripts.seed_admin` (password read from stdin) in `backend/`.
 - `shared/roles.json`, when added, holds `{"ranks": {"MASTER_ADMIN": 60, "PROFESSOR": 40, "RESEARCHER": 30, "STUDENT": 15}}`; a backend test checks it matches.

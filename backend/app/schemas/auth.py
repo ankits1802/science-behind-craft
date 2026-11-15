@@ -10,6 +10,7 @@ class LoginRequest(APIModel):
     email: str | None = Field(default=None, max_length=320)
     password: str | None = Field(default=None, min_length=1, max_length=MAX_PASSWORD_LENGTH)
     googleIdToken: str | None = Field(default=None, max_length=8192)
+    googleNonce: str | None = Field(default=None, max_length=200)
 
     @model_validator(mode="after")
     def _one_mode(self) -> LoginRequest:
@@ -23,8 +24,10 @@ class LoginRequest(APIModel):
 class SignUpRequest(APIModel):
     email: EmailStr = Field(max_length=320)
     name: str = Field(min_length=1, max_length=160)
-    password: str = Field(min_length=10, max_length=MAX_PASSWORD_LENGTH)
     affiliation: str | None = Field(default=None, max_length=300)
+    requestedRole: Literal["STUDENT", "RESEARCHER", "PROFESSOR"] = "STUDENT"
+    profileUrl: str | None = Field(default=None, max_length=500, pattern=r"^https?://\S+$")
+    note: str | None = Field(default=None, max_length=1000)
     ageAttested: bool = False
     privacyNoticeVersion: str = Field(min_length=1, max_length=40)
     turnstileToken: str | None = Field(default=None, max_length=4096)

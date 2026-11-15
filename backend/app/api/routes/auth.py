@@ -34,7 +34,7 @@ from app.core.roles import (
     role_value,
 )
 from app.core.security import create_access_token, hash_password, verify_password, verify_password_or_decoy
-from app.models import ConsentRecord, PasswordResetRequest, User
+from app.models import AccessRoster, ConsentRecord, PasswordResetRequest, RoleRequest, User
 from app.schemas.auth import (
     ChangePasswordRequest,
     ConsentRequest,
@@ -68,6 +68,10 @@ THROTTLED_DETAIL = "Too many sign-in attempts. Wait a few minutes and try again.
 PASSWORD_NOT_SET_HINT = "PASSWORD_NOT_SET"
 PASSWORD_NOT_SET_DETAIL = (
     "This account has no password yet. Sign in with Google, or ask for a set-password link."
+)
+EMAIL_UNVERIFIED_HINT = "EMAIL_UNVERIFIED"
+EMAIL_UNVERIFIED_DETAIL = (
+    "Confirm your email address first: open the link we sent, or ask for a new one with Forgot password."
 )
 GOOGLE_UNAVAILABLE_DETAIL = "Google sign-in isn't available right now. Sign in with your email and password."
 GOOGLE_FAILED_DETAIL = "Google sign-in didn't work. Try again."
@@ -158,6 +162,14 @@ async def _find_user(session: AsyncSession, email: str) -> User | None:
     ).scalar_one_or_none()
 
 
+def _adopt_admitted_role(account: User, row: Any) -> None:
+    admitted = access_roster.role_of(row) if access_roster.admits(row) else None
+    if not admitted or role_value(account) in (admitted, MASTER_ADMIN):
+        return
+    account.role = admitted
+    account.tokenVersion += 1
+
+
 async def login_with_google(session: AsyncSession, token: str) -> tuple[User, Any]:
     if not google_auth.google_enabled():
         raise HTTPException(status.HTTP_400_BAD_REQUEST, GOOGLE_UNAVAILABLE_DETAIL)
@@ -181,6 +193,27 @@ async def login_with_google(session: AsyncSession, token: str) -> tuple[User, An
             raise HTTPException(
                 status.HTTP_403_FORBIDDEN, ACCESS_SUSPENDED_DETAIL, _access_headers(access_roster.SUSPENDED)
             )
+        if existing.emailVerifiedAt is None and not existing.passwordIssuerKnown:
+            had_password = existing.passwordHash is not None
+            had_two_factor = existing.twoFactorEnabled or existing.twoFactorPendingSecret is not None
+            if had_password or had_two_factor:
+                existing.passwordHash = None
+                existing.passwordSetAt = None
+                existing.mustChangePassword = False
+                await two_factor.reset_by_administrator(session, existing)
+                await credential_links.revoke_outstanding(session, existing.id)
+                await audit.record(
+                    session,
+                    action="auth.unverified_credentials_cleared",
+                    actor=None,
+                    target_type="User",
+                    target_id=existing.id,
+                    detail={"password": had_password, "twoFactor": had_two_factor},
+                )
+                await session.flush()
+                existing = await reload_user(session, existing.id)
+        if existing.emailVerifiedAt is None:
+            _adopt_admitted_role(existing, access)
         if existing.passwordHash is None:
             existing.name = name[:200]
             existing.authProvider = "GOOGLE"
@@ -231,6 +264,17 @@ async def login_with_password(
     )
     if not matched or user is None or user.deletedAt is not None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, INVALID_CREDENTIALS_DETAIL)
+    if (
+        user.emailVerifiedAt is None
+        and not user.passwordIssuerKnown
+        and user.firstLoginAt is None
+        and not is_break_glass_master(user)
+    ):
+        raise HTTPException(
+            status.HTTP_401_UNAUTHORIZED,
+            EMAIL_UNVERIFIED_DETAIL,
+            {SIGN_IN_HINT_HEADER: EMAIL_UNVERIFIED_HINT},
+        )
     refund_account(account_key)
     refund_ip(request)
     access = await assert_access_admits(session, user.email, is_master=is_break_glass_master(user))
@@ -259,7 +303,9 @@ async def auth_config() -> dict[str, Any]:
         "googleEnabled": google_auth.google_enabled(),
         "googleClientId": get_settings().google_client_id if google_auth.google_enabled() else None,
         "turnstileRequired": turnstile.turnstile_enabled(),
+        "turnstileSiteKey": turnstile.site_key(),
         "mailAvailable": mailer.mail_configured(),
+        "signUpOpen": mailer.mail_configured() and not turnstile.required_but_missing(),
     }
 
 
@@ -282,9 +328,44 @@ async def login(
     return await open_session(session, user, access)
 
 
+SIGNUP_CLOSED_DETAIL = "Request access with Google instead."
+SIGNUP_ROLE_LABELS = {"STUDENT": "Student", "RESEARCHER": "Researcher", "PROFESSOR": "Professor"}
+
+
+def _signup_answer(email: str) -> dict[str, Any]:
+    return {"status": "EMAIL_SENT", "email": email}
+
+
+def _signup_notes(payload: SignUpRequest) -> str:
+    parts = [f"Requested role: {SIGNUP_ROLE_LABELS[payload.requestedRole]}."]
+    if payload.profileUrl:
+        parts.append(f"Profile: {payload.profileUrl}")
+    if payload.note and payload.note.strip():
+        parts.append(payload.note.strip())
+    return "\n".join(parts)
+
+
+async def _send_signup_link(email: str, user_id: uuid.UUID) -> None:
+    async with session_scope() as session:
+        account = await session.get(User, user_id)
+        if account is None or account.deletedAt is not None or account.emailVerifiedAt is not None:
+            return
+        try:
+            issued, _raw = await credential_links.issue_link(
+                session, user=account, purpose="INVITE", issued_by_id=None
+            )
+        except credential_links.IssueThrottled:
+            return
+        await session.commit()
+        await mailer.send(mailer.signup_link_mail(email, issued.link, credential_links.INVITE_MINUTES))
+
+
 @router.post("/signup", status_code=status.HTTP_202_ACCEPTED)
 async def signup(
-    payload: SignUpRequest, request: Request, session: AsyncSession = Depends(get_session)
+    payload: SignUpRequest,
+    request: Request,
+    background: BackgroundTasks,
+    session: AsyncSession = Depends(get_session),
 ) -> dict[str, Any]:
     allowed, retry = sign_in_attempt_by_ip(request)
     if not allowed:
@@ -293,6 +374,8 @@ async def signup(
             THROTTLED_DETAIL,
             {"Retry-After": str(max(1, int(retry + 0.999)))},
         )
+    if turnstile.required_but_missing() or not mailer.mail_configured():
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, SIGNUP_CLOSED_DETAIL)
     if not await turnstile.verify(payload.turnstileToken, client_ip(request)):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "The human check did not pass. Try again.")
     if not payload.ageAttested:
@@ -301,21 +384,19 @@ async def signup(
         )
     email = str(payload.email).strip().lower()
     if email == get_settings().master_admin_email.strip().lower():
-        raise HTTPException(status.HTTP_409_CONFLICT, "This address can't sign up here.")
-    if await _find_user(session, email) is not None:
-        raise HTTPException(
-            status.HTTP_409_CONFLICT, "An account already exists for this address. Sign in instead."
-        )
+        return _signup_answer(email)
+    existing = await _find_user(session, email)
+    if existing is not None:
+        if existing.deletedAt is None and existing.emailVerifiedAt is None and existing.passwordHash is None:
+            background.add_task(_send_signup_link, email, existing.id)
+        return _signup_answer(email)
     now = datetime.now(UTC)
-    row = await access_roster.access_row(session, email)
     user = User(
         email=email,
-        name=payload.name,
-        passwordHash=await asyncio.to_thread(hash_password, payload.password),
-        passwordSetAt=now,
-        role=(access_roster.role_of(row) if access_roster.admits(row) else None) or role_for_email(email),
+        name=payload.name.strip()[:200],
+        role=role_for_email(email),
         authProvider="LOCAL",
-        affiliation=payload.affiliation,
+        affiliation=(payload.affiliation or "").strip() or None,
         ageAttestedAt=now,
     )
     session.add(user)
@@ -325,36 +406,56 @@ async def signup(
             userId=user.id, kind="PRIVACY_NOTICE", noticeVersion=payload.privacyNoticeVersion, acceptedAt=now
         )
     )
-    if row is None:
-        if await access_roster.pending_count(session) >= access_roster.pending_cap():
-            await session.rollback()
-            raise HTTPException(
-                status.HTTP_503_SERVICE_UNAVAILABLE,
-                ACCESS_NOT_RECORDED_DETAIL,
-                _access_headers(access_roster.NOT_RECORDED),
-            )
-        from app.models import AccessRoster
-
-        row = AccessRoster(
-            email=email,
-            status=access_roster.PENDING,
-            requestedAt=now,
-            attemptCount=1,
-            lastAttemptAt=now,
-            fullName=payload.name,
-            affiliation=payload.affiliation,
+    session.add(
+        RoleRequest(
+            userId=user.id,
+            requestedRole=payload.requestedRole,
+            affiliation=user.affiliation,
+            profileUrl=payload.profileUrl,
+            note=_signup_notes(payload),
         )
-        session.add(row)
+    )
     await audit.record(
         session,
         action="auth.signup",
-        actor=user,
+        actor=None,
         target_type="User",
         target_id=user.id,
         ip_hash=ip_hash(client_ip(request)),
     )
     await session.commit()
-    return {"accessStatus": access_roster.status_of(row), "email": email}
+    background.add_task(_send_signup_link, email, user.id)
+    return _signup_answer(email)
+
+
+async def _record_verified_request(session: AsyncSession, account: User) -> None:
+    if await access_roster.access_row(session, account.email) is not None:
+        return
+    request = (
+        await session.execute(
+            select(RoleRequest)
+            .where(RoleRequest.userId == account.id, RoleRequest.status == "PENDING")
+            .order_by(RoleRequest.createdAt.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    if request is None:
+        return
+    if await access_roster.pending_count(session) >= access_roster.pending_cap():
+        return
+    now = datetime.now(UTC)
+    session.add(
+        AccessRoster(
+            email=account.email,
+            status=access_roster.PENDING,
+            requestedAt=now,
+            attemptCount=1,
+            lastAttemptAt=now,
+            fullName=account.name[:180],
+            affiliation=request.affiliation,
+            notes=request.note,
+        )
+    )
 
 
 @router.post("/logout")
@@ -559,6 +660,10 @@ async def set_password(
     account.passwordIssuerKnown = False
     account.sessionsValidFrom = now
     account.tokenVersion += 1
+    if account.emailVerifiedAt is None:
+        account.emailVerifiedAt = now
+        _adopt_admitted_role(account, await access_roster.access_row(session, account.email))
+        await _record_verified_request(session, account)
     await credential_links.mark_used_and_revoke_rest(session, verdict)
     await audit.record(
         session,

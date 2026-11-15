@@ -15,11 +15,16 @@ test("sign in has email, password and one primary action", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
 });
 
-test("request access needs the privacy notice ticked", async ({ page }) => {
+test("request access needs the age and privacy boxes ticked", async ({ page }) => {
+  await page.route("**/api/auth/config", (route) =>
+    route.fulfill({ json: { signUpOpen: true, turnstileRequired: false, turnstileSiteKey: null } })
+  );
   await page.goto("/signup");
   await expect(page.getByRole("heading", { name: "Request access" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Request access" })).toBeDisabled();
   await page.getByLabel("I agree to the").check();
+  await expect(page.getByRole("button", { name: "Request access" })).toBeDisabled();
+  await page.getByLabel("I am 18 or older").check();
   await expect(page.getByRole("button", { name: "Request access" })).toBeEnabled();
 });
 

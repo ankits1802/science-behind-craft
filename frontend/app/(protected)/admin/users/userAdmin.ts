@@ -34,7 +34,7 @@ export function suspendUser(userId: string): Promise<User> {
 }
 
 export function reactivateUser(userId: string): Promise<User> {
-  return apiFetch<User>(`/users/${encodeURIComponent(userId)}/reactivate`, { method: "POST" });
+  return apiFetch<User>(`/users/${encodeURIComponent(userId)}/restore`, { method: "POST" });
 }
 
 export type RowOffers = {

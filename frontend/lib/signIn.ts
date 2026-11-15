@@ -5,7 +5,7 @@ import { writeBody } from "@/lib/writeBody";
 
 export const SIGN_IN_HINT_HEADER = "x-sign-in-hint";
 
-export type SignInHint = "AMBIGUOUS_IDENTIFIER" | "PASSWORD_NOT_SET" | null;
+export type SignInHint = "AMBIGUOUS_IDENTIFIER" | "PASSWORD_NOT_SET" | "EMAIL_UNVERIFIED" | null;
 
 export function signInHintOf(header: string | null | undefined): SignInHint {
   switch ((header ?? "").trim().toUpperCase()) {
@@ -13,6 +13,8 @@ export function signInHintOf(header: string | null | undefined): SignInHint {
       return "AMBIGUOUS_IDENTIFIER";
     case "PASSWORD_NOT_SET":
       return "PASSWORD_NOT_SET";
+    case "EMAIL_UNVERIFIED":
+      return "EMAIL_UNVERIFIED";
     default:
       return null;
   }
@@ -24,6 +26,8 @@ export function signInHintHeading(hint: SignInHint): string | null {
       return "That number matches more than one account";
     case "PASSWORD_NOT_SET":
       return "This account has no password yet";
+    case "EMAIL_UNVERIFIED":
+      return "Confirm your email address first";
     default:
       return null;
   }

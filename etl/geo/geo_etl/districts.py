@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import geopandas as gpd
+import pandas as pd
 from shapely.geometry import Polygon
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
@@ -120,7 +121,8 @@ def load_districts(lgds: set[int] | None = None, states: set[int] | None = None)
                 "geometry": geometry,
             }
         )
-    frame = gpd.GeoDataFrame(rows, geometry="geometry", crs="EPSG:4326")
+    columns = ["districtLgd", "stateLgd", "districtName", "stateName", "centroidLon", "centroidLat", "geometry"]
+    frame = gpd.GeoDataFrame(pd.DataFrame(rows, columns=columns), geometry="geometry", crs="EPSG:4326")
     if len(frame):
         frame["areaKm2"] = frame.to_crs(INDIA_LCC).area / 1e6
     else:

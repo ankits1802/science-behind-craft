@@ -38,7 +38,7 @@ export type UsageReport = {
 };
 
 export function fetchUsage(range: { dateFrom?: string; dateTo?: string }): Promise<UsageReport> {
-  return apiFetch<UsageReport>(`/settings/usage${buildQuery({ from: range.dateFrom, to: range.dateTo })}`);
+  return apiFetch<UsageReport>(`/usage/report${buildQuery({ from: range.dateFrom, to: range.dateTo })}`);
 }
 
 export function money(value: Money): number | null {

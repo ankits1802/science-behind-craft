@@ -53,6 +53,9 @@ GLIM_CLASSES = {
 }
 
 
+MRDS_LITHOLOGY = "mineral_occurrences"
+
+
 def geology_row(district: pd.Series, dataset, method: str, **values) -> dict:
     return {
         "districtLgd": int(district["districtLgd"]),
@@ -142,7 +145,16 @@ def run_mrds(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 commodities = Counter(c for p in found for c in p["commodities"])
                 for code, count in sorted(commodities.items()):
                     rows.add(district, f"mineral_occurrences_{code.lower()}", "", "COUNT", float(count), "sites")
-                geology.append(geology_row(district, MRDS, method, mineralOccurrences=json.dumps(found)))
+                geology.append(
+                    geology_row(
+                        district,
+                        MRDS,
+                        method,
+                        lithology=MRDS_LITHOLOGY,
+                        lithologyName="Mineral occurrences",
+                        mineralOccurrences=json.dumps(found),
+                    )
+                )
         except Exception as error:
             failures.append(failure(group, "mrds", error))
     return Result(MRDS, rows.frame(), geology=pd.DataFrame(geology, columns=GEOLOGY_COLUMNS), failures=failures)

@@ -19,6 +19,7 @@ HOMOLOSINE = CRS.from_proj4("+proj=igh +lat_0=0 +lon_0=0 +datum=WGS84 +units=m +
 CELL = 250.0
 CHUNK = 2000
 NODATA = -32768
+MASKED = 0
 PAD_M = 1000.0
 ATTEMPTS = 4
 
@@ -87,6 +88,8 @@ def read(variable: str, depth: str, layer: str, bounds: tuple[float, float, floa
             )
             block = part.astype("float32") / divisor
             block[part == NODATA] = np.nan
+            if layer == "mean":
+                block[part == MASKED] = np.nan
             out[r0:r1, c0:c1] = block
     return raster.Grid(out, from_origin(xmin, ymax, CELL, CELL), HOMOLOSINE)
 
@@ -95,8 +98,9 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
     rows = Rows(
         SOILGRIDS,
         "ISRIC WCS 2.0.1 GetCoverage on the native 250 m Homolosine grid (request bounds snapped to the grid, "
-        "no resampling); district polygons reprojected to Homolosine; exactextract coverage-weighted "
-        "(area_cartesian); values divided by the ISRIC conversion factor",
+        "no resampling); cells the service returns as 0 (SoilGrids mask: built-up, water, rock) and their "
+        "uncertainty cells treated as no data; district polygons reprojected to Homolosine; exactextract "
+        "coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
     )
     failures: list[dict] = []
     for group in by_state(districts):
@@ -107,9 +111,16 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 layers = [("mean", None)]
                 if options.soil_uncertainty:
                     layers += [("Q0.05", "UNCERTAINTY_Q05_MEAN"), ("Q0.95", "UNCERTAINTY_Q95_MEAN")]
+                valid = None
                 for layer, stat in layers:
                     try:
                         grid = read(variable, depth, layer, bounds, divisor)
+                        if layer == "mean":
+                            valid = ~np.isnan(grid.values)
+                        elif valid is None:
+                            raise RuntimeError("mean layer missing, so the SoilGrids mask is unknown")
+                        else:
+                            grid.values[~valid] = np.nan
                         ops = raster.continuous_ops(grid)
                         if stat is not None:
                             ops = [ops[0], ops[-1]]

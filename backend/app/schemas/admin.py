@@ -45,6 +45,10 @@ class ManagedSecretSetIn(APIModel):
     twoFactorCode: str | None = Field(default=None, max_length=64)
 
 
+class ManagedSecretClearIn(APIModel):
+    twoFactorCode: str | None = Field(default=None, max_length=64)
+
+
 class RouteEntry(APIModel):
     provider: str = Field(min_length=1, max_length=40)
     model: str = Field(min_length=1, max_length=120)
@@ -59,6 +63,7 @@ class RouteOrderUpdate(APIModel):
 
 class RouteTestRequest(APIModel):
     provider: str = Field(min_length=1, max_length=40)
+    model: str | None = Field(default=None, max_length=120)
 
 
 class AppSettingsUpdate(APIModel):

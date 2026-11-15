@@ -7,7 +7,7 @@ from app.core.db import get_session
 from app.core.deps import require
 from app.core.roles import Capability
 from app.models import User
-from app.schemas.admin import ManagedSecretSetIn
+from app.schemas.admin import ManagedSecretClearIn, ManagedSecretSetIn
 from app.services import audit, managed_secrets, two_factor
 
 router = APIRouter(prefix="/secrets", tags=["secrets"])
@@ -61,12 +61,14 @@ async def set_secret(
 @router.delete("/{key}")
 async def clear_secret(
     key: str,
+    payload: ManagedSecretClearIn | None = None,
     actor: User = Depends(key_manager),
     session: AsyncSession = Depends(get_session),
     x_two_factor_code: str | None = Header(default=None, max_length=64),
 ) -> dict[str, Any]:
     _require_managed(key)
-    await require_step_up(session, actor, x_two_factor_code)
+    code = (payload.twoFactorCode if payload else None) or x_two_factor_code
+    await require_step_up(session, actor, code)
     await audit.record(
         session, action="secrets.cleared", actor=actor, target_type="ManagedSecret", target_id=key
     )

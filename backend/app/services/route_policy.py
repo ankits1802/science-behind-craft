@@ -72,6 +72,28 @@ async def key_states(session: AsyncSession) -> dict[str, dict[str, Any]]:
     return states
 
 
+def provider_rows_for_routing(
+    catalogue_rows: list[dict[str, Any]], states: dict[str, dict[str, Any]]
+) -> list[dict[str, Any]]:
+    out = []
+    for entry in catalogue_rows:
+        state = states.get(entry["provider"], {})
+        out.append(
+            {
+                "id": entry["provider"],
+                "name": entry["label"],
+                "keyName": entry["managedKey"],
+                "keyState": state.get("keyState", KEY_ABSENT),
+                "publicTextOnly": entry["dataClass"] == "PUBLIC_TEXT_ONLY",
+                "models": [
+                    {"id": model["id"], "label": model["label"], "tasks": model["tasks"]}
+                    for model in entry["models"]
+                ],
+            }
+        )
+    return out
+
+
 async def task_state(
     session: AsyncSession, task: AiTask, *, normalised: bool = False, note: str | None = None
 ) -> dict[str, Any]:

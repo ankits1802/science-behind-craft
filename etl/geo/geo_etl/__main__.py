@@ -2,6 +2,7 @@ import argparse
 import dataclasses
 import datetime as dt
 import json
+import re
 import sys
 import time
 from collections.abc import Callable
@@ -27,6 +28,43 @@ LAYERS: dict[str, Callable[..., Result]] = {
     "mrds": geology.run_mrds,
     "glim": geology.run_glim,
 }
+IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
+DATASET_LABELS = {
+    "SOILGRIDS_2_0": "SoilGrids-2-0",
+    "ESA_WORLDCOVER_2021_V200": "ESA-WorldCover-2021-v200",
+    "HANSEN_GFC_2025_V1_13": "Hansen-GFC-2025-v1-13",
+    "CHELSA_2_1_1981_2010": "CHELSA-2-1-1981-2010",
+    "CHIRPS_3_0": "CHIRPS-3-0",
+    "COPERNICUS_DEM_GLO90": "Copernicus-DEM-GLO-90",
+    "HYDRORIVERS_1_0": "HydroRIVERS-1-0",
+    "USGS_MRDS": "USGS-MRDS",
+    "GLIM_1_0_05DEG": "GLiM-1-0",
+}
+CSV_GLOB = "KalaVigyan_Dataset_*_District-Stats.csv"
+
+
+def dataset_label(code: str) -> str:
+    if code in DATASET_LABELS:
+        return DATASET_LABELS[code]
+    words = [w for w in re.split(r"[^A-Za-z0-9]+", code) if w]
+    return "-".join(w if any(c.isdigit() for c in w) else w.capitalize() for w in words)
+
+
+def district_stats_filename(code: str, generated: dt.datetime) -> str:
+    label = dataset_label(code)
+    date = generated.astimezone(IST).strftime("%Y-%m-%d")
+    return "_".join(part for part in ("KalaVigyan", "Dataset", date, label, "District-Stats") if part) + ".csv"
+
+
+def write_dataset_csvs(values: pd.DataFrame, out: Path, generated: dt.datetime) -> list[str]:
+    for stale in out.glob(CSV_GLOB):
+        stale.unlink()
+    names = []
+    for code, frame in values.groupby("datasetCode", sort=True):
+        name = district_stats_filename(str(code), generated)
+        frame.to_csv(out / name, index=False, encoding="utf-8", lineterminator="\n")
+        names.append(name)
+    return names
 
 
 def parse_ints(text: str | None) -> set[int] | None:
@@ -123,13 +161,15 @@ def combine(args: argparse.Namespace) -> int:
         print(f"{duplicates} duplicate keys in the combined table", file=sys.stderr)
         return 1
     values.to_parquet(out / "district_env.parquet", index=False)
+    generated = dt.datetime.now(dt.UTC)
+    csv_names = write_dataset_csvs(values, out, generated)
     geo_frames = [pd.read_parquet(p) for p in sorted(parts.glob("*.geology.parquet"))]
     geology_table = pd.concat(geo_frames, ignore_index=True) if geo_frames else pd.DataFrame(columns=GEOLOGY_COLUMNS)
     geology_table.to_parquet(out / "district_geology.parquet", index=False)
     datasets = {m["dataset"]["code"]: {**m["dataset"], "retrievedAt": m["retrievedAt"]} for m in metas}
     boundaries = catalog.BOUNDARIES.as_row() | {"sha256": sha256_of(SHAPES_PATH)}
     summary = {
-        "generatedAt": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        "generatedAt": generated.isoformat(timespec="seconds"),
         "boundaries": boundaries,
         "datasets": list(datasets.values()),
         "layers": [
@@ -142,6 +182,7 @@ def combine(args: argparse.Namespace) -> int:
         "districts": int(values["districtLgd"].nunique()) if len(values) else 0,
         "variables": (values.groupby("datasetCode")["variable"].nunique().astype(int).to_dict() if len(values) else {}),
         "districtsWithoutShapes": districts_without_shapes(),
+        "csv": csv_names,
     }
     (out / "district_env_summary.json").write_text(json.dumps(summary, indent=1, default=str), encoding="utf-8")
     print(f"combined {len(values)} rows over {summary['districts']} districts into {out}")

@@ -28,7 +28,7 @@ const KEY_BADGE: Record<KeyState, { label: string; className: string; Icon: type
   PASSING: { label: "Working", className: "text-success-600 dark:text-emerald-400", Icon: CheckCircle2 },
   FAILING: { label: "Test failed", className: "text-error-600", Icon: XCircle },
   UNTESTED: { label: "Not tested", className: "text-amber-800 dark:text-amber-500", Icon: ShieldQuestion },
-  NO_KEY: { label: "No key", className: "text-ink-500", Icon: CircleDashed }
+  ABSENT: { label: "No key", className: "text-ink-500", Icon: CircleDashed }
 };
 
 export function RoutingPanel() {

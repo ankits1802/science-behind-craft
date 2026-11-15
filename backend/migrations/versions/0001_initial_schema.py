@@ -85,6 +85,12 @@ ENUMS: tuple[tuple[str, tuple[str, ...]], ...] = (
             "SHARE",
             "CLASS",
             "NORMAL",
+            "DISTRICT_MIN",
+            "DISTRICT_MAX",
+            "TOTAL",
+            "DENSITY",
+            "DISTANCE",
+            "COUNT",
         ),
     ),
     (
@@ -1581,6 +1587,12 @@ def _create_tables() -> None:
                 "SHARE",
                 "CLASS",
                 "NORMAL",
+                "DISTRICT_MIN",
+                "DISTRICT_MAX",
+                "TOTAL",
+                "DENSITY",
+                "DISTANCE",
+                "COUNT",
                 name="EnvStat",
                 create_type=False,
             ),
@@ -1633,6 +1645,12 @@ def _create_tables() -> None:
             ondelete="CASCADE",
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("DistrictGeology_pkey")),
+        sa.UniqueConstraint(
+            "districtLgd",
+            "datasetId",
+            "lithology",
+            name=op.f("DistrictGeology_districtLgd_datasetId_lithology_key"),
+        ),
     )
     op.create_index(op.f("DistrictGeology_datasetId_idx"), "DistrictGeology", ["datasetId"], unique=False)
     op.create_index(op.f("DistrictGeology_districtLgd_idx"), "DistrictGeology", ["districtLgd"], unique=False)

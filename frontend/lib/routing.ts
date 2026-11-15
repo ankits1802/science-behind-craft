@@ -1,6 +1,6 @@
 import { apiFetch } from "@/lib/api";
 
-export type KeyState = "NO_KEY" | "UNTESTED" | "PASSING" | "FAILING";
+export type KeyState = "ABSENT" | "UNTESTED" | "PASSING" | "FAILING";
 
 export type AiProviderId = "GEMINI" | "ANTHROPIC" | "OPENAI" | "DEEPSEEK" | "ELEVENLABS";
 
@@ -43,18 +43,18 @@ export type RoutingState = {
 };
 
 export function fetchRouting(): Promise<RoutingState> {
-  return apiFetch<RoutingState>("/settings/routing");
+  return apiFetch<RoutingState>("/settings/ai-routing");
 }
 
 export function saveTaskRoute(task: string, routes: Pick<RouteRow, "provider" | "model" | "enabled">[]): Promise<TaskRoute> {
-  return apiFetch<TaskRoute>(`/settings/routing/${encodeURIComponent(task)}`, {
+  return apiFetch<TaskRoute>(`/settings/ai-routing/${encodeURIComponent(task)}`, {
     method: "PUT",
     body: JSON.stringify({ routes })
   });
 }
 
 export function testTaskRoute(task: string, provider: AiProviderId, model: string): Promise<TaskRoute> {
-  return apiFetch<TaskRoute>(`/settings/routing/${encodeURIComponent(task)}/test`, {
+  return apiFetch<TaskRoute>(`/settings/ai-routing/${encodeURIComponent(task)}/test`, {
     method: "POST",
     body: JSON.stringify({ provider, model })
   });

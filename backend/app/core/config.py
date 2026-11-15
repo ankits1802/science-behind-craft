@@ -3,7 +3,7 @@ from ipaddress import ip_address
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
-from pydantic import AliasChoices, Field, field_validator, model_validator
+from pydantic import AliasChoices, Field, ValidationError, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _BACKEND_ROOT = Path(__file__).resolve().parents[2]
@@ -92,7 +92,7 @@ class Settings(BaseSettings):
     mail_ses_configuration_set: str | None = Field(default=None, alias="MAIL_SES_CONFIGURATION_SET")
 
     aws_region: str = Field(default="ap-south-1", alias="AWS_REGION")
-    s3_bucket: str | None = Field(default=None, alias="S3_BUCKET")
+    s3_bucket: str | None = Field(default=None, validation_alias=AliasChoices("S3_BUCKET", "AWS_S3_BUCKET"))
 
     gemini_api_key: str | None = Field(default=None, alias="GEMINI_API_KEY")
     anthropic_api_key: str | None = Field(default=None, alias="ANTHROPIC_API_KEY")
@@ -101,7 +101,9 @@ class Settings(BaseSettings):
     elevenlabs_api_key: str | None = Field(default=None, alias="ELEVENLABS_API_KEY")
     elevenlabs_agent_id: str | None = Field(default=None, alias="ELEVENLABS_AGENT_ID")
     voice_llm_bearer: str | None = Field(default=None, alias="VOICE_LLM_BEARER")
-    brave_search_api_key: str | None = Field(default=None, alias="BRAVE_SEARCH_API_KEY")
+    brave_search_api_key: str | None = Field(
+        default=None, validation_alias=AliasChoices("BRAVE_SEARCH_API_KEY", "BRAVE_API_KEY")
+    )
     exa_api_key: str | None = Field(default=None, alias="EXA_API_KEY")
     tavily_api_key: str | None = Field(default=None, alias="TAVILY_API_KEY")
     openalex_api_key: str | None = Field(default=None, alias="OPENALEX_API_KEY")
@@ -114,6 +116,7 @@ class Settings(BaseSettings):
     wiley_tdm_token: str | None = Field(default=None, alias="WILEY_TDM_TOKEN")
     data_gov_in_api_key: str | None = Field(default=None, alias="DATA_GOV_IN_API_KEY")
     turnstile_secret_key: str | None = Field(default=None, alias="TURNSTILE_SECRET_KEY")
+    turnstile_site_key: str | None = Field(default=None, alias="TURNSTILE_SITE_KEY")
     cross_portal_token: str | None = Field(default=None, alias="CROSS_PORTAL_TOKEN")
 
     sign_in_attempts_per_ip: int = Field(default=20, ge=1, alias="SIGN_IN_ATTEMPTS_PER_IP")
@@ -126,6 +129,7 @@ class Settings(BaseSettings):
         populate_by_name=True,
         extra="ignore",
         env_ignore_empty=True,
+        hide_input_in_errors=True,
     )
 
     @field_validator("jwt_algorithm")
@@ -162,6 +166,16 @@ class Settings(BaseSettings):
         return "*" not in self.cors_origins
 
 
+class SettingsError(RuntimeError):
+    pass
+
+
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    try:
+        return Settings()
+    except ValidationError as error:
+        problems = sorted(
+            {f"{'.'.join(str(part) for part in item['loc'])} ({item['type']})" for item in error.errors()}
+        )
+        raise SettingsError(f"Invalid settings: {', '.join(problems)}") from None

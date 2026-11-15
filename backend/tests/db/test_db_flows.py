@@ -2,6 +2,7 @@ import os
 import time
 import uuid
 from collections.abc import AsyncIterator
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
@@ -44,6 +45,7 @@ async def create_user(
                 role=role,
                 twoFactorEnabled=with_two_factor,
                 twoFactorSecret=two_factor.encrypt_secret(secret) if secret else None,
+                emailVerifiedAt=datetime.now(UTC),
             )
         )
         if rostered:
@@ -155,20 +157,62 @@ async def test_schema_is_hardened_and_seeded() -> None:
             )
 
 
-async def test_signup_waits_for_approval(client: httpx.AsyncClient) -> None:
+@pytest.fixture
+def outbox(monkeypatch: pytest.MonkeyPatch) -> dict[str, list[Any]]:
+    from app.services import credential_links, mailer
+
+    box: dict[str, list[Any]] = {"mail": [], "tokens": []}
+    issue = credential_links.issue_link
+
+    async def capture_issue(*args: Any, **kwargs: Any) -> Any:
+        issued, raw = await issue(*args, **kwargs)
+        box["tokens"].append((kwargs["user"].email, raw))
+        return issued, raw
+
+    async def capture_send(mail: Any) -> bool:
+        box["mail"].append(mail)
+        return True
+
+    monkeypatch.setattr(mailer, "mail_configured", lambda: True)
+    monkeypatch.setattr(mailer, "send", capture_send)
+    monkeypatch.setattr(credential_links, "issue_link", capture_issue)
+    return box
+
+
+def sign_up_body(email: str, name: str = "New Student", role: str = "STUDENT") -> dict[str, Any]:
+    return {
+        "email": email,
+        "name": name,
+        "requestedRole": role,
+        "ageAttested": True,
+        "privacyNoticeVersion": "2026-11-16",
+    }
+
+
+def token_for(box: dict[str, list[Any]], email: str) -> str:
+    sent = [raw for address, raw in box["tokens"] if address == email]
+    assert sent, f"no link was issued for {email}"
+    return sent[-1]
+
+
+async def test_signup_waits_for_approval(client: httpx.AsyncClient, outbox: dict[str, list[Any]]) -> None:
     applicant = unique_email("student")
-    response = await client.post(
-        "/api/auth/signup",
-        json={
-            "email": applicant,
-            "name": "New Student",
-            "password": PASSWORD,
-            "ageAttested": True,
-            "privacyNoticeVersion": "2026-11-15",
-        },
-    )
+    response = await client.post("/api/auth/signup", json=sign_up_body(applicant))
     assert response.status_code == 202, response.text
-    assert response.json()["accessStatus"] == "PENDING"
+    assert response.json() == {"status": "EMAIL_SENT", "email": applicant}
+    assert [mail.to for mail in outbox["mail"]] == [applicant]
+
+    async with session_scope() as session:
+        assert await session.scalar(select(AccessRoster).where(AccessRoster.email == applicant)) is None
+
+    no_password = await client.post("/api/auth/login", json={"email": applicant, "password": PASSWORD})
+    assert no_password.status_code == 401
+    assert no_password.headers["x-sign-in-hint"] == "PASSWORD_NOT_SET"
+
+    confirmed = await client.post(
+        "/api/auth/set-password", json={"token": token_for(outbox, applicant), "password": PASSWORD}
+    )
+    assert confirmed.status_code == 200, confirmed.text
 
     refused = await client.post("/api/auth/login", json={"email": applicant, "password": PASSWORD})
     assert refused.status_code == 403
@@ -215,6 +259,79 @@ async def test_signup_waits_for_approval(client: httpx.AsyncClient) -> None:
 
     forbidden = await client.get("/api/users", headers=bearer(student_token))
     assert forbidden.status_code == 403
+
+
+async def test_signup_cannot_take_over_a_rostered_address(
+    client: httpx.AsyncClient, master: dict[str, Any], outbox: dict[str, list[Any]]
+) -> None:
+    victim = unique_email("victim")
+    added = await client.post(
+        "/api/access/roster",
+        headers=bearer(master["token"]),
+        json={"email": victim, "role": "PROFESSOR"},
+    )
+    assert added.status_code == 201, added.text
+
+    fresh = unique_email("fresh")
+    attempt = await client.post("/api/auth/signup", json=sign_up_body(victim, "Attacker", "PROFESSOR"))
+    baseline = await client.post("/api/auth/signup", json=sign_up_body(fresh))
+    assert attempt.status_code == baseline.status_code == 202
+    assert set(attempt.json()) == set(baseline.json())
+    repeat = await client.post("/api/auth/signup", json=sign_up_body(victim, "Attacker", "PROFESSOR"))
+    assert repeat.status_code == 202
+    assert repeat.json() == {"status": "EMAIL_SENT", "email": victim}
+
+    async with session_scope() as session:
+        account = await session.scalar(select(User).where(User.email == victim))
+        assert account is not None
+        assert account.passwordHash is None
+        assert account.emailVerifiedAt is None
+        assert account.role != "PROFESSOR"
+
+    for password in (PASSWORD, "attacker-chosen-password"):
+        refused = await client.post("/api/auth/login", json={"email": victim, "password": password})
+        assert refused.status_code == 401
+
+    async with session_scope() as session:
+        account = await session.scalar(select(User).where(User.email == victim))
+        account.passwordHash = hash_password(PASSWORD)
+    unverified = await client.post("/api/auth/login", json={"email": victim, "password": PASSWORD})
+    assert unverified.status_code == 401
+    assert unverified.headers["x-sign-in-hint"] == "EMAIL_UNVERIFIED"
+
+    owner_password = "owner-chosen-password"
+    confirmed = await client.post(
+        "/api/auth/set-password", json={"token": token_for(outbox, victim), "password": owner_password}
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    async with session_scope() as session:
+        account = await session.scalar(select(User).where(User.email == victim))
+        assert account.emailVerifiedAt is not None
+        assert account.role == "PROFESSOR"
+    signed_in = await client.post("/api/auth/login", json={"email": victim, "password": owner_password})
+    assert signed_in.status_code == 200, signed_in.text
+
+
+async def test_professor_cannot_reinstate_barred_access(
+    client: httpx.AsyncClient, master: dict[str, Any]
+) -> None:
+    professor = unique_email("professor")
+    secret = await create_user(professor, "PROFESSOR", with_two_factor=True)
+    token = await login(client, professor, secret)
+    barred = unique_email("barred")
+    async with session_scope() as session:
+        row = AccessRoster(email=barred, status="SUSPENDED", admitRole="STUDENT")
+        session.add(row)
+        await session.flush()
+        row_id = str(row.id)
+    refused = await client.post(
+        f"/api/access/roster/{row_id}/decision",
+        headers=bearer(token),
+        json={"decision": "APPROVE", "role": "STUDENT"},
+    )
+    assert refused.status_code == 403, refused.text
+    async with session_scope() as session:
+        assert (await session.get(AccessRoster, uuid.UUID(row_id))).status == "SUSPENDED"
 
 
 async def test_google_nonce_is_single_use_by_hash() -> None:
