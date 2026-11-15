@@ -2,15 +2,9 @@ name: Deploy backend
 
 on:
   workflow_run:
-    workflows: [Checks]
+    workflows: [Backend checks]
     types: [completed]
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      ref:
-        description: Commit to deploy (empty = head of main)
-        required: false
-        default: ""
 
 permissions:
   contents: read
@@ -23,8 +17,10 @@ concurrency:
 jobs:
   deploy:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
     runs-on: ubuntu-26.04
     timeout-minutes: 50
     env:
@@ -37,7 +33,7 @@ jobs:
       - name: Check out the commit to deploy
         uses: actions/checkout@v7
         with:
-          ref: ${{ inputs.ref || github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 1
 
       - name: Name the release
