@@ -121,7 +121,7 @@ resource "aws_iam_role" "deploy" {
       Condition = {
         StringEquals = {
           "${local.oidc_provider}:aud" = "sts.amazonaws.com"
-          "${local.oidc_provider}:sub" = "repo:${var.github_repo}:ref:${var.github_deploy_ref}"
+          "${local.oidc_provider}:sub" = "repo:${var.github_oidc_subject_repo}:ref:${var.github_deploy_ref}"
         }
       }
     }]

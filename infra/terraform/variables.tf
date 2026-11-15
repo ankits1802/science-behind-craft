@@ -28,6 +28,12 @@ variable "github_repo" {
   default     = "cxacraftecosystem-ui/KalaVigyan"
 }
 
+variable "github_oidc_subject_repo" {
+  description = "Repository part of the GitHub OIDC sub claim; the cxacraftecosystem-ui organisation issues immutable subjects (owner@id/name@id)."
+  type        = string
+  default     = "cxacraftecosystem-ui@293924172/KalaVigyan@1459150589"
+}
+
 variable "github_deploy_ref" {
   description = "Git ref whose workflows may assume the deploy role."
   type        = string
