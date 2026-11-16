@@ -45,15 +45,15 @@ async def learner(session: AsyncSession) -> User:
 
 
 def live(user: User, **changes: object) -> SessionRecord:
-    return voice_session(
-        id=uuid.uuid4(),
-        user_id=user.id,
-        chat_id=uuid.uuid4(),
-        craft=AJRAKH,
-        started_at=NOW,
-        expires_at=NOW + timedelta(seconds=120),
-        **changes,
-    )
+    defaults: dict[str, object] = {
+        "id": uuid.uuid4(),
+        "user_id": user.id,
+        "chat_id": uuid.uuid4(),
+        "craft": AJRAKH,
+        "started_at": NOW,
+        "expires_at": NOW + timedelta(seconds=120),
+    }
+    return voice_session(**{**defaults, **changes})
 
 
 async def test_a_created_session_reads_back_with_its_role_and_craft(store: Stores) -> None:
