@@ -52,6 +52,7 @@ async def test_a_write_back_embeds_only_the_rows_it_wrote(session: AsyncSession)
             predicate="states",
             text="A seeded claim still waiting for its vector.",
             evidenceLevel="REVIEWED",
+            origin="IMPORT",
         )
     )
     await session.flush()

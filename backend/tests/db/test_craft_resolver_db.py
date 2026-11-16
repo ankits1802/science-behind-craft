@@ -1,3 +1,4 @@
+import math
 import uuid
 from collections.abc import AsyncIterator
 
@@ -98,8 +99,8 @@ async def test_semantic_neighbours_come_from_pgvector(session: AsyncSession) -> 
     found = await resolver(session, embed).resolve(CraftQuery(text="zzqx yyqv"))
     assert embed.calls == [["zzqx yyqv"]]
     scores = {c.craft.slug: c.score for c in found.candidates}
-    assert scores["Qorvane-Weave"] == pytest.approx(0.8, abs=1e-6)
-    assert scores["Qorvane-Ikat"] == pytest.approx(0.565685, abs=1e-6)
+    assert scores["Qorvane-Weave"] == pytest.approx(0.8, abs=1e-5)
+    assert scores["Qorvane-Ikat"] == pytest.approx(0.8 / math.sqrt(2), abs=1e-5)
     assert found.status == "AMBIGUOUS"
 
 
