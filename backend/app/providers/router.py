@@ -14,6 +14,7 @@ from sqlalchemy import case, func, select, text, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+from app.core.errors import STOP_KINDS, AppError
 from app.core.logging import current_request_id
 from app.models import ManagedSecret, Provider, RoutePolicy, SecretTestResult, UsageEvent
 from app.services import app_settings, managed_secrets
@@ -39,9 +40,6 @@ DEGRADABLE_TASKS = frozenset(
     {AiTask.COMPOSE, AiTask.EXTRACT, AiTask.VOICE_TURN, AiTask.PLAN, AiTask.WEB_READ}
 )
 EMBED_DIMENSIONS = 1536
-
-NEXT_ROUTE_KINDS = frozenset({"rate_limit", "unavailable", "auth", "not_found", "error"})
-STOP_KINDS = frozenset({"refusal", "bad_request"})
 
 
 @dataclass(frozen=True)
@@ -85,7 +83,7 @@ class RouterResult:
     meta: dict[str, Any] = field(default_factory=dict)
 
 
-class RouterError(Exception):
+class RouterError(AppError):
     def __init__(
         self,
         kind: str,
@@ -215,6 +213,21 @@ async def current_spend(
         media_month_usd=budget.usd(media_total),
         user_day_usd=budget.usd(user_day),
     )
+
+
+async def tagged_spend(session: AsyncSession, *, request_id_prefix: str, since: datetime) -> Decimal:
+    if not request_id_prefix:
+        raise ValueError("A tagged spend needs a request id prefix")
+    escaped = request_id_prefix.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    total = (
+        await session.execute(
+            select(_spend_sum()).where(
+                UsageEvent.createdAt >= since,
+                UsageEvent.requestId.like(f"{escaped}%", escape="\\"),
+            )
+        )
+    ).scalar_one()
+    return budget.usd(total)
 
 
 async def reserve(

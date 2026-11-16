@@ -1,13 +1,11 @@
-import time
 import uuid
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from typing import Any
 
-from sqlalchemy import func, or_, select, text
+from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.data.craft_master_loader import normalise
 from app.models import (
     AdminDistrict,
     AdminState,
@@ -16,7 +14,6 @@ from app.models import (
     Concept,
     ConceptEdge,
     Craft,
-    CraftAlias,
     CraftCategory,
     CraftLocation,
     CraftSubCategory,
@@ -24,10 +21,12 @@ from app.models import (
     ProcessStage,
     Source,
 )
+from app.research.retrieval import HIDDEN_CLAIM_STATUSES, RESTRICTED_SENSITIVITY, VISIBLE_SENSITIVITY
+from app.research.vocabulary import LEVEL_ORDER
+from app.retrieval.statements import CraftScope, claim_conditions, lexical_rank, scope_concepts, text_query
+from app.retrieval.text import or_tsquery
 
-HIDDEN_CLAIM_STATUSES = ("DRAFT", "REJECTED", "RETRACTED")
-VISIBLE_SENSITIVITY = "OPEN"
-LEVEL_ORDER = {"VERIFIED": 0, "REVIEWED": 1, "PROVISIONAL": 2, "HYPOTHESIS": 3}
+PROFILE_MODE = "HYBRID"
 MATERIAL_TYPES = ("MATERIAL", "TOOL")
 STAGE_TYPE = "PROCESS_STAGE"
 EDGE_SECTION = "RELATIONS"
@@ -64,8 +63,6 @@ SECTION_ORDER = [
     "Other findings",
     "Open questions",
 ]
-MIN_ALIAS_LENGTH = 4
-ALIAS_CACHE_SECONDS = 300.0
 
 
 @dataclass
@@ -144,56 +141,70 @@ def craft_ref(craft: Craft) -> dict[str, Any]:
     return {"slug": craft.slug, "name": craft.name, "path": f"/crafts/{craft.slug}"}
 
 
+def craft_scope_of(craft: Craft) -> CraftScope:
+    return CraftScope(craft_id=craft.id, sub_category_id=craft.subCategoryId)
+
+
 async def craft_concepts(session: AsyncSession, craft: Craft) -> list[Concept]:
-    scope = [Concept.craftId == craft.id]
-    if craft.subCategoryId is not None:
-        scope.append((Concept.craftId.is_(None)) & (Concept.subCategoryId == craft.subCategoryId))
-    return list(
-        (
-            await session.execute(
-                select(Concept).where(or_(*scope), Concept.sensitivity == VISIBLE_SENSITIVITY)
-            )
-        )
-        .scalars()
-        .all()
-    )
+    concepts = scope_concepts(craft_scope_of(craft))
+    return list((await session.scalars(select(Concept).where(Concept.id.in_(concepts)))).all())
 
 
 async def claims_for(
-    session: AsyncSession, concepts: list[Concept], *, question: str | None = None
+    session: AsyncSession, craft: Craft, *, mode: str, question: str | None = None
 ) -> tuple[list[ClaimView], dict[uuid.UUID, Source]]:
-    if not concepts:
-        return [], {}
-    by_id = {c.id: c for c in concepts}
-    edges = list(
-        (
-            await session.execute(
-                select(ConceptEdge).where(
-                    or_(ConceptEdge.srcId.in_(list(by_id)), ConceptEdge.dstId.in_(list(by_id)))
-                )
-            )
-        )
-        .scalars()
-        .all()
-    )
-    edge_ids = [edge.id for edge in edges]
-    subject = or_(
-        (Claim.subjectType == "CONCEPT") & Claim.subjectId.in_(list(by_id)),
-        (Claim.subjectType == "EDGE") & Claim.subjectId.in_(edge_ids) if edge_ids else text("false"),
-    )
-    rank_column: Any = text("0")
-    if question and question.strip():
-        query = func.websearch_to_tsquery("english", question.strip())
-        rank_column = func.ts_rank(Claim.tsv, query)
-    rows = (
-        await session.execute(
-            select(Claim, rank_column).where(
-                subject,
-                Claim.status.not_in(HIDDEN_CLAIM_STATUSES),
-                Claim.sensitivity == VISIBLE_SENSITIVITY,
-            )
-        )
-    ).all()
+    tsquery = or_tsquery(question or "")
+    rank_column: Any = lexical_rank(Claim.tsv, text_query(tsquery)) if tsquery else text("0")
+    conditions = claim_conditions(craft_scope_of(craft), mode=mode)
+    rows = list((await session.execute(select(Claim, rank_column).where(*conditions))).all())
+    concepts = {concept.id: concept for concept in await craft_concepts(session, craft)}
+    edge_concept = await _edge_concepts(session, rows, concepts)
+
+    def placed(claim: Claim) -> tuple[uuid.UUID | None, str]:
+        if claim.subjectType == "EDGE":
+            return edge_concept.get(claim.subjectId), EDGE_SECTION
+        return claim.subjectId, concepts[claim.subjectId].type
+
+    return await _cited_views(session, rows, placed)
+
+
+async def _edge_concepts(
+    session: AsyncSession, rows: list[Any], concepts: dict[uuid.UUID, Concept]
+) -> dict[uuid.UUID, uuid.UUID]:
+    edge_ids = [claim.subjectId for claim, _ in rows if claim.subjectType == "EDGE"]
+    if not edge_ids:
+        return {}
+    edges = (await session.scalars(select(ConceptEdge).where(ConceptEdge.id.in_(edge_ids)))).all()
+    return {edge.id: edge.srcId if edge.srcId in concepts else edge.dstId for edge in edges}
+
+
+async def claims_by_id(
+    session: AsyncSession, claim_ids: Iterable[uuid.UUID]
+) -> tuple[dict[uuid.UUID, ClaimView], dict[uuid.UUID, Source]]:
+    wanted = list(dict.fromkeys(claim_ids))
+    if not wanted:
+        return {}, {}
+    rows = await _visible_claims(session, Claim.id.in_(wanted), text("0"))
+
+    def placed(claim: Claim) -> tuple[uuid.UUID | None, str]:
+        return (claim.subjectId if claim.subjectType == "CONCEPT" else None), ""
+
+    views, sources = await _cited_views(session, rows, placed)
+    return {view.id: view for view in views}, sources
+
+
+async def _visible_claims(session: AsyncSession, condition: Any, rank_column: Any) -> list[Any]:
+    filters = [
+        condition,
+        Claim.status.not_in(HIDDEN_CLAIM_STATUSES),
+        Claim.sensitivity == VISIBLE_SENSITIVITY,
+    ]
+    return list((await session.execute(select(Claim, rank_column).where(*filters))).all())
+
+
+async def _cited_views(
+    session: AsyncSession, rows: list[Any], placed: Callable[[Claim], tuple[uuid.UUID | None, str]]
+) -> tuple[list[ClaimView], dict[uuid.UUID, Source]]:
     if not rows:
         return [], {}
     claim_ids = [claim.id for claim, _ in rows]
@@ -205,7 +216,7 @@ async def claims_for(
         source.id: source
         for source in (
             await session.execute(
-                select(Source).where(Source.id.in_(source_ids), Source.sensitivity != "RESTRICTED")
+                select(Source).where(Source.id.in_(source_ids), Source.sensitivity != RESTRICTED_SENSITIVITY)
             )
         )
         .scalars()
@@ -215,18 +226,12 @@ async def claims_for(
     for cite in cites:
         if cite.sourceId in sources:
             by_claim.setdefault(cite.claimId, []).append(cite)
-    edge_concept = {edge.id: edge.srcId if edge.srcId in by_id else edge.dstId for edge in edges}
     views: list[ClaimView] = []
     for claim, rank in rows:
         attached = by_claim.get(claim.id)
         if not attached:
             continue
-        if claim.subjectType == "EDGE":
-            concept_id = edge_concept.get(claim.subjectId)
-            concept_type = EDGE_SECTION
-        else:
-            concept_id = claim.subjectId
-            concept_type = by_id[claim.subjectId].type
+        concept_id, concept_type = placed(claim)
         attached.sort(key=lambda c: (c.quote is None, str(c.id)))
         views.append(
             ClaimView(
@@ -321,7 +326,7 @@ async def craft_profile(session: AsyncSession, craft: Craft) -> dict[str, Any]:
         )
     ).first()
     concepts = await craft_concepts(session, craft)
-    claims, sources = await claims_for(session, concepts)
+    claims, sources = await claims_for(session, craft, mode=PROFILE_MODE)
     stage_rows = (
         (
             await session.execute(
@@ -459,44 +464,3 @@ async def map_points(session: AsyncSession) -> list[dict[str, Any]]:
         listed = sorted(entry["crafts"].values(), key=lambda c: c["name"].casefold())
         out.append({**entry, "total": len(listed), "crafts": listed})
     return sorted(out, key=lambda p: p["name"].casefold())
-
-
-_alias_cache: dict[str, Any] = {"at": 0.0, "rows": []}
-
-
-async def alias_rows(session: AsyncSession) -> list[tuple[str, uuid.UUID]]:
-    now = time.monotonic()
-    if _alias_cache["rows"] and now - _alias_cache["at"] < ALIAS_CACHE_SECONDS:
-        return _alias_cache["rows"]
-    crafts = (
-        await session.execute(
-            select(Craft.id, Craft.name).where(Craft.status == "ACTIVE", Craft.isCatchAll.is_(False))
-        )
-    ).all()
-    active = {craft_id for craft_id, _ in crafts}
-    rows = [(normalise(name), craft_id) for craft_id, name in crafts]
-    aliases = (
-        await session.execute(
-            select(CraftAlias.aliasNorm, CraftAlias.craftId).where(CraftAlias.status == "ACTIVE")
-        )
-    ).all()
-    rows.extend((alias, craft_id) for alias, craft_id in aliases if craft_id in active)
-    cleaned = sorted({(alias, craft_id) for alias, craft_id in rows if len(alias) >= MIN_ALIAS_LENGTH})
-    _alias_cache.update(at=now, rows=cleaned)
-    return cleaned
-
-
-def match_aliases(question: str, rows: list[tuple[str, uuid.UUID]]) -> list[uuid.UUID]:
-    padded = f" {normalise(question)} "
-    best = 0
-    found: dict[uuid.UUID, int] = {}
-    for alias, craft_id in rows:
-        if f" {alias} " in padded:
-            length = len(alias)
-            found[craft_id] = max(found.get(craft_id, 0), length)
-            best = max(best, length)
-    return sorted((cid for cid, length in found.items() if length == best), key=str)
-
-
-def reset_alias_cache() -> None:
-    _alias_cache.update(at=0.0, rows=[])

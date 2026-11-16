@@ -3,6 +3,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
+from app.core.errors import ExternalFailure
+
 
 @dataclass
 class ChatRequest:
@@ -28,21 +30,8 @@ class ChatResult:
     cache_write_tokens: int | None = None
 
 
-class ProviderError(Exception):
-    def __init__(
-        self,
-        message: str,
-        *,
-        retryable: bool = False,
-        status: int | None = None,
-        kind: str = "error",
-        retry_after: float | None = None,
-    ):
-        super().__init__(message)
-        self.retryable = retryable
-        self.status = status
-        self.kind = kind
-        self.retry_after = retry_after
+class ProviderError(ExternalFailure):
+    pass
 
 
 class Adapter(ABC):

@@ -97,11 +97,22 @@ All lookups go through the Wikidata Query Service, including Wikipedia and Wikid
 - `stage.stageType` is a keyword guess from the stage title. Researchers correct it.
 - Each import writes a `ReviewEvent` with `actorKind=SYSTEM` and `systemActor=import` when the backend loads it (backend lane).
 
+## Crafts synced from the portals
+
+`Craft` also holds every craft the designer and documentation portals added beyond the master
+list (`docs/contracts/portal-craft-feed.md`, decision 0003). Such a row has
+`extraMetadata.portalOrigin` and `extraMetadata.portalSources`; master rows gain
+`portalSources` only and are otherwise untouched. Portal names are `CraftAlias` rows with
+source `DR_SYNC` (designer portal) or `FR_SYNC` (documentation portal, migration
+`0002_portal_alias_source`). `alias_norm`, `alias_lang` and `SCRIPT_LANG` now live in
+`backend/app/data/craft_text.py`; `etl/crafts/aliases.py` imports them.
+
 ## Matcher expectations (plan §5.2)
 
-- Exact match: ACTIVE `CraftAlias.aliasNorm`, `CraftSpelling.spelling` or slug, excluding collision norms.
-- Fuzzy: `pg_trgm` on `aliasNorm`, and rapidfuzz on `latin` for romanised input.
-- Use `craft_text.core_key` to strip stop tokens, `craft_text.to_latin_spoken` for Indic queries, and `craft_text.ascii_key` everywhere else.
+The resolver is built: `docs/contracts/research.md` (The resolver) and decision 0004.
+
+- Exact match: ACTIVE `CraftAlias.alias`, `CraftSpelling.label` (through `craftCode`), name and local name, keyed by `craft_text.core_key` of the text and of `craft_text.to_latin_spoken(text)`. A key that names several crafts (a collision) gives each the same exact score, so they become pills, never a single answer.
+- Fuzzy: rapidfuzz `ratio` on those keys and on distinctive name tokens, in memory (not `pg_trgm`).
 
 ## Workflow
 

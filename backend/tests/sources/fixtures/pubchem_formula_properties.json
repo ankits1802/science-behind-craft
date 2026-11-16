@@ -1,0 +1,24 @@
+{
+ "PropertyTable": {
+  "Properties": [
+   {
+    "CID": 6293,
+    "MolecularFormula": "C14H8O4",
+    "MolecularWeight": "240.21",
+    "SMILES": "C1=CC=C2C(=C1)C(=O)C3=C(C2=O)C(=C(C=C3)O)O",
+    "InChIKey": "RGCKGOZRHPZPFP-UHFFFAOYSA-N",
+    "IUPACName": "1,2-dihydroxyanthracene-9,10-dione",
+    "Title": "Alizarin"
+   },
+   {
+    "CID": 2950,
+    "MolecularFormula": "C14H8O4",
+    "MolecularWeight": "240.21",
+    "SMILES": "C1=CC2=C(C(=C1)O)C(=O)C3=C(C2=O)C=CC=C3O",
+    "InChIKey": "QBPFLULOKWLNNW-UHFFFAOYSA-N",
+    "IUPACName": "1,8-dihydroxyanthracene-9,10-dione",
+    "Title": "1,8-Dihydroxyanthraquinone"
+   }
+  ]
+ }
+}

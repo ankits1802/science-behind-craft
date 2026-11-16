@@ -16,6 +16,17 @@ INDIC_BLOCKS: dict[int, str] = {
     0x0D00: "Mlym",
 }
 INDO_ARYAN = frozenset({"Deva", "Beng", "Guru", "Gujr", "Orya"})
+SCRIPT_LANG: dict[str, str] = {
+    "Deva": "hi",
+    "Beng": "bn",
+    "Guru": "pa",
+    "Gujr": "gu",
+    "Orya": "or",
+    "Taml": "ta",
+    "Telu": "te",
+    "Knda": "kn",
+    "Mlym": "ml",
+}
 STOP_TOKENS = frozenset({"craft", "crafts", "work", "works", "art", "arts", "of", "the", "prints", "kala"})
 
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
@@ -194,3 +205,13 @@ def ascii_key(text: Any) -> str:
 
 def core_key(text: Any) -> str:
     return " ".join(tok for tok in ascii_key(text).split() if tok not in STOP_TOKENS)
+
+
+def alias_norm(text: Any) -> str:
+    value = str(text or "")
+    return ascii_key(value) if script_of(value) in ("Latn", "Zyyy") else fold(value)
+
+
+def alias_lang(text: Any) -> str | None:
+    script = script_of(text)
+    return "en" if script == "Latn" else SCRIPT_LANG.get(script)

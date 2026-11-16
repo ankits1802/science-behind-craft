@@ -1,0 +1,1150 @@
+{
+ "head": {
+  "vars": [
+   "property",
+   "propertyLabel",
+   "type",
+   "value",
+   "valueLabel",
+   "unit",
+   "unitLabel",
+   "precision"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P2067"
+    },
+    "unit": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q483261"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#Quantity"
+    },
+    "value": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "240.042"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "mass"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "240.042"
+    },
+    "unitLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "dalton"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P2101"
+    },
+    "unit": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q25267"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#Quantity"
+    },
+    "value": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "288"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "melting point"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "288"
+    },
+    "unitLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "degree Celsius"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P2101"
+    },
+    "unit": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q25267"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#Quantity"
+    },
+    "value": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "289"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "melting point"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "289"
+    },
+    "unitLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "degree Celsius"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P2102"
+    },
+    "unit": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q25267"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#Quantity"
+    },
+    "value": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "430"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "boiling point"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "430"
+    },
+    "unitLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "degree Celsius"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P274"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#String"
+    },
+    "value": {
+     "type": "literal",
+     "value": "C₁₄H₈O₄"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "chemical formula"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "C₁₄H₈O₄"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P279"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q574302"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "subclass of"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "anthraquinones"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P361"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q22321701"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "part of"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "alizarin 2-beta-glucosyltransferase activity"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P373"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#String"
+    },
+    "value": {
+     "type": "literal",
+     "value": "Alizarin"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Commons category"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "Alizarin"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P527"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q556"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "has part(s)"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "hydrogen"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P527"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q629"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "has part(s)"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "oxygen"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P527"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q623"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "has part(s)"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "carbon"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P646"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#ExternalId"
+    },
+    "value": {
+     "type": "literal",
+     "value": "/m/01h_4s"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Freebase ID"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "/m/01h_4s"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P662"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#ExternalId"
+    },
+    "value": {
+     "type": "literal",
+     "value": "6293"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "PubChem CID"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "6293"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1378803"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Senna obtusifolia"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q3095290"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia peregrina"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q557377"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Stereum hirsutum"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q104972939"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia lanceolata"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q15399753"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Cinchona calisaya"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q163641"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia tinctorum"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q3237818"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia cordifolia"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q24693248"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Fallopia japonica var. japonica"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q24853218"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia alata"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q55864240"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Gynochthodes parvifolia"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q164574"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Cinchona pubescens"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q7085552"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Oldenlandia umbellata"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q26280580"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rhizobium rhizogenes"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q96063759"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Galium dasypodum"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q161090"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "sweet woodruff"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q234238"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Morinda citrifolia"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q10869718"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia argyi"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q21304962"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Rubia akane"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q138216"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Agrobacterium rhizogenes"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P703"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q15452200"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "found in taxon"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Galium rubioides"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q19180675"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Small Brockhaus and Efron Encyclopedic Dictionary"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q867541"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Encyclopædia Britannica 11th edition"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q20078554"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Great Soviet Encyclopedia (1926–1947)"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q20078551"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Technical Encyclopedia, 1st edition"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q602358"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Brockhaus and Efron Encyclopedic Dictionary"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1970746"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Explanatory Dictionary of the Living Great Russian Language"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1343"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q123560817"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "described by source"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Armenian Soviet Encyclopedia, vol. 1"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P1889"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q2695590"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "different from"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Alizarine Yellow R"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P18"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#CommonsMedia"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Alizarin-sample.jpg"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "image"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Alizarin-sample.jpg"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P31"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#WikibaseItem"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q113145171"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "instance of"
+    },
+    "valueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "type of chemical entity"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P117"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#CommonsMedia"
+    },
+    "value": {
+     "type": "uri",
+     "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Alizarin.svg"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "chemical structure"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Alizarin.svg"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P231"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#ExternalId"
+    },
+    "value": {
+     "type": "literal",
+     "value": "72-48-0"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "CAS Registry Number"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "72-48-0"
+    }
+   },
+   {
+    "property": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/P233"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#String"
+    },
+    "value": {
+     "type": "literal",
+     "value": "C1=CC=C2C(=C1)C(=O)C3=C(C2=O)C(=C(C=C3)O)O"
+    },
+    "propertyLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "canonical SMILES"
+    },
+    "valueLabel": {
+     "type": "literal",
+     "value": "C1=CC=C2C(=C1)C(=O)C3=C(C2=O)C(=C(C=C3)O)O"
+    }
+   }
+  ]
+ }
+}

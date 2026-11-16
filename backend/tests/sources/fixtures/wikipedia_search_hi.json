@@ -1,0 +1,55 @@
+{
+ "batchcomplete": true,
+ "continue": {
+  "gsroffset": 2,
+  "continue": "gsroffset||siteinfo"
+ },
+ "query": {
+  "pages": [
+   {
+    "pageid": 1738,
+    "ns": 0,
+    "title": "मधुबनी",
+    "index": 2,
+    "pagelanguage": "hi",
+    "lastrevid": 6476103,
+    "fullurl": "https://hi.wikipedia.org/wiki/%E0%A4%AE%E0%A4%A7%E0%A5%81%E0%A4%AC%E0%A4%A8%E0%A5%80",
+    "canonicalurl": "https://hi.wikipedia.org/wiki/%E0%A4%AE%E0%A4%A7%E0%A5%81%E0%A4%AC%E0%A4%A8%E0%A5%80",
+    "pageprops": {
+     "wikibase_item": "Q2767858"
+    },
+    "revisions": [
+     {
+      "revid": 6476103,
+      "parentid": 6113024,
+      "timestamp": "2025-09-16T04:06:12Z"
+     }
+    ]
+   },
+   {
+    "pageid": 1741,
+    "ns": 0,
+    "title": "मधुबनी चित्रकला",
+    "index": 1,
+    "pagelanguage": "hi",
+    "lastrevid": 6189182,
+    "fullurl": "https://hi.wikipedia.org/wiki/%E0%A4%AE%E0%A4%A7%E0%A5%81%E0%A4%AC%E0%A4%A8%E0%A5%80_%E0%A4%9A%E0%A4%BF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%95%E0%A4%B2%E0%A4%BE",
+    "canonicalurl": "https://hi.wikipedia.org/wiki/%E0%A4%AE%E0%A4%A7%E0%A5%81%E0%A4%AC%E0%A4%A8%E0%A5%80_%E0%A4%9A%E0%A4%BF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%95%E0%A4%B2%E0%A4%BE",
+    "pageprops": {
+     "wikibase_item": "Q2547125"
+    },
+    "revisions": [
+     {
+      "revid": 6189182,
+      "parentid": 6090363,
+      "timestamp": "2024-07-20T07:15:49Z"
+     }
+    ]
+   }
+  ],
+  "rightsinfo": {
+   "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.hi",
+   "text": "Creative Commons Attribution-Share Alike 4.0"
+  }
+ }
+}

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { chemistryTex, renderChemistry } from "@/lib/chemistry";
-import { doiUrl, highlightQuote, safeOutboundUrl, sourceHref, sourceNumbers } from "@/lib/citations";
+import { doiUrl, highlightQuote, safeOutboundUrl, sourceHref, sourceKindLabel, sourceNumbers, sourceReliabilityLabel } from "@/lib/citations";
 import type { AnswerSection, Citation } from "@/lib/types";
 
 const cite = (sourceId: string): Citation => ({
@@ -61,4 +61,11 @@ test("chemical equations go through mhchem with trust off", () => {
   const html = renderChemistry("Al2Si2O5(OH)4 -> Al2Si2O7 + 2 H2O", true);
   expect(html).toContain("katex");
   expect(html).not.toContain("<script");
+});
+
+test("source types and reliability tiers read as words in the source dialog", () => {
+  expect(sourceKindLabel("WEB_PAGE")).toBe("Web page");
+  expect(sourceKindLabel("SOMETHING_NEW")).toBe("Other");
+  expect(sourceReliabilityLabel("A")).toBe("A · peer-reviewed or official");
+  expect(sourceReliabilityLabel("C")).toBe("C · general web");
 });

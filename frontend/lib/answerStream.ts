@@ -1,5 +1,5 @@
 import { API_BASE, APP_PLATFORM, APP_VERSION, APP_VERSION_CODE, ApiError, describeApiBody, statusFallback } from "@/lib/api";
-import type { AnswerMode, AnswerPayload, AnswerReaction, AnswerSection, AnswerSentence, CraftMatch, SourceRef } from "@/lib/types";
+import type { AnswerMode, AnswerPayload, AnswerReaction, AnswerSection, AnswerSentence, AnswerStatus, CraftMatch, SourceRef } from "@/lib/types";
 
 export const ANSWER_STREAM_PATH = "/answers/stream";
 
@@ -13,6 +13,8 @@ export type AskRequest = {
 
 export type AnswerEvent =
   | { type: "match"; data: CraftMatch }
+  | { type: "status"; data: AnswerStatus }
+  | { type: "not_enough_evidence"; data: { message: string } }
   | { type: "source"; data: SourceRef }
   | { type: "section"; data: { id: string; heading: string } }
   | { type: "sentence"; data: { sectionId: string; sentence: AnswerSentence } }
@@ -22,20 +24,26 @@ export type AnswerEvent =
   | { type: "done"; data: { answerId: string | null } }
   | { type: "error"; data: { message: string } };
 
-export type AnswerPhase = "idle" | "matching" | "streaming" | "done" | "ambiguous" | "failed";
+export type AnswerPhase = "idle" | "matching" | "streaming" | "done" | "ambiguous" | "empty" | "failed";
 
 export type AnswerState = {
   phase: AnswerPhase;
   match: CraftMatch | null;
+  status: AnswerStatus | null;
   payload: AnswerPayload;
   error: string | null;
+  notice: string | null;
 };
+
+const SETTLED: ReadonlySet<AnswerPhase> = new Set(["ambiguous", "empty", "failed"]);
 
 export function emptyAnswer(question = "", mode: AnswerMode = "HYBRID"): AnswerState {
   return {
     phase: "idle",
     match: null,
+    status: null,
     error: null,
+    notice: null,
     payload: {
       answerId: null,
       question,
@@ -74,6 +82,11 @@ export function reduceAnswer(state: AnswerState, event: AnswerEvent): AnswerStat
         payload: { ...payload, craft: match.status === "RESOLVED" ? match.craft : null }
       };
     }
+    case "status":
+      if (SETTLED.has(state.phase)) return state;
+      return { ...state, status: event.data };
+    case "not_enough_evidence":
+      return { ...state, phase: "empty", status: null, notice: event.data.message };
     case "source":
       if (payload.sources.some((source) => source.id === event.data.id)) return state;
       return { ...state, payload: { ...payload, sources: [...payload.sources, event.data] } };
@@ -96,20 +109,20 @@ export function reduceAnswer(state: AnswerState, event: AnswerEvent): AnswerStat
     case "follow_ups":
       return { ...state, payload: { ...payload, followUps: event.data.items } };
     case "done":
-      if (state.phase === "failed") return state;
       return {
         ...state,
-        phase: state.phase === "ambiguous" ? "ambiguous" : "done",
+        phase: SETTLED.has(state.phase) ? state.phase : "done",
+        status: null,
         payload: { ...payload, answerId: event.data.answerId ?? payload.answerId }
       };
     case "error":
-      return { ...state, phase: "failed", error: event.data.message };
+      return { ...state, phase: "failed", status: null, error: event.data.message };
     default:
       return state;
   }
 }
 
-const KNOWN_EVENTS = new Set(["match", "source", "section", "sentence", "open_question", "reaction", "follow_ups", "done", "error"]);
+const KNOWN_EVENTS = new Set(["match", "status", "not_enough_evidence", "source", "section", "sentence", "open_question", "reaction", "follow_ups", "done", "error"]);
 
 export function parseSseBlock(block: string): AnswerEvent | null {
   let name = "message";

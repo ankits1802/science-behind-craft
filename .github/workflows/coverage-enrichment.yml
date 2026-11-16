@@ -1,0 +1,83 @@
+name: Coverage enrichment
+
+on:
+  schedule:
+    - cron: "17 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: coverage-enrichment
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 75
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      INSTANCE_ID: ${{ vars.EC2_INSTANCE_ID }}
+      BUCKET: ${{ vars.MEDIA_BUCKET }}
+    steps:
+      - name: Check the repository variables
+        run: |
+          set -euo pipefail
+          for v in AWS_REGION INSTANCE_ID BUCKET; do
+            [ -n "${!v}" ] || { echo "::error::repository variable for $v is not set (see docs/RUNBOOK.md)"; exit 1; }
+          done
+
+      - name: Assume the deploy role
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: coverage-enrichment-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Fill missing vectors, then widen coverage of the least covered crafts on the box
+        run: |
+          set -euo pipefail
+          script=$(cat <<'EOF'
+          set -euo pipefail
+          cd /opt/kalavigyan/current/backend
+          run_module() { runuser -u kalavigyan -- bash -c "set -a; . /opt/kalavigyan/.env; set +a; exec ./.venv/bin/python -m $1"; }
+          outcome=0
+          run_module app.scripts.embed_knowledge || outcome=$?
+          run_module app.scripts.enrich_coverage || outcome=$?
+          exit "$outcome"
+          EOF
+          )
+          prefix="deploy/logs/coverage-enrichment/$GITHUB_RUN_ID"
+          jq -n --arg s "$script" '{commands: [$s], executionTimeout: ["3900"]}' > "$RUNNER_TEMP/params.json"
+          cid="$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name AWS-RunShellScript \
+            --comment "coverage enrichment run ${GITHUB_RUN_ID}" \
+            --timeout-seconds 300 \
+            --parameters "file://$RUNNER_TEMP/params.json" \
+            --output-s3-bucket-name "$BUCKET" \
+            --output-s3-key-prefix "$prefix" \
+            --query Command.CommandId --output text)"
+          echo "SSM command $cid"
+          deadline=$(( $(date +%s) + 4020 ))
+          while :; do
+            sleep 15
+            status="$(aws ssm get-command-invocation --command-id "$cid" --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)"
+            case "$status" in
+              Pending|InProgress|Delayed) ;;
+              *) break ;;
+            esac
+            [ "$(date +%s)" -lt "$deadline" ] || { echo "::error::the coverage enrichment did not finish in 67 minutes"; status=TimedOut; break; }
+          done
+          echo "status: $status"
+          base="$prefix/$cid/$INSTANCE_ID/awsrunShellScript/0.awsrunShellScript"
+          for stream in stdout stderr; do
+            echo "::group::box $stream"
+            aws s3 cp --only-show-errors "s3://$BUCKET/$base/$stream" - 2>/dev/null \
+              || aws ssm get-command-invocation --command-id "$cid" --instance-id "$INSTANCE_ID" \
+                   --query "$( [ "$stream" = stdout ] && echo StandardOutputContent || echo StandardErrorContent )" --output text
+            echo "::endgroup::"
+          done
+          [ "$status" = Success ] || { echo "::error::coverage enrichment ended $status; the JSON report above names each craft, its job and any error (docs/contracts/research.md)"; exit 1; }

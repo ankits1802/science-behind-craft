@@ -1,0 +1,75 @@
+{
+ "batchcomplete": true,
+ "continue": {
+  "gsroffset": 3,
+  "continue": "gsroffset||siteinfo"
+ },
+ "query": {
+  "pages": [
+   {
+    "pageid": 8807398,
+    "ns": 0,
+    "title": "Ajrak",
+    "index": 1,
+    "pagelanguage": "en",
+    "lastrevid": 1385329287,
+    "fullurl": "https://en.wikipedia.org/wiki/Ajrak",
+    "canonicalurl": "https://en.wikipedia.org/wiki/Ajrak",
+    "pageprops": {
+     "wikibase_item": "Q104218192"
+    },
+    "revisions": [
+     {
+      "revid": 1385329287,
+      "parentid": 1382781094,
+      "timestamp": "2026-11-12T20:42:27Z"
+     }
+    ]
+   },
+   {
+    "pageid": 33536457,
+    "ns": 0,
+    "title": "Crafts of India",
+    "index": 2,
+    "pagelanguage": "en",
+    "lastrevid": 1322165462,
+    "fullurl": "https://en.wikipedia.org/wiki/Crafts_of_India",
+    "canonicalurl": "https://en.wikipedia.org/wiki/Crafts_of_India",
+    "pageprops": {
+     "wikibase_item": "Q5180565"
+    },
+    "revisions": [
+     {
+      "revid": 1322165462,
+      "parentid": 1322162736,
+      "timestamp": "2025-11-14T18:00:50Z"
+     }
+    ]
+   },
+   {
+    "pageid": 73948903,
+    "ns": 0,
+    "title": "Anokhi Museum of Hand Printing",
+    "index": 3,
+    "pagelanguage": "en",
+    "lastrevid": 1369260343,
+    "fullurl": "https://en.wikipedia.org/wiki/Anokhi_Museum_of_Hand_Printing",
+    "canonicalurl": "https://en.wikipedia.org/wiki/Anokhi_Museum_of_Hand_Printing",
+    "pageprops": {
+     "wikibase_item": "Q61931254"
+    },
+    "revisions": [
+     {
+      "revid": 1369260343,
+      "parentid": 1363440782,
+      "timestamp": "2026-08-13T21:57:23Z"
+     }
+    ]
+   }
+  ],
+  "rightsinfo": {
+   "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+   "text": "Creative Commons Attribution-Share Alike 4.0"
+  }
+ }
+}

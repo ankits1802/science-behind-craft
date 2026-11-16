@@ -1,0 +1,74 @@
+{
+ "id": "270012ac76064f23948b99c92aed70d0",
+ "created_date": "2023-01-08T12:10:11Z",
+ "last_updated": "2025-08-19T21:19:44Z",
+ "es_type": "article",
+ "admin": {
+  "in_doaj": true
+ },
+ "bibjson": {
+  "title": "An eco-friendly method of extracting alizarin from Rubia tinctorum roots under supercritical carbon dioxide and its application to wool dyeing",
+  "year": "2023",
+  "month": "1",
+  "abstract": "Abstract Because of its low critical temperature and pressure levels, supercritical carbon dioxide (scCO2) is the most widely used supercritical fluid in the supercritical fluid extraction (SFE) technique. Alizarin was extracted from madder roots (Rubia tinctorum) using scCO2 under different conditions of co-solvent ratio (0–50%), temperature (45–95 °C), pressure (150–250 bar), extraction time (15–120 min), and flow rate (5–9 mL/min). Based on alizarin recovery and minimization of environmental risk, the optimum conditions were determined. SFE was optimum at 90% CO2:10% methanol (Me), 65 °C, 250 bar, 45 min, and 9 mL/min. The alizarin recovery, and its content in R. tinctorum extract (RE) under the optimum conditions were 1.34 g/kg roots, and 6.42%, respectively. Using conventional dyeing methods, wool fabrics were dyed with RE at different concentrations (2–6%). Various types of mordants were also used in the dyeing process, including chemical and bio-mordants. Color and fastness properties of dyed wool fabrics were evaluated based on RE concentration and mordant type. A higher RE concentration and the use of mordants, specifically Punica granatum (P. granatum) peels, increased the color characteristics. RE and dyed fabrics exhibited good antibacterial activity against the tested bacterial strains, especially Pseudomonas aeruginosa and Escherichia coli.",
+  "journal": {
+   "start_page": "1",
+   "end_page": "10",
+   "volume": "13",
+   "number": "1",
+   "publisher": "Nature Portfolio",
+   "title": "Scientific Reports",
+   "country": "GB",
+   "language": [
+    "EN"
+   ]
+  },
+  "identifier": [
+   {
+    "type": "doi",
+    "id": "10.1038/s41598-022-27110-0"
+   },
+   {
+    "type": "eissn",
+    "id": "2045-2322"
+   }
+  ],
+  "link": [
+   {
+    "type": "fulltext",
+    "url": "https://doi.org/10.1038/s41598-022-27110-0",
+    "content_type": "HTML"
+   }
+  ],
+  "author": [
+   {
+    "name": "Tarek Abou Elmaaty",
+    "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University"
+   },
+   {
+    "name": "Khaled Sayed-Ahmed",
+    "affiliation": "Department of Agricultural Chemistry, Faculty of Agriculture, Damietta University"
+   },
+   {
+    "name": "Mai Magdi",
+    "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University"
+   },
+   {
+    "name": "Hanan Elsisi",
+    "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University"
+   }
+  ],
+  "subject": [
+   {
+    "scheme": "LCC",
+    "term": "Medicine",
+    "code": "R"
+   },
+   {
+    "scheme": "LCC",
+    "term": "Science",
+    "code": "Q"
+   }
+  ]
+ }
+}

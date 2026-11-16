@@ -219,13 +219,13 @@ Indexes: `Claim(subjectType, subjectId, evidenceLevel, status)`; HNSW `vector_co
 ### 5.1 Identity sync
 
 - P0: vendored JSON plus a scheduled workflow comparing its sha1 with DR's file.
-- P1a: DR gains a `/cross-portal/crafts` peer route (in DR's next batched release) returning every craft with status and `mergedInto` slug, with an ETag. KalaVigyan pulls daily with the cross-portal token and upserts by slug, including LEGACY and MERGED redirects and renames (renamed names become `CraftAlias` source DR_SYNC). `GET /crafts/catalogue` (`designer-portal/backend/app/api/routes/crafts.py:134`) is not enough: it returns ACTIVE crafts only.
+- P1a: DR and FR gain a `/cross-portal/peer/crafts` peer route (in their next batched release; specified in `docs/contracts/portal-craft-feed.md`, decision 0003) returning every craft with status and `mergedInto` slug, with an ETag. KalaVigyan pulls daily with the cross-portal token and upserts by slug, including LEGACY and MERGED redirects and renames (renamed names become `CraftAlias` source DR_SYNC). `GET /crafts/catalogue` (`designer-portal/backend/app/api/routes/crafts.py:134`) is not enough: it returns ACTIVE crafts only.
 
 ### 5.2 Matcher (`crafts/matcher.py`)
 
 1. Normalise: NFKC, casefold, `unaccent`; Indic scripts through the naming skill's inherent-vowel pass then `anyascii`; strip stop tokens (`craft`, `work`, `art`, `of`, `the`, `prints`, `kala`); keep place tokens.
 2. Exact: ACTIVE `CraftAlias.aliasNorm`, `CraftSpelling`, slugs; MERGED redirect via `mergedIntoId`.
-3. Fuzzy: `pg_trgm` similarity ≥ 0.45, top 10.
+3. Fuzzy: `pg_trgm` similarity ≥ 0.45, top 10. (Built with rapidfuzz at 0.85 and score fusion instead of RRF: decision 0004.)
 4. Semantic: cosine on `descriptorEmbedding`, top 10.
 5. RRF fusion; boost when a named state or place matches `stateOfPractice` or `CraftLocation`.
 6. Decide: top ≥ 0.85 with margin ≥ 0.15 → accept; a family term → sub-category answer listing its crafts; otherwise a model chooses from an enum of the top 5 slugs plus `none`, and on `none` the UI shows 5 pills.
@@ -554,7 +554,7 @@ From security-audit (`AI-AND-LLM.md`, `WEB-PROTOCOL-AND-AUTH.md`, `CLIENT-SIDE.m
 
 | Group | Names |
 |---|---|
-| Backend runtime (Actions `BACKEND_ENV` + box `.env`) | `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`, `VOICE_SESSION_HMAC_KEY`, `MEDIA_BUNDLE_HMAC_KEY`, `GOOGLE_CLIENT_ID`, `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER`, `BRAVE_SEARCH_API_KEY`, `EXA_API_KEY`, `TAVILY_API_KEY`, `OPENALEX_API_KEY`, `CROSSREF_MAILTO`, `SEMANTIC_SCHOLAR_API_KEY`, `CORE_API_KEY`, `DATA_GOV_IN_API_KEY`, `TURNSTILE_SECRET_KEY`, `CROSS_PORTAL_TOKEN`, `S3_BUCKET`, `AWS_REGION`, `PUBLIC_WEB_URL`, `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME`, `MAIL_REPLY_TO`, `MAIL_SES_REGION`, `MAIL_SES_CONFIGURATION_SET` |
+| Backend runtime (Actions `BACKEND_ENV` + box `.env`) | `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`, `VOICE_SESSION_HMAC_KEY`, `MEDIA_BUNDLE_HMAC_KEY`, `GOOGLE_CLIENT_ID`, `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER`, `BRAVE_SEARCH_API_KEY`, `EXA_API_KEY`, `TAVILY_API_KEY`, `OPENALEX_API_KEY`, `RESEARCH_CONTACT_EMAIL`, `SEMANTIC_SCHOLAR_API_KEY`, `CORE_API_KEY`, `DATA_GOV_IN_API_KEY`, `TURNSTILE_SECRET_KEY`, `CROSS_PORTAL_TOKEN`, `S3_BUCKET`, `AWS_REGION`, `PUBLIC_WEB_URL`, `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME`, `MAIL_REPLY_TO`, `MAIL_SES_REGION`, `MAIL_SES_CONFIGURATION_SET` |
 | Web (Actions + Vercel env) | `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` |
 | Deploy-only (Actions only, never on the box) | `EC2_SSH_KEY`, `EC2_HOST`, `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DATABASE_URL` |
 | Eval-only (Actions only) | `EVAL_GEMINI_API_KEY`, `EVAL_ANTHROPIC_API_KEY` (own budget caps) |

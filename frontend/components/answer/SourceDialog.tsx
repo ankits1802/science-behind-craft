@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { EvidenceKindBadge, EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
 import { FieldDialog } from "@/components/dialogs/FieldDialog";
 import { ActionGroup } from "@/components/ui/ActionGroup";
-import { highlightQuote, sourceByline, sourceHost, sourceHref } from "@/lib/citations";
+import { highlightQuote, sourceByline, sourceHost, sourceHref, sourceKindLabel, sourceReliabilityLabel } from "@/lib/citations";
 import type { Citation, SourceRef } from "@/lib/types";
 
 export type OpenCitation = { citation: Citation; source: SourceRef | null; number: number | null };
@@ -30,6 +30,7 @@ export function SourceDialog({ open, onClose }: { open: OpenCitation | null; onC
             <a href={href} target="_blank" rel="noopener noreferrer" className="field-button" data-testid="source-outbound">
               Read at {host ?? "source"}
               <ExternalLink className="h-4 w-4" aria-hidden />
+              <span className="sr-only">(opens in a new tab)</span>
             </a>
           ) : null}
           <button type="button" className="field-button-secondary" onClick={onClose}>
@@ -61,6 +62,18 @@ export function SourceDialog({ open, onClose }: { open: OpenCitation | null; onC
             <p className="text-sm text-ink-500">Inferred from the cited source; no passage is quoted.</p>
           )}
           <dl className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs">
+            {source ? (
+              <>
+                <dt className="text-ink-500">Type</dt>
+                <dd className="text-ink-900">{sourceKindLabel(source.kind)}</dd>
+              </>
+            ) : null}
+            {source?.reliability ? (
+              <>
+                <dt className="text-ink-500">Reliability</dt>
+                <dd className="text-ink-900">{sourceReliabilityLabel(source.reliability)}</dd>
+              </>
+            ) : null}
             {citation.locator ? (
               <>
                 <dt className="text-ink-500">Location</dt>

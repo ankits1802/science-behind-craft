@@ -120,6 +120,13 @@ def test_redaction() -> None:
     assert "Bearer [redacted]" in redacted
 
 
+def test_redaction_hides_keys_in_query_strings() -> None:
+    line = "HTTP Request: GET https://api.example.org/works?q=dye&api_key=Zq81-secret&apiKey=Kq7 HTTP/1.1 200"
+    assert redact_secrets(line) == (
+        "HTTP Request: GET https://api.example.org/works?q=dye&api_key=[redacted]&apiKey=[redacted] HTTP/1.1 200"
+    )
+
+
 def test_sliding_window() -> None:
     window = SlidingWindow()
     assert window.attempt("k", 2, 10, now=0)[0]

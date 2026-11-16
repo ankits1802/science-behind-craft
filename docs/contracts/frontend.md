@@ -74,6 +74,12 @@ Changes to DR shapes the client assumes:
   - `reaction`: `{id, label, equation (mhchem source, no `\ce{}` needed), balanced, level, conditions|null, citations}`
   - `follow_ups`: `{items: string[]}`
   - `done`: `{answerId|null}`; `error`: `{message}` (shown verbatim)
+  - `status`: `{step, message}`, progress while the answer is worked out (`step` one of RESOLVING, PLANNING, SEARCHING_STORED, RESEARCHING, READING, COMPOSING, WRITING_BACK). The client shows `message` as the progress line (`AnswerProgress`, `role="status"`) and clears it on `done`, `error` or `not_enough_evidence`.
+  - `not_enough_evidence`: `{message}`, nothing cited could be shown; `message` lists what was searched. The client's empty state (`NotEnoughEvidence`), not an error; after a VERIFIED question it offers "Research it live" (asks again in HYBRID). Only `done` follows.
+  - Modes: `/answers/config` lists only the modes the asker's role may use (`DEEP` for researchers and above); asking DEEP without the role is a 403 with a sentence in `detail`.
+  - Data states of the answer: loading (`matching`/`streaming` with the status line), empty (`empty`), error (`failed`, shown verbatim with Try again), success (`done`).
+  - Heartbeat: an SSE comment `: keep-alive` after 60 s without an event; the parser already skips comments.
+  - The backend side of this stream, with the models every event is validated against, is `docs/contracts/research.md`; `shared/answer-stream.golden.sse` is checked by both sides.
   - `Citation = {id, claimId, sourceId, quote|null (≤300 chars), locator|null, context|null (the surrounding passage the quote sits in), evidence: "QUOTED"|"INFERRED", level}`
   - `level` ∈ `VERIFIED`, `REVIEWED`, `PROVISIONAL`, `HYPOTHESIS`, `UNAVAILABLE` (uppercase enum values of `evidenceLevel`).
   - Outbound links are drawn only for `https:` URLs; a DOI without a URL becomes `https://doi.org/<doi>`.

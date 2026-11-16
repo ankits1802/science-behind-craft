@@ -1,0 +1,161 @@
+{
+ "search-results": {
+  "opensearch:totalResults": "13",
+  "opensearch:startIndex": "0",
+  "opensearch:itemsPerPage": "2",
+  "opensearch:Query": {
+   "@role": "request",
+   "@searchTerms": "TITLE-ABS-KEY(alizarin mordant cotton)",
+   "@startPage": "0"
+  },
+  "link": [
+   {
+    "@_fa": "true",
+    "@ref": "self",
+    "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=2&query=TITLE-ABS-KEY%28alizarin+mordant+cotton%29",
+    "@type": "application/json"
+   },
+   {
+    "@_fa": "true",
+    "@ref": "first",
+    "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=2&query=TITLE-ABS-KEY%28alizarin+mordant+cotton%29",
+    "@type": "application/json"
+   },
+   {
+    "@_fa": "true",
+    "@ref": "next",
+    "@href": "https://api.elsevier.com/content/search/scopus?start=2&count=2&query=TITLE-ABS-KEY%28alizarin+mordant+cotton%29",
+    "@type": "application/json"
+   },
+   {
+    "@_fa": "true",
+    "@ref": "last",
+    "@href": "https://api.elsevier.com/content/search/scopus?start=11&count=2&query=TITLE-ABS-KEY%28alizarin+mordant+cotton%29",
+    "@type": "application/json"
+   }
+  ],
+  "entry": [
+   {
+    "@_fa": "true",
+    "link": [
+     {
+      "@_fa": "true",
+      "@ref": "self",
+      "@href": "https://api.elsevier.com/content/abstract/scopus_id/105054490722"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "author-affiliation",
+      "@href": "https://api.elsevier.com/content/abstract/scopus_id/105054490722?field=author,affiliation"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "scopus",
+      "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=105054490722&origin=inward"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "scopus-citedby",
+      "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=105054490722&origin=inward"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "full-text",
+      "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0143720826007539"
+     }
+    ],
+    "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105054490722",
+    "dc:identifier": "SCOPUS_ID:105054490722",
+    "eid": "2-s2.0-105054490722",
+    "dc:title": "High-sensitivity colorimetric sensing of pathogenic bacteria using smart fabrics dyed with pH-responsive dyes",
+    "dc:creator": "Dai Y.",
+    "prism:publicationName": "Dyes and Pigments",
+    "prism:issn": "01437208",
+    "prism:eIssn": "18733743",
+    "prism:volume": "257",
+    "prism:pageRange": null,
+    "prism:coverDate": "2027-03-01",
+    "prism:coverDisplayDate": "1 March 2027",
+    "prism:doi": "10.1016/j.dyepig.2026.114301",
+    "pii": "S0143720826007539",
+    "citedby-count": "0",
+    "affiliation": [
+     {
+      "@_fa": "true",
+      "affilname": "Jiangnan University",
+      "affiliation-city": "Wuxi",
+      "affiliation-country": "China"
+     }
+    ],
+    "prism:aggregationType": "Journal",
+    "subtype": "ar",
+    "subtypeDescription": "Article",
+    "article-number": "114301",
+    "source-id": "23502",
+    "openaccess": "0",
+    "openaccessFlag": false
+   },
+   {
+    "@_fa": "true",
+    "link": [
+     {
+      "@_fa": "true",
+      "@ref": "self",
+      "@href": "https://api.elsevier.com/content/abstract/scopus_id/105039809304"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "author-affiliation",
+      "@href": "https://api.elsevier.com/content/abstract/scopus_id/105039809304?field=author,affiliation"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "scopus",
+      "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=105039809304&origin=inward"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "scopus-citedby",
+      "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=105039809304&origin=inward"
+     },
+     {
+      "@_fa": "true",
+      "@ref": "full-text",
+      "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S0141813026024736"
+     }
+    ],
+    "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105039809304",
+    "dc:identifier": "SCOPUS_ID:105039809304",
+    "eid": "2-s2.0-105039809304",
+    "dc:title": "Thermally-induced phase separation of alkali lignin into mesoscale pigments for rapid mordant-free cotton dyeing",
+    "dc:creator": "Guo F.",
+    "prism:publicationName": "International Journal of Biological Macromolecules",
+    "prism:issn": "01418130",
+    "prism:eIssn": "18790003",
+    "prism:volume": "368",
+    "prism:pageRange": null,
+    "prism:coverDate": "2026-06-01",
+    "prism:coverDisplayDate": "June 2026",
+    "prism:doi": "10.1016/j.ijbiomac.2026.152546",
+    "pii": "S0141813026024736",
+    "citedby-count": "0",
+    "affiliation": [
+     {
+      "@_fa": "true",
+      "affilname": "Dalian Polytechnic University",
+      "affiliation-city": "Dalian",
+      "affiliation-country": "China"
+     }
+    ],
+    "pubmed-id": "42162587",
+    "prism:aggregationType": "Journal",
+    "subtype": "ar",
+    "subtypeDescription": "Article",
+    "article-number": "152546",
+    "source-id": "17544",
+    "openaccess": "0",
+    "openaccessFlag": false
+   }
+  ]
+ }
+}

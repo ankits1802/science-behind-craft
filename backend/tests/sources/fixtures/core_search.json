@@ -1,0 +1,72 @@
+{
+ "totalHits": 287715,
+ "limit": 2,
+ "offset": 0,
+ "results": [
+  {
+   "id": 214982727,
+   "doi": "10.1177/0040517517693975",
+   "title": "Deodorization for ethanethiol by cotton and wool fabrics mordant dyed with congo red and copper (II) sulfate",
+   "authors": [
+    {
+     "name": "Toshiko Amemiya"
+    },
+    {
+     "name": "Tadashi Nakanishi"
+    }
+   ],
+   "publishedDate": "2017-02-23T00:00:00+00:00",
+   "yearPublished": 2017,
+   "publisher": "SAGE Publications",
+   "documentType": null,
+   "abstract": " Cotton and wool fabrics were mordant-dyed with C.I. direct red 28 (congo red) and copper (II) sulfate. The deodorization abilities of the mordant-dyed samples for ethanethiol were examined using gas detector tubes. The cotton and the wool samples indicated the deodorizing abilities of the following order, respectively: pre-mordant &lt; post-mordant &lt; only copper salt treatment, and pre-mordant &lt; only copper salt treatment &lt; post-mordant. The deodorization rate constants were obtained from the slopes of the lines for the semi-logarithmic plots of the ethanethiol concentration against time. Two rate constants were obtained from the slopes of both the cotton and wool samples for the initial and the following second phases of the deodorization process. The deodorization rates for the mordant-dyed cotton fabrics were of the fast–slow type, while for the wool fabrics they were of the slow–fast type. The deodorization behavior of the mordant-dyed fabrics depended on the type of constituting fiber material for the fabrics. </jats:p",
+   "fullText": "",
+   "downloadUrl": "",
+   "links": [
+    {
+     "type": "display",
+     "url": "https://core.ac.uk/works/214982727"
+    }
+   ]
+  },
+  {
+   "id": 67302936,
+   "doi": "10.56042/ijftr.v44i1.16455",
+   "title": "Surface modification of cotton fabrics treated with organic-inorganic nanocomposites",
+   "authors": [
+    {
+     "name": "Schramm, Christian ; University Innsbruck"
+    }
+   ],
+   "publishedDate": "2019-03-26T00:00:00+00:00",
+   "yearPublished": 2019,
+   "publisher": "Indian Journal of Fibre & Textile Research (IJFTR)",
+   "documentType": null,
+   "abstract": "Cotton fabrics have been treated with mixtures of hydrolysed organoalkoxysilanes and hydrolysed metal alkoxides toimpart novel properties to the cellulosic material. For this purpose, the cotton samples are impregnated with aqueoussolutions comprising various compositions of (3-glycidyloxy)propyltrimethoxysilane, tetraethoxysilane, (3-amino)propyltriethoxysilane,aluminium isopropoxide, titanium tetraisopropoxide, and zircon tetrabutoxide, and then dyed with the naturaldyestuff alizarin, as the hydrolysed metal alkoxide acts as mordant. The physico-mechanical properties, such as creaserecovery angle, tensile strength, stiffness, contact angle, and whiteness index (undyed fabric), are evaluated. The resultsshow that the incorporation of tetraethoxysilane or (3-amino) propyltriethoxysilane causes an alteration in physicomechanicalproperties. The treatment with metal alkoxides increases the contact angle. Dyeing with alizarin causes differentcolor shades which are evaluated in terms of the colorimetric data, such as L*, a*, b* and K/S values",
+   "fullText": "Indian Journal of Fibre & Textile Research \nVol 44, March 2019, pp. 83-91 \n \n \n \n \n \n \nSurface modification of cotton fabrics treated with organic-inorganic nanocomposites \nChristian Schramm\na\n \nResearch Institute of Textile Chemistry and Textile Physics, University Innsbruck, Höchsterstrasse 73, Austria \nReceived 8 February 2017; revised received and accepted 18 September 2017 \nCotton fabrics have been treated with mixtures of hydrolysed organoalkoxysilanes and hydrolysed metal alkoxides to \nimpart novel properties to the cellulosic material. For this purpose, the cotton samples are impregnated with aqueous \nsolutions comprising various compositions of (3-glycidyloxy)propyltrimethoxysilane, tetraethoxysilane, (3-amino)propyl-\ntriethoxysilane, aluminium isopropoxide, titanium tetraisopropoxide, and zircon tetrabutoxide, and then dyed with the natural \ndyestuff alizarin, as the hydrolysed metal alkoxide acts as mordant. The physico-mechanical properties, such as crease \nrecovery angle, tensile strength, stiffness, contact angle, and whiteness index (undyed fabric), are evaluated. The results \nshow that the incorporation of tetraethoxysilane or (3-amino) propyltriethoxysilane causes an alteration in physico-\nmechanical properties. The treatment with metal alkoxides increases the contact angle. Dyeing with alizarin causes different \ncolor shades which are evaluated in terms of the colorimetric data, such as L*, a*, b* and K/S values. \nKeywords: Alizarin, Cotton, Crease resist",
+   "downloadUrl": "https://core.ac.uk/download/229216458.pdf",
+   "links": [
+    {
+     "type": "download",
+     "url": "https://core.ac.uk/download/229216458.pdf"
+    },
+    {
+     "type": "reader",
+     "url": "https://core.ac.uk/reader/229216458"
+    },
+    {
+     "type": "thumbnail_m",
+     "url": "https://core.ac.uk/image/229216458/large"
+    },
+    {
+     "type": "thumbnail_l",
+     "url": "https://core.ac.uk/image/229216458/large"
+    },
+    {
+     "type": "display",
+     "url": "https://core.ac.uk/works/67302936"
+    }
+   ]
+  }
+ ]
+}

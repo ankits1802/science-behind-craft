@@ -1,23 +1,29 @@
 import hashlib
-import json
-from collections.abc import AsyncIterator
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Literal
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 from pydantic import Field
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.core.db import get_session
-from app.core.deps import get_current_user
+from app.core.db import get_session, sessionmaker
+from app.core.deps import get_current_user, refusal_for
 from app.core.rate_limit import ask_attempt
-from app.models import Craft, User
+from app.core.roles import Capability, can
+from app.models import User
+from app.providers.embedding import router_embedder
+from app.providers.router import Principal
+from app.providers.structured import router_structured_model
+from app.research.stream import event_stream
+from app.research.vocabulary import ANSWER_LANGUAGE_LABELS, AnswerLanguage
 from app.schemas.common import APIModel
 from app.services import knowledge_view
+from app.services.ai_providers import AiTask
+from app.services.answer_store import build_answer_pipeline
+from app.services.answering import NOT_FOUND_DETAIL, AnswerAsk, AnswerPipeline, answer_question
 
 router = APIRouter(tags=["knowledge"])
 
@@ -26,14 +32,8 @@ NOTICE_VERSION = "2026-11-16"
 NOTICE_PUBLISHED_AT = "2026-11-16T00:00:00+05:30"
 NOTICE_TITLE = "Privacy notice"
 
-ANSWER_MODES = ("VERIFIED",)
-ANSWER_LIMIT = 14
-OPEN_QUESTION_LIMIT = 4
-CANDIDATE_LIMIT = 5
-NOT_FOUND_DETAIL = "No craft has that address."
-NO_EVIDENCE_DETAIL = (
-    "The evidence base has no cited finding for this yet. Try naming the craft, a material or a step."
-)
+ANSWER_MODES = ("VERIFIED", "HYBRID", "DEEP")
+DEFAULT_ANSWER_MODE = "HYBRID"
 THROTTLED_DETAIL = "You have asked a lot in the last few minutes. Wait a little and ask again."
 
 
@@ -77,118 +77,54 @@ async def map_crafts(
 
 
 @router.get("/answers/config")
-async def answers_config(_: User = Depends(get_current_user)) -> dict[str, Any]:
+async def answers_config(user: User = Depends(get_current_user)) -> dict[str, Any]:
+    modes = [mode for mode in ANSWER_MODES if can(user, mode_capability(mode))]
     return {
-        "modes": list(ANSWER_MODES),
-        "defaultMode": ANSWER_MODES[0],
+        "modes": modes,
+        "defaultMode": DEFAULT_ANSWER_MODE if DEFAULT_ANSWER_MODE in modes else next(iter(modes), None),
         "voice": {"configured": False, "languages": []},
-        "languages": [{"code": "en", "label": "English"}],
+        "languages": [{"code": code, "label": label} for code, label in ANSWER_LANGUAGE_LABELS.items()],
     }
 
 
 class AskRequest(APIModel):
     question: str = Field(min_length=2, max_length=1000)
-    mode: Literal["VERIFIED", "HYBRID", "DEEP"] = "VERIFIED"
+    mode: Literal["VERIFIED", "HYBRID", "DEEP"] = DEFAULT_ANSWER_MODE
     craftSlug: str | None = Field(default=None, max_length=200)
-    language: str | None = Field(default=None, max_length=16)
+    language: AnswerLanguage | None = None
     conversationId: str | None = Field(default=None, max_length=64)
 
 
-def sse(event: str, data: Any) -> str:
-    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, separators=(',', ':'))}\n\n"
+def mode_capability(mode: str) -> Capability:
+    return Capability.ASK_DEEP if mode == "DEEP" else Capability.ASK_STANDARD
 
 
-def follow_ups(craft_name: str, headings: list[str]) -> list[str]:
-    prompts = {
-        "Materials and tools": f"Which materials does {craft_name} depend on, and why?",
-        "Process": f"What happens at each step of {craft_name}?",
-        "How it works": f"What is the chemistry or physics behind {craft_name}?",
-        "Place and climate": f"How do local water, soil and climate shape {craft_name}?",
-        "The artisan's judgement": f"How do artisans judge when a step of {craft_name} is done?",
-        "History": f"Where did {craft_name} come from?",
-    }
-    return [prompts[h] for h in prompts if h not in headings][:3]
+def withheld_terms(user: User) -> tuple[str, ...]:
+    name = (user.name or "").strip()
+    return (name,) if 2 <= len(name) <= 200 else ()
 
 
-async def _answer_events(session: AsyncSession, payload: AskRequest) -> AsyncIterator[str]:
-    craft: Craft | None = None
-    if payload.craftSlug:
-        craft = await knowledge_view.resolve_craft(session, payload.craftSlug)
-        if craft is None:
-            yield sse("error", {"message": NOT_FOUND_DETAIL})
-            yield sse("done", {"answerId": None})
-            return
-    else:
-        matches = knowledge_view.match_aliases(payload.question, await knowledge_view.alias_rows(session))
-        if len(matches) > 1:
-            rows = (
-                (await session.execute(select(Craft).where(Craft.id.in_(matches)).order_by(Craft.name)))
-                .scalars()
-                .all()
-            )
-            yield sse(
-                "match",
-                {
-                    "status": "AMBIGUOUS",
-                    "candidates": [knowledge_view.craft_ref(c) for c in rows[:CANDIDATE_LIMIT]],
-                },
-            )
-            yield sse("done", {"answerId": None})
-            return
-        if matches:
-            craft = await session.get(Craft, matches[0])
-    if craft is None:
-        yield sse("match", {"status": "NONE"})
-        yield sse(
-            "error", {"message": "Name the craft you are asking about, or open it from the craft list."}
-        )
-        yield sse("done", {"answerId": None})
-        return
-    yield sse("match", {"status": "RESOLVED", "craft": knowledge_view.craft_ref(craft)})
-    concepts = await knowledge_view.craft_concepts(session, craft)
-    claims, sources = await knowledge_view.claims_for(session, concepts, question=payload.question)
-    ranked = sorted(claims, key=lambda c: (-c.rank, knowledge_view.LEVEL_ORDER.get(c.level, 9)))
-    findings = [c for c in ranked if c.level != "HYPOTHESIS"][:ANSWER_LIMIT]
-    open_questions = [c for c in ranked if c.level == "HYPOTHESIS"][:OPEN_QUESTION_LIMIT]
-    if not findings and not open_questions:
-        yield sse("error", {"message": NO_EVIDENCE_DETAIL})
-        yield sse("done", {"answerId": None})
-        return
-    sent_sources: set[str] = set()
-    sections: dict[str, str] = {}
-    for view in knowledge_view.order_claims(findings):
-        heading = knowledge_view.section_heading(view.concept_type)
-        for cite in view.citations:
-            if cite["sourceId"] not in sent_sources:
-                sent_sources.add(cite["sourceId"])
-                source = next(s for s in sources.values() if str(s.id) == cite["sourceId"])
-                yield sse("source", knowledge_view.source_ref(source))
-        if heading not in sections:
-            sections[heading] = f"s{len(sections) + 1}"
-            yield sse("section", {"id": sections[heading], "heading": heading})
-        yield sse("sentence", {"sectionId": sections[heading], "sentence": view.payload()})
-    for view in open_questions:
-        for cite in view.citations:
-            if cite["sourceId"] not in sent_sources:
-                sent_sources.add(cite["sourceId"])
-                source = next(s for s in sources.values() if str(s.id) == cite["sourceId"])
-                yield sse("source", knowledge_view.source_ref(source))
-        yield sse(
-            "open_question",
-            {"sectionId": "open", "heading": "Open questions", "sentence": view.payload()},
-        )
-    yield sse("follow_ups", {"items": follow_ups(craft.name, list(sections))})
-    yield sse("done", {"answerId": None})
+def answer_pipeline(request: Request, user: User = Depends(get_current_user)) -> AnswerPipeline:
+    principal = Principal(user_id=user.id, role=user.role)
+    return build_answer_pipeline(
+        sessions=sessionmaker(),
+        index=request.app.state.craft_index,
+        live=request.app.state.live_sources,
+        plan_model=router_structured_model(AiTask.PLAN, principal),
+        compose_model=router_structured_model(AiTask.COMPOSE, principal),
+        embed=router_embedder(principal),
+    )
 
 
 @router.post("/answers/stream")
 async def answers_stream(
     payload: AskRequest,
     user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_session),
+    pipeline: AnswerPipeline = Depends(answer_pipeline),
 ) -> StreamingResponse:
-    if payload.mode not in ANSWER_MODES:
-        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "Choose Verified only.")
+    capability = mode_capability(payload.mode)
+    if not can(user, capability):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, refusal_for(capability))
     allowed, retry = ask_attempt(str(user.id))
     if not allowed:
         raise HTTPException(
@@ -196,14 +132,16 @@ async def answers_stream(
             THROTTLED_DETAIL,
             {"Retry-After": str(max(1, int(retry + 0.999)))},
         )
-    events = [event async for event in _answer_events(session, payload)]
-
-    async def body() -> AsyncIterator[str]:
-        for event in events:
-            yield event
-
+    ask = AnswerAsk(
+        question=payload.question,
+        mode=payload.mode,
+        craft_slug=payload.craftSlug,
+        language=payload.language,
+        user_id=user.id,
+        withheld_terms=withheld_terms(user),
+    )
     return StreamingResponse(
-        body(),
+        event_stream(lambda emit: answer_question(ask, pipeline, emit)),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
     )

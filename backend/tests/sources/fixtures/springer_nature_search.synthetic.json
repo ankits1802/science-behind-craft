@@ -1,0 +1,44 @@
+{
+ "apiMessage": "This JSON was provided by Springer Nature",
+ "query": "doi:10.1000/kv.synthetic.1",
+ "result": [
+  {
+   "total": "1",
+   "start": "1",
+   "pageLength": "1",
+   "recordsDisplayed": "1"
+  }
+ ],
+ "records": [
+  {
+   "contentType": "Article",
+   "identifier": "doi:10.1000/kv.synthetic.1",
+   "language": "en",
+   "url": [
+    {
+     "format": "html",
+     "platform": "web",
+     "value": "http://dx.doi.org/10.1000/kv.synthetic.1"
+    }
+   ],
+   "title": "Synthetic record for adapter tests",
+   "creators": [
+    {
+     "creator": "Tester, Ada"
+    },
+    {
+     "creator": "Fixture, Ben"
+    }
+   ],
+   "publicationName": "Synthetic Journal",
+   "openaccess": "true",
+   "doi": "10.1000/kv.synthetic.1",
+   "publisher": "Springer",
+   "publicationDate": "2024-05-02",
+   "abstract": {
+    "h1": "Abstract",
+    "p": "A synthetic abstract standing in for a recorded Springer Nature response."
+   }
+  }
+ ]
+}

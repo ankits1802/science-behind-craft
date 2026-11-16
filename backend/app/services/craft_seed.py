@@ -1,11 +1,12 @@
 import uuid
-from collections.abc import Iterable
+from itertools import batched
 from typing import Any
 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.data.craft_master_loader import seed_plan
 from app.models import Craft, CraftAlias, CraftCategory, CraftCode, CraftSpelling, CraftSubCategory
 
 BATCH = 500
@@ -24,16 +25,11 @@ CRAFT_COLUMNS = (
 )
 
 
-def _chunks(rows: list[dict[str, Any]], size: int = BATCH) -> Iterable[list[dict[str, Any]]]:
-    for start in range(0, len(rows), size):
-        yield rows[start : start + size]
-
-
 def _uuid(value: Any) -> uuid.UUID:
     return value if isinstance(value, uuid.UUID) else uuid.UUID(str(value))
 
 
-async def _ids_by_slug(session: AsyncSession, model: Any) -> dict[str, uuid.UUID]:
+async def ids_by_slug(session: AsyncSession, model: Any) -> dict[str, uuid.UUID]:
     return dict((await session.execute(select(model.slug, model.id))).all())
 
 
@@ -41,8 +37,6 @@ async def seed_crafts(
     session: AsyncSession, plan: dict[str, list[dict[str, Any]]] | None = None
 ) -> dict[str, int]:
     if plan is None:
-        from app.data.craft_master_loader import seed_plan
-
         plan = seed_plan()
 
     for row in plan["categories"]:
@@ -60,7 +54,7 @@ async def seed_crafts(
                 set_={"name": values["name"], "sortOrder": values["sortOrder"]},
             )
         )
-    category_ids = await _ids_by_slug(session, CraftCategory)
+    category_ids = await ids_by_slug(session, CraftCategory)
     seed_category_slug = {_uuid(row["id"]): row["slug"] for row in plan["categories"]}
 
     for row in plan["subCategories"]:
@@ -80,10 +74,10 @@ async def seed_crafts(
                 set_={"name": values["name"], "categoryId": category_id, "sortOrder": values["sortOrder"]},
             )
         )
-    sub_ids = await _ids_by_slug(session, CraftSubCategory)
+    sub_ids = await ids_by_slug(session, CraftSubCategory)
     seed_sub_slug = {_uuid(row["id"]): row["slug"] for row in plan["subCategories"]}
 
-    for chunk in _chunks(plan["codes"]):
+    for chunk in batched(plan["codes"], BATCH, strict=False):
         await session.execute(
             insert(CraftCode)
             .values([{"code": r["code"], "name": r["name"]} for r in chunk])
@@ -91,7 +85,7 @@ async def seed_crafts(
                 index_elements=[CraftCode.code], set_={"name": insert(CraftCode).excluded.name}
             )
         )
-    for chunk in _chunks(plan["spellings"]):
+    for chunk in batched(plan["spellings"], BATCH, strict=False):
         await session.execute(
             insert(CraftSpelling)
             .values(
@@ -137,7 +131,7 @@ async def seed_crafts(
                 .values(id=found[0], slug=row["slug"], **values)
                 .on_conflict_do_update(index_elements=[Craft.slug], set_=values)
             )
-    craft_ids = await _ids_by_slug(session, Craft)
+    craft_ids = await ids_by_slug(session, Craft)
 
     alias_rows = []
     for row in plan["aliases"]:
@@ -155,10 +149,10 @@ async def seed_crafts(
                 "status": row.get("status", "ACTIVE"),
             }
         )
-    for chunk in _chunks(alias_rows):
+    for chunk in batched(alias_rows, BATCH, strict=False):
         await session.execute(
             insert(CraftAlias)
-            .values(chunk)
+            .values(list(chunk))
             .on_conflict_do_nothing(index_elements=[CraftAlias.craftId, CraftAlias.aliasNorm])
         )
     await session.flush()

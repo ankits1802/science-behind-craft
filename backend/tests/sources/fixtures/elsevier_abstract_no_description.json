@@ -1,0 +1,72 @@
+{
+ "abstracts-retrieval-response": {
+  "affiliation": {
+   "affiliation-city": "Wuxi",
+   "affilname": "Jiangnan University",
+   "affiliation-country": "China"
+  },
+  "coredata": {
+   "srctype": "j",
+   "eid": "2-s2.0-105054490722",
+   "prism:coverDate": "2027-03-01",
+   "prism:aggregationType": "Journal",
+   "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105054490722",
+   "subtypeDescription": "Article",
+   "dc:creator": {
+    "author": [
+     {
+      "ce:given-name": "Yue",
+      "preferred-name": {
+       "ce:given-name": "Yue",
+       "ce:initials": "Y.",
+       "ce:surname": "Dai",
+       "ce:indexed-name": "Dai Y."
+      },
+      "@seq": "1",
+      "ce:initials": "Y.",
+      "@_fa": "true",
+      "affiliation": {
+       "@id": "60007029",
+       "@href": "https://api.elsevier.com/content/affiliation/affiliation_id/60007029"
+      },
+      "ce:surname": "Dai",
+      "@auid": "61025013400",
+      "author-url": "https://api.elsevier.com/content/author/author_id/61025013400",
+      "ce:indexed-name": "Dai Y."
+     }
+    ]
+   },
+   "link": [
+    {
+     "@_fa": "true",
+     "@rel": "self",
+     "@href": "https://api.elsevier.com/content/abstract/scopus_id/105054490722"
+    },
+    {
+     "@_fa": "true",
+     "@rel": "scopus",
+     "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=105054490722&origin=inward"
+    },
+    {
+     "@_fa": "true",
+     "@rel": "scopus-citedby",
+     "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=105054490722&origin=inward"
+    }
+   ],
+   "prism:publicationName": "Dyes and Pigments",
+   "source-id": "23502",
+   "pii": "S0143720826007539",
+   "citedby-count": "0",
+   "prism:volume": "257",
+   "subtype": "ar",
+   "dc:title": "High-sensitivity colorimetric sensing of pathogenic bacteria using smart fabrics dyed with pH-responsive dyes",
+   "openaccess": "0",
+   "openaccessFlag": "false",
+   "prism:doi": "10.1016/j.dyepig.2026.114301",
+   "prism:issn": "18733743 01437208",
+   "article-number": "114301",
+   "dc:identifier": "SCOPUS_ID:105054490722",
+   "dc:publisher": "Elsevier Ltd"
+  }
+ }
+}

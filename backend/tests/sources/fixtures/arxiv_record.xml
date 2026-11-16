@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/9QGA6Vaoy+SMjmiu/bkecbAiRHc</id>
+  <title>arXiv Query: search_query=&amp;id_list=2207.00830v1&amp;start=0&amp;max_results=10</title>
+  <updated>2026-11-15T21:49:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2207.00830v1" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2207.00830v1</id>
+    <title>Tuning the electron injection mechanism by changing the adsorption mode:the case study of Alizarin on TiO2</title>
+    <updated>2022-07-02T13:33:37Z</updated>
+    <link href="https://arxiv.org/abs/2207.00830v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.00830v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Functionalized TiO2 nanoparticles with intense fluorescent dyes is a promising tool for several technological applications ranging from photochemistry, photocatalysis, photovoltaics, photodynamic therapy or bioimaging. Here, we present the case study of the Alizarin adsorption on TiO2 nanoparticles (NPs) of different shape and increasing size up to 2.2 nm (700 atoms), by means of density functional theory (DFT) calculations. We find that Alizarin can bind in three different ways, depending on the number and type of bonds between Alizarin and TiO2: "tridented", "bidented" and "chelated". Next, we investigate the optical properties of these systems by time-dependent density functional theory (TDDFT) calculations. Based on the absorption spectra and the Kohn-Sham orbitals analysis, we discovered that the mechanism of electron injection depends on the Alizarin binding mode to the TiO2 surface. While for bidented and chelated adsorption modes a direct charge transfer is observed, for the tridented one an indirect mechanism governs the charge transfer process following the excitation. Our results are in good agreement with existing experimental data and suggests that by tailoring the shape of the TiO2 NPs and, thus, determining the type of undercoordinated Ti atoms prevalently exposed at the surface, it is possible to control the predominant injection mechanism.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-02T13:33:37Z</published>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>Federico Soria</name>
+    </author>
+    <author>
+      <name>Chiara Daldossi</name>
+    </author>
+    <author>
+      <name>Cristiana Di Valentin</name>
+    </author>
+    <arxiv:doi>10.1016/j.mtener.2022.101085</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.mtener.2022.101085" title="doi"/>
+  </entry>
+</feed>

@@ -1,0 +1,36 @@
+{
+ "paperId": "46907c3237cfd943f750bd7d3abc80f3869adab6",
+ "externalIds": {
+  "MAG": "2625322139",
+  "DOI": "10.1111/COTE.12288",
+  "CorpusId": 103598029
+ },
+ "url": "https://www.semanticscholar.org/paper/46907c3237cfd943f750bd7d3abc80f3869adab6",
+ "title": "Mordant dye application on cotton: optimisation and combination with natural dyes",
+ "venue": "",
+ "year": 2017,
+ "openAccessPdf": {
+  "url": "",
+  "status": "CLOSED",
+  "license": null,
+  "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1111/COTE.12288?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1111/COTE.12288, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+ },
+ "publicationTypes": null,
+ "publicationDate": "2017-06-13",
+ "journal": {
+  "name": "Coloration Technology",
+  "pages": "369-375",
+  "volume": "133"
+ },
+ "authors": [
+  {
+   "authorId": "14668581",
+   "name": "Yi Ding"
+  },
+  {
+   "authorId": "39955425",
+   "name": "H. Freeman"
+  }
+ ],
+ "abstract": null
+}

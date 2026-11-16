@@ -334,10 +334,15 @@ class ClaimSource(Base):
     quoteCheck: Mapped[str] = mapped_column(e.QuoteCheck, nullable=False, server_default="NA")
     checkedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     relation: Mapped[str] = mapped_column(e.SourceRelation, nullable=False, server_default="DIRECT")
+    foundBy: Mapped[str | None] = mapped_column(String(20))
+    answerId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Answer.id", ondelete="SET NULL")
+    )
+    retrievedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
-    __table_args__ = (Index(None, "claimId"), Index(None, "sourceId"))
+    __table_args__ = (Index(None, "claimId"), Index(None, "sourceId"), Index(None, "answerId"))
 
 
 class ReviewEvent(Base):

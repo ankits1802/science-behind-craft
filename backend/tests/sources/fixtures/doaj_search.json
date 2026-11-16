@@ -1,0 +1,151 @@
+{
+ "total": 4,
+ "page": 1,
+ "pageSize": 2,
+ "timestamp": "2026-11-15T21:48:54.847778Z",
+ "query": "alizarin mordant",
+ "results": [
+  {
+   "last_updated": "2025-08-19T21:19:44Z",
+   "bibjson": {
+    "identifier": [
+     {
+      "id": "10.1038/s41598-022-27110-0",
+      "type": "doi"
+     },
+     {
+      "id": "2045-2322",
+      "type": "eissn"
+     }
+    ],
+    "journal": {
+     "volume": "13",
+     "number": "1",
+     "country": "GB",
+     "issns": [
+      "2045-2322"
+     ],
+     "publisher": "Nature Portfolio",
+     "language": [
+      "EN"
+     ],
+     "title": "Scientific Reports"
+    },
+    "month": "1",
+    "end_page": "10",
+    "year": "2023",
+    "start_page": "1",
+    "subject": [
+     {
+      "code": "R",
+      "scheme": "LCC",
+      "term": "Medicine"
+     },
+     {
+      "code": "Q",
+      "scheme": "LCC",
+      "term": "Science"
+     }
+    ],
+    "author": [
+     {
+      "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University",
+      "name": "Tarek Abou Elmaaty"
+     },
+     {
+      "affiliation": "Department of Agricultural Chemistry, Faculty of Agriculture, Damietta University",
+      "name": "Khaled Sayed-Ahmed"
+     },
+     {
+      "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University",
+      "name": "Mai Magdi"
+     },
+     {
+      "affiliation": "Department of Textile Printing, Dyeing and Finishing, Faculty of Applied Arts, Damietta University",
+      "name": "Hanan Elsisi"
+     }
+    ],
+    "link": [
+     {
+      "content_type": "HTML",
+      "type": "fulltext",
+      "url": "https://doi.org/10.1038/s41598-022-27110-0"
+     }
+    ],
+    "abstract": "Abstract Because of its low critical temperature and pressure levels, supercritical carbon dioxide (scCO2) is the most widely used supercritical fluid in the supercritical fluid extraction (SFE) technique. Alizarin was extracted from madder roots (Rubia tinctorum) using scCO2 under different conditions of co-solvent ratio (0–50%), temperature (45–95 °C), pressure (150–250 bar), extraction time (15–120 min), and flow rate (5–9 mL/min). Based on alizarin recovery and minimization of environmental risk, the optimum conditions were determined. SFE was optimum at 90% CO2:10% methanol (Me), 65 °C, 250 bar, 45 min, and 9 mL/min. The alizarin recovery, and its content in R. tinctorum extract (RE) under the optimum conditions were 1.34 g/kg roots, and 6.42%, respectively. Using conventional dyeing methods, wool fabrics were dyed with RE at different concentrations (2–6%). Various types of mordants were also used in the dyeing process, including chemical and bio-mordants. Color and fastness properties of dyed wool fabrics were evaluated based on RE concentration and mordant type. A higher RE concentration and the use of mordants, specifically Punica granatum (P. granatum) peels, increased the color characteristics. RE and dyed fabrics exhibited good antibacterial activity against the tested bacterial strains, especially Pseudomonas aeruginosa and Escherichia coli.",
+    "title": "An eco-friendly method of extracting alizarin from Rubia tinctorum roots under supercritical carbon dioxide and its application to wool dyeing"
+   },
+   "id": "270012ac76064f23948b99c92aed70d0",
+   "created_date": "2023-01-08T12:10:11Z"
+  },
+  {
+   "last_updated": "2025-08-19T21:53:40Z",
+   "bibjson": {
+    "identifier": [
+     {
+      "id": "2369-9698",
+      "type": "pissn"
+     },
+     {
+      "id": "10.1016/j.jobab.2022.07.003",
+      "type": "doi"
+     }
+    ],
+    "journal": {
+     "volume": "7",
+     "number": "4",
+     "country": "CN",
+     "issns": [
+      "2369-9698"
+     ],
+     "publisher": "KeAi Communications Co., Ltd.",
+     "language": [
+      "EN"
+     ],
+     "title": "Journal of Bioresources and Bioproducts"
+    },
+    "month": "11",
+    "end_page": "319",
+    "keywords": [
+     "Sesamum",
+     "Bast fibre",
+     "Textile",
+     "Tensile strength",
+     "Dyeing",
+     "Sustainability"
+    ],
+    "year": "2022",
+    "start_page": "306",
+    "subject": [
+     {
+      "code": "QD415-436",
+      "scheme": "LCC",
+      "term": "Biochemistry"
+     }
+    ],
+    "author": [
+     {
+      "affiliation": "Correspondence to: Department of Botany, University of Kerala, Trivandrum 695034, Kerala, India.; Department of Botany, University of Kerala, Thiruvananthapuram 695581, Kerala, India",
+      "name": "Ancy S Watson"
+     },
+     {
+      "affiliation": "Corresponding authors.; Department of Botany, University of Kerala, Thiruvananthapuram 695581, Kerala, India",
+      "name": "Suhara Beevy S"
+     }
+    ],
+    "link": [
+     {
+      "type": "fulltext",
+      "url": "http://www.sciencedirect.com/science/article/pii/S2369969822000536"
+     }
+    ],
+    "abstract": "Natural fibres are renewable, inexpensive and biodegradable sources of sustainable materials from plants or animals. Bast fibres, as the notable natural fibres, are gathered from the outer cell layers of the stem of plant. Mature and young bast fibres from two species of Sesamum, namely Sesamum indicum L. and S. radiatum Schumach. &amp; Thonn. were extracted through traditional water retting technique and analyzed for their physical, mechanical and chemical attributes. Anatomical studies revealed polygon shaped phloem (bast fibre) cells with small lumen were similar to jute, in terms of architecture, and bagasse, in terms of lumen size. Upon extraction and subsequent drying, the young stems of S. radiatum were found to yield more bast fibres by mass compared with the rest of the Sesamum samples, that was, 0.59 g (dry weight) of bast fibres from 100 g (fresh weight) of stem. According to stereo microscopic images, the mature S. radiatum fibres had rougher edges than the rest. Both S. indicum and S. radiatum fibre surfaces also seemed to have pores, according to scanning electron microscopy (SEM) images. The porosity appeared to get more pronounced as the plants got older. The Sesamum bast fibres were also found to be extremely hydrophilic with a high-water retention value. The fibres obtained from S. radiatum were determined to be suitable for the textile industry due to their light colour, ideal diameter and length, and water-holding capacity that matched the requirements of fabric manufacturing. Even in the absence of a mordant, the mature fibres showed a significant degree and evenness of Alizarin dye attachment, which might be correlated to the increase in fibre surface roughness with fibre maturity. These fibres were also discovered to be comparable with jute in terms of phloem cell shape (polygonal), diameter (13–15 m), tenacity (12.86–32.54 gf/(g·km–1)), and linear density (2.5–3.3 g/km). It suggested that they might find industrial applications if further research were to be done.",
+    "title": "Physico-mechanical characteristics of bast fibres of Sesamum indicum and Sesamum radiatum for bioprospecting"
+   },
+   "id": "5f18c15ee1cb4b9eaf523df3c092ea35",
+   "created_date": "2023-03-24T04:22:47Z"
+  }
+ ],
+ "next": "https://doaj.org/api/v4/search/articles/alizarin%20mordant?page=2&pageSize=2",
+ "last": "https://doaj.org/api/v4/search/articles/alizarin%20mordant?page=2&pageSize=2"
+}

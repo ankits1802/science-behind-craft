@@ -1,0 +1,80 @@
+{
+ "total": 2,
+ "offset": 0,
+ "data": [
+  {
+   "paperId": "46907c3237cfd943f750bd7d3abc80f3869adab6",
+   "externalIds": {
+    "MAG": "2625322139",
+    "DOI": "10.1111/COTE.12288",
+    "CorpusId": 103598029
+   },
+   "url": "https://www.semanticscholar.org/paper/46907c3237cfd943f750bd7d3abc80f3869adab6",
+   "title": "Mordant dye application on cotton: optimisation and combination with natural dyes",
+   "venue": "",
+   "year": 2017,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1111/COTE.12288?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1111/COTE.12288, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "publicationDate": "2017-06-13",
+   "journal": {
+    "name": "Coloration Technology",
+    "pages": "369-375",
+    "volume": "133"
+   },
+   "authors": [
+    {
+     "authorId": "14668581",
+     "name": "Yi Ding"
+    },
+    {
+     "authorId": "39955425",
+     "name": "H. Freeman"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "5a75f51ed9119ee7203bc29776f55b6488b8acb2",
+   "externalIds": {
+    "ArXiv": "2207.00830",
+    "DOI": "10.1016/j.mtener.2022.101085",
+    "CorpusId": 250239566
+   },
+   "url": "https://www.semanticscholar.org/paper/5a75f51ed9119ee7203bc29776f55b6488b8acb2",
+   "title": "Tuning the electron injection mechanism by changing the adsorption mode: the case study of Alizarin on TiO2",
+   "venue": "Materials Today Energy",
+   "year": 2022,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2207.00830",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2207.00830, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "publicationDate": "2022-07-01",
+   "journal": {
+    "name": "Materials Today Energy"
+   },
+   "authors": [
+    {
+     "authorId": "2134591484",
+     "name": "Federico A. Soria"
+    },
+    {
+     "authorId": "100553618",
+     "name": "C. Daldossi"
+    },
+    {
+     "authorId": "5997598",
+     "name": "C. Di Valentin"
+    }
+   ],
+   "abstract": "Functionalized TiO2 nanoparticles with intense fluorescent dyes is a promising tool for several technological applications ranging from photochemistry, photocatalysis, photovoltaics, photodynamic therapy or bioimaging. Here, we present the case study of the Alizarin adsorption on TiO2 nanoparticles (NPs) of different shape and increasing size up to 2.2 nm (700 atoms), by means of density functional theory (DFT) calculations. We find that Alizarin can bind in three different ways, depending on the number and type of bonds between Alizarin and TiO2: “tridented”, “bidented” and “chelated”. Next, we investigate the optical properties of these systems by time-dependent density functional theory (TDDFT) calculations. Based on the absorption spectra and the Kohn-Sham orbitals analysis, we discovered that the mechanism of electron injection depends on the Alizarin binding mode to the TiO2 surface. While for bidented and chelated adsorption modes a direct charge transfer is observed, for the tridented one an indirect mechanism governs the charge transfer process following the excitation. Our results are in good agreement with existing experimental data and suggests that by tailoring the shape of the TiO2 NPs and, thus, determining the type of undercoordinated Ti atoms prevalently exposed at the surface, it is possible to control the predominant injection mechanism."
+  }
+ ]
+}

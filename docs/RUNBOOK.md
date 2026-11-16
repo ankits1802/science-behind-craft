@@ -51,6 +51,7 @@ Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME
 - GitHub variables: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`, `EC2_INSTANCE_ID`, `MEDIA_BUCKET`, `API_BASE_URL`, `CLOUDFRONT_DISTRIBUTION_ID`, `WEB_ORIGIN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
 - Parameter Store also holds non-secret config (`APP_ENV`, `BACKEND_CORS_ORIGINS`, `FORWARDED_CLIENT_HOPS`, `REDIS_URL`, `SEARXNG_URL`, …). See `infra/.env.example` for every name.
 - Copied from the DR box without printing them: `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `GOOGLE_CLIENT_ID`, `MASTER_ADMIN_EMAIL`, `MASTER_ADMIN_NAME`.
+- `CROSS_PORTAL_TOKEN`: copied without printing from the shared SSM SecureString `/iit/shared/cross-portal-token` (the designer and documentation portals' value) into `/kalavigyan/env/CROSS_PORTAL_TOKEN` and the GitHub secret on 2026-11-16. `DESIGNER_PORTAL_API_URL` and `FIELD_REPOSITORY_API_URL` are in Parameter Store. The box `.env` gets all three at the next deploy's render.
 
 **The owner still has to add these** (none of them were on the DR box):
 
@@ -84,7 +85,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Copies changed secrets into `/kalavigyan/env`.
 3. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
 4. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, builds the venv with uv, then `blue_green.sh release <sha>`:
-   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves;
+   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on);
    2. start the other colour;
    3. wait for `/health`;
    4. switch nginx;
@@ -93,6 +94,10 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
    It keeps the newest 5 releases.
 5. Smoke-tests `https://d89rsltpszebp.cloudfront.net/health`.
+
+Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
+
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_knowledge` (fills every missing claim and chunk vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
 
 Running the same sha again re-renders the env and restarts the live colour.
 

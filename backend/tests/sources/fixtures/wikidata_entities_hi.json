@@ -1,0 +1,77 @@
+{
+ "entities": {
+  "Q267813": {
+   "pageid": 259431,
+   "ns": 0,
+   "title": "Q267813",
+   "lastrevid": 2542539962,
+   "modified": "2026-09-09T03:15:30Z",
+   "type": "item",
+   "id": "Q267813",
+   "labels": {
+    "hi": {
+     "value": "alizarin",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "descriptions": {
+    "hi": {
+     "value": "chemical compound and histologic stain",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "aliases": {}
+  },
+  "Q4062337": {
+   "pageid": 3871202,
+   "ns": 0,
+   "title": "Q4062337",
+   "lastrevid": 2551407094,
+   "modified": "2026-09-30T17:50:54Z",
+   "type": "item",
+   "id": "Q4062337",
+   "labels": {
+    "hi": {
+     "value": "sodium alizarinesulfonate",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "descriptions": {
+    "hi": {
+     "value": "chemical compound",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "aliases": {}
+  },
+  "Q3611866": {
+   "pageid": 3439901,
+   "ns": 0,
+   "title": "Q3611866",
+   "lastrevid": 2006008582,
+   "modified": "2023-11-07T01:39:26Z",
+   "type": "item",
+   "id": "Q3611866",
+   "labels": {
+    "hi": {
+     "value": "Alizarin 2-beta-glucosyltransferase",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "descriptions": {
+    "hi": {
+     "value": "class of enzymes",
+     "language": "en",
+     "for-language": "hi"
+    }
+   },
+   "aliases": {}
+  }
+ },
+ "success": 1
+}

@@ -2,19 +2,22 @@
 
 import { Lightbulb, Quote } from "lucide-react";
 
-import { evidenceKindLabel } from "@/components/answer/EvidenceBadge";
+import { evidenceKindLabel, evidenceLevelLabel } from "@/components/answer/EvidenceBadge";
 import type { Citation } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export function CitationChip({ citation, number, title, onOpen }: { citation: Citation; number: number | null; title: string | null; onOpen: (citation: Citation) => void }) {
   const inferred = citation.evidence === "INFERRED";
   const kind = evidenceKindLabel(citation.evidence);
+  const level = evidenceLevelLabel(citation.level);
+  const described = `${kind}, ${level}`;
   return (
     <button
       type="button"
       onClick={() => onOpen(citation)}
-      title={title ? `${title} · ${kind}` : kind}
-      aria-label={`Source ${number ?? ""}, ${kind}${title ? `: ${title}` : ""}`}
+      title={title ? `${title} · ${described}` : described}
+      aria-label={`Source ${number ?? ""}, ${described}${title ? `: ${title}` : ""}`}
+      aria-haspopup="dialog"
       data-evidence={citation.evidence}
       data-testid="citation-chip"
       className={cn(

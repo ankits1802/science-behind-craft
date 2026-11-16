@@ -12,7 +12,8 @@ from app.main import app
 from app.models import Base
 
 BACKEND = Path(__file__).resolve().parents[1]
-MIGRATION = BACKEND / "migrations" / "versions" / "0001_initial_schema.py"
+MIGRATIONS = BACKEND / "migrations" / "versions"
+MIGRATION = MIGRATIONS / "0001_initial_schema.py"
 FUNCTIONAL_DIRECTIVE = re.compile(r"^#\s*(noqa|type:|pragma|pyright:|ruff:|fmt:|!)")
 
 
@@ -73,6 +74,28 @@ def migration_tree() -> ast.Module:
     return ast.parse(MIGRATION.read_text(encoding="utf-8"))
 
 
+def module_constant(tree: ast.Module, name: str) -> object | None:
+    for node in tree.body:
+        target = node.target if isinstance(node, ast.AnnAssign) else None
+        if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            target = node.targets[0]
+        if isinstance(target, ast.Name) and target.id == name and node.value is not None:
+            return ast.literal_eval(node.value)
+    return None
+
+
+def enum_additions() -> dict[str, tuple[str, ...]]:
+    added: dict[str, tuple[str, ...]] = {}
+    for path in sorted(MIGRATIONS.glob("[0-9][0-9][0-9][0-9]_*.py")):
+        if path == MIGRATION:
+            continue
+        for name, values in (
+            module_constant(ast.parse(path.read_text(encoding="utf-8")), "ENUM_ADDITIONS") or ()
+        ):
+            added[name] = added.get(name, ()) + tuple(values)
+    return added
+
+
 def is_call_to(node: ast.AST, attr: str) -> bool:
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == attr
 
@@ -97,20 +120,42 @@ def migration_tables() -> dict[str, dict[str, ast.Call]]:
                 assert column not in columns, f"{name}.{column} is declared twice"
                 columns[column] = arg
         tables[name] = columns
+    for table, column, call in later_column_changes():
+        if call is None:
+            tables[table].pop(column, None)
+        else:
+            assert column not in tables[table], f"{table}.{column} is added twice"
+            tables[table][column] = call
     return tables
 
 
+def later_column_changes() -> list[tuple[str, str, ast.Call | None]]:
+    changes: list[tuple[str, str, ast.Call | None]] = []
+    for path in sorted(MIGRATIONS.glob("[0-9][0-9][0-9][0-9]_*.py")):
+        if path == MIGRATION:
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        upgrade = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "upgrade")
+        for node in ast.walk(upgrade):
+            if is_call_to(node, "add_column") and len(node.args) == 2 and is_call_to(node.args[1], "Column"):
+                changes.append((first_string(node), first_string(node.args[1]), node.args[1]))
+            elif is_call_to(node, "drop_column") and len(node.args) == 2:
+                changes.append((first_string(node), ast.literal_eval(node.args[1]), None))
+    return changes
+
+
+def initial_enum_list() -> dict[str, tuple[str, ...]]:
+    pairs = module_constant(migration_tree(), "ENUMS")
+    if pairs is None:
+        raise AssertionError("ENUMS is missing from the migration")
+    names = [name for name, _values in pairs]
+    assert len(names) == len(set(names)), "ENUMS lists a type twice"
+    return {name: tuple(values) for name, values in pairs}
+
+
 def migration_enum_list() -> dict[str, tuple[str, ...]]:
-    for node in migration_tree().body:
-        target = node.target if isinstance(node, ast.AnnAssign) else None
-        if isinstance(node, ast.Assign) and len(node.targets) == 1:
-            target = node.targets[0]
-        if isinstance(target, ast.Name) and target.id == "ENUMS" and node.value is not None:
-            pairs = ast.literal_eval(node.value)
-            names = [name for name, _values in pairs]
-            assert len(names) == len(set(names)), "ENUMS lists a type twice"
-            return {name: tuple(values) for name, values in pairs}
-    raise AssertionError("ENUMS is missing from the migration")
+    added = enum_additions()
+    return {name: values + added.get(name, ()) for name, values in initial_enum_list().items()}
 
 
 def inline_enum(column: ast.Call) -> tuple[str, tuple[str, ...]] | None:
@@ -161,6 +206,7 @@ def test_migration_enum_columns_match_model(table: str) -> None:
             assert not isinstance(column_type, sa.Enum), f"{table}.{name} is an enum only in the model"
             continue
         enum_name, values = found
+        values += enum_additions().get(enum_name, ())
         assert isinstance(column_type, sa.Enum), f"{table}.{name} is an enum only in the migration"
         assert enum_name == column_type.name, (table, name, enum_name, column_type.name)
         assert values == tuple(column_type.enums), (table, name, values, column_type.enums)
@@ -201,3 +247,9 @@ def test_no_code_comments(path: Path) -> None:
     for token in tokenize.generate_tokens(io.StringIO(source).readline):
         if token.type == tokenize.COMMENT:
             assert FUNCTIONAL_DIRECTIVE.match(token.string), f"{path}:{token.start[0]} {token.string}"
+
+
+def test_alias_source_downgrade_restores_the_initial_values() -> None:
+    later = ast.parse((MIGRATIONS / "0002_portal_alias_source.py").read_text(encoding="utf-8"))
+    assert module_constant(later, "ALIAS_SOURCES_BEFORE") == initial_enum_list()["AliasSource"]
+    assert enum_additions()["AliasSource"] == ("FR_SYNC",)

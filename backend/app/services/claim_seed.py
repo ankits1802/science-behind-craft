@@ -1,11 +1,11 @@
 import json
 import uuid
-from collections.abc import Iterable
 from datetime import UTC, datetime
+from itertools import batched
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import bindparam, select, update
+from sqlalchemy import bindparam, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -23,6 +23,7 @@ from app.models import (
     Source,
 )
 from app.models.knowledge import QUOTE_MAX_CHARS
+from app.services.craft_seed import ids_by_slug
 
 BATCH = 500
 SYSTEM_ACTOR = "import"
@@ -37,11 +38,6 @@ def seed_id(kind: str, key: str) -> uuid.UUID:
 
 def load_seed_claims(path: Path | None = None) -> dict[str, Any]:
     return json.loads((path or SEED_CLAIMS_FILE).read_text(encoding="utf-8"))
-
-
-def _chunks(rows: list[dict[str, Any]], size: int = BATCH) -> Iterable[list[dict[str, Any]]]:
-    for start in range(0, len(rows), size):
-        yield rows[start : start + size]
 
 
 def _date(value: Any) -> datetime | None:
@@ -193,16 +189,12 @@ def claim_seed_plan(data: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
 
 async def _insert_new(session: AsyncSession, model: Any, rows: list[dict[str, Any]]) -> int:
     inserted = 0
-    for chunk in _chunks(rows):
+    for chunk in batched(rows, BATCH, strict=False):
         result = await session.execute(
-            insert(model).values(chunk).on_conflict_do_nothing().returning(model.id)
+            insert(model).values(list(chunk)).on_conflict_do_nothing().returning(model.id)
         )
         inserted += len(result.scalars().all())
     return inserted
-
-
-async def _ids_by_slug(session: AsyncSession, model: Any) -> dict[str, uuid.UUID]:
-    return dict((await session.execute(select(model.slug, model.id))).all())
 
 
 async def _seed_processes(
@@ -241,8 +233,8 @@ async def _seed_processes(
 
 async def seed_claims(session: AsyncSession, data: dict[str, Any] | None = None) -> dict[str, Any]:
     plan = claim_seed_plan(data if data is not None else load_seed_claims())
-    craft_ids = await _ids_by_slug(session, Craft)
-    sub_ids = await _ids_by_slug(session, CraftSubCategory)
+    craft_ids = await ids_by_slug(session, Craft)
+    sub_ids = await ids_by_slug(session, CraftSubCategory)
 
     unresolved: set[str] = set()
     concept_values = []

@@ -1,0 +1,42 @@
+{
+ "best_oa_location": null,
+ "data_standard": 2,
+ "doi": "10.1111/cote.12288",
+ "doi_url": "https://doi.org/10.1111/cote.12288",
+ "first_oa_location": null,
+ "genre": "journal-article",
+ "has_repository_copy": false,
+ "is_oa": false,
+ "is_paratext": false,
+ "journal_is_in_doaj": false,
+ "journal_is_oa": false,
+ "journal_issn_l": "1472-3581",
+ "journal_issns": "1472-3581,1478-4408",
+ "journal_name": "Coloration Technology",
+ "oa_locations": [],
+ "oa_locations_embargoed": [],
+ "oa_status": "closed",
+ "published_date": "2017-06-13",
+ "publisher": "Wiley",
+ "title": "Mordant dye application on cotton: optimisation and combination with natural dyes",
+ "updated": "2025-05-22T18:42:22Z",
+ "year": 2017,
+ "z_authors": [
+  {
+   "author_position": "first",
+   "is_corresponding": true,
+   "raw_affiliation_strings": [
+    "Department of Textile Engineering, Chemistry and Science North Carolina State University Raleigh NC 27695 USA"
+   ],
+   "raw_author_name": "Yi Ding"
+  },
+  {
+   "author_position": "last",
+   "is_corresponding": false,
+   "raw_affiliation_strings": [
+    "Department of Textile Engineering, Chemistry and Science North Carolina State University Raleigh NC 27695 USA"
+   ],
+   "raw_author_name": "Harold S. Freeman"
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "PropertyTable": {
+  "Properties": [
+   {
+    "CID": 6293,
+    "MolecularFormula": "C14H8O4",
+    "MolecularWeight": "240.21",
+    "SMILES": "C1=CC=C2C(=C1)C(=O)C3=C(C2=O)C(=C(C=C3)O)O",
+    "InChIKey": "RGCKGOZRHPZPFP-UHFFFAOYSA-N",
+    "IUPACName": "1,2-dihydroxyanthracene-9,10-dione",
+    "Title": "Alizarin"
+   },
+   {
+    "CID": 3955344,
+    "MolecularFormula": "C14H7NaO7S",
+    "MolecularWeight": "342.26",
+    "SMILES": "C1=CC=C2C(=C1)C(=O)C3=CC(=C(C(=C3C2=O)O)O)S(=O)(=O)[O-].[Na+]",
+    "InChIKey": "HFVAFDPGUJEFBQ-UHFFFAOYSA-M",
+    "IUPACName": "sodium 3,4-dihydroxy-9,10-dioxoanthracene-2-sulfonate",
+    "Title": "Sodium alizarinesulfonate"
+   },
+   {
+    "CID": 20431,
+    "MolecularFormula": "C28H20N2Na2O8S2",
+    "MolecularWeight": "622.6",
+    "SMILES": "CC1=CC(=C(C=C1)NC2=C3C(=C(C=C2)NC4=C(C=C(C=C4)C)S(=O)(=O)[O-])C(=O)C5=CC=CC=C5C3=O)S(=O)(=O)[O-].[Na+].[Na+]",
+    "InChIKey": "FPAYXBWMYIMERV-UHFFFAOYSA-L",
+    "IUPACName": "disodium;5-methyl-2-[[4-(4-methyl-2-sulfonatoanilino)-9,10-dioxoanthracen-1-yl]amino]benzenesulfonate",
+    "Title": "Acid Green 25"
+   }
+  ]
+ }
+}

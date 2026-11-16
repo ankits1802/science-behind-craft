@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/1WLGKl3C5BKqdwqIfke66OM9ELU</id>
+  <title>arXiv Query: search_query=all:alizarin AND all:dye&amp;id_list=&amp;start=0&amp;max_results=2</title>
+  <updated>2026-11-15T21:48:54Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:alizarin+AND+all:dye&amp;start=0&amp;max_results=2&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>2</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2207.00830v1</id>
+    <title>Tuning the electron injection mechanism by changing the adsorption mode:the case study of Alizarin on TiO2</title>
+    <updated>2022-07-02T13:33:37Z</updated>
+    <link href="https://arxiv.org/abs/2207.00830v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.00830v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Functionalized TiO2 nanoparticles with intense fluorescent dyes is a promising tool for several technological applications ranging from photochemistry, photocatalysis, photovoltaics, photodynamic therapy or bioimaging. Here, we present the case study of the Alizarin adsorption on TiO2 nanoparticles (NPs) of different shape and increasing size up to 2.2 nm (700 atoms), by means of density functional theory (DFT) calculations. We find that Alizarin can bind in three different ways, depending on the number and type of bonds between Alizarin and TiO2: "tridented", "bidented" and "chelated". Next, we investigate the optical properties of these systems by time-dependent density functional theory (TDDFT) calculations. Based on the absorption spectra and the Kohn-Sham orbitals analysis, we discovered that the mechanism of electron injection depends on the Alizarin binding mode to the TiO2 surface. While for bidented and chelated adsorption modes a direct charge transfer is observed, for the tridented one an indirect mechanism governs the charge transfer process following the excitation. Our results are in good agreement with existing experimental data and suggests that by tailoring the shape of the TiO2 NPs and, thus, determining the type of undercoordinated Ti atoms prevalently exposed at the surface, it is possible to control the predominant injection mechanism.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-02T13:33:37Z</published>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>Federico Soria</name>
+    </author>
+    <author>
+      <name>Chiara Daldossi</name>
+    </author>
+    <author>
+      <name>Cristiana Di Valentin</name>
+    </author>
+    <arxiv:doi>10.1016/j.mtener.2022.101085</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.mtener.2022.101085" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.05545v1</id>
+    <title>Beyond Vibrationally Mediated Electron Transfer: Coherent Phenomena Induced by Ultrafast Charge Separation</title>
+    <updated>2016-07-19T12:32:00Z</updated>
+    <link href="https://arxiv.org/abs/1607.05545v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.05545v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Wave packet propagation succeeding electron transfer (ET) from alizarin dye molecules into the nanocrystalline TiO2 semiconductor has been studied by ultrafast transient absorption spectroscopy. Due to the ultrafast time scale of the ET reaction of about 6 fs the system shows substantial differences to molecular ET systems. We show that the ET process is not mediated by molecular vibrations and therefore classical ET theories lose their applicability. Here the ET reaction itself prepares a vibrational wave packet and not the electromagnetic excitation by the laser pulse. Furthermore, the generation of phonons during polaron formation in the TiO2 lattice is observed in real time for this system. The presented investigations enable an unambiguous assignment of the involved photoinduced mechanisms and can contribute to a corresponding extension of molecular ET theories to ultrafast ET systems like alizarin/TiO2.</summary>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-19T12:32:00Z</published>
+    <arxiv:comment>This work was supported by the German Research Foundation (DFG) (Hu 1006/6-1, WA 1850/6-1) and European Union projects FDML-Raman (FP7 ERC StG, contract no. 259158) and ENCOMOLE-2i (Horizon 2020, ERC CoG no. 646669)</arxiv:comment>
+    <arxiv:primary_category term="physics.chem-ph"/>
+    <arxiv:journal_ref>The Journal of Physical Chemistry C 2016 120 (16), 8534-8539</arxiv:journal_ref>
+    <author>
+      <name>Robert Huber</name>
+    </author>
+    <author>
+      <name>Lars Dworak</name>
+    </author>
+    <author>
+      <name>Jacques E. Moser</name>
+    </author>
+    <author>
+      <name>Michael Grätzel</name>
+    </author>
+    <author>
+      <name>Josef Wachtveitl</name>
+    </author>
+    <arxiv:doi>10.1021/acs.jpcc.6b02012</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1021/acs.jpcc.6b02012" title="doi"/>
+  </entry>
+</feed>

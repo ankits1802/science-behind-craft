@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - "frontend/**"
+      - "shared/answer-stream*.golden.sse"
       - ".github/workflows/frontend-checks.yml"
   push:
     branches: [main]
     paths:
       - "frontend/**"
+      - "shared/answer-stream*.golden.sse"
       - ".github/workflows/frontend-checks.yml"
   workflow_dispatch:
 

@@ -1,0 +1,7 @@
+{
+ "docs": "https://help.openalex.org/access/unpaywall/#unpaywall-and-openalex",
+ "error": "gone",
+ "message": "Unpaywall title search was retired on 2026-09-18. Use OpenAlex instead: https://api.openalex.org/works?search=YOUR+QUERY . OpenAlex is the successor to Unpaywall, from the same team, and Unpaywall now runs on the OpenAlex database, so it is the same data. More: https://help.openalex.org/access/unpaywall/#unpaywall-and-openalex",
+ "replacement": "https://api.openalex.org/works?search=YOUR+QUERY",
+ "retired": "2026-09-18"
+}

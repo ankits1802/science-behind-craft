@@ -1,0 +1,197 @@
+{
+ "batchcomplete": true,
+ "continue": {
+  "gsroffset": 3,
+  "continue": "gsroffset||"
+ },
+ "query": {
+  "pages": [
+   {
+    "pageid": 15565262,
+    "ns": 6,
+    "title": "File:Ajrak.jpg",
+    "index": 1,
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ajrak.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Ajrak.jpg",
+      "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=15565262",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Ajrak",
+        "source": "mediawiki-metadata"
+       },
+       "ImageDescription": {
+        "value": "Ajrak\n<p>Ajrak (Sindhi: اجرڪ) is a name given to a unique form of blockprinted shawls and tiles found in Sindh, Pakistan. Ajraks are also worn by the Seraiki people of Southern Punjab and Kutch. These shawls display special designs and patterns made using block printing by stamps. Common colours used while making these patterns may include but are not limited to blue, red, black, yellow and green. Over the years, ajraks have become a symbol of the Sindhi culture and traditions.\n</p><p>Early human settlements in the region which is now the province Sindh in Pakistan along the Indus River had found a way of cultivating and using Gossypium arboreum commonly known as tree cotton to make clothes for themselves. These civilizations are thought to have mastered the art of making cotton fabrics as early as 3000 BC.[1] A bust of a king priest excavated at Mohenjo-daro shows him draped over one shoulder in a piece of cloth that resembles an ajrak.\nWhat came as a formidable explanation for this observation was the trefoil pattern etched on the person's garment interspersed with small circles, the interiors of which were filled with a red pigment. Excavations elsewhere in the Old World around Mesopotamia have yielded similar patterns appearing on various objects most notably on the royal couch of Tutankhamen. This symbol illustrates what is now believed to be an edifice depicting the fusion of the three sun-disks of the gods of the sun, water and the earth. Reminiscent geometry of the trefoil is evident on most of the recent ajrak prints.\n</p>\n&lt;a href=\"<a class=\"external free\" data-mw-original-href=\"http://en.wikipedia.org/wiki/Ajrak\" href=\"https://en.wikipedia.org/wiki/Ajrak\">http://en.wikipedia.org/wiki/Ajrak</a>\" rel=\"nofollow\"&gt;en.wikipedia.org/wiki/Ajrak&lt;/a&gt;",
+        "source": "commons-desc-page"
+       },
+       "DateTimeOriginal": {
+        "value": "2010-05-31",
+        "source": "commons-desc-page"
+       },
+       "Credit": {
+        "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+        "source": "commons-desc-page"
+       },
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Ahub1988&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Ahub1988 (page does not exist)\">Ahub1988</a>",
+        "source": "commons-desc-page"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 3.0",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "AttributionRequired": {
+        "value": "true",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "LicenseUrl": {
+        "value": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "commons-desc-page"
+       }
+      },
+      "mime": "image/jpeg"
+     }
+    ],
+    "pagelanguage": "en",
+    "lastrevid": 1272783994,
+    "fullurl": "https://commons.wikimedia.org/wiki/File:Ajrak.jpg",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/File:Ajrak.jpg",
+    "revisions": [
+     {
+      "revid": 1272783994,
+      "parentid": 1132460212,
+      "timestamp": "2026-09-05T19:52:16Z"
+     }
+    ]
+   },
+   {
+    "pageid": 49875448,
+    "ns": 6,
+    "title": "File:Sindhi Cap Ajrak.jpg",
+    "index": 3,
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Sindhi_Cap_Ajrak.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Sindhi_Cap_Ajrak.jpg",
+      "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=49875448",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Sindhi Cap Ajrak",
+        "source": "mediawiki-metadata"
+       },
+       "ImageDescription": {
+        "value": "Ajrak detail on Handmade Sindhi Cap",
+        "source": "commons-desc-page"
+       },
+       "DateTimeOriginal": {
+        "value": "2016-07-03",
+        "source": "commons-desc-page"
+       },
+       "Credit": {
+        "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+        "source": "commons-desc-page"
+       },
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Muhammadahmad79&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Muhammadahmad79 (page does not exist)\">Muhammadahmad79</a>",
+        "source": "commons-desc-page"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 4.0",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "AttributionRequired": {
+        "value": "true",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "LicenseUrl": {
+        "value": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "commons-desc-page"
+       }
+      },
+      "mime": "image/jpeg"
+     }
+    ],
+    "pagelanguage": "en",
+    "lastrevid": 1171386440,
+    "fullurl": "https://commons.wikimedia.org/wiki/File:Sindhi_Cap_Ajrak.jpg",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/File:Sindhi_Cap_Ajrak.jpg",
+    "revisions": [
+     {
+      "revid": 1171386440,
+      "parentid": 446835831,
+      "timestamp": "2026-02-24T19:30:05Z"
+     }
+    ]
+   },
+   {
+    "pageid": 67760143,
+    "ns": 6,
+    "title": "File:Ajrak Chadar.jpg",
+    "index": 2,
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Ajrak_Chadar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Ajrak_Chadar.jpg",
+      "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=67760143",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Ajrak Chadar",
+        "source": "mediawiki-metadata"
+       },
+       "ImageDescription": {
+        "value": "Source via : www.sindhidress.com",
+        "source": "commons-desc-page"
+       },
+       "DateTimeOriginal": {
+        "value": "2017-12-29",
+        "source": "commons-desc-page"
+       },
+       "Credit": {
+        "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+        "source": "commons-desc-page"
+       },
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Abdulwahabkath&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Abdulwahabkath (page does not exist)\">Abdulwahabkath</a>",
+        "source": "commons-desc-page"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 4.0",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "AttributionRequired": {
+        "value": "true",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "LicenseUrl": {
+        "value": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "commons-desc-page"
+       }
+      },
+      "mime": "image/jpeg"
+     }
+    ],
+    "pagelanguage": "en",
+    "lastrevid": 1260353320,
+    "fullurl": "https://commons.wikimedia.org/wiki/File:Ajrak_Chadar.jpg",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/File:Ajrak_Chadar.jpg",
+    "revisions": [
+     {
+      "revid": 1260353320,
+      "parentid": 790202005,
+      "timestamp": "2026-08-12T22:30:02Z"
+     }
+    ]
+   }
+  ]
+ }
+}

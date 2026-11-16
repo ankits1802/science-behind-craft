@@ -77,3 +77,29 @@ test("hypotheses land in open questions, not in the answer body", () => {
   expect(state.payload.sections).toHaveLength(0);
   expect(state.payload.openQuestions[0].sentences[0].id).toBe("h");
 });
+
+test("a status step is shown while the answer is being researched and cleared when it settles", () => {
+  let state = reduceAnswer({ ...emptyAnswer("q"), phase: "matching" }, { type: "status", data: { step: "RESOLVING", message: "Finding the craft" } });
+  expect(state.phase).toBe("matching");
+  expect(state.status).toEqual({ step: "RESOLVING", message: "Finding the craft" });
+  state = reduceAnswer(state, { type: "status", data: { step: "READING", message: "Reading the best of 4 sources found" } });
+  expect(state.status?.step).toBe("READING");
+  expect(reduceAnswer(state, { type: "done", data: { answerId: null } }).status).toBeNull();
+  expect(reduceAnswer(state, { type: "error", data: { message: "Research failed just now." } }).status).toBeNull();
+});
+
+test("not enough evidence is its own settled state, not an error", () => {
+  let state = reduceAnswer(emptyAnswer("q"), { type: "not_enough_evidence", data: { message: "There is not enough cited evidence yet." } });
+  state = reduceAnswer(state, { type: "status", data: { step: "COMPOSING", message: "late" } });
+  state = reduceAnswer(state, { type: "done", data: { answerId: "ans-2" } });
+  expect(state.phase).toBe("empty");
+  expect(state.notice).toBe("There is not enough cited evidence yet.");
+  expect(state.error).toBeNull();
+  expect(state.status).toBeNull();
+  expect(state.payload.answerId).toBe("ans-2");
+});
+
+test("the new event names parse and a heartbeat between them is skipped", () => {
+  const { blocks } = splitSseBuffer('event: status\ndata: {"step":"PLANNING","message":"Planning"}\n\n: keep-alive\n\nevent: not_enough_evidence\ndata: {"message":"m"}\n\n');
+  expect(blocks.map(parseSseBlock)).toEqual([{ type: "status", data: { step: "PLANNING", message: "Planning" } }, null, { type: "not_enough_evidence", data: { message: "m" } }]);
+});

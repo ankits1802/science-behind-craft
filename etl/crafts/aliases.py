@@ -23,7 +23,15 @@ from app.data.craft_master_loader import (
     parse_codes,
     parse_master,
 )
-from app.data.craft_text import INDIC_BLOCKS, ascii_key, fold, script_of, to_latin, to_latin_spoken
+from app.data.craft_text import (
+    INDIC_BLOCKS,
+    SCRIPT_LANG,
+    alias_norm,
+    ascii_key,
+    script_of,
+    to_latin,
+    to_latin_spoken,
+)
 
 from traditions import IMMERSIVE_ROOT, IMMERSIVE_TO_MASTER
 
@@ -142,17 +150,6 @@ SCHEMES: dict[str, str] = {
     "Knda": "kannada",
     "Mlym": "malayalam",
 }
-SCRIPT_LANG = {
-    "Deva": "hi",
-    "Beng": "bn",
-    "Guru": "pa",
-    "Gujr": "gu",
-    "Orya": "or",
-    "Taml": "ta",
-    "Telu": "te",
-    "Knda": "kn",
-    "Mlym": "ml",
-}
 STATE_SCRIPTS: dict[str, tuple[str, ...]] = {
     "Andhra Pradesh": ("Telu",),
     "Telangana": ("Telu",),
@@ -176,11 +173,6 @@ STATE_SUFFIX = re.compile(r"\s+of\s+[A-Z][A-Za-z ]+$")
 
 def sha1_of(path: Path) -> str | None:
     return hashlib.sha1(path.read_bytes()).hexdigest() if path.exists() else None
-
-
-def alias_norm(text: Any) -> str:
-    value = str(text or "")
-    return ascii_key(value) if script_of(value) in ("Latn", "Zyyy") else fold(value)
 
 
 def is_generic(norm: str) -> bool:

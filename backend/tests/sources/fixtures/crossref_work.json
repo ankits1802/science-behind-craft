@@ -1,0 +1,40 @@
+{
+ "status": "ok",
+ "message-type": "work",
+ "message-version": "1.0.0",
+ "message": {
+  "DOI": "10.55041/ijsrem46137",
+  "title": [
+   "Reducing carbon Footprint and Enhancing Sustainability in Natural Printing Practices via Imprint Technology using Pre-Mordant and Post-Mordant Techniques on Cotton Fabric Printing with Flower and Leaf"
+  ],
+  "author": [
+   {
+    "given": "Ms.Monika",
+    "family": "Choudhary",
+    "sequence": "first",
+    "affiliation": [],
+    "role": [
+     {
+      "role": "author",
+      "vocabulary": "crossref"
+     }
+    ]
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2025,
+     4,
+     27
+    ]
+   ]
+  },
+  "type": "journal-article",
+  "publisher": "Edtech Publishers (OPC) Private Limited",
+  "abstract": "<jats:p>Abstract\n\nClothing serves several essential functions, including protection, identification, and adornment. Among the methods used to enhance fabrics, printing techniques play a significant role, while conventional techniques like screen printing and block printing are still commonly used. Recently, eco-printing has emerged as a contemporary and sustainable technique that utilizes plant materials to create unique colors and patterns on textiles. Mordants, particularly a few Natural Mordants are critical in this process as they enhance and improve color quality with changes in the natural pigment of the flower &amp; leaf and base colour of the fabric, resulting in unexpected results. This study aims to investigate the effects of pre-mordanting and post-mordanting on the color quality, shape, depth, fastness properties, and overall aesthetics of cotton fabrics printed with natural dyes derived from flowers and leaves. Flower and leaf impression printing, also known as floral impressionism or pounding, is an innovative technique that uses the natural shapes and colors of flowers to create unique prints on fabric. This eco-friendly method involves pressing fresh flowers or leaves into cloth, either by hand or using a hammer for the printing press, to transfer their intricate patterns and vibrant hues. As the textile industry faces scrutiny for its significant environmental impact, adopting sustainable practices like flower &amp; leaf impression printing can revolutionize fabric printing and reduce pollution.\n\nFew benefits of Natural Printing, which contribute to both environment and Design Aesthetics are 1. Eco-Friendly Process ,2. Sustainable Fabrics,3. Minimal Waste, 4. Unique Aesthetic,5. Promoting Awareness, 6.Innovative.</jats:p>",
+  "container-title": [
+   "INTERNATIONAL JOURNAL OF SCIENTIFIC RESEARCH IN ENGINEERING AND MANAGEMENT"
+  ]
+ }
+}

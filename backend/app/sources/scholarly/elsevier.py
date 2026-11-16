@@ -1,0 +1,123 @@
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Any
+
+from app.research.evidence import EvidenceItem, SearchQuery, SourceDocument
+
+from ..adapter import Clock, HttpSourceAdapter, build_document, utc_now
+from ..http import RatePolicy, SourceHttp
+from ..records import (
+    AUTHORS_MAX,
+    UnusableRecord,
+    classify,
+    clean_text,
+    doi_of,
+    doi_url,
+    https_or_none,
+    markup_text,
+    partial_date_of,
+    query_terms,
+    title_of,
+)
+
+__all__ = ["ELSEVIER_RATE", "ElsevierAdapter"]
+
+ELSEVIER_API = "https://api.elsevier.com/content"
+ELSEVIER_RATE = RatePolicy(min_interval=0.2)
+SUBTYPE_KINDS = {
+    "ar": "article",
+    "re": "article",
+    "cp": "article",
+    "le": "article",
+    "ch": "chapter",
+    "bk": "book",
+}
+SCOPUS_PREFIX = "SCOPUS_ID:"
+JSON_ACCEPT = {"Accept": "application/json"}
+SCOPUS_RECORD = "https://www.scopus.com/record/display.uri?eid=2-s2.0-"
+
+
+class ElsevierAdapter(HttpSourceAdapter):
+    name = "elsevier"
+
+    def __init__(
+        self, http: SourceHttp, *, api_key: str, insttoken: str | None = None, clock: Clock = utc_now
+    ) -> None:
+        if not api_key:
+            raise ValueError("The Elsevier adapter needs ELSEVIER_API_KEY")
+        super().__init__(http, clock=clock)
+        self._secret = {"X-ELS-APIKey": api_key} | ({"X-ELS-Insttoken": insttoken} if insttoken else {})
+
+    async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
+        terms = query_terms(query.text)
+        if not terms:
+            return []
+        response = await self.http.get(
+            f"{ELSEVIER_API}/search/scopus",
+            params={"query": f"TITLE-ABS-KEY({' '.join(terms)})", "count": str(k)},
+            headers=JSON_ACCEPT,
+            secret_headers=self._secret,
+        )
+        entries = (response.json(self.name).get("search-results") or {}).get("entry") or []
+        return [entry for entry in entries if "error" not in entry]
+
+    def _item(self, record: Any, retrieved_at: datetime) -> EvidenceItem:
+        scopus_id = _scopus_id(record.get("dc:identifier"))
+        doi = doi_of(record.get("prism:doi"))
+        source_type, trust = classify(SUBTYPE_KINDS.get(record.get("subtype") or "", "other"))
+        return EvidenceItem(
+            id=f"{self.name}:{scopus_id}",
+            adapter=self.name,
+            tier=self.tier,
+            source_type=source_type,
+            url=doi_url(doi) if doi else _scopus_url(record) or f"{SCOPUS_RECORD}{scopus_id}",
+            title=title_of(record.get("dc:title")),
+            authors=_authors(record.get("dc:creator")),
+            published=partial_date_of(record.get("prism:coverDate")),
+            retrieved_at=retrieved_at,
+            doi=doi,
+            publisher=clean_text(record.get("dc:publisher"))
+            or clean_text(record.get("prism:publicationName")),
+            trust=trust,
+            external_ids={"scopus": scopus_id},
+        )
+
+    async def _fetch_document(self, native: str, retrieved_at: datetime) -> SourceDocument:
+        if not native.isdigit():
+            raise self._not_found(native, "no record with this id")
+        response = await self.http.get(
+            _abstract_url(native), headers=JSON_ACCEPT, secret_headers=self._secret
+        )
+        coredata = (response.json(self.name).get("abstracts-retrieval-response") or {}).get("coredata") or {}
+        abstract = markup_text(coredata.get("dc:description"))
+        if abstract is None:
+            raise self._not_found(native, "no abstract this key may read")
+        return build_document(self._item(coredata, retrieved_at), abstract, "ABSTRACT")
+
+
+def _scopus_id(value: Any) -> str:
+    text = clean_text(value) or ""
+    scopus_id = text.removeprefix(SCOPUS_PREFIX)
+    if not scopus_id.isdigit():
+        raise UnusableRecord("no Scopus id")
+    return scopus_id
+
+
+def _abstract_url(scopus_id: str) -> str:
+    return f"{ELSEVIER_API}/abstract/scopus_id/{scopus_id}"
+
+
+def _scopus_url(record: dict[str, Any]) -> str | None:
+    for link in record.get("link") or []:
+        if link.get("@ref") == "scopus" or link.get("@rel") == "scopus":
+            return https_or_none(link.get("@href"))
+    return None
+
+
+def _authors(creator: Any) -> list[str]:
+    if isinstance(creator, dict):
+        names = [clean_text(author.get("ce:indexed-name")) for author in creator.get("author") or []]
+        return [name for name in names if name][:AUTHORS_MAX]
+    name = clean_text(creator)
+    return [name] if name else []

@@ -49,6 +49,47 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 - `USGS_MRDS`: U.S. Geological Survey. Mineral Resources Data System (MRDS). Reston, Virginia. https://mrdata.usgs.gov/mrds/
 - `GLIM_1_0_05DEG`: Hartmann, J., Moosdorf, N. (2012). Global Lithological Map Database v1.0 (gridded to 0.5 degree spatial resolution). PANGAEA. https://doi.org/10.1594/PANGAEA.788537
 
+## Live scholarly sources
+
+Live research reads these services through `backend/app/sources/` (decision 0005) and cites each
+work by DOI or the service's record URL; only short quoted passages are stored.
+
+| Adapter | Service | Terms that bind us |
+|---|---|---|
+| `openalex` | OpenAlex works API | Metadata CC0; daily allowance per key or per IP |
+| `crossref` | Crossref REST API, polite pool (`mailto`) | Metadata free to reuse; abstracts remain the publishers' |
+| `semantic_scholar` | Semantic Scholar Academic Graph | API licence; publishers may elide abstracts |
+| `core` | CORE API v3 | Key required; full texts keep their own licences |
+| `europe_pmc` | Europe PMC REST | Per-article licence (the `licence` field) |
+| `arxiv` | arXiv API | One request every 3 s; papers keep their own licences |
+| `doaj` | DOAJ API v4 | Articles under their journals' licences |
+| `elsevier`, `springer_nature` | Scopus, Springer Nature open access | Only with keys; quotes and DOI links, never a full copy (PLAN 17.1a) |
+| Unpaywall (locator) | Unpaywall DOI API (`email`) | Open-access status and legal copy location only |
+
+## Live reference sources
+
+Read through `backend/app/sources/reference/` (decision 0006). Each item keeps its licence and
+attribution; only short quoted passages are stored, with a link back.
+
+| Adapter | Service | Licence and attribution |
+|---|---|---|
+| `wikipedia` | Wikipedia Action API (English and Indian-language wikis) | CC BY-SA 4.0, read live from each wiki's rightsinfo; attributed to "Wikipedia contributors" with the article title and revision |
+| `wikidata` | Wikidata Action API and query service (SPARQL) | Structured data CC0 1.0; cited by item id and revision |
+| `pubchem` | PubChem PUG REST and PUG View, National Library of Medicine | Compound properties: NCBI places no restrictions (https://www.ncbi.nlm.nih.gov/home/about/policies/). GHS hazards keep the reporting source's terms; for ECHA, non-commercial reuse with "Source: European Chemicals Agency, http://echa.europa.eu/" (https://echa.europa.eu/web/guest/legal-notice) |
+| `wikimedia_commons` | Wikimedia Commons file metadata | Each file's own licence (short name and URL) and author, attributed "author, licence, via Wikimedia Commons" |
+
+## Live web sources
+
+Found through `backend/app/sources/web/` and read by the fetcher (decision 0007). A web page
+keeps its own copyright: only short quoted passages are stored, each with the page title, site
+name, final URL, fetch time and, when the page declares one, its licence; robots.txt is
+honoured for the agent `KalaVigyan`.
+
+| Adapter | Service | Terms |
+|---|---|---|
+| `searxng` | Self-hosted SearXNG metasearch on the box | Results come from the engines SearXNG queries; each hit links to its page |
+| `brave` | Brave Web Search API (fallback, only with `BRAVE_SEARCH_API_KEY`) | Brave Search API terms; results are used to find pages, and the pages themselves are cited |
+
 ## Variables and statistics
 
 Each row in `district_env.parquet` is one `(districtLgd, datasetCode, variable, depthOrPeriod, stat)`. Zonal statistics use exactextract with coverage-weighted, spherical-area cell weights, so partly covered edge cells count by the share inside the district. `depthOrPeriod` is `""` where it does not apply.

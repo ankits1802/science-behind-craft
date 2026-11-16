@@ -1,0 +1,570 @@
+{
+ "id": "https://openalex.org/W2625322139",
+ "doi": "https://doi.org/10.1111/cote.12288",
+ "display_name": "Mordant dye application on cotton: optimisation and combination with natural dyes",
+ "publication_date": "2017-06-13",
+ "publication_year": 2017,
+ "type": "article",
+ "authorships": [
+  {
+   "author": {
+    "display_name": "Yi Ding"
+   }
+  },
+  {
+   "author": {
+    "display_name": "Harold Stanley Freeman"
+   }
+  }
+ ],
+ "primary_location": {
+  "id": "doi:10.1111/cote.12288",
+  "doi": "https://doi.org/10.1111/cote.12288",
+  "is_oa": false,
+  "landing_page_url": "https://doi.org/10.1111/cote.12288",
+  "pdf_url": null,
+  "source": {
+   "id": "https://openalex.org/S78419349",
+   "display_name": "Coloration Technology",
+   "issn_l": "1472-3581",
+   "issn": [
+    "1472-3581",
+    "1478-4408"
+   ],
+   "is_oa": false,
+   "is_in_doaj": false,
+   "is_core": true,
+   "listed_in": [
+    "cwts-core",
+    "dongbi-c",
+    "jufo-1",
+    "norway-1",
+    "poland-40",
+    "russia-white-list-2"
+   ],
+   "host_organization": "https://openalex.org/P4310320595",
+   "host_organization_name": "Wiley",
+   "host_organization_lineage": [
+    "https://openalex.org/P4310320595"
+   ],
+   "host_organization_lineage_names": [
+    "Wiley"
+   ],
+   "type": "journal"
+  },
+  "license": null,
+  "license_id": null,
+  "version": "publishedVersion",
+  "is_accepted": true,
+  "is_published": true,
+  "raw_source_name": "Coloration Technology",
+  "raw_type": "journal-article"
+ },
+ "best_oa_location": null,
+ "abstract_inverted_index": {
+  "It": [
+   0
+  ],
+  "is": [
+   1,
+   82
+  ],
+  "well": [
+   2
+  ],
+  "known": [
+   3,
+   32
+  ],
+  "that": [
+   4,
+   148
+  ],
+  "cotton": [
+   5,
+   55,
+   137,
+   161
+  ],
+  "fibres": [
+   6
+  ],
+  "can": [
+   7,
+   37,
+   157
+  ],
+  "be": [
+   8,
+   38,
+   158,
+   225
+  ],
+  "dyed": [
+   9
+  ],
+  "through": [
+   10
+  ],
+  "the": [
+   11,
+   49,
+   69,
+   99,
+   111,
+   116,
+   128,
+   202,
+   218
+  ],
+  "formation": [
+   12
+  ],
+  "of": [
+   13,
+   51,
+   71,
+   76,
+   101,
+   113,
+   140,
+   144,
+   195,
+   221
+  ],
+  "coordinate": [
+   14
+  ],
+  "bonds": [
+   15
+  ],
+  "involving": [
+   16
+  ],
+  "cellulose": [
+   17
+  ],
+  "chains,": [
+   18
+  ],
+  "mordants": [
+   19
+  ],
+  "such": [
+   20,
+   26,
+   182
+  ],
+  "as": [
+   21,
+   27,
+   33,
+   105,
+   183,
+   210
+  ],
+  "alum,": [
+   22
+  ],
+  "and": [
+   23,
+   95,
+   168,
+   180,
+   188,
+   197,
+   207
+  ],
+  "natural": [
+   24,
+   52,
+   72,
+   80,
+   96,
+   108,
+   134,
+   155,
+   198
+  ],
+  "dyes": [
+   25,
+   31,
+   36,
+   46,
+   53,
+   78,
+   81,
+   97,
+   104,
+   109,
+   121,
+   135,
+   156,
+   165,
+   181,
+   205,
+   223
+  ],
+  "alizarin.": [
+   28
+  ],
+  "Similarly,": [
+   29
+  ],
+  "synthetic": [
+   30,
+   77
+  ],
+  "mordant": [
+   34,
+   45,
+   94,
+   103,
+   164,
+   196,
+   204
+  ],
+  "acid": [
+   35
+  ],
+  "used": [
+   39
+  ],
+  "to": [
+   40,
+   107,
+   126,
+   229
+  ],
+  "dye": [
+   41,
+   199
+  ],
+  "wool": [
+   42
+  ],
+  "fibres.": [
+   43
+  ],
+  "Unlike": [
+   44
+  ],
+  "on": [
+   47,
+   54,
+   136,
+   160
+  ],
+  "wool,": [
+   48
+  ],
+  "fastnesses": [
+   50
+  ],
+  "are": [
+   56
+  ],
+  "often": [
+   57
+  ],
+  "low.": [
+   58
+  ],
+  "Although": [
+   59
+  ],
+  "concerns": [
+   60
+  ],
+  "surrounding": [
+   61
+  ],
+  "textile": [
+   62
+  ],
+  "sustainability": [
+   63
+  ],
+  "have": [
+   64
+  ],
+  "sparked": [
+   65
+  ],
+  "renewed": [
+   66
+  ],
+  "interest": [
+   67
+  ],
+  "in": [
+   68,
+   90,
+   110,
+   227
+  ],
+  "use": [
+   70
+  ],
+  "dyes,": [
+   73
+  ],
+  "extensive": [
+   74
+  ],
+  "replacement": [
+   75
+  ],
+  "with": [
+   79,
+   151
+  ],
+  "neither": [
+   83
+  ],
+  "practical": [
+   84
+  ],
+  "nor": [
+   85
+  ],
+  "fundamentally": [
+   86
+  ],
+  "possible.": [
+   87
+  ],
+  "However,": [
+   88,
+   217
+  ],
+  "similarities": [
+   89
+  ],
+  "dyeing": [
+   91,
+   112
+  ],
+  "methods": [
+   92
+  ],
+  "using": [
+   93,
+   102,
+   162,
+   176,
+   201
+  ],
+  "raise": [
+   98
+  ],
+  "possibility": [
+   100
+  ],
+  "alternatives": [
+   106
+  ],
+  "cotton.": [
+   114
+  ],
+  "Further,": [
+   115
+  ],
+  "potential": [
+   117
+  ],
+  "for": [
+   118
+  ],
+  "combining": [
+   119
+  ],
+  "suitable": [
+   120
+  ],
+  "from": [
+   122,
+   133
+  ],
+  "these": [
+   123,
+   222
+  ],
+  "two": [
+   124,
+   203
+  ],
+  "classes": [
+   125
+  ],
+  "expand": [
+   127
+  ],
+  "colour": [
+   129
+  ],
+  "gamut": [
+   130
+  ],
+  "currently": [
+   131
+  ],
+  "available": [
+   132
+  ],
+  "seem": [
+   138
+  ],
+  "worthy": [
+   139
+  ],
+  "exploration.": [
+   141
+  ],
+  "The": [
+   142,
+   171
+  ],
+  "results": [
+   143,
+   173
+  ],
+  "this": [
+   145
+  ],
+  "study": [
+   146
+  ],
+  "indicate": [
+   147
+  ],
+  "shades": [
+   149,
+   214
+  ],
+  "comparable": [
+   150
+  ],
+  "those": [
+   152
+  ],
+  "produced": [
+   153
+  ],
+  "by": [
+   154
+  ],
+  "obtained": [
+   159,
+   175
+  ],
+  "select": [
+   163
+  ],
+  "following": [
+   166
+  ],
+  "Fe2+": [
+   167
+  ],
+  "Al3+": [
+   169
+  ],
+  "pretreatments.": [
+   170
+  ],
+  "best": [
+   172
+  ],
+  "were": [
+   174,
+   215
+  ],
+  "a": [
+   177
+  ],
+  "two‐step/two‐bath": [
+   178
+  ],
+  "process": [
+   179
+  ],
+  "CI": [
+   184,
+   189
+  ],
+  "Mordant": [
+   185,
+   190
+  ],
+  "Blue": [
+   186
+  ],
+  "13": [
+   187
+  ],
+  "Orange": [
+   191
+  ],
+  "6.": [
+   192
+  ],
+  "In": [
+   193
+  ],
+  "evaluations": [
+   194
+  ],
+  "combinations": [
+   200
+  ],
+  "logwood": [
+   206
+  ],
+  "Osage": [
+   208
+  ],
+  "orange": [
+   209
+  ],
+  "prototypes,": [
+   211
+  ],
+  "interesting": [
+   212
+  ],
+  "fabric": [
+   213
+  ],
+  "obtained.": [
+   216
+  ],
+  "fastness": [
+   219
+  ],
+  "properties": [
+   220
+  ],
+  "must": [
+   224
+  ],
+  "improved": [
+   226
+  ],
+  "order": [
+   228
+  ],
+  "produce": [
+   230
+  ],
+  "commercially": [
+   231
+  ],
+  "viable": [
+   232
+  ],
+  "dyeings.": [
+   233
+  ]
+ }
+}

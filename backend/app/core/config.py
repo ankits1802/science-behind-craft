@@ -3,7 +3,7 @@ from ipaddress import ip_address
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
-from pydantic import AliasChoices, Field, ValidationError, field_validator, model_validator
+from pydantic import AliasChoices, EmailStr, Field, ValidationError, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _BACKEND_ROOT = Path(__file__).resolve().parents[2]
@@ -104,10 +104,14 @@ class Settings(BaseSettings):
     brave_search_api_key: str | None = Field(
         default=None, validation_alias=AliasChoices("BRAVE_SEARCH_API_KEY", "BRAVE_API_KEY")
     )
+    searxng_url: str = Field(default="http://127.0.0.1:8888", alias="SEARXNG_URL")
+    fetcher_url: str = Field(default="http://127.0.0.1:8090", alias="FETCHER_URL")
     exa_api_key: str | None = Field(default=None, alias="EXA_API_KEY")
     tavily_api_key: str | None = Field(default=None, alias="TAVILY_API_KEY")
     openalex_api_key: str | None = Field(default=None, alias="OPENALEX_API_KEY")
-    crossref_mailto: str | None = Field(default=None, alias="CROSSREF_MAILTO")
+    research_contact_email: EmailStr = Field(
+        default="cxa.craftecosystem@gmail.com", alias="RESEARCH_CONTACT_EMAIL"
+    )
     semantic_scholar_api_key: str | None = Field(default=None, alias="SEMANTIC_SCHOLAR_API_KEY")
     core_api_key: str | None = Field(default=None, alias="CORE_API_KEY")
     springer_nature_api_key: str | None = Field(default=None, alias="SPRINGER_NATURE_API_KEY")
@@ -118,6 +122,8 @@ class Settings(BaseSettings):
     turnstile_secret_key: str | None = Field(default=None, alias="TURNSTILE_SECRET_KEY")
     turnstile_site_key: str | None = Field(default=None, alias="TURNSTILE_SITE_KEY")
     cross_portal_token: str | None = Field(default=None, alias="CROSS_PORTAL_TOKEN")
+    designer_portal_api_url: str | None = Field(default=None, alias="DESIGNER_PORTAL_API_URL")
+    field_repository_api_url: str | None = Field(default=None, alias="FIELD_REPOSITORY_API_URL")
 
     sign_in_attempts_per_ip: int = Field(default=20, ge=1, alias="SIGN_IN_ATTEMPTS_PER_IP")
     sign_in_attempts_per_account: int = Field(default=10, ge=1, alias="SIGN_IN_ATTEMPTS_PER_ACCOUNT")

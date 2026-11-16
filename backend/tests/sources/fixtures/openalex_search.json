@@ -1,0 +1,104 @@
+{
+ "meta": {
+  "count": 525,
+  "page": 1,
+  "per_page": 2
+ },
+ "results": [
+  {
+   "id": "https://openalex.org/W566549159",
+   "doi": null,
+   "display_name": "Dyeing Properties of Alizarin to Chitosan-Treated Cotton Fabrics with Various Mordants",
+   "publication_date": "1993-01-01",
+   "publication_year": 1993,
+   "type": "article",
+   "authorships": [
+    {
+     "author": {
+      "display_name": "Takeshi Kako"
+     }
+    }
+   ],
+   "primary_location": {
+    "id": "mag:566549159",
+    "doi": null,
+    "is_oa": false,
+    "landing_page_url": "http://ci.nii.ac.jp/naid/40003272733",
+    "pdf_url": null,
+    "source": null,
+    "license": null,
+    "license_id": null,
+    "version": null,
+    "is_accepted": false,
+    "is_published": false,
+    "raw_source_name": null,
+    "raw_type": null
+   },
+   "best_oa_location": null
+  },
+  {
+   "id": "https://openalex.org/W2625322139",
+   "doi": "https://doi.org/10.1111/cote.12288",
+   "display_name": "Mordant dye application on cotton: optimisation and combination with natural dyes",
+   "publication_date": "2017-06-13",
+   "publication_year": 2017,
+   "type": "article",
+   "authorships": [
+    {
+     "author": {
+      "display_name": "Yi Ding"
+     }
+    },
+    {
+     "author": {
+      "display_name": "Harold Stanley Freeman"
+     }
+    }
+   ],
+   "primary_location": {
+    "id": "doi:10.1111/cote.12288",
+    "doi": "https://doi.org/10.1111/cote.12288",
+    "is_oa": false,
+    "landing_page_url": "https://doi.org/10.1111/cote.12288",
+    "pdf_url": null,
+    "source": {
+     "id": "https://openalex.org/S78419349",
+     "display_name": "Coloration Technology",
+     "issn_l": "1472-3581",
+     "issn": [
+      "1472-3581",
+      "1478-4408"
+     ],
+     "is_oa": false,
+     "is_in_doaj": false,
+     "is_core": true,
+     "listed_in": [
+      "cwts-core",
+      "dongbi-c",
+      "jufo-1",
+      "norway-1",
+      "poland-40",
+      "russia-white-list-2"
+     ],
+     "host_organization": "https://openalex.org/P4310320595",
+     "host_organization_name": "Wiley",
+     "host_organization_lineage": [
+      "https://openalex.org/P4310320595"
+     ],
+     "host_organization_lineage_names": [
+      "Wiley"
+     ],
+     "type": "journal"
+    },
+    "license": null,
+    "license_id": null,
+    "version": "publishedVersion",
+    "is_accepted": true,
+    "is_published": true,
+    "raw_source_name": "Coloration Technology",
+    "raw_type": "journal-article"
+   },
+   "best_oa_location": null
+  }
+ ]
+}

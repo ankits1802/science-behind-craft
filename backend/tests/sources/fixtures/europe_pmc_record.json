@@ -1,0 +1,223 @@
+{
+ "version": "6.9",
+ "hitCount": 1,
+ "request": {
+  "queryString": "EXT_ID:42168406 AND SRC:MED",
+  "internalQuery": "EXT_ID:42168406 AND SRC:MED",
+  "resultType": "CORE",
+  "cursorMark": "*",
+  "pageSize": 25,
+  "sort": "",
+  "synonym": false
+ },
+ "resultList": {
+  "result": [
+   {
+    "id": "42168406",
+    "source": "MED",
+    "pmid": "42168406",
+    "pmcid": "PMC13503851",
+    "fullTextIdList": {
+     "fullTextId": [
+      "PMC13503851"
+     ]
+    },
+    "doi": "10.1038/s41598-026-52122-5",
+    "title": "Natural dyeing of wool fabric with Sappan via the atmospheric-pressure non-equilibrium microwave plasma system.",
+    "authorString": "Poonthong W, Yuji T, Tashiro S, Hirotani D, Mungkung N, Kasayapanand N.",
+    "authorList": {
+     "author": [
+      {
+       "fullName": "Poonthong W",
+       "lastName": "Poonthong",
+       "firstName": "Wittawat",
+       "initials": "W",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "School of Energy Environment and Materials, King Mongkut's University of Technology Thonburi, Bangkok, 10140, Thailand."
+         }
+        ]
+       }
+      },
+      {
+       "fullName": "Yuji T",
+       "lastName": "Yuji",
+       "firstName": "Toshifumi",
+       "initials": "T",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "Faculty of Education, University of Miyazaki, Miyazaki, 889-2192, Japan."
+         }
+        ]
+       }
+      },
+      {
+       "fullName": "Tashiro S",
+       "lastName": "Tashiro",
+       "firstName": "Shinichi",
+       "initials": "S",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "Joining and Welding Research Institute, The University of Osaka, Osaka, 567-0047, Japan."
+         }
+        ]
+       }
+      },
+      {
+       "fullName": "Hirotani D",
+       "lastName": "Hirotani",
+       "firstName": "Daisuke",
+       "initials": "D",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "Fujico Co., Ltd., Fukuoka, 804-0011, Japan."
+         }
+        ]
+       }
+      },
+      {
+       "fullName": "Mungkung N",
+       "lastName": "Mungkung",
+       "firstName": "Narong",
+       "initials": "N",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "Faculty of Industrial Education and Technology, King Mongkut's University of Technology Thonburi, Bangkok, 10140, Thailand."
+         }
+        ]
+       }
+      },
+      {
+       "fullName": "Kasayapanand N",
+       "lastName": "Kasayapanand",
+       "firstName": "Nat",
+       "initials": "N",
+       "authorAffiliationDetailsList": {
+        "authorAffiliation": [
+         {
+          "affiliation": "School of Energy Environment and Materials, King Mongkut's University of Technology Thonburi, Bangkok, 10140, Thailand. nat.kas@kmutt.ac.th."
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "journalInfo": {
+     "issue": "1",
+     "volume": "16",
+     "journalIssueId": 4187086,
+     "dateOfPublication": "2026 May",
+     "monthOfPublication": 5,
+     "yearOfPublication": 2026,
+     "journal": {
+      "medlineAbbreviation": "Sci Rep",
+      "title": "Scientific reports",
+      "essn": "2045-2322",
+      "issn": "2045-2322",
+      "isoabbreviation": "Sci Rep",
+      "nlmid": "101563288"
+     },
+     "printPublicationDate": "2026-05-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "26634",
+    "abstractText": "This study presents an improved natural dyeing method for wool fabric utilizing Sappan wood, achieved by integrating iron mordant treatment with atmospheric-pressure non-equilibrium microwave plasma irradiation. The dyeing process was conducted at 80 °C with a 2.0 wt% Sappan dye solution, and plasma irradiation was applied both during and after the dyeing procedure. There has been found that colorimetric analysis using the CIE Lab* system demonstrated a significant decrease in L* (brightness) and increases in a* and b* chromaticity values for plasma-treated samples compared with untreated dyeing. These results indicate enhanced color depth and chromatic development. In addition, XPS analysis revealed increased Fe 3p and O 1s peak intensities following plasma irradiation, indicating the formation of oxidized iron species and additional oxygen-containing surface groups. These changes result from reactions among plasma-generated oxygen radicals, iron mordant species, and phenolic hydroxyl groups in Sappan dye molecules, which enhance dye fiber interaction. Therefore, the results indicate that atmospheric-pressure microwave plasma irradiation promotes surface chemical activation and enhances natural dye fixation on wool fibers, offering a promising method for improving natural dyeing processes.",
+    "affiliation": "School of Energy Environment and Materials, King Mongkut's University of Technology Thonburi, Bangkok, 10140, Thailand.",
+    "publicationStatus": "epublish",
+    "language": "eng",
+    "pubModel": "Electronic",
+    "pubTypeList": {
+     "pubType": [
+      "research-article",
+      "Journal Article"
+     ]
+    },
+    "grantsList": {
+     "grant": [
+      {
+       "agency": "the Royal Golden Jubilee (RGJ) Ph.D. scholarship from the National Research Council of Thailand under the Ministry of Higher Education, Science, Research, and Innovation",
+       "grantId": "N41A650091",
+       "orderIn": 0
+      },
+      {
+       "agency": "the Japan Society for the Promotion of Science (JSPS) through the Grants-in-Aid for Scientific Research",
+       "grantId": "JP24K05549",
+       "orderIn": 0
+      }
+     ]
+    },
+    "keywordList": {
+     "keyword": [
+      "Wool",
+      "Sappan wood",
+      "Natural Dye",
+      "Iron Mordant",
+      "Microwave Discharge Plasma"
+     ]
+    },
+    "subsetList": {
+     "subset": [
+      {
+       "code": "IM",
+       "name": "Index Medicus"
+      }
+     ]
+    },
+    "fullTextUrlList": {
+     "fullTextUrl": [
+      {
+       "availability": "Subscription required",
+       "availabilityCode": "S",
+       "documentStyle": "doi",
+       "site": "DOI",
+       "url": "https://doi.org/10.1038/s41598-026-52122-5"
+      },
+      {
+       "availability": "Open access",
+       "availabilityCode": "OA",
+       "documentStyle": "html",
+       "site": "Europe_PMC",
+       "url": "https://europepmc.org/articles/PMC13503851"
+      },
+      {
+       "availability": "Open access",
+       "availabilityCode": "OA",
+       "documentStyle": "pdf",
+       "site": "Europe_PMC",
+       "url": "https://europepmc.org/articles/PMC13503851?pdf=render"
+      }
+     ]
+    },
+    "isOpenAccess": "Y",
+    "inEPMC": "Y",
+    "inPMC": "Y",
+    "citedByCount": 0,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "Y",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "N",
+    "hasData": "N",
+    "license": "cc by-nc-nd",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "N",
+    "dateOfCreation": "2026-05-21",
+    "dateOfRevision": "2026-08-27",
+    "electronicPublicationDate": "2026-05-21",
+    "firstPublicationDate": "2026-05-21",
+    "firstIndexDate": "2026-05-22",
+    "fullTextReceivedDate": "2026-09-10",
+    "hasEvaluations": "N"
+   }
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "search",
+  "query": {"original": "ajrakh mordant alum"},
+  "web": {
+    "type": "search",
+    "results": [
+      {
+        "title": "Ajrakh resist printing",
+        "url": "https://crafts.example.org/ajrakh/resist-printing",
+        "description": "Ajrakh printers in <strong>Kutch</strong> soak cotton...",
+        "page_age": "2024-03-18T09:00:00",
+        "profile": {"name": "Craft Notes", "url": "https://crafts.example.org", "long_name": "crafts.example.org"},
+        "language": "en",
+        "family_friendly": true
+      },
+      {
+        "title": "Natural dyes of <strong>Kutch</strong>",
+        "url": "https://textiles.example.ac.in/natural-dyes/kutch",
+        "description": "Alum and iron mordants...",
+        "page_age": "2021-11",
+        "profile": {"name": "Textile Archive"},
+        "language": "en",
+        "family_friendly": true
+      },
+      {
+        "title": "Alizarin lake",
+        "url": "https://chem.example.org/alizarin",
+        "description": "Alizarin forms coloured lakes with metal ions.",
+        "profile": {"name": "Chem Notes"},
+        "language": "en",
+        "family_friendly": true
+      }
+    ]
+  }
+}

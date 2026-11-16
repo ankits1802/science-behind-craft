@@ -1,0 +1,41 @@
+{
+  "query": "ajrakh mordant alum",
+  "number_of_results": 0,
+  "results": [
+    {
+      "url": "https://crafts.example.org/ajrakh/resist-printing",
+      "title": "Ajrakh resist printing | Craft Notes",
+      "content": "Ajrakh printers in Kutch soak cotton in a solution of camel dung...",
+      "engine": "duckduckgo",
+      "engines": ["duckduckgo", "wikipedia"],
+      "score": 2.0,
+      "category": "general",
+      "publishedDate": "2024-03-18T00:00:00"
+    },
+    {
+      "url": "http://old.example.in/ajrakh.html",
+      "title": "Ajrakh (insecure mirror)",
+      "content": "Plain http result.",
+      "engine": "bing",
+      "engines": ["bing"],
+      "score": 1.5,
+      "category": "general",
+      "publishedDate": null
+    },
+    {
+      "url": "https://museum.example.org/collection/ajrakh-shawl",
+      "title": "Ajrakh shawl, <b>Kutch</b>",
+      "content": "Block-printed cotton, natural dyes.",
+      "engine": "duckduckgo",
+      "engines": ["duckduckgo"],
+      "score": 1.0,
+      "category": "general",
+      "publishedDate": null
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": [],
+  "unresponsive_engines": [["google", "CAPTCHA"]]
+}

@@ -6,6 +6,7 @@ on:
       - "backend/**"
       - "shared/**"
       - "infra/deploy/**"
+      - "tools/**"
       - ".github/workflows/backend-checks.yml"
   push:
     branches: [main]
@@ -53,6 +54,15 @@ jobs:
         run: uv run ruff format --check .
       - name: Unit tests
         run: uv run pytest -q
+      - name: Hygiene tool lint and tests
+        working-directory: .
+        run: |
+          backend/.venv/bin/python -m ruff check tools
+          backend/.venv/bin/python -m ruff format --check tools
+          backend/.venv/bin/python -m pytest -q tools/tests
+      - name: Hygiene check
+        working-directory: .
+        run: backend/.venv/bin/python tools/hygiene_check.py
       - name: Migration renders offline
         env:
           DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test

@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RotateCw } from "lucide-react";
 
 import { AnswerView } from "@/components/answer/AnswerView";
+import { NotEnoughEvidence } from "@/components/answer/NotEnoughEvidence";
 import { AskBox } from "@/components/ask/AskBox";
 import { useAnswerStream } from "@/components/ask/useAnswerStream";
 import { useAuth } from "@/components/AuthProvider";
@@ -68,7 +69,7 @@ function AskScreen() {
 
   const busy = state.phase === "matching" || state.phase === "streaming";
 
-  function run(text: string, slug: string | null = craftSlug) {
+  function run(text: string, slug: string | null = craftSlug, chosen: AnswerMode = mode) {
     const trimmed = text.trim();
     if (!trimmed) return;
     setQuestion(trimmed);
@@ -76,7 +77,7 @@ function AskScreen() {
     search.set("q", trimmed);
     if (slug) search.set("craft", slug);
     router.replace(`${pathname}?${search.toString()}`, { scroll: false });
-    void ask({ question: trimmed, mode, craftSlug: slug, language: config.languages[0]?.code ?? "en" });
+    void ask({ question: trimmed, mode: chosen, craftSlug: slug, language: config.languages[0]?.code ?? "en" });
   }
 
   useEffect(() => {
@@ -164,10 +165,25 @@ function AskScreen() {
         <AnswerView
           payload={state.payload}
           streaming={busy}
+          status={state.status}
           onFollowUp={(next) => {
             clear();
             run(next);
           }}
+        />
+      ) : null}
+
+      {state.phase === "empty" && state.notice ? (
+        <NotEnoughEvidence
+          message={state.notice}
+          onResearch={
+            state.payload.mode === "VERIFIED" && modes.includes("HYBRID")
+              ? () => {
+                  setMode("HYBRID");
+                  run(question, craftSlug, "HYBRID");
+                }
+              : undefined
+          }
         />
       ) : null}
 

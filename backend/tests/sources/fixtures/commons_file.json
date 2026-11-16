@@ -1,0 +1,64 @@
+{
+ "batchcomplete": true,
+ "query": {
+  "pages": [
+   {
+    "pageid": 60897367,
+    "ns": 6,
+    "title": "File:Kalamkari Rumal MET SC98375.jpg",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Kalamkari_Rumal_MET_SC98375.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Kalamkari_Rumal_MET_SC98375.jpg",
+      "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=60897367",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "<div class=\"fn\">\nKalamkari Rumal</div>",
+        "source": "commons-desc-page"
+       },
+       "ImageDescription": {
+        "value": "<div class=\"description\">\n<dl><dt>Cover; Textiles-Painted and/or Printed</dt></dl></div>",
+        "source": "commons-desc-page"
+       },
+       "DateTimeOriginal": {
+        "value": "circa 1640<div style=\"display: none;\">date QS:P571,+1640-00-00T00:00:00Z/9,P1480,Q5727902</div>–50",
+        "source": "commons-desc-page"
+       },
+       "Credit": {
+        "value": "This file was donated to Wikimedia Commons as part of a project by the <a href=\"//commons.wikimedia.org/wiki/Commons:Met\" title=\"Commons:Met\">Metropolitan Museum of Art</a>. See the <a rel=\"nofollow\" class=\"external text\" href=\"https://metmuseum.org/about-the-met/policies-and-documents/image-resources\">Image and Data Resources Open Access Policy</a>",
+        "source": "commons-desc-page"
+       },
+       "LicenseShortName": {
+        "value": "CC0",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "AttributionRequired": {
+        "value": "false",
+        "source": "commons-desc-page",
+        "hidden": ""
+       },
+       "LicenseUrl": {
+        "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "commons-desc-page"
+       }
+      },
+      "mime": "image/jpeg"
+     }
+    ],
+    "pagelanguage": "en",
+    "lastrevid": 1182766628,
+    "fullurl": "https://commons.wikimedia.org/wiki/File:Kalamkari_Rumal_MET_SC98375.jpg",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/File:Kalamkari_Rumal_MET_SC98375.jpg",
+    "revisions": [
+     {
+      "revid": 1182766628,
+      "parentid": 707598005,
+      "timestamp": "2026-03-17T21:09:56Z"
+     }
+    ]
+   }
+  ]
+ }
+}

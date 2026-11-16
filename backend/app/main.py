@@ -27,6 +27,8 @@ from app.core.logging import (
 )
 from app.core.security import verify_jwt_configuration
 from app.services import two_factor
+from app.services.craft_resolver import CraftIndexStore
+from app.services.live_sources import LiveSourcesStore
 
 logger = logging.getLogger("kalavigyan")
 
@@ -67,8 +69,9 @@ class SecurityHeadersMiddleware:
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
+    await app.state.live_sources.aclose()
     await dispose_engine()
 
 
@@ -85,6 +88,8 @@ def create_app() -> FastAPI:
         redoc_url=None,
         openapi_url="/openapi.json" if settings.backend_expose_docs else None,
     )
+    app.state.craft_index = CraftIndexStore()
+    app.state.live_sources = LiveSourcesStore()
 
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception) -> JSONResponse:

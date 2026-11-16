@@ -37,6 +37,10 @@ export type EvidenceKind = "QUOTED" | "INFERRED";
 
 export type AnswerMode = "VERIFIED" | "HYBRID" | "DEEP";
 
+export type AnswerStatusStep = "RESOLVING" | "PLANNING" | "SEARCHING_STORED" | "RESEARCHING" | "READING" | "COMPOSING" | "WRITING_BACK";
+
+export type AnswerStatus = { step: AnswerStatusStep; message: string };
+
 export type SourceReliability = "A" | "B" | "C" | "D";
 
 export type SourceRef = {

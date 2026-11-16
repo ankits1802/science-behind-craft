@@ -1,0 +1,70 @@
+{
+ "entities": {
+  "Q267813": {
+   "pageid": 259431,
+   "ns": 0,
+   "title": "Q267813",
+   "lastrevid": 2542539962,
+   "modified": "2026-09-09T03:15:30Z",
+   "type": "item",
+   "id": "Q267813",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "alizarin"
+    }
+   },
+   "descriptions": {
+    "en": {
+     "language": "en",
+     "value": "chemical compound and histologic stain"
+    }
+   },
+   "aliases": {
+    "en": [
+     {
+      "language": "en",
+      "value": "Turkey Red"
+     },
+     {
+      "language": "en",
+      "value": "Alizarin Red"
+     },
+     {
+      "language": "en",
+      "value": "Alizarin B"
+     },
+     {
+      "language": "en",
+      "value": "1,2-Anthraquinonediol"
+     },
+     {
+      "language": "en",
+      "value": "Az"
+     },
+     {
+      "language": "en",
+      "value": "Mordant Red 11"
+     },
+     {
+      "language": "en",
+      "value": "pigment red 83"
+     },
+     {
+      "language": "en",
+      "value": "C.I. 58000"
+     },
+     {
+      "language": "en",
+      "value": "1,2-dihydroxy-9,10-anthraquinone"
+     },
+     {
+      "language": "en",
+      "value": "1,2-dihydroxyanthra-9,10-quinone"
+     }
+    ]
+   }
+  }
+ },
+ "success": 1
+}

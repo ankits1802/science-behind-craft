@@ -1,0 +1,23 @@
+{
+ "batchcomplete": true,
+ "query": {
+  "pages": [
+   {
+    "pageid": 5,
+    "ns": 2,
+    "title": "User:FoeNyx",
+    "pagelanguage": "en",
+    "lastrevid": 43560569,
+    "fullurl": "https://commons.wikimedia.org/wiki/User:FoeNyx",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/User:FoeNyx",
+    "revisions": [
+     {
+      "revid": 43560569,
+      "parentid": 1654649,
+      "timestamp": "2010-09-05T20:34:15Z"
+     }
+    ]
+   }
+  ]
+ }
+}

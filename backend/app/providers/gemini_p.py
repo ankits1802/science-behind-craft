@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import time
 
+from app.core.retry_after import retry_after_of
+
 from .base import Adapter, ChatRequest, ChatResult, ProviderError
-from .retry_after import retry_after_of
 from .usage import gemini_cached_tokens
 
 

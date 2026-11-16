@@ -1,0 +1,180 @@
+{
+ "entities": {
+  "Q267813": {
+   "pageid": 259431,
+   "ns": 0,
+   "title": "Q267813",
+   "lastrevid": 2542539962,
+   "modified": "2026-09-09T03:15:30Z",
+   "type": "item",
+   "id": "Q267813",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "alizarin"
+    }
+   },
+   "descriptions": {
+    "en": {
+     "language": "en",
+     "value": "chemical compound and histologic stain"
+    }
+   },
+   "aliases": {
+    "en": [
+     {
+      "language": "en",
+      "value": "Turkey Red"
+     },
+     {
+      "language": "en",
+      "value": "Alizarin Red"
+     },
+     {
+      "language": "en",
+      "value": "Alizarin B"
+     },
+     {
+      "language": "en",
+      "value": "1,2-Anthraquinonediol"
+     },
+     {
+      "language": "en",
+      "value": "Az"
+     },
+     {
+      "language": "en",
+      "value": "Mordant Red 11"
+     },
+     {
+      "language": "en",
+      "value": "pigment red 83"
+     },
+     {
+      "language": "en",
+      "value": "C.I. 58000"
+     },
+     {
+      "language": "en",
+      "value": "1,2-dihydroxy-9,10-anthraquinone"
+     },
+     {
+      "language": "en",
+      "value": "1,2-dihydroxyanthra-9,10-quinone"
+     }
+    ]
+   }
+  },
+  "Q4062337": {
+   "pageid": 3871202,
+   "ns": 0,
+   "title": "Q4062337",
+   "lastrevid": 2551407094,
+   "modified": "2026-09-30T17:50:54Z",
+   "type": "item",
+   "id": "Q4062337",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "sodium alizarinesulfonate"
+    }
+   },
+   "descriptions": {
+    "en": {
+     "language": "en",
+     "value": "chemical compound"
+    }
+   },
+   "aliases": {
+    "en": [
+     {
+      "language": "en",
+      "value": "mordant red 3"
+     },
+     {
+      "language": "en",
+      "value": "sodium 3,4-dihydroxyanthraquinone-2-sulfonate"
+     },
+     {
+      "language": "en",
+      "value": "sodium alizarin-3-sulfonate"
+     },
+     {
+      "language": "en",
+      "value": "alizarin-3-sulfonate sodium salt"
+     },
+     {
+      "language": "en",
+      "value": "9,10-dihydro-3,4-dihydroxy-9,10-dioxo-2-anthracenesulfonic acid monosodium salt"
+     },
+     {
+      "language": "en",
+      "value": "alizarine S"
+     },
+     {
+      "language": "en",
+      "value": "acid red alizarine"
+     },
+     {
+      "language": "en",
+      "value": "sodium alizarinesulfonate"
+     },
+     {
+      "language": "en",
+      "value": "alizarin carmine"
+     },
+     {
+      "language": "en",
+      "value": "alizarin"
+     },
+     {
+      "language": "en",
+      "value": "alizarine red S sodium salt"
+     }
+    ]
+   }
+  },
+  "Q3611866": {
+   "pageid": 3439901,
+   "ns": 0,
+   "title": "Q3611866",
+   "lastrevid": 2006008582,
+   "modified": "2023-11-07T01:39:26Z",
+   "type": "item",
+   "id": "Q3611866",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "Alizarin 2-beta-glucosyltransferase"
+    }
+   },
+   "descriptions": {
+    "en": {
+     "language": "en",
+     "value": "class of enzymes"
+    }
+   },
+   "aliases": {
+    "en": [
+     {
+      "language": "en",
+      "value": "UDPglucose:1,2-dihydroxy-9,10-anthraquinone 2-O-beta-D-glucosyl-transferase"
+     },
+     {
+      "language": "en",
+      "value": "UDP-glucose:1,2-dihydroxy-9,10-anthraquinone 2-O-beta-D-glucosyltransferase"
+     },
+     {
+      "language": "en",
+      "value": "alizarin 2-b-glucosyltransferase"
+     },
+     {
+      "language": "en",
+      "value": "uridine diphosphoglucose-alizarin glucosyltransferase"
+     }
+    ]
+   }
+  }
+ },
+ "success": 1
+}

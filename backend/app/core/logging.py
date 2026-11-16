@@ -4,6 +4,8 @@ import re
 import secrets
 import sys
 import time
+from collections.abc import Iterator
+from contextlib import contextmanager
 from contextvars import ContextVar
 from datetime import UTC, datetime
 from typing import Any
@@ -22,6 +24,7 @@ _SECRET_PATTERNS = (
     re.compile(r"sk-[A-Za-z0-9_\-]{16,}"),
     re.compile(r"AIza[0-9A-Za-z_\-]{20,}"),
     re.compile(r"(?i)(bearer\s+)[A-Za-z0-9._\-]{16,}"),
+    re.compile(r"(?i)([?&](?:api[_-]?key|insttoken|access[_-]?token)=)[^&\s\"'#]+"),
 )
 
 _STANDARD_ATTRS = frozenset(
@@ -70,6 +73,17 @@ def set_log_user(user_id: str | None) -> None:
 
 def new_request_id() -> str:
     return secrets.token_hex(12)
+
+
+@contextmanager
+def request_id_scope(request_id: str) -> Iterator[str]:
+    if not _INBOUND_REQUEST_ID.fullmatch(request_id):
+        raise ValueError("A request id is 8 to 64 letters, digits, dots, dashes or underscores")
+    token = _request_id.set(request_id)
+    try:
+        yield request_id
+    finally:
+        _request_id.reset(token)
 
 
 class JsonFormatter(logging.Formatter):

@@ -56,6 +56,16 @@ seed() {
     fi
     say "$module done"
   done
+  sync_portal_crafts "$tree"
+}
+
+sync_portal_crafts() {
+  local tree="$1"
+  if (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m app.scripts.sync_portal_crafts" >&2); then
+    say "app.scripts.sync_portal_crafts done"
+  else
+    say "::warning::craft sync from the portals failed; the release goes on with the crafts already stored. The JSON report above names each portal's outcome."
+  fi
 }
 
 wait_healthy() {

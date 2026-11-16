@@ -1,4 +1,4 @@
-import type { AnswerReaction, AnswerSection, Citation, SourceRef } from "@/lib/types";
+import type { AnswerReaction, AnswerSection, Citation, SourceReliability, SourceRef } from "@/lib/types";
 
 export function sourceNumbers(sections: readonly AnswerSection[], reactions: readonly AnswerReaction[] = []): Map<string, number> {
   const numbers = new Map<string, number>();
@@ -80,4 +80,33 @@ export function highlightQuote(context: string | null | undefined, quote: string
   parts.push({ text: body.slice(at, at + needle.length), mark: true });
   if (at + needle.length < body.length) parts.push({ text: body.slice(at + needle.length), mark: false });
   return parts;
+}
+
+const SOURCE_KIND_LABEL: Record<string, string> = {
+  PAPER: "Journal article",
+  BOOK: "Book",
+  BOOK_CHAPTER: "Book chapter",
+  WEB_PAGE: "Web page",
+  ENCYCLOPEDIA: "Encyclopedia",
+  DATASET: "Dataset",
+  GI_JOURNAL: "GI Journal",
+  GOVERNMENT_REPORT: "Government report",
+  COMPOUND_RECORD: "Compound record",
+  FIELD_TESTIMONY: "Field testimony",
+  OTHER: "Other"
+};
+
+const RELIABILITY_LABEL: Record<SourceReliability, string> = {
+  A: "A · peer-reviewed or official",
+  B: "B · reputable reference",
+  C: "C · general web",
+  D: "D · unknown"
+};
+
+export function sourceKindLabel(kind: string): string {
+  return SOURCE_KIND_LABEL[kind] ?? "Other";
+}
+
+export function sourceReliabilityLabel(reliability: SourceReliability): string {
+  return RELIABILITY_LABEL[reliability];
 }
