@@ -5,6 +5,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import pandas as pd
+import shapely
 from shapely.geometry import Polygon
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
@@ -20,6 +21,7 @@ ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 LOOKUP = {ch: i for i, ch in enumerate(ALPHABET)}
 SCALE = 1000
 INDIA_LCC = "EPSG:7755"
+POLYGONAL = ("Polygon", "MultiPolygon")
 
 
 @dataclass(frozen=True)
@@ -77,7 +79,14 @@ def assemble(encoded_rings: list[str]) -> BaseGeometry:
         shape = polygon if shape is None else shape.symmetric_difference(polygon)
     if shape is None:
         return Polygon()
-    return make_valid(unary_union([shape]))
+    return polygonal_part(make_valid(unary_union([shape])))
+
+
+def polygonal_part(shape: BaseGeometry) -> BaseGeometry:
+    if shape.geom_type in POLYGONAL:
+        return shape
+    polygons = [part for part in shapely.get_parts(shape) if part.geom_type in POLYGONAL]
+    return unary_union(polygons) if polygons else Polygon()
 
 
 def load_register(path: Path = REGISTER_PATH) -> Register:

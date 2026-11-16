@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+from collections.abc import Callable
 from typing import Literal, Protocol, Self, runtime_checkable
 from urllib.parse import urlsplit, urlunsplit
 
@@ -29,6 +30,7 @@ __all__ = [
     "SourceDocument",
     "canonical_url",
     "personal_data_in",
+    "without_personal_data",
 ]
 
 SEARCH_MAX_K = 50
@@ -39,8 +41,15 @@ DOI_PATTERN = r"^10\.\d{4,9}/\S+$"
 OPEN_ACCESS_STATUSES = ("GOLD", "DIAMOND", "HYBRID", "BRONZE", "GREEN", "CLOSED")
 PERSONAL_DATA = {
     "email address": re.compile(r"[^\s@]+@[^\s@]+\.[^\s@]+"),
+    "spoken email address": re.compile(r"\b[\w.+-]+\s+at\s+[\w-]+(?:\s+dot\s+[a-z]{2,})+\b", re.IGNORECASE),
     "Aadhaar-like number": re.compile(r"(?<!\d)\d{4}[ -]?\d{4}[ -]?\d{4}(?!\d)"),
     "phone-like number": re.compile(r"(?<!\d)(?:\+?\d[ -]?){10,}(?!\d)"),
+}
+PERSONAL_DATA_PLACEHOLDERS = {
+    "email address": "[email]",
+    "spoken email address": "[email]",
+    "Aadhaar-like number": "[number]",
+    "phone-like number": "[number]",
 }
 
 
@@ -135,6 +144,19 @@ class OpenAccessLocation(ContractModel):
 
 def personal_data_in(text: str) -> list[str]:
     return [label for label, pattern in PERSONAL_DATA.items() if pattern.search(text)]
+
+
+def without_personal_data(text: str) -> str:
+    for label, pattern in PERSONAL_DATA.items():
+        text = pattern.sub(_replacement(PERSONAL_DATA_PLACEHOLDERS[label]), text)
+    return text
+
+
+def _replacement(placeholder: str) -> Callable[[re.Match[str]], str]:
+    def replace(found: re.Match[str]) -> str:
+        return placeholder + (" " if found.group()[-1] in " -" else "")
+
+    return replace
 
 
 def canonical_url(url: str) -> str:

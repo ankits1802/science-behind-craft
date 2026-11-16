@@ -1,0 +1,1 @@
+{"tools": [{"id": "tool_map", "tool_config": {"type": "client", "name": "show_on_map", "description": "old"}, "access_info": {"is_creator": true}, "usage_stats": {"avg_latency_secs": 0.1, "total_calls": 3}}], "has_more": false}

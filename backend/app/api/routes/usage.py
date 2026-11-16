@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import case, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.clock import INDIA_TZ, INDIA_TZ_NAME
 from app.core.db import get_session
 from app.core.deps import get_current_user, require
 from app.core.roles import Capability, daily_allowance
@@ -25,21 +26,17 @@ MONTH_PATTERN = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 def _month_bounds(month: str | None) -> tuple[str, datetime, datetime]:
     if month is None:
         start = budget.month_start()
-        local = start.astimezone(budget.BUDGET_TIMEZONE)
+        local = start.astimezone(INDIA_TZ)
         label = f"{local.year:04d}-{local.month:02d}"
     else:
         if not MONTH_PATTERN.fullmatch(month):
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "month must look like 2026-11")
         label = month
         year, number = int(month[:4]), int(month[5:])
-        start = datetime.combine(date(year, number, 1), time.min, tzinfo=budget.BUDGET_TIMEZONE).astimezone(
-            UTC
-        )
-    local = start.astimezone(budget.BUDGET_TIMEZONE)
+        start = datetime.combine(date(year, number, 1), time.min, tzinfo=INDIA_TZ).astimezone(UTC)
+    local = start.astimezone(INDIA_TZ)
     next_year, next_month = (local.year + 1, 1) if local.month == 12 else (local.year, local.month + 1)
-    end = datetime.combine(
-        date(next_year, next_month, 1), time.min, tzinfo=budget.BUDGET_TIMEZONE
-    ).astimezone(UTC)
+    end = datetime.combine(date(next_year, next_month, 1), time.min, tzinfo=INDIA_TZ).astimezone(UTC)
     return label, start, end
 
 
@@ -105,7 +102,7 @@ async def usage_summary(
             )
         )
     ).scalar_one()
-    day = func.date_trunc("day", func.timezone("Asia/Kolkata", UsageEvent.createdAt))
+    day = func.date_trunc("day", func.timezone(INDIA_TZ_NAME, UsageEvent.createdAt))
     by_day = (
         await session.execute(
             select(day, func.coalesce(func.sum(UsageEvent.costUsd), 0), func.count())
@@ -168,7 +165,7 @@ def _instant(value: str | None, *, fallback: datetime) -> datetime:
     except ValueError as exc:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "from and to must be ISO dates") from exc
     if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=budget.BUDGET_TIMEZONE)
+        parsed = parsed.replace(tzinfo=INDIA_TZ)
     return parsed.astimezone(UTC)
 
 
@@ -225,7 +222,7 @@ async def usage_report(
             .order_by(cost.desc())
         )
     ).all()
-    day = func.date_trunc("day", func.timezone("Asia/Kolkata", UsageEvent.createdAt))
+    day = func.date_trunc("day", func.timezone(INDIA_TZ_NAME, UsageEvent.createdAt))
     by_day = (
         await session.execute(select(day, func.count(), cost).where(*window).group_by(day).order_by(day))
     ).all()

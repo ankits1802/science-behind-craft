@@ -70,6 +70,7 @@ def source_row(row: dict[str, Any]) -> dict[str, Any]:
         "retrievedAt": _date(row.get("retrievedAt")),
         "origin": row.get("origin") or "IMPORT",
         "sensitivity": row.get("sensitivity") or "OPEN",
+        "attribution": row.get("attribution"),
         "evidenceKind": _clip(row.get("evidenceKind"), 80),
         "notes": row.get("notes"),
         "externalIds": external,

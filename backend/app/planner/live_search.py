@@ -8,10 +8,11 @@ from app.core.errors import ExternalFailure, NotConfigured
 from app.models.enums import RELIABILITIES
 from app.research.evidence import EvidenceItem, SourceAdapter
 from app.research.evidence_pack import PackedEvidence
-from app.research.planning import PlannedQuery, RetrievalPlan
+from app.research.planning import NATIVE_QUERY_TIER, PlannedQuery, RetrievalPlan
+from app.research.vocabulary import CANONICAL_LANGUAGE
 
 from .failures import FailureLog
-from .policy import LIVE_BUDGETS, SEARCH_CONCURRENCY, SEARCH_TIMEOUT_SECONDS
+from .policy import LIVE_BUDGETS, NATIVE_QUERY_SEARCHERS, SEARCH_CONCURRENCY, SEARCH_TIMEOUT_SECONDS
 
 __all__ = ["LIVE_RESEARCH_SERVICE", "SEARCH_STAGE", "SearchHit", "merged_evidence", "run_searches"]
 
@@ -36,7 +37,7 @@ async def run_searches(
     calls = [
         _search(gate, searcher, index, query, mode=plan.mode, log=log)
         for index, query in enumerate(plan.queries)
-        for searcher in by_tier[query.tier]
+        for searcher in _query_searchers(query, by_tier)
     ]
     if not calls:
         return []
@@ -90,7 +91,17 @@ def _searchers_by_tier(
     missing = sorted({query.tier for query in plan.queries} - by_tier.keys())
     if missing:
         raise NotConfigured("live sources", f"No live source can search tier {', '.join(missing)}")
+    native = any(query.query.language != CANONICAL_LANGUAGE for query in plan.queries)
+    if native and not any(s.name in NATIVE_QUERY_SEARCHERS for s in by_tier.get(NATIVE_QUERY_TIER, ())):
+        raise NotConfigured("live sources", f"No live source can search in {plan.language}")
     return by_tier
+
+
+def _query_searchers(query: PlannedQuery, by_tier: Mapping[str, list[SourceAdapter]]) -> list[SourceAdapter]:
+    searchers = by_tier[query.tier]
+    if query.query.language == CANONICAL_LANGUAGE:
+        return searchers
+    return [searcher for searcher in searchers if searcher.name in NATIVE_QUERY_SEARCHERS]
 
 
 async def _search(

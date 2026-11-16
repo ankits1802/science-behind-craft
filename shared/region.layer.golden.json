@@ -1,0 +1,77 @@
+{
+  "layer": {
+    "id": "soil-ph-0-5cm",
+    "facet": "SOIL",
+    "title": "Soil pH, 0-5 cm",
+    "datasetCode": "SOILGRIDS_2_0",
+    "variable": "phh2o",
+    "depth": "0-5cm",
+    "period": "modelled, 2020 release",
+    "stat": "DISTRICT_MEAN",
+    "unit": "pH"
+  },
+  "dataset": {
+    "code": "SOILGRIDS_2_0",
+    "title": "SoilGrids 2.0",
+    "publisher": "ISRIC World Soil Information",
+    "edition": "2.0",
+    "period": "modelled, 2020 release",
+    "nativeResolution": "250 m",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "SoilGrids 2.0, ISRIC World Soil Information",
+    "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021",
+    "url": "https://files.isric.org/soilgrids/latest/data/"
+  },
+  "resolution": "250 m",
+  "classes": [
+    {
+      "min": 6.4,
+      "max": 7.08
+    },
+    {
+      "min": 7.08,
+      "max": 7.64
+    },
+    {
+      "min": 7.64,
+      "max": 7.88
+    },
+    {
+      "min": 7.88,
+      "max": 8.04
+    },
+    {
+      "min": 8.04,
+      "max": 8.3
+    }
+  ],
+  "values": {
+    "438": 7.8,
+    "441": 7.6,
+    "444": 6.4,
+    "447": 7.9,
+    "449": 8.1,
+    "455": 8.0,
+    "459": 7.2,
+    "460": 8.3,
+    "462": 6.9
+  },
+  "version": "42329c3ed50736b8e2a8b77623370bf5e482138c3208e675fb9bfd48ae54dce0",
+  "boundary": {
+    "caption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative.",
+    "dataset": {
+      "code": "DR_DISTRICT_SHAPES",
+      "title": "District shapes as drawn by the Designer Portal",
+      "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+      "edition": "791efb62cc30cf5d",
+      "period": "2026-10-17",
+      "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+      "licence": "Unconfirmed; indicative boundaries",
+      "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+      "attribution": "District boundaries are indicative.",
+      "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+      "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+    }
+  }
+}

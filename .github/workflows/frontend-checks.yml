@@ -4,13 +4,25 @@ on:
   pull_request:
     paths:
       - "frontend/**"
-      - "shared/answer-stream*.golden.sse"
+      - "shared/*.golden.*"
+      - "shared/roles.json"
+      - "backend/app/research/vocabulary.py"
+      - "backend/app/models/enums.py"
+      - "backend/app/schemas/**"
+      - "backend/app/core/roles.py"
+      - "infra/terraform/variables.tf"
       - ".github/workflows/frontend-checks.yml"
   push:
     branches: [main]
     paths:
       - "frontend/**"
-      - "shared/answer-stream*.golden.sse"
+      - "shared/*.golden.*"
+      - "shared/roles.json"
+      - "backend/app/research/vocabulary.py"
+      - "backend/app/models/enums.py"
+      - "backend/app/schemas/**"
+      - "backend/app/core/roles.py"
+      - "infra/terraform/variables.tf"
       - ".github/workflows/frontend-checks.yml"
   workflow_dispatch:
 

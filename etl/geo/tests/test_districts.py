@@ -1,17 +1,22 @@
+import json
+
 import pytest
-from shapely.geometry import Point
+from shapely.geometry import GeometryCollection, LineString, Point, box
 
 from geo_etl.districts import (
     ALPHABET,
+    SHAPES_PATH,
     assemble,
     decode_rings,
     districts_without_shapes,
     load_districts,
     load_register,
+    polygonal_part,
     verify_inputs,
 )
 
 MAHE_RINGS = ["IkxzEm_WiBzCzBXagC", "GwxzEy7WdFSQ"]
+SLIVERED = {304: 19, 308: 19, 449: 24, 586: 33, 673: 24, 675: 24, 747: 28}
 
 
 def encode_number(value: int) -> str:
@@ -57,6 +62,35 @@ def test_decode_rings_empty():
 def test_assemble_drops_degenerate_rings():
     shape = assemble([encode_ring([(0, 0), (1000, 0)])])
     assert shape.is_empty
+
+
+def test_assemble_drops_a_collapsed_spike_and_keeps_the_area():
+    square_with_spike = [(0, 0), (2000, 0), (2000, 2000), (3000, 3000), (2000, 2000), (0, 2000)]
+    shape = assemble([encode_ring(square_with_spike)])
+    assert shape.geom_type == "Polygon"
+    assert shape.area == pytest.approx(4.0)
+    assert shape.bounds == pytest.approx((0.0, 0.0, 2.0, 2.0))
+
+
+def test_polygonal_part_keeps_every_polygon_of_a_mixed_collection():
+    mixed = GeometryCollection([box(0, 0, 1, 1), box(5, 5, 7, 7), LineString([(1, 1), (5, 5)]), Point(9, 9)])
+    shape = polygonal_part(mixed)
+    assert shape.geom_type == "MultiPolygon"
+    assert shape.area == pytest.approx(5.0)
+    assert polygonal_part(LineString([(0, 0), (1, 1)])).is_empty
+
+
+def test_every_vendored_district_loads_as_a_polygon_or_multipolygon():
+    raw = json.loads(SHAPES_PATH.read_text(encoding="utf-8"))
+    frame = load_districts()
+    assert len(frame) == len(raw["districts"])
+    assert set(frame.geometry.geom_type) <= {"Polygon", "MultiPolygon"}
+
+
+def test_districts_with_collapsed_slivers_load_as_multipolygons():
+    frame = load_districts(set(SLIVERED))
+    assert dict(zip(frame["districtLgd"], frame["stateLgd"], strict=True)) == SLIVERED
+    assert set(frame.geometry.geom_type) == {"MultiPolygon"}
 
 
 def test_assemble_mahe_is_valid():

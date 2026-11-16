@@ -309,7 +309,7 @@ async def settle(
     await session.commit()
 
 
-async def _mark_key_failed(session: AsyncSession, key_name: str, value: str | None, message: str) -> None:
+async def mark_key_failed(session: AsyncSession, key_name: str, value: str | None, message: str) -> None:
     now = datetime.now(UTC)
     result = await session.execute(
         update(ManagedSecret)
@@ -563,7 +563,7 @@ async def run(
                 detail={"status": failure.status},
             )
             if failure.kind == "auth":
-                await _mark_key_failed(session, choice.key_name, key_value, str(failure))
+                await mark_key_failed(session, choice.key_name, key_value, str(failure))
         attempts.append({"provider": choice.provider, "model": choice.model, "outcome": failure.kind})
         logger.warning(
             "route failed",

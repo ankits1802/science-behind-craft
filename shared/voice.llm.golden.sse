@@ -1,0 +1,8 @@
+data: {"id":"chatcmpl-bd260d5539e85cbf9e4d8dbe58ea75df","object":"chat.completion.chunk","created":1794825000,"model":"kalavigyan-voice","choices":[{"index":0,"delta":{"role":"assistant","content":"Alum is used as a mordant to fasten the colours."},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-bd260d5539e85cbf9e4d8dbe58ea75df","object":"chat.completion.chunk","created":1794825000,"model":"kalavigyan-voice","choices":[{"index":0,"delta":{"content":" Source: GI Journal 188."},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-bd260d5539e85cbf9e4d8dbe58ea75df","object":"chat.completion.chunk","created":1794825000,"model":"kalavigyan-voice","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+

@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/components/ui/Toast";
 import { PREFERENCES_BOOT_SCRIPT, THEME_COLOR } from "@/lib/preferences";
+import { SCRIPT_FONT_VARIABLES } from "./scriptFonts";
 import "./globals.css";
 
 const inter = localFont({
@@ -39,7 +40,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html className={`${inter.variable} ${jakarta.variable}`} lang="en" suppressHydrationWarning>
+    <html className={`${inter.variable} ${jakarta.variable} ${SCRIPT_FONT_VARIABLES}`} lang="en" suppressHydrationWarning>
       <body className="font-sans">
         <script dangerouslySetInnerHTML={{ __html: PREFERENCES_BOOT_SCRIPT }} />
         <AuthProvider>

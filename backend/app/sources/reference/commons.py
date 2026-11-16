@@ -13,9 +13,11 @@ from .mediawiki import (
     WIKIMEDIA_PUBLISHER,
     WIKIMEDIA_RATE,
     action_api,
+    language_and_native,
     page_revision,
     pages_in_order,
     primary_language,
+    with_language,
 )
 
 __all__ = ["COMMONS_RATE", "WikimediaCommonsAdapter", "file_metadata"]
@@ -55,27 +57,29 @@ class WikimediaCommonsAdapter(HttpSourceAdapter):
     name = "wikimedia_commons"
 
     async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
+        language = primary_language(query.language)
         params = FILE_PROPS | {
             "action": "query",
             "generator": "search",
             "gsrsearch": query.text,
             "gsrnamespace": str(FILE_NAMESPACE),
             "gsrlimit": str(k),
-            "iiextmetadatalanguage": primary_language(query.language),
+            "iiextmetadatalanguage": language,
         }
-        return pages_in_order(await action_api(self.http, COMMONS_API, params))
+        return [(page, language) for page in pages_in_order(await action_api(self.http, COMMONS_API, params))]
 
     def _item(self, record: Any, retrieved_at: datetime) -> EvidenceItem:
-        meta = file_metadata(record)
+        page, language = record
+        meta = file_metadata(page)
         if meta["licence"] is None:
             raise UnusableRecord("no licence")
-        url = https_or_none(record.get("canonicalurl") or record.get("fullurl"))
+        url = https_or_none(page.get("canonicalurl") or page.get("fullurl"))
         if url is None:
             raise UnusableRecord("no https description page")
-        revision = page_revision(record)
-        file_title = title_of(record.get("title"))
+        revision = page_revision(page)
+        file_title = title_of(page.get("title"))
         return EvidenceItem(
-            id=f"{self.name}:{record['pageid']}",
+            id=f"{self.name}:{with_language(str(page['pageid']), language)}",
             adapter=self.name,
             tier=self.tier,
             source_type="OTHER",
@@ -90,19 +94,20 @@ class WikimediaCommonsAdapter(HttpSourceAdapter):
             trust="C",
             external_ids={
                 "commons_file": file_title,
-                "commons_media": f"M{record['pageid']}",
+                "commons_media": f"M{page['pageid']}",
                 "revision": revision.id,
             },
         )
 
     async def _fetch_document(self, native: str, retrieved_at: datetime) -> SourceDocument:
-        if not PAGE_ID.match(native):
+        language, page_id = language_and_native(native)
+        if not PAGE_ID.match(page_id):
             raise InvalidInput(f"{native!r} is not a Wikimedia Commons page id")
-        params = FILE_PROPS | {"action": "query", "pageids": native, "iiextmetadatalanguage": "en"}
+        params = FILE_PROPS | {"action": "query", "pageids": page_id, "iiextmetadatalanguage": language}
         pages = pages_in_order(await action_api(self.http, COMMONS_API, params))
         if not pages or pages[0].get("missing") or pages[0].get("ns") != FILE_NAMESPACE:
             raise self._not_found(native, "no file")
-        item = self._item(pages[0], retrieved_at)
+        item = self._item((pages[0], language), retrieved_at)
         return build_document(item, _document_text(item.title, file_metadata(pages[0])), "EXCERPT")
 
 

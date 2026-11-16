@@ -6,6 +6,7 @@ from typing import Any
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.geo.places import MASTER_LIST_LEVEL
 from app.models import (
     AdminDistrict,
     AdminState,
@@ -311,7 +312,7 @@ async def craft_locations(session: AsyncSession, craft: Craft) -> list[dict[str,
                 "districtName": None,
                 "latitude": point["latitude"],
                 "longitude": point["longitude"],
-                "level": "REVIEWED",
+                "level": MASTER_LIST_LEVEL,
             }
         )
     return out

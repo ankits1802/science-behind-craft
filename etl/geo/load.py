@@ -36,7 +36,7 @@ DATASET_COLUMNS = [
 DATASET_REQUIRED = {"code", "title", "licence"}
 
 VALUE_KEY = ["districtLgd", "datasetId", "variable", "depthOrPeriod", "stat"]
-VALUE_COLUMNS = [*VALUE_KEY, "value", "valueText", "unit", "method", "pixelCount"]
+VALUE_COLUMNS = [*VALUE_KEY, "value", "valueText", "unit", "method", "resolution", "pixelCount"]
 VALUE_REQUIRED = set(VALUE_KEY) | {"value"}
 
 GEOLOGY_KEY = ["districtLgd", "datasetId", "lithology"]

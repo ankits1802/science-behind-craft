@@ -1,32 +1,20 @@
 "use client";
 
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { EASE_OUT } from "@/components/guide/guideMotion";
 import { loadBorders } from "@/components/map/borderGeometry";
-import { bloomDelays, layoutPins, type MapPoint, type PlacedPin } from "@/components/map/layout";
+import { bloomDelays, layoutPins, type MapPoint } from "@/components/map/layout";
 import { MapHoverCard } from "@/components/map/MapHoverCard";
-import { bordersToPath, indiaOutlinePath, unitsPerKilometre, VIEW_BOX } from "@/components/map/projection";
+import { Pin, ScaleBar } from "@/components/map/MapMarks";
+import { bordersToPath, indiaOutlinePath, VIEW_BOX } from "@/components/map/projection";
 import { cn } from "@/lib/utils";
 
 export type { MapPoint } from "@/components/map/layout";
 
 const BLOOM = 0.48;
-
-const PRESS_SPRING = { type: "spring" as const, stiffness: 380, damping: 30, mass: 0.7 };
-
-function pinPop(reduce: boolean): Variants {
-  return {
-    hidden: { opacity: 0, scale: reduce ? 1 : 0.3, transition: reduce ? { duration: 0 } : PRESS_SPRING },
-    visible: (delay: number) => ({
-      opacity: 1,
-      scale: 1,
-      transition: reduce ? { duration: 0 } : { ...PRESS_SPRING, delay }
-    })
-  };
-}
 
 function leaderFade(reduce: boolean): Variants {
   return {
@@ -34,6 +22,19 @@ function leaderFade(reduce: boolean): Variants {
     visible: { opacity: 1, transition: reduce ? { duration: 0 } : { duration: 0.22, ease: EASE_OUT, delay: BLOOM } }
   };
 }
+
+const OutlineStroke = memo(function OutlineStroke() {
+  return (
+    <path
+      d={indiaOutlinePath()}
+      fillRule="evenodd"
+      className="pointer-events-none fill-none stroke-purple-300"
+      strokeWidth={1.6}
+      strokeLinejoin="round"
+      vectorEffect="non-scaling-stroke"
+    />
+  );
+});
 
 const Coastline = memo(function Coastline() {
   return (
@@ -81,6 +82,8 @@ export interface IndiaMapProps {
   onSelect?: (key: string) => void;
   onHover?: (key: string | null) => void;
   showStates?: boolean;
+  underlay?: ReactNode;
+  overlay?: ReactNode;
   className?: string;
 }
 
@@ -91,6 +94,8 @@ export function IndiaMap({
   onSelect,
   onHover,
   showStates = true,
+  underlay = null,
+  overlay = null,
   className
 }: IndiaMapProps) {
   const reduce = useAppReducedMotion();
@@ -112,7 +117,9 @@ export function IndiaMap({
         viewport={{ once: true, amount: 0.3 }}
       >
         <Coastline />
+        {underlay}
         {showStates ? <StateBorders /> : null}
+        {underlay ? <OutlineStroke /> : null}
 
         <motion.g variants={leaderFade(reduce)}>
           {pins
@@ -137,6 +144,7 @@ export function IndiaMap({
           />
         ))}
 
+        {overlay}
         <ScaleBar />
       </motion.svg>
 
@@ -144,64 +152,5 @@ export function IndiaMap({
         {active ? <MapHoverCard key={active.point.key} pin={active} ordinal={ordinals.get(active.point.key)} reduce={reduce} /> : null}
       </AnimatePresence>
     </div>
-  );
-}
-
-function Pin({
-  pin,
-  isActive,
-  delay,
-  reduce,
-  onSelect,
-  onHover
-}: {
-  pin: PlacedPin;
-  isActive: boolean;
-  delay: number;
-  reduce: boolean;
-  onSelect?: (key: string) => void;
-  onHover?: (key: string | null) => void;
-}) {
-  const { point, x, y, radius } = pin;
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <motion.g
-        variants={pinPop(reduce)}
-        custom={delay}
-        className="cursor-pointer"
-        onClick={() => onSelect?.(point.key)}
-        onPointerEnter={() => onHover?.(point.key)}
-        onPointerLeave={() => onHover?.(null)}
-      >
-        <circle r={radius + 8} fill="transparent" />
-        {isActive ? <circle r={radius + 4} className="fill-none stroke-purple-700" strokeWidth={2} /> : null}
-        <circle r={radius} className={cn("fill-purple-700 stroke-white", isActive ? "opacity-100" : "opacity-90")} strokeWidth={2} />
-        <text
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize={radius * ((point.pinLabel ?? String(point.total)).length >= 3 ? 0.72 : (point.pinLabel ?? String(point.total)).length === 2 ? 0.9 : 1.05)}
-          className="pointer-events-none fill-white font-display font-bold"
-        >
-          {point.pinLabel ?? point.total}
-        </text>
-      </motion.g>
-    </g>
-  );
-}
-
-function ScaleBar() {
-  const kilometres = 500;
-  const length = kilometres * unitsPerKilometre();
-  const x = 26;
-  const y = VIEW_BOX.height - 34;
-  return (
-    <g className="pointer-events-none">
-      <line x1={x} y1={y} x2={x + length} y2={y} className="stroke-ink-500" strokeWidth={2} />
-      <line x1={x} y1={y - 5} x2={x} y2={y + 5} className="stroke-ink-500" strokeWidth={2} />
-      <line x1={x + length} y1={y - 5} x2={x + length} y2={y + 5} className="stroke-ink-500" strokeWidth={2} />
-      <text x={x} y={y + 22} className="fill-ink-500 font-sans text-[15px]">
-        {kilometres} km
-      </text>
-    </g>
   );
 }

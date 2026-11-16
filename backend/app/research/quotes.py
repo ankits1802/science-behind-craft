@@ -7,8 +7,12 @@ from collections.abc import Iterable
 __all__ = [
     "QUOTE_MIN_CHARS",
     "QUOTE_OVERLAP_MIN",
+    "content_stems",
     "figures_in",
+    "fold_digits",
+    "formulas_in",
     "normalise_quote_text",
+    "numbers_in",
     "quote_key",
     "quote_occurs",
     "quote_overlap",
@@ -29,6 +33,9 @@ TYPOGRAPHIC = str.maketrans(
     | {chr(c): "'" for c in SINGLE_QUOTE_CODEPOINTS}
     | {chr(c): '"' for c in DOUBLE_QUOTE_CODEPOINTS}
 )
+ARABIC_DECIMAL_SEPARATOR = chr(0x066B)
+ARABIC_THOUSANDS_SEPARATOR = chr(0x066C)
+NUMERAL_SEPARATORS = str.maketrans({ARABIC_DECIMAL_SEPARATOR: ".", ARABIC_THOUSANDS_SEPARATOR: ","})
 LINE_BREAK_HYPHEN = re.compile(r"(\w)-[ \t]*\r?\n\s*(\w)")
 WHITESPACE = re.compile(r"\s+")
 FORMULA = re.compile(r"(?<![A-Za-z0-9])(?:[A-Z][a-z]?\d*|\((?:[A-Z][a-z]?\d*)+\)\d*)+(?![A-Za-z0-9])")
@@ -118,19 +125,31 @@ def trivial_quote(quote: str) -> bool:
 
 
 def quote_overlap(text: str, quotes: Iterable[str]) -> float:
-    wanted = _content_stems(text)
+    wanted = content_stems(text)
     if not wanted:
         return 0.0
-    found = {stem for quote in quotes for stem in _content_stems(quote)}
+    found = {stem for quote in quotes for stem in content_stems(quote)}
     return len(wanted & found) / len(wanted)
 
 
+def fold_digits(text: str) -> str:
+    return "".join(_ascii_digit(ch) for ch in text.translate(NUMERAL_SEPARATORS))
+
+
+def formulas_in(text: str) -> list[str]:
+    folded = _figure_text(text)
+    return list(
+        dict.fromkeys(m.group() for m in FORMULA.finditer(folded) if any(c.isdigit() for c in m.group()))
+    )
+
+
+def numbers_in(text: str) -> list[str]:
+    rest = FORMULA.sub(" ", _figure_text(text))
+    return list(dict.fromkeys(m.group().replace(",", "") for m in NUMBER.finditer(rest)))
+
+
 def figures_in(text: str) -> list[str]:
-    normalised = normalise_quote_text(text)
-    formulas = [m.group() for m in FORMULA.finditer(normalised) if any(ch.isdigit() for ch in m.group())]
-    rest = FORMULA.sub(" ", normalised)
-    numbers = [m.group().replace(",", "") for m in NUMBER.finditer(rest)]
-    return list(dict.fromkeys([*formulas, *numbers]))
+    return list(dict.fromkeys([*formulas_in(text), *numbers_in(text)]))
 
 
 def unsupported_figures(text: str, cited_texts: Iterable[str]) -> list[str]:
@@ -138,6 +157,15 @@ def unsupported_figures(text: str, cited_texts: Iterable[str]) -> list[str]:
     return [figure for figure in figures_in(text) if figure not in supported]
 
 
-def _content_stems(text: str) -> set[str]:
+def content_stems(text: str) -> set[str]:
     words = (word.casefold() for word in CONTENT_WORD.findall(quote_key(text)))
     return {word[:STEM_CHARS] for word in words if word not in STOP_WORDS}
+
+
+def _figure_text(text: str) -> str:
+    return fold_digits(normalise_quote_text(text))
+
+
+def _ascii_digit(char: str) -> str:
+    value = unicodedata.decimal(char, None)
+    return char if value is None else str(value)

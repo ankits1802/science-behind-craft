@@ -52,6 +52,37 @@ def test_relative_import_resolves_against_its_package() -> None:
     ]
 
 
+def test_schemas_reuse_research_shapes_but_not_models() -> None:
+    assert check("backend/app/schemas/science.py", "from app.research.stream import Citation\n") == []
+    found = check("backend/app/schemas/science.py", "from app.models.enums import STAGE_TYPES\n")
+    assert found == [
+        "backend/app/schemas/science.py:1: schemas imports app.models.enums (schemas may not import models)"
+    ]
+
+
+def test_the_science_engine_builds_on_the_contracts_and_reaches_no_storage() -> None:
+    assert (
+        check("backend/app/science/process_view.py", "from app.schemas.science import CraftProcess\n") == []
+    )
+    assert check("backend/app/services/science_seed.py", "from app.science.balance import balance\n") == []
+    found = check("backend/app/science/balance.py", "from app.models import Reaction\n")
+    assert found == [
+        "backend/app/science/balance.py:1: science imports app.models (science may not import models)"
+    ]
+
+
+def test_the_region_builder_builds_on_the_contracts_and_reaches_no_storage() -> None:
+    assert check("backend/app/geo/region_view.py", "from app.schemas.region import CraftRegion\n") == []
+    assert check("backend/app/services/region_records.py", "from app.geo.places import region_places\n") == []
+    assert check("backend/app/api/routes/map_layers.py", "from app.geo.layers import map_layer\n") == []
+    assert check("backend/app/geo/places.py", "from app.models import CraftLocation\n") == [
+        "backend/app/geo/places.py:1: geo imports app.models (geo may not import models)"
+    ]
+    assert check("backend/app/geo/layers.py", "from app.science.units import normalised_bounds\n") == [
+        "backend/app/geo/layers.py:1: geo imports app.science.units (geo may not import science)"
+    ]
+
+
 def test_relative_import_inside_a_package_init() -> None:
     assert check("backend/app/providers/__init__.py", "from . import base\n") == []
 
@@ -69,9 +100,10 @@ def test_nothing_below_the_entry_points_imports_main_or_scripts() -> None:
 
 
 def test_an_unmapped_layer_fails_closed() -> None:
-    found = check("backend/app/geo/region.py", "import math\n")
+    found = check("backend/app/governance/flags.py", "import math\n")
     assert found == [
-        "backend/app/geo/region.py:1: geo imports app.geo.region (app.geo is not a layer in LAYER_IMPORTS)"
+        "backend/app/governance/flags.py:1: governance imports app.governance.flags "
+        "(app.governance is not a layer in LAYER_IMPORTS)"
     ]
 
 
@@ -120,4 +152,17 @@ def test_the_planner_builds_on_sources_and_reaches_no_provider_or_service() -> N
     found = check("backend/app/sources/adapter.py", "from app.planner import policy\n")
     assert found == [
         "backend/app/sources/adapter.py:1: sources imports app.planner (sources may not import planner)"
+    ]
+
+
+def test_voice_orchestrates_providers_and_contracts_and_only_entry_points_import_it() -> None:
+    allowed = "from app.providers.elevenlabs import ElevenLabs\nfrom app.schemas.voice import MAX_TURNS\n"
+    assert check("backend/app/voice/relay.py", allowed) == []
+    assert check("backend/app/api/routes/voice.py", "from app.voice.relay import relay_turn_events\n") == []
+    assert check("backend/app/scripts/voice_upkeep.py", "from app.voice.upkeep import run_upkeep\n") == []
+    found = check("backend/app/voice/relay.py", "from app.api import voice_deps\n")
+    assert found == ["backend/app/voice/relay.py:1: voice imports app.api (voice may not import api)"]
+    found = check("backend/app/services/answering.py", "from app.voice import turns\n")
+    assert found == [
+        "backend/app/services/answering.py:1: services imports app.voice (services may not import voice)"
     ]

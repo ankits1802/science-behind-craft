@@ -32,12 +32,14 @@ import { CUT_NOTICE_LIVE_REGION, searchCutNotice } from "@/components/data/cappe
 import { ApiError } from "@/lib/api";
 import {
   accessEntryDetails,
+  accessEntryOffers,
   addToAccessRoster,
   decideAccessRequest,
   listAccessRoster,
   promotionHeldSentence,
   suspendAccessEntry,
   updateAccessEntry,
+  type AccessEntryOffers,
   type AccessRosterEntry,
   type AccessRosterPage
 } from "@/lib/accessRoster";
@@ -438,6 +440,7 @@ function PlatformAccessScreen() {
               <QueueRow
                 key={entry.id}
                 entry={entry}
+                offers={accessEntryOffers(user, entry)}
                 grantable={grantable}
                 onApprove={(role) => approve(entry, role)}
                 onReject={() => reject(entry)}
@@ -611,26 +614,16 @@ function PlatformAccessScreen() {
                       {entry.notes ? <span className="line-clamp-3 whitespace-pre-line">{entry.notes}</span> : "—"}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <RowActions>
-                        <button type="button" className={rowAction("edit")} onClick={() => startEdit(entry)}>
-                          Update
-                        </button>
-                        {entry.status === "ACTIVE" ? (
-                          <button type="button" data-danger className={rowAction("danger")} onClick={() => suspend(entry)}>
-                            Suspend
-                          </button>
-                        ) : (
-                          <button type="button" className={rowAction("positive")} onClick={() => restore(entry)}>
-                            <UserCheck className="h-3.5 w-3.5" aria-hidden />
-                            {entry.status === "PENDING" ? "Approve" : "Let back in"}
-                          </button>
-                        )}
-                        {entry.status === "PENDING" ? (
-                          <button type="button" data-danger className={rowAction("danger")} onClick={() => reject(entry)}>
-                            Refuse
-                          </button>
-                        ) : null}
-                      </RowActions>
+                      <EntryActions
+                        offers={accessEntryOffers(user, entry)}
+                        pending={entry.status === "PENDING"}
+                        on={{
+                          update: () => startEdit(entry),
+                          suspend: () => suspend(entry),
+                          admit: () => restore(entry),
+                          refuse: () => reject(entry)
+                        }}
+                      />
                     </td>
                   </OpenableRow>
                 ))}
@@ -646,11 +639,14 @@ function PlatformAccessScreen() {
         title={viewing?.fullName || "Name not recorded"}
         description={viewing?.email}
         details={viewing ? accessEntryDetails(viewing) : []}
-        onUpdate={() => {
-          const target = viewing;
-          setViewing(null);
-          if (target) startEdit(target);
-        }}
+        onUpdate={
+          viewing && accessEntryOffers(user, viewing).update
+            ? () => {
+                setViewing(null);
+                startEdit(viewing);
+              }
+            : undefined
+        }
       />
     </>
   );
@@ -725,13 +721,45 @@ function AdmitTierField({ grantable, initial }: { grantable: UserRole[]; initial
   );
 }
 
+type EntryHandlers = { update: () => void; suspend: () => void; admit: () => void; refuse: () => void };
+
+function EntryActions({ offers, pending, on }: { offers: AccessEntryOffers; pending: boolean; on: EntryHandlers }) {
+  return (
+    <RowActions>
+      {offers.update ? (
+        <button type="button" className={rowAction("edit")} onClick={on.update}>
+          Update
+        </button>
+      ) : null}
+      {offers.suspend ? (
+        <button type="button" data-danger className={rowAction("danger")} onClick={on.suspend}>
+          Suspend
+        </button>
+      ) : null}
+      {offers.admit ? (
+        <button type="button" className={rowAction("positive")} onClick={on.admit}>
+          <UserCheck className="h-3.5 w-3.5" aria-hidden />
+          {pending ? "Approve" : "Let back in"}
+        </button>
+      ) : null}
+      {offers.refuse ? (
+        <button type="button" data-danger className={rowAction("danger")} onClick={on.refuse}>
+          Refuse
+        </button>
+      ) : null}
+    </RowActions>
+  );
+}
+
 function QueueRow({
   entry,
+  offers,
   grantable,
   onApprove,
   onReject
 }: {
   entry: AccessRosterEntry;
+  offers: AccessEntryOffers;
   grantable: UserRole[];
   onApprove: (role: UserRole | "") => void;
   onReject: () => void;
@@ -749,31 +777,43 @@ function QueueRow({
           {entry.lastAttemptAt ? `, last ${formatDateTime(entry.lastAttemptAt)}` : ""}
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <span id={`tier-label-${entry.id}`} className="sr-only">
-          The role {entry.email} joins with
-        </span>
-        <FieldLabelProvider value={`tier-label-${entry.id}`}>
-          <Dropdown
-            value={role}
-            onChange={(next) => setRole(next as UserRole | "")}
-            options={[
-              { value: "", label: "Joins with the default role" },
-              ...grantable.map((option) => ({ value: option, label: `Joins as ${roleLabel(option)}` }))
-            ]}
-            advanceOnSelect={false}
-            className="h-9 min-w-56 py-0 text-sm"
-          />
-        </FieldLabelProvider>
-        <ActionGroup className="max-sm:w-full"><button type="button" className={rowAction("positive")} onClick={() => onApprove(role)}>
-          <UserCheck className="h-3.5 w-3.5" aria-hidden />
-          Approve
-        </button>
-        <button type="button" data-danger className={rowAction("danger")} onClick={onReject}>
-          <UserX className="h-3.5 w-3.5" aria-hidden />
-          Refuse
-        </button></ActionGroup>
-      </div>
+      {offers.admit || offers.refuse ? (
+        <div className="flex flex-wrap items-center gap-2">
+          {offers.admit ? (
+            <>
+              <span id={`tier-label-${entry.id}`} className="sr-only">
+                The role {entry.email} joins with
+              </span>
+              <FieldLabelProvider value={`tier-label-${entry.id}`}>
+                <Dropdown
+                  value={role}
+                  onChange={(next) => setRole(next as UserRole | "")}
+                  options={[
+                    { value: "", label: "Joins with the default role" },
+                    ...grantable.map((option) => ({ value: option, label: `Joins as ${roleLabel(option)}` }))
+                  ]}
+                  advanceOnSelect={false}
+                  className="h-9 min-w-56 py-0 text-sm"
+                />
+              </FieldLabelProvider>
+            </>
+          ) : null}
+          <ActionGroup className="max-sm:w-full">
+            {offers.admit ? (
+              <button type="button" className={rowAction("positive")} onClick={() => onApprove(role)}>
+                <UserCheck className="h-3.5 w-3.5" aria-hidden />
+                Approve
+              </button>
+            ) : null}
+            {offers.refuse ? (
+              <button type="button" data-danger className={rowAction("danger")} onClick={onReject}>
+                <UserX className="h-3.5 w-3.5" aria-hidden />
+                Refuse
+              </button>
+            ) : null}
+          </ActionGroup>
+        </div>
+      ) : null}
     </li>
   );
 }

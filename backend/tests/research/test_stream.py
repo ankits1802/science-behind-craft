@@ -47,7 +47,7 @@ WIRE = {
         },
     ),
     "status": ({"step", "message"}, {"step", "message"}),
-    "section": ({"id", "heading"}, {"id", "heading"}),
+    "section": ({"id", "heading", "original"}, {"id", "heading"}),
     "sentence": ({"sectionId", "sentence"}, {"sectionId", "sentence"}),
     "open_question": ({"sectionId", "heading", "sentence"}, {"sectionId", "sentence"}),
     "reaction": (
@@ -94,7 +94,14 @@ def test_sentences_and_citations_keep_their_wire_fields() -> None:
     defs = schema_of("sentence")["$defs"]
     assert set(defs["Citation"]["properties"]) == CITATION
     assert set(defs["Citation"]["required"]) == CITATION
-    assert set(defs["AnswerSentence"]["properties"]) == {"id", "text", "level", "citations", "translated"}
+    assert set(defs["AnswerSentence"]["properties"]) == {
+        "id",
+        "text",
+        "level",
+        "citations",
+        "translated",
+        "original",
+    }
     assert set(defs["AnswerSentence"]["required"]) == {"id", "text", "level", "citations"}
     assert defs["AnswerSentence"]["properties"]["citations"]["minItems"] == 1
     assert defs["Citation"]["properties"]["evidence"]["enum"] == ["QUOTED", "INFERRED"]

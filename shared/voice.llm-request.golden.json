@@ -1,0 +1,33 @@
+{
+  "model": "kalavigyan-voice",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are KalaVigyan."
+    },
+    {
+      "role": "user",
+      "content": "Why do Ajrakh printers use alum?"
+    }
+  ],
+  "temperature": 0.5,
+  "max_tokens": 5000,
+  "stream": true,
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "end_call",
+        "description": "Ends the call",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      }
+    }
+  ],
+  "elevenlabs_extra_body": {
+    "voiceSessionId": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ranks": {
+    "MASTER_ADMIN": 60,
+    "ADMIN": 50,
+    "PROFESSOR": 40,
+    "RESEARCHER": 30,
+    "STUDENT": 15
+  },
+  "labels": {
+    "MASTER_ADMIN": "Master Admin",
+    "ADMIN": "Admin",
+    "PROFESSOR": "Professor",
+    "RESEARCHER": "Researcher",
+    "STUDENT": "Student"
+  }
+}

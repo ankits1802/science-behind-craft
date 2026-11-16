@@ -1,3 +1,5 @@
+import { apiFetch } from "@/lib/api";
+
 export type OidcProviderId = "MICROSOFT" | "YAHOO";
 
 export interface OidcProvider {
@@ -11,15 +13,14 @@ export interface OidcProvider {
 export const OIDC_CALLBACK_PATH = "/login/callback";
 
 export const WEB_STATE_PREFIX = "web.";
-export const APP_STATE_PREFIX = "app.";
 export const CONFIRM_STATE_PREFIX = "pw.";
 export const CONFIRM_RETURN_PATH = "/settings";
 
-export const ANDROID_SIGN_IN_SCHEME = "com.designprototype.workshop.signin";
-
 export const PENDING_LIFETIME_MS = 10 * 60 * 1000;
 
-const PENDING_KEY = "dpw.oidc.pending";
+export const PENDING_KEY = "kalavigyan_oidc_pending";
+
+export const OIDC_TAB_LOST = "That sign-in can't be finished in this tab. Start it again here.";
 
 const MICROSOFT_TENANT_KEYWORDS = ["common", "organizations", "consumers"];
 const GUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -86,6 +87,15 @@ export async function sha256Base64Url(text: string): Promise<string> {
   return base64Url(new Uint8Array(digest));
 }
 
+export async function fetchOidcNonce(provider: OidcProviderId): Promise<string> {
+  const answer = await apiFetch<{ nonce: string }>(
+    "/auth/oidc/nonce",
+    { method: "POST", body: JSON.stringify({ provider }) },
+    { redirectOn401: false }
+  );
+  return answer.nonce;
+}
+
 export interface AuthorizeRequest {
   redirectUri: string;
   state: string;
@@ -117,28 +127,26 @@ export interface PendingSignIn {
   codeVerifier: string;
   rawNonce: string;
   redirectUri: string;
-  agreedAt: string | null;
   startedAt: number;
 }
 
-export async function beginSignIn(
-  provider: OidcProvider,
-  origin: string,
-  agreedAt: string | null,
-  storage: Pick<Storage, "setItem"> = window.sessionStorage,
-  purpose: "sign-in" | "confirm" = "sign-in"
-): Promise<string> {
-  const prefix = purpose === "confirm" ? CONFIRM_STATE_PREFIX : WEB_STATE_PREFIX;
+export interface SignInStart {
+  rawNonce: string;
+  purpose?: "sign-in" | "confirm";
+  storage?: Pick<Storage, "setItem">;
+}
+
+export async function beginSignIn(provider: OidcProvider, origin: string, start: SignInStart): Promise<string> {
+  const prefix = start.purpose === "confirm" ? CONFIRM_STATE_PREFIX : WEB_STATE_PREFIX;
   const pending: PendingSignIn = {
     provider: provider.id,
     state: `${prefix}${randomToken()}`,
     codeVerifier: randomToken(48),
-    rawNonce: randomToken(),
+    rawNonce: start.rawNonce,
     redirectUri: `${origin}${OIDC_CALLBACK_PATH}`,
-    agreedAt,
     startedAt: Date.now()
   };
-  storage.setItem(PENDING_KEY, JSON.stringify(pending));
+  (start.storage ?? window.sessionStorage).setItem(PENDING_KEY, JSON.stringify(pending));
   return authorizeUrl(provider, {
     redirectUri: pending.redirectUri,
     state: pending.state,
@@ -184,16 +192,15 @@ export function parseCallbackFragment(hash: string): CallbackResult | null {
 
 const FORWARDED = ["code", "state", "error"] as const;
 
-export function callbackTarget(query: URLSearchParams, appScheme: string = ANDROID_SIGN_IN_SCHEME): string {
+export function callbackTarget(query: URLSearchParams): string {
   const kept = new URLSearchParams();
   for (const name of FORWARDED) {
     const value = query.get(name);
     if (value) kept.set(name, value.slice(0, 4096));
   }
   const state = kept.get("state") ?? "";
-  if (state.startsWith(APP_STATE_PREFIX)) return `${appScheme}://oidc/callback?${kept.toString()}`;
-  if (state.startsWith(CONFIRM_STATE_PREFIX)) return `${CONFIRM_RETURN_PATH}#oidc=${encodeURIComponent(kept.toString())}`;
-  return `/login#oidc=${encodeURIComponent(kept.toString())}`;
+  const path = state.startsWith(CONFIRM_STATE_PREFIX) ? CONFIRM_RETURN_PATH : "/login";
+  return `${path}#oidc=${encodeURIComponent(kept.toString())}`;
 }
 
 export function loginBody(pending: PendingSignIn, code: string) {
@@ -212,6 +219,6 @@ export function providerLabel(id: OidcProviderId): string {
 
 export function callbackErrorMessage(id: OidcProviderId, error: string | null): string {
   const label = providerLabel(id);
-  if (error === "access_denied") return `Signing in with ${label} was cancelled. You can try again.`;
-  return `Signing in with ${label} did not complete. Try again, or use another way to sign in.`;
+  if (error === "access_denied") return `${label} sign-in was cancelled.`;
+  return `${label} sign-in didn't work. Try again.`;
 }

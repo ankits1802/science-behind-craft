@@ -1,0 +1,27 @@
+{
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "kinds": [
+    {
+      "kind": "IMAGE",
+      "remainingToday": 4
+    }
+  ],
+  "stages": [
+    {
+      "stageId": "575d3427-7a90-568d-87d5-bb0f1c602591",
+      "kinds": [
+        "IMAGE"
+      ]
+    },
+    {
+      "stageId": "eb895bd5-83a3-511a-9e64-ba7e452afea8",
+      "kinds": [
+        "IMAGE"
+      ]
+    }
+  ]
+}

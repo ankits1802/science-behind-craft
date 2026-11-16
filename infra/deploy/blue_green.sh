@@ -57,6 +57,7 @@ seed() {
     say "$module done"
   done
   sync_portal_crafts "$tree"
+  embed_craft_descriptors "$tree"
 }
 
 sync_portal_crafts() {
@@ -65,6 +66,15 @@ sync_portal_crafts() {
     say "app.scripts.sync_portal_crafts done"
   else
     say "::warning::craft sync from the portals failed; the release goes on with the crafts already stored. The JSON report above names each portal's outcome."
+  fi
+}
+
+embed_craft_descriptors() {
+  local tree="$1"
+  if (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m app.scripts.embed_craft_descriptors" >&2); then
+    say "app.scripts.embed_craft_descriptors done"
+  else
+    say "::warning::craft descriptor embeddings were not filled; the daily Coverage enrichment run fills the missing ones."
   fi
 }
 

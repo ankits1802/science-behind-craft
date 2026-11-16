@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import { CitationChip } from "@/components/answer/CitationChip";
 import { riseItem } from "@/components/guide/guideMotion";
+import { headingView, paragraphAttributes, sentenceView, type AnswerLanguage } from "@/lib/answerLanguages";
 import { uniqueCitations } from "@/lib/citations";
 import type { AnswerSection, AnswerSentence, Citation, SourceRef } from "@/lib/types";
 
@@ -13,7 +14,9 @@ export function SectionBlock({
   numbers,
   sourcesById,
   onOpen,
-  compact = false
+  compact = false,
+  language = null,
+  original = false
 }: {
   section: AnswerSection;
   reduce: boolean;
@@ -21,13 +24,30 @@ export function SectionBlock({
   sourcesById: Map<string, SourceRef>;
   onOpen: (citation: Citation) => void;
   compact?: boolean;
+  language?: AnswerLanguage | null;
+  original?: boolean;
 }) {
+  const heading = headingView(section, language, original);
+  const paragraph = paragraphAttributes(section, language, original);
   return (
     <section className={compact ? "" : "panel p-5 md:p-6"}>
-      {section.heading ? <h2 className="font-display text-lg font-bold text-ink-900">{section.heading}</h2> : null}
-      <p className={section.heading ? "mt-2 text-[15px] leading-8 text-ink-700" : "text-[15px] leading-8 text-ink-700"}>
+      {heading.text ? (
+        <h2 lang={heading.lang} dir={heading.dir} className="font-display text-lg font-bold text-ink-900">
+          {heading.text}
+        </h2>
+      ) : null}
+      <p lang={paragraph.lang} dir={paragraph.dir} className={heading.text ? "mt-2 text-[15px] leading-8 text-ink-700" : "text-[15px] leading-8 text-ink-700"}>
         {section.sentences.map((sentence) => (
-          <SentenceRun key={sentence.id} sentence={sentence} reduce={reduce} numbers={numbers} sourcesById={sourcesById} onOpen={onOpen} />
+          <SentenceRun
+            key={sentence.id}
+            sentence={sentence}
+            reduce={reduce}
+            numbers={numbers}
+            sourcesById={sourcesById}
+            onOpen={onOpen}
+            language={language}
+            original={original}
+          />
         ))}
       </p>
     </section>
@@ -39,19 +59,25 @@ function SentenceRun({
   reduce,
   numbers,
   sourcesById,
-  onOpen
+  onOpen,
+  language,
+  original
 }: {
   sentence: AnswerSentence;
   reduce: boolean;
   numbers: Map<string, number>;
   sourcesById: Map<string, SourceRef>;
   onOpen: (citation: Citation) => void;
+  language: AnswerLanguage | null;
+  original: boolean;
 }) {
   const citations = uniqueCitations(sentence.citations);
+  const shown = sentenceView(sentence, language, original);
   return (
     <motion.span variants={riseItem(reduce, 4)} initial="hidden" animate="show" className="inline" data-testid="answer-sentence" data-level={sentence.level}>
-      {sentence.text}
-      {sentence.translated ? <span className="ml-1 rounded-sm bg-surface-50 px-1 text-[10px] font-semibold uppercase tracking-wide text-ink-500">Translated</span> : null}
+      <span lang={shown.lang} dir={shown.dir}>
+        {shown.text}
+      </span>
       {citations.map((citation) => (
         <CitationChip
           key={`${citation.sourceId}:${citation.claimId}`}

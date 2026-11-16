@@ -6,13 +6,15 @@ export type Preferences = {
   reducedMotion: boolean;
   largerText: boolean;
   highContrast: boolean;
+  answerLanguage: string;
 };
 
 export const DEFAULT_PREFERENCES: Preferences = {
   theme: "system",
   reducedMotion: false,
   largerText: false,
-  highContrast: false
+  highContrast: false,
+  answerLanguage: "auto"
 };
 
 export const PREFERENCES_KEY = "kalavigyan_preferences";
@@ -26,6 +28,8 @@ export const THEME_COLOR: Record<ResolvedTheme, string> = {
 
 export const THEME_CHOICES: ThemeChoice[] = ["system", "light", "dark"];
 
+const ANSWER_LANGUAGE_CHOICE = /^(auto|[a-z]{2,3})$/;
+
 export function normalizePreferences(value: unknown): Preferences {
   if (!value || typeof value !== "object") return { ...DEFAULT_PREFERENCES };
   const raw = value as Partial<Record<keyof Preferences, unknown>>;
@@ -35,7 +39,8 @@ export function normalizePreferences(value: unknown): Preferences {
       : DEFAULT_PREFERENCES.theme,
     reducedMotion: raw.reducedMotion === true,
     largerText: raw.largerText === true,
-    highContrast: raw.highContrast === true
+    highContrast: raw.highContrast === true,
+    answerLanguage: typeof raw.answerLanguage === "string" && ANSWER_LANGUAGE_CHOICE.test(raw.answerLanguage) ? raw.answerLanguage : DEFAULT_PREFERENCES.answerLanguage
   };
 }
 

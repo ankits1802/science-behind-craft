@@ -1,0 +1,48 @@
+{
+  "id": "v1_ChdpbWFnZS1pbnRlcmFjdGlvbi0wMDAx",
+  "status": "completed",
+  "model": "gemini-3.1-flash-image",
+  "created": "2026-11-16T09:00:12Z",
+  "updated": "2026-11-16T09:00:31Z",
+  "steps": [
+    {
+      "type": "thought",
+      "content": [
+        {
+          "type": "text",
+          "text": "Planning the composition."
+        }
+      ]
+    },
+    {
+      "type": "model_output",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here is the illustration."
+        },
+        {
+          "type": "image",
+          "mime_type": "image/png",
+          "data": "iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAAAElFTkSuQmCC"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "total_input_tokens": 312,
+    "total_output_tokens": 1180,
+    "total_thought_tokens": 60,
+    "total_tokens": 1492,
+    "output_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1120
+      },
+      {
+        "modality": "text",
+        "tokens": 60
+      }
+    ]
+  }
+}

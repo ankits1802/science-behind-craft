@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.core.errors import RETRYABLE_KINDS, ExternalFailure, InvalidInput
+from app.research.vocabulary import CANONICAL_LANGUAGE
 
 from ..http import RatePolicy, SourceHttp
 from ..records import UnusableRecord, clean_text, partial_date_of
@@ -15,10 +16,12 @@ __all__ = [
     "WIKIMEDIA_RATE",
     "Revision",
     "action_api",
+    "language_and_native",
     "page_revision",
     "pages_in_order",
     "primary_language",
     "rights_text",
+    "with_language",
 ]
 
 WIKIMEDIA_RATE = RatePolicy(min_interval=0.2)
@@ -28,6 +31,7 @@ NOT_FOUND_CODES = frozenset({"no-such-entity", "missingtitle", "nosuchpageid", "
 RATE_LIMIT_CODES = frozenset({"ratelimited", "maxlag"})
 UNAVAILABLE_CODES = frozenset({"readonly", "internal_api_error_DBQueryError"})
 LANGUAGE_CODE = re.compile(r"^[a-z]{2,3}$")
+LANGUAGE_PREFIX = re.compile(r"^([a-z]{2,3}):(.+)$")
 
 
 @dataclass(frozen=True)
@@ -57,6 +61,17 @@ def primary_language(language: str) -> str:
     if not LANGUAGE_CODE.match(primary):
         raise InvalidInput(f"{language!r} is not a language code")
     return primary
+
+
+def with_language(native: str, language: str) -> str:
+    return native if language == CANONICAL_LANGUAGE else f"{language}:{native}"
+
+
+def language_and_native(native: str) -> tuple[str, str]:
+    match = LANGUAGE_PREFIX.match(native)
+    if match is None:
+        return CANONICAL_LANGUAGE, native
+    return primary_language(match.group(1)), match.group(2)
 
 
 def rights_text(payload: Mapping[str, Any]) -> str | None:

@@ -1,0 +1,28 @@
+"use client";
+
+import { useMemo } from "react";
+
+import { FieldBlock } from "@/components/FormControls";
+import { SearchableSelect } from "@/components/ui/SearchableSelect";
+import type { MapLayerList } from "@/lib/regionContract";
+import { layerOptions } from "@/lib/regionView";
+
+export const CRAFT_PLACES_LABEL = "Craft places";
+
+export function LayerPicker({ list, value, onChange }: { list: MapLayerList; value: string | null; onChange: (id: string | null) => void }) {
+  const options = useMemo(() => layerOptions(list), [list]);
+  return (
+    <div className="mb-4 sm:max-w-sm" data-testid="layer-picker">
+      <FieldBlock label="Layer">
+        <SearchableSelect
+          value={value ?? ""}
+          options={options}
+          noneLabel={CRAFT_PLACES_LABEL}
+          onChange={(next) => onChange(next || null)}
+          searchable
+          advanceOnSelect={false}
+        />
+      </FieldBlock>
+    </div>
+  );
+}

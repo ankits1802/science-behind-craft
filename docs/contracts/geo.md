@@ -4,7 +4,7 @@ The geo lane owns `etl/geo/`, `.github/workflows/geo-etl.yml` and `docs/DATA_SOU
 
 ## Backend changes required
 
-Rows 1 and 2 are done: `ENV_STATS` and the `EnvStat` type in migration 0001 carry the six values, and `DistrictGeology` has `UniqueConstraint("districtLgd", "datasetId", "lithology")`, so `load.py` takes the `ON CONFLICT` path. Rows 3 to 5 are still open.
+Rows 1 and 2 are done: `ENV_STATS` and the `EnvStat` type in migration 0001 carry the six values, and `DistrictGeology` has `UniqueConstraint("districtLgd", "datasetId", "lithology")`, so `load.py` takes the `ON CONFLICT` path. Rows 3 and 5 are done by migration `0005_region_profile` (decision 0016), which also adds `DistrictEnvValue.resolution` (now loaded) and fills the grid of earlier WorldCover and Copernicus DEM rows and the names of earlier GLiM rows. Row 4 is still open.
 
 | # | Where | Change | Why |
 |---|---|---|---|
@@ -27,7 +27,7 @@ Column names are the quoted camelCase names in Postgres. `load.py` reads `inform
 ### DistrictEnvValue
 
 - Key and unique constraint (already in the model): `districtLgd`, `datasetId`, `variable`, `depthOrPeriod`, `stat`.
-- Required: the key plus `value`. Written when present: `valueText`, `unit`, `method`, `pixelCount`, `createdAt`, `updatedAt`.
+- Required: the key plus `value`. Written when present: `valueText`, `unit`, `method`, `resolution`, `pixelCount`, `createdAt`, `updatedAt`.
 - `depthOrPeriod` is never null; layers without a depth or period write `""`, matching the column's server default.
 - `id` is filled with `gen_random_uuid()`.
 
@@ -61,7 +61,8 @@ All in `etl/geo/out/` (or `--out`).
 | `unit` | str | `unit` |
 | `method` | str | `method` |
 | `pixelCount` | float or null | `pixelCount`, rounded |
-| `source`, `version`, `resolution`, `licence` | str | not loaded; carried per row for audit and duplicated in `EnvDataset` |
+| `resolution` | str | `resolution`: the grid the value was read at (WorldCover at its overview factor) |
+| `source`, `version`, `licence` | str | not loaded; carried per row for audit and duplicated in `EnvDataset` |
 
 `EnvStat` values the layers emit: `DISTRICT_MEAN`, `DISTRICT_P10`, `DISTRICT_P90`, `DISTRICT_MIN`, `DISTRICT_MAX`, `UNCERTAINTY_Q05_MEAN`, `UNCERTAINTY_Q95_MEAN`, `SHARE`, `CLASS`, `NORMAL`, `TOTAL`, `DENSITY`, `DISTANCE`, `COUNT`.
 
@@ -71,7 +72,7 @@ All in `etl/geo/out/` (or `--out`).
 
 ### district_env_summary.json
 
-`generatedAt`, `boundaries` (one dataset row), `datasets` (dataset rows with `code`, `title`, `publisher`, `edition`, `period`, `nativeResolution`, `crs`, `licence`, `licenceUrl`, `attribution`, `redistributable`, `citation`, `url`, `retrievedAt`), `layers` (per layer and shard: rows, geology rows, seconds, notes, options, failures), `rows`, `geologyRows`, `districts`, `variables` (distinct variables per dataset code), `districtsWithoutShapes`.
+`generatedAt`, `boundaries` (one dataset row), `datasets` (dataset rows with `code`, `title`, `publisher`, `edition`, `period`, `nativeResolution`, `crs`, `licence`, `licenceUrl`, `attribution`, `redistributable`, `citation`, `url`, `retrievedAt`), `layers` (per layer and shard: rows, geology rows, seconds, notes, options, failures, `districtsWithoutValues` and `lostStates`, decision 0027), `rows`, `geologyRows`, `districts`, `variables` (distinct variables per dataset code), `districtsWithoutShapes`.
 
 ## Running load.py
 

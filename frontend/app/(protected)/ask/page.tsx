@@ -12,7 +12,11 @@ import { useAnswerStream } from "@/components/ask/useAnswerStream";
 import { useAuth } from "@/components/AuthProvider";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { useGsapHeadline } from "@/components/guide/useGsapHeadline";
+import { LanguagePicker } from "@/components/LanguagePicker";
+import { useThemePreferences } from "@/components/ThemeProvider";
 import { ActionGroup } from "@/components/ui/ActionGroup";
+import { useVoiceOffered } from "@/components/voice/useVoiceOffer";
+import { detectedLanguage, englishOf, languageFor, resolvedLanguage } from "@/lib/answerLanguages";
 import { FALLBACK_ASK_CONFIG, fetchAskConfig, normaliseAskConfig, type AskConfig } from "@/lib/askConfig";
 import { useCraftCatalogue } from "@/lib/craftCatalogue";
 import { canAskDeep } from "@/lib/permissions";
@@ -39,7 +43,9 @@ function AskScreen() {
   const headline = useGsapHeadline<HTMLHeadingElement>(reduce);
   const { catalogue } = useCraftCatalogue();
   const { state, ask, stop, clear } = useAnswerStream();
+  const { preferences, update } = useThemePreferences();
   const [config, setConfig] = useState<AskConfig>(FALLBACK_ASK_CONFIG);
+  const [configReady, setConfigReady] = useState(false);
   const [question, setQuestion] = useState(() => params.get("q") ?? "");
   const [craftSlug, setCraftSlug] = useState<string | null>(() => params.get("craft"));
   const [mode, setMode] = useState<AnswerMode>("HYBRID");
@@ -54,8 +60,11 @@ function AskScreen() {
         const next = normaliseAskConfig(raw);
         setConfig(next);
         setMode((current) => (next.modes.includes(current) ? current : next.defaultMode));
+        setConfigReady(true);
       })
-      .catch(() => undefined);
+      .catch(() => {
+        if (!cancelled) setConfigReady(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -68,6 +77,9 @@ function AskScreen() {
   }, [catalogue, craftSlug]);
 
   const busy = state.phase === "matching" || state.phase === "streaming";
+  const choice = preferences.answerLanguage;
+  const detected = useMemo(() => detectedLanguage(question, config.languages) ?? englishOf(config.languages), [config.languages, question]);
+  const voiceOffered = useVoiceOffered(config.voice);
 
   function run(text: string, slug: string | null = craftSlug, chosen: AnswerMode = mode) {
     const trimmed = text.trim();
@@ -77,16 +89,16 @@ function AskScreen() {
     search.set("q", trimmed);
     if (slug) search.set("craft", slug);
     router.replace(`${pathname}?${search.toString()}`, { scroll: false });
-    void ask({ question: trimmed, mode: chosen, craftSlug: slug, language: config.languages[0]?.code ?? "en" });
+    void ask({ question: trimmed, mode: chosen, craftSlug: slug, language: resolvedLanguage(choice, trimmed, config.languages).code });
   }
 
   useEffect(() => {
-    if (autoAsked.current) return;
+    if (autoAsked.current || !configReady) return;
     const initial = params.get("q");
     if (!initial) return;
     autoAsked.current = true;
-    void ask({ question: initial, mode: "HYBRID", craftSlug: params.get("craft"), language: "en" });
-  }, [ask, params]);
+    void ask({ question: initial, mode: "HYBRID", craftSlug: params.get("craft"), language: resolvedLanguage(choice, initial, config.languages).code });
+  }, [ask, params, configReady, choice, config.languages]);
 
   const started = state.phase !== "idle";
 
@@ -112,10 +124,21 @@ function AskScreen() {
         mode={mode}
         modes={modes}
         onMode={setMode}
-        voiceAvailable={config.voice.configured}
+        voiceAvailable={voiceOffered}
         onVoice={() => setVoiceOpen(true)}
         craftLabel={craftName}
         onClearCraft={() => setCraftSlug(null)}
+        languageControl={
+          config.languages.length > 1 ? (
+            <LanguagePicker
+              value={choice}
+              languages={config.languages}
+              detected={detected}
+              onChange={(next) => update({ answerLanguage: next })}
+              disabled={busy}
+            />
+          ) : null
+        }
       />
 
       {!started ? (
@@ -163,7 +186,9 @@ function AskScreen() {
 
       {started && state.phase !== "ambiguous" ? (
         <AnswerView
+          key={`${state.payload.question}:${state.payload.language}`}
           payload={state.payload}
+          language={languageFor(state.payload.language, config.languages)}
           streaming={busy}
           status={state.status}
           onFollowUp={(next) => {
@@ -187,13 +212,14 @@ function AskScreen() {
         />
       ) : null}
 
-      {config.voice.configured ? (
+      {voiceOffered ? (
         <VoicePanel
           open={voiceOpen}
           onClose={() => setVoiceOpen(false)}
           craftSlug={craftSlug}
           mode={mode}
-          language={config.languages[0]?.code ?? "en"}
+          question={question}
+          availability={config.voice}
           onTranscript={(text) => setQuestion(text)}
         />
       ) : null}

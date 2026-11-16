@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "@/components/AuthProvider";
-import { isAdmin, isContentAdmin, isMasterAdmin } from "@/lib/permissions";
+import { hasAdminView, isMasterAdmin } from "@/lib/permissions";
 import type { User } from "@/lib/types";
 
 type AdminViewValue = {
@@ -41,7 +41,7 @@ function writePreference(key: string, value: string | null) {
 
 export function AdminViewProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const canAdmin = isContentAdmin(user);
+  const canAdmin = hasAdminView(user);
   const [resolved, setResolved] = useState<ResolvedView | null>(null);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const ADMIN_CHROME_ROUTES: AdminChromeRoute[] = [
 ];
 
 export function adminChromeVisible(user: User | null | undefined, adminMode: boolean): boolean {
-  return !isAdmin(user) || adminMode;
+  return !hasAdminView(user) || adminMode;
 }
 
 export function adminChromeRouteFor(pathname: string): AdminChromeRoute | null {

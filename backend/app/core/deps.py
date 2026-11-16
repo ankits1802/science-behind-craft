@@ -11,12 +11,17 @@ from app.core.config import get_settings
 from app.core.db import get_session
 from app.core.logging import set_log_user
 from app.core.roles import (
+    ROLE_LABELS,
     ROLE_RANK,
     Capability,
+    assignable_roles,
     can,
     capabilities_of,
     has_rank,
+    is_known_role,
     is_master_admin,
+    may_assign,
+    may_manage_target,
     requires_two_factor,
     role_rank,
     role_value,
@@ -153,13 +158,15 @@ async def get_current_user(
 CAPABILITY_REFUSALS: dict[Capability, str] = {
     Capability.ASK_DEEP: "Deep research is for researchers and above.",
     Capability.GENERATE_VIDEO: "Video is for researchers and above.",
-    Capability.MANAGE_ACCESS: "Managing who may sign in is for professors and the master admin.",
-    Capability.LIST_USERS: "Managing users is for professors and the master admin.",
-    Capability.CHANGE_ROLES: "Only the master admin can change roles.",
-    Capability.DISABLE_USERS: "Only the master admin can suspend accounts.",
+    Capability.MANAGE_ACCESS: "Managing who may sign in is for professors and admins.",
+    Capability.LIST_USERS: "Managing users is for professors and admins.",
+    Capability.CHANGE_ROLES: "Only admins can change roles.",
+    Capability.DISABLE_USERS: "Only admins can suspend accounts.",
     Capability.MANAGE_KEYS: "Only the master admin can manage keys.",
     Capability.MANAGE_ROUTING: "Only the master admin can change routing.",
-    Capability.VIEW_USAGE: "Only the master admin can see platform usage.",
+    Capability.MANAGE_QUOTAS: "Only the master admin can change quotas.",
+    Capability.MANAGE_CEILINGS: "Only the master admin can change spending limits.",
+    Capability.VIEW_USAGE: "Only admins can see platform usage.",
 }
 
 
@@ -175,6 +182,25 @@ def require(capability: Capability) -> Callable[..., Coroutine[Any, Any, User]]:
 
     dependency.__name__ = f"require_{capability.value.lower()}"
     return dependency
+
+
+MANAGE_TARGET_REFUSAL = "You can't change an account at or above your role."
+
+
+def refuse_unless_assignable(actor: Any, role: Any) -> None:
+    if not is_known_role(role):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=f"Unknown role {role!r}"
+        )
+    if may_assign(actor, role):
+        return
+    allowed = ", ".join(ROLE_LABELS[option] for option in assignable_roles(actor)) or "none"
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You can give these roles: {allowed}.")
+
+
+def refuse_unless_manageable(actor: Any, target: Any) -> None:
+    if not may_manage_target(actor, target):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=MANAGE_TARGET_REFUSAL)
 
 
 async def require_master_admin(user: User = Depends(get_current_user)) -> User:
@@ -193,6 +219,9 @@ __all__ = [
     "has_rank",
     "is_break_glass_master",
     "is_configured_master_admin",
+    "refusal_for",
+    "refuse_unless_assignable",
+    "refuse_unless_manageable",
     "require",
     "require_master_admin",
     "role_rank",

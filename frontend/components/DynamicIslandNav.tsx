@@ -32,16 +32,7 @@ import { BrandMark } from "@/components/BrandMark";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { usePendingAccessCount } from "@/components/hooks/usePendingAccessCount";
 import { HoveredLink, MenuItem } from "@/components/ui/navbar-menu";
-import {
-  canManageAccessRoster,
-  canManageRouting,
-  canManageSecrets,
-  canManageUsers,
-  canReadUsage,
-  isAdmin,
-  isMasterAdmin,
-  roleLabel
-} from "@/lib/permissions";
+import { canManageAccessRoster, hasAdminView, roleLabel, routeAllows } from "@/lib/permissions";
 import { lockPageScroll, unlockPageScroll } from "@/lib/scrollLock";
 import { cn } from "@/lib/utils";
 import type { User } from "@/lib/types";
@@ -83,19 +74,19 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/crafts", label: "Crafts", icon: BookOpen, group: null, can: everyone, gate: "get_current_user" },
   { href: "/map", label: "Map", icon: MapPinned, group: null, can: everyone, gate: "get_current_user" },
 
-  { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: isMasterAdmin, gate: "require_master_admin", adminSurface: true },
-  { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: canManageAccessRoster, gate: "require_access_roster_manager", adminSurface: true },
-  { href: "/admin/users", label: "Manage users", icon: UserCog, group: "Admin", can: canManageUsers, gate: "require_professor", adminSurface: true },
-  { href: "/admin/keys", label: "API keys", icon: KeyRound, group: "Admin", can: canManageSecrets, gate: "require_master_admin", adminSurface: true },
-  { href: "/admin/routing", label: "AI routing", icon: Route, group: "Admin", can: canManageRouting, gate: "require_master_admin", adminSurface: true },
-  { href: "/admin/usage", label: "Usage", icon: BarChart3, group: "Admin", can: canReadUsage, gate: "require_master_admin", adminSurface: true },
+  { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: routeAllows("/admin"), gate: "require_admin", adminSurface: true },
+  { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: routeAllows("/admin/access"), gate: "require_access_roster_manager", adminSurface: true },
+  { href: "/admin/users", label: "Manage users", icon: UserCog, group: "Admin", can: routeAllows("/admin/users"), gate: "require_professor", adminSurface: true },
+  { href: "/admin/keys", label: "API keys", icon: KeyRound, group: "Admin", can: routeAllows("/admin/keys"), gate: "require_master_admin", adminSurface: true },
+  { href: "/admin/routing", label: "AI routing", icon: Route, group: "Admin", can: routeAllows("/admin/routing"), gate: "require_master_admin", adminSurface: true },
+  { href: "/admin/usage", label: "Usage", icon: BarChart3, group: "Admin", can: routeAllows("/admin/usage"), gate: "require_view_usage", adminSurface: true },
 
   { href: "/settings", label: "Settings", icon: SettingsIcon, group: "Account", can: everyone, gate: "get_current_user" }
 ];
 
 export function isNavItemVisible(item: NavItem, user: User | null | undefined, adminMode: boolean): boolean {
   if (!user || !item.can(user)) return false;
-  if (item.adminSurface && isAdmin(user)) return adminMode;
+  if (item.adminSurface && hasAdminView(user)) return adminMode;
   return true;
 }
 

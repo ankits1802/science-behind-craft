@@ -1,0 +1,43 @@
+{
+  "id": "9af1da3c-f6c8-547b-b0e8-ca47cd798604",
+  "kind": "IMAGE",
+  "status": "SUCCEEDED",
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "stage": {
+    "id": "575d3427-7a90-568d-87d5-bb0f1c602591",
+    "ordinal": 6,
+    "name": "Pa (alum mordant printing for red)"
+  },
+  "claimIds": [
+    "9a3c214f-f54f-5f76-a5b7-88aa6a363489",
+    "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e"
+  ],
+  "cached": false,
+  "attempts": 1,
+  "refunded": false,
+  "pollAfterSeconds": null,
+  "createdAt": "2026-11-16T09:00:05Z",
+  "updatedAt": "2026-11-16T09:00:41Z",
+  "asset": {
+    "id": "8ff6abf0-198d-5196-8a87-3ef7dd5fc432",
+    "mime": "image/png",
+    "width": 1024,
+    "height": 1024,
+    "durationSeconds": null,
+    "url": "https://kalavigyan-media-example.s3.ap-south-1.amazonaws.com/media/66ceb1a0-fce2-5527-b3c8-c9c4507c60b9/8ff6abf0198d51968a873ef7dd5fc432/KalaVigyan_Generated-Image_2026-11-16_1430_Ajrakhpur-Kachchh_Kutch-Ajrakh_Pa-Alum-Mordant-Printing-For-Red_Image_Step-06.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=900&X-Amz-Signature=fixture",
+    "urlExpiresAt": "2026-11-16T09:15:41Z",
+    "fileName": "KalaVigyan_Generated-Image_2026-11-16_1430_Ajrakhpur-Kachchh_Kutch-Ajrakh_Pa-Alum-Mordant-Printing-For-Red_Image_Step-06.png",
+    "label": {
+      "text": "AI illustration",
+      "model": "gemini-3.1-flash-image",
+      "generatedOn": "2026-11-16"
+    },
+    "altText": "Pa, a smooth paste of alum in tamarind-seed paste, is printed with blocks patterned for the mavi areas where red is required.",
+    "visibility": "PRIVATE"
+  },
+  "failure": null
+}

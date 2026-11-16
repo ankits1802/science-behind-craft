@@ -1,0 +1,10 @@
+{
+  "agent_id": "agent_test",
+  "conversation_id": "conv_0123456789abcdef",
+  "status": "done",
+  "transcript": [],
+  "metadata": {"start_time_unix_secs": 1794825000, "call_duration_secs": 211.4},
+  "has_audio": false,
+  "has_user_audio": false,
+  "has_response_audio": false
+}

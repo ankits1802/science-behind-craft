@@ -16,7 +16,7 @@ export type AnswerEvent =
   | { type: "status"; data: AnswerStatus }
   | { type: "not_enough_evidence"; data: { message: string } }
   | { type: "source"; data: SourceRef }
-  | { type: "section"; data: { id: string; heading: string } }
+  | { type: "section"; data: { id: string; heading: string; original?: string } }
   | { type: "sentence"; data: { sectionId: string; sentence: AnswerSentence } }
   | { type: "open_question"; data: { sectionId: string; heading?: string; sentence: AnswerSentence } }
   | { type: "reaction"; data: AnswerReaction }
@@ -37,7 +37,7 @@ export type AnswerState = {
 
 const SETTLED: ReadonlySet<AnswerPhase> = new Set(["ambiguous", "empty", "failed"]);
 
-export function emptyAnswer(question = "", mode: AnswerMode = "HYBRID"): AnswerState {
+export function emptyAnswer(question = "", mode: AnswerMode = "HYBRID", language = "en"): AnswerState {
   return {
     phase: "idle",
     match: null,
@@ -48,6 +48,7 @@ export function emptyAnswer(question = "", mode: AnswerMode = "HYBRID"): AnswerS
       answerId: null,
       question,
       mode,
+      language,
       craft: null,
       sections: [],
       openQuestions: [],
@@ -124,7 +125,7 @@ export function reduceAnswer(state: AnswerState, event: AnswerEvent): AnswerStat
 
 const KNOWN_EVENTS = new Set(["match", "status", "not_enough_evidence", "source", "section", "sentence", "open_question", "reaction", "follow_ups", "done", "error"]);
 
-export function parseSseBlock(block: string): AnswerEvent | null {
+export function sseFields(block: string): { name: string; data: string | null } {
   let name = "message";
   const data: string[] = [];
   for (const raw of block.split("\n")) {
@@ -136,9 +137,14 @@ export function parseSseBlock(block: string): AnswerEvent | null {
     if (field === "event") name = value;
     else if (field === "data") data.push(value);
   }
-  if (!KNOWN_EVENTS.has(name) || data.length === 0) return null;
+  return { name, data: data.length ? data.join("\n") : null };
+}
+
+export function parseSseBlock(block: string): AnswerEvent | null {
+  const { name, data } = sseFields(block);
+  if (!KNOWN_EVENTS.has(name) || data === null) return null;
   try {
-    return { type: name, data: JSON.parse(data.join("\n")) } as AnswerEvent;
+    return { type: name, data: JSON.parse(data) } as AnswerEvent;
   } catch {
     return null;
   }
@@ -151,28 +157,26 @@ export function splitSseBuffer(buffer: string): { blocks: string[]; rest: string
   return { blocks: parts, rest };
 }
 
-export async function streamAnswer(request: AskRequest, onEvent: (event: AnswerEvent) => void, signal?: AbortSignal): Promise<void> {
-  const headers = new Headers({ "Content-Type": "application/json", Accept: "text/event-stream" });
+export async function openEventStream(path: string, init: { body: BodyInit; json: boolean; signal?: AbortSignal; fallback: string }): Promise<ReadableStream<Uint8Array>> {
+  const headers = new Headers({ Accept: "text/event-stream" });
+  if (init.json) headers.set("Content-Type", "application/json");
   headers.set("X-Client-Time", new Date().toISOString());
   headers.set("X-App-Version", APP_VERSION);
   headers.set("X-App-Platform", APP_PLATFORM);
   if (APP_VERSION_CODE) headers.set("X-App-Version-Code", APP_VERSION_CODE);
 
-  const response = await fetch(`${API_BASE}/api${ANSWER_STREAM_PATH}`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(request),
-    cache: "no-store",
-    signal
-  });
+  const response = await fetch(`${API_BASE}/api${path}`, { method: "POST", headers, body: init.body, cache: "no-store", signal: init.signal });
 
   if (!response.ok || !response.body) {
     const contentType = response.headers.get("content-type") ?? "";
     const body = contentType.includes("application/json") ? await response.json().catch(() => null) : await response.text().catch(() => "");
-    throw new ApiError(response.status, describeApiBody(body, statusFallback(response.status, "Couldn't answer that. Try again.")), body, response.headers);
+    throw new ApiError(response.status, describeApiBody(body, statusFallback(response.status, init.fallback)), body, response.headers);
   }
+  return response.body;
+}
 
-  const reader = response.body.getReader();
+export async function readSseBlocks(stream: ReadableStream<Uint8Array>, onBlock: (block: string) => void): Promise<void> {
+  const reader = stream.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
   for (;;) {
@@ -181,14 +185,16 @@ export async function streamAnswer(request: AskRequest, onEvent: (event: AnswerE
     buffer += decoder.decode(value, { stream: true });
     const { blocks, rest } = splitSseBuffer(buffer);
     buffer = rest;
-    for (const block of blocks) {
-      const event = parseSseBlock(block);
-      if (event) onEvent(event);
-    }
+    for (const block of blocks) onBlock(block);
   }
   buffer += decoder.decode();
-  if (buffer.trim()) {
-    const event = parseSseBlock(buffer);
+  if (buffer.trim()) onBlock(buffer);
+}
+
+export async function streamAnswer(request: AskRequest, onEvent: (event: AnswerEvent) => void, signal?: AbortSignal): Promise<void> {
+  const stream = await openEventStream(ANSWER_STREAM_PATH, { body: JSON.stringify(request), json: true, signal, fallback: "Couldn't answer that. Try again." });
+  await readSseBlocks(stream, (block) => {
+    const event = parseSseBlock(block);
     if (event) onEvent(event);
-  }
+  });
 }

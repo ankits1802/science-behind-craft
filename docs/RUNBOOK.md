@@ -27,7 +27,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | `/opt/kalavigyan/slot-8000`, `slot-8001`, `current` | Symlinks used by blue/green. nginx proxies to exactly one port. |
 | `/opt/kalavigyan/.env`, `fetcher.env` | Rendered from Parameter Store by `kv-render-env` (0640 root:kalavigyan) |
 | `kv-api@8000`, `kv-api@8001` | The two API colours (user `kalavigyan`, MemoryMax 3000M, Restart=always) |
-| `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher` |
+| `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher`. `app/worker.py` (the media queue, decision 0018) ships with the media backend; `journalctl -u kv-worker` shows its jobs. |
 | `api-watchdog.timer` | Restarts a running colour after 2 failed `/health` checks a minute apart (`journalctl -t api-watchdog`) |
 | nginx site `kalavigyan` | `:80`. The snippet `kalavigyan-origin-verify.conf` returns 403 without CloudFront's header; loopback is exempt. |
 | `redis-server` | `127.0.0.1:6379`, 256 MB LRU |
@@ -60,9 +60,13 @@ Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME
 | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `BRAVE_SEARCH_API_KEY` | GitHub secrets. The next backend deploy copies them into Parameter Store and the box. |
 | `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` | Create a Cloudflare Turnstile widget for `kalavigyan.vercel.app`. The secret is a GitHub secret and the site key a GitHub variable; each deploy copies both into Parameter Store. Until both exist, production email sign-up is closed and the page offers Google only. |
 | `WEB_PROXY_SECRET` | Re-run `seed_secrets.py` once: it generates the value and writes Parameter Store, the GitHub secret and the Vercel env (Sensitive). It also deletes the retired names `AWS_S3_BUCKET`, `BRAVE_API_KEY`, `NEXT_PUBLIC_APP_URL`, `DATABASE_USE_TRANSACTION_POOLER`, `TWO_FACTOR_KEY_REQUIRED` and `MEDIA_PRESIGNED_READS` from Parameter Store. |
+| `VOICE_LLM_BEARER`, `VOICE_SESSION_HMAC_KEY`, `TRANSCRIPT_ENCRYPTION_KEY` | Re-run `seed_secrets.py` once: it generates all three like the other generated keys and writes Parameter Store and the GitHub secrets; Deploy backend keeps them in sync. Voice stays hidden until `TRANSCRIPT_ENCRYPTION_KEY` and `ELEVENLABS_API_KEY` exist. |
+| `MEDIA_BUNDLE_HMAC_KEY` | Re-run `seed_secrets.py` once: it generates it like the voice keys and writes Parameter Store and the GitHub secret; Deploy backend keeps it in sync. Media stays hidden and `kv-worker` waits until it exists. |
+| `ELEVENLABS_AGENT_ID` | Only for the `AGENT` transport: after the voice agent is provisioned (Voice, below), store the printed agent id as a GitHub secret and deploy. |
 | `CORE_API_KEY` | Rotate it with CORE: a settings error on the laptop printed the start of the old value. The backend now hides input values in settings errors. |
 | `MAIL_FROM_ADDRESS` | Parameter Store, once an SES identity is chosen for KalaVigyan mail |
 | Google OAuth client | Add `https://kalavigyan.vercel.app` to the client's Authorized JavaScript origins |
+| `YAHOO_CLIENT_ID`, `YAHOO_CLIENT_SECRET`, `NEXT_PUBLIC_YAHOO_CLIENT_ID` | Register the Yahoo app and set the three names as in Yahoo sign-in, below. Until then there is no "Continue with Yahoo" button. |
 
 To change a secret: `gh secret set NAME --repo cxacraftecosystem-ui/KalaVigyan`, then run **Deploy backend**. The deploy copies changed GitHub secrets into Parameter Store and re-renders the box `.env`. For config that is not a GitHub secret:
 
@@ -73,7 +77,42 @@ sudo kv-render-env && sudo kv-blue-green restart     # on the box
 
 `infra/scripts/seed_secrets.py` rebuilds the whole set. It keeps existing generated keys, takes the Terraform outputs, and writes Parameter Store, GitHub, Vercel and the box. Run it with a Python that has `boto3` and `cryptography`, passing `--terraform <path to terraform>`. `--copy-from-instance <id>` copies the provider keys from another box's `.env` over an RSA-encrypted SSM channel.
 
-Never rotate `TWO_FACTOR_ENCRYPTION_KEY` or `SECRETS_ENCRYPTION_KEY` by overwriting them: stored data is encrypted with them.
+Never rotate `TWO_FACTOR_ENCRYPTION_KEY`, `SECRETS_ENCRYPTION_KEY` or `TRANSCRIPT_ENCRYPTION_KEY` by overwriting them: stored data is encrypted with them.
+
+## Yahoo sign-in
+
+Decision 0026. The backend redeems Yahoo's code with the client secret, so the secret never reaches a browser.
+
+1. Register the app at `https://developer.yahoo.com/apps/create/`, signed in with the project's Yahoo account:
+   - Application Name `KalaVigyan`, Homepage URL `https://kalavigyan.vercel.app`.
+   - Redirect URI(s): exactly `https://kalavigyan.vercel.app/login/callback`. The backend accepts only `PUBLIC_WEB_URL` + `/login/callback`, so the two must match; a new web domain needs both changed.
+   - OAuth Client Type: Confidential Client.
+   - API Permissions: OpenID Connect Permissions, with Email and Profile ticked. Without Email the ID token carries no verified address and every sign-in is refused.
+   - Create the app and keep the page open: it shows the Client ID (Consumer Key) and Client Secret (Consumer Secret).
+2. Backend first: `gh secret set YAHOO_CLIENT_ID --repo cxacraftecosystem-ui/KalaVigyan` and `gh secret set YAHOO_CLIENT_SECRET --repo cxacraftecosystem-ui/KalaVigyan` (paste each value at the prompt, never on the command line), then run **Deploy backend**. It copies both into Parameter Store and the box `.env`. `GET https://kalavigyan.vercel.app/api/auth/config` then answers `yahooEnabled: true`.
+3. Then the web: add `NEXT_PUBLIC_YAHOO_CLIENT_ID` (the same Client ID, Encrypted, Production and Preview) to the Vercel project, or re-run `seed_secrets.py`, which sets it from Parameter Store once both Yahoo values are there. Redeploy the web app: the value is read at build time. The login page now shows "Continue with Yahoo".
+4. Check: sign in with a Yahoo address that is on the access roster. An address not on the roster becomes a PENDING request, exactly as with Google.
+
+Rotating the secret: create a new secret on the Yahoo app page, `gh secret set YAHOO_CLIENT_SECRET`, deploy. A wrong or retired secret turns every Yahoo sign-in into "Yahoo sign-in didn't work" and the API log shows `oidc: the provider refused the redemption` with `invalid_client`. To switch Yahoo off, delete `NEXT_PUBLIC_YAHOO_CLIENT_ID` in Vercel and redeploy the web, then remove the two backend values from GitHub and `/kalavigyan/env/` and deploy.
+
+Microsoft sign-in is built the same way and stays off: leave `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `MICROSOFT_TENANT` and `NEXT_PUBLIC_MICROSOFT_CLIENT_ID` unset.
+
+## Voice
+
+Decision 0017; contract `docs/contracts/voice.md`.
+
+- Transport: `AppSetting` `voice.transport` is `RELAY` until the ElevenLabs spike passes. To switch,
+  on the box: `INSERT INTO "AppSetting" (key, value) VALUES ('voice.transport', '"AGENT"') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;`
+  (the same for `voice.max_live_sessions`, default 5, and `voice.voice_id`).
+- Agent: `cd /opt/kalavigyan/current/backend && sudo -u kalavigyan bash -c 'set -a; . /opt/kalavigyan/.env; set +a; .venv/bin/python -m app.scripts.provision_voice_agent --dry-run'`
+  prints the body; without `--dry-run` it creates or updates the workspace secret
+  `KALAVIGYAN_VOICE_LLM_BEARER`, the client tools `show_on_map`, `open_stage`, `show_sources`,
+  `offer_image` and the agent `KalaVigyan voice`, and prints the agent id (not a secret). Needs
+  `PUBLIC_API_URL`, `VOICE_LLM_BEARER` and `ELEVENLABS_API_KEY`.
+- Rotating `VOICE_LLM_BEARER` (quarterly): `gh secret set VOICE_LLM_BEARER`, deploy, then run the
+  provisioning script again so the workspace secret matches; calls in progress end with a 401.
+- Upkeep: `app.scripts.voice_upkeep` runs first in the daily **Coverage enrichment** box job; its JSON
+  line reports closed, purged, reconciled and refunded seconds.
 
 ## Deploy
 
@@ -85,7 +124,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Copies changed secrets into `/kalavigyan/env`.
 3. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
 4. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, builds the venv with uv, then `blue_green.sh release <sha>`:
-   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on);
+   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and fill missing craft descriptor vectors (`embed_craft_descriptors`; a failure is a warning too);
    2. start the other colour;
    3. wait for `/health`;
    4. switch nginx;
@@ -97,7 +136,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
 
-Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_knowledge` (fills every missing claim and chunk vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016) and `app.scripts.embed_knowledge` (fills every missing claim and chunk vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
 
 Running the same sha again re-renders the env and restarts the live colour.
 

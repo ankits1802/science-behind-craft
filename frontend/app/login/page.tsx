@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 import { AuthShell, OrDivider } from "@/components/auth/AuthShell";
+import { OidcSignInButtons } from "@/components/auth/OidcSignInButtons";
 import { SignInRefusal } from "@/components/auth/SignInRefusal";
 import { useGoogleNonce } from "@/components/auth/useGoogleNonce";
+import { useOidcSignIn } from "@/components/auth/useOidcSignIn";
 import { useAuth } from "@/components/AuthProvider";
 import { FirstPasswordGate } from "@/components/FirstPasswordGate";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
@@ -64,6 +66,26 @@ export default function LoginPage() {
     },
     [router]
   );
+
+  const oidc = useOidcSignIn({
+    onStart: () => {
+      setDoorPassword("");
+      setError(null);
+      setRefusal(null);
+      setHint(null);
+      signingIn.current = true;
+    },
+    onSignedIn: proceed,
+    onFailure: describeFailure,
+    onMessage: (message) => {
+      setRefusal(null);
+      setHint(null);
+      setError(message);
+    },
+    onSettled: () => {
+      signingIn.current = false;
+    }
+  });
 
   const onGoogleCredential = useCallback(
     async (credential: string) => {
@@ -189,30 +211,38 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <Button type="submit" size="auth" disabled={loading} className="mt-1 w-full font-display text-base font-bold">
+            <Button type="submit" size="auth" disabled={loading || oidc.busy} className="mt-1 w-full font-display text-base font-bold">
               {loading ? "Signing in…" : "Sign in"}
             </Button>
           </form>
 
-          {google.clientId ? (
-            <>
-              <OrDivider />
-              <GoogleSignInButton
-                clientId={google.clientId}
-                nonce={google.nonce}
-                disabled={!google.nonce}
-                onCredential={(credential) => void onGoogleCredential(credential)}
-                onLoadError={() =>
-                  toast({ title: "Couldn't load Google sign-in", description: "Check your connection and reload.", tone: "error", duration: 0 })
-                }
-              />
-              {google.failed ? (
-                <button type="button" onClick={google.renew} className="mt-2 w-full text-center text-xs font-medium text-purple-700 hover:underline dark:text-purple-300">
-                  Retry Google sign-in
-                </button>
-              ) : null}
-            </>
-          ) : null}
+          {google.clientId || oidc.providers.length > 0 ? <OrDivider /> : null}
+
+          <div className="grid gap-2.5">
+            {google.clientId ? (
+              <>
+                <GoogleSignInButton
+                  clientId={google.clientId}
+                  nonce={google.nonce}
+                  disabled={!google.nonce}
+                  onCredential={(credential) => void onGoogleCredential(credential)}
+                  onLoadError={() =>
+                    toast({ title: "Couldn't load Google sign-in", description: "Check your connection and reload.", tone: "error", duration: 0 })
+                  }
+                />
+                {google.failed ? (
+                  <button type="button" onClick={google.renew} className="w-full text-center text-xs font-medium text-purple-700 hover:underline dark:text-purple-300">
+                    Retry Google sign-in
+                  </button>
+                ) : null}
+              </>
+            ) : null}
+            <OidcSignInButtons
+              providers={oidc.providers}
+              disabled={loading || oidc.busy}
+              onStart={(provider) => void oidc.start(provider)}
+            />
+          </div>
 
           <p className="mt-5 text-center text-sm text-ink-500">
             New here?{" "}

@@ -25,7 +25,16 @@ async def test_the_plan_schema_offers_only_registered_values() -> None:
     assert facet["type"]["enum"] == list(CONCEPT_TYPES)
     assert schema["properties"]["queries"]["maxItems"] == 4
     assert schema["properties"]["queries"]["items"]["properties"]["tier"]["enum"] == ["T3", "T4"]
-    assert schema["required"] == ["intent", "needsRegion", "facets", "queries"]
+    assert schema["required"] == [
+        "intent",
+        "needsRegion",
+        "facets",
+        "queries",
+        "nativeQueries",
+        "nativeCraftName",
+        "englishQuestion",
+    ]
+    assert schema["properties"]["nativeQueries"]["maxItems"] == 0
 
 
 async def test_the_question_reaches_the_model_only_as_untrusted_data() -> None:

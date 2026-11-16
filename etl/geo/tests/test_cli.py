@@ -94,6 +94,8 @@ def test_extract_and_combine_offline(tmp_path, monkeypatch, capsys):
     assert summary["boundaries"]["code"] == BOUNDARIES.code
     assert [d["code"] for d in summary["datasets"]] == [SOILGRIDS.code]
     assert summary["layers"][0]["failureCount"] == 0
+    assert summary["layers"][0]["districtsWithoutValues"] == []
+    assert summary["layers"][0]["lostStates"] == []
     assert (out / "district_geology.parquet").exists()
     assert len(summary["csv"]) == 1
     name = summary["csv"][0]
@@ -138,6 +140,39 @@ def test_extract_shard_stem_and_failures(tmp_path, monkeypatch):
     assert cli.main([*argv, "--cache", str(tmp_path)]) == 1
     assert (parts / "bad-shard1of1.parquet").exists()
     assert cli.main([*argv, "--cache", str(tmp_path), "--allow-failures"]) == 0
+    meta = json.loads((parts / "bad-shard1of1.json").read_text(encoding="utf-8"))
+    assert meta["lostStates"] == []
+    assert meta["districtsWithoutValues"] == []
+
+
+def test_extract_fails_a_state_left_without_values_even_with_allow_failures(tmp_path, monkeypatch, capsys):
+    def puducherry_only(districts, options):
+        return fake_layer(districts[districts["stateLgd"] == 34], options)
+
+    monkeypatch.setattr(cli, "LAYERS", {"partial": puducherry_only})
+    parts = tmp_path / "parts"
+    argv = ["extract", "--datasets", "partial", "--states", "31,34", "--parts", str(parts), "--cache", str(tmp_path)]
+    assert cli.main([*argv, "--allow-failures"]) == 1
+    meta = json.loads((parts / "partial.json").read_text(encoding="utf-8"))
+    assert meta["lostStates"] == [31]
+    assert meta["districtsWithoutValues"] == [553]
+    assert "states [31]" in capsys.readouterr().err
+
+
+def test_extract_fails_a_step_lost_for_a_whole_state_even_with_allow_failures(tmp_path, monkeypatch):
+    def whole_state_step(districts, options):
+        result = fake_layer(districts, options)
+        lgds = [int(v) for v in districts["districtLgd"]]
+        result.failures.append({"step": "clay 0-5cm Q0.05", "districtLgds": lgds, "error": "boom"})
+        return result
+
+    monkeypatch.setattr(cli, "LAYERS", {"step": whole_state_step})
+    parts = tmp_path / "parts"
+    argv = ["extract", "--datasets", "step", "--states", "34", "--parts", str(parts), "--cache", str(tmp_path)]
+    assert cli.main([*argv, "--allow-failures"]) == 1
+    meta = json.loads((parts / "step.json").read_text(encoding="utf-8"))
+    assert meta["lostStates"] == [34]
+    assert meta["districtsWithoutValues"] == []
 
 
 def test_extract_with_no_districts_returns_2(tmp_path, monkeypatch):

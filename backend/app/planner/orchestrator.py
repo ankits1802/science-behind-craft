@@ -13,7 +13,7 @@ from .coverage import facet_coverage, stored_knowledge
 from .drafting import draft_plan
 from .failures import FailureLog
 from .live_search import merged_evidence, run_searches
-from .plans import effective_mode, retrieval_plan
+from .plans import effective_mode, retrieval_plan, search_question
 from .policy import DEEP_REFERENCE_RESERVE, LIVE_BUDGETS
 from .reading import DocumentReader, LiveSources, reading_order
 from .references import cited_dois, follow_references
@@ -26,6 +26,7 @@ class PlannedQuestion:
     plan: RetrievalPlan
     coverage: tuple[FacetCoverage, ...]
     degraded: bool
+    search_question: str
 
 
 @dataclass(frozen=True)
@@ -52,7 +53,12 @@ class ResearchPlanner:
             self._retriever, craft_slug=request.craft.slug, mode=mode, facets=draft.facets
         )
         plan = retrieval_plan(request, draft, coverage, mode=mode)
-        return PlannedQuestion(plan=plan, coverage=coverage, degraded=draft.degraded)
+        return PlannedQuestion(
+            plan=plan,
+            coverage=coverage,
+            degraded=draft.degraded,
+            search_question=search_question(request, draft),
+        )
 
     async def research(
         self, request: PlanRequest, *, progress: ResearchProgress | None = None
@@ -62,7 +68,7 @@ class ResearchPlanner:
         plan = planned.plan
         await report("SEARCHING_STORED", len(plan.facets))
         stored = await stored_knowledge(
-            self._retriever, craft_slug=plan.craft.slug, mode=plan.mode, question=request.question
+            self._retriever, craft_slug=plan.craft.slug, mode=plan.mode, question=planned.search_question
         )
         log = FailureLog()
         findings = await self._live(plan, log, report) if plan.queries else LiveFindings()

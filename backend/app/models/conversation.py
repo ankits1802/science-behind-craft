@@ -5,6 +5,7 @@ from typing import Any
 
 from sqlalchemy import (
     Boolean,
+    CheckConstraint,
     DateTime,
     ForeignKey,
     Index,
@@ -184,7 +185,10 @@ class VoiceSession(Base):
         UUID(as_uuid=True), ForeignKey("Conversation.id", ondelete="SET NULL")
     )
     mode: Mapped[str] = mapped_column(e.AnswerMode, nullable=False, server_default="HYBRID")
+    transport: Mapped[str] = mapped_column(String(16), nullable=False, server_default="RELAY")
     startedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    expiresAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    maxDurationSeconds: Mapped[int] = mapped_column(Integer, nullable=False, server_default=sql_text("600"))
     endedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     turnCount: Mapped[int] = mapped_column(Integer, nullable=False, server_default=sql_text("0"))
     reservedSeconds: Mapped[int] = mapped_column(Integer, nullable=False, server_default=sql_text("0"))
@@ -203,6 +207,7 @@ class VoiceSession(Base):
             unique=True,
             postgresql_where=sql_text('"endedAt" IS NULL'),
         ),
+        CheckConstraint("transport IN ('AGENT', 'RELAY')", name="transport"),
     )
 
 
@@ -238,6 +243,9 @@ class MediaJob(Base):
     bundle: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     providerRef: Mapped[str | None] = mapped_column(String(300))
     error: Mapped[str | None] = mapped_column(Text)
+    assetId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("MediaAsset.id", ondelete="SET NULL", use_alter=True)
+    )
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
@@ -245,6 +253,7 @@ class MediaJob(Base):
         Index(None, "status", "kind"),
         Index(None, "requestedById", "createdAt"),
         Index(None, "promptHash"),
+        Index(None, "assetId"),
     )
 
 
@@ -262,6 +271,7 @@ class MediaAsset(Base):
     height: Mapped[int | None] = mapped_column(Integer)
     durationS: Mapped[Decimal | None] = mapped_column(Numeric(8, 3))
     label: Mapped[str | None] = mapped_column(Text)
+    model: Mapped[str | None] = mapped_column(String(120))
     altText: Mapped[str | None] = mapped_column(Text)
     visibility: Mapped[str] = mapped_column(e.MediaVisibility, nullable=False, server_default="PRIVATE")
     approvedById: Mapped[uuid.UUID | None] = mapped_column(

@@ -15,19 +15,6 @@ UNPLACED = (10**6, 10**6, "")
 REFERENCE_SKIP = frozenset({"Craft", "CraftAlias"})
 
 
-def etag_matches(if_none_match: str | None, etag: str) -> bool:
-    def bare(tag: str) -> str:
-        tag = tag.strip()
-        return tag[2:] if tag[:2].upper() == "W/" else tag
-
-    tags = [bare(tag) for tag in (if_none_match or "").split(",") if tag.strip()]
-    return "*" in tags or bare(etag) in tags
-
-
-def quoted_etag(version: str) -> str:
-    return f'"{version}"'
-
-
 def _text(value: Any) -> str | None:
     return None if value is None else str(value)
 

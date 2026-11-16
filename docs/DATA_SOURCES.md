@@ -78,6 +78,23 @@ attribution; only short quoted passages are stored, with a link back.
 | `pubchem` | PubChem PUG REST and PUG View, National Library of Medicine | Compound properties: NCBI places no restrictions (https://www.ncbi.nlm.nih.gov/home/about/policies/). GHS hazards keep the reporting source's terms; for ECHA, non-commercial reuse with "Source: European Chemicals Agency, http://echa.europa.eu/" (https://echa.europa.eu/web/guest/legal-notice) |
 | `wikimedia_commons` | Wikimedia Commons file metadata | Each file's own licence (short name and URL) and author, attributed "author, licence, via Wikimedia Commons" |
 
+## Seeded reference passages (science engine)
+
+The physical constants behind the stage envelopes (decision 0015) are claims in
+`backend/app/data/science_seed.json`, each quoting one pinned Wikipedia revision (retrieved
+2026-11-16; CC BY-SA 4.0, attributed "Wikipedia contributors" with title and revision).
+
+| Constant | Article and revision | Value cited |
+|---|---|---|
+| Water boils at one atmosphere | Water, 1385775442 (Phase transitions) | 100 °C |
+| Quartz α to β inversion | Quartz, 1383182792 (Crystal habit and structure) | 573 °C |
+| Kaolinite dehydroxylation begins | Kaolinite, 1383311141 (Metakaolin) | 550–600 °C |
+| Beeswax melts | Beeswax, 1382937264 (Physical characteristics) | 62 to 64 °C |
+| Brass melts | Brass, 1382181158 (Properties) | 900 to 940 °C |
+
+Seeded compounds are matched to PubChem records by `app/scripts/link_compounds` through the
+`pubchem` adapter (terms above); each linked compound cites its PubChem record.
+
 ## Live web sources
 
 Found through `backend/app/sources/web/` and read by the fetcher (decision 0007). A web page
@@ -129,8 +146,8 @@ Each row in `district_env.parquet` is one `(districtLgd, datasetCode, variable, 
 
 Method notes carried in each row's `method`:
 
-- SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers.
-- WorldCover is read from the 3 degree COG tiles. The workflow can read an overview (`--worldcover-factor`, default 4, so about 40 m, nearest neighbour); the effective resolution is written to each row's `resolution`.
+- SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers. SoilGrids masks built-up land, water and bare rock; a district masked throughout gets no SoilGrids rows and is listed under `districtsWithoutValues` in the summary (Mumbai, 482: 0 of 2,720 cells unmasked on 2026-11-17).
+- WorldCover is read from the 3 degree COG tiles. The workflow can read an overview (`--worldcover-factor`, default 4, so about 40 m, nearest neighbour); the effective resolution is written to each row's `resolution`, loaded into `DistrictEnvValue.resolution` and sent with every region value and layer (decision 0016).
 - Hansen forest is `treecover2000 >= 30%`; loss is counted only inside that 2000 forest, by `lossyear`.
 - CHIRPS uses the last `--chirps-years` (default 10) complete years available; `monsoon_share_jjas` is June to September over the annual normal.
 - Slope is computed from the DEM with central differences, using metres per degree at each row's latitude.

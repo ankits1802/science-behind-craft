@@ -133,5 +133,17 @@ def ask_attempt(user_id: str) -> tuple[bool, float]:
     return _windows.attempt(f"ask:{user_id}", 30, 600)
 
 
+def voice_session_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"voice:{user_id}", 10, 600)
+
+
+def voice_turn_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"voice-turn:{user_id}", 40, 600)
+
+
+def voice_speech_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"voice-speech:{user_id}", 60, 600)
+
+
 def reset_all() -> None:
     _windows.clear()

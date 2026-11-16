@@ -8,6 +8,7 @@ import { TwoStepCodeEntry, type TwoStepCodeEntryHandle, type TwoStepCodeKind } f
 import { OtpCodeInput, type OtpCodeInputHandle } from "@/components/ui/OtpCodeInput";
 import { Toggle } from "@/components/ui/Toggle";
 import { isCompleteCode } from "@/components/ui/otpCode";
+import { saveBlob } from "@/lib/download";
 import { isUnreachable } from "@/lib/failureTriage";
 import {
   beginTwoFactorSetup,
@@ -132,12 +133,7 @@ export function TwoStepVerificationCard() {
 
   function download(codes: string[]) {
     const blob = new Blob([recoveryCodesFileText(codes, user?.email ?? "")], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = exportFilename("Account", "Recovery-Codes", "txt");
-    link.click();
-    URL.revokeObjectURL(url);
+    saveBlob(blob, exportFilename("Account", "Recovery-Codes", "txt"));
   }
 
   async function startSetup() {

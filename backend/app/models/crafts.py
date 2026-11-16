@@ -298,6 +298,7 @@ class EnvDataset(Base):
     retrievedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     sha256: Mapped[str | None] = mapped_column(String(64))
     citation: Mapped[str | None] = mapped_column(Text)
+    url: Mapped[str | None] = mapped_column(Text)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
@@ -319,6 +320,7 @@ class DistrictEnvValue(Base):
     valueText: Mapped[str | None] = mapped_column(Text)
     unit: Mapped[str | None] = mapped_column(String(40))
     method: Mapped[str | None] = mapped_column(Text)
+    resolution: Mapped[str | None] = mapped_column(String(120))
     pixelCount: Mapped[int | None] = mapped_column(Integer)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
@@ -326,6 +328,7 @@ class DistrictEnvValue(Base):
     __table_args__ = (
         UniqueConstraint("districtLgd", "datasetId", "variable", "depthOrPeriod", "stat"),
         Index(None, "datasetId"),
+        Index(None, "datasetId", "variable", "depthOrPeriod", "stat"),
     )
 
 
@@ -340,8 +343,10 @@ class DistrictGeology(Base):
         UUID(as_uuid=True), ForeignKey("EnvDataset.id", ondelete="CASCADE"), nullable=False
     )
     lithology: Mapped[str] = mapped_column(String(200), nullable=False)
+    lithologyName: Mapped[str | None] = mapped_column(String(300))
     areaShare: Mapped[Decimal | None] = mapped_column(Numeric(8, 6))
     mineralOccurrences: Mapped[list[Any] | None] = mapped_column(JSONB)
+    method: Mapped[str | None] = mapped_column(Text)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 

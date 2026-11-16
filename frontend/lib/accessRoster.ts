@@ -1,7 +1,7 @@
 import { apiFetch, buildQuery } from "@/lib/api";
 import { formatDate, formatDateTime } from "@/lib/format";
-import { roleLabel } from "@/lib/permissions";
-import type { PageResult, UserRole } from "@/lib/types";
+import { canManageAccessEntry, canSuspendUsers, roleLabel } from "@/lib/permissions";
+import type { PageResult, User, UserRole } from "@/lib/types";
 
 export type AccessStatus = "ACTIVE" | "PENDING" | "REJECTED" | "SUSPENDED";
 
@@ -99,6 +99,24 @@ export async function updateAccessEntry(
 
 export async function suspendAccessEntry(id: string): Promise<AccessRosterEntry> {
   return apiFetch<AccessRosterEntry>(`/access/roster/${id}`, { method: "DELETE" });
+}
+
+export type AccessEntryOffers = {
+  update: boolean;
+  suspend: boolean;
+  admit: boolean;
+  refuse: boolean;
+};
+
+export function accessEntryOffers(viewer: User | null | undefined, entry: AccessRosterEntry): AccessEntryOffers {
+  if (!canManageAccessEntry(viewer, entry.admitRole)) return { update: false, suspend: false, admit: false, refuse: false };
+  const pending = entry.status === "PENDING";
+  return {
+    update: true,
+    suspend: entry.status === "ACTIVE",
+    admit: pending || (entry.status !== "ACTIVE" && canSuspendUsers(viewer)),
+    refuse: pending
+  };
 }
 
 export type AccessRefusalKind =

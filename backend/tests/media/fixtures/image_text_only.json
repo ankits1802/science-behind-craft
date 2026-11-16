@@ -1,0 +1,20 @@
+{
+  "id": "v1_ChdpbWFnZS1pbnRlcmFjdGlvbi0wMDAy",
+  "status": "completed",
+  "model": "gemini-3.1-flash-image",
+  "steps": [
+    {
+      "type": "model_output",
+      "content": [
+        {
+          "type": "text",
+          "text": "I can't create that image."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "total_input_tokens": 312,
+    "total_output_tokens": 9
+  }
+}

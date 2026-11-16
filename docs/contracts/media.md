@@ -1,0 +1,192 @@
+# Media contract: generated stage images and videos (lanes: media backend 0018, media UI 0021)
+
+How a learner asks for an illustration of a process stage, what the server builds it from, how
+it is queued, billed, labelled, named and served. The models are `backend/app/schemas/media.py`;
+the client's types and shapes are `frontend/lib/mediaContract.ts`; the golden answers are
+`shared/media.job.golden.json` and `shared/media.options.golden.json`. Change them together with
+`backend/tests/contracts/test_media_contract.py` and `frontend/e2e/contracts-unit.spec.ts`. PLAN
+11 is the specification (PLAN 0 overrides it). Design choices: decisions 0014, 0018 (backend)
+and 0021 (client).
+
+Last reviewed: 2026-11-16.
+
+## Routes
+
+| Method | Path | Who | Answer |
+|---|---|---|---|
+| GET | `/api/media/options?craftSlug=<slug>` | signed in | `MediaOptions`: the kinds the asker may still make today and the stages that can be illustrated |
+| POST | `/api/media/jobs` | `GENERATE_IMAGE` / `GENERATE_VIDEO` | body `MediaJobRequest`; 202 `MediaJobView` for a new job, 200 for a repeat of the same key or a shared asset |
+| GET | `/api/media/jobs/{id}` | the requester | `MediaJobView`; 404 for anyone else |
+| POST | `/api/media/assets/{id}/sharing` | `SHARE_MEDIA` | body `{action: SHARE\|UNSHARE}`; `MediaAssetView` (governance lane; not served yet, see Sharing) |
+
+### Options
+
+`MediaOptions {craft, kinds: [{kind, remainingToday|null}], stages: [{stageId, kinds}]}`. A kind
+is listed only when the role holds its capability and has units left today (`null` means no
+daily limit), and media can be made now (the bundle key and bucket are set, a route has a key, and
+the budget allows one more); a stage only when its claim set (below) has at least `MEDIA_MIN_CLAIMS` (2) claims,
+and only with listed kinds. The client draws an Image or Video button exactly for what is listed
+and nothing else: an absent button, never a disabled one (PLAN 11).
+
+### Request
+
+`MediaJobRequest {kind: IMAGE|VIDEO, stageId, idempotencyKey, styleHint?}`.
+
+- Claim ids are never accepted from the client (the model refuses unknown fields).
+- `idempotencyKey`: 16-160 characters of `[A-Za-z0-9._:-]` (`IDEMPOTENCY_KEY_PATTERN`), made by
+  the client per click. The same key with the same body answers the existing job; with another
+  body 409.
+- `styleHint`: at most 120 characters of letters, digits, spaces, commas, full stops,
+  apostrophes and hyphens, with none of `STYLE_HINT_BANNED_WORDS`: the group words below, writing
+  (text, letters, captions, numbers, logos, script), people (faces, persons, men, women, children,
+  portraits, dress, skin), maps, borders and flags, sacred and ritual words (temples, deities,
+  gods, idols, worship) and words that try to override the prompt (ignore, rules, instructions,
+  prompt, system). A word matches in the singular or plural (`castes`, `deities`, `rules`);
+  else 422 with the sentence from `style_hint_problem`.
+
+| Refusal | Status |
+|---|---|
+| missing capability | 403 with a sentence |
+| unknown stage, or a stage of a craft the asker cannot see | 404 |
+| fewer than `MEDIA_MIN_CLAIMS` claims in the claim set | 409 with a sentence |
+| no units left today | 429 with `Retry-After` until midnight IST |
+| `MAX_ACTIVE_JOBS_PER_USER` (3) jobs queued or running | 429 with `Retry-After: 30` |
+| media sub-cap or monthly ceiling reached (`providers/budget`) | 503 with the router's sentence |
+
+## The claim set (server-derived)
+
+From `stageId` alone: claims whose subject is the stage's concept or one of its
+`StageMaterial` claims, visible to the asker's ACL, sensitivity `OPEN`, cited by no `RESTRICTED`
+source, status not `DRAFT`, `REJECTED` or `RETRACTED`, and either level `VERIFIED` or `REVIEWED`,
+or level `PROVISIONAL` with at least one citation whose `quoteCheck` is `PASS`. "Visible to the
+asker's ACL" means a citation without a chunk or with a `PUBLIC` chunk, and a `RESEARCHER` chunk
+for `READ_RESEARCHER_QUOTES` holders; a `RESTRICTED` chunk counts as a restricted source. A claim
+using a group word (community, caste, jati, samaj, tribe, tribal, clan, gotra, biradari, adivasi) is left
+out (PLAN 13a, decision 0018); the list is `schemas/media.NAMED_GROUP_WORDS`, matched in the
+singular or plural (`names_a_group`, decision 0022). Hypotheses never enter a prompt. At most `MEDIA_MAX_CLAIMS` (8), strongest level first, then the stage's own claims,
+then id. The ids are stored on the job (`MediaJob.claimIds`) and returned as `claimIds`.
+
+## Prompt
+
+- Template `MEDIA_PROMPT_VERSION` (`media-prompt/v2`), kept in the media package and versioned on
+  any change: a fixed instruction to draw the craft stage as a neutral process illustration, the
+  stage name, the filtered style hint framed as the requester's description and not an
+  instruction, the claim texts as numbered facts, and the bans last, so nothing the requester
+  wrote is the model's final instruction (decision 0022).
+- Fixed bans (`MEDIA_PROMPT_BANS`): no text, letters or numbers; no logos or brand marks; no faces
+  of real people; no maps, borders or flags; no ceremonial or sacred objects; no depiction of a
+  community or caste as a group; no stereotyped dress or skin tone. Community and caste names never
+  enter a prompt (PLAN 13a).
+- References: only a generated image of the same stage (the video's first frame) in v1; no
+  archive photos.
+- `promptHash` is the SHA-256 of the canonical JSON (sorted keys, no spaces) of the template
+  version, kind, the first route's model, the claim ids with their texts and the style hint. A
+  `CRAFT_SHARED` asset whose producing job has the same hash is returned at once: a new job with
+  `cached` true, `status` `SUCCEEDED`, `attempts` 0, no unit and no cost (`MediaJob.assetId` names
+  the shared asset). If the asset is unshared later, that job answers 404.
+
+## Models, queues and limits
+
+| | Image | Video |
+|---|---|---|
+| Model (`RoutePolicy` `IMAGE` / `VIDEO`) | `gemini-3.1-flash-image` at 1K, drafts `gemini-nano-banana-2.1` | `gemini-omni-1.2-flash` via `POST /v1beta/interactions`, `background=true`, polled |
+| Output (`MEDIA_OUTPUT`) | `image/png` | `video/mp4`, 8 s, 720p, 16:9, no audio (any track stripped before storage) |
+| Queue concurrency (`QUEUE_CONCURRENCY`) | 4 | 2 |
+
+Each attempt has `JOB_TIMEOUT_SECONDS` (240); a failed attempt is retried at most `JOB_RETRIES`
+(2) times, 15 s × attempts later; a refusal (BLOCKED), a bad request, a budget refusal or a
+missing route is final. Images are one synchronous interaction (`store: false`); video runs with
+`background: true`, is polled every 5 s and deleted once read. A polled interaction carries the
+clip inline (a `uri` block is downloaded from the Files API host only). Omni documents no
+silent-output option, so any audio track is removed from the MP4 before storage. Jobs run in
+`kv-worker` (`python -m app.worker`) from the `Job` queue (`media.image`, `media.video`;
+`SELECT … FOR UPDATE SKIP LOCKED` under a per-queue lock that counts running rows); a `RUNNING`
+row older than 6 minutes is handed back as a spent attempt. `MediaJob.bundle` holds tool
+(`media.generate/v1`), args (kind, stage, claim ids, prompt hash, the prompt's SHA-256, model,
+hint), requester (user and role), target (job and stage) and expiry (24 h) with a base64url
+HMAC-SHA256 under `MEDIA_BUNDLE_HMAC_KEY`; the worker refuses a missing, forged, changed or
+expired bundle before any model call, and refunds the unit. Unverified provider behaviour is
+listed in decision 0018.
+
+## Quotas, spend and refunds
+
+- Units per day by role (`core/roles.DAILY_ALLOWANCES`, PLAN 12): images student 5, researcher
+  30, professor 50; videos 0, 5, 10; master admin within the ceiling.
+- One unit is reserved when the job is created (`QuotaLedger` key `media:<jobId>`); dollars are
+  reserved and settled through `providers/router.reserve` and `settle`, so the media sub-cap
+  (`AppSetting`, $150 a month) and the monthly ceiling apply; `billedTokens` comes from the usage
+  metadata.
+- A job that ends `FAILED` (after its retries) or `BLOCKED` (the provider refused the content) is
+  refunded: one `media-refund:<jobId>` row returns the unit and the reservation is released.
+  `refunded` is true exactly then.
+
+## Job view
+
+`MediaJobView {id, kind, status, craft, stage {id, ordinal, name}, claimIds, cached, attempts,
+refunded, pollAfterSeconds, createdAt, updatedAt, asset|null, failure|null}`.
+
+| Status | `asset` | `failure` | `pollAfterSeconds` |
+|---|---|---|---|
+| `QUEUED`, `RUNNING` | null | null | 3 (`POLL_SECONDS`): the client polls with a ProgressBar |
+| `SUCCEEDED` | the asset | null | null |
+| `FAILED`, `BLOCKED` | null | `{reason, message}` with `reason` the status | null |
+
+`MediaAssetView {id, mime, width, height, durationSeconds|null, url, urlExpiresAt, fileName,
+label {text, model, generatedOn}, altText, visibility}`.
+
+- `label.text` is always `AI illustration` (`ASSET_LABEL`), with the id of the model that made
+  the asset (`MediaAsset.model`) and the IST date it was stored.
+  Every asset is drawn with its label and never in the evidence column.
+- `altText` is written from the claim texts the prompt used.
+- `visibility` `PRIVATE` until shared. Sharing needs a professor (`SHARE_MEDIA`); an asset that
+  depicts a named cluster (`depictsNamedCluster`) needs a second professor's sign-off. The
+  sharing route belongs to the governance lane.
+
+## Sharing (client side fixed by lane 0021; producer: the governance lane)
+
+- `MediaAssetView.sharing` is optional and sent only to a caller holding `SHARE_MEDIA`, once the
+  route below exists: `{actions: ("SHARE"|"UNSHARE")[], awaitingSecondProfessor: bool}`. The
+  client draws a sharing control only when it is present, for a professor or above, and
+  only for a listed action; absent means no control.
+- Rules (the client refuses a body that breaks them): `SHARE` only for a `PRIVATE` asset with
+  `awaitingSecondProfessor` false; `UNSHARE` only for a `CRAFT_SHARED` asset or one awaiting a
+  second professor; a `CRAFT_SHARED` asset awaits nobody; each action once.
+- `POST /api/media/assets/{id}/sharing` body `{action}` answers the updated `MediaAssetView`
+  (fresh presigned URL). `SHARE` by a first professor of an asset with `depictsNamedCluster`
+  leaves it `PRIVATE` with `awaitingSecondProfessor` true; by a second professor, or for any other
+  asset, it becomes `CRAFT_SHARED`. `UNSHARE` returns it to `PRIVATE` and withdraws a pending
+  sign-off. 403 without `SHARE_MEDIA`, 404 for an asset the caller cannot see, 409 with a
+  sentence for an action not listed. The second professor reaches the asset through the
+  governance lane's queue, since a job is visible to its requester only.
+
+## Naming and storage (PLAN 14.3, the naming skill)
+
+- S3 key `media/<requesterUserId>/<uuid32hex>/<fileName>` (`MEDIA_S3_KEY_PATTERN`), private
+  bucket `S3_BUCKET`, SSE-S3, written by the worker with the instance role.
+- `fileName` (`MEDIA_FILE_NAME_PATTERN`, at most 150 characters):
+  `KalaVigyan_Generated-Image_<YYYY-MM-DD>_<HHMM>_<Place>_<Craft>_<Subject>_Image_Step-<NN>.png`
+  (`Generated-Video` … `_Video_Step-<NN>.mp4`): IST generation time; Place `Locality-District`
+  from the craft's location, else the state; Craft the craft name in Title-Case words; Subject the
+  stage name (at most 40 characters); `NN` the stage ordinal. Built by the naming helper
+  (`services/naming.py`, golden rows in `shared/naming-golden.json`), never inline.
+- `url` is a presigned GET valid `PRESIGNED_GET_SECONDS` (900 s), with
+  `ResponseContentDisposition` `inline; filename="<fileName>"; filename*=UTF-8''<fileName>`;
+  `urlExpiresAt` says when; the client asks for the job again for a fresh URL. Presigned URLs use
+  the regional virtual-hosted host `https://<S3_BUCKET>.s3.<region>.amazonaws.com` (today
+  `https://kalavigyan-media-626159998512.s3.ap-south-1.amazonaws.com`); the web CSP names exactly
+  that host in `connect-src`, `img-src` and `media-src` (`frontend/next.config.ts`, checked against
+  `infra/terraform/variables.tf`), so a URL on another host is blocked.
+
+## Client (lane 0021, decision 0021)
+
+- The craft page holds one store (`frontend/lib/craftMedia.ts`) for the options and one slot per
+  stage and kind; Image and Video are drawn exactly for `offeredKinds(options, stageId)` and show
+  the units left. Options are re-read after a job settles and after a refused press.
+- One idempotency key per press (`media:<uuid>`); a press without an answer (network, 500, 502,
+  504) is sent again with the same key; a refusal shows the server's sentence.
+- An open job is polled after its `pollAfterSeconds`; two missed polls are retried, the third
+  asks to try again; polling stops after 15 minutes until the reader checks again.
+- The figure is drawn after the stage's evidence with `label.text`, the model and the generation
+  day, and `altText`; downloads fetch the asset and save it as `fileName`; a URL with a minute or
+  less left is renewed first. Job ids are kept per craft in session storage so a reload shows
+  the job again.

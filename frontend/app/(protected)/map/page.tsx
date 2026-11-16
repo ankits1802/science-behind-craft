@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { MapPinned, RotateCw } from "lucide-react";
+import { Suspense, useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { MapPinned } from "lucide-react";
 
-import { IndiaMapStage } from "@/components/map/IndiaMapStage";
+import { failureMessage, useRemote } from "@/components/hooks/useRemote";
 import type { MapPoint } from "@/components/map/layout";
+import { LayerPicker } from "@/components/map/LayerPicker";
+import { MapLayerView } from "@/components/map/MapLayerView";
 import { PageHeader } from "@/components/PageHeader";
+import { LoadingPanel, RetryPanel } from "@/components/RemotePanels";
 import { fetchCraftMapPoints } from "@/lib/craftProfile";
+import { chosenLayerId, fetchMapLayers, LAYER_PARAM } from "@/lib/mapLayers";
 import type { CraftMapPoint } from "@/lib/types";
 
 function caption(point: CraftMapPoint): string | null {
@@ -16,44 +21,52 @@ function caption(point: CraftMapPoint): string | null {
   return more > 0 ? `${names.join(", ")} and ${more} more` : names.join(", ");
 }
 
+function mapPoint(point: CraftMapPoint): MapPoint {
+  return {
+    key: point.key,
+    name: point.name,
+    latitude: point.latitude,
+    longitude: point.longitude,
+    total: point.total,
+    caption: caption(point),
+    href: point.crafts.length === 1 ? `/crafts/${encodeURIComponent(point.crafts[0].slug)}` : `/crafts?q=${encodeURIComponent(point.name)}`
+  };
+}
+
 export default function MapPage() {
-  const [points, setPoints] = useState<CraftMapPoint[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [round, setRound] = useState(0);
+  return (
+    <Suspense fallback={null}>
+      <MapScreen />
+    </Suspense>
+  );
+}
 
-  useEffect(() => {
-    let cancelled = false;
-    setError(null);
-    fetchCraftMapPoints()
-      .then((next) => {
-        if (!cancelled) setPoints(next);
-      })
-      .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Couldn't load the map.");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [round]);
+function MapScreen() {
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const places = useRemote(fetchCraftMapPoints);
+  const layers = useRemote(fetchMapLayers);
+  const layerId = chosenLayerId(layers.data, params.get(LAYER_PARAM));
+  const points = places.data;
 
-  const mapPoints: MapPoint[] = useMemo(
+  const mapPoints = useMemo(
     () =>
       (points ?? [])
         .slice()
         .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name))
-        .map((point) => ({
-          key: point.key,
-          name: point.name,
-          latitude: point.latitude,
-          longitude: point.longitude,
-          total: point.total,
-          caption: caption(point),
-          href: point.crafts.length === 1 ? `/crafts/${encodeURIComponent(point.crafts[0].slug)}` : `/crafts?q=${encodeURIComponent(point.name)}`
-        })),
+        .map(mapPoint),
     [points]
   );
-
   const crafts = useMemo(() => new Set((points ?? []).flatMap((point) => point.crafts.map((craft) => craft.slug))).size, [points]);
+
+  const chooseLayer = (id: string | null) => {
+    const search = new URLSearchParams(params.toString());
+    if (id) search.set(LAYER_PARAM, id);
+    else search.delete(LAYER_PARAM);
+    const query = search.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
 
   return (
     <>
@@ -63,19 +76,14 @@ export default function MapPage() {
         icon={<MapPinned className="h-5 w-5" aria-hidden />}
         back={false}
       />
-      {error ? (
-        <section role="alert" className="panel grid justify-items-center gap-3 p-6 text-center">
-          <p className="text-sm text-ink-700">{error}</p>
-          <button type="button" className="field-button" onClick={() => setRound((value) => value + 1)}>
-            <RotateCw className="h-4 w-4" aria-hidden />
-            Try again
-          </button>
-        </section>
+      {places.failure ? (
+        <RetryPanel message={failureMessage(places.failure, "Couldn't load the map.")} onRetry={places.retry} />
       ) : points === null ? (
-        <section className="panel p-6 text-sm text-ink-500">Loading…</section>
+        <LoadingPanel />
       ) : (
         <section className="panel p-4 md:p-6">
-          <IndiaMapStage points={mapPoints} listLabel="Places" />
+          {layers.data && layers.data.layers.length > 0 ? <LayerPicker list={layers.data} value={layerId} onChange={chooseLayer} /> : null}
+          <MapLayerView points={mapPoints} layerId={layerId} boundary={layers.data?.boundary ?? null} />
         </section>
       )}
     </>

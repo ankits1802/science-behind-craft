@@ -18,8 +18,16 @@ from app.research.crafts import CraftQuery, CraftRef, CraftResolution
 from app.research.evidence_pack import EvidencePack
 from app.research.planning import PlanRequest
 from app.research.stream import Emit, ResearchProgress, StatusStep, match_event
+from app.research.vocabulary import ANSWER_LANGUAGE_SPECS, CANONICAL_LANGUAGE
 
 from .answer_events import CitedClaims, StreamEvent, composed_answer_events, stored_answer_events
+from .answer_translation import (
+    AnswerTranslation,
+    english_question,
+    needs_english_rendering,
+    translated_composed_events,
+    translated_stored_events,
+)
 
 __all__ = [
     "NOT_FOUND_DETAIL",
@@ -75,9 +83,10 @@ class AnswerPipeline:
     research: Callable[[PlanRequest, ResearchProgress], Awaitable[EvidencePack]]
     compose: Callable[[ComposeRequest], Awaitable[ComposedAnswer]]
     store: AnswerStore
+    translation: AnswerTranslation
 
 
-def status_message(step: StatusStep, count: int = 0, craft: str = "") -> str:
+def status_message(step: StatusStep, count: int = 0, craft: str = "", *, language: str = "") -> str:
     messages = {
         "RESOLVING": "Finding the craft",
         "PLANNING": f"Planning the research on {craft}",
@@ -86,6 +95,7 @@ def status_message(step: StatusStep, count: int = 0, craft: str = "") -> str:
         "READING": f"Reading the best of {_counted(count, 'source', 'sources')} found",
         "COMPOSING": f"Writing a cited answer from {_counted(count, 'passage', 'passages')}",
         "WRITING_BACK": f"Saving {_counted(count, 'source', 'sources')} for the next question",
+        "TRANSLATING": f"Translating the answer into {language}",
     }
     return messages[step]
 
@@ -109,7 +119,7 @@ async def _answer(ask: AnswerAsk, pipeline: AnswerPipeline, emit: Emit) -> uuid.
     if craft is None:
         return None
     if ask.mode == "VERIFIED":
-        await _stored_answer(ask, craft, pipeline.store, emit)
+        await _stored_answer(ask, craft, pipeline, emit)
         return None
     return await _researched_answer(ask, craft, pipeline, emit)
 
@@ -133,10 +143,16 @@ async def _resolved_craft(ask: AnswerAsk, pipeline: AnswerPipeline, emit: Emit) 
     return None
 
 
-async def _stored_answer(ask: AnswerAsk, craft: CraftRef, store: AnswerStore, emit: Emit) -> None:
+async def _stored_answer(ask: AnswerAsk, craft: CraftRef, pipeline: AnswerPipeline, emit: Emit) -> None:
     await _status(emit, "SEARCHING_STORED")
-    cited = await store.stored_claims(craft.slug, ask.question, ask.mode)
+    question = await english_question(ask.question, pipeline.translation)
+    cited = await pipeline.store.stored_claims(craft.slug, question, ask.mode)
     events = stored_answer_events(craft.name, cited)
+    if events and _language(ask) != CANONICAL_LANGUAGE:
+        await _translating(emit, ask)
+        events = await translated_stored_events(
+            events, language=_language(ask), translation=pipeline.translation, claim_texts=_texts(cited)
+        )
     if not events:
         summary = ResearchSummary(
             craft=craft,
@@ -160,8 +176,9 @@ async def _researched_answer(
         question=ask.question,
         mode=ask.mode,
         craft=craft,
-        language=ask.language or "en",
+        language=_language(ask),
         withheld_terms=ask.withheld_terms,
+        english_question=None if needs_english_rendering(ask.question) else ask.question,
     )
 
     async def progress(step: StatusStep, count: int) -> None:
@@ -179,6 +196,11 @@ async def _researched_answer(
     if composed.not_enough_evidence is None:
         cited = await pipeline.store.cited(claim for claims in kept.claims_of for claim in claims)
         events = composed_answer_events(composed, kept.claims_of, cited)
+        if events and _language(ask) != CANONICAL_LANGUAGE:
+            await _translating(emit, ask)
+            events = await translated_composed_events(
+                events, language=_language(ask), translation=pipeline.translation, claim_texts=_texts(cited)
+            )
     if not events:
         summary = composed.not_enough_evidence or research_summary(pack)
         await emit("not_enough_evidence", {"message": not_enough_evidence_message(summary)})
@@ -193,6 +215,19 @@ async def _emit_all(emit: Emit, events: list[StreamEvent]) -> None:
 
 async def _status(emit: Emit, step: StatusStep, count: int = 0, *, craft: str = "") -> None:
     await emit("status", {"step": step, "message": status_message(step, count, craft)})
+
+
+async def _translating(emit: Emit, ask: AnswerAsk) -> None:
+    label = ANSWER_LANGUAGE_SPECS[_language(ask)].label
+    await emit("status", {"step": "TRANSLATING", "message": status_message("TRANSLATING", language=label)})
+
+
+def _language(ask: AnswerAsk) -> str:
+    return ask.language or CANONICAL_LANGUAGE
+
+
+def _texts(cited: CitedClaims) -> dict[uuid.UUID, str]:
+    return {claim_id: view.text for claim_id, view in cited.views.items()}
 
 
 def _user_message(error: AppError, otherwise: str) -> str:

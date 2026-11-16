@@ -18,7 +18,7 @@ from app.core.security import (
     verify_password,
     verify_password_or_decoy,
 )
-from app.services import google_auth, two_factor
+from app.services import auth_nonces, google_auth, two_factor
 
 
 def test_password_round_trip() -> None:
@@ -187,4 +187,4 @@ def test_google_claims_checks() -> None:
     missing = dict(base)
     del missing["nonce"]
     assert google_auth.check_claims(missing, "cid", now) == "nonce_missing"
-    assert google_auth.nonce_hash("x") == google_auth.nonce_hash("x") != google_auth.nonce_hash("y")
+    assert auth_nonces.nonce_hash("x") == auth_nonces.nonce_hash("x") != auth_nonces.nonce_hash("y")

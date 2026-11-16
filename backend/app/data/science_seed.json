@@ -1,0 +1,547 @@
+{
+  "version": 1,
+  "about": "Hand-curated science seed (decision 0015): physical constants as cited claims, compounds, the kind and role of each seeded material, the PLAN 7 reactions with the citations that support them, and condition readings stated in seed claims. Species are proposed here; coefficients are always computed by app/science/balance.py.",
+  "constants": {
+    "sources": [
+      {
+        "id": "sci:wikipedia:Water",
+        "kind": "ENCYCLOPEDIA",
+        "title": "Water",
+        "authors": ["Wikipedia contributors"],
+        "year": 2026,
+        "doi": null,
+        "url": "https://en.wikipedia.org/w/index.php?title=Water&oldid=1385775442",
+        "publisher": "Wikimedia Foundation",
+        "licence": "Creative Commons Attribution-Share Alike 4.0",
+        "attribution": "Wikipedia contributors, \"Water\", English Wikipedia, revision 1385775442",
+        "reliability": "B",
+        "storage": "EXCERPT",
+        "retrievedAt": "2026-11-16",
+        "origin": "IMPORT",
+        "sensitivity": "OPEN",
+        "evidenceKind": "REFERENCE_WORK"
+      },
+      {
+        "id": "sci:wikipedia:Quartz",
+        "kind": "ENCYCLOPEDIA",
+        "title": "Quartz",
+        "authors": ["Wikipedia contributors"],
+        "year": 2026,
+        "doi": null,
+        "url": "https://en.wikipedia.org/w/index.php?title=Quartz&oldid=1383182792",
+        "publisher": "Wikimedia Foundation",
+        "licence": "Creative Commons Attribution-Share Alike 4.0",
+        "attribution": "Wikipedia contributors, \"Quartz\", English Wikipedia, revision 1383182792",
+        "reliability": "B",
+        "storage": "EXCERPT",
+        "retrievedAt": "2026-11-16",
+        "origin": "IMPORT",
+        "sensitivity": "OPEN",
+        "evidenceKind": "REFERENCE_WORK"
+      },
+      {
+        "id": "sci:wikipedia:Kaolinite",
+        "kind": "ENCYCLOPEDIA",
+        "title": "Kaolinite",
+        "authors": ["Wikipedia contributors"],
+        "year": 2026,
+        "doi": null,
+        "url": "https://en.wikipedia.org/w/index.php?title=Kaolinite&oldid=1383311141",
+        "publisher": "Wikimedia Foundation",
+        "licence": "Creative Commons Attribution-Share Alike 4.0",
+        "attribution": "Wikipedia contributors, \"Kaolinite\", English Wikipedia, revision 1383311141",
+        "reliability": "B",
+        "storage": "EXCERPT",
+        "retrievedAt": "2026-11-16",
+        "origin": "IMPORT",
+        "sensitivity": "OPEN",
+        "evidenceKind": "REFERENCE_WORK"
+      },
+      {
+        "id": "sci:wikipedia:Beeswax",
+        "kind": "ENCYCLOPEDIA",
+        "title": "Beeswax",
+        "authors": ["Wikipedia contributors"],
+        "year": 2026,
+        "doi": null,
+        "url": "https://en.wikipedia.org/w/index.php?title=Beeswax&oldid=1382937264",
+        "publisher": "Wikimedia Foundation",
+        "licence": "Creative Commons Attribution-Share Alike 4.0",
+        "attribution": "Wikipedia contributors, \"Beeswax\", English Wikipedia, revision 1382937264",
+        "reliability": "B",
+        "storage": "EXCERPT",
+        "retrievedAt": "2026-11-16",
+        "origin": "IMPORT",
+        "sensitivity": "OPEN",
+        "evidenceKind": "REFERENCE_WORK"
+      },
+      {
+        "id": "sci:wikipedia:Brass",
+        "kind": "ENCYCLOPEDIA",
+        "title": "Brass",
+        "authors": ["Wikipedia contributors"],
+        "year": 2026,
+        "doi": null,
+        "url": "https://en.wikipedia.org/w/index.php?title=Brass&oldid=1382181158",
+        "publisher": "Wikimedia Foundation",
+        "licence": "Creative Commons Attribution-Share Alike 4.0",
+        "attribution": "Wikipedia contributors, \"Brass\", English Wikipedia, revision 1382181158",
+        "reliability": "B",
+        "storage": "EXCERPT",
+        "retrievedAt": "2026-11-16",
+        "origin": "IMPORT",
+        "sensitivity": "OPEN",
+        "evidenceKind": "REFERENCE_WORK"
+      }
+    ],
+    "concepts": [
+      {
+        "key": "sci:property.water-boiling-point",
+        "craftSlug": null,
+        "subCategorySlug": null,
+        "type": "PROPERTY",
+        "name": "Boiling point of water at one atmosphere",
+        "description": "The temperature at which water boils at a pressure of one atmosphere.",
+        "sensitivity": "OPEN"
+      },
+      {
+        "key": "sci:property.brass-melting-range",
+        "craftSlug": null,
+        "subCategorySlug": null,
+        "type": "PROPERTY",
+        "name": "Melting range of brass",
+        "description": "The temperatures over which brass melts, which depend on its composition.",
+        "sensitivity": "OPEN"
+      }
+    ],
+    "claims": [
+      {
+        "id": "sci-constant-water-boiling-point",
+        "constant": "water-boiling-point",
+        "subjectType": "CONCEPT",
+        "subjectKey": "sci:property.water-boiling-point",
+        "predicate": "PROPERTY",
+        "text": "At a pressure of one atmosphere, water boils at 100 °C.",
+        "textLang": "en",
+        "evidenceLevel": "PROVISIONAL",
+        "levelReason": "quote re-found verbatim in the cited revision",
+        "origin": "IMPORT",
+        "status": "PROPOSED",
+        "createdByKind": "SYSTEM",
+        "sensitivity": "OPEN",
+        "sources": [
+          {
+            "sourceId": "sci:wikipedia:Water",
+            "locator": "§ Phase transitions",
+            "quote": "At a pressure of one atmosphere (atm), ice melts or water freezes (solidifies) at 0 °C (32 °F) and water boils or vapor condenses at 100 °C (212 °F).",
+            "quoteCheck": "PASS",
+            "relation": "DIRECT"
+          }
+        ]
+      },
+      {
+        "id": "sci-constant-quartz-inversion",
+        "constant": "quartz-inversion",
+        "subjectType": "CONCEPT",
+        "subjectKey": "inf:terracotta:quartz_inversion",
+        "predicate": "PROPERTY",
+        "text": "At ambient pressure, alpha quartz changes abruptly to beta quartz at 573 °C.",
+        "textLang": "en",
+        "evidenceLevel": "PROVISIONAL",
+        "levelReason": "quote re-found verbatim in the cited revision",
+        "origin": "IMPORT",
+        "status": "PROPOSED",
+        "createdByKind": "SYSTEM",
+        "sensitivity": "OPEN",
+        "sources": [
+          {
+            "sourceId": "sci:wikipedia:Quartz",
+            "locator": "§ Crystal habit and structure",
+            "quote": "The transition from α-quartz to β-quartz occurs abruptly at 573 °C (1,063 °F; 846 K) at ambient pressure; the transition temperature is greater at higher pressures.",
+            "quoteCheck": "PASS",
+            "relation": "DIRECT"
+          }
+        ]
+      },
+      {
+        "id": "sci-constant-kaolinite-dehydroxylation",
+        "constant": "kaolinite-dehydroxylation",
+        "subjectType": "CONCEPT",
+        "subjectKey": "inf:terracotta:dehydroxylation",
+        "predicate": "PROPERTY",
+        "text": "Kaolinite begins to lose its hydroxyl water at 550–600 °C, forming disordered metakaolin; hydroxyl loss continues up to 900 °C.",
+        "textLang": "en",
+        "evidenceLevel": "PROVISIONAL",
+        "levelReason": "quote re-found verbatim in the cited revision",
+        "origin": "IMPORT",
+        "status": "PROPOSED",
+        "createdByKind": "SYSTEM",
+        "sensitivity": "OPEN",
+        "sources": [
+          {
+            "sourceId": "sci:wikipedia:Kaolinite",
+            "locator": "§ Metakaolin",
+            "quote": "Endothermic dehydration of kaolinite begins at 550–600 °C producing disordered metakaolin, but continuous hydroxyl loss is observed up to 900 °C (1,650 °F).",
+            "quoteCheck": "PASS",
+            "relation": "DIRECT"
+          }
+        ]
+      },
+      {
+        "id": "sci-constant-beeswax-melting-range",
+        "constant": "beeswax-melting-range",
+        "subjectType": "CONCEPT",
+        "subjectKey": "ie:machilipatnam-kalamkari.material.beeswax-resist",
+        "predicate": "PROPERTY",
+        "text": "Beeswax melts over a relatively low range of 62 to 64 °C.",
+        "textLang": "en",
+        "evidenceLevel": "PROVISIONAL",
+        "levelReason": "quote re-found verbatim in the cited revision",
+        "origin": "IMPORT",
+        "status": "PROPOSED",
+        "createdByKind": "SYSTEM",
+        "sensitivity": "OPEN",
+        "sources": [
+          {
+            "sourceId": "sci:wikipedia:Beeswax",
+            "locator": "§ Physical characteristics",
+            "quote": "Beeswax has a relatively low melting point range of 62 to 64 °C (144 to 147 °F).",
+            "quoteCheck": "PASS",
+            "relation": "DIRECT"
+          }
+        ]
+      },
+      {
+        "id": "sci-constant-brass-melting-range",
+        "constant": "brass-melting-range",
+        "subjectType": "CONCEPT",
+        "subjectKey": "sci:property.brass-melting-range",
+        "predicate": "PROPERTY",
+        "text": "Brass melts at 900 to 940 °C depending on its composition, which makes it relatively easy to cast.",
+        "textLang": "en",
+        "evidenceLevel": "PROVISIONAL",
+        "levelReason": "quote re-found verbatim in the cited revision",
+        "origin": "IMPORT",
+        "status": "PROPOSED",
+        "createdByKind": "SYSTEM",
+        "sensitivity": "OPEN",
+        "sources": [
+          {
+            "sourceId": "sci:wikipedia:Brass",
+            "locator": "§ Properties",
+            "quote": "The relatively low melting point of brass (900 to 940 °C; 1,650 to 1,720 °F, depending on composition) and its flow characteristics make it a relatively easy material to cast.",
+            "quoteCheck": "PASS",
+            "relation": "DIRECT"
+          }
+        ]
+      }
+    ]
+  },
+  "compounds": [
+    {"key": "iron-ii-acetate", "name": "Iron(II) acetate", "formula": "Fe(CH3COO)2"},
+    {"key": "alizarin", "name": "Alizarin", "formula": "C14H8O4"},
+    {"key": "indigo", "name": "Indigo", "formula": "C16H10N2O2"},
+    {"key": "leucoindigo", "name": "Leucoindigo", "formula": "C16H12N2O2"},
+    {"key": "potassium-alum", "name": "Potassium alum", "formula": "KAl(SO4)2·12H2O"}
+  ],
+  "materials": {
+    "ie:ajrakh.material.neerani-scouring-mix": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:ajrakh.material.camel-dung": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:ajrakh.material.cotton-cloth": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:ajrakh.material.harde-myrobalan": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:ajrakh.material.lime-gum-resist": {"kind": "OTHER", "role": "RESIST", "compound": null},
+    "ie:ajrakh.material.kut-iron-paste": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:ajrakh.material.alum": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"},
+    "ie:ajrakh.material.tamarind-seed-paste": {"kind": "OTHER", "role": "BINDER", "compound": null},
+    "ie:ajrakh.material.gach-mud-resist": {"kind": "CLAY", "role": "RESIST", "compound": null},
+    "ie:ajrakh.material.dusting-agents": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:ajrakh.material.indigo": {"kind": "DYE", "role": "DYE", "compound": "indigo"},
+    "ie:ajrakh.material.madder": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:ajrakh.material.synthetic-alizarin": {"kind": "DYE", "role": "DYE", "compound": "alizarin"},
+    "ie:ajrakh.material.dhawri-tamarisk": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagh.material.sanchara-rock-salt": {"kind": "MINERAL", "role": "INPUT", "compound": null},
+    "ie:bagh.material.mengni-goat-dung": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagh.material.castor-oil": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagh.material.harara": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:bagh.material.alum": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"},
+    "ie:bagh.material.iron-black": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:bagh.material.tamarind-seed-powder": {"kind": "OTHER", "role": "BINDER", "compound": null},
+    "ie:bagh.material.alizarin": {"kind": "DYE", "role": "DYE", "compound": "alizarin"},
+    "ie:bagh.material.dhavda-flowers": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagh.material.bleaching-powder": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagh.material.base-fabric": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:bagru.material.scouring-agents": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagru.material.cotton-fabric": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:bagru.material.harda-myrobalan": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:bagru.material.syahi-iron-black": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:bagru.material.begar-alum-paste": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:bagru.material.madder-alizarin": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:bagru.material.dhawai-flowers": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:bagru.material.dabu-paste": {"kind": "CLAY", "role": "RESIST", "compound": null},
+    "ie:bagru.material.sawdust": {"kind": "WOOD", "role": "INPUT", "compound": null},
+    "ie:bagru.material.indigo": {"kind": "DYE", "role": "DYE", "compound": "indigo"},
+    "ie:bagru.material.turmeric-pomegranate-yellow": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:bagru.material.alum-fitkari": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"},
+    "ie:dabu.material.cotton-fabric": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:dabu.material.sawdust": {"kind": "WOOD", "role": "INPUT", "compound": null},
+    "ie:dabu.material.wheat-chaff-beedan": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:dabu.material.indigo": {"kind": "DYE", "role": "DYE", "compound": "indigo"},
+    "ie:dabu.material.alizarin-and-naphthol-reds": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:dabu.material.tar-oil-rogan-resist": {"kind": "OTHER", "role": "RESIST", "compound": null},
+    "ie:dabu.material.myrobalan-and-mordants": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.cow-dung": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.kora-cotton-cloth": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.myrobalan-karakkaya": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.buffalo-milk": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.kasim-iron-acetate": {"kind": "MORDANT", "role": "MORDANT", "compound": "iron-ii-acetate"},
+    "ie:machilipatnam-kalamkari.material.gum-binder": {"kind": "OTHER", "role": "BINDER", "compound": null},
+    "ie:machilipatnam-kalamkari.material.alum-karam": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"},
+    "ie:machilipatnam-kalamkari.material.alizarin-and-red-roots": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:machilipatnam-kalamkari.material.dye-bath-plant-additives": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.rice-starch": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:machilipatnam-kalamkari.material.indigo": {"kind": "DYE", "role": "DYE", "compound": "indigo"},
+    "ie:machilipatnam-kalamkari.material.alum": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"},
+    "ie:sanganeri.material.cow-dung": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:sanganeri.material.cotton-mulmul": {"kind": "FIBRE", "role": "INPUT", "compound": null},
+    "ie:sanganeri.material.harda-myrobalan": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:sanganeri.material.syahi-iron-black": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:sanganeri.material.begar-alum-mordant": {"kind": "MORDANT", "role": "MORDANT", "compound": null},
+    "ie:sanganeri.material.madder-alizarin": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:sanganeri.material.dhawai-phool": {"kind": "OTHER", "role": "INPUT", "compound": null},
+    "ie:sanganeri.material.dabu-resist-paste": {"kind": "CLAY", "role": "RESIST", "compound": null},
+    "ie:sanganeri.material.sawdust": {"kind": "WOOD", "role": "INPUT", "compound": null},
+    "ie:sanganeri.material.indigo": {"kind": "DYE", "role": "DYE", "compound": "indigo"},
+    "ie:sanganeri.material.haldi-naspal-yellow": {"kind": "DYE", "role": "DYE", "compound": null},
+    "ie:sanganeri.material.alum-fitkari": {"kind": "MORDANT", "role": "MORDANT", "compound": "potassium-alum"}
+  },
+  "reactions": [
+    {
+      "stage": "ie:ajrakh.process_stage.kut",
+      "key": "iron-acetate",
+      "ordinal": 1,
+      "kind": "REDOX",
+      "label": "Scrap iron dissolving into iron acetate",
+      "species": [
+        {"role": "REACTANT", "formula": "Fe", "name": "Iron", "compound": null},
+        {"role": "REACTANT", "formula": "CH3COOH", "name": "Acetic acid", "compound": null},
+        {"role": "PRODUCT", "formula": "Fe(CH3COO)2", "name": "Iron(II) acetate", "compound": "iron-ii-acetate"},
+        {"role": "PRODUCT", "formula": "H2", "name": "Hydrogen", "compound": null}
+      ],
+      "citations": [
+        ["seed-e1a28b32e2c7416ebed3", 0],
+        ["seed-ca39189df4e04dcb5a7a", 0],
+        ["seed-b22aaa6d6607a5019194", 0]
+      ]
+    },
+    {
+      "stage": "ie:ajrakh.process_stage.indigo-dyeing",
+      "key": "indigo-reduction",
+      "ordinal": 1,
+      "kind": "REDOX",
+      "label": "Indigo reduced to soluble leucoindigo in the vat",
+      "species": [
+        {"role": "REACTANT", "formula": "C16H10N2O2", "name": "Indigo", "compound": "indigo"},
+        {"role": "REACTANT", "formula": "H^+", "name": "Hydrogen ion", "compound": null},
+        {"role": "REACTANT", "formula": "e^-", "name": "Electron", "compound": null},
+        {"role": "PRODUCT", "formula": "C16H12N2O2", "name": "Leucoindigo", "compound": "leucoindigo"}
+      ],
+      "citations": [
+        ["seed-d9b4aea0626d66ccdb60", 2],
+        ["seed-a16a0906bd1fa81c6de0", 0],
+        ["seed-3965c8f733d2c1a997d5", 0]
+      ]
+    },
+    {
+      "stage": "ie:ajrakh.process_stage.indigo-dyeing",
+      "key": "indigo-oxidation",
+      "ordinal": 2,
+      "kind": "REDOX",
+      "label": "Leucoindigo oxidised back to blue indigo in air",
+      "species": [
+        {"role": "REACTANT", "formula": "C16H12N2O2", "name": "Leucoindigo", "compound": "leucoindigo"},
+        {"role": "REACTANT", "formula": "O2", "name": "Oxygen", "compound": null},
+        {"role": "PRODUCT", "formula": "C16H10N2O2", "name": "Indigo", "compound": "indigo"},
+        {"role": "PRODUCT", "formula": "H2O", "name": "Water", "compound": null}
+      ],
+      "citations": [
+        ["seed-86fcd25c654d7a0e0079", 0],
+        ["seed-bdce98b16440ad986190", 0],
+        ["seed-3965c8f733d2c1a997d5", 1]
+      ]
+    },
+    {
+      "stage": "ie:ajrakh.process_stage.red-dyeing",
+      "key": "alizarin-lake",
+      "ordinal": 1,
+      "kind": "COMPLEXATION",
+      "label": "Alizarin binding to the alum mordant",
+      "species": [
+        {"role": "REACTANT", "formula": "Al^3+", "name": "Aluminium from the alum mordant", "compound": null},
+        {"role": "REACTANT", "formula": "C14H8O4", "name": "Alizarin", "compound": "alizarin"},
+        {"role": "PRODUCT", "formula": null, "name": "Aluminium-alizarin lake", "compound": null}
+      ],
+      "citations": [
+        ["seed-b14a93745f3a652197c0", 0],
+        ["seed-bd5ef6022d643b22c6dd", 0],
+        ["seed-5bbd031c8cc0abd3b6b9", 0],
+        ["seed-0484b9bf06c14eb12785", 0]
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.bhatti",
+      "key": "alizarin-lake",
+      "ordinal": 1,
+      "kind": "COMPLEXATION",
+      "label": "Alizarin binding to the alum mordant",
+      "species": [
+        {"role": "REACTANT", "formula": "Al^3+", "name": "Aluminium from the alum mordant", "compound": null},
+        {"role": "REACTANT", "formula": "C14H8O4", "name": "Alizarin", "compound": "alizarin"},
+        {"role": "PRODUCT", "formula": null, "name": "Aluminium-alizarin lake", "compound": null}
+      ],
+      "citations": [
+        ["seed-2714d8cefdaa2513f97b", 0],
+        ["seed-7513d28a96c14b97b814", 0],
+        ["seed-0484b9bf06c14eb12785", 0]
+      ]
+    },
+    {
+      "stage": "ie:machilipatnam-kalamkari.process_stage.mordant-printing-kasim",
+      "key": "iron-acetate",
+      "ordinal": 1,
+      "kind": "REDOX",
+      "label": "Iron dissolving into iron acetate",
+      "species": [
+        {"role": "REACTANT", "formula": "Fe", "name": "Iron", "compound": null},
+        {"role": "REACTANT", "formula": "CH3COOH", "name": "Acetic acid", "compound": null},
+        {"role": "PRODUCT", "formula": "Fe(CH3COO)2", "name": "Iron(II) acetate", "compound": "iron-ii-acetate"},
+        {"role": "PRODUCT", "formula": "H2", "name": "Hydrogen", "compound": null}
+      ],
+      "citations": [
+        ["seed-2f6c6a50b346d718c7b4", 1],
+        ["seed-d40e84ae9b0db76e8d9a", 0]
+      ]
+    },
+    {
+      "stage": "ie:machilipatnam-kalamkari.process_stage.alizarin-boiling",
+      "key": "alizarin-lake",
+      "ordinal": 1,
+      "kind": "COMPLEXATION",
+      "label": "Alizarin binding to the alum mordant",
+      "species": [
+        {"role": "REACTANT", "formula": "Al^3+", "name": "Aluminium from the alum mordant", "compound": null},
+        {"role": "REACTANT", "formula": "C14H8O4", "name": "Alizarin", "compound": "alizarin"},
+        {"role": "PRODUCT", "formula": null, "name": "Aluminium-alizarin lake", "compound": null}
+      ],
+      "citations": [
+        ["seed-40e50f13f3fbffc4edc2", 0],
+        ["seed-11b8db36c0f2c8284ee7", 0],
+        ["seed-0484b9bf06c14eb12785", 0]
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "stage": "ie:ajrakh.process_stage.kut",
+      "key": "duration",
+      "label": "Fermenting the iron paste",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-ca39189df4e04dcb5a7a", "citation": 0, "stated": "ten to fifteen days", "min": 10, "max": 15, "unit": "day"},
+        {"claim": "seed-d124d09b6ccdc13459f6", "citation": 0, "stated": "two weeks", "min": 2, "max": 2, "unit": "week"}
+      ]
+    },
+    {
+      "stage": "ie:ajrakh.process_stage.red-dyeing",
+      "key": "duration",
+      "label": "Red dye bath",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-b14a93745f3a652197c0", "citation": 1, "stated": "up to four hours", "min": null, "max": 4, "unit": "hour"}
+      ]
+    },
+    {
+      "stage": "ie:ajrakh.process_stage.tapano",
+      "key": "duration",
+      "label": "Sun-bleaching the whites",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-ca11a0666ee878f5bd79", "citation": 2, "stated": "at least three days", "min": 3, "max": null, "unit": "day"}
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.colour-paste-preparation",
+      "key": "ageing",
+      "label": "Ageing the mordant solution",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-9402ed26f3fa75356364", "citation": 0, "stated": "8–10 days", "min": 8, "max": 10, "unit": "day"}
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.colour-paste-preparation",
+      "key": "iron-fermenting",
+      "label": "Fermenting the iron black",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-5d44ff4d2abaa26b4140", "citation": 0, "stated": "15–20 days", "min": 15, "max": 20, "unit": "day"}
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.colour-paste-preparation",
+      "key": "alum-concentration",
+      "label": "Alum in the red paste",
+      "quantity": "CONCENTRATION",
+      "readings": [
+        {"claim": "seed-1374b814c3d2ac9e65db", "citation": 0, "stated": "80–100 g of alum per litre of water", "min": 80, "max": 100, "unit": "g/L"}
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.curing",
+      "key": "duration",
+      "label": "Resting the printed cloth",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-22c2ee2a3a54f7993181", "citation": 0, "stated": "eight to fifteen days", "min": 8, "max": 15, "unit": "day"},
+        {"claim": "seed-9eb2977975e8f835f33b", "citation": 0, "stated": "about seven days", "min": 7, "max": 7, "unit": "day"}
+      ]
+    },
+    {
+      "stage": "ie:bagh.process_stage.bhatti",
+      "key": "duration",
+      "label": "Boiling with alizarin",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-1833e19a424b6f9c5df7", "citation": 2, "stated": "about three hours", "min": 3, "max": 3, "unit": "hour"},
+        {"claim": "seed-1d9afc2d4bdccca4d5b0", "citation": 0, "stated": "five to six hours", "min": 5, "max": 6, "unit": "hour"}
+      ]
+    },
+    {
+      "stage": "ie:machilipatnam-kalamkari.process_stage.mordant-printing-kasim",
+      "key": "duration",
+      "label": "Fermenting the iron black",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-c8b48523584b47823bb4", "citation": 0, "stated": "21 days", "min": 21, "max": 21, "unit": "day"}
+      ]
+    },
+    {
+      "stage": "ie:machilipatnam-kalamkari.process_stage.myrobalan-treatment",
+      "key": "duration",
+      "label": "Myrobalan bath",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-4b8491f8fbea35568b52", "citation": 1, "stated": "30–45 minutes", "min": 30, "max": 45, "unit": "minute"},
+        {"claim": "seed-bc9cd9fa97c13a61a6e3", "citation": 3, "stated": "5 to 10 minutes", "min": 5, "max": 10, "unit": "minute"}
+      ]
+    },
+    {
+      "stage": "ie:machilipatnam-kalamkari.process_stage.alizarin-boiling",
+      "key": "duration",
+      "label": "Boiling with alizarin",
+      "quantity": "DURATION",
+      "readings": [
+        {"claim": "seed-11b8db36c0f2c8284ee7", "citation": 0, "stated": "an hour and a half", "min": 1.5, "max": 1.5, "unit": "hour"}
+      ]
+    }
+  ]
+}

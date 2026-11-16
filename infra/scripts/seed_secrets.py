@@ -26,13 +26,30 @@ VERCEL_TEAM = "cxacraftecosystem-8028s-projects"
 VERCEL_PROJECT = "kalavigyan"
 INFRA = Path(__file__).resolve().parents[1]
 
-GENERATED = ("JWT_SECRET", "SECRETS_ENCRYPTION_KEY", "TWO_FACTOR_ENCRYPTION_KEY", "WEB_PROXY_SECRET")
+GENERATED = (
+    "JWT_SECRET",
+    "SECRETS_ENCRYPTION_KEY",
+    "TWO_FACTOR_ENCRYPTION_KEY",
+    "WEB_PROXY_SECRET",
+    "TRANSCRIPT_ENCRYPTION_KEY",
+    "VOICE_SESSION_HMAC_KEY",
+    "VOICE_LLM_BEARER",
+    "MEDIA_BUNDLE_HMAC_KEY",
+)
+TOKEN_GENERATED = (
+    "JWT_SECRET",
+    "WEB_PROXY_SECRET",
+    "VOICE_SESSION_HMAC_KEY",
+    "VOICE_LLM_BEARER",
+    "MEDIA_BUNDLE_HMAC_KEY",
+)
 COPYABLE = (
     "GEMINI_API_KEY",
     "ANTHROPIC_API_KEY",
     "OPENAI_API_KEY",
     "DEEPSEEK_API_KEY",
     "ELEVENLABS_API_KEY",
+    "ELEVENLABS_AGENT_ID",
     "BRAVE_SEARCH_API_KEY",
     "TURNSTILE_SECRET_KEY",
     "GOOGLE_CLIENT_ID",
@@ -44,6 +61,10 @@ GITHUB_SECRETS = (
     "JWT_SECRET",
     "SECRETS_ENCRYPTION_KEY",
     "TWO_FACTOR_ENCRYPTION_KEY",
+    "TRANSCRIPT_ENCRYPTION_KEY",
+    "VOICE_SESSION_HMAC_KEY",
+    "VOICE_LLM_BEARER",
+    "MEDIA_BUNDLE_HMAC_KEY",
     "ORIGIN_VERIFY_SECRET",
     "WEB_PROXY_SECRET",
     "AWS_ACCESS_KEY_ID",
@@ -108,7 +129,7 @@ class Params:
 
 
 def generated_value(key):
-    if key in ("JWT_SECRET", "WEB_PROXY_SECRET"):
+    if key in TOKEN_GENERATED:
         return secrets.token_urlsafe(64)
     return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
 
@@ -291,8 +312,14 @@ def main():
 
     if not a.skip_vercel:
         envs = {"NEXT_PUBLIC_API_URL": tf["api_base_url"], "NEXT_PUBLIC_APP_URL": WEB_ORIGIN}
-        if current.get("GOOGLE_CLIENT_ID"):
-            envs["NEXT_PUBLIC_GOOGLE_CLIENT_ID"] = current["GOOGLE_CLIENT_ID"]
+        for public, live_with in (
+            ("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_ID"),
+            ("YAHOO_CLIENT_ID", "YAHOO_CLIENT_SECRET"),
+            ("MICROSOFT_CLIENT_ID", "MICROSOFT_CLIENT_SECRET"),
+            ("MICROSOFT_TENANT", "MICROSOFT_CLIENT_SECRET"),
+        ):
+            if current.get(public) and current.get(live_with):
+                envs[f"NEXT_PUBLIC_{public}"] = current[public]
         server_only = {"WEB_PROXY_SECRET": current["WEB_PROXY_SECRET"]}
         for key, value in {**envs, **server_only}.items():
             kind = "sensitive" if key in server_only else "encrypted"

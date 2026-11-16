@@ -4,7 +4,7 @@ import uuid
 from collections.abc import Mapping
 from typing import Literal, Protocol, Self, runtime_checkable
 
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from app.core.errors import InvalidInput
 from app.models.knowledge import QUOTE_MAX_CHARS
@@ -20,7 +20,7 @@ from .quotes import (
     trivial_quote,
     unsupported_figures,
 )
-from .vocabulary import AnswerLanguage, AnswerMode, EvidenceLevel, LiveTier, weakest_level
+from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, AnswerMode, EvidenceLevel, LiveTier, weakest_level
 
 __all__ = [
     "CANDIDATE_KINDS",
@@ -104,10 +104,20 @@ class ResearchSummary(ContractModel):
 
 class ComposeRequest(ContractModel):
     question: str = Field(min_length=2, max_length=QUESTION_MAX_CHARS)
-    language: AnswerLanguage = "en"
+    language: AnswerLanguage = CANONICAL_LANGUAGE
     craft: CraftRef
     candidates: list[ComposeCandidate] = Field(default_factory=list)
     searched: ResearchSummary
+
+    @field_validator("language")
+    @classmethod
+    def _composes_canonical_text(cls, language: str) -> str:
+        if language != CANONICAL_LANGUAGE:
+            raise ValueError(
+                f"the composer writes and checks {CANONICAL_LANGUAGE} sentences; translate them afterwards "
+                "with services.answer_translation"
+            )
+        return language
 
     @model_validator(mode="after")
     def _consistent(self) -> Self:

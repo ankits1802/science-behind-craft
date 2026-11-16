@@ -206,14 +206,16 @@ the four T3 reference adapters; none needs a key.
 | Adapter `name` | Service | Id after the colon | `fetch` content | Source type, trust | Licence |
 |---|---|---|---|---|---|
 | `wikipedia` | Action API search and TextExtracts | `<language>:<page id>` | `FULL_TEXT` | `ENCYCLOPEDIA`, `B` | the wiki's rightsinfo text, read live |
-| `wikidata` | `list=search`, `wbgetentities`, SPARQL statements | `Q…` | `EXCERPT` | `DATASET`, `B` | `CC0 1.0` |
+| `wikidata` | `list=search`, `wbgetentities`, SPARQL statements | `Q…`, or `<language>:Q…` outside English | `EXCERPT` | `DATASET`, `B` | `CC0 1.0` |
 | `pubchem` | PUG REST (names, formulas, properties), PUG View (GHS) | `<CID>` or `<CID>:ghs` | `EXCERPT` | `COMPOUND_RECORD`, `A` | NCBI policy URL; for `:ghs` the reporting sources' licence URLs |
-| `wikimedia_commons` | Action API file search with `extmetadata` | page id | `EXCERPT` | `OTHER`, `C` | the file's licence short name |
+| `wikimedia_commons` | Action API file search with `extmetadata` | page id, or `<language>:<page id>` outside English | `EXCERPT` | `OTHER`, `C` | the file's licence short name |
 
 - `SearchQuery.language` picks the Wikipedia (`WIKIPEDIA_LANGUAGES`: English and the Indian
   languages with a Wikipedia; another language is `InvalidInput`), the Wikidata label language
-  (with fallback) and the Commons metadata language. Fetches of Wikidata and Commons render
-  in English.
+  (with fallback) and the Commons metadata language. A Wikidata or Commons item found in another
+  language than English carries it in its id (`mediawiki.with_language`), and `fetch` renders
+  labels, descriptions, statement labels and file metadata in it (`language_and_native`); English
+  ids keep their old form (decision 0023).
 - Wikipedia items carry `externalIds` `wikipedia`, `revision` and `wikidata`; Wikidata items
   `wikidata`, `revision` and, on fetch, `pubchem_cid`, `cas_number`, `chebi` when stated;
   PubChem items `pubchem_cid` and `inchikey`; Commons items `commons_file`, `commons_media`
@@ -263,6 +265,9 @@ its edge is a letter or digit, and never inside a decimal: `50` does not occur i
 in `1.5`. `trivial_quote(quote)` is true below `QUOTE_MIN_CHARS` (20) folded characters.
 `quote_overlap(text, quotes)` is the share of the text's content words (four or more letters, not
 a stop word, compared by their first four letters) that occur in the quotes (decision 0013).
+`figures_in`, `formulas_in` and `numbers_in` read every Unicode decimal digit and the Arabic
+decimal and thousands separators as ASCII (`fold_digits`), so `६०` is the number `60` and a quote
+in native digits supports the same figure (decision 0023).
 
 ## Fetcher (`research/fetcher.py`)
 
@@ -387,7 +392,10 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
 `Planner.plan(PlanRequest) -> RetrievalPlan`. The planner runs after a craft is resolved.
 
-- `PlanRequest {question, mode, craft, language="en"}`.
+- `PlanRequest {question, mode, craft, language="en", englishQuestion?}`. `language` is the
+  answer language (`ANSWER_LANGUAGES`); `englishQuestion` is the question in English when the
+  caller has it (the answering service passes the question itself when it is written in Latin
+  script), else the planner uses the plan call's rendering.
 - `RetrievalPlan {schemaVersion 1, mode, craft, intent, language, needsRegion,
   facets[Facet] (1-8), tiers[], queries[PlannedQuery], maxFetches}`; stored in `Answer.plan`.
   `intent` is one of `OVERVIEW`, `MATERIALS`, `PROCESS`, `SCIENCE`, `PLACE`, `HISTORY`,
@@ -395,15 +403,16 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   `PlannedQuery {tier: LiveTier, facetIndex, query: SearchQuery}`.
 - Each mode's limits (`MODE_POLICIES`):
 
-| Mode | Tiers | Live tiers run | Queries | Fetches |
-|---|---|---|---|---|
-| `VERIFIED` | T0, T1 | never | 0 | 0 |
-| `HYBRID` | T0-T4 | only for facets the stored tiers left without a claim | 4 | 10 |
-| `DEEP` | T0-T4 | always | 8 | 20 |
+| Mode | Tiers | Live tiers run | Queries | Native-language queries | Fetches |
+|---|---|---|---|---|---|
+| `VERIFIED` | T0, T1 | never | 0 | 0 | 0 |
+| `HYBRID` | T0-T4 | only for facets the stored tiers left without a claim | 4 | 2 | 10 |
+| `DEEP` | T0-T4 | always | 8 | 3 | 20 |
 
   A plan outside its mode's tiers, query or fetch limits, with tiers out of order or repeated,
-  a query on a tier the plan does not run, or a query naming a missing facet, does not
-  construct. Past 80% of the monthly ceiling the router degrades and the planner plans DEEP as
+  a query on a tier the plan does not run, a query naming a missing facet, or a native-language
+  query (`query.language` other than English) that is not `T3` (`NATIVE_QUERY_TIER`) in the plan's
+  language, does not construct. Native-language queries count apart from the English limit. Past 80% of the monthly ceiling the router degrades and the planner plans DEEP as
   HYBRID.
 - `PlanRequest.withheldTerms` (at most 20, each 2-200 characters): words a search query must
   never carry, such as the asker's own names (PLAN 6, search egress).
@@ -431,9 +440,11 @@ validates the object against its own model.
 before the stored search, `RESEARCHING` (query count) before live search and `READING`
 (evidence count) before reading when anything was found.
 
-- **Draft**: one `PLAN` call with `plan_schema(max_queries)` (intent from `PLAN_INTENTS`, facet
-  types from `CONCEPT_TYPES`, tiers from `LIVE_TIERS`); the question goes in an
-  `untrusted_block`. An unusable reply is retried once (`PLAN_DRAFT_RETRIES`), then raised. A
+- **Draft**: one `PLAN` call with `plan_schema(max_queries, max_native_queries)` (intent from
+  `PLAN_INTENTS`, facet types from `CONCEPT_TYPES`, tiers from `LIVE_TIERS`; also `nativeQueries`
+  `{facetIndex, text}`, `nativeCraftName` and `englishQuestion`); the question goes in an
+  `untrusted_block`, as written. `native_query_limit(language, mode)` is 0 for English and for a
+  language without a Wikipedia (`WIKIPEDIA_LANGUAGES`). An unusable reply is retried once (`PLAN_DRAFT_RETRIES`), then raised. A
   `degraded` reply turns `DEEP` into `HYBRID` (`DEGRADED_MODES`).
 - **Plan**: coverage per facet (above), then queries: the first query of each open facet
   (the craft name and the facet target when the model gave none, on `T3`), then the model's
@@ -488,7 +499,8 @@ evidence[PackedEvidence], documents[SourceDocument], failures[ResearchFailure]}`
 
 `Composer.compose(ComposeRequest) -> ComposedAnswer`.
 
-- `ComposeRequest {question, language, craft, candidates[ComposeCandidate] (unique ids, may be
+- `ComposeRequest {question, language ("en" only: the composer writes and checks English;
+  translation follows, decision 0023), craft, candidates[ComposeCandidate] (unique ids, may be
   empty), searched: ResearchSummary (same craft)}`; `request.allowed` maps id to candidate.
 - `ComposeCandidate {id, kind, text, quotes[], sourceLabel, level}`. `CLAIM`: `id` is the claim
   UUID, `text` the claim text, `quotes` its citation quotes. `EVIDENCE` (a live item not yet
@@ -579,7 +591,7 @@ faster.
 - Labels and stored levels (never inferred from model text): `QUOTED` needs at least one
   citation whose quote passed the check and is stored `PROVISIONAL`; `INFERRED` is a model or
   reader inference, stored `HYPOTHESIS`. Live research never stores a level above
-  `PROVISIONAL`; only a professor or master admin `ReviewEvent` raises one.
+  `PROVISIONAL`; only a professor, admin or master admin `ReviewEvent` raises one.
 - Every figure in `text` and `valueNum` must appear in a quote that passed; a unit needs a
   value. `foundBy` is `ANSWER` (with `answerId`) or `BACKGROUND` (the coverage job, no
   `answerId`).
@@ -648,9 +660,9 @@ fields that were set.
 | Event | Payload | Notes |
 |---|---|---|
 | `match` | `{status:"RESOLVED", craft}` / `{status:"AMBIGUOUS", candidates (1-5)}` / `{status:"NONE"}` | first; AMBIGUOUS is followed only by `done` |
-| `status` | `{step, message}` | new; progress while research runs. `step` one of `RESOLVING`, `PLANNING`, `SEARCHING_STORED`, `RESEARCHING`, `READING`, `COMPOSING`, `WRITING_BACK`; `message` a short user-facing sentence |
+| `status` | `{step, message}` | new; progress while research runs. `step` one of `RESOLVING`, `PLANNING`, `SEARCHING_STORED`, `RESEARCHING`, `READING`, `COMPOSING`, `WRITING_BACK`, `TRANSLATING`; `message` a short user-facing sentence |
 | `source` | `SourceRef {id, kind, title, authors[], year, doi, url, publisher, licence, attribution, reliability}` | before the first citation naming it; `url` https or null |
-| `section` | `{id, heading}` | |
+| `section` | `{id, heading, original?}` | `original` is the English heading when `heading` is a translation |
 | `sentence` | `{sectionId, sentence: AnswerSentence}` | |
 | `open_question` | `{sectionId, heading?, sentence}` | hypothesis-level sentences |
 | `reaction` | `{id, label, equation, balanced, level, conditions, citations (at least one)}` | |
@@ -659,7 +671,8 @@ fields that were set.
 | `done` | `{answerId}` | last |
 | `error` | `{message}` | shown verbatim; never internal detail |
 
-`AnswerSentence {id, text, level, citations (at least one), translated?}`;
+`AnswerSentence {id, text, level, citations (at least one), translated?, original?}`: a
+translated sentence, and only one, carries `translated: true` and its English `original`;
 `Citation {id, claimId, sourceId, quote (at most 300) | null, locator, context, evidence
 (QUOTED or INFERRED), level}`. Levels are `ShownLevel`.
 
@@ -685,11 +698,12 @@ models and the client together.
 
 `answer_question(AnswerAsk, AnswerPipeline, emit)`; `AnswerAsk {question, mode, craft_slug?,
 language?, user_id?, withheld_terms}`; `AnswerPipeline {resolve, research(PlanRequest,
-ResearchProgress), compose(ComposeRequest), store: AnswerStore}`; `AnswerStore {stored_claims
+ResearchProgress), compose(ComposeRequest), store: AnswerStore, translation:
+answer_translation.AnswerTranslation}`; `AnswerStore {stored_claims
 (slug, question, mode), keep(ask, pack, answer) -> KeptAnswer {answer_id, claims_of},
 cited(claim_ids)}`, the reads returning `answer_events.CitedClaims {views, sources}`.
 `answer_store.build_answer_pipeline(sessions=, index=, live=, plan_model=, compose_model=,
-embed=)` wires the database resolver, `ResearchPlanner` over `retrieval.hybrid.
+translate_model=, embed=, shield=)` wires the database resolver, `ResearchPlanner` over `retrieval.hybrid.
 SessionScopedSearch` and the process-held `live_sources.LiveSourcesStore` (rebuilt every
 `LIVE_SOURCES_TTL_SECONDS` 600 on one HTTP client), `ModelComposer` and `SqlAnswerStore`. No
 database session is held across a model call or the stream: each step opens its own.
@@ -701,32 +715,66 @@ database session is held across a model call or the stream: each step opens its 
 2. `VERIFIED`: `status SEARCHING_STORED`, the craft's `VERIFIED` and `REVIEWED` `APPROVED`
    claims (`retrieval/statements.claim_conditions`, the scope T1 also reads) ranked by any
    word of the question (`ts_rank_cd` over the OR query), at most 14
-   findings by concept section and 4 hypotheses; no model call; `answerId` null.
+   findings by concept section and 4 hypotheses; `answerId` null. No model call for a question
+   in Latin script; another script is first rendered in English by one TRANSLATE call.
 3. `HYBRID`, `DEEP`: `status PLANNING`, `research` (which reports its own steps), `status
    COMPOSING` (candidate count, when there are candidates), compose, `status WRITING_BACK`
    (document count, when documents were read), `keep` (an `Answer` row, then
-   `store_live_research` with `found_by=ANSWER` and its id), then the citations of every claim
+   `store_live_research` with `found_by=ANSWER` and its id, run on the process's
+   `core/shielded.ShieldedWork`, so it commits even when the learner leaves), then the citations of every claim
    the sentences rest on (`knowledge_view.claims_by_id`). Each sentence keeps the visible
    citations of its claims in order; one without any is dropped; its level is the weakest of
    its claims' stored levels; a `HYPOTHESIS` sentence is an `open_question` (section `open`,
    heading `Open questions`). Section ids `s1`, `s2`, ... in heading order; sentence ids
    `<section>.<n>`. A `source` event precedes the first sentence citing it; `follow_ups` are
    the composer's.
-4. Nothing shown: `not_enough_evidence` with the composer's summary, or the pack's.
-5. Any `AppError` after the match is one `error`: a router `ceiling` refusal in its own words,
+4. Another answer language: `status TRANSLATING`, then the events are translated (below)
+   before they are sent.
+5. Nothing shown: `not_enough_evidence` with the composer's summary, or the pack's.
+6. Any `AppError` after the match is one `error`: a router `ceiling` refusal in its own words,
    anything else `RESEARCH_FAILED_DETAIL`; any other exception is logged and `UNEXPECTED_DETAIL`.
    `done {answerId}` always ends the stream.
 
 Status messages (`status_message(step, count, craft)`): `Finding the craft`, `Planning the
 research on <craft>`, `Searching stored findings`, `Searching <n> live queries`, `Reading the
 best of <n> sources found`, `Writing a cited answer from <n> passages`, `Saving <n> sources for
-the next question` (singular for one).
+the next question` (singular for one), `Translating the answer into <language>`.
 
 Route (`api/routes/knowledge.py`): `VERIFIED` and `HYBRID` need `ASK_STANDARD`, `DEEP` needs
 `ASK_DEEP` (403 with `refusal_for`, before any work; an unknown role has neither); then the ask
 window (429). Model calls run as the asker's `Principal`, so the per-role daily cap and the
 monthly ceiling apply. The asker's name is a withheld search term. `/answers/config` lists the
 modes the asker may use, default `HYBRID`.
+
+### Translation (`research/translation.py`, `services/answer_translation.py`, decision 0023)
+
+Answers are composed and checked in English and translated afterwards.
+`Translator.translate(TranslationRequest {language, items[{key, text}] (unique keys)}) -> {key:
+text}` returns only translations that passed `translation_problems(original, translated,
+language=)`: the same numbers after `fold_digits` (no number missing, none added); the same
+formulas, mhchem `\ce{}`/`\pu{}` spans and units (°C, °F, %, ‰, pH, and the `NUMBER_UNITS` after
+a number), compared after NFKC; prose (protected tokens removed) at least half in the target
+script; and (`composer/translation.checked_translation`) no link, markup or personal data the
+original did not carry. `ModelTranslator` sends every item in one `TRANSLATE` call, sends the
+failing ones back once with their problems (`TRANSLATION_ATTEMPTS` 2), and leaves out the rest;
+a router failure is raised to the caller, which keeps the English.
+
+- `translated_composed_events(events, language=, translation=, claim_texts=)`: sentences, open
+  questions, section headings and follow-ups in one call; `translated_stored_events(...)`: claim
+  sentences only (headings and follow-ups of a stored answer are the app's labels). A translated
+  sentence keeps its citations and gains `translated: true` and `original`; a translated heading
+  gains `original`; an item that fails twice stays English.
+- **Voice**: `translated_sentences(sentences, *, language, translation, claim_texts)` takes
+  verified English `AnswerSentence` payloads and returns them in the session language by the same
+  rules; build `translation` with `answer_store.build_answer_translation(sessions,
+  model=router_structured_model(AiTask.TRANSLATE, principal))`, and pass the cited claims' texts
+  (`{view.id: view.text}`) so claim sentences use the cache. Compose the turn in English
+  (`ComposeRequest.language` refuses anything else); `english_question(question, translation)`
+  renders a question in another script for ranking stored claims.
+- Cache: `TranslationCache {known(language, {claimId: text}), remember(language, {claimId:
+  (text, translation)})}`, `translation_cache.SqlTranslationCache` over `ClaimTranslation`. A
+  sentence is cached when it cites one claim and its text is exactly that claim's text; a row is
+  used only while its `sourceSha256` is the SHA-256 of the claim's current text.
 
 ## Not built yet
 

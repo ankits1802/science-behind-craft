@@ -5,6 +5,7 @@ from collections.abc import AsyncIterator
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine
+from app.core.shielded import ShieldedWork
 from app.models import (
     Answer,
     Concept,
@@ -131,4 +132,4 @@ def answer_store(session: AsyncSession) -> SqlAnswerStore:
     def sessions() -> AsyncSession:
         return AsyncSession(bind=session.bind, expire_on_commit=False, autoflush=False)
 
-    return SqlAnswerStore(sessions, embed=FixedEmbedder())
+    return SqlAnswerStore(sessions, embed=FixedEmbedder(), shield=ShieldedWork())

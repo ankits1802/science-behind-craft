@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "places": [
+    {
+      "key": "district-449",
+      "scope": "DISTRICT",
+      "stateLgd": 24,
+      "stateName": "Gujarat",
+      "districtLgd": 449,
+      "districtName": "Kachchh",
+      "placeLabel": "Ajrakhpur, Kachchh",
+      "basis": {
+        "kind": "CRAFT_LOCATION",
+        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+        "label": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+        "level": "PROVISIONAL"
+      },
+      "valuesFrom": "DISTRICT",
+      "inheritedReason": null,
+      "facets": [
+        {
+          "facet": "SOIL",
+          "values": [
+            {
+              "datasetCode": "SOILGRIDS_2_0",
+              "variable": "clay",
+              "depth": "0-5cm",
+              "period": "modelled, 2020 release",
+              "stat": "DISTRICT_MEAN",
+              "aggregation": "DISTRICT",
+              "value": 27.4,
+              "valueText": null,
+              "unit": "%",
+              "resolution": "250 m",
+              "method": "ISRIC WCS 2.0.1 GetCoverage on the native 250 m Homolosine grid (request bounds snapped to the grid, no resampling); cells the service returns as 0 (SoilGrids mask: built-up, water, rock) and their uncertainty cells treated as no data; district polygons reprojected to Homolosine; exactextract coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
+              "districtCount": null,
+              "districtTotal": null
+            },
+            {
+              "datasetCode": "SOILGRIDS_2_0",
+              "variable": "phh2o",
+              "depth": "0-5cm",
+              "period": "modelled, 2020 release",
+              "stat": "DISTRICT_MEAN",
+              "aggregation": "DISTRICT",
+              "value": 8.1,
+              "valueText": null,
+              "unit": "pH",
+              "resolution": "250 m",
+              "method": "ISRIC WCS 2.0.1 GetCoverage on the native 250 m Homolosine grid (request bounds snapped to the grid, no resampling); cells the service returns as 0 (SoilGrids mask: built-up, water, rock) and their uncertainty cells treated as no data; district polygons reprojected to Homolosine; exactextract coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
+              "districtCount": null,
+              "districtTotal": null
+            }
+          ]
+        },
+        {
+          "facet": "CLIMATE",
+          "values": [
+            {
+              "datasetCode": "CHELSA_2_1_1981_2010",
+              "variable": "annual_mean_temperature",
+              "depth": null,
+              "period": "1981-2010",
+              "stat": "NORMAL",
+              "aggregation": "DISTRICT",
+              "value": 26.6,
+              "valueText": null,
+              "unit": "degC",
+              "resolution": "30 arc-seconds (about 1 km)",
+              "method": "exactextract coverage weight area_spherical_km2 on the native 30 arc-second grid; scale and offset read from the GeoTIFF; raw 65535 treated as no data",
+              "districtCount": null,
+              "districtTotal": null
+            },
+            {
+              "datasetCode": "CHELSA_2_1_1981_2010",
+              "variable": "annual_precipitation",
+              "depth": null,
+              "period": "1981-2010",
+              "stat": "NORMAL",
+              "aggregation": "DISTRICT",
+              "value": 372.4,
+              "valueText": null,
+              "unit": "mm/year",
+              "resolution": "30 arc-seconds (about 1 km)",
+              "method": "exactextract coverage weight area_spherical_km2 on the native 30 arc-second grid; scale and offset read from the GeoTIFF; raw 65535 treated as no data",
+              "districtCount": null,
+              "districtTotal": null
+            }
+          ]
+        },
+        {
+          "facet": "LAND_COVER",
+          "values": [
+            {
+              "datasetCode": "ESA_WORLDCOVER_2021_V200",
+              "variable": "landcover_bare_sparse_vegetation",
+              "depth": null,
+              "period": "2021",
+              "stat": "SHARE",
+              "aggregation": "DISTRICT",
+              "value": 0.312,
+              "valueText": null,
+              "unit": "fraction",
+              "resolution": "40 m (overview read, factor 4, nearest)",
+              "method": "exactextract class fractions, coverage weight area_spherical_km2, read at 40 m (overview read, factor 4, nearest); share of mapped area inside the district polygon",
+              "districtCount": null,
+              "districtTotal": null
+            },
+            {
+              "datasetCode": "ESA_WORLDCOVER_2021_V200",
+              "variable": "landcover_cropland",
+              "depth": null,
+              "period": "2021",
+              "stat": "SHARE",
+              "aggregation": "DISTRICT",
+              "value": 0.236,
+              "valueText": null,
+              "unit": "fraction",
+              "resolution": "40 m (overview read, factor 4, nearest)",
+              "method": "exactextract class fractions, coverage weight area_spherical_km2, read at 40 m (overview read, factor 4, nearest); share of mapped area inside the district polygon",
+              "districtCount": null,
+              "districtTotal": null
+            }
+          ]
+        },
+        {
+          "facet": "TERRAIN",
+          "values": [
+            {
+              "datasetCode": "COPERNICUS_DEM_GLO90",
+              "variable": "elevation",
+              "depth": null,
+              "period": "2011-2015 acquisitions",
+              "stat": "DISTRICT_MEAN",
+              "aggregation": "DISTRICT",
+              "value": 52.3,
+              "valueText": null,
+              "unit": "m",
+              "resolution": "3 arc-seconds (about 90 m)",
+              "method": "exactextract coverage weight area_spherical_km2 at 3 arc-seconds (about 90 m); slope from central differences with latitude-dependent metres per degree; missing ocean tiles are no data",
+              "districtCount": null,
+              "districtTotal": null
+            }
+          ]
+        },
+        {
+          "facet": "GEOLOGY",
+          "values": [
+            {
+              "datasetCode": "USGS_MRDS",
+              "variable": "mineral_occurrences",
+              "depth": null,
+              "period": "compiled to 2011, no longer updated",
+              "stat": "COUNT",
+              "aggregation": "DISTRICT",
+              "value": 41.0,
+              "valueText": null,
+              "unit": "sites",
+              "resolution": "point locations",
+              "method": "USGS MRDS WFS points inside the district polygon (point-in-polygon, EPSG:4326)",
+              "districtCount": null,
+              "districtTotal": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "code": "CHELSA_2_1_1981_2010",
+      "title": "CHELSA V2.1 climatologies 1981-2010",
+      "publisher": "Swiss Federal Institute for Forest, Snow and Landscape Research WSL",
+      "edition": "V2.1",
+      "period": "1981-2010",
+      "nativeResolution": "30 arc-seconds (about 1 km)",
+      "licence": "Open download without registration; licence text not confirmed on 2026-11-15",
+      "licenceUrl": "https://chelsa-climate.org/",
+      "attribution": "CHELSA V2.1, Karger et al.",
+      "citation": "Karger, D. N., Conrad, O., Bohner, J., et al. (2017). Climatologies at high resolution for the earth's land surface areas. Scientific Data 4, 170122. https://doi.org/10.1038/sdata.2017.122",
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/"
+    },
+    {
+      "code": "COPERNICUS_DEM_GLO90",
+      "title": "Copernicus DEM GLO-90",
+      "publisher": "European Space Agency, Copernicus Programme",
+      "edition": "2021_1 (AWS Open Data COG)",
+      "period": "2011-2015 acquisitions",
+      "nativeResolution": "3 arc-seconds (about 90 m)",
+      "licence": "Copernicus DEM licence (GLO-90 free worldwide)",
+      "licenceUrl": "https://registry.opendata.aws/copernicus-dem/",
+      "attribution": "Produced using Copernicus WorldDEM-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "citation": "European Space Agency (2024). Copernicus Global Digital Elevation Model. https://doi.org/10.5270/ESA-c5d3d65",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/"
+    },
+    {
+      "code": "ESA_WORLDCOVER_2021_V200",
+      "title": "ESA WorldCover 10 m 2021 v200",
+      "publisher": "European Space Agency",
+      "edition": "v200",
+      "period": "2021",
+      "nativeResolution": "10 m (1/12000 degree)",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium",
+      "citation": "Zanaga, D., Van De Kerchove, R., Daems, D., et al. (2022). ESA WorldCover 10 m 2021 v200. https://doi.org/10.5281/zenodo.7254221",
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/"
+    },
+    {
+      "code": "SOILGRIDS_2_0",
+      "title": "SoilGrids 2.0",
+      "publisher": "ISRIC World Soil Information",
+      "edition": "2.0",
+      "period": "modelled, 2020 release",
+      "nativeResolution": "250 m",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "SoilGrids 2.0, ISRIC World Soil Information",
+      "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021",
+      "url": "https://files.isric.org/soilgrids/latest/data/"
+    },
+    {
+      "code": "USGS_MRDS",
+      "title": "Mineral Resources Data System",
+      "publisher": "U.S. Geological Survey",
+      "edition": "WFS snapshot at retrieval",
+      "period": "compiled to 2011, no longer updated",
+      "nativeResolution": "point locations",
+      "licence": "Public domain (U.S. Government work)",
+      "licenceUrl": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+      "attribution": "U.S. Geological Survey Mineral Resources Data System",
+      "citation": "U.S. Geological Survey. Mineral Resources Data System (MRDS). Reston, Virginia. https://mrdata.usgs.gov/mrds/",
+      "url": "https://mrdata.usgs.gov/services/wfs/mrds"
+    }
+  ],
+  "sources": [
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    }
+  ]
+}

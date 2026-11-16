@@ -11,6 +11,8 @@ import { SourcesList } from "@/components/answer/SourcesList";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { Accordion } from "@/components/ui/Accordion";
 import { ActionGroup } from "@/components/ui/ActionGroup";
+import { SegmentedChoice } from "@/components/ui/SegmentedChoice";
+import { attributesForText, ENGLISH, hasTranslation, type AnswerLanguage } from "@/lib/answerLanguages";
 import { sourceNumbers } from "@/lib/citations";
 import type { AnswerPayload, AnswerStatus, Citation } from "@/lib/types";
 
@@ -19,11 +21,18 @@ export type AnswerViewProps = {
   streaming?: boolean;
   status?: AnswerStatus | null;
   onFollowUp?: (question: string) => void;
+  language?: AnswerLanguage;
 };
 
-export function AnswerView({ payload, streaming = false, status = null, onFollowUp }: AnswerViewProps) {
+const ORIGINAL = "original";
+const TRANSLATED = "translated";
+
+export function AnswerView({ payload, streaming = false, status = null, onFollowUp, language = ENGLISH }: AnswerViewProps) {
   const reduce = useAppReducedMotion();
   const [open, setOpen] = useState<OpenCitation | null>(null);
+  const [shown, setShown] = useState(TRANSLATED);
+  const translated = hasTranslation([...payload.sections, ...payload.openQuestions]);
+  const original = translated && shown === ORIGINAL;
   const sourcesById = useMemo(() => new Map(payload.sources.map((source) => [source.id, source])), [payload.sources]);
   const numbers = useMemo(
     () => sourceNumbers([...payload.sections, ...payload.openQuestions], payload.reactions),
@@ -46,19 +55,45 @@ export function AnswerView({ payload, streaming = false, status = null, onFollow
 
   return (
     <article className="grid gap-5" aria-busy={streaming || undefined} data-testid="answer-view">
-      {payload.craft ? (
-        <p className="text-sm text-ink-500">
-          About{" "}
-          <Link href={`/crafts/${encodeURIComponent(payload.craft.slug)}`} className="font-medium text-purple-700 hover:underline dark:text-purple-300">
-            {payload.craft.name}
-          </Link>
-          {payload.craft.path ? <span> · {payload.craft.path}</span> : null}
-        </p>
+      {payload.craft || translated ? (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {payload.craft ? (
+            <p className="text-sm text-ink-500">
+              About{" "}
+              <Link href={`/crafts/${encodeURIComponent(payload.craft.slug)}`} className="font-medium text-purple-700 hover:underline dark:text-purple-300">
+                {payload.craft.name}
+              </Link>
+              {payload.craft.path ? <span> · {payload.craft.path}</span> : null}
+            </p>
+          ) : (
+            <span />
+          )}
+          {translated ? (
+            <SegmentedChoice
+              label="Answer text"
+              value={original ? ORIGINAL : TRANSLATED}
+              options={[
+                { value: TRANSLATED, label: language.autonym },
+                { value: ORIGINAL, label: ENGLISH.label }
+              ]}
+              onChange={setShown}
+            />
+          ) : null}
+        </div>
       ) : null}
 
       {payload.sections.map((section) =>
         section.sentences.length > 0 ? (
-          <SectionBlock key={section.id} section={section} reduce={reduce} numbers={numbers} sourcesById={sourcesById} onOpen={openCitation} />
+          <SectionBlock
+            key={section.id}
+            section={section}
+            reduce={reduce}
+            numbers={numbers}
+            sourcesById={sourcesById}
+            onOpen={openCitation}
+            language={language}
+            original={original}
+          />
         ) : null
       )}
 
@@ -73,7 +108,17 @@ export function AnswerView({ payload, streaming = false, status = null, onFollow
           <div className="grid gap-4">
             {payload.openQuestions.map((section) =>
               section.sentences.length > 0 ? (
-                <SectionBlock key={section.id} section={section} reduce={reduce} numbers={numbers} sourcesById={sourcesById} onOpen={openCitation} compact />
+                <SectionBlock
+                  key={section.id}
+                  section={section}
+                  reduce={reduce}
+                  numbers={numbers}
+                  sourcesById={sourcesById}
+                  onOpen={openCitation}
+                  compact
+                  language={language}
+                  original={original}
+                />
               ) : null
             )}
           </div>
@@ -87,7 +132,7 @@ export function AnswerView({ payload, streaming = false, status = null, onFollow
           <h2 className="field-label mb-2">Ask next</h2>
           <ActionGroup align="start">
             {payload.followUps.map((question) => (
-              <button key={question} type="button" className="field-button-secondary" onClick={() => onFollowUp(question)}>
+              <button key={question} type="button" className="field-button-secondary" onClick={() => onFollowUp(question)} {...attributesForText(question, language)}>
                 {question}
               </button>
             ))}

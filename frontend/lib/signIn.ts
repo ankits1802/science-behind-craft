@@ -133,15 +133,19 @@ export type ProviderProof =
       oidcNonce: string;
     };
 
+export function firstPasswordBody(newPassword: string, proof: ProviderProof, twoFactorCode?: string) {
+  const code = twoFactorCode?.trim();
+  return code ? { newPassword, ...proof, twoFactorCode: code } : { newPassword, ...proof };
+}
+
 export async function setFirstPassword(
   newPassword: string,
   proof: ProviderProof,
   twoFactorCode?: string
 ): Promise<boolean> {
-  const code = twoFactorCode?.trim();
   const { headers } = await apiFetchWithHeaders<unknown>("/auth/change-password", {
     method: "POST",
-    body: JSON.stringify(code ? { newPassword, ...proof, twoFactorCode: code } : { newPassword, ...proof })
+    body: JSON.stringify(firstPasswordBody(newPassword, proof, twoFactorCode))
   });
   return sessionRotated(headers);
 }
@@ -235,7 +239,7 @@ export async function correctAccountDetails(
   return apiFetch<User>(`/users/${userId}`, { method: "PATCH", body: JSON.stringify(changes) });
 }
 
-export const MIN_PASSWORD_LENGTH = 8;
+export const MIN_PASSWORD_LENGTH = 10;
 
 export const MAX_PASSWORD_LENGTH = 200;
 

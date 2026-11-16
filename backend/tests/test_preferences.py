@@ -25,3 +25,14 @@ def test_partial_update_keeps_only_sent_fields() -> None:
 def test_me_alias_allowed_during_pending_steps() -> None:
     assert ("GET", "/api/me") in PASSWORD_CHANGE_ALLOWED_ROUTES
     assert ("GET", "/api/me") in TWO_FACTOR_SETUP_ALLOWED_ROUTES
+
+
+@pytest.mark.parametrize("language", ["auto", "en", "hi", "ur"])
+def test_answer_language_takes_auto_or_an_offered_language(language: str) -> None:
+    assert PreferencesUpdate(answerLanguage=language).answerLanguage == language
+
+
+@pytest.mark.parametrize("language", ["fr", "hi-IN", "Hindi", ""])
+def test_answer_language_refuses_anything_else(language: str) -> None:
+    with pytest.raises(ValidationError):
+        PreferencesUpdate(answerLanguage=language)

@@ -4,20 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { Eye, EyeOff, KeyRound } from "lucide-react";
 
 import { useAuth } from "@/components/AuthProvider";
-import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { TwoStepCodeEntry, type TwoStepCodeKind } from "@/components/TwoStepCodeEntry";
+import { ConfirmItsYou } from "@/components/settings/ConfirmItsYou";
 import { isCompleteCode } from "@/components/ui/otpCode";
 import { isUnreachable } from "@/lib/failureTriage";
-import { googleClientId } from "@/lib/googleIdentity";
-import {
-  CONFIRM_STATE_PREFIX,
-  beginSignIn,
-  callbackErrorMessage,
-  configuredOidcProviders,
-  loginBody,
-  parseCallbackFragment,
-  takePendingSignIn
-} from "@/lib/oidcSignIn";
+import { CONFIRM_STATE_PREFIX, parseCallbackFragment } from "@/lib/oidcSignIn";
 import {
   CONFIRMED_NOTE,
   FIRST_PASSWORD_NOTE,
@@ -26,6 +17,7 @@ import {
   canSetFirstPassword,
   confirmPrompt,
   confirmProviderFor,
+  confirmReturn,
   currentPasswordRefused,
   firstPasswordNeedsCode,
   newPasswordProblem,
@@ -71,12 +63,12 @@ export function ChangePasswordCard() {
     const callback = parseCallbackFragment(window.location.hash);
     if (!callback || !callback.state.startsWith(CONFIRM_STATE_PREFIX)) return;
     window.history.replaceState(null, "", window.location.pathname + window.location.search);
-    const pending = takePendingSignIn(callback.state);
-    if (pending && callback.code) {
-      setProof(loginBody(pending, callback.code));
+    const outcome = confirmReturn(callback);
+    if ("proof" in outcome) {
+      setProof(outcome.proof);
       setChanged(CONFIRMED_NOTE);
     } else {
-      setError(callbackErrorMessage(pending?.provider ?? "MICROSOFT", callback.error));
+      setError(outcome.error);
     }
     section.current?.scrollIntoView({ block: "start" });
   }, []);
@@ -134,6 +126,8 @@ export function ChangePasswordCard() {
       } else if (settingFirst && twoFactorCodeRequired(err)) {
         setCode("");
         setCodeErrorKey((key) => key + 1);
+        if (askCode) setProof(null);
+        else void refreshMe();
       } else if (!settingFirst && currentPasswordRefused(err)) {
         setCurrent("");
         setCurrentRefusals((count) => count + 1);
@@ -290,61 +284,5 @@ export function ChangePasswordCard() {
         )}
       </form>
     </section>
-  );
-}
-
-function ConfirmItsYou({
-  provider,
-  onProof,
-  onError
-}: {
-  provider: ConfirmProvider;
-  onProof: (proof: ProviderProof) => void;
-  onError: (message: string) => void;
-}) {
-  const [leaving, setLeaving] = useState(false);
-  const onProofRef = useRef(onProof);
-  const onErrorRef = useRef(onError);
-  useEffect(() => {
-    onProofRef.current = onProof;
-    onErrorRef.current = onError;
-  });
-  const clientId = provider === "GOOGLE" ? googleClientId() : null;
-  const oidc = provider === "GOOGLE" ? null : (configuredOidcProviders().find((item) => item.id === provider) ?? null);
-
-  async function leaveForProvider() {
-    if (!oidc) return;
-    setLeaving(true);
-    try {
-      window.location.assign(await beginSignIn(oidc, window.location.origin, null, window.sessionStorage, "confirm"));
-    } catch {
-      setLeaving(false);
-      onError(callbackErrorMessage(oidc.id, null));
-    }
-  }
-
-  return (
-    <div className="grid gap-2 rounded-md border border-line-200 bg-surface-50 p-3">
-      <p className="text-sm text-ink-700">{confirmPrompt(provider)}</p>
-      {clientId ? (
-        <GoogleSignInButton
-          clientId={clientId}
-          onCredential={(credential) => onProofRef.current({ googleIdToken: credential })}
-          onLoadError={() => onErrorRef.current("Couldn't reach Google. Check your connection and try again.")}
-        />
-      ) : null}
-      {oidc ? (
-        <div>
-          <button type="button" className="field-button-secondary w-full" disabled={leaving} onClick={() => void leaveForProvider()}>
-            {leaving ? "Opening…" : `Continue with ${oidc.label}`}
-          </button>
-        </div>
-      ) : null}
-      {!clientId && !oidc ? (
-        <p className="text-xs leading-5 text-ink-500">
-          To add a password, ask an administrator to send you a link to set one.
-        </p>
-      ) : null}
-    </div>
   );
 }

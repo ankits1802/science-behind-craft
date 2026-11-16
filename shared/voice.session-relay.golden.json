@@ -1,0 +1,24 @@
+{
+  "voiceSessionId": "d4281969-05ea-5cf5-a5c0-5bb292452af6",
+  "mode": "HYBRID",
+  "language": "en",
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "maxDurationSeconds": 540,
+  "remainingSeconds": 540,
+  "maxTurns": 40,
+  "expiresAt": "2026-11-16T10:40:00Z",
+  "transport": "RELAY",
+  "maxTurnSeconds": 60,
+  "maxAudioBytes": 300000,
+  "audioBitsPerSecond": 32000,
+  "audioTypes": [
+    "audio/webm",
+    "audio/ogg",
+    "audio/mp4",
+    "audio/wav"
+  ]
+}

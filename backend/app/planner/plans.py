@@ -8,17 +8,26 @@ from app.research.crafts import CraftRef
 from app.research.evidence import SEARCH_QUERY_MAX_CHARS, SearchQuery, personal_data_in
 from app.research.planning import (
     MODE_POLICIES,
+    NATIVE_QUERY_TIER,
     FacetCoverage,
     PlannedQuery,
     PlanRequest,
     RetrievalPlan,
 )
-from app.research.vocabulary import RETRIEVAL_TIERS, STORED_TIERS
+from app.research.vocabulary import CANONICAL_LANGUAGE, RETRIEVAL_TIERS, STORED_TIERS
 
 from .drafting import DraftQuery, PlanDraft
-from .policy import DEGRADED_MODES
+from .policy import DEGRADED_MODES, native_query_limit
 
-__all__ = ["DEFAULT_QUERY_TIER", "effective_mode", "open_facets", "planned_queries", "retrieval_plan"]
+__all__ = [
+    "DEFAULT_QUERY_TIER",
+    "effective_mode",
+    "native_queries",
+    "open_facets",
+    "planned_queries",
+    "retrieval_plan",
+    "search_question",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +53,9 @@ def retrieval_plan(
     request: PlanRequest, draft: PlanDraft, coverage: Sequence[FacetCoverage], *, mode: str
 ) -> RetrievalPlan:
     policy = MODE_POLICIES[mode]
-    queries = planned_queries(request, draft, open_facets(mode, coverage), limit=policy.max_queries)
+    facets = open_facets(mode, coverage)
+    native = native_queries(request, draft, facets, limit=native_query_limit(request.language, mode))
+    queries = [*planned_queries(request, draft, facets, limit=policy.max_queries), *native]
     live_tiers = {query.tier for query in queries}
     return RetrievalPlan(
         mode=mode,
@@ -82,15 +93,49 @@ def planned_queries(
     return planned[:limit]
 
 
-def search_query(text: str, craft: CraftRef, *, withheld: Sequence[str]) -> SearchQuery | None:
-    anchored = _anchored(text, craft)
+def native_queries(
+    request: PlanRequest, draft: PlanDraft, facet_indexes: Sequence[int], *, limit: int
+) -> list[PlannedQuery]:
+    wanted = set(facet_indexes)
+    planned: list[PlannedQuery] = []
+    seen: set[str] = set()
+    for query in draft.native_queries if limit else ():
+        if query.facet_index not in wanted:
+            continue
+        search = search_query(
+            query.text,
+            request.craft,
+            withheld=request.withheld_terms,
+            language=request.language,
+            native_name=draft.native_craft_name,
+        )
+        if search is None or search.text.casefold() in seen:
+            continue
+        seen.add(search.text.casefold())
+        planned.append(PlannedQuery(tier=NATIVE_QUERY_TIER, facet_index=query.facet_index, query=search))
+    return planned[:limit]
+
+
+def search_question(request: PlanRequest, draft: PlanDraft) -> str:
+    return request.english_question or draft.english_question or request.question
+
+
+def search_query(
+    text: str,
+    craft: CraftRef,
+    *,
+    withheld: Sequence[str],
+    language: str = CANONICAL_LANGUAGE,
+    native_name: str = "",
+) -> SearchQuery | None:
+    anchored = _anchored(text, craft, native_name)
     if personal_data_in(anchored):
         logger.warning("left out a planned query that carried personal data")
         return None
     if any(_mentions(anchored, term) for term in withheld):
         logger.warning("left out a planned query that named a withheld term")
         return None
-    return SearchQuery(text=anchored)
+    return SearchQuery(text=anchored, language=language)
 
 
 def _first_query(craft: CraftRef, draft: PlanDraft, drafted: Sequence[DraftQuery], index: int) -> DraftQuery:
@@ -101,12 +146,21 @@ def _first_query(craft: CraftRef, draft: PlanDraft, drafted: Sequence[DraftQuery
     return DraftQuery(facet_index=index, tier=DEFAULT_QUERY_TIER, text=f"{craft.name} {target}")
 
 
-def _anchored(text: str, craft: CraftRef) -> str:
-    words = {word.casefold() for word in WORD.findall(text)}
-    anchors = {word.casefold() for word in WORD.findall(craft.name) if len(word) >= ANCHOR_MIN_CHARS}
-    if not anchors or words & anchors:
+def _anchored(text: str, craft: CraftRef, native_name: str = "") -> str:
+    if _names(text, craft.name) or (native_name and _names_natively(text, native_name)):
         return text[:SEARCH_QUERY_MAX_CHARS].strip()
-    return f"{craft.name} {text}"[:SEARCH_QUERY_MAX_CHARS].strip()
+    return f"{native_name or craft.name} {text}"[:SEARCH_QUERY_MAX_CHARS].strip()
+
+
+def _names(text: str, name: str) -> bool:
+    words = {word.casefold() for word in WORD.findall(text)}
+    anchors = {word.casefold() for word in WORD.findall(name) if len(word) >= ANCHOR_MIN_CHARS}
+    return not anchors or bool(words & anchors)
+
+
+def _names_natively(text: str, native_name: str) -> bool:
+    folded = text.casefold()
+    return any(part.casefold() in folded for part in native_name.split() if len(part) >= ANCHOR_MIN_CHARS)
 
 
 def _mentions(text: str, term: str) -> bool:

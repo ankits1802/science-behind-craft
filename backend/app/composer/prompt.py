@@ -22,6 +22,7 @@ __all__ = [
     "COMPOSE_SYSTEM_PROMPT",
     "MAX_SECTIONS",
     "REGENERATE_SYSTEM_PROMPT",
+    "SOURCE_RULES",
     "compose_message",
     "compose_schema",
     "regenerate_message",
@@ -61,14 +62,22 @@ REGENERATE_SYSTEM_PROMPT = (
 )
 
 
-def compose_schema() -> dict[str, Any]:
+def compose_schema(
+    *,
+    max_sections: int = MAX_SECTIONS,
+    max_sentences: int | None = None,
+    max_follow_ups: int = FOLLOW_UPS_MAX,
+) -> dict[str, Any]:
+    sentences: dict[str, Any] = {"type": "array", "minItems": 1, "items": _sentence()}
+    if max_sentences is not None:
+        sentences["maxItems"] = max_sentences
     section = schema_object(
         heading={"type": "string", "minLength": 1, "maxLength": HEADING_MAX_CHARS},
-        sentences={"type": "array", "minItems": 1, "items": _sentence()},
+        sentences=sentences,
     )
     return schema_object(
-        sections={"type": "array", "maxItems": MAX_SECTIONS, "items": section},
-        followUps={"type": "array", "maxItems": FOLLOW_UPS_MAX, "items": {"type": "string", "minLength": 1}},
+        sections={"type": "array", "maxItems": max_sections, "items": section},
+        followUps={"type": "array", "maxItems": max_follow_ups, "items": {"type": "string", "minLength": 1}},
     )
 
 

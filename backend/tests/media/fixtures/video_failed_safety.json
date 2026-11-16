@@ -1,0 +1,12 @@
+{
+  "id": "v1_ChdvbW5pLWludGVyYWN0aW9uLTAwMDU",
+  "status": "failed",
+  "model": "gemini-omni-1.2-flash",
+  "steps": [],
+  "errors": [
+    {
+      "code": "invalid_argument",
+      "message": "The output was blocked by safety filters."
+    }
+  ]
+}

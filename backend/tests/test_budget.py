@@ -90,6 +90,15 @@ def test_role_daily_cap() -> None:
     assert master.allowed
 
 
+def test_admin_daily_cap_is_ten_dollars() -> None:
+    def admin_spending(today: str) -> budget.BudgetDecision:
+        spend = budget.SpendState(Decimal(10), Decimal(0), Decimal(today))
+        return budget.evaluate(ceilings(), spend, estimate_usd=Decimal("0.5"), is_media=False, role="ADMIN")
+
+    assert admin_spending("9.5").allowed
+    assert admin_spending("9.51").reason == budget.ROLE_DAILY_CAP
+
+
 def test_unknown_role_falls_back_to_student_cap() -> None:
     spend = budget.SpendState(Decimal(0), Decimal(0), Decimal("0.5"))
     decision = budget.evaluate(ceilings(), spend, estimate_usd=Decimal("0.01"), is_media=False, role="GUEST")

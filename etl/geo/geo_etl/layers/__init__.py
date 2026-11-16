@@ -1,4 +1,5 @@
-from collections.abc import Iterator
+import time
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -9,6 +10,8 @@ import requests
 from geo_etl.catalog import Dataset
 
 USER_AGENT = "kalavigyan-geo-etl/0.0.1"
+ATTEMPTS = 4
+BACKOFF_S = 5.0
 
 
 @dataclass
@@ -52,6 +55,15 @@ def failure(group: gpd.GeoDataFrame, step: str, error: Exception) -> dict:
         "districtLgds": [int(v) for v in group["districtLgd"]],
         "error": f"{type(error).__name__}: {error}"[:500],
     }
+
+
+def with_retries[T](call: Callable[[], T], *, retry_on: tuple[type[Exception], ...], attempts: int = ATTEMPTS) -> T:
+    for attempt in range(attempts - 1):
+        try:
+            return call()
+        except retry_on:
+            time.sleep(BACKOFF_S * (attempt + 1))
+    return call()
 
 
 def download(url: str, target: Path) -> Path:

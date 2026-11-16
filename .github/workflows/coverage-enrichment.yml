@@ -36,7 +36,7 @@ jobs:
           role-session-name: coverage-enrichment-${{ github.run_id }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Fill missing vectors, then widen coverage of the least covered crafts on the box
+      - name: Purge and reconcile voice calls, fill missing craft and knowledge vectors, then widen coverage on the box
         run: |
           set -euo pipefail
           script=$(cat <<'EOF'
@@ -44,6 +44,8 @@ jobs:
           cd /opt/kalavigyan/current/backend
           run_module() { runuser -u kalavigyan -- bash -c "set -a; . /opt/kalavigyan/.env; set +a; exec ./.venv/bin/python -m $1"; }
           outcome=0
+          run_module app.scripts.voice_upkeep || outcome=$?
+          run_module app.scripts.embed_craft_descriptors || outcome=$?
           run_module app.scripts.embed_knowledge || outcome=$?
           run_module app.scripts.enrich_coverage || outcome=$?
           exit "$outcome"

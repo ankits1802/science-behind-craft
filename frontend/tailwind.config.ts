@@ -96,6 +96,20 @@ const mango = {
   950: "oklch(0.255 0.052 71 / <alpha-value>)"
 };
 
+const evidence = {
+  50: "oklch(0.977 0.013 150 / <alpha-value>)",
+  100: "oklch(0.946 0.03 150 / <alpha-value>)",
+  200: "oklch(0.9 0.058 150 / <alpha-value>)",
+  300: "oklch(0.828 0.1 150 / <alpha-value>)",
+  400: "oklch(0.738 0.15 150 / <alpha-value>)",
+  500: "oklch(0.648 0.168 150 / <alpha-value>)",
+  600: "oklch(0.56 0.145 150 / <alpha-value>)",
+  700: "oklch(0.47 0.122 150 / <alpha-value>)",
+  800: "oklch(0.4 0.104 150 / <alpha-value>)",
+  900: "oklch(0.34 0.088 150 / <alpha-value>)",
+  950: "oklch(0.255 0.066 150 / <alpha-value>)"
+};
+
 const tailwind3Stock = {
   amber: { 200: "#fde68a", 700: "#b45309", 900: "#78350f", 950: "#451a03" },
   red: { 100: "#fee2e2", 200: "#fecaca", 400: "#f87171", 700: "#b91c1c" },
@@ -121,9 +135,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-jakarta)", "var(--font-inter)", "ui-sans-serif", "sans-serif"],
-        serif: ["var(--font-jakarta)", "var(--font-inter)", "ui-sans-serif", "sans-serif"]
+        sans: ["var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-jakarta)", "var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "sans-serif"],
+        serif: ["var(--font-jakarta)", "var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "sans-serif"]
       },
       fontSize: tailwind3Type,
       colors: {
@@ -134,6 +148,7 @@ const config: Config = {
         errand,
         steward,
         mango,
+        evidence,
         ink: {
           DEFAULT: neutral("ink-900"),
           900: neutral("ink-900"),

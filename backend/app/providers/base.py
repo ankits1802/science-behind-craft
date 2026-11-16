@@ -34,6 +34,31 @@ class ProviderError(ExternalFailure):
     pass
 
 
+@dataclass(frozen=True)
+class MediaRequest:
+    model: str
+    prompt: str
+    kind: str
+    output: dict[str, str]
+
+
+@dataclass(frozen=True)
+class MediaResult:
+    data: bytes
+    mime: str
+    input_tokens: int | None
+    output_tokens: int | None
+    media_tokens: int | None
+    provider_ref: str | None
+    served_model: str | None
+
+
+@dataclass(frozen=True)
+class MediaPoll:
+    done: bool
+    result: MediaResult | None = None
+
+
 class Adapter(ABC):
     learned: dict[str, list[str]]
 
@@ -64,6 +89,18 @@ class Adapter(ABC):
         raise ProviderError(
             f"{self.preset} does not provide embeddings through this adapter", kind="unavailable"
         )
+
+    async def generate_image(self, req: MediaRequest) -> MediaResult:
+        raise ProviderError(f"{self.preset} does not make images through this adapter", kind="unavailable")
+
+    async def start_video(self, req: MediaRequest) -> str:
+        raise ProviderError(f"{self.preset} does not make video through this adapter", kind="unavailable")
+
+    async def poll_video(self, ref: str) -> MediaPoll:
+        raise ProviderError(f"{self.preset} does not make video through this adapter", kind="unavailable")
+
+    async def forget_media(self, ref: str) -> None:
+        return None
 
     async def aclose(self) -> None:
         return None

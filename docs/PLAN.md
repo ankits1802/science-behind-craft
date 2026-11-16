@@ -30,6 +30,7 @@ For a question typed or spoken, the platform:
 | Role | Who | Primary jobs |
 |---|---|---|
 | Master admin | Owner / IIT PI | Users, roles, keys, routing, quotas, ceilings, datasets, retractions |
+| Admin | Delegated administrators | Everything a professor does; invite professors, change roles and suspend accounts ranked below Admin; usage, audit log, datasets (decision 0024) |
 | Professor | Faculty, domain experts | Review and promote claims, curate sources, approve shared media, handle objections |
 | Researcher | RAs, PhD scholars | Ask in every mode, run enrichment, propose claims, aliases, sources |
 | Student | Invited or allow-listed institution users | Ask (verified, hybrid), voice, limited images, save answers |
@@ -44,7 +45,7 @@ Evidence levels are stored on each claim and never inferred from model text.
 | hypothesis | Researcher or model inference with no direct quote. Never phrased as fact. |
 | unavailable | A planned facet with no claim. Rendered as the "No source found" badge on that facet. |
 
-A derived artefact (a balanced equation, a unit conversion) inherits the minimum level of its inputs. `balanced=true` is a check result, not a level. Only a `ReviewEvent` by a PROFESSOR or MASTER_ADMIN raises a level above provisional. There are no exceptions.
+A derived artefact (a balanced equation, a unit conversion) inherits the minimum level of its inputs. `balanced=true` is a check result, not a level. Only a `ReviewEvent` by a PROFESSOR, ADMIN or MASTER_ADMIN raises a level above provisional. There are no exceptions.
 
 ---
 
@@ -396,13 +397,16 @@ If the custom-LLM request cannot carry a server-injected value the client cannot
 
 ### 10.5 Cost control
 
-- `VOICE_SECONDS` reserved in `QuotaLedger` on every custom-LLM turn; when exhausted the handler emits `end_call`.
+- `VOICE_SECONDS` held in `QuotaLedger` before the provider is called: an agent call holds its whole length at start and the handler emits `end_call` when it is used up; a relay turn holds a minute before speech to text and keeps at least its upload's floor (decision 0022).
 - One live session per user; global concurrency held below the plan's concurrent-call limit.
-- Worker reconciles `billedSeconds` from the ElevenLabs conversation API.
+- Worker reconciles `billedSeconds` from the ElevenLabs conversation API in both directions (refund or charge).
 
 ### 10.6 Languages and privacy
 
-- MVP English and Hindi; other Indic languages in P4, each behind its eval gate.
+- MVP English and Hindi; other Indic languages in P4, each behind its eval gate. Written answers
+  are offered in English and twelve Indian languages, composed and checked in English and then
+  translated (owner 2026-11-16, decision 0023); voice offers the same languages wherever both
+  ElevenLabs speech models support them (owner 2026-11-16, decision 0025).
 - Transcript stored Fernet-encrypted (`TRANSCRIPT_ENCRYPTION_KEY`), phone and email scrubbed before storage, kept 30 days then purged by the worker; never written to logs, `AnswerTrace` or eval fixtures.
 - Consent notice before the first voice session (`ConsentRecord` VOICE_NOTICE).
 - ElevenLabs down → Voice button hidden; `Listen` uses `gemini-3.8-flash-tts`.
@@ -429,8 +433,9 @@ If the custom-LLM request cannot carry a server-injected value the client cannot
 Sign-in:
 - Email and password: DR `security.py` (bcrypt, decoy verify, reset links, email verification).
 - Google Identity Services ID-token flow (`auth.py:219`) with a server nonce per attempt passed to `google.accounts.id.initialize({nonce})`; backend verifies nonce (single use), aud, iss, exp, `email_verified`.
+- Yahoo (and Microsoft, off until its keys are set): DR's OpenID Connect code flow with PKCE, redeemed by the backend with the client secret; the provider gets the digest of a single-use server nonce; backend verifies signature (provider JWKS), iss, aud, exp and nonce, requires a provider-verified address, and admits through the access roster like Google (decision 0026).
 - Linking Google to an existing account: only from a signed-in session after a fresh password or TOTP confirmation, with the Google email verified and matching.
-- TOTP mandatory for PROFESSOR and MASTER_ADMIN at first sign-in after promotion.
+- TOTP mandatory for PROFESSOR, ADMIN and MASTER_ADMIN at first sign-in after promotion.
 - JWT with pinned algorithm, `tokenVersion` bumped on password, role, 2FA change and disable. Bearer header (DR pattern).
 - Mail: Amazon SES ap-south-1 through DR's `MAIL_*` settings.
 
@@ -438,23 +443,27 @@ Sign-up (owner decision 2026-11-15): port the DR/FR access roster and role manag
 
 Data rights: `/settings/data` exports a user's answers, saved items and transcripts, and deletes the account (`DataRequest`).
 
-| Capability | Student | Researcher | Professor | Master admin |
-|---|---|---|---|---|
-| Ask verified, hybrid | ✓ | ✓ | ✓ | ✓ |
-| Ask deep | — | ✓ | ✓ | ✓ |
-| Voice (verified email) | ✓ 10 min/day | ✓ 30 | ✓ 30 | ✓ |
-| Images per day | 5 | 30 | 50 | within ceiling |
-| Videos per day | 0 | 5 | 10 | within ceiling |
-| Save, export | ✓ | ✓ | ✓ | ✓ |
-| RESEARCHER-ACL quotes | — | ✓ | ✓ | ✓ |
-| Propose claims, aliases, sources; run enrichment; accept aliases | — | ✓ | ✓ | ✓ |
-| Approve reviewed/verified (not own claims); retract | — | — | ✓ | ✓ |
-| Share media; handle objections | — | — | ✓ | ✓ |
-| Invite researchers, students; approve researcher requests | — | — | ✓ | ✓ |
-| Invite professors; change roles; disable users | — | — | — | ✓ |
-| Keys: set, test, rotate (TOTP step-up); routing; quotas; ceilings; datasets | — | — | — | ✓ |
-| Evaluation dashboard | — | — | ✓ | ✓ |
-| Audit log | — | — | — | ✓ |
+| Capability | Student | Researcher | Professor | Admin | Master admin |
+|---|---|---|---|---|---|
+| Ask verified, hybrid | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Ask deep | — | ✓ | ✓ | ✓ | ✓ |
+| Voice (verified email) | ✓ 10 min/day | ✓ 30 | ✓ 30 | ✓ 60 | ✓ |
+| Images per day | 5 | 30 | 50 | 100 | within ceiling |
+| Videos per day | 0 | 5 | 10 | 20 | within ceiling |
+| Save, export | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RESEARCHER-ACL quotes | — | ✓ | ✓ | ✓ | ✓ |
+| Propose claims, aliases, sources; run enrichment; accept aliases | — | ✓ | ✓ | ✓ | ✓ |
+| Approve reviewed/verified (not own claims); retract | — | — | ✓ | ✓ | ✓ |
+| Share media; handle objections | — | — | ✓ | ✓ | ✓ |
+| Invite researchers, students; approve researcher requests | — | — | ✓ | ✓ | ✓ |
+| Invite professors; change roles; disable users | — | — | — | ✓ below Admin | ✓ |
+| Create, change, suspend or remove an Admin or Master admin | — | — | — | — | ✓ |
+| Keys: set, test, rotate (TOTP step-up); routing; quotas; ceilings | — | — | — | — | ✓ |
+| Datasets; usage | — | — | — | ✓ | ✓ |
+| Evaluation dashboard | — | — | ✓ | ✓ | ✓ |
+| Audit log | — | — | — | ✓ | ✓ |
+
+Admin (owner 2026-11-16, decision 0024) ranks 50, between Professor (40) and Master admin (60). An admin assigns roles up to Professor and acts only on accounts and roster entries ranked below Admin; only the master admin assigns Admin. Allowances apply under the global monthly ceiling and media cap.
 
 Enforcement: capability sets in `core/deps.py`; `shared/roles.json` ranks with a CI test against frontend `ROUTE_GUARDS`; tool handlers re-check principal against target; four-eyes uses `Claim.createdById` (imports have `createdByKind=SYSTEM`, so any professor may approve them); master-admin override is audited.
 
@@ -554,8 +563,8 @@ From security-audit (`AI-AND-LLM.md`, `WEB-PROTOCOL-AND-AUTH.md`, `CLIENT-SIDE.m
 
 | Group | Names |
 |---|---|
-| Backend runtime (Actions `BACKEND_ENV` + box `.env`) | `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`, `VOICE_SESSION_HMAC_KEY`, `MEDIA_BUNDLE_HMAC_KEY`, `GOOGLE_CLIENT_ID`, `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER`, `BRAVE_SEARCH_API_KEY`, `EXA_API_KEY`, `TAVILY_API_KEY`, `OPENALEX_API_KEY`, `RESEARCH_CONTACT_EMAIL`, `SEMANTIC_SCHOLAR_API_KEY`, `CORE_API_KEY`, `DATA_GOV_IN_API_KEY`, `TURNSTILE_SECRET_KEY`, `CROSS_PORTAL_TOKEN`, `S3_BUCKET`, `AWS_REGION`, `PUBLIC_WEB_URL`, `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME`, `MAIL_REPLY_TO`, `MAIL_SES_REGION`, `MAIL_SES_CONFIGURATION_SET` |
-| Web (Actions + Vercel env) | `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` |
+| Backend runtime (Actions `BACKEND_ENV` + box `.env`) | `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`, `VOICE_SESSION_HMAC_KEY`, `MEDIA_BUNDLE_HMAC_KEY`, `GOOGLE_CLIENT_ID`, `YAHOO_CLIENT_ID`, `YAHOO_CLIENT_SECRET`, `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER`, `BRAVE_SEARCH_API_KEY`, `EXA_API_KEY`, `TAVILY_API_KEY`, `OPENALEX_API_KEY`, `RESEARCH_CONTACT_EMAIL`, `SEMANTIC_SCHOLAR_API_KEY`, `CORE_API_KEY`, `DATA_GOV_IN_API_KEY`, `TURNSTILE_SECRET_KEY`, `CROSS_PORTAL_TOKEN`, `S3_BUCKET`, `AWS_REGION`, `PUBLIC_WEB_URL`, `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME`, `MAIL_REPLY_TO`, `MAIL_SES_REGION`, `MAIL_SES_CONFIGURATION_SET` |
+| Web (Actions + Vercel env) | `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `NEXT_PUBLIC_YAHOO_CLIENT_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` |
 | Deploy-only (Actions only, never on the box) | `EC2_SSH_KEY`, `EC2_HOST`, `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DATABASE_URL` |
 | Eval-only (Actions only) | `EVAL_GEMINI_API_KEY`, `EVAL_ANTHROPIC_API_KEY` (own budget caps) |
 | SSM SecureString backups | `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `TRANSCRIPT_ENCRYPTION_KEY` |

@@ -2,6 +2,7 @@ from enum import StrEnum
 from typing import Any
 
 MASTER_ADMIN = "MASTER_ADMIN"
+ADMIN = "ADMIN"
 PROFESSOR = "PROFESSOR"
 RESEARCHER = "RESEARCHER"
 STUDENT = "STUDENT"
@@ -10,6 +11,7 @@ ROLE_RANK: dict[str, int] = {
     STUDENT: 15,
     RESEARCHER: 30,
     PROFESSOR: 40,
+    ADMIN: 50,
     MASTER_ADMIN: 60,
 }
 
@@ -17,12 +19,13 @@ ROLE_LABELS: dict[str, str] = {
     STUDENT: "Student",
     RESEARCHER: "Researcher",
     PROFESSOR: "Professor",
+    ADMIN: "Admin",
     MASTER_ADMIN: "Master Admin",
 }
 
 ROLES_BY_RANK: tuple[str, ...] = tuple(sorted(ROLE_RANK, key=lambda role: -ROLE_RANK[role]))
 
-TWO_FACTOR_REQUIRED_ROLES = frozenset({PROFESSOR, MASTER_ADMIN})
+TWO_FACTOR_REQUIRED_ROLES = frozenset({PROFESSOR, ADMIN, MASTER_ADMIN})
 
 
 class Capability(StrEnum):
@@ -72,23 +75,24 @@ CAPABILITY_MIN_ROLE: dict[Capability, str] = {
     Capability.HANDLE_OBJECTIONS: PROFESSOR,
     Capability.MANAGE_ACCESS: PROFESSOR,
     Capability.LIST_USERS: PROFESSOR,
-    Capability.INVITE_PROFESSORS: MASTER_ADMIN,
-    Capability.CHANGE_ROLES: MASTER_ADMIN,
-    Capability.DISABLE_USERS: MASTER_ADMIN,
+    Capability.INVITE_PROFESSORS: ADMIN,
+    Capability.CHANGE_ROLES: ADMIN,
+    Capability.DISABLE_USERS: ADMIN,
     Capability.MANAGE_KEYS: MASTER_ADMIN,
     Capability.MANAGE_ROUTING: MASTER_ADMIN,
     Capability.MANAGE_QUOTAS: MASTER_ADMIN,
     Capability.MANAGE_CEILINGS: MASTER_ADMIN,
-    Capability.MANAGE_DATASETS: MASTER_ADMIN,
-    Capability.VIEW_USAGE: MASTER_ADMIN,
+    Capability.MANAGE_DATASETS: ADMIN,
+    Capability.VIEW_USAGE: ADMIN,
     Capability.VIEW_EVALUATION: PROFESSOR,
-    Capability.VIEW_AUDIT_LOG: MASTER_ADMIN,
+    Capability.VIEW_AUDIT_LOG: ADMIN,
 }
 
 DAILY_ALLOWANCES: dict[str, dict[str, int | None]] = {
     STUDENT: {"VOICE_SECONDS": 600, "IMAGE": 5, "VIDEO": 0},
     RESEARCHER: {"VOICE_SECONDS": 1800, "IMAGE": 30, "VIDEO": 5},
     PROFESSOR: {"VOICE_SECONDS": 1800, "IMAGE": 50, "VIDEO": 10},
+    ADMIN: {"VOICE_SECONDS": 3600, "IMAGE": 100, "VIDEO": 20},
     MASTER_ADMIN: {"VOICE_SECONDS": None, "IMAGE": None, "VIDEO": None},
 }
 

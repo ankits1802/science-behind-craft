@@ -1,19 +1,15 @@
 import asyncio
-import hashlib
 import logging
-import secrets
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.models import AuthNonce
+from app.services.auth_nonces import consume_nonce
 
 logger = logging.getLogger(__name__)
 
-NONCE_MINUTES = 10
 GOOGLE_ISSUERS = frozenset({"accounts.google.com", "https://accounts.google.com"})
 
 
@@ -23,43 +19,12 @@ class GoogleSignInRefused(Exception):
         self.reason = reason
 
 
+def client_id_if_enabled() -> str | None:
+    return (get_settings().google_client_id or "").strip() or None
+
+
 def google_enabled() -> bool:
-    return bool((get_settings().google_client_id or "").strip())
-
-
-def nonce_hash(raw: str) -> str:
-    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
-
-
-async def issue_nonce(
-    session: AsyncSession, *, purpose: str = "GOOGLE_SIGN_IN", user_id: Any = None, ip_hash: str | None = None
-) -> tuple[str, datetime]:
-    now = datetime.now(UTC)
-    await session.execute(delete(AuthNonce).where(AuthNonce.expiresAt < now - timedelta(hours=1)))
-    raw = secrets.token_urlsafe(32)
-    expires = now + timedelta(minutes=NONCE_MINUTES)
-    session.add(
-        AuthNonce(
-            purpose=purpose, nonceHash=nonce_hash(raw), userId=user_id, ipHash=ip_hash, expiresAt=expires
-        )
-    )
-    await session.commit()
-    return raw, expires
-
-
-async def consume_nonce(session: AsyncSession, raw: str, *, purpose: str, user_id: Any = None) -> bool:
-    if not raw or len(raw) > 200:
-        return False
-    conditions = [
-        AuthNonce.nonceHash == nonce_hash(raw),
-        AuthNonce.purpose == purpose,
-        AuthNonce.usedAt.is_(None),
-        AuthNonce.expiresAt > datetime.now(UTC),
-    ]
-    if user_id is not None:
-        conditions.append(AuthNonce.userId == user_id)
-    result = await session.execute(update(AuthNonce).where(*conditions).values(usedAt=datetime.now(UTC)))
-    return result.rowcount == 1
+    return client_id_if_enabled() is not None
 
 
 def _verify_sync(token: str, client_id: str) -> dict[str, Any]:

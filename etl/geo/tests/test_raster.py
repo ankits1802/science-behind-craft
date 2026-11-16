@@ -6,6 +6,7 @@ from rasterio.transform import from_origin
 from shapely.geometry import box
 
 from geo_etl import raster
+from geo_etl.districts import load_districts
 
 
 def grid_of(values: np.ndarray) -> raster.Grid:
@@ -42,6 +43,19 @@ def test_zonal_quantiles_bracket_the_mean_on_tied_data():
     assert record["p10"] == 0.0
     assert record["p90"] == 0.0
     assert record["mean"] == pytest.approx(1.0)
+
+
+def test_zonal_takes_every_district_shape_in_one_call():
+    districts = load_districts()
+    step = 0.05
+    west, north = 68.0, 38.0
+    field = np.full((int(32 / step), int(30 / step)), 7.0)
+    grid = raster.Grid(field.astype("float32"), from_origin(west, north, step, step), CRS.from_epsg(4326))
+    assert grid.bounds[0] <= districts.total_bounds[0] and grid.bounds[2] >= districts.total_bounds[2]
+    assert grid.bounds[1] <= districts.total_bounds[1] and grid.bounds[3] >= districts.total_bounds[3]
+    table = raster.zonal(grid, districts, raster.continuous_ops(grid))
+    assert sorted(table["districtLgd"]) == sorted(districts["districtLgd"])
+    assert table["mean"].to_numpy() == pytest.approx(np.full(len(districts), 7.0))
 
 
 def test_zonal_quantiles_skip_nodata_cells():

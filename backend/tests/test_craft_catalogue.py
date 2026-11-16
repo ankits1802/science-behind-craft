@@ -2,13 +2,9 @@ from typing import Any
 
 import pytest
 
+from app.core.http_cache import etag_matches, quoted_etag
 from app.data.craft_master_loader import build_catalogue, seed_plan
-from app.services.craft_catalogue import (
-    assemble_catalogue,
-    etag_matches,
-    quoted_etag,
-    reference_tables,
-)
+from app.services.craft_catalogue import assemble_catalogue, reference_tables
 
 
 @pytest.fixture(scope="module")

@@ -1,8 +1,5 @@
 import os
-import time
 import uuid
-from collections.abc import AsyncIterator
-from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
@@ -12,73 +9,16 @@ from sqlalchemy import func, select, text
 
 from app.core.db import session_scope
 from app.core.security import hash_password
-from app.main import app
 from app.models import AccessRoster, AppSetting, Provider, RoutePolicy, UsageEvent, User
 from app.providers import router as ai_router
 from app.providers.base import Adapter, ChatResult, ProviderError
 from app.services import app_settings, two_factor
 
+from .accounts import PASSWORD, bearer, code, create_user, login, unique_email
+
 pytestmark = pytest.mark.db
 
-PASSWORD = "correct-horse-battery"
 MASTER_EMAIL = os.environ["MASTER_ADMIN_EMAIL"].lower()
-
-
-def unique_email(prefix: str) -> str:
-    return f"{prefix}-{uuid.uuid4().hex[:10]}@example.com"
-
-
-def code(secret: str, steps_ahead: int = 0) -> str:
-    return two_factor.current_totp(secret, time.time() + 30 * steps_ahead)
-
-
-async def create_user(
-    email: str, role: str, *, with_two_factor: bool = False, rostered: bool = True
-) -> str | None:
-    secret = two_factor.generate_secret() if with_two_factor else None
-    async with session_scope() as session:
-        session.add(
-            User(
-                email=email,
-                name=email.split("@")[0],
-                passwordHash=hash_password(PASSWORD),
-                role=role,
-                twoFactorEnabled=with_two_factor,
-                twoFactorSecret=two_factor.encrypt_secret(secret) if secret else None,
-                emailVerifiedAt=datetime.now(UTC),
-            )
-        )
-        if rostered:
-            session.add(AccessRoster(email=email, status="ACTIVE", admitRole=role))
-    return secret
-
-
-@pytest.fixture(scope="session")
-async def client() -> AsyncIterator[httpx.AsyncClient]:
-    transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://test") as http:
-        yield http
-
-
-def bearer(token: str) -> dict[str, str]:
-    return {"Authorization": f"Bearer {token}"}
-
-
-async def login(
-    client: httpx.AsyncClient, email: str, secret: str | None = None, steps_ahead: int = 0
-) -> str:
-    response = await client.post("/api/auth/login", json={"email": email, "password": PASSWORD})
-    assert response.status_code == 200, response.text
-    body = response.json()
-    if body.get("two_factor_required"):
-        assert secret is not None
-        verified = await client.post(
-            "/api/auth/two-factor/verify",
-            json={"challenge_token": body["challenge_token"], "code": code(secret, steps_ahead)},
-        )
-        assert verified.status_code == 200, verified.text
-        body = verified.json()
-    return body["accessToken"]
 
 
 @pytest.fixture(scope="session")
@@ -335,15 +275,15 @@ async def test_professor_cannot_reinstate_barred_access(
 
 
 async def test_google_nonce_is_single_use_by_hash() -> None:
-    from app.services import google_auth
+    from app.services import auth_nonces
 
     async with session_scope() as session:
-        raw, _expires = await google_auth.issue_nonce(session)
+        raw, _expires = await auth_nonces.issue_nonce(session, purpose="GOOGLE_SIGN_IN")
     async with session_scope() as session:
-        assert await google_auth.consume_nonce(session, raw, purpose="GOOGLE_SIGN_IN")
+        assert await auth_nonces.consume_nonce(session, raw, purpose="GOOGLE_SIGN_IN")
     async with session_scope() as session:
-        assert not await google_auth.consume_nonce(session, raw, purpose="GOOGLE_SIGN_IN")
-        assert not await google_auth.consume_nonce(session, "forged", purpose="GOOGLE_SIGN_IN")
+        assert not await auth_nonces.consume_nonce(session, raw, purpose="GOOGLE_SIGN_IN")
+        assert not await auth_nonces.consume_nonce(session, "forged", purpose="GOOGLE_SIGN_IN")
 
 
 async def test_master_manages_keys_routing_and_usage(

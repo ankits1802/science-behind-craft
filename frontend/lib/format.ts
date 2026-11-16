@@ -7,6 +7,15 @@ export function formatDate(value?: string | null) {
   }).format(new Date(value));
 }
 
+const CALENDAR_DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+export function formatCalendarDay(day: string): string {
+  const parts = CALENDAR_DAY.exec(day);
+  if (!parts) throw new RangeError(`not a calendar day: ${day}`);
+  const date = new Date(Date.UTC(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])));
+  return new Intl.DateTimeFormat("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(date);
+}
+
 export function formatDateTime(value?: string | null) {
   if (!value) return "-";
   return new Intl.DateTimeFormat("en-IN", {
@@ -26,6 +35,19 @@ export function bytes(value: number | string | undefined | null) {
   if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
   if (size < 1024 * 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(1)} MB`;
   return `${(size / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+}
+
+export function formatClock(seconds: number): string {
+  const whole = Math.max(0, Math.ceil(seconds));
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+}
+
+export function spokenClock(seconds: number): string {
+  const whole = Math.max(0, Math.ceil(seconds));
+  const minutes = Math.floor(whole / 60);
+  const rest = whole % 60;
+  const parts = [minutes > 0 ? countNoun(minutes, "minute") : null, rest > 0 || minutes === 0 ? countNoun(rest, "second") : null];
+  return parts.filter(Boolean).join(" ");
 }
 
 export function byCount(count: number, one: string, many: string): string {

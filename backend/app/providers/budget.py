@@ -4,11 +4,10 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, time, timedelta
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
-from zoneinfo import ZoneInfo
 
+from app.core.clock import INDIA_TZ
 from app.services.ai_providers import UNKNOWN_TOKEN_PRICE, UNKNOWN_UNIT_PRICE, AiModel
 
-BUDGET_TIMEZONE = ZoneInfo("Asia/Kolkata")
 CACHED_INPUT_FRACTION = Decimal("0.25")
 RESERVATION_TTL = timedelta(minutes=15)
 MICRO = Decimal("0.000001")
@@ -155,14 +154,14 @@ def estimate_tokens(text: str) -> int:
 
 
 def budget_today(now: datetime | None = None) -> date:
-    return (now or datetime.now(UTC)).astimezone(BUDGET_TIMEZONE).date()
+    return (now or datetime.now(UTC)).astimezone(INDIA_TZ).date()
 
 
 def month_start(now: datetime | None = None) -> datetime:
-    local = (now or datetime.now(UTC)).astimezone(BUDGET_TIMEZONE)
-    return datetime.combine(local.date().replace(day=1), time.min, tzinfo=BUDGET_TIMEZONE).astimezone(UTC)
+    local = (now or datetime.now(UTC)).astimezone(INDIA_TZ)
+    return datetime.combine(local.date().replace(day=1), time.min, tzinfo=INDIA_TZ).astimezone(UTC)
 
 
 def day_start(now: datetime | None = None) -> datetime:
-    local = (now or datetime.now(UTC)).astimezone(BUDGET_TIMEZONE)
-    return datetime.combine(local.date(), time.min, tzinfo=BUDGET_TIMEZONE).astimezone(UTC)
+    local = (now or datetime.now(UTC)).astimezone(INDIA_TZ)
+    return datetime.combine(local.date(), time.min, tzinfo=INDIA_TZ).astimezone(UTC)

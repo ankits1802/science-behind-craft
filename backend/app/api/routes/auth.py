@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import uuid
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
@@ -26,9 +27,12 @@ from app.core.rate_limit import (
     sign_in_attempt_by_ip,
 )
 from app.core.roles import (
+    ADMIN,
     MASTER_ADMIN,
+    STUDENT,
     Capability,
     can,
+    has_rank,
     is_known_role,
     may_manage_target,
     role_value,
@@ -36,17 +40,28 @@ from app.core.roles import (
 from app.core.security import create_access_token, hash_password, verify_password, verify_password_or_decoy
 from app.models import AccessRoster, ConsentRecord, PasswordResetRequest, RoleRequest, User
 from app.schemas.auth import (
-    ChangePasswordRequest,
     ConsentRequest,
     ForgotPasswordRequest,
     GoogleLinkRequest,
     IssuePasswordLinkRequest,
     LoginRequest,
+    OidcCodeFields,
+    OidcNonceRequest,
     PasswordLinkCheckRequest,
     SetPasswordRequest,
     SignUpRequest,
 )
-from app.services import access_roster, audit, credential_links, google_auth, mailer, turnstile, two_factor
+from app.services import (
+    access_roster,
+    audit,
+    auth_nonces,
+    credential_links,
+    google_auth,
+    mailer,
+    oidc_sign_in,
+    turnstile,
+    two_factor,
+)
 from app.services.users import serialize_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -67,17 +82,22 @@ INVALID_CREDENTIALS_DETAIL = "Invalid email or password"
 THROTTLED_DETAIL = "Too many sign-in attempts. Wait a few minutes and try again."
 PASSWORD_NOT_SET_HINT = "PASSWORD_NOT_SET"
 PASSWORD_NOT_SET_DETAIL = (
-    "This account has no password yet. Sign in with Google, or ask for a set-password link."
+    "This account has no password yet. Sign in with {label}, or ask for a set-password link."
 )
 EMAIL_UNVERIFIED_HINT = "EMAIL_UNVERIFIED"
 EMAIL_UNVERIFIED_DETAIL = (
     "Confirm your email address first: open the link we sent, or ask for a new one with Forgot password."
 )
-GOOGLE_UNAVAILABLE_DETAIL = "Google sign-in isn't available right now. Sign in with your email and password."
-GOOGLE_FAILED_DETAIL = "Google sign-in didn't work. Try again."
-GOOGLE_UNVERIFIED_DETAIL = "This Google account's email address isn't verified."
+PROVIDER_UNAVAILABLE_DETAIL = (
+    "{label} sign-in isn't available right now. Sign in with your email and password."
+)
+PROVIDER_FAILED_DETAIL = "{label} sign-in didn't work. Try again."
+PROVIDER_UNVERIFIED_DETAIL = "This {label} account's email address isn't verified."
+GOOGLE_PROVIDER = "GOOGLE"
+GOOGLE_UNAVAILABLE_DETAIL = PROVIDER_UNAVAILABLE_DETAIL.format(label="Google")
+GOOGLE_FAILED_DETAIL = PROVIDER_FAILED_DETAIL.format(label="Google")
+GOOGLE_UNVERIFIED_DETAIL = PROVIDER_UNVERIFIED_DETAIL.format(label="Google")
 SAME_PASSWORD_DETAIL = "Choose a password different from the one you have now."
-CURRENT_PASSWORD_WRONG_DETAIL = "Current password is incorrect"
 FORGOT_PASSWORD_MESSAGE = "If that address has a password here, a reset link is on its way."
 
 SET_PASSWORD_REFUSALS = {
@@ -99,7 +119,7 @@ def role_for_email(email: str) -> str:
     if email.strip().lower() == settings.master_admin_email.strip().lower():
         return MASTER_ADMIN
     role = settings.default_signup_role
-    return role if is_known_role(role) and role != MASTER_ADMIN else "STUDENT"
+    return role if is_known_role(role) and not has_rank(role, ADMIN) else STUDENT
 
 
 async def assert_access_admits(session: AsyncSession, email: str, *, is_master: bool) -> Any:
@@ -162,12 +182,105 @@ async def _find_user(session: AsyncSession, email: str) -> User | None:
     ).scalar_one_or_none()
 
 
+def _sign_in_label(user: User) -> str:
+    provider = str(user.authProvider or "")
+    return oidc_sign_in.label_of(provider) if provider in oidc_sign_in.PROVIDERS else "Google"
+
+
 def _adopt_admitted_role(account: User, row: Any) -> None:
     admitted = access_roster.role_of(row) if access_roster.admits(row) else None
     if not admitted or role_value(account) in (admitted, MASTER_ADMIN):
         return
     account.role = admitted
     account.tokenVersion += 1
+
+
+@dataclass(frozen=True)
+class VerifiedMailbox:
+    email: str
+    display_name: str | None
+    avatar_url: str | None
+    provider: str
+
+
+def _account_name(mailbox: VerifiedMailbox, role: str, access: Any) -> str:
+    if access is not None and access.fullName:
+        return str(access.fullName)[:200]
+    if role == MASTER_ADMIN:
+        return get_settings().master_admin_name[:200]
+    return str(mailbox.display_name or mailbox.email.split("@")[0])[:200]
+
+
+async def _clear_unverified_credentials(session: AsyncSession, account: User) -> User:
+    if account.emailVerifiedAt is not None or account.passwordIssuerKnown:
+        return account
+    had_password = account.passwordHash is not None
+    had_two_factor = account.twoFactorEnabled or account.twoFactorPendingSecret is not None
+    if not (had_password or had_two_factor):
+        return account
+    account.passwordHash = None
+    account.passwordSetAt = None
+    account.mustChangePassword = False
+    await two_factor.reset_by_administrator(session, account)
+    await credential_links.revoke_outstanding(session, account.id)
+    await audit.record(
+        session,
+        action="auth.unverified_credentials_cleared",
+        actor=None,
+        target_type="User",
+        target_id=account.id,
+        detail={"password": had_password, "twoFactor": had_two_factor},
+    )
+    await session.flush()
+    return await reload_user(session, account.id)
+
+
+async def _update_verified_account(
+    session: AsyncSession, existing: User, mailbox: VerifiedMailbox, *, name: str, role: str, access: Any
+) -> User:
+    if existing.deletedAt is not None:
+        raise HTTPException(
+            status.HTTP_403_FORBIDDEN, ACCESS_SUSPENDED_DETAIL, _access_headers(access_roster.SUSPENDED)
+        )
+    existing = await _clear_unverified_credentials(session, existing)
+    if existing.emailVerifiedAt is None:
+        _adopt_admitted_role(existing, access)
+    if existing.passwordHash is None:
+        existing.name = name
+        if str(existing.authProvider) in ("LOCAL", mailbox.provider):
+            existing.authProvider = mailbox.provider
+    if mailbox.provider == GOOGLE_PROVIDER:
+        existing.avatarUrl = mailbox.avatar_url
+    existing.emailVerifiedAt = existing.emailVerifiedAt or datetime.now(UTC)
+    if role == MASTER_ADMIN and existing.passwordHash is None and role_value(existing) != MASTER_ADMIN:
+        existing.role = MASTER_ADMIN
+        existing.tokenVersion += 1
+    await session.flush()
+    return existing
+
+
+async def sign_in_verified_mailbox(session: AsyncSession, mailbox: VerifiedMailbox) -> tuple[User, Any]:
+    role = role_for_email(mailbox.email)
+    access = await assert_access_admits(session, mailbox.email, is_master=role == MASTER_ADMIN)
+    name = _account_name(mailbox, role, access)
+    existing = await _find_user(session, mailbox.email)
+    if existing is not None:
+        updated = await _update_verified_account(
+            session, existing, mailbox, name=name, role=role, access=access
+        )
+        return updated, access
+    admitted_role = access_roster.role_of(access) if access is not None else None
+    created = User(
+        email=mailbox.email,
+        name=name,
+        avatarUrl=mailbox.avatar_url,
+        authProvider=mailbox.provider,
+        role=MASTER_ADMIN if role == MASTER_ADMIN else (admitted_role or role),
+        emailVerifiedAt=datetime.now(UTC),
+    )
+    session.add(created)
+    await session.flush()
+    return created, access
 
 
 async def login_with_google(session: AsyncSession, token: str) -> tuple[User, Any]:
@@ -180,62 +293,63 @@ async def login_with_google(session: AsyncSession, token: str) -> tuple[User, An
         detail = GOOGLE_UNVERIFIED_DETAIL if exc.reason == "email_unverified" else GOOGLE_FAILED_DETAIL
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail) from exc
     await session.commit()
-    email = str(claims["email"]).strip().lower()
-    role = role_for_email(email)
-    settings = get_settings()
-    access = await assert_access_admits(session, email, is_master=role == MASTER_ADMIN)
-    name = settings.master_admin_name if role == MASTER_ADMIN else (claims.get("name") or email.split("@")[0])
-    if access is not None and access.fullName:
-        name = access.fullName
-    existing = await _find_user(session, email)
-    if existing is not None:
-        if existing.deletedAt is not None:
-            raise HTTPException(
-                status.HTTP_403_FORBIDDEN, ACCESS_SUSPENDED_DETAIL, _access_headers(access_roster.SUSPENDED)
-            )
-        if existing.emailVerifiedAt is None and not existing.passwordIssuerKnown:
-            had_password = existing.passwordHash is not None
-            had_two_factor = existing.twoFactorEnabled or existing.twoFactorPendingSecret is not None
-            if had_password or had_two_factor:
-                existing.passwordHash = None
-                existing.passwordSetAt = None
-                existing.mustChangePassword = False
-                await two_factor.reset_by_administrator(session, existing)
-                await credential_links.revoke_outstanding(session, existing.id)
-                await audit.record(
-                    session,
-                    action="auth.unverified_credentials_cleared",
-                    actor=None,
-                    target_type="User",
-                    target_id=existing.id,
-                    detail={"password": had_password, "twoFactor": had_two_factor},
-                )
-                await session.flush()
-                existing = await reload_user(session, existing.id)
-        if existing.emailVerifiedAt is None:
-            _adopt_admitted_role(existing, access)
-        if existing.passwordHash is None:
-            existing.name = name[:200]
-            existing.authProvider = "GOOGLE"
-        existing.avatarUrl = claims.get("picture")
-        existing.emailVerifiedAt = existing.emailVerifiedAt or datetime.now(UTC)
-        if role == MASTER_ADMIN and existing.passwordHash is None and role_value(existing) != MASTER_ADMIN:
-            existing.role = MASTER_ADMIN
-            existing.tokenVersion += 1
-        await session.flush()
-        return existing, access
-    admitted_role = access_roster.role_of(access) if access is not None else None
-    created = User(
-        email=email,
-        name=str(name)[:200],
-        avatarUrl=claims.get("picture"),
-        authProvider="GOOGLE",
-        role=MASTER_ADMIN if role == MASTER_ADMIN else (admitted_role or role),
-        emailVerifiedAt=datetime.now(UTC),
+    mailbox = VerifiedMailbox(
+        email=str(claims["email"]).strip().lower(),
+        display_name=claims.get("name"),
+        avatar_url=claims.get("picture"),
+        provider=GOOGLE_PROVIDER,
     )
-    session.add(created)
-    await session.flush()
-    return created, access
+    return await sign_in_verified_mailbox(session, mailbox)
+
+
+def _refuse_when_ip_throttled(request: Request) -> None:
+    allowed, retry = sign_in_attempt_by_ip(request)
+    if not allowed:
+        raise HTTPException(
+            status.HTTP_429_TOO_MANY_REQUESTS,
+            THROTTLED_DETAIL,
+            {"Retry-After": str(max(1, int(retry + 0.999)))},
+        )
+
+
+def code_grant(payload: OidcCodeFields) -> oidc_sign_in.CodeGrant:
+    return oidc_sign_in.CodeGrant(
+        provider=payload.oidcProvider or "",
+        code=payload.oidcCode or "",
+        code_verifier=payload.oidcCodeVerifier or "",
+        redirect_uri=payload.oidcRedirectUri or "",
+        raw_nonce=payload.oidcNonce or "",
+    )
+
+
+async def _prove_with_provider(
+    session: AsyncSession, payload: LoginRequest, label: str
+) -> oidc_sign_in.ProvedIdentity:
+    name = payload.oidcProvider or ""
+    try:
+        return await oidc_sign_in.prove_once(session, code_grant(payload), purpose=oidc_sign_in.NONCE_PURPOSE)
+    except oidc_sign_in.EmailNotVerified as exc:
+        logger.info("oidc sign-in refused", extra={"provider": name, "reason": exc.reason})
+        detail = PROVIDER_UNVERIFIED_DETAIL.format(label=label)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail) from exc
+    except oidc_sign_in.SignInRefused as exc:
+        logger.info("oidc sign-in refused", extra={"provider": name, "reason": exc.reason})
+        detail = PROVIDER_FAILED_DETAIL.format(label=label)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail) from exc
+
+
+async def login_with_oidc(session: AsyncSession, payload: LoginRequest, request: Request) -> tuple[User, Any]:
+    name = payload.oidcProvider or ""
+    label = oidc_sign_in.label_of(name)
+    if oidc_sign_in.provider(name) is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, PROVIDER_UNAVAILABLE_DETAIL.format(label=label))
+    _refuse_when_ip_throttled(request)
+    proved = await _prove_with_provider(session, payload, label)
+    refund_ip(request)
+    mailbox = VerifiedMailbox(
+        email=proved.email, display_name=proved.name, avatar_url=None, provider=proved.provider
+    )
+    return await sign_in_verified_mailbox(session, mailbox)
 
 
 async def login_with_password(
@@ -246,7 +360,7 @@ async def login_with_password(
     if user is not None and user.passwordHash is None and user.deletedAt is None:
         raise HTTPException(
             status.HTTP_401_UNAUTHORIZED,
-            PASSWORD_NOT_SET_DETAIL,
+            PASSWORD_NOT_SET_DETAIL.format(label=_sign_in_label(user)),
             {SIGN_IN_HINT_HEADER: PASSWORD_NOT_SET_HINT},
         )
     account_key = str(user.id) if user is not None else f"addr:{email}"
@@ -285,23 +399,41 @@ async def login_with_password(
 async def google_nonce(request: Request, session: AsyncSession = Depends(get_session)) -> dict[str, Any]:
     if not google_auth.google_enabled():
         raise HTTPException(status.HTTP_404_NOT_FOUND, GOOGLE_UNAVAILABLE_DETAIL)
-    allowed, retry = sign_in_attempt_by_ip(request)
-    if not allowed:
-        raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS,
-            THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
-        )
+    _refuse_when_ip_throttled(request)
     refund_ip(request)
-    nonce, expires = await google_auth.issue_nonce(session, ip_hash=ip_hash(client_ip(request)))
+    nonce, expires = await auth_nonces.issue_nonce(
+        session, purpose="GOOGLE_SIGN_IN", ip_hash=ip_hash(client_ip(request))
+    )
     return {"nonce": nonce, "expiresAt": expires.isoformat(), "clientId": get_settings().google_client_id}
+
+
+@router.post("/oidc/nonce")
+async def oidc_nonce(
+    payload: OidcNonceRequest, request: Request, session: AsyncSession = Depends(get_session)
+) -> dict[str, Any]:
+    client_id = oidc_sign_in.client_id_if_enabled(payload.provider)
+    if client_id is None:
+        label = oidc_sign_in.label_of(payload.provider)
+        raise HTTPException(status.HTTP_404_NOT_FOUND, PROVIDER_UNAVAILABLE_DETAIL.format(label=label))
+    _refuse_when_ip_throttled(request)
+    refund_ip(request)
+    nonce, expires = await auth_nonces.issue_nonce(
+        session, purpose=oidc_sign_in.NONCE_PURPOSE, ip_hash=ip_hash(client_ip(request))
+    )
+    return {"nonce": nonce, "expiresAt": expires.isoformat(), "clientId": client_id}
 
 
 @router.get("/config")
 async def auth_config() -> dict[str, Any]:
+    microsoft_client_id = oidc_sign_in.client_id_if_enabled(oidc_sign_in.MICROSOFT)
+    yahoo_client_id = oidc_sign_in.client_id_if_enabled(oidc_sign_in.YAHOO)
     return {
         "googleEnabled": google_auth.google_enabled(),
         "googleClientId": get_settings().google_client_id if google_auth.google_enabled() else None,
+        "microsoftEnabled": microsoft_client_id is not None,
+        "microsoftClientId": microsoft_client_id,
+        "yahooEnabled": yahoo_client_id is not None,
+        "yahooClientId": yahoo_client_id,
         "turnstileRequired": turnstile.turnstile_enabled(),
         "turnstileSiteKey": turnstile.site_key(),
         "mailAvailable": mailer.mail_configured(),
@@ -315,6 +447,8 @@ async def login(
 ) -> dict[str, Any]:
     if payload.googleIdToken:
         user, access = await login_with_google(session, payload.googleIdToken)
+    elif payload.has_oidc_code:
+        user, access = await login_with_oidc(session, payload, request)
     else:
         user, access = await login_with_password(session, payload, request)
     await session.commit()
@@ -492,7 +626,7 @@ async def google_link_nonce(
 ) -> dict[str, Any]:
     if not google_auth.google_enabled():
         raise HTTPException(status.HTTP_404_NOT_FOUND, GOOGLE_UNAVAILABLE_DETAIL)
-    nonce, expires = await google_auth.issue_nonce(session, purpose="GOOGLE_LINK", user_id=user.id)
+    nonce, expires = await auth_nonces.issue_nonce(session, purpose="GOOGLE_LINK", user_id=user.id)
     return {"nonce": nonce, "expiresAt": expires.isoformat(), "clientId": get_settings().google_client_id}
 
 
@@ -537,9 +671,7 @@ async def issue_password_link(
     session: AsyncSession = Depends(get_session),
 ) -> dict[str, Any]:
     if not can(actor, Capability.MANAGE_ACCESS):
-        raise HTTPException(
-            status.HTTP_403_FORBIDDEN, "Issuing password links is for professors and the master admin."
-        )
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Issuing password links is for professors and admins.")
     try:
         target_id = uuid.UUID(payload.userId)
     except ValueError as exc:
@@ -730,55 +862,3 @@ async def forgot_password(
     )
     response.headers["Cache-Control"] = "no-store"
     return {"message": FORGOT_PASSWORD_MESSAGE}
-
-
-@router.post("/change-password")
-async def change_password(
-    payload: ChangePasswordRequest,
-    response: Response,
-    user: User = Depends(get_current_user_any_step),
-    session: AsyncSession = Depends(get_session),
-) -> dict[str, bool]:
-    allowed, retry = sign_in_attempt_by_account(str(user.id))
-    if not allowed:
-        raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS,
-            THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
-        )
-    if user.passwordHash is None:
-        if not user.twoFactorEnabled:
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST, "Use a set-password link to add a password to this account."
-            )
-        if not payload.twoFactorCode:
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST,
-                "Enter the code from your authenticator app.",
-                {TWO_FACTOR_REQUIRED_HEADER: "1"},
-            )
-        if not await two_factor.step_up(session, user, payload.twoFactorCode):
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST, two_factor.WRONG_CODE_DETAIL, {TWO_FACTOR_REQUIRED_HEADER: "1"}
-            )
-    else:
-        if not await asyncio.to_thread(verify_password, payload.currentPassword, user.passwordHash):
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, CURRENT_PASSWORD_WRONG_DETAIL)
-        if await asyncio.to_thread(verify_password, payload.newPassword, user.passwordHash):
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, SAME_PASSWORD_DETAIL)
-    refund_account(str(user.id))
-    user = await reload_user(session, user.id)
-    user.passwordHash = await asyncio.to_thread(hash_password, payload.newPassword)
-    user.passwordSetAt = datetime.now(UTC)
-    user.mustChangePassword = False
-    user.passwordIssuerKnown = False
-    user.tokenVersion += 1
-    await credential_links.revoke_outstanding(session, user.id)
-    await audit.record(
-        session, action="auth.password_changed", actor=user, target_type="User", target_id=user.id
-    )
-    await session.commit()
-    user = await reload_user(session, user.id)
-    response.headers[SESSION_TOKEN_HEADER] = session_token(user)
-    await mailer.send(mailer.password_changed_mail(user.email))
-    return {"ok": True}

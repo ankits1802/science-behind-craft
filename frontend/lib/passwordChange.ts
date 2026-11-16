@@ -1,5 +1,6 @@
-import { ApiError } from "@/lib/api";
-import { CONFIRM_PROVIDER_HEADER, TWO_FACTOR_REQUIRED_HEADER } from "@/lib/signIn";
+import { ApiError, apiFetch } from "@/lib/api";
+import { OIDC_TAB_LOST, callbackErrorMessage, loginBody, takePendingSignIn, type CallbackResult } from "@/lib/oidcSignIn";
+import { CONFIRM_PROVIDER_HEADER, TWO_FACTOR_REQUIRED_HEADER, type ProviderProof } from "@/lib/signIn";
 import type { User } from "@/lib/types";
 
 export function hasOwnPassword(user: Pick<User, "passwordSetAt" | "hasPassword"> | null | undefined): boolean {
@@ -34,6 +35,29 @@ export function confirmPrompt(provider: ConfirmProvider): string {
 }
 
 export const CONFIRMED_NOTE = "Confirmed. Set your password within the next few minutes.";
+
+export type FirstPasswordNonce = {
+  nonce: string;
+  expiresAt: string;
+  provider: ConfirmProvider;
+  clientId: string;
+};
+
+export async function fetchFirstPasswordNonce(): Promise<FirstPasswordNonce> {
+  return apiFetch<FirstPasswordNonce>("/auth/first-password/nonce", { method: "POST" });
+}
+
+export type ConfirmReturn = { proof: ProviderProof } | { error: string };
+
+export function confirmReturn(
+  callback: CallbackResult,
+  storage?: Pick<Storage, "getItem" | "removeItem">
+): ConfirmReturn {
+  const pending = takePendingSignIn(callback.state, storage);
+  if (!pending) return { error: OIDC_TAB_LOST };
+  if (callback.error || !callback.code) return { error: callbackErrorMessage(pending.provider, callback.error) };
+  return { proof: loginBody(pending, callback.code) };
+}
 
 export function twoFactorCodeRequired(error: unknown): boolean {
   return error instanceof ApiError && error.status === 400 && error.headers?.get(TWO_FACTOR_REQUIRED_HEADER) === "1";

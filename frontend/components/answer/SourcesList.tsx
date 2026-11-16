@@ -5,17 +5,33 @@ import type { SourceRef } from "@/lib/types";
 
 export type NumberedSource = { number: number; id: string; source: SourceRef | null };
 
-export function SourcesList({ entries }: { entries: NumberedSource[] }) {
+export function SourcesList({
+  entries,
+  idPrefix = "source",
+  compact = false,
+  flashIds
+}: {
+  entries: NumberedSource[];
+  idPrefix?: string;
+  compact?: boolean;
+  flashIds?: ReadonlySet<string>;
+}) {
+  const headingId = `${idPrefix}s-heading`;
   return (
-    <section className="panel p-5 md:p-6" aria-labelledby="sources-heading">
-      <h2 id="sources-heading" className="font-display text-lg font-bold text-ink-900">
+    <section className={compact ? "grid gap-2" : "panel p-5 md:p-6"} aria-labelledby={headingId}>
+      <h2 id={headingId} className={compact ? "field-label" : "font-display text-lg font-bold text-ink-900"}>
         Sources
       </h2>
-      <ol className="mt-3 grid gap-2.5">
+      <ol className={compact ? "grid gap-2" : "mt-3 grid gap-2.5"}>
         {entries.map(({ number, id, source }) => {
           const href = source ? sourceHref(source) : null;
           return (
-            <li key={id} id={`source-${number}`} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-2 text-sm">
+            <li
+              key={id}
+              id={`${idPrefix}-${number}`}
+              data-flash={flashIds?.has(id) ? "true" : undefined}
+              className="fr-flash-row grid grid-cols-[2rem_minmax(0,1fr)] gap-2 rounded-sm text-sm"
+            >
               <span className="font-display font-bold tabular-nums text-purple-700 dark:text-purple-300">[{number}]</span>
               <span className="min-w-0">
                 {href ? (

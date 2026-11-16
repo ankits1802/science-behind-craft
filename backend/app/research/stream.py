@@ -5,9 +5,9 @@ import contextlib
 import json
 from collections.abc import AsyncIterator, Awaitable, Callable, Mapping
 from types import MappingProxyType
-from typing import Annotated, Any, Literal
+from typing import Annotated, Any, Literal, Self
 
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError, model_validator
 
 from app.core.errors import InvalidInput
 from app.models.knowledge import QUOTE_MAX_CHARS
@@ -56,11 +56,16 @@ STATUS_STEPS = (
     "READING",
     "COMPOSING",
     "WRITING_BACK",
+    "TRANSLATING",
 )
 
 StatusStep = Literal[*STATUS_STEPS]
 ResearchProgress = Callable[[StatusStep, int], Awaitable[None]]
 Emit = Callable[[str, Any], Awaitable[None]]
+
+
+def _absent(value: object) -> bool:
+    return value is None
 
 
 class SourceRef(ContractModel):
@@ -94,6 +99,13 @@ class AnswerSentence(ContractModel):
     level: ShownLevel
     citations: list[Citation] = Field(min_length=1)
     translated: bool = False
+    original: str | None = Field(default=None, min_length=1, exclude_if=_absent)
+
+    @model_validator(mode="after")
+    def _translation_keeps_its_original(self) -> Self:
+        if self.translated != (self.original is not None):
+            raise ValueError("a translated sentence, and only a translated one, carries its original")
+        return self
 
 
 class MatchResolved(ContractModel):
@@ -118,6 +130,7 @@ class StatusEvent(ContractModel):
 class SectionEvent(ContractModel):
     id: str = Field(min_length=1)
     heading: str = Field(min_length=1)
+    original: str | None = Field(default=None, min_length=1, exclude_if=_absent)
 
 
 class SentenceEvent(ContractModel):

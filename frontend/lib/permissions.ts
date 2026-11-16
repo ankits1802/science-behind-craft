@@ -4,6 +4,7 @@ export const ROLE_RANK: Record<UserRole, number> = {
   STUDENT: 15,
   RESEARCHER: 30,
   PROFESSOR: 40,
+  ADMIN: 50,
   MASTER_ADMIN: 60
 };
 
@@ -11,6 +12,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   STUDENT: "Student",
   RESEARCHER: "Researcher",
   PROFESSOR: "Professor",
+  ADMIN: "Admin",
   MASTER_ADMIN: "Master Admin"
 };
 
@@ -36,18 +38,15 @@ export function isMasterAdmin(user: User | null | undefined) {
   return user?.role === "MASTER_ADMIN";
 }
 
-export function isAdmin(user: User | null | undefined) {
-  return isMasterAdmin(user);
-}
-
-export function isContentAdmin(user: User | null | undefined) {
+export function hasAdminView(user: User | null | undefined) {
   return isMasterAdmin(user);
 }
 
 export function assignableRoles(user: User | null | undefined): UserRole[] {
   if (isMasterAdmin(user)) return ROLES_BY_RANK;
-  if (hasRank(user, "PROFESSOR")) return ROLES_BY_RANK.filter((role) => ROLE_RANK[role] < ROLE_RANK.PROFESSOR);
-  return [];
+  if (!canManageAccessRoster(user)) return [];
+  const own = roleRank(user);
+  return ROLES_BY_RANK.filter((role) => ROLE_RANK[role] < own);
 }
 
 export function canManageUser(user: User | null | undefined, target: User): boolean {
@@ -60,31 +59,28 @@ export function canManageUsers(user: User | null | undefined) {
 }
 
 export function canChangeRoles(user: User | null | undefined) {
-  return isMasterAdmin(user);
+  return hasRank(user, "ADMIN");
 }
 
 export function canSuspendUsers(user: User | null | undefined) {
-  return isMasterAdmin(user);
-}
-
-export const ACCOUNT_PROVISIONER_ROLES: readonly UserRole[] = ["MASTER_ADMIN"];
-
-export function canProvisionAccounts(user: User | null | undefined) {
-  return !!user && ACCOUNT_PROVISIONER_ROLES.includes(user.role);
-}
-
-export function provisionableRoles(user: User | null | undefined): UserRole[] {
-  if (!canProvisionAccounts(user)) return [];
-  const own = roleRank(user);
-  return ROLES_BY_RANK.filter((role) => ROLE_RANK[role] < own);
+  return hasRank(user, "ADMIN");
 }
 
 export function canManageAccessRoster(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
 }
 
+export function canManageAccessEntry(user: User | null | undefined, admitRole: UserRole | null): boolean {
+  if (!canManageAccessRoster(user)) return false;
+  return isMasterAdmin(user) || roleRank(admitRole) < roleRank(user);
+}
+
 export function canAskDeep(user: User | null | undefined) {
   return hasRank(user, "RESEARCHER");
+}
+
+export function canShareMedia(user: User | null | undefined) {
+  return hasRank(user, "PROFESSOR");
 }
 
 export function canManageSecrets(user: User | null | undefined) {
@@ -96,7 +92,11 @@ export function canManageRouting(user: User | null | undefined) {
 }
 
 export function canReadUsage(user: User | null | undefined) {
-  return isMasterAdmin(user);
+  return hasRank(user, "ADMIN");
+}
+
+export function canOpenSettingsHub(user: User | null | undefined) {
+  return hasRank(user, "ADMIN");
 }
 
 export type RouteGuard = {
@@ -114,6 +114,13 @@ const MASTER_ADMIN_GUARD = {
   message: "Master admins only."
 } as const;
 
+const ADMIN_GUARD = {
+  can: canOpenSettingsHub,
+  gate: "require_admin",
+  title: "Admin access required",
+  message: "Needs Admin access or above."
+} as const;
+
 const PROFESSOR_GUARD = {
   can: canManageUsers,
   gate: "require_professor",
@@ -122,10 +129,10 @@ const PROFESSOR_GUARD = {
 } as const;
 
 export const ROUTE_GUARDS: RouteGuard[] = [
-  { path: "/admin", ...MASTER_ADMIN_GUARD },
+  { path: "/admin", ...ADMIN_GUARD },
   { path: "/admin/keys", ...MASTER_ADMIN_GUARD },
   { path: "/admin/routing", ...MASTER_ADMIN_GUARD },
-  { path: "/admin/usage", ...MASTER_ADMIN_GUARD },
+  { path: "/admin/usage", ...ADMIN_GUARD, can: canReadUsage, gate: "require_view_usage" },
   { path: "/admin/users", ...PROFESSOR_GUARD },
   { path: "/admin/access", ...PROFESSOR_GUARD, gate: "require_access_roster_manager" }
 ];
@@ -149,4 +156,8 @@ export function routeGuardFor(pathname: string): RouteGuard | null {
 export function canAccessRoute(user: User | null | undefined, pathname: string): boolean {
   const guard = routeGuardFor(pathname);
   return !guard || guard.can(user);
+}
+
+export function routeAllows(pathname: string): (user: User | null | undefined) => boolean {
+  return (user) => canAccessRoute(user, pathname);
 }

@@ -20,17 +20,51 @@ LAYER_IMPORTS: dict[str, frozenset[str]] = {
     "retrieval": frozenset({"retrieval", "research", "core", "models"}),
     "planner": frozenset({"planner", "sources", "research", "core", "models"}),
     "composer": frozenset({"composer", "research", "core", "models"}),
-    "schemas": frozenset({"schemas", "core"}),
+    "schemas": frozenset({"schemas", "research", "core"}),
+    "science": frozenset({"science", "schemas", "research", "core"}),
+    "geo": frozenset({"geo", "schemas", "research", "core"}),
     "services": frozenset(
-        {"services", "planner", "composer", "retrieval", "sources", "research", "core", "models", "data"}
+        {
+            "services",
+            "science",
+            "geo",
+            "planner",
+            "composer",
+            "retrieval",
+            "sources",
+            "research",
+            "core",
+            "models",
+            "data",
+        }
     ),
     "providers": frozenset({"providers", "services", "research", "core", "models"}),
+    "voice": frozenset(
+        {"voice", "providers", "services", "composer", "schemas", "research", "core", "models"}
+    ),
+    "media": frozenset({"media", "providers", "services", "schemas", "research", "core", "models"}),
+    "worker": frozenset({"worker", "media", "core"}),
     "api": frozenset(
-        {"api", "providers", "services", "retrieval", "research", "schemas", "core", "models", "data"}
+        {
+            "api",
+            "voice",
+            "media",
+            "providers",
+            "services",
+            "science",
+            "geo",
+            "retrieval",
+            "research",
+            "schemas",
+            "core",
+            "models",
+            "data",
+        }
     ),
     "scripts": frozenset(
         {
             "scripts",
+            "voice",
             "providers",
             "services",
             "planner",
@@ -42,7 +76,7 @@ LAYER_IMPORTS: dict[str, frozenset[str]] = {
             "data",
         }
     ),
-    "main": frozenset({"api", "providers", "services", "core", "models"}),
+    "main": frozenset({"api", "voice", "providers", "services", "core", "models"}),
 }
 
 

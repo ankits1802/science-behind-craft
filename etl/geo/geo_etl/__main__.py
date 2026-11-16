@@ -11,6 +11,7 @@ from pathlib import Path
 import pandas as pd
 
 from geo_etl import catalog
+from geo_etl.coverage import coverage_of
 from geo_etl.districts import SHAPES_PATH, districts_without_shapes, load_districts, sha256_of
 from geo_etl.layers import Options, Result, chelsa, chirps, copdem, geology, hansen, hydrorivers, soilgrids, worldcover
 from geo_etl.layers.geology import GEOLOGY_COLUMNS
@@ -41,6 +42,18 @@ DATASET_LABELS = {
     "GLIM_1_0_05DEG": "GLiM-1-0",
 }
 CSV_GLOB = "KalaVigyan_Dataset_*_District-Stats.csv"
+SUMMARY_LAYER_KEYS = (
+    "layer",
+    "shard",
+    "districts",
+    "rows",
+    "geologyRows",
+    "districtsWithoutValues",
+    "lostStates",
+    "seconds",
+    "notes",
+    "options",
+)
 
 
 def dataset_label(code: str) -> str:
@@ -117,34 +130,52 @@ def extract(args: argparse.Namespace) -> int:
         print("no districts selected", file=sys.stderr)
         return 2
     options = options_from(args)
-    failed = 0
-    for key in [k.strip() for k in args.datasets.split(",")] if args.datasets != "all" else list(LAYERS):
-        started = time.monotonic()
-        result = LAYERS[key](districts, options)
-        stem = key if args.shard is None else f"{key}-shard{args.shard.replace('/', 'of')}"
-        result.values.to_parquet(parts / f"{stem}.parquet", index=False)
-        if result.geology is not None:
-            result.geology.to_parquet(parts / f"{stem}.geology.parquet", index=False)
-        meta = {
-            "layer": key,
-            "stem": stem,
-            "shard": args.shard,
-            "dataset": result.dataset.as_row(),
-            "retrievedAt": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-            "districts": int(len(districts)),
-            "rows": int(len(result.values)),
-            "geologyRows": 0 if result.geology is None else int(len(result.geology)),
-            "failures": result.failures,
-            "notes": result.notes,
-            "options": {k: (str(v) if isinstance(v, Path) else v) for k, v in dataclasses.asdict(options).items()},
-            "seconds": round(time.monotonic() - started, 1),
-        }
-        (parts / f"{stem}.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
-        failed += len(result.failures)
-        print(f"{key}: {meta['rows']} rows, {len(result.failures)} failures, {meta['seconds']} s")
-        for item in result.failures:
-            print(f"  failure {item['step']} {item['districtLgds'][:5]}: {item['error']}", file=sys.stderr)
-    return 1 if failed and not args.allow_failures else 0
+    keys = [k.strip() for k in args.datasets.split(",")] if args.datasets != "all" else list(LAYERS)
+    metas = [extract_layer(key, districts, options, parts=parts, shard=args.shard) for key in keys]
+    return part_status(metas, allow_failures=args.allow_failures)
+
+
+def extract_layer(key: str, districts: pd.DataFrame, options: Options, *, parts: Path, shard: str | None) -> dict:
+    started = time.monotonic()
+    result = LAYERS[key](districts, options)
+    stem = key if shard is None else f"{key}-shard{shard.replace('/', 'of')}"
+    result.values.to_parquet(parts / f"{stem}.parquet", index=False)
+    if result.geology is not None:
+        result.geology.to_parquet(parts / f"{stem}.geology.parquet", index=False)
+    reach = coverage_of(districts, result)
+    meta = {
+        "layer": key,
+        "stem": stem,
+        "shard": shard,
+        "dataset": result.dataset.as_row(),
+        "retrievedAt": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        "districts": int(len(districts)),
+        "rows": int(len(result.values)),
+        "geologyRows": 0 if result.geology is None else int(len(result.geology)),
+        "failures": result.failures,
+        "districtsWithoutValues": reach.districts_without_values,
+        "lostStates": reach.lost_states,
+        "notes": result.notes,
+        "options": {k: (str(v) if isinstance(v, Path) else v) for k, v in dataclasses.asdict(options).items()},
+        "seconds": round(time.monotonic() - started, 1),
+    }
+    (parts / f"{stem}.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
+    print(f"{key}: {meta['rows']} rows, {len(result.failures)} failures, {meta['seconds']} s")
+    for item in result.failures:
+        print(f"  failure {item['step']} {item['districtLgds'][:5]}: {item['error']}", file=sys.stderr)
+    return meta
+
+
+def part_status(metas: list[dict], *, allow_failures: bool) -> int:
+    lost = [m for m in metas if m["lostStates"]]
+    for meta in lost:
+        print(
+            f"{meta['layer']}: states {meta['lostStates']} lost every district or a whole step; "
+            "a lost state fails the part even with --allow-failures",
+            file=sys.stderr,
+        )
+    failed = any(m["failures"] for m in metas)
+    return 1 if lost or (failed and not allow_failures) else 0
 
 
 def combine(args: argparse.Namespace) -> int:
@@ -173,7 +204,7 @@ def combine(args: argparse.Namespace) -> int:
         "boundaries": boundaries,
         "datasets": list(datasets.values()),
         "layers": [
-            {k: m[k] for k in ("layer", "shard", "districts", "rows", "geologyRows", "seconds", "notes", "options")}
+            {k: m[k] for k in SUMMARY_LAYER_KEYS}
             | {"datasetCode": m["dataset"]["code"], "failureCount": len(m["failures"]), "failures": m["failures"]}
             for m in metas
         ],
@@ -206,7 +237,12 @@ def add_extract_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--no-chelsa-months", action="store_true")
     parser.add_argument("--no-chirps-monthly", action="store_true")
     parser.add_argument("--download-striped", action="store_true")
-    parser.add_argument("--allow-failures", action="store_true")
+    parser.add_argument(
+        "--allow-failures",
+        action="store_true",
+        help="keep a part whose failures are scattered districts; a state left with no values, or with a step "
+        "failed for every one of its districts, still fails the part",
+    )
     parser.add_argument("--shard", help="k/n: process the k-th of n state groups, balanced by area")
 
 

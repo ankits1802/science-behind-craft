@@ -1,5 +1,4 @@
 import math
-import time
 
 import geopandas as gpd
 import numpy as np
@@ -11,7 +10,7 @@ from rasterio.transform import from_origin
 
 from geo_etl import raster
 from geo_etl.catalog import SOILGRIDS
-from geo_etl.layers import USER_AGENT, Options, Result, by_state, failure
+from geo_etl.layers import USER_AGENT, Options, Result, by_state, failure, with_retries
 from geo_etl.rows import Rows, pick
 
 WCS = "https://maps.isric.org/mapserv"
@@ -21,7 +20,6 @@ CHUNK = 2000
 NODATA = -32768
 MASKED = 0
 PAD_M = 1000.0
-ATTEMPTS = 4
 
 CONVERSION = {
     "clay": (10.0, "%"),
@@ -57,19 +55,16 @@ def coverage(variable: str, depth: str, layer: str, bounds: tuple[float, float, 
         "SUBSET": [f"X({xmin:.0f},{xmax:.0f})", f"Y({ymin:.0f},{ymax:.0f})"],
     }
     expected = (round((ymax - ymin) / CELL), round((xmax - xmin) / CELL))
-    for attempt in range(ATTEMPTS):
-        try:
-            response = requests.get(WCS, params=params, timeout=300, headers={"User-Agent": USER_AGENT})
-            response.raise_for_status()
-            with MemoryFile(response.content) as memory, memory.open() as dataset:
-                if dataset.shape != expected or abs(dataset.res[0] - CELL) > 1e-6:
-                    raise RuntimeError(f"WCS returned {dataset.shape} at {dataset.res}, expected {expected} at {CELL}")
-                return dataset.read(1)
-        except requests.RequestException, RuntimeError:
-            if attempt == ATTEMPTS - 1:
-                raise
-            time.sleep(5 * (attempt + 1))
-    raise RuntimeError("unreachable")
+
+    def fetch() -> np.ndarray:
+        response = requests.get(WCS, params=params, timeout=300, headers={"User-Agent": USER_AGENT})
+        response.raise_for_status()
+        with MemoryFile(response.content) as memory, memory.open() as dataset:
+            if dataset.shape != expected or abs(dataset.res[0] - CELL) > 1e-6:
+                raise RuntimeError(f"WCS returned {dataset.shape} at {dataset.res}, expected {expected} at {CELL}")
+            return dataset.read(1)
+
+    return with_retries(fetch, retry_on=(requests.RequestException, RuntimeError))
 
 
 def read(variable: str, depth: str, layer: str, bounds: tuple[float, float, float, float], divisor: float):

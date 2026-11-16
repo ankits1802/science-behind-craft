@@ -16,6 +16,7 @@ from app.api.routes.auth import (
     SIGN_IN_HINT_HEADER,
     TWO_FACTOR_REQUIRED_HEADER,
 )
+from app.api.routes.password_change import CONFIRM_PROVIDER_HEADER
 from app.core.config import get_settings
 from app.core.db import dispose_engine, ping
 from app.core.deps import PASSWORD_CHANGE_REQUIRED_HEADER, TWO_FACTOR_SETUP_REQUIRED_HEADER
@@ -26,9 +27,12 @@ from app.core.logging import (
     current_request_id,
 )
 from app.core.security import verify_jwt_configuration
+from app.core.shielded import ShieldedWork
 from app.services import two_factor
 from app.services.craft_resolver import CraftIndexStore
 from app.services.live_sources import LiveSourcesStore
+from app.voice.runtime import VoiceRuntime
+from app.voice.sessions import VOICE_CONSENT_HEADER
 
 logger = logging.getLogger("kalavigyan")
 
@@ -71,7 +75,9 @@ class SecurityHeadersMiddleware:
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
+    await app.state.shielded_work.drain()
     await app.state.live_sources.aclose()
+    await app.state.voice_runtime.aclose()
     await dispose_engine()
 
 
@@ -90,6 +96,8 @@ def create_app() -> FastAPI:
     )
     app.state.craft_index = CraftIndexStore()
     app.state.live_sources = LiveSourcesStore()
+    app.state.shielded_work = ShieldedWork()
+    app.state.voice_runtime = VoiceRuntime()
 
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception) -> JSONResponse:
@@ -114,6 +122,7 @@ def create_app() -> FastAPI:
         ],
         expose_headers=[
             ACCESS_STATUS_HEADER,
+            CONFIRM_PROVIDER_HEADER,
             SIGN_IN_HINT_HEADER,
             SESSION_TOKEN_HEADER,
             TWO_FACTOR_REQUIRED_HEADER,
@@ -122,6 +131,7 @@ def create_app() -> FastAPI:
             REQUEST_ID_HEADER,
             "Retry-After",
             "ETag",
+            VOICE_CONSENT_HEADER,
         ],
         max_age=600,
     )

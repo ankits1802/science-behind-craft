@@ -11,7 +11,7 @@ export type GoogleNonceState = {
   renew: () => void;
 };
 
-export function useGoogleNonce(): GoogleNonceState {
+export function useGoogleNonce(fetchNonce: () => Promise<string> = fetchGoogleNonce): GoogleNonceState {
   const [clientId] = useState(() => googleClientId());
   const [nonce, setNonce] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
@@ -21,7 +21,7 @@ export function useGoogleNonce(): GoogleNonceState {
     if (!clientId) return;
     let cancelled = false;
     setNonce(null);
-    fetchGoogleNonce()
+    fetchNonce()
       .then((next) => {
         if (cancelled) return;
         setNonce(next);
@@ -33,7 +33,7 @@ export function useGoogleNonce(): GoogleNonceState {
     return () => {
       cancelled = true;
     };
-  }, [clientId, round]);
+  }, [clientId, fetchNonce, round]);
 
   const renew = useCallback(() => setRound((value) => value + 1), []);
 

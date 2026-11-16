@@ -9,34 +9,33 @@ import { riseItem, staggerParent } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { usePendingAccessCount } from "@/components/hooks/usePendingAccessCount";
 import { PageHeader } from "@/components/PageHeader";
-import { canManageAccessRoster, canManageRouting, canManageSecrets, canManageUsers, canReadUsage } from "@/lib/permissions";
-import type { User } from "@/lib/types";
+import { canAccessRoute, canManageAccessRoster, canManageRouting } from "@/lib/permissions";
 
 type HubCard = {
   href: string;
   title: string;
   note: string;
   icon: LucideIcon;
-  can: (user: User | null) => boolean;
 };
 
 const CARDS: HubCard[] = [
-  { href: "/admin/access", title: "Who may sign in", note: "Approve requests and add addresses.", icon: ShieldCheck, can: canManageAccessRoster },
-  { href: "/admin/users", title: "Manage users", note: "Change roles, suspend accounts.", icon: UserCog, can: canManageUsers },
-  { href: "/admin/keys", title: "API keys", note: "Set and test provider keys.", icon: KeyRound, can: canManageSecrets },
-  { href: "/admin/routing", title: "AI routing", note: "Model order for each task.", icon: Route, can: canManageRouting },
-  { href: "/admin/usage", title: "Usage", note: "Calls, tokens and spend.", icon: BarChart3, can: canReadUsage }
+  { href: "/admin/access", title: "Who may sign in", note: "Approve requests and add addresses.", icon: ShieldCheck },
+  { href: "/admin/users", title: "Manage users", note: "Change roles, suspend accounts.", icon: UserCog },
+  { href: "/admin/keys", title: "API keys", note: "Set and test provider keys.", icon: KeyRound },
+  { href: "/admin/routing", title: "AI routing", note: "Model order for each task.", icon: Route },
+  { href: "/admin/usage", title: "Usage", note: "Calls, tokens and spend.", icon: BarChart3 }
 ];
 
 export default function SettingsHubPage() {
   const { user } = useAuth();
   const reduce = useAppReducedMotion();
-  const visible = CARDS.filter((card) => card.can(user));
+  const visible = CARDS.filter((card) => canAccessRoute(user, card.href));
   const pending = usePendingAccessCount(canManageAccessRoster(user));
+  const description = canManageRouting(user) ? "Accounts, keys and model routing." : "Accounts, access and usage.";
 
   return (
     <>
-      <PageHeader title="Settings hub" description="Accounts, keys and model routing." icon={<SlidersHorizontal className="h-5 w-5" aria-hidden />} />
+      <PageHeader title="Settings hub" description={description} icon={<SlidersHorizontal className="h-5 w-5" aria-hidden />} />
       <motion.ul variants={staggerParent(reduce)} initial="hidden" animate="show" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((card) => (
           <motion.li key={card.href} variants={riseItem(reduce)}>

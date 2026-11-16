@@ -9,14 +9,16 @@ Errors are `{"detail": "<sentence>"}` (FastAPI); validation errors are FastAPI's
 | Header | When | Meaning |
 |---|---|---|
 | `X-Access-Status` | 403/503 from `/auth/login`, `/auth/two-factor/verify` | `PENDING`, `REJECTED`, `SUSPENDED`, `NOT_RECORDED` (queue full, 503). Same values as DR `lib/accessRoster.ts`. |
-| `X-Two-Factor-Setup-Required: 1` | 403 from any route except the 2FA setup routes, `/auth/me`, `/me`, `/auth/change-password`, `/auth/logout` | PROFESSOR or MASTER_ADMIN without TOTP. Send the user to the 2FA setup screen. |
+| `X-Two-Factor-Setup-Required: 1` | 403 from any route except the 2FA setup routes, `/auth/me`, `/me`, `/auth/change-password`, `/auth/logout` | PROFESSOR, ADMIN or MASTER_ADMIN without TOTP. Send the user to the 2FA setup screen. |
 | `X-Password-Change-Required: 1` | 401 from any route except `/auth/me`, `/me`, `/auth/change-password`, `/auth/logout` | `mustChangePassword` is set. |
 | `X-Two-Factor-Required: 1` | 401 from key or budget changes; 400 from change-password without a password | Ask for a TOTP code and resend. |
+| `X-Confirm-Provider` | 400 from `/auth/change-password` for an account without a password | `GOOGLE`, `MICROSOFT` or `YAHOO`: the account's provider. Sign in with it again (`POST /auth/first-password/nonce`) and resend with the proof (decision 0028). |
 | `X-Session-Token` | 200 from `/auth/change-password`, `/auth/two-factor/enable`, `/auth/two-factor/disable` | Replace the stored token with this one. |
 | `X-Sign-In-Hint: PASSWORD_NOT_SET` | 401 from password login | Account exists without a password. |
 | `X-Sign-In-Hint: EMAIL_UNVERIFIED` | 401 from password login | The address was never confirmed (no emailed link opened, no Google sign-in, no admin-issued password, never signed in). |
 | `Retry-After` | 429 | Seconds. |
-| `ETag` | 200/304 from `/crafts/catalogue` | Send it back as `If-None-Match`; a match answers 304 with no body. |
+| `X-Voice-Consent-Required` | 403 from `POST /voice/session` | The voice notice version to accept (`POST /auth/consent` with `kind: VOICE_NOTICE`) before a call. |
+| `ETag` | 200/304 from `/crafts/catalogue` and `/map/layers/{layer}` | Send it back as `If-None-Match`; a match answers 304 with no body. |
 
 ## User object (`serialize_user`)
 
@@ -25,7 +27,7 @@ Errors are `{"detail": "<sentence>"}` (FastAPI); validation errors are FastAPI's
   twoFactorEnabled, twoFactorRequired, twoFactorSetupRequired, hasPassword, capabilities: string[],
   accessStatus?, emailVerifiedAt, firstLoginAt, lastLoginAt, passwordSetAt, ageAttestedAt, createdAt, updatedAt }
 ```
-Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15). `capabilities` is the list from `app/core/roles.py` (`Capability`): ASK_STANDARD, ASK_DEEP, VOICE, GENERATE_IMAGE, GENERATE_VIDEO, SAVE_EXPORT, READ_RESEARCHER_QUOTES, PROPOSE_KNOWLEDGE, RUN_ENRICHMENT, ACCEPT_ALIASES, MARK_CLAIM_LEVEL, RETRACT_CLAIM, SHARE_MEDIA, HANDLE_OBJECTIONS, MANAGE_ACCESS, LIST_USERS, INVITE_PROFESSORS, CHANGE_ROLES, DISABLE_USERS, MANAGE_KEYS, MANAGE_ROUTING, MANAGE_QUOTAS, MANAGE_CEILINGS, MANAGE_DATASETS, VIEW_USAGE, VIEW_EVALUATION, VIEW_AUDIT_LOG. Gate nav items on capabilities, not on role names. No review gates exist (PLAN §0).
+Roles: `MASTER_ADMIN` (60), `ADMIN` (50, label "Admin"), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15). `capabilities` is the list from `app/core/roles.py` (`Capability`): ASK_STANDARD, ASK_DEEP, VOICE, GENERATE_IMAGE, GENERATE_VIDEO, SAVE_EXPORT, READ_RESEARCHER_QUOTES, PROPOSE_KNOWLEDGE, RUN_ENRICHMENT, ACCEPT_ALIASES, MARK_CLAIM_LEVEL, RETRACT_CLAIM, SHARE_MEDIA, HANDLE_OBJECTIONS, MANAGE_ACCESS, LIST_USERS, INVITE_PROFESSORS, CHANGE_ROLES, DISABLE_USERS, MANAGE_KEYS, MANAGE_ROUTING, MANAGE_QUOTAS, MANAGE_CEILINGS, MANAGE_DATASETS, VIEW_USAGE, VIEW_EVALUATION, VIEW_AUDIT_LOG. Gate nav items on capabilities, not on role names. No review gates exist (PLAN §0).
 
 ## Health
 
@@ -38,9 +40,10 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 
 | Method | Path | Body | Response |
 |---|---|---|---|
-| GET | `/auth/config` | | `{googleEnabled, googleClientId, turnstileRequired, turnstileSiteKey, mailAvailable, signUpOpen}`. Draw the Google button only when `googleEnabled`; draw the email sign-up form only when `signUpOpen` (mail configured, and in production a Turnstile secret and site key); render the Turnstile widget with `turnstileSiteKey` when `turnstileRequired`. |
+| GET | `/auth/config` | | `{googleEnabled, googleClientId, microsoftEnabled, microsoftClientId, yahooEnabled, yahooClientId, turnstileRequired, turnstileSiteKey, mailAvailable, signUpOpen}`. Draw the Google button only when `googleEnabled`; Microsoft and Yahoo are enabled only when their client ID and secret are both set (decision 0026); draw the email sign-up form only when `signUpOpen` (mail configured, and in production a Turnstile secret and site key); render the Turnstile widget with `turnstileSiteKey` when `turnstileRequired`. |
 | POST | `/auth/google/nonce` | | `{nonce, expiresAt, clientId}`. 404 when Google is off. Pass `nonce` to `google.accounts.id.initialize({nonce})`; the backend checks it once from the ID token's `nonce` claim. |
-| POST | `/auth/login` | `{email, password}` or `{googleIdToken, googleNonce?}` | `{accessToken, tokenType:"bearer", user}` or `{two_factor_required:true, challenge_token}`. 401 bad credentials or `X-Sign-In-Hint`, 403 + `X-Access-Status`, 429 + `Retry-After`. An unknown Google address creates a PENDING roster request. Google sign-in into an account whose address was never verified first clears any password and 2FA on it (bumping `tokenVersion` and revoking outstanding links), then marks it verified and adopts the roster `admitRole`. |
+| POST | `/auth/oidc/nonce` | `{provider:"MICROSOFT"\|"YAHOO"}` | `{nonce, expiresAt, clientId}`. 404 when that provider is off; 429 like the Google nonce. Send `base64url(sha256(nonce))` to the provider as its `nonce` and the raw `nonce` back with the code. Single use, 10 minutes. |
+| POST | `/auth/login` | `{email, password}`, `{googleIdToken, googleNonce?}` or `{oidcProvider:"MICROSOFT"\|"YAHOO", oidcCode, oidcCodeVerifier, oidcRedirectUri, oidcNonce}` | `{accessToken, tokenType:"bearer", user}` or `{two_factor_required:true, challenge_token}`. 401 bad credentials or `X-Sign-In-Hint`, 403 + `X-Access-Status`, 429 + `Retry-After`. An unknown Google, Microsoft or Yahoo address creates a PENDING roster request. Google, Microsoft or Yahoo sign-in into an account whose address was never verified first clears any password and 2FA on it (bumping `tokenVersion` and revoking outstanding links), then marks it verified and adopts the roster `admitRole`. Microsoft and Yahoo: 400 when the provider is off; 401 when `oidcRedirectUri` is not `PUBLIC_WEB_URL` + `/login/callback`, the nonce is unknown, spent or expired, the code does not redeem, the ID token fails its checks, or the provider has not verified the address. A new account is recorded with `authProvider` `MICROSOFT` or `YAHOO`; an existing account keeps its provider and avatar, except that a `LOCAL` account without a password takes the new provider. |
 | POST | `/auth/two-factor/verify` | `{challenge_token, code}` (6 digits or a recovery code) | Same as a successful login. 401 wrong or dead challenge, 429 locked. |
 | POST | `/auth/signup` | `{email, name, affiliation?, requestedRole:"STUDENT"|"RESEARCHER"|"PROFESSOR", profileUrl?, note?, ageAttested:true, privacyNoticeVersion, turnstileToken?}` | 202 `{status:"EMAIL_SENT", email}`, identical whether or not the address already has an account (no enumeration). No password is taken. A new address gets an unverified `User` (default role, no password), a `ConsentRecord` and a PENDING `RoleRequest`; an INVITE link (`/set-password?token=`, 3 days) is mailed. Opening it sets the password and `emailVerifiedAt`, adopts the roster `admitRole` if the row is ACTIVE, and only then adds a PENDING roster row (subject to `ACCESS_PENDING_MAX`). An existing unverified address without a password gets a fresh link; any other existing address gets nothing. 503 when mail is not configured, or in production when Turnstile is not configured; 400 when the Turnstile check fails; 422 without `ageAttested`. |
 | POST | `/auth/logout` | | `{ok:true}` (stateless; drop the token) |
@@ -52,7 +55,8 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 | GET | `/auth/set-password?token=` | | `{valid, reason, purpose}`; reasons `MISSING`, `MALFORMED`, `EXPIRED`, `REVOKED`, `SPENT`, `UNKNOWN_ACCOUNT`; purpose `INVITE`/`RESET` |
 | POST | `/auth/set-password/check` | `{token}` | same as above (token out of the URL) |
 | POST | `/auth/set-password` | `{token, password (>=10)}` | `{ok:true}`; ends every session |
-| POST | `/auth/change-password` | `{currentPassword, newPassword, twoFactorCode?}` | `{ok:true}` + `X-Session-Token` |
+| POST | `/auth/first-password/nonce` | | `{nonce, expiresAt, provider, clientId}` for the signed-in account's own provider. 409 when the account has a password, 400 when it has no provider (`LOCAL`), 404 when that provider is off. Single use, 10 minutes, bound to the account (purpose `FIRST_PASSWORD`). Google: pass `nonce` to `google.accounts.id.initialize({nonce})`; Microsoft and Yahoo: send `base64url(sha256(nonce))` as at sign-in and the raw `nonce` back with the code. |
+| POST | `/auth/change-password` | `{currentPassword, newPassword, twoFactorCode?}`; an account without a password sends `{newPassword, googleIdToken, twoFactorCode?}` or `{newPassword, oidcProvider, oidcCode, oidcCodeVerifier, oidcRedirectUri, oidcNonce, twoFactorCode?}` instead | `{ok:true}` + `X-Session-Token`. A password account needs its current password (400 `Current password is incorrect`) and proof fields change nothing. A first password needs a proof from the account's own provider, verified as at sign-in, with its first-password nonce, issued within 5 minutes, for the account's address; otherwise 400 + `X-Confirm-Provider` and nothing is written. With two-step on, a missing code is asked for (400 + `X-Two-Factor-Required`) before the proof is spent, and a wrong code spends it. 429 + `Retry-After` from the per-account sign-in budget. Bumps `tokenVersion` (decision 0028). |
 | POST | `/auth/password-links` | `{userId, delivery:"COPY_LINK"|"EMAIL"}` | 201 `{id, link|null, expiresAt, purpose, deliveredBy}`; MANAGE_ACCESS and a lower-ranked target |
 | POST | `/auth/password-links/{id}/revoke` | | `{ok:true}` |
 
@@ -64,7 +68,7 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 | POST | `/auth/two-factor/setup` | | `{secret, otpauth_uri, qr_svg}` (409 if on) |
 | POST | `/auth/two-factor/setup/cancel` | | 204 |
 | POST | `/auth/two-factor/enable` | `{code}` | `{recovery_codes: string[10], accessToken}` + `X-Session-Token` (the old token stops working) |
-| POST | `/auth/two-factor/disable` | `{code}` | `{ok:true, accessToken}`; 409 for PROFESSOR and MASTER_ADMIN (mandatory) |
+| POST | `/auth/two-factor/disable` | `{code}` | `{ok:true, accessToken}`; 409 for PROFESSOR, ADMIN and MASTER_ADMIN (mandatory) |
 | POST | `/auth/two-factor/recovery-codes` | `{code}` (TOTP only) | `{recovery_codes}` |
 
 ## Me and preferences (`/api`)
@@ -72,12 +76,12 @@ Roles: `MASTER_ADMIN` (60), `PROFESSOR` (40), `RESEARCHER` (30), `STUDENT` (15).
 | Method | Path | Body | Response |
 |---|---|---|---|
 | GET | `/me` | | Same as `GET /auth/me`: user object with `accessStatus`. Allowed while a password change or 2FA setup is pending. |
-| GET | `/preferences/me` | | `{theme:"system"|"light"|"dark", reducedMotion, largerText, highContrast, updatedAt}`. The row is created with defaults (`system`, all false) on first read. |
-| PUT | `/preferences/me` | `{theme?, reducedMotion?, largerText?, highContrast?}` | Same shape as GET. Omitted or null fields keep their value; unknown fields and other theme values are 422. Blocked (401/403 + header) while a password change or 2FA setup is pending. |
+| GET | `/preferences/me` | | `{theme:"system"|"light"|"dark", reducedMotion, largerText, highContrast, answerLanguage, updatedAt}`. `answerLanguage` is `auto` (follow the question's script) or an answer language code. The row is created with defaults (`system`, all false, `auto`) on first read. |
+| PUT | `/preferences/me` | `{theme?, reducedMotion?, largerText?, highContrast?, answerLanguage?}` | Same shape as GET. Omitted or null fields keep their value; unknown fields, other theme values and other answer languages are 422. Blocked (401/403 + header) while a password change or 2FA setup is pending. |
 
 ## Access roster (`/api/access`), DR `/access/roster` semantics
 
-Capability MANAGE_ACCESS (PROFESSOR, MASTER_ADMIN). A professor admits RESEARCHER and STUDENT only; the master admin admits any role. Statuses `ACTIVE`, `PENDING`, `REJECTED`, `SUSPENDED`.
+Capability MANAGE_ACCESS (PROFESSOR and above). A professor admits RESEARCHER and STUDENT only, an admin up to PROFESSOR; the master admin admits any role. The role checked is the one the address joins with, the default role included (`MASTER_ADMIN_EMAIL` joins as MASTER_ADMIN). Below the master admin, any change or decision on an entry whose role, or whose account's role, is at or above the actor's own is 403; restoring a REJECTED or SUSPENDED entry needs DISABLE_USERS (ADMIN and above). Statuses `ACTIVE`, `PENDING`, `REJECTED`, `SUSPENDED`.
 
 Roster row: `{id, email, fullName, affiliation, status, admitRole, joinedAt, requestedAt, attemptCount, lastAttemptAt, decidedAt, decidedById, decidedByName, firstSeenAt, notes, createdAt, updatedAt, addedById, addedByName}`.
 
@@ -92,7 +96,7 @@ Roster row: `{id, email, fullName, affiliation, status, admitRole, joinedAt, req
 
 ## Manage users (`/api/users`)
 
-List and view: LIST_USERS (PROFESSOR+). Role changes, suspend, restore, 2FA reset, delete: master admin only.
+List and view: LIST_USERS (PROFESSOR+). Role changes: CHANGE_ROLES; suspend, restore, 2FA reset, delete: DISABLE_USERS (both ADMIN and above). Every change to another account is 403 when its role is at or above the actor's (the master admin excepted), and an admin assigns roles up to PROFESSOR only; the account named by `MASTER_ADMIN_EMAIL` is never suspended, deleted or re-roled by anyone else.
 
 | Method | Path | Body / query | Response |
 |---|---|---|---|
@@ -139,9 +143,21 @@ Keys: GEMINI_API_KEY, ANTHROPIC_API_KEY, OPENAI_API_KEY, DEEPSEEK_API_KEY, ELEVE
 |---|---|---|---|
 | GET | `/privacy/notice` | public | `{version, title, body (Markdown, from app/data/privacy_notice.md), publishedAt}`. `version` is what signup sends as `privacyNoticeVersion`. |
 | GET | `/crafts/{slug}/profile` | signed in | Frontend contract §4.6 `CraftProfile` (`craft` also carries `path`). A MERGED slug answers with its target's profile; unknown slug 404. `science` is `[]` until reactions are stored. Claims with status DRAFT, REJECTED or RETRACTED, non-OPEN sensitivity, or no visible citation are left out; PROPOSED seed claims show. |
+| GET | `/crafts/{slug}/process` | signed in | `CraftProcess` of `docs/contracts/science.md` (stages, materials, conditions, reactions, sources), built only from stored rows; `Cache-Control: private, no-cache`. A MERGED slug answers with its target's process; unknown slug 404 `{detail}`. |
+| GET | `/crafts/{slug}/region` | signed in | `CraftRegion` of `docs/contracts/region.md` (places, environment values with grid and period, datasets), built only from stored rows; `Cache-Control: private, no-cache`. A MERGED slug answers with its target's region; unknown slug 404 `{detail}`. |
+| GET | `/map/layers` | signed in | `MapLayerList` of `docs/contracts/region.md`: the layers with stored values, their datasets and the boundary caption; 404 `{detail}` while no geo load has stored the boundary dataset. |
+| GET | `/map/layers/{layer}` | signed in | `MapLayer`: district values, quantile classes, `version`. `ETag: "<version>"`, `Cache-Control: private, no-cache`; a matching `If-None-Match` answers 304; an unknown or empty layer 404 `{detail}`. |
 | GET | `/map/crafts` | signed in | `[{key, name, latitude, longitude, total, crafts:[{slug, name, path}]}]`: one point per state of practice (a point on the state's surface, from `AdminState.geom`) plus one per district or point `CraftLocation`. |
-| GET | `/answers/config` | signed in | `{modes, defaultMode:"HYBRID", voice:{configured:false, languages:[]}, languages:[{code:"en", label:"English"}]}`; `modes` are those the asker may use: `VERIFIED`, `HYBRID` for every role, `DEEP` for researchers and above. |
+| GET | `/answers/config` | signed in | `{modes, defaultMode:"HYBRID", voice, languages:[{code, label, autonym, script, direction}]}` (English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Odia, Punjabi, Assamese, Urdu; `direction` is `rtl` for Urdu, decision 0023); `voice` is the `VoiceAvailability` of `docs/contracts/voice.md`; `modes` are those the asker may use: `VERIFIED`, `HYBRID` for every role, `DEEP` for researchers and above. |
 | POST | `/answers/stream` | signed in; `DEEP` needs `ASK_DEEP` (403), the others `ASK_STANDARD`; 30 per 10 min per user (429 + `Retry-After`) | `text/event-stream` per frontend contract §4.5 and `docs/contracts/research.md` (answer stream, the answering service): `status` steps while it works, `match`, then for `VERIFIED` the stored `VERIFIED`/`REVIEWED` claims, and for `HYBRID`/`DEEP` planner, live research, composer and write-back, then `source`, `section`, `sentence`, `open_question`, `follow_ups`, or `not_enough_evidence`; `error` on failure; `done {answerId}` last. A `: keep-alive` comment after 60 s of silence. Every frame is validated (`research/stream.event_frame`). |
+
+## Voice (`/api/voice`)
+
+The routes, checks, statuses and streams are the table in `docs/contracts/voice.md` (Routes): the voice notice, starting, ending and reading a session, the custom-LLM endpoint ElevenLabs calls with its bearer, and the relay turn and speech routes. Per user, session starts are limited to 10 in 10 minutes, relay turns to 40 and reply replays to 60 in 10 minutes (429 + `Retry-After`).
+
+## Media (`/api/media`)
+
+The routes, refusals, claim set, prompt, quotas and job view are `docs/contracts/media.md` (lanes 0018 and 0021): `GET /media/options?craftSlug=` lists the kinds and stages a press may make, `POST /media/jobs` creates a job from a stage and an idempotency key (never claim ids), and `GET /media/jobs/{id}` answers its status, failure, polling hint and labelled asset with an expiring link. The sharing route `POST /media/assets/{id}/sharing` belongs to the governance lane and is not served yet.
 
 ## Settings hub (`/api/settings`)
 
@@ -169,7 +185,7 @@ Task state:
 | GET | `/settings/ai-budget` | | `{monthlyCeilingUsd, mediaCapUsd, roleDailyUsd:{ROLE: number|null}, degradeAtFraction, signUpMode, domainAllowlist}` (MANAGE_CEILINGS) |
 | PUT | `/settings/ai-budget` | any of the above + `twoFactorCode` | same shape; 422 if media cap exceeds the monthly ceiling |
 
-Defaults (seeded in `AppSetting`): ceiling $800/month, media sub-cap $150/month, per-user daily caps STUDENT $0.50, RESEARCHER $3, PROFESSOR $5, MASTER_ADMIN none, degrade at 80%. Budget months and days run on Asia/Kolkata.
+Defaults (seeded in `AppSetting`): ceiling $800/month, media sub-cap $150/month, per-user daily caps STUDENT $0.50, RESEARCHER $3, PROFESSOR $5, ADMIN $10, MASTER_ADMIN none, degrade at 80%. Budget months and days run on Asia/Kolkata.
 
 ## Usage (`/api/usage`)
 
@@ -188,7 +204,7 @@ Defaults (seeded in `AppSetting`): ceiling $800/month, media sub-cap $150/month,
 - Before each call it reserves the estimate as a `UsageEvent` (`RESERVED`) under a Postgres advisory lock, refusing with `RouterError(kind="ceiling", reason="MONTHLY_CEILING"|"MEDIA_CAP"|"ROLE_DAILY_CAP"|"REQUEST_BUDGET")` and a `REFUSED_CEILING` row. After the call it settles the row to `OK` with the real cost, or `ERROR`/`REFUSED_PROVIDER`. No DB session is held across a provider call.
 - `degraded=True` once the month passes 80% of the ceiling; COMPOSE, EXTRACT, VOICE_TURN, PLAN and WEB_READ then try the cheapest route first. The caller drops Deep to Hybrid.
 - EMBED returns 1536-dimension vectors (`texts=[...]`).
-- IMAGE and VIDEO are not called through `run`; the media lane calls `router.reserve(...)` and `router.settle(...)` around its own job so the media sub-cap applies.
+- IMAGE and VIDEO are not called through `run`; `providers/media_router.MediaRouter` walks their routes and calls `router.reserve(...)` and `router.settle(...)` around each call so the media sub-cap applies (decision 0018). The media routes are `docs/contracts/media.md`.
 - Unverified prices (gpt-6.1-terra, gemini-4-argon, DeepSeek models, Omni video) are budgeted at $5/$30 per MTok, $0.134/image, $0.15/s until the owner sets `AI_MODEL_PRICES` (`{"model-id": {"in": x, "out": y}}` or `{"unit": z}`) in `AppSetting`.
 
 ## Data model
@@ -202,4 +218,4 @@ DR columns not carried: Aadhaar columns on `User`, `Craft.workshopId` (no Worksh
 - Frontend: the DR screens it ports call these paths with the `/api` prefix. DR's `/secrets/{key}/reveal` and `/settings/transcription-providers` do not exist here; use `/settings/ai-routing` instead. Secrets changes must collect a TOTP code. Suspension of an account is `/users/{id}/suspend`, not a roster DELETE (both work).
 - Data/ETL lane: owns the district and environmental tables and the source corpus. The craft seed (455 crafts, `CraftCode`, `CraftSpelling`, `CraftAlias`) belongs to this lane: `app/services/craft_seed.py` and `app/scripts/seed_crafts.py`, fed by the vendored JSON in `backend/app/data/`. The ETL lane reads crafts by slug or `craftCode` and must not insert or rename catalogue rows; changes to the catalogue go through the vendored JSON and the seeder.
 - Infra lane: provides `DATABASE_URL` (Supabase session pooler, port 5432) and the names in `backend/.env.example` on the box. `blue_green.sh` runs `seed_crafts`, `seed_claims` and `seed_districts` after `alembic upgrade head` and stops the release if one fails, then `sync_portal_crafts` (a warning on failure); `backend-checks.yml` runs the same three before the DB tests. Client IP for rate limits: `x-viewer-address` when `x-web-proxy-secret` matches `WEB_PROXY_SECRET` (hmac compare), otherwise the `FORWARDED_CLIENT_HOPS` rule. Settings errors name fields only (`hide_input_in_errors`, `SettingsError`). The bucket and Brave key are read as `S3_BUCKET` and `BRAVE_SEARCH_API_KEY` (old `AWS_S3_BUCKET` and `BRAVE_API_KEY` still accepted). First master admin: `MASTER_ADMIN_EMAIL` signs in with Google, or the operator runs `python -m app.scripts.seed_admin` (password read from stdin) in `backend/`.
-- `shared/roles.json`, when added, holds `{"ranks": {"MASTER_ADMIN": 60, "PROFESSOR": 40, "RESEARCHER": 30, "STUDENT": 15}}`; a backend test checks it matches.
+- `shared/roles.json` holds `{"ranks": {ROLE: rank}, "labels": {ROLE: label}}` for all five roles; `backend/tests/test_roles.py` and `frontend/e2e/permissions-unit.spec.ts` check both sides match it.

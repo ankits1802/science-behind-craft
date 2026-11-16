@@ -10,7 +10,7 @@ type Action = { kind: "reset"; request: AskRequest } | { kind: "event"; event: A
 function reducer(state: AnswerState, action: Action): AnswerState {
   switch (action.kind) {
     case "reset":
-      return { ...emptyAnswer(action.request.question, action.request.mode), phase: "matching" };
+      return { ...emptyAnswer(action.request.question, action.request.mode, action.request.language ?? "en"), phase: "matching" };
     case "event":
       return reduceAnswer(state, action.event);
     case "fail":

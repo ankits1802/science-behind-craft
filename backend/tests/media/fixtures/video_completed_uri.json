@@ -1,0 +1,21 @@
+{
+  "id": "v1_ChdvbW5pLWludGVyYWN0aW9uLTAwMDQ",
+  "status": "completed",
+  "model": "gemini-omni-1.2-flash",
+  "steps": [
+    {
+      "type": "model_output",
+      "content": [
+        {
+          "type": "video",
+          "mime_type": "video/mp4",
+          "uri": "https://generativelanguage.googleapis.com/v1beta/files/omni-clip-0004"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "total_input_tokens": 410,
+    "total_output_tokens": 46336
+  }
+}

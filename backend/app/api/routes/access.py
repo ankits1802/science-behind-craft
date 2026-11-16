@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.routes.auth import role_for_email
 from app.core.config import get_settings
 from app.core.db import get_session
-from app.core.deps import require
+from app.core.deps import refuse_unless_assignable, require
 from app.core.roles import (
     ROLE_RANK,
     Capability,
@@ -89,18 +89,6 @@ def _tokens(values: list[str] | None, allowed: frozenset[str], field: str) -> se
     return tokens or None
 
 
-def _assert_assignable(actor: User, role: str | None) -> None:
-    if role is None:
-        return
-    if role not in ROLE_RANK:
-        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"Unknown role {role!r}")
-    if not may_assign(actor, role):
-        raise HTTPException(
-            status.HTTP_403_FORBIDDEN,
-            f"You can admit these roles: {', '.join(assignable_roles(actor)) or 'none'}.",
-        )
-
-
 async def _row_or_404(session: AsyncSession, row_id: uuid.UUID) -> AccessRoster:
     row = await session.get(AccessRoster, row_id)
     if row is None:
@@ -146,16 +134,12 @@ async def _assert_may_change(session: AsyncSession, actor: User, row: AccessRost
 
 async def _assert_may_reinstate(session: AsyncSession, actor: User, row: AccessRoster) -> None:
     if access_roster.status_of(row) not in access_roster.BARRED:
-        account = await _account_at(session, row.email)
-        if account is not None and not may_manage_target(actor, account):
-            raise HTTPException(
-                status.HTTP_403_FORBIDDEN, "You can't change access for an account at or above your role."
-            )
+        await _assert_may_change(session, actor, row)
         return
     if not can(actor, Capability.DISABLE_USERS):
         raise HTTPException(
             status.HTTP_403_FORBIDDEN,
-            "Only the master admin can restore access that was suspended or refused.",
+            "Only admins can restore access that was suspended or refused.",
         )
     await _assert_may_bar(session, actor, row)
 
@@ -271,8 +255,8 @@ async def list_access_roster(
 async def add_to_access_roster(
     payload: AccessRosterCreate, actor: User = Depends(manager), session: AsyncSession = Depends(get_session)
 ) -> dict[str, Any]:
-    _assert_assignable(actor, payload.role)
     email = normalise_email(payload.email)
+    refuse_unless_assignable(actor, payload.role or role_for_email(email))
     existing = await access_roster.access_row(session, email)
     if existing is not None:
         raise HTTPException(
@@ -342,7 +326,7 @@ async def decide_access_request(
         return await _payload(session, row, accountPromotionHeld=None)
     await _assert_may_reinstate(session, actor, row)
     granted = payload.role or access_roster.role_of(row) or role_for_email(row.email)
-    _assert_assignable(actor, granted)
+    refuse_unless_assignable(actor, granted)
     row = await access_roster.admit(
         session,
         row.email,
@@ -372,10 +356,11 @@ async def update_access_entry(
 ) -> dict[str, Any]:
     row = await _row_or_404(session, row_id)
     values = payload.model_dump(exclude_unset=True)
+    if values:
+        await _assert_may_change(session, actor, row)
     held = None
     if "role" in values:
-        await _assert_may_change(session, actor, row)
-        _assert_assignable(actor, values["role"])
+        refuse_unless_assignable(actor, values["role"] or role_for_email(row.email))
         row.admitRole = values["role"]
         if access_roster.admits(row):
             held = await _apply_role_to_account(session, actor, row.email, values["role"])

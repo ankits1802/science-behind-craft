@@ -12,7 +12,7 @@ on:
         type: string
         default: all
       shards:
-        description: "Shards per raster layer, 1 to 24, balanced by state area"
+        description: "Shards per raster layer, 1 to 24, balanced by state area; capped at the number of states chosen"
         type: number
         default: 6
       load:
@@ -20,7 +20,7 @@ on:
         type: boolean
         default: false
       allow_failures:
-        description: "Keep a part whose districts partly failed; failures stay listed in the summary"
+        description: "Keep a part whose failures are scattered districts; a state with no values, or a step failed for all its districts, still fails"
         type: boolean
         default: false
 
@@ -53,6 +53,7 @@ jobs:
         env:
           DATASETS: ${{ inputs.datasets }}
           SHARDS: ${{ inputs.shards }}
+          STATES: ${{ inputs.states }}
         shell: python
         run: |
           import json
@@ -70,6 +71,9 @@ jobs:
           shards = int(float(os.environ["SHARDS"] or "1"))
           if not 1 <= shards <= 24:
               sys.exit(f"shards must be 1 to 24, got {shards}")
+          states = os.environ["STATES"].replace(" ", "").lower()
+          if states not in ("", "all"):
+              shards = min(shards, len({v for v in states.split(",") if v}))
           include = []
           for layer in [k for k in known if k in chosen]:
               if layer in raster and shards > 1:
@@ -170,10 +174,10 @@ jobs:
           s = json.load(open("out/district_env_summary.json", encoding="utf-8"))
           print(f"{s['rows']} values over {s['districts']} districts, {s['geologyRows']} geology rows")
           print()
-          print("| layer | shard | rows | failures | seconds |")
-          print("|---|---|---|---|---|")
+          print("| layer | shard | rows | failures | districts without values | seconds |")
+          print("|---|---|---|---|---|---|")
           for layer in s["layers"]:
-              print(f"| {layer['layer']} | {layer['shard'] or ''} | {layer['rows']} | {layer['failureCount']} | {layer['seconds']} |")
+              print(f"| {layer['layer']} | {layer['shard'] or ''} | {layer['rows']} | {layer['failureCount']} | {len(layer['districtsWithoutValues'])} | {layer['seconds']} |")
           EOF
       - name: Upload the outputs
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

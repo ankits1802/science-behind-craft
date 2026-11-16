@@ -6,6 +6,7 @@ import bcrypt
 import jwt
 
 from app.core.config import get_settings
+from app.core.errors import NotConfigured
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +16,7 @@ BCRYPT_HASH_LENGTH = 60
 MAX_CHECKED_PASSWORD_BYTES = 4096
 MAX_PASSWORD_LENGTH = 200
 MIN_JWT_SIGNING_KEY_LENGTH = 32
+SECRET_KEY_MIN_CHARS = 32
 
 TOKEN_VERSION_CLAIM = "tv"
 
@@ -86,6 +88,24 @@ def jwt_signing_weakness(secret: str) -> str | None:
             f"JWT_SECRET is {len(candidate)} characters; at least {MIN_JWT_SIGNING_KEY_LENGTH} are required"
         )
     return None
+
+
+def secret_key(name: str, value: str | None, *, min_chars: int = SECRET_KEY_MIN_CHARS) -> bytes:
+    key = (value or "").strip()
+    if len(key) < min_chars:
+        raise NotConfigured(name, f"{name} is missing or shorter than {min_chars} characters")
+    return key.encode("utf-8")
+
+
+def secret_key_or_none(
+    name: str, value: str | None, *, min_chars: int = SECRET_KEY_MIN_CHARS
+) -> bytes | None:
+    try:
+        return secret_key(name, value, min_chars=min_chars)
+    except NotConfigured:
+        if (value or "").strip():
+            logger.error("%s is set but shorter than %d characters, so it is not used", name, min_chars)
+        return None
 
 
 def verify_jwt_configuration() -> None:

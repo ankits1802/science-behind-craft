@@ -2,10 +2,21 @@ import type { NextConfig } from "next";
 
 const isProduction = process.env.NODE_ENV === "production";
 
+export const ELEVENLABS_CONNECT_SOURCES = ["wss://livekit.rtc.elevenlabs.io", "https://livekit.rtc.elevenlabs.io"];
+export const GOOGLE_IDENTITY_CONNECT_SOURCE = "https://accounts.google.com/gsi/";
+export const MEDIA_BUCKET_ORIGIN = "https://kalavigyan-media-626159998512.s3.ap-south-1.amazonaws.com";
+
+export const CONTENT_SECURITY_POLICY = [
+  "frame-ancestors 'none'",
+  ["connect-src 'self'", GOOGLE_IDENTITY_CONNECT_SOURCE, ...ELEVENLABS_CONNECT_SOURCES, MEDIA_BUCKET_ORIGIN].join(" "),
+  `img-src 'self' data: ${MEDIA_BUCKET_ORIGIN}`,
+  `media-src 'self' ${MEDIA_BUCKET_ORIGIN}`
+].join("; ");
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
-  { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+  { key: "Content-Security-Policy", value: CONTENT_SECURITY_POLICY },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
     key: "Permissions-Policy",

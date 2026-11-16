@@ -7,7 +7,9 @@ from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.composer.composer import ModelComposer
+from app.composer.translation import ModelTranslator
 from app.core.errors import InvalidInput
+from app.core.shielded import ShieldedWork
 from app.models import Answer
 from app.planner.orchestrator import ResearchPlanner
 from app.research.composition import ComposedAnswer
@@ -21,18 +23,23 @@ from app.retrieval.hybrid import SessionScopedSearch
 
 from . import knowledge_view
 from .answer_events import CitedClaims, cited_claims
+from .answer_translation import AnswerTranslation
 from .answering import AnswerAsk, AnswerPipeline, KeptAnswer
 from .craft_resolver import CraftIndexStore, DatabaseCraftResolver
 from .live_sources import LiveSourcesStore
 from .research_write_back import sentence_claim_ids, store_live_research
+from .translation_cache import SqlTranslationCache
 
-__all__ = ["SqlAnswerStore", "build_answer_pipeline"]
+__all__ = ["SqlAnswerStore", "build_answer_pipeline", "build_answer_translation"]
 
 
 class SqlAnswerStore:
-    def __init__(self, sessions: async_sessionmaker[AsyncSession], *, embed: TextEmbedder) -> None:
+    def __init__(
+        self, sessions: async_sessionmaker[AsyncSession], *, embed: TextEmbedder, shield: ShieldedWork
+    ) -> None:
         self._sessions = sessions
         self._embed = embed
+        self._shield = shield
 
     async def stored_claims(self, craft_slug: str, question: str, mode: str) -> CitedClaims:
         async with self._sessions() as session:
@@ -43,6 +50,9 @@ class SqlAnswerStore:
         return cited_claims(views, sources)
 
     async def keep(self, ask: AnswerAsk, pack: EvidencePack, answer: ComposedAnswer) -> KeptAnswer:
+        return await self._shield.run(self._kept(ask, pack, answer), name="answer write-back")
+
+    async def _kept(self, ask: AnswerAsk, pack: EvidencePack, answer: ComposedAnswer) -> KeptAnswer:
         answer_id = uuid.uuid4()
         async with self._sessions() as session:
             craft = await knowledge_view.resolve_craft(session, pack.plan.craft.slug)
@@ -83,7 +93,9 @@ def build_answer_pipeline(
     live: LiveSourcesStore,
     plan_model: StructuredModel,
     compose_model: StructuredModel,
+    translate_model: StructuredModel,
     embed: TextEmbedder,
+    shield: ShieldedWork,
 ) -> AnswerPipeline:
     async def resolve(query: CraftQuery) -> CraftResolution:
         async with sessions() as session:
@@ -101,5 +113,12 @@ def build_answer_pipeline(
         resolve=resolve,
         research=research,
         compose=ModelComposer(model=compose_model).compose,
-        store=SqlAnswerStore(sessions, embed=embed),
+        store=SqlAnswerStore(sessions, embed=embed, shield=shield),
+        translation=build_answer_translation(sessions, model=translate_model),
     )
+
+
+def build_answer_translation(
+    sessions: async_sessionmaker[AsyncSession], *, model: StructuredModel
+) -> AnswerTranslation:
+    return AnswerTranslation(translator=ModelTranslator(model=model), cache=SqlTranslationCache(sessions))

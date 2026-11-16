@@ -117,10 +117,12 @@ class FakeAdapter:
     texts: dict[str, str] = field(default_factory=dict)
     search_failure: ExternalFailure | None = None
     searched: list[tuple[str, int]] = field(default_factory=list)
+    languages: list[str] = field(default_factory=list)
     fetched: list[str] = field(default_factory=list)
 
     async def search(self, query: SearchQuery, k: int) -> list[EvidenceItem]:
         self.searched.append((query.text, k))
+        self.languages.append(query.language)
         if self.search_failure is not None:
             raise self.search_failure
         return self.results[:k]

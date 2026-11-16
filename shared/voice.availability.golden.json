@@ -1,0 +1,37 @@
+{
+  "configured": true,
+  "transport": "AGENT",
+  "languages": [
+    {
+      "code": "en",
+      "label": "English",
+      "autonym": "English",
+      "script": "Latn",
+      "direction": "ltr"
+    },
+    {
+      "code": "hi",
+      "label": "Hindi",
+      "autonym": "हिन्दी",
+      "script": "Deva",
+      "direction": "ltr"
+    },
+    {
+      "code": "ta",
+      "label": "Tamil",
+      "autonym": "தமிழ்",
+      "script": "Taml",
+      "direction": "ltr"
+    },
+    {
+      "code": "ur",
+      "label": "Urdu",
+      "autonym": "اردو",
+      "script": "Arab",
+      "direction": "rtl"
+    }
+  ],
+  "noticeVersion": "2026-11-16",
+  "consentRequired": false,
+  "remainingSeconds": 540
+}

@@ -12,7 +12,7 @@ const THEME_OPTIONS: Array<{ value: ThemeChoice; label: string; Icon: typeof Mon
   { value: "dark", label: "Dark", Icon: Moon }
 ];
 
-const ACCESSIBILITY_OPTIONS: Array<{ key: Exclude<keyof Preferences, "theme">; label: string; helper: string }> = [
+const ACCESSIBILITY_OPTIONS: Array<{ key: Exclude<keyof Preferences, "theme" | "answerLanguage">; label: string; helper: string }> = [
   { key: "reducedMotion", label: "Reduce motion", helper: "Adds to your device's own setting." },
   { key: "largerText", label: "Larger text", helper: "About a tenth larger." },
   { key: "highContrast", label: "High contrast", helper: "Stronger borders and focus ring." }

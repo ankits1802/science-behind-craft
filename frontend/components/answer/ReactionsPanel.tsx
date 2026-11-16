@@ -4,7 +4,7 @@ import { FlaskConical } from "lucide-react";
 
 import { ChemEquation } from "@/components/answer/ChemEquation";
 import { CitationChip } from "@/components/answer/CitationChip";
-import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
+import { EvidenceLevelBadge, EvidenceSignalBadge } from "@/components/answer/EvidenceBadge";
 import { uniqueCitations } from "@/lib/citations";
 import type { AnswerReaction, Citation, SourceRef } from "@/lib/types";
 
@@ -32,7 +32,7 @@ export function ReactionsPanel({
               <span className="text-sm font-semibold text-ink-900">{reaction.label}</span>
               <span className="flex flex-wrap items-center gap-1.5">
                 <EvidenceLevelBadge level={reaction.level} />
-                {reaction.balanced ? null : <span className="rounded-full border border-amber-500/30 bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">Unbalanced</span>}
+                {reaction.balanced ? null : <EvidenceSignalBadge signal="UNBALANCED" />}
               </span>
             </div>
             <ChemEquation equation={reaction.equation} className="mt-3 text-base" />

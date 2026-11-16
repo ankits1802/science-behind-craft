@@ -41,6 +41,7 @@ def test_default_routes_follow_plan_first_choices() -> None:
     assert DEFAULT_ROUTES[AiTask.PLAN][0] == (AiProvider.GEMINI, "gemini-3.5-flash-lite")
     assert DEFAULT_ROUTES[AiTask.EMBED] == ((AiProvider.GEMINI, "gemini-embedding-2"),)
     assert DEFAULT_ROUTES[AiTask.VIDEO] == ((AiProvider.GEMINI, "gemini-omni-1.2-flash"),)
+    assert DEFAULT_ROUTES[AiTask.TRANSLATE][0] == (AiProvider.GEMINI, "gemini-3.8-flash")
 
 
 def test_supports_rejects_unknowns() -> None:

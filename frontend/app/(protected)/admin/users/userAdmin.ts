@@ -1,5 +1,5 @@
 import { apiFetch, buildQuery } from "@/lib/api";
-import { assignableRoles, canChangeRoles, canManageUser, canSuspendUsers, isMasterAdmin } from "@/lib/permissions";
+import { assignableRoles, canChangeRoles, canManageUser, canSuspendUsers } from "@/lib/permissions";
 import type { PageResult, User, UserRole } from "@/lib/types";
 
 export const USERS_PAGE_SIZE = 20;
@@ -53,7 +53,7 @@ export function rowOffers(viewer: User | null | undefined, target: User): RowOff
     role: canChangeRoles(viewer) && roleChoices(viewer, target).length > 1,
     suspend: canSuspendUsers(viewer) && !suspended,
     reactivate: canSuspendUsers(viewer) && suspended,
-    resetTwoStep: isMasterAdmin(viewer) && Boolean(target.twoFactorEnabled)
+    resetTwoStep: canSuspendUsers(viewer) && Boolean(target.twoFactorEnabled)
   };
 }
 

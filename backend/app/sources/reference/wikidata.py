@@ -9,7 +9,14 @@ from app.research.evidence import EvidenceItem, SearchQuery, SourceDocument
 from ..adapter import Clock, HttpSourceAdapter, build_document, utc_now
 from ..http import RatePolicy, SourceHttp
 from ..records import UnusableRecord, clean_text, partial_date_of
-from .mediawiki import WIKIMEDIA_PUBLISHER, WIKIMEDIA_RATE, action_api, primary_language
+from .mediawiki import (
+    WIKIMEDIA_PUBLISHER,
+    WIKIMEDIA_RATE,
+    action_api,
+    language_and_native,
+    primary_language,
+    with_language,
+)
 from .wikidata_statements import (
     ITEM_ID,
     Statement,
@@ -26,7 +33,6 @@ WIKIDATA_SPARQL = "https://query.wikidata.org/sparql"
 WIKIDATA_RATE = WIKIMEDIA_RATE
 WIKIDATA_SPARQL_RATE = RatePolicy(min_interval=1.0)
 WIKIDATA_LICENCE = "CC0 1.0"
-FETCH_LANGUAGE = "en"
 ENTITY_PROPS = "info|labels|descriptions|aliases"
 
 
@@ -67,7 +73,7 @@ class WikidataAdapter(HttpSourceAdapter):
         if not revision:
             raise UnusableRecord("no revision")
         return EvidenceItem(
-            id=f"{self.name}:{item_id}",
+            id=f"{self.name}:{with_language(item_id, language)}",
             adapter=self.name,
             tier=self.tier,
             source_type="DATASET",
@@ -83,18 +89,17 @@ class WikidataAdapter(HttpSourceAdapter):
         )
 
     async def _fetch_document(self, native: str, retrieved_at: datetime) -> SourceDocument:
-        if not ITEM_ID.match(native):
+        language, item_id = language_and_native(native)
+        if not ITEM_ID.match(item_id):
             raise InvalidInput(f"{native!r} is not a Wikidata item id")
-        entities = await self._entities([native], FETCH_LANGUAGE)
-        if native not in entities:
+        entities = await self._entities([item_id], language)
+        if item_id not in entities:
             raise self._not_found(native, "no item")
-        statements = await self._statements(native)
-        entity = entities[native]
-        item = self._item((entity, FETCH_LANGUAGE), retrieved_at)
+        statements = await self._statements(item_id, language)
+        entity = entities[item_id]
+        item = self._item((entity, language), retrieved_at)
         item = item.model_copy(update={"external_ids": item.external_ids | external_ids_of(statements)})
-        return build_document(
-            item, _item_text(entity, FETCH_LANGUAGE, statement_lines(statements)), "EXCERPT"
-        )
+        return build_document(item, _item_text(entity, language, statement_lines(statements)), "EXCERPT")
 
     async def _entities(self, ids: list[str], language: str) -> dict[str, dict[str, Any]]:
         params = {
@@ -108,10 +113,10 @@ class WikidataAdapter(HttpSourceAdapter):
         entities = payload.get("entities") or {}
         return {key: value for key, value in entities.items() if "missing" not in value}
 
-    async def _statements(self, item_id: str) -> list[Statement]:
+    async def _statements(self, item_id: str, language: str) -> list[Statement]:
         response = await self.sparql.get(
             WIKIDATA_SPARQL,
-            params={"query": statements_query(item_id, FETCH_LANGUAGE), "format": "json"},
+            params={"query": statements_query(item_id, language), "format": "json"},
             headers={"Accept": "application/sparql-results+json"},
         )
         bindings = ((response.json(self.sparql.service).get("results")) or {}).get("bindings") or []

@@ -20,7 +20,7 @@ import { FirstPasswordGate } from "@/components/FirstPasswordGate";
 import { TwoStepVerificationCard } from "@/components/settings/TwoStepVerificationCard";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { BrandMark } from "@/components/BrandMark";
-import { isAdmin, routeGuardFor } from "@/lib/permissions";
+import { hasAdminView, routeGuardFor } from "@/lib/permissions";
 import { browserOffline } from "@/lib/errorKind";
 import { signInHref } from "@/lib/sessionReturn";
 import { mustChangePassword } from "@/lib/signIn";
@@ -74,7 +74,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const blocked = Boolean(guard && !guard.can(user));
 
   const chrome = blocked ? null : adminChromeRouteFor(pathname);
-  const chromeSettling = Boolean(chrome) && isAdmin(user) && !adminViewResolved;
+  const chromeSettling = Boolean(chrome) && hasAdminView(user) && !adminViewResolved;
   const chromeHidden = Boolean(chrome) && !adminChromeVisible(user, adminMode);
 
   return (

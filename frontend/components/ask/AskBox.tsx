@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { ArrowUp, Mic, Square } from "lucide-react";
 
 import { SegmentedChoice } from "@/components/ui/SegmentedChoice";
@@ -22,7 +22,8 @@ export function AskBox({
   voiceAvailable,
   onVoice,
   craftLabel,
-  onClearCraft
+  onClearCraft,
+  languageControl
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -36,6 +37,7 @@ export function AskBox({
   onVoice: () => void;
   craftLabel: string | null;
   onClearCraft: () => void;
+  languageControl?: ReactNode;
 }) {
   const area = useRef<HTMLTextAreaElement | null>(null);
   const empty = value.trim().length === 0;
@@ -68,6 +70,7 @@ export function AskBox({
         value={value}
         maxLength={QUESTION_MAX}
         rows={2}
+        dir="auto"
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
@@ -79,17 +82,18 @@ export function AskBox({
         className="min-h-14 w-full resize-none bg-transparent px-1 text-base leading-7 text-ink-900 outline-hidden placeholder:text-ink-300"
       />
       <div className="flex flex-wrap items-center justify-between gap-2">
-        {modes.length > 1 ? (
-          <SegmentedChoice
-            label="Mode"
-            value={mode}
-            options={modes.map((value) => ({ value, label: MODE_LABEL[value] }))}
-            onChange={(next) => onMode(next as AnswerMode)}
-            disabled={busy}
-          />
-        ) : (
-          <span />
-        )}
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          {modes.length > 1 ? (
+            <SegmentedChoice
+              label="Mode"
+              value={mode}
+              options={modes.map((value) => ({ value, label: MODE_LABEL[value] }))}
+              onChange={(next) => onMode(next as AnswerMode)}
+              disabled={busy}
+            />
+          ) : null}
+          {languageControl}
+        </div>
         <div className="flex items-center gap-2">
           {voiceAvailable ? (
             <button

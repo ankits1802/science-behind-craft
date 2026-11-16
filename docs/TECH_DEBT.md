@@ -3,7 +3,7 @@
 What is knowingly below standard, why it was left, and what clears it. Add an entry in the same
 change that takes the shortcut; delete it in the change that clears it.
 
-Last reviewed: 2026-11-16.
+Last reviewed: 2026-11-17.
 
 ## Infrastructure
 
@@ -32,15 +32,15 @@ Last reviewed: 2026-11-16.
 
 ### Python code over budget
 
-- **What:** recorded in `tools/hygiene_baseline.json` on 2026-11-16: 14 files over 400 lines, 55
+- **What:** recorded in `tools/hygiene_baseline.json` on 2026-11-16: 12 files over 400 lines, 54
   functions over 40 lines, 9 functions with more than 5 positional parameters. The largest files:
   `backend/migrations/versions/0001_initial_schema.py` (2853), `etl/crafts/wikidata_link.py`
   (1121), `backend/app/api/routes/auth.py` (784), `backend/app/services/two_factor.py` (703),
   `etl/crafts/seed_claims.py` (642), `backend/app/providers/router.py` (566),
-  `backend/app/models/knowledge.py` (553), `etl/crafts/aliases.py` (543),
-  `backend/tests/db/test_db_flows.py` (524), `backend/app/services/knowledge_view.py` (502),
+  `etl/crafts/aliases.py` (543),
+  `backend/tests/db/test_db_flows.py` (464), `backend/app/services/knowledge_view.py` (502),
   `backend/app/services/managed_secrets.py` (496), `backend/app/services/ai_providers.py` (454),
-  `backend/app/data/craft_master_loader.py` (433), `backend/app/api/routes/access.py` (414).
+  `backend/app/data/craft_master_loader.py` (433).
 - **Why left:** most were ported from the designer portal with the same shapes so the portals
   stay mergeable; splitting them is a separate restructuring change.
 - **Clears it:** split along responsibilities when a file is next changed; run
@@ -49,8 +49,8 @@ Last reviewed: 2026-11-16.
 
 ### Answer stream: gaps left on 2026-11-16 (decision 0012)
 
-- **What:** (1) A client that disconnects cancels the answer, including a write-back in
-  progress (its transaction rolls back), so research already paid for can be lost.
+- **What:** (1) Cleared by decision 0016: the write-back runs as shielded work and finishes
+  when the learner leaves; only a write-back still running 8 s into a shutdown is lost (logged).
   (2) `AnswerSentence`, `AnswerCitation`, `AnswerTrace` and `LiveCandidate` rows are not
   written; the `Answer` row has the plan, tiers and cited claim ids but no `costUsd`,
   `latencyMs` or `payload`. `VERIFIED` answers write no `Answer` row (`answerId` null).
@@ -61,8 +61,7 @@ Last reviewed: 2026-11-16.
   so the learner waits for the whole pipeline before the first sentence.
 - **Why left:** the trace and answer-sentence tables, cost settlement per answer and chunk
   citations each widen the contract; this change wires the flow first.
-- **Clears it:** shield the keep step from cancellation (or hand it to a background task);
-  write the answer rows and trace from the events already produced, with spend from the
+- **Clears it:** write the answer rows and trace from the events already produced, with spend from the
   request id's `UsageEvent` rows; pass `RESEARCHER` to the stored search when the asker may
   read it; store the quote's surrounding passage on `ClaimSource`; embed before opening the
   resolver's session; send stored-claim sentences before write-back once the client can
@@ -118,15 +117,12 @@ Last reviewed: 2026-11-16.
 
 ### Craft descriptor embeddings are not filled
 
-- **What:** semantic craft matching (decision 0004) needs `Craft.descriptorEmbedding`, and no
-  workflow runs `app/scripts/embed_craft_descriptors.py`. Until it runs, the resolver uses
-  exact, fuzzy, family and region signals only. It also fills only missing vectors, so a craft
-  whose aliases change later (portal sync, enrichment) keeps its old vector.
-- **Why left:** the script calls the paid embedding route and changing the deploy or a scheduled
-  workflow is the infrastructure lane's change, batched with the next release.
-- **Clears it:** run it after the seeds and the craft sync in Deploy backend and in the daily
-  Craft sync, and store a hash of `descriptor_text` per craft so a changed descriptor is
-  embedded again.
+- **What:** `app/scripts/embed_craft_descriptors.py` now runs after the seeds and the craft sync
+  on every release and first in the daily Coverage enrichment run (decision 0016), but it fills
+  only missing vectors, so a craft whose aliases change later (portal sync, enrichment) keeps
+  its old vector.
+- **Why left:** detecting a changed descriptor needs a stored hash per craft, a schema change.
+- **Clears it:** store a hash of `descriptor_text` per craft and embed again when it differs.
 
 ### Craft matching has no evaluation set
 
@@ -167,8 +163,6 @@ Last reviewed: 2026-11-16.
 
 - **What:**
   - The per-process pacing above applies to `reference_sources` too.
-  - Wikidata and Commons fetches render in English only; `fetch` takes no language, so a Hindi
-    question cites English labels and descriptions.
   - Wikidata time values coarser than a year (decade, century) are left out of the item text,
     and the Commons `published` date is empty unless the original date is ISO.
   - PubChem hazards keep at most three reporting sources; the ECHA terms allow non-commercial
@@ -176,10 +170,10 @@ Last reviewed: 2026-11-16.
   - Commons media use `SourceKind` `OTHER`: the enum has no image or media kind.
   - `WIKIPEDIA_LANGUAGES` is English and Indian languages only; a learner writing in another
     language gets `InvalidInput` from the Wikipedia adapter.
-- **Why left:** no caller yet decides the language of a fetch or needs other wikis; a media
-  source kind needs a migration of the `SourceKind` enum.
-- **Clears it:** pass the answer language through to `fetch` (the answering service has it); add a `MEDIA` source kind with its migration when the media lane stores Commons files;
-  widen the language list when the planner asks for it.
+- **Why left:** no caller yet needs other wikis; a media source kind needs a migration of the
+  `SourceKind` enum.
+- **Clears it:** add a `MEDIA` source kind with its migration when the media lane stores Commons
+  files; widen the language list when the planner asks for it.
 
 ### Web search and fetcher: gaps left on 2026-11-16 (decision 0007)
 
@@ -219,8 +213,9 @@ Last reviewed: 2026-11-16.
   rows wait for the next scheduled run. (3) The corpus imports (Wood Handbook,
   immersive-episteme sources) do not store chunks yet; write-back does
   (`live_source_store.keep_document`). (4) A claim whose text changes in place keeps its old
-  vector. (5) Full-text ranking reads Latin-script words only; a question in an Indic script is
-  ranked by the vector alone. (6) The HNSW indexes on `Claim.embedding` and `Chunk.embedding`
+  vector. (5) Full-text ranking reads Latin-script words only; answers search with an English
+  rendering of the question (decision 0023), but a direct caller of `StoredKnowledgeSearch` with
+  Indic text is ranked by the vector alone. (6) The HNSW indexes on `Claim.embedding` and `Chunk.embedding`
   are unused by the exact craft-scoped scan.
 - **Why left:** the stamp needs a migration; the corpus imports are their own lane.
 - **Clears it:** add `embeddingModel` to `Claim` and `Chunk` (and `Craft`), filter the vector
@@ -271,26 +266,29 @@ Last reviewed: 2026-11-16.
   claim. (3) A stored claim is offered as its text alone; its citations' quotes and sources are
   not in `ClaimHit`, so the model cannot quote the source behind a claim and the label says only
   "stored claim". (4) `ResearchSummary.services` lists searchers that returned evidence or
-  failed, not every searcher asked. (5) A sentence in a language that writes numbers in its own
-  digits fails the figure check unless its quote has the same digits; the prompt asks for 0-9.
+  failed, not every searcher asked.
 - **Why left:** the reader and the answering service are separate lanes; chunk citations and
   claim sources need the stream and retrieval contracts to grow together.
 - **Clears it:** the reader fills quotes for long documents; the answering service builds
   `compose_request` from the pack, joins each claim's sources and quotes from the database into
   its candidate, and records which searchers ran in the pack; add a chunk candidate kind with a
-  source-only citation when the stream allows one; fold Indic digits in `figures_in`.
+  source-only citation when the stream allows one.
 
 ## Live research write-back (decision 0011)
 
-### The quote overlap assumes one language (decision 0013)
+### The quote overlap reads English passages only (decisions 0013, 0023)
 
-- **What:** `UNRELATED_QUOTE` compares the sentence's content words with its quotes' words, so
-  an answer written in another language than its sources would fail every sentence
-  (`backend/app/research/quotes.py`, `quote_overlap`). The stop list and the four-letter stem
-  are English.
-- **Why left:** English is the only answer language (`ANSWER_LANGUAGES`).
-- **Clears it:** before a second answer language is offered, compare against a translation of
-  the quotes or skip the overlap for that language with a recorded decision.
+- **What:** answers are composed and checked in English and translated afterwards (decision
+  0023), so the overlap holds for English sources. `UNRELATED_QUOTE` still compares the sentence's
+  English content words with its quotes' words (`backend/app/research/quotes.py`,
+  `quote_overlap`), so a sentence resting only on a Hindi Wikipedia or Wikidata passage, found by
+  a native-language query, is dropped; such passages count only beside an English passage that
+  carries the wording.
+- **Why left:** the owner kept every existing check unchanged; a cross-language overlap needs a
+  checked translation of the quote first.
+- **Clears it:** translate a non-English quote into English with the TRANSLATE route, check it
+  with `translation_problems`, and compute the overlap against that rendering while the citation
+  keeps the verbatim quote.
 
 ### Licence allow-list is by string
 
@@ -328,3 +326,537 @@ Last reviewed: 2026-11-16.
 - **Clears it:** pass the remaining day budget as `request_budget_usd` through
   `router_structured_model` and `router_embedder`.
 
+## Science, region, voice and media contracts (decision 0014)
+
+### Contracts ahead of their producers
+
+- **What:** the models, golden files and contract tests exist; the process (decision 0015),
+  region (decision 0016), voice (decision 0017) and media (decision 0018) routes produce theirs,
+  and `services/naming.py` with `shared/naming-golden.json` names media files. The media
+  sharing route is still unserved.
+- **Why left:** decision 0014 is the contract lane; sharing belongs to the governance lane.
+- **Clears it:** the governance lane serves `POST /api/media/assets/{id}/sharing`.
+
+### ElevenLabs behaviour not yet verified
+
+- **What:** the voice binding rests on `custom_llm.request_headers` substituting
+  `{{system__conversation_id}}` and on `custom_llm.api_key` arriving as a bearer, neither on
+  ElevenLabs' official pages; also unverified are the URL suffix, custom-LLM tool calls reaching
+  `end_call` and client tools, Hindi in agents, CSP hosts and the plan's retention minimum
+  (`docs/contracts/voice.md`). Relay text to speech cannot run with zero retention
+  (`enable_logging=false` is enterprise only).
+- **Why left:** only a recorded round trip against a test agent can settle them (PLAN 10.1). Lane
+  0017 built the agent path on the contract's assumptions (`custom_llm.url` ending `/api/voice/llm/v1`,
+  the bearer, the header template) and its adapter tests on the documented response shapes; the
+  spike workflow is not written, because it calls the real account.
+- **Clears it:** the spike on GitHub Actions with a test agent made by
+  `app/scripts/provision_voice_agent.py`, replacing the fixtures in `backend/tests/voice/fixtures`
+  with recorded responses; `voice.transport` stays `RELAY` until it passes. Retention: an
+  enterprise plan, or the Gemini voice for relay speech.
+
+### Contract tests read files their workflow does not watch
+
+- **What:** `backend/tests/contracts` reads `etl/geo/geo_etl/catalog.py`, `infra/terraform/*` and
+  `docs/PLAN.md`, but Backend checks do not run on a push that changes only those. Adding them to
+  the push filter would make such a push deploy the backend. The frontend side is closed: Frontend
+  checks (which deploy nothing) watch `backend/app/models/enums.py`, `backend/app/schemas/**`,
+  `backend/app/core/roles.py`, `shared/roles.json` and `infra/terraform/variables.tf`, the files
+  its unit specs read (decision 0022).
+- **Clears it:** a separate contract-check job (or a paths filter on pull requests only) that runs
+  `tests/contracts` when those files change.
+
+### Region golden values are hand-written
+
+- **What:** the district numbers in `shared/region.craft.golden.json` and
+  `shared/region.layer.golden.json` are illustrative shapes for tests, not ETL output; only the
+  dataset rows are real, and the layer's classes and version are computed from the hand-written
+  numbers (decision 0016).
+- **Clears it:** when the full `geo-etl` load exists, regenerate the layer fixture's values from
+  it in a reviewed change.
+
+
+## Region profile and map layers (decision 0016)
+
+### A district place carries every stored value
+
+- **What:** `GET /crafts/{slug}/region` sends every stored value of a district (about 300 with
+  the full load: monthly normals, yearly forest loss, percentiles and uncertainty bounds) and
+  every aggregable series of a state, and a craft practised in many states sends one such place
+  per state. The panel lists them all.
+- **Why left:** the contract (decision 0014) asks for every row; choosing a headline set is a
+  product decision.
+- **Clears it:** a curated set of headline variables per facet in the contract (the layer
+  registry is a start), with the rest behind a "More" view or left to the map.
+
+### State aggregates are computed per request
+
+- **What:** each region request groups the state's district rows in Postgres (one grouped query
+  per request over the states it shows); nothing is cached.
+- **Why left:** correct and fast enough for a handful of states; a cache needs invalidation on
+  every geo load.
+- **Clears it:** a `StateEnvValue` table filled by `etl/geo/load.py` after each load, or a
+  materialised view refreshed by it.
+
+### Two region rules mirror how the geo ETL writes rows
+
+- **What:** `geo/records.LITHOLOGY_TWIN_PREFIX` assumes GLiM writes each class share both as
+  `lithology_<code>` and as a `DistrictGeology` row, and `geo/aggregation.ABSENT_MEANS_ZERO`
+  that GLiM shares and MRDS per-commodity counts exist only where present. Migration 0005 also
+  copies the GLiM legend (`geo_etl/layers/geology.GLIM_CLASSES`) to name rows loaded earlier.
+  No test reads the ETL to keep them in step.
+- **Clears it:** have the ETL write the share once with its name and write zero rows (or a
+  coverage row per dataset), then drop both rules; or a contract test that runs the GLiM and
+  MRDS row builders on a fixture.
+
+### Dataset links of rows loaded before migration 0005
+
+- **What:** `EnvDataset.url` is filled only by a geo load after the migration, so until the next
+  `geo-etl` run with `load` the region and layer answers send `url: null` for every dataset.
+- **Clears it:** the next Geo ETL run with `load` (any dataset), which upserts every dataset row.
+
+### States of practice are matched in two places
+
+- **What:** `geo/places.practice_states` and `services/knowledge_view.craft_locations` both
+  match `Craft.stateOfPractice` to `AdminState.name` case-insensitively; only the region skips
+  `All India` explicitly and logs other unmatched names.
+- **Clears it:** have the profile use `practice_states` (or an `AdminState` lookup in one service)
+  the next time `knowledge_view.py` is split.
+
+## Geo ETL state gaps (decision 0027)
+
+### An unreachable tile reads as an absent one
+
+- **What:** `etl/geo/geo_etl/raster.exists` turns any open error, a timeout or a server error as
+  much as a 404, into "no such file", caches that answer for the process, and `raster.read`
+  mosaics only the tiles it found. A WorldCover, Hansen or Copernicus DEM district whose tile did
+  not answer is computed from the tiles that did, with no failure listed; a CHELSA or CHIRPS file
+  that did not answer fails its step for the whole shard (which now fails the part). After the
+  CHIRPS year lookup, file reads still rely on GDAL's own retries (7 tries of up to 120 s per
+  request in the workflow), so a stalled server can still hold a job for hours.
+- **Why left:** run 43884310432's gaps all came from the district shapes; telling an ocean tile
+  from an unreachable one needs each layer's tile index, a change to every tiled layer.
+- **Clears it:** probe tiles over HTTP as the CHIRPS lookup does (only 404 means absent, other
+  errors retried then raised), or list each dataset's tiles once and treat a listed tile that
+  cannot be read as a failure; cap GDAL's retries with an overall deadline per file.
+
+### Each shard resolves the CHIRPS period on its own
+
+- **What:** every CHIRPS extract job calls `latest_year` itself. Should CHC publish a new annual
+  file while a run is going, shards could end on different years, and the combined table would
+  hold two periods for one dataset; `combine` keeps the last dataset row it reads.
+- **Why left:** CHC publishes once a year and a run takes under an hour.
+- **Clears it:** resolve the year once in the workflow's plan job, pass it to every shard
+  (a `--chirps-last-year` option), and have `combine` refuse parts of one dataset whose rows
+  differ.
+
+## Craft page and region panel (decision 0019)
+
+### The profile still sends stages and science the page no longer reads
+
+- **What:** `GET /crafts/{slug}/profile` (`services/knowledge_view.craft_profile`) still returns
+  `stages` (with the uncited `durationText`) and an always-empty `science`; the craft page now
+  reads the process route instead, and uses `stages` only to keep the profile's citation numbers.
+- **Why left:** lane 0019 does not edit backend files.
+- **Clears it:** drop both fields from the profile route and `CraftProfile` in one change, and
+  number sources from the overview, materials and the process route.
+
+### Map layer values carry no district names
+
+- **What:** `MapLayer.values` is keyed by LGD code only and the client holds no district names, so
+  hovering or tapping a district on `/map` shows its value and not its name
+  (`components/map/MapLayerView.tsx`).
+- **Why left:** the region contract (decision 0014) fixes the layer body, and the backend is
+  another lane's.
+- **Clears it:** add district names to `MapLayer` (or a cached districts route) with the contract,
+  golden file and both tests, then show "Kachchh · pH 8.1".
+
+### Craft page and map layers not yet seen running
+
+- **What:** the timeline, region panel and choropleths are checked by typecheck, lint and unit
+  specs of their pure rules, not in a browser: there is no React renderer in the unit project and
+  nothing runs on the laptop. Their contrast, wrapping at phone width and the KaTeX rendering of
+  real reactions are unverified.
+- **Clears it:** the Production build job, then a signed-in smoke spec (craft page tabs, `/map`
+  with `?layer=`) with route fixtures from `shared/` at desktop and phone widths, and screenshots
+  once the 0015-0016 routes are deployed.
+
+### The boundary caption has two homes
+
+- **What:** maps drawn without the layer list (the craft page) print the caption from
+  `components/map/MapAttribution.tsx`; `/map` prints the server's `boundary.caption`
+  (`schemas/region.BOUNDARY_CAPTION`). The two are equal today.
+- **Clears it:** have the craft page read the caption from `GET /map/layers` (or a shared
+  boundary route) and delete the client constants.
+
+## Voice backend (decision 0017)
+
+### Voice in other languages is checked by text only (decision 0025)
+
+- **What:** voice offers all thirteen answer languages from the ElevenLabs documentation, not from
+  calls. Scribe's published accuracy is Scribe v2's, and Urdu's band is moderate (25-50% word error),
+  so an Urdu question may often be misheard. The fixed spoken phrases in `voice/phrases.py` were
+  written by the lane and not read by native speakers. In `AGENT` nothing yet tells the agent a
+  session's language: the token takes none and client overrides are off, so the agent hears in its
+  own language until `language_detection` switches; the presets are not provisioned.
+- **Why left:** no provider call with a real key from the laptop, and no native reviewers in reach.
+- **Clears it:** the spike records one relay turn per language and one agent call in Hindi; a
+  native reader per language signs off the phrase table; if Urdu misses too often, drop `ur` from
+  `STT_LANGUAGE_CODES` (voice then stops offering it) or try `scribe_v3` with Hindi as a
+  `secondary_language_codes` hint; the spike decides whether the agent gets an `agent.language`
+  override or one agent per language.
+
+### The voice pack is claims only, ranked by words
+
+- **What:** PLAN 10.3 asks for the T0/T1 pack with embeddings plus T2 passages; the pack is the
+  craft's visible claims ranked by shared word stems (`voice/pack.ranked_claims`), without vectors
+  or corpus chunks.
+- **Why left:** a query embedding per turn is a second model call before the first sentence.
+- **Clears it:** prefetch the claim vectors with the pack and embed the question in parallel with
+  the filler; add T2 chunks as `EVIDENCE` candidates with their verified quotes.
+
+### Voice upkeep rides the daily Coverage enrichment run
+
+- **What:** purging transcripts after 30 days, closing calls left open and reconciling agent calls
+  run as the first module of the daily box job in `coverage-enrichment.yml`; `kv-worker`
+  (`app/worker.py`, decision 0018) runs only the media queue.
+- **Why left:** the worker arrived with the media lane, which did not take on voice scheduling.
+- **Clears it:** move `app.scripts.voice_upkeep` into the worker's schedule.
+
+### Voice billing approximations
+
+- **What:** a relay upload's floor is its bytes at 5 000 a second; compressed audio is not decoded,
+  so a client encoding below the dock's 32 kbit/s (Opus goes down to 6 kbit/s) gets up to about
+  6.7 times the floor's seconds of speech to text inside the 300 000-byte ceiling, still within
+  the day's seconds. Parallel uploads are allowed; each holds its own minute under the row lock,
+  so they cannot pass the day's seconds. An agent call cannot be hung up from our side: after its
+  row ends the ElevenLabs call can run to the agent's 600 s, which reconciliation charges (the user
+  may go below zero for that day). Refund and settle rows count on the day they are written, not
+  the call's day.
+- **Why left:** decoding needs ffmpeg on the box; ending a call needs an ElevenLabs endpoint the
+  spike has not confirmed. Each is bounded by the day's seconds, the turn and replay limits and
+  the 40-turn cap (decision 0022).
+- **Clears it:** decode the upload's duration (ffprobe) before speech to text and bill that; end
+  the ElevenLabs conversation when the row ends, once the spike shows how; date settlement rows to
+  the call's day.
+
+### Voice state held per process
+
+- **What:** claim packs (10 minutes), relay reply audio (15 minutes, 32 replies) and the ElevenLabs
+  reachability (1 minute) are held per API process. A reply missing from that process's cache
+  (another worker, a handover, eviction) is synthesised again, only while the call is live or two
+  minutes after it ended, billed under its own key and limited to 60 replays in 10 minutes
+  (decision 0022).
+- **Clears it:** keep reply audio in the media bucket under a short lifecycle rule, so a cache miss
+  never calls text to speech.
+
+### Voice settings have no screen
+
+- **What:** `voice.transport`, `voice.max_live_sessions` and `voice.voice_id` are `AppSetting` rows set
+  in SQL (`docs/RUNBOOK.md`); `voice.max_live_sessions` defaults to 5, an assumption about the bought
+  plan's concurrent-call limit.
+- **Clears it:** a master-admin voice block in Settings, and the limit from the plan once bought.
+
+### A hand-written multipart reader
+
+- **What:** relay uploads are read by `api/multipart_form.py` rather than `python-multipart`.
+- **Why left:** the lockfile cannot be regenerated on this machine (no `uv`), and one field is
+  enough.
+- **Clears it:** add `python-multipart` with `uv add` where `uv` runs and read the form with
+  Starlette's limits.
+
+## Voice UI (decision 0020)
+
+### The voice dock has not run in a browser
+
+- **What:** the dock, orb, microphone recording, speech playback and the ElevenLabs WebRTC call
+  are checked by typecheck, lint and unit specs that drive `VoiceCall` with fakes; no browser has
+  recorded, played or joined a LiveKit room, and the dock's layout above the bottom island, its
+  contrast in both themes and the transcript at phone width are unverified. The `AGENT` path also
+  assumes the server writes each turn to the transcript as it is spoken.
+- **Clears it:** after lane 0017 deploys, a signed-in smoke spec with a fake microphone
+  (`--use-fake-device-for-media-stream`) on `RELAY`, route fixtures from `shared/` at desktop and
+  phone widths, then one real `AGENT` call once the spike passes.
+
+### The dock asks for a bit rate it cannot enforce
+
+- **What:** the relay recorder asks `MediaRecorder` for the session's `audioBitsPerSecond`
+  (32 kbit/s) and sends a turn at nine tenths of `maxAudioBytes`; a browser that ignores the asked
+  rate (Safari's AAC is the likely case, unverified) sends shorter turns than a minute.
+- **Clears it:** measure the recorded rate per browser in the smoke spec; if one ignores it, raise
+  that type's byte ceiling in the contract with its measured rate.
+
+### Audio worklets need `blob:` scripts
+
+- **What:** `@elevenlabs/client` loads its AudioWorklet processors from `blob:` and `data:` URLs.
+  The CSP has no `script-src` yet, so they load; the strict CSP of PLAN 15 would block them.
+- **Clears it:** copy `node_modules/@elevenlabs/client/worklets/*` into `public/` at build time
+  and pass `workletPaths` from `lib/elevenLabsAgent.ts`, in the change that adds `script-src`.
+
+## Media UI (decision 0021)
+
+### Sharing waits for the governance lane
+
+- **What:** the client draws Share, Withdraw and Stop sharing only when an asset carries
+  `sharing` (`docs/contracts/media.md`, Sharing), which no backend sends, and calls
+  `POST /api/media/assets/{id}/sharing`, which no route serves. A second professor cannot reach
+  an asset awaiting sign-off, because a job is visible to its requester only.
+- **Why left:** lane 0021 does not edit backend files; the contract gave the route to the
+  governance lane.
+- **Clears it:** the governance lane adds `sharing` to `MediaAssetView` for `SHARE_MEDIA` holders,
+  serves the route with the rules of the contract, adds the second professor's queue, and adds a
+  golden asset with `sharing` that both contract tests read.
+
+### Shared illustrations reach other readers only through the cache
+
+- **What:** a `CRAFT_SHARED` asset is shown to another reader only when they press Image on the
+  same stage and the prompt hash matches; no route lists a craft's shared assets, so the stage
+  does not show them on arrival.
+- **Clears it:** a route listing the shared assets of a craft's stages (with fresh URLs), read
+  by the media store and drawn by `components/craft/StageMedia.tsx` before the buttons.
+
+### The client's wait limit restates backend constants
+
+- **What:** `MEDIA_WAIT_LIMIT_SECONDS` (900, `frontend/lib/mediaView.ts`) is three attempts of
+  `JOB_TIMEOUT_SECONDS` (240) plus a queue's wait; a change to the backend's timeout or retries
+  does not move it.
+- **Clears it:** a deadline on the job view (for example `giveUpAt`) that the client reads
+  instead, with the contract, golden file and both tests.
+
+### No style hint
+
+- **What:** `MediaJobRequest.styleHint` is always sent as `null`; the UI has no field for it.
+- **Clears it:** a short field on the stage's media row (filtered with the contract's banned
+  words, refusals shown beside it) when the owner asks for one.
+
+### Media UI not yet seen running
+
+- **What:** the buttons, progress, figure, downloads and sharing steps are checked by typecheck,
+  lint and unit specs that drive the store with fakes and test the rules on the golden files; no
+  browser has drawn an asset, played a video, saved a blob from the bucket (its CORS allows
+  `https://kalavigyan.vercel.app`) or loaded every page under the new `img-src` and `media-src`.
+- **Clears it:** after lane 0018 deploys, a signed-in smoke spec with route fixtures from
+  `shared/` at desktop and phone widths (press, progress, figure, download name), and a pass over
+  every page with the CSP report in the console.
+
+## Science engine (decision 0015)
+
+### Reactions and readings cover three crafts
+
+- **What:** the science seed has reactions and condition readings for Kutch Ajrakh, Bagh and
+  Machilipatnam only; Bagru, Sanganeri and Akola stages get materials but no reactions or
+  readings. Nothing proposes species for new claims (no researcher form, no enrichment step),
+  so reactions grow only through `app/data/science_seed.json`. Kaolinite dehydroxylation has
+  no reaction: the terracotta seed is sub-category mechanism chains, not a craft process with
+  a `FIRE` stage. Stage concepts without an upstream ordinal (Akola mud soaking and paste
+  preparation, Machilipatnam and Sanganeri block carving) get no stage, although `PRECEDES`
+  edges could place them. No seed claim states a temperature or pH, so no seeded reading is
+  checked against an envelope yet.
+- **Why left:** each reaction and reading is curated against its quote; a model proposal path
+  needs the review queue and a writer that calls `science/reactions.check_reaction`.
+- **Clears it:** a writer for proposed species (researcher form and enrichment), balanced only
+  through `check_reaction`; a terracotta craft process; ordering stages by `PRECEDES`.
+
+### Out-of-envelope readings are not in a review queue
+
+- **What:** the contract lists every `OUTSIDE` reading in the review queue; no review queue
+  exists, so they are only shown with their status.
+- **Clears it:** the review-queue lane lists readings whose `envelope_check` is `OUTSIDE`.
+
+### Compound lookup is not scheduled
+
+- **What:** `app/scripts/link_compounds` fills PubChem CIDs, properties and sources for seeded
+  compounds, but no workflow runs it, so compounds show name and formula only.
+- **Why left:** changing the deploy or a scheduled workflow was outside the lane.
+- **Clears it:** run it after the seeds in Deploy backend or in the daily Coverage enrichment.
+
+### The science seed never deletes
+
+- **What:** science rows are upserted by derived id, so a reaction, condition or reading removed
+  from `science_seed.json` stays in the database.
+- **Clears it:** delete seeded science rows whose derived id is no longer in the plan, in the
+  same transaction as the upsert.
+
+### One kind and role per material
+
+- **What:** a seeded material has one curated `MaterialKind` and one `MaterialRole` for every
+  stage that uses it, and tools (`TOOL` concepts) are not stage materials.
+- **Clears it:** take the role per stage from the source when a stage uses a material
+  differently, and show tools once the contract has a place for them.
+
+### Kaolinite constant differs from PLAN 7
+
+- **What:** PLAN 7 gives kaolinite dehydroxylation as 450–600 °C; the cited revision says it
+  begins at 550–600 °C, which is the constant.
+- **Clears it:** cite a scholarly thermal-analysis source and set the constant to what it says.
+
+## Answers in Indian languages (decision 0023)
+
+### Translations are checked for figures, not for meaning
+
+- **What:** `research/translation.translation_problems` proves that numbers, formulas, mhchem,
+  units and the script survive a translation and that no link or personal data was added; it does
+  not prove the sentence still says the same thing. A unit or number written in words in the
+  target language fails the check and the sentence falls back to English.
+- **Why left:** a meaning check needs a second model call per answer and a judge to calibrate.
+- **Clears it:** run the known-answer questions of PLAN 0 in Hindi and Tamil on the box, have a
+  speaker of each read the answers, and add a back-translation check if they find drift.
+
+### Verified headings and follow-ups stay English
+
+- **What:** a Verified answer in another language translates only its claim sentences; the
+  section headings and the templated follow-ups are the app's English labels, and the
+  not-enough-evidence message, errors and status lines are English in every mode.
+- **Why left:** translating them would cost a model call on every Verified answer, including one
+  whose claims are all cached; UI strings stay English.
+- **Clears it:** keep translated labels per language as reviewed data (not model output) and send
+  them with the stream.
+
+### Multilingual answers not yet seen running
+
+- **What:** the language picker, the Noto Sans faces, right-to-left Urdu and the English toggle are
+  checked by typecheck, lint and unit specs; no browser has drawn them, and no TRANSLATE call has
+  run against a provider. Migration 0007 seeds the TRANSLATE routes and has run only offline.
+- **Why left:** nothing runs on the laptop; the batch deploys once.
+- **Clears it:** after the deploy, ask one Hindi and one Urdu question in each mode and look at the
+  answer on a phone and a laptop.
+
+## Media backend (decision 0018)
+
+### Gemini media behaviour not yet seen live
+
+- **What:** how a safety block reads on the Interactions API, the image output type when none is
+  asked for (PNG assumed), `DELETE /v1beta/interactions/{id}`, the clip's exact duration and the
+  interaction id alphabet are unverified; the fixtures in `backend/tests/media/fixtures/` follow
+  the documented shapes, not captured traffic.
+- **Why left:** no paid call runs from the laptop and nothing is deployed yet.
+- **Clears it:** after the deploy, make one image and one video, read the `UsageEvent` and the
+  worker logs, replace the fixtures with the recorded answers (key-free) and adjust
+  `providers/gemini_media.py` where the shapes differ.
+
+### Video without the stage image as its first frame
+
+- **What:** PLAN 11 allows the generated stage image as the only reference; videos are
+  `text_to_video` only.
+- **Why left:** it needs an S3 read and an image input in the request, which the first live runs
+  should shape.
+- **Clears it:** pass the requester's image asset of the same stage as an `image` input with
+  `video_config.task` `image_to_video`, read through `services/object_store`.
+
+### Community and caste names caught by group words only
+
+- **What:** a claim, stage name or style hint is kept out of a prompt when it uses a group word in
+  the singular or plural (`schemas/media.NAMED_GROUP_WORDS`, decision 0022); a community named
+  without one (a surname or cluster name alone) still passes, and
+  `depictsNamedCluster` compares only the craft's located place names.
+- **Why left:** no register of community and caste names exists; PLAN 13a names them only from
+  cited sources.
+- **Clears it:** the governance lane keeps the named practitioners per craft as data; the claim
+  set and the named-cluster flag check against it.
+
+### The KalaVigyan token is not in the cross-portal naming document
+
+- **What:** PLAN 14.3 adds `KalaVigyan` and its entities to
+  `C:/dev/IIT/docs/conventions/NAMING_2026-10-18.md`; only this repository's helper and golden
+  rows know them.
+- **Why left:** that document is outside this repository and shared with both portals.
+- **Clears it:** add the token, the `Generated-Image` and `Generated-Video` entities and the
+  `Step-NN` sequence there at the portals' next release.
+
+### India time is written again outside the backend package
+
+- **What:** `core/clock.INDIA_TZ` is the backend's one home (decision 0022), but the geo ETL keeps
+  its own `IST` offset for its run date (`etl/geo/geo_etl/__main__.py`) and `Craft`'s
+  `recordedTimezone` default names `Asia/Kolkata` in the model, which may import nothing.
+- **Clears it:** let the ETL import the backend's clock when it gains a dependency on the backend
+  package, and move the model default into the migration that next touches the column.
+
+### Media spend and units approximations
+
+- **What:** a refund row counts on the day it is written, so a job failing after midnight IST
+  returns a unit to the new day; the creation hold stops counting after 15 minutes
+  (`RESERVATION_TTL`) while a job waits; `MediaJob.costUsd` holds the successful call only (failed
+  and abandoned calls stay in `UsageEvent`); text and thinking tokens are priced at the media
+  output rate, which overstates cost slightly.
+- **Why left:** each is bounded and small next to the daily allowance and the monthly cap.
+- **Clears it:** date refunds to their job's day, renew holds while queued, and price output by
+  modality once the token breakdown is seen live.
+
+### No signal that the worker is running
+
+- **What:** the options route cannot tell whether `kv-worker` is up; if it is stopped, jobs queue
+  and the client stops polling after 15 minutes.
+- **Why left:** the watchdog covers the API only and the unit restarts itself.
+- **Clears it:** a worker heartbeat (Redis or `AppSetting`) that options read, and the watchdog
+  checking the unit.
+
+## Admin role (decision 0024)
+
+### The roster screen judges an entry by its own role
+
+- **What:** `accessEntryOffers` (`frontend/lib/accessRoster.ts`) hides roster actions by the
+  entry's `admitRole`; the server also refuses when the account at that address holds a role at
+  or above the viewer's, so such a row can show an action that answers 403 with a sentence.
+- **Why left:** the roster row does not carry the account's role, and adding it means a second
+  query per page.
+- **Clears it:** the roster list sends the actions the viewer may take on each row, computed with
+  the same guards as the routes, and the screen draws exactly those.
+
+### Sorting users by role follows the enum, not the rank
+
+- **What:** `UserRole` lists `ADMIN` last (Postgres appends a new value), so
+  `GET /users?sort=role` puts admins after students.
+- **Why left:** the web client never sends that sort, and moving the value means recreating the
+  type.
+- **Clears it:** order that sort by `ROLE_RANK` with a `CASE` expression.
+
+### A partial role-cap update drops the other roles to the student cap
+
+- **What:** `PUT /settings/ai-budget` replaces the whole `roleDailyUsd` map; a role it leaves out
+  falls back to the student's $0.50 in `providers/budget.evaluate` and shows no cap in
+  `/usage/me`.
+- **Why left:** older than the admin role; the master admin sends the whole map today.
+- **Clears it:** merge the sent roles into the stored map, or refuse a map that does not name
+  every role.
+
+### Admin role not yet seen running
+
+- **What:** migration 0009 has been rendered offline only; the admin DB tests
+  (`backend/tests/db/test_admin_role_db.py`) run on GitHub Actions, and no browser has drawn the
+  hub, Manage users or the roster as an admin.
+- **Why left:** nothing runs on the laptop; the batch deploys once.
+- **Clears it:** Backend checks green on the batch, then sign in as an admin after the deploy and
+  walk the hub, Usage, Manage users and the roster.
+
+## Yahoo sign-in (decision 0026)
+
+### Yahoo sign-in not yet seen running
+
+- **What:** migration 0010 has been rendered offline only; the Yahoo DB tests
+  (`backend/tests/db/test_oidc_sign_in_db.py`) run on GitHub Actions, and no real Yahoo account
+  has signed in: the token endpoint's acceptance of the secret in the form body and of the PKCE
+  parameters is taken from DR, where it has run since 2026-10-10.
+- **Why left:** the Yahoo app is not registered yet and nothing runs on the laptop.
+- **Clears it:** register the app (`docs/RUNBOOK.md`, Yahoo sign-in), deploy, and sign in once
+  with a rostered Yahoo address.
+
+## First-password proof (decision 0028)
+
+### A recovery code is offered for a first password but not taken
+
+- **What:** the Settings card's two-step entry (`ChangePasswordCard.tsx`, `allowRecovery`) lets an
+  account with two-step on type a recovery code before its first password, but
+  `POST /auth/change-password` checks the code with `two_factor.step_up`, which takes only an
+  authenticator code, so a recovery code is refused as a wrong code. DR accepts one there.
+- **Why left:** older than decision 0028, and whether a recovery code may add a password is a
+  security choice for the owner.
+- **Clears it:** either check the first-password code with `check_second_factor(...,
+  allow_recovery=True)` and answer its lock as 429, or drop `allowRecovery` from the card.
+
+### First-password proof not yet seen running
+
+- **What:** migration 0011 has been rendered offline only; the route tests
+  (`backend/tests/db/test_first_password_db.py`) run on GitHub Actions, and no browser has added a
+  password through the Google or Yahoo round trip.
+- **Why left:** nothing runs on the laptop, and Yahoo is not registered yet.
+- **Clears it:** Backend checks green on the batch, then after the deploy add a password in
+  Settings from a Google-only account (and a Yahoo one once Yahoo is registered).

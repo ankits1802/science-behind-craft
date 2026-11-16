@@ -1,16 +1,25 @@
 import dataclasses
 import datetime as dt
+import re
+from functools import partial
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import requests
 
 from geo_etl import raster
 from geo_etl.catalog import CHIRPS
-from geo_etl.layers import Options, Result, failure
+from geo_etl.layers import USER_AGENT, Options, Result, failure, with_retries
 from geo_etl.rows import Rows, pick
 
 BASE = "https://data.chc.ucsb.edu/products/CHIRPS/v3.0"
+ANNUAL_DIR = f"{BASE}/annual/global/tifs/"
+ANNUAL_FILE = re.compile(r"chirps-v3\.0\.(\d{4})\.tif(?![\w.])")
+LOOKBACK_YEARS = 4
+ABSENT = (404, 410)
+PROBE_TIMEOUT_S = (10, 60)
+RETRY_ON = (requests.RequestException,)
 MONSOON = (6, 7, 8, 9)
 
 
@@ -23,11 +32,42 @@ def monthly_url(year: int, month: int) -> str:
 
 
 def latest_year(today: dt.date | None = None) -> int:
-    year = (today or dt.date.today()).year - 1
-    for candidate in range(year, year - 4, -1):
-        if raster.exists(annual_url(candidate)):
-            return candidate
-    raise RuntimeError("no CHIRPS v3.0 annual file found for the last four years")
+    newest = (today or dt.date.today()).year - 1
+    candidates = list(range(newest, newest - LOOKBACK_YEARS, -1))
+    try:
+        return probed_year(candidates)
+    except requests.RequestException as probe_error:
+        try:
+            return listed_year(candidates)
+        except requests.RequestException as listing_error:
+            raise RuntimeError(
+                f"CHIRPS v3.0 annual files unreachable: probe {probe_error}; listing {listing_error}"
+            ) from listing_error
+
+
+def probed_year(candidates: list[int]) -> int:
+    for year in candidates:
+        response = with_retries(partial(answered, "HEAD", annual_url(year)), retry_on=RETRY_ON)
+        if response.status_code not in ABSENT:
+            return year
+    raise RuntimeError(f"no CHIRPS v3.0 annual file for {candidates[-1]} to {candidates[0]}: every year is not found")
+
+
+def listed_year(candidates: list[int]) -> int:
+    response = with_retries(partial(answered, "GET", ANNUAL_DIR), retry_on=RETRY_ON)
+    if response.status_code in ABSENT:
+        raise RuntimeError(f"{ANNUAL_DIR} answered {response.status_code}")
+    listed = {int(year) for year in ANNUAL_FILE.findall(response.text)} & set(candidates)
+    if not listed:
+        raise RuntimeError(f"{ANNUAL_DIR} lists no CHIRPS v3.0 annual file for {candidates[-1]} to {candidates[0]}")
+    return max(listed)
+
+
+def answered(method: str, url: str) -> requests.Response:
+    response = requests.request(method, url, timeout=PROBE_TIMEOUT_S, headers={"User-Agent": USER_AGENT})
+    if response.status_code not in ABSENT:
+        response.raise_for_status()
+    return response
 
 
 def district_means(url: str, districts: gpd.GeoDataFrame, bounds) -> pd.DataFrame:

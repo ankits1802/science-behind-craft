@@ -1,0 +1,18 @@
+{
+  "language_code": "en",
+  "language_probability": 0.98,
+  "text": "Why do Ajrakh printers use alum?",
+  "words": [
+    {"text": "Why", "start": 0.12, "end": 0.31, "type": "word"},
+    {"text": " ", "start": 0.31, "end": 0.34, "type": "spacing"},
+    {"text": "do", "start": 0.34, "end": 0.45, "type": "word"},
+    {"text": " ", "start": 0.45, "end": 0.5, "type": "spacing"},
+    {"text": "Ajrakh", "start": 0.5, "end": 1.02, "type": "word"},
+    {"text": " ", "start": 1.02, "end": 1.06, "type": "spacing"},
+    {"text": "printers", "start": 1.06, "end": 1.61, "type": "word"},
+    {"text": " ", "start": 1.61, "end": 1.65, "type": "spacing"},
+    {"text": "use", "start": 1.65, "end": 1.88, "type": "word"},
+    {"text": " ", "start": 1.88, "end": 1.92, "type": "spacing"},
+    {"text": "alum?", "start": 1.92, "end": 2.37, "type": "word"}
+  ]
+}

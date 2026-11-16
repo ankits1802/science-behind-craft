@@ -71,6 +71,7 @@ class Settings(BaseSettings):
 
     app_env: str = Field(default="development", alias="APP_ENV")
     public_web_url: str = Field(default="http://localhost:3000", alias="PUBLIC_WEB_URL")
+    public_api_url: str | None = Field(default=None, alias="PUBLIC_API_URL")
     backend_cors_origins: str = Field(default="http://localhost:3000", alias="BACKEND_CORS_ORIGINS")
     forwarded_client_hops: int = Field(default=2, ge=1, le=5, alias="FORWARDED_CLIENT_HOPS")
     web_proxy_secret: str | None = Field(default=None, alias="WEB_PROXY_SECRET")
@@ -84,6 +85,11 @@ class Settings(BaseSettings):
     access_pending_max: int = Field(default=500, ge=1, alias="ACCESS_PENDING_MAX")
 
     google_client_id: str | None = Field(default=None, alias="GOOGLE_CLIENT_ID")
+    microsoft_client_id: str | None = Field(default=None, alias="MICROSOFT_CLIENT_ID")
+    microsoft_client_secret: str | None = Field(default=None, alias="MICROSOFT_CLIENT_SECRET")
+    microsoft_tenant: str = Field(default="common", alias="MICROSOFT_TENANT")
+    yahoo_client_id: str | None = Field(default=None, alias="YAHOO_CLIENT_ID")
+    yahoo_client_secret: str | None = Field(default=None, alias="YAHOO_CLIENT_SECRET")
 
     mail_from_address: str | None = Field(default=None, alias="MAIL_FROM_ADDRESS")
     mail_from_name: str = Field(default="KalaVigyan", alias="MAIL_FROM_NAME")

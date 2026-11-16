@@ -15,7 +15,7 @@ router = APIRouter(tags=["me"])
 
 router.add_api_route("/me", auth.me, methods=["GET"])
 
-PREFERENCE_FIELDS = ("theme", "reducedMotion", "largerText", "highContrast")
+PREFERENCE_FIELDS = ("theme", "reducedMotion", "largerText", "highContrast", "answerLanguage")
 
 
 def serialize_preferences(row: UserPreference) -> dict[str, Any]:
@@ -24,6 +24,7 @@ def serialize_preferences(row: UserPreference) -> dict[str, Any]:
         "reducedMotion": row.reducedMotion,
         "largerText": row.largerText,
         "highContrast": row.highContrast,
+        "answerLanguage": row.answerLanguage,
         "updatedAt": row.updatedAt.isoformat() if row.updatedAt else None,
     }
 

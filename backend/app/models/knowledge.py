@@ -9,7 +9,6 @@ from sqlalchemy import (
     CheckConstraint,
     Computed,
     DateTime,
-    Float,
     ForeignKey,
     Index,
     Integer,
@@ -19,7 +18,7 @@ from sqlalchemy import (
     UniqueConstraint,
     text as sql_text,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, JSONB, TSVECTOR, UUID
+from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
@@ -140,135 +139,6 @@ class ConceptEdge(Base):
     updatedAt: Mapped[datetime] = updated_at()
 
     __table_args__ = (UniqueConstraint("srcId", "dstId", "relation"), Index(None, "dstId"))
-
-
-class Process(Base):
-    __tablename__ = "Process"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    craftId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="CASCADE"), nullable=False
-    )
-    name: Mapped[str] = mapped_column(String(300), nullable=False)
-    variant: Mapped[str | None] = mapped_column(String(200))
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-    __table_args__ = (Index(None, "craftId"),)
-
-
-class ProcessStage(Base):
-    __tablename__ = "ProcessStage"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    processId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Process.id", ondelete="CASCADE"), nullable=False
-    )
-    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
-    conceptId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="SET NULL")
-    )
-    name: Mapped[str] = mapped_column(String(300), nullable=False)
-    stageType: Mapped[str] = mapped_column(e.StageType, nullable=False, server_default="OTHER")
-    durationText: Mapped[str | None] = mapped_column(String(200))
-    tempMinC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))
-    tempMaxC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))
-    phMin: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))
-    phMax: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))
-    medium: Mapped[str | None] = mapped_column(String(200))
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-    __table_args__ = (UniqueConstraint("processId", "ordinal"),)
-
-
-class Compound(Base):
-    __tablename__ = "Compound"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    pubchemCid: Mapped[int | None] = mapped_column(Integer, unique=True)
-    name: Mapped[str] = mapped_column(String(300), nullable=False)
-    formula: Mapped[str | None] = mapped_column(String(200))
-    iupacName: Mapped[str | None] = mapped_column(Text)
-    smiles: Mapped[str | None] = mapped_column(Text)
-    inchiKey: Mapped[str | None] = mapped_column(String(27), unique=True)
-    molecularWeight: Mapped[Decimal | None] = mapped_column(Numeric(12, 4))
-    synonyms: Mapped[list[str]] = mapped_column(
-        ARRAY(Text), nullable=False, server_default=sql_text("ARRAY[]::text[]")
-    )
-    hazards: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
-    sourceId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Source.id", ondelete="SET NULL")
-    )
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-    __table_args__ = (Index(None, "formula"),)
-
-
-class Material(Base):
-    __tablename__ = "Material"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    name: Mapped[str] = mapped_column(String(300), nullable=False)
-    nameNorm: Mapped[str] = mapped_column(String(300), nullable=False, unique=True)
-    kind: Mapped[str] = mapped_column(e.MaterialKind, nullable=False, server_default="OTHER")
-    description: Mapped[str | None] = mapped_column(Text)
-    conceptId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Concept.id", ondelete="SET NULL")
-    )
-    compoundId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Compound.id", ondelete="SET NULL")
-    )
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-
-class StageMaterial(Base):
-    __tablename__ = "StageMaterial"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    stageId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("ProcessStage.id", ondelete="CASCADE"), nullable=False
-    )
-    materialId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Material.id", ondelete="CASCADE"), nullable=False
-    )
-    role: Mapped[str] = mapped_column(e.MaterialRole, nullable=False, server_default="INPUT")
-    quantityText: Mapped[str | None] = mapped_column(String(200))
-    claimId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="SET NULL")
-    )
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-    __table_args__ = (UniqueConstraint("stageId", "materialId", "role"), Index(None, "materialId"))
-
-
-class Reaction(Base):
-    __tablename__ = "Reaction"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    stageId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("ProcessStage.id", ondelete="CASCADE"), nullable=False
-    )
-    kind: Mapped[str] = mapped_column(e.ReactionKind, nullable=False, server_default="OTHER")
-    species: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
-    )
-    equationInput: Mapped[str | None] = mapped_column(Text)
-    equationBalanced: Mapped[str | None] = mapped_column(Text)
-    coefficients: Mapped[list[int] | None] = mapped_column(ARRAY(Integer))
-    balanced: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("false"))
-    conditions: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
-    )
-    checkerVersion: Mapped[str | None] = mapped_column(String(40))
-    deltaHKjMol: Mapped[Decimal | None] = mapped_column(Numeric(12, 3))
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-    __table_args__ = (Index(None, "stageId"),)
 
 
 class Claim(Base):
@@ -501,58 +371,17 @@ class WebFetch(Base):
     __table_args__ = (Index(None, "url"),)
 
 
-class EvalCase(Base):
-    __tablename__ = "EvalCase"
+class ClaimTranslation(Base):
+    __tablename__ = "ClaimTranslation"
 
     id: Mapped[uuid.UUID] = uuid_pk()
-    suite: Mapped[str] = mapped_column(String(60), nullable=False)
-    externalId: Mapped[str] = mapped_column(String(120), nullable=False)
-    craftSlug: Mapped[str | None] = mapped_column(String(200))
-    input: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
-    expected: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
-    authorId: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    claimId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="CASCADE"), nullable=False
     )
-    active: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("true"))
+    language: Mapped[str] = mapped_column(String(16), nullable=False)
+    sourceSha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
-    __table_args__ = (UniqueConstraint("suite", "externalId"),)
-
-
-class EvalRun(Base):
-    __tablename__ = "EvalRun"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    suite: Mapped[str] = mapped_column(String(60), nullable=False)
-    gitSha: Mapped[str | None] = mapped_column(String(40))
-    status: Mapped[str] = mapped_column(e.EvalRunStatus, nullable=False, server_default="QUEUED")
-    budgetUsd: Mapped[Decimal | None] = mapped_column(Numeric(10, 4))
-    costUsd: Mapped[Decimal] = mapped_column(Numeric(10, 6), nullable=False, server_default=sql_text("0"))
-    summary: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
-    reportKey: Mapped[str | None] = mapped_column(Text)
-    startedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    finishedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    createdAt: Mapped[datetime] = created_at()
-    updatedAt: Mapped[datetime] = updated_at()
-
-
-class EvalResult(Base):
-    __tablename__ = "EvalResult"
-
-    id: Mapped[uuid.UUID] = uuid_pk()
-    runId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("EvalRun.id", ondelete="CASCADE"), nullable=False
-    )
-    caseId: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("EvalCase.id", ondelete="CASCADE"), nullable=False
-    )
-    passed: Mapped[bool | None] = mapped_column(Boolean)
-    score: Mapped[float | None] = mapped_column(Float)
-    metrics: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, server_default=sql_text("'{}'::jsonb")
-    )
-    output: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
-    createdAt: Mapped[datetime] = created_at()
-
-    __table_args__ = (UniqueConstraint("runId", "caseId"),)
+    __table_args__ = (UniqueConstraint("claimId", "language"),)

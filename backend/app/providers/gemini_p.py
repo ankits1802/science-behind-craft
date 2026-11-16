@@ -2,15 +2,20 @@ from __future__ import annotations
 
 import time
 
+import httpx
+
 from app.core.retry_after import retry_after_of
 
-from .base import Adapter, ChatRequest, ChatResult, ProviderError
+from .base import Adapter, ChatRequest, ChatResult, MediaPoll, MediaRequest, MediaResult, ProviderError
+from .gemini_media import GeminiMediaWire
 from .usage import gemini_cached_tokens
 
 
 class GeminiAdapter(Adapter):
-    def __init__(self, **kw):
+    def __init__(self, *, media_client: httpx.AsyncClient | None = None, **kw):
         super().__init__(**kw)
+        self._media_client = media_client
+        self._owns_media_client = media_client is None
         try:
             from google import genai
             from google.genai import errors, types
@@ -188,3 +193,25 @@ class GeminiAdapter(Adapter):
             ) from e
         self.last_usage = getattr(resp, "metadata", None)
         return [list(e.values) for e in resp.embeddings]
+
+    async def generate_image(self, req: MediaRequest) -> MediaResult:
+        return await self._media_wire().generate_image(req)
+
+    async def start_video(self, req: MediaRequest) -> str:
+        return await self._media_wire().start_video(req)
+
+    async def poll_video(self, ref: str) -> MediaPoll:
+        return await self._media_wire().poll_video(ref)
+
+    async def forget_media(self, ref: str) -> None:
+        await self._media_wire().forget(ref)
+
+    async def aclose(self) -> None:
+        if self._owns_media_client and self._media_client is not None:
+            await self._media_client.aclose()
+            self._media_client = None
+
+    def _media_wire(self) -> GeminiMediaWire:
+        if self._media_client is None:
+            self._media_client = httpx.AsyncClient()
+        return GeminiMediaWire(api_key=self.api_key or "", client=self._media_client)

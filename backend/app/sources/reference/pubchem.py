@@ -2,19 +2,28 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 from urllib.parse import quote
 
 from app.core.errors import ExternalFailure, InvalidInput
+from app.research.elements import ELEMENTS
 from app.research.evidence import EvidenceItem, SearchQuery, SourceDocument
 
-from ..adapter import HttpSourceAdapter, build_document
+from ..adapter import HttpSourceAdapter, build_document, checked_k
 from ..http import RatePolicy
 from ..records import UnusableRecord, clean_text, title_of
 from .pubchem_hazards import HazardReport, hazard_report
 
-__all__ = ["PUBCHEM_LICENCE", "PUBCHEM_RATE", "PubChemAdapter", "is_formula"]
+__all__ = [
+    "PUBCHEM_LICENCE",
+    "PUBCHEM_PUBLISHER",
+    "PUBCHEM_RATE",
+    "PubChemAdapter",
+    "PubChemCompound",
+    "is_formula",
+]
 
 PUG_REST = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 PUG_VIEW = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound"
@@ -31,19 +40,34 @@ PROPERTY_LINES = (
 )
 FORMULA = re.compile(r"(?:[A-Z][a-z]?\d*){2,}|[A-Z][a-z]?\d+")
 FORMULA_PART = re.compile(r"([A-Z][a-z]?)\d*")
-ELEMENT_SYMBOLS = (
-    "H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr "
-    "Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm "
-    "Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No "
-    "Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og"
-)
-ELEMENTS = frozenset(ELEMENT_SYMBOLS.split())
 NATIVE_ID = re.compile(r"^([1-9]\d{0,11})(:ghs)?$")
 GHS_HEADING = "GHS Classification"
 
 
+@dataclass(frozen=True)
+class PubChemCompound:
+    cid: int
+    title: str
+    formula: str | None
+    molecular_weight: str | None
+    iupac_name: str | None
+    inchikey: str | None
+    smiles: str | None
+
+    @property
+    def url(self) -> str:
+        return _compound_url(str(self.cid))
+
+
 class PubChemAdapter(HttpSourceAdapter):
     name = "pubchem"
+
+    async def compounds(self, text: str, k: int) -> list[PubChemCompound]:
+        cids = await self._matching_cids(text, checked_k(k))
+        if not cids:
+            return []
+        table = await self._properties(cids)
+        return [_compound(table[cid]) for cid in cids if cid in table]
 
     async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
         cids = await self._matching_cids(query.text, k)
@@ -147,6 +171,21 @@ def is_formula(text: str) -> bool:
     if FORMULA.fullmatch(candidate) is None:
         return False
     return all(symbol in ELEMENTS for symbol in FORMULA_PART.findall(candidate))
+
+
+def _compound(record: dict[str, Any]) -> PubChemCompound:
+    def text(key: str) -> str | None:
+        return clean_text(str(record[key])) if record.get(key) is not None else None
+
+    return PubChemCompound(
+        cid=int(record["CID"]),
+        title=title_of(record.get("Title") or record.get("IUPACName")),
+        formula=text("MolecularFormula"),
+        molecular_weight=text("MolecularWeight"),
+        iupac_name=text("IUPACName"),
+        inchikey=text("InChIKey"),
+        smiles=text("SMILES"),
+    )
 
 
 def _compound_url(cid: str) -> str:

@@ -1,9 +1,10 @@
 import uuid
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
 from app.composer.composer import ModelComposer
+from app.composer.translation import ModelTranslator
 from app.models import ClaimSource, Source
 from app.research.composition import ComposedAnswer
 from app.research.crafts import CraftCandidate, CraftQuery, CraftResolution, MatchReason
@@ -14,6 +15,7 @@ from app.research.write_back import WriteBackResult
 from app.retrieval.indexing import EmbeddedCounts
 from app.services import knowledge_view
 from app.services.answer_events import CitedClaims, cited_claims
+from app.services.answer_translation import AnswerTranslation
 from app.services.answering import AnswerAsk, AnswerPipeline, KeptAnswer, answer_question
 from app.services.research_write_back import StoredResearch, sentence_claim_ids
 from app.services.write_back_plan import write_back_plan
@@ -132,9 +134,11 @@ class FakeStore:
     stored: CitedClaims = field(default_factory=CitedClaims)
     kept: list[tuple[AnswerAsk, EvidencePack, ComposedAnswer]] = field(default_factory=list)
     asked_for: list[list[uuid.UUID]] = field(default_factory=list)
+    questions: list[str] = field(default_factory=list)
 
     async def stored_claims(self, craft_slug: str, question: str, mode: str) -> CitedClaims:
         assert (craft_slug, mode) == (AJRAKH.slug, "VERIFIED")
+        self.questions.append(question)
         return self.stored
 
     async def keep(self, ask: AnswerAsk, pack: EvidencePack, answer: ComposedAnswer) -> KeptAnswer:
@@ -175,12 +179,31 @@ class FakeResearch:
         return self.pack
 
 
+@dataclass
+class MemoryCache:
+    rows: dict[tuple[uuid.UUID, str], tuple[str, str]] = field(default_factory=dict)
+
+    async def known(self, language: str, texts: Mapping[uuid.UUID, str]) -> dict[uuid.UUID, str]:
+        found = {claim_id: self.rows.get((claim_id, language)) for claim_id in texts}
+        return {claim_id: row[1] for claim_id, row in found.items() if row and row[0] == texts[claim_id]}
+
+    async def remember(self, language: str, entries: Mapping[uuid.UUID, tuple[str, str]]) -> None:
+        self.rows.update({(claim_id, language): entry for claim_id, entry in entries.items()})
+
+
+def translation(model: FakeModel | None = None, cache: MemoryCache | None = None) -> AnswerTranslation:
+    return AnswerTranslation(
+        translator=ModelTranslator(model=model or FakeModel([])), cache=cache or MemoryCache()
+    )
+
+
 def pipeline(
     *,
     resolution: CraftResolution | Exception | None = None,
     research: FakeResearch | None = None,
     replies: Sequence[str] = (),
     store: FakeStore | None = None,
+    translated: AnswerTranslation | None = None,
 ) -> AnswerPipeline:
     outcome = resolved() if resolution is None else resolution
 
@@ -194,6 +217,7 @@ def pipeline(
         research=research or FakeResearch(),
         compose=ModelComposer(model=FakeModel(list(replies))).compose,
         store=store or FakeStore(),
+        translation=translated or translation(),
     )
 
 

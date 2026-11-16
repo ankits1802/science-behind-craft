@@ -43,14 +43,27 @@ backend/app/composer/    the composer: evidence pack to candidates, the COMPOSE 
                          (decision 0010)
 backend/app/retrieval/   stored-knowledge retrieval (T1 claims, T2 chunks): scope and ranking SQL,
                          reciprocal rank fusion, chunking, embedding fill (decision 0008)
-backend/app/schemas/     pydantic request and response bodies
+backend/app/schemas/     pydantic request and response bodies, and the science, region, voice
+                         and media contracts (decision 0014)
+backend/app/science/     the science engine: formulas, balancing (sympy), units (pint), stage
+                         envelopes and the process view built from stored rows (decision 0015)
+backend/app/geo/         the region profile and map layers: places, state aggregates, facets,
+                         the layer registry and its classes, built from stored rows (decision 0016)
+backend/app/voice/       voice calls: sessions and their binding, the custom-LLM turn, relay turns,
+                         the encrypted transcript, daily upkeep, agent provisioning (decision 0017)
+backend/app/media/       stage illustrations and clips: claim set, prompt, bundle, MP4 and PNG
+                         checks, the job routes' steps, the worker queue and its SQL (decision 0018)
+backend/app/worker.py    the kv-worker process (python -m app.worker): the media queue
 backend/app/services/    domain services: crafts, knowledge, access, credentials, keys, routing
-backend/app/providers/   model-provider adapters, the AI router and the budget rules
+backend/app/providers/   model-provider adapters (and the one ElevenLabs adapter), the AI router,
+                         the budget rules and the quota ledger
 backend/app/api/         entry points: router.py and api/routes/<area>.py (thin handlers)
 backend/app/scripts/     entry points: seed commands run by the deploy (seed_crafts, seed_claims,
                          seed_districts, seed_admin) and the portal craft sync
                          (sync_portal_crafts, also run daily), embed_craft_descriptors,
-                         embed_knowledge and the daily coverage enrichment (enrich_coverage)
+                         embed_knowledge, the daily coverage enrichment (enrich_coverage),
+                         the PubChem compound lookup (link_compounds), the daily voice upkeep
+                         (voice_upkeep) and the voice agent's provisioning (provision_voice_agent)
 backend/app/main.py      the ASGI app
 backend/migrations/      Alembic migrations
 backend/tests/           DB-free tests; backend/tests/db/ needs Postgres (marker `db`)
@@ -59,7 +72,7 @@ etl/crafts/              craft data pipeline (aliases, Wikidata links, seed clai
 etl/geo/                 per-district environment statistics from open datasets (package geo_etl)
 frontend/                Next.js App Router web client (npm)
 infra/                   Terraform, deploy scripts and systemd units, secret seeding, Supabase lockdown
-shared/                  files both sides check (craft-master.sha1)
+shared/                  files both sides check (craft-master.sha1, the *.golden.* contract files)
 tools/                   developer tooling: the hygiene check and its tests
 docs/                    living documents, contracts, decisions
 ```
@@ -68,18 +81,23 @@ Imports in `backend/app` point one way. The allowed edges, enforced by `tools/hy
 (`LAYER_IMPORTS`), are:
 
 ```
-main      -> api, providers, services, core, models
-api       -> providers, services, retrieval, research, schemas, core, models, data
-scripts   -> providers, services, planner, composer, retrieval, research, core, models, data
+main      -> api, voice, providers, services, core, models
+api       -> voice, media, providers, services, science, geo, retrieval, research, schemas, core, models, data
+scripts   -> voice, providers, services, planner, composer, retrieval, research, core, models, data
+voice     -> providers, services, composer, schemas, research, core, models
+media     -> providers, services, schemas, research, core, models
+worker    -> media, core
 providers -> services, research, core, models
-services  -> planner, composer, retrieval, sources, research, core, models, data
+services  -> science, geo, planner, composer, retrieval, sources, research, core, models, data
 planner   -> sources, research, core, models
 composer  -> research, core, models
 retrieval -> research, core, models
 sources   -> research, core, models
 fetcher   -> sources, research, core
 research  -> core, models
-schemas   -> core
+science   -> schemas, research, core
+geo       -> schemas, research, core
+schemas   -> research, core
 core      -> models
 models    -> (nothing else)
 data      -> (nothing else)
@@ -87,7 +105,7 @@ data      -> (nothing else)
 
 Nothing imports `api`, `scripts` or `main` except the layers above them. A new package under
 `backend/app` fails the check until it is added to `LAYER_IMPORTS` and to this list. The plan's
-later packages (`websearch/`, `evidence/`, `science/`, `geo/`, `voice/`, `media/`,
+later packages (`websearch/`, `evidence/`,
 `enrichment/`, `review/`, `governance/`) each get a row when they are created; those that build
 on the research contracts list `research` among their allowed imports.
 
@@ -100,7 +118,8 @@ components/ui/             generic kit, no domain knowledge
 components/<area>/         domain components grouped by area: answer, ask, craft, map, admin,
                            settings, auth, nav, voice, data, dialogs, forms, guide, hooks...
 components/*.tsx           app-wide shell pieces (AppShell, providers, PageHeader, ErrorPanel...)
-lib/                       the API client (api.ts), session, formatters, permissions, types
+lib/                       the API client (api.ts), session, formatters, permissions, types,
+                           the runtime shape kit (shape.ts) and the contract shapes (*Contract.ts)
 lib/server/                server-only code (apiProxy.ts)
 e2e/                       Playwright: *-unit.spec.ts (unit project) and smoke.spec.ts
 public/, fonts/            static assets
@@ -122,11 +141,12 @@ provider access in `backend/app/providers/`. The catalogue of all of it is `docs
 check it before writing any helper.
 
 Quick index (the catalogue is authoritative): settings (`core/config.py`), database sessions
-and the pooler URL (`core/db.py`), passwords and JWTs (`core/security.py`), roles, ranks and
-capabilities (`core/roles.py`), the current user and capability guards (`core/deps.py`), JSON
+and the pooler URL (`core/db.py`), passwords, JWTs and HMAC keys (`core/security.py`), India time
+(`core/clock.py`), roles, ranks and capabilities (`core/roles.py`), the current user and capability guards (`core/deps.py`), JSON
 logging, request ids and secret redaction (`core/logging.py`), sliding-window rate limits and
 the client address (`core/rate_limit.py`), the error hierarchy (`core/errors.py`), Retry-After parsing
-(`core/retry_after.py`), paced and cached source HTTP and record rules (`sources/http.py`,
+(`core/retry_after.py`), ETag revalidation (`core/http_cache.py`), work that outlives a leaving
+caller (`core/shielded.py`), paced and cached source HTTP and record rules (`sources/http.py`,
 `sources/records.py`, `sources/adapter.py`), JSON model calls (`research/structured.py`,
 `providers/structured.py`, the schema helper `research/structured.schema_object`), the
 composer (`composer/`), live research budgets (`planner/policy.py`), the MediaWiki Action API
@@ -134,7 +154,10 @@ composer (`composer/`), live research budgets (`planner/policy.py`), the MediaWi
 licences (`research/licences.py`), the craft claim scope (`retrieval/statements.py`), audit
 records (`services/audit.py`), managed keys (`services/managed_secrets.py`), the model catalogue
 (`services/ai_providers.py`), the AI router (`providers/router.py`), spend rules
-(`providers/budget.py`), the research and answering contracts (`research/`), the craft master
+(`providers/budget.py`), the quota ledger (`providers/quota.py`), the ElevenLabs adapter
+(`providers/elevenlabs.py`), the media router and Gemini media wire
+(`providers/media_router.py`, `providers/gemini_media.py`), generated names (`services/naming.py`),
+the S3 adapter (`services/object_store.py`), personal-data patterns (`research/evidence.py`), the research and answering contracts (`research/`), the craft master
 list and text normalisation (`data/craft_master_loader.py`, `data/craft_text.py`), the portals'
 signed peer feed (`services/portal_peer.py`).
 
@@ -198,7 +221,7 @@ not tracked (`.gitignore`).
 | `docs/PLAN.md` | the product plan; section 0 is the owner's direction and overrides the rest |
 | `docs/ARCHITECTURE.md` | layers, module map, import direction, how a question flows |
 | `docs/CORE_API.md` | the catalogue of shared components |
-| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the portals' craft feed |
+| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the portals' craft feed, process science, region, voice, media |
 | `docs/decisions/` | decision log: one short file per decision, numbered |
 | `docs/TECH_DEBT.md` | debt register |
 | `docs/PROGRESS.md` | where work stands and what comes next |
@@ -223,9 +246,9 @@ These come from the plan and are never traded away for a passing test, a demo or
   links to its sources with the quoted passage. A sentence without a source is not shown.
 - **No answer text without a source.** Numbers, units and formulas in a sentence must appear in
   a cited claim or quote; a failed post-check drops the sentence.
-- **Evidence levels are stored, never inferred** from model text. Only a professor or master
-  admin review raises a level above provisional. There are no review gates: nothing waits for
-  approval to be shown.
+- **Evidence levels are stored, never inferred** from model text. Only a professor, admin or
+  master admin review raises a level above provisional. There are no review gates: nothing
+  waits for approval to be shown.
 - **Retrieved web content is data, never instructions.** Pages, PDFs, search results and model
   output are passed to models as quoted data and never change what the system does.
 - **Research is not limited to the sources named in the plan**, and cites whatever it used.

@@ -122,6 +122,13 @@ def test_validate_geology_problems():
     assert "duplicate geology keys" in problems
 
 
+def test_the_load_writes_the_grid_each_value_was_read_at():
+    assert "resolution" in load.VALUE_COLUMNS
+    assert set(load.VALUE_COLUMNS) - {"datasetId"} <= set(COLUMNS)
+    assert {"lithologyName", "method"} <= set(load.GEOLOGY_COLUMNS)
+    assert set(load.GEOLOGY_COLUMNS) - {"datasetId"} <= set(GEOLOGY_COLUMNS)
+
+
 def test_fit_values_rounds_pixel_count_to_nullable_int():
     fitted = load.fit_values(pd.DataFrame({"pixelCount": [96.6, None, 3.2]}))
     assert str(fitted["pixelCount"].dtype) == "Int64"

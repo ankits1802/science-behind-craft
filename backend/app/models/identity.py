@@ -306,5 +306,6 @@ class UserPreference(Base):
     reducedMotion: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     largerText: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     highContrast: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
+    answerLanguage: Mapped[str] = mapped_column(String(16), nullable=False, server_default="auto")
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()

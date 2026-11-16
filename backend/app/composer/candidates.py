@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import uuid
+
 from app.research.composition import ComposeCandidate, ComposeRequest, ResearchSummary, SearchedQuery
 from app.research.evidence import SourceDocument
 from app.research.evidence_pack import EvidencePack
@@ -13,6 +15,7 @@ __all__ = [
     "compose_request",
     "document_candidate",
     "research_summary",
+    "stored_claim_candidate",
 ]
 
 WHOLE_TEXT_MAX_CHARS = 4000
@@ -25,7 +28,6 @@ def compose_request(pack: EvidencePack, question: str) -> ComposeRequest:
     documents = [candidate for doc in pack.documents if (candidate := document_candidate(doc)) is not None]
     return ComposeRequest(
         question=question,
-        language=pack.plan.language,
         craft=pack.plan.craft,
         candidates=[*claims, *documents],
         searched=research_summary(pack),
@@ -33,12 +35,12 @@ def compose_request(pack: EvidencePack, question: str) -> ComposeRequest:
 
 
 def claim_candidate(hit: ClaimHit) -> ComposeCandidate:
+    return stored_claim_candidate(hit.claim_id, hit.text, hit.level)
+
+
+def stored_claim_candidate(claim_id: uuid.UUID, text: str, level: str) -> ComposeCandidate:
     return ComposeCandidate(
-        id=str(hit.claim_id),
-        kind="CLAIM",
-        text=hit.text,
-        source_label=f"stored claim, {hit.level.lower()}",
-        level=hit.level,
+        id=str(claim_id), kind="CLAIM", text=text, source_label=f"stored claim, {level.lower()}", level=level
     )
 
 

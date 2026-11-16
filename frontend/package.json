@@ -16,6 +16,7 @@
     "test:smoke": "playwright test --project=desktop --project=phone"
   },
   "dependencies": {
+    "@elevenlabs/client": "1.36.1",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

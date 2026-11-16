@@ -10,9 +10,11 @@ from .untrusted import untrusted_block
 __all__ = [
     "ACCEPT_MARGIN",
     "ACCEPT_SCORE",
+    "CRAFT_NAME_MAX_CHARS",
     "FUZZY_MIN_SIMILARITY",
     "MATCH_REASON_KINDS",
     "MAX_CANDIDATES",
+    "QUESTION_MAX_CHARS",
     "RESOLUTION_STATUSES",
     "CraftCandidate",
     "CraftQuery",
@@ -29,6 +31,7 @@ ACCEPT_MARGIN = 0.15
 FUZZY_MIN_SIMILARITY = 0.85
 MAX_CANDIDATES = 5
 QUESTION_MAX_CHARS = 1000
+CRAFT_NAME_MAX_CHARS = 300
 SLUG_MAX_CHARS = 200
 MATCH_REASON_KINDS = (
     "EXACT_SLUG",
@@ -51,7 +54,7 @@ Score = Annotated[float, Field(ge=0.0, le=1.0)]
 
 class CraftRef(ContractModel):
     slug: str = Field(min_length=1, max_length=SLUG_MAX_CHARS)
-    name: str = Field(min_length=1, max_length=300)
+    name: str = Field(min_length=1, max_length=CRAFT_NAME_MAX_CHARS)
     path: str
 
     @model_validator(mode="after")

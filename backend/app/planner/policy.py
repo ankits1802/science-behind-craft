@@ -5,6 +5,10 @@ from dataclasses import dataclass
 from types import MappingProxyType
 
 from app.research.evidence import SEARCH_MAX_K
+from app.research.planning import MODE_POLICIES
+from app.research.vocabulary import CANONICAL_LANGUAGE
+from app.sources.reference.wikidata import WikidataAdapter
+from app.sources.reference.wikipedia import WIKIPEDIA_LANGUAGES, WikipediaAdapter
 
 __all__ = [
     "COVERAGE_QUERY_LIMIT",
@@ -12,6 +16,7 @@ __all__ = [
     "DEGRADED_MODES",
     "DOCUMENT_TIMEOUT_SECONDS",
     "LIVE_BUDGETS",
+    "NATIVE_QUERY_SEARCHERS",
     "PLAN_DRAFT_RETRIES",
     "READ_ATTEMPT_FACTOR",
     "READ_CONCURRENCY",
@@ -20,6 +25,7 @@ __all__ = [
     "SEARCH_TIMEOUT_SECONDS",
     "STORED_PACK_LIMIT",
     "TierBudget",
+    "native_query_limit",
 ]
 
 PLAN_DRAFT_RETRIES = 1
@@ -33,6 +39,7 @@ READ_ATTEMPT_FACTOR = 2
 DEEP_REFERENCE_RESERVE = 6
 REFERENCES_PER_DOCUMENT = 5
 DEGRADED_MODES: Mapping[str, str] = MappingProxyType({"DEEP": "HYBRID"})
+NATIVE_QUERY_SEARCHERS = frozenset({WikipediaAdapter.name, WikidataAdapter.name})
 
 
 @dataclass(frozen=True)
@@ -62,3 +69,9 @@ LIVE_BUDGETS: Mapping[str, Mapping[str, TierBudget]] = MappingProxyType(
         ),
     }
 )
+
+
+def native_query_limit(language: str, mode: str) -> int:
+    if language == CANONICAL_LANGUAGE or language not in WIKIPEDIA_LANGUAGES:
+        return 0
+    return MODE_POLICIES[mode].max_native_queries

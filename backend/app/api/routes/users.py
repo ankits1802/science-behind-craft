@@ -8,8 +8,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 from app.core.db import get_session
-from app.core.deps import is_configured_master_admin, require
-from app.core.roles import ROLE_RANK, Capability, can, is_master_admin, may_manage_target
+from app.core.deps import (
+    is_configured_master_admin,
+    refusal_for,
+    refuse_unless_assignable,
+    refuse_unless_manageable,
+    require,
+)
+from app.core.roles import ROLE_RANK, Capability, can
 from app.models import AccessRoster, User
 from app.schemas.admin import SuspendRequest, UserUpdate
 from app.schemas.common import normalize_pagination, page_payload
@@ -116,14 +122,13 @@ async def update_user(
     is_self = target.id == actor.id
     if "role" in data:
         if not can(actor, Capability.CHANGE_ROLES):
-            raise HTTPException(status.HTTP_403_FORBIDDEN, "Only the master admin can change roles.")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, refusal_for(Capability.CHANGE_ROLES))
         if is_self:
             raise HTTPException(status.HTTP_403_FORBIDDEN, "You cannot change your own role.")
-        if data["role"] not in ROLE_RANK:
-            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"Unknown role {data['role']!r}")
+        refuse_unless_assignable(actor, data["role"])
         _protect_master(target, actor)
-    if not is_self and not may_manage_target(actor, target):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "You can't change an account at or above your role.")
+    if not is_self:
+        refuse_unless_manageable(actor, target)
     if data.get("mustChangePassword") is True and target.passwordHash is None:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "This account has no password to change.")
     changed: list[str] = []
@@ -201,6 +206,7 @@ async def suspend_user(
     if target.id == actor.id:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "You cannot suspend your own account.")
     _protect_master(target, actor)
+    refuse_unless_manageable(actor, target)
     await _set_access(session, actor, target, access_roster.SUSPENDED, payload.reason if payload else None)
     target.tokenVersion += 1
     target.sessionsValidFrom = datetime.now(UTC)
@@ -217,6 +223,7 @@ async def restore_user(
     user_id: uuid.UUID, actor: User = Depends(disabler), session: AsyncSession = Depends(get_session)
 ) -> dict[str, Any]:
     target = await _target(session, user_id)
+    refuse_unless_manageable(actor, target)
     await _set_access(session, actor, target, access_roster.ACTIVE, None)
     await audit.record(session, action="users.restored", actor=actor, target_type="User", target_id=target.id)
     await session.commit()
@@ -231,8 +238,7 @@ async def sign_out_everywhere(
     target = await _target(session, user_id)
     if target.id == actor.id:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Change your password to end your own other sessions.")
-    if not may_manage_target(actor, target):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "You can't change an account at or above your role.")
+    refuse_unless_manageable(actor, target)
     target.tokenVersion += 1
     target.sessionsValidFrom = datetime.now(UTC)
     await audit.record(
@@ -252,6 +258,7 @@ async def reset_two_factor(
         raise HTTPException(
             status.HTTP_403_FORBIDDEN, "Use your own settings to manage two-step verification."
         )
+    refuse_unless_manageable(actor, target)
     if not target.twoFactorEnabled:
         raise HTTPException(
             status.HTTP_409_CONFLICT, "Two-step verification is already off for this account."
@@ -278,8 +285,9 @@ async def delete_user(
     target = await _target(session, user_id)
     if target.id == actor.id:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "You cannot delete your own account.")
-    if is_configured_master_admin(target) or (is_master_admin(target) and not is_master_admin(actor)):
+    if is_configured_master_admin(target):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "The master admin account cannot be deleted")
+    refuse_unless_manageable(actor, target)
     target.deletedAt = datetime.now(UTC)
     target.tokenVersion += 1
     await credential_links.revoke_outstanding(session, target.id)

@@ -1,4 +1,4 @@
-export type UserRole = "MASTER_ADMIN" | "PROFESSOR" | "RESEARCHER" | "STUDENT";
+export type UserRole = "MASTER_ADMIN" | "ADMIN" | "PROFESSOR" | "RESEARCHER" | "STUDENT";
 
 export type RecordStatus = "DRAFT" | "PENDING" | "APPROVED" | "REJECTED" | "NEEDS_REVISION";
 
@@ -37,7 +37,7 @@ export type EvidenceKind = "QUOTED" | "INFERRED";
 
 export type AnswerMode = "VERIFIED" | "HYBRID" | "DEEP";
 
-export type AnswerStatusStep = "RESOLVING" | "PLANNING" | "SEARCHING_STORED" | "RESEARCHING" | "READING" | "COMPOSING" | "WRITING_BACK";
+export type AnswerStatusStep = "RESOLVING" | "PLANNING" | "SEARCHING_STORED" | "RESEARCHING" | "READING" | "COMPOSING" | "WRITING_BACK" | "TRANSLATING";
 
 export type AnswerStatus = { step: AnswerStatusStep; message: string };
 
@@ -74,11 +74,13 @@ export type AnswerSentence = {
   level: EvidenceLevel;
   citations: Citation[];
   translated?: boolean;
+  original?: string;
 };
 
 export type AnswerSection = {
   id: string;
   heading: string;
+  original?: string;
   sentences: AnswerSentence[];
 };
 
@@ -107,6 +109,7 @@ export type AnswerPayload = {
   answerId: string | null;
   question: string;
   mode: AnswerMode;
+  language: string;
   craft: CraftRef | null;
   sections: AnswerSection[];
   openQuestions: AnswerSection[];

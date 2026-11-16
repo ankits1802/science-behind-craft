@@ -48,6 +48,7 @@ async def test_cors_exposes_access_status(client: httpx.AsyncClient) -> None:
     exposed = simple.headers["access-control-expose-headers"].lower()
     assert "x-access-status" in exposed
     assert "x-two-factor-setup-required" in exposed
+    assert "x-confirm-provider" in exposed
 
 
 async def test_protected_routes_need_a_token(client: httpx.AsyncClient) -> None:
@@ -106,10 +107,25 @@ def first_string(call: ast.Call) -> str | None:
     return None
 
 
+def later_upgrade_steps() -> list[ast.FunctionDef]:
+    steps = []
+    for path in sorted(MIGRATIONS.glob("[0-9][0-9][0-9][0-9]_*.py")):
+        if path == MIGRATION:
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        steps.extend(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name != "downgrade")
+    return steps
+
+
+def created_tables() -> list[ast.Call]:
+    roots = [migration_tree(), *later_upgrade_steps()]
+    return [node for root in roots for node in ast.walk(root) if is_call_to(node, "create_table")]
+
+
 def migration_tables() -> dict[str, dict[str, ast.Call]]:
     tables: dict[str, dict[str, ast.Call]] = {}
-    for node in ast.walk(migration_tree()):
-        if not is_call_to(node, "create_table") or first_string(node) is None:
+    for node in created_tables():
+        if first_string(node) is None:
             continue
         name = first_string(node)
         assert name not in tables, f"{name} is created twice"
@@ -131,12 +147,8 @@ def migration_tables() -> dict[str, dict[str, ast.Call]]:
 
 def later_column_changes() -> list[tuple[str, str, ast.Call | None]]:
     changes: list[tuple[str, str, ast.Call | None]] = []
-    for path in sorted(MIGRATIONS.glob("[0-9][0-9][0-9][0-9]_*.py")):
-        if path == MIGRATION:
-            continue
-        tree = ast.parse(path.read_text(encoding="utf-8"))
-        upgrade = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "upgrade")
-        for node in ast.walk(upgrade):
+    for step in later_upgrade_steps():
+        for node in ast.walk(step):
             if is_call_to(node, "add_column") and len(node.args) == 2 and is_call_to(node.args[1], "Column"):
                 changes.append((first_string(node), first_string(node.args[1]), node.args[1]))
             elif is_call_to(node, "drop_column") and len(node.args) == 2:
@@ -253,3 +265,24 @@ def test_alias_source_downgrade_restores_the_initial_values() -> None:
     later = ast.parse((MIGRATIONS / "0002_portal_alias_source.py").read_text(encoding="utf-8"))
     assert module_constant(later, "ALIAS_SOURCES_BEFORE") == initial_enum_list()["AliasSource"]
     assert enum_additions()["AliasSource"] == ("FR_SYNC",)
+
+
+def initial_columns_of_enum(enum_name: str) -> set[tuple[str, str]]:
+    found: set[tuple[str, str]] = set()
+    for node in ast.walk(migration_tree()):
+        if not is_call_to(node, "create_table") or first_string(node) is None:
+            continue
+        for arg in node.args[1:]:
+            enum = inline_enum(arg) if is_call_to(arg, "Column") else None
+            if enum is not None and enum[0] == enum_name:
+                found.add((first_string(node), first_string(arg)))
+    return found
+
+
+def test_user_role_downgrade_restores_the_initial_values() -> None:
+    later = ast.parse((MIGRATIONS / "0009_admin_role.py").read_text(encoding="utf-8"))
+    assert module_constant(later, "USER_ROLES_BEFORE") == initial_enum_list()["UserRole"]
+    assert enum_additions()["UserRole"] == ("ADMIN",)
+    retyped = {(table, column) for table, column, _default in module_constant(later, "ROLE_COLUMNS")}
+    assert retyped == initial_columns_of_enum("UserRole")
+    assert len(retyped) == 6
