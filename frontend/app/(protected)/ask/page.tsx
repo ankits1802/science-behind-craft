@@ -84,6 +84,7 @@ function AskScreen() {
   function run(text: string, slug: string | null = craftSlug, chosen: AnswerMode = mode) {
     const trimmed = text.trim();
     if (!trimmed) return;
+    autoAsked.current = true;
     setQuestion(trimmed);
     const search = new URLSearchParams();
     search.set("q", trimmed);

@@ -159,6 +159,28 @@ def test_extract_fails_a_state_left_without_values_even_with_allow_failures(tmp_
     assert "states [31]" in capsys.readouterr().err
 
 
+def test_extract_keeps_a_state_whose_only_district_was_measured_without_cells(tmp_path, monkeypatch, capsys):
+    def ocean_only(districts, options):
+        lgds = sorted(int(v) for v in districts["districtLgd"])
+        return Result(SOILGRIDS, Rows(SOILGRIDS, "fake").frame(), districts_without_cells=lgds)
+
+    monkeypatch.setattr(cli, "LAYERS", {"ocean": ocean_only})
+    parts = tmp_path / "parts"
+    out = tmp_path / "out"
+    argv = ["--datasets", "ocean", "--states", "31", "--parts", str(parts), "--cache", str(tmp_path)]
+    assert cli.main(["run", *argv, "--out", str(out)]) == 0
+    meta = json.loads((parts / "ocean.json").read_text(encoding="utf-8"))
+    assert meta["rows"] == 0
+    assert meta["districtsWithoutValues"] == [553]
+    assert meta["districtsWithoutCells"] == [553]
+    assert meta["lostStates"] == []
+    summary = json.loads((out / "district_env_summary.json").read_text(encoding="utf-8"))
+    assert summary["layers"][0]["districtsWithoutValues"] == [553]
+    assert summary["layers"][0]["districtsWithoutCells"] == [553]
+    assert summary["layers"][0]["lostStates"] == []
+    assert "ocean: 0 rows, 0 failures, 1 districts without cells" in capsys.readouterr().out
+
+
 def test_extract_fails_a_step_lost_for_a_whole_state_even_with_allow_failures(tmp_path, monkeypatch):
     def whole_state_step(districts, options):
         result = fake_layer(districts, options)

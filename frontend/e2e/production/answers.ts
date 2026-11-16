@@ -1,0 +1,250 @@
+import { scriptOf } from "@/lib/answerLanguages";
+import { parseSseBlock, splitSseBuffer, type AnswerEvent } from "@/lib/answerStream";
+import type { AnswerSentence } from "@/lib/types";
+
+import type { TappedChunk, TappedStream } from "./streamTap";
+
+export const ANSWER_DEADLINE_MS = 10 * 60_000;
+export const STALL_LIMIT_MS = 150_000;
+export const EXPECTED_MODE = "HYBRID";
+export const KNOWN_ANSWER = /\balum\b|फिटकरी|फिटकिरी|फ़िटकरी/i;
+export const LATIN = "Latn";
+
+export type KnownAnswerQuestion = { label: string; language: string; script: string; question: string };
+
+export const KNOWN_ANSWER_QUESTIONS: readonly KnownAnswerQuestion[] = [
+  { label: "English", language: "en", script: LATIN, question: "Which mordant fixes the red in Kutch Ajrakh block printing?" },
+  {
+    label: "Hindi",
+    language: "hi",
+    script: "Deva",
+    question: "कच्छ की अजरख छपाई में लाल रंग पक्का करने के लिए कौन सा मॉर्डेंट इस्तेमाल होता है?"
+  }
+];
+
+export type WaitOutcome = "stalled" | "timeout" | "never-started";
+export type AnswerEnd = "done" | "error" | "closed" | WaitOutcome;
+
+export type TimedEvent = { at: number; event: AnswerEvent };
+export type ParsedStream = { events: TimedEvent[]; heartbeats: number; longestSilenceMs: number; unparsed: number };
+
+export type SentenceRecord = {
+  kind: "sentence" | "open_question";
+  id: string;
+  sectionId: string;
+  text: string;
+  original: string | null;
+  translated: boolean;
+  level: string;
+  script: string | null;
+  citations: number;
+  sourceIds: string[];
+};
+
+export type SourceRecord = { id: string; kind: string; title: string; publisher: string | null; year: number | null; doi: string | null; url: string | null };
+
+export type AnswerRecord = {
+  label: string;
+  question: string;
+  expectedLanguage: string;
+  request: { mode: string | null; language: string | null; craftSlug: string | null };
+  httpStatus: number | null;
+  streamsOpened: number;
+  endedWith: AnswerEnd;
+  answerId: string | null;
+  craft: string | null;
+  error: string | null;
+  notEnoughEvidence: string | null;
+  timing: { firstByteMs: number | null; firstSentenceMs: number | null; doneMs: number | null; totalMs: number | null; heartbeats: number; longestSilenceMs: number };
+  statusSteps: { step: string; message: string; atMs: number }[];
+  sentenceCount: number;
+  citedSentenceCount: number;
+  uncitedSentenceCount: number;
+  openQuestionCount: number;
+  citationCount: number;
+  sources: SourceRecord[];
+  sentences: SentenceRecord[];
+  followUps: string[];
+  scripts: { translated: number; englishFallback: number; other: number };
+  knownAnswerFound: boolean;
+  pageSentences: number | null;
+  pageSentencesWithoutChip: number | null;
+  problems: string[];
+};
+
+function isComment(block: string): boolean {
+  const lines = block.split("\n").filter((line) => line.trim() !== "");
+  return lines.length > 0 && lines.every((line) => line.startsWith(":"));
+}
+
+export function parseTappedStream(chunks: readonly TappedChunk[], startedAt: number): ParsedStream {
+  const parsed: ParsedStream = { events: [], heartbeats: 0, longestSilenceMs: 0, unparsed: 0 };
+  let buffer = "";
+  let last = startedAt;
+  const take = (block: string, at: number) => {
+    if (!block.trim()) return;
+    if (isComment(block)) {
+      parsed.heartbeats += 1;
+      return;
+    }
+    const event = parseSseBlock(block);
+    if (event) parsed.events.push({ at, event });
+    else parsed.unparsed += 1;
+  };
+  for (const chunk of chunks) {
+    parsed.longestSilenceMs = Math.max(parsed.longestSilenceMs, chunk.at - last);
+    last = chunk.at;
+    buffer += chunk.text;
+    const { blocks, rest } = splitSseBuffer(buffer);
+    buffer = rest;
+    for (const block of blocks) take(block, chunk.at);
+  }
+  take(buffer.replace(/\r\n/g, "\n"), last);
+  return parsed;
+}
+
+function sentenceRecord(kind: SentenceRecord["kind"], sectionId: string, sentence: AnswerSentence): SentenceRecord {
+  return {
+    kind,
+    id: sentence.id,
+    sectionId,
+    text: sentence.text,
+    original: sentence.original ?? null,
+    translated: sentence.translated === true,
+    level: sentence.level,
+    script: scriptOf(sentence.text),
+    citations: sentence.citations.length,
+    sourceIds: [...new Set(sentence.citations.map((citation) => citation.sourceId))]
+  };
+}
+
+function requestOf(body: string | null): AnswerRecord["request"] {
+  try {
+    const parsed = JSON.parse(body ?? "") as Record<string, unknown>;
+    const text = (key: string) => (typeof parsed[key] === "string" ? (parsed[key] as string) : null);
+    return { mode: text("mode"), language: text("language"), craftSlug: text("craftSlug") };
+  } catch {
+    return { mode: null, language: null, craftSlug: null };
+  }
+}
+
+function since(at: number | undefined | null, start: number): number | null {
+  return at === undefined || at === null ? null : at - start;
+}
+
+function endOf(parsed: ParsedStream, waited: WaitOutcome | null): AnswerEnd {
+  if (waited) return waited;
+  if (parsed.events.some(({ event }) => event.type === "done")) return "done";
+  if (parsed.events.some(({ event }) => event.type === "error")) return "error";
+  return "closed";
+}
+
+function scriptCounts(sentences: readonly SentenceRecord[], script: string): AnswerRecord["scripts"] {
+  return {
+    translated: sentences.filter((sentence) => sentence.translated && sentence.script === script).length,
+    englishFallback: sentences.filter((sentence) => !sentence.translated && sentence.script === LATIN).length,
+    other: sentences.filter((sentence) => !(sentence.translated ? sentence.script === script : sentence.script === LATIN)).length
+  };
+}
+
+export type AnswerInput = {
+  question: KnownAnswerQuestion;
+  stream: TappedStream | null;
+  streamsOpened: number;
+  clickedAt: number;
+  waited: WaitOutcome | null;
+};
+
+export function answerRecord(input: AnswerInput): AnswerRecord {
+  const { question, stream, clickedAt } = input;
+  const parsed = parseTappedStream(stream?.chunks ?? [], stream?.requestedAt ?? clickedAt);
+  const sentences: SentenceRecord[] = [];
+  const sources: SourceRecord[] = [];
+  const statusSteps: AnswerRecord["statusSteps"] = [];
+  let followUps: string[] = [];
+  let answerId: string | null = null;
+  let craft: string | null = null;
+  let error: string | null = null;
+  let notEnoughEvidence: string | null = null;
+  for (const { at, event } of parsed.events) {
+    if (event.type === "sentence") sentences.push(sentenceRecord("sentence", event.data.sectionId, event.data.sentence));
+    else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
+    else if (event.type === "source") {
+      const { id, kind, title, publisher, year, doi, url } = event.data;
+      sources.push({ id, kind, title, publisher, year, doi, url });
+    } else if (event.type === "status") statusSteps.push({ step: event.data.step, message: event.data.message, atMs: at - clickedAt });
+    else if (event.type === "follow_ups") followUps = event.data.items;
+    else if (event.type === "done") answerId = event.data.answerId;
+    else if (event.type === "match" && event.data.status === "RESOLVED") craft = event.data.craft.slug;
+    else if (event.type === "error") error = event.data.message;
+    else if (event.type === "not_enough_evidence") notEnoughEvidence = event.data.message;
+  }
+  const atOf = (type: AnswerEvent["type"]) => parsed.events.find(({ event }) => event.type === type)?.at;
+  const body = sentences.filter((sentence) => sentence.kind === "sentence");
+  return {
+    label: question.label,
+    question: question.question,
+    expectedLanguage: question.language,
+    request: requestOf(stream?.body ?? null),
+    httpStatus: stream?.status ?? null,
+    streamsOpened: input.streamsOpened,
+    endedWith: endOf(parsed, input.waited),
+    answerId,
+    craft,
+    error,
+    notEnoughEvidence,
+    timing: {
+      firstByteMs: since(stream?.chunks[0]?.at, clickedAt),
+      firstSentenceMs: since(atOf("sentence"), clickedAt),
+      doneMs: since(atOf("done"), clickedAt),
+      totalMs: since(stream?.endedAt, clickedAt),
+      heartbeats: parsed.heartbeats,
+      longestSilenceMs: parsed.longestSilenceMs
+    },
+    statusSteps,
+    sentenceCount: sentences.length,
+    citedSentenceCount: body.filter((sentence) => sentence.citations > 0).length,
+    uncitedSentenceCount: sentences.filter((sentence) => sentence.citations === 0).length,
+    openQuestionCount: sentences.length - body.length,
+    citationCount: sentences.reduce((sum, sentence) => sum + sentence.citations, 0),
+    sources,
+    sentences,
+    followUps,
+    scripts: scriptCounts(sentences, question.script),
+    knownAnswerFound: sentences.some((sentence) => KNOWN_ANSWER.test(`${sentence.text} ${sentence.original ?? ""}`)),
+    pageSentences: null,
+    pageSentencesWithoutChip: null,
+    problems: []
+  };
+}
+
+export function scriptProblems(sentences: readonly SentenceRecord[], script: string): string[] {
+  if (script === LATIN) return [];
+  return sentences.flatMap((sentence) => {
+    if (sentence.translated) {
+      if (sentence.script !== script) return [`sentence ${sentence.id} is marked translated but is written in ${sentence.script ?? "no script"}`];
+      return sentence.original ? [] : [`sentence ${sentence.id} is translated but carries no English original`];
+    }
+    return sentence.script === LATIN ? [] : [`sentence ${sentence.id} is neither in ${script} nor an English fallback`];
+  });
+}
+
+export function answerProblems(record: AnswerRecord, question: KnownAnswerQuestion): string[] {
+  const problems: string[] = [];
+  const sent = new Set(record.sources.map((source) => source.id));
+  if (record.httpStatus !== 200) problems.push(`the stream answered ${record.httpStatus ?? "nothing"}`);
+  if (record.streamsOpened !== 1) problems.push(`the question opened ${record.streamsOpened} answer streams, not 1`);
+  if (record.endedWith !== "done") problems.push(`the stream ended with ${record.endedWith}, not done`);
+  if (record.error) problems.push(`the stream sent an error: ${record.error}`);
+  if (record.request.mode !== EXPECTED_MODE) problems.push(`the request asked in ${record.request.mode ?? "no mode"}, not ${EXPECTED_MODE}`);
+  if (record.request.language !== question.language) problems.push(`the request asked for ${record.request.language ?? "no language"}, not ${question.language}`);
+  if (record.citedSentenceCount < 1) problems.push("no cited sentence arrived");
+  if (record.uncitedSentenceCount > 0) problems.push(`${record.uncitedSentenceCount} sentences arrived without a citation`);
+  const orphans = record.sentences.flatMap((sentence) => sentence.sourceIds).filter((id) => !sent.has(id));
+  if (orphans.length > 0) problems.push(`${new Set(orphans).size} cited sources never arrived as source events`);
+  if (!record.knownAnswerFound) problems.push("no sentence names alum, the known mordant");
+  if (record.pageSentencesWithoutChip) problems.push(`${record.pageSentencesWithoutChip} sentences on the page show no citation`);
+  const shown = new Set(record.sentences.filter((sentence) => sentence.kind === "sentence" && sentence.citations > 0).map((sentence) => `${sentence.sectionId}:${sentence.id}`)).size;
+  if (record.pageSentences !== null && record.pageSentences !== shown) problems.push(`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`);
+  return [...problems, ...scriptProblems(record.sentences, question.script)];
+}

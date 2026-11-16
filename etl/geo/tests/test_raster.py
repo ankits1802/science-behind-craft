@@ -66,3 +66,19 @@ def test_zonal_quantiles_skip_nodata_cells():
     assert record["p10"] == 2.0
     assert record["p90"] == 14.0
     assert record["pixels"] == pytest.approx(15.0)
+
+
+def test_zonal_counts_no_cells_under_nodata_or_outside_the_grid_and_a_fraction_inside_one_cell():
+    values = np.arange(16, dtype="float64").reshape(4, 4)
+    values[2:, 2:] = np.nan
+    zones = gpd.GeoDataFrame(
+        {"districtLgd": [1, 2, 3]},
+        geometry=[box(2.2, 0.2, 3.8, 1.8), box(10, 10, 11, 11), box(0.4, 0.4, 0.6, 0.6)],
+        crs="EPSG:3857",
+    )
+    table = raster.zonal(grid_of(values), zones, raster.continuous_ops(grid_of(values)))
+    assert list(table["districtLgd"]) == [1, 2, 3]
+    assert list(table["pixels"]) == pytest.approx([0.0, 0.0, 0.04])
+    assert [raster.has_cells(p) for p in table["pixels"]] == [False, False, True]
+    assert table["mean"].iloc[2] == 12.0
+    assert not raster.has_cells(float("nan"))

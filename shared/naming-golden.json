@@ -55,5 +55,12 @@
       "stageOrdinal": 2,
       "fileName": "KalaVigyan_Generated-Image_2026-11-16_0800_Jaipur_Jaipur-Blue-Pottery_Quartz-Dough_Image_Step-02.png"
     }
+  ],
+  "evalRunFiles": [
+    {"startedAt": "2026-11-17T09:00:00Z", "subject": "Known Answers", "what": "Report", "ext": "json", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Known-Answers_Report.json"},
+    {"startedAt": "2026-11-17T09:00:00Z", "subject": "Desktop Screens", "what": "Report", "ext": "json", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Desktop-Screens_Report.json"},
+    {"startedAt": "2026-11-17T09:00:00Z", "subject": "Summary", "what": "Report", "ext": "md", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Summary_Report.md"},
+    {"startedAt": "2026-11-17T09:00:00Z", "subject": "Phone Craft Process", "what": "Snapshot", "ext": "png", "sequence": "05", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Phone-Craft-Process_Snapshot_05.png"},
+    {"startedAt": "2026-11-17T20:15:00Z", "subject": "Tablet Not found", "what": "Snapshot", "ext": "png", "sequence": "11", "fileName": "KalaVigyan_Eval-Run_2026-11-18_0145_Tablet-Not-Found_Snapshot_11.png"}
   ]
 }

@@ -91,3 +91,39 @@ a false "missing". Had one older year answered, that shard alone would have used
   part that selects it (`docs/DATA_SOURCES.md`).
 - Left as debt (`docs/TECH_DEBT.md`, "Geo ETL state gaps"): tile reads still treat an unreachable
   tile as an absent one, and each shard resolves the CHIRPS year on its own.
+
+## Addendum, 2026-11-17: districts measured without valid cells
+
+**Context.** Actions run 43949571146 (`cxacraftecosystem-ui/KalaVigyan`, datasets `glim`) failed
+with "glim: states [31] lost every district or a whole step". Lakshadweep (state 31, one district,
+553) lies on no land cell of the GLiM 0.5 degree grid: exactextract measured it and found no
+valid cell, so it got no row and no failure. Mumbai (482) is the same case for SoilGrids and
+passed only because Maharashtra's other districts had rows. Point 2's rule could not tell such a
+district from one lost silently.
+
+**Decision.**
+
+1. Every raster layer lists the districts it measured without a valid cell in
+   `Result.districts_without_cells`. `layers.Measured` reads each step's zonal table (per district
+   for WorldCover, Hansen and the DEM; per state for SoilGrids; per shard for CHELSA and CHIRPS;
+   per run for GLiM) and lists a district when the table returned it and its `pixels` (exactextract
+   `count`, which skips nodata) was 0 or NaN in every step: nodata everywhere under the polygon,
+   or the polygon outside the grid. A polygon smaller than a valid cell still gets a value, since
+   exactextract weights by coverage fraction. A district missing from the table, or in a step that
+   raised, is never listed: it stays silent or failed.
+2. Such a district gets no rows. WorldCover and Hansen wrote 0.0 shares, areas and losses for it;
+   they now write nothing, as the other layers already did.
+3. `coverage_of` counts it as accounted for. It stays in `districtsWithoutValues` and is also in
+   `districtsWithoutCells`, which gives the reason. A state is lost when none of its selected
+   districts has a row or is listed without cells, or when one failure names all of them. A failure
+   still outweighs the no-cells list, and a state with no row, no listing and no failure is still
+   lost. This is the state-level reading: a state with no rows passes when at least one of its
+   districts is listed without cells, even if another is silent.
+4. `districtsWithoutCells` goes into the part JSON and the summary's `layers`. The workflow summary
+   shows its count beside districts without values.
+
+**Consequences.** Re-run 3 (datasets `glim`) needs this on `main`. It is expected, from the
+synthetic tests and run 43949571146's message, to list 553 under both keys instead of failing on
+state 31; that is not yet observed on the real grid. Left as debt under "Geo ETL state gaps": an
+unreachable tile or a grid read as nodata everywhere now reads as "no valid cells", and a silent
+district does not fail the part when another district of its state is accounted for.

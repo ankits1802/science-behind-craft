@@ -239,3 +239,4 @@ never sits among the evidence. Files reach the browser through `lib/download.ts`
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |
 | Geo ETL | `etl/geo` tests and the district statistics build |
 | Deploy backend | after Backend checks succeed on a push to `main` of `cxacraftecosystem-ui/KalaVigyan` |
+| E2E production | on dispatch only: Playwright against the deployed site at 1440, 834 and 390 px wide, every screen signed in as the E2E Researcher, and with `questions=true` two known-answer questions in Hybrid (decision 0029) |

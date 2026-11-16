@@ -146,7 +146,7 @@ Each row in `district_env.parquet` is one `(districtLgd, datasetCode, variable, 
 
 Method notes carried in each row's `method`:
 
-- SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers. SoilGrids masks built-up land, water and bare rock; a district masked throughout gets no SoilGrids rows and is listed under `districtsWithoutValues` in the summary (Mumbai, 482: 0 of 2,720 cells unmasked on 2026-11-17).
+- SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers. SoilGrids masks built-up land, water and bare rock; a district masked throughout gets no SoilGrids rows and is listed under `districtsWithoutValues` and `districtsWithoutCells` in the summary (Mumbai, 482: 0 of 2,720 cells unmasked on 2026-11-17).
 - WorldCover is read from the 3 degree COG tiles. The workflow can read an overview (`--worldcover-factor`, default 4, so about 40 m, nearest neighbour); the effective resolution is written to each row's `resolution`, loaded into `DistrictEnvValue.resolution` and sent with every region value and layer (decision 0016).
 - Hansen forest is `treecover2000 >= 30%`; loss is counted only inside that 2000 forest, by `lossyear`.
 - CHIRPS uses the last `--chirps-years` (default 10) complete years available; `monsoon_share_jjas` is June to September over the annual normal.
@@ -162,7 +162,7 @@ Method notes carried in each row's `method`:
 Geology uses two open sources only:
 
 - **USGS MRDS** mineral occurrence points inside India, fetched from the public WFS by bounding box and assigned to districts by point-in-polygon. MRDS was compiled to 2011 and is no longer updated. Its India coverage is sparse and uneven, so a count of zero means "none recorded in MRDS", not "no deposits".
-- **GLiM v1.0 gridded to 0.5 degree** (about 55 km), the GLiM product that downloads directly from PANGAEA as one small file. A district usually spans just a few cells, so lithology shares show the broad geological setting, not the rock under a given village.
+- **GLiM v1.0 gridded to 0.5 degree** (about 55 km), the GLiM product that downloads directly from PANGAEA as one small file. A district usually spans just a few cells, so lithology shares show the broad geological setting, not the rock under a given village. Lakshadweep (553) lies on no GLiM land cell, so it has no GLiM rows (Actions run 43949571146) and is listed under `districtsWithoutCells`.
 
 These sources were considered and not used:
 

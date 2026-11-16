@@ -49,6 +49,7 @@ SUMMARY_LAYER_KEYS = (
     "rows",
     "geologyRows",
     "districtsWithoutValues",
+    "districtsWithoutCells",
     "lostStates",
     "seconds",
     "notes",
@@ -154,13 +155,17 @@ def extract_layer(key: str, districts: pd.DataFrame, options: Options, *, parts:
         "geologyRows": 0 if result.geology is None else int(len(result.geology)),
         "failures": result.failures,
         "districtsWithoutValues": reach.districts_without_values,
+        "districtsWithoutCells": reach.districts_without_cells,
         "lostStates": reach.lost_states,
         "notes": result.notes,
         "options": {k: (str(v) if isinstance(v, Path) else v) for k, v in dataclasses.asdict(options).items()},
         "seconds": round(time.monotonic() - started, 1),
     }
     (parts / f"{stem}.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
-    print(f"{key}: {meta['rows']} rows, {len(result.failures)} failures, {meta['seconds']} s")
+    print(
+        f"{key}: {meta['rows']} rows, {len(result.failures)} failures, "
+        f"{len(reach.districts_without_cells)} districts without cells, {meta['seconds']} s"
+    )
     for item in result.failures:
         print(f"  failure {item['step']} {item['districtLgds'][:5]}: {item['error']}", file=sys.stderr)
     return meta
@@ -170,8 +175,8 @@ def part_status(metas: list[dict], *, allow_failures: bool) -> int:
     lost = [m for m in metas if m["lostStates"]]
     for meta in lost:
         print(
-            f"{meta['layer']}: states {meta['lostStates']} lost every district or a whole step; "
-            "a lost state fails the part even with --allow-failures",
+            f"{meta['layer']}: states {meta['lostStates']} have no district with values or without valid cells, "
+            "or lost a whole step; a lost state fails the part even with --allow-failures",
             file=sys.stderr,
         )
     failed = any(m["failures"] for m in metas)
@@ -240,8 +245,8 @@ def add_extract_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--allow-failures",
         action="store_true",
-        help="keep a part whose failures are scattered districts; a state left with no values, or with a step "
-        "failed for every one of its districts, still fails the part",
+        help="keep a part whose failures are scattered districts; a state none of whose districts has values or "
+        "was measured without valid cells, or with a step failed for every one of its districts, still fails the part",
     )
     parser.add_argument("--shard", help="k/n: process the k-th of n state groups, balanced by area")
 

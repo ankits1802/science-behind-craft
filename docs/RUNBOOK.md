@@ -45,7 +45,7 @@ sudo kv-blue-green status
 
 ## Secrets
 
-Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME>` in Parameter Store, and `/opt/kalavigyan/.env` on the box.
+Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME>` in Parameter Store, and `/opt/kalavigyan/.env` on the box. The one exception is the E2E account (`E2E_EMAIL`, `E2E_PASSWORD`): only the E2E production workflow reads it, so it is a GitHub secret alone (E2E production run, below).
 
 - GitHub secrets: `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `ORIGIN_VERIFY_SECRET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `GOOGLE_CLIENT_ID`, `MASTER_ADMIN_EMAIL`, `MASTER_ADMIN_NAME`.
 - GitHub variables: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`, `EC2_INSTANCE_ID`, `MEDIA_BUCKET`, `API_BASE_URL`, `CLOUDFRONT_DISTRIBUTION_ID`, `WEB_ORIGIN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
@@ -171,6 +171,30 @@ As provisioned on 2026-11-16, each layer was checked:
 - The Elastic IP gave no answer.
 - SearXNG JSON returned results, and Redis answered PONG.
 - The box reached Postgres 17.11 through the session pooler, with the five extensions and the RLS event trigger present.
+
+## E2E production run
+
+Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the two known-answer questions in Hybrid (English and Hindi, alum as the mordant), up to 10 minutes each.
+
+The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no two-step), active on the roster, email verified, voice consent unset.
+
+1. Provision it on the box, once a backend deploy has shipped `app.scripts.provision_e2e_account`. It prompts for the password (12 to 200 characters) and never prints it. Running it again resets the password, role, roster row and two-step, and ends the account's sessions.
+   ```bash
+   aws ssm start-session --target i-0a58a2feb528241aa --region ap-south-1
+   cd /opt/kalavigyan/current/backend && sudo -u kalavigyan bash -c 'set -a; . /opt/kalavigyan/.env; set +a; .venv/bin/python -m app.scripts.provision_e2e_account'
+   ```
+2. Store the address and the same password as GitHub secrets, pasting each value at the prompt:
+   ```bash
+   gh secret set E2E_EMAIL --repo cxacraftecosystem-ui/KalaVigyan
+   gh secret set E2E_PASSWORD --repo cxacraftecosystem-ui/KalaVigyan
+   ```
+3. Dispatch it (Actions, **E2E production**, Run workflow, or):
+   ```bash
+   gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan
+   gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true
+   ```
+
+The run summary has a table per screen and width, and one per question. Two artifacts carry the run id: `e2e-production-screenshots-<run id>` and `e2e-production-report-<run id>` (`KalaVigyan_Eval-Run_<date>_<time>_<Width>-Screens_Report.json`, `..._Known-Answers_Report.json` with each answer's sentences, citations, sources and timing, and `..._Summary_Report.md`). Each question is one Hybrid answer under the Researcher daily cap.
 
 ## Terraform
 

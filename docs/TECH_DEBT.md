@@ -429,7 +429,10 @@ Last reviewed: 2026-11-17.
 - **What:** `etl/geo/geo_etl/raster.exists` turns any open error, a timeout or a server error as
   much as a 404, into "no such file", caches that answer for the process, and `raster.read`
   mosaics only the tiles it found. A WorldCover, Hansen or Copernicus DEM district whose tile did
-  not answer is computed from the tiles that did, with no failure listed; a CHELSA or CHIRPS file
+  not answer is computed from the tiles that did, with no failure listed; when the tiles under its
+  polygon did not answer but another tile in its padded bounds did, it comes back without valid
+  cells and, since the addendum to 0027, counts as accounted for, even as a state's only district
+  (when no tile answers, the read fails); a CHELSA or CHIRPS file
   that did not answer fails its step for the whole shard (which now fails the part). After the
   CHIRPS year lookup, file reads still rely on GDAL's own retries (7 tries of up to 120 s per
   request in the workflow), so a stalled server can still hold a job for hours.
@@ -438,6 +441,33 @@ Last reviewed: 2026-11-17.
 - **Clears it:** probe tiles over HTTP as the CHIRPS lookup does (only 404 means absent, other
   errors retried then raised), or list each dataset's tiles once and treat a listed tile that
   cannot be read as a failure; cap GDAL's retries with an overall deadline per file.
+
+### A grid read as nodata everywhere counts as "no valid cells"
+
+- **What:** since the addendum to 0027, `coverage_of` trusts `Result.districts_without_cells`. A
+  read that returns a grid of nodata (a SoilGrids WCS answer of masked cells for a whole state, a
+  grid registered in the wrong place) lists every district without cells, accounts for every
+  state, and the part passes with no rows. Before, it lost those states and failed.
+- **Why left:** telling such a read from a real gap (Lakshadweep in GLiM, Mumbai in SoilGrids)
+  needs a reference the layers do not have; a guard on "no valid cell in the whole grid" would also
+  fail a run that selects only Lakshadweep.
+- **Clears it:** fail a step whose grid holds no valid cell at all while the selection has land
+  cells in an independent mask (for example the Copernicus DEM or WorldCover land fraction), or
+  keep a reviewed list of districts expected without cells per dataset and fail any other.
+
+### A silent district does not fail the part when its state has another district accounted for
+
+- **What:** a selected district with no row, no no-cells listing and no failure is listed only
+  under `districtsWithoutValues`; its state is lost only when none of its districts is accounted
+  for. That includes a state with no rows at all where one district is listed without cells and
+  another is silent, which the rule before the addendum failed. Every raster path now lists its no-cells districts, so such a district means a defect, and
+  can only be found as `districtsWithoutValues` minus `districtsWithoutCells` minus the failed
+  districts.
+- **Why left:** the addendum to 0027 keeps the state-level rule the owner asked for; failing on a
+  single silent district is a stricter rule not yet agreed.
+- **Clears it:** list such districts under their own key in the part JSON and fail the part when
+  it is not empty, or at least lose a state without rows unless every one of its districts is
+  listed without cells.
 
 ### Each shard resolves the CHIRPS period on its own
 

@@ -1,10 +1,27 @@
+import geopandas as gpd
 import numpy as np
+import pandas as pd
 import pytest
 import requests
+from rasterio.crs import CRS
 from rasterio.io import MemoryFile
 from rasterio.transform import from_origin
+from shapely.geometry import box
 
-from geo_etl.layers import soilgrids, with_retries
+from geo_etl import raster
+from geo_etl.coverage import Coverage, coverage_of, covered_districts
+from geo_etl.layers import (
+    Measured,
+    Options,
+    chelsa,
+    chirps,
+    copdem,
+    geology,
+    hansen,
+    soilgrids,
+    with_retries,
+    worldcover,
+)
 
 
 def outcomes(*steps):
@@ -67,3 +84,71 @@ def test_soilgrids_coverage_retries_a_tile_of_the_wrong_shape(monkeypatch, sleep
     assert block.shape == (3, 2)
     assert (block == 250).all()
     assert sleeps == [5.0]
+
+
+RASTER_LAYERS = {
+    "soilgrids": soilgrids.run,
+    "worldcover": worldcover.run,
+    "hansen": hansen.run,
+    "chelsa": chelsa.run,
+    "chirps": chirps.run,
+    "copdem": copdem.run,
+    "glim": geology.run_glim,
+}
+
+
+def half_valid_grid(*args, **kwargs) -> raster.Grid:
+    values = np.full((4, 4), np.nan, dtype="float32")
+    values[:, :2] = 1.0
+    return raster.Grid(values, from_origin(70.0, 24.0, 1.0, 1.0), CRS.from_epsg(4326))
+
+
+def districts_beside_nodata() -> gpd.GeoDataFrame:
+    return gpd.GeoDataFrame(
+        {"districtLgd": [11, 12, 21], "stateLgd": [1, 1, 2], "districtName": ["valid", "nodata", "island"]},
+        geometry=[box(70.2, 20.2, 71.8, 21.8), box(72.2, 20.2, 73.8, 21.8), box(72.2, 22.2, 73.8, 23.8)],
+        crs="EPSG:4326",
+    )
+
+
+@pytest.fixture
+def offline_reads(monkeypatch):
+    monkeypatch.setattr(raster, "read", half_valid_grid)
+    monkeypatch.setattr(soilgrids, "read", half_valid_grid)
+    monkeypatch.setattr(chirps, "latest_year", lambda: 2025)
+    monkeypatch.setattr(geology, "download", lambda url, target: target)
+
+
+@pytest.mark.parametrize("key", list(RASTER_LAYERS))
+def test_every_raster_layer_lists_districts_measured_without_valid_cells(key, offline_reads, tmp_path):
+    options = Options(
+        cache=tmp_path,
+        soil_vars=("clay",),
+        soil_depths=("0-5cm",),
+        chelsa_bio=("bio1",),
+        chelsa_months=False,
+        chirps_years=1,
+    )
+    districts = districts_beside_nodata()
+    result = RASTER_LAYERS[key](districts, options)
+    assert result.failures == []
+    assert covered_districts(result) == {11}
+    assert result.districts_without_cells == [12, 21]
+    assert coverage_of(districts, result) == Coverage(
+        districts_without_values=[12, 21], districts_without_cells=[12, 21], lost_states=[]
+    )
+
+
+def test_glim_writes_geology_only_for_the_district_with_cells(offline_reads, tmp_path):
+    result = geology.run_glim(districts_beside_nodata(), Options(cache=tmp_path))
+    assert list(result.geology["districtLgd"]) == [11]
+    assert list(result.geology["lithology"]) == ["su"]
+    assert result.geology["areaShare"].tolist() == pytest.approx([1.0])
+
+
+def test_measured_lists_only_districts_without_cells_in_every_step_it_measured():
+    measured = Measured()
+    measured.add(pd.DataFrame({"districtLgd": [11, 12, 21], "pixels": [3.0, 0.0, 0.0]}))
+    measured.add(pd.DataFrame({"districtLgd": [11, 12], "pixels": [3.0, 0.5]}))
+    measured.add(pd.DataFrame({"districtLgd": [21], "pixels": [float("nan")]}))
+    assert measured.without_cells() == [21]

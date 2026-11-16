@@ -7,6 +7,7 @@ import geopandas as gpd
 import pandas as pd
 import requests
 
+from geo_etl import raster
 from geo_etl.catalog import Dataset
 
 USER_AGENT = "kalavigyan-geo-etl/0.0.1"
@@ -37,6 +38,23 @@ class Result:
     geology: pd.DataFrame | None = None
     failures: list[dict] = field(default_factory=list)
     notes: dict = field(default_factory=dict)
+    districts_without_cells: list[int] = field(default_factory=list)
+
+
+@dataclass
+class Measured:
+    districts: set[int] = field(default_factory=set)
+    with_cells: set[int] = field(default_factory=set)
+
+    def add(self, table: pd.DataFrame) -> pd.DataFrame:
+        for lgd, pixels in zip(table["districtLgd"], table["pixels"], strict=True):
+            self.districts.add(int(lgd))
+            if raster.has_cells(pixels):
+                self.with_cells.add(int(lgd))
+        return table
+
+    def without_cells(self) -> list[int]:
+        return sorted(self.districts - self.with_cells)
 
 
 def by_state(districts: gpd.GeoDataFrame) -> Iterator[gpd.GeoDataFrame]:

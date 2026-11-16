@@ -271,19 +271,30 @@ Last updated: 2026-11-17.
   (`core/clock`) and the first-citation walk; a frontend spec pins the client's vocabularies to
   the backend tuples, and Frontend checks now watch the backend files their specs read.
 
+- **E2E production run** (decision 0029): **E2E production** (dispatch only) drives the deployed
+  site with Playwright at 1440, 834 and 390 px wide as one Researcher account signed in through the
+  login form, checks every screen (console, failed requests, sideways scroll, overflowing text,
+  alerts, gap copy, the role's menu), screenshots it, and with `questions=true` asks the English and
+  Hindi known-answer questions in Hybrid and checks them on the wire. `app.scripts.provision_e2e_account`
+  creates or resets the account; `seed_admin` now shares its upsert (`services/password_accounts`).
+
 ## Next
 
 1. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
    engine follow-ups are in `docs/TECH_DEBT.md` (decision 0015).
-2. Run one or two known-answer questions in `HYBRID` on the box once deployed (PLAN section 0),
-   and clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher
+2. Run the known-answer questions with **E2E production** (`questions=true`) once deployed (PLAN
+   section 0, decision 0029), and clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher
    chunk access).
 3. The `WEB_READ` reader for long documents.
 4. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
 
 ## Waiting on the owner
+
+- E2E production run: after the next backend deploy, run `app.scripts.provision_e2e_account` on the
+  box, set `E2E_EMAIL` (`e2e-researcher@kalavigyan.example`) and `E2E_PASSWORD` as GitHub secrets,
+  then dispatch **E2E production** (`docs/RUNBOOK.md`, E2E production run).
 
 - Free OpenAlex, Semantic Scholar and Springer Nature API keys (Settings, API keys); without
   them OpenAlex shares a small daily allowance per IP, Semantic Scholar's shared pool answers

@@ -2,7 +2,7 @@ import geopandas as gpd
 
 from geo_etl import raster
 from geo_etl.catalog import CHELSA
-from geo_etl.layers import Options, Result, failure
+from geo_etl.layers import Measured, Options, Result, failure
 from geo_etl.rows import Rows, pick
 
 BASE = "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010"
@@ -46,6 +46,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         "scale and offset read from the GeoTIFF; raw 65535 treated as no data",
     )
     failures: list[dict] = []
+    measured = Measured()
     bounds = raster.bounds_in(districts, "EPSG:4326", 0.02)
     lookup = districts.set_index("districtLgd")
     for url, variable, period, unit in layers(options):
@@ -53,7 +54,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
             grid = raster.read([url], bounds, nodata_values=NODATA, dtype="float32")
             if grid is None:
                 raise RuntimeError(f"{url} not reachable")
-            table = raster.zonal(grid, districts, raster.continuous_ops(grid))
+            table = measured.add(raster.zonal(grid, districts, raster.continuous_ops(grid)))
             for _, record in table.iterrows():
                 district = lookup.loc[int(record["districtLgd"])].copy()
                 district["districtLgd"] = int(record["districtLgd"])
@@ -63,4 +64,4 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 rows.add(district, variable, period, "DISTRICT_P90", pick(record, "p90"), unit, pixels=pixels)
         except Exception as error:
             failures.append(failure(districts, f"chelsa {variable} {period}", error))
-    return Result(CHELSA, rows.frame(), failures=failures)
+    return Result(CHELSA, rows.frame(), failures=failures, districts_without_cells=measured.without_cells())

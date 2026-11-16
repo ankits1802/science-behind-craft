@@ -184,6 +184,10 @@ def zonal(grid: Grid, frame: gpd.GeoDataFrame, ops: list[str]) -> pd.DataFrame:
     return table
 
 
+def has_cells(pixels: float) -> bool:
+    return float(pixels) > 0.0
+
+
 def geographic(grid: Grid) -> bool:
     return bool(grid.crs.is_geographic)
 

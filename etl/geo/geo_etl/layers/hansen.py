@@ -5,13 +5,19 @@ import numpy as np
 
 from geo_etl import raster
 from geo_etl.catalog import HANSEN
-from geo_etl.layers import Options, Result, by_district, download, failure
+from geo_etl.layers import Measured, Options, Result, by_district, download, failure
 from geo_etl.rows import Rows, pick
 
 VERSION = "GFC-2025-v1.13"
 BASE = f"https://storage.googleapis.com/earthenginepartners-hansen/{VERSION}"
 LAST_YEAR = 2025
 CANOPY = 30
+CLASS_OPS = [
+    "classes=unique",
+    "shares=frac(coverage_weight=area_spherical_km2)",
+    "area=count(coverage_weight=area_spherical_km2)",
+    "pixels=count",
+]
 
 
 def tile_id(top: int, left: int) -> str:
@@ -55,6 +61,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         f"forest = treecover2000 >= {CANOPY}%; loss counted inside 2000 forest by lossyear",
     )
     failures: list[dict] = []
+    measured = Measured()
     for group in by_district(districts):
         district = group.iloc[0]
         try:
@@ -71,16 +78,9 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
             cover = raster.Grid(np.where(land, tc.values, np.nan).astype("float32"), tc.transform, tc.crs)
             classes = raster.Grid(code, tc.transform, tc.crs)
             mean = raster.zonal(cover, group, ["mean=mean(coverage_weight=area_spherical_km2)", "pixels=count"])
-            record = raster.zonal(
-                classes,
-                group,
-                [
-                    "classes=unique",
-                    "shares=frac(coverage_weight=area_spherical_km2)",
-                    "area=count(coverage_weight=area_spherical_km2)",
-                    "pixels=count",
-                ],
-            ).iloc[0]
+            record = measured.add(raster.zonal(classes, group, CLASS_OPS)).iloc[0]
+            if not raster.has_cells(record["pixels"]):
+                continue
             pixels = float(record["pixels"])
             land_km2 = float(record["area"])
             found = {
@@ -118,4 +118,4 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 )
         except Exception as error:
             failures.append(failure(group, "hansen", error))
-    return Result(HANSEN, rows.frame(), failures=failures)
+    return Result(HANSEN, rows.frame(), failures=failures, districts_without_cells=measured.without_cells())

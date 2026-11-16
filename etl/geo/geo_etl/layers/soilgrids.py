@@ -10,7 +10,7 @@ from rasterio.transform import from_origin
 
 from geo_etl import raster
 from geo_etl.catalog import SOILGRIDS
-from geo_etl.layers import USER_AGENT, Options, Result, by_state, failure, with_retries
+from geo_etl.layers import USER_AGENT, Measured, Options, Result, by_state, failure, with_retries
 from geo_etl.rows import Rows, pick
 
 WCS = "https://maps.isric.org/mapserv"
@@ -98,6 +98,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         "coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
     )
     failures: list[dict] = []
+    measured = Measured()
     for group in by_state(districts):
         bounds = raster.bounds_in(group, HOMOLOSINE, PAD_M)
         for variable in options.soil_vars:
@@ -119,10 +120,11 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                         ops = raster.continuous_ops(grid)
                         if stat is not None:
                             ops = [ops[0], ops[-1]]
-                        emit(rows, group, raster.zonal(grid, group, ops), variable, depth, unit, stat)
+                        table = measured.add(raster.zonal(grid, group, ops))
+                        emit(rows, group, table, variable, depth, unit, stat)
                     except Exception as error:
                         failures.append(failure(group, f"{variable} {depth} {layer}", error))
-    return Result(SOILGRIDS, rows.frame(), failures=failures)
+    return Result(SOILGRIDS, rows.frame(), failures=failures, districts_without_cells=measured.without_cells())
 
 
 def emit(rows: Rows, group: gpd.GeoDataFrame, table: pd.DataFrame, variable, depth, unit, stat) -> None:

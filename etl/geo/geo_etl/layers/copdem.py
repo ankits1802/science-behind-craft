@@ -5,7 +5,7 @@ import numpy as np
 
 from geo_etl import raster
 from geo_etl.catalog import COPDEM
-from geo_etl.layers import Options, Result, by_district, failure
+from geo_etl.layers import Measured, Options, Result, by_district, failure
 from geo_etl.rows import Rows, pick
 
 BASE = "https://copernicus-dem-90m.s3.amazonaws.com"
@@ -47,6 +47,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         "latitude-dependent metres per degree; missing ocean tiles are no data",
     )
     failures: list[dict] = []
+    measured = Measured()
     for group in by_district(districts):
         district = group.iloc[0]
         try:
@@ -55,7 +56,9 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
             if grid is None:
                 raise RuntimeError("no Copernicus DEM tile reachable")
             ops = [*raster.continuous_ops(grid), "low=min", "high=max"]
-            record = raster.zonal(grid, group, ops).iloc[0]
+            record = measured.add(raster.zonal(grid, group, ops)).iloc[0]
+            if not raster.has_cells(record["pixels"]):
+                continue
             pixels = float(record["pixels"])
             for stat, key in (
                 ("DISTRICT_MEAN", "mean"),
@@ -71,4 +74,4 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 rows.add(district, "slope", "", stat, pick(record, key), "degree", pixels=pixels, resolution=effective)
         except Exception as error:
             failures.append(failure(group, "copdem", error))
-    return Result(COPDEM, rows.frame(), failures=failures)
+    return Result(COPDEM, rows.frame(), failures=failures, districts_without_cells=measured.without_cells())

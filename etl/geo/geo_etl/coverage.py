@@ -10,18 +10,25 @@ __all__ = ["Coverage", "coverage_of"]
 @dataclass(frozen=True)
 class Coverage:
     districts_without_values: list[int]
+    districts_without_cells: list[int]
     lost_states: list[int]
 
 
 def coverage_of(districts: pd.DataFrame, result: Result) -> Coverage:
     members = state_members(districts)
+    selected = set().union(*members.values()) if members else set()
     covered = covered_districts(result)
-    lost = {state for state, lgds in members.items() if not lgds & covered}
+    without_cells = (set(result.districts_without_cells) & selected) - covered
+    accounted = covered | without_cells
+    lost = {state for state, lgds in members.items() if not lgds & accounted}
     for item in result.failures:
         failed = {int(v) for v in item["districtLgds"]}
         lost |= {state for state, lgds in members.items() if lgds <= failed}
-    selected = set().union(*members.values()) if members else set()
-    return Coverage(districts_without_values=sorted(selected - covered), lost_states=sorted(lost))
+    return Coverage(
+        districts_without_values=sorted(selected - covered),
+        districts_without_cells=sorted(without_cells),
+        lost_states=sorted(lost),
+    )
 
 
 def state_members(districts: pd.DataFrame) -> dict[int, set[int]]:

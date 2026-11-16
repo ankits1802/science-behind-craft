@@ -10,7 +10,7 @@ import requests
 
 from geo_etl import raster
 from geo_etl.catalog import CHIRPS
-from geo_etl.layers import USER_AGENT, Options, Result, failure, with_retries
+from geo_etl.layers import USER_AGENT, Measured, Options, Result, failure, with_retries
 from geo_etl.rows import Rows, pick
 
 BASE = "https://data.chc.ucsb.edu/products/CHIRPS/v3.0"
@@ -70,11 +70,11 @@ def answered(method: str, url: str) -> requests.Response:
     return response
 
 
-def district_means(url: str, districts: gpd.GeoDataFrame, bounds) -> pd.DataFrame:
+def district_means(url: str, districts: gpd.GeoDataFrame, bounds, *, measured: Measured) -> pd.DataFrame:
     grid = raster.read([url], bounds, valid_min=0.0, dtype="float32")
     if grid is None:
         raise RuntimeError(f"{url} not reachable")
-    table = raster.zonal(grid, districts, raster.continuous_ops(grid))
+    table = measured.add(raster.zonal(grid, districts, raster.continuous_ops(grid)))
     return table.set_index("districtLgd")
 
 
@@ -89,12 +89,13 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         "no data; normals are the mean of yearly district means",
     )
     failures: list[dict] = []
+    measured = Measured()
     bounds = raster.bounds_in(districts, "EPSG:4326", 0.1)
     lookup = districts.set_index("districtLgd")
     annual: dict[int, pd.DataFrame] = {}
     for year in range(first, last + 1):
         try:
-            annual[year] = district_means(annual_url(year), districts, bounds)
+            annual[year] = district_means(annual_url(year), districts, bounds, measured=measured)
         except Exception as error:
             failures.append(failure(districts, f"chirps annual {year}", error))
     monthly: dict[tuple[int, int], pd.DataFrame] = {}
@@ -102,7 +103,9 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         for year in range(first, last + 1):
             for month in range(1, 13):
                 try:
-                    monthly[(year, month)] = district_means(monthly_url(year, month), districts, bounds)
+                    monthly[(year, month)] = district_means(
+                        monthly_url(year, month), districts, bounds, measured=measured
+                    )
                 except Exception as error:
                     failures.append(failure(districts, f"chirps monthly {year}-{month:02d}", error))
     for lgd in districts["districtLgd"]:
@@ -146,4 +149,10 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
             if total > 0:
                 share = sum(normals[m] for m in MONSOON) / total
                 rows.add(district, "monsoon_share_jjas", period, "NORMAL", share, "fraction of annual")
-    return Result(dataset, rows.frame(), failures=failures, notes={"period": period})
+    return Result(
+        dataset,
+        rows.frame(),
+        failures=failures,
+        notes={"period": period},
+        districts_without_cells=measured.without_cells(),
+    )

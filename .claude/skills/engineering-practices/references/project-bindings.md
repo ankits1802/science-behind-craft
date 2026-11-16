@@ -63,7 +63,9 @@ backend/app/scripts/     entry points: seed commands run by the deploy (seed_cra
                          (sync_portal_crafts, also run daily), embed_craft_descriptors,
                          embed_knowledge, the daily coverage enrichment (enrich_coverage),
                          the PubChem compound lookup (link_compounds), the daily voice upkeep
-                         (voice_upkeep) and the voice agent's provisioning (provision_voice_agent)
+                         (voice_upkeep), the voice agent's provisioning (provision_voice_agent)
+                         and the E2E account's provisioning (provision_e2e_account); shared
+                         operator input in operator_input
 backend/app/main.py      the ASGI app
 backend/migrations/      Alembic migrations
 backend/tests/           DB-free tests; backend/tests/db/ needs Postgres (marker `db`)
@@ -122,6 +124,8 @@ lib/                       the API client (api.ts), session, formatters, permiss
                            the runtime shape kit (shape.ts) and the contract shapes (*Contract.ts)
 lib/server/                server-only code (apiProxy.ts)
 e2e/                       Playwright: *-unit.spec.ts (unit project) and smoke.spec.ts
+e2e/production/            the E2E production run (decision 0029): projects exist only with
+                           E2E_PRODUCTION=1, never in Frontend checks
 public/, fonts/            static assets
 ```
 

@@ -11,7 +11,7 @@ from shapely.geometry import Point
 
 from geo_etl import raster
 from geo_etl.catalog import GLIM, MRDS
-from geo_etl.layers import USER_AGENT, Options, Result, by_state, download, failure
+from geo_etl.layers import USER_AGENT, Measured, Options, Result, by_state, download, failure
 from geo_etl.rows import Rows, pick
 
 GEOLOGY_COLUMNS = [
@@ -168,6 +168,7 @@ def run_glim(districts: gpd.GeoDataFrame, options: Options) -> Result:
     rows = Rows(GLIM, method)
     geology: list[dict] = []
     failures: list[dict] = []
+    measured = Measured()
     try:
         archive = download(GLIM.url, options.cache / "glim" / "glim_wgs84_0point5deg.zip")
         source = f"/vsizip/{archive.as_posix()}/glim_wgs84_0point5deg.txt.asc"
@@ -176,7 +177,7 @@ def run_glim(districts: gpd.GeoDataFrame, options: Options) -> Result:
         if grid is None:
             raise RuntimeError("GLiM grid unreadable")
         grid = raster.Grid(grid.values, grid.transform, CRS.from_epsg(4326))
-        table = raster.zonal(grid, districts, raster.class_ops(grid))
+        table = measured.add(raster.zonal(grid, districts, raster.class_ops(grid)))
         lookup = districts.set_index("districtLgd")
         for _, record in table.iterrows():
             district = lookup.loc[int(record["districtLgd"])].copy()
@@ -191,4 +192,10 @@ def run_glim(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 rows.add(district, f"lithology_{code}", "", "SHARE", float(share), "fraction", pixels=record["pixels"])
     except Exception as error:
         failures.append(failure(districts, "glim", error))
-    return Result(GLIM, rows.frame(), geology=pd.DataFrame(geology, columns=GEOLOGY_COLUMNS), failures=failures)
+    return Result(
+        GLIM,
+        rows.frame(),
+        geology=pd.DataFrame(geology, columns=GEOLOGY_COLUMNS),
+        failures=failures,
+        districts_without_cells=measured.without_cells(),
+    )

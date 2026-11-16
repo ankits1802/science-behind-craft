@@ -5,7 +5,7 @@ import numpy as np
 
 from geo_etl import raster
 from geo_etl.catalog import WORLDCOVER
-from geo_etl.layers import Options, Result, by_district, failure
+from geo_etl.layers import Measured, Options, Result, by_district, failure
 from geo_etl.rows import Rows, pick
 
 BASE = "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map"
@@ -49,6 +49,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
         "share of mapped area inside the district polygon",
     )
     failures: list[dict] = []
+    measured = Measured()
     for group in by_district(districts):
         district = group.iloc[0]
         try:
@@ -56,7 +57,9 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
             grid = raster.read(tiles(bounds), bounds, factor=factor, nodata_values=(0,), dtype="float32")
             if grid is None:
                 raise RuntimeError("no WorldCover tile reachable")
-            record = raster.zonal(grid, group, raster.class_ops(grid)).iloc[0]
+            record = measured.add(raster.zonal(grid, group, raster.class_ops(grid))).iloc[0]
+            if not raster.has_cells(record["pixels"]):
+                continue
             classes = np.asarray(pick(record, "classes"), dtype=float)
             shares = np.asarray(pick(record, "shares"), dtype=float)
             found = {int(c): float(s) for c, s in zip(classes, shares, strict=True)}
@@ -74,4 +77,4 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
                 )
         except Exception as error:
             failures.append(failure(group, "worldcover", error))
-    return Result(WORLDCOVER, rows.frame(), failures=failures)
+    return Result(WORLDCOVER, rows.frame(), failures=failures, districts_without_cells=measured.without_cells())
