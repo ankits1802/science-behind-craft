@@ -36,7 +36,7 @@ jobs:
           role-session-name: coverage-enrichment-${{ github.run_id }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Purge and reconcile voice calls, fill missing craft and knowledge vectors, rebuild stale knowledge pieces, then widen coverage on the box
+      - name: Purge and reconcile voice calls, then fill missing craft and knowledge vectors on the box
         run: |
           set -euo pipefail
           script=$(cat <<'EOF'
@@ -47,8 +47,6 @@ jobs:
           run_module app.scripts.voice_upkeep || outcome=$?
           run_module app.scripts.embed_craft_descriptors || outcome=$?
           run_module app.scripts.embed_knowledge || outcome=$?
-          run_module app.scripts.rebuild_pieces || outcome=$?
-          run_module app.scripts.enrich_coverage || outcome=$?
           exit "$outcome"
           EOF
           )
