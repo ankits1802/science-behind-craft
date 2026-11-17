@@ -10,8 +10,8 @@ import { splitSseBuffer } from "@/lib/answerStream";
 import { agentEndOf } from "@/lib/elevenLabsAgent";
 import { formatClock, spokenClock } from "@/lib/format";
 import { mediaOptionsShape, offeredStageIds } from "@/lib/mediaContract";
-import { shownStageNames } from "@/lib/processView";
-import { craftProcessShape } from "@/lib/scienceContract";
+import { craftPageShape } from "@/lib/craftPageContract";
+import { pageStageNames } from "@/lib/craftPageView";
 import { parseShape } from "@/lib/shape";
 import { EMPTY_CONVERSATION, reduceRelayEvent } from "@/lib/voiceConversation";
 import { parseVoiceTurnBlock, voiceAvailabilityShape, voiceTranscriptShape, type ClientToolCall, type VoiceAvailability } from "@/lib/voiceContract";
@@ -204,11 +204,11 @@ test("offer_image needs the media options to offer that stage an image today", (
 });
 
 test("the craft page names the stages it drew, by id", () => {
-  const process = parseShape(craftProcessShape, golden("science.process.golden.json"));
-  const names = shownStageNames(process);
-  expect(names.size).toBe(3);
-  expect(names.has(STAGE_ID)).toBe(true);
-  expect(shownStageNames(null).size).toBe(0);
+  const page = parseShape(craftPageShape, golden("craft.page.golden.json"));
+  const names = pageStageNames(page.process);
+  expect(names.size).toBe(14);
+  expect(names.get("56cb030a-4653-5f47-982c-6c0a9b229225")).toBe("Iron-black printing");
+  expect(pageStageNames({ processId: null, stages: [], reactions: [] }).size).toBe(0);
 });
 
 test("the call clock reads as minutes and seconds", () => {

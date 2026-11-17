@@ -49,6 +49,7 @@ DATASET_FACETS = MappingProxyType(
         "SOILGRIDS_2_0": "SOIL",
         "CHELSA_2_1_1981_2010": "CLIMATE",
         "CHIRPS_3_0": "CLIMATE",
+        "GHCN_CAMS_T2M": "CLIMATE",
         "HYDRORIVERS_1_0": "WATER",
         "HANSEN_GFC_2025_V1_13": "FOREST",
         "ESA_WORLDCOVER_2021_V200": "LAND_COVER",

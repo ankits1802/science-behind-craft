@@ -18,6 +18,7 @@ export const DEFAULT_PREFERENCES: Preferences = {
 };
 
 export const PREFERENCES_KEY = "kalavigyan_preferences";
+export const PREFERENCES_PATH = "/preferences/me";
 
 export const DARK_MEDIA_QUERY = "(prefers-color-scheme: dark)";
 

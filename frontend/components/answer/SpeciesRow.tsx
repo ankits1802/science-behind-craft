@@ -4,8 +4,7 @@ import { Fragment } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { ChemEquation } from "@/components/answer/ChemEquation";
-import { reactionSpoken, speciesSides, type SpeciesReaction } from "@/lib/processView";
-import type { ReactionSpecies } from "@/lib/scienceContract";
+import { reactionSpoken, speciesSides, type SpeciesReaction, type SpeciesTerm } from "@/lib/processView";
 
 export function SpeciesRow({ reaction }: { reaction: SpeciesReaction }) {
   const { reactants, products } = speciesSides(reaction);
@@ -21,7 +20,7 @@ export function SpeciesRow({ reaction }: { reaction: SpeciesReaction }) {
   );
 }
 
-function SpeciesGroup({ species }: { species: readonly ReactionSpecies[] }) {
+function SpeciesGroup({ species }: { species: readonly SpeciesTerm[] }) {
   return species.map((entry, index) => (
     <Fragment key={`${entry.formula ?? ""}:${entry.name ?? ""}:${index}`}>
       {index > 0 ? <span className="text-ink-500">+</span> : null}

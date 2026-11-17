@@ -4,7 +4,6 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { renderChemistry } from "@/lib/chemistry";
-import { craftSources } from "@/lib/craftProfile";
 import {
   checkedProcess,
   deltaHText,
@@ -20,11 +19,8 @@ import {
 } from "@/lib/processView";
 import { craftProcessShape, type CraftProcess, type ProcessReaction, type StageCondition } from "@/lib/scienceContract";
 import { parseShape, ShapeError } from "@/lib/shape";
-import type { CraftProfile } from "@/lib/types";
 
 const GOLDEN = join(__dirname, "..", "..", "shared", "science.process.golden.json");
-const GI_JOURNAL = "d0f53ee9-4b97-5df7-a367-686957bdb7c8";
-const MINGEI = "4ce205e3-653f-51db-9e49-14fb3b3f2e14";
 
 function raw(): CraftProcess {
   return JSON.parse(readFileSync(GOLDEN, "utf8")) as CraftProcess;
@@ -149,28 +145,6 @@ test("PubChem links only for a real compound id", () => {
   expect(pubchemHref(6342)).toBe("https://pubchem.ncbi.nlm.nih.gov/compound/6342");
   expect(pubchemHref(null)).toBeNull();
   expect(pubchemHref(0)).toBeNull();
-});
-
-test("process sources are numbered after the profile's, never renumbering them", () => {
-  const body = process();
-  const mingei = body.sources.find((source) => source.id === MINGEI);
-  if (!mingei) throw new Error("golden process lost the Mingei source");
-  const profile: CraftProfile = {
-    craft: { slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", id: "c", localName: null, giStatus: "GI", stateOfPractice: [], stateOfOrigin: [], description: null, categoryName: null, subCategoryName: null },
-    overview: [{ id: "o", text: "x", level: "PROVISIONAL", citations: [{ ...body.processes[0].stages[0].reactions[0].claims[0].citations[0] }] }],
-    locations: [],
-    stages: [],
-    materials: [],
-    science: [],
-    sources: [mingei]
-  };
-  const sources = craftSources(profile, body, null);
-  expect([...sources.numbers.entries()]).toEqual([
-    [MINGEI, 1],
-    [GI_JOURNAL, 2]
-  ]);
-  expect(sources.ordered.map((source) => source.id)).toEqual([MINGEI, GI_JOURNAL]);
-  expect(craftSources(profile, null, null).ordered.map((source) => source.id)).toEqual([MINGEI]);
 });
 
 test("every equation and formula the server sends renders through mhchem", () => {

@@ -12,6 +12,12 @@ export function sourceNumbers(sections: readonly AnswerSection[], reactions: rea
   return numbers;
 }
 
+export function listedSourceNumbers(sources: readonly Pick<SourceRef, "id">[]): Map<string, number> {
+  const numbers = new Map<string, number>();
+  for (const source of sources) if (!numbers.has(source.id)) numbers.set(source.id, numbers.size + 1);
+  return numbers;
+}
+
 export function uniqueCitations(citations: readonly Citation[]): Citation[] {
   const seen = new Set<string>();
   const out: Citation[] = [];

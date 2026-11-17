@@ -1,7 +1,7 @@
 # Plan: the answer experience
 
-Status: approved by the owner, 2026-11-17 (section 8); phase A deployed, phase B built and reviewed,
-not yet deployed (section 5).
+Status: approved by the owner, 2026-11-17 (section 8); phase A deployed, phases B and C built and
+reviewed, not yet deployed, the contract of phase D fixed (section 5).
 Supersedes the chat-style answer and the live voice call. PLAN section 0 still binds: accuracy over speed, every claim cited, research not limited
 to named sources, the knowledge base grows from every answer, no review gates.
 
@@ -314,6 +314,72 @@ takes to the materials, places, months and seasons their sources state, held bui
 to the answer's headroom, content-addressed river files and refused a changed one, moved the
 river load to a scoped OIDC role, named the rainfall district, and added the water question to the
 production E2E.
+
+**Phase C status (2026-11-18).** The contract is fixed (decision 0054): the final fields and
+validators of the generated explainer (`simulation`), the what-if lab, the zoom story and the
+timeline map; the generated explainer's static check with its escape-attempt corpus and its
+sandboxed frame; how a generated explainer is stored, reused by claim set and concept, and hidden
+by a professor; film mode derived on the client with an optional ElevenLabs score, its route and
+payload; and the ElevenLabs music, sound effect, image and video routes beside the existing media
+routes (image and video only where ElevenLabs publishes an API). The Kutch Ajrakh fixture is
+checked on both sides. Lanes 0055 to 0060 build the rest; 0061 is the review. The zoom story
+and timeline map builders are registered (decision 0057) and their renderers and film mode are
+built (decision 0060); both kinds join the built kinds in the review. ElevenLabs music, sound
+effects, image and video are built (decision 0058): ElevenLabs publishes all four, so the film
+score is made on demand and cached, and image and video are further route choices in Settings.
+The generated explainer's builder is registered (decision 0055: figures offered only from
+cited quotes, one checked call with one redraft, reuse by claim set and concept before any
+call, the professor's hide route) and joins the built kinds with its renderer in the review.
+The what-if lab's builder is registered (decision 0056: a stage's materials that a stored
+contrast or text relates as alternatives, outcomes only from cited relationships the server
+assembles, unknown options shown as unknown, one input at a time, a hypothesis relationship
+labelled as one) and joins the built kinds with its renderer in the review.
+Built and reviewed, not yet deployed (decision 0061): all four kinds are in `BUILT_BLOCK_KINDS` on
+both sides. The review made the frame refuse peer connections in every browser (the policy above
+plus `webrtc 'block'`, and a guard script of the client's own, because Chromium ignores that
+directive), made the static check read markup as a browser does, close the reflection routes to
+the window, read figures written against letters and run in linear time on a bounded draft, kept
+and hid every generated explainer a reader can see (also across versions), pinned and bounded the
+ElevenLabs download, and brought Music and sound, Mute on iOS and the score's failure message to
+the ask screen. Open: the deploy and the proof in production, the E2E's fourth known-answer
+question (how indigo turns blue on Kutch Ajrakh cloth, at Expert depth), whose generated
+explainer must run in the sandboxed frame with every request from the frame blocked and recorded.
+
+**Phase D status (2026-11-18).** The contract is fixed (decision 0062): the final fields and
+validators of the quiz (a cloze over the explainer's cited sentences, options only terms the server
+marked), compare, the concept graph, local measures (an exact definition or a value a source
+states for the region, O5), market and GI, and climate and risk; follow-ups stored as versions
+that never rewrite an earlier one; saved explainers with a nightly re-check that only detects,
+in-app notes and a weekly SES digest behind a setting left off; lesson packs for Professors and
+above (slides, reading list, quiz; HTML, PPTX, PDF); the PDF and APA, BibTeX and RIS exports; the
+shared-science explorer and ask the map. The Kutch Ajrakh fixtures (with Bagru for compare) are
+checked on both sides. Lanes 0063 to 0069 build the rest; 0070 is the review. Climate and risk
+and ask the map are built (decision 0065): CHIRPS rainfall and GHCN CAMS temperature from 1981
+with a Theil-Sen trend and Mann-Kendall p-value per district, the `climate_risk` builder (joined
+to the built kinds), and `GET /api/map/districts/{districtLgd}`; they wait for the Geo ETL load
+after the deploy, and no open groundwater dataset exists. The screens are built (decision 0069):
+follow-ups that extend the explainer with a version picker, Save and the "This answer got better"
+inbox on `/saved`, the lesson builder with its slide preview and PPTX, PDF and HTML files, the
+explainer's PDF and citation exports, the district panel on the map and the compare page.
+Local measures and market and GI are built and joined the built kinds (decision 0066): feet,
+inches, yards, miles and square feet convert by their exact definitions in any section, Indian
+units (in Pint, each its own dimension) only by a value a stored quote states for a register
+district or state holding the craft (O5), else they stay as written; an economics section shows
+each craft's curated GI record or the registry fields its GI journal and government claims state,
+signs of imitation from GI journal text and curated prices whose year and place their sentences
+state, all by fixed rules with no model call. Lesson packs and exports are built (decision 0067): a
+professor's pack from one version (cited sentences still shown, the one quiz rule, reading list,
+sources) as an offline reveal.js deck, PPTX and PDF, and any reader's version PDF and citations,
+all written on the server in pure Python (fpdf2 with HarfBuzz and Noto fonts, python-pptx,
+citeproc-py with the APA 7 CSL style) and handed out as short-lived links from the private bucket.
+The review (decision 0070) moved APA formatting off the event loop and the export libraries out
+of start-up, served every version with its hidden generated explainers left out of exports, the
+quiz and lessons, showed GI and price dates only as precisely as their quotes state, closed
+BibTeX to braces in stored values, linked each digest item to its explainer, told an unknown craft
+from an empty comparison, held notes per account, added the Shared science tab to the craft page
+and the export proof to the production E2E. Phase D is built; open are the deploy, the Geo ETL
+climate load and the proof itself, which needs the owner's choice of a Professor account for the
+E2E (`docs/PROGRESS.md`, Waiting on the owner).
 
 Then the **curation run**: the owner chose on 2026-11-17 that it costs no API spend. Claude Code
 curates every craft into a verified dossier (`docs/plans/dataset-curation.md`, decision 0051), and

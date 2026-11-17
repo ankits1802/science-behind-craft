@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import base64
-import binascii
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -11,15 +9,35 @@ from urllib.parse import quote
 
 import httpx
 
-from app.core.errors import RETRYABLE_KINDS, ExternalFailure, InvalidInput, NotConfigured, failure_kind
-from app.core.retry_after import parse_headers
+from app.core.errors import ExternalFailure, InvalidInput, NotConfigured
+
+from .elevenlabs_download import downloaded, http_failure
+from .elevenlabs_shapes import (
+    ELEVENLABS_SERVICE,
+    SPEECH_MAX_BYTES,
+    Generation,
+    aligned_times,
+    checked_audio,
+    created_generation,
+    decoded_audio,
+    generation_of,
+    has_text,
+    id_in,
+    named_tool,
+    off_contract,
+)
 
 __all__ = [
     "ELEVENLABS_API",
     "ELEVENLABS_KEY_NAME",
     "ELEVENLABS_SERVICE",
+    "GENERATION_KINDS",
+    "MUSIC_SECONDS_MAX",
+    "MUSIC_SECONDS_MIN",
     "NARRATION_MAX_CHARACTERS",
     "NARRATION_MODEL",
+    "SOUND_SECONDS_MAX",
+    "SOUND_SECONDS_MIN",
     "SPEECH_MAX_BYTES",
     "STT_LANGUAGE_CODES",
     "STT_MODEL",
@@ -30,13 +48,13 @@ __all__ = [
     "ConversationRecord",
     "ConversationToken",
     "ElevenLabs",
+    "Generation",
     "HeardSpeech",
     "TimedSpeech",
     "audio_seconds",
     "speech_seconds",
 ]
 
-ELEVENLABS_SERVICE = "elevenlabs"
 ELEVENLABS_API = "https://api.elevenlabs.io"
 ELEVENLABS_KEY_NAME = "ELEVENLABS_API_KEY"
 KEY_HEADER = "xi-api-key"
@@ -46,10 +64,18 @@ TTS_OUTPUT_FORMAT = "mp3_44100_128"
 TTS_BITS_PER_SECOND = 128_000
 NARRATION_MODEL = "eleven_v4"
 NARRATION_MAX_CHARACTERS = 10_000
-SPEECH_MAX_BYTES = 8 * 1024 * 1024
 REQUEST_TIMEOUT = httpx.Timeout(20.0, connect=5.0)
 NARRATION_TIMEOUT = httpx.Timeout(90.0, connect=5.0)
 PROBE_TIMEOUT = httpx.Timeout(3.0)
+MUSIC_TIMEOUT = httpx.Timeout(110.0, connect=5.0)
+SOUND_TIMEOUT = httpx.Timeout(45.0, connect=5.0)
+MUSIC_SECONDS_MIN = 3.0
+MUSIC_SECONDS_MAX = 300.0
+MUSIC_PROMPT_MAX_CHARACTERS = 4_100
+SOUND_SECONDS_MIN = 0.5
+SOUND_SECONDS_MAX = 30.0
+SOUND_PROMPT_INFLUENCE = 0.5
+GENERATION_KINDS = frozenset({"image", "video"})
 PAGE_SIZE = 100
 PAGES_MAX = 20
 STT_LANGUAGE_CODES: Mapping[str, str] = MappingProxyType(
@@ -121,16 +147,16 @@ class ElevenLabs:
     async def conversation_token(self, agent_id: str) -> ConversationToken:
         body = await self._json("GET", "/v1/convai/conversation/token", params={"agent_id": agent_id})
         token, conversation_id = body.get("token"), body.get("conversation_id")
-        if not _text(token) or not _text(conversation_id):
-            raise _off_contract("conversation token")
+        if not has_text(token) or not has_text(conversation_id):
+            raise off_contract("conversation token")
         return ConversationToken(token=token, conversation_id=conversation_id)
 
     async def conversation(self, conversation_id: str) -> ConversationRecord:
         body = await self._json("GET", f"/v1/convai/conversations/{quote(conversation_id, safe='')}")
         status = body.get("status")
         duration = (body.get("metadata") or {}).get("call_duration_secs")
-        if not _text(status) or (duration is not None and not isinstance(duration, int | float)):
-            raise _off_contract("conversation")
+        if not has_text(status) or (duration is not None and not isinstance(duration, int | float)):
+            raise off_contract("conversation")
         seconds = None if duration is None else math.ceil(duration)
         return ConversationRecord(
             conversation_id=conversation_id, status=status, call_duration_seconds=seconds
@@ -155,7 +181,7 @@ class ElevenLabs:
         body = await self._json("POST", "/v1/speech-to-text", data=data, files=files)
         text, words = body.get("text"), body.get("words") or []
         if not isinstance(text, str) or not isinstance(words, list):
-            raise _off_contract("speech to text")
+            raise off_contract("speech to text")
         ends = [w["end"] for w in words if isinstance(w, dict) and isinstance(w.get("end"), int | float)]
         language_code = body.get("language_code")
         return HeardSpeech(
@@ -173,7 +199,7 @@ class ElevenLabs:
             params={"output_format": TTS_OUTPUT_FORMAT},
             json={"text": text, "model_id": TTS_MODEL, "language_code": language},
         )
-        return _checked_audio(response.content)
+        return checked_audio(response.content)
 
     async def narration(
         self, text: str, *, voice_id: str, language: str, previous_text: str = "", next_text: str = ""
@@ -195,29 +221,72 @@ class ElevenLabs:
             json=body,
             timeout=NARRATION_TIMEOUT,
         )
-        starts, ends = _aligned_times(text, answer.get("alignment"))
+        starts, ends = aligned_times(text, answer.get("alignment"))
         return TimedSpeech(
-            audio=_checked_audio(_decoded(answer.get("audio_base64"))), starts=starts, ends=ends
+            audio=checked_audio(decoded_audio(answer.get("audio_base64"))), starts=starts, ends=ends
         )
+
+    async def music(self, prompt: str, *, seconds: float, model: str) -> bytes:
+        _require_prompt(prompt, MUSIC_PROMPT_MAX_CHARACTERS)
+        _require_seconds(seconds, MUSIC_SECONDS_MIN, MUSIC_SECONDS_MAX)
+        body = {
+            "prompt": prompt,
+            "music_length_ms": round(seconds * 1000),
+            "model_id": model,
+            "force_instrumental": True,
+        }
+        response = await self._send(
+            "POST", "/v1/music", params={"output_format": TTS_OUTPUT_FORMAT}, json=body, timeout=MUSIC_TIMEOUT
+        )
+        return checked_audio(response.content)
+
+    async def sound_effect(self, text: str, *, seconds: float, model: str) -> bytes:
+        _require_prompt(text, MUSIC_PROMPT_MAX_CHARACTERS)
+        _require_seconds(seconds, SOUND_SECONDS_MIN, SOUND_SECONDS_MAX)
+        body = {
+            "text": text,
+            "duration_seconds": seconds,
+            "prompt_influence": SOUND_PROMPT_INFLUENCE,
+            "model_id": model,
+            "loop": False,
+        }
+        response = await self._send(
+            "POST",
+            "/v1/sound-generation",
+            params={"output_format": TTS_OUTPUT_FORMAT},
+            json=body,
+            timeout=SOUND_TIMEOUT,
+        )
+        return checked_audio(response.content)
+
+    async def start_generation(self, kind: str, body: Mapping[str, Any]) -> str:
+        return created_generation(await self._json("POST", _flows_path(kind), json=dict(body)))
+
+    async def generation(self, kind: str, generation_id: str) -> Generation:
+        path = f"{_flows_path(kind)}/{quote(generation_id, safe='')}"
+        return generation_of(await self._json("GET", path), generation_id)
+
+    async def download(self, url: str, *, limit: int) -> bytes:
+        return await downloaded(self._client, url, limit=limit)
 
     async def agent_ids(self, name: str) -> list[str]:
         agents = await self._pages("/v1/convai/agents", "agents", {"search": name})
-        return [str(a["agent_id"]) for a in agents if a.get("name") == name and _text(a.get("agent_id"))]
+        return [str(a["agent_id"]) for a in agents if a.get("name") == name and has_text(a.get("agent_id"))]
 
     async def create_agent(self, body: Mapping[str, Any]) -> str:
         created = await self._json("POST", "/v1/convai/agents/create", json=dict(body))
-        return _id_in(created, "agent_id", "agent")
+        return id_in(created, "agent_id", "agent")
 
     async def update_agent(self, agent_id: str, body: Mapping[str, Any]) -> None:
         await self._send("PATCH", f"/v1/convai/agents/{quote(agent_id, safe='')}", json=dict(body))
 
     async def client_tool_ids(self) -> dict[str, str]:
         tools = await self._pages("/v1/convai/tools", "tools", {"types": "client"})
-        return {str(t["tool_config"]["name"]): str(t["id"]) for t in tools if _is_named_tool(t)}
+        return {str(t["tool_config"]["name"]): str(t["id"]) for t in tools if named_tool(t)}
 
     async def create_tool(self, config: Mapping[str, Any]) -> str:
         created = await self._json("POST", "/v1/convai/tools", json={"tool_config": dict(config)})
-        return _id_in(created, "id", "tool")
+        return id_in(created, "id", "tool")
 
     async def update_tool(self, tool_id: str, config: Mapping[str, Any]) -> None:
         await self._send(
@@ -226,13 +295,13 @@ class ElevenLabs:
 
     async def secret_ids(self, name: str) -> list[str]:
         found = await self._pages("/v1/convai/secrets", "secrets", {"search": name})
-        return [str(s["secret_id"]) for s in found if s.get("name") == name and _text(s.get("secret_id"))]
+        return [str(s["secret_id"]) for s in found if s.get("name") == name and has_text(s.get("secret_id"))]
 
     async def create_secret(self, name: str, value: str) -> str:
         created = await self._json(
             "POST", "/v1/convai/secrets", json={"type": "new", "name": name, "value": value}
         )
-        return _id_in(created, "secret_id", "secret")
+        return id_in(created, "secret_id", "secret")
 
     async def update_secret(self, secret_id: str, name: str, value: str) -> None:
         body = {"type": "update", "name": name, "value": value}
@@ -246,10 +315,10 @@ class ElevenLabs:
             body = await self._json("GET", path, params=query)
             items = body.get(field)
             if not isinstance(items, list):
-                raise _off_contract(path)
+                raise off_contract(path)
             found += [item for item in items if isinstance(item, dict)]
             cursor = body.get("next_cursor") if body.get("has_more", True) else None
-            if not _text(cursor):
+            if not has_text(cursor):
                 return found
         raise ExternalFailure(
             f"ElevenLabs {path} has more than {PAGES_MAX} pages", service=ELEVENLABS_SERVICE
@@ -260,9 +329,9 @@ class ElevenLabs:
         try:
             body = response.json()
         except ValueError:
-            raise _off_contract(path) from None
+            raise off_contract(path) from None
         if not isinstance(body, dict):
-            raise _off_contract(path)
+            raise off_contract(path)
         return body
 
     async def _send(
@@ -281,74 +350,20 @@ class ElevenLabs:
             ) from None
         if response.is_success:
             return response
-        kind = failure_kind(response.status_code)
-        raise ExternalFailure(
-            f"ElevenLabs answered {response.status_code} to {method} {path}",
-            kind=kind,
-            retryable=kind in RETRYABLE_KINDS,
-            status=response.status_code,
-            retry_after=parse_headers(response.headers),
-            service=ELEVENLABS_SERVICE,
-        )
+        raise http_failure(response, f"{method} {path}")
 
 
-def _text(value: Any) -> bool:
-    return isinstance(value, str) and bool(value.strip())
+def _flows_path(kind: str) -> str:
+    if kind not in GENERATION_KINDS:
+        raise InvalidInput(f"ElevenLabs flows make {sorted(GENERATION_KINDS)}, not {kind!r}")
+    return f"/v1/flows/{kind}"
 
 
-def _checked_audio(audio: bytes) -> bytes:
-    if not audio or len(audio) > SPEECH_MAX_BYTES:
-        raise _off_contract(f"text to speech ({len(audio)} bytes)")
-    return audio
+def _require_prompt(prompt: str, limit: int) -> None:
+    if not prompt.strip() or len(prompt) > limit:
+        raise InvalidInput(f"An ElevenLabs prompt holds 1 to {limit} characters")
 
 
-def _decoded(value: Any) -> bytes:
-    if not _text(value):
-        raise _off_contract("narration audio")
-    try:
-        return base64.b64decode(value, validate=True)
-    except binascii.Error:
-        raise _off_contract("narration audio") from None
-
-
-def _aligned_times(text: str, alignment: Any) -> tuple[tuple[float, ...], tuple[float, ...]]:
-    if not isinstance(alignment, dict):
-        raise _off_contract("narration alignment")
-    marks = alignment.get("characters")
-    starts = alignment.get("character_start_times_seconds")
-    ends = alignment.get("character_end_times_seconds")
-    if not (isinstance(marks, list) and isinstance(starts, list) and isinstance(ends, list)):
-        raise _off_contract("narration alignment")
-    if not len(marks) == len(starts) == len(ends):
-        raise _off_contract("narration alignment")
-    if not all(map(_timed_mark, marks, starts, ends, strict=True)):
-        raise _off_contract("narration alignment")
-    if "".join(marks) != text:
-        raise _off_contract("narration alignment, which does not spell the text sent,")
-    spread = [
-        (float(start), float(end)) for mark, start, end in zip(marks, starts, ends, strict=True) for _ in mark
-    ]
-    return tuple(start for start, _ in spread), tuple(end for _, end in spread)
-
-
-def _timed_mark(mark: Any, start: Any, end: Any) -> bool:
-    numbers = isinstance(start, int | float) and isinstance(end, int | float)
-    return isinstance(mark, str) and bool(mark) and numbers and 0 <= start <= end
-
-
-def _is_named_tool(tool: Mapping[str, Any]) -> bool:
-    config = tool.get("tool_config")
-    return isinstance(config, dict) and _text(config.get("name")) and _text(tool.get("id"))
-
-
-def _id_in(body: Mapping[str, Any], field: str, what: str) -> str:
-    value = body.get(field)
-    if not _text(value):
-        raise _off_contract(f"created {what}")
-    return str(value)
-
-
-def _off_contract(what: str) -> ExternalFailure:
-    return ExternalFailure(
-        f"ElevenLabs {what} answer is off its documented shape", service=ELEVENLABS_SERVICE
-    )
+def _require_seconds(seconds: float, low: float, high: float) -> None:
+    if not low <= seconds <= high:
+        raise InvalidInput(f"ElevenLabs makes {low:g} to {high:g} s here, not {seconds:g} s")

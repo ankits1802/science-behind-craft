@@ -1,25 +1,20 @@
 from __future__ import annotations
 
-import logging
 import uuid
 from datetime import datetime
-from typing import Any
 
-from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.models import Answer, User
 from app.providers.quota import LedgerEntry, record_units, remaining_today, used_today
 from app.research.explainer import Explainer
-from app.services.answer_store import EXPLAINER_PAYLOAD_KEY
+from app.services.explainer_payload import stored_explainer
 
 from .listen import ListenHold
 from .seconds import VOICE_SECONDS
 
-__all__ = ["SqlListenStore", "stored_explainer"]
-
-logger = logging.getLogger(__name__)
+__all__ = ["SqlListenStore"]
 
 
 class SqlListenStore:
@@ -53,18 +48,3 @@ class SqlListenStore:
         async with self._sessions() as session:
             await record_units(session, entry)
             await session.commit()
-
-
-def stored_explainer(answer_id: uuid.UUID, payload: dict[str, Any] | None) -> Explainer | None:
-    document = payload.get(EXPLAINER_PAYLOAD_KEY) if isinstance(payload, dict) else None
-    if document is None:
-        return None
-    try:
-        explainer = Explainer.model_validate(document)
-    except ValidationError as error:
-        logger.error("answer %s keeps an explainer that is off its contract: %s", answer_id, error)
-        return None
-    if explainer.answer_id != answer_id:
-        logger.error("answer %s keeps the explainer of answer %s", answer_id, explainer.answer_id)
-        return None
-    return explainer

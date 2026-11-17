@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import SPEND_REFUSAL_KIND, STOP_KINDS
 from app.services import app_settings, managed_secrets
-from app.services.ai_providers import MEDIA_TASKS, AiTask, model_for
+from app.services.ai_providers import AUDIO_TASKS, MEDIA_TASKS, AiTask, model_for
 
 from . import budget
 from .base import Adapter, MediaRequest, MediaResult, ProviderError
@@ -190,13 +190,15 @@ class MediaRouter:
         )
         if ask.task == AiTask.IMAGE:
             return await adapter.generate_image(request)
+        if ask.task in AUDIO_TASKS:
+            return await adapter.generate_audio(request)
         ref = await adapter.start_video(request)
         try:
             while True:
                 poll = await adapter.poll_video(ref)
                 if poll.done and poll.result is not None:
                     return poll.result
-                await self._sleep(self._poll_seconds)
+                await self._sleep(max(self._poll_seconds, adapter.video_poll_seconds))
         finally:
             await _forget(adapter, ref)
 

@@ -1,55 +1,22 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
+import { ClaimChips } from "@/components/craft/CraftClaims";
+import type { StageItem } from "@/lib/craftPageContract";
+import { materialRoleText } from "@/lib/processView";
 
-import { ChemEquation } from "@/components/answer/ChemEquation";
-import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
-import { ClaimList } from "@/components/craft/ClaimList";
-import { materialRoleText, pubchemHref } from "@/lib/processView";
-import type { StageMaterial } from "@/lib/scienceContract";
-
-export function StageMaterials({ materials }: { materials: readonly StageMaterial[] }) {
+export function StageMaterials({ items, testId }: { items: readonly StageItem[]; testId: string }) {
   return (
     <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {materials.map((material) => (
-        <li key={material.id} className="rounded-md border border-line-200 bg-card px-3 py-2.5" data-testid="process-material">
-          <MaterialHeading material={material} />
-          {material.compound ? <CompoundLine compound={material.compound} /> : null}
-          {material.quantityText ? <p className="mt-1 text-xs text-ink-500">{material.quantityText}</p> : null}
-          <div className="mt-2">
-            <ClaimList claims={material.claims} size="compact" />
-          </div>
+      {items.map((item) => (
+        <li key={item.id} className="min-w-0 rounded-md border border-line-200 bg-surface-50 px-3 py-2.5" data-testid={testId}>
+          <span className="block text-sm font-semibold text-ink-900 [overflow-wrap:anywhere]">
+            {item.name}
+            <ClaimChips ids={item.claimIds} />
+          </span>
+          {item.localNames.length > 0 ? <span className="block text-xs italic text-ink-700 [overflow-wrap:anywhere]">{item.localNames.join(", ")}</span> : null}
+          <span className="block text-xs text-ink-500">{materialRoleText(item.role, item.kind)}</span>
         </li>
       ))}
     </ul>
-  );
-}
-
-function MaterialHeading({ material }: { material: StageMaterial }) {
-  return (
-    <div className="flex flex-wrap items-start justify-between gap-2">
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold text-ink-900">{material.name}</span>
-        <span className="block text-xs text-ink-500">{materialRoleText(material.role, material.kind)}</span>
-      </span>
-      <EvidenceLevelBadge level={material.level} />
-    </div>
-  );
-}
-
-function CompoundLine({ compound }: { compound: NonNullable<StageMaterial["compound"]> }) {
-  const href = pubchemHref(compound.pubchemCid);
-  return (
-    <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-700">
-      {compound.formula ? <ChemEquation equation={compound.formula} display={false} label={compound.formula} className="text-sm" /> : null}
-      <span>{compound.name}</span>
-      {href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-0.5 font-medium text-purple-700 hover:underline dark:text-purple-300">
-          PubChem
-          <ExternalLink className="h-3 w-3" aria-hidden />
-          <span className="sr-only">(opens in a new tab)</span>
-        </a>
-      ) : null}
-    </p>
   );
 }

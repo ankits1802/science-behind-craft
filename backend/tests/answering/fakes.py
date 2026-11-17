@@ -16,6 +16,7 @@ from app.research.composition import ComposedAnswer
 from app.research.crafts import CraftCandidate, CraftQuery, CraftRef, CraftResolution, MatchReason
 from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Explainer
+from app.research.explainer_versions import VersionMark
 from app.research.image_relevance import ClaimText
 from app.research.planning import PlanRequest
 from app.research.sections import AnswerPlans
@@ -172,6 +173,7 @@ class FakeStore:
     finished: list[dict[str, Any]] = field(default_factory=list)
     asked_for: list[list[uuid.UUID]] = field(default_factory=list)
     questions: list[str] = field(default_factory=list)
+    answer_id: uuid.UUID = ANSWER_ID
 
     @property
     def understood(self) -> list[Understanding]:
@@ -184,7 +186,7 @@ class FakeStore:
 
     async def begin(self, ask: AnswerAsk, understanding: Understanding) -> uuid.UUID:
         self.begun.append((ask, understanding))
-        return ANSWER_ID
+        return self.answer_id
 
     async def keep(
         self, answer_id: uuid.UUID, pack: EvidencePack, composed: ComposedAnswer
@@ -220,9 +222,16 @@ class FakeStore:
         plans: AnswerPlans,
         claim_ids: Sequence[uuid.UUID],
         explainer: Explainer | None,
+        version: VersionMark | None = None,
     ) -> None:
         self.finished.append(
-            {"answer_id": answer_id, "plans": plans, "claim_ids": claim_ids, "explainer": explainer}
+            {
+                "answer_id": answer_id,
+                "plans": plans,
+                "claim_ids": claim_ids,
+                "explainer": explainer,
+                "version": version,
+            }
         )
 
 

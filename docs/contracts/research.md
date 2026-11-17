@@ -389,7 +389,7 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 - What each mode reads (`MODE_CLAIM_LEVELS`, `MODE_CLAIM_STATUSES`): `VERIFIED` reads
   `VERIFIED` and `REVIEWED` claims with status `APPROVED` and no chunks; `HYBRID` and `DEEP` read
   every level and every status except `HIDDEN_CLAIM_STATUSES` (`DRAFT`, `REJECTED`,
-  `RETRACTED`), and chunks (the modes whose `MODE_POLICIES` tiers include `T2`).
+  `RETRACTED`, `SUPERSEDED`, `WITHDRAWN`; decision 0053), and chunks (the modes whose `MODE_POLICIES` tiers include `T2`).
 - Scope, in SQL before any limit: claims on the craft's concepts and its sub-category's shared
   concepts, or on concept edges touching them; concept and claim `OPEN`
   (`VISIBLE_SENSITIVITY`), cited by at least one source that is not `RESTRICTED`. Chunks: of
@@ -419,7 +419,9 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
 `Planner.plan(PlanRequest) -> RetrievalPlan`. The planner runs after a craft is resolved.
 
-- `PlanRequest {question, mode, craft | null, depth?, language="en", englishQuestion?}`. A null
+- `PlanRequest {question, mode, craft | null, compared[CraftRef] (0-3, left out when empty),
+  depth?, language="en", englishQuestion?}`. `compared` are the crafts a comparison sets beside
+  `craft`; the planner ignores them and the `compare` builder reads them (decision 0064). A null
   `craft` is any craft: stored searches read every visible concept, queries carry no craft name
   and the plan call sees `crafts.ANY_CRAFT_LINE` in place of the craft block. `depth` bounds the
   queries and fetches by `research/depth.research_budget(mode, depth)`. `language` is the
@@ -463,8 +465,9 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
 ### Model calls (`research/structured.py`)
 
-`StructuredModel(system=, user=, schema=) -> StructuredReply {text, degraded}`: one model call
-that should answer one JSON object. `providers/structured.router_structured_model(task,
+`StructuredModel(system=, user=, schema=) -> StructuredReply {text, degraded, model?}`: one model
+call that should answer one JSON object; `model` is the id of the route's model that answered
+(`RouterResult.model`, decision 0055), which a generated explainer names. `providers/structured.router_structured_model(task,
 principal)` runs it through the AI router (`router.run` with `json_schema`), so the routes of
 the Settings hub, the spend reservation and the monthly ceiling apply; `degraded` is the
 router's own flag (`providers/budget.degrades`: past the degrade mark, never for Master Admin). `reply_object(reply)` reads the object (a Markdown code fence around it is
@@ -787,17 +790,21 @@ ModelUnderstander(model=StructuredModel, resolve=)` implements it with the craft
 
 - `UnderstandAsk {question, depth, language="en", craftSlug?, anyCraft=false, role?}`; a craft
   and any craft together do not construct.
-- `Understanding {schemaVersion 1, craft | null, candidates[CraftRef] (0-5), disciplines
-  [Discipline], seats[ExpertSeat], depth, language, basis: MODEL | RESOLVER, refusal?}`, stored on
-  `Answer.understanding`. `craft` null is any craft; each craft appears once across `craft` and
-  `candidates`; disciplines and seats are listed once each, seats at most the depth's
+- `Understanding {schemaVersion 1, craft | null, candidates[CraftRef] (0-5), compared[CraftRef]
+  (0-3, left out when empty), disciplines [Discipline], seats[ExpertSeat], depth, language, basis:
+  MODEL | RESOLVER, refusal?}`, stored on `Answer.understanding`. `craft` null is any craft; each
+  craft appears once across `craft`, `compared` and `candidates`; `compared` (decision 0064) are
+  the crafts a comparison sets beside `craft`, only in a `MODEL` understanding with a craft;
+  disciplines and seats are listed once each, seats at most the depth's
   `max_experts`. `MODEL` names at least one discipline; `RESOLVER` (the model call failed or its
   reply was unusable) names none and no seats; only `RESOLVER` carries a `refusal`, the router's
-  own words when spend was refused. `understood()` is the stream's `Understood` event.
+  own words when spend was refused. `understood()` is the stream's `Understood` event, its
+  `crafts` the craft then the compared ones.
 - The call: system `UNDERSTAND_SYSTEM_PROMPT`; user `understand_message` (depth label, the
   depth's expert range, the listed crafts each in a `craft_block`, the question in an untrusted
   block); schema `understand_schema(offered)` `{craft: enum of the listed slugs and "", craftNames
-  [string], disciplines[DISCIPLINES], seats[EXPERT_SEATS]}` with only `type`, `enum`, `items`,
+  [string], compare[enum of the listed slugs and ""], disciplines[DISCIPLINES],
+  seats[EXPERT_SEATS]}` with only `type`, `enum`, `items`,
   `properties`, `required` and `additionalProperties: false`. The reply must choose a listed craft
   or none and name at least one discipline; duplicates are dropped, at most three names are kept.
 - The choice: a slug the reader gave is kept (an unknown one raises `UnknownCraft`); `anyCraft`
@@ -807,6 +814,11 @@ ModelUnderstander(model=StructuredModel, resolve=)` implements it with the craft
   candidates offered; `AMBIGUOUS` takes the model's pick, else the top candidate, and offers the
   rest; `NONE` resolves each model-named craft with a text-only `CraftQuery`, chooses the first
   `RESOLVED` one and offers every other candidate found, else any craft. At most five offers.
+- A comparison (`compared_choice`, decision 0064): when the reply's `compare` names at least two
+  listed crafts (unknown slugs dropped) and the reader did not ask for any craft, the first of them
+  leads (`craft`) and the next three at most are `compared`; a craft the reader picked leads
+  instead, and only when it is among them. The others stay offers. `PlanRequest.compared` carries
+  them to the block builders (`compare`); research and composition still run for the lead craft.
 - The depth is `effective_depth(asked, role, past_degrade=reply.degraded)`.
 
 ### The answering service (`services/answering.py`, decisions 0012, 0031 and 0032)
@@ -927,7 +939,10 @@ the ask window (429). Model calls run as the asker's `Principal` with one
 and the monthly ceiling apply to every role but Master Admin. The block builders' compose model
 holds the same answer's `headroom()`: a call is refused unless the answer keeps half its cap
 after it (`OPTIONAL_WORK_KEEPS`, decision 0046). The asker's name is a withheld
-search term. `/answers/config` lists the depths with their labels and the role's default.
+search term. `/answers/config` lists the depths with their labels and the role's default. A
+follow-up that builds on an explainer adds `buildsOn {explainerId, version, facets}` to the body
+and is streamed and stored as that explainer's next version (decision 0062,
+`docs/contracts/learning.md`).
 
 ### Translation (`research/translation.py`, `services/answer_translation.py`, decision 0023)
 

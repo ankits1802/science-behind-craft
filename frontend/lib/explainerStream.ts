@@ -13,6 +13,7 @@ import {
   type Understood,
   type WorkingSectionState
 } from "@/lib/explainerContract";
+import { buildsOnEventShape, versionMarkShape, type BuildsOnEvent, type VersionMark } from "@/lib/learningContract";
 import { boolean, integer, list, matching, nullable, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import type { AnswerReaction, AnswerSentence, AnswerStatus, SourceRef } from "@/lib/types";
 
@@ -37,6 +38,8 @@ export type TrailEntry = {
 
 export type ExplainerEvent =
   | { type: "understood"; data: Understood }
+  | { type: "builds_on"; data: BuildsOnEvent }
+  | { type: "version"; data: VersionMark }
   | { type: "section_started"; data: SectionStarted }
   | { type: "section_state"; data: SectionStateChange }
   | { type: "block"; data: BlockArrived }
@@ -53,6 +56,8 @@ export type ExplainerEvent =
 
 const EVENTS: { [K in ExplainerEvent["type"]]: Shape<Extract<ExplainerEvent, { type: K }>["data"]> } = {
   understood: understoodShape,
+  builds_on: buildsOnEventShape,
+  version: versionMarkShape,
   section_started: object<SectionStarted>({
     id: SECTION_ID,
     discipline: oneOf(DISCIPLINES),

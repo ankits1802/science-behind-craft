@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import uuid
 from collections.abc import Iterable, Sequence
+from dataclasses import dataclass
+from typing import Any
 
 from sqlalchemy import update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.composer.composer import ModelComposer
@@ -20,6 +23,7 @@ from app.research.depth import depth_policy
 from app.research.embedding import TextEmbedder
 from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Explainer
+from app.research.explainer_versions import VersionMark
 from app.research.planning import PlanRequest
 from app.research.sections import AnswerPlans
 from app.research.stream import ResearchProgress
@@ -38,6 +42,8 @@ from .block_builders import BlockBuilders
 from .builder_interface import BuilderTools
 from .craft_process import process_records
 from .craft_resolver import CraftIndexStore, DatabaseCraftResolver
+from .explainer_history import StaleVersion
+from .explainer_payload import EXPLAINER_PAYLOAD_KEY, FIRST_VERSION, stored_payload
 from .live_sources import LiveSourcesStore
 from .piece_store import SqlPieceStore
 from .research_write_back import sentence_claim_ids, store_live_research
@@ -53,8 +59,6 @@ __all__ = [
     "build_answer_pipeline",
     "build_answer_translation",
 ]
-
-EXPLAINER_PAYLOAD_KEY = "explainer"
 
 
 class SqlAnswerStore:
@@ -86,8 +90,10 @@ class SqlAnswerStore:
         plans: AnswerPlans,
         claim_ids: Sequence[uuid.UUID],
         explainer: Explainer | None,
+        version: VersionMark | None = None,
     ) -> None:
-        await self._shield.run(self._finished(answer_id, plans, claim_ids, explainer), name="answer record")
+        stored = _StoredExplainer(explainer, version) if explainer is not None else None
+        await self._shield.run(self._finished(answer_id, plans, claim_ids, stored), name="answer record")
 
     async def process(self, craft_slug: str) -> ProcessRecords | None:
         async with self._sessions() as session:
@@ -128,7 +134,7 @@ class SqlAnswerStore:
         answer_id: uuid.UUID,
         plans: AnswerPlans,
         claim_ids: Sequence[uuid.UUID],
-        explainer: Explainer | None,
+        stored: _StoredExplainer | None,
     ) -> None:
         tiers = dict.fromkeys(tier for section in plans.sections for tier in section.plan.tiers)
         values = {
@@ -138,16 +144,36 @@ class SqlAnswerStore:
         }
         if plans.sections:
             values["mode"] = plans.sections[0].plan.mode
-        if explainer is not None:
-            values["payload"] = {EXPLAINER_PAYLOAD_KEY: explainer.model_dump(mode="json", by_alias=True)}
-        async with self._sessions() as session:
-            await session.execute(update(Answer).where(Answer.id == answer_id).values(**values))
-            await session.commit()
+        if stored is not None:
+            values |= stored.values(answer_id)
+        try:
+            async with self._sessions() as session:
+                await session.execute(update(Answer).where(Answer.id == answer_id).values(**values))
+                await session.commit()
+        except IntegrityError as error:
+            if stored is None or stored.version is None:
+                raise
+            mark = stored.version
+            raise StaleVersion(mark.explainer_id, mark.version - 1, mark.version) from error
 
     async def cited(self, claim_ids: Iterable[uuid.UUID]) -> CitedClaims:
         async with self._sessions() as session:
             views, sources = await knowledge_view.claims_by_id(session, claim_ids)
         return cited_claims(list(views.values()), sources)
+
+
+@dataclass(frozen=True)
+class _StoredExplainer:
+    explainer: Explainer
+    version: VersionMark | None
+
+    def values(self, answer_id: uuid.UUID) -> dict[str, Any]:
+        mark = self.version
+        return {
+            "payload": stored_payload(self.explainer, mark),
+            "explainerId": mark.explainer_id if mark is not None else answer_id,
+            "explainerVersion": mark.version if mark is not None else FIRST_VERSION,
+        }
 
 
 def build_answer_pipeline(

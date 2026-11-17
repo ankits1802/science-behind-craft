@@ -40,7 +40,7 @@ export function RegionPlaceCard({ place, datasets }: { place: RegionPlace; datas
   );
 }
 
-function BasisLine({ basis }: { basis: PlaceBasis }) {
+export function BasisLine({ basis }: { basis: PlaceBasis }) {
   const { numbers, sourcesById } = useCitations();
   const source = basis.sourceId ? sourcesById.get(basis.sourceId) : undefined;
   const href = source ? sourceHref(source) : null;
@@ -61,7 +61,7 @@ function BasisLine({ basis }: { basis: PlaceBasis }) {
   );
 }
 
-function FacetBlock({ facet, datasets }: { facet: RegionFacet; datasets: Map<string, RegionDataset> }) {
+export function FacetBlock({ facet, datasets }: { facet: RegionFacet; datasets: Map<string, RegionDataset> }) {
   const Icon = FACET_ICON[facet.facet];
   return (
     <section data-testid={`region-facet-${facet.facet}`}>

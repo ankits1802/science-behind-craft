@@ -127,7 +127,7 @@ def test_every_raster_layer_lists_districts_measured_without_valid_cells(key, of
         soil_depths=("0-5cm",),
         chelsa_bio=("bio1",),
         chelsa_months=False,
-        chirps_years=1,
+        climate_first_year=2025,
     )
     districts = districts_beside_nodata()
     result = RASTER_LAYERS[key](districts, options)

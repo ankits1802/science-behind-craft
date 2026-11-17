@@ -56,7 +56,7 @@ def test_hybrid_mode_reads_every_level_and_every_status_but_the_hidden_ones() ->
     _, params = compiled(claim_lexical_ranking(claim_conditions(SCOPE, mode="HYBRID"), "alum"))
     assert params_with(params, "status_") == [["PROPOSED", "IN_REVIEW", "APPROVED"]]
     assert params_with(params, "evidenceLevel_") == [["VERIFIED", "REVIEWED", "PROVISIONAL", "HYPOTHESIS"]]
-    assert HIDDEN_CLAIM_STATUSES == ("DRAFT", "REJECTED", "RETRACTED")
+    assert HIDDEN_CLAIM_STATUSES == ("DRAFT", "REJECTED", "RETRACTED", "SUPERSEDED", "WITHDRAWN")
 
 
 def test_every_mode_has_claim_filters_and_only_the_corpus_modes_read_chunks() -> None:

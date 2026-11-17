@@ -23,6 +23,11 @@ from app.models import enums as e
 from app.models.base import Base, created_at, updated_at, uuid_pk
 from app.models.knowledge import QUOTE_MAX_CHARS
 
+EXPLAINER_VERSION_CHECK = (
+    '("explainerId" IS NULL AND "explainerVersion" IS NULL) OR '
+    '("explainerVersion" >= 1 AND ("explainerVersion" = 1) = ("explainerId" = "id"))'
+)
+
 
 class Conversation(Base):
     __tablename__ = "Conversation"
@@ -76,6 +81,10 @@ class Answer(Base):
     latencyMs: Mapped[int | None] = mapped_column(Integer)
     route: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     staleSince: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    explainerId: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Answer.id", ondelete="CASCADE")
+    )
+    explainerVersion: Mapped[int | None] = mapped_column(Integer)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
@@ -83,6 +92,8 @@ class Answer(Base):
         Index(None, "conversationId"),
         Index(None, "userId", "createdAt"),
         Index(None, "craftId"),
+        UniqueConstraint("explainerId", "explainerVersion"),
+        CheckConstraint(EXPLAINER_VERSION_CHECK, name="explainerVersion"),
     )
 
 

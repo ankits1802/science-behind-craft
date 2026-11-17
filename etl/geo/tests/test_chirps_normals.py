@@ -46,7 +46,7 @@ def kachchh() -> gpd.GeoDataFrame:
 @pytest.fixture
 def two_years(monkeypatch, tmp_path):
     monkeypatch.setattr(chirps, "latest_year", lambda: 2025)
-    return Options(cache=tmp_path, chirps_years=2)
+    return Options(cache=tmp_path, climate_first_year=2024)
 
 
 def test_twelve_monthly_normals_are_the_mean_of_each_month_over_the_period(monkeypatch, two_years):

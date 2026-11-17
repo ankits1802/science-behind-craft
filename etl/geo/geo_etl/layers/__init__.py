@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 
 from geo_etl import raster
-from geo_etl.catalog import Dataset
+from geo_etl.catalog import CLIMATE_FIRST_YEAR, Dataset
 
 USER_AGENT = "kalavigyan-geo-etl/0.0.1"
 ATTEMPTS = 4
@@ -26,7 +26,7 @@ class Options:
     soil_uncertainty: bool = True
     chelsa_months: bool = True
     chelsa_bio: tuple[str, ...] = ("bio1", "bio5", "bio6", "bio12", "bio15")
-    chirps_years: int = 10
+    climate_first_year: int = CLIMATE_FIRST_YEAR
     chirps_monthly: bool = True
     download_striped: bool = False
 

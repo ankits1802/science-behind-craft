@@ -24,7 +24,8 @@ def explainer_document(
 ) -> Explainer | None:
     if not any(outcome.blocks for outcome in outcomes):
         return None
-    sections = [_section(outcome, titles) for outcome in sorted(outcomes, key=lambda o: o.spec.order)]
+    ordered = sorted(outcomes, key=lambda o: o.spec.order)
+    sections = [_section(outcome, titles, order) for order, outcome in enumerate(ordered, start=1)]
     known = {sid: ref for outcome in outcomes for sid, ref in outcome.sources.items()}
     cited = dict.fromkeys(
         sid for section in sections for block in section.blocks for sid in block.cited_source_ids()
@@ -41,14 +42,14 @@ def explainer_document(
     )
 
 
-def _section(outcome: SectionOutcome, titles: Mapping[str, str]) -> ExplainerSection:
+def _section(outcome: SectionOutcome, titles: Mapping[str, str], order: int) -> ExplainerSection:
     spec = outcome.spec
     return ExplainerSection.model_validate(
         {
             "id": spec.id,
             "discipline": spec.discipline,
             **shown_title(spec, titles),
-            "order": spec.order,
+            "order": order,
             "state": "READY" if outcome.blocks else "EMPTY",
             "blocks": [block.model_dump(mode="json", by_alias=True) for block in outcome.blocks],
             "searched": None if outcome.blocks else outcome.searched,

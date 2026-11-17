@@ -34,6 +34,8 @@ SECOND_ANSWER = uuid.UUID("4c0a2f3e-7d8b-4e9c-8f10-2b3c4d5e6f70")
 KEPT_AT = datetime(2026, 11, 12, 8, 15, tzinfo=UTC)
 LATER = datetime(2026, 11, 14, 9, 30, tzinfo=UTC)
 MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "versions" / "0015_knowledge_pieces.py"
+CURATED_MIGRATION = MIGRATION.with_name("0017_curated_dossiers.py")
+LEARNING_MIGRATION = MIGRATION.with_name("0018_learning_block_kinds.py")
 
 
 def golden_block(block_id: str) -> Any:
@@ -193,8 +195,8 @@ def test_groups_keep_the_order_they_were_found_in_and_skip_other_facets_and_topi
     assert groups == [(newer,), (older,)]
 
 
-def load_migration() -> Any:
-    spec = importlib.util.spec_from_file_location("knowledge_pieces_migration", MIGRATION)
+def load_migration(path: Path = MIGRATION) -> Any:
+    spec = importlib.util.spec_from_file_location(f"migration_{path.stem}", path)
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -203,11 +205,22 @@ def load_migration() -> Any:
 
 def test_the_migration_checks_the_same_vocabulary_as_the_models() -> None:
     migration = load_migration()
-    assert migration.BLOCK_KINDS == BLOCK_KINDS
+    learning = load_migration(LEARNING_MIGRATION)
+    assert migration.BLOCK_KINDS == learning.BLOCK_KINDS_BEFORE
+    assert learning.BLOCK_KINDS == BLOCK_KINDS
     assert migration.DISCIPLINES == DISCIPLINES
     assert migration.DEPTHS == EXPLAINER_DEPTHS
-    assert migration.HIDDEN_CLAIM_STATUSES == HIDDEN_CLAIM_STATUSES
-    for status in HIDDEN_CLAIM_STATUSES:
-        assert f"'{status}'" in migration.STALE_ON_CHANGE
+    assert HIDDEN_CLAIM_STATUSES[: len(migration.HIDDEN_CLAIM_STATUSES)] == migration.HIDDEN_CLAIM_STATUSES
     for column in ('"status"', '"evidenceLevel"', '"text"', '"sensitivity"'):
         assert f"NEW.{column} IS DISTINCT FROM OLD.{column}" in migration.STALE_ON_CHANGE
+
+
+def test_the_latest_stale_trigger_hides_every_hidden_status() -> None:
+    curated = load_migration(CURATED_MIGRATION)
+    assert curated.HIDDEN_CLAIM_STATUSES == HIDDEN_CLAIM_STATUSES
+    assert curated.HIDDEN_BEFORE == load_migration().HIDDEN_CLAIM_STATUSES
+    trigger = curated._stale_on_change(curated.HIDDEN_CLAIM_STATUSES)
+    for status in HIDDEN_CLAIM_STATUSES:
+        assert f"'{status}'" in trigger
+    for column in ('"status"', '"evidenceLevel"', '"text"', '"sensitivity"'):
+        assert f"NEW.{column} IS DISTINCT FROM OLD.{column}" in trigger

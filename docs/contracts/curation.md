@@ -3,13 +3,13 @@
 What a curated craft dossier holds, how its quotes are verified, and what the offline checker
 refuses. The plan is `docs/plans/dataset-curation.md` (sections 3, 5, 6 and 10; its section 0 and
 the decisions in its section 14 are the owner's). The code is the Pydantic model and the rules in
-`backend/app/curation/`, shared by the tools and the later importer, and the tools in
+`backend/app/curation/`, shared by the tools and the importer (below), and the tools in
 `tools/curation/`. The JSON Schema generated from the model is
 `shared/curation.dossier.schema.json` (`python tools/curation/schema.py` writes it; a backend test
 fails when it is stale). Change the model, the schema file, this page and the tests
 (`backend/tests/curation/`, `tools/tests/test_curation_*.py`) together.
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
 ## Files
 
@@ -330,7 +330,43 @@ Windows, `backend/.venv/bin/python` on Linux):
 
 `verify.py` and `fetch.py` use the network; `check.py` and the tests never do.
 
+## The import (`app.scripts.import_curation`, decision 0053)
+
+Runs on every deploy right after `seed_crafts`, `seed_claims` and `seed_districts`
+(`infra/deploy/blue_green.sh`) and in Backend checks after the database tests. It first withdraws
+the seed's edge sentences (claims with `subjectType` `EDGE` and origin `IMPORT` become `WITHDRAWN`,
+a review event each; their `ConceptEdge` rows stay), then imports every dossier whose checks pass
+(the rules above and a current check file), each whole or not at all. It prints one JSON report
+(`withdrawnEdgeSentences`, `imported`, `refused`, and per dossier its `status`, `changed` row
+counts, `problems` and the overview sentences the prose validator dropped) and exits 2 when a
+dossier is refused. Ids are `uuid5(ID_NAMESPACE, "curation:<slug>:<id>")` for claims and sources and
+`curation:<slug>:<kind>:<id>` for the rest; a second run writes nothing. The code is
+`backend/app/services/curation_*.py` (the plan is pure: `curation_plan.curation_plan`).
+
+| Dossier part | Stored as |
+|---|---|
+| sources | `Source`: `origin` `IMPORT`, `storage` `EXCERPT`, `reliability` kept, `externalIds` `{systemActor: "curation", curation: "<slug>:<id>", language, access, archivedUrl?}`, `sha256` the verifier's text hash, `evidenceKind` the `subKind`; a DOI another row already holds is cited through that row |
+| claims | `Claim` (`subjectType` `CONCEPT`, `PROVISIONAL` or `HYPOTHESIS`, `APPROVED`, `version` the dossier version that last changed it, `sourcesDiffer` when in a conflict) and `CuratedClaim {claimId, craftId, key, discipline}`, the marker of a curated claim; every change writes a `ReviewEvent` with `systemActor` `curation` |
+| quotes | `ClaimSource` (`quoteCheck` `PASS`, `checkedAt` the check file's, `foundBy` `curation`) |
+| subjects | `Concept` rows owned by the craft: stages, materials, tools, places (one per place, whatever its roles), communities, terms, and one per discipline for claims about the craft itself (`services/curation_keys.py` names the concept types) |
+| places | `CraftLocation` with `role` for places in India where the craft is made (`PRACTISED`, `ORIGIN`, `HISTORIC_CENTRE`, `MIGRATED_FROM`, `MIGRATED_TO`): `DISTRICT` precision with the district and state LGD codes (a village or town in its district), or `STATE` for a state; material sources, markets, pending districts and places abroad are page facts only |
+| stages | `Process` (variant `curation`) and `ProcessStage` (`ordered` false and an ordinal after the ordered stages when no source states the order; `durationText`); materials and tools are `Material` rows, their uses `StageMaterial` (tools with role `TOOL`) |
+| reactions | `Reaction` balanced by the science engine and `ReactionCitation` to every quote of its claims; no formula, no equation; a reaction without a stage is a page fact |
+| pictures | `MediaRef` (provider `curation`, `INLINE` under an open licence with its author) and `MediaRefClaim` |
+| glossary | `Term` (key from the first spelling of a comma list, the rest aliases; inserted only when the key is new), `TermCraft`, `TermConcept` |
+| GI record | `CraftGiRecord {craftId, applicationNumber, certificateNumber, filedOn, registeredOn, journalIssue, proprietors[], authorisedUserCount, claimIds[]}`, one per craft; dates are partial (`YYYY`, `YYYY-MM`, `YYYY-MM-DD`) as the dossier gives them |
+| prices | `CraftPrice {id, craftId, claimId, pricedOn (partial date), placeName, stateLgd, districtLgd}` |
+| workforce | `CraftWorkforce {id, craftId, claimId, year}` |
+| overview | `KnowledgePiece` `prose` blocks, `EXPERT`, no answer id: the lede (facet `OVERVIEW`) and one per section, topic as answers compute it, sentences checked by the answer engine's prose validator (a failing one is dropped) and marked with the dossier's glossary |
+| the rest | `CuratedCraft {craftId, version, curatedAt, coverage, digest, page, importedAt}`: `page` is `services/curated_index.CuratedPage`, the references the craft page needs (key facts, conflicts, open questions, places, communities, stage details, picture captions, the overview's piece ids, environment links); `digest` is the SHA-256 of the dossier and its check file |
+
+A new version supersedes the old: a curated claim it no longer holds becomes `SUPERSEDED` and
+keeps its citations; a level a person raised or a retraction is never undone; replaced overview
+pieces are superseded, dropped ones marked stale; curated locations, stage structure, market rows
+and dropped quotes of kept claims are replaced. Claims written by answers are never touched.
+Imported claims and pieces get their vectors from the nightly `embed_knowledge`. The craft page
+that reads all this is `docs/contracts/craft-page.md`.
+
 ## Not built yet
 
-The importer (`app.scripts.import_curation`, plan section 8), the critic's brief (plan section 7)
-and the first dossiers (wave 0, plan section 10).
+The critic's brief (plan section 7).

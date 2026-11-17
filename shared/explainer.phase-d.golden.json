@@ -1,0 +1,1723 @@
+{
+  "schemaVersion": 1,
+  "crafts": [
+    {
+      "slug": "Kutch-Ajrakh",
+      "name": "Kutch Ajrakh",
+      "path": "/crafts/Kutch-Ajrakh"
+    },
+    {
+      "slug": "Bagru-Hand-Block-Print",
+      "name": "Bagru Hand Block Print",
+      "path": "/crafts/Bagru-Hand-Block-Print"
+    }
+  ],
+  "placeholders": {
+    "climateTrends": [
+      {
+        "blockId": "s6.b1",
+        "districtLgd": 449,
+        "variable": "annual_precipitation"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "s1",
+      "discipline": "MATERIALS",
+      "blocks": [
+        {
+          "id": "s1.b1",
+          "kind": "quiz",
+          "version": 1,
+          "reuse": null,
+          "questions": [
+            {
+              "prompt": "_____ is used as a mordant to fasten the colours.",
+              "options": [
+                {
+                  "termKey": "alum",
+                  "text": "Alum",
+                  "sentence": {
+                    "id": "s1.b1.q1.1",
+                    "text": "Alum is used as a mordant to fasten the colours.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c7c60b8b-8e49-5da9-9b60-3b3a7d360670",
+                        "claimId": "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Alum is used as a mordant in the process to fasten the colours.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "kut",
+                  "text": "Kut",
+                  "sentence": {
+                    "id": "s1.b1.q1.2",
+                    "text": "Kut is made from jaggery or molasses in which scrap iron such as horseshoes and gram flour have been fermented for ten to fifteen days; the iron-water is mixed with tree gum.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "bbda0126-cff0-5edb-b58b-1b9ee4f8bc1a",
+                        "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Kut printing is usually undertaken in the afternoon.The kut is a smooth finer paste made from jaggery, or molasses, in which scrap iron such as horse-hoes and besan (gram flour) have been fermented for ten to fifteen days.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "cc110cce-fba5-54c5-aa96-14f4fae15347",
+                        "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The resulting liquid or “ironwater” is drained off and mixed with smooth tree gum paste.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Kut",
+                        "termKey": "kut"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "indigo",
+                  "text": "Indigo",
+                  "sentence": {
+                    "id": "s1.b1.q1.3",
+                    "text": "Indigo came from Shikarpur in Sindh and was also grown in Dhamadka.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "a9c9921f-8679-57af-8484-5ca04da21c2d",
+                        "claimId": "49b3a295-9419-5e14-8751-849598399e69",
+                        "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                        "quote": "Blue extract from the indigo plant mostly came from Shikarpur in Sindh, but it was also grown in Dhamadka.",
+                        "locator": "§ \"We work in harmony with nature\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "answer": 0
+            },
+            {
+              "prompt": "Printed on harde-treated cloth, _____ develops a deep fast chocolate-black as iron reacts with the tannic acid.",
+              "options": [
+                {
+                  "termKey": "kut",
+                  "text": "kut",
+                  "sentence": {
+                    "id": "s1.b1.q2.1",
+                    "text": "Printed on harde-treated cloth, kut develops a deep fast chocolate-black as iron reacts with the tannic acid.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "6211c7f6-8d84-5ac5-8528-256a5dc1cb5b",
+                        "claimId": "8e106f5b-6c6e-5857-9d66-95ec73a07421",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "harde",
+                        "termKey": "harde"
+                      },
+                      {
+                        "text": "kut",
+                        "termKey": "kut"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "gach",
+                  "text": "gach",
+                  "sentence": {
+                    "id": "s1.b1.q2.2",
+                    "text": "Sawdust or finely powdered cow dung is sprinkled immediately after printing the gach pastes to prevent the wet clay from smudging.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "ca4b30f1-f140-55be-a45f-5cac72d587ca",
+                        "claimId": "58c27c01-f22f-5554-8b42-9f1a2495a390",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Saw dust or finely powdered cow dung is sprinkled over immediately after printing these two gach pastes, to prevent the wet day from smudging.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "25227dc8-a9b5-50f9-9e7c-eab2cc6aa9f7",
+                        "claimId": "58c27c01-f22f-5554-8b42-9f1a2495a390",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "a smooth fine paste is mixed from tree gum (Guar ka godh), clay (lal mitti), water and millet flour.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Sawdust",
+                        "termKey": "sawdust"
+                      },
+                      {
+                        "text": "gach",
+                        "termKey": "gach"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "tapano",
+                  "text": "tapano",
+                  "sentence": {
+                    "id": "s1.b1.q2.3",
+                    "text": "Dyed cloth is soaked in a camel-dung solution and spread on river sand in the sun for tapano.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "9d1516bd-a885-5d87-8d87-38b5ab0784a8",
+                        "claimId": "b79c8dfe-35e4-54e3-b7f3-8838f0659b2e",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The dyed cloth would be soaked in a solution of camel dung, then spread on the sandy banks of a river in the sun and regularly sprinkled with water to keep it moist throughout the day.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "3684eb2d-2013-5bd3-ae16-6c4c522dc526",
+                        "claimId": "b79c8dfe-35e4-54e3-b7f3-8838f0659b2e",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "(ii) Tapano:-",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "tapano",
+                        "termKey": "tapano"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "answer": 0
+            },
+            {
+              "prompt": "Natural _____ is fermented in an underground vat; a vat need only be made once and can be kept active, sometimes for decades.",
+              "options": [
+                {
+                  "termKey": "indigo",
+                  "text": "indigo",
+                  "sentence": {
+                    "id": "s1.b1.q3.1",
+                    "text": "Natural indigo is fermented in an underground vat; a vat need only be made once and can be kept active, sometimes for decades.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "80429468-fd10-5292-9f1d-329b89724ab0",
+                        "claimId": "a3531daf-5305-5c19-bdec-b01cac6d8d45",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "An indigo vat need only be made once, then used daily and ingredients replenished to keep the Vat active, sometimes for decades.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "84208285-3df5-5e88-8a99-da6844bd7d7b",
+                        "claimId": "a3531daf-5305-5c19-bdec-b01cac6d8d45",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "alizarin",
+                  "text": "alizarin",
+                  "sentence": {
+                    "id": "s1.b1.q3.2",
+                    "text": "Cloth is boiled in a solution of tamarix (dhawri) with madder, al or alizarin.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "e30c0d67-117e-59ec-af3f-e0e358c1c3d5",
+                        "claimId": "c37e78de-f62f-5fe8-a114-1a2a229e3d62",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "But for some ajrakh, alizarin (synthetic madder) may be used, in which case the cloth is boiled in a solution of alizarin and tamarix powder.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "b5ef8953-5a90-551d-8778-7629ec6cafbc",
+                        "claimId": "c37e78de-f62f-5fe8-a114-1a2a229e3d62",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The cloth is boiled in a solution of tamarix (from the dhawri tree) and either madder root powder or al root powder and is then washed and sun-dried.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "alizarin",
+                        "termKey": "alizarin"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "termKey": "alum",
+                  "text": "alum",
+                  "sentence": {
+                    "id": "s1.b1.q3.3",
+                    "text": "The final wash is usually done early in the morning when water is cool, as warm afternoon water may dissolve some of the alum.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c55e7e8a-e1f1-511a-a63a-0b447d239b67",
+                        "claimId": "aef422e3-a33e-5e74-96f4-3268621b710d",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "It is usually done early in the morning when the water is cool as the warm water of the afternoon may dissolve some of the alum.It clears the excess dyes and makes the whiteness of the Ajrakh stars shine bright.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "bfeaaf18-3f99-5c87-bd5b-fd4d5c2d7edd",
+                        "claimId": "aef422e3-a33e-5e74-96f4-3268621b710d",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Final Wash (Vichharana):The final washing and beating to remove any loose colour is vital.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "discipline": "CHEMISTRY",
+      "blocks": [
+        {
+          "id": "s2.b1",
+          "kind": "concept_graph",
+          "version": 1,
+          "reuse": null,
+          "focus": {
+            "slug": "Kutch-Ajrakh",
+            "name": "Kutch Ajrakh",
+            "path": "/crafts/Kutch-Ajrakh"
+          },
+          "nodes": [
+            {
+              "termKey": "alum",
+              "label": "Alum",
+              "crafts": [
+                {
+                  "craft": {
+                    "slug": "Kutch-Ajrakh",
+                    "name": "Kutch Ajrakh",
+                    "path": "/crafts/Kutch-Ajrakh"
+                  },
+                  "conceptIds": [
+                    "e5954d2b-f5cd-5738-bce1-f3bf0c9d33f7"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.alum.1",
+                    "text": "Alum is used as a mordant to fasten the colours.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c7c60b8b-8e49-5da9-9b60-3b3a7d360670",
+                        "claimId": "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Alum is used as a mordant in the process to fasten the colours.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Bagru-Hand-Block-Print",
+                    "name": "Bagru Hand Block Print",
+                    "path": "/crafts/Bagru-Hand-Block-Print"
+                  },
+                  "conceptIds": [
+                    "568f8615-438b-5f5e-8ab9-b146e6075475"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.alum.2",
+                    "text": "Alum solution fixes colour and also helps remove the dabu paste; its quantity varies with the strength of the dabu.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "5eaea7ea-1bd9-5681-b398-f11925e08b1e",
+                        "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                        "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                        "quote": "This solution is then strained through a cloth filter. Quantity of alum varies according to the strength of the dabu.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "bdc9c5b9-8c78-59d2-b1bc-0b5de1006a75",
+                        "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                        "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                        "quote": "It is washed again and then rinsed in a solution of alum and water to fix the colour and also for removing dabu paste.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Machilipatnam-Kalamkari",
+                    "name": "Machilipatnam Kalamkari",
+                    "path": "/crafts/Machilipatnam-Kalamkari"
+                  },
+                  "conceptIds": [
+                    "3ac2e4a0-7969-5009-a1a8-1dc91727ce8a",
+                    "9bf13910-dedf-55e6-9c21-eb6298696281"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.alum.3",
+                    "text": "Alum (karam in Telugu) is pounded, boiled in water until reduced to half, and iron implements are avoided because iron darkens the colour.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "4acc438c-88ce-5fc0-9e75-049fe1fe07d1",
+                        "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                        "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                        "quote": "The solution is allowed to boil with occasional stirring until it has reduced to half. A mixture of iron in any form leads to darkening of the color and for this reason the iron implements and utensils are avoided.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "7bee5e9c-1675-5fe0-8305-007094c58957",
+                        "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                        "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                        "quote": "Alum (Karam in Telugu) Dry alum crystals are pounded to powder. Water is added in the proportion of 4 liters water to 3.5 kilograms alum.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Sanganeri-Hand-Block-Printing",
+                    "name": "Sanganeri Hand Block Printing",
+                    "path": "/crafts/Sanganeri-Hand-Block-Printing"
+                  },
+                  "conceptIds": [
+                    "8e5e8218-87b8-5c75-8c01-d22675239958"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.alum.4",
+                    "text": "Post-mordanting with diluted alum (fitkari) makes the fugitive turmeric-pomegranate yellow fast.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "161ae158-075c-5945-a996-e9f37be681f3",
+                        "claimId": "df6ca1e2-4294-519a-a324-60ceacf478ab",
+                        "sourceId": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+                        "quote": "known u'Filkui Rangati' The dye extracted ftom turmeric and pomegranate peals is very fugitive and in order to make it fast, post mordanting is done witl alum (fitkari). ln this process the fab'ric is dipped in a big copper vessel filled with water and diluted",
+                        "locator": "PDF p. 12",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "termKey": "indigo",
+              "label": "Indigo",
+              "crafts": [
+                {
+                  "craft": {
+                    "slug": "Kutch-Ajrakh",
+                    "name": "Kutch Ajrakh",
+                    "path": "/crafts/Kutch-Ajrakh"
+                  },
+                  "conceptIds": [
+                    "f2b33abe-18a6-5f0d-91f0-3007e2afb4bf"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.indigo.1",
+                    "text": "Indigo came from Shikarpur in Sindh and was also grown in Dhamadka.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "a9c9921f-8679-57af-8484-5ca04da21c2d",
+                        "claimId": "49b3a295-9419-5e14-8751-849598399e69",
+                        "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                        "quote": "Blue extract from the indigo plant mostly came from Shikarpur in Sindh, but it was also grown in Dhamadka.",
+                        "locator": "§ \"We work in harmony with nature\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Bagru-Hand-Block-Print",
+                    "name": "Bagru Hand Block Print",
+                    "path": "/crafts/Bagru-Hand-Block-Print"
+                  },
+                  "conceptIds": [
+                    "8c6a23ae-19cc-5287-95bb-c04c43199bd8"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.indigo.2",
+                    "text": "Indigo blue (nil) is extracted from Indigofera tinctoria; synthetic indigo granules are also used nowadays.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "865066ef-a3c7-5388-9811-54fbde45d0fe",
+                        "claimId": "62383c0e-6a1c-5d59-8b43-a7f3c77f010e",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "Indigo Blue: - Indigo blue (nil) is a blue colouring matter extracted from nil plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are also used.",
+                        "locator": "PDF p. 14",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Block-Printing-Of-Akola",
+                    "name": "Block Printing of Akola",
+                    "path": "/crafts/Block-Printing-Of-Akola"
+                  },
+                  "conceptIds": [
+                    "e08c756b-74d3-5803-827c-9cd847ac3bda"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.indigo.3",
+                    "text": "Indigo dyeing is done in a cold bath, the cloth turning green then indigo as it oxidises in air.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "5eb1daef-d61a-547d-a72c-59ce5f8fa9d4",
+                        "claimId": "00cde00d-2520-55d8-8c7c-6c903e73a428",
+                        "sourceId": "cc2a785f-ac7a-54dc-b1d5-869733aff9fa",
+                        "quote": "It is a cold dyeing process where the cloth is dipped in a solution of Indigo dye. When dipped, the cloth turns to a rich green color which turns to a deep indigo shade once its exposed to dry air and it undergoes rapid oxidation.",
+                        "locator": "§ \"process:\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo dyeing",
+                        "termKey": "indigo-dyeing"
+                      },
+                      {
+                        "text": "indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Machilipatnam-Kalamkari",
+                    "name": "Machilipatnam Kalamkari",
+                    "path": "/crafts/Machilipatnam-Kalamkari"
+                  },
+                  "conceptIds": [
+                    "15f71970-d2f1-5ced-8ccb-adbcad845db8"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.indigo.4",
+                    "text": "Indigo is obtained from indigo cakes and mixed with rice starch, not gum, for printing; indigo does not require any mordant so it is printed directly.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "67ef24b3-4fa8-5745-8d5b-3bb3dd637ccf",
+                        "claimId": "3cc9a246-faa3-59f3-935d-8bf56a71a8e8",
+                        "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                        "quote": "Indigo is obtained from indigo cakes. It is mixed with rice starch and not gum for printing purposes.",
+                        "locator": "PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "9d7cffdd-fd9a-5822-ac56-14aad250f71e",
+                        "claimId": "3cc9a246-faa3-59f3-935d-8bf56a71a8e8",
+                        "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                        "quote": "Indigo does not require any mordant so the solution is printed directly.",
+                        "locator": "PDF p. 12",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "craft": {
+                    "slug": "Sanganeri-Hand-Block-Printing",
+                    "name": "Sanganeri Hand Block Printing",
+                    "path": "/crafts/Sanganeri-Hand-Block-Printing"
+                  },
+                  "conceptIds": [
+                    "ceb84dd1-c656-56b1-8166-4ba9bf3c5df3"
+                  ],
+                  "sentence": {
+                    "id": "s2.b1.indigo.5",
+                    "text": "Indigo blue (nil) is extracted from Indigofera tinctoria; nowadays synthetic indigo granules are used.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "1675d392-62ef-5960-afe8-c26003951280",
+                        "claimId": "6913010a-5269-5b29-aa3e-a0d5a3d32c42",
+                        "sourceId": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+                        "quote": "Indigo Blue: - Indrgo blue (nil) is a blue colouring mattr extracted from nil plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are used.",
+                        "locator": "PDF p. 14",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "discipline": "OVERVIEW",
+      "blocks": [
+        {
+          "id": "s3.b1",
+          "kind": "compare",
+          "version": 1,
+          "reuse": null,
+          "crafts": [
+            {
+              "slug": "Kutch-Ajrakh",
+              "name": "Kutch Ajrakh",
+              "path": "/crafts/Kutch-Ajrakh"
+            },
+            {
+              "slug": "Bagru-Hand-Block-Print",
+              "name": "Bagru Hand Block Print",
+              "path": "/crafts/Bagru-Hand-Block-Print"
+            }
+          ],
+          "rows": [
+            {
+              "facet": "MATERIALS",
+              "term": {
+                "key": "alum",
+                "label": "Alum"
+              },
+              "cells": [
+                {
+                  "sentence": {
+                    "id": "s3.b1.r1.1",
+                    "text": "Red comes from alum as mordant together with dhaori (tamarisk galls).",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "bf4c4038-3785-5da6-b3eb-281648bc27fc",
+                        "claimId": "f0b75ff9-d401-543e-b58e-4b73484ecafe",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The different colours are prepared by using the above ingredients as follows: Red color: This color comes from alum as mordant and dhaori na phool (galls of tamarisk).",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 4",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  },
+                  "pieceId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s3.b1.r1.2",
+                    "text": "Alum solution fixes colour and also helps remove the dabu paste; its quantity varies with the strength of the dabu.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "5eaea7ea-1bd9-5681-b398-f11925e08b1e",
+                        "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                        "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                        "quote": "This solution is then strained through a cloth filter. Quantity of alum varies according to the strength of the dabu.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "bdc9c5b9-8c78-59d2-b1bc-0b5de1006a75",
+                        "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                        "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                        "quote": "It is washed again and then rinsed in a solution of alum and water to fix the colour and also for removing dabu paste.",
+                        "locator": "PDF p. 5",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Alum",
+                        "termKey": "alum"
+                      }
+                    ]
+                  },
+                  "pieceId": null
+                }
+              ]
+            },
+            {
+              "facet": "MATERIALS",
+              "term": {
+                "key": "indigo",
+                "label": "Indigo"
+              },
+              "cells": [
+                {
+                  "sentence": {
+                    "id": "s3.b1.r2.1",
+                    "text": "Indigo can be natural (Indigofera tinctoria) or synthetic 'German' indigo; natural indigo is fermented with lime, dates and soda; synthetic indigo often has 'Hydros' added.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "d8672570-92a1-51c3-9b6c-c48a73761953",
+                        "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Indigo dye can either be natural Indigo from Indigofera tinctoria, or a synthesized substitute \"German\" indigo.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "0f4ac64c-2dda-5847-9a61-927226cf5a1a",
+                        "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Synthetic indigo is also dissolved in alkaline lime powder and water, but often has a strong industrial chemical known as \"Hydros\" added.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "51bfc60f-8b8b-54f8-8f27-4b7cab358fa4",
+                        "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  },
+                  "pieceId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s3.b1.r2.2",
+                    "text": "Indigo blue (nil) is extracted from Indigofera tinctoria; synthetic indigo granules are also used nowadays.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "865066ef-a3c7-5388-9811-54fbde45d0fe",
+                        "claimId": "62383c0e-6a1c-5d59-8b43-a7f3c77f010e",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "Indigo Blue: - Indigo blue (nil) is a blue colouring matter extracted from nil plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are also used.",
+                        "locator": "PDF p. 14",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": [
+                      {
+                        "text": "Indigo",
+                        "termKey": "indigo"
+                      }
+                    ]
+                  },
+                  "pieceId": null
+                }
+              ]
+            },
+            {
+              "facet": "GEOGRAPHY",
+              "term": null,
+              "cells": [
+                {
+                  "sentence": {
+                    "id": "s3.b1.r3.1",
+                    "text": "Ajrakh printing got concentrated where extra soft water was available.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c333691c-bb17-5c97-a725-c037ff9f24ce",
+                        "claimId": "6d42a538-0a5e-5cfb-b8f5-68012eb0d4d6",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The district gazetteers of 1971 have mentioned that Ajrakh Printing-Ajrakh is another popular variety in hand-printing of textiles in Kutch. Ajrakh printing originally came from Sindh and got concentrated where extra soft water was available.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": "7d4e2c10-5a6b-4c7d-9e8f-0a1b2c3d4e5f"
+                },
+                {
+                  "sentence": {
+                    "id": "s3.b1.r3.2",
+                    "text": "Chhipas came perhaps more for abundant water with excellent properties for dyeing and printing than for royal patronage; the Sanjaria river's perennial stream and sandy bed suited printing.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "e72684c0-4b18-5d5d-9b13-ee86921c917e",
+                        "claimId": "3a9fcd2f-2826-5303-ba18-be4ddabe93dc",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "They perhaps came for the *ren royal patronage but more for the abundant availability of watea which had exoellent properties suitable for dyeing and printing.",
+                        "locator": "PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "8736a89f-f71f-58e2-be79-6af03ed24da0",
+                        "claimId": "3a9fcd2f-2826-5303-ba18-be4ddabe93dc",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "Abundant flowing water for washing, processing etc., and a clean sunny bed are the imporbnt requisiles for printing; and the Saojaria River with its perennial lirater stream and stretches of sandy bed was aptly suitable for the purpose.",
+                        "locator": "PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": null
+                }
+              ]
+            },
+            {
+              "facet": "HISTORY",
+              "term": null,
+              "cells": [
+                {
+                  "sentence": {
+                    "id": "s3.b1.r4.1",
+                    "text": "The technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited Khatri craftsmen to the banks of the Dhamadka river.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "5ce04f15-f5b3-5827-bdae-96cbce262cf1",
+                        "claimId": "994587f8-d0df-54c3-9861-88c2b1f6fa88",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "This intricate and exclusively handcrafted block-printing technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited craftsmen from Khatri community to come and practice their art on the banks of Dhamadka river.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 9",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s3.b1.r4.2",
+                    "text": "The hand printers, known as Chhipa, migrated to Bagru from Sawai Madhopur, Alwar, Jhunjhunu and Sikar districts some 300 years ago, according to the GI dossier citing Mohanty & Mohanty (1983).",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c6512e55-42c7-5626-9c58-d7be058f9491",
+                        "claimId": "1dd7be52-3593-5ebf-82cf-83cae7072722",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": ", The hand printers\" known as chhipa, came from Sawai ll{adhopur, Alwar, Jhuojhunu and Siker districts of Rajasthan to satle in Bagru and make it their home some 300 years ago.",
+                        "locator": "PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "0dad9ea8-94dc-51af-8f57-faa2c1c7074f",
+                        "claimId": "1dd7be52-3593-5ebf-82cf-83cae7072722",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book *BLOCK PRINTING AND D\\aEING OF BAGRU, RAJASTI{AN'. According to the authors",
+                        "locator": "PDF p. 6",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "27b593bc-76ca-5fce-881e-3cb03bfa343e",
+                        "claimId": "1dd7be52-3593-5ebf-82cf-83cae7072722",
+                        "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                        "quote": "B.C. Mohanty and J.P. Mohanty, Calico Mseum of Textiles, Ahmedabad, India 1983)",
+                        "locator": "PDF p. 7",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": null
+                }
+              ]
+            },
+            {
+              "facet": "ECONOMICS",
+              "term": null,
+              "cells": [
+                {
+                  "sentence": {
+                    "id": "s3.b1.r5.1",
+                    "text": "Kutch Ajrakh was filed as GI application 1050 on 31-01-2023 by Ajarakhpur Hastkala Vikas Sangathan, advertised in GI Journal 188, and registered (certificate dated 22-04-2024).",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "7640a240-3d5a-5a79-8aff-ecfc0d78b68e",
+                        "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Application Number 1050 Geographical Indications Kutch Ajrakh Print of Gujarat Status Registered Applicant Name Ajarakhpur Hastkala Vikas Sangathan Applicant Address Ajarakhpur, Padhar, Post: Kukama, Taluka: Bhuj, Kutch , Gujarat, India, 370 105 Date of Filing 31-01-2023 Class 24,25 Goods Textiles",
+                        "locator": "§ \"Application Details\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "9c1ae1d0-99e5-512e-a125-eddd447e0f4a",
+                        "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 188 dated December 19, 2023 G.I.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 1",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "71a430dd-d406-5871-9825-86a3399c8a56",
+                        "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                        "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                        "quote": "Application Number 1050 Geographical Indications Kutch Ajrakh Print of Gujarat Status Registered Applicant Name Ajarakhpur Hastkala Vikas Sangathan Applicant Address Ajarakhpur, Padhar, Post: Kukama, Taluka: Bhuj, Kutch , Gujarat, India, 370 105 Date of Filing 31-01-2023 Class 24,25 Goods Textiles",
+                        "locator": "§ \"Application Details\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "0a4cc4b9-d7d9-5554-8a78-334a0ebef704",
+                        "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                        "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                        "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 188 dated December 19, 2023 G.I.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 1",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "4673358b-c570-50f1-8a97-20bb0a079403",
+                        "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                        "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                        "quote": "1 1050 - Certificate of Registration - 22-04-2024 22-04-2024",
+                        "locator": "§ \"Document Details\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s3.b1.r5.2",
+                    "text": "Bagru Hand Block Print is a registered GI (application 183, certificate 150 dated 11-05-2011).",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "c8dc420d-b147-528e-b204-3b7abf345203",
+                        "claimId": "95587e29-efb3-5c18-98cd-c0408e6298bd",
+                        "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                        "quote": "Application Number 183 Geographical Indications BAGRU HAND BLOCK PRINT Status Registered Applicant Name Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS) Applicant Address Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS), Lakshminath Chowk",
+                        "locator": "§ \"Application Details\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "ef31f717-e3b6-54a4-9e86-c0c968ab82b5",
+                        "claimId": "95587e29-efb3-5c18-98cd-c0408e6298bd",
+                        "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                        "quote": "Date of Filing 10-08-2009 Class 24 & 25 Goods Handicraft Geographical Area Rajasthan Priority Country India Journal Number 37 Availability Date 04-01-2011 Certificate Number 150 Certificate Date 11-05-2011 Registration Valid Upto 09-08-2029",
+                        "locator": "§ \"Application Details\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "pieceId": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "discipline": "GEOGRAPHY",
+      "blocks": [
+        {
+          "id": "s4.b1",
+          "kind": "measure",
+          "version": 1,
+          "reuse": null,
+          "rows": [
+            {
+              "stated": "10-15 feet",
+              "low": 10.0,
+              "high": 15.0,
+              "unitLabel": "feet",
+              "conversion": {
+                "unit": "foot",
+                "metricUnit": "m",
+                "factor": 0.3048,
+                "basis": "DEFINED",
+                "region": null,
+                "citation": null,
+                "dataset": {
+                  "code": "NIST_SP_811_2008",
+                  "title": "Guide for the Use of the International System of Units (SI), Appendix B: Conversion Factors",
+                  "publisher": "National Institute of Standards and Technology",
+                  "edition": "NIST Special Publication 811, 2008 edition",
+                  "period": "2008",
+                  "nativeResolution": "exact conversion factors",
+                  "licence": "Not subject to copyright in the United States (U.S. Government work)",
+                  "licenceUrl": null,
+                  "attribution": "Ambler Thompson and Barry N. Taylor, NIST",
+                  "citation": "Thompson, A., & Taylor, B. N. (2008). Guide for the Use of the International System of Units (SI) (NIST Special Publication 811). National Institute of Standards and Technology.",
+                  "url": "https://www.nist.gov/pml/special-publication-811"
+                }
+              },
+              "metric": {
+                "low": 3.05,
+                "high": 4.57,
+                "unit": "m"
+              },
+              "sentence": {
+                "id": "s4.b1.1",
+                "text": "Water levels have been going down by 10-15 feet every year; no comprehensive water management plan has emerged.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "8b868f92-1531-52c2-ab05-fa84f8e968e7",
+                    "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                    "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                    "quote": "But the problem of water still persists because the level of water has been going down by 10-15 feet every year even here. We have to seriously think and plan for the future.\" Water is the lifeline of printing and dyeing.",
+                    "locator": "§ \"We are running out of water\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "381890d6-6736-5f2a-9694-71d71060a9ab",
+                    "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                    "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                    "quote": "As of yet, a comprehensive plan has yet to emerge.",
+                    "locator": "§ \"We are running out of water\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "discipline": "ECONOMICS",
+      "blocks": [
+        {
+          "id": "s5.b1",
+          "kind": "market_gi",
+          "version": 1,
+          "reuse": null,
+          "craft": {
+            "slug": "Kutch-Ajrakh",
+            "name": "Kutch Ajrakh",
+            "path": "/crafts/Kutch-Ajrakh"
+          },
+          "gi": {
+            "status": "REGISTERED",
+            "applicationNumber": "1050",
+            "certificateNumber": null,
+            "filedOn": "2023-01-31",
+            "registeredOn": "2024-04-22",
+            "journalIssue": "188",
+            "proprietors": [
+              "Ajarakhpur Hastkala Vikas Sangathan"
+            ],
+            "authorisedUserCount": null,
+            "sentences": [
+              {
+                "id": "s5.b1.1",
+                "text": "Kutch Ajrakh was filed as GI application 1050 on 31-01-2023 by Ajarakhpur Hastkala Vikas Sangathan, advertised in GI Journal 188, and registered (certificate dated 22-04-2024).",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "7640a240-3d5a-5a79-8aff-ecfc0d78b68e",
+                    "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Application Number 1050 Geographical Indications Kutch Ajrakh Print of Gujarat Status Registered Applicant Name Ajarakhpur Hastkala Vikas Sangathan Applicant Address Ajarakhpur, Padhar, Post: Kukama, Taluka: Bhuj, Kutch , Gujarat, India, 370 105 Date of Filing 31-01-2023 Class 24,25 Goods Textiles",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "9c1ae1d0-99e5-512e-a125-eddd447e0f4a",
+                    "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 188 dated December 19, 2023 G.I.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 1",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "71a430dd-d406-5871-9825-86a3399c8a56",
+                    "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                    "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                    "quote": "Application Number 1050 Geographical Indications Kutch Ajrakh Print of Gujarat Status Registered Applicant Name Ajarakhpur Hastkala Vikas Sangathan Applicant Address Ajarakhpur, Padhar, Post: Kukama, Taluka: Bhuj, Kutch , Gujarat, India, 370 105 Date of Filing 31-01-2023 Class 24,25 Goods Textiles",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "0a4cc4b9-d7d9-5554-8a78-334a0ebef704",
+                    "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                    "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                    "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 188 dated December 19, 2023 G.I.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 1",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "4673358b-c570-50f1-8a97-20bb0a079403",
+                    "claimId": "0ee67893-3343-5bf1-ac27-acd8de752737",
+                    "sourceId": "8710bbca-939e-504b-a57d-29e028dec98e",
+                    "quote": "1 1050 - Certificate of Registration - 22-04-2024 22-04-2024",
+                    "locator": "§ \"Document Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            ]
+          },
+          "imitation": [],
+          "prices": []
+        },
+        {
+          "id": "s5.b2",
+          "kind": "market_gi",
+          "version": 1,
+          "reuse": null,
+          "craft": {
+            "slug": "Bagru-Hand-Block-Print",
+            "name": "Bagru Hand Block Print",
+            "path": "/crafts/Bagru-Hand-Block-Print"
+          },
+          "gi": {
+            "status": "REGISTERED",
+            "applicationNumber": "183",
+            "certificateNumber": "150",
+            "filedOn": "2009-08-10",
+            "registeredOn": "2011-05-11",
+            "journalIssue": "37",
+            "proprietors": [
+              "Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti"
+            ],
+            "authorisedUserCount": null,
+            "sentences": [
+              {
+                "id": "s5.b2.1",
+                "text": "Bagru Hand Block Print is a registered GI (application 183, certificate 150 dated 11-05-2011).",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "c8dc420d-b147-528e-b204-3b7abf345203",
+                    "claimId": "95587e29-efb3-5c18-98cd-c0408e6298bd",
+                    "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                    "quote": "Application Number 183 Geographical Indications BAGRU HAND BLOCK PRINT Status Registered Applicant Name Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS) Applicant Address Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS), Lakshminath Chowk",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "ef31f717-e3b6-54a4-9e86-c0c968ab82b5",
+                    "claimId": "95587e29-efb3-5c18-98cd-c0408e6298bd",
+                    "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                    "quote": "Date of Filing 10-08-2009 Class 24 & 25 Goods Handicraft Geographical Area Rajasthan Priority Country India Journal Number 37 Availability Date 04-01-2011 Certificate Number 150 Certificate Date 11-05-2011 Registration Valid Upto 09-08-2029",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              {
+                "id": "s5.b2.2",
+                "text": "GI application 183 was filed 10-08-2009 and certificate 150 issued 11-05-2011.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "fd0b882e-c2c9-56ab-9cd2-697562a55ed6",
+                    "claimId": "cc250e61-e2c6-597a-836c-7f26b160d58b",
+                    "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                    "quote": "Date of Filing 10-08-2009 Class 24 & 25 Goods Handicraft Geographical Area Rajasthan Priority Country India Journal Number 37 Availability Date 04-01-2011 Certificate Number 150 Certificate Date 11-05-2011 Registration Valid Upto 09-08-2029",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "f637ca08-48bd-5a59-8146-7c72078fe3a1",
+                    "claimId": "cc250e61-e2c6-597a-836c-7f26b160d58b",
+                    "sourceId": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+                    "quote": "Application Number 183 Geographical Indications BAGRU HAND BLOCK PRINT Status Registered Applicant Name Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS) Applicant Address Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS), Lakshminath Chowk",
+                    "locator": "§ \"Application Details\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            ]
+          },
+          "imitation": [
+            {
+              "id": "s5.b2.3",
+              "text": "Fake screen-printed Bagru textiles were being sold all over India under the Bagru name, motivating GI registration.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "b8ad5124-16ec-5b43-b987-33324476fd69",
+                  "claimId": "3e2cf983-1d73-56ef-b6d7-80374fa0e294",
+                  "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                  "quote": "As a result, faditional block printing crat and products are frcing tough competition fiom screen printed products. Fake (screm printe/) Bagru Textiles are being sold ali over India in the name of Bagru l{and Block Print.",
+                  "locator": "PDF p. 16",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "fe9c267e-1cfe-5716-8afb-8fb226124e5e",
+                  "claimId": "3e2cf983-1d73-56ef-b6d7-80374fa0e294",
+                  "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                  "quote": "Thus there is a need not only to provide protection and safe guard the interest of original Bagru lland Block Prinq produced in very lirnited geographical area.",
+                  "locator": "PDF p. 16",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ],
+          "prices": []
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "discipline": "CLIMATE",
+      "blocks": [
+        {
+          "id": "s6.b1",
+          "kind": "climate_risk",
+          "version": 1,
+          "reuse": null,
+          "trends": [
+            {
+              "district": {
+                "districtLgd": 449,
+                "name": "Kachchh",
+                "stateName": "Gujarat"
+              },
+              "variable": "annual_precipitation",
+              "datasetCode": "CHIRPS_3_0",
+              "period": "1981-2025",
+              "resolution": "0.05 degree",
+              "mean": 383.0,
+              "meanUnit": "mm/year",
+              "slopePerDecade": 21.6,
+              "slopeUnit": "mm/year per decade",
+              "pValue": 0.12,
+              "significant": false
+            }
+          ],
+          "groundwater": [],
+          "meaning": [
+            {
+              "id": "s6.b1.1",
+              "text": "Water levels have been going down by 10-15 feet every year; no comprehensive water management plan has emerged.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "8b868f92-1531-52c2-ab05-fa84f8e968e7",
+                  "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                  "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                  "quote": "But the problem of water still persists because the level of water has been going down by 10-15 feet every year even here. We have to seriously think and plan for the future.\" Water is the lifeline of printing and dyeing.",
+                  "locator": "§ \"We are running out of water\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "381890d6-6736-5f2a-9694-71d71060a9ab",
+                  "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                  "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                  "quote": "As of yet, a comprehensive plan has yet to emerge.",
+                  "locator": "§ \"We are running out of water\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            },
+            {
+              "id": "s6.b1.2",
+              "text": "Excess iron in groundwater threatened Ajrakh in Dhamadka and is again threatening it in Ajrakhpur.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "02b489ed-7b2a-5ece-bb34-caf590e4b31f",
+                  "claimId": "faa466c1-8940-5552-a7f5-851cebb40f64",
+                  "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+                  "quote": "Excess iron in groundwater that threatened Ajrakh in Dhamadka, is once again threatening the craft in Ajrakhpur.",
+                  "locator": "§ \"Share this article\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ],
+          "datasets": [
+            {
+              "code": "CHIRPS_3_0",
+              "title": "Climate Hazards Center InfraRed Precipitation with Stations v3.0",
+              "publisher": "Climate Hazards Center, UC Santa Barbara",
+              "edition": "3.0",
+              "period": "1981-2025",
+              "nativeResolution": "0.05 degree",
+              "licence": "CC BY 4.0",
+              "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+              "attribution": "Climate Hazards Center, UC Santa Barbara (CHIRPS3)",
+              "citation": "Climate Hazards Center InfraRed Precipitation with Stations version 3 (CHIRPS3) Data Repository (2025). https://doi.org/10.15780/G2JQ0P",
+              "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pieces": [
+    {
+      "blockId": "s4.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "GEOGRAPHY",
+      "topicKey": "water:kachchh"
+    },
+    {
+      "blockId": "s5.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "ECONOMICS",
+      "topicKey": "economy:kutch-ajrakh"
+    }
+  ],
+  "sources": [
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "ba479ec5-4b93-570b-be74-2eab9711e777",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 2: The art of Ajrakh",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/art-of-ajrakh",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+      "kind": "WEB_PAGE",
+      "title": "'Bagru' — A Traditional Printing Technique of Rajasthan",
+      "authors": [
+        "Sambaditya Raj"
+      ],
+      "year": 2012,
+      "doi": null,
+      "url": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+      "publisher": "fibre2fashion.com (industry article, PDF)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+      "kind": "WEB_PAGE",
+      "title": "Kalamkari — The Block Prints of Machalipatnam (craft documentation)",
+      "authors": [
+        "Craftmark (All India Artisans and Craftworkers Welfare Association) — individual author not stated"
+      ],
+      "year": null,
+      "doi": null,
+      "url": null,
+      "publisher": "Craftmark / AIACA",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+      "kind": "GI_JOURNAL",
+      "title": "Application for Registration of a Geographical Indication in Part A of the Register: Sanganeri Hand Block Printing (Statement of case)",
+      "authors": [
+        "Calico Printers Co-operative Society Ltd., Sanganer (applicant)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+      "publisher": "Filed under the Geographical Indications of Goods (Registration & Protection) Act, 1999; PDF hosted by oriGIn",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+      "kind": "GI_JOURNAL",
+      "title": "Form GI-1: Application for Registration of a Geographical Indication in Part A of the Register — Bagru Hand Block Print (statement of case)",
+      "authors": [
+        "Bagru Haath Thappa Chhapai Dastkar Sanrakshan Awam Vikas Samiti (BHTCDSAVS), applicant"
+      ],
+      "year": 2009,
+      "doi": null,
+      "url": "https://origin-gi.com/wp-content/uploads/2017/01/129-bagru-hand-block-print.pdf",
+      "publisher": "Filed with the Geographical Indications Registry, Chennai; scan hosted by origin-gi.com",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "cc2a785f-ac7a-54dc-b1d5-869733aff9fa",
+      "kind": "WEB_PAGE",
+      "title": "Block Print~Akola (Craft Archive)",
+      "authors": [
+        "Gaatha (unattributed)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://gaatha.org/Craft-of-India/akola-dabu-printing-process-history/",
+      "publisher": "Gaatha craft archive (gaatha.org)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "8710bbca-939e-504b-a57d-29e028dec98e",
+      "kind": "GI_JOURNAL",
+      "title": "GI Registry public search record: Application 1050, Kutch Ajrakh Print of Gujarat",
+      "authors": [
+        "Geographical Indications Registry"
+      ],
+      "year": 2024,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "IP India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "c5645b63-446c-58d4-8efe-dbe9d6f2da78",
+      "kind": "GI_JOURNAL",
+      "title": "GI Application Details — Application No. 183, Bagru Hand Block Print",
+      "authors": [
+        "Geographical Indications Registry"
+      ],
+      "year": 2011,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/183",
+      "publisher": "Office of the Controller General of Patents, Designs & Trade Marks, Government of India (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 3: Adapting to the present",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+      "kind": "WEB_PAGE",
+      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+      "authors": [
+        "Azera Parveen Rahman"
+      ],
+      "year": 2019,
+      "doi": null,
+      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "publisher": "Mongabay India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    }
+  ]
+}

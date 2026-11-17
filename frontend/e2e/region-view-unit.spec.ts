@@ -3,7 +3,8 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { craftSources } from "@/lib/craftProfile";
+import type { CraftPage } from "@/lib/craftPageContract";
+import { pageSourceNumbers, pageSourcesById, sourceGroups } from "@/lib/craftPageView";
 import { chosenLayerId } from "@/lib/mapLayers";
 import { craftRegionShape, mapLayerListShape, mapLayerShape, type CraftRegion, type MapLayer, type RegionPlace } from "@/lib/regionContract";
 import {
@@ -28,7 +29,6 @@ import {
   valueReading
 } from "@/lib/regionView";
 import { parseShape, ShapeError } from "@/lib/shape";
-import type { CraftProfile } from "@/lib/types";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 
@@ -156,20 +156,29 @@ test("each dataset lists its distinct methods once", () => {
 test("a location's source is numbered and linked even when no claim cites it", () => {
   const body = region();
   const [place] = body.places;
-  const profile: CraftProfile = {
-    craft: { slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", id: "c", localName: null, giStatus: "GI", stateOfPractice: [], stateOfOrigin: [], description: null, categoryName: null, subCategoryName: null },
-    overview: [],
-    locations: [],
-    stages: [],
-    materials: [],
-    science: [],
+  const page: CraftPage = {
+    schemaVersion: 1,
+    craft: { slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", path: "/crafts/Kutch-Ajrakh", id: "c", localName: null, categoryName: null, subCategoryName: null, giStatus: "GI", stateOfPractice: [], stateOfOrigin: [] },
+    curated: false,
+    curation: null,
+    overview: { lede: [], keyFacts: [], sections: [] },
+    sourcesDiffer: [],
+    places: [],
+    communities: [],
+    process: { processId: null, stages: [], reactions: [] },
+    glossary: [],
+    pictures: [],
+    openQuestions: [],
+    evidence: { groups: [], hypotheses: [] },
+    claims: [],
     sources: []
   };
-  const sources = craftSources(profile, null, body);
+  const numbers = pageSourceNumbers(page, body.sources);
+  const byId = pageSourcesById(page, body.sources);
   expect(place.basis.kind).toBe("CRAFT_LOCATION");
-  expect(sources.numbers.get(place.basis.sourceId ?? "")).toBe(1);
-  expect(sources.byId.get(place.basis.sourceId ?? "")?.url).toBe("https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050");
-  expect(sources.ordered.map((source) => source.id)).toEqual([place.basis.sourceId]);
+  expect(numbers.get(place.basis.sourceId ?? "")).toBe(1);
+  expect(byId.get(place.basis.sourceId ?? "")?.url).toBe("https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050");
+  expect(sourceGroups(byId.values(), numbers).flatMap((group) => group.sources.map((source) => source.id))).toEqual([place.basis.sourceId]);
 });
 
 test("the client refuses a place whose source is not listed", () => {

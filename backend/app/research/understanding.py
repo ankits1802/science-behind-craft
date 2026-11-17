@@ -7,9 +7,9 @@ from pydantic import Field, model_validator
 from app.core.errors import InvalidInput
 from app.models.enums import DISCIPLINES
 
-from .base import ContractModel, absent
+from .base import ContractModel, absent, empty
 from .blocks_people import ExpertSeat
-from .crafts import MAX_CANDIDATES, QUESTION_MAX_CHARS, SLUG_MAX_CHARS, CraftRef
+from .crafts import COMPARED_CRAFTS_MAX, MAX_CANDIDATES, QUESTION_MAX_CHARS, SLUG_MAX_CHARS, CraftRef
 from .depth import depth_policy
 from .explainer import Understood
 from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, Depth, Discipline
@@ -56,6 +56,7 @@ class Understanding(ContractModel):
     schema_version: Literal[1] = UNDERSTANDING_SCHEMA_VERSION
     craft: CraftRef | None
     candidates: list[CraftRef] = Field(max_length=MAX_CANDIDATES)
+    compared: list[CraftRef] = Field(default_factory=list, max_length=COMPARED_CRAFTS_MAX, exclude_if=empty)
     disciplines: list[Discipline] = Field(max_length=len(DISCIPLINES))
     seats: list[ExpertSeat]
     depth: Depth
@@ -65,9 +66,13 @@ class Understanding(ContractModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> Self:
-        slugs = [craft.slug for craft in (*([self.craft] if self.craft else []), *self.candidates)]
+        slugs = [
+            craft.slug for craft in (*([self.craft] if self.craft else []), *self.compared, *self.candidates)
+        ]
         if len(set(slugs)) != len(slugs):
-            raise ValueError("a craft is chosen or offered, once")
+            raise ValueError("a craft is chosen, compared or offered, once")
+        if self.compared and (self.craft is None or self.basis != "MODEL"):
+            raise ValueError("a comparison is a model understanding that chose a craft to lead it")
         if len(set(self.disciplines)) != len(self.disciplines) or len(set(self.seats)) != len(self.seats):
             raise ValueError("each discipline and each seat is listed once")
         if len(self.seats) > depth_policy(self.depth).max_experts:
@@ -82,7 +87,7 @@ class Understanding(ContractModel):
 
     def understood(self) -> Understood:
         return Understood(
-            crafts=[self.craft] if self.craft else [],
+            crafts=[self.craft, *self.compared] if self.craft else [],
             candidates=self.candidates,
             depth=self.depth,
             language=self.language,

@@ -38,6 +38,10 @@ class KnowledgePiece(Base):
     supersededById: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("KnowledgePiece.id", ondelete="SET NULL")
     )
+    hiddenAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    hiddenById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
@@ -46,9 +50,12 @@ class KnowledgePiece(Base):
         CheckConstraint(one_of("facet", DISCIPLINES), name="facet"),
         CheckConstraint(one_of("depth", EXPLAINER_DEPTHS), name="depth"),
         CheckConstraint('cardinality("claimIds") > 0 AND cardinality("sourceIds") > 0', name="rests_on"),
+        CheckConstraint('"hiddenById" IS NULL OR "hiddenAt" IS NOT NULL', name="hidden_by"),
         Index(None, "craftId", "facet", "topicKey"),
         Index("KnowledgePiece_claimIds_gin_idx", "claimIds", postgresql_using="gin"),
         Index(None, "createdFromAnswerId"),
         Index(None, "supersededById"),
+        Index(None, "hiddenById"),
+        Index(None, "contentHash"),
         Index(None, "staleSince", postgresql_where=text('"staleSince" IS NOT NULL')),
     )

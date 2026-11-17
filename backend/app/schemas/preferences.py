@@ -14,3 +14,4 @@ class PreferencesUpdate(APIModel):
     largerText: bool | None = None
     highContrast: bool | None = None
     answerLanguage: PreferredAnswerLanguage | None = None
+    alertDigest: bool | None = None

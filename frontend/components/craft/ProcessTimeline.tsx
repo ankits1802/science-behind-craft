@@ -1,59 +1,76 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
-import { NoSourceFound } from "@/components/craft/ClaimList";
+import { ReactionCard } from "@/components/craft/ReactionCard";
 import { StageCard } from "@/components/craft/StageCard";
 import { riseItem, staggerParent } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { shownVariants } from "@/lib/processView";
-import type { CraftProcess, ProcessStageView } from "@/lib/scienceContract";
+import type { PagePicture, PageProcess, PageStage } from "@/lib/craftPageContract";
+import { stageGroups, stagePictures } from "@/lib/craftPageView";
 
 export type StageRows = {
   register: (stageId: string) => (node: HTMLElement | null) => void;
   flashKey: string | null;
 };
 
-export type StageMediaSlot = (stage: ProcessStageView) => ReactNode;
+type StageListProps = { stages: readonly PageStage[]; ordered: boolean; pictures: readonly PagePicture[]; rows?: StageRows };
 
-export function ProcessTimeline({ process, rows, stageMedia }: { process: CraftProcess; rows?: StageRows; stageMedia?: StageMediaSlot }) {
+function StageList({ stages, ordered, pictures, rows }: StageListProps) {
   const reduce = useAppReducedMotion();
-  const variants = shownVariants(process);
-
-  if (variants.length === 0) {
-    return (
-      <div className="panel p-5">
-        <NoSourceFound />
-      </div>
-    );
-  }
-
+  const List = ordered ? motion.ol : motion.ul;
   return (
-    <div className="grid gap-8">
-      {variants.map((variant) => (
-        <section key={variant.id} aria-label={variants.length > 1 ? variant.name : "Process steps"}>
-          {variants.length > 1 ? <h2 className="mb-3 font-display text-lg font-bold text-ink-900">{variant.name}</h2> : null}
-          <div className="relative isolate">
-            <span aria-hidden className="pointer-events-none absolute inset-y-8 left-[calc(2rem-1px)] -z-10 w-0.5 rounded-full bg-progress-track md:left-[calc(2.25rem-1px)]" />
-            <motion.ol variants={staggerParent(reduce)} initial="hidden" animate="show" className="grid gap-3 [--rail:2rem]">
-              {variant.stages.map((stage, index) => (
-                <motion.li
-                  key={stage.id}
-                  ref={rows?.register(stage.id)}
-                  variants={riseItem(reduce)}
-                  data-flash={rows?.flashKey === stage.id ? "true" : undefined}
-                  className="fr-flash-row panel scroll-mt-28 p-4 md:p-5"
-                  data-testid="process-stage"
-                >
-                  <StageCard stage={stage} position={index + 1} />
-                  {stageMedia?.(stage)}
-                </motion.li>
-              ))}
-            </motion.ol>
+    <div className="relative isolate">
+      {ordered ? <span aria-hidden className="pointer-events-none absolute inset-y-8 left-[calc(2rem-1px)] -z-10 w-0.5 rounded-full bg-progress-track md:left-[calc(2.25rem-1px)]" /> : null}
+      <List variants={staggerParent(reduce)} initial="hidden" animate="show" className="grid gap-3">
+        {stages.map((stage) => (
+          <motion.li
+            key={stage.id}
+            ref={rows?.register(stage.id)}
+            variants={riseItem(reduce)}
+            data-flash={rows?.flashKey === stage.id ? "true" : undefined}
+            className="fr-flash-row panel scroll-mt-28 p-4 md:p-5"
+            data-testid="process-stage"
+            data-ordered={ordered ? "true" : "false"}
+          >
+            <StageCard stage={stage} pictures={stagePictures(pictures, stage.id)} />
+          </motion.li>
+        ))}
+      </List>
+    </div>
+  );
+}
+
+export function ProcessTimeline({ process, pictures, rows }: { process: PageProcess; pictures: readonly PagePicture[]; rows?: StageRows }) {
+  const { numbered, unnumbered } = stageGroups(process.stages);
+  return (
+    <div className="grid gap-8" data-testid="process-timeline">
+      {numbered.length > 0 ? (
+        <section aria-label="Steps in order">
+          <StageList stages={numbered} ordered pictures={pictures} rows={rows} />
+        </section>
+      ) : null}
+      {unnumbered.length > 0 ? (
+        <section aria-labelledby="process-unordered-heading" data-testid="process-unordered">
+          <h2 id="process-unordered-heading" className="font-display text-lg font-bold text-ink-900">
+            {numbered.length > 0 ? "Other stages" : "Stages"}
+          </h2>
+          <p className="mb-3 mt-1 text-sm text-ink-500">The sources don&apos;t place these in the sequence.</p>
+          <StageList stages={unnumbered} ordered={false} pictures={pictures} rows={rows} />
+        </section>
+      ) : null}
+      {process.reactions.length > 0 ? (
+        <section aria-labelledby="process-reactions-heading" data-testid="process-reactions">
+          <h2 id="process-reactions-heading" className="mb-3 font-display text-lg font-bold text-ink-900">
+            Chemistry
+          </h2>
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            {process.reactions.map((reaction) => (
+              <ReactionCard key={reaction.id ?? reaction.label} reaction={reaction} />
+            ))}
           </div>
         </section>
-      ))}
+      ) : null}
     </div>
   );
 }

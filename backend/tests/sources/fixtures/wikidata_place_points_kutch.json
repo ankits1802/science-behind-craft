@@ -1,0 +1,12 @@
+{
+ "head": {
+  "vars": [
+   "item",
+   "coordinates",
+   "rank"
+  ]
+ },
+ "results": {
+  "bindings": []
+ }
+}

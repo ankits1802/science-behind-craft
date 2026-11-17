@@ -1,4 +1,5 @@
 import type { AnswerRecord } from "./answers";
+import type { ExportProof } from "./exportProof";
 
 export type ScreenOutcome = {
   name: string;
@@ -30,6 +31,7 @@ export type AnswersReport = {
   problemCount: number;
   unasked: string[];
   questions: AnswerRecord[];
+  exports: ExportProof | null;
 };
 
 export type RunReport = ScreensReport | AnswersReport;

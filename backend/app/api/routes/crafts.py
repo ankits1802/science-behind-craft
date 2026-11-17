@@ -6,12 +6,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_session
 from app.core.deps import get_current_user
 from app.core.http_cache import PRIVATE_NO_CACHE, revalidated
-from app.core.roles import PROFESSOR, has_rank
+from app.core.roles import PROFESSOR, Capability, can, has_rank
 from app.geo.region_view import craft_region
 from app.models import Craft, User
+from app.research.craft_page import without_evidence
 from app.science.process_view import craft_process
 from app.services import craft_catalogue, knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
+from app.services.craft_page import craft_page
+from app.services.craft_page_records import craft_page_records
 from app.services.craft_process import process_records
 from app.services.region_records import region_records
 
@@ -45,6 +48,19 @@ async def get_craft_process(
     process = craft_process(await process_records(session, await _known_craft(session, slug)))
     response.headers["Cache-Control"] = PRIVATE_NO_CACHE
     return process.model_dump(mode="json", by_alias=True)
+
+
+@router.get("/{slug}/page")
+async def get_craft_page(
+    slug: str,
+    response: Response,
+    user: User = Depends(get_current_user),
+    session: AsyncSession = Depends(get_session),
+) -> Any:
+    page = craft_page(await craft_page_records(session, await _known_craft(session, slug)))
+    shown = page if can(user, Capability.READ_ALL_EVIDENCE) else without_evidence(page)
+    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
+    return shown.model_dump(mode="json", by_alias=True)
 
 
 @router.get("/{slug}/region")

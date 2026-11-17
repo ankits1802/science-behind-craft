@@ -9,6 +9,7 @@ import {
   DEFAULT_PREFERENCES,
   applyPreferences,
   normalizePreferences,
+  PREFERENCES_PATH,
   readStoredPreferences,
   writeStoredPreferences,
   type Preferences,
@@ -42,7 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setSaving(true);
     setError(null);
     try {
-      await apiFetch("/preferences/me", { method: "PUT", body: JSON.stringify(next) });
+      await apiFetch(PREFERENCES_PATH, { method: "PUT", body: JSON.stringify(next) });
     } catch (err) {
       if (err instanceof ApiError && err.passwordChangeRequired) {
         heldBack.current = signedIn.current;
@@ -90,7 +91,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     let cancelled = false;
-    apiFetch<Partial<Preferences>>("/preferences/me")
+    apiFetch<Partial<Preferences>>(PREFERENCES_PATH)
       .then((remote) => {
         if (cancelled) return;
         if (!remote || typeof remote.theme !== "string") {

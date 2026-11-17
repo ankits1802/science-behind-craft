@@ -24,7 +24,7 @@ async def test_the_composer_runs_through_the_router_compose_task(monkeypatch: py
 
     async def run(task: AiTask, **options: Any) -> SimpleNamespace:
         seen.append({"task": task, **options})
-        return SimpleNamespace(text=reply, degraded=False)
+        return SimpleNamespace(text=reply, degraded=False, model="claude-opus-5-5")
 
     monkeypatch.setattr(router, "run", run)
     principal = router.Principal(role="STUDENT")

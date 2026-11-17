@@ -18,9 +18,12 @@ __all__ = [
     "MediaName",
     "PlaceParts",
     "content_disposition",
+    "explainer_file_name",
+    "export_key",
     "field",
     "file_name",
     "generated_media_file_name",
+    "lesson_file_name",
     "media_key",
     "molecule_key",
     "narration_file_name",
@@ -28,17 +31,25 @@ __all__ = [
     "place_field",
     "river_topology_file_name",
     "river_topology_key",
+    "score_cue_file_name",
+    "score_key",
+    "score_manifest_key",
+    "score_music_file_name",
 ]
 
 PORTAL = "KalaVigyan"
 FILE_MAX = 150
 SUBJECT_MAX = 40
 MEDIA_PREFIX = "media"
+EXPORTS_PREFIX = "exports"
 NARRATION_FOLDER = "narration"
 MOLECULE_FOLDER = "molecules"
 RIVER_FOLDER = "rivers"
+SCORE_FOLDER = "score"
+SCORE_MANIFEST_LEAF = "score.json"
 RIVER_TOPOLOGY_SUBJECT = "HydroRIVERS-1-0"
 NARRATION_PARTS_MAX = 99
+LESSON_FILE_WHAT = {"html": "Slides", "pptx": "Slides", "pdf": "Lesson"}
 MEDIA_NAMES = {
     "IMAGE": ("Generated-Image", "Image", "png"),
     "VIDEO": ("Generated-Video", "Video", "mp4"),
@@ -87,14 +98,45 @@ def file_name(
 ) -> str:
     local = _ist(moment)
     fixed = (PORTAL, field(entity), local.date().isoformat(), local.strftime("%H%M"))
-    tail = (field(what), sequence)
+    return _named(fixed, (field(what), sequence), ext, (_place_text(place), craft, subject))
 
+
+def lesson_file_name(*, made_at: datetime, craft: str | None, title: str, fmt: str) -> str:
+    what = LESSON_FILE_WHAT.get(fmt)
+    if what is None:
+        raise InvalidInput(f"No lesson file is written as {fmt!r}")
+    fixed = (PORTAL, "Lesson", _ist(made_at).date().isoformat())
+    return _named(fixed, (what, None), fmt, (None, craft, _capped_subject(title)))
+
+
+def explainer_file_name(
+    *, made_at: datetime, craft: str | None, question: str, version: int, what: str, ext: str
+) -> str:
+    if version < 1:
+        raise InvalidInput(f"Explainer version {version} does not fit v<n>")
+    fixed = (PORTAL, "Explainer", _ist(made_at).date().isoformat())
+    return _named(fixed, (field(what), f"v{version}"), ext, (None, craft, _capped_subject(question)))
+
+
+def export_key(owner_id: uuid.UUID, digest: str, leaf: str) -> str:
+    if not _hex_digest(digest):
+        raise InvalidInput("An export key is filed under the 64-hex SHA-256 of what it was made from")
+    return f"{EXPORTS_PREFIX}/{owner_id}/{digest}/{_one_file_name(leaf, 'export')}"
+
+
+def _named(
+    fixed: tuple[str, ...],
+    tail: tuple[str, str | None],
+    ext: str,
+    parts: tuple[str | None, str | None, str | None],
+) -> str:
     def render(place_words: list[str], craft_words: list[str], subject_words: list[str]) -> str:
         middle = ("-".join(place_words), "-".join(craft_words), "-".join(subject_words))
         stem = "_".join(part for part in (*fixed, *middle, *tail) if part)
         return f"{_guard(stem)}.{ext}"
 
-    return _fit(render, _field_words(_place_text(place)), _field_words(craft), _field_words(subject))
+    place, craft, subject = parts
+    return _fit(render, _field_words(place), _field_words(craft), _field_words(subject))
 
 
 def generated_media_file_name(name: MediaName) -> str:
@@ -120,22 +162,35 @@ def media_key(owner_id: uuid.UUID, leaf: str, *, token: uuid.UUID | None = None)
 def narration_file_name(generated_at: datetime, part: int) -> str:
     if not 1 <= part <= NARRATION_PARTS_MAX:
         raise InvalidInput(f"Narration part {part} does not fit Part-NN")
-    return file_name(
-        entity="Explainer",
-        what="Narration",
-        ext="mp3",
-        moment=generated_at,
-        place=PlaceParts(),
-        craft=None,
-        subject=None,
-        sequence=f"Part-{part:02d}",
-    )
+    return _explainer_audio_name(generated_at, "Narration", f"Part-{part:02d}")
 
 
 def narration_key(cache_id: str, leaf: str) -> str:
     if not _hex_digest(cache_id):
         raise InvalidInput("A narration key is filed under its 64-hex cache id")
     return f"{MEDIA_PREFIX}/{NARRATION_FOLDER}/{cache_id}/{_one_file_name(leaf, 'narration')}"
+
+
+def score_music_file_name(generated_at: datetime) -> str:
+    return _explainer_audio_name(generated_at, "Music", None)
+
+
+def score_cue_file_name(generated_at: datetime, scene: int) -> str:
+    if scene < 1:
+        raise InvalidInput(f"Film scene {scene} does not fit Scene-NN")
+    return _explainer_audio_name(generated_at, "Sound-Effect", f"Scene-{scene:02d}")
+
+
+def score_key(cache_id: str, leaf: str) -> str:
+    if not _hex_digest(cache_id):
+        raise InvalidInput("A score clip is filed under its 64-hex cache id")
+    return f"{MEDIA_PREFIX}/{SCORE_FOLDER}/{cache_id}/{_one_file_name(leaf, 'score')}"
+
+
+def score_manifest_key(answer_id: uuid.UUID, language: str) -> str:
+    if not language.isascii() or not language.isalpha():
+        raise InvalidInput("A score is filed under its answer and language code")
+    return f"{MEDIA_PREFIX}/{SCORE_FOLDER}/{answer_id}/{language}/{SCORE_MANIFEST_LEAF}"
 
 
 def molecule_key(pubchem_cid: int, leaf: str) -> str:
@@ -170,6 +225,19 @@ def content_disposition(leaf: str, *, inline: bool) -> str:
         raise InvalidInput("A download name is ASCII without quotes")
     kind = "inline" if inline else "attachment"
     return f"{kind}; filename=\"{leaf}\"; filename*=UTF-8''{quote(leaf, safe='')}"
+
+
+def _explainer_audio_name(generated_at: datetime, what: str, sequence: str | None) -> str:
+    return file_name(
+        entity="Explainer",
+        what=what,
+        ext="mp3",
+        moment=generated_at,
+        place=PlaceParts(),
+        craft=None,
+        subject=None,
+        sequence=sequence,
+    )
 
 
 def _one_file_name(leaf: str, what: str) -> str:

@@ -36,3 +36,8 @@ def test_answer_language_takes_auto_or_an_offered_language(language: str) -> Non
 def test_answer_language_refuses_anything_else(language: str) -> None:
     with pytest.raises(ValidationError):
         PreferencesUpdate(answerLanguage=language)
+
+
+def test_the_digest_opt_in_is_a_preference_kept_only_when_sent() -> None:
+    assert PreferencesUpdate(alertDigest=True).model_dump(exclude_unset=True) == {"alertDigest": True}
+    assert "alertDigest" not in PreferencesUpdate(theme="dark").model_dump(exclude_unset=True)

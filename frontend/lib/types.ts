@@ -100,61 +100,6 @@ export type CraftRef = {
   path?: string | null;
 };
 
-export type CraftLocationPrecision = "STATE" | "DISTRICT" | "POINT";
-
-export type CraftLocation = {
-  id: string;
-  precision: CraftLocationPrecision;
-  placeLabel: string;
-  stateName: string | null;
-  districtName: string | null;
-  latitude: number | null;
-  longitude: number | null;
-  level: EvidenceLevel;
-};
-
-export type CraftFacetClaim = {
-  id: string;
-  text: string;
-  level: EvidenceLevel;
-  citations: Citation[];
-};
-
-export type CraftProcessStage = {
-  id: string;
-  ordinal: number;
-  name: string;
-  stageType: string;
-  durationText: string | null;
-  claims: CraftFacetClaim[];
-};
-
-export type CraftMaterial = {
-  id: string;
-  name: string;
-  description: string | null;
-  claims: CraftFacetClaim[];
-};
-
-export type CraftProfile = {
-  craft: CraftRef & {
-    id: string;
-    localName: string | null;
-    giStatus: "GI" | "NON_GI" | null;
-    stateOfPractice: string[];
-    stateOfOrigin: string[];
-    description: string | null;
-    categoryName: string | null;
-    subCategoryName: string | null;
-  };
-  overview: CraftFacetClaim[];
-  locations: CraftLocation[];
-  stages: CraftProcessStage[];
-  materials: CraftMaterial[];
-  science: AnswerReaction[];
-  sources: SourceRef[];
-};
-
 export type CraftMapPoint = {
   key: string;
   name: string;

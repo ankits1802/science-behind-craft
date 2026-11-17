@@ -4,7 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 
-import type { ImagesBlock, MediaRef } from "@/lib/explainerContract";
+import type { MediaRef } from "@/lib/explainerBlockBase";
+import type { ImagesBlock } from "@/lib/explainerContract";
 
 const STRIP_SIZES = "(min-width: 1024px) 220px, (min-width: 640px) 30vw, 45vw";
 
@@ -65,11 +66,18 @@ function PictureLinkCard({ media, onBroken }: { media: MediaRef; onBroken: () =>
   );
 }
 
+export function PictureView({ media, onBroken }: { media: MediaRef; onBroken: () => void }) {
+  return media.display === "INLINE" ? <InlinePicture media={media} onBroken={onBroken} /> : <PictureLinkCard media={media} onBroken={onBroken} />;
+}
+
 function StripItem({ media }: { media: MediaRef }) {
   const [broken, setBroken] = useState(false);
   if (broken) return null;
-  const onBroken = () => setBroken(true);
-  return <li className="min-w-0">{media.display === "INLINE" ? <InlinePicture media={media} onBroken={onBroken} /> : <PictureLinkCard media={media} onBroken={onBroken} />}</li>;
+  return (
+    <li className="min-w-0">
+      <PictureView media={media} onBroken={() => setBroken(true)} />
+    </li>
+  );
 }
 
 export function ImageStrip({ block }: { block: ImagesBlock }) {

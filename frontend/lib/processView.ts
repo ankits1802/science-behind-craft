@@ -94,10 +94,6 @@ export function shownVariants(process: CraftProcess): ProcessVariant[] {
     .filter((variant) => variant.stages.length > 0);
 }
 
-export function shownStageNames(process: CraftProcess | null): Map<string, string> {
-  return new Map((process ? shownVariants(process) : []).flatMap((variant) => variant.stages.map((stage) => [stage.id, stage.name] as const)));
-}
-
 export function stageHasContent(stage: ProcessStageView): boolean {
   return stage.claims.length + stage.materials.length + stage.conditions.length + stage.reactions.length > 0;
 }
@@ -120,22 +116,23 @@ export function isUnbalanced(reaction: ProcessReaction): boolean {
   return reaction.levelReason === UNBALANCED_REASON;
 }
 
-export type SpeciesReaction = Pick<ProcessReaction, "species" | "balanced">;
+export type SpeciesTerm = Pick<ReactionSpecies, "role" | "formula" | "name" | "coefficient">;
+export type SpeciesReaction = { species: readonly SpeciesTerm[]; balanced: boolean };
 
-export function speciesSides(reaction: Pick<ProcessReaction, "species">): { reactants: ReactionSpecies[]; products: ReactionSpecies[] } {
+export function speciesSides<S extends SpeciesTerm>(reaction: { species: readonly S[] }): { reactants: S[]; products: S[] } {
   return {
     reactants: reaction.species.filter((species) => species.role === "REACTANT"),
     products: reaction.species.filter((species) => species.role === "PRODUCT")
   };
 }
 
-export function speciesName(species: ReactionSpecies): string {
+export function speciesName(species: SpeciesTerm): string {
   const name = species.name ?? species.formula;
   if (!name) throw new ShapeError("species", "a name or a formula");
   return name;
 }
 
-function spokenSide(species: readonly ReactionSpecies[], balanced: boolean): string {
+function spokenSide(species: readonly SpeciesTerm[], balanced: boolean): string {
   return species
     .map((entry) => (balanced && entry.coefficient !== null && entry.coefficient > 1 ? `${entry.coefficient} ${speciesName(entry)}` : speciesName(entry)))
     .join(" + ");
@@ -146,7 +143,7 @@ export function reactionSpoken(reaction: SpeciesReaction): string {
   return `${spokenSide(reactants, reaction.balanced)} gives ${spokenSide(products, reaction.balanced)}`;
 }
 
-export function speciesNamesLine(reaction: Pick<ProcessReaction, "species">): string {
+export function speciesNamesLine(reaction: { species: readonly SpeciesTerm[] }): string {
   const { reactants, products } = speciesSides(reaction);
   return `${reactants.map(speciesName).join(" · ")} → ${products.map(speciesName).join(" · ")}`;
 }

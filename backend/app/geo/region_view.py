@@ -25,7 +25,7 @@ from app.schemas.region import (
     split_depth_or_period,
 )
 
-__all__ = ["craft_region", "region_facets", "value_order"]
+__all__ = ["craft_region", "district_value", "region_facets", "value_order"]
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +41,7 @@ def craft_region(records: RegionRecords) -> CraftRegion:
     for place in records.places:
         if place.values_from == "DISTRICT":
             rows = district_values.get(place.district_lgd, []) if place.district_lgd else []
-            values = [_district_value(row, _dataset(records, row.dataset_code)) for row in rows]
+            values = [district_value(row, _dataset(records, row.dataset_code)) for row in rows]
         else:
             lgd = place.state.lgd
             if lgd not in shown_states:
@@ -110,7 +110,7 @@ def _region_place(place: PlaceRecord, values: Sequence[RegionValue]) -> RegionPl
     )
 
 
-def _district_value(row: ValueRecord, dataset: DatasetRecord) -> RegionValue:
+def district_value(row: ValueRecord, dataset: DatasetRecord) -> RegionValue:
     depth, period = split_depth_or_period(row.depth_or_period, dataset.period or "")
     return RegionValue(
         dataset_code=row.dataset_code,

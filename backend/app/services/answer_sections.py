@@ -7,8 +7,6 @@ from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
-from pydantic import TypeAdapter
-
 from app.composer.candidates import compose_request, research_summary
 from app.core.errors import AppError, spend_refusal
 from app.research.composition import ComposedAnswer, ComposeFocus, ComposeRequest, searched_note
@@ -17,13 +15,12 @@ from app.research.explainer import Block
 from app.research.planning import PlanRequest, ResearchShare, RetrievalPlan
 from app.research.sections import LADDER_DISCIPLINE, SectionSpec, block_id
 from app.research.stream import ResearchProgress
-from app.research.vocabulary import CANONICAL_LANGUAGE
 from app.science.ladder import ladder_problems, ladder_stage_options, process_ladder
 from app.science.records import ProcessRecords
 
 from .answer_events import CitedClaims
 from .answer_trail import stored_key
-from .answer_translation import AnswerTranslation, translated_block, translated_sentences
+from .answer_translation import AnswerTranslation
 from .block_builders import AddedBlocks, BlockBuilders, SectionBuilds
 from .builder_interface import BuildAsk
 from .explainer_events import ExplainerStream
@@ -36,7 +33,9 @@ from .section_blocks import (
     prose_block,
     section_sentences,
 )
+from .section_deepening import LADDER_KIND, NEW_SECTION, Deepening
 from .section_enrichment import Enrichment, PictureSearches
+from .section_language import block_in_language, open_questions_in_language
 
 __all__ = [
     "SECTION_CONCURRENCY",
@@ -45,7 +44,6 @@ __all__ = [
     "SectionOutcome",
     "SectionStore",
     "SectionTools",
-    "block_in_language",
     "run_sections",
 ]
 
@@ -53,7 +51,6 @@ logger = logging.getLogger(__name__)
 
 SECTION_CONCURRENCY = 4
 SECTION_STOPPED_NOTE = "Research for this section stopped before a source could be read."
-BLOCKS = TypeAdapter(Block)
 
 ClaimsOf = tuple[tuple[uuid.UUID, ...], ...]
 
@@ -82,6 +79,10 @@ class SectionContext:
     enrichment: Enrichment
     process: ProcessRecords | None = None
     builders: BlockBuilders = field(default_factory=BlockBuilders)
+    deepening: Mapping[str, Deepening] = field(default_factory=dict)
+
+    def deepening_of(self, section_id: str) -> Deepening:
+        return self.deepening.get(section_id, NEW_SECTION)
 
 
 @dataclass(frozen=True)
@@ -145,8 +146,13 @@ async def _section(spec: SectionSpec, share: ResearchShare, context: SectionCont
         await context.stream.section_state(spec.id, "RESEARCHING")
         attempts.append(await _attempt(spec, context, fresh, fresh=True))
     shown = attempts[-1]
-    async with context.enrichment.searching() as pictures, context.builders.building() as builds:
-        pictures.start(spec.id, shown.blocks)
+    deepening = context.deepening_of(spec.id)
+    async with (
+        context.enrichment.searching() as pictures,
+        context.builders.without(deepening.kinds).building() as builds,
+    ):
+        if deepening.adds_pictures:
+            pictures.start(spec.id, shown.blocks)
         builds.start(BuildAsk(context.answer_id, spec, context.base, shown.blocks, shown.cited))
         blocks, added = await _shown(spec, shown, context, pictures, builds)
     packs = tuple(attempt.pack for attempt in attempts)
@@ -179,7 +185,8 @@ async def _attempt(
     await context.stream.section_state(spec.id, "CHECKING")
     claims_of = await _kept(context, pack, composed)
     cited = await context.tools.store.cited(claim for claims in claims_of for claim in claims)
-    return _built(spec, context, pack, composed, sentences=kept_sentences(composed, claims_of), cited=cited)
+    sentences = context.deepening_of(spec.id).unshown(kept_sentences(composed, claims_of))
+    return _built(spec, context, pack, composed, sentences=sentences, cited=cited)
 
 
 async def _researched(
@@ -217,11 +224,12 @@ def _built(
     cited: CitedClaims,
 ) -> _Attempt:
     split = section_sentences(sentences, cited)
+    deepening = context.deepening_of(spec.id)
     blocks: list[Block] = []
-    ladder = _ladder(spec, context.process, composed, block_id(spec.id, 1))
+    ladder = None if deepening.shows(LADDER_KIND) else _ladder(spec, context, composed, deepening.number(1))
     if ladder is not None:
         blocks.append(ladder)
-    prose = _prose(block_id(spec.id, len(blocks) + 1), split.facts, cited)
+    prose = _prose(block_id(spec.id, deepening.number(len(blocks) + 1)), split.facts, cited)
     if prose is not None:
         blocks.append(prose)
     shown_facts = split.facts if prose is not None else ()
@@ -242,10 +250,12 @@ def _built(
 
 
 def _ladder(
-    spec: SectionSpec, records: ProcessRecords | None, composed: ComposedAnswer, ladder_id: str
+    spec: SectionSpec, context: SectionContext, composed: ComposedAnswer, ordinal: int
 ) -> Block | None:
+    records = context.process
     if records is None or spec.discipline != LADDER_DISCIPLINE or not composed.stage_ids:
         return None
+    ladder_id = block_id(spec.id, ordinal)
     ladder = process_ladder(records, block_id=ladder_id, stage_ids=composed.stage_ids)
     if ladder is None:
         return None
@@ -280,13 +290,14 @@ async def _shown(
         translated = await _in_language(block, context, texts)
         await context.stream.blocks(spec.id, [translated], sources)
         shown.append(translated)
-    found = await builds.added(spec.id, first_ordinal=len(shown) + 1)
+    deepening = context.deepening_of(spec.id)
+    found = await builds.added(spec.id, first_ordinal=deepening.number(len(shown) + 1))
     added = AddedBlocks(tuple(context.enrichment.marked(block) for block in found.blocks), found.sources)
     for block in added.blocks:
         translated = await _in_language(block, context, texts)
         await context.stream.blocks(spec.id, [translated], {**sources, **added.sources})
         shown.append(translated)
-    images = await pictures.sent(spec.id, context.stream, ordinal=len(shown) + 1)
+    images = await pictures.sent(spec.id, context.stream, ordinal=deepening.number(len(shown) + 1))
     if images is not None:
         shown.append(images)
     open_questions = await _open_in_language(attempt.open_questions, context, texts)
@@ -301,7 +312,7 @@ async def _quote_trail(
     sources: Mapping[str, Mapping[str, Any]],
 ) -> None:
     trail = context.stream.trail
-    ladder = {sid for block in blocks if block.kind == "process_ladder" for sid in block.cited_source_ids()}
+    ladder = {sid for block in blocks if block.kind == LADDER_KIND for sid in block.cited_source_ids()}
     cited = dict.fromkeys(source_id for block in blocks for source_id in block.cited_source_ids())
     quoted = [sources[sid] for sid in cited if sid in ladder or trail.knows(stored_key(sid))]
     await trail.quoted(attempt.evidence_ids, quoted)
@@ -313,32 +324,11 @@ async def _in_language(block: Block, context: SectionContext, texts: Mapping[uui
     )
 
 
-async def block_in_language(
-    block: Block,
-    *,
-    stream: ExplainerStream,
-    translation: AnswerTranslation,
-    claim_texts: Mapping[uuid.UUID, str],
-) -> Block:
-    if stream.language == CANONICAL_LANGUAGE:
-        return block
-    await stream.status("TRANSLATING")
-    payload = block.model_dump(mode="json", by_alias=True, exclude_unset=True)
-    shown = await translated_block(
-        payload, language=stream.language, translation=translation, claim_texts=claim_texts
-    )
-    return BLOCKS.validate_python(shown)
-
-
 async def _open_in_language(
     sentences: Sequence[dict[str, Any]], context: SectionContext, texts: Mapping[uuid.UUID, str]
 ) -> list[dict[str, Any]]:
-    language = context.base.language
-    if language == CANONICAL_LANGUAGE or not sentences:
-        return list(sentences)
-    await context.stream.status("TRANSLATING")
-    return await translated_sentences(
-        sentences, language=language, translation=context.tools.translation, claim_texts=texts
+    return await open_questions_in_language(
+        sentences, stream=context.stream, translation=context.tools.translation, claim_texts=texts
     )
 
 

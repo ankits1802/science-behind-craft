@@ -31,8 +31,8 @@ export const GAP_COPY_PATTERNS: readonly RegExp[] = [
 
 export type NavExpectation = { bar: string[]; menu: string[]; depths: string[] };
 
-const LEARNER_BAR = ["Ask", "Crafts", "Map"];
-const LEARNER_MENU = ["Ask", "Crafts", "Map", "Settings"];
+const LEARNER_BAR = ["Ask", "Crafts", "Map", "Saved"];
+const LEARNER_MENU = ["Ask", "Crafts", "Map", "Saved", "Settings"];
 const EVERY_DEPTH = ["Basic", "Detailed", "Expert"];
 
 export const NAV_BY_ROLE: Partial<Record<UserRole, NavExpectation>> = {
@@ -68,4 +68,21 @@ export function labelProblems(where: string, expected: readonly string[], actual
   const same = shown.length === expected.length && expected.every((label, index) => label === shown[index]);
   if (same) return [];
   return [`${where} shows [${shown.join(", ")}]; this role should see [${expected.join(", ")}]`];
+}
+
+export type OverviewServed = { curated: boolean; version: number | null; coverage: string | null; lede: number; keyFacts: number };
+export type OverviewShown = { lede: number; keyFacts: number };
+
+export function overviewNote(served: OverviewServed): string {
+  return served.curated ? `curated: version ${served.version}, ${served.coverage} coverage` : "not curated";
+}
+
+export function curatedOverviewProblems(served: OverviewServed, shown: OverviewShown): string[] {
+  if (!served.curated) return [];
+  const problems: string[] = [];
+  if (served.lede === 0) problems.push("the curated page serves no lede");
+  else if (shown.lede !== served.lede) problems.push(`the lede shows ${shown.lede} of its ${served.lede} sentences`);
+  if (served.keyFacts === 0) problems.push("the curated page serves no key facts");
+  else if (shown.keyFacts !== served.keyFacts) problems.push(`the key facts show ${shown.keyFacts} of ${served.keyFacts}`);
+  return problems;
 }

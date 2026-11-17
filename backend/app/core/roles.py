@@ -56,6 +56,9 @@ class Capability(StrEnum):
     VIEW_USAGE = "VIEW_USAGE"
     VIEW_EVALUATION = "VIEW_EVALUATION"
     VIEW_AUDIT_LOG = "VIEW_AUDIT_LOG"
+    BUILD_LESSONS = "BUILD_LESSONS"
+    HIDE_GENERATED = "HIDE_GENERATED"
+    READ_ALL_EVIDENCE = "READ_ALL_EVIDENCE"
 
 
 CAPABILITY_MIN_ROLE: dict[Capability, str] = {
@@ -85,6 +88,9 @@ CAPABILITY_MIN_ROLE: dict[Capability, str] = {
     Capability.VIEW_USAGE: ADMIN,
     Capability.VIEW_EVALUATION: PROFESSOR,
     Capability.VIEW_AUDIT_LOG: ADMIN,
+    Capability.BUILD_LESSONS: PROFESSOR,
+    Capability.HIDE_GENERATED: PROFESSOR,
+    Capability.READ_ALL_EVIDENCE: RESEARCHER,
 }
 
 DAILY_ALLOWANCES: dict[str, dict[str, int | None]] = {

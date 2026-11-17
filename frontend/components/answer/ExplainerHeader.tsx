@@ -1,6 +1,7 @@
 "use client";
 
-import { Play, RefreshCw } from "lucide-react";
+import type { ReactNode } from "react";
+import { Clapperboard, Play, RefreshCw } from "lucide-react";
 
 import { UnderstoodLine, type UnderstoodChange } from "@/components/answer/UnderstoodLine";
 import { SegmentedChoice } from "@/components/ui/SegmentedChoice";
@@ -19,7 +20,9 @@ export function ExplainerHeader({
   change,
   shown,
   onListen,
-  onFresh
+  onFresh,
+  onFilm = null,
+  tools = null
 }: {
   understood: Understood | null;
   depthLabel: string | null;
@@ -28,12 +31,14 @@ export function ExplainerHeader({
   shown: ShownText;
   onListen: (() => void) | null;
   onFresh: (() => void) | null;
+  onFilm?: (() => void) | null;
+  tools?: ReactNode;
 }) {
-  if (!understood && !shown.translated && !onListen && !onFresh) return null;
+  if (!understood && !shown.translated && !onListen && !onFresh && !onFilm && !tools) return null;
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       {understood ? <UnderstoodLine understood={understood} depthLabel={depthLabel} language={language} change={change} /> : <span />}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex min-w-0 flex-wrap items-center gap-2">
         {shown.translated ? (
           <SegmentedChoice
             label="Answer text"
@@ -57,6 +62,13 @@ export function ExplainerHeader({
             Listen
           </button>
         ) : null}
+        {onFilm ? (
+          <button type="button" className="field-button-secondary min-h-10 rounded-full px-4" onClick={onFilm} data-testid="film-start">
+            <Clapperboard className="h-4 w-4" aria-hidden />
+            Film
+          </button>
+        ) : null}
+        {tools}
       </div>
     </div>
   );

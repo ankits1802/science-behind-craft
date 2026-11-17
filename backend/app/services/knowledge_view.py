@@ -230,22 +230,25 @@ async def _cited_views(
     views: list[ClaimView] = []
     for claim, rank in rows:
         attached = by_claim.get(claim.id)
-        if not attached:
-            continue
-        concept_id, concept_type = placed(claim)
-        attached.sort(key=lambda c: (c.quote is None, str(c.id)))
-        views.append(
-            ClaimView(
-                id=claim.id,
-                text=claim.text,
-                level=claim.evidenceLevel,
-                concept_type=concept_type,
-                concept_id=concept_id,
-                rank=float(rank or 0),
-                citations=[citation(c, claim.evidenceLevel) for c in attached],
-            )
-        )
+        if attached:
+            views.append(cited_view(claim, attached, placed(claim), rank=float(rank or 0)))
     return views, sources
+
+
+def cited_view(
+    claim: Claim, cites: list[ClaimSource], placed: tuple[uuid.UUID | None, str], *, rank: float = 0.0
+) -> ClaimView:
+    concept_id, concept_type = placed
+    ordered = sorted(cites, key=lambda c: (c.quote is None, str(c.id)))
+    return ClaimView(
+        id=claim.id,
+        text=claim.text,
+        level=claim.evidenceLevel,
+        concept_type=concept_type,
+        concept_id=concept_id,
+        rank=rank,
+        citations=[citation(c, claim.evidenceLevel) for c in ordered],
+    )
 
 
 async def state_points(session: AsyncSession) -> dict[str, dict[str, Any]]:

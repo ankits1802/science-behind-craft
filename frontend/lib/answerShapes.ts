@@ -15,10 +15,12 @@ export const HTTPS_URL = matching(/^https:\/\/\S+$/, "an https URL");
 export const shownLevelShape: Shape<EvidenceLevel> = oneOf(SHOWN_LEVELS);
 export const storedLevelShape: Shape<StoredLevel> = oneOf(STORED_LEVELS);
 
+export const CRAFT_PATH = matching(/^\/crafts\/\S+$/, "a craft path");
+
 export const craftLinkShape: Shape<CraftLink> = object<CraftLink>({
   slug: text,
   name: text,
-  path: matching(/^\/crafts\/\S+$/, "a craft path")
+  path: CRAFT_PATH
 });
 
 export const citationShape: Shape<Citation> = object<Citation>({

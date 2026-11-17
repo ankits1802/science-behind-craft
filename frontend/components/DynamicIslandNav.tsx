@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import {
   BarChart3,
+  Bookmark,
   BookOpen,
   Eye,
   EyeOff,
@@ -15,6 +16,7 @@ import {
   MapPinned,
   Menu as MenuIcon,
   MessageCircleQuestion,
+  Presentation,
   Route,
   Settings as SettingsIcon,
   ShieldCheck,
@@ -31,8 +33,10 @@ import { useAuth } from "@/components/AuthProvider";
 import { BrandMark } from "@/components/BrandMark";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { usePendingAccessCount } from "@/components/hooks/usePendingAccessCount";
+import { useNotes } from "@/components/learn/useNotes";
 import { HoveredLink, MenuItem } from "@/components/ui/navbar-menu";
 import { canManageAccessRoster, hasAdminView, roleLabel, routeAllows } from "@/lib/permissions";
+import { SAVED_PATH, unreadText } from "@/lib/savedView";
 import { lockPageScroll, unlockPageScroll } from "@/lib/scrollLock";
 import { cn } from "@/lib/utils";
 import type { User } from "@/lib/types";
@@ -57,6 +61,17 @@ function PendingAccessBadge({ count }: { count: number }) {
   );
 }
 
+function UnreadBadge({ count }: { count: number }) {
+  const text = unreadText(count);
+  if (!text) return null;
+  return (
+    <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-purple-700 px-1.5 text-[11px] font-semibold leading-5 text-white" data-testid="unread-notes">
+      <span aria-hidden>{count > 99 ? "99+" : count}</span>
+      <span className="sr-only">{`, ${text}`}</span>
+    </span>
+  );
+}
+
 export type NavItem = {
   href: string;
   label: string;
@@ -73,6 +88,8 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/ask", label: "Ask", icon: MessageCircleQuestion, group: null, can: everyone, gate: "get_current_user" },
   { href: "/crafts", label: "Crafts", icon: BookOpen, group: null, can: everyone, gate: "get_current_user" },
   { href: "/map", label: "Map", icon: MapPinned, group: null, can: everyone, gate: "get_current_user" },
+  { href: SAVED_PATH, label: "Saved", icon: Bookmark, group: null, can: everyone, gate: "get_current_user" },
+  { href: "/lessons", label: "Lessons", icon: Presentation, group: null, can: routeAllows("/lessons"), gate: "require(BUILD_LESSONS)" },
 
   { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: routeAllows("/admin"), gate: "require_admin", adminSurface: true },
   { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: routeAllows("/admin/access"), gate: "require_access_roster_manager", adminSurface: true },
@@ -190,6 +207,7 @@ export function DynamicIslandNav() {
   const hubEntryVisible = visibleItems.some((item) => item.href === PENDING_ACCESS_BADGE_HREF);
   const pendingAccess = usePendingAccessCount(hubEntryVisible && canManageAccessRoster(user));
   const pendingAccessCount = pendingAccess?.pending ?? 0;
+  const unreadNotes = useNotes(user?.id ?? null).list?.unread ?? 0;
 
 
   if (!user) return null;
@@ -212,7 +230,7 @@ export function DynamicIslandNav() {
     label: item.label,
     href: item.href,
     icon: item.icon,
-    badge: item.href === PENDING_ACCESS_BADGE_HREF ? pendingAccessCount : 0
+    badge: item.href === PENDING_ACCESS_BADGE_HREF ? pendingAccessCount : item.href === SAVED_PATH ? unreadNotes : 0
   });
   const islandRoots = rootItems.map(islandEntry);
   const islandGroups = visibleGroups.map((group) => ({ label: group.label, entries: group.items.map(islandEntry) }));
@@ -265,6 +283,7 @@ export function DynamicIslandNav() {
                     )}
                   >
                     {item.label}
+                    {item.href === SAVED_PATH ? <UnreadBadge count={unreadNotes} /> : null}
                   </Link>
                 ))}
                 {visibleGroups.map((group) => (
@@ -362,6 +381,7 @@ export function DynamicIslandNav() {
                     <item.icon className="h-4 w-4 shrink-0 text-ink-300" aria-hidden />
                     {item.label}
                     {item.href === PENDING_ACCESS_BADGE_HREF ? <PendingAccessBadge count={pendingAccessCount} /> : null}
+                    {item.href === SAVED_PATH ? <UnreadBadge count={unreadNotes} /> : null}
                   </Link>
                 ))}
               </div>

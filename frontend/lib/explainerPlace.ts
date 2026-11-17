@@ -54,7 +54,7 @@ const riverShape: Shape<RiverPath> = object<RiverPath>({
   name: nullable(text)
 });
 
-const districtShape: Shape<DistrictRef> = object<DistrictRef>({ districtLgd: integer, name: text, stateName: text });
+export const districtShape: Shape<DistrictRef> = object<DistrictRef>({ districtLgd: integer, name: text, stateName: text });
 
 export const regionStoryBlockShape: Shape<RegionStoryBlock> = object<RegionStoryBlock>({
   ...envelope("region_story"),

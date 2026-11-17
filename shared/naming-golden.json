@@ -67,8 +67,26 @@
     {"generatedAt": "2026-11-17T09:00:00Z", "part": 1, "fileName": "KalaVigyan_Explainer_2026-11-17_1430_Narration_Part-01.mp3"},
     {"generatedAt": "2026-11-17T20:15:00Z", "part": 12, "fileName": "KalaVigyan_Explainer_2026-11-18_0145_Narration_Part-12.mp3"}
   ],
+  "scoreFiles": [
+    {"generatedAt": "2026-11-18T05:00:00Z", "scene": null, "fileName": "KalaVigyan_Explainer_2026-11-18_1030_Music.mp3"},
+    {"generatedAt": "2026-11-18T05:00:00Z", "scene": 1, "fileName": "KalaVigyan_Explainer_2026-11-18_1030_Sound-Effect_Scene-01.mp3"},
+    {"generatedAt": "2026-11-18T05:00:00Z", "scene": 3, "fileName": "KalaVigyan_Explainer_2026-11-18_1030_Sound-Effect_Scene-03.mp3"},
+    {"generatedAt": "2026-11-18T20:15:00Z", "scene": 12, "fileName": "KalaVigyan_Explainer_2026-11-19_0145_Sound-Effect_Scene-12.mp3"}
+  ],
   "riverTopologies": [
     {"edition": "v10", "mainRiv": 41071234, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-41071234.json", "key": "media/rivers/v10/41071234/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-41071234.json"},
     {"edition": "v10", "mainRiv": 40000001, "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", "fileName": "KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-40000001.json", "key": "media/rivers/v10/40000001/ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad/KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-40000001.json"}
+  ],
+  "lessonFiles": [
+    {"madeAt": "2026-11-18T10:00:00Z", "craft": "Kutch Ajrakh", "title": "How is Kutch Ajrakh made, and why does its water matter?", "format": "pptx", "fileName": "KalaVigyan_Lesson_2026-11-18_Kutch-Ajrakh_How-Is-Kutch-Ajrakh-Made-And-Why-Does_Slides.pptx"},
+    {"madeAt": "2026-11-18T10:00:00Z", "craft": "Kutch Ajrakh", "title": "How is Kutch Ajrakh made, and why does its water matter?", "format": "html", "fileName": "KalaVigyan_Lesson_2026-11-18_Kutch-Ajrakh_How-Is-Kutch-Ajrakh-Made-And-Why-Does_Slides.html"},
+    {"madeAt": "2026-11-18T19:00:00Z", "craft": null, "title": "Mordants", "format": "pdf", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"}
+  ],
+  "explainerFiles": [
+    {"madeAt": "2026-11-17T20:15:00Z", "craft": "Kutch Ajrakh", "question": "Why did water push Ajrakh printers from Dhamadka to Ajrakhpur?", "version": 2, "what": "Report", "ext": "pdf", "fileName": "KalaVigyan_Explainer_2026-11-18_Kutch-Ajrakh_Why-Did-Water-Push-Ajrakh-Printers-From_Report_v2.pdf"},
+    {"madeAt": "2026-11-18T05:00:00Z", "craft": null, "question": "Which crafts use alum", "version": 1, "what": "Citations", "ext": "bib", "fileName": "KalaVigyan_Explainer_2026-11-18_Which-Crafts-Use-Alum_Citations_v1.bib"}
+  ],
+  "exportKeys": [
+    {"ownerId": "00000000-0000-0000-0000-000000000007", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf", "key": "exports/00000000-0000-0000-0000-000000000007/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"}
   ]
 }

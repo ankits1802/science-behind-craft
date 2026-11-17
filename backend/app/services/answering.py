@@ -20,8 +20,9 @@ from app.research.crafts import CraftRef
 from app.research.depth import depth_policy
 from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Explainer
+from app.research.explainer_versions import VersionMark
 from app.research.planning import PlanRequest
-from app.research.sections import LADDER_DISCIPLINE, AnswerPlans, SectionPlan, SectionSpec, section_specs
+from app.research.sections import LADDER_DISCIPLINE, AnswerPlans, SectionPlan, SectionSpec
 from app.research.stream import Emit, ResearchProgress
 from app.research.understanding import UnderstandAsk, Understanding, UnknownCraft
 from app.research.vocabulary import CANONICAL_LANGUAGE
@@ -46,6 +47,8 @@ from .answer_translation import (
 from .block_builders import BlockBuilders
 from .explainer_document import explainer_document
 from .explainer_events import ExplainerStream, status_message
+from .explainer_history import STALE_VERSION_DETAIL, StaleVersion
+from .follow_ups import AnswerLayout, FollowUp, answer_layout, understood_for
 from .piece_lookup import PieceAsk
 from .piece_store import BuiltSection, PieceStore
 from .reused_sections import ReuseBuilds, ReusedShowing, reused_follow_ups, stream_reused
@@ -86,6 +89,7 @@ class AnswerAsk:
     role: str | None = None
     withheld_terms: tuple[str, ...] = ()
     fresh: bool = False
+    builds_on: FollowUp | None = None
 
 
 class AnswerStore(Protocol):
@@ -106,6 +110,7 @@ class AnswerStore(Protocol):
         plans: AnswerPlans,
         claim_ids: Sequence[uuid.UUID],
         explainer: Explainer | None,
+        version: VersionMark | None = None,
     ) -> None: ...
 
 
@@ -129,12 +134,16 @@ class _Run:
     stream: ExplainerStream
     answer_id: uuid.UUID
     enrichment: Enrichment
+    layout: AnswerLayout
 
 
 async def answer_question(ask: AnswerAsk, pipeline: AnswerPipeline, emit: Emit) -> None:
     answer_id: uuid.UUID | None = None
     try:
         answer_id = await _answer(ask, pipeline, emit)
+    except StaleVersion as stale:
+        logger.warning("the follow-up was not kept: %s", stale)
+        await emit("error", {"message": STALE_VERSION_DETAIL})
     except AppError as error:
         logger.warning("answering stopped: %s", error, exc_info=True)
         await emit("error", {"message": _user_message(error, RESEARCH_FAILED_DETAIL)})
@@ -181,14 +190,16 @@ async def _understood(ask: AnswerAsk, pipeline: AnswerPipeline, emit: Emit) -> U
         logger.warning("understanding the question failed", exc_info=True)
         await emit("error", {"message": _user_message(error, RESOLVER_FAILED_DETAIL)})
         return None
-    await emit("understood", understanding.understood())
+    await emit("understood", understood_for(understanding, ask.builds_on))
+    if ask.builds_on is not None:
+        await emit("builds_on", ask.builds_on.event())
     return understanding
 
 
 async def _refused_answer(
     ask: AnswerAsk, understanding: Understanding, pipeline: AnswerPipeline, stream: ExplainerStream
 ) -> None:
-    if understanding.craft is None:
+    if understanding.craft is None or ask.builds_on is not None:
         await stream.emit("error", {"message": understanding.refusal})
         return
     await _stored_answer(ask, understanding.craft, pipeline, stream)
@@ -219,11 +230,16 @@ async def _researched_answer(
 ) -> uuid.UUID:
     craft = understanding.craft
     await stream.status("PLANNING", craft=craft.name if craft else "")
-    specs = section_specs(understanding.disciplines, understanding.depth)
+    layout = answer_layout(understanding, ask.builds_on)
+    specs = layout.specs
     answer_id = await pipeline.store.begin(ask, understanding)
-    titles = await _translated(_title_segments(specs), stream.language, pipeline.translation)
-    lookup = await pipeline.pieces.reusable(_piece_ask(ask, understanding, specs))
-    run = _Run(ask, understanding, pipeline, stream, answer_id, await pipeline.enrichment.for_answer(craft))
+    titles = {
+        **await _translated(_title_segments(layout.untitled), stream.language, pipeline.translation),
+        **layout.titles,
+    }
+    lookup = await pipeline.pieces.reusable(_piece_ask(ask, understanding, layout.reusable))
+    enrichment = await pipeline.enrichment.for_answer(craft)
+    run = _Run(ask, understanding, pipeline, stream, answer_id, enrichment, layout)
     reused = await stream_reused(specs, lookup, _reused_showing(run, titles))
     open_specs = [spec for spec in specs if spec.discipline not in lookup.reused]
     for spec in open_specs:
@@ -233,7 +249,13 @@ async def _researched_answer(
     english = _english_follow_ups(outcomes) if open_specs else reused_follow_ups(craft, lookup)
     follow_ups = await _closing(outcomes, english, stream, pipeline.translation)
     await _finish(run, outcomes, titles=titles, follow_ups=follow_ups)
-    built = [BuiltSection(outcome.spec.discipline, outcome.built) for outcome in researched if outcome.built]
+    built = [
+        BuiltSection(
+            outcome.spec.discipline, outcome.built, deepened=not layout.keeps_pieces_of(outcome.spec)
+        )
+        for outcome in researched
+        if outcome.built
+    ]
     await pipeline.pieces.keep(lookup, answer_id=answer_id, depth=understanding.depth, sections=built)
     return answer_id
 
@@ -259,6 +281,7 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
         enrichment=run.enrichment,
         process=await _process(run.understanding.craft, specs, pipeline.store),
         builders=pipeline.builders,
+        deepening=run.layout.deepening,
     )
     return await run_sections(specs, context)
 
@@ -266,19 +289,24 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
 async def _finish(
     run: _Run, outcomes: Sequence[SectionOutcome], *, titles: Mapping[str, str], follow_ups: Sequence[str]
 ) -> None:
+    document = explainer_document(
+        answer_id=run.answer_id,
+        question=run.ask.question,
+        understood=run.layout.understood(run.understanding),
+        outcomes=outcomes,
+        titles=titles,
+        follow_ups=follow_ups,
+    )
+    stored = run.layout.stored(document, dict.fromkeys(c for outcome in outcomes for c in outcome.claim_ids))
     await run.pipeline.store.finish(
         run.answer_id,
         plans=_plans(outcomes),
-        claim_ids=list(dict.fromkeys(claim for outcome in outcomes for claim in outcome.claim_ids)),
-        explainer=explainer_document(
-            answer_id=run.answer_id,
-            question=run.ask.question,
-            understood=run.understanding.understood(),
-            outcomes=outcomes,
-            titles=titles,
-            follow_ups=follow_ups,
-        ),
+        claim_ids=list(stored.claim_ids),
+        explainer=stored.explainer,
+        version=stored.version,
     )
+    if stored.version is not None:
+        await run.stream.emit("version", stored.version)
 
 
 def _piece_ask(ask: AnswerAsk, understanding: Understanding, specs: Sequence[SectionSpec]) -> PieceAsk:
@@ -353,6 +381,7 @@ def _plan_request(ask: AnswerAsk, understanding: Understanding) -> PlanRequest:
         question=ask.question,
         mode=depth_policy(understanding.depth).mode,
         craft=understanding.craft,
+        compared=tuple(understanding.compared),
         depth=understanding.depth,
         language=_language(ask),
         withheld_terms=ask.withheld_terms,

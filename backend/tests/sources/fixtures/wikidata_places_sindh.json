@@ -1,0 +1,266 @@
+{
+ "searchinfo": {
+  "search": "Sindh"
+ },
+ "search": [
+  {
+   "id": "Q37211",
+   "title": "Q37211",
+   "pageid": 39755,
+   "concepturi": "http://www.wikidata.org/entity/Q37211",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q37211",
+   "display": {
+    "label": {
+     "value": "Sindh",
+     "language": "en"
+    },
+    "description": {
+     "value": "province of Pakistan",
+     "language": "en"
+    }
+   },
+   "label": "Sindh",
+   "description": "province of Pakistan",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindh"
+   }
+  },
+  {
+   "id": "Q33997",
+   "title": "Q33997",
+   "pageid": 36799,
+   "concepturi": "http://www.wikidata.org/entity/Q33997",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q33997",
+   "display": {
+    "label": {
+     "value": "Sindhi",
+     "language": "en"
+    },
+    "description": {
+     "value": "Indo-Aryan language spoken in Pakistan and India",
+     "language": "en"
+    }
+   },
+   "label": "Sindhi",
+   "description": "Indo-Aryan language spoken in Pakistan and India",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindhi"
+   }
+  },
+  {
+   "id": "Q7348",
+   "title": "Q7348",
+   "pageid": 8569,
+   "concepturi": "http://www.wikidata.org/entity/Q7348",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q7348",
+   "display": {
+    "label": {
+     "value": "Indus River",
+     "language": "en"
+    },
+    "description": {
+     "value": "river in Asia",
+     "language": "en"
+    }
+   },
+   "label": "Indus River",
+   "description": "river in Asia",
+   "match": {
+    "type": "alias",
+    "language": "en",
+    "text": "Sindhu River"
+   },
+   "aliases": [
+    "Sindhu River"
+   ]
+  },
+  {
+   "id": "Q448360",
+   "title": "Q448360",
+   "pageid": 423010,
+   "concepturi": "http://www.wikidata.org/entity/Q448360",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q448360",
+   "display": {
+    "label": {
+     "value": "Pusarla Venkata Sindhu",
+     "language": "en"
+    },
+    "description": {
+     "value": "Indian badminton player",
+     "language": "en"
+    }
+   },
+   "label": "Pusarla Venkata Sindhu",
+   "description": "Indian badminton player",
+   "match": {
+    "type": "alias",
+    "language": "en",
+    "text": "Sindhu Pusarla Venkata"
+   },
+   "aliases": [
+    "Sindhu Pusarla Venkata"
+   ]
+  },
+  {
+   "id": "Q58781026",
+   "title": "Q58781026",
+   "pageid": 58693401,
+   "concepturi": "http://www.wikidata.org/entity/Q58781026",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q58781026",
+   "display": {
+    "label": {
+     "value": "Sindh",
+     "language": "en"
+    },
+    "description": {
+     "value": "Constituency for the Senate of Pakistan",
+     "language": "en"
+    }
+   },
+   "label": "Sindh",
+   "description": "Constituency for the Senate of Pakistan",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindh"
+   }
+  },
+  {
+   "id": "Q768332",
+   "title": "Q768332",
+   "pageid": 721749,
+   "concepturi": "http://www.wikidata.org/entity/Q768332",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q768332",
+   "display": {
+    "label": {
+     "value": "Sindhudurg district",
+     "language": "en"
+    },
+    "description": {
+     "value": "district in Maharashtra, India",
+     "language": "en"
+    }
+   },
+   "label": "Sindhudurg district",
+   "description": "district in Maharashtra, India",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindhudurg district"
+   }
+  },
+  {
+   "id": "Q6608704",
+   "title": "Q6608704",
+   "pageid": 6435808,
+   "concepturi": "http://www.wikidata.org/entity/Q6608704",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q6608704",
+   "display": {
+    "label": {
+     "value": "Sind",
+     "language": "en"
+    },
+    "description": {
+     "value": "Province of Islamic Empires",
+     "language": "en"
+    }
+   },
+   "label": "Sind",
+   "description": "Province of Islamic Empires",
+   "match": {
+    "type": "alias",
+    "language": "en",
+    "text": "Sindh"
+   },
+   "aliases": [
+    "Sindh"
+   ]
+  },
+  {
+   "id": "Q25653071",
+   "title": "Q25653071",
+   "pageid": 27605690,
+   "concepturi": "http://www.wikidata.org/entity/Q25653071",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q25653071",
+   "display": {
+    "label": {
+     "value": "Sindhri Taluka",
+     "language": "en"
+    },
+    "description": {
+     "value": "administrative subdivision of Pakistan",
+     "language": "en"
+    }
+   },
+   "label": "Sindhri Taluka",
+   "description": "administrative subdivision of Pakistan",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindhri Taluka"
+   }
+  },
+  {
+   "id": "Q29533",
+   "title": "Q29533",
+   "pageid": 32839,
+   "concepturi": "http://www.wikidata.org/entity/Q29533",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q29533",
+   "display": {
+    "label": {
+     "value": "Vitex trifolia",
+     "language": "en"
+    },
+    "description": {
+     "value": "species of flowering plant",
+     "language": "en"
+    }
+   },
+   "label": "Vitex trifolia",
+   "description": "species of flowering plant",
+   "match": {
+    "type": "alias",
+    "language": "en",
+    "text": "sindhuka"
+   },
+   "aliases": [
+    "sindhuka"
+   ]
+  },
+  {
+   "id": "Q63680444",
+   "title": "Q63680444",
+   "pageid": 63402108,
+   "concepturi": "http://www.wikidata.org/entity/Q63680444",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q63680444",
+   "display": {
+    "label": {
+     "value": "Sindhudurg postal division",
+     "language": "en"
+    }
+   },
+   "label": "Sindhudurg postal division",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Sindhudurg postal division"
+   }
+  }
+ ],
+ "search-continue": 10,
+ "success": 1
+}

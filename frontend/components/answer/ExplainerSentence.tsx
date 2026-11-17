@@ -10,9 +10,9 @@ import { wordRanges } from "@/lib/listen";
 import type { EvidenceLevel } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const MARKED_LEVELS: ReadonlySet<EvidenceLevel> = new Set(["VERIFIED", "REVIEWED"]);
+const MARKED_LEVELS: ReadonlySet<EvidenceLevel> = new Set(["VERIFIED", "REVIEWED", "HYPOTHESIS"]);
 
-const TERM_CLASS =
+export const TERM_CLASS =
   "rounded-sm font-medium text-ink-900 underline decoration-purple-500 decoration-dotted decoration-[1.5px] underline-offset-[3px] transition hover:decoration-solid dark:decoration-purple-300";
 
 function Parts({ parts }: { parts: TextPart[] }) {

@@ -45,7 +45,7 @@ test("every phase B kind is built: the parser and the stream take each fixture b
     expect(parseShape(explainerBlockShape, block)).toEqual(block);
     expect(parseExplainerStreamBlock(frame(String(block.id).split(".")[0], block))?.type).toBe("block");
   }
-  const later = { id: "s7.b1", kind: "what_if", version: 1, reuse: null, changed: "Wash water", options: [] };
+  const later = { id: "s7.b1", kind: "artisan_voice", version: 1, reuse: null, quotes: [] };
   expect(built).not.toContain(later.kind);
   expect(() => parseShape(explainerBlockShape, later)).toThrow(ShapeError);
   expect(() => parseExplainerStreamBlock(frame("s7", later))).toThrow(ShapeError);
@@ -100,6 +100,6 @@ test("every built kind has one renderer and a block without one is not drawn", (
   for (const kind of BUILT_BLOCK_KINDS) expect(BLOCK_RENDERERS[kind]).toBeDefined();
   const prose = { id: "s1.b1", kind: "prose", version: 1, reuse: null, sentences: [] } as unknown as ExplainerBlock;
   expect(hasRenderer(prose)).toBe(true);
-  const unknown = { ...prose, kind: "what_if" } as unknown as ExplainerBlock;
+  const unknown = { ...prose, kind: "designs" } as unknown as ExplainerBlock;
   expect(hasRenderer(unknown)).toBe(false);
 });

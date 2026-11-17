@@ -11,6 +11,7 @@ from app.planner.understanding_prompt import UNDERSTAND_SYSTEM_PROMPT, understan
 from app.providers.router import RouterError
 from app.research.blocks_people import EXPERT_SEATS
 from app.research.crafts import CraftCandidate, CraftQuery, CraftRef, CraftResolution, MatchReason
+from app.research.planning import PlanRequest
 from app.research.understanding import UnderstandAsk, UnknownCraft
 
 from ..research.fixtures import AJRAKH, BAGRU
@@ -115,6 +116,52 @@ async def test_names_the_resolver_cannot_place_leave_any_craft_with_the_offers()
 async def test_any_craft_on_request_keeps_the_detected_crafts_as_offers() -> None:
     found, _ = await understood(RESOLVED, any_craft=True)
     assert (found.craft, found.candidates) == (None, [AJRAKH, BARMER])
+
+
+THREE = resolution("AMBIGUOUS", (AJRAKH, 0.7), (BAGRU, 0.6), (BARMER, 0.5))
+
+
+async def test_a_comparison_leads_with_the_first_compared_craft_and_sets_the_others_beside_it() -> None:
+    found, _ = await understood(THREE, {**READ, "compare": [BAGRU.slug, BARMER.slug]})
+    assert (found.craft, found.compared, found.candidates) == (BAGRU, [BARMER], [AJRAKH])
+    assert found.understood().crafts == [BAGRU, BARMER]
+    assert found.understood().candidates == [AJRAKH]
+
+
+async def test_the_first_compared_craft_leads_even_past_a_clear_winner() -> None:
+    found, _ = await understood(RESOLVED, {**READ, "compare": [BARMER.slug, AJRAKH.slug]})
+    assert (found.craft, found.compared, found.candidates) == (BARMER, [AJRAKH], [])
+
+
+@pytest.mark.parametrize(
+    ("compare", "changes"),
+    [
+        ([AJRAKH.slug], {}),
+        ([AJRAKH.slug, "Not-Listed"], {}),
+        ([AJRAKH.slug, BAGRU.slug], {"any_craft": True}),
+    ],
+)
+async def test_one_listed_craft_or_any_craft_is_no_comparison(compare: list[str], changes: Any) -> None:
+    found, _ = await understood(THREE, {**READ, "compare": compare}, **changes)
+    assert found.compared == []
+    assert len(found.understood().crafts) <= 1
+
+
+async def test_a_picked_craft_is_compared_only_with_crafts_the_resolver_listed_beside_it() -> None:
+    picked = resolution("RESOLVED", (BAGRU, 1.0), (AJRAKH, 0.4))
+    found, _ = await understood(picked, {**READ, "compare": [AJRAKH.slug, BAGRU.slug]}, craft_slug=BAGRU.slug)
+    assert (found.craft, found.compared) == (BAGRU, [AJRAKH])
+    alone = resolution("RESOLVED", (BAGRU, 1.0))
+    found, _ = await understood(alone, {**READ, "compare": [AJRAKH.slug, BAGRU.slug]}, craft_slug=BAGRU.slug)
+    assert (found.craft, found.compared) == (BAGRU, [])
+
+
+async def test_the_compared_crafts_reach_the_builders_through_the_plan_request() -> None:
+    found, _ = await understood(THREE, {**READ, "compare": [BAGRU.slug, AJRAKH.slug]})
+    request = PlanRequest(question=QUESTION, mode="HYBRID", craft=found.craft, compared=tuple(found.compared))
+    again = PlanRequest.model_validate(request.model_dump() | {"focus": "MATERIALS"})
+    assert (again.craft, again.compared) == (BAGRU, (AJRAKH,))
+    assert "compared" not in PlanRequest(question=QUESTION, mode="HYBRID", craft=BAGRU).model_dump()
 
 
 async def test_a_chosen_craft_is_kept_and_an_unknown_one_is_refused() -> None:
@@ -253,7 +300,8 @@ def keywords(schema: Any) -> set[str]:
 def test_the_schema_uses_only_widely_supported_keywords_and_the_registered_vocabulary() -> None:
     schema = understand_schema([AJRAKH])
     assert keywords(schema) <= SCHEMA_KEYWORDS
-    assert schema["required"] == ["craft", "craftNames", "disciplines", "seats"]
+    assert schema["required"] == ["craft", "craftNames", "compare", "disciplines", "seats"]
+    assert schema["properties"]["compare"]["items"]["enum"] == [AJRAKH.slug, ""]
     assert schema["additionalProperties"] is False
     assert schema["properties"]["disciplines"]["items"]["enum"] == list(DISCIPLINES)
     assert schema["properties"]["seats"]["items"]["enum"] == list(EXPERT_SEATS)

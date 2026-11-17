@@ -176,12 +176,16 @@ async def test_region_stories_are_looked_up_for_the_geography_facet_only(
     async def states(session: Any, pieces: Any) -> tuple[dict, CitedClaims]:
         return {}, CitedClaims()
 
+    async def simulations(session: Any, claim_ids: Any, simulation_facets: Any) -> list[KnowledgePiece]:
+        return []
+
     monkeypatch.setattr(piece_store.knowledge_view, "resolve_craft", craft)
     for name, fake in (
         ("topic_subjects", subjects),
         ("candidate_pieces", candidates),
         ("region_story_pieces", regions),
         ("claim_states", states),
+        ("simulation_pieces", simulations),
     ):
         monkeypatch.setattr(piece_store, name, fake)
     store = SqlPieceStore(no_session, embed=None, shield=None)

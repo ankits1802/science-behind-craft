@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Collection, Sequence
+from collections.abc import Collection, Iterable, Mapping, Sequence
 from typing import Protocol
 
 from app.research.blocks import stated_texts
@@ -12,10 +12,13 @@ from .supply_links import OriginPlace
 
 __all__ = [
     "PLACED_ORIGINS_MAX",
+    "NamedPlace",
     "PlaceFinder",
     "chosen_candidate",
     "context_words",
+    "named_places",
     "origin_places",
+    "stated_words",
 ]
 
 PLACED_ORIGINS_MAX = 8
@@ -29,10 +32,17 @@ class PlaceFinder(Protocol):
     async def place_points(self, item_ids: Sequence[str]) -> dict[str, PlacePoint]: ...
 
 
+NamedPlace = tuple[str, frozenset[str]]
+
+
 async def origin_places(finder: PlaceFinder, links: Sequence[SupplyLink]) -> dict[str, OriginPlace]:
+    return await named_places(finder, _origin_contexts(links))
+
+
+async def named_places(finder: PlaceFinder, named: Mapping[str, NamedPlace]) -> dict[str, OriginPlace]:
     chosen: dict[str, str] = {}
-    for key, (origin, words) in list(_origin_contexts(links).items())[:PLACED_ORIGINS_MAX]:
-        candidate = chosen_candidate(await finder.place_candidates(origin), words)
+    for key, (name, words) in list(named.items())[:PLACED_ORIGINS_MAX]:
+        candidate = chosen_candidate(await finder.place_candidates(name), words)
         if candidate is not None:
             chosen[key] = candidate.item_id
     if not chosen:
@@ -57,9 +67,13 @@ def chosen_candidate(candidates: Sequence[PlaceCandidate], words: Collection[str
 
 
 def context_words(link: SupplyLink) -> frozenset[str]:
-    own = {*DESCRIPTION_WORD.findall(link.origin), *DESCRIPTION_WORD.findall(link.material)}
-    stated = {word for text in stated_texts(link.sentence) for word in CONTEXT_WORD.findall(text)}
-    return frozenset(stated - own)
+    return stated_words(stated_texts(link.sentence), (link.origin, link.material))
+
+
+def stated_words(texts: Iterable[str], own: Iterable[str]) -> frozenset[str]:
+    left_out = {word for name in own for word in DESCRIPTION_WORD.findall(name)}
+    stated = {word for text in texts for word in CONTEXT_WORD.findall(text)}
+    return frozenset(stated - left_out)
 
 
 def _origin_contexts(links: Sequence[SupplyLink]) -> dict[str, tuple[str, frozenset[str]]]:

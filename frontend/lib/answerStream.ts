@@ -1,5 +1,6 @@
 import { API_BASE, APP_PLATFORM, APP_VERSION, APP_VERSION_CODE, ApiError, describeApiBody, statusFallback } from "@/lib/api";
 import type { Depth } from "@/lib/explainerContract";
+import type { BuildsOn } from "@/lib/learningContract";
 
 export const ANSWER_STREAM_PATH = "/answers/stream";
 
@@ -11,6 +12,7 @@ export type AskRequest = {
   language?: string | null;
   fresh?: boolean;
   conversationId?: string | null;
+  buildsOn?: BuildsOn;
 };
 
 export function sseFields(block: string): { name: string; data: string | null } {

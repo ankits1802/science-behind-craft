@@ -5,7 +5,7 @@ The only project-specific file of the three practice skills (`engineering-practi
 the project; the facts below do. Review this file whenever the layout, tooling or commands
 change, and update the date.
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
 ## What this repository is
 
@@ -23,17 +23,22 @@ backend/app/core/        shared layer: settings, database sessions, security, ro
                          rate limits, request dependencies
 backend/app/models/      SQLAlchemy models (DR's Prisma naming: PascalCase tables, camelCase columns)
 backend/app/data/        vendored datasets and their pure loaders (craft master list, aliases,
-                         LGD register, seed claims, craft text normalisation)
+                         LGD register, seed claims, craft text normalisation) and the vendored
+                         export assets (reveal.js, the APA CSL style, Noto fonts; decision 0067)
 backend/app/research/    research and answering contracts: typed models, protocols and
                          rules shared by the resolver, planner, source adapters, fetcher,
                          composer, claim writer and answer stream (docs/contracts/research.md),
                          and the explainer: document, blocks, terms, images, stored pieces,
                          depth by role (docs/contracts/explainer.md, decision 0030); dataset
                          rows, rivers, month and season words, reaction rules and the expert
-                         panel (decision 0042)
+                         panel (decision 0042); the phase C kinds, the generated explainer's
+                         static check and the years and moves a text states (decision 0054);
+                         the phase D kinds, unit conversion, follow-up versions, saved
+                         explainers and notes, lesson packs, citation export and the
+                         shared-science explorer (docs/contracts/learning.md, decision 0062)
 backend/app/curation/    curated craft dossiers: the Pydantic model, the offline rules, the
                          check file and the index, shared by tools/curation and the importer
-                         (docs/contracts/curation.md, decision 0051)
+                         in services/curation_* (docs/contracts/curation.md, decisions 0051, 0053)
 backend/app/sources/     adapters for external research sources: shared paced HTTP, record
                          rules and the adapter skeleton; sources/scholarly/ has one module per
                          scholarly service and the registry (decision 0005); sources/reference/
@@ -54,28 +59,34 @@ backend/app/retrieval/   stored-knowledge retrieval (T1 claims, T2 chunks): scop
                          reciprocal rank fusion, chunking, embedding fill (decision 0008)
 backend/app/schemas/     pydantic request and response bodies, and the science, region, voice
                          and media contracts (decision 0014)
-backend/app/science/     the science engine: formulas, balancing (sympy), units (pint), stage
+backend/app/science/     the science engine: formulas, balancing (sympy), units (pint, through
+                         the one registry in research/unit_registry.py, decision 0066), stage
                          envelopes and the process view built from stored rows (decision 0015)
 backend/app/geo/         the region profile and map layers: places, state aggregates, facets,
                          the layer registry and its classes, built from stored rows (decision 0016)
 backend/app/voice/       voice calls: sessions and their binding, the custom-LLM turn, relay turns,
                          the encrypted transcript, daily upkeep, agent provisioning (decision 0017;
                          switched off by VOICE_CALL_ENABLED, decision 0035); Listen: narration of
-                         finished explainers with word timings and its cache (decision 0035)
+                         finished explainers with word timings and its cache (decision 0035);
+                         film mode's score: scenes, fixed prompts and its caches (decision 0058)
 backend/app/media/       stage illustrations and clips: claim set, prompt, bundle, MP4 and PNG
                          checks, the job routes' steps, the worker queue and its SQL (decision 0018)
 backend/app/worker.py    the kv-worker process (python -m app.worker): the media queue
 backend/app/services/    domain services: crafts, knowledge, access, credentials, keys, routing
-backend/app/providers/   model-provider adapters (and the one ElevenLabs adapter), the AI router,
-                         the budget rules and the quota ledger
+backend/app/providers/   model-provider adapters (and the one ElevenLabs adapter with its media
+                         router wrapper, decision 0058), the AI router, the budget rules and the
+                         quota ledger
 backend/app/api/         entry points: router.py and api/routes/<area>.py (thin handlers)
 backend/app/scripts/     entry points: seed commands run by the deploy (seed_crafts, seed_claims
                          with the science seed and the term glossary, seed_districts,
-                         seed_admin) and the portal craft sync
+                         seed_admin), the curated dossier import (import_curation, decision
+                         0053) and the portal craft sync
                          (sync_portal_crafts, also run daily), embed_craft_descriptors,
                          embed_knowledge, the daily coverage enrichment (enrich_coverage),
                          the nightly rebuild of stale knowledge pieces (rebuild_pieces),
-                         the PubChem compound lookup (link_compounds), the daily voice upkeep
+                         the PubChem compound lookup (link_compounds), the nightly re-check
+                         of saved explainers (recheck_saved) and the weekly alert digest
+                         (send_alert_digest, decision 0063), the daily voice upkeep
                          (voice_upkeep), the voice agent's provisioning (provision_voice_agent)
                          and the E2E account's provisioning (provision_e2e_account); shared
                          operator input in operator_input
@@ -105,7 +116,7 @@ voice     -> providers, services, composer, schemas, research, core, models
 media     -> providers, services, schemas, research, core, models
 worker    -> media, core
 providers -> services, research, core, models
-services  -> science, geo, planner, composer, retrieval, sources, research, core, models, data
+services  -> science, geo, planner, composer, retrieval, sources, curation, research, core, models, data
 planner   -> sources, research, core, models
 composer  -> research, core, models
 retrieval -> research, core, models
@@ -243,7 +254,7 @@ not tracked (`.gitignore`).
 | `docs/PLAN.md` | the product plan; section 0 is the owner's direction and overrides the rest |
 | `docs/ARCHITECTURE.md` | layers, module map, import direction, how a question flows |
 | `docs/CORE_API.md` | the catalogue of shared components |
-| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media, curated dossiers |
+| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media, curated dossiers, learning (follow-ups, alerts, lessons, exports, the map) |
 | `docs/decisions/` | decision log: one short file per decision, numbered |
 | `docs/TECH_DEBT.md` | debt register |
 | `docs/PROGRESS.md` | where work stands and what comes next |

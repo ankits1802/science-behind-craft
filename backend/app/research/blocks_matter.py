@@ -4,38 +4,22 @@ import uuid
 from collections.abc import Iterator
 from typing import ClassVar, Literal, Self
 
-from pydantic import AwareDatetime, Field, model_validator
+from pydantic import Field, model_validator
 
 from .base import ContractModel
 from .blocks import SENTENCE, BlockBase, ExplainerSentence, SentenceSpec, require_facts
 from .citations import Citation
-from .media_refs import MediaRef
 from .reactions import SPECIES_ROLES, ReactionSpecies, mhchem_equation, reaction_level
 from .subject_keys import TermKey
 from .terms import WIKIDATA_ID_PATTERN
 from .vocabulary import MaterialKind, MaterialRole, ReactionKind, ShownLevel
 
 __all__ = [
-    "SIMULATION_MAX_BYTES",
-    "SIMULATION_VALUE_KEY_PATTERN",
-    "ZOOM_LEVELS",
     "MaterialCardBlock",
     "Molecule3dBlock",
     "ReactionPlayerBlock",
     "ReactionStep",
-    "SimulationBlock",
-    "SimulationValue",
-    "WhatIfBlock",
-    "WhatIfOption",
-    "ZoomLevel",
-    "ZoomStoryBlock",
 ]
-
-SIMULATION_MAX_BYTES = 200 * 1024
-SIMULATION_VALUE_KEY_PATTERN = r"^[a-z][a-zA-Z0-9]{0,39}$"
-ZOOM_LEVELS = ("DISTRICT", "WORKSHOP", "CLOTH", "FIBRE", "MOLECULE")
-
-ZoomLevelName = Literal[*ZOOM_LEVELS]
 
 
 class ReactionStep(ContractModel):
@@ -137,83 +121,3 @@ class Molecule3dBlock(BlockBase):
 
     def shown_labels(self) -> list[str]:
         return [self.name]
-
-
-class ZoomLevel(ContractModel):
-    level: ZoomLevelName
-    media: MediaRef | None
-    district_lgd: int | None = Field(ge=1)
-    pubchem_cid: int | None = Field(ge=1)
-    sentence: ExplainerSentence
-
-    @model_validator(mode="after")
-    def _each_level_shows_real_matter(self) -> Self:
-        shown = {
-            "DISTRICT": self.district_lgd is not None,
-            "MOLECULE": self.pubchem_cid is not None,
-        }.get(self.level, self.media is not None)
-        if not shown:
-            raise ValueError(f"zoom level {self.level} is shown only with its district, image or compound")
-        return self
-
-
-class ZoomStoryBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (("levels", [(("sentence", SENTENCE),)]),)
-
-    kind: Literal["zoom_story"]
-    version: Literal[1]
-    levels: list[ZoomLevel] = Field(min_length=2)
-
-    @model_validator(mode="after")
-    def _levels_zoom_in_once_each(self) -> Self:
-        ranks = [ZOOM_LEVELS.index(level.level) for level in self.levels]
-        if ranks != sorted(set(ranks)):
-            raise ValueError(f"zoom story {self.id} zooms in level by level, each level once")
-        return self
-
-
-class SimulationValue(ContractModel):
-    key: str = Field(pattern=SIMULATION_VALUE_KEY_PATTERN)
-    value: float
-    unit: str | None = Field(max_length=40)
-    citations: list[Citation] = Field(min_length=1)
-
-
-class SimulationBlock(BlockBase):
-    kind: Literal["simulation"]
-    version: Literal[1]
-    concept: str = Field(min_length=1, max_length=200)
-    title: str = Field(min_length=1, max_length=200)
-    model: str = Field(min_length=1, max_length=120)
-    created_at: AwareDatetime
-    html: str = Field(min_length=1)
-    html_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
-    values: list[SimulationValue] = Field(min_length=1)
-    hidden: bool
-
-    @model_validator(mode="after")
-    def _small_and_fed_only_cited_values(self) -> Self:
-        if len(self.html.encode("utf-8")) > SIMULATION_MAX_BYTES:
-            raise ValueError(f"simulation {self.id} is larger than {SIMULATION_MAX_BYTES} bytes")
-        keys = [value.key for value in self.values]
-        if len(set(keys)) != len(keys):
-            raise ValueError(f"simulation {self.id} passes each value once")
-        return self
-
-    def citations(self) -> Iterator[Citation]:
-        for value in self.values:
-            yield from value.citations
-
-
-class WhatIfOption(ContractModel):
-    label: str = Field(min_length=1, max_length=200)
-    outcome: ExplainerSentence | None
-
-
-class WhatIfBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (("options", [(("outcome", SENTENCE),)]),)
-
-    kind: Literal["what_if"]
-    version: Literal[1]
-    changed: str = Field(min_length=1, max_length=200)
-    options: list[WhatIfOption] = Field(min_length=2)

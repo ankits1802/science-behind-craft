@@ -9,7 +9,15 @@ from typing import Any
 
 from .craft_master_loader import DATA_DIR
 
-__all__ = ["REGISTER_FILE", "DistrictRegister", "load_district_register", "parse_district_register"]
+__all__ = [
+    "REGISTER_FILE",
+    "DistrictCodes",
+    "DistrictRegister",
+    "load_district_codes",
+    "load_district_register",
+    "parse_district_codes",
+    "parse_district_register",
+]
 
 REGISTER_FILE = DATA_DIR / "lgd_register.json"
 
@@ -30,6 +38,18 @@ class DistrictRegister:
 
     def place_names(self) -> frozenset[str]:
         return self.states.union(*self.districts.values())
+
+
+@dataclass(frozen=True)
+class DistrictCodes:
+    states: Mapping[str, int]
+    districts: Mapping[tuple[str, str], int]
+
+    def state_lgd(self, state: str) -> int | None:
+        return self.states.get(state)
+
+    def district_lgd(self, state: str, district: str) -> int | None:
+        return self.districts.get((state, district))
 
 
 def parse_district_register(raw: Mapping[str, Any]) -> DistrictRegister:
@@ -55,3 +75,21 @@ def parse_district_register(raw: Mapping[str, Any]) -> DistrictRegister:
 @lru_cache(maxsize=1)
 def load_district_register() -> DistrictRegister:
     return parse_district_register(json.loads(REGISTER_FILE.read_text(encoding="utf-8")))
+
+
+def parse_district_codes(raw: Mapping[str, Any]) -> DistrictCodes:
+    states = {int(row["lgd"]): str(row["name"]) for row in raw["states"]}
+    districts = {
+        (states[int(row["stateLgd"])], str(row["name"])): int(row["lgd"])
+        for row in raw["districts"]
+        if int(row["stateLgd"]) in states
+    }
+    return DistrictCodes(
+        states=MappingProxyType({name: lgd for lgd, name in states.items()}),
+        districts=MappingProxyType(districts),
+    )
+
+
+@lru_cache(maxsize=1)
+def load_district_codes() -> DistrictCodes:
+    return parse_district_codes(json.loads(REGISTER_FILE.read_text(encoding="utf-8")))

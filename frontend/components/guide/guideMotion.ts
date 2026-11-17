@@ -10,6 +10,18 @@ export function layoutSpring(reduce: boolean): Transition {
   return reduce ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 32, mass: 0.9 };
 }
 
+export function cameraMove(reduce: boolean): Transition {
+  return reduce ? { duration: 0 } : { duration: 1.6, ease: EASE_OUT, delay: 0.3 };
+}
+
+export function zoomThrough(reduce: boolean): Variants {
+  return {
+    hidden: { opacity: 0, scale: reduce ? 1 : 0.9 },
+    show: { opacity: 1, scale: 1, transition: { duration: reduce ? 0 : 0.5, ease: EASE_OUT } },
+    exit: { opacity: 0, scale: reduce ? 1 : 1.12, transition: { duration: reduce ? 0 : 0.28, ease: "easeIn" } }
+  };
+}
+
 export function staggerParent(reduce: boolean, stagger = 0.06): Variants {
   return {
     hidden: {},

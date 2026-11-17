@@ -5,7 +5,7 @@ from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 
 from app.core.errors import AppError, ExternalFailure, spend_refusal
-from app.research.crafts import MAX_CANDIDATES, CraftQuery, CraftRef, CraftResolution
+from app.research.crafts import COMPARED_CRAFTS_MAX, MAX_CANDIDATES, CraftQuery, CraftRef, CraftResolution
 from app.research.depth import depth_policy, effective_depth
 from app.research.structured import StructuredModel
 from app.research.understanding import UnderstandAsk, Understanding, UnknownCraft
@@ -18,7 +18,7 @@ from .understanding_prompt import (
     understand_schema,
 )
 
-__all__ = ["CraftChoice", "ModelUnderstander", "Reading", "Resolve", "chosen_craft"]
+__all__ = ["CraftChoice", "ModelUnderstander", "Reading", "Resolve", "chosen_craft", "compared_choice"]
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +36,7 @@ class Reading:
 class CraftChoice:
     craft: CraftRef | None
     others: tuple[CraftRef, ...] = ()
+    compared: tuple[CraftRef, ...] = ()
 
 
 class ModelUnderstander:
@@ -52,7 +53,7 @@ class ModelUnderstander:
         choice = chosen_craft(ask, resolution, reading.reply)
         if choice.craft is None and not ask.any_craft and reading.reply is not None:
             choice = await self._named(reading.reply, offered)
-        return _understanding(ask, choice, reading)
+        return _understanding(ask, compared_choice(ask, choice, reading.reply, offered), reading)
 
     async def _resolution(self, ask: UnderstandAsk) -> CraftResolution | None:
         query = CraftQuery(text=ask.question, craft_slug=ask.craft_slug, language=ask.language)
@@ -109,12 +110,29 @@ def chosen_craft(
     return CraftChoice(craft=picked, others=_distinct(offered, without=picked))
 
 
+def compared_choice(
+    ask: UnderstandAsk, choice: CraftChoice, reply: UnderstandReply | None, offered: Sequence[CraftRef]
+) -> CraftChoice:
+    listed = _distinct(reply.compared(offered), without=None) if reply is not None else ()
+    if ask.any_craft or len(listed) < 2:
+        return choice
+    slugs = [craft.slug for craft in listed]
+    if ask.craft_slug is not None and (choice.craft is None or choice.craft.slug not in slugs):
+        return choice
+    lead = choice.craft if ask.craft_slug is not None and choice.craft is not None else listed[0]
+    compared = tuple(craft for craft in listed if craft.slug != lead.slug)[:COMPARED_CRAFTS_MAX]
+    kept = {lead.slug, *(craft.slug for craft in compared)}
+    rest = (*([choice.craft] if choice.craft is not None else []), *choice.others)
+    return CraftChoice(craft=lead, others=_distinct(rest, without=None, leaving=kept), compared=compared)
+
+
 def _understanding(ask: UnderstandAsk, choice: CraftChoice, reading: Reading) -> Understanding:
     depth = effective_depth(ask.depth, ask.role, past_degrade=reading.degraded)
     reply = reading.reply
     return Understanding(
         craft=choice.craft,
         candidates=list(choice.others[:MAX_CANDIDATES]),
+        compared=list(choice.compared) if reply else [],
         disciplines=list(reply.disciplines) if reply else [],
         seats=list(reply.seats[: depth_policy(depth).max_experts]) if reply else [],
         depth=depth,
@@ -128,8 +146,10 @@ def _offered(resolution: CraftResolution | None) -> list[CraftRef]:
     return [candidate.craft for candidate in resolution.candidates] if resolution else []
 
 
-def _distinct(crafts: Sequence[CraftRef], *, without: CraftRef | None) -> tuple[CraftRef, ...]:
-    seen = {without.slug} if without else set()
+def _distinct(
+    crafts: Sequence[CraftRef], *, without: CraftRef | None, leaving: set[str] | None = None
+) -> tuple[CraftRef, ...]:
+    seen = ({without.slug} if without else set()) | (leaving or set())
     kept: list[CraftRef] = []
     for craft in crafts:
         if craft.slug not in seen:

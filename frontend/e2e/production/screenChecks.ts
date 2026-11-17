@@ -1,9 +1,11 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, type Locator, type Page, type Response } from "@playwright/test";
 
+import { checkedCraftPage, CRAFT_PAGE_PATH, craftPageShape } from "@/lib/craftPageContract";
 import { ROLE_LABELS } from "@/lib/permissions";
+import { parseShape } from "@/lib/shape";
 import type { User } from "@/lib/types";
 
-import { DESKTOP_NAV_MIN_WIDTH, NO_LAYER_LABEL, clip, labelProblems, navExpectation } from "./checks";
+import { DESKTOP_NAV_MIN_WIDTH, NO_LAYER_LABEL, clip, curatedOverviewProblems, labelProblems, navExpectation, overviewNote, type OverviewServed } from "./checks";
 import { answersScript } from "./stuckPage";
 
 const LAYER_TIMEOUT_MS = 30_000;
@@ -11,6 +13,7 @@ const CLICK_TIMEOUT_MS = 30_000;
 const ANSWER_TIMEOUT_MS = 5_000;
 const STEADY_GAP_MS = 500;
 const CALL_LOG_LINES = 6;
+const CRAFT_PAGE_TIMEOUT_MS = 30_000;
 
 function wideNav(page: Page): boolean {
   return (page.viewportSize()?.width ?? 0) >= DESKTOP_NAV_MIN_WIDTH;
@@ -54,13 +57,39 @@ export async function depthProblems(page: Page, user: User): Promise<string[]> {
   return labelProblems("the Depth choice", expected.depths, shown);
 }
 
-export async function openCraftTab(page: Page, label: string, panel: string): Promise<string[] | null> {
+export function craftPageResponse(page: Page, slug: string): Promise<Response | null> {
+  const path = `/api${CRAFT_PAGE_PATH(slug)}`;
+  return page.waitForResponse((response) => new URL(response.url()).pathname === path, { timeout: CRAFT_PAGE_TIMEOUT_MS }).catch(() => null);
+}
+
+export async function overviewOutcome(page: Page, served: Promise<Response | null>): Promise<{ problems: string[]; note: string | null }> {
+  await expect(page.getByTestId("craft-panel-overview")).toBeVisible();
+  const response = await served;
+  if (!response) return { problems: [`the craft page route did not answer in ${CRAFT_PAGE_TIMEOUT_MS / 1000} s`], note: null };
+  if (!response.ok()) return { problems: [`the craft page route answered ${response.status()}`], note: null };
+  const body = checkedCraftPage(parseShape(craftPageShape, await response.json()));
+  const summary: OverviewServed = {
+    curated: body.curated,
+    version: body.curation?.version ?? null,
+    coverage: body.curation?.coverage ?? null,
+    lede: body.overview.lede.length,
+    keyFacts: body.overview.keyFacts.length
+  };
+  const shown = {
+    lede: await page.getByTestId("craft-lede").getByTestId("answer-sentence").count(),
+    keyFacts: await page.getByTestId("craft-key-facts").getByTestId("craft-fact").count()
+  };
+  return { problems: curatedOverviewProblems(summary, shown), note: overviewNote(summary) };
+}
+
+export async function openCraftTab(page: Page, label: string, panel: string, content: string): Promise<string[] | null> {
   const tab = page.getByRole("tab", { name: label, exact: true });
   if ((await tab.count()) === 0) return null;
   const refused = await clickProblems(page, tab, `the ${label} tab`);
   if (refused.length > 0) return refused;
   await expect(tab).toHaveAttribute("aria-selected", "true");
   await expect(page.getByTestId(panel)).toBeVisible();
+  await expect(page.getByTestId(panel).getByTestId(content).first()).toBeVisible();
   return [];
 }
 

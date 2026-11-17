@@ -6,8 +6,8 @@ import pytest
 from app.core.errors import ExternalFailure
 from app.providers.elevenlabs import NARRATION_MAX_CHARACTERS, NARRATION_MODEL
 from app.schemas.listen import ListenScript
+from app.services.explainer_payload import stored_explainer
 from app.voice.listen import NARRATION_LINK_SECONDS, ListenRefused, listen_script
-from app.voice.listen_store import stored_explainer
 from app.voice.narration import PART_CHARACTERS
 
 from ..contracts.golden import dumped, golden_json, golden_text

@@ -100,10 +100,20 @@ def test_the_ladder_uses_the_seeded_stages_and_the_science_rows() -> None:
 
 def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
     assert set(BLOCK_MODELS) == set(BLOCK_KINDS) == set(BLOCK_PHASES)
-    assert len(BLOCK_KINDS) == 21
+    assert len(BLOCK_KINDS) == 25
+    assert [kind for kind, phase in BLOCK_PHASES.items() if phase == "D"] == [
+        "quiz",
+        "compare",
+        "in_practice",
+        "open_questions",
+        "concept_graph",
+        "measure",
+        "market_gi",
+        "climate_risk",
+    ]
     assert BUILT_BLOCK_KINDS[:3] == ("prose", "process_ladder", "images")
     assert {kind for kind, phase in BLOCK_PHASES.items() if phase == "A"} <= set(BUILT_BLOCK_KINDS)
-    assert {BLOCK_PHASES[kind] for kind in BUILT_BLOCK_KINDS} <= {"A", "B"}
+    assert {BLOCK_PHASES[kind] for kind in BUILT_BLOCK_KINDS} <= {"A", "B", "C", "D"}
     assert BLOCK_PHASES["designs"] == "DEFERRED"
     for kind, model in BLOCK_MODELS.items():
         assert model.model_fields["kind"].annotation.__args__ == (kind,)
@@ -113,7 +123,7 @@ def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
 
 def test_a_block_that_is_not_built_is_never_shown() -> None:
     body = document()
-    section(body, "s3")["blocks"].append(declared("what_if") | {"id": "s3.b2"})
+    section(body, "s3")["blocks"].append(declared("artisan_voice") | {"id": "s3.b2"})
     with pytest.raises(ValidationError, match="not built yet"):
         Explainer.model_validate(body)
 

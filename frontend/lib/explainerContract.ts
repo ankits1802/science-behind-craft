@@ -1,7 +1,35 @@
 import { languageCodeShape } from "@/lib/answerLanguages";
-import { answerSentenceShape, citationShape, craftLinkShape, HTTPS_URL, INSTANT, shownLevelShape, sourceRefShape, UUID, type CraftLink } from "@/lib/answerShapes";
-import { envelope, explainerSentenceShape, TERM_KEY, WIKIDATA_ID, type BlockEnvelope, type ExplainerSentence } from "@/lib/explainerBlockBase";
+import { answerSentenceShape, citationShape, craftLinkShape, INSTANT, shownLevelShape, sourceRefShape, UUID, type CraftLink } from "@/lib/answerShapes";
+import {
+  DISCIPLINES,
+  envelope,
+  explainerSentenceShape,
+  IMAGE_RELEVANCE,
+  mediaRefShape,
+  TERM_KEY,
+  WIKIDATA_ID,
+  type BlockEnvelope,
+  type Discipline,
+  type ExplainerSentence,
+  type MediaRef
+} from "@/lib/explainerBlockBase";
 import { expertViewBlockShape, type ExpertViewBlock } from "@/lib/explainerExperts";
+import {
+  climateRiskBlockShape,
+  marketGiBlockShape,
+  measureBlockShape,
+  type ClimateRiskBlock,
+  type MarketGiBlock,
+  type MeasureBlock
+} from "@/lib/explainerInsight";
+import {
+  compareBlockShape,
+  conceptGraphBlockShape,
+  quizBlockShape,
+  type CompareBlock,
+  type ConceptGraphBlock,
+  type QuizBlock
+} from "@/lib/explainerLearning";
 import {
   materialCardBlockShape,
   molecule3dBlockShape,
@@ -20,27 +48,22 @@ import {
   type SeasonsBlock,
   type SupplyMapBlock
 } from "@/lib/explainerPlace";
+import {
+  simulationBlockShape,
+  timelineMapBlockShape,
+  whatIfBlockShape,
+  zoomStoryBlockShape,
+  type SimulationBlock,
+  type TimelineMapBlock,
+  type WhatIfBlock,
+  type ZoomStoryBlock
+} from "@/lib/explainerPlay";
 import { MATERIAL_KINDS, MATERIAL_ROLES, STAGE_TYPES } from "@/lib/scienceContract";
 import { integer, list, matching, nullable, object, oneOf, optional, tagged, text, type Shape } from "@/lib/shape";
 import type { AnswerSentence, Citation, EvidenceLevel, SourceRef } from "@/lib/types";
 
+export { DISCIPLINES, type Discipline };
 export const DEPTHS = ["BASIC", "DETAILED", "EXPERT"] as const;
-export const DISCIPLINES = [
-  "OVERVIEW",
-  "PROCESS",
-  "CHEMISTRY",
-  "PHYSICS",
-  "MATERIALS",
-  "GEOGRAPHY",
-  "GEOLOGY",
-  "CLIMATE",
-  "ECOLOGY",
-  "BOTANY",
-  "HISTORY",
-  "ECONOMICS",
-  "DESIGN",
-  "HEALTH"
-] as const;
 export const BLOCK_KINDS = [
   "prose",
   "process_ladder",
@@ -62,17 +85,18 @@ export const BLOCK_KINDS = [
   "quiz",
   "open_questions",
   "artisan_voice",
-  "designs"
+  "designs",
+  "concept_graph",
+  "measure",
+  "market_gi",
+  "climate_risk"
 ] as const;
-export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d"] as const;
+export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d", "compare", "concept_graph", "climate_risk", "measure", "market_gi", "simulation", "what_if", "zoom_story", "timeline_map"] as const;
 export const WORKING_SECTION_STATES = ["RESEARCHING", "WRITING", "CHECKING"] as const;
 export const FINAL_SECTION_STATES = ["READY", "EMPTY"] as const;
-export const MEDIA_DISPLAYS = ["INLINE", "LINK_CARD"] as const;
-export const IMAGE_RELEVANCE = ["TEXT", "VISION"] as const;
 export const TERM_BASES = ["STORED", "WIKIPEDIA", "WEB_SEARCH"] as const;
 
 export type Depth = (typeof DEPTHS)[number];
-export type Discipline = (typeof DISCIPLINES)[number];
 export type BlockKind = (typeof BLOCK_KINDS)[number];
 export type WorkingSectionState = (typeof WORKING_SECTION_STATES)[number];
 export type FinalSectionState = (typeof FINAL_SECTION_STATES)[number];
@@ -98,24 +122,6 @@ export type LadderStage = {
   reactionIds: string[];
 };
 export type ProcessLadderBlock = BlockEnvelope<"process_ladder"> & { craft: CraftLink; processId: string; stages: LadderStage[] };
-export type MediaRef = {
-  id: string;
-  display: (typeof MEDIA_DISPLAYS)[number];
-  provider: string;
-  pageUrl: string;
-  imageUrl: string;
-  width: number | null;
-  height: number | null;
-  title: string;
-  alt: string;
-  author: string | null;
-  site: string;
-  credit: string | null;
-  licence: string | null;
-  licenceUrl: string | null;
-  sourceId: string | null;
-  retrievedAt: string;
-};
 export type ImageItem = { media: MediaRef; claimIds: string[]; relevance: (typeof IMAGE_RELEVANCE)[number] };
 export type ImagesBlock = BlockEnvelope<"images"> & { items: ImageItem[] };
 export type BlockByKind = {
@@ -130,6 +136,16 @@ export type BlockByKind = {
   expert_view: ExpertViewBlock;
   seasons: SeasonsBlock;
   supply_map: SupplyMapBlock;
+  simulation: SimulationBlock;
+  what_if: WhatIfBlock;
+  zoom_story: ZoomStoryBlock;
+  timeline_map: TimelineMapBlock;
+  quiz: QuizBlock;
+  compare: CompareBlock;
+  concept_graph: ConceptGraphBlock;
+  measure: MeasureBlock;
+  market_gi: MarketGiBlock;
+  climate_risk: ClimateRiskBlock;
 };
 export type TypedBlockKind = keyof BlockByKind;
 export type BuiltBlockKind = (typeof BUILT_BLOCK_KINDS)[number];
@@ -185,25 +201,6 @@ const ladderStageShape: Shape<LadderStage> = object<LadderStage>({
   reactionIds: list(UUID)
 });
 
-export const mediaRefShape: Shape<MediaRef> = object<MediaRef>({
-  id: UUID,
-  display: oneOf(MEDIA_DISPLAYS),
-  provider: matching(/^[a-z][a-z0-9_]{1,39}$/, "a provider name"),
-  pageUrl: HTTPS_URL,
-  imageUrl: HTTPS_URL,
-  width: nullable(integer),
-  height: nullable(integer),
-  title: text,
-  alt: text,
-  author: nullable(text),
-  site: text,
-  credit: nullable(text),
-  licence: nullable(text),
-  licenceUrl: nullable(HTTPS_URL),
-  sourceId: nullable(text),
-  retrievedAt: INSTANT
-});
-
 export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K]> } = {
   prose: object<ProseBlock>({ ...envelope("prose"), sentences: list(explainerSentenceShape, 1) }),
   process_ladder: object<ProcessLadderBlock>({ ...envelope("process_ladder"), craft: craftLinkShape, processId: UUID, stages: list(ladderStageShape, 1) }),
@@ -218,7 +215,17 @@ export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K
   }),
   expert_view: expertViewBlockShape,
   seasons: seasonsBlockShape,
-  supply_map: supplyMapBlockShape
+  supply_map: supplyMapBlockShape,
+  simulation: simulationBlockShape,
+  what_if: whatIfBlockShape,
+  zoom_story: zoomStoryBlockShape,
+  timeline_map: timelineMapBlockShape,
+  quiz: quizBlockShape,
+  compare: compareBlockShape,
+  concept_graph: conceptGraphBlockShape,
+  measure: measureBlockShape,
+  market_gi: marketGiBlockShape,
+  climate_risk: climateRiskBlockShape
 };
 
 export const explainerBlockShape: Shape<ExplainerBlock> = tagged<ExplainerBlock>(

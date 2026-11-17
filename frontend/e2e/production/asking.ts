@@ -2,16 +2,18 @@ import { expect, type Page } from "@playwright/test";
 
 import {
   ANSWER_DEADLINE_MS,
-  EXPECTED_DEPTH_LABEL,
+  DEPTH_LABELS,
   STALL_LIMIT_MS,
   answerProblems,
   answerRecord,
   knownAnswerOutcome,
   type AnswerRecord,
+  type AskedDepth,
   type KnownAnswerQuestion,
   type WaitOutcome
 } from "./answers";
 import { CRAFT_SLUG, riversLoaded } from "./run";
+import { readSandboxFrames, watchSandboxFrames, type SandboxWatch } from "./sandboxWatch";
 import { settle } from "./screenRun";
 import { glanceAtTaps, pageNow, readTaps } from "./streamTap";
 
@@ -28,8 +30,8 @@ async function chooseAutoLanguage(page: Page): Promise<void> {
   await expect(picker).toHaveText(AUTO_LANGUAGE);
 }
 
-async function chooseDepth(page: Page): Promise<void> {
-  const depth = page.getByRole("group", { name: "Depth" }).getByRole("button", { name: EXPECTED_DEPTH_LABEL, exact: true });
+async function chooseDepth(page: Page, asked: AskedDepth): Promise<void> {
+  const depth = page.getByRole("group", { name: "Depth" }).getByRole("button", { name: DEPTH_LABELS[asked], exact: true });
   if ((await depth.getAttribute("aria-pressed")) !== "true") await depth.click();
   await expect(depth).toHaveAttribute("aria-pressed", "true");
 }
@@ -64,20 +66,36 @@ async function readPageSentences(page: Page, record: AnswerRecord): Promise<void
   record.pageSentencesWithoutChip = chips.filter((count) => count === 0).length;
 }
 
-export async function askKnownAnswer(page: Page, question: KnownAnswerQuestion): Promise<AnswerRecord> {
-  await page.goto(`/ask?craft=${encodeURIComponent(CRAFT_SLUG)}`, { waitUntil: "domcontentloaded" });
-  await settle(page);
-  await chooseDepth(page);
-  await chooseAutoLanguage(page);
-  await page.getByLabel("Your question").fill(question.question);
+async function generatedFrames(page: Page, record: AnswerRecord, watch: SandboxWatch, ended: boolean): Promise<void> {
+  const frames = ended ? await readSandboxFrames(page) : null;
+  record.generatedExplainer = { ...record.generatedExplainer, frames, frameRequests: [...watch.requests], frameRefusals: [...watch.refusals] };
+}
+
+async function asked(page: Page, question: KnownAnswerQuestion, watch: SandboxWatch | null): Promise<AnswerRecord> {
   const clickedAt = await pageNow(page);
   await page.getByRole("button", { name: "Ask", exact: true }).click();
   const waited = await waitForStreamEnd(page, clickedAt);
   const streams = await readTaps(page, clickedAt);
   const record = answerRecord({ question, stream: streams.at(-1) ?? null, streamsOpened: streams.length, clickedAt, waited });
   if (!waited) await readPageSentences(page, record);
-  const options = { riversLoaded: riversLoaded() };
-  record.problems.push(...answerProblems(record, question, options));
-  record.notes.push(...knownAnswerOutcome(record, question, options).notes);
+  if (watch) await generatedFrames(page, record, watch, waited === null);
   return record;
+}
+
+export async function askKnownAnswer(page: Page, question: KnownAnswerQuestion): Promise<AnswerRecord> {
+  await page.goto(`/ask?craft=${encodeURIComponent(CRAFT_SLUG)}`, { waitUntil: "domcontentloaded" });
+  await settle(page);
+  await chooseDepth(page, question.depth);
+  await chooseAutoLanguage(page);
+  await page.getByLabel("Your question").fill(question.question);
+  const watch = question.check === "GENERATED_EXPLAINER" ? await watchSandboxFrames(page) : null;
+  try {
+    const record = await asked(page, question, watch);
+    const options = { riversLoaded: riversLoaded() };
+    record.problems.push(...answerProblems(record, question, options));
+    record.notes.push(...knownAnswerOutcome(record, question, options).notes);
+    return record;
+  } finally {
+    await watch?.stop();
+  }
 }

@@ -54,7 +54,7 @@ export function useAskScreen() {
   const pathname = usePathname();
   const { catalogue } = useCraftCatalogue();
   const { config, ready } = useAskConfig();
-  const { state, round, ask, stop, clear } = useAnswerStream();
+  const { state, round, ask, follow, load, stop, clear } = useAnswerStream();
   const { params, question, setQuestion, setPick, setPickedDepth, update, settings } = useAskSettings(config);
   const language = resolvedLanguage(settings.languageChoice, question, config.languages);
   const dictation = useDictation(language, setQuestion, QUESTION_MAX);
@@ -96,5 +96,5 @@ export function useAskScreen() {
   const canAsk = askable(question) && !(busy && question.trim() === asked.trim());
   const understood = useMemo<UnderstoodChange>(() => ({ parts: changeableParts(config), onChange: focusAskOption }), [config]);
   const shownDepth = depthLabel(state.understood?.depth, config);
-  return { state, round, config, question, setQuestion, language, dictation, busy, canAsk, options, understood, shownDepth, run, stop, clear };
+  return { state, round, config, question, setQuestion, language, dictation, busy, canAsk, options, understood, shownDepth, run, follow, load, stop, clear };
 }

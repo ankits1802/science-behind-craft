@@ -190,13 +190,3 @@ test("the CSP lets images, video and downloads reach the media bucket the Terraf
   expect(directive("media-src")).toEqual(["media-src", "'self'", origin]);
   expect(directive("connect-src")).toContain(origin);
 });
-
-test("an illustration sits beside the stage's evidence, never inside it", () => {
-  const card = read("frontend", "components", "craft", "StageCard.tsx");
-  expect(card).not.toMatch(/Media|media/);
-  const timeline = read("frontend", "components", "craft", "ProcessTimeline.tsx");
-  const cardAt = timeline.indexOf("<StageCard ");
-  const mediaAt = timeline.indexOf("{stageMedia?.(stage)}");
-  expect(cardAt).toBeGreaterThan(0);
-  expect(mediaAt).toBeGreaterThan(timeline.indexOf("/>", cardAt));
-});

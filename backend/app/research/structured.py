@@ -29,6 +29,7 @@ PORTABLE_SCHEMA_KEYWORDS = frozenset(
 class StructuredReply(ContractModel):
     text: str
     degraded: bool
+    model: str | None = None
 
 
 @runtime_checkable

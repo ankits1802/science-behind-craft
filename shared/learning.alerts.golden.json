@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "saved": {
+    "schemaVersion": 1,
+    "items": [
+      {
+        "explainerId": "0c5e7a1d-2b3f-4c6d-8e9f-a0b1c2d3e4f5",
+        "question": "How is Kutch Ajrakh made, and why does its water matter?",
+        "craft": {
+          "slug": "Kutch-Ajrakh",
+          "name": "Kutch Ajrakh",
+          "path": "/crafts/Kutch-Ajrakh"
+        },
+        "facets": [
+          "PROCESS",
+          "GEOGRAPHY",
+          "CHEMISTRY",
+          "HISTORY"
+        ],
+        "depth": "EXPERT",
+        "language": "en",
+        "latestVersion": 2,
+        "seenVersion": 2,
+        "savedAt": "2026-11-18T09:05:00Z",
+        "checkedAt": "2026-11-19T01:30:00Z"
+      }
+    ]
+  },
+  "notifications": {
+    "schemaVersion": 1,
+    "items": [
+      {
+        "id": "aebd3a94-ce4e-5794-b21f-640a4506813c",
+        "kind": "ANSWER_IMPROVED",
+        "createdAt": "2026-11-19T01:30:00Z",
+        "readAt": null,
+        "payload": {
+          "explainerId": "0c5e7a1d-2b3f-4c6d-8e9f-a0b1c2d3e4f5",
+          "version": 2,
+          "question": "How is Kutch Ajrakh made, and why does its water matter?",
+          "craft": {
+            "slug": "Kutch-Ajrakh",
+            "name": "Kutch Ajrakh",
+            "path": "/crafts/Kutch-Ajrakh"
+          },
+          "news": [
+            {
+              "facet": "GEOGRAPHY",
+              "newClaims": 3
+            },
+            {
+              "facet": "HISTORY",
+              "newClaims": 1
+            }
+          ],
+          "checkedAt": "2026-11-19T01:30:00Z"
+        }
+      }
+    ],
+    "unread": 1
+  },
+  "digest": {
+    "schemaVersion": 1,
+    "weekOf": "2026-11-23",
+    "items": [
+      {
+        "explainerId": "0c5e7a1d-2b3f-4c6d-8e9f-a0b1c2d3e4f5",
+        "version": 2,
+        "question": "How is Kutch Ajrakh made, and why does its water matter?",
+        "craft": {
+          "slug": "Kutch-Ajrakh",
+          "name": "Kutch Ajrakh",
+          "path": "/crafts/Kutch-Ajrakh"
+        },
+        "news": [
+          {
+            "facet": "GEOGRAPHY",
+            "newClaims": 3
+          },
+          {
+            "facet": "HISTORY",
+            "newClaims": 1
+          }
+        ],
+        "checkedAt": "2026-11-19T01:30:00Z"
+      }
+    ],
+    "settingsUrl": "https://kalavigyan.example.org/settings"
+  }
+}

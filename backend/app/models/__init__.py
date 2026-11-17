@@ -9,6 +9,7 @@ from app.models.ai import (
     SecretTestResult,
     UsageEvent,
 )
+from app.models.alerts import AlertDigestSend, Notification
 from app.models.base import Base
 from app.models.conversation import (
     Answer,
@@ -37,6 +38,7 @@ from app.models.crafts import (
     EnvDataset,
     GiRegistration,
 )
+from app.models.curation import CraftGiRecord, CraftPrice, CraftWorkforce, CuratedClaim, CuratedCraft
 from app.models.evaluation import EvalCase, EvalResult, EvalRun
 from app.models.glossary import Term, TermConcept, TermCraft, TermSummary
 from app.models.identity import (
@@ -70,6 +72,7 @@ from app.models.knowledge import (
     WebFetch,
 )
 from app.models.knowledge_pieces import KnowledgePiece
+from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
 from app.models.rivers import RiverBasin, RiverReach
 from app.models.science import (
@@ -88,6 +91,7 @@ __all__ = [
     "AccessRoster",
     "AdminDistrict",
     "AdminState",
+    "AlertDigestSend",
     "Answer",
     "AnswerCitation",
     "AnswerSentence",
@@ -110,9 +114,14 @@ __all__ = [
     "CraftAlias",
     "CraftCategory",
     "CraftCode",
+    "CraftGiRecord",
     "CraftLocation",
+    "CraftPrice",
     "CraftSpelling",
     "CraftSubCategory",
+    "CraftWorkforce",
+    "CuratedClaim",
+    "CuratedCraft",
     "CxaCraftMap",
     "DataRequest",
     "DistrictEnvValue",
@@ -127,6 +136,7 @@ __all__ = [
     "Invite",
     "Job",
     "KnowledgePiece",
+    "LessonPack",
     "LiveCandidate",
     "ManagedSecret",
     "Material",
@@ -135,6 +145,7 @@ __all__ = [
     "MediaRef",
     "MediaRefClaim",
     "Message",
+    "Notification",
     "Objection",
     "PasswordResetRequest",
     "PasswordResetToken",

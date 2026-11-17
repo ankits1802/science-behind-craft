@@ -20,6 +20,7 @@ __all__ = [
     "quote_key",
     "quote_occurs",
     "quote_overlap",
+    "spans_in_key",
     "trivial_quote",
     "unsupported_figures",
 ]
@@ -124,12 +125,22 @@ def quote_occurs(quote: str, text: str) -> bool:
 
 
 def occurs_in_key(quote: str, key: str) -> bool:
+    pattern = _needle_pattern(quote)
+    return pattern is not None and pattern.search(key) is not None
+
+
+def spans_in_key(quote: str, key: str) -> list[tuple[int, int]]:
+    pattern = _needle_pattern(quote)
+    return [] if pattern is None else [found.span() for found in pattern.finditer(key)]
+
+
+def _needle_pattern(quote: str) -> re.Pattern[str] | None:
     needle = quote_key(quote)
     if not needle:
-        return False
+        return None
     opening = OPEN_BOUNDARY if needle[0].isalnum() else ""
     closing = CLOSE_BOUNDARY if needle[-1].isalnum() else ""
-    return re.search(opening + re.escape(needle) + closing, key) is not None
+    return re.compile(opening + re.escape(needle) + closing)
 
 
 def trivial_quote(quote: str) -> bool:

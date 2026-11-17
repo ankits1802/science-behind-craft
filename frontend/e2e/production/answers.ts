@@ -4,31 +4,34 @@ import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
 import { blockSentences } from "@/lib/explainerView";
 import type { AnswerSentence } from "@/lib/types";
 
+import { NO_GENERATED_EXPLAINER, generatedExplainerFound, generatedExplainerOutcome, withGeneratedExplainer, type GeneratedExplainerRecord } from "./generatedExplainer";
 import type { TappedChunk, TappedStream } from "./streamTap";
 import { NO_REGION_STORY, waterStoryFound, waterStoryOutcome, withRegionStory, type CheckOutcome, type RegionStoryRecord } from "./waterStory";
 
 export const ANSWER_DEADLINE_MS = 10 * 60_000;
 export const STALL_LIMIT_MS = 150_000;
-export const EXPECTED_DEPTH = "DETAILED";
-export const EXPECTED_DEPTH_LABEL = "Detailed";
+export const DEPTH_LABELS = { DETAILED: "Detailed", EXPERT: "Expert" } as const;
 export const KNOWN_ANSWER = /\balum\b|फिटकरी|फिटकिरी|फ़िटकरी/i;
 export const LATIN = "Latn";
 
-export type KnownAnswerCheck = "MORDANT" | "WATER_STORY";
-export type KnownAnswerQuestion = { label: string; language: string; script: string; question: string; check: KnownAnswerCheck };
+export type KnownAnswerCheck = "MORDANT" | "WATER_STORY" | "GENERATED_EXPLAINER";
+export type AskedDepth = keyof typeof DEPTH_LABELS;
+export type KnownAnswerQuestion = { label: string; language: string; script: string; depth: AskedDepth; question: string; check: KnownAnswerCheck };
 export type KnownAnswerOptions = { riversLoaded: boolean };
 
 export const RIVERS_NOT_LOADED: KnownAnswerOptions = { riversLoaded: false };
 export const KNOWN_ANSWER_QUESTIONS: readonly KnownAnswerQuestion[] = [
-  { label: "English", language: "en", script: LATIN, check: "MORDANT", question: "Which mordant fixes the red in Kutch Ajrakh block printing?" },
+  { label: "English", language: "en", script: LATIN, depth: "DETAILED", check: "MORDANT", question: "Which mordant fixes the red in Kutch Ajrakh block printing?" },
   {
     label: "Hindi",
     language: "hi",
     script: "Deva",
+    depth: "DETAILED",
     check: "MORDANT",
     question: "कच्छ की अजरख छपाई में लाल रंग पक्का करने के लिए कौन सा मॉर्डेंट इस्तेमाल होता है?"
   },
-  { label: "Water", language: "en", script: LATIN, check: "WATER_STORY", question: "How does the water of Kachchh shape Kutch Ajrakh?" }
+  { label: "Water", language: "en", script: LATIN, depth: "DETAILED", check: "WATER_STORY", question: "How does the water of Kachchh shape Kutch Ajrakh?" },
+  { label: "Indigo", language: "en", script: LATIN, depth: "EXPERT", check: "GENERATED_EXPLAINER", question: "How does indigo turn blue on Kutch Ajrakh cloth?" }
 ];
 
 export type WaitOutcome = "stalled" | "timeout" | "never-started";
@@ -78,6 +81,7 @@ export type AnswerRecord = {
   scripts: { translated: number; englishFallback: number; other: number };
   knownAnswerFound: boolean;
   regionStory: RegionStoryRecord;
+  generatedExplainer: GeneratedExplainerRecord;
   pageSentences: number | null;
   pageSentencesWithoutChip: number | null;
   problems: string[];
@@ -179,10 +183,12 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
   let error: string | null = null;
   let notEnoughEvidence: string | null = null;
   let regionStory = NO_REGION_STORY;
+  let generatedExplainer = NO_GENERATED_EXPLAINER;
   for (const { at, event } of parsed.events) {
     if (event.type === "block") {
       sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence)));
       regionStory = withRegionStory(regionStory, event.data.block);
+      generatedExplainer = withGeneratedExplainer(generatedExplainer, event.data.block);
     } else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
     else if (event.type === "source") {
       const { id, kind, title, publisher, year, doi, url } = event.data;
@@ -228,13 +234,20 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     sentences,
     followUps,
     scripts: scriptCounts(sentences, question.script),
-    knownAnswerFound: question.check === "WATER_STORY" ? waterStoryFound(regionStory) : sentences.some((sentence) => KNOWN_ANSWER.test(`${sentence.text} ${sentence.original ?? ""}`)),
+    knownAnswerFound: knownAnswerFound(question, sentences, regionStory, generatedExplainer),
     regionStory,
+    generatedExplainer,
     pageSentences: null,
     pageSentencesWithoutChip: null,
     problems: [],
     notes: []
   };
+}
+
+function knownAnswerFound(question: KnownAnswerQuestion, sentences: readonly SentenceRecord[], story: RegionStoryRecord, generated: GeneratedExplainerRecord): boolean {
+  if (question.check === "WATER_STORY") return waterStoryFound(story);
+  if (question.check === "GENERATED_EXPLAINER") return generatedExplainerFound(generated);
+  return sentences.some((sentence) => KNOWN_ANSWER.test(`${sentence.text} ${sentence.original ?? ""}`));
 }
 
 export function scriptProblems(sentences: readonly SentenceRecord[], script: string): string[] {
@@ -250,6 +263,7 @@ export function scriptProblems(sentences: readonly SentenceRecord[], script: str
 
 export function knownAnswerOutcome(record: AnswerRecord, question: KnownAnswerQuestion, options: KnownAnswerOptions = RIVERS_NOT_LOADED): CheckOutcome {
   if (question.check === "WATER_STORY") return waterStoryOutcome(record.regionStory, options.riversLoaded);
+  if (question.check === "GENERATED_EXPLAINER") return generatedExplainerOutcome(record.generatedExplainer);
   return { problems: record.knownAnswerFound ? [] : ["no sentence names alum, the known mordant"], notes: [] };
 }
 
@@ -260,7 +274,7 @@ export function answerProblems(record: AnswerRecord, question: KnownAnswerQuesti
   if (record.streamsOpened !== 1) problems.push(`the question opened ${record.streamsOpened} answer streams, not 1`);
   if (record.endedWith !== "done") problems.push(`the stream ended with ${record.endedWith}, not done`);
   if (record.error) problems.push(`the stream sent an error: ${record.error}`);
-  if (record.request.depth !== EXPECTED_DEPTH) problems.push(`the request asked at ${record.request.depth ?? "no depth"}, not ${EXPECTED_DEPTH}`);
+  if (record.request.depth !== question.depth) problems.push(`the request asked at ${record.request.depth ?? "no depth"}, not ${question.depth}`);
   if (record.request.language !== question.language) problems.push(`the request asked for ${record.request.language ?? "no language"}, not ${question.language}`);
   if (record.citedSentenceCount < 1) problems.push("no cited sentence arrived");
   if (record.uncitedSentenceCount > 0) problems.push(`${record.uncitedSentenceCount} sentences arrived without a citation`);

@@ -85,6 +85,9 @@ MATRIX = {
     Capability.VIEW_USAGE: (False, False, False, True, True),
     Capability.VIEW_EVALUATION: (False, False, True, True, True),
     Capability.VIEW_AUDIT_LOG: (False, False, False, True, True),
+    Capability.BUILD_LESSONS: (False, False, True, True, True),
+    Capability.HIDE_GENERATED: (False, False, True, True, True),
+    Capability.READ_ALL_EVIDENCE: (False, True, True, True, True),
 }
 
 

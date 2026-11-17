@@ -1,0 +1,179 @@
+{
+ "searchinfo": {
+  "search": "Fustat"
+ },
+ "search": [
+  {
+   "id": "Q23973753",
+   "title": "Q23973753",
+   "pageid": 25968556,
+   "concepturi": "http://www.wikidata.org/entity/Q23973753",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q23973753",
+   "display": {
+    "label": {
+     "value": "Fustat Park",
+     "language": "en"
+    },
+    "description": {
+     "value": "park in Cairo Governorate, Egypt",
+     "language": "en"
+    }
+   },
+   "label": "Fustat Park",
+   "description": "park in Cairo Governorate, Egypt",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Fustat Park"
+   }
+  },
+  {
+   "id": "Q839456",
+   "title": "Q839456",
+   "pageid": 791768,
+   "concepturi": "http://www.wikidata.org/entity/Q839456",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q839456",
+   "display": {
+    "label": {
+     "value": "El-Fustat",
+     "language": "en"
+    },
+    "description": {
+     "value": "first capital of Islamic Egypt, in Old Cairo",
+     "language": "en"
+    }
+   },
+   "label": "El-Fustat",
+   "description": "first capital of Islamic Egypt, in Old Cairo",
+   "match": {
+    "type": "label",
+    "language": "ca",
+    "text": "Fustat"
+   },
+   "aliases": [
+    "Fustat"
+   ]
+  },
+  {
+   "id": "Q98966100",
+   "title": "Q98966100",
+   "pageid": 97093995,
+   "concepturi": "http://www.wikidata.org/entity/Q98966100",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q98966100",
+   "display": {
+    "label": {
+     "value": "Fustat ruins",
+     "language": "en"
+    },
+    "description": {
+     "value": "archaeological site in Cairo, Egypt",
+     "language": "en"
+    }
+   },
+   "label": "Fustat ruins",
+   "description": "archaeological site in Cairo, Egypt",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Fustat ruins"
+   }
+  },
+  {
+   "id": "Q138140423",
+   "title": "Q138140423",
+   "pageid": 131741160,
+   "concepturi": "http://www.wikidata.org/entity/Q138140423",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q138140423",
+   "display": {
+    "label": {
+     "value": "Fustat Park Mosque",
+     "language": "en"
+    },
+    "description": {
+     "value": "Mosque in Egypt",
+     "language": "en"
+    }
+   },
+   "label": "Fustat Park Mosque",
+   "description": "Mosque in Egypt",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Fustat Park Mosque"
+   }
+  },
+  {
+   "id": "Q112750729",
+   "title": "Q112750729",
+   "pageid": 107612144,
+   "concepturi": "http://www.wikidata.org/entity/Q112750729",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q112750729",
+   "display": {
+    "label": {
+     "value": "Fustat I under the direction of Roland-Pierre Gayraud Bone Carvings from Fustat- Istabl ʿAntar. Excavations of the Institut français d’archéologie orientale in Cairo (1985-2003), by Elzbieta Rodziewicz, with preface by Sylvie Denoix.",
+     "language": "en"
+    }
+   },
+   "label": "Fustat I under the direction of Roland-Pierre Gayraud Bone Carvings from Fustat- Istabl ʿAntar. Excavations of the Institut français d’archéologie orientale in Cairo (1985-2003), by Elzbieta Rodziewicz, with preface by Sylvie Denoix.",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Fustat I under the direction of Roland-Pierre Gayraud Bone Carvings from Fustat- Istabl ʿAntar. Excavations of the Institut français d’archéologie orientale in Cairo (1985-2003), by Elzbieta Rodziewicz, with preface by Sylvie Denoix."
+   }
+  },
+  {
+   "id": "Q136110067",
+   "title": "Q136110067",
+   "pageid": 129821110,
+   "concepturi": "http://www.wikidata.org/entity/Q136110067",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q136110067",
+   "display": {
+    "label": {
+     "value": "Fustat Finds: Beads, Coins, Medical Instruments, Textiles, and Other Artifacts from the Awad Collection",
+     "language": "mul"
+    },
+    "description": {
+     "value": "book 2002",
+     "language": "en"
+    }
+   },
+   "label": "Fustat Finds: Beads, Coins, Medical Instruments, Textiles, and Other Artifacts from the Awad Collection",
+   "description": "book 2002",
+   "match": {
+    "type": "label",
+    "language": "mul",
+    "text": "Fustat Finds: Beads, Coins, Medical Instruments, Textiles, and Other Artifacts from the Awad Collection"
+   }
+  },
+  {
+   "id": "Q32020157",
+   "title": "Q32020157",
+   "pageid": 33496099,
+   "concepturi": "http://www.wikidata.org/entity/Q32020157",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q32020157",
+   "display": {
+    "label": {
+     "value": "Fuchsstadt",
+     "language": "en"
+    }
+   },
+   "label": "Fuchsstadt",
+   "match": {
+    "type": "alias",
+    "language": "de",
+    "text": "Fustat"
+   },
+   "aliases": [
+    "Fustat"
+   ]
+  }
+ ],
+ "success": 1
+}

@@ -7,11 +7,15 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from app.api.listen_deps import UNAVAILABLE_DETAIL, ListenTools, listen_store, listen_tools
-from app.core.deps import require
+from app.api.listen_deps import (
+    UNAVAILABLE_DETAIL,
+    ListenTools,
+    listen_store,
+    listen_tools,
+    throttled_voice_user,
+)
 from app.core.errors import AppError
 from app.core.rate_limit import listen_attempt
-from app.core.roles import Capability, is_uncapped
 from app.models import User
 from app.research.explainer import SECTION_ID_PATTERN
 from app.research.vocabulary import AnswerLanguage
@@ -29,17 +33,7 @@ def utc_now() -> datetime:
     return datetime.now(UTC)
 
 
-def throttle(user: User = Depends(require(Capability.VOICE))) -> User:
-    if is_uncapped(user):
-        return user
-    allowed, retry = listen_attempt(str(user.id))
-    if not allowed:
-        raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS,
-            THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
-        )
-    return user
+throttle = throttled_voice_user(listen_attempt, THROTTLED_DETAIL)
 
 
 @router.get("/{answer_id}/listen")

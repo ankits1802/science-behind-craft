@@ -17,25 +17,20 @@ from .blocks import (
     sentences_in_payload,
     with_sentences_in_payload,
 )
-from .blocks_matter import (
-    MaterialCardBlock,
-    Molecule3dBlock,
-    ReactionPlayerBlock,
-    SimulationBlock,
-    WhatIfBlock,
-    ZoomStoryBlock,
-)
+from .blocks_insight import ClimateRiskBlock, MarketGiBlock, MeasureBlock
+from .blocks_journey import TimelineMapBlock, ZoomStoryBlock
+from .blocks_learning import CompareBlock, ConceptGraphBlock, QuizBlock
+from .blocks_matter import MaterialCardBlock, Molecule3dBlock, ReactionPlayerBlock
 from .blocks_people import (
     ArtisanVoiceBlock,
-    CompareBlock,
     DesignsBlock,
     ExpertViewBlock,
     InPracticeBlock,
     OpenQuestionsBlock,
-    QuizBlock,
     expert_pairing_problems,
 )
-from .blocks_place import MapLayerBlock, RegionStoryBlock, SeasonsBlock, SupplyMapBlock, TimelineMapBlock
+from .blocks_place import MapLayerBlock, RegionStoryBlock, SeasonsBlock, SupplyMapBlock
+from .blocks_play import SimulationBlock, WhatIfBlock
 from .citations import SourceRef
 from .composition import FOLLOW_UPS_MAX, HEADING_MAX_CHARS
 from .crafts import MAX_CANDIDATES, QUESTION_MAX_CHARS, CraftRef
@@ -135,6 +130,10 @@ BLOCK_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType(
         "open_questions": OpenQuestionsBlock,
         "artisan_voice": ArtisanVoiceBlock,
         "designs": DesignsBlock,
+        "concept_graph": ConceptGraphBlock,
+        "measure": MeasureBlock,
+        "market_gi": MarketGiBlock,
+        "climate_risk": ClimateRiskBlock,
     }
 )
 BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
@@ -158,6 +157,10 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "compare": "D",
         "in_practice": "D",
         "open_questions": "D",
+        "concept_graph": "D",
+        "measure": "D",
+        "market_gi": "D",
+        "climate_risk": "D",
         "artisan_voice": "E",
         "designs": "DEFERRED",
     }
@@ -174,6 +177,15 @@ BUILT_BLOCK_KINDS = (
     "reaction_player",
     "material_card",
     "molecule_3d",
+    "compare",
+    "concept_graph",
+    "climate_risk",
+    "measure",
+    "market_gi",
+    "simulation",
+    "what_if",
+    "zoom_story",
+    "timeline_map",
 )
 
 Block = Annotated[
@@ -197,7 +209,11 @@ Block = Annotated[
     | QuizBlock
     | OpenQuestionsBlock
     | ArtisanVoiceBlock
-    | DesignsBlock,
+    | DesignsBlock
+    | ConceptGraphBlock
+    | MeasureBlock
+    | MarketGiBlock
+    | ClimateRiskBlock,
     Field(discriminator="kind"),
 ]
 

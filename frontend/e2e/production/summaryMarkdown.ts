@@ -60,6 +60,15 @@ function questionsSection(report: AnswersReport | undefined, requested: boolean)
   return lines;
 }
 
+function exportsSection(report: AnswersReport | undefined, requested: boolean): string[] {
+  const proof = requested ? report?.exports : null;
+  if (!proof) return [];
+  const lines = ["### Exports", "", `From the ${cell(proof.label)} explainer: ${proof.files.length} files, ${verdict(proof.problems.length)}.`];
+  if (proof.problems.length > 0) lines.push("", ...proof.problems.map((problem) => `- ${cell(problem)}`));
+  if (proof.notes.length > 0) lines.push("", ...proof.notes.map((note) => `- ${cell(note)}`));
+  return ["", ...lines];
+}
+
 export function summaryMarkdown(reports: readonly RunReport[], context: SummaryContext): string {
   const screens = reports
     .filter((report): report is ScreensReport => report.kind === "screens")
@@ -75,6 +84,7 @@ export function summaryMarkdown(reports: readonly RunReport[], context: SummaryC
     ...screensSection(screens),
     "",
     ...questionsSection(answers, context.questionsRequested),
+    ...exportsSection(answers, context.questionsRequested),
     ""
   ].join("\n");
 }

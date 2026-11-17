@@ -1,17 +1,74 @@
-import { answerSentenceShape, INSTANT, UUID } from "@/lib/answerShapes";
-import { list, matching, nullable, object, oneOf, ShapeError, text, type Shape } from "@/lib/shape";
+import { answerSentenceShape, HTTPS_URL, INSTANT, UUID } from "@/lib/answerShapes";
+import { integer, list, matching, nullable, object, oneOf, ShapeError, text, type Shape } from "@/lib/shape";
 import type { AnswerSentence } from "@/lib/types";
 
+export const DISCIPLINES = [
+  "OVERVIEW",
+  "PROCESS",
+  "CHEMISTRY",
+  "PHYSICS",
+  "MATERIALS",
+  "GEOGRAPHY",
+  "GEOLOGY",
+  "CLIMATE",
+  "ECOLOGY",
+  "BOTANY",
+  "HISTORY",
+  "ECONOMICS",
+  "DESIGN",
+  "HEALTH"
+] as const;
+export const MEDIA_DISPLAYS = ["INLINE", "LINK_CARD"] as const;
+export const IMAGE_RELEVANCE = ["TEXT", "VISION"] as const;
+
+export type Discipline = (typeof DISCIPLINES)[number];
 export type TermSpan = { text: string; termKey: string };
 export type ExplainerSentence = AnswerSentence & { terms: TermSpan[] };
 export type ReuseMarker = { pieceId: string; storedAt: string };
 export type BlockEnvelope<K extends string> = { id: string; kind: K; version: 1; reuse: ReuseMarker | null };
+export type MediaRef = {
+  id: string;
+  display: (typeof MEDIA_DISPLAYS)[number];
+  provider: string;
+  pageUrl: string;
+  imageUrl: string;
+  width: number | null;
+  height: number | null;
+  title: string;
+  alt: string;
+  author: string | null;
+  site: string;
+  credit: string | null;
+  licence: string | null;
+  licenceUrl: string | null;
+  sourceId: string | null;
+  retrievedAt: string;
+};
 
 export const BLOCK_ID = matching(/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/, "a block id");
 export const TERM_KEY = matching(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "a term key");
 export const WIKIDATA_ID = matching(/^Q[1-9]\d*$/, "a Wikidata id");
 
-const termSpanShape: Shape<TermSpan> = object<TermSpan>({ text, termKey: TERM_KEY });
+export const termSpanShape: Shape<TermSpan> = object<TermSpan>({ text, termKey: TERM_KEY });
+
+export const mediaRefShape: Shape<MediaRef> = object<MediaRef>({
+  id: UUID,
+  display: oneOf(MEDIA_DISPLAYS),
+  provider: matching(/^[a-z][a-z0-9_]{1,39}$/, "a provider name"),
+  pageUrl: HTTPS_URL,
+  imageUrl: HTTPS_URL,
+  width: nullable(integer),
+  height: nullable(integer),
+  title: text,
+  alt: text,
+  author: nullable(text),
+  site: text,
+  credit: nullable(text),
+  licence: nullable(text),
+  licenceUrl: nullable(HTTPS_URL),
+  sourceId: nullable(text),
+  retrievedAt: INSTANT
+});
 
 export const explainerSentenceShape: Shape<ExplainerSentence> = {
   expected: "a cited sentence with its marked terms",

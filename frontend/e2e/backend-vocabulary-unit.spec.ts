@@ -3,10 +3,17 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, IMAGE_RELEVANCE, MEDIA_DISPLAYS, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
+import { COVERAGE_CLASSES, CRAFT_GI_STATUSES, GROUP_KINDS, PLACE_KINDS, PROVENANCES, SECTION_BASES, SPECIES_ROLES, SUBJECT_KINDS, TIMING_KINDS } from "@/lib/craftPageContract";
+import { PLACE_ROLES } from "@/lib/districtCraftsContract";
+import { IMAGE_RELEVANCE, MEDIA_DISPLAYS } from "@/lib/explainerBlockBase";
+import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
 import { EXPERT_SEATS } from "@/lib/explainerExperts";
+import { CONVERSION_BASES, CURRENCIES, GI_STATUSES, METRIC_UNITS, PRICE_SCALES, TREND_VARIABLES } from "@/lib/explainerInsight";
 import { SEASONS } from "@/lib/explainerPlace";
+import { ZOOM_LEVELS } from "@/lib/explainerPlay";
 import { TRAIL_GROUPS, TRAIL_STAGES } from "@/lib/explainerStream";
+import { NOTIFICATION_KINDS, SECTION_CHANGES } from "@/lib/learningContract";
+import { CITATION_FORMATS, LESSON_FORMATS, SLIDE_KINDS } from "@/lib/lessonContract";
 import { MEDIA_JOB_STATUSES, MEDIA_KINDS } from "@/lib/mediaContract";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
 import { CONDITION_QUANTITIES, ENVELOPE_STATUSES, MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, STAGE_TYPES } from "@/lib/scienceContract";
@@ -52,7 +59,29 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["models/enums.py", "IMAGE_RELEVANCE", IMAGE_RELEVANCE],
   ["models/enums.py", "TERM_BASES", TERM_BASES],
   ["research/blocks_people.py", "EXPERT_SEATS", EXPERT_SEATS],
-  ["research/calendar.py", "SEASONS", SEASONS]
+  ["research/calendar.py", "SEASONS", SEASONS],
+  ["research/blocks_journey.py", "ZOOM_LEVELS", ZOOM_LEVELS],
+  ["models/enums.py", "NOTIFICATION_KINDS", NOTIFICATION_KINDS],
+  ["models/enums.py", "PLACE_ROLES", PLACE_ROLES],
+  ["research/measures.py", "METRIC_UNITS", METRIC_UNITS],
+  ["research/measures.py", "CONVERSION_BASES", CONVERSION_BASES],
+  ["research/blocks_insight.py", "GI_STATUSES", GI_STATUSES],
+  ["research/blocks_insight.py", "CURRENCIES", CURRENCIES],
+  ["research/blocks_insight.py", "PRICE_SCALES", PRICE_SCALES],
+  ["research/blocks_insight.py", "TREND_VARIABLES", TREND_VARIABLES],
+  ["research/explainer_versions.py", "SECTION_CHANGES", SECTION_CHANGES],
+  ["research/lessons.py", "SLIDE_KINDS", SLIDE_KINDS],
+  ["research/lessons.py", "LESSON_FORMATS", LESSON_FORMATS],
+  ["research/citation_export.py", "CITATION_FORMATS", CITATION_FORMATS],
+  ["research/craft_page.py", "PROVENANCES", PROVENANCES],
+  ["research/craft_page.py", "SECTION_BASES", SECTION_BASES],
+  ["research/craft_page.py", "SUBJECT_KINDS", SUBJECT_KINDS],
+  ["research/craft_page.py", "TIMING_KINDS", TIMING_KINDS],
+  ["research/reactions.py", "SPECIES_ROLES", SPECIES_ROLES],
+  ["models/enums.py", "GI_STATUSES", CRAFT_GI_STATUSES],
+  ["models/enums.py", "COVERAGE_CLASSES", COVERAGE_CLASSES],
+  ["curation/vocabulary.py", "PLACE_KINDS", PLACE_KINDS],
+  ["curation/vocabulary.py", "GROUP_KINDS", GROUP_KINDS]
 ];
 
 for (const [file, name, client] of PAIRS) {

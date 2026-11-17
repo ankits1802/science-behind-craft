@@ -4,16 +4,25 @@ from app.api.routes import (
     access,
     auth,
     crafts,
+    explainer_exports,
+    explainers,
+    film,
     knowledge,
+    learning_views,
+    lessons,
     listen,
+    map_districts,
     map_layers,
     me,
     media,
     molecules,
+    notifications,
     password_change,
     rivers,
+    saved_explainers,
     secrets,
     settings,
+    simulations,
     terms,
     two_factor,
     usage,
@@ -29,14 +38,23 @@ api_router.include_router(two_factor.router)
 api_router.include_router(access.router)
 api_router.include_router(users.router)
 api_router.include_router(crafts.router)
+api_router.include_router(explainers.router)
+api_router.include_router(explainer_exports.router)
+api_router.include_router(film.router)
 api_router.include_router(knowledge.router)
+api_router.include_router(learning_views.router)
+api_router.include_router(lessons.router)
 api_router.include_router(listen.router)
+api_router.include_router(map_districts.router)
 api_router.include_router(map_layers.router)
 api_router.include_router(media.router)
 api_router.include_router(molecules.router)
+api_router.include_router(notifications.router)
 api_router.include_router(rivers.router)
+api_router.include_router(saved_explainers.router)
 api_router.include_router(secrets.router)
 api_router.include_router(settings.router)
+api_router.include_router(simulations.router)
 api_router.include_router(terms.router)
 api_router.include_router(usage.router)
 api_router.include_router(voice.router)

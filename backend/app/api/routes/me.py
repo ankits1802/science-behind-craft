@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.routes import auth
+from app.core.config import get_settings
 from app.core.db import get_session
 from app.core.deps import get_current_user
 from app.models import User, UserPreference
@@ -15,7 +16,7 @@ router = APIRouter(tags=["me"])
 
 router.add_api_route("/me", auth.me, methods=["GET"])
 
-PREFERENCE_FIELDS = ("theme", "reducedMotion", "largerText", "highContrast", "answerLanguage")
+PREFERENCE_FIELDS = ("theme", "reducedMotion", "largerText", "highContrast", "answerLanguage", "alertDigest")
 
 
 def serialize_preferences(row: UserPreference) -> dict[str, Any]:
@@ -25,6 +26,8 @@ def serialize_preferences(row: UserPreference) -> dict[str, Any]:
         "largerText": row.largerText,
         "highContrast": row.highContrast,
         "answerLanguage": row.answerLanguage,
+        "alertDigest": row.alertDigest,
+        "alertDigestOffered": get_settings().alert_digest_enabled,
         "updatedAt": row.updatedAt.isoformat() if row.updatedAt else None,
     }
 

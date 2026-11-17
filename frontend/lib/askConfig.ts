@@ -2,6 +2,7 @@ import { apiFetch } from "@/lib/api";
 import { answerLanguagesOf, ENGLISH, type AnswerLanguage } from "@/lib/answerLanguages";
 import { DEPTHS, type Depth } from "@/lib/explainerContract";
 import type { UnderstoodPart } from "@/lib/explainerView";
+import { filmScoreOffered } from "@/lib/filmScore";
 import { listenLanguagesOf } from "@/lib/listen";
 import { list, nullable, object, oneOf, ShapeError, text } from "@/lib/shape";
 import type { VoiceAvailability } from "@/lib/voiceContract";
@@ -15,6 +16,7 @@ export type AskConfig = AskDepths & {
   voice: VoiceAvailability;
   languages: AnswerLanguage[];
   listenLanguages: string[];
+  filmScore: boolean;
 };
 
 const NO_DEPTHS: AskDepths = { depths: [], defaultDepth: null };
@@ -23,10 +25,11 @@ export const FALLBACK_ASK_CONFIG: AskConfig = {
   ...NO_DEPTHS,
   voice: NO_VOICE,
   languages: [ENGLISH],
-  listenLanguages: []
+  listenLanguages: [],
+  filmScore: false
 };
 
-export type RawAskConfig = { depths?: unknown; defaultDepth?: unknown; voice?: unknown; languages?: unknown; listen?: unknown };
+export type RawAskConfig = { depths?: unknown; defaultDepth?: unknown; voice?: unknown; languages?: unknown; listen?: unknown; film?: unknown };
 
 const depthOptionShape = object<DepthOption>({ depth: oneOf(DEPTHS), label: text });
 
@@ -54,7 +57,8 @@ export function normaliseAskConfig(raw: RawAskConfig | null | undefined): AskCon
     ...askDepthsOf(raw?.depths, raw?.defaultDepth),
     voice: voiceAvailabilityOf(raw?.voice),
     languages: answerLanguagesOf(raw?.languages),
-    listenLanguages: listenLanguagesOf(raw?.listen)
+    listenLanguages: listenLanguagesOf(raw?.listen),
+    filmScore: filmScoreOffered(raw?.film)
   };
 }
 

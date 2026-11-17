@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "district": {
+    "districtLgd": 449,
+    "name": "Kachchh",
+    "stateName": "Gujarat"
+  },
+  "crafts": [
+    {
+      "craft": {
+        "slug": "Kutch-Ajrakh",
+        "name": "Kutch Ajrakh",
+        "path": "/crafts/Kutch-Ajrakh"
+      },
+      "roles": [
+        "PRACTISED"
+      ],
+      "basis": {
+        "kind": "CRAFT_LOCATION",
+        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+        "label": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+        "level": "PROVISIONAL"
+      }
+    }
+  ],
+  "land": {
+    "blocks": [
+      {
+        "id": "land.b1",
+        "kind": "region_story",
+        "version": 1,
+        "reuse": {
+          "pieceId": "5dcf872c-2f4b-59c8-877a-93679321bc81",
+          "storedAt": "2026-11-18T06:00:00Z"
+        },
+        "river": {
+          "datasetCode": "HYDRORIVERS_1_0",
+          "mainRiv": 3,
+          "reachIds": [
+            1,
+            2,
+            3
+          ],
+          "districtLgds": [
+            449
+          ],
+          "name": "Saran"
+        },
+        "districts": [
+          {
+            "districtLgd": 449,
+            "name": "Kachchh",
+            "stateName": "Gujarat"
+          }
+        ],
+        "steps": [
+          {
+            "districtLgd": null,
+            "sentence": {
+              "id": "land.b1.1",
+              "text": "Ajrakh activities prevailed at Dhamadka for the past 450 years because of a water source from a stream of the Indus river; this stream dried up in 1989.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "077b97c6-2c58-512f-9645-16bb15d621d8",
+                  "claimId": "6f85ec91-39be-5e17-849d-ac0a2052b590",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "The Ajrakh activities prevailed at Dhamadka since the past 450 years, as it was having a potential water source from one of the water stream of the Indus river.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "16f621e6-5a49-5770-a361-087ad7f2c20d",
+                  "claimId": "6f85ec91-39be-5e17-849d-ac0a2052b590",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "This water stream dried up in 1989 and water levels from wells and tanks continued to fall.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          },
+          {
+            "districtLgd": null,
+            "sentence": {
+              "id": "land.b1.2",
+              "text": "The river Saran in Dhamadka dried up by 1989, largely because bore pumps diverted water toward the Kandla Free Trade Zone.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "4e0caa74-00cf-57da-be98-9c43443cb428",
+                  "claimId": "47766797-6f8a-5369-bf51-6122e1c52329",
+                  "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                  "quote": "In Dhamadka, the river Saran was always flowing, but it died a slow death by 1989. This was largely due to the increase in bore pumps which diverted the water towards the Kandla Free Trade Zone.",
+                  "locator": "§ \"We are running out of water\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          },
+          {
+            "districtLgd": null,
+            "sentence": {
+              "id": "land.b1.3",
+              "text": "After the 2001 earthquake about a hundred families moved from Dhamadka to their present location 40 km away, in search of good quality groundwater.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "b307d090-ab32-5dcd-93d2-95397d90e146",
+                  "claimId": "fd18a5bd-27b8-5995-aa28-c2a05c7de469",
+                  "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+                  "quote": "Last time something like this had happened, the entire village of a hundred families moved from their earlier settlement in Dhamadka to their present location, 40 km away, in search of good quality groundwater. This transition was after the devastating earthquake in 2001 .",
+                  "locator": "§ \"History repeats itself\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          },
+          {
+            "districtLgd": null,
+            "sentence": {
+              "id": "land.b1.4",
+              "text": "Excess iron in groundwater threatened Ajrakh in Dhamadka and is again threatening it in Ajrakhpur.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "02b489ed-7b2a-5ece-bb34-caf590e4b31f",
+                  "claimId": "faa466c1-8940-5552-a7f5-851cebb40f64",
+                  "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+                  "quote": "Excess iron in groundwater that threatened Ajrakh in Dhamadka, is once again threatening the craft in Ajrakhpur.",
+                  "locator": "§ \"Share this article\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          }
+        ],
+        "layers": [
+          "river-density"
+        ],
+        "datasets": [
+          {
+            "code": "DR_DISTRICT_SHAPES",
+            "title": "District shapes as drawn by the Designer Portal",
+            "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+            "edition": "791efb62cc30cf5d",
+            "period": "2026-10-17",
+            "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+            "licence": "Unconfirmed; indicative boundaries",
+            "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+            "attribution": "District boundaries are indicative.",
+            "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+            "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+          },
+          {
+            "code": "HYDRORIVERS_1_0",
+            "title": "HydroRIVERS v1.0 (Asia)",
+            "publisher": "WWF HydroSHEDS",
+            "edition": "v10",
+            "period": "static",
+            "nativeResolution": "15 arc-second network (reaches with upstream area >= 10 km2 or discharge >= 0.1 m3/s)",
+            "licence": "HydroSHEDS v1 License Agreement: free for non-commercial and commercial use; distributed only inside derived products, never on its own; attribution required",
+            "licenceUrl": "https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf",
+            "attribution": "This product KalaVigyan incorporates data from the HydroSHEDS version 1 database which is © World Wildlife Fund, Inc. (2006-2022) and has been used herein under license. WWF has not evaluated the data as altered and incorporated within KalaVigyan, and therefore gives no warranty regarding its accuracy, completeness, currency or suitability for any particular purpose. Portions of the HydroSHEDS v1 database incorporate data which are the intellectual property rights of © USGS (2006-2008), NASA (2000-2005), ESRI (1992-1998), CIAT (2004-2006), UNEP-WCMC (1993), WWF (2004), Commonwealth of Australia (2007), and Her Royal Majesty and the British Crown and are used under license. The HydroSHEDS v1 database and more information are available at https://www.hydrosheds.org.",
+            "citation": "Lehner, B., Grill, G. (2013). Global river hydrography and network routing: baseline data and new approaches to study the world's large river systems. Hydrological Processes 27(15), 2171-2186. https://doi.org/10.1002/hyp.9740",
+            "url": "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_as_shp.zip"
+          }
+        ],
+        "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+      }
+    ],
+    "facets": [
+      {
+        "facet": "SOIL",
+        "values": [
+          {
+            "datasetCode": "SOILGRIDS_2_0",
+            "variable": "clay",
+            "depth": "0-5cm",
+            "period": "modelled, 2020 release",
+            "stat": "DISTRICT_MEAN",
+            "aggregation": "DISTRICT",
+            "value": 27.4,
+            "valueText": null,
+            "unit": "%",
+            "resolution": "250 m",
+            "method": "ISRIC WCS 2.0.1 GetCoverage on the native 250 m Homolosine grid (request bounds snapped to the grid, no resampling); cells the service returns as 0 (SoilGrids mask: built-up, water, rock) and their uncertainty cells treated as no data; district polygons reprojected to Homolosine; exactextract coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
+            "districtCount": null,
+            "districtTotal": null
+          },
+          {
+            "datasetCode": "SOILGRIDS_2_0",
+            "variable": "phh2o",
+            "depth": "0-5cm",
+            "period": "modelled, 2020 release",
+            "stat": "DISTRICT_MEAN",
+            "aggregation": "DISTRICT",
+            "value": 8.1,
+            "valueText": null,
+            "unit": "pH",
+            "resolution": "250 m",
+            "method": "ISRIC WCS 2.0.1 GetCoverage on the native 250 m Homolosine grid (request bounds snapped to the grid, no resampling); cells the service returns as 0 (SoilGrids mask: built-up, water, rock) and their uncertainty cells treated as no data; district polygons reprojected to Homolosine; exactextract coverage-weighted (area_cartesian); values divided by the ISRIC conversion factor",
+            "districtCount": null,
+            "districtTotal": null
+          }
+        ]
+      },
+      {
+        "facet": "CLIMATE",
+        "values": [
+          {
+            "datasetCode": "CHELSA_2_1_1981_2010",
+            "variable": "annual_mean_temperature",
+            "depth": null,
+            "period": "1981-2010",
+            "stat": "NORMAL",
+            "aggregation": "DISTRICT",
+            "value": 26.6,
+            "valueText": null,
+            "unit": "degC",
+            "resolution": "30 arc-seconds (about 1 km)",
+            "method": "exactextract coverage weight area_spherical_km2 on the native 30 arc-second grid; scale and offset read from the GeoTIFF; raw 65535 treated as no data",
+            "districtCount": null,
+            "districtTotal": null
+          },
+          {
+            "datasetCode": "CHELSA_2_1_1981_2010",
+            "variable": "annual_precipitation",
+            "depth": null,
+            "period": "1981-2010",
+            "stat": "NORMAL",
+            "aggregation": "DISTRICT",
+            "value": 372.4,
+            "valueText": null,
+            "unit": "mm/year",
+            "resolution": "30 arc-seconds (about 1 km)",
+            "method": "exactextract coverage weight area_spherical_km2 on the native 30 arc-second grid; scale and offset read from the GeoTIFF; raw 65535 treated as no data",
+            "districtCount": null,
+            "districtTotal": null
+          }
+        ]
+      },
+      {
+        "facet": "TERRAIN",
+        "values": [
+          {
+            "datasetCode": "COPERNICUS_DEM_GLO90",
+            "variable": "elevation",
+            "depth": null,
+            "period": "2011-2015 acquisitions",
+            "stat": "DISTRICT_MEAN",
+            "aggregation": "DISTRICT",
+            "value": 52.3,
+            "valueText": null,
+            "unit": "m",
+            "resolution": "3 arc-seconds (about 90 m)",
+            "method": "exactextract coverage weight area_spherical_km2 at 3 arc-seconds (about 90 m); slope from central differences with latitude-dependent metres per degree; missing ocean tiles are no data",
+            "districtCount": null,
+            "districtTotal": null
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 3: Adapting to the present",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+      "kind": "WEB_PAGE",
+      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+      "authors": [
+        "Azera Parveen Rahman"
+      ],
+      "year": 2019,
+      "doi": null,
+      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "publisher": "Mongabay India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    }
+  ],
+  "datasets": [
+    {
+      "code": "DR_DISTRICT_SHAPES",
+      "title": "District shapes as drawn by the Designer Portal",
+      "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+      "edition": "791efb62cc30cf5d",
+      "period": "2026-10-17",
+      "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+      "licence": "Unconfirmed; indicative boundaries",
+      "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+      "attribution": "District boundaries are indicative.",
+      "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+      "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+    },
+    {
+      "code": "CHELSA_2_1_1981_2010",
+      "title": "CHELSA V2.1 climatologies 1981-2010",
+      "publisher": "Swiss Federal Institute for Forest, Snow and Landscape Research WSL",
+      "edition": "V2.1",
+      "period": "1981-2010",
+      "nativeResolution": "30 arc-seconds (about 1 km)",
+      "licence": "Open download without registration; licence text not confirmed on 2026-11-15",
+      "licenceUrl": "https://chelsa-climate.org/",
+      "attribution": "CHELSA V2.1, Karger et al.",
+      "citation": "Karger, D. N., Conrad, O., Bohner, J., et al. (2017). Climatologies at high resolution for the earth's land surface areas. Scientific Data 4, 170122. https://doi.org/10.1038/sdata.2017.122",
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/"
+    },
+    {
+      "code": "COPERNICUS_DEM_GLO90",
+      "title": "Copernicus DEM GLO-90",
+      "publisher": "European Space Agency, Copernicus Programme",
+      "edition": "2021_1 (AWS Open Data COG)",
+      "period": "2011-2015 acquisitions",
+      "nativeResolution": "3 arc-seconds (about 90 m)",
+      "licence": "Copernicus DEM licence (GLO-90 free worldwide)",
+      "licenceUrl": "https://registry.opendata.aws/copernicus-dem/",
+      "attribution": "Produced using Copernicus WorldDEM-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "citation": "European Space Agency (2024). Copernicus Global Digital Elevation Model. https://doi.org/10.5270/ESA-c5d3d65",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/"
+    },
+    {
+      "code": "SOILGRIDS_2_0",
+      "title": "SoilGrids 2.0",
+      "publisher": "ISRIC World Soil Information",
+      "edition": "2.0",
+      "period": "modelled, 2020 release",
+      "nativeResolution": "250 m",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "SoilGrids 2.0, ISRIC World Soil Information",
+      "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021",
+      "url": "https://files.isric.org/soilgrids/latest/data/"
+    }
+  ],
+  "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+}

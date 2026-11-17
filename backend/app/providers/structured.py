@@ -17,6 +17,6 @@ def router_structured_model(task: AiTask, principal: Principal | None = None) ->
         result = await router.run(
             task, system=system, user=user, json_schema=dict(schema), principal=principal
         )
-        return StructuredReply(text=result.text, degraded=result.degraded)
+        return StructuredReply(text=result.text, degraded=result.degraded, model=result.model)
 
     return call

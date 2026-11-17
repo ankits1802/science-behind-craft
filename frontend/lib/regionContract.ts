@@ -22,7 +22,9 @@ export const ENV_STATS = [
   "TOTAL",
   "DENSITY",
   "DISTANCE",
-  "COUNT"
+  "COUNT",
+  "TREND_PER_DECADE",
+  "TREND_P_VALUE"
 ] as const;
 export const AGGREGATIONS = ["DISTRICT", "STATE_AREA_MEAN", "STATE_SUM", "STATE_MIN", "STATE_MAX"] as const;
 export const PLACE_SCOPES = ["DISTRICT", "STATE"] as const;
@@ -132,6 +134,15 @@ const valueShape: Shape<RegionValue> = object<RegionValue>({
   districtTotal: nullable(integer)
 });
 
+export const placeBasisShape: Shape<PlaceBasis> = object<PlaceBasis>({
+  kind: oneOf(PLACE_BASES),
+  sourceId: nullable(text),
+  label: text,
+  level: storedLevelShape
+});
+
+export const regionFacetShape: Shape<RegionFacet> = object<RegionFacet>({ facet: facetShape, values: list(valueShape, 1) });
+
 const placeShape: Shape<RegionPlace> = object<RegionPlace>({
   key: matching(/^(district|state)-[1-9]\d*$/, "a place key"),
   scope: oneOf(PLACE_SCOPES),
@@ -140,15 +151,10 @@ const placeShape: Shape<RegionPlace> = object<RegionPlace>({
   districtLgd: nullable(integer),
   districtName: nullable(text),
   placeLabel: text,
-  basis: object<PlaceBasis>({
-    kind: oneOf(PLACE_BASES),
-    sourceId: nullable(text),
-    label: text,
-    level: storedLevelShape
-  }),
+  basis: placeBasisShape,
   valuesFrom: oneOf(PLACE_SCOPES),
   inheritedReason: nullable(text),
-  facets: list(object<RegionFacet>({ facet: facetShape, values: list(valueShape, 1) }))
+  facets: list(regionFacetShape)
 });
 
 const boundaryShape: Shape<BoundaryNote> = object<BoundaryNote>({ caption: text, dataset: datasetShape });

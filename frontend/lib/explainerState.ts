@@ -1,5 +1,6 @@
 import { FINAL_SECTION_STATES, type ExplainerBlock, type FinalSectionState, type Understood, type WorkingSectionState } from "@/lib/explainerContract";
 import { TRAIL_STAGES, type ExplainerEvent, type SectionStarted, type TrailEntry } from "@/lib/explainerStream";
+import type { VersionMark } from "@/lib/learningContract";
 import type { AnswerReaction, AnswerSection, AnswerSentence, AnswerStatus, SourceRef } from "@/lib/types";
 
 export type ExplainerPhase = "idle" | "asking" | "streaming" | "done" | "empty" | "failed";
@@ -7,6 +8,8 @@ export type ExplainerPhase = "idle" | "asking" | "streaming" | "done" | "empty" 
 export type SectionState = WorkingSectionState | FinalSectionState;
 
 export type SectionView = Omit<SectionStarted, "state"> & { state: SectionState; blocks: ExplainerBlock[]; searched: string | null };
+
+export type ExplainerRef = { explainerId: string; version: number };
 
 export type ExplainerState = {
   phase: ExplainerPhase;
@@ -23,6 +26,8 @@ export type ExplainerState = {
   followUps: string[];
   error: string | null;
   notice: string | null;
+  mark: VersionMark | null;
+  basedOn: ExplainerRef | null;
 };
 
 const SETTLED: ReadonlySet<ExplainerPhase> = new Set(["empty", "failed"]);
@@ -43,7 +48,9 @@ export function emptyExplainer(question = "", language = "en"): ExplainerState {
     reactions: [],
     followUps: [],
     error: null,
-    notice: null
+    notice: null,
+    mark: null,
+    basedOn: null
   };
 }
 

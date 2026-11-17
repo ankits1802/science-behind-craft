@@ -106,7 +106,7 @@ def test_only_builders_of_built_kinds_are_started() -> None:
         BuilderEntry(
             kind, frozenset({"CHEMISTRY"}), lambda tools, kind=kind: made.append(kind) or FakeBuilder()
         )
-        for kind in ("material_card", "timeline_map")
+        for kind in ("material_card", "artisan_voice")
     ]
     started = BlockBuilders.from_registry(object(), entries)
     assert made == ["material_card"]
@@ -156,9 +156,9 @@ async def test_a_late_failing_or_wrong_builder_adds_nothing_and_the_others_still
 
 
 async def test_a_kind_that_is_not_built_yet_is_never_added() -> None:
-    timeline = TypeAdapter(Block).validate_python(declared("timeline_map"))
-    later = FakeBuilder(blocks=(timeline,), sources={})
-    added = await BlockBuilders([(entry(kind="timeline_map"), later)]).added(ask())
+    voice = TypeAdapter(Block).validate_python(declared("artisan_voice"))
+    later = FakeBuilder(blocks=(voice,), sources={})
+    added = await BlockBuilders([(entry(kind="artisan_voice"), later)]).added(ask())
     assert (added.blocks, len(later.asks)) == ((), 1)
 
 
@@ -212,7 +212,14 @@ async def test_an_added_block_streams_after_the_prose_before_the_pictures_and_is
 def test_the_registry_adds_kinds_in_the_one_order_a_reused_section_reads() -> None:
     kinds = [entry.kind for entry in BLOCK_BUILDERS]
     assert kinds == sorted(kinds, key=PIECE_BLOCK_ORDER.index)
-    assert [entry.kind for entry in BLOCK_BUILDERS if entry.rebuilt_on_reuse] == ["map_layer", "molecule_3d"]
+    assert [entry.kind for entry in BLOCK_BUILDERS if entry.rebuilt_on_reuse] == [
+        "map_layer",
+        "climate_risk",
+        "market_gi",
+        "molecule_3d",
+        "compare",
+        "concept_graph",
+    ]
 
 
 async def test_a_section_with_nothing_checked_starts_no_builder_and_stays_empty() -> None:

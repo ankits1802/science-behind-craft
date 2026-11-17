@@ -31,6 +31,10 @@ dependencies = [
     "pypdf>=7.1.0",
     "sympy>=1.14.0",
     "pint>=0.26.2",
+    "citeproc-py>=0.12.3",
+    "fpdf2>=2.9.0",
+    "python-pptx>=1.0.2",
+    "uharfbuzz>=0.57.0",
 ]
 
 [dependency-groups]
@@ -38,6 +42,8 @@ dev = [
     "ruff>=0.17.5",
     "pytest>=9.2.0",
     "pytest-asyncio>=1.5.0",
+    "bibtexparser>=2.1.0",
+    "rispy>=0.10.0",
 ]
 
 [tool.uv]

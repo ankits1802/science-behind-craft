@@ -18,6 +18,7 @@ const LOADING_TIMEOUT_MS = 30_000;
 const LOADING_TEXT = /^(Loading…|Checking your admin view…)$/;
 const STEP_LIMIT_MS = 120_000;
 const ANSWER_WAIT_MS = 5_000;
+const UNKNOWN_WEBRTC_DIRECTIVE = "Unrecognized Content-Security-Policy directive 'webrtc'.";
 
 export async function settle(page: Page): Promise<string[]> {
   await page.waitForLoadState("networkidle", { timeout: IDLE_TIMEOUT_MS }).catch(() => undefined);
@@ -205,6 +206,7 @@ export class ScreenRun {
     const text = message.text();
     const from = message.location().url;
     if (text.startsWith("Failed to load resource") && from && this.sameOrigin(from)) return;
+    if (text === UNKNOWN_WEBRTC_DIRECTIVE && from.startsWith("about:srcdoc")) return;
     this.flag(`console error: ${clip(text)}`);
   }
 

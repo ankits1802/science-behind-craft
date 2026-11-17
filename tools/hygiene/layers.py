@@ -33,6 +33,7 @@ LAYER_IMPORTS: dict[str, frozenset[str]] = {
             "composer",
             "retrieval",
             "sources",
+            "curation",
             "research",
             "core",
             "models",

@@ -36,7 +36,7 @@ jobs:
           role-session-name: coverage-enrichment-${{ github.run_id }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Purge and reconcile voice calls, then fill missing craft and knowledge vectors and PubChem links on the box
+      - name: Purge and reconcile voice calls, fill missing craft and knowledge vectors and PubChem links, then re-check saved explainers on the box
         run: |
           set -euo pipefail
           script=$(cat <<'EOF'
@@ -48,6 +48,7 @@ jobs:
           run_module app.scripts.embed_craft_descriptors || outcome=$?
           run_module app.scripts.embed_knowledge || outcome=$?
           run_module app.scripts.link_compounds || outcome=$?
+          run_module app.scripts.recheck_saved || outcome=$?
           exit "$outcome"
           EOF
           )

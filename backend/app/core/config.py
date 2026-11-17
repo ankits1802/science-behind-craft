@@ -96,6 +96,7 @@ class Settings(BaseSettings):
     mail_reply_to: str | None = Field(default=None, alias="MAIL_REPLY_TO")
     mail_ses_region: str = Field(default="ap-south-1", alias="MAIL_SES_REGION")
     mail_ses_configuration_set: str | None = Field(default=None, alias="MAIL_SES_CONFIGURATION_SET")
+    alert_digest_enabled: bool = Field(default=False, alias="ALERT_DIGEST_ENABLED")
 
     aws_region: str = Field(default="ap-south-1", alias="AWS_REGION")
     s3_bucket: str | None = Field(default=None, validation_alias=AliasChoices("S3_BUCKET", "AWS_S3_BUCKET"))

@@ -1,4 +1,4 @@
-# Media contract: generated stage images and videos (lanes: media backend 0018, media UI 0021)
+# Media contract: generated stage images and videos (lanes: media backend 0018, media UI 0021; ElevenLabs routes 0054, 0058)
 
 How a learner asks for an illustration of a process stage, what the server builds it from, how
 it is queued, billed, labelled, named and served. The models are `backend/app/schemas/media.py`;
@@ -8,7 +8,7 @@ the client's types and shapes are `frontend/lib/mediaContract.ts`; the golden an
 11 is the specification (PLAN 0 overrides it). Design choices: decisions 0014, 0018 (backend)
 and 0021 (client).
 
-Last reviewed: 2026-11-16.
+Last reviewed: 2026-11-18.
 
 ## Routes
 
@@ -107,6 +107,51 @@ hint), requester (user and role), target (job and stage) and expiry (24 h) with 
 HMAC-SHA256 under `MEDIA_BUNDLE_HMAC_KEY`; the worker refuses a missing, forged, changed or
 expired bundle before any model call, and refunds the unit. Unverified provider behaviour is
 listed in decision 0018.
+
+## ElevenLabs routes (decisions 0054, 0058)
+
+ElevenLabs makes the film score's music and sound effects (`docs/contracts/explainer.md`, Film
+mode) and is a further `IMAGE` and `VIDEO` route choice through its public Image and Video
+("Flows") API. Every call goes through the media router's reserve and settle, so the media
+sub-cap and the monthly ceiling apply and Master Admins are never refused; their spend still
+shows on Usage. The official reference was read on 2026-11-18 (decision 0058 lists the pages).
+
+| Task | Route (seeded first) | Endpoint | Output |
+|---|---|---|---|
+| `MUSIC` | ElevenLabs `music_v2_5` (also `music_v2`) | `POST /v1/music?output_format=mp3_44100_128`, `{prompt, music_length_ms, model_id, force_instrumental: true}` | `audio/mpeg`, instrumental, 30 to 180 s here (the API takes 3 to 300 s) |
+| `SOUND_EFFECT` | ElevenLabs `eleven_text_to_sound_v3` | `POST /v1/sound-generation?output_format=mp3_44100_128`, `{text, duration_seconds, prompt_influence: 0.5, model_id, loop: false}` | `audio/mpeg`, 0.5 to 30 s (2 s by default) |
+| `IMAGE` | Gemini (seeded); ElevenLabs `gemini-3.1-flash-image` as a choice | `POST /v1/flows/image` `{model_id, prompt, aspect_ratio: "1:1", resolution: "1K"}`, then `GET /v1/flows/image/{id}` every 2 s (90 polls at most) | `image/png` at 1K, as above |
+| `VIDEO` | Gemini (seeded); ElevenLabs `veo-3.1-fast-generate-001` as a choice | `POST /v1/flows/video` `{model_id, prompt, aspect_ratio: "16:9", resolution: "720p", duration_secs: "8", generate_audio: false, enhance_prompt: false}`, then `GET /v1/flows/video/{id}` every 10 s | `video/mp4`, 8 s, 720p, 16:9, any audio stripped, as above |
+
+- `MUSIC` and `SOUND_EFFECT` are in `AiTask` (`services/ai_providers.py`), the `AiTask` database
+  enum and `MEDIA_TASKS` (with `AUDIO_TASKS`), so `budget.evaluate` counts them as media; they
+  appear on the routing page (Film music, Film sound effects) and on Usage. `ELEVENLABS` is in
+  `AiProvider` with the managed key `ELEVENLABS_API_KEY` (the Listen key). Migration
+  `0022_elevenlabs_media` seeds the provider row and the two score routes.
+- Prices are per unit and unverified because the published pages disagree; the catalogue keeps
+  the higher figure: music $0.275 a minute and sound effects $0.12 a minute, both billed per
+  second asked; $0.07 an image; $0.10 a second of video. Admin price overrides apply.
+- One adapter per service: `providers/elevenlabs.py` (`music`, `sound_effect`,
+  `start_generation`, `generation`, `download`); the media router reaches it through the registry
+  (preset and kind `elevenlabs`, `providers/elevenlabs_media.ElevenLabsMediaAdapter`, the hook
+  `Adapter.generate_audio`). A refused body is `bad_request` and stops the route walk; a
+  `moderated` generation is a `refusal`; `timeout`, `dependency_failed` and `internal_error` are
+  retryable `unavailable`; other failures try the next route. A finished generation's signed
+  `content_url` is fetched over https only, from `storage.googleapis.com` only (the host the
+  reference shows; any other host, a port or credentials in the link fail before a request),
+  without the key, following no redirect, streamed and cut as soon as it passes 64 MB (a larger
+  declared `Content-Length` is refused before the body is read; decision 0061), then checked as
+  Gemini's output is.
+- The ElevenLabs flows report no model, so the `AI illustration` label names the requested model
+  id. Flows need a Pro plan and a key holding the Image and Video permission; below that ElevenLabs
+  answers 402, which tries the next route.
+- Licence (Eleven Music terms): paid plans need no attribution; prompts never name artists,
+  songs, labels or lyrics (the score's prompts are fixed and name nothing); the stored clips are
+  played only under their films and never offered as a library.
+- Score prompts are fixed text from a versioned table (`voice/score_prompts.py`,
+  `SCORE_PROMPT_VERSION` `film-score/v1`): never a claim, a craft, place, community or person
+  name, a style hint or model output. The audio is checked before it is stored: MP3, non-empty and
+  within 1 s of the asked length at 128 kbps (`voice/film_score.checked_score_audio`).
 
 ## Quotas, spend and refunds
 

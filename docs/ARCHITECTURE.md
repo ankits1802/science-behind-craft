@@ -43,7 +43,9 @@ entry points   main.py   api/ (router.py, routes/<area>.py)   scripts/ (seeds, s
 voice          voice/       voice sessions, the custom-LLM turn, relay turns, the encrypted
                             transcript, daily upkeep, agent provisioning (decision 0017; the
                             call is switched off, decision 0035); Listen: narration of finished
-                            explainers with word timings, cached in the media bucket (0035)
+                            explainers with word timings, cached in the media bucket (0035);
+                            film mode's score: scenes, fixed prompts, content-addressed clips
+                            and a manifest per explainer and language (0058)
 media          media/       stage illustrations and clips: claim set, prompt, bundle, MP4 and
                             PNG checks, the job routes' steps, the kv-worker queue and its SQL;
                             worker.py runs it as kv-worker (decision 0018)
@@ -108,17 +110,25 @@ and sentence shapes (decision 0014). `science/` imports `schemas/` for the proce
 follows the same pattern: `services/region_records` and `services/map_layer_store` read rows
 into `geo/records`, and the routes hand them to `geo/region_view` and `geo/layers` (decision
 0016).
+`services/` imports `curation/` so the dossier import reads the checker's own model and rules
+(decision 0053); the craft page's response models live in `research/craft_page.py` so
+`services/craft_page` can build them.
 
 ## API surface
 
 All routes are under `/api` except `/health` and `/health/ready`. Route groups (`api/routes/`):
-`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `knowledge`, `listen` (an explainer read aloud, decision 0035), `map_layers`, `media`, `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
+`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `film` (film mode's music and sound score, decision 0058), `knowledge`, `lessons` (lesson packs and their files, decision 0067), `explainer_exports` (an explainer version's PDF and citations, decision 0067), `listen` (an explainer read aloud, decision 0035), `map_districts` (ask the map, decision 0065), `map_layers`, `media`, `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
 `settings`, `terms` (a glossary term's cited summary, decision 0034), `usage`, `voice` (404 throughout while `VOICE_CALL_ENABLED` is off, decision 0035). Shapes, headers and error forms are in `docs/contracts/backend.md`; the web client's
-side is `docs/contracts/frontend.md`. `GET /api/crafts/{slug}/process` (in `crafts`) answers a craft's
+side is `docs/contracts/frontend.md`. `GET /api/crafts/{slug}/page` (in `crafts`) answers the whole craft page from stored rows: the
+curated overview and facts and All evidence (`docs/contracts/craft-page.md`, decision 0053);
+`GET /api/crafts/{slug}/process` (in `crafts`) answers a craft's
 stages, materials, conditions and reactions (`docs/contracts/science.md`);
 `GET /api/crafts/{slug}/region` its places and their environment, and `GET /api/map/layers` and
 `/api/map/layers/{layer}` (in `map_layers`) the district choropleths, all from the stored
-district statistics (`docs/contracts/region.md`).
+district statistics (`docs/contracts/region.md`). `GET /api/map/districts/{districtLgd}` (in
+`map_districts`, ask the map, decision 0065) answers a tapped district's located crafts, its
+stored region story and place prose pieces and its land values, with no model call
+(`docs/contracts/learning.md`).
 
 ## How a question is answered today
 
@@ -173,6 +183,40 @@ district statistics (`docs/contracts/region.md`).
 6. Nothing cited: each section says what it searched and `not_enough_evidence` sums it up; any
    failure of the whole answer is one `error`; `done` always ends the stream. The explainer
    document is kept in `Answer.payload.explainer` and the plans in `Answer.plan`.
+7. A follow-up (`buildsOn`, decision 0063) is the same flow with a layout
+   (`services/follow_ups`): the explainer's crafts, depth and language are kept, a field it has
+   deepens that section (blocks numbered after its own, already-cited sentences and shown kinds
+   left out, never reused from or stored as pieces) and any other field is added after its
+   sections; `builds_on` follows `understood`. `services/version_merge` merges the follow-up into
+   the latest version, `version_problems` must hold, and the merged document is kept on the
+   follow-up's answer with its `VersionMark` (`Answer.explainerId`, `explainerVersion`); `version`
+   precedes `done`. Earlier versions are never rewritten.
+
+## How a saved explainer gets better (decision 0063)
+
+1. A reader saves an explainer (`SavedItem` with its first answer). Every night the last module of
+   the Coverage enrichment job, `app.scripts.recheck_saved`, counts per saved field the craft's
+   fact-level claims created or raised since the last check that the latest version does not cite,
+   and writes one `ANSWER_IMPROVED` note when any field has news; no model is called.
+2. The note's Update asks a follow-up for the fields with news, as the reader and under the
+   reader's caps. On Mondays the **Alert digest** workflow mails opted-in readers their unread
+   notes through SES, only while `ALERT_DIGEST_ENABLED` is set.
+
+## How a lesson pack and its files are made (decision 0067)
+
+1. A Professor or above chooses finished sections of one version of their explainer. The server
+   builds the pack from the stored version with no model: the sections' cited fact sentences whose
+   claims are still shown, five a slide, each section's first open picture, the quiz by the one
+   `quiz_block`, the reading list and sources, and stores it as a `LessonPack` row.
+2. A file (HTML deck, PPTX or PDF, or an explainer version's PDF) is asked for by format. The
+   route reads the pack or version and its sources' access days, releases its connection, and
+   looks for `exports/<builder>/<sha256>/<name>` in the private bucket; only when it is missing
+   are the open pictures read from Commons or Openverse, then the APA references written by
+   citeproc-py with the vendored APA 7 style and the file rendered, both in one worker thread
+   (reveal.js, python-pptx, fpdf2 with HarfBuzz and the Noto fonts), and stored. The export
+   libraries are imported on the first file a process makes, never at start-up, and a version is
+   read with its hidden generated explainers left out (decision 0070). The answer is a five-minute
+   signed link; citation files are answered directly.
 
 ## How stored pieces stay current (decision 0033)
 
@@ -202,6 +246,24 @@ district statistics (`docs/contracts/region.md`).
    and then the manifest, and settles the hold to the audio's seconds.
 4. The answer is one track per part: a one-hour presigned link and the words with their times,
    which the explainer UI highlights (`frontend/lib/listen.ts`).
+
+## How a film gets its score (decision 0058)
+
+1. `GET /api/answers/{answerId}/film-score?language=` (`api/routes/film.py`) checks `VOICE` and
+   the 10-ask limit (Master Admin unlimited) and reads the reader's own explainer with hidden
+   simulations marked, in one short session (`voice/film_store.py`).
+2. `voice/film_scenes.py` makes the scenes (drawn blocks in reading order, timed by their
+   narration estimate or `FILM_SCENE_SECONDS`), their hash, the bed length and the cues the
+   fixed table of `voice/score_prompts.py` names. A manifest at
+   `media/score/<answerId>/<language>/score.json` whose hash matches is served at once.
+3. Otherwise `voice/film_score.py` looks up each clip by its content address
+   (`media/score/<cacheId>/clip.json`) and makes only the missing ones, three at a time, through
+   `providers/media_router.MediaRouter` (`MUSIC`, `SOUND_EFFECT`: reserve, ElevenLabs through
+   `providers/elevenlabs_media.py`, settle), checks each MP3's length, stores clip and record,
+   then the manifest. Any failure stores no manifest. The work runs shielded, so a reader who
+   leaves still fills the cache.
+4. The answer is `FilmScore`: one-hour presigned links to the bed and cues, labelled with the
+   models that made them.
 
 ## How a voice call is answered
 
@@ -288,7 +350,8 @@ answers 404 and no voice button is drawn. The steps hold when the setting is tru
    is kept as a cross-craft piece by basin or districts and reused with its geography section
    (`services/region_pieces`). Geology and climate sections get the
    registry layer their sentences name, built as the layer route answers it. Climate sections also
-   get a seasons strip and materials sections a supply map (`services/season_supply_builders`,
+   get a seasons strip, the trends of the craft's districts with the section's cited claims on
+   what they mean (`services/climate_risk`, decision 0065), and materials sections a supply map (`services/season_supply_builders`,
    decision 0047): the craft's stages and the section's claims placed only on the months or season
    their own text names, a season given months only by a cited quote that states them, the CHIRPS
    rainfall of the first craft district with twelve normals; supply links whose material and
@@ -300,6 +363,32 @@ answers 404 and no voice button is drawn. The steps hold when the setting is tru
    season, state or district no source states, `services/stated_names`) or is not shown, "Experts
    differ" is kept only for two stored facts about one concept from two sources, and the call
    spends only from the answer's headroom (`providers/budget.AnswerHeadroom`).
+   Sections of the mechanism fields also get a generated explainer (`services/simulation_builder`,
+   decision 0055; built since the review, decision 0061): every figure
+   the section's cited quotes state is offered with its own words; a stored explainer whose claims
+   the section offers is placed first with no model call; otherwise one `COMPOSE` call from the
+   headroom chooses values and writes an HTML fragment that must pass the value, static
+   (`research/sandbox`) and block checks, with one redraft; it is kept as a cross-craft piece by
+   concept and claim set from any section (also an any-craft answer and a deepened follow-up), and
+   a professor's hide (`PUT /api/answers/{answerId}/simulations/{blockId}/hidden`) keeps it from
+   being served or built again; every route that reads a stored explainer back marks it hidden.
+   Process, chemistry and water sections also get a what-if (`services/what_if_builder`, decision
+   0056; built since decision 0061): a stage's materials that a
+   stored contrast relation or a stored text ("madder or al root") relates as alternatives, once a
+   section sentence names one, each offered the relation claims on its concept (a hypothesis
+   marked and later labelled), its own fact claims and the claims of reactions of its compound;
+   after the process rows and one short read of those claims, one plan-model call chooses the
+   input, its words and each option's outcomes by ref; an option without evidence is shown
+   unknown, and the block is re-checked against the process rows when built and when reused.
+   Materials sections also get a powers-of-ten zoom and history sections a timeline map
+   (`services/journey_builders`, decision 0057), registered and waiting for their renderers to
+   join the built kinds: the zoom reads the craft's mapped districts, the boundary row, the craft's
+   claims naming a district and the open pictures already kept for the offered claims in one short
+   session, searches Commons and Openverse only for levels still missing, keeps what it shows as
+   `MediaRef` rows and shows the molecule only with a kept conformer, every level captioned by a
+   distinct stored claim and none faked; the timeline offers the section's facts with the spans of
+   years their own texts state, one plan-model call picks points, routes and years by ref, and
+   places are pinned only with Wikidata coordinates through the supply origins' rule.
    The web client draws each block kind through one renderer
    (`components/answer/blockRenderers.ts`); a kind without one is not drawn.
 
@@ -310,7 +399,9 @@ stay mergeable; the full list is `backend/app/models/` and `backend/migrations/v
 Craft data is vendored from the designer portal (`docs/contracts/crafts.md`); district and
 environment data come from open datasets (`docs/contracts/geo.md`, `docs/DATA_SOURCES.md`).
 Seeds (`app/scripts/seed_crafts`, `seed_claims`, `seed_districts`) run on every deploy and are
-idempotent. `seed_claims` also runs the science seed (`app/data/science_seed.json`: constants,
+idempotent; right after them `app/scripts/import_curation` imports every checked dossier of
+`backend/app/data/curation/` into the same tables, withdraws the seed's edge sentences and
+supersedes claims a new dossier version drops (decision 0053). `seed_claims` also runs the science seed (`app/data/science_seed.json`: constants,
 materials, compounds, reactions, readings; decision 0015); `app/scripts/link_compounds` looks
 the seeded compounds up in PubChem, nightly in the Coverage enrichment run (decision 0045). After them, `app/scripts/sync_portal_crafts` adds every craft the two portals hold
 beyond the master list, with their aliases, spellings and merge redirects, through the signed
@@ -324,12 +415,15 @@ TopoJSON per basin to the media bucket (`riverlines` in the Geo ETL run); `servi
 traces a river through a reach (`geo/river_trace`: the largest upstream branch to the source,
 `NEXT_DOWN` to the mouth) and orders the districts it crosses with PostGIS, and
 `GET /api/rivers/{mainRiv}` serves the basin's file. A district's CHIRPS monthly normals reach a
-`seasons` block through `services/monthly_rain`.
+`seasons` block through `services/monthly_rain`. The CHIRPS and GHCN CAMS layers write each
+district's yearly series from 1981 with its normal and its Theil-Sen and Mann-Kendall trend
+(`etl/geo/geo_etl/trend.py`); `services/climate_store` reads a craft's district trends through
+`geo/climate` for a `climate_risk` block (decision 0065).
 
 ## Frontend
 
-Next.js App Router. Signed-in screens are under `app/(protected)/` (ask, crafts, map, settings,
-admin); `app/api/` holds route handlers that proxy auth and session calls; `lib/api.ts` is the
+Next.js App Router. Signed-in screens are under `app/(protected)/` (ask, crafts, map, saved,
+lessons, compare, settings, admin); `app/api/` holds route handlers that proxy auth and session calls; `lib/api.ts` is the
 one API client and `lib/server/apiProxy.ts` the server-side proxy. Generic components are in
 `components/ui/`, domain components in `components/<area>/`. Design rules are the
 `field-repo-frontend`, `motion` and `gsap` skills; practice rules are `frontend-practices`.
@@ -360,12 +454,53 @@ map block is drawn (`components/answer/lazyBlock.tsx`). The matter kinds (decisi
 3D molecules drawn by 3Dmol.js through its one adapter (`lib/moleculeViewer.ts`, imported only
 when a molecule nears the viewport) from the conformer route (`lib/conformer.ts`); a section's
 expert views are one panel with its "Experts differ" cards (`components/answer/experts/`,
-`lib/expertPanel.ts`).
+`lib/expertPanel.ts`). The phase C kinds (generated explainers in a sandboxed `srcdoc` frame, the
+what-if lab, the zoom story, the timeline map) and film mode with its score have their client
+shapes in `lib/explainerPlay.ts` and `lib/filmScore.ts` (decision 0054); the score's route is
+built (decision 0058). The zoom story and the timeline map are `components/answer/journey/`,
+loaded on demand (`lib/zoomView.ts`, `lib/timelineView.ts`, decision 0060). Film mode is
+`components/answer/film/`, loaded only when a film starts: one clock over the drawn blocks
+(`lib/filmScenes.ts`), the Listen script and audio for narration and captions, each block's own
+animation driven through `components/answer/FilmScene.tsx`, and the optional score mixed by
+`lib/filmSound.ts`.
+The phase D kinds (the cloze quiz, compare, the concept graph, local measures, market and GI,
+climate and risk) have their client shapes in `lib/explainerLearning.ts` and
+`lib/explainerInsight.ts`, and the learning routes (versions and follow-ups, saved explainers
+and notifications, lesson packs and citation export, the shared-science explorer, ask the map)
+theirs in `lib/learningContract.ts`, `lib/lessonContract.ts`, `lib/sharedScienceContract.ts`,
+`lib/quizContract.ts`, `lib/compareContract.ts` and `lib/districtCraftsContract.ts` (decision
+0062). On the server the quiz, compare and the concept graph follow fixed
+rules in `research/quiz.py`, `research/craft_compare.py` and `research/shared_science.py`, read
+their rows through `services/shared_concepts.py` and `services/craft_compare.py`, and reach answers
+through `services/learning_builders.py` (decision 0064). Local measures and market and GI
+follow fixed rules too: stated quantities, regional factors and prices in
+`research/stated_quantities.py` and `research/stated_prices.py` over the one Pint registry
+(`research/unit_registry.py`, shared with the science engine), GI registry fields in
+`research/gi_registry.py`, read through `services/measure_store.py` and
+`services/market_store.py` and built by `services/measure_builder.py` and
+`services/market_builder.py` (decision 0066). The six kinds are drawn
+by `components/answer/learning/` (the quiz, compare and the concept graph) and
+`components/answer/insight/` (measures, market and GI, climate trends), with their rules in
+`lib/quizView.ts`, `lib/compareView.ts`, `lib/conceptGraph.ts`, `lib/insightView.ts` and
+`lib/climateView.ts` (decision 0068). The screens around the learning routes (decision 0069) are
+`components/learn/` and `components/map/DistrictPanel.tsx` over `lib/learningApi.ts` and
+`lib/lessonApi.ts`: follow-ups stream on top of the shown explainer through
+`lib/explainerVersions.reduceAnswerEvent` (which wraps `reduceExplainer`), stored versions open at
+`/ask?explainer=` (`components/ask/useExplainerLearning.ts`), and `/saved`, `/lessons`,
+`/compare` and the district panel on `/map` read the rest; citation files are saved under the
+server's file name (`lib/download.downloadApiFile`), lesson files and the report PDF through their
+signed links (decision 0067). The notes behind `/saved` and the nav's unread badge are held for
+the signed-in account only (`lib/notesStore.ts`, decision 0070).
 
-The craft page reads the profile, then the process and region routes, each parsed by its
-contract shape and cross-checked at the boundary (`lib/craftProfile.ts`, `lib/processView.ts`,
-`lib/regionView.ts`); one citation numbering per page reaches every chip through
-`components/answer/CitationContext.tsx` (shared with the explainer). `/map` draws craft places as pins and the environment
+The craft page (decision 0071) reads `GET /crafts/{slug}/page` and the region route, each parsed
+by its contract shape and cross-checked at the boundary (`lib/craftPageContract.ts`,
+`lib/craftRegion.ts` with `lib/regionView.ts`); its pure rules are `lib/craftPageView.ts` and
+`lib/craftPlaces.ts`, and `components/craft/CraftReference.tsx` draws the tabs (Overview,
+Process, Region, Shared science when `GET /crafts/{slug}/shared-science` names a shared concept
+(decision 0070), Sources, and All evidence for researchers and above). One claim index
+(`components/craft/CraftClaims.tsx`) and one citation numbering per page reach every chip through
+`components/answer/CitationContext.tsx`; sentences and terms are the explainer's
+(`ExplainerSentence`, `TermSheet`). `/map` draws craft places as pins and the environment
 layers as district choropleths on `public/boundaries/district-shapes.json`, clipped to the
 DataMeet outline, with no tile basemap (`components/map/`, decision 0019).
 
@@ -376,20 +511,24 @@ which runs the consent, session, timer and client-tool checks and takes its tran
 SDK, on demand), and the microphone and speech player (`lib/voiceDevice.ts`). The CSP's
 `connect-src` is `next.config.ts`.
 
-Generated media (decision 0021) is one store per craft page, `lib/craftMedia.ts`, created above
-the tabs by `components/craft/useStageMedia.tsx`: it reads the media options, creates jobs with an
+Generated media (decision 0021) is one store per page, `lib/craftMedia.ts`, created by
+`components/craft/useStageMedia.tsx`: it reads the media options, creates jobs with an
 idempotency key per press, polls them, remembers their ids in session storage and renews expiring
-URLs. `ProcessTimeline` draws each stage's `StageMedia` after the stage card, so an illustration
-never sits among the evidence. Files reach the browser through `lib/download.ts`; the CSP's
+URLs. Since decision 0071 no screen mounts it (the craft page offers no generator). Files reach the browser through `lib/download.ts`; the CSP's
 `connect-src`, `img-src` and `media-src` name the media bucket's host. Pictures from the web are
 drawn with no referrer (decision 0034); `img-src` adds `https:` on every page, because a
 client-side move to `/ask` keeps the first page's policy (decision 0039); plain http stays refused.
+The CSP's `frame-src` names only Google's sign-in frames: a generated explainer is a
+`sandbox="allow-scripts"` `srcdoc` frame under its own policy, sized by a height message the page
+bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The frame's first
+script is the client's own guard: it removes the peer connection constructors and keeps the frame
+from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
 
 ## Checks
 
 | Workflow | Runs |
 |---|---|
-| Backend checks | ruff, DB-free pytest, tools tests (hygiene, curation), hygiene check, the curation check of every dossier and the index (`tools/curation/check.py --check-index`, no network), offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector |
+| Backend checks | ruff, DB-free pytest, tools tests (hygiene, curation), hygiene check, the curation check of every dossier and the index (`tools/curation/check.py --check-index`, no network), offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector, then the curated dossier import (decision 0053) |
 | Frontend checks | typecheck, lint, unit specs, smoke specs |
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |
 | Geo ETL | `etl/geo` tests and the district statistics build |

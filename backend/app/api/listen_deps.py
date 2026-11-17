@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -8,9 +9,9 @@ from fastapi import Depends, HTTPException, Request, status
 
 from app.api.voice_deps import current_voice, voice_runtime
 from app.core.db import sessionmaker
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, require
 from app.core.errors import AppError
-from app.core.roles import Capability, can
+from app.core.roles import Capability, can, is_uncapped
 from app.models import User
 from app.schemas.listen import ListenOffer
 from app.services.object_store import media_bucket
@@ -19,7 +20,15 @@ from app.voice.listen import Narrator
 from app.voice.listen_store import SqlListenStore
 from app.voice.narration_cache import NarrationObjects
 
-__all__ = ["NO_LISTEN", "UNAVAILABLE_DETAIL", "ListenTools", "listen_store", "listen_tools", "offered_listen"]
+__all__ = [
+    "NO_LISTEN",
+    "UNAVAILABLE_DETAIL",
+    "ListenTools",
+    "listen_store",
+    "listen_tools",
+    "offered_listen",
+    "throttled_voice_user",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +41,19 @@ class ListenTools:
     objects: NarrationObjects
     narrator: Narrator
     voice_id: str
+
+
+def throttled_voice_user(attempt: Callable[[str], tuple[bool, float]], detail: str) -> Callable[..., User]:
+    def throttle(user: User = Depends(require(Capability.VOICE))) -> User:
+        if is_uncapped(user):
+            return user
+        allowed, retry = attempt(str(user.id))
+        if not allowed:
+            wait = str(max(1, int(retry + 0.999)))
+            raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, detail, {"Retry-After": wait})
+        return user
+
+    return throttle
 
 
 def listen_store() -> SqlListenStore:

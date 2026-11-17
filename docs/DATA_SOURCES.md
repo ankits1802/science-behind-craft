@@ -13,7 +13,8 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 | `ESA_WORLDCOVER_2021_V200` | ESA WorldCover 10 m 2021 v200 | European Space Agency | v200 | 2021 | 10 m (1/12000 degree) | EPSG:4326 |
 | `HANSEN_GFC_2025_V1_13` | Global Forest Change 2000-2025 | University of Maryland, Department of Geographical Sciences | GFC-2025-v1.13 | 2000-2025 | 1 arc-second (about 30 m) | EPSG:4326 |
 | `CHELSA_2_1_1981_2010` | CHELSA V2.1 climatologies 1981-2010 | Swiss Federal Institute for Forest, Snow and Landscape Research WSL | V2.1 | 1981-2010 | 30 arc-seconds (about 1 km) | EPSG:4326 |
-| `CHIRPS_3_0` | Climate Hazards Center InfraRed Precipitation with Stations v3.0 | Climate Hazards Center, UC Santa Barbara | 3.0 | set per run (last 10 complete years by default) | 0.05 degree | EPSG:4326 |
+| `CHIRPS_3_0` | Climate Hazards Center InfraRed Precipitation with Stations v3.0 | Climate Hazards Center, UC Santa Barbara | 3.0 | set per run: 1981 (the record's first year) to the last complete year | 0.05 degree | EPSG:4326 |
+| `GHCN_CAMS_T2M` | GHCN CAMS gridded monthly land surface air temperature | NOAA Climate Prediction Center, distributed by NOAA Physical Sciences Laboratory | air.mon.mean.nc, file version 3.01 | set per run: 1981 to the last complete year in the file | 0.5 degree | EPSG:4326 |
 | `COPERNICUS_DEM_GLO90` | Copernicus DEM GLO-90 | European Space Agency, Copernicus Programme | 2021_1 (AWS Open Data COG) | 2011-2015 acquisitions | 3 arc-seconds (about 90 m) | EPSG:4326 (EGM2008 heights) |
 | `HYDRORIVERS_1_0` | HydroRIVERS v1.0 (Asia) | WWF HydroSHEDS | v10 | static | 15 arc-second network (reaches with upstream area >= 10 km2 or discharge >= 0.1 m3/s) | EPSG:4326 |
 | `USGS_MRDS` | Mineral Resources Data System | U.S. Geological Survey | WFS snapshot at retrieval | compiled to 2011, no longer updated | point locations | EPSG:4326 |
@@ -31,6 +32,7 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 | `HANSEN_GFC_2025_V1_13` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | Hansen/UMD/Google/USGS/NASA | https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/ |
 | `CHELSA_2_1_1981_2010` | Open download without registration; licence text not confirmed on 2026-11-15 ([site](https://chelsa-climate.org/)) | No, until confirmed | CHELSA V2.1, Karger et al. | https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/ |
 | `CHIRPS_3_0` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | Climate Hazards Center, UC Santa Barbara (CHIRPS3) | https://data.chc.ucsb.edu/products/CHIRPS/v3.0/ |
+| `GHCN_CAMS_T2M` | [Public domain (U.S. Government work on a federal server)](https://psl.noaa.gov/data/help/) (checked 2026-11-18) | Yes | GHCN_CAMS Gridded 2m Temperature (Land) data provided by the NOAA PSL, Boulder, Colorado, USA | https://downloads.psl.noaa.gov/Datasets/ghcncams/air.mon.mean.nc |
 | `COPERNICUS_DEM_GLO90` | [Copernicus DEM licence (GLO-90 free worldwide)](https://registry.opendata.aws/copernicus-dem/) | Yes | Produced using Copernicus WorldDEM-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved | https://copernicus-dem-90m.s3.amazonaws.com/ |
 | `HYDRORIVERS_1_0` | [HydroSHEDS v1 License Agreement](https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf) (Appendix A, checked 2026-11-17): free for non-commercial and commercial use; distributed only inside derived products, never on its own; attribution required | Yes, inside the app; the lines are never a download or export | The Exhibit B statement, below (River lines) | https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_as_shp.zip |
 | `USGS_MRDS` | [Public domain (U.S. Government work)](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits) | Yes | U.S. Geological Survey Mineral Resources Data System | https://mrdata.usgs.gov/services/wfs/mrds |
@@ -44,10 +46,23 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 - `HANSEN_GFC_2025_V1_13`: Hansen, M. C., Potapov, P. V., Moore, R., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science 342, 850-853. https://doi.org/10.1126/science.1244693. Data GFC-2025-v1.13.
 - `CHELSA_2_1_1981_2010`: Karger, D. N., Conrad, O., Bohner, J., et al. (2017). Climatologies at high resolution for the earth's land surface areas. Scientific Data 4, 170122. https://doi.org/10.1038/sdata.2017.122
 - `CHIRPS_3_0`: Climate Hazards Center InfraRed Precipitation with Stations version 3 (CHIRPS3) Data Repository (2025). https://doi.org/10.15780/G2JQ0P
+- `GHCN_CAMS_T2M`: Fan, Y., van den Dool, H. (2008). A global monthly land surface air temperature analysis for 1948-present. Journal of Geophysical Research 113, D01103. https://doi.org/10.1029/2007JD008470
 - `COPERNICUS_DEM_GLO90`: European Space Agency (2024). Copernicus Global Digital Elevation Model. https://doi.org/10.5270/ESA-c5d3d65
 - `HYDRORIVERS_1_0`: Lehner, B., Grill, G. (2013). Global river hydrography and network routing: baseline data and new approaches to study the world's large river systems. Hydrological Processes 27(15), 2171-2186. https://doi.org/10.1002/hyp.9740
 - `USGS_MRDS`: U.S. Geological Survey. Mineral Resources Data System (MRDS). Reston, Virginia. https://mrdata.usgs.gov/mrds/
 - `GLIM_1_0_05DEG`: Hartmann, J., Moosdorf, N. (2012). Global Lithological Map Database v1.0 (gridded to 0.5 degree spatial resolution). PANGAEA. https://doi.org/10.1594/PANGAEA.788537
+
+## Unit definitions (decision 0062)
+
+A `measure` block converts a unit exactly defined in metric by its definition and cites one
+dataset row, `NIST_SP_811_2008` (`research/measures.UNIT_DEFINITIONS`): Thompson, A., & Taylor,
+B. N. (2008), Guide for the Use of the International System of Units (SI), NIST Special
+Publication 811, Appendix B (https://www.nist.gov/pml/special-publication-811). Not subject to
+copyright in the United States (U.S. Government work). The factors used are its exact ones: inch
+2.54 cm, foot 0.3048 m, yard 0.9144 m, mile 1.609344 km, square foot 0.09290304 m2. Local Indian
+units (seer, maund, tola, gaj, ...) are never converted by a table: only by a value a cited source
+states for the region (owner O5). Pint holds each of them as a dimension of its own, so it has no
+value for any of them (decision 0066).
 
 ## Live scholarly sources
 
@@ -115,13 +130,42 @@ honoured for the agent `KalaVigyan`.
 
 Found through the image sources of decision 0034 and shown in an explainer's `images` block. A
 picture is never copied into the media bucket: the reader's browser loads it from its own host,
-with no referrer, and the card links to its page.
+with no referrer, and the card links to its page. The one exception is an exported file (decision
+0067): a lesson deck, PPTX or PDF, or an explainer's PDF, embeds the section's first open picture
+(CC0, CC BY, CC BY-SA or public domain only, read from `upload.wikimedia.org` or
+`api.openverse.org`) with its title, author, licence and page beside it, as those licences ask;
+the file sits in the private bucket's `exports/` prefix for seven days and goes only to its
+builder.
 
 | Adapter | Service | Terms and credit |
 |---|---|---|
 | `wikimedia_commons` | Wikimedia Commons file search (`imageinfo`, 960 px thumbnails) | Each file's own licence; shown inline only under CC0, CC BY, CC BY-SA or public domain with its author, credited author, licence (linked) and Wikimedia Commons; otherwise a link card |
 | `openverse` | Openverse image search (`api.openverse.org`, anonymous) | Only `by`, `by-sa`, `cc0` and `pdm` results with a creator; credited creator, licence and source site (Flickr, Wikimedia Commons, ...); the Openverse thumbnail is shown |
 | `searxng` | SearXNG image results | No licence is known, so always a link card: the source site's own image as thumbnail, the page title and site, opening the page |
+
+## Vendored export assets (decision 0067)
+
+Files the server writes exports with, kept in `backend/app/data/exports/` with their SHA-256
+pinned by `tests/learning/test_export_store.py`. Each is redistributed under its own licence,
+which travels with it.
+
+| Asset | Source | Licence |
+|---|---|---|
+| reveal.js 6.0.2 (`reveal.js`, `reveal.css`, `LICENSE.txt`) | the npm package `reveal.js@6.0.2` | MIT; the header and the full licence text are kept in every HTML deck |
+| APA 7 CSL style (`csl/apa.csl`, id `http://www.zotero.org/styles/apa`, updated 2026-02-07) | citation-style-language/styles, commit `3c6698d7` (2026-10-02) | CC BY-SA 3.0 (its `rights` element); XML comments removed, nothing else changed |
+| Noto Sans, Noto Sans Devanagari, Bengali, Tamil, Telugu, Gujarati, Kannada, Malayalam, Oriya, Gurmukhi and Noto Naskh Arabic, Regular and Bold (unhinted TTF, `fonts/`) | notofonts/notofonts.github.io | SIL Open Font License 1.1 (`fonts/OFL.txt`); embedded as subsets in PDFs |
+
+## Generated media
+
+Nothing generated is evidence: generated pictures, clips and film scores are labelled and never
+cited (`docs/contracts/media.md`).
+
+| Service | What | Terms and label |
+|---|---|---|
+| Gemini (Interactions API) | stage illustrations and silent clips | "AI illustration" with the model and day (decision 0018) |
+| ElevenLabs Eleven Music (`/v1/music`) | film mode's instrumental bed | Eleven Music terms: paid plans need no attribution; prompts name no artist, song, label or lyric; outputs are not compiled into a music library. Labelled "AI music and sound" with the models (decision 0058) |
+| ElevenLabs Sound Effects (`/v1/sound-generation`) | film mode's cues | ElevenLabs terms of service; same label |
+| ElevenLabs Image and Video (`/v1/flows/*`) | further route choices for stage pictures and clips | ElevenLabs terms of service and the underlying model's; "AI illustration" with the model id asked, since flows report none (decision 0058). The finished file is fetched only from the signed `content_url` on `storage.googleapis.com`, the host the reference shows, over https without the key, streamed and cut at 64 MB (decision 0061) |
 
 ## Variables and statistics
 
@@ -147,9 +191,15 @@ Each row in `district_env.parquet` is one `(districtLgd, datasetCode, variable, 
 | | `mean_temperature` (tas) | `1981-2010-01` to `1981-2010-12` | same | degC |
 | | `precipitation` (pr) | `1981-2010-01` to `1981-2010-12` | same | mm/month |
 | CHIRPS (`chirps`) | `annual_precipitation` | each year of the run period | `DISTRICT_MEAN`, `DISTRICT_P10`, `DISTRICT_P90` | mm/year |
-| | `annual_precipitation` | run period, e.g. `2016-2025` | `NORMAL` | mm/year |
-| | `monthly_precipitation` | run period plus month, e.g. `2016-2025-07` | `NORMAL` | mm/month |
+| | `annual_precipitation` | run period, e.g. `1981-2025` | `NORMAL` | mm/year |
+| | `annual_precipitation` | run period | `TREND_PER_DECADE` | mm/year per decade |
+| | `annual_precipitation` | run period | `TREND_P_VALUE` | p-value |
+| | `monthly_precipitation` | run period plus month, e.g. `1981-2025-07` | `NORMAL` | mm/month |
 | | `monsoon_share_jjas` | run period | `NORMAL` | fraction of annual |
+| GHCN CAMS (`ghcncams`) | `annual_mean_temperature` | each year of the run period | `DISTRICT_MEAN` | degC |
+| | `annual_mean_temperature` | run period, e.g. `1981-2025` | `NORMAL` | degC |
+| | `annual_mean_temperature` | run period | `TREND_PER_DECADE` | degC per decade |
+| | `annual_mean_temperature` | run period | `TREND_P_VALUE` | p-value |
 | Copernicus DEM (`copdem`) | `elevation` | | `DISTRICT_MEAN`, `DISTRICT_P10`, `DISTRICT_P90`, `DISTRICT_MIN`, `DISTRICT_MAX` | m |
 | | `slope` | | `DISTRICT_MEAN`, `DISTRICT_P10`, `DISTRICT_P90` | degree |
 | HydroRIVERS (`hydrorivers`) | `river_length`, `major_river_length` | | `TOTAL` | km |
@@ -165,7 +215,9 @@ Method notes carried in each row's `method`:
 - SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers. SoilGrids masks built-up land, water and bare rock; a district masked throughout gets no SoilGrids rows and is listed under `districtsWithoutValues` and `districtsWithoutCells` in the summary (Mumbai, 482: 0 of 2,720 cells unmasked on 2026-11-17).
 - WorldCover is read from the 3 degree COG tiles. The workflow can read an overview (`--worldcover-factor`, default 4, so about 40 m, nearest neighbour); the effective resolution is written to each row's `resolution`, loaded into `DistrictEnvValue.resolution` and sent with every region value and layer (decision 0016).
 - Hansen forest is `treecover2000 >= 30%`; loss is counted only inside that 2000 forest, by `lossyear`.
-- CHIRPS uses the last `--chirps-years` (default 10) complete years available; `monsoon_share_jjas` is June to September over the annual normal. The twelve `monthly_precipitation` normals of a district are written only when every year of the period has every month; they are the rainfall of an explainer's `seasons` block, cited by the CHIRPS dataset row with its period and 0.05 degree grid (decision 0043) and named by its district and state from the LGD register ("Rainfall · Kachchh, Gujarat · monthly normal · 2016-2025", decision 0050).
+- CHIRPS runs from `--climate-first-year` (default 1981, the first year of the CHIRPS record; decision 0065) to the last complete year available, so the dataset row's period, the normals and the trend are one period (`1981-2025`); `monsoon_share_jjas` is June to September over the annual normal. The twelve `monthly_precipitation` normals of a district are written only when every year of the period has every month; they are the rainfall of an explainer's `seasons` block, cited by the CHIRPS dataset row with its period and 0.05 degree grid (decision 0043) and named by its district and state from the LGD register ("Rainfall · Kachchh, Gujarat · monthly normal · 1981-2025", decision 0050).
+- GHCN CAMS (decision 0065) is one netCDF file of monthly 2 m air temperature over land in Kelvin (`air`), downloaded whole once a month into the run's cache and read through GDAL's netCDF driver. A cell's annual mean is the mean of its twelve monthly means; a cell missing any month, or outside the file's valid range (150 to 400 K), has no value that year. Values are Kelvin less 273.15. The run starts at `--climate-first-year` (default 1981) and ends at the last year the file holds all twelve months of. On a 0.5 degree grid a small district is one or two cells, so the resolution is shown with every value.
+- Trends (decision 0065): for a district whose yearly series is complete over a period of at least 30 years, `TREND_PER_DECADE` is the Theil-Sen slope (the median of the slopes between every pair of years; Theil 1950, Sen 1968) times ten, and `TREND_P_VALUE` the two-sided Mann-Kendall test's p-value (normal approximation with the tie-corrected variance and a continuity correction; Kendall 1975, Gilbert 1987). A trend is significant when p < 0.05. A district missing any year has its yearly values but no normal and no trend. `DistrictEnvValue.value` keeps six decimals, so a p-value below 0.0000005 is stored as 0.
 - Slope is computed from the DEM with central differences, using metres per degree at each row's latitude.
 - HydroRIVERS lengths are reaches clipped to the district in WGS 84 / India NSF LCC. A major river is `ORD_FLOW <= 4` (long-term discharge of at least 100 m3/s). Distance is from the Designer Portal district centroid.
 
@@ -202,6 +254,26 @@ The river story draws HydroRIVERS v1.0 (Asia) lines, not just their district tot
 CHELSA V2.1 (1981-2010) was chosen over WorldClim 2.1 (1970-2000). It covers a more recent baseline at the same 30 arc-second resolution, and it handles terrain better through its orographic precipitation correction, which matters in the Himalayan and Western Ghats districts. Its GeoTIFFs are served as individual files from a public object store, so the workflow can read only the window it needs. WorldClim publishes zipped bundles that would have to be downloaded whole.
 
 CHELSA's licence is **unconfirmed**. The files download openly without registration, but on 2026-11-15 we could not find a licence statement on the CHELSA site to cite. Until one is confirmed, `redistributable` is `false` and CHELSA values must stay internal: no public display, no export. If the licence turns out to be CC BY 4.0, change `redistributable` in `catalog.py`, re-run the load and update this page. CHIRPS v3.0 (CC BY 4.0) covers recent rainfall and can be shown publicly now.
+
+### Temperature trends: GHCN CAMS (decision 0065)
+
+The temperature trend needs a monthly series per district from at least 1981 to last year, open
+and with no key or registration. GHCN CAMS (NOAA CPC, served by NOAA PSL) is one file updated
+monthly, 0.5 degree, 1948 to the present, and in the public domain: PSL's data help page states
+that "the information on federal government servers are in the public domain, unless
+specifically annotated otherwise" and asks for an acknowledgment (the attribution above), checked
+2026-11-18. Considered and not used: CRU TS 4.09 (Open Government Licence, but CRU asks for
+downloads through CEDA, which needs an account, and the series ends in 2024); ERA5 and ERA5-Land
+(Copernicus Climate Data Store key); Berkeley Earth (CC BY-NC); CHELSA monthly series (licence
+unconfirmed, as above, and ends in 2019); IMD gridded temperature (terms of reuse not stated).
+
+### Groundwater
+
+No open district-level groundwater dataset is loaded. The Central Ground Water Board's district
+tables (Dynamic Ground Water Resources of India) are published as state PDFs, and the India Data
+Portal's machine-readable copies need an API key, so a climate block shows no groundwater value;
+groundwater appears only through cited claims. `GroundwaterValue` is ready for an open dataset
+when one exists (`docs/TECH_DEBT.md`).
 
 ### District boundaries are indicative and not redistributable
 

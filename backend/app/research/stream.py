@@ -15,6 +15,7 @@ from .base import ContractModel, absent
 from .citations import AnswerSentence, Citation, SourceRef
 from .crafts import MAX_CANDIDATES, CraftRef
 from .explainer import EXPLAINER_EVENTS
+from .explainer_versions import VERSION_EVENTS
 from .vocabulary import ShownLevel
 
 __all__ = [
@@ -142,6 +143,7 @@ STREAM_EVENTS: Mapping[str, TypeAdapter[Any]] = MappingProxyType(
         "done": TypeAdapter(DoneEvent),
         "error": TypeAdapter(ErrorEvent),
         **EXPLAINER_EVENTS,
+        **VERSION_EVENTS,
     }
 )
 

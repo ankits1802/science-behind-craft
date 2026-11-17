@@ -3,15 +3,17 @@ import type { NextConfig } from "next";
 const isProduction = process.env.NODE_ENV === "production";
 
 export const ELEVENLABS_CONNECT_SOURCES = ["wss://livekit.rtc.elevenlabs.io", "https://livekit.rtc.elevenlabs.io"];
-export const GOOGLE_IDENTITY_CONNECT_SOURCE = "https://accounts.google.com/gsi/";
+export const GOOGLE_IDENTITY_SOURCE = "https://accounts.google.com/gsi/";
 export const MEDIA_BUCKET_ORIGIN = "https://kalavigyan-media-626159998512.s3.ap-south-1.amazonaws.com";
 
 export const WEB_PICTURE_SOURCE = "https:";
 export const IMAGE_SOURCES = ["'self'", "data:", MEDIA_BUCKET_ORIGIN, WEB_PICTURE_SOURCE];
+export const FRAME_SOURCES = [GOOGLE_IDENTITY_SOURCE];
 
 export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
-  ["connect-src 'self'", GOOGLE_IDENTITY_CONNECT_SOURCE, ...ELEVENLABS_CONNECT_SOURCES, MEDIA_BUCKET_ORIGIN].join(" "),
+  ["frame-src", ...FRAME_SOURCES].join(" "),
+  ["connect-src 'self'", GOOGLE_IDENTITY_SOURCE, ...ELEVENLABS_CONNECT_SOURCES, MEDIA_BUCKET_ORIGIN].join(" "),
   ["img-src", ...IMAGE_SOURCES].join(" "),
   `media-src 'self' ${MEDIA_BUCKET_ORIGIN}`
 ].join("; ");

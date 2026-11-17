@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { splitSseBuffer } from "@/lib/answerStream";
+import { craftPageShape } from "@/lib/craftPageContract";
 import { mediaJobShape, mediaOptionsShape } from "@/lib/mediaContract";
 import { craftRegionShape, layerClassOf, mapLayerListShape, mapLayerShape } from "@/lib/regionContract";
 import { craftProcessShape } from "@/lib/scienceContract";
@@ -28,6 +29,7 @@ function parsed<T>(shape: Shape<T>, name: string): T {
 }
 
 const GOLDEN: [string, Shape<unknown>][] = [
+  ["craft.page.golden.json", craftPageShape],
   ["science.process.golden.json", craftProcessShape],
   ["region.craft.golden.json", craftRegionShape],
   ["region.layers.golden.json", mapLayerListShape],

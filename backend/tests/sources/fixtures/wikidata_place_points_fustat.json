@@ -1,0 +1,28 @@
+{
+ "head": {
+  "vars": [
+   "item",
+   "coordinates",
+   "rank"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "item": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q839456"
+    },
+    "coordinates": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(31.2375 30.005)"
+    },
+    "rank": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#NormalRank"
+    }
+   }
+  ]
+ }
+}

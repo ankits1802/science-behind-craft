@@ -113,6 +113,9 @@ def test_a_matching_piece_is_reused_when_every_claim_is_still_visible() -> None:
         ({}, {"depth": "DETAILED"}, False, "DEPTH"),
         ({}, {"staleSince": AT}, False, "STALE"),
         ({}, {"supersededById": "9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d"}, False, "SUPERSEDED"),
+        ({}, {"hiddenAt": AT}, False, "HIDDEN"),
+        ({}, {"hiddenAt": AT}, True, "HIDDEN"),
+        ({}, {"hiddenAt": AT, "supersededById": "9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d"}, False, "SUPERSEDED"),
         ({}, {}, True, "CLAIM_NOT_VISIBLE"),
     ],
 )

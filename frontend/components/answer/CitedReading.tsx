@@ -1,0 +1,50 @@
+"use client";
+
+import { useCallback, useMemo, useState, type ReactNode } from "react";
+
+import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
+import { ExplainerReadingProvider, type ExplainerReading } from "@/components/answer/ExplainerReading";
+import { SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
+import { SourcesList } from "@/components/answer/SourcesList";
+import { TermSheet } from "@/components/answer/TermSheet";
+import { useTermState } from "@/components/answer/useTermState";
+import { ENGLISH, type AnswerLanguage } from "@/lib/answerLanguages";
+import { listedSourceNumbers } from "@/lib/citations";
+import type { Citation, SourceRef } from "@/lib/types";
+
+export type CitedReadingProps = {
+  sources: readonly SourceRef[];
+  numbers: Map<string, number>;
+  language?: AnswerLanguage;
+  children: ReactNode;
+};
+
+export function CitedReading({ sources, numbers, language = ENGLISH, children }: CitedReadingProps) {
+  const [opened, setOpened] = useState<OpenCitation | null>(null);
+  const terms = useTermState();
+  const sourcesById = useMemo(() => new Map(sources.map((source) => [source.id, source])), [sources]);
+  const onOpen = useCallback(
+    (citation: Citation) => setOpened({ citation, source: sourcesById.get(citation.sourceId) ?? null, number: numbers.get(citation.sourceId) ?? null }),
+    [numbers, sourcesById]
+  );
+  const lookup = useMemo<CitationLookup>(() => ({ numbers, sourcesById, onOpen }), [numbers, sourcesById, onOpen]);
+  const reading = useMemo<ExplainerReading>(
+    () => ({ language, original: false, hiddenTerms: terms.hidden, onTerm: terms.open, listen: null }),
+    [language, terms.hidden, terms.open]
+  );
+  return (
+    <ExplainerReadingProvider value={reading}>
+      <CitationProvider value={lookup}>
+        {children}
+        <SourceDialog open={opened} onClose={() => setOpened(null)} />
+        <TermSheet span={terms.span} language={language.code} onClose={terms.close} onMissing={terms.missing} onAsk={null} onOpenCitation={setOpened} />
+      </CitationProvider>
+    </ExplainerReadingProvider>
+  );
+}
+
+export function ListedSources({ sources, idPrefix }: { sources: readonly SourceRef[]; idPrefix: string }) {
+  const byId = new Map(sources.map((source) => [source.id, source]));
+  const entries = [...listedSourceNumbers(sources)].map(([id, number]) => ({ number, id, source: byId.get(id) ?? null }));
+  return entries.length > 0 ? <SourcesList entries={entries} idPrefix={idPrefix} /> : null;
+}

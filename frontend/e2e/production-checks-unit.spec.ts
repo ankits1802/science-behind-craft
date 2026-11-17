@@ -12,11 +12,13 @@ import type { AnswersReport, ScreensReport } from "./production/report";
 import { runFileName } from "./production/run";
 import type { TappedChunk, TappedStream } from "./production/streamTap";
 import { summaryMarkdown } from "./production/summaryMarkdown";
+import { FRAME_DOCUMENT_START, NO_CONCEPT_NOTE, type FrameSeen } from "./production/generatedExplainer";
 import { RIVERS_NOT_LOADED_NOTE } from "./production/waterStory";
+import { PHASE_C, phaseCBlock } from "./playFixture";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 const GOLDEN = readFileSync(join(SHARED, "explainer.stream.golden.sse"), "utf8");
-const [ENGLISH, HINDI, WATER] = KNOWN_ANSWER_QUESTIONS;
+const [ENGLISH, HINDI, WATER, INDIGO] = KNOWN_ANSWER_QUESTIONS;
 const PHASE_B = JSON.parse(readFileSync(join(SHARED, "explainer.phase-b.golden.json"), "utf8")) as {
   sections: { blocks: Record<string, unknown>[] }[];
   sources: Record<string, unknown>[];
@@ -40,10 +42,10 @@ function sentence(id: string, text: string, extra: Record<string, unknown> = {},
   return block("block", { sectionId: "s1", block: prose });
 }
 
-function stream(text: string, language: string): TappedStream {
+function stream(text: string, language: string, depth = "DETAILED"): TappedStream {
   return {
     url: "/api/answers/stream",
-    body: JSON.stringify({ question: "q", depth: "DETAILED", craftSlug: "Kutch-Ajrakh", language }),
+    body: JSON.stringify({ question: "q", depth, craftSlug: "Kutch-Ajrakh", language }),
     requestedAt: 1_000,
     respondedAt: 1_100,
     status: 200,
@@ -54,7 +56,7 @@ function stream(text: string, language: string): TappedStream {
 }
 
 function recordOf(text: string, question: KnownAnswerQuestion, streamsOpened = 1) {
-  return answerRecord({ question, stream: stream(text, question.language), streamsOpened, clickedAt: 1_000, waited: null });
+  return answerRecord({ question, stream: stream(text, question.language, question.depth), streamsOpened, clickedAt: 1_000, waited: null });
 }
 
 const HINDI_ANSWER = [
@@ -208,7 +210,8 @@ test("the step summary orders widths from widest and escapes table cells", () =>
     role: "RESEARCHER",
     problemCount: 0,
     unasked: [],
-    questions: [recordOf(HINDI_ANSWER, HINDI), { ...recordOf(waterAnswer(sentence("w2", "Alum is the mordant.")), WATER), notes: [RIVERS_NOT_LOADED_NOTE] }]
+    questions: [recordOf(HINDI_ANSWER, HINDI), { ...recordOf(waterAnswer(sentence("w2", "Alum is the mordant.")), WATER), notes: [RIVERS_NOT_LOADED_NOTE] }],
+    exports: null
   };
   const markdown = summaryMarkdown([screens("Phone", 390, ["a | b"]), screens("Desktop", 1440, [])], {
     runId: "7",
@@ -223,4 +226,51 @@ test("the step summary orders widths from widest and escapes table cells", () =>
   expect(withAnswers).toContain("| Question | Ended | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |");
   expect(withAnswers).toContain("| Hindi | done | 2 | 2 | 2 | 1 | Yes | 1 translated, 1 English, 0 other |");
   expect(withAnswers).toContain(`#### Answer notes\n\n- Water: ${RIVERS_NOT_LOADED_NOTE}`);
+});
+
+function indigoAnswer(...frames: string[]): string {
+  return [block("source", SOURCE), ...PHASE_C.sources.map((source) => block("source", source)), sentence("i1", "Indigo turns blue as it meets the air."), ...frames, block("done", { answerId: null })].join("");
+}
+
+const DRAWN_FRAME: FrameSeen = { sandbox: "allow-scripts", policyFirst: true, drawn: true, peerless: true };
+
+test("the four known-answer questions ask the mordant, the water and indigo at their depths", () => {
+  expect(KNOWN_ANSWER_QUESTIONS.map((question) => [question.label, question.depth, question.check])).toEqual([
+    ["English", "DETAILED", "MORDANT"],
+    ["Hindi", "DETAILED", "MORDANT"],
+    ["Water", "DETAILED", "WATER_STORY"],
+    ["Indigo", "EXPERT", "GENERATED_EXPLAINER"]
+  ]);
+  expect(INDIGO.question).toBe("How does indigo turn blue on Kutch Ajrakh cloth?");
+  expect(FRAME_DOCUMENT_START).toContain("webrtc 'block'");
+  const detailed = answerRecord({ question: INDIGO, stream: stream(indigoAnswer(), "en"), streamsOpened: 1, clickedAt: 1_000, waited: null });
+  expect(answerProblems(detailed, INDIGO)).toContain("the request asked at DETAILED, not EXPERT");
+});
+
+test("indigo passes when its generated explainer draws in the sandbox and its frame reaches nothing", () => {
+  const generated = block("block", { sectionId: "s1", block: phaseCBlock("simulation", "s1.b1") });
+  const record = recordOf(indigoAnswer(generated), INDIGO);
+  expect(record.generatedExplainer).toMatchObject({ blocks: 1, values: 2, valuesWithoutBasis: 0 });
+  expect(record.knownAnswerFound).toBe(true);
+  expect(answerProblems({ ...record, generatedExplainer: { ...record.generatedExplainer, frames: [DRAWN_FRAME] } }, INDIGO)).toEqual([]);
+  const leaking = { ...record.generatedExplainer, frames: [DRAWN_FRAME], frameRequests: ["https://example.org/leak"], frameRefusals: ["Refused to connect to 'https://example.org/'"] };
+  expect(answerProblems({ ...record, generatedExplainer: leaking }, INDIGO)).toEqual([
+    "a generated explainer frame attempted 1 network requests: https://example.org/leak",
+    "a generated explainer frame attempted 1 loads its policy refused: Refused to connect to 'https://example.org/'"
+  ]);
+  const broken = { ...record.generatedExplainer, frames: [{ sandbox: "allow-scripts allow-same-origin", policyFirst: false, drawn: false, peerless: false }, DRAWN_FRAME] };
+  expect(answerProblems({ ...record, generatedExplainer: broken }, INDIGO)).toEqual([
+    "the stream sent 1 generated explainers; the page draws 2 sandboxed frames",
+    '1 generated explainer frames lack sandbox="allow-scripts" or the policy as their first head element',
+    "1 generated explainer frames drew nothing",
+    "1 generated explainer frames still offer a peer connection"
+  ]);
+});
+
+test("without a generated explainer the indigo question records that the builder chose no concept and does not fail", () => {
+  const record = recordOf(indigoAnswer(), INDIGO);
+  expect(record.generatedExplainer.blocks).toBe(0);
+  expect(record.knownAnswerFound).toBe(false);
+  expect(answerProblems({ ...record, generatedExplainer: { ...record.generatedExplainer, frames: [] } }, INDIGO)).toEqual([]);
+  expect(knownAnswerOutcome(record, INDIGO).notes).toEqual([NO_CONCEPT_NOTE]);
 });

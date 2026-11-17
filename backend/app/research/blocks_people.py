@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import uuid
 from collections.abc import Iterator, Sequence
 from typing import ClassVar, Literal, Self
 
@@ -9,7 +8,6 @@ from pydantic import Field, model_validator
 from .base import ContractModel, HttpsUrl, PartialDate
 from .blocks import SENTENCE, BlockBase, ExplainerSentence, SentenceSpec, require_facts
 from .citations import AnswerSentence
-from .crafts import CraftRef
 from .evidence import personal_data_in
 from .media_refs import MediaRef
 from .quotes import figures_in
@@ -18,12 +16,9 @@ from .vocabulary import AnswerLanguage
 __all__ = [
     "AUDIENCES",
     "EXPERT_SEATS",
-    "QUIZ_MAX_QUESTIONS",
     "ArtisanQuote",
     "ArtisanRef",
     "ArtisanVoiceBlock",
-    "CompareBlock",
-    "CompareRow",
     "DesignRef",
     "DesignsBlock",
     "ExpertDifference",
@@ -32,8 +27,6 @@ __all__ = [
     "OpenQuestion",
     "OpenQuestionsBlock",
     "PracticeNote",
-    "QuizBlock",
-    "QuizQuestion",
     "expert_pairing_problems",
 ]
 
@@ -58,7 +51,6 @@ EXPERT_SEATS = (
     "ARTISAN",
 )
 AUDIENCES = ("ARTISAN", "STUDENT", "DESIGNER", "POLICY", "NGO", "CONSERVATOR")
-QUIZ_MAX_QUESTIONS = 10
 
 ExpertSeat = Literal[*EXPERT_SEATS]
 Audience = Literal[*AUDIENCES]
@@ -135,28 +127,6 @@ def _sources_of(sentence: AnswerSentence) -> frozenset[str]:
     return frozenset(citation.source_id for citation in sentence.citations)
 
 
-class CompareRow(ContractModel):
-    aspect: str = Field(min_length=1, max_length=120)
-    left: ExplainerSentence | None
-    right: ExplainerSentence | None
-
-
-class CompareBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (("rows", [(("left", SENTENCE), ("right", SENTENCE))]),)
-
-    kind: Literal["compare"]
-    version: Literal[1]
-    crafts: list[CraftRef] = Field(min_length=2, max_length=2)
-    rows: list[CompareRow] = Field(min_length=1)
-    piece_ids: list[uuid.UUID]
-
-    @model_validator(mode="after")
-    def _two_different_crafts(self) -> Self:
-        if self.crafts[0].slug == self.crafts[1].slug:
-            raise ValueError(f"compare {self.id} sets two different crafts side by side")
-        return self
-
-
 class PracticeNote(ContractModel):
     audience: Audience
     sentences: list[ExplainerSentence] = Field(min_length=1)
@@ -175,27 +145,6 @@ class InPracticeBlock(BlockBase):
         if len(set(audiences)) != len(audiences):
             raise ValueError(f"in practice {self.id} has one note per audience")
         return self
-
-
-class QuizQuestion(ContractModel):
-    prompt: str = Field(min_length=1, max_length=300)
-    options: list[str] = Field(min_length=2, max_length=5)
-    answer: int = Field(ge=0)
-    explanation: ExplainerSentence
-
-    @model_validator(mode="after")
-    def _the_key_is_an_option(self) -> Self:
-        if self.answer >= len(self.options) or len(set(self.options)) != len(self.options):
-            raise ValueError(f"quiz question {self.prompt!r} keys one of its distinct options")
-        return self
-
-
-class QuizBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (("questions", [(("explanation", SENTENCE),)]),)
-
-    kind: Literal["quiz"]
-    version: Literal[1]
-    questions: list[QuizQuestion] = Field(min_length=1, max_length=QUIZ_MAX_QUESTIONS)
 
 
 class OpenQuestion(ContractModel):

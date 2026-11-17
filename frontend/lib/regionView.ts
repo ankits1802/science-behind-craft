@@ -38,7 +38,9 @@ const STAT_LABEL: Record<RegionValue["stat"], string> = {
   TOTAL: "District total",
   DENSITY: "District density",
   DISTANCE: "Distance",
-  COUNT: "Count in district"
+  COUNT: "Count in district",
+  TREND_PER_DECADE: "Trend per decade (Sen's slope)",
+  TREND_P_VALUE: "Trend significance (Mann–Kendall)"
 };
 
 const STATE_AGGREGATION_LABEL: Record<Exclude<RegionValue["aggregation"], "DISTRICT">, string> = {

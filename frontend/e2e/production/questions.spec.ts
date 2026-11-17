@@ -5,6 +5,7 @@ import { expect, test } from "@playwright/test";
 import { KNOWN_ANSWER_QUESTIONS, type AnswerRecord } from "./answers";
 import { askKnownAnswer } from "./asking";
 import { clip } from "./checks";
+import { proveExports, type ExportProof } from "./exportProof";
 import type { AnswersReport } from "./report";
 import { QUESTIONS_TIMEOUT_MS, SCREENSHOT_DIR, baseUrl, credentials, questionsRequested, runFileName, runId, runStartedAt, writeReport } from "./run";
 import { signIn } from "./signIn";
@@ -17,13 +18,14 @@ function unaskedProblem(label: string, error: unknown): string {
   return `${label}: could not ask the question: ${clip(message)}`;
 }
 
-test("three known-answer questions at Detailed depth: the mordant in English and Hindi, and Kachchh's water", async ({ page }) => {
+test("four known-answer questions: the mordant in English and Hindi and Kachchh's water at Detailed depth, and indigo's generated explainer at Expert depth", async ({ page }) => {
   test.skip(!questionsRequested(), "Dispatch with questions=true to ask the known-answer questions.");
   test.setTimeout(QUESTIONS_TIMEOUT_MS);
   await installStreamTap(page);
   const user = await signIn(page, credentials());
   const records: AnswerRecord[] = [];
   const unasked: string[] = [];
+  let exports: ExportProof | null = null;
   const write = () => {
     const report: AnswersReport = {
       kind: "answers",
@@ -31,9 +33,10 @@ test("three known-answer questions at Detailed depth: the mordant in English and
       runId: runId(),
       startedAt: runStartedAt(),
       role: user.role,
-      problemCount: records.reduce((sum, record) => sum + record.problems.length, 0) + unasked.length,
+      problemCount: records.reduce((sum, record) => sum + record.problems.length, 0) + unasked.length + (exports?.problems.length ?? 0),
       unasked,
-      questions: records
+      questions: records,
+      exports
     };
     writeReport(REPORT_NAME(), report);
   };
@@ -48,7 +51,10 @@ test("three known-answer questions at Detailed depth: the mordant in English and
     await page.screenshot({ path: join(SCREENSHOT_DIR, shot), fullPage: true }).catch(() => undefined);
     write();
   }
+  exports = await proveExports(page, records, user);
+  write();
 
-  const problems = [...unasked, ...records.flatMap((record) => record.problems.map((problem) => `${record.label}: ${problem}`))];
+  const exported = exports.problems.map((problem) => `Exports: ${problem}`);
+  const problems = [...unasked, ...records.flatMap((record) => record.problems.map((problem) => `${record.label}: ${problem}`)), ...exported];
   expect(problems.length, problems.join("\n")).toBe(0);
 });

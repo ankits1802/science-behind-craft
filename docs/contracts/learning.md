@@ -1,0 +1,410 @@
+# Learning contract: follow-ups, versions, saved answers, alerts, lessons, exports, shared science and the map
+
+Phase D of `docs/plans/answer-experience.md` ("Learn and act", features 7, 11, 14, 15, 16, export)
+around the explainer of `docs/contracts/explainer.md`. The code is the typed models in
+`backend/app/research/` (`explainer_versions.py`, `alerts.py`, `lessons.py`,
+`citation_export.py`, `shared_science.py`, `quiz.py`, `craft_compare.py`) and
+`backend/app/schemas/district_crafts.py`, and the client shapes in
+`frontend/lib/learningContract.ts`, `lessonContract.ts`, `sharedScienceContract.ts`,
+`quizContract.ts`, `compareContract.ts` and `districtCraftsContract.ts`. The phase D blocks (quiz, compare,
+concept graph, measure, market and GI, climate and risk) are in the explainer contract. Change a
+shape only together with this page, the fixtures and both sides' tests. Design choices: decision
+0062; the lanes that build it: 0063 (follow-ups, versions, saved explainers and alerts), 0064
+(quiz, compare and the shared-science explorer), 0065 (climate and risk, ask the map), 0066 (local
+measures, market and GI), 0067 (lesson builder, PDF and citation export), 0068 (block renderers),
+0069 (screens), 0070 (review).
+
+Last reviewed: 2026-11-18.
+
+## Ground rules
+
+- Shapes follow `docs/contracts/research.md`: `ContractModel`, camelCase JSON, unknown fields
+  refused, https URLs only, instants with a time zone. Every response here is `schemaVersion 1`.
+- Every fact a reader sees carries its citation: a sentence its claims' citations, a value its
+  dataset row. Nothing here is written by a model; a model may only choose and order.
+- An explainer is its asker's. Every explainer, version, saved entry, notification and lesson
+  route answers 404 to anyone else, Master Admins included, so a stranger learns nothing.
+- Routes are thin (`docs/contracts/backend.md`): read on one short session, release it before any
+  model, bucket or HTTP call (decision 0040).
+- The paths below are under `/api`; the client's constants omit the prefix like every other
+  contract (`EXPLAINER_PATH`, `LESSON_FILE_PATH`, ...).
+
+## Follow-ups that build (decision 0063 builds it)
+
+An explainer is named by the answer that first made it: `explainerId` is version 1's `answerId`.
+A follow-up is a new answer that adds or deepens sections of the same explainer and is stored as
+the next version; earlier versions are never changed.
+
+- **Asking.** `POST /api/answers/stream` takes `buildsOn: BuildsOn {explainerId, version, facets[]}`
+  beside the question. `version` must be the latest (else 409 `{detail}`, the client reloads);
+  `facets` (each once, at most 14), when given, are exactly the fields researched whatever the
+  question asks (the alert's "Update" sends the facets with news); empty lets the question decide,
+  capped by the depth's section count. The follow-up keeps the explainer's crafts, depth and
+  language (`Understood` as version 1 had it), so a request with `buildsOn` sends no `craftSlug`,
+  `anyCraft`, `depth` or `language` (422 otherwise); 403 when the reader's role no longer offers
+  that depth. 404 for an explainer that is not the asker's.
+- **Stream.** After `understood`: `builds_on` `BuildsOnEvent {explainerId, version, sections[{id,
+  order}]}` (the base version's sections by order). Sections then stream as usual: a section the
+  base has (same id) is deepened, its new blocks numbered after the base's (`s2.b2` after `s2.b1`);
+  a new section takes the next id and an order after the base's. A deepened section only adds:
+  sentences whose claims the explainer already cites are dropped, and kinds it already shows (a
+  ladder, a picture strip, a builder's kind) are not built again; one that finds nothing new ends
+  `EMPTY` in the stream and stays as the base shows it. Before `done`: `version` `VersionMark` of
+  the stored version; a follow-up that added nothing stores no version and sends no `version`.
+  When another follow-up stored that version meanwhile, the stream ends with an `error` and
+  `done {answerId: null}`. Both events are in `research/stream.STREAM_EVENTS`
+  (`explainer_versions.VERSION_EVENTS`); the client reads them (`lib/explainerVersions`, decision
+  0069): it keeps the base's sections, adds a deepened section's blocks before its pictures and
+  shows a deepened section that ended `EMPTY` as the base does.
+- **The stored version.** The follow-up's `Answer.payload.explainer` holds the whole merged
+  explainer (`answerId` the follow-up's, `question` the follow-up's), so Listen and every reader
+  keep working on one document; `payload.version` holds its `VersionMark`. `Answer.explainerId`
+  and `Answer.explainerVersion` index every version (version 1 is the explainer's own answer; the
+  pair is unique), and a version's `claimIds` are every claim its document cites. An added section
+  that found nothing is left out of the stored version and later added sections close up its
+  order. Deepened sections are never reused from or stored as knowledge pieces; added ones are.
+- **`VersionMark {explainerId, version >= 1, answerId, basedOn, question, changes[SectionChange],
+  createdAt}`**: version 1 is the explainer's own answer (`answerId == explainerId`, `basedOn`
+  null, no changes); version n builds on n-1 and changes at least one section, each section once.
+  `SectionChange {sectionId, change: ADDED | DEEPENED, blockIds[] (1+)}`.
+- **`version_problems(base, latest, changes)`** is the one rule, empty when the follow-up is
+  sound: the crafts, depth and language are kept; every base section is kept with its discipline,
+  title, original title and order; its blocks are kept unchanged and in order, the added blocks
+  follow them, and its pictures (`images`) stay last; added blocks are numbered after the
+  section's own; added sections come after the base's; the changes name exactly the added
+  sections (all their blocks) and the deepened ones (the blocks added); something changed.
+- **Old versions keep their citations.** Each version's document is kept whole on its answer and
+  never rewritten; claims are never deleted (superseded and withdrawn claims keep their rows), so
+  every citation of an old version still resolves.
+
+| Method | Path | Who | Answer |
+|---|---|---|---|
+| GET | `/api/explainers/{explainerId}` | the asker | `ExplainerVersionDocument {schemaVersion 1, mark, explainer}` of the latest version |
+| GET | `/api/explainers/{explainerId}/versions` | the asker | `ExplainerHistory {schemaVersion 1, explainerId, versions[VersionMark] (1..n in order)}` |
+| GET | `/api/explainers/{explainerId}/versions/{version}` | the asker | `ExplainerVersionDocument` of that version |
+
+Both documents mark a generated explainer whose piece is hidden `hidden: true`
+(`docs/contracts/explainer.md`, Hiding; decision 0061).
+
+404 for an unknown explainer or version, or another asker's; 422 for an id that is not a uuid or a
+version below 1. Fixture: `shared/learning.versions.golden.json` (`history`, `latest`, the
+`request` and the `buildsOn` event): version 1 is `explainer.document.golden.json`; version 2 asks
+"Why did water push Ajrakh printers from Dhamadka to Ajrakhpur?", deepens `s2` with a prose block
+on iron in the water (Khamir, Mongabay) and adds `s4` History on the move to Ajrakhpur.
+
+## Saved explainers and "This answer got better" (decision 0063 builds it)
+
+- **Saving** (`SAVE_EXPORT`, every role): the reader saves an explainer, not a version.
+  `SavedExplainer {explainerId, question (version 1's), craft | null, facets[] (the latest
+  version's section fields in order, 1+), depth, language, latestVersion, seenVersion (the
+  latest the reader opened, at most latestVersion), savedAt, checkedAt | null}`. At most
+  `SAVED_EXPLAINERS_MAX` (200) per reader; 409 `{detail}` past it. A saved explainer is a
+  `SavedItem` row with `answerId` (version 1), `seenVersion` (the latest version when saved) and
+  `checkedAt`.
+- **Re-check** (`app.scripts.recheck_saved`, the last module of the nightly **Coverage
+  enrichment** box job, so after the coverage modules and any deploy's curation import; no model
+  call): for each saved explainer of a known craft, the fact-level claims of that craft that the
+  saved depth's mode can see (`retrieval/statements` scope), created or raised in level (a
+  `ReviewEvent` moving it to a stronger level) since
+  `checkedAt` (else since the latest version), that its latest version does not cite, counted per
+  facet: a curated claim's discipline (`CuratedClaim`), else the field its concept's heading maps to
+  (`services/stored_explainer.HEADING_DISCIPLINES`). Facets outside the saved ones are ignored.
+  When any count is at least one, one `ANSWER_IMPROVED` notification is written (at most one
+  unread per explainer: an unread one is replaced, and when it named the same version its counts
+  are added, so nothing unread is lost) and `checkedAt` moves on either way. An edge claim maps to
+  no field.
+- **Update.** The note's action asks a follow-up with `buildsOn {explainerId, version: latest,
+  facets: the facets with news}` and the version 1 question; it runs as the reader, under the
+  reader's own depth caps, and makes the next version. Nothing is rebuilt at night on anyone's
+  behalf.
+- **Notification** `{id, kind: ANSWER_IMPROVED, createdAt, readAt | null, payload: AnswerImproved
+  {explainerId, version (the latest checked), question, craft, news[FacetNews {facet, newClaims
+  >= 1}] (each facet once), checkedAt}}` (`models/enums.NOTIFICATION_KINDS`). Lists are newest
+  first, at most `NOTIFICATIONS_SHOWN_MAX` (50), with the reader's `unread` count.
+- **Weekly email digest** (off until the owner verifies a sender): `WeeklyDigest {schemaVersion
+  1, weekOf (the Monday, India time), items[AnswerImproved] (1-20, each explainer once),
+  settingsUrl (PUBLIC_WEB_URL + /settings)}`, sent by `app.scripts.send_alert_digest` on Mondays at
+  09:00 India time through the existing SES mailer (`services/mailer`, `MAIL_FROM_ADDRESS`) only
+  when `ALERT_DIGEST_ENABLED` is true (default false) and the reader opted in
+  (`PreferencesUpdate.alertDigest`, default false), with the week's unread notes (created in the
+  seven days before the send, newest first). No digest with nothing in it; never a second one for
+  a week (the send is recorded per reader and week before the mail goes, and released when SES
+  refuses it). Only active readers (roster `ACTIVE`, not deleted) get one. The mail is plain
+  text: each explainer's question, craft, new findings per field and its own link
+  (`PUBLIC_WEB_URL/ask?explainer=<explainerId>`, decision 0070), then the settings link. `GET /api/preferences/me` answers `alertDigest` and `alertDigestOffered` (the
+  setting), and the client draws the opt-in only when it is offered.
+
+| Method | Path | Who | Answer |
+|---|---|---|---|
+| GET | `/api/saved-explainers` | signed in | `SavedExplainerList {schemaVersion 1, items}` newest saved first |
+| PUT | `/api/saved-explainers/{explainerId}` | `SAVE_EXPORT`, the asker | 200 `SavedExplainer` (saving twice keeps the first `savedAt`); 404 not the asker's; 409 at the cap |
+| DELETE | `/api/saved-explainers/{explainerId}` | the saver | 204; 404 when not saved |
+| GET | `/api/notifications` | signed in | `NotificationList {schemaVersion 1, items, unread}` |
+| POST | `/api/notifications/{id}/read` | the recipient | 204; 404 for another reader's |
+| POST | `/api/notifications/read-all` | signed in | 204 |
+
+Opening a version sets `seenVersion` (GET of a version by its saver). Fixture:
+`shared/learning.alerts.golden.json` (`saved`, `notifications`, `digest`) for the versions
+fixture's explainer: three new Geography findings and one History.
+
+## Lesson packs (decision 0067 builds it)
+
+A professor turns one version of their explainer into a lesson: slides, a reading list and a
+quiz, downloadable as an HTML deck, PPTX and PDF. Capability `BUILD_LESSONS` (`core/roles`,
+Professor and above; the client's `canBuildLessons`); a pack is its builder's alone.
+
+- **`LessonRequest {explainerId, version, title | null (the version's question when null),
+  sectionIds[] (1-14, each once, READY sections of that version, in the order wanted), quiz}`.**
+- **`LessonPack {schemaVersion 1, id, explainerId, version, title, craft | null, language,
+  createdAt, slides[Slide] (3-60), readingList[ReadingItem] (1+), quiz: QuizBlock | null,
+  sources[SourceRef]}`.** Built by the server from the stored version, no model: slides run
+  `TITLE`, then `SECTION` slides in the chosen order (a section's cited sentences in reading order,
+  at most `LESSON_BULLETS_MAX` (5) per slide, continued on the next slide under the same title;
+  the first slide of a section shows its first `INLINE` picture, never a link card), one `QUIZ`
+  slide per quiz question in order, `READING`, `SOURCES` (`SLIDE_KINDS`). `Slide {number, kind,
+  title, sectionId, blockIds, bullets[ExplainerSentence], image: MediaRef | null, question}`:
+  only a `SECTION` slide has a section, blocks and bullets (and maybe a picture); only a `QUIZ`
+  slide has a question (its index). The quiz is a `QuizBlock` (id `lesson.quiz`) built from the
+  chosen sections' cited sentences by the quiz rules (explainer contract), at most 10 questions;
+  none can be built, or `quiz` false, is `null`. `sources` is every source the bullets and the
+  quiz cite, in order of first citation; `readingList` is each of them once with `citedBy` (how
+  many shown sentences cite it), by reliability A to D (none last), then most cited, then first
+  cited (`lessons.reading_list`). Titles of the fixed slides are the pack language's ("Question
+  1", "Reading list", "Sources" in English).
+- **Files.** `GET /api/lessons/{id}/files/{format}`, `LESSON_FORMATS`: `html` (one offline file:
+  reveal.js inlined from a vendored copy at an exact version the lane pins and records, MIT
+  licence kept in the file; no CDN, no script but reveal's), `pptx` (python-pptx), `pdf` (the
+  slides as pages, then the reading list and the quiz with its answer key). Every bullet keeps its
+  numbered citation and the `SOURCES` slide lists them; a picture shows its author and licence. No
+  headless browser, LibreOffice or other heavy native package on the server: the PDF is written by
+  a pure-Python library with vendored open fonts (decision 0067 names them). File names come from
+  `services/naming.py` (`KalaVigyan_Lesson_<date>_<craft>_<title>_Slides.pptx`, `_Slides.html`,
+  `_Lesson.pdf`; golden rows in `shared/naming-golden.json`). A file is made on its first request,
+  kept in the private bucket at `exports/<builder>/<sha256>/<name>` (the hash of the rendering
+  version, the format, the stored pack and its sources' access days, so it is made once and made
+  again only when one of them changes; the bucket's `exports/` rule expires it after seven days),
+  and answered as `ExportLink {schemaVersion 1, format, fileName, url, expiresAt}`: a signed GET
+  valid for `EXPORT_LINK_SECONDS` (300) whose `Content-Disposition` is `attachment` with that
+  name (`research/export_links.py`; the client's `exportLinkShape`).
+
+| Method | Path | Who | Answer |
+|---|---|---|---|
+| POST | `/api/lessons` | `BUILD_LESSONS`, the explainer's asker | 201 `LessonPack`; 403 without the capability; 404 for an explainer, version or section that is not theirs; 422 for a section that is not `READY` |
+| GET | `/api/lessons` | `BUILD_LESSONS` | `LessonList {schemaVersion 1, items[LessonSummary {id, title, explainerId, version, craft, createdAt, slideCount}]}` newest first |
+| GET | `/api/lessons/{id}` | the builder | `LessonPack`; 404 otherwise |
+| DELETE | `/api/lessons/{id}` | the builder | 204 (its routes stop at once; its files expire with the `exports/` rule) |
+| GET | `/api/lessons/{id}/files/{format}` | the builder | `ExportLink`; 404 otherwise; 422 for another format; 503 when the bucket fails |
+
+Fixture: `shared/learning.lesson.golden.json` (`request`, `pack`, `list`): version 1 of the
+document golden, its three sections in four section slides (the ladder runs over two, the first
+with the Commons picture), the nine questions of `learning.quiz.golden.json` under `lesson.quiz`,
+reading list and sources: 16 slides. The builder reproduces it byte for byte
+(`tests/learning/test_lesson_pack.py`).
+
+**As built (decision 0067, `research/lesson_builder.py`, `services/lesson_packs.py`,
+`services/export_files.py`, `api/routes/lessons.py`).** The pack is read and stored on the
+request's session with no model or outside call: bullets are the chosen sections' cited fact
+sentences whose claims are all still shown (`services/visible_claims.py`), quiz blocks left out;
+the quiz is `quiz.quiz_block` over the same sentences. A section the version lacks answers 404;
+an unfinished section, a pack left with no bullet, or one past 60 slides answers 422 with the
+reason. Fixed slide titles come from `research/lesson_words.py` per answer language; a question
+longer than 120 characters is cut at a word with `…`. The files: the HTML deck inlines reveal.js
+6.0.2 and its stylesheet (MIT, `app/data/exports/reveal/`) under a `default-src 'none'` policy
+with `data:` pictures only and quiz answers as fragments; the PPTX (python-pptx) is 16:9 with
+answers in the speaker notes; the PDF (fpdf2 with HarfBuzz shaping and the Noto fonts of every
+answer script, `app/data/exports/fonts/`) is the slides as A4 landscape pages, then the answers
+with each keyed sentence. References on the reading and sources slides are the APA text of the
+citation export. A slide's open picture is read only from `upload.wikimedia.org` or
+`api.openverse.org`, flattened to a JPEG of at most 1,600 px; one that cannot be read is left out
+with its credit.
+
+## Exports (decision 0067 builds it)
+
+- **PDF.** `GET /api/explainers/{explainerId}/versions/{version}/pdf` (`SAVE_EXPORT`, the asker)
+  answers an `ExportLink` (as lesson files: made once into `exports/`, a 300-second signed link):
+  the version as stored with its hidden marks (a hidden generated explainer, its sources and dataset
+  rows are left out of the PDF and the citations, decision 0070), its `READY` sections in order, each with its first open picture and
+  credit, every cited sentence of every block in reading order with its numbered citations, each
+  dataset row a block draws credited under it with its number, then the numbered references
+  (sources, then dataset rows, as the citation export numbers them); same writer and fonts as the
+  lesson PDF. No map, player or model is drawn, so no boundary caption is needed. Name
+  `KalaVigyan_Explainer_<date>_<craft>_<question>_Report_v<version>.pdf` (the version's day).
+- **Citations.** `GET /api/explainers/{explainerId}/versions/{version}/citations` (`SAVE_EXPORT`,
+  the asker) answers `CitationExport {schemaVersion 1, explainerId, version, entries[CitationEntry]
+  (1+)}`: one entry per cited source, then per dataset row the blocks cite, numbered as the
+  explainer numbers them. `CitationEntry {number, sourceId | datasetCode (exactly one), csl,
+  apa, bibtex, ris}`, every format keyed `kv<number>`. `GET .../citations/{format}`
+  (`CITATION_FORMATS`: `bib`, `ris`, `txt` for APA, `json` for CSL-JSON) answers the joined file
+  (`application/x-bibtex`, `application/x-research-info-systems`, `text/plain`,
+  `application/vnd.citationstyles.csl+json`; UTF-8) with `Content-Disposition: attachment` and the
+  name `KalaVigyan_Explainer_<date>_<craft>_<question>_Citations_v<version>.<format>`: BibTeX
+  entries one blank line apart, RIS records back to back, APA one `[n] reference` a line, CSL-JSON
+  the items' array.
+- **CSL item** (`CslItem`): `id`, `type` (`CSL_TYPES` by source kind; a dataset row is
+  `dataset`), `title`, `author[{literal}]` (each stored author as written: names are never
+  inverted or guessed; a dataset row's publisher), `issued {"date-parts": [[year]]}` when there is
+  a year, `accessed {"date-parts": [[year, month, day]]}` (the India-time day the source or the
+  dataset row was retrieved, `retrievedAt`, when stored), `publisher`, `version` (a dataset row's
+  edition), `DOI`, `URL`; absent fields are left out.
+- **APA** (APA 7 reference text, plain): the CSL items processed by citeproc-py with the official
+  APA 7 CSL style (`app/data/exports/csl/apa.csl`, id `http://www.zotero.org/styles/apa`, updated
+  2026-02-07; decision 0067), in the order given. For the stored fields this gives `Authors.
+  (Year). Title. Publisher. Link`: one author as written, two `A, & B`, three to twenty `A, B,
+  & C`, more than twenty the first nineteen, `, . . . ` and the last; no year is `(n.d.)` and an
+  undated item with a link adds `Retrieved <Month D, YYYY>, from` its access day; a dataset adds
+  `(Version <edition>) [Data set]` to its title; the link is `https://doi.org/<doi>` when there is
+  a DOI, else the URL. A dataset row with its own `citation` text uses that text.
+- **BibTeX**: `@<type>{kv<n>,` (`BIBTEX_TYPES`: article, book, incollection, techreport, else
+  misc), then one `  name = {value},` line each in this order: `author` (each name in braces,
+  joined by ` and `), `title` (in double braces), the venue (`journal` for an article,
+  `publisher` for a book or chapter, `institution` for a report, `howpublished` otherwise) from the
+  publisher, `year`, `doi`, `url`; then `}` and a line end. Text fields escape `% & $ # _` with a
+  backslash and write `\` `{` `}` `~` `^` as `\textbackslash{}`, `\textbraceleft{}`,
+  `\textbraceright{}`, `\textasciitilde{}`, `\textasciicircum{}` (BibTeX and biber count `\{` when
+  matching braces, so a stored brace could close a field; decision 0070); `doi` and `url` are as
+  stored except `\` `{` `}`, written `%5C` `%7B` `%7D`.
+- **RIS**: `TY` (`RIS_TYPES`), one `AU` per author, `TI`, `PY`, `PB`, `DO`, `UR`, `ID kv<n>`, `ER`,
+  each `<tag>  - <value>` ending CRLF, the record ending `ER  - ` CRLF.
+
+Fixture: `shared/learning.citations.golden.json`, the six sources of the versions fixture's
+version 2, each read on 2026-10-14 (the seed sources' `retrievedAt`). The BibTeX and RIS strings
+are the rules above applied by hand, the APA strings the style's output checked by hand against
+the rules; `research/citation_formats.py` and `services/apa_references.py` reproduce them byte
+for byte (`tests/learning/test_citation_formats.py`), and bibtexparser and rispy read the BibTeX
+and RIS back to the same fields.
+
+Every file, the report PDF and the lesson files alike, writes its APA references and renders in one
+worker thread after the request's connection is released, as the citation routes do; python-pptx,
+fpdf2, uharfbuzz, citeproc-py and Pillow load on the first file a process makes, never at start-up
+(decision 0070).
+
+## Shared-science explorer (decision 0064 builds it)
+
+`GET /api/crafts/{slug}/shared-science` (signed in) answers `SharedScience {schemaVersion 1, craft,
+nodes[ConceptNode] (0-24), sources}`: the glossary terms the craft shares with at least one other
+craft (`TermCraft`), each a `ConceptNode` (explainer contract, concept graph) listing every craft
+that shares it with its concept ids (`TermConcept`, that craft's `Concept` rows) and one cited
+fact-level claim of that craft about one of them that names the term; a craft whose claims name it
+nowhere is left out, a term left with fewer than two crafts is dropped. Nodes by label; the
+craft's own entry first in each node, the others by name. 404 for an
+unknown slug; a `MERGED` slug answers for its target. `GET /api/shared-science/{termKey}` (signed
+in) answers `SharedConcept {schemaVersion 1, node, sources}` for one term across every craft,
+the crafts by name, or with `?craft=<slug>` that craft first (404 when it does not share the
+term); 404 for an unknown term or one fewer than two crafts share. Sentence ids are
+`<termKey>.<n>`. `Cache-Control: private, no-cache`. Fixture:
+`shared/learning.shared-science.golden.json` (`craft` for Kutch Ajrakh, `concept` for alum seen
+from Kutch Ajrakh), the nodes of the phase D concept graph.
+
+The craft page draws the craft route as its Shared science tab (decision 0070,
+`components/craft/CraftSharedScience.tsx`): the concept graph view with the craft in focus, a
+choice of its shared terms, every sharing craft linked with its cited sentence, and the route's
+numbered sources; the tab is offered only when the route names at least one node. The craft
+route's nodes already list every sharing craft up to the same 100 the term route reads, so the
+tab needs no second read.
+
+**As built (decision 0064, `services/shared_concepts.py`, `research/shared_science.py`).** Read
+on the request's one session, no model call. A craft's sentence is chosen among its fact-level
+claims about the term's concepts (`TermConcept` rows owned by that craft, family concepts left
+out) that name the label (`blocks.named_in`): the strongest level, then the most reliable
+source, then the most distinct sources, then the text (`offered_facts.fact_rank`). Limits: the
+craft route looks at the first `SHARED_TERMS_SCANNED` (48) shared terms by label and keeps at
+most 24 nodes; a term reads at most `CONCEPT_CRAFTS_MAX` (100) crafts (the focus craft first,
+then by name) and at most `CLAIMS_PER_CONCEPT` (3) claims per concept, those naming the label
+first. A craft with no such claim has no edge; a term left with fewer than two crafts is no node.
+
+## Quiz of an explainer (decision 0064)
+
+`GET /api/answers/{answerId}/quiz?sections=<id>&sections=<id>` (the asker) answers `ExplainerQuiz
+{schemaVersion 1, answerId, language, quiz: QuizBlock (id `quiz`), sources}` built from the
+stored explainer of that answer (any version: each version's answer row holds the whole merged
+document) by the quiz rules below, from the chosen sections (each once, every section when none
+is given), read with the hidden marks of its generated explainers (a hidden one adds nothing,
+decision 0070); `sources` are the sources its sentences cite, in order of first citation. 404 for an
+answer that is not the asker's, holds no explainer or yields no question; 422 for a section the
+explainer lacks or one asked twice. `Cache-Control: private, no-cache`. No model call.
+
+- **The rules** (`research/quiz.py`, `quiz_block`, used by lesson packs too): the pool is the
+  sections' fact sentences in reading order (quiz blocks left out, a sentence text once), each
+  kept only while every claim it cites is still shown (`claims_by_id`); questions are tried
+  section by section in turn, one per sentence, each term keyed once: the key is the first term
+  the sentence marks with at least `QUIZ_TERM_MIN_CHARS` (3) letters that has at least
+  `QUIZ_DISTRACTORS_MIN` (2) distractors; distractors are taken walking the pool from the keyed
+  sentence onwards (wrapping), the first fitting term of each sentence that cites none of the
+  keyed claims, is another term with another text, has three letters or more and is not named by
+  the keyed sentence or its quotes, at most `QUIZ_DISTRACTORS_MAX` (3). Options are sorted by text
+  and `answer` is the key's place; a prompt that reads like an earlier one is not asked again. At
+  most 10 questions.
+
+Fixture: `shared/learning.quiz.golden.json`, the nine questions of the document golden's quiz.
+
+## Compare crafts (decision 0064)
+
+`GET /api/compare?crafts=<slug>&crafts=<slug>[&facets=<DISCIPLINE>...]` (signed in) answers
+`CraftComparison {schemaVersion 1, comparison: CompareBlock (id `compare`), sources (1+)}`: two to
+four crafts side by side, in the order asked, by field (every field in `DISCIPLINES` order unless
+`facets` names some), read on one session with no model call. 422 for fewer than two or more than
+four crafts, or two slugs of one craft; 404 `No craft has that address.` for an unknown slug; 204
+with no body when no field has claims on two sides (decision 0070). `Cache-Control: private,
+no-cache`.
+
+- **The rows** (`research/craft_compare.compare_block`, the same rows the `compare` builder adds
+  to a comparison answer's sections): per field, up to `COMPARE_TERM_ROWS_MAX` (3) term rows for
+  the glossary terms at least two of the crafts share (`TermCraft`), by label, each cell the
+  craft's best fact naming the term (claims about the term's own concepts first), then one row of
+  the field's best remaining fact per craft; a row needs two filled cells, a craft without one
+  leaves `null`, no claim is shown twice, at most 12 rows. A craft's facts are its own concepts'
+  fact-level claims (family concepts and relations left out) placed in the field of their curated
+  discipline, else their concept type's (`services/craft_page.CONCEPT_TYPE_DISCIPLINES`, else
+  `OVERVIEW`), and the first fully visible sentence of the newest current English prose piece of
+  each craft and field, which leads its field and carries `pieceId`. Ranked by
+  `offered_facts.fact_rank`.
+
+Fixture: `shared/learning.compare.golden.json`, the phase D comparison of Kutch Ajrakh and Bagru on
+its own screen.
+
+## Ask the map (decision 0065 builds it)
+
+`GET /api/map/districts/{districtLgd}` (signed in) answers `DistrictCrafts {schemaVersion 1,
+district: DistrictRef, crafts[DistrictCraft], land: LandStory | null, sources, datasets,
+boundaryCaption}`, read with no model call:
+
+- **Crafts** practised there: each craft with a cited `CraftLocation` in the district (a district
+  location, or a point in its polygon, as the region route places it), `{craft, roles[] (the
+  locations' `role`s, `PRACTISED` when none is stored; `models/enums.PLACE_ROLES`), basis:
+  PlaceBasis (CRAFT_LOCATION only, the strongest location, as the region route chooses it)}`,
+  by name. A state of practice alone does not place a craft in a district.
+- **Land** (why the land suits them): `LandStory {blocks[Block] (0-4), facets[RegionFacet]}`.
+  Blocks are stored pieces placed with their reuse mark, never built on the tap: the current
+  cross-craft region story of the district (`water:lgd-<code>` or a basin crossing it) and the
+  `GEOGRAPHY`, `GEOLOGY` and `CLIMATE` prose pieces of the crafts listed whose topic names the
+  district, at most four, each passing the reuse rule. Facets are the district's own values of
+  the land facets (`LAND_FACETS`: `SOIL`, `CLIMATE`, `WATER`, `TERRAIN`), exactly as the region route
+  gives a district place. Neither is `land: null`.
+- `sources`: the crafts' basis sources, then every source the blocks cite, once each, in that
+  order. `datasets`: `DR_DISTRICT_SHAPES`, then each value's dataset row once, by code.
+  `boundaryCaption` is `BOUNDARY_CAPTION`; the client draws the district from the shapes it has.
+- 404 for an LGD code the register does not hold or while no `DR_DISTRICT_SHAPES` row is stored;
+  422 below 1. `Cache-Control: private, no-cache`.
+
+Fixture: `shared/map.district-crafts.golden.json`: Kachchh (449), Kutch Ajrakh placed by the GI
+journal, the phase B region story placed from its basin piece, and the region golden's soil,
+climate and terrain values.
+
+**As built (decision 0065, `api/routes/map_districts.py`, `services/district_crafts.py`,
+`geo/district_view.py`).** Read on the request's one session, no model, HTTP or bucket call. The
+register row (`place_offers.district_refs`) and the `DR_DISTRICT_SHAPES` dataset row must exist,
+else 404 `{detail}`. Crafts: `ACTIVE`, not catch-all crafts with a `DISTRICT` or `POINT`
+`CraftLocation` placed in the district as the region route places it (`region_records.
+located_places`: a point by the polygon covering it, lowest LGD first, else its stored district)
+whose source is visible; curated places are such rows (decision 0053). Each craft once by name,
+its roles in `PLACE_ROLES` order, its basis the strongest location (level, then id). Land blocks,
+at most four: the newest current region story with no craft keyed `water:lgd-<code>` or a basin
+crossing the district (`region_pieces.district_story_pieces`, its river still stored), then for
+each listed craft and each of `GEOGRAPHY`, `GEOLOGY`, `CLIMATE` the newest English `prose` piece
+whose topic key's subjects include the district's name slug, by craft name then facet; every
+piece passes the reuse rule at any depth (`reuse_refusal` with `BASIC`) and cites only visible
+sources. Blocks are `land.b<n>` with sentences `land.b<n>.<m>` and their reuse marks. Facets are
+the district's stored values of `SOIL`, `CLIMATE`, `WATER` and `TERRAIN` built by
+`region_view.district_value` and `region_facets`, so the climate facet also lists the CHIRPS and
+GHCN CAMS series, normals and trends. The assembler reproduces the fixture from the region
+golden's rows (`tests/geo/test_district_view.py`).

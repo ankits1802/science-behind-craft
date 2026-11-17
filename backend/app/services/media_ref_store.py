@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import uuid
 from collections.abc import Sequence
+from dataclasses import dataclass
 
+from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -17,9 +20,22 @@ from app.research.media_refs import MediaRef
 
 from . import knowledge_view
 
-__all__ = ["TEXT_RELEVANCE", "SqlMediaStore", "media_ref_id", "media_url_key", "stored_media_ref"]
+__all__ = [
+    "INLINE_DISPLAY",
+    "TEXT_RELEVANCE",
+    "SqlMediaStore",
+    "StoredPicture",
+    "media_ref_id",
+    "media_ref_values",
+    "media_url_key",
+    "stored_media_ref",
+    "stored_pictures",
+]
+
+logger = logging.getLogger(__name__)
 
 TEXT_RELEVANCE = "TEXT"
+INLINE_DISPLAY = "INLINE"
 KEY_SEPARATOR = "\x1f"
 
 
@@ -53,6 +69,32 @@ def stored_media_ref(row: MediaRefRow) -> MediaRef:
     )
 
 
+@dataclass(frozen=True)
+class StoredPicture:
+    media: MediaRef
+    claim_id: uuid.UUID
+    relevance: str
+
+
+async def stored_pictures(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> list[StoredPicture]:
+    order = {claim_id: n for n, claim_id in enumerate(dict.fromkeys(claim_ids))}
+    if not order:
+        return []
+    rows = await session.execute(
+        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance)
+        .join(MediaRefClaim, MediaRefClaim.mediaRefId == MediaRefRow.id)
+        .where(MediaRefClaim.claimId.in_(list(order)), MediaRefRow.display == INLINE_DISPLAY)
+        .order_by(MediaRefRow.retrievedAt, MediaRefRow.id)
+    )
+    found: list[StoredPicture] = []
+    for row, claim_id, relevance in rows.tuples().all():
+        try:
+            found.append(StoredPicture(stored_media_ref(row), claim_id, relevance))
+        except ValidationError as refused:
+            logger.error("stored media %s is off its contract and is not shown: %s", row.id, refused)
+    return sorted(found, key=lambda picture: order[picture.claim_id])
+
+
 class SqlMediaStore:
     def __init__(self, sessions: async_sessionmaker[AsyncSession]) -> None:
         self._sessions = sessions
@@ -78,7 +120,9 @@ async def _kept(session: AsyncSession, image: ChosenImage) -> MediaRef:
     url_key = media_url_key(candidate.provider, candidate.page_url, candidate.image_url)
     source_id = await _page_source(session, candidate)
     fresh = media_ref_of(candidate, media_id=media_ref_id(url_key), source_id=source_id)
-    await session.execute(insert(MediaRefRow).values(_row_values(fresh, url_key)).on_conflict_do_nothing())
+    await session.execute(
+        insert(MediaRefRow).values(media_ref_values(fresh, url_key)).on_conflict_do_nothing()
+    )
     row = await session.scalar(select(MediaRefRow).where(MediaRefRow.urlKey == url_key))
     if row is None:
         raise InvalidInput(f"The media {url_key} could not be stored")
@@ -100,7 +144,7 @@ async def _page_source(session: AsyncSession, candidate: ImageCandidate) -> str 
     return str(found) if found else None
 
 
-def _row_values(ref: MediaRef, url_key: str) -> dict[str, object]:
+def media_ref_values(ref: MediaRef, url_key: str) -> dict[str, object]:
     return {
         "id": ref.id,
         "urlKey": url_key,

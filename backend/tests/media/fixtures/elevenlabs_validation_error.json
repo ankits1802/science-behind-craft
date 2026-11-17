@@ -1,0 +1,1 @@
+{"detail": [{"loc": ["body", "music_length_ms"], "msg": "Input should be less than or equal to 600000", "type": "less_than_equal"}]}

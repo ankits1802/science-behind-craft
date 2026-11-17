@@ -2,8 +2,6 @@ import { citationShape, craftLinkShape, shownLevelShape, sourceRefShape, storedL
 import { boolean, integer, list, nullable, number, object, oneOf, text, type Shape } from "@/lib/shape";
 import type { Citation, EvidenceLevel, SourceRef } from "@/lib/types";
 
-export const SCIENCE_PROCESS_PATH = (slug: string) => `/crafts/${encodeURIComponent(slug)}/process`;
-
 export const STAGE_TYPES = ["PREP", "SCOUR", "MORDANT", "DYE", "RESIST", "PRINT", "WASH", "DRY", "SHAPE", "CARVE", "FIRE", "CAST", "FINISH", "OTHER"] as const;
 export const MATERIAL_KINDS = ["FIBRE", "DYE", "MORDANT", "MINERAL", "CLAY", "METAL", "WOOD", "RESIN", "FUEL", "WATER", "OTHER"] as const;
 export const MATERIAL_ROLES = ["INPUT", "MORDANT", "DYE", "RESIST", "BINDER", "FLUX", "FUEL", "TOOL", "PRODUCT", "OTHER"] as const;

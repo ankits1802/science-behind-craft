@@ -3,17 +3,16 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from pint import UnitRegistry
 from pint.errors import PintError
 
 from app.core.errors import InvalidInput
+from app.research.unit_registry import unit_registry
 from app.schemas.science import CONDITION_QUANTITIES, CONDITION_UNITS
 
 __all__ = ["NORMALISED_DIGITS", "PH_UNIT", "Bounds", "normalised_bounds"]
 
 NORMALISED_DIGITS = 6
 PH_UNIT = CONDITION_UNITS["PH"]
-UNITS = UnitRegistry()
 
 
 @dataclass(frozen=True)
@@ -48,7 +47,7 @@ def _converted(value: float | None, unit: str, target: str) -> float | None:
     if value is None:
         return None
     try:
-        magnitude = UNITS.Quantity(value, unit).to(target).magnitude
+        magnitude = unit_registry().Quantity(value, unit).to(target).magnitude
     except PintError as error:
         raise InvalidInput(f"{value} {unit} cannot be expressed in {target}") from error
     return _rounded(float(magnitude))

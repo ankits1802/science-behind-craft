@@ -6,6 +6,7 @@ export function ListenAudio({
   src,
   playing,
   rate,
+  muted = false,
   onTime,
   onEnded,
   onBroken,
@@ -14,6 +15,7 @@ export function ListenAudio({
   src: string;
   playing: boolean;
   rate: number;
+  muted?: boolean;
   onTime: (time: number) => void;
   onEnded: () => void;
   onBroken: () => void;
@@ -25,9 +27,10 @@ export function ListenAudio({
     const audio = audioRef.current;
     if (!audio) return;
     audio.playbackRate = rate;
+    audio.muted = muted;
     if (playing && audio.paused) audio.play().catch(onRefused);
     if (!playing && !audio.paused) audio.pause();
-  }, [playing, rate, src, onRefused]);
+  }, [playing, rate, muted, src, onRefused]);
 
   return (
     <audio

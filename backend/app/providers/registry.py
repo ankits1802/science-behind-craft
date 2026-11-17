@@ -55,6 +55,10 @@ def build_adapter(
         if not base:
             raise ProviderError("This endpoint has no base URL configured", kind="unavailable")
         return OpenAICompatAdapter(native=kind == "openai", **kw)
+    if kind == "elevenlabs":
+        from .elevenlabs_media import ElevenLabsMediaAdapter
+
+        return ElevenLabsMediaAdapter(**kw)
     raise ProviderError(f"Unknown provider kind '{kind}'", kind="unavailable")
 
 

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 import { springy } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { CRAFT_TABS, CRAFT_TAB_LABEL, type CraftTab } from "@/lib/craftProfile";
+import { CRAFT_TAB_LABEL, type CraftTab } from "@/lib/craftPageView";
 import { cn } from "@/lib/utils";
 
 export function craftTabId(tab: CraftTab) {
@@ -16,19 +16,19 @@ export function craftPanelId(tab: CraftTab) {
   return `craft-panel-${tab}`;
 }
 
-export function CraftTabs({ value, onChange }: { value: CraftTab; onChange: (tab: CraftTab) => void }) {
+export function CraftTabs({ tabs, value, onChange }: { tabs: readonly CraftTab[]; value: CraftTab; onChange: (tab: CraftTab) => void }) {
   const reduce = useAppReducedMotion();
   const refs = useRef(new Map<CraftTab, HTMLButtonElement | null>());
 
   function focusTab(index: number) {
-    const tab = CRAFT_TABS[(index + CRAFT_TABS.length) % CRAFT_TABS.length];
+    const tab = tabs[(index + tabs.length) % tabs.length];
     onChange(tab);
     refs.current.get(tab)?.focus();
   }
 
   return (
     <div role="tablist" aria-label="Craft sections" className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
-      {CRAFT_TABS.map((tab, index) => {
+      {tabs.map((tab, index) => {
         const active = tab === value;
         return (
           <button
@@ -55,7 +55,7 @@ export function CraftTabs({ value, onChange }: { value: CraftTab; onChange: (tab
                 focusTab(0);
               } else if (event.key === "End") {
                 event.preventDefault();
-                focusTab(CRAFT_TABS.length - 1);
+                focusTab(tabs.length - 1);
               }
             }}
             className={cn(

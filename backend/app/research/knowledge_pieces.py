@@ -14,6 +14,7 @@ from pydantic import AwareDatetime, Field, TypeAdapter, model_validator
 from .base import ContractModel
 from .blocks import BlockBase, ReuseMarker
 from .blocks_place import RegionStoryBlock
+from .blocks_play import SimulationBlock
 from .depth import depth_at_least
 from .explainer import BUILT_BLOCK_KINDS, Block, with_payload_sentences
 from .piece_topics import FACET_NAMESPACES
@@ -22,15 +23,19 @@ from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, BlockKind, Depth, Di
 
 __all__ = [
     "BASIN_SUBJECT_PREFIX",
+    "CLAIM_KEYED_KINDS",
     "DISTRICT_SUBJECT_PREFIX",
     "PIECE_SCHEMA_VERSION",
     "PIECE_SENTENCE_PREFIX_CHARS",
     "PIECE_STALE_CHANGES",
     "PLACEMENT_FIELDS",
     "REUSE_REFUSALS",
+    "SIMULATION_NAMESPACE",
+    "UNSTORED_BLOCK_KINDS",
     "KnowledgePiece",
     "PieceSlot",
     "ReuseAsk",
+    "concept_slot",
     "knowledge_piece",
     "piece_content_hash",
     "piece_slot",
@@ -44,10 +49,13 @@ __all__ = [
 PIECE_SCHEMA_VERSION = 1
 PIECE_STALE_CHANGES = ("RETRACTED", "LEVEL_CHANGED", "HIDDEN", "TEXT_CHANGED")
 PLACEMENT_FIELDS = frozenset({"id", "reuse"})
-REUSE_REFUSALS = ("CRAFT", "FACET", "TOPIC", "DEPTH", "STALE", "SUPERSEDED", "CLAIM_NOT_VISIBLE")
+REUSE_REFUSALS = ("CRAFT", "FACET", "TOPIC", "DEPTH", "STALE", "SUPERSEDED", "HIDDEN", "CLAIM_NOT_VISIBLE")
 PIECE_SENTENCE_PREFIX_CHARS = 12
+UNSTORED_BLOCK_KINDS = frozenset({"quiz", "compare", "concept_graph", "climate_risk"})
 BASIN_SUBJECT_PREFIX = "basin"
 DISTRICT_SUBJECT_PREFIX = "lgd"
+SIMULATION_NAMESPACE = "concept"
+CLAIM_KEYED_KINDS = frozenset({"simulation"})
 BLOCKS = TypeAdapter(Block)
 
 ReuseRefusal = Literal[*REUSE_REFUSALS]
@@ -70,6 +78,7 @@ class KnowledgePiece(ContractModel):
     created_at: AwareDatetime
     stale_since: AwareDatetime | None
     superseded_by_id: uuid.UUID | None
+    hidden_at: AwareDatetime | None
 
     @model_validator(mode="after")
     def _payload_and_what_it_rests_on_agree(self) -> Self:
@@ -81,6 +90,8 @@ class KnowledgePiece(ContractModel):
             raise ValueError(f"piece {self.id} stores a {self.kind} block as built, with no reuse mark")
         if self.kind not in BUILT_BLOCK_KINDS:
             raise ValueError(f"piece {self.id} stores a {self.kind} block, which is not built yet")
+        if self.kind in UNSTORED_BLOCK_KINDS:
+            raise ValueError(f"piece {self.id} stores a {self.kind} block, which is rebuilt each time")
         cited = sorted({uuid.UUID(claim) for claim in self.payload.cited_claim_ids()})
         if self.claim_ids != cited:
             raise ValueError(f"piece {self.id} lists the claims its block cites, once each, sorted")
@@ -120,6 +131,7 @@ def reuse_refusal(
         ("DEPTH", depth_at_least(piece.depth, ask.depth)),
         ("STALE", piece.stale_since is None),
         ("SUPERSEDED", piece.superseded_by_id is None),
+        ("HIDDEN", piece.hidden_at is None),
         ("CLAIM_NOT_VISIBLE", set(piece.claim_ids) <= set(visible_claim_ids)),
     )
     return next((refusal for refusal, holds in matches if not holds), None)
@@ -160,6 +172,7 @@ def knowledge_piece(
         created_at=created_at,
         stale_since=None,
         superseded_by_id=None,
+        hidden_at=None,
     )
 
 
@@ -173,6 +186,8 @@ def piece_text(block: BlockBase) -> str:
 
 
 def piece_slot(block: BlockBase, slot: PieceSlot) -> PieceSlot:
+    if isinstance(block, SimulationBlock):
+        return concept_slot(block, slot.facet, slot.depth)
     if not isinstance(block, RegionStoryBlock):
         return slot
     main_riv = block.river.main_riv if block.river is not None else None
@@ -180,6 +195,10 @@ def piece_slot(block: BlockBase, slot: PieceSlot) -> PieceSlot:
     return PieceSlot(
         None, slot.facet, region_topic(slot.facet, main_riv=main_riv, district_lgds=lgds), slot.depth
     )
+
+
+def concept_slot(block: SimulationBlock, facet: str, depth: str) -> PieceSlot:
+    return PieceSlot(None, facet, topic_key(SIMULATION_NAMESPACE, block.concept), depth)
 
 
 def region_topic(facet: str, *, main_riv: int | None, district_lgds: Collection[int]) -> str:

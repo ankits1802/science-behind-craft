@@ -4,6 +4,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/PageHeader";
+import { AlertDigestCard } from "@/components/settings/AlertDigestCard";
 import { ChangePasswordCard } from "@/components/settings/ChangePasswordCard";
 import { AccessibilityCard, AppearanceCard } from "@/components/settings/PersonalSettingsCards";
 import { TwoStepVerificationCard } from "@/components/settings/TwoStepVerificationCard";
@@ -24,6 +25,7 @@ export default function SettingsPage() {
         <AccessibilityCard />
         <TwoStepVerificationCard />
         <ChangePasswordCard />
+        <AlertDigestCard />
       </div>
     </>
   );

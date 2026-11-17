@@ -180,7 +180,15 @@ def _concept_ids(rows: _Rows) -> set[uuid.UUID]:
 
 def _stage(stage: ProcessStage, concept_claims: Mapping[uuid.UUID, list[uuid.UUID]]) -> StageRecord:
     claim_ids = tuple(concept_claims.get(stage.conceptId, [])) if stage.conceptId else ()
-    return StageRecord(stage.id, stage.processId, stage.ordinal, stage.name, stage.stageType, claim_ids)
+    return StageRecord(
+        stage.id,
+        stage.processId,
+        stage.ordinal,
+        stage.name,
+        stage.stageType,
+        claim_ids,
+        ordered=stage.ordered,
+    )
 
 
 def _material(link: Any, concept_claims: Mapping[uuid.UUID, list[uuid.UUID]]) -> MaterialRecord:

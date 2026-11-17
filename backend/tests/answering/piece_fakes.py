@@ -6,7 +6,7 @@ from datetime import UTC, datetime, timedelta
 from app.models import Source
 from app.research.depth import depth_at_least
 from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece, piece_slot
-from app.research.piece_reuse import ClaimState, reusable_groups, with_region_story
+from app.research.piece_reuse import ClaimState, reusable_groups, with_region_story, with_simulation
 from app.research.piece_topics import TopicSubjects, facet_topics
 from app.services.answer_events import cited_claims
 from app.services.knowledge_view import ClaimView
@@ -46,6 +46,7 @@ class MemoryPieces:
             groups = reusable_groups(own, ask_for, states)
             if groups:
                 shown = with_region_story(groups[0], regions, depth=ask.depth, current=states)
+                shown = with_simulation(shown, regions, depth=ask.depth, current=states)
                 reused[facet] = ReusedSection(pieces=shown, cited=cited)
         return PieceLookup(craft_id=CRAFT_ID, topics=topics, reused=reused)
 
@@ -55,7 +56,7 @@ class MemoryPieces:
         self.kept.append((answer_id, depth, tuple(sections)))
         created_at = FIRST_KEPT_AT + timedelta(minutes=len(self.kept))
         for section in sections:
-            if lookup.craft_id is None or section.facet not in lookup.topics:
+            if section.deepened or lookup.craft_id is None or section.facet not in lookup.topics:
                 continue
             slot = PieceSlot(lookup.craft_id, section.facet, lookup.topics[section.facet], depth)
             for block in section.blocks:

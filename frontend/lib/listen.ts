@@ -86,8 +86,11 @@ export function activeWordIndex(words: readonly ListenWord[], time: number): num
 }
 
 export function listenMark(script: ListenScript | null, position: ListenPosition): ListenMark | null {
-  const words = script?.tracks[position.track]?.words ?? [];
-  const index = activeWordIndex(words, position.time);
+  return trackMark(script?.tracks[position.track]?.words ?? [], position.time);
+}
+
+export function trackMark(words: readonly ListenWord[], time: number): ListenMark | null {
+  const index = activeWordIndex(words, time);
   if (index < 0) return null;
   const sentenceId = words[index].sentenceId;
   const ofSentence = words.filter((word) => word.sentenceId === sentenceId);

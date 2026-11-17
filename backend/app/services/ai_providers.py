@@ -12,6 +12,7 @@ class AiProvider(StrEnum):
     GEMINI = "GEMINI"
     ANTHROPIC = "ANTHROPIC"
     DEEPSEEK = "DEEPSEEK"
+    ELEVENLABS = "ELEVENLABS"
 
 
 class AiTask(StrEnum):
@@ -30,6 +31,8 @@ class AiTask(StrEnum):
     VIDEO = "VIDEO"
     VOICE_TURN = "VOICE_TURN"
     EVAL_JUDGE = "EVAL_JUDGE"
+    MUSIC = "MUSIC"
+    SOUND_EFFECT = "SOUND_EFFECT"
 
 
 TEXT_TASKS = frozenset({AiTask.PROOFREAD, AiTask.EXPAND, AiTask.SUMMARISE, AiTask.TRANSLATE})
@@ -38,7 +41,8 @@ RESEARCH_TEXT_TASKS = frozenset(
     {AiTask.PLAN, AiTask.COMPOSE, AiTask.WEB_READ, AiTask.EXTRACT, AiTask.VOICE_TURN, AiTask.EVAL_JUDGE}
 )
 PUBLIC_TEXT_TASKS = frozenset({AiTask.WEB_READ, AiTask.EXTRACT})
-MEDIA_TASKS = frozenset({AiTask.IMAGE, AiTask.VIDEO})
+MEDIA_TASKS = frozenset({AiTask.IMAGE, AiTask.VIDEO, AiTask.MUSIC, AiTask.SOUND_EFFECT})
+AUDIO_TASKS = frozenset({AiTask.MUSIC, AiTask.SOUND_EFFECT})
 CHAT_TASKS = TEXT_AND_VISION | RESEARCH_TEXT_TASKS
 
 TASK_LABELS: dict[AiTask, str] = {
@@ -57,6 +61,8 @@ TASK_LABELS: dict[AiTask, str] = {
     AiTask.VIDEO: "Video",
     AiTask.VOICE_TURN: "Voice turns",
     AiTask.EVAL_JUDGE: "Evaluation judge",
+    AiTask.MUSIC: "Film music",
+    AiTask.SOUND_EFFECT: "Film sound effects",
 }
 
 UNKNOWN_TOKEN_PRICE: tuple[float, float] = (5.0, 30.0)
@@ -298,8 +304,74 @@ _DEEPSEEK = ProviderSpec(
     default_model="deepseek-flash",
 )
 
+_ELEVENLABS = ProviderSpec(
+    provider=AiProvider.ELEVENLABS,
+    label="ElevenLabs",
+    managed_key="ELEVENLABS_API_KEY",
+    key_prefix=None,
+    console_url="https://elevenlabs.io/app/settings/api-keys",
+    pricing_url="https://elevenlabs.io/pricing/api",
+    preset="elevenlabs",
+    kind="elevenlabs",
+    base_url="https://api.elevenlabs.io",
+    data_class="ANY",
+    models=(
+        AiModel(
+            "music_v2_5",
+            "Eleven Music v2.5",
+            "Instrumental film beds.",
+            None,
+            frozenset({AiTask.MUSIC}),
+            price_per_unit=0.275 / 60,
+            unit="second",
+            price_verified=False,
+        ),
+        AiModel(
+            "music_v2",
+            "Eleven Music v2",
+            "Previous music model.",
+            None,
+            frozenset({AiTask.MUSIC}),
+            price_per_unit=0.275 / 60,
+            unit="second",
+            price_verified=False,
+        ),
+        AiModel(
+            "eleven_text_to_sound_v3",
+            "Sound Effects v3",
+            "Short film cues.",
+            None,
+            frozenset({AiTask.SOUND_EFFECT}),
+            price_per_unit=0.12 / 60,
+            unit="second",
+            price_verified=False,
+        ),
+        AiModel(
+            "gemini-3.1-flash-image",
+            "Nano Banana 2 via ElevenLabs",
+            "Stage illustrations at 1K through ElevenLabs.",
+            None,
+            frozenset({AiTask.IMAGE}),
+            price_per_unit=0.07,
+            unit="image",
+            price_verified=False,
+        ),
+        AiModel(
+            "veo-3.1-fast-generate-001",
+            "Veo 3.1 Fast via ElevenLabs",
+            "Eight-second silent stage clips through ElevenLabs.",
+            None,
+            frozenset({AiTask.VIDEO}),
+            price_per_unit=0.10,
+            unit="second",
+            price_verified=False,
+        ),
+    ),
+    default_model="music_v2_5",
+)
+
 PROVIDERS: dict[AiProvider, ProviderSpec] = {
-    spec.provider: spec for spec in (_OPENAI, _GEMINI, _ANTHROPIC, _DEEPSEEK)
+    spec.provider: spec for spec in (_OPENAI, _GEMINI, _ANTHROPIC, _DEEPSEEK, _ELEVENLABS)
 }
 
 DEFAULT_ROUTES: dict[AiTask, tuple[tuple[AiProvider, str], ...]] = {
@@ -345,6 +417,8 @@ DEFAULT_ROUTES: dict[AiTask, tuple[tuple[AiProvider, str], ...]] = {
         (AiProvider.GEMINI, "gemini-nano-banana-2.1"),
     ),
     AiTask.VIDEO: ((AiProvider.GEMINI, "gemini-omni-1.2-flash"),),
+    AiTask.MUSIC: ((AiProvider.ELEVENLABS, "music_v2_5"),),
+    AiTask.SOUND_EFFECT: ((AiProvider.ELEVENLABS, "eleven_text_to_sound_v3"),),
 }
 
 ROUTABLE_TASKS: tuple[AiTask, ...] = tuple(DEFAULT_ROUTES)

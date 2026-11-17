@@ -35,6 +35,8 @@ UNDERSTAND_SYSTEM_PROMPT = (
     "- craftNames: crafts the question names or clearly describes that are not listed, by their usual "
     "English names, at most three; empty when it points to none. Never guess a craft the question "
     "does not point to.\n"
+    "- compare: the slugs of the listed crafts the question sets side by side, in the order it names "
+    "them; empty unless it compares two or more crafts.\n"
     "- disciplines: every field an expert answer must draw on, most important first. GEOGRAPHY covers "
     "geography and water, GEOLOGY covers geology and soil, PROCESS how the craft is made, OVERVIEW what "
     "the craft is.\n"
@@ -48,6 +50,7 @@ UNDERSTAND_SYSTEM_PROMPT = (
 class UnderstandReply(ContractModel):
     craft: str
     craft_names: list[str] = Field(default_factory=list)
+    compare: list[str] = Field(default_factory=list)
     disciplines: list[Discipline] = Field(min_length=1)
     seats: list[ExpertSeat] = Field(default_factory=list)
 
@@ -59,7 +62,7 @@ class UnderstandReply(ContractModel):
             raise ValueError(f"a craft name is 2 to {CRAFT_NAME_MAX_CHARS} characters")
         return list(dict.fromkeys(cleaned))[:MAX_CRAFT_NAMES]
 
-    @field_validator("disciplines", "seats")
+    @field_validator("compare", "disciplines", "seats")
     @classmethod
     def _listed_once(cls, values: list[str]) -> list[str]:
         return list(dict.fromkeys(values))
@@ -67,11 +70,19 @@ class UnderstandReply(ContractModel):
     def chosen(self, offered: Sequence[CraftRef]) -> CraftRef | None:
         return next((craft for craft in offered if craft.slug == self.craft), None)
 
+    def compared(self, offered: Sequence[CraftRef]) -> list[CraftRef]:
+        listed = {craft.slug: craft for craft in offered}
+        return [listed[slug] for slug in self.compare if slug in listed]
+
 
 def understand_schema(offered: Sequence[CraftRef]) -> dict[str, Any]:
     return schema_object(
         craft={"type": "string", "enum": [*(craft.slug for craft in offered), ""]},
         craftNames={"type": "array", "items": {"type": "string"}},
+        compare={
+            "type": "array",
+            "items": {"type": "string", "enum": [*(craft.slug for craft in offered), ""]},
+        },
         disciplines={"type": "array", "items": {"type": "string", "enum": list(DISCIPLINES)}},
         seats={"type": "array", "items": {"type": "string", "enum": list(EXPERT_SEATS)}},
     )

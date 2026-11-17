@@ -1,5 +1,7 @@
 from dataclasses import asdict, dataclass
 
+CLIMATE_FIRST_YEAR = 1981
+
 
 @dataclass(frozen=True)
 class Dataset:
@@ -135,6 +137,25 @@ CHIRPS = Dataset(
     url="https://data.chc.ucsb.edu/products/CHIRPS/v3.0/",
 )
 
+GHCN_CAMS = Dataset(
+    code="GHCN_CAMS_T2M",
+    title="GHCN CAMS gridded monthly land surface air temperature",
+    publisher="NOAA Climate Prediction Center, distributed by NOAA Physical Sciences Laboratory",
+    edition="air.mon.mean.nc, file version 3.01",
+    period="set per run",
+    nativeResolution="0.5 degree",
+    crs="EPSG:4326",
+    licence="Public domain (U.S. Government work on a federal server)",
+    licenceUrl="https://psl.noaa.gov/data/help/",
+    attribution="GHCN_CAMS Gridded 2m Temperature (Land) data provided by the NOAA PSL, Boulder, Colorado, USA",
+    redistributable=True,
+    citation=(
+        "Fan, Y., van den Dool, H. (2008). A global monthly land surface air temperature analysis for "
+        "1948-present. Journal of Geophysical Research 113, D01103. https://doi.org/10.1029/2007JD008470"
+    ),
+    url="https://downloads.psl.noaa.gov/Datasets/ghcncams/air.mon.mean.nc",
+)
+
 COPDEM = Dataset(
     code="COPERNICUS_DEM_GLO90",
     title="Copernicus DEM GLO-90",
@@ -221,4 +242,7 @@ GLIM = Dataset(
     url="https://doi.pangaea.de/10.1594/PANGAEA.788537?format=textfile",
 )
 
-ALL = {d.code: d for d in (BOUNDARIES, SOILGRIDS, WORLDCOVER, HANSEN, CHELSA, CHIRPS, COPDEM, HYDRORIVERS, MRDS, GLIM)}
+ALL = {
+    d.code: d
+    for d in (BOUNDARIES, SOILGRIDS, WORLDCOVER, HANSEN, CHELSA, CHIRPS, GHCN_CAMS, COPDEM, HYDRORIVERS, MRDS, GLIM)
+}

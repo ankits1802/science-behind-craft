@@ -52,6 +52,7 @@ class ProcessStage(Base):
     )
     name: Mapped[str] = mapped_column(String(300), nullable=False)
     stageType: Mapped[str] = mapped_column(e.StageType, nullable=False, server_default="OTHER")
+    ordered: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("true"))
     durationText: Mapped[str | None] = mapped_column(String(200))
     tempMinC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))
     tempMaxC: Mapped[Decimal | None] = mapped_column(Numeric(8, 2))

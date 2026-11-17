@@ -50,7 +50,7 @@ seed() {
   if [ ! -f "$tree/alembic.ini" ]; then
     return 0
   fi
-  for module in app.scripts.seed_crafts app.scripts.seed_claims app.scripts.seed_districts; do
+  for module in app.scripts.seed_crafts app.scripts.seed_claims app.scripts.seed_districts app.scripts.import_curation; do
     if ! (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m $module" >&2); then
       return 1
     fi

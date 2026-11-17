@@ -19,6 +19,7 @@ from app.models.enums import (
     MATERIAL_KINDS,
     MATERIAL_ROLES,
     MEDIA_KINDS,
+    PLACE_ROLES,
     QUOTE_CHECKS,
     REACTION_KINDS,
     RELIABILITIES,
@@ -54,6 +55,7 @@ __all__ = [
     "MaterialKind",
     "MaterialRole",
     "MediaKind",
+    "PlaceRole",
     "QuoteCheck",
     "ReactionKind",
     "RetrievalTier",
@@ -126,6 +128,7 @@ MaterialRole = Literal[*MATERIAL_ROLES]
 ReactionKind = Literal[*REACTION_KINDS]
 EnvStat = Literal[*ENV_STATS]
 MediaKind = Literal[*MEDIA_KINDS]
+PlaceRole = Literal[*PLACE_ROLES]
 Depth = Literal[*EXPLAINER_DEPTHS]
 BlockKind = Literal[*BLOCK_KINDS]
 Discipline = Literal[*DISCIPLINES]

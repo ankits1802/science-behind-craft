@@ -562,18 +562,329 @@ Last updated: 2026-11-18.
   for composing. Saving a route order keeps each route's params. The paid nightly enrichment was
   removed (commit fdf478c), and the dataset is curated by Claude Code instead.
 
+- **Curated dossier import and the craft page API (decision 0053).** `app.scripts.import_curation`
+  runs after the seeds on every deploy (and in Backend checks after the database tests): it
+  withdraws the seed's 557 edge sentences from every reader (status `WITHDRAWN`, the edge rows
+  kept), and imports every checked dossier into `Source`, `Claim` and `CuratedClaim`,
+  `ClaimSource`, `Concept`, `CraftLocation` (villages in their district, with role), the curated
+  `Process` and stages (ordered only where a source orders them), materials, tools, reactions,
+  `MediaRef`, the `Term` glossary, `CraftGiRecord`, `CraftPrice`, `CraftWorkforce` and Expert
+  overview pieces; a new dossier version supersedes dropped claims (status `SUPERSEDED`, citations
+  kept). Migration `0017_curated_dossiers`. `GET /api/crafts/{slug}/page` answers the craft page
+  from those rows (`docs/contracts/craft-page.md`; fixture `shared/craft.page.golden.json`).
+  The three pilot dossiers import; the DB tests run on GitHub Actions.
+
+- **Phase C contract (decision 0054, 2026-11-18).** The four phase C kinds have their final fields
+  and fail-closed validators (`research/blocks_play.py`: the generated explainer `simulation` and
+  `what_if`; `research/blocks_journey.py`: `zoom_story` and `timeline_map`; client
+  `lib/explainerPlay.ts`). The generated explainer's static check (`research/sandbox.py`, six
+  named rules, an 86-case escape corpus in `shared/sandbox.corpus.golden.json`) and its frame
+  (`sandbox="allow-scripts"`, a fixed `srcdoc` with the plan's policy and a `kv-data` element of
+  cited values); the years and moves a text states (`research/timeline.py`); the simulation's
+  cross-craft piece slot by concept and claim set, the hide route, film mode, the score route and
+  payload (`schemas/film.py`, `lib/filmScore.ts`, `shared/film.score.golden.json`) and the
+  ElevenLabs media routes (`docs/contracts/media.md`). `shared/explainer.phase-c.golden.json`
+  (Kutch Ajrakh) is checked on both sides. Nothing a reader sees changes; lanes 0055 to 0060 build.
+
+- **Zoom story and timeline map builders (decision 0057, 2026-11-18).** Registered in
+  `BLOCK_BUILDERS` (`services/journey_builders.py`) for materials and history sections; they start
+  once the review joins both kinds to the built kinds (their renderers are 0060's). The zoom (no
+  model) captions each level with a distinct stored fact: the craft's mapped district (with the
+  craft's claims naming it and the boundary row), workshop, cloth and fibre pictures under an open licence (kept
+  `MediaRef` rows first, then Commons and Openverse, kept as rows), and a compound with a kept 3D
+  conformer; a level without its matter is absent. The timeline offers the section's dated facts
+  with the spans their texts state (a numeral counting a plural noun is not a year), one
+  plan-model call picks points, routes and spans by ref, a route needs a text stating the move,
+  and places are pinned only with Wikidata coordinates (the supply origins' rule, now shared as
+  `supply_places.named_places`). Both reproduce the phase C fixture from recorded responses
+  (`tests/journey`); the stored reads have database tests for GitHub Actions.
+
+- **Generated explainers (decision 0055, 2026-11-18).** Sections of the mechanism fields
+  (process, chemistry, physics, materials, geography and water, geology and soil, climate) get a
+  generated explainer from the builder registry (`services/simulation_builder`): every figure the
+  section's cited quotes state is offered with its own words and citation, one `COMPOSE` call from
+  the answer's headroom (Master Admins uncapped) chooses the values and writes an HTML fragment,
+  and the fragment must pass the value checks, the contract's static check over its data object
+  and the block's validators, with one redraft listing the failed checks; a failure adds nothing
+  and logs the rules. A stored explainer whose claims the section offers is placed before any
+  model call, also in reused sections, and a placed one is never stored again; a newer one
+  supersedes an older only for the same concept and claims. `HIDE_GENERATED` (Professor and above)
+  and `PUT /api/answers/{answerId}/simulations/{blockId}/hidden` mark the piece hidden (migration
+  `0019_hidden_generated_explainers`, audited); a hidden piece is never reused or built again.
+  Model replies now name their model (`StructuredReply.model`). Nothing a reader sees changes until
+  the review joins `simulation` to the built kinds with its renderer (0061). Tests drive every
+  corpus escape attempt, every accepted fragment, an absent numeral and the size cap through the
+  builder, reuse with no model call across two answers, and the Student refusal; database tests
+  for GitHub Actions cover the pieces query, reuse, hiding and showing again.
+
+- **What-if lab builder (decision 0056, 2026-11-18).** Registered in `BLOCK_BUILDERS`
+  (`services/what_if_builder.py`) for process, chemistry and water sections; it starts once the
+  review joins `what_if` to the built kinds. An input is a stage's materials that a stored contrast
+  relation or a stored text ("madder, al or alizarin") relates as alternatives, offered once a
+  section sentence names one; each option is offered the relation claims on its concept
+  (`CONTRASTS_WITH`, `CAUSES`, `DEPENDS_ON`, ...), its own fact claims and the claims of reactions
+  of its compound that name it, all read in short sessions before one plan-model call that chooses
+  the input, its words and the outcomes by ref. An option without evidence is shown unknown, a ref
+  that is not one of the option's claims is dropped, a reply touching two inputs is refused, and a
+  relationship that is a hypothesis keeps its level and shows the Hypothesis badge (the what-if
+  validator now accepts stored findings at their level). Stored what-ifs are re-checked against
+  the process rows when built and reused. Tests rebuild the fixture's madder and alizarin options
+  from the seed and a recorded reply; database tests for GitHub Actions read the seeded relations.
+
+- **Generated explainer and what-if renderers (decision 0059, 2026-11-18).** Drawn through
+  `components/answer/play/playRenderers.tsx`; they show once 0055's and 0056's builders join both
+  kinds to the built kinds (0061). A generated explainer is a `sandbox="allow-scripts"` `srcdoc`
+  frame whose document opens with the sandbox policy and carries the cited values as `kv-data`,
+  sized by a height message the page bounds, with "Generated explainer · model · date", its
+  title, what it was built from (each value with its quoted words and citations, or its dataset
+  row) and View code as text only; Professors and above can hide one, and a hidden one is not
+  drawn for anyone else. The what-if lab offers each option with its count of cited outcomes and
+  shows the chosen one's cited sentences, or "Unknown"; reduced motion swaps them in place. The
+  site policy gains `frame-src https://accounts.google.com/gsi/` (Google sign-in keeps working,
+  any other frame navigation loads nothing), proved in Chromium under the real header.
+
+- **ElevenLabs music, sound effects, image and video (decision 0058, 2026-11-18).** The official
+  reference (read 2026-11-18) publishes music (`POST /v1/music`), sound effects (`POST
+  /v1/sound-generation`) and an Image and Video API (`/v1/flows/image`, `/v1/flows/video`), so
+  all four are built. `ELEVENLABS` joins the providers on the Listen key and `MUSIC` and
+  `SOUND_EFFECT` the media tasks (migration `0022_elevenlabs_media` seeds the provider and the two
+  routes, `music_v2_5` and `eleven_text_to_sound_v3`, since v1 and v2 are deprecated); ElevenLabs
+  `gemini-3.1-flash-image` and `veo-3.1-fast-generate-001` are further `IMAGE` and `VIDEO` choices
+  in Settings with every media rule unchanged. `GET /api/answers/{answerId}/film-score` makes one
+  instrumental bed and up to twelve fixed-prompt cues for the reader's explainer through the media
+  router (media sub-cap and ceiling, Master Admins never refused), stores content-addressed clips
+  and a manifest per explainer and language in the private bucket, and serves them with one-hour
+  links; `/answers/config` offers `film {score}`. Tests on hand-written responses that follow the
+  docs: a cached score makes no second call, a refused reservation adds no score, a failed call
+  adds nothing, a Master Admin past every cap is served, and the score for the phase A document
+  reproduces `shared/film.score.golden.json`. Owner step: give the restricted key the Music, Sound
+  Effects and Image and Video permissions (Image and Video needs a Pro plan); nothing a reader
+  sees changes until lane 0060 draws film mode.
+
+- **Zoom, timeline and film renderers (decision 0060, 2026-11-18).** The zoom story and the
+  timeline map are drawn through the registry, their code loaded on demand
+  (`components/answer/journey/`); they show once the review joins both kinds to the built kinds
+  (0061). The zoom shows one level at a time under a rail: the district on the India map with the
+  register's polygon and the map moving into it under the boundary caption, a picture with its
+  author and licence, the molecule in 3D with its PubChem record, each with its cited sentence;
+  reduced motion lists every level. The timeline lists points and routes in time order with their
+  spans as the texts state them and their citations, beside a slider over the dated moments; placed
+  places are numbered pins linked to Wikidata, a place beyond the India frame a signpost at its
+  edge, a stated move between placed ends a route. Film mode sits beside Listen: a dialog, loaded
+  on demand, plays the drawn blocks as scenes timed by the Listen script or a hold per kind (the
+  server's `FILM_SCENE_SECONDS`), each block's own animation following the scene (the ladder
+  fills, the reaction steps, the zoom levels, the time slider), the sentence being read marked and
+  captioned in the answer language, a silent scene captioned with its section's title; previous,
+  play, next and mute by button or key; and, where `/answers/config` offers it, Music and sound
+  (asked once, music and effects volumes, a fade over the last 2 s, the AI credit). Reduced motion
+  swaps scenes still and shows every end state. Unit specs check both renderers against the phase
+  C fixture and the film against the phase A document and the Listen and score goldens.
+
+- **Phase C review fixes (decision 0061, 2026-11-18).** The generated explainer, the what-if lab,
+  the zoom story and the timeline map joined `BUILT_BLOCK_KINDS` on both sides, so their builders
+  start and readers see them after the deploy. The generated explainer's frame blocks peer
+  connections in every browser: the policy gains `webrtc 'block'`, and since Chromium ignores it
+  the frame's own first script (`FRAME_GUARD`) removes the peer connection constructors and keeps
+  nested frames out, proved against a STUN server on the test's loopback. The static check reads a
+  self-closed `<script/>` as a browser does, refuses reflection over the window, the window under
+  other names, STUN and TURN addresses and an unclosed `url(`, reads shown figures as
+  `quotes.numbers_in` does (`500km`, `18th`), list starts and CSS counters, runs in linear time
+  and refuses a draft past 12,000 characters as `SIZE` (108 refused cases in the corpus). Every
+  generated explainer shown can be hidden and stays hidden: it is kept as a piece from any section
+  (any-craft answers and deepened follow-ups too), hiding one never kept keeps it first, and the
+  read-back routes mark it hidden by its piece or its content hash, so a later version's copy hides
+  too (migration `0024_piece_content_hash_index`); readers below Professor see nothing of it. The
+  ElevenLabs Flows download is pinned to `storage.googleapis.com` and cut at 64 MB while it
+  streams. The ask screen passes the film offer, so Music and sound appears; Mute silences the bed
+  and cues on iOS; a failed score says why; a zoom district missing from the shapes draws no map.
+  The production E2E asks a fourth question at Expert depth, how indigo turns blue on Kutch Ajrakh
+  cloth, and checks its generated explainer in the sandboxed frame with every frame request
+  blocked and recorded.
+
+- **Phase D contract (decision 0062, 2026-11-18).** The six phase D kinds have their final fields
+  and fail-closed validators (`research/blocks_learning.py`: the cloze `quiz`, `compare` of two to
+  four crafts by facet, the shared-science `concept_graph`; `research/blocks_insight.py`:
+  `measure` by an exact definition or a stated regional value, `market_gi`, `climate_risk`;
+  `research/measures.py`; client `lib/explainerLearning.ts`, `lib/explainerInsight.ts`), four new
+  `BLOCK_KINDS` with migration `0018_learning_block_kinds`, the rebuilt-each-time kinds
+  (`UNSTORED_BLOCK_KINDS`), follow-ups that build (`research/explainer_versions.py`, the stream's
+  `builds_on` and `version`, `version_problems`), saved explainers, notifications and the weekly
+  digest (`research/alerts.py`), lesson packs (`research/lessons.py`) with the new
+  `BUILD_LESSONS` capability, citation export (`research/citation_export.py`), the shared-science
+  explorer (`research/shared_science.py`) and ask the map (`schemas/district_crafts.py`); every
+  route in `docs/contracts/learning.md` with a fixture (`shared/explainer.phase-d.golden.json`
+  and six `learning.*` and `map.*` goldens) checked on both sides. Nothing a reader sees changes;
+  lanes 0063 to 0069 build, 0070 reviews.
+
+- **Follow-ups, versions, saved explainers and alerts (decision 0063, 2026-11-18).**
+  `POST /api/answers/stream` takes `buildsOn`: the follow-up runs the usual sections, deepening
+  the explainer's own (new blocks numbered after its own, already-cited sentences and shown kinds
+  left out) and adding new fields after them, streams `builds_on` and `version`, and stores the
+  merged document as the next version (`Answer.explainerId` and `explainerVersion`, migration
+  `0020_explainer_versions_and_alerts`, a unique pair so a racing follow-up is refused); earlier
+  versions are never touched. `GET /api/explainers/{id}`, `/versions` and `/versions/{n}` read
+  them for the asker only. Saving reuses `SavedItem` (`/api/saved-explainers`); the nightly
+  Coverage enrichment job ends with `app.scripts.recheck_saved`, which writes one "This answer got
+  better" note per explainer with new cited claims in its saved fields, no model call
+  (`/api/notifications`, read and read-all). The weekly digest (`app.scripts.send_alert_digest`,
+  workflow **Alert digest**, Mondays 09:00 India time) is built behind `ALERT_DIGEST_ENABLED`
+  (off) and a per-reader opt-in (`alertDigest` in preferences). Tests: a follow-up keeps the older
+  version intact and merges into the versions fixture byte for byte, deepens and adds sections in
+  the stream, stores nothing when nothing is new; a re-check with no new claims or a claim on
+  another field makes no note; notes are private to their reader; no digest is sent while the
+  setting is off (database tests for GitHub Actions cover storage, saving, the re-check SQL and
+  the digest). The screens are lane 0069's.
+
+- **Learning block renderers (decision 0068, 2026-11-18).** The client draws the six phase D
+  kinds through the registry: the quiz (blanked prompts, options in alphabetical order, the first
+  pick marked right or wrong in colour, icon and words, then the keyed sentence with its
+  citation; score and Start again), compare (stacked cards on a phone, side by side by facet
+  where the columns fit, crafts linked, empty cells a dash), the concept graph (the term at a hub
+  with up to seven sharing crafts and a count, over the linked list of every craft with its cited
+  sentence), measures (the stated words, the metric value and the conversion with its basis,
+  region, citation or definitions row), market and GI (status, registry facts and dates as
+  stated, proprietors, signs of imitation, prices with per, place and date) and climate and risk
+  (slopes per decade from zero, solid when significant, with mean, period, resolution and the
+  dataset row and method; groundwater where loaded; what it means for the craft). Every layout
+  holds at 390 px; reduced motion draws each end state. The kinds join `BUILT_BLOCK_KINDS` with
+  their builders (lanes 0064 to 0066).
+
+- **Local measures, and market and GI (decision 0066, 2026-11-18).** `MeasureBuilder` adds a
+  `measure` block to any section whose cited facts state a quantity in a fixed unit word: feet,
+  inches, yards, miles and square feet by their exact NIST definitions; the fifteen Indian units
+  (defined in the one Pint registry, now shared with the science engine, each as its own
+  dimension so Pint never converts one) only by a factor a stored quote states as an equality in
+  a metric unit of the same quantity for one LGD register district or state holding the craft,
+  the district's value first, none when values differ; otherwise the quantity stays as written.
+  `MarketGiBuilder` adds one `market_gi` block per craft (the answer's and each compared one) to
+  economics sections: the curated GI record with its registry claims, else the registry fields
+  read by label from the craft's GI journal and government claims (none on any disagreement, none
+  for "registered" without a date or certificate), up to three GI journal claims naming imitation
+  or passing off, and the curated prices whose year and place their sentences state. Neither asks
+  a model. Both kinds join `BUILT_BLOCK_KINDS` on both sides and the piece order; only the answer
+  craft's market block is kept as a piece. Tested on the phase D fixture's seed claims, the
+  Kutch Ajrakh, Bastar Dhokra and Tikuli dossiers and hand-written conversions; a database test
+  (CI only) reads the imported records and a stored regional quote. No migration or data run.
+
+- **Climate and risk, and ask the map (decision 0065, 2026-11-18).** The geo ETL's CHIRPS layer
+  runs from 1981 (one dataset period for the yearly series, the annual and monthly normals and
+  the trend); a new `ghcncams` layer reads NOAA's public-domain GHCN CAMS monthly temperature
+  (0.5 degree) into yearly means, a normal and a trend; each district with a complete series of
+  30 years or more gets the Theil-Sen slope per decade and the Mann-Kendall p-value
+  (`geo_etl/trend.py`, tested on hand-computed series and on a netCDF file read through GDAL).
+  Migration `0021_climate_trend_stats` adds the two stats. `ClimateRiskBuilder` adds a
+  `climate_risk` block to Climate sections from the trends of the craft's districts, paired with
+  the section's cited claims about water, rain, heat or groundwater that one plan-model call
+  picks; the kind joins `BUILT_BLOCK_KINDS` with decision 0068's renderer. `GET
+  /api/map/districts/{districtLgd}` answers a district's located crafts, its stored region story
+  and its crafts' place prose pieces with their reuse marks, and its soil, climate, water and
+  terrain values, with no model call; the assembler reproduces the fixture. The Geo ETL gains
+  `ghcncams` and a `prune` input. No open groundwater dataset exists, so none is loaded. Waits on
+  the owner's Geo ETL dispatch after the deploy.
+
+- **Quiz, compare and the shared-science explorer (decision 0064, 2026-11-18).** The quiz is made
+  for an explainer on request (`GET /api/answers/{answerId}/quiz`, the asker, any version, chosen
+  sections) and by lesson packs through the one `quiz_block`: a cloze per cited fact, round the
+  sections in turn, the key a marked term, two or three distractors marked in sentences that cite
+  none of the keyed claims and are not named by the keyed sentence or its quotes, a sentence whose
+  claim is no longer shown left out. The understanding reply names the listed crafts a question
+  compares (`Understanding.compared`, up to three beside the lead craft); a comparison answer shows
+  each section's field side by side (term rows for shared glossary terms, then the field's best
+  remaining fact, two filled cells or no row, a stored piece's sentence leading its field), and
+  `GET /api/compare` shows every field for two to four crafts. The concept graph adds, to
+  chemistry, physics, materials and geography sections, up to four terms the section marks that
+  the answer's craft shares with others, each craft backed by its own cited claim about its
+  concepts of that term; `GET /api/crafts/{slug}/shared-science` and `GET
+  /api/shared-science/{termKey}?craft=` answer the explorer with bounded reads. Nothing here asks a
+  model. `compare` and `concept_graph` joined `BUILT_BLOCK_KINDS` on both sides; rebuilt kinds are
+  never stored as pieces. Fixtures `learning.quiz.golden.json` and `learning.compare.golden.json`
+  are checked on both sides; database tests for GitHub Actions cover the seeded explorer and
+  comparison.
+
+- **Craft page rebuild (decision 0071, 2026-11-18).** The craft page reads
+  `GET /api/crafts/{slug}/page` (`lib/craftPageContract.ts`, cross-checked as the backend model
+  does) and the region route, and no longer calls `/profile` or `/process`. Overview: lede, key
+  facts, credited pictures, discipline sections with chips and tappable terms, "Where sources
+  differ" with every side cited, open questions, glossary, and the register's facts when a craft
+  has no lede. Process: stages numbered only where the response orders them, the rest apart, with
+  materials, tools, timing, reactions and stage pictures; the Image and Video generators are gone
+  from the page. Region: districts where the craft is made on the outlines, places with all their
+  roles, people and groups, district datasets. Sources by reliability A to D. All evidence for
+  researchers and above, every claim once with its provenance, near-duplicates folded, hypotheses
+  apart. Unit specs parse the golden page (curated, uncurated and empty), and the production
+  Overview check requires a curated craft's lede and key facts on screen.
+
+- **Learning screens (decision 0069, 2026-11-18).** The explainer offers Save, Export (Report as
+  PDF; citations as APA, BibTeX, RIS and CSL-JSON, named by the server) and, for professors and
+  above, Make a lesson. "Ask a follow-up", the Ask next suggestions and a term's Ask about it
+  extend the stored explainer as its next version (`buildsOn`, the `builds_on` and `version`
+  events read), with a version picker that says what each version changed. Stored explainers
+  open at `/ask?explainer=`. `/saved` holds the "This answer got better" notes (Update asks the
+  follow-up for the facets with news) and the saved answers; the Saved entry of the navigation
+  carries the unread count. `/lessons`, `/lessons/new` and `/lessons/{id}` (professors and
+  above) choose sections, build the pack, preview every slide and download PPTX, PDF and HTML
+  with the citation menu. On `/map` a tapped district shows its cited crafts, the stored land
+  story, its values and credits; `/compare` sets two to four crafts side by side, reached from
+  the explainer's candidates and the district panel. A finished explainer offers its quiz as
+  Check yourself. The weekly email switch on Settings is drawn only while the digest is offered.
+  Unit specs drive every screen's states from the learning goldens.
+
+- **Lesson packs and exports (decision 0067, 2026-11-18).** `POST /api/lessons` builds a pack
+  from one version of a professor's own explainer with no model (cited fact sentences still
+  shown, five a slide, each section's first open picture, the one quiz rule, reading list by
+  reliability then citations, sources); `GET /api/lessons`, `/lessons/{id}`, `DELETE` and
+  `/lessons/{id}/files/{html|pptx|pdf}` are the builder's own (`BUILD_LESSONS`; migration
+  `0023_lesson_packs`). Files are built once into the bucket's `exports/` prefix under the hash
+  of what they are made from and answered as five-minute signed links: an offline reveal.js
+  6.0.2 deck, a python-pptx deck with answers in the notes, and fpdf2 PDFs shaped by HarfBuzz
+  with the Noto font of every answer script; no headless browser or system package. Any reader
+  exports a version as a PDF (`.../versions/{n}/pdf`) and its citations
+  (`.../citations[/{bib|ris|txt|json}]`, named by the server): APA through citeproc-py and the
+  official APA 7 CSL style, BibTeX and RIS by the contract's rules, each CSL item with the day
+  its source was retrieved. The lesson fixture now carries the quiz fixture's nine questions.
+  Tests: a Student cannot build, list, open or download a pack; every slide bullet is the
+  explainer's own sentence with its citation numbers in the PPTX, deck and PDF; the reading list
+  is the explainer's cited sources; BibTeX and RIS parse back through bibtexparser and rispy; the
+  PPTX opens with python-pptx and holds the expected slides; the citation route reproduces its
+  fixture; database tests for GitHub Actions cover storing, listing and deleting packs.
+
+- **Phase D review (decision 0070, 2026-11-18).** Report PDFs and lesson files write their APA
+  references in the same worker thread as the render, so a source-heavy first export no longer
+  stalls the event loop; python-pptx, fpdf2, uharfbuzz, citeproc-py and Pillow load on the first
+  file instead of at start-up (a test imports the API router in a fresh process and finds none of
+  them). Explainer versions are served with their generated explainers' hidden marks wherever they
+  are read (`services/explainer_history`), so a hidden simulation, its sources and its dataset rows
+  leave the report PDF, the citations, lesson packs and the quiz; a follow-up still builds on the
+  stored version. GI and price dates are shown only as precisely as a cited text states them
+  (`research/stated_dates.py`; a curated date is cut to that precision, 2024-04-02 against a
+  quote of 22-04-2024 shows April 2024). BibTeX writes a source's braces as `\textbraceleft{}`
+  and `\textbraceright{}` and percent-encodes `\ { }` in `doi` and `url`, so no stored value
+  can close a field or start an entry. The weekly digest links each item to its explainer.
+  `GET /api/compare` answers 204 when nothing cited sets the crafts side by side and keeps 404 for
+  an unknown craft; the page tells the two apart. Notes are held per account, so the next reader
+  in a tab never sees the last one's, and `/saved` reloads them on opening. The craft page gains
+  a Shared science tab drawn from `GET /api/crafts/{slug}/shared-science`. The production E2E
+  proves the exports from the English known answer (report PDF and four citation files, each
+  opened and checked for every streamed source; a lesson pack's PPTX and PDF when the account may
+  build one), and its navigation check expects Saved. No migration.
+
 ## Next
 
-0. Close phase B (lanes 0043 to 0050 are built, every phase B kind is in `BUILT_BLOCK_KINDS`).
-   After the owner applies the river load role and the deploy that carries migration 0016,
+0. Close phases B and C (every phase B and C kind is in `BUILT_BLOCK_KINDS`; decision 0061 is the
+   phase C review). After the deploy that carries migrations up to 0024, dispatch E2E production
+   with `questions=true` to prove phase C (the Indigo question's generated explainer in the
+   sandboxed frame, plan section 5). For phase B, after the owner applies the river load role and
+   the deploy that carries migration 0016,
    dispatch Geo ETL with `riverlines` and `load` (region stories wait for it, decision 0044) and
-   then `chirps` (`docs/RUNBOOK.md`, Geo ETL); put the traced Kachchh river's ids into the phase B
+   then `chirps,ghcncams` with prune once migration 0021 is deployed (`docs/RUNBOOK.md`, Geo ETL;
+   decision 0065); put the traced Kachchh river's ids into the phase B
    fixture; then dispatch E2E production with `questions` and `rivers_loaded` to prove the water
    story for Kachchh (plan section 5).
 
-1. Curation (`docs/plans/dataset-curation.md`): `app.scripts.import_curation` and the craft page
-   rebuild (overview from curated claims, key facts, district places, conflicts, seed edge
-   sentences hidden), then wave 1, the 209 GI crafts, once the owner approves it.
+1. Curation (`docs/plans/dataset-curation.md`): deploy the import (decision 0053) with the rebuilt
+   craft page (decision 0071), take the Kutch Ajrakh before and after screenshots from E2E
+   production at the three widths, retire `/profile` and `/process` in the backend; then wave 1,
+   the 209 GI crafts, once the owner approves it.
 2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
@@ -581,8 +892,13 @@ Last updated: 2026-11-18.
 3. Run the known-answer questions with **E2E production** (`questions=true`) once deployed (PLAN
    section 0, decision 0029), and clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher
    chunk access).
-4. The `WEB_READ` reader for long documents.
-5. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
+4. Phase D is built and reviewed (decisions 0062 to 0070). Deploy it with phase C (migrations up
+   to 0024), dispatch Geo ETL `chirps,ghcncams` (Waiting on the owner), then E2E production with
+   `questions=true`: the export proof runs on the English answer. The phase D proof, a professor
+   building a lesson pack from one explainer, needs the owner's E2E choice below; the owner
+   verifies an SES sender before `ALERT_DIGEST_ENABLED` is set.
+5. The `WEB_READ` reader for long documents.
+6. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
 
 ## Waiting on the owner
 
@@ -590,6 +906,24 @@ Last updated: 2026-11-18.
   `kalavigyan-river-load`; then set the repository variable `AWS_RIVER_LOAD_ROLE_ARN` to the
   `river_load_role_arn` output (or re-run `infra/scripts/seed_secrets.py`) before the first Geo ETL
   `riverlines` load.
+
+- Weekly alert digest (decisions 0062, 0063): verify a sender identity in SES (`MAIL_FROM_ADDRESS`,
+  region `MAIL_SES_REGION`) and request production access out of the SES sandbox; only then put
+  `ALERT_DIGEST_ENABLED=true` at `/kalavigyan/env/ALERT_DIGEST_ENABLED` in Parameter Store and
+  re-render the box `.env` (`docs/RUNBOOK.md`, Alert digest). Until then the Monday **Alert
+  digest** run sends nothing. In-app notes need nothing.
+
+- Climate trends (decision 0065): after the deploy that carries migration
+  `0021_climate_trend_stats`, dispatch **Geo ETL** with `datasets=chirps,ghcncams`,
+  `states=all`, `shards=24`, `load=true`, `prune=true` (`docs/RUNBOOK.md`, Geo ETL, step 2).
+
+- Lesson pack proof (decision 0070): the E2E account is a Researcher, building a lesson pack
+  needs `BUILD_LESSONS` (Professor), and a Professor must use two-step sign-in, which the run cannot
+  answer. Choose one: a Professor E2E account whose authenticator secret is stored as a GitHub
+  secret (`E2E_TOTP_SECRET`; the run then needs a small sign-in step to turn it into a code), or a
+  lesson pack built by hand from the English known answer after the deploy, its PPTX and PDF
+  checked against the explainer's sources. Until then each run checks the report PDF and the
+  citations and notes the lesson step.
 
 - E2E production run: after the next backend deploy, run `app.scripts.provision_e2e_account` on the
   box, set `E2E_EMAIL` (`e2e-researcher@kalavigyan.example`) and `E2E_PASSWORD` as GitHub secrets,

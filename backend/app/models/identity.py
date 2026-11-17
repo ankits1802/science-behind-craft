@@ -4,6 +4,7 @@ from typing import Any
 
 from sqlalchemy import (
     Boolean,
+    CheckConstraint,
     DateTime,
     ForeignKey,
     Index,
@@ -17,6 +18,11 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
 from app.models.base import Base, created_at, updated_at, uuid_pk
+
+SAVED_ANSWER_INDEX = "SavedItem_userId_answerId_key"
+SAVED_ANSWER_CHECK = (
+    '("answerId" IS NULL) = ("seenVersion" IS NULL) AND ("seenVersion" IS NULL OR "seenVersion" >= 1)'
+)
 
 
 class User(Base):
@@ -289,10 +295,22 @@ class SavedItem(Base):
         UUID(as_uuid=True), ForeignKey("MediaAsset.id", ondelete="CASCADE")
     )
     note: Mapped[str | None] = mapped_column(Text)
+    seenVersion: Mapped[int | None] = mapped_column(Integer)
+    checkedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
-    __table_args__ = (Index(None, "userId", "createdAt"),)
+    __table_args__ = (
+        Index(None, "userId", "createdAt"),
+        Index(
+            SAVED_ANSWER_INDEX,
+            "userId",
+            "answerId",
+            unique=True,
+            postgresql_where=text('"answerId" IS NOT NULL'),
+        ),
+        CheckConstraint(SAVED_ANSWER_CHECK, name="seenVersion"),
+    )
 
 
 class UserPreference(Base):
@@ -307,5 +325,6 @@ class UserPreference(Base):
     largerText: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     highContrast: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     answerLanguage: Mapped[str] = mapped_column(String(16), nullable=False, server_default="auto")
+    alertDigest: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()

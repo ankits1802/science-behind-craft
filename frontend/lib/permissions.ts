@@ -75,8 +75,24 @@ export function canManageAccessEntry(user: User | null | undefined, admitRole: U
   return isMasterAdmin(user) || roleRank(admitRole) < roleRank(user);
 }
 
+export function canReadAllEvidence(user: User | null | undefined) {
+  return hasRank(user, "RESEARCHER");
+}
+
 export function canShareMedia(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
+}
+
+export function canHideGenerated(user: User | null | undefined) {
+  return hasRank(user, "PROFESSOR");
+}
+
+export function canBuildLessons(user: User | null | undefined) {
+  return hasRank(user, "PROFESSOR");
+}
+
+export function canSaveExport(user: User | null | undefined) {
+  return hasRank(user, "STUDENT");
 }
 
 export function canManageSecrets(user: User | null | undefined) {
@@ -130,7 +146,8 @@ export const ROUTE_GUARDS: RouteGuard[] = [
   { path: "/admin/routing", ...MASTER_ADMIN_GUARD },
   { path: "/admin/usage", ...ADMIN_GUARD, can: canReadUsage, gate: "require_view_usage" },
   { path: "/admin/users", ...PROFESSOR_GUARD },
-  { path: "/admin/access", ...PROFESSOR_GUARD, gate: "require_access_roster_manager" }
+  { path: "/admin/access", ...PROFESSOR_GUARD, gate: "require_access_roster_manager" },
+  { path: "/lessons", ...PROFESSOR_GUARD, can: canBuildLessons, gate: "require(BUILD_LESSONS)" }
 ];
 
 function routeMatches(rulePath: string, pathname: string): boolean {

@@ -7,9 +7,9 @@ from typing import Literal, Protocol, Self, runtime_checkable
 
 from pydantic import Field, field_validator, model_validator
 
-from .base import ContractModel
+from .base import ContractModel, empty
 from .blocks_people import ExpertSeat
-from .crafts import QUESTION_MAX_CHARS, CraftRef
+from .crafts import COMPARED_CRAFTS_MAX, QUESTION_MAX_CHARS, CraftRef
 from .evidence import SearchQuery
 from .retrieval import MODE_CLAIM_LEVELS
 from .vocabulary import (
@@ -152,6 +152,7 @@ class PlanRequest(ContractModel):
     question: str = Field(min_length=2, max_length=QUESTION_MAX_CHARS)
     mode: AnswerMode
     craft: CraftRef | None
+    compared: tuple[CraftRef, ...] = Field(default=(), max_length=COMPARED_CRAFTS_MAX, exclude_if=empty)
     depth: Depth | None = None
     language: AnswerLanguage = CANONICAL_LANGUAGE
     withheld_terms: tuple[str, ...] = Field(default=(), max_length=WITHHELD_TERMS_MAX)

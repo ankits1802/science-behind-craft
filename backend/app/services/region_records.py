@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterable, Sequence
+from collections.abc import Collection, Iterable, Sequence
 from typing import Any
 
 from sqlalchemy import (
     CTE,
+    ColumnElement,
     Float,
     Row,
     String,
@@ -55,7 +56,14 @@ from app.research.retrieval import RESTRICTED_SENSITIVITY
 from app.research.stream import SourceRef
 from app.services.knowledge_view import craft_ref, source_ref
 
-__all__ = ["dataset_records", "district_places", "region_records", "region_values"]
+__all__ = [
+    "dataset_records",
+    "district_places",
+    "district_values",
+    "located_places",
+    "region_records",
+    "region_values",
+]
 
 
 async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
@@ -64,7 +72,7 @@ async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
     own = [place for place in places if place.values_from == "DISTRICT"]
     districts = sorted({place.district_lgd for place in own if place.district_lgd is not None})
     states = sorted({place.state.lgd for place in places if place.values_from == "STATE"})
-    values = await _district_values(session, districts)
+    values = await district_values(session, districts)
     totals = await _state_totals(session, states)
     codes = {row.dataset_code for row in values} | {row.dataset_code for row in totals}
     return RegionRecords(
@@ -159,7 +167,7 @@ async def _states(session: AsyncSession) -> Sequence[tuple[int, str]]:
 
 
 async def _locations(session: AsyncSession, craft: Craft) -> list[LocationRecord]:
-    located = _located(craft)
+    located = located_places(CraftLocation.craftId == craft.id)
     district, state = aliased(AdminDistrict), aliased(AdminState)
     statement = (
         select(
@@ -181,7 +189,7 @@ async def _locations(session: AsyncSession, craft: Craft) -> list[LocationRecord
     return [_location(row) for row in (await session.execute(statement)).all()]
 
 
-def _located(craft: Craft) -> Subquery:
+def located_places(condition: ColumnElement[bool]) -> Subquery:
     holder = (
         select(AdminDistrict.lgd)
         .where(
@@ -200,14 +208,16 @@ def _located(craft: Craft) -> Subquery:
     return (
         select(
             CraftLocation.id,
+            CraftLocation.craftId,
             CraftLocation.precision,
             CraftLocation.placeLabel,
             CraftLocation.evidenceLevel,
             CraftLocation.sourceId,
             CraftLocation.stateLgd,
+            CraftLocation.role,
             district_lgd.label("located_lgd"),
         )
-        .where(CraftLocation.craftId == craft.id)
+        .where(condition)
         .subquery("located")
     )
 
@@ -230,11 +240,16 @@ def _location(row: Row[Any]) -> LocationRecord:
     )
 
 
-async def _district_values(session: AsyncSession, districts: Sequence[int]) -> tuple[ValueRecord, ...]:
+async def district_values(
+    session: AsyncSession, districts: Sequence[int], *, codes: Collection[str] | None = None
+) -> tuple[ValueRecord, ...]:
     if not districts:
         return ()
     values = region_values()
-    rows = (await session.execute(select(values).where(values.c.district_lgd.in_(districts)))).all()
+    statement = select(values).where(values.c.district_lgd.in_(districts))
+    if codes is not None:
+        statement = statement.where(values.c.dataset_code.in_(sorted(codes)))
+    rows = (await session.execute(statement)).all()
     return tuple(
         ValueRecord(
             district_lgd=row.district_lgd,

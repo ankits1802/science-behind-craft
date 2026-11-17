@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Collection, Mapping, Sequence
 from dataclasses import KW_ONLY, dataclass, field
 from typing import Any, Self
 
@@ -10,19 +10,31 @@ from app.core.errors import InvalidInput
 from app.models.enums import DISCIPLINES
 from app.research.expert_panel import PANEL_FIELDS
 from app.research.explainer import BLOCK_PHASES, BUILT_BLOCK_KINDS, Block
-from app.research.piece_reuse import REGION_STORY_FACETS
+from app.research.piece_reuse import REGION_STORY_FACETS, SIMULATION_FACETS
 from app.research.sections import block_id
 
 from .builder_interface import BlockBuilder, BuildAsk, BuilderTools, Built, SourceRefs
+from .climate_risk import CLIMATE_RISK_WAIT_SECONDS, ClimateRiskBuilder
 from .expert_views import EXPERT_VIEW_WAIT_SECONDS, ExpertPanelBuilder
+from .journey_builders import (
+    TIMELINE_MAP_WAIT_SECONDS,
+    ZOOM_STORY_WAIT_SECONDS,
+    TimelineMapBuilder,
+    ZoomStoryBuilder,
+)
+from .learning_builders import COMPARE_FIELDS, CONCEPT_GRAPH_FIELDS, CompareBuilder, ConceptGraphBuilder
+from .market_builder import MARKET_FIELDS, MarketGiBuilder
 from .matter_builders import (
     MATERIAL_CARD_WAIT_SECONDS,
     MaterialCardBuilder,
     MoleculeBuilder,
     ReactionPlayerBuilder,
 )
+from .measure_builder import MEASURE_FIELDS, MeasureBuilder
 from .place_builders import REGION_STORY_WAIT_SECONDS, MapLayerBuilder, RegionStoryBuilder
 from .season_supply_builders import SUPPLY_MAP_WAIT_SECONDS, SeasonsBuilder, SupplyMapBuilder
+from .simulation_builder import SIMULATION_WAIT_SECONDS, SimulationBuilder
+from .what_if_builder import WHAT_IF_FIELDS, WHAT_IF_WAIT_SECONDS, WhatIfBuilder
 
 __all__ = [
     "BLOCK_BUILDERS",
@@ -50,6 +62,7 @@ class BuilderEntry:
     wait_seconds: float = BUILDER_WAIT_SECONDS
     _: KW_ONLY
     rebuilt_on_reuse: bool = False
+    places_pieces: bool = False
 
     def __post_init__(self) -> None:
         if BLOCK_PHASES.get(self.kind, PHASE_A) == PHASE_A:
@@ -64,7 +77,16 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
     BuilderEntry("region_story", REGION_STORY_FACETS, RegionStoryBuilder, REGION_STORY_WAIT_SECONDS),
     BuilderEntry("map_layer", frozenset({"GEOLOGY", "CLIMATE"}), MapLayerBuilder, rebuilt_on_reuse=True),
     BuilderEntry("seasons", frozenset({"CLIMATE"}), SeasonsBuilder),
+    BuilderEntry(
+        "climate_risk",
+        frozenset({"CLIMATE"}),
+        ClimateRiskBuilder,
+        CLIMATE_RISK_WAIT_SECONDS,
+        rebuilt_on_reuse=True,
+    ),
     BuilderEntry("supply_map", frozenset({"MATERIALS"}), SupplyMapBuilder, SUPPLY_MAP_WAIT_SECONDS),
+    BuilderEntry("measure", MEASURE_FIELDS, MeasureBuilder),
+    BuilderEntry("market_gi", MARKET_FIELDS, MarketGiBuilder, rebuilt_on_reuse=True),
     BuilderEntry("reaction_player", frozenset({"CHEMISTRY"}), ReactionPlayerBuilder),
     BuilderEntry(
         "material_card",
@@ -76,6 +98,14 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
         "molecule_3d", frozenset({"CHEMISTRY", "MATERIALS"}), MoleculeBuilder, rebuilt_on_reuse=True
     ),
     BuilderEntry("expert_view", PANEL_FIELDS, ExpertPanelBuilder, EXPERT_VIEW_WAIT_SECONDS),
+    BuilderEntry("what_if", WHAT_IF_FIELDS, WhatIfBuilder, WHAT_IF_WAIT_SECONDS),
+    BuilderEntry(
+        "simulation", SIMULATION_FACETS, SimulationBuilder, SIMULATION_WAIT_SECONDS, places_pieces=True
+    ),
+    BuilderEntry("zoom_story", frozenset({"MATERIALS"}), ZoomStoryBuilder, ZOOM_STORY_WAIT_SECONDS),
+    BuilderEntry("timeline_map", frozenset({"HISTORY"}), TimelineMapBuilder, TIMELINE_MAP_WAIT_SECONDS),
+    BuilderEntry("compare", COMPARE_FIELDS, CompareBuilder, rebuilt_on_reuse=True),
+    BuilderEntry("concept_graph", CONCEPT_GRAPH_FIELDS, ConceptGraphBuilder, rebuilt_on_reuse=True),
 )
 
 
@@ -98,6 +128,9 @@ class BlockBuilders:
 
     def for_reuse(self) -> BlockBuilders:
         return BlockBuilders([pair for pair in self._builders if pair[0].rebuilt_on_reuse])
+
+    def without(self, kinds: Collection[str]) -> BlockBuilders:
+        return BlockBuilders([pair for pair in self._builders if pair[0].kind not in kinds])
 
     def building(self) -> SectionBuilds:
         return SectionBuilds(self)
@@ -180,7 +213,7 @@ def _refusal(entry: BuilderEntry, block: Block, known: SourceRefs) -> str | None
         return f"the {entry.kind} builder made a {block.kind} block"
     if block.kind not in BUILT_BLOCK_KINDS:
         return f"{block.kind} is not built yet"
-    if block.reuse is not None:
+    if block.reuse is not None and not entry.places_pieces:
         return "a built block carries no reuse mark"
     unknown = [sid for sid in block.cited_source_ids() if sid not in known]
     if unknown:

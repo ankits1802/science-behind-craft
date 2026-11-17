@@ -25,6 +25,7 @@ __all__ = [
     "SectionImages",
     "SectionImagesAsk",
     "image_search_text",
+    "searched_images",
     "section_images",
 ]
 
@@ -71,20 +72,24 @@ class SectionImages:
         return ImagesBlock(id=ask.block_id, kind="images", version=1, reuse=None, items=items)
 
     async def _candidates(self, source: ImageSource, searched: str, named: str) -> list[ImageCandidate]:
-        try:
-            async with asyncio.timeout(self.search_seconds):
-                return await _searched(source, searched, named)
-        except ExternalFailure as failure:
-            logger.warning("%s image search failed (%s)", source.name, failure.kind)
-        except TimeoutError:
-            logger.warning(
-                "%s image search took over %s s; its pictures are left out", source.name, self.search_seconds
-            )
-        return []
+        return await searched_images(source, (searched, named), seconds=self.search_seconds)
 
 
-async def _searched(source: ImageSource, searched: str, named: str) -> list[ImageCandidate]:
-    for text in dict.fromkeys(t for t in (searched, named) if len(t) >= 2):
+async def searched_images(
+    source: ImageSource, texts: Sequence[str], *, seconds: float
+) -> list[ImageCandidate]:
+    try:
+        async with asyncio.timeout(seconds):
+            return await _searched(source, texts)
+    except ExternalFailure as failure:
+        logger.warning("%s image search failed (%s)", source.name, failure.kind)
+    except TimeoutError:
+        logger.warning("%s image search took over %s s; its pictures are left out", source.name, seconds)
+    return []
+
+
+async def _searched(source: ImageSource, texts: Sequence[str]) -> list[ImageCandidate]:
+    for text in dict.fromkeys(t for t in texts if len(t) >= 2):
         found = await source.images(ImageQuery(text=text), CANDIDATES_PER_SOURCE)
         if found:
             return found

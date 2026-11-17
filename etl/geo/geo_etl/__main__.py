@@ -13,7 +13,19 @@ import pandas as pd
 from geo_etl import catalog, rivers
 from geo_etl.coverage import coverage_of
 from geo_etl.districts import SHAPES_PATH, districts_without_shapes, load_districts, sha256_of
-from geo_etl.layers import Options, Result, chelsa, chirps, copdem, geology, hansen, hydrorivers, soilgrids, worldcover
+from geo_etl.layers import (
+    Options,
+    Result,
+    chelsa,
+    chirps,
+    copdem,
+    geology,
+    ghcncams,
+    hansen,
+    hydrorivers,
+    soilgrids,
+    worldcover,
+)
 from geo_etl.layers.geology import GEOLOGY_COLUMNS
 from geo_etl.rows import COLUMNS
 
@@ -24,6 +36,7 @@ LAYERS: dict[str, Callable[..., Result]] = {
     "hansen": hansen.run,
     "chelsa": chelsa.run,
     "chirps": chirps.run,
+    "ghcncams": ghcncams.run,
     "copdem": copdem.run,
     "hydrorivers": hydrorivers.run,
     "mrds": geology.run_mrds,
@@ -36,6 +49,7 @@ DATASET_LABELS = {
     "HANSEN_GFC_2025_V1_13": "Hansen-GFC-2025-v1-13",
     "CHELSA_2_1_1981_2010": "CHELSA-2-1-1981-2010",
     "CHIRPS_3_0": "CHIRPS-3-0",
+    "GHCN_CAMS_T2M": "GHCN-CAMS-T2M",
     "COPERNICUS_DEM_GLO90": "Copernicus-DEM-GLO-90",
     "HYDRORIVERS_1_0": "HydroRIVERS-1-0",
     "USGS_MRDS": "USGS-MRDS",
@@ -105,7 +119,7 @@ def select_shard(districts: pd.DataFrame, shard: str | None):
 
 def options_from(args: argparse.Namespace) -> Options:
     options = Options(cache=Path(args.cache))
-    for name in ("worldcover_factor", "hansen_factor", "dem_factor", "chirps_years"):
+    for name in ("worldcover_factor", "hansen_factor", "dem_factor", "climate_first_year"):
         if getattr(args, name, None) is not None:
             options = dataclasses.replace(options, **{name: getattr(args, name)})
     if args.soil_vars:
@@ -234,7 +248,7 @@ def add_extract_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--worldcover-factor", type=int)
     parser.add_argument("--hansen-factor", type=int)
     parser.add_argument("--dem-factor", type=int)
-    parser.add_argument("--chirps-years", type=int)
+    parser.add_argument("--climate-first-year", type=int)
     parser.add_argument("--soil-vars")
     parser.add_argument("--soil-depths")
     parser.add_argument("--chelsa-bio")

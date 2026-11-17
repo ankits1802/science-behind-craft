@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import uuid
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 
 from pydantic import ValidationError
@@ -31,6 +31,7 @@ __all__ = [
     "craft_districts",
     "stored_piece",
     "topic_subjects",
+    "view_states",
 ]
 
 logger = logging.getLogger(__name__)
@@ -57,6 +58,7 @@ class ReusedSection:
 class PieceLookup:
     craft_id: uuid.UUID | None = None
     topics: Mapping[str, str] = field(default_factory=dict)
+    craft_slug: str | None = None
     reused: Mapping[str, ReusedSection] = field(default_factory=dict)
 
 
@@ -102,11 +104,14 @@ async def claim_states(
 ) -> tuple[dict[uuid.UUID, ClaimState], CitedClaims]:
     wanted = dict.fromkeys(claim for piece in pieces for claim in piece.claim_ids)
     views, sources = await knowledge_view.claims_by_id(session, wanted)
-    states = {
-        claim_id: ClaimState(level=view.level, citation_ids=frozenset(c["id"] for c in view.citations))
-        for claim_id, view in views.items()
+    return view_states(views.values()), cited_claims(list(views.values()), sources)
+
+
+def view_states(views: Iterable[knowledge_view.ClaimView]) -> dict[uuid.UUID, ClaimState]:
+    return {
+        view.id: ClaimState(level=view.level, citation_ids=frozenset(c["id"] for c in view.citations))
+        for view in views
     }
-    return states, cited_claims(list(views.values()), sources)
 
 
 def stored_piece(row: PieceRow) -> KnowledgePiece | None:
@@ -129,6 +134,7 @@ def stored_piece(row: PieceRow) -> KnowledgePiece | None:
                 "createdAt": row.createdAt,
                 "staleSince": row.staleSince,
                 "supersededById": row.supersededById,
+                "hiddenAt": row.hiddenAt,
             }
         )
     except ValidationError as refused:

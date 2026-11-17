@@ -140,3 +140,16 @@ def test_media_estimates_use_units() -> None:
     assert estimate_for(
         image, AiTask.IMAGE, prompt_tokens=100, max_tokens=0, units=2, overrides={}
     ) == Decimal("0.134000")
+
+
+def test_elevenlabs_makes_only_media_with_the_listen_key_and_scores_by_default() -> None:
+    spec = PROVIDERS[AiProvider.ELEVENLABS]
+    assert (spec.managed_key, spec.preset, spec.kind) == ("ELEVENLABS_API_KEY", "elevenlabs", "elevenlabs")
+    assert all(model.tasks <= MEDIA_TASKS and not model.price_verified for model in spec.models)
+    assert DEFAULT_ROUTES[AiTask.MUSIC] == ((AiProvider.ELEVENLABS, "music_v2_5"),)
+    assert DEFAULT_ROUTES[AiTask.SOUND_EFFECT] == ((AiProvider.ELEVENLABS, "eleven_text_to_sound_v3"),)
+    assert all(provider == AiProvider.GEMINI for provider, _ in DEFAULT_ROUTES[AiTask.IMAGE])
+    assert supports("ELEVENLABS", "veo-3.1-fast-generate-001", AiTask.VIDEO)
+    assert supports("ELEVENLABS", "gemini-3.1-flash-image", AiTask.IMAGE)
+    assert not supports("ELEVENLABS", "music_v2_5", AiTask.COMPOSE)
+    assert {AiTask.MUSIC, AiTask.SOUND_EFFECT} <= MEDIA_TASKS

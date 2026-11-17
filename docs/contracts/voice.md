@@ -294,6 +294,10 @@ document), or one section of it, through `ElevenLabs.narration` (`eleven_v4`, ch
 `/answers/config` carries `listen {languages}`: the answer languages the narration model speaks when
 the bucket, the key and ElevenLabs answer, else `[]`, and the client draws no Listen control.
 
+Film mode (decision 0054, `docs/contracts/explainer.md`) plays the same script: its scenes are
+timed by these tracks and captioned with these words; its optional score is ElevenLabs music and
+sound effects through the media router (`docs/contracts/media.md`), not narration seconds.
+
 ## Secrets (names only)
 
 `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER` (rotated quarterly),

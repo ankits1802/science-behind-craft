@@ -13,6 +13,7 @@ __all__ = [
     "HttpsUrl",
     "PartialDate",
     "absent",
+    "empty",
     "https_url",
 ]
 
@@ -34,6 +35,10 @@ class ContractModel(BaseModel):
 
 def absent(value: object) -> bool:
     return value is None
+
+
+def empty(value: object) -> bool:
+    return value is None or value == () or value == []
 
 
 def https_url(value: str) -> str:

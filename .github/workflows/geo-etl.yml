@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       datasets:
-        description: "Layers, comma separated: soilgrids,worldcover,hansen,chelsa,chirps,copdem,hydrorivers,mrds,glim,riverlines or all (riverlines ignores states and shards)"
+        description: "Layers, comma separated: soilgrids,worldcover,hansen,chelsa,chirps,ghcncams,copdem,hydrorivers,mrds,glim,riverlines or all (ghcncams, the vector layers and riverlines ignore shards; riverlines ignores states)"
         type: string
         default: all
       states:
@@ -17,6 +17,10 @@ on:
         default: 6
       load:
         description: "Upsert the combined tables into the database"
+        type: boolean
+        default: false
+      prune:
+        description: "With load: delete each loaded district's older rows of the datasets loaded (a re-run over a new period)"
         type: boolean
         default: false
       allow_failures:
@@ -85,8 +89,9 @@ jobs:
 
           raster = ["soilgrids", "worldcover", "hansen", "chelsa", "chirps", "copdem"]
           vector = ["hydrorivers", "mrds", "glim"]
+          whole = ["ghcncams"]
           lines = ["riverlines"]
-          known = raster + vector + lines
+          known = raster + vector + whole + lines
           text = os.environ["DATASETS"].replace(" ", "").lower()
           chosen = known if text in ("", "all") else [v for v in text.split(",") if v]
           unknown = sorted(set(chosen) - set(known))
@@ -99,7 +104,7 @@ jobs:
           if states not in ("", "all"):
               shards = min(shards, len({v for v in states.split(",") if v}))
           include = []
-          for layer in [k for k in raster + vector if k in chosen]:
+          for layer in [k for k in raster + vector + whole if k in chosen]:
               if layer in raster and shards > 1:
                   include += [{"layer": layer, "shard": f"{i}/{shards}", "part": f"{layer}-shard{i}of{shards}"} for i in range(1, shards + 1)]
               else:
@@ -245,7 +250,11 @@ jobs:
       - name: Upsert
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: python load.py --out out
+          PRUNE: ${{ inputs.prune }}
+        run: |
+          args=(--out out)
+          if [ "$PRUNE" = "true" ]; then args+=(--prune); fi
+          python load.py "${args[@]}"
 
   rivers:
     name: River lines and basin topologies

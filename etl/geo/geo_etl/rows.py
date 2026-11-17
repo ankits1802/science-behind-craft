@@ -20,6 +20,8 @@ STATS = (
     "DENSITY",
     "DISTANCE",
     "COUNT",
+    "TREND_PER_DECADE",
+    "TREND_P_VALUE",
 )
 
 COLUMNS = [

@@ -4,15 +4,15 @@ import Link from "next/link";
 import { BookOpen, MessageCircleQuestion, Mic } from "lucide-react";
 
 import { PageHeader } from "@/components/PageHeader";
-import type { CraftProfile } from "@/lib/types";
+import type { PageCraft } from "@/lib/craftPageContract";
+import { craftSubtitle } from "@/lib/craftPageView";
 
-export function CraftHeader({ craft, onVoice }: { craft: CraftProfile["craft"]; onVoice?: () => void }) {
-  const path = [craft.categoryName, craft.subCategoryName].filter(Boolean).join(" › ");
+export function CraftHeader({ craft, onVoice }: { craft: PageCraft; onVoice?: () => void }) {
   return (
     <>
       <PageHeader
         title={craft.name}
-        description={[craft.localName && craft.localName !== craft.name ? craft.localName : null, path].filter(Boolean).join(" · ") || undefined}
+        description={craftSubtitle(craft)}
         icon={<BookOpen className="h-5 w-5" aria-hidden />}
         actions={
           <>

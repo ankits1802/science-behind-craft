@@ -82,6 +82,8 @@ def test_the_event_names_are_the_frontend_set_plus_status_and_the_explainer_even
         "block",
         "section_done",
         "trail",
+        "builds_on",
+        "version",
     }
 
 

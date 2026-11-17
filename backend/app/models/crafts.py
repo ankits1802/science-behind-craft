@@ -7,6 +7,7 @@ from geoalchemy2 import Geography, Geometry
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     Boolean,
+    CheckConstraint,
     Date,
     DateTime,
     ForeignKey,
@@ -22,7 +23,7 @@ from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
-from app.models.base import Base, created_at, updated_at, uuid_pk
+from app.models.base import Base, created_at, one_of, updated_at, uuid_pk
 
 EMBEDDING_DIMENSIONS = 1536
 
@@ -246,10 +247,12 @@ class CraftLocation(Base):
         UUID(as_uuid=True), ForeignKey("Source.id", ondelete="SET NULL")
     )
     evidenceLevel: Mapped[str] = mapped_column(e.EvidenceLevel, nullable=False, server_default="PROVISIONAL")
+    role: Mapped[str | None] = mapped_column(String(20))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
     __table_args__ = (
+        CheckConstraint(one_of("role", e.PLACE_ROLES), name="role"),
         Index(None, "craftId"),
         Index(None, "districtLgd"),
         Index(None, "stateLgd"),

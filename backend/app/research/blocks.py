@@ -8,7 +8,7 @@ from typing import Any, ClassVar, Literal, Self
 from pydantic import AwareDatetime, Field, model_validator
 from pydantic.alias_generators import to_camel
 
-from app.models.enums import IMAGE_RELEVANCE
+from app.models.enums import EVIDENCE_LEVELS, IMAGE_RELEVANCE
 
 from .base import ContractModel
 from .citations import AnswerSentence, Citation
@@ -37,6 +37,7 @@ __all__ = [
     "SentenceSpec",
     "named_in",
     "require_facts",
+    "require_findings",
     "sentences_in_payload",
     "stated_texts",
     "with_sentences_in_payload",
@@ -235,11 +236,17 @@ def named_in(name: str, sentence: AnswerSentence) -> bool:
 
 
 def require_facts(owner: str, sentences: Sequence[ExplainerSentence]) -> None:
+    require_findings(owner, sentences)
+    if any(sentence.level not in FACT_LEVELS for sentence in sentences):
+        raise ValueError(f"{owner} states facts only; a hypothesis is an open question")
+
+
+def require_findings(owner: str, sentences: Sequence[ExplainerSentence]) -> None:
     ids = [sentence.id for sentence in sentences]
     if len(set(ids)) != len(ids):
         raise ValueError(f"{owner} lists each sentence once")
-    if any(sentence.level not in FACT_LEVELS for sentence in sentences):
-        raise ValueError(f"{owner} states facts only; a hypothesis is an open question")
+    if any(sentence.level not in EVIDENCE_LEVELS for sentence in sentences):
+        raise ValueError(f"{owner} shows stored findings only, each at its stored level")
 
 
 def sentences_in_payload(payload: Mapping[str, Any], spec: SentenceSpec) -> list[Mapping[str, Any]]:

@@ -286,3 +286,11 @@ def test_user_role_downgrade_restores_the_initial_values() -> None:
     retyped = {(table, column) for table, column, _default in module_constant(later, "ROLE_COLUMNS")}
     assert retyped == initial_columns_of_enum("UserRole")
     assert len(retyped) == 6
+
+
+def test_claim_status_downgrade_restores_the_initial_values() -> None:
+    later = ast.parse((MIGRATIONS / "0017_curated_dossiers.py").read_text(encoding="utf-8"))
+    assert module_constant(later, "CLAIM_STATUSES_BEFORE") == initial_enum_list()["ClaimStatus"]
+    assert enum_additions()["ClaimStatus"] == ("SUPERSEDED", "WITHDRAWN")
+    retyped = {(table, column) for table, column, _default in module_constant(later, "CLAIM_STATUS_COLUMNS")}
+    assert retyped == initial_columns_of_enum("ClaimStatus")

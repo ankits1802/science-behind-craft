@@ -40,9 +40,6 @@ __all__ = [
     "StoryStep",
     "SupplyLink",
     "SupplyMapBlock",
-    "TimelineMapBlock",
-    "TimelinePoint",
-    "TimelineRoute",
 ]
 
 LAYER_KEY_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
@@ -224,47 +221,6 @@ class SupplyMapBlock(BlockBase):
 
     def shown_labels(self) -> list[str]:
         return list(dict.fromkeys(text for link in self.links for text in (link.material, link.origin)))
-
-
-class TimelinePoint(ContractModel):
-    label: str = Field(min_length=1, max_length=200)
-    year_from: int
-    year_to: int
-    wikidata_id: str = Field(pattern=WIKIDATA_ID_PATTERN)
-    latitude: float = Field(ge=-90, le=90)
-    longitude: float = Field(ge=-180, le=180)
-    sentence: ExplainerSentence
-
-    @model_validator(mode="after")
-    def _years_in_order(self) -> Self:
-        if self.year_from > self.year_to:
-            raise ValueError(f"timeline point {self.label!r} starts before it ends")
-        return self
-
-
-class TimelineRoute(ContractModel):
-    start: int = Field(ge=0)
-    end: int = Field(ge=0)
-    sentence: ExplainerSentence
-
-
-class TimelineMapBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (
-        ("points", [(("sentence", SENTENCE),)]),
-        ("routes", [(("sentence", SENTENCE),)]),
-    )
-
-    kind: Literal["timeline_map"]
-    version: Literal[1]
-    points: list[TimelinePoint] = Field(min_length=1)
-    routes: list[TimelineRoute]
-
-    @model_validator(mode="after")
-    def _routes_join_listed_points(self) -> Self:
-        last = len(self.points) - 1
-        if any(r.start > last or r.end > last or r.start == r.end for r in self.routes):
-            raise ValueError(f"timeline {self.id} joins two different listed points per route")
-        return self
 
 
 def _require_caption(block_id: str, caption: str) -> None:

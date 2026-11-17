@@ -1,0 +1,703 @@
+{
+  "schemaVersion": 1,
+  "craft": {
+    "schemaVersion": 1,
+    "craft": {
+      "slug": "Kutch-Ajrakh",
+      "name": "Kutch Ajrakh",
+      "path": "/crafts/Kutch-Ajrakh"
+    },
+    "nodes": [
+      {
+        "termKey": "alum",
+        "label": "Alum",
+        "crafts": [
+          {
+            "craft": {
+              "slug": "Kutch-Ajrakh",
+              "name": "Kutch Ajrakh",
+              "path": "/crafts/Kutch-Ajrakh"
+            },
+            "conceptIds": [
+              "e5954d2b-f5cd-5738-bce1-f3bf0c9d33f7"
+            ],
+            "sentence": {
+              "id": "alum.1",
+              "text": "Alum is used as a mordant to fasten the colours.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "c7c60b8b-8e49-5da9-9b60-3b3a7d360670",
+                  "claimId": "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Alum is used as a mordant in the process to fasten the colours.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Alum",
+                  "termKey": "alum"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Bagru-Hand-Block-Print",
+              "name": "Bagru Hand Block Print",
+              "path": "/crafts/Bagru-Hand-Block-Print"
+            },
+            "conceptIds": [
+              "568f8615-438b-5f5e-8ab9-b146e6075475"
+            ],
+            "sentence": {
+              "id": "alum.2",
+              "text": "Alum solution fixes colour and also helps remove the dabu paste; its quantity varies with the strength of the dabu.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "5eaea7ea-1bd9-5681-b398-f11925e08b1e",
+                  "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                  "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                  "quote": "This solution is then strained through a cloth filter. Quantity of alum varies according to the strength of the dabu.",
+                  "locator": "PDF p. 5",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "bdc9c5b9-8c78-59d2-b1bc-0b5de1006a75",
+                  "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                  "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                  "quote": "It is washed again and then rinsed in a solution of alum and water to fix the colour and also for removing dabu paste.",
+                  "locator": "PDF p. 5",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Alum",
+                  "termKey": "alum"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Machilipatnam-Kalamkari",
+              "name": "Machilipatnam Kalamkari",
+              "path": "/crafts/Machilipatnam-Kalamkari"
+            },
+            "conceptIds": [
+              "3ac2e4a0-7969-5009-a1a8-1dc91727ce8a",
+              "9bf13910-dedf-55e6-9c21-eb6298696281"
+            ],
+            "sentence": {
+              "id": "alum.3",
+              "text": "Alum (karam in Telugu) is pounded, boiled in water until reduced to half, and iron implements are avoided because iron darkens the colour.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "4acc438c-88ce-5fc0-9e75-049fe1fe07d1",
+                  "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                  "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                  "quote": "The solution is allowed to boil with occasional stirring until it has reduced to half. A mixture of iron in any form leads to darkening of the color and for this reason the iron implements and utensils are avoided.",
+                  "locator": "PDF p. 5",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "7bee5e9c-1675-5fe0-8305-007094c58957",
+                  "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                  "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                  "quote": "Alum (Karam in Telugu) Dry alum crystals are pounded to powder. Water is added in the proportion of 4 liters water to 3.5 kilograms alum.",
+                  "locator": "PDF p. 5",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Alum",
+                  "termKey": "alum"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Sanganeri-Hand-Block-Printing",
+              "name": "Sanganeri Hand Block Printing",
+              "path": "/crafts/Sanganeri-Hand-Block-Printing"
+            },
+            "conceptIds": [
+              "8e5e8218-87b8-5c75-8c01-d22675239958"
+            ],
+            "sentence": {
+              "id": "alum.4",
+              "text": "Post-mordanting with diluted alum (fitkari) makes the fugitive turmeric-pomegranate yellow fast.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "161ae158-075c-5945-a996-e9f37be681f3",
+                  "claimId": "df6ca1e2-4294-519a-a324-60ceacf478ab",
+                  "sourceId": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+                  "quote": "known u'Filkui Rangati' The dye extracted ftom turmeric and pomegranate peals is very fugitive and in order to make it fast, post mordanting is done witl alum (fitkari). ln this process the fab'ric is dipped in a big copper vessel filled with water and diluted",
+                  "locator": "PDF p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "alum",
+                  "termKey": "alum"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "termKey": "indigo",
+        "label": "Indigo",
+        "crafts": [
+          {
+            "craft": {
+              "slug": "Kutch-Ajrakh",
+              "name": "Kutch Ajrakh",
+              "path": "/crafts/Kutch-Ajrakh"
+            },
+            "conceptIds": [
+              "f2b33abe-18a6-5f0d-91f0-3007e2afb4bf"
+            ],
+            "sentence": {
+              "id": "indigo.1",
+              "text": "Indigo came from Shikarpur in Sindh and was also grown in Dhamadka.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "a9c9921f-8679-57af-8484-5ca04da21c2d",
+                  "claimId": "49b3a295-9419-5e14-8751-849598399e69",
+                  "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                  "quote": "Blue extract from the indigo plant mostly came from Shikarpur in Sindh, but it was also grown in Dhamadka.",
+                  "locator": "§ \"We work in harmony with nature\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Indigo",
+                  "termKey": "indigo"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Bagru-Hand-Block-Print",
+              "name": "Bagru Hand Block Print",
+              "path": "/crafts/Bagru-Hand-Block-Print"
+            },
+            "conceptIds": [
+              "8c6a23ae-19cc-5287-95bb-c04c43199bd8"
+            ],
+            "sentence": {
+              "id": "indigo.2",
+              "text": "Indigo blue (nil) is extracted from Indigofera tinctoria; synthetic indigo granules are also used nowadays.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "865066ef-a3c7-5388-9811-54fbde45d0fe",
+                  "claimId": "62383c0e-6a1c-5d59-8b43-a7f3c77f010e",
+                  "sourceId": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+                  "quote": "Indigo Blue: - Indigo blue (nil) is a blue colouring matter extracted from nil plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are also used.",
+                  "locator": "PDF p. 14",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Indigo",
+                  "termKey": "indigo"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Block-Printing-Of-Akola",
+              "name": "Block Printing of Akola",
+              "path": "/crafts/Block-Printing-Of-Akola"
+            },
+            "conceptIds": [
+              "e08c756b-74d3-5803-827c-9cd847ac3bda"
+            ],
+            "sentence": {
+              "id": "indigo.3",
+              "text": "Indigo dyeing is done in a cold bath, the cloth turning green then indigo as it oxidises in air.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "5eb1daef-d61a-547d-a72c-59ce5f8fa9d4",
+                  "claimId": "00cde00d-2520-55d8-8c7c-6c903e73a428",
+                  "sourceId": "cc2a785f-ac7a-54dc-b1d5-869733aff9fa",
+                  "quote": "It is a cold dyeing process where the cloth is dipped in a solution of Indigo dye. When dipped, the cloth turns to a rich green color which turns to a deep indigo shade once its exposed to dry air and it undergoes rapid oxidation.",
+                  "locator": "§ \"process:\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Indigo dyeing",
+                  "termKey": "indigo-dyeing"
+                },
+                {
+                  "text": "indigo",
+                  "termKey": "indigo"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Machilipatnam-Kalamkari",
+              "name": "Machilipatnam Kalamkari",
+              "path": "/crafts/Machilipatnam-Kalamkari"
+            },
+            "conceptIds": [
+              "15f71970-d2f1-5ced-8ccb-adbcad845db8"
+            ],
+            "sentence": {
+              "id": "indigo.4",
+              "text": "Indigo is obtained from indigo cakes and mixed with rice starch, not gum, for printing; indigo does not require any mordant so it is printed directly.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "67ef24b3-4fa8-5745-8d5b-3bb3dd637ccf",
+                  "claimId": "3cc9a246-faa3-59f3-935d-8bf56a71a8e8",
+                  "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                  "quote": "Indigo is obtained from indigo cakes. It is mixed with rice starch and not gum for printing purposes.",
+                  "locator": "PDF p. 6",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "9d7cffdd-fd9a-5822-ac56-14aad250f71e",
+                  "claimId": "3cc9a246-faa3-59f3-935d-8bf56a71a8e8",
+                  "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                  "quote": "Indigo does not require any mordant so the solution is printed directly.",
+                  "locator": "PDF p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Indigo",
+                  "termKey": "indigo"
+                }
+              ]
+            }
+          },
+          {
+            "craft": {
+              "slug": "Sanganeri-Hand-Block-Printing",
+              "name": "Sanganeri Hand Block Printing",
+              "path": "/crafts/Sanganeri-Hand-Block-Printing"
+            },
+            "conceptIds": [
+              "ceb84dd1-c656-56b1-8166-4ba9bf3c5df3"
+            ],
+            "sentence": {
+              "id": "indigo.5",
+              "text": "Indigo blue (nil) is extracted from Indigofera tinctoria; nowadays synthetic indigo granules are used.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "1675d392-62ef-5960-afe8-c26003951280",
+                  "claimId": "6913010a-5269-5b29-aa3e-a0d5a3d32c42",
+                  "sourceId": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+                  "quote": "Indigo Blue: - Indrgo blue (nil) is a blue colouring mattr extracted from nil plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are used.",
+                  "locator": "PDF p. 14",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": [
+                {
+                  "text": "Indigo",
+                  "termKey": "indigo"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+        "kind": "GI_JOURNAL",
+        "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+        "authors": [
+          "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+          "facilitated by Textiles Committee, Ministry of Textiles)"
+        ],
+        "year": 2023,
+        "doi": null,
+        "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+        "publisher": "Geographical Indications Registry, Chennai (IP India)",
+        "licence": null,
+        "attribution": null,
+        "reliability": "A"
+      },
+      {
+        "id": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+        "kind": "WEB_PAGE",
+        "title": "'Bagru' — A Traditional Printing Technique of Rajasthan",
+        "authors": [
+          "Sambaditya Raj"
+        ],
+        "year": 2012,
+        "doi": null,
+        "url": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+        "publisher": "fibre2fashion.com (industry article, PDF)",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      },
+      {
+        "id": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+        "kind": "WEB_PAGE",
+        "title": "Kalamkari — The Block Prints of Machalipatnam (craft documentation)",
+        "authors": [
+          "Craftmark (All India Artisans and Craftworkers Welfare Association) — individual author not stated"
+        ],
+        "year": null,
+        "doi": null,
+        "url": null,
+        "publisher": "Craftmark / AIACA",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      },
+      {
+        "id": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+        "kind": "GI_JOURNAL",
+        "title": "Application for Registration of a Geographical Indication in Part A of the Register: Sanganeri Hand Block Printing (Statement of case)",
+        "authors": [
+          "Calico Printers Co-operative Society Ltd., Sanganer (applicant)"
+        ],
+        "year": null,
+        "doi": null,
+        "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+        "publisher": "Filed under the Geographical Indications of Goods (Registration & Protection) Act, 1999; PDF hosted by oriGIn",
+        "licence": null,
+        "attribution": null,
+        "reliability": "A"
+      },
+      {
+        "id": "ba479ec5-4b93-570b-be74-2eab9711e777",
+        "kind": "WEB_PAGE",
+        "title": "Ajrakh exhibition, Part 2: The art of Ajrakh",
+        "authors": [
+          "Khamir (craft resource centre, Kachchh)"
+        ],
+        "year": null,
+        "doi": null,
+        "url": "https://exhibitions-khamir.org/ajrakh/art-of-ajrakh",
+        "publisher": "Khamir",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      },
+      {
+        "id": "e9f4bcfb-56f9-55be-8f32-4028e50ca27a",
+        "kind": "GI_JOURNAL",
+        "title": "Form GI-1: Application for Registration of a Geographical Indication in Part A of the Register — Bagru Hand Block Print (statement of case)",
+        "authors": [
+          "Bagru Haath Thappa Chhapai Dastkar Sanrakshan Awam Vikas Samiti (BHTCDSAVS), applicant"
+        ],
+        "year": 2009,
+        "doi": null,
+        "url": "https://origin-gi.com/wp-content/uploads/2017/01/129-bagru-hand-block-print.pdf",
+        "publisher": "Filed with the Geographical Indications Registry, Chennai; scan hosted by origin-gi.com",
+        "licence": null,
+        "attribution": null,
+        "reliability": "A"
+      },
+      {
+        "id": "cc2a785f-ac7a-54dc-b1d5-869733aff9fa",
+        "kind": "WEB_PAGE",
+        "title": "Block Print~Akola (Craft Archive)",
+        "authors": [
+          "Gaatha (unattributed)"
+        ],
+        "year": null,
+        "doi": null,
+        "url": "https://gaatha.org/Craft-of-India/akola-dabu-printing-process-history/",
+        "publisher": "Gaatha craft archive (gaatha.org)",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      }
+    ]
+  },
+  "concept": {
+    "schemaVersion": 1,
+    "node": {
+      "termKey": "alum",
+      "label": "Alum",
+      "crafts": [
+        {
+          "craft": {
+            "slug": "Kutch-Ajrakh",
+            "name": "Kutch Ajrakh",
+            "path": "/crafts/Kutch-Ajrakh"
+          },
+          "conceptIds": [
+            "e5954d2b-f5cd-5738-bce1-f3bf0c9d33f7"
+          ],
+          "sentence": {
+            "id": "alum.1",
+            "text": "Alum is used as a mordant to fasten the colours.",
+            "level": "PROVISIONAL",
+            "citations": [
+              {
+                "id": "c7c60b8b-8e49-5da9-9b60-3b3a7d360670",
+                "claimId": "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e",
+                "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                "quote": "Alum is used as a mordant in the process to fasten the colours.",
+                "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              }
+            ],
+            "translated": false,
+            "terms": [
+              {
+                "text": "Alum",
+                "termKey": "alum"
+              }
+            ]
+          }
+        },
+        {
+          "craft": {
+            "slug": "Bagru-Hand-Block-Print",
+            "name": "Bagru Hand Block Print",
+            "path": "/crafts/Bagru-Hand-Block-Print"
+          },
+          "conceptIds": [
+            "568f8615-438b-5f5e-8ab9-b146e6075475"
+          ],
+          "sentence": {
+            "id": "alum.2",
+            "text": "Alum solution fixes colour and also helps remove the dabu paste; its quantity varies with the strength of the dabu.",
+            "level": "PROVISIONAL",
+            "citations": [
+              {
+                "id": "5eaea7ea-1bd9-5681-b398-f11925e08b1e",
+                "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                "quote": "This solution is then strained through a cloth filter. Quantity of alum varies according to the strength of the dabu.",
+                "locator": "PDF p. 5",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              },
+              {
+                "id": "bdc9c5b9-8c78-59d2-b1bc-0b5de1006a75",
+                "claimId": "4b60810b-8407-5beb-85ae-2bc336bae6d6",
+                "sourceId": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+                "quote": "It is washed again and then rinsed in a solution of alum and water to fix the colour and also for removing dabu paste.",
+                "locator": "PDF p. 5",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              }
+            ],
+            "translated": false,
+            "terms": [
+              {
+                "text": "Alum",
+                "termKey": "alum"
+              }
+            ]
+          }
+        },
+        {
+          "craft": {
+            "slug": "Machilipatnam-Kalamkari",
+            "name": "Machilipatnam Kalamkari",
+            "path": "/crafts/Machilipatnam-Kalamkari"
+          },
+          "conceptIds": [
+            "3ac2e4a0-7969-5009-a1a8-1dc91727ce8a",
+            "9bf13910-dedf-55e6-9c21-eb6298696281"
+          ],
+          "sentence": {
+            "id": "alum.3",
+            "text": "Alum (karam in Telugu) is pounded, boiled in water until reduced to half, and iron implements are avoided because iron darkens the colour.",
+            "level": "PROVISIONAL",
+            "citations": [
+              {
+                "id": "4acc438c-88ce-5fc0-9e75-049fe1fe07d1",
+                "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                "quote": "The solution is allowed to boil with occasional stirring until it has reduced to half. A mixture of iron in any form leads to darkening of the color and for this reason the iron implements and utensils are avoided.",
+                "locator": "PDF p. 5",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              },
+              {
+                "id": "7bee5e9c-1675-5fe0-8305-007094c58957",
+                "claimId": "eaabf54d-e969-5db9-b342-a07a961dfc6d",
+                "sourceId": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+                "quote": "Alum (Karam in Telugu) Dry alum crystals are pounded to powder. Water is added in the proportion of 4 liters water to 3.5 kilograms alum.",
+                "locator": "PDF p. 5",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              }
+            ],
+            "translated": false,
+            "terms": [
+              {
+                "text": "Alum",
+                "termKey": "alum"
+              }
+            ]
+          }
+        },
+        {
+          "craft": {
+            "slug": "Sanganeri-Hand-Block-Printing",
+            "name": "Sanganeri Hand Block Printing",
+            "path": "/crafts/Sanganeri-Hand-Block-Printing"
+          },
+          "conceptIds": [
+            "8e5e8218-87b8-5c75-8c01-d22675239958"
+          ],
+          "sentence": {
+            "id": "alum.4",
+            "text": "Post-mordanting with diluted alum (fitkari) makes the fugitive turmeric-pomegranate yellow fast.",
+            "level": "PROVISIONAL",
+            "citations": [
+              {
+                "id": "161ae158-075c-5945-a996-e9f37be681f3",
+                "claimId": "df6ca1e2-4294-519a-a324-60ceacf478ab",
+                "sourceId": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+                "quote": "known u'Filkui Rangati' The dye extracted ftom turmeric and pomegranate peals is very fugitive and in order to make it fast, post mordanting is done witl alum (fitkari). ln this process the fab'ric is dipped in a big copper vessel filled with water and diluted",
+                "locator": "PDF p. 12",
+                "context": null,
+                "evidence": "QUOTED",
+                "level": "PROVISIONAL"
+              }
+            ],
+            "translated": false,
+            "terms": [
+              {
+                "text": "alum",
+                "termKey": "alum"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+        "kind": "GI_JOURNAL",
+        "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+        "authors": [
+          "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+          "facilitated by Textiles Committee, Ministry of Textiles)"
+        ],
+        "year": 2023,
+        "doi": null,
+        "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+        "publisher": "Geographical Indications Registry, Chennai (IP India)",
+        "licence": null,
+        "attribution": null,
+        "reliability": "A"
+      },
+      {
+        "id": "b14e8d5e-f9db-5a3a-8510-5dfde0f93b10",
+        "kind": "WEB_PAGE",
+        "title": "'Bagru' — A Traditional Printing Technique of Rajasthan",
+        "authors": [
+          "Sambaditya Raj"
+        ],
+        "year": 2012,
+        "doi": null,
+        "url": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+        "publisher": "fibre2fashion.com (industry article, PDF)",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      },
+      {
+        "id": "bc0b16ce-9b7e-5979-a2dd-03c3071ad0b1",
+        "kind": "WEB_PAGE",
+        "title": "Kalamkari — The Block Prints of Machalipatnam (craft documentation)",
+        "authors": [
+          "Craftmark (All India Artisans and Craftworkers Welfare Association) — individual author not stated"
+        ],
+        "year": null,
+        "doi": null,
+        "url": null,
+        "publisher": "Craftmark / AIACA",
+        "licence": null,
+        "attribution": null,
+        "reliability": "B"
+      },
+      {
+        "id": "cea9c896-db5b-5a4a-b7d2-5fcf2f0ca25e",
+        "kind": "GI_JOURNAL",
+        "title": "Application for Registration of a Geographical Indication in Part A of the Register: Sanganeri Hand Block Printing (Statement of case)",
+        "authors": [
+          "Calico Printers Co-operative Society Ltd., Sanganer (applicant)"
+        ],
+        "year": null,
+        "doi": null,
+        "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+        "publisher": "Filed under the Geographical Indications of Goods (Registration & Protection) Act, 1999; PDF hosted by oriGIn",
+        "licence": null,
+        "attribution": null,
+        "reliability": "A"
+      }
+    ]
+  }
+}

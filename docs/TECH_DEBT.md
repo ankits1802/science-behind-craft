@@ -886,26 +886,17 @@ Last reviewed: 2026-11-18.
 - **Clears it:** switch each importer to `research.citations` when it is next touched, then drop
   the three names from `stream.__all__`.
 
-### Declared block kinds check only what `research` can see
-
-- **What:** decision 0042 cleared phase B's part: the caption and dataset rows moved to
-  `research/datasets` and the reaction rules to `research/reactions`, so region stories, map
-  layers and reaction steps check them. Left: the simulation's static check (plan 2.6) does not
-  exist.
-- **Why left:** the simulation is built in phase C.
-- **Clears it:** phase C's simulation lane adds the static check and its escape-attempt tests.
-
 ## Understanding and depth (decision 0031)
 
-### Comparison questions answer for one craft
+### Comparison questions research the lead craft only
 
-- **What:** the understanding step chooses at most one craft; a second craft a comparison
-  question names is only offered, so `understood.crafts` never holds two and the answer covers the
-  first craft.
-- **Why left:** researching and composing two crafts side by side is the `compare` block of phase
-  D.
-- **Clears it:** phase D lets the understanding choose several crafts for a comparison and runs
-  research per craft into a `compare` block.
+- **What:** since decision 0064 a comparison sets up to three crafts beside the lead one and each
+  section shows a `compare` block, but live research and composition still run for the lead craft;
+  the compared crafts' cells come from what is already stored about them.
+- **Why left:** researching every compared craft multiplies the answer's spend; the curation run
+  fills the stored claims each craft's cells read.
+- **Clears it:** a per-craft research share inside the answer's budget for compared crafts with
+  few stored claims in the section's field.
 
 ### Any-craft claims are read only by any-craft questions
 
@@ -1809,6 +1800,911 @@ Last reviewed: 2026-11-18.
   is a new provider module.
 - **Clears it:** one `providers/answer_models.answer_models(spend, user=)` returning the set, which
   `build_answer_pipeline` takes as one argument.
+
+## Curated import and craft page (decision 0053)
+
+### The ladder and the process route still number unordered curated stages
+
+- **What:** curated stages no source orders are stored with `ProcessStage.ordered` false and an
+  ordinal after the ordered ones. The craft page's Process tab shows them unnumbered (decision
+  0071), but `GET /crafts/{slug}/process` (`schemas/science.ProcessStageView.ordinal`) and the
+  answers' process ladder (`science/ladder`) still show every stage's ordinal.
+- **Why left:** both read the science contract and its golden fixtures, which the import did not
+  need to change; `science/records.StageRecord.ordered` already carries the flag.
+- **Clears it:** an `ordered` field in the science contract and the ladder, and the composer told
+  which stages have no stated order.
+
+### A seeded craft keeps its seed process and seed claims beside the curated ones
+
+- **What:** Kutch Ajrakh (and any other seeded craft once curated) keeps the "Seed process" next
+  to the curated process, so `/process` lists both and an answer's ladder may choose either; its
+  seed claims (edge sentences withdrawn) stay visible to answers and in All evidence, folded under
+  a curated near-duplicate where one exists.
+- **Why left:** the plan withdraws only the edge sentences; retiring the rest of a seeded craft's
+  seed rows is a reading of the plan the owner has not made.
+- **Clears it:** an owner decision, then the import superseding a curated craft's seed claims and
+  process (status `SUPERSEDED`, rows kept).
+
+### Facet search finds curated claims by their subject's concept type
+
+- **What:** the planner's facets filter by `Concept.type`; curated places are
+  `ENVIRONMENTAL_CONDITION` and communities `TRADITION` whatever the claim's discipline, so a
+  history facet does not see a history claim about a place. Craft-level claims are typed by
+  discipline (`curation_keys.DISCIPLINE_CONCEPT_TYPES`).
+- **Why left:** concept types are the retrieval vocabulary the planner's schema enumerates;
+  adding types or a discipline filter changes the planner contract.
+- **Clears it:** retrieval filtering by `CuratedClaim.discipline` (or a claim discipline column)
+  when the facet maps to a discipline.
+
+### Curated materials link only to compounds already stored
+
+- **What:** a dossier material's PubChem CID sets `Material.compoundId` only when a `Compound`
+  with that CID exists; no compound row is created, so molecules and material cards do not see
+  the other curated substances.
+- **Why left:** a compound row needs a name and formula from PubChem, and the import makes no
+  HTTP call.
+- **Clears it:** the import adds `Compound` rows with the CID and name, and the nightly
+  `link_compounds` fills their formula from PubChem.
+
+### Two homes for GI facts
+
+- **What:** the dossier's GI record lands in `CraftGiRecord`; the older `GiRegistration` table
+  (PLAN section 4) is still never written.
+- **Why left:** `GiRegistration` has no fields for the journal issue, filing date, proprietors
+  as a list, the authorised-user count or the claims, and the market and GI builder reads only
+  `CraftGiRecord` and the registry claims (decision 0066). Dropping the empty table needs a
+  migration with its row-level security, which the GI lane did not batch with parallel lanes'
+  migrations.
+- **Clears it:** the next migration that touches the crafts' tables drops `GiRegistration` (its
+  downgrade recreating the table and its policy) and removes the model.
+
+### A dossier removed from the folder is not un-imported
+
+- **What:** the import reads the dossiers present; deleting a dossier file leaves its claims,
+  pieces and `CuratedCraft` row as they were.
+- **Why left:** no dossier has been retired, and deletion would need its own supersession rule.
+- **Clears it:** an explicit retire step that supersedes the claims and pieces of a craft whose
+  dossier is gone.
+
+### A curated glossary meaning does not reach the term route
+
+- **What:** the page shows the dossier's meaning of each term, but `Term` rows are inserted only
+  when the key is new (the seed glossary owns its rows and rewrites them on every deploy), and
+  `GET /terms/{key}` builds its summary from defining claims, Wikipedia or a search.
+- **Why left:** writing a cached `TermSummary` from the curated meaning needs the meaning checked
+  as a cited sentence.
+- **Clears it:** a `STORED` term summary built from the term's curated claims at import.
+
+### The old colour reads the new claim statuses during the first deploy
+
+- **What:** migration `0017_curated_dossiers` and the import run while the previous release still
+  serves; its `ClaimStatus` list lacks `SUPERSEDED` and `WITHDRAWN`, so a request that loads a
+  withdrawn edge claim (a stored piece citing one) can fail until nginx switches to the new colour.
+- **Why left:** the seed step runs before the switch by design (blue/green), and the window is the
+  health wait of one release.
+- **Clears it:** nothing after the first deploy that carries the migration.
+
+### The import's database tests have not run on a laptop
+
+- **What:** `tests/db/test_curation_import_db.py` (full Kutch Ajrakh import, idempotence,
+  supersession, seed-edge hiding, answers' claims untouched, the region builder's districts) runs
+  only on GitHub Actions; it was written without a local database (owner rule).
+- **Why left:** nothing heavy runs locally.
+- **Clears it:** the first Backend checks run of this change passing; then delete this entry.
+
+## Phase C contract (decision 0054)
+
+### The static check reads script text by pattern
+
+- **What:** `research/sandbox` parses the markup but scans script text with patterns, not a
+  JavaScript parser. It refuses some good code (a string `"top"`, `"window"` or `"self"`, an
+  English "this," inside a string, a local named `parent`, `view` or `location`, a `class`
+  field read as `.constructor`), and it cannot follow every alias of the window (decision 0061
+  refuses `window`, `self`, `globalThis` and `this` handed on as values, `.view`,
+  `defaultView`, `contentWindow` and the reflection names, but a computed read of an object
+  that is the window under another name still passes).
+- **Why left:** no JavaScript parser runs on the server, and the frame's sandbox, policy and
+  guard are the boundary; the check is a filter that fails closed.
+- **Clears it:** a JavaScript tokenizer behind one adapter if production regenerations show the
+  check refusing good explainers, or an escape attempt it misses.
+
+### Numbers the explainer computes are not checked
+
+- **What:** the static check reads the numerals a generated explainer writes (decision 0061 added
+  figures against letters, list starts and CSS counters), not the numbers its code computes. A
+  value worked out from data values and an input's position (the fixture's `n *
+  data.fallLowFeet`, which shows 20 to 150 feet as the slider moves), a numeral assembled from
+  allowed constants (`'1' + '8' + '6' + '8'`, `1000 + 12 * 12 * 6`) or a unit conversion
+  (`data.depth * 9 / 5 + 32`) reaches the reader without being a cited value.
+- **Why left:** a frame guard that refused every shown numeral missing from `kv-data` (a
+  `MutationObserver` and wrapped `fillText`) would hide the fixture's own explainer the moment
+  its slider moves, since 20 is not a data value; telling a derived figure from an invented one at
+  run time needs a rule the plan does not have.
+- **Clears it:** an owner rule for derived figures (for example, only products of a data value and
+  an input step the data object names), then that runtime guard in `lib/sandboxFrame`'s prelude
+  posting a refusal that `SandboxFrame` turns into hiding the block.
+
+### Chromium ignores the frame policy's webrtc directive
+
+- **What:** `SANDBOX_CSP` ends with `webrtc 'block'` (decision 0061), but Chromium 158 logs
+  "Unrecognized Content-Security-Policy directive 'webrtc'." as a console error in every generated
+  explainer and lets a peer connection reach a STUN server; there the client's `FRAME_GUARD` is
+  what stops it (no constructor, no nested window, no nested frame), proved by
+  `e2e/sandbox-frame-unit.spec.ts`. The production screens walk ignores exactly that console
+  error from `about:srcdoc`.
+- **Why left:** browsers that read the directive enforce it, and the guard covers the rest; the
+  directive's support is the browsers'.
+- **Clears it:** nothing in this repository; drop the screens walk's exception once Chromium
+  recognises the directive.
+
+### Years are read by pattern
+
+- **What:** `research/timeline.years_named` reads any four-digit numeral from 1000 to 2099 as a
+  year; the timeline builder offers `years_offered`, which drops a numeral followed by a plural
+  lowercase noun ("1500 artisans", decision 0057), but a count before a singular or irregular
+  noun ("1500 people", "1200 men") is still offered. Relative dates ("400 years ago") name none,
+  so such claims never date a point.
+- **Why left:** the history claims held state dates as years, ranges and centuries.
+- **Clears it:** a short list of irregular counted nouns, or curation storing a claim's dates.
+
+### Timeline places are placed by exact Wikidata label only
+
+- **What:** places are placed with the supply origins' rule (decision 0047), so a spelling that is
+  no item's label or alias stays unplaced (Ajrakhpur, Dhamadka), "Sindh" has three exact items none
+  described by the claim's words, and "Kutch" matches only a family name, which has no
+  coordinates. The fixture places only Fustat.
+- **Why left:** a wrong pin is worse than none, and the rule is shared with supply maps.
+- **Clears it:** the place register (decision 0047's entry) or a Wikidata id stored on the
+  claim's place by curation.
+
+## Generated explainers (decision 0055)
+
+### Dataset rows are not offered to a generated explainer
+
+- **What:** the builder offers only figures the section's cited quotes state; the contract also
+  allows a value resting on a dataset row (`datasetCode`), such as a district's CHIRPS rainfall,
+  but no dataset value is offered, so an explainer cannot show one.
+- **Why left:** a section's dataset rows reach the builder only through other builders' reads
+  (the region and climate rows), and an explainer resting on rows alone is no piece and would be
+  paid for on every answer.
+- **Clears it:** offer the rows of the craft's first district that the section's blocks cite
+  (`DatasetRef` with its value), keyed apart from quoted values, and keep row-only explainers out
+  unless they also rest on a claim.
+
+### A redraft can run past the builder's wait
+
+- **What:** the first draft and its one redraft share the registry's 60 s ceiling; a slow route
+  can leave the redraft cut off, and the section then shows no generated explainer.
+- **Why left:** the section waits for its builders before its pictures, and 60 s is the most a
+  builder may hold it (decision 0042).
+- **Clears it:** production timings of the first answers; if redrafts are often cut, build the
+  explainer after `section_done` as a late block, which needs a stream event the contract does not
+  have yet.
+
+### A generated explainer reused inside a fresh section has no trail entry
+
+- **What:** a stored explainer placed by the builder in a freshly researched section carries its
+  reuse mark ("From earlier research") but adds no `trail FOUND piece:<id>` event; reused sections
+  send one per piece.
+- **Why left:** builders return blocks, not trail events, and the block's own mark tells the
+  reader where it came from.
+- **Clears it:** let `Built` carry the pieces a builder placed and send their trail events with
+  the blocks.
+
+### The generated explainer's database tests have not run on a laptop
+
+- **What:** `tests/db/test_simulation_pieces_db.py` (the stored pieces query, reuse with a kept
+  section, hiding, showing again, the 404 cases) and migration `0019_hidden_generated_explainers`
+  run only on GitHub Actions; they were written without a local database (owner rule).
+- **Why left:** nothing heavy runs locally.
+- **Clears it:** the first Backend checks run of this change passing; then delete this entry.
+
+## What-if lab (decision 0056)
+
+### Alternatives are read from English words beside each other
+
+- **What:** a stored text relates two materials only when an alternative word (`or`, `instead`,
+  `replaced`, `superseded`, ...) stands within three words between their names
+  (`research/alternatives`); "Alizarin, first synthesised in 1868, superseded madder" and "now
+  alizarine has taken its place" relate nothing, and texts in other languages are not read. A
+  material is named only by its stored name and glossary surfaces, so the seed's "Indian madder"
+  is not named by a plain "madder".
+- **Why left:** a wider gap joins co-ingredients ("clay, millet flour, gum and alum or lime"),
+  which must never be offered as alternatives; the seed's contrast relations and the curated
+  dossiers' "madder or al root" cover the crafts held.
+- **Clears it:** curation storing alternatives as `CONTRASTS_WITH` relations (or a material's
+  alternatives) so no text has to be read.
+
+### Temperatures and water sources are not offered as inputs
+
+- **What:** inputs are only a stage's stored materials. A temperature (a stage condition's
+  readings) or a water source held only as a concept ("Iron content of process water") is never
+  an input, so the plan's "temperature" and "river or well water" examples appear only when the
+  waters are stored materials with alternatives.
+- **Why left:** no stored row relates a condition's stated range, or one water source, to an
+  outcome; a what-if over them would need numbers or outcomes a model would have to supply.
+- **Clears it:** curation storing condition ranges with the outcomes a source ties to each, or
+  water sources as materials with their relations; then an input kind over them in a version 2.
+
+### Listen reads a hypothesis outcome without its label
+
+- **What:** Listen speaks every outcome sentence of a what-if (all options, in reading order),
+  and a hypothesis is spoken like a finding; on screen it carries the Hypothesis badge.
+- **Why left:** the narration and its cache are decision 0035's and shared with film mode
+  (0060); changing what is spoken changes every cached narration's hash.
+- **Clears it:** Listen leaving hypotheses out, or a spoken "possibly" prefix, with the narration
+  cache version raised.
+
+### One answer can show the same what-if in two sections
+
+- **What:** builders see only their own section, so a process and a chemistry section that both
+  name madder can each show the red-dye what-if.
+- **Why left:** the registry has no answer-wide view of what other sections built.
+- **Clears it:** an answer-level set of inputs already shown passed to the builders, or the
+  what-if kept to the first section that names its stage.
+
+### The what-if database tests have not run on a laptop
+
+- **What:** `tests/db/test_what_if_db.py` (the seeded relationships and own claims of the red
+  dyes, their offer from the seeded rows, the builder rebuilding the fixture's options) runs only on
+  GitHub Actions; it was written without a local database (owner rule).
+- **Why left:** nothing runs a database locally.
+- **Clears it:** the next Backend checks run passing; then delete this entry.
+
+## Zoom story and timeline map (decision 0057)
+
+### No open-access paper figure is searched for the fibre level
+
+- **What:** the fibre level comes only from Commons and Openverse micrographs; the contract's
+  "open-access figure whose `sourceId` is the stored paper" has no adapter (no figure search in
+  Europe PMC or a publisher's open figures), so most crafts show no fibre level.
+- **Why left:** no figure source exists to reuse, and a new adapter needs its own recorded tests
+  and licence reading per figure.
+- **Clears it:** one figures adapter over an open-access full-text source (for example the
+  figures of Europe PMC's open-access articles, each with its article's licence), checked on
+  recorded responses, and the fibre search asking it after Commons and Openverse.
+
+### Picture levels are read from English words
+
+- **What:** a picture's level is read from its title and description against short English word
+  lists (`zoom_pictures.LEVEL_WORDS`), and the craft's fibre from a list of fibre names
+  (`FIBRE_NAMES`); a picture titled in another language or with an unlisted word ("hand block
+  print", "karigar") finds no level, and a fibre material named only by a local word ("kora")
+  gives no fibre level.
+- **Why left:** a vision call per candidate would spend from the answer for a picture the reader
+  may never open; the lists hold the words the stored pictures use.
+- **Clears it:** the glossary's terms tagged with a zoom level, or a vision check of the top
+  candidate per level within the answer's headroom.
+
+### Undated history claims are not on the timeline
+
+- **What:** the plan lists undated or unplaced claims without a point; version 1 of the timeline
+  (decision 0054) gives every point and route a span of years, so an undated history claim is not
+  offered at all. Unplaced places are listed without a pin.
+- **Why left:** the version-1 fields are fixed and a reinterpretation is not allowed.
+- **Clears it:** a version 2 of `timeline_map` with an `undated` list of cited sentences and
+  their place, built with lane 0060's renderer.
+
+### The journey database tests have not run on a laptop
+
+- **What:** `tests/db/test_journey_db.py` (the zoom's stored reads: kept open pictures, the
+  craft's district claims, the boundary row) runs only on GitHub Actions.
+- **Why left:** nothing runs a database locally (owner rule).
+- **Clears it:** the next Backend checks run; this entry goes when it passes.
+
+## ElevenLabs music, sound effects, image and video (decision 0058)
+
+### ElevenLabs prices are unverified
+
+- **What:** the API pricing page, its own FAQ and the scale-tier page disagree (music $0.150 or
+  $0.275 a minute, sound effects $0.120 or $0.060 a minute or per generation); image and video
+  prices appear only on the scale-tier page. The catalogue keeps the higher figure per second or
+  image (`services/ai_providers.py`, `_ELEVENLABS`), so Usage may show more than ElevenLabs bills.
+- **Why left:** no invoice exists yet and no paid call is made while building.
+- **Clears it:** compare the first month's ElevenLabs invoice with Usage, set the confirmed prices
+  and `price_verified` true, or set admin price overrides.
+
+### The music bed is timed by an estimate of the narration
+
+- **What:** `voice/film_scenes` times a narrated scene at 1,000 characters a minute (Listen's hold
+  estimate), not by the narration's real length, so the bed can be shorter than the film; the
+  client loops it.
+- **Why left:** the score must not depend on whether Listen has run, and the cache keys on the
+  length.
+- **Clears it:** time narrated scenes from the stored narration manifests when every block is
+  narrated, falling back to the estimate.
+
+### Two asks for the same score can both make it
+
+- **What:** two readers asking at once for an uncached score of the same explainer and language
+  each call ElevenLabs; both store identical content-addressed clips and the last manifest wins,
+  so the spend is doubled once.
+- **Why left:** only the asker can read an explainer, so it needs the same reader in two tabs.
+- **Clears it:** a per-answer and language advisory lock around the making, held without a
+  database connection across the calls (decision 0040).
+
+### The cue table reads section fields, not their words
+
+- **What:** prose in a geography section gets running water and every process ladder tapping
+  tools, whatever the section is about; other kinds and fields get no cue.
+- **Why left:** prompts may carry no claim text or names, so a cue can only follow the block kind
+  and field.
+- **Clears it:** a version 2 table keyed by stored facets (water, dyeing, firing) once pieces carry
+  them.
+
+### A long score may outlast the request
+
+- **What:** a 180 s bed and twelve cues can take longer than CloudFront's 120 s origin timeout; the
+  making continues as shielded work and the next ask is served from the cache, but that first film
+  plays without its score.
+- **Why left:** ElevenLabs answers music synchronously and no job queue for audio exists.
+- **Clears it:** make scores in `kv-worker` like stage media and let the client poll, if
+  production shows first scores timing out.
+
+### Flows content is fetched only from the host the reference shows
+
+- **What:** since decision 0061 a finished image or video is fetched only from
+  `storage.googleapis.com` (`providers/elevenlabs_download.DOWNLOAD_HOSTS`), the host of the
+  reference's example; the OpenAPI document describes `content_url` only as a signed URL and
+  promises no host, so a move to another host fails every ElevenLabs picture and clip loudly.
+- **Why left:** an unpinned host could stream any body into the API box; ElevenLabs image and video
+  are route choices no seeded chain uses.
+- **Clears it:** the first production generation confirms the host; if ElevenLabs names another,
+  add it to `DOWNLOAD_HOSTS` after checking the reference.
+
+### Old score clips and manifests stay in the bucket
+
+- **What:** a changed explainer writes a new manifest over the old one, and clips no manifest
+  names any more are never deleted.
+- **Why left:** clips are shared across explainers by content, so deleting needs a reference count.
+- **Clears it:** a lifecycle rule or a sweep that deletes clips no manifest has named for 90 days.
+
+### The score's database tests have not run on a laptop
+
+- **What:** `tests/db/test_film_score_db.py` (the seeded routes, the media cap and the Master Admin
+  through the real ledger) runs only on GitHub Actions.
+- **Why left:** nothing runs a database locally (owner rule).
+- **Clears it:** the next Backend checks run; this entry goes when it passes.
+
+## Sandbox and what-if renderers (decision 0059)
+
+### A generated explainer can choose its own frame height
+
+- **What:** the frame's height comes from a message posted inside the frame (`FRAME_SIZER`);
+  generated code that slipped a `postMessage` past the static check could post another height.
+- **Why left:** the page cannot measure a frame of another origin, and the message moves nothing
+  but that frame's height, clamped to 120 to 1,200 px.
+- **Clears it:** nothing needed unless the bounds prove wrong in production.
+
+### A frame may navigate itself to Google's sign-in path
+
+- **What:** `frame-src` allows `https://accounts.google.com/gsi/` for the Google sign-in button,
+  so a generated explainer that navigated itself there (refused by the static check) would load
+  Google's page inside its own frame, still sandboxed.
+- **Why left:** `frame-src 'none'` would break Google sign-in; no other URL loads.
+- **Clears it:** a separate origin for the sign-in screens, or sign-in moving off the GSI button.
+
+## Zoom, timeline and film renderers (decision 0060)
+
+### A place beyond the India frame is a signpost, not a pin
+
+- **What:** the timeline draws a placed point outside the India frame (Fustat in the fixture) as
+  a signpost at the frame's edge pointing toward it, so the reader sees its direction and its
+  Wikidata item but not its distance or neighbourhood.
+- **Why left:** the frame is fixed by `components/map/projection.ts`; widening it for one point
+  would shrink India on every timeline, and drawing other countries is refused.
+- **Clears it:** an inset frame for points abroad (the same projection, its own bounds, the plain
+  ground only), chosen by the timeline when it places a point outside the India frame.
+
+### Film volumes do nothing on iPhones and iPads
+
+- **What:** the film sets the music and effects volume through `HTMLMediaElement.volume`, which
+  iOS Safari ignores, so there the bed plays at full level under the narration and the two
+  volume sliders change nothing. Mute works there: since decision 0061 it sets `muted` on the
+  narration, the bed and the cues.
+- **Why left:** a Web Audio gain needs the score's audio served with CORS headers from the
+  private bucket, and the bucket's CORS is infrastructure this lane does not change.
+- **Clears it:** CORS `GET` from the site's origins on the media bucket, then the bed and cues
+  through one Web Audio gain adapter in `components/answer/film/FilmSound.tsx`.
+
+### The score's bed is cut from the server's estimate of the film
+
+- **What:** the server sizes the bed and numbers the cues from scenes timed by an estimate of
+  each block's narration (`voice/film_scenes.film_scenes`), while the client times the film by
+  the Listen script's real durations; the bed loops or ends early and fades over the film's last
+  2 s either way.
+- **Why left:** the score is made before Listen's audio exists for that language, and the client
+  rule (loop, fade, resync) covers both cases.
+- **Clears it:** nothing needed unless readers notice; otherwise the score route times scenes
+  from the Listen manifest when one is cached.
+
+### Film mode has not met a browser end to end
+
+- **What:** the unit specs render the player's parts and check the clock, captions, mix and keys
+  as pure rules; no spec plays the narration, the bed or a cue in a browser, and the production
+  E2E does not open Film.
+- **Why left:** audio needs the deployed Listen and score routes and a signed-in browser.
+- **Clears it:** a step in the production E2E that opens Film on a known-answer question, checks
+  the caption and the played bar advance, and closes it with Escape; then delete this entry.
+
+## Phase C review fixes (decision 0061)
+
+### The phase C kinds have not met production
+
+- **What:** `simulation`, `what_if`, `zoom_story` and `timeline_map` joined the built kinds on
+  both sides; no production answer has built one yet, and the first generated explainer will be
+  the production E2E's indigo question.
+- **Why left:** nothing is deployed from a lane (owner rule).
+- **Clears it:** after the deploy, dispatch E2E production with `questions=true`; the Indigo row
+  passing (or noting that no concept was chosen) and a materials and a history answer showing a
+  zoom and a timeline clear this entry.
+
+### A hidden explainer is found by its content as well as its piece
+
+- **What:** a read-back explainer marks a generated explainer hidden when the piece it was kept as
+  or reused from is hidden, or when any hidden generated explainer piece has its content hash;
+  hiding a block no piece holds keeps it as a piece first, with no vector until
+  `embed_knowledge` fills it.
+- **Why left:** a later version carries a block whose piece was kept under an earlier answer, and
+  versions are never rewritten (decision 0063); two different explainers never share a content
+  hash because each carries its own build time.
+- **Clears it:** nothing needed unless pieces start being copied between answers.
+
+### The 0061 database tests have not run on a laptop
+
+- **What:** `tests/db/test_simulation_pieces_db.py` now also covers hiding an explainer never
+  kept as a piece and hiding a block carried into another answer; it and migration
+  `0024_piece_content_hash_index` run only on GitHub Actions.
+- **Why left:** nothing runs a database locally (owner rule).
+- **Clears it:** the next Backend checks run passing; then delete this entry.
+
+## Phase D contract (decision 0062)
+
+### No stored source states a regional unit conversion yet
+
+- **What:** a `REGIONAL` measure needs a stored claim whose quote states the factor for a region
+  (owner O5); no seed or curated claim does, so until one is curated only exactly defined units
+  (inch, foot, yard, mile, square foot) convert, and the fixture's measure is a feet value. The
+  regional path is built and tested on hand-written quotes (decision 0066).
+- **Why left:** a regional value has to come from a source a curator verifies; inventing one would
+  break O5.
+- **Clears it:** a dossier claim quoting a regional table (a district gazetteer or a state's
+  weights-and-measures record) as an equality ("a seer of Kachchh weighs ... kg") that names the
+  district or state by its LGD register spelling; then the review adds a `REGIONAL` row to the
+  fixture from that claim.
+
+### The phase D fixture shows no price and no Kutch Ajrakh sign of imitation
+
+- **What:** the market blocks show Kutch Ajrakh's GI record and Bagru's GI record with its GI
+  journal imitation sign; no seed claim states an Ajrakh price or Ajrakh imitation from GI journal
+  text. The curated dossier holds the 1975 Barmer price (C049), which the builder shows
+  (`tests/answering/test_market_builder.py` reads it from the dossier); its screen-printing claims
+  (C047, C138, C141) cite papers and a web page, not GI journal text, so they are not signs of
+  imitation under decision 0066.
+- **Why left:** the versions, lesson, quiz and citation goldens of both sides are built from the
+  Ajrakh market block, so the price adds a source and renumbers every file built from them; the
+  review (0070) fixed its findings and left this fixture refresh whole for one change.
+- **Clears it:** add C049's price to `s5.b1` by `curation_keys.curated_id` and regenerate the
+  goldens built from it, with the APA text of the new source checked by hand.
+
+### The climate trend in the fixture is a placeholder
+
+- **What:** the Kachchh rainfall trend's mean, slope and p-value are written by hand (listed
+  under `placeholders`). Lane 0065 added the stats, their migration (`0021_climate_trend_stats`),
+  the CHIRPS series from 1981 and the GHCN CAMS temperature layer, but no load has run.
+- **Why left:** the series are processed on GitHub Actions by an owner dispatch after the deploy;
+  agents dispatch nothing.
+- **Clears it:** the Geo ETL dispatch in `docs/RUNBOOK.md` (datasets `chirps,ghcncams`), then the
+  loaded Kachchh `CHIRPS_3_0` row (read-only on the box) replaces the placeholders and the fixture
+  test pins it.
+
+### Quizzes mostly vanish in other languages
+
+- **What:** a quiz option is a glossary term marked in its sentence; a translated sentence keeps a
+  span only where the English term still occurs, so most questions are dropped outside English.
+- **Why left:** translating option terms and re-marking them needs term translations the glossary
+  does not hold.
+- **Clears it:** local-language names of glossary terms (`Term.localNames` by language) marked in
+  translated sentences, then the quiz rebuilt from them.
+
+### Author names are cited as stored
+
+- **What:** citation exports write each stored author as written, so seed sources split on commas
+  read oddly (the V&A as "Victoria, & Albert Museum"; the GI journal's applicant note as two
+  authors).
+- **Why left:** inverting or joining names would guess; the stored values are the seed's.
+- **Clears it:** the seed and curated sources store organisation authors whole (the curation
+  checker already keeps them whole); the export needs no change.
+
+### Ask the map lists only crafts placed in the district by a cited location
+
+- **What:** a district answers only crafts with a cited district or point location there; a craft
+  the master list knows only by its state of practice is not listed for any district.
+- **Why left:** placing a state-level craft in every district of the state would be a claim no
+  source makes.
+- **Clears it:** cited locations for more crafts (curation adds them district by district).
+
+## Local measures, and market and GI (decision 0066)
+
+### A region is named only by its register spelling
+
+- **What:** a regional factor holds only where its quote or claim names an LGD register district
+  or state as the register spells it, so "a seer of Kutch" gives no region and converts nothing.
+- **Why left:** no alias table of district names exists; guessing that "Kutch" is Kachchh would
+  be a place no source names in the register's terms.
+- **Clears it:** a reviewed alias list per district in `app/data` (Kutch, Kachchh), read by
+  `stated_names.register_places_named` for every region reader at once.
+
+### Prices come only from curated rows
+
+- **What:** a price is shown only from a `CraftPrice` row (a curated dossier's `market.prices`);
+  seed and answer claims that state a price are not shown, because nothing records their date and
+  place apart from the text.
+- **Why left:** reading a date and a place out of free text would choose among several; the
+  contract names the curated rows as the source.
+- **Clears it:** the curation run adds `market.prices` for each craft whose sources state one.
+
+### GI fields are read by their labels
+
+- **What:** without a curated record, the registry fields come from labelled words in GI journal
+  and government claims ("application 183", "Certificate Date 11-05-2011", "Journal Number 37");
+  a claim phrased otherwise adds nothing, and two claims stating different values give no status.
+- **Why left:** the registry offers no open API, and a curated record replaces the reading.
+- **Clears it:** curated GI records for every GI craft (the curation run), after which the label
+  reader serves only crafts without a dossier.
+
+### Imitation and per are fixed word lists
+
+- **What:** a sign of imitation must name one of the listed words (fake, imitation, counterfeit,
+  spurious, knock-off, passed off, screen-printed, machine-made, power loom, mill-made);
+  "duplicate", "copies" and "substitute" are left out because they also name other things. A
+  price's `per` is read only after "per" or "/", so "Rs 1,500 a metre" shows no per.
+- **Why left:** a model choosing either would spend on every economics section; the lists err
+  toward showing less.
+- **Clears it:** a dossier field naming the claims that are signs of imitation, read first, and
+  a reviewed list of per words.
+
+### The insight database test has not run on a laptop
+
+- **What:** `tests/db/test_insight_builders_db.py` (imported GI records and prices, a craft's
+  places, a stored regional quote) is written but runs only on GitHub Actions.
+- **Why left:** owner rule: no local database.
+- **Clears it:** the next Backend checks run on GitHub; then delete this entry.
+
+## Climate and risk, and ask the map (decision 0065)
+
+### Climate blocks wait for the trend load
+
+- **What:** until the Geo ETL loads the 1981 series, no district has trend rows, so the climate
+  builder adds nothing and the seasons rainfall keeps the last load's ten-year period.
+- **Why left:** the load is an owner dispatch after the deploy that carries migration 0021.
+- **Clears it:** the Geo ETL dispatch in `docs/RUNBOOK.md`, Geo ETL, step 2, with its checks.
+
+### No groundwater values
+
+- **What:** `climate_risk.groundwater` is always empty; groundwater reaches a reader only as cited
+  claims.
+- **Why left:** no open, key-free, machine-readable district groundwater dataset exists: CGWB's
+  Dynamic Ground Water Resources tables are state PDFs and the India data portal's copies need an
+  API key (`docs/DATA_SOURCES.md`, Groundwater).
+- **Clears it:** an open district dataset (or the owner's choice to take the portal key into the
+  ETL), loaded as `DistrictEnvValue` rows and read into `GroundwaterValue`.
+
+### The region panel lists every year of the series
+
+- **What:** the region route and ask the map list each district value, so Climate now shows 45
+  years of CHIRPS annual means (with their 10th and 90th percentiles) and 45 years of GHCN CAMS
+  means beside the normals and trends.
+- **Why left:** the routes give a district's values as stored (contract); folding a series is a
+  screen choice.
+- **Clears it:** the region and map screens fold a yearly series into one row with a sparkline
+  (each year a dataset value), or a contract change that leaves yearly rows out of the facets.
+
+### The GHCN CAMS reader is tested on a hand-written file
+
+- **What:** `ghcncams.read_months` is tested through GDAL on a small netCDF classic file the test
+  writes; the real file is netCDF-4 (HDF5) and is first read by the Actions run.
+- **Why left:** the real file is about 190 MB and nothing heavy is downloaded on the laptop.
+- **Clears it:** the first `ghcncams` run; it fails loudly on non-consecutive months, other units
+  or a grid that does not hold India, and `test_ghcncams` gains a check of the run's summary.
+
+### Ask the map matches a prose piece by the district's name
+
+- **What:** a place-facet prose piece's topic names its craft's districts by name slug
+  (`water:kachchh`); only crafts placed in the tapped district are read, so a piece is shown for
+  the wrong district only when one craft is placed in two districts sharing a name (Bilaspur in
+  Himachal Pradesh and in Chhattisgarh).
+- **Why left:** the topic keys of decision 0033 name districts by name; changing them is a piece
+  contract change.
+- **Clears it:** place-facet topic keys by LGD code (`water:lgd-449`, as region stories already
+  use), with a piece rebuild.
+
+### The 0065 database tests have not run on a laptop
+
+- **What:** `tests/db/test_climate_map_db.py` (the trend read, the builder over stored rows, ask
+  the map's crafts, stories, stale pieces and 404 cases) runs only on GitHub Actions.
+- **Why left:** no local database (owner rule).
+- **Clears it:** the next Backend checks run.
+
+## Follow-ups, versions and alerts (decision 0063)
+
+### The digest is in English
+
+- **What:** the weekly digest mail is plain English text whatever the reader's answer language;
+  each item links to its explainer (`/ask?explainer=<explainerId>`, decision 0070).
+- **Why left:** the digest stays off until the owner verifies an SES sender, and its few fixed
+  lines have no translation yet.
+- **Clears it:** write the mail in the reader's answer language through the translation cache.
+
+### A deepened section never repeats a kind it shows
+
+- **What:** a follow-up does not build a second block of a kind the deepened section already
+  shows, so a second map layer or region story that would fit is left out with the duplicate.
+- **Why left:** blocks of one kind carry no shared identity to tell a duplicate from a new one.
+- **Clears it:** compare per kind (a map layer's code, a story's basin, a reaction's equation)
+  and drop only true duplicates.
+
+### Only mapped fields are news
+
+- **What:** the re-check counts a claim only through a curated discipline or a concept heading
+  in `HEADING_DISCIPLINES`; mechanism, results, comparison and edge claims are never news.
+- **Why left:** those headings span several fields and guessing one would misreport.
+- **Clears it:** curated claims carry their discipline; as curation covers crafts, fewer claims
+  rely on headings.
+
+### A follow-up that loses a race keeps no text
+
+- **What:** when two follow-ups build on one version, the second's answer row keeps no explainer
+  (its research is still written back as claims).
+- **Why left:** re-merging onto the newer version would renumber blocks the reader already saw.
+- **Clears it:** merge the losing follow-up onto the newer version when its sections still fit,
+  and stream the renumbered blocks.
+
+### The alerts database tests have not run on a laptop
+
+- **What:** `tests/db/test_alerts_db.py` and `tests/db/test_explainer_versions_db.py` run only on
+  GitHub Actions (no local database, owner rule).
+- **Why left:** the owner rule; the SQL is covered there with the rest of `tests/db`.
+- **Clears it:** the next Backend checks run.
+
+## Learning block renderers (decision 0068)
+
+### Climate trends are drawn as slopes, not over the years
+
+- **What:** `climate_risk` draws each trend as its slope per decade from zero, with the mean in
+  words; there is no year-by-year line, because the block holds no annual series.
+- **Why left:** drawing a line through the period would show values no dataset row states.
+- **Clears it:** a later block version carrying the CHIRPS annual series (each year a dataset
+  value, loaded by the geo ETL), then a line chart of the series with its trend.
+
+### The concept graph is a hub, not the researchers' full graph
+
+- **What:** the figure shows one term at a time with at most seven crafts and a count; on a phone
+  long craft names on a crowded ring can touch. The list under it holds every craft.
+- **Why left:** a force layout across terms and crafts needs a layout library or a measured
+  label pass, and the hub answers the explainer's question.
+- **Clears it:** a whole-graph view for researchers on the craft page's Shared science tab
+  (decision 0070), with label collision handled.
+
+### Quiz picks are kept in the page only
+
+- **What:** a reload or a new visit clears the reader's answers and score.
+- **Why left:** no route stores quiz attempts, and decision 0062 makes a quiz a rebuilt block.
+- **Clears it:** an attempts route if the owner wants scores kept (for a class, with the lesson
+  builder).
+
+### Compare and the quiz options follow the viewport, not the block's width
+
+- **What:** compare goes side by side at `sm`, `md` or `lg` by craft count, and the quiz options
+  pair from `sm`, measured on the window rather than the section the block sits in.
+- **Why left:** every other block uses viewport breakpoints, and the section fills the reading
+  column at every width.
+- **Clears it:** container queries for blocks drawn in narrower places (a lesson slide, a side
+  panel).
+
+## Quiz, compare and the shared-science explorer (decision 0064)
+
+### A comparison is only of crafts the resolver listed
+
+- **What:** the understanding reply names compared crafts by the slugs the craft resolver listed
+  for the question; a craft the question names that the resolver did not list (it only reaches
+  `craftNames`) is not compared, and a craft the reader picked is compared only with crafts listed
+  beside it.
+- **Why left:** resolving every named craft again for a comparison adds a lookup per name to every
+  question, and the resolver lists the crafts a question names in most cases.
+- **Clears it:** resolve `craftNames` when the reply also asks for a comparison, and add the
+  `RESOLVED` ones to the compared crafts.
+
+### Fixed rules, not a model, choose quiz questions and compare cells
+
+- **What:** a quiz keys the first fitting term of each sentence and takes distractors walking on
+  from it; compare and the concept graph take the best-ranked fact. A distractor that also fits
+  the blank, or a cell that is true but off the point, is not caught.
+- **Why left:** a model call per quiz or block spends the reader's caps on choosing alone, and the
+  rules keep every value cited and the output the same for every reader.
+- **Clears it:** an optional plan-model pass that may only drop offered distractors and reorder
+  offered facts, measured against the rules on the known-answer questions.
+
+### The explorer reads at most three claims per concept and 100 crafts per term
+
+- **What:** a craft whose naming claim is its fourth about a concept, or a term shared by more
+  than 100 crafts (by name after the focus craft), can leave a sharing craft out of a node.
+- **Why left:** a term like cotton or indigo may be shared by most crafts once curation ends; the
+  small EC2 box must answer the explorer in one short read.
+- **Clears it:** a stored per-term summary refreshed by the curation import (crafts, concept ids
+  and the chosen claim), read whole by the routes.
+
+### A claim's field is its concept type's when it was not curated
+
+- **What:** compare places uncurated claims by their concept type (as the craft page does): a
+  mechanism falls in chemistry even when it is physics, and outcomes and comparisons fall in
+  overview.
+- **Why left:** curated claims carry their discipline, and the curation run covers every craft.
+- **Clears it:** the curation of every craft (decision 0053), or a discipline column on `Claim`
+  written by the import and by answers.
+
+## Craft page rebuild (decision 0071)
+
+### The register's description is no longer shown
+
+- **What:** the old page showed the craft register's `description` above the claims. `PageCraft`
+  has no description, so a craft without a dossier or claims shows only its register facts
+  (category, kind, GI status, states).
+- **Why left:** the field is not in the contract, and it is uncited register text, which the page
+  otherwise never shows as a sentence.
+- **Clears it:** an owner decision; if wanted, `description` on `PageCraft` (model, contract,
+  fixture) drawn beside the register facts and marked as the register's.
+
+### The stage media client is mounted nowhere
+
+- **What:** the craft page no longer offers Image or Video on a stage. `lib/craftMedia.ts`,
+  `lib/mediaJobMemory.ts`, `lib/mediaView.ts`, `components/craft/StageMedia.tsx`,
+  `useStageMedia.tsx`, `MediaFigure.tsx` and `MediaShareButton.tsx` stay, with their specs
+  (`e2e/craft-media-unit.spec.ts`, `e2e/media-view-unit.spec.ts`).
+- **Why left:** whether generation returns on another surface or is retired with its routes is the
+  owner's call, and the media contract (`docs/contracts/media.md`) is another lane's.
+- **Clears it:** the owner's choice, then mounting the store where generation lives, or deleting
+  these modules and specs with the media routes.
+
+### The profile and process client shapes outlive their screen
+
+- **What:** nothing in the frontend calls `GET /crafts/{slug}/profile` or `/process` any more; the
+  profile client is deleted. `lib/scienceContract.craftProcessShape` and the process-route rules in
+  `lib/processView.ts` (`checkedProcess`, `shownVariants`, `stageHasContent`, `readingClaim`,
+  `readingRange`, `isUnbalanced`, `deltaHClaim`, `deltaHText`, `pubchemHref`, `citationsOf`) are
+  used only by `e2e/process-view-unit.spec.ts` and `e2e/contracts-unit.spec.ts`.
+- **Why left:** both backend routes stay; the specs keep the client half of the science contract
+  checked against `shared/science.process.golden.json` until the routes are retired.
+- **Clears it:** retiring `/profile` and `/process` in the backend, then deleting these shapes,
+  rules and specs (the species helpers the answers use stay).
+
+### Places abroad and rivers are listed, not drawn
+
+- **What:** the Region map fills and tags Indian districts by LGD code only; a place abroad
+  (Sindh) or a river (Dhamadka River) is listed with its roles but has no mark of its own.
+- **Why left:** `PagePlace` carries no coordinates or river id, and the map has no geometry for
+  places outside the district outlines.
+- **Clears it:** coordinates (or a HydroRIVERS id) on `PagePlace`, drawn as pins or a river line.
+
+## Learning screens (decision 0069)
+
+### Two citation lookups for cited text outside the explainer
+
+- **What:** `components/craft/useCraftReading` builds the same reading and citation contexts as
+  `components/answer/CitedReading`, with the craft page's own numbering.
+- **Why left:** the craft page was being rebuilt by lane 0071 in the same working tree.
+- **Clears it:** `useCraftReading` keeps its numbering and hands it to `CitedReading`.
+
+### Check yourself asks for a quiz on every finished explainer
+
+- **What:** the explainer asks `GET /api/answers/{answerId}/quiz` once when it finishes, to offer
+  Check yourself only when a quiz exists (a 404 draws nothing).
+- **Why left:** the route is a read with no model call, and offering a control that then says
+  there is no quiz would be a dead end.
+- **Clears it:** a `quizAvailable` flag on the stored explainer or the stream's `done`.
+
+### A lesson keeps the explainer's section order
+
+- **What:** the builder chooses sections but sends them in the explainer's order; the contract
+  allows any order.
+- **Why left:** a reorder control needs the one drag and arrow implementation, which this app
+  does not have yet (`lib/routing.moveRoute` is the AI routing page's).
+- **Clears it:** a shared list-order helper and Up and Down controls on the builder's rows.
+
+### An added section that found nothing shows until a reload
+
+- **What:** during a follow-up an added section that ends `EMPTY` shows what was searched; the
+  stored version leaves it out, so it is gone on the next visit.
+- **Why left:** what was searched is useful in the moment, and the stored version is the
+  record.
+- **Clears it:** reload the stored version after `version` arrives, or drop such sections then.
+
+## Lesson packs and exports (decision 0067)
+
+### A paper's APA reference names no journal
+
+- **What:** the APA style prints a journal article's venue from `container-title`, which no
+  source stores; `Source.publisher` holds a journal for some adapters (Europe PMC, Semantic
+  Scholar) and a publishing house for others (Crossref, OpenAlex), so CSL items pass it as
+  `publisher` and a paper's reference ends with its DOI or URL, without the journal.
+- **Why left:** naming the journal from a field whose meaning differs by adapter would guess.
+- **Clears it:** sources store the container title apart from the publisher (each scholarly
+  adapter fills it), and `citation_formats.csl_item` passes it as `container-title`.
+
+### A file made while a picture could not be read keeps no picture for a week
+
+- **What:** an export is filed under the hash of what it was made from, which does not include
+  whether its pictures could be read, so a file made while Commons or Openverse failed is reused
+  without the picture until the bucket's `exports/` rule removes it (seven days).
+- **Why left:** knowing the pictures before checking the bucket would read them on every
+  download, which the reuse is there to avoid.
+- **Clears it:** file such a build under a short-lived marker (or skip storing it) so the next
+  request tries the pictures again.
+
+### The explainer PDF shows sentences and credits, not drawn blocks
+
+- **What:** maps, river stories, players, molecules, charts and generated explainers appear in
+  the PDF as their cited sentences and dataset credits only; the climate slopes, seasons and
+  map values a reader sees on screen are not drawn.
+- **Why left:** drawing them needs per-kind PDF renderers (and the district geometry) that this
+  lane did not have time for; a picture of them would need a headless browser, which the box
+  must not run.
+- **Clears it:** small per-kind PDF drawings built from the block's own values (a table of
+  trends, a month strip, a district outline from the shapes the client already has), each with
+  its dataset credit and, for maps, the boundary caption.
+
+### Slide text is sized by its length, not measured
+
+- **What:** the PPTX picks a body size from the characters a slide holds (20 pt down to 11 pt);
+  a slide with very long references can still run past its box, and PowerPoint does not shrink
+  text it did not lay out itself.
+- **Why left:** measuring needs the font metrics of every script per run; the pack keeps at most
+  five bullets a slide and lists its sources on one slide by contract.
+- **Clears it:** measure with the vendored fonts (python-pptx `fit_text` per script) or split the
+  reading and sources slides in the files when they overflow.
+
+### Exports are built one request at a time, without a queue
+
+- **What:** a lesson file or report PDF is built in a worker thread of the request that first
+  asks for it; two first requests for different files build at once, and nothing caps how many
+  builds run on the box together.
+- **Why left:** builds take well under a second for the fixtures and only Professors build packs.
+- **Clears it:** a small per-process limit on concurrent export builds, if Usage shows memory
+  pressure from them.
+
+### The lesson database tests have not run on a laptop
+
+- **What:** `tests/db/test_lessons_db.py` (building, listing, opening and deleting a pack, the
+  owner rule, access days) runs only on GitHub Actions.
+- **Why left:** nothing runs a database on the laptop (owner rule).
+- **Clears it:** the next Backend checks run.
+
+## Phase D review (decision 0070)
+
+### The curation checks a curated GI date only by its year, and a price's date not at all
+
+- **What:** `curation/entity_rules._gi_messages` (decision 0053) accepts a curated `filedOn` or
+  `registeredOn` whose year a quote states, even when no quote states its day or month, and a
+  curated price's `date` (`curation/records.Price`) is not checked against its claim's quotes. The
+  market builder cuts such a date to the precision its quotes state before showing it, and drops
+  a price whose quotes state none (`research/stated_dates.stated_precision`), so no unstated day
+  reaches a screen, but the curation check does not report the record.
+- **Why left:** the curation and importer files belong to lane 0053, which was running in the same
+  tree.
+- **Clears it:** the curation rules check each GI and price date with `stated_dates.states_date`
+  at its own precision and report a record whose day, month or year no quote states.
+
+### Lesson packs are not proved in production
+
+- **What:** the production E2E builds no lesson pack: its account is a Researcher, and
+  `BUILD_LESSONS` needs a Professor, a role that must use two-step sign-in, which the E2E cannot
+  answer. The run checks the explainer's report PDF and its four citation files and notes the
+  lesson step instead of failing.
+- **Why left:** granting a role is the owner's decision (`docs/PROGRESS.md`, Waiting on the
+  owner).
+- **Clears it:** a Professor E2E account whose authenticator secret is a GitHub secret the run
+  turns into a code at sign-in, or the owner's other choice; the run then builds the pack and
+  checks its PPTX and PDF (`e2e/production/exportProof.ts` already does when the role allows).
 
 ## Frontend audit exceptions
 

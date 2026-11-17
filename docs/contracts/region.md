@@ -251,3 +251,16 @@ districts with a register row (`place_offers.district_refs`) that has rainfall
 (`season_supply_builders.craft_rainfall`, decisions 0047 and 0050); when none has, the block shows
 its rows without rainfall. The client credits it as "Rainfall · <district>, <state> · monthly
 normal · <period>".
+
+## Climate trends (decision 0065)
+
+The CHIRPS layer now runs from 1981, the first year of the record, to the last complete year, so
+the CHIRPS dataset row's period (`1981-2025`) is the period of its yearly series, its annual and
+monthly normals and its trends; the GHCN CAMS layer (`GHCN_CAMS_T2M`, `annual_mean_temperature`,
+0.5 degree) writes the same for temperature. A district with a complete series of at least 30
+years gets `TREND_PER_DECADE` (the Theil-Sen slope per decade, `mm/year per decade` or `degC per
+decade`) and `TREND_P_VALUE` (the two-sided Mann-Kendall p-value, unit `p-value`) over that
+period. They are district values like any other: the region route and ask the map list them
+under `CLIMATE`, and the state aggregates leave them out (`STATE_AGGREGATIONS` names neither).
+`geo/climate.climate_trends` reads them for a `climate_risk` block
+(`docs/contracts/explainer.md`).

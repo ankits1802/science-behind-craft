@@ -44,6 +44,7 @@ class StageRecord:
     name: str
     stage_type: str
     claim_ids: tuple[uuid.UUID, ...]
+    ordered: bool = True
 
 
 @dataclass(frozen=True)

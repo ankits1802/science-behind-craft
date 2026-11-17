@@ -4,7 +4,7 @@ The geo lane owns `etl/geo/`, `.github/workflows/geo-etl.yml` and `docs/DATA_SOU
 
 ## Backend changes required
 
-Rows 1 and 2 are done: `ENV_STATS` and the `EnvStat` type in migration 0001 carry the six values, and `DistrictGeology` has `UniqueConstraint("districtLgd", "datasetId", "lithology")`, so `load.py` takes the `ON CONFLICT` path. Rows 3 and 5 are done by migration `0005_region_profile` (decision 0016), which also adds `DistrictEnvValue.resolution` (now loaded) and fills the grid of earlier WorldCover and Copernicus DEM rows and the names of earlier GLiM rows. Row 4 is still open.
+Rows 1 and 2 are done: `ENV_STATS` and the `EnvStat` type in migration 0001 carry the six values, and `DistrictGeology` has `UniqueConstraint("districtLgd", "datasetId", "lithology")`, so `load.py` takes the `ON CONFLICT` path. Rows 3 and 5 are done by migration `0005_region_profile` (decision 0016), which also adds `DistrictEnvValue.resolution` (now loaded) and fills the grid of earlier WorldCover and Copernicus DEM rows and the names of earlier GLiM rows. Row 6 is done by migration `0021_climate_trend_stats` (decision 0065). Row 4 is still open.
 
 | # | Where | Change | Why |
 |---|---|---|---|
@@ -13,6 +13,7 @@ Rows 1 and 2 are done: `ENV_STATS` and the `EnvStat` type in migration 0001 carr
 | 3 | `DistrictGeology` model and migration (optional) | `lithologyName: String(300) NULL`, `method: Text NULL` | The geology parquet carries both. `load.py` writes only columns that exist, so they are dropped silently until added. |
 | 4 | `DistrictEnvValue.pixelCount` | Keep `Integer`, or change to `Numeric(18, 3)` | The layers emit coverage-weighted pixel counts as floats. `load.py` rounds them to integers (`fit_values`), so `Integer` works today; `Numeric` would keep the fractional coverage. |
 | 5 | `EnvDataset` (optional) | `url: Text NULL` | Every dataset row carries a landing URL; it is skipped while the column is absent. |
+| 6 | `backend/app/models/enums.py` `ENV_STATS` plus a migration | Add `TREND_PER_DECADE`, `TREND_P_VALUE` | The CHIRPS and GHCN CAMS layers write each district's trend (`geo_etl/trend.py`); a load before the migration fails on the enum cast. |
 
 ## Tables load.py assumes
 

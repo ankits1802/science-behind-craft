@@ -95,5 +95,6 @@
   "createdFromAnswerId": "3b9f1e2d-6c7a-4d8b-9e0f-1a2b3c4d5e6f",
   "createdAt": "2026-11-12T08:15:00Z",
   "staleSince": null,
-  "supersededById": null
+  "supersededById": null,
+  "hiddenAt": null
 }

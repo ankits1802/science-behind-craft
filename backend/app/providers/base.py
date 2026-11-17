@@ -79,6 +79,7 @@ class MediaPoll:
 
 class Adapter(ABC):
     learned: dict[str, list[str]]
+    video_poll_seconds: float = 0.0
 
     def __init__(self, *, api_key: str | None, base_url: str | None, preset: str, extra: dict, learned: dict):
         self.api_key = api_key
@@ -110,6 +111,9 @@ class Adapter(ABC):
 
     async def generate_image(self, req: MediaRequest) -> MediaResult:
         raise ProviderError(f"{self.preset} does not make images through this adapter", kind="unavailable")
+
+    async def generate_audio(self, req: MediaRequest) -> MediaResult:
+        raise ProviderError(f"{self.preset} does not make audio through this adapter", kind="unavailable")
 
     async def start_video(self, req: MediaRequest) -> str:
         raise ProviderError(f"{self.preset} does not make video through this adapter", kind="unavailable")

@@ -19,14 +19,14 @@ async def test_the_router_model_runs_the_plan_task_with_the_schema(monkeypatch: 
 
     async def run(task: AiTask, **options: Any) -> SimpleNamespace:
         seen.update(options, task=task)
-        return SimpleNamespace(text='{"ok": true}', degraded=True)
+        return SimpleNamespace(text='{"ok": true}', degraded=True, model="gemini-3.8-flash-lite")
 
     monkeypatch.setattr(router, "run", run)
     principal = router.Principal(role="STUDENT")
     model = router_structured_model(AiTask.PLAN, principal)
     assert isinstance(model, StructuredModel)
     reply = await model(system="sys", user="usr", schema={"type": "object"})
-    assert (reply.text, reply.degraded) == ('{"ok": true}', True)
+    assert (reply.text, reply.degraded, reply.model) == ('{"ok": true}', True, "gemini-3.8-flash-lite")
     assert seen == {
         "task": AiTask.PLAN,
         "system": "sys",

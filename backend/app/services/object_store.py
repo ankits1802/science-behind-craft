@@ -40,6 +40,9 @@ class ObjectStore:
     async def get(self, key: str) -> bytes | None:
         return await asyncio.to_thread(self._get, key)
 
+    async def exists(self, key: str) -> bool:
+        return await asyncio.to_thread(self._exists, key)
+
     def presigned_get(self, key: str, *, disposition: str, seconds: int, now: datetime) -> PresignedGet:
         url = self._client.generate_presigned_url(
             "get_object",
@@ -58,6 +61,15 @@ class ObjectStore:
             if _error_code(error) in MISSING_CODES:
                 return None
             raise _failure(error, "read") from error
+
+    def _exists(self, key: str) -> bool:
+        try:
+            self._client.head_object(Bucket=self.bucket, Key=key)
+        except Exception as error:
+            if _error_code(error) in MISSING_CODES:
+                return False
+            raise _failure(error, "read") from error
+        return True
 
     def _put(self, key: str, body: bytes, content_type: str) -> None:
         try:

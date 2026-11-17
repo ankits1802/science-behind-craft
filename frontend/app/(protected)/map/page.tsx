@@ -5,13 +5,16 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MapPinned } from "lucide-react";
 
 import { failureMessage, useRemote } from "@/components/hooks/useRemote";
+import { DistrictPanel, useDistrict } from "@/components/map/DistrictPanel";
 import type { MapPoint } from "@/components/map/layout";
 import { LayerPicker } from "@/components/map/LayerPicker";
 import { MapLayerView } from "@/components/map/MapLayerView";
 import { PageHeader } from "@/components/PageHeader";
 import { LoadingPanel, RetryPanel } from "@/components/RemotePanels";
-import { fetchCraftMapPoints } from "@/lib/craftProfile";
+import { fetchCraftMapPoints } from "@/lib/craftRegion";
+import { DISTRICT_PARAM } from "@/lib/districtView";
 import { chosenLayerId, fetchMapLayers, LAYER_PARAM } from "@/lib/mapLayers";
+import { positiveParam } from "@/lib/searchParams";
 import type { CraftMapPoint } from "@/lib/types";
 
 function caption(point: CraftMapPoint): string | null {
@@ -48,6 +51,8 @@ function MapScreen() {
   const places = useRemote(fetchCraftMapPoints);
   const layers = useRemote(fetchMapLayers);
   const layerId = chosenLayerId(layers.data, params.get(LAYER_PARAM));
+  const districtLgd = positiveParam(params.get(DISTRICT_PARAM));
+  const district = useDistrict(districtLgd);
   const points = places.data;
 
   const mapPoints = useMemo(
@@ -60,13 +65,15 @@ function MapScreen() {
   );
   const crafts = useMemo(() => new Set((points ?? []).flatMap((point) => point.crafts.map((craft) => craft.slug))).size, [points]);
 
-  const chooseLayer = (id: string | null) => {
+  const choose = (param: string, value: string | null) => {
     const search = new URLSearchParams(params.toString());
-    if (id) search.set(LAYER_PARAM, id);
-    else search.delete(LAYER_PARAM);
+    if (value) search.set(param, value);
+    else search.delete(param);
     const query = search.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   };
+  const chooseLayer = (id: string | null) => choose(LAYER_PARAM, id);
+  const pickDistrict = (lgd: number | null) => choose(DISTRICT_PARAM, lgd === null ? null : String(lgd));
 
   return (
     <>
@@ -83,7 +90,17 @@ function MapScreen() {
       ) : (
         <section className="panel p-4 md:p-6">
           {layers.data && layers.data.layers.length > 0 ? <LayerPicker list={layers.data} value={layerId} onChange={chooseLayer} /> : null}
-          <MapLayerView points={mapPoints} layerId={layerId} boundary={layers.data?.boundary ?? null} />
+          <MapLayerView
+            points={mapPoints}
+            layerId={layerId}
+            boundary={layers.data?.boundary ?? null}
+            district={{
+              lgd: districtLgd,
+              name: district.data?.district.name ?? null,
+              onPick: pickDistrict,
+              panel: districtLgd !== null ? <DistrictPanel district={district} onClose={() => pickDistrict(null)} /> : null
+            }}
+          />
         </section>
       )}
     </>

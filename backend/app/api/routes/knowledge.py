@@ -1,6 +1,7 @@
 import hashlib
 import logging
 from collections.abc import Callable
+from dataclasses import replace
 from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
@@ -11,6 +12,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import Field, model_validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.film_deps import offered_film
 from app.api.listen_deps import offered_listen
 from app.api.voice_deps import current_voice, voice_call_enabled, voice_runtime, voice_store
 from app.core.config import get_settings
@@ -25,6 +27,7 @@ from app.providers.embedding import router_embedder
 from app.providers.router import Principal
 from app.providers.structured import router_structured_model
 from app.research.depth import DEPTH_LABELS, default_depth, selectable_depths
+from app.research.explainer_versions import BuildsOn
 from app.research.planning import withheld_name
 from app.research.stream import event_stream
 from app.research.vocabulary import ANSWER_LANGUAGES, AnswerLanguage, Depth, language_option
@@ -33,6 +36,14 @@ from app.services import knowledge_view
 from app.services.ai_providers import AiTask
 from app.services.answer_store import build_answer_pipeline
 from app.services.answering import NOT_FOUND_DETAIL, AnswerAsk, AnswerPipeline, answer_question
+from app.services.explainer_history import (
+    STALE_VERSION_DETAIL,
+    UNKNOWN_EXPLAINER_DETAIL,
+    StaleVersion,
+    UnknownExplainer,
+    follow_up_of,
+)
+from app.services.follow_ups import FollowUp
 from app.voice.availability import HIDDEN_VOICE, voice_availability
 from app.voice.runtime import VoiceRuntime, VoiceSettings
 from app.voice.store import SqlVoiceStore
@@ -110,6 +121,7 @@ async def answers_config(
     user: User = Depends(get_current_user),
     voice: dict[str, Any] = Depends(offered_voice),
     listen: dict[str, Any] = Depends(offered_listen),
+    film: dict[str, Any] = Depends(offered_film),
 ) -> dict[str, Any]:
     depths = selectable_depths(user)
     return {
@@ -117,6 +129,7 @@ async def answers_config(
         "defaultDepth": default_depth(user) if depths else None,
         "voice": voice,
         "listen": listen,
+        "film": film,
         "languages": answer_languages(),
     }
 
@@ -129,11 +142,14 @@ class AskRequest(APIModel):
     language: AnswerLanguage | None = None
     fresh: bool = False
     conversationId: str | None = Field(default=None, max_length=64)
+    buildsOn: BuildsOn | None = None
 
     @model_validator(mode="after")
     def _one_craft_or_any(self) -> Self:
         if self.anyCraft and self.craftSlug is not None:
             raise ValueError("Ask about one craft or any craft, not both.")
+        if self.buildsOn is not None and (self.anyCraft or self.craftSlug or self.depth or self.language):
+            raise ValueError("A follow-up keeps the explainer's craft, depth and language.")
         return self
 
 
@@ -169,14 +185,50 @@ def answer_pipelines(request: Request, user: User = Depends(get_current_user)) -
     return build
 
 
+async def follow_up_for(builds_on: BuildsOn | None, user: User) -> FollowUp | None:
+    if builds_on is None:
+        return None
+    try:
+        async with sessionmaker()() as session:
+            return await follow_up_of(session, user.id, builds_on)
+    except UnknownExplainer:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, UNKNOWN_EXPLAINER_DETAIL) from None
+    except StaleVersion:
+        raise HTTPException(status.HTTP_409_CONFLICT, STALE_VERSION_DETAIL) from None
+
+
+def asked(payload: AskRequest, user: User, follow_up: FollowUp | None) -> AnswerAsk:
+    ask = AnswerAsk(
+        question=payload.question,
+        depth=payload.depth or default_depth(user),
+        craft_slug=payload.craftSlug,
+        any_craft=payload.anyCraft,
+        language=payload.language,
+        user_id=user.id,
+        role=role_value(user),
+        withheld_terms=withheld_terms(user),
+        fresh=payload.fresh,
+    )
+    if follow_up is None:
+        return ask
+    return replace(
+        ask,
+        depth=follow_up.understood.depth,
+        craft_slug=follow_up.craft_slug,
+        any_craft=follow_up.craft_slug is None,
+        language=follow_up.understood.language,
+        builds_on=follow_up,
+    )
+
+
 @router.post("/answers/stream")
 async def answers_stream(
     payload: AskRequest,
     user: User = Depends(get_current_user),
     pipelines: PipelineFor = Depends(answer_pipelines),
 ) -> StreamingResponse:
-    depth = payload.depth or default_depth(user)
-    if not can(user, Capability.ASK_STANDARD) or depth not in selectable_depths(user):
+    ask = asked(payload, user, await follow_up_for(payload.buildsOn, user))
+    if not can(user, Capability.ASK_STANDARD) or ask.depth not in selectable_depths(user):
         raise HTTPException(status.HTTP_403_FORBIDDEN, refusal_for(Capability.ASK_STANDARD))
     if not is_uncapped(user):
         allowed, retry = ask_attempt(str(user.id))
@@ -186,18 +238,7 @@ async def answers_stream(
                 THROTTLED_DETAIL,
                 {"Retry-After": str(max(1, int(retry + 0.999)))},
             )
-    ask = AnswerAsk(
-        question=payload.question,
-        depth=depth,
-        craft_slug=payload.craftSlug,
-        any_craft=payload.anyCraft,
-        language=payload.language,
-        user_id=user.id,
-        role=role_value(user),
-        withheld_terms=withheld_terms(user),
-        fresh=payload.fresh,
-    )
-    pipeline = pipelines(depth)
+    pipeline = pipelines(ask.depth)
     return StreamingResponse(
         event_stream(lambda emit: answer_question(ask, pipeline, emit)),
         media_type="text/event-stream",

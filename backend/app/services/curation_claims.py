@@ -1,0 +1,239 @@
+from __future__ import annotations
+
+import uuid
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
+from itertools import batched
+from typing import Any
+
+from sqlalchemy import func, select, update
+from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models import Claim, CuratedClaim, ReviewEvent
+from app.research.retrieval import HIDDEN_CLAIM_STATUSES
+
+from .curation_keys import (
+    CURATED_STATUS,
+    CURATION_ACTOR,
+    CURATION_LEVELS,
+    SUPERSEDED_STATUS,
+    WITHDRAWN_STATUS,
+)
+from .curation_writes import BATCH, update_rows
+
+__all__ = [
+    "EDGE_WITHDRAWN_NOTE",
+    "ClaimWrites",
+    "StoredClaim",
+    "claim_writes",
+    "review_event",
+    "stored_curated_claims",
+    "superseded_claims",
+    "withdraw_seed_edges",
+    "write_claims",
+]
+
+EDGE_WITHDRAWN_NOTE = "seed edge sentence withdrawn from display; its relationship stays as structure"
+SEED_EDGE = "EDGE"
+SEED_ORIGIN = "IMPORT"
+CLAIM_UPDATE_COLUMNS = (
+    "id",
+    "subjectId",
+    "text",
+    "evidenceLevel",
+    "levelReason",
+    "status",
+    "version",
+    "sensitivity",
+    "sourcesDiffer",
+)
+COMPARED = ("subjectId", "text", "evidenceLevel", "status", "sensitivity", "sourcesDiffer")
+
+
+@dataclass(frozen=True)
+class StoredClaim:
+    id: uuid.UUID
+    subject_id: uuid.UUID
+    text: str
+    level: str
+    level_reason: str | None
+    status: str
+    sensitivity: str
+    sources_differ: bool
+
+    def compared(self) -> dict[str, Any]:
+        return {
+            "subjectId": self.subject_id,
+            "text": self.text,
+            "evidenceLevel": self.level,
+            "status": self.status,
+            "sensitivity": self.sensitivity,
+            "sourcesDiffer": self.sources_differ,
+        }
+
+
+@dataclass(frozen=True)
+class ClaimWrites:
+    inserts: tuple[dict[str, Any], ...] = ()
+    updates: tuple[dict[str, Any], ...] = ()
+    events: tuple[dict[str, Any], ...] = ()
+
+
+def review_event(
+    claim_id: uuid.UUID,
+    note: str,
+    *,
+    status: tuple[str | None, str | None],
+    level: tuple[str | None, str | None],
+) -> dict[str, Any]:
+    return {
+        "claimId": claim_id,
+        "actorId": None,
+        "actorKind": "SYSTEM",
+        "systemActor": CURATION_ACTOR,
+        "fromStatus": status[0],
+        "toStatus": status[1],
+        "fromLevel": level[0],
+        "toLevel": level[1],
+        "note": note,
+    }
+
+
+def claim_writes(
+    planned: Sequence[dict[str, Any]], stored: Mapping[uuid.UUID, StoredClaim], note: str
+) -> ClaimWrites:
+    inserts, updates, events = [], [], []
+    for row in planned:
+        current = stored.get(row["id"])
+        if current is None:
+            inserts.append(row)
+            events.append(
+                review_event(
+                    row["id"], note, status=(None, row["status"]), level=(None, row["evidenceLevel"])
+                )
+            )
+            continue
+        wanted = _respecting_people(row, current)
+        if any(wanted[column] != current.compared()[column] for column in COMPARED):
+            updates.append({column: wanted[column] for column in CLAIM_UPDATE_COLUMNS})
+            events.append(
+                review_event(
+                    row["id"],
+                    note,
+                    status=(current.status, wanted["status"]),
+                    level=(current.level, wanted["evidenceLevel"]),
+                )
+            )
+    return ClaimWrites(tuple(inserts), tuple(updates), tuple(events))
+
+
+def _respecting_people(row: dict[str, Any], current: StoredClaim) -> dict[str, Any]:
+    curated_level = current.level in CURATION_LEVELS
+    status = CURATED_STATUS if current.status == SUPERSEDED_STATUS else current.status
+    return {
+        **row,
+        "evidenceLevel": row["evidenceLevel"] if curated_level else current.level,
+        "levelReason": row["levelReason"] if curated_level else current.level_reason,
+        "status": status,
+    }
+
+
+def superseded_claims(
+    stored: Mapping[uuid.UUID, StoredClaim], planned_ids: set[uuid.UUID], note: str
+) -> ClaimWrites:
+    dropped = [
+        claim
+        for claim_id, claim in stored.items()
+        if claim_id not in planned_ids and claim.status not in HIDDEN_CLAIM_STATUSES
+    ]
+    return ClaimWrites(
+        updates=tuple({"id": claim.id, "status": SUPERSEDED_STATUS} for claim in dropped),
+        events=tuple(
+            review_event(
+                claim.id, note, status=(claim.status, SUPERSEDED_STATUS), level=(claim.level, claim.level)
+            )
+            for claim in dropped
+        ),
+    )
+
+
+async def stored_curated_claims(session: AsyncSession, craft_id: uuid.UUID) -> dict[uuid.UUID, StoredClaim]:
+    statement = (
+        select(
+            Claim.id,
+            Claim.subjectId,
+            Claim.text,
+            Claim.evidenceLevel,
+            Claim.levelReason,
+            Claim.status,
+            Claim.sensitivity,
+            Claim.sourcesDiffer,
+        )
+        .join(CuratedClaim, CuratedClaim.claimId == Claim.id)
+        .where(CuratedClaim.craftId == craft_id)
+    )
+    return {row[0]: StoredClaim(*row) for row in (await session.execute(statement)).tuples()}
+
+
+async def write_claims(
+    session: AsyncSession, craft_id: uuid.UUID, planned: Sequence[dict[str, Any]], note: str
+) -> int:
+    stored = await stored_curated_claims(session, craft_id)
+    planned_ids = {row["id"] for row in planned}
+    stored.update(await _stored_by_id(session, planned_ids - set(stored)))
+    written = claim_writes(planned, stored, note)
+    dropped = superseded_claims(stored, planned_ids, note)
+    for chunk in batched(written.inserts, BATCH, strict=False):
+        await session.execute(insert(Claim.__table__).values(list(chunk)))
+    await update_rows(session, Claim, written.updates)
+    await update_rows(session, Claim, dropped.updates)
+    events = [*written.events, *dropped.events]
+    for chunk in batched(events, BATCH, strict=False):
+        await session.execute(insert(ReviewEvent.__table__).values(list(chunk)))
+    return len(written.inserts) + len(written.updates) + len(dropped.updates)
+
+
+async def _stored_by_id(session: AsyncSession, claim_ids: set[uuid.UUID]) -> dict[uuid.UUID, StoredClaim]:
+    if not claim_ids:
+        return {}
+    statement = select(
+        Claim.id,
+        Claim.subjectId,
+        Claim.text,
+        Claim.evidenceLevel,
+        Claim.levelReason,
+        Claim.status,
+        Claim.sensitivity,
+        Claim.sourcesDiffer,
+    ).where(Claim.id.in_(list(claim_ids)))
+    return {row[0]: StoredClaim(*row) for row in (await session.execute(statement)).tuples()}
+
+
+async def withdraw_seed_edges(session: AsyncSession) -> int:
+    rows = (
+        await session.execute(
+            select(Claim.id, Claim.status, Claim.evidenceLevel).where(
+                Claim.subjectType == SEED_EDGE,
+                Claim.origin == SEED_ORIGIN,
+                Claim.status.not_in(HIDDEN_CLAIM_STATUSES),
+            )
+        )
+    ).all()
+    table = Claim.__table__
+    for chunk in batched([row.id for row in rows], BATCH, strict=False):
+        await session.execute(
+            update(table).where(table.c.id.in_(chunk)).values(status=WITHDRAWN_STATUS, updatedAt=func.now())
+        )
+    events = [
+        review_event(
+            row.id,
+            EDGE_WITHDRAWN_NOTE,
+            status=(row.status, WITHDRAWN_STATUS),
+            level=(row.evidenceLevel, row.evidenceLevel),
+        )
+        for row in rows
+    ]
+    for chunk in batched(events, BATCH, strict=False):
+        await session.execute(insert(ReviewEvent.__table__).values(list(chunk)))
+    return len(rows)

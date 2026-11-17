@@ -37,6 +37,15 @@ PRESETS: list[dict] = [
         "key_env": "DEEPSEEK_API_KEY",
         "docs_url": "https://api-docs.deepseek.com/",
     },
+    {
+        "preset": "elevenlabs",
+        "kind": "elevenlabs",
+        "label": "ElevenLabs",
+        "base_url": "https://api.elevenlabs.io",
+        "needs_key": True,
+        "key_env": "ELEVENLABS_API_KEY",
+        "docs_url": "https://elevenlabs.io/docs/api-reference/introduction",
+    },
 ]
 
 BY_PRESET = {p["preset"]: p for p in PRESETS}

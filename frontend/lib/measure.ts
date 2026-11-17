@@ -2,6 +2,9 @@ export type MeasureParts = { prefix: string; suffix: string; scale: number };
 
 const UNIT_TEXT: Record<string, string> = {
   degC: "°C",
+  "degC per decade": "°C per decade",
+  m2: "m²",
+  l: "L",
   km2: "km²",
   "km/km2": "km/km²",
   "m3/s": "m³/s"

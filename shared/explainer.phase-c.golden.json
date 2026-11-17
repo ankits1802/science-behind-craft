@@ -1,0 +1,656 @@
+{
+  "schemaVersion": 1,
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "sandbox": {
+    "attribute": "allow-scripts",
+    "csp": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; webrtc 'block'",
+    "dataElementId": "kv-data",
+    "maxBytes": 204800
+  },
+  "sections": [
+    {
+      "id": "s1",
+      "discipline": "GEOGRAPHY",
+      "blocks": [
+        {
+          "id": "s1.b1",
+          "kind": "simulation",
+          "version": 1,
+          "reuse": null,
+          "concept": "Falling water table",
+          "title": "How fast the water table falls",
+          "model": "claude-opus-5-5",
+          "createdAt": "2026-11-18T10:30:00Z",
+          "html": "<style>\n.kv{display:grid;gap:12px;padding:16px;font:15px/1.5 system-ui,sans-serif;color:#1d1b16;background:#faf7f0}\n.kv label{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}\n.kv input{width:100%}\n.kv .bar{height:16px;border-radius:8px;background:#e4dccb;overflow:hidden}\n.kv .fill{height:100%;width:0;background:#2f5d8a;transition:width .3s ease}\n.kv .fill.high{background:#8a3b2f}\n</style>\n<div class=\"kv\">\n<label for=\"years\">Years from now <output id=\"count\"></output></label>\n<input id=\"years\" type=\"range\" min=\"1\" max=\"10\" step=\"1\" value=\"1\">\n<div class=\"bar\" role=\"img\" aria-label=\"Fall at the lower stated rate\"><div class=\"fill\" id=\"low\"></div></div>\n<div class=\"bar\" role=\"img\" aria-label=\"Fall at the higher stated rate\"><div class=\"fill high\" id=\"high\"></div></div>\n<p id=\"said\" aria-live=\"polite\"></p>\n</div>\n<script>\nconst data = JSON.parse(document.getElementById(\"kv-data\").textContent);\nconst years = document.getElementById(\"years\");\nfunction draw() {\n  const n = Number(years.value);\n  const most = Number(years.max) * data.fallHighFeet;\n  document.getElementById(\"count\").textContent = String(n);\n  document.getElementById(\"low\").style.width = (n * data.fallLowFeet / most * 100) + \"%\";\n  document.getElementById(\"high\").style.width = (n * data.fallHighFeet / most * 100) + \"%\";\n  document.getElementById(\"said\").textContent = \"The water table is \" + n * data.fallLowFeet + \" to \" + n * data.fallHighFeet + \" feet lower.\";\n}\nyears.addEventListener(\"input\", draw);\ndraw();\n</script>",
+          "htmlSha256": "3f414b14570b45befeea436784d6facbb242bd4a74384f55bc75678d0926ed33",
+          "values": [
+            {
+              "key": "fallLowFeet",
+              "label": "Yearly fall of the water level, lower figure",
+              "value": 10.0,
+              "unit": "feet a year",
+              "stated": "10-15 feet every year",
+              "citations": [
+                {
+                  "id": "8b868f92-1531-52c2-ab05-fa84f8e968e7",
+                  "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                  "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                  "quote": "But the problem of water still persists because the level of water has been going down by 10-15 feet every year even here. We have to seriously think and plan for the future.\" Water is the lifeline of printing and dyeing.",
+                  "locator": "§ \"We are running out of water\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "datasetCode": null
+            },
+            {
+              "key": "fallHighFeet",
+              "label": "Yearly fall of the water level, higher figure",
+              "value": 15.0,
+              "unit": "feet a year",
+              "stated": "10-15 feet every year",
+              "citations": [
+                {
+                  "id": "8b868f92-1531-52c2-ab05-fa84f8e968e7",
+                  "claimId": "00885460-e0ce-5a6e-905c-28da38a06a16",
+                  "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                  "quote": "But the problem of water still persists because the level of water has been going down by 10-15 feet every year even here. We have to seriously think and plan for the future.\" Water is the lifeline of printing and dyeing.",
+                  "locator": "§ \"We are running out of water\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "datasetCode": null
+            }
+          ],
+          "datasets": [],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "discipline": "CHEMISTRY",
+      "blocks": [
+        {
+          "id": "s2.b1",
+          "kind": "what_if",
+          "version": 1,
+          "reuse": null,
+          "changed": "Red dye",
+          "stageId": "eb895bd5-83a3-511a-9e64-ba7e452afea8",
+          "options": [
+            {
+              "label": "Indian madder (majith/majeeta, Rubia cordifolia)",
+              "materialId": "f688cdba-8a3c-5af9-847f-1a91998e0d52",
+              "termKey": null,
+              "outcomes": [
+                {
+                  "sentence": {
+                    "id": "s2.b1.1",
+                    "text": "The colour compounds in madder are more complex than those of synthetic alizarin, so dyeing with madder often leaves a pinkish tinge on the whites.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "e3479cd8-4210-5c5d-b9a9-7f3c26ca1d78",
+                        "claimId": "d2ce3edb-6145-51a3-8d23-c044121c97c2",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "The color compounds contained within natural madder roots are much more complex than those of synthetic alizarin.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "reactionId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s2.b1.2",
+                    "text": "Tapano was developed to counteract the pinkish tinge that dyeing with madder leaves on the white areas.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "eaf85d81-68d6-5ce6-9c38-200e96349180",
+                        "claimId": "f50cf605-3fb9-561f-b43e-ee01c198a7b1",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "dyeing with majeeta often leaves a pinkish tinge to the white areas of a design. Over time a procedure was developed to counteract this staining.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "reactionId": null
+                }
+              ]
+            },
+            {
+              "label": "Synthetic alizarin",
+              "materialId": "02a0d0b9-ae5d-571f-87ae-fe50175c8df2",
+              "termKey": null,
+              "outcomes": [
+                {
+                  "sentence": {
+                    "id": "s2.b1.3",
+                    "text": "Alizarin, first synthesised in 1868 by Graebe and Liebermann, superseded madder and also requires alum to attach colour.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "affc1bd0-6880-526d-9596-9dbb65a46218",
+                        "claimId": "0899069c-80aa-5b60-bfb9-79eee94a39fe",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "Derived from coal tar this crystalline red dye rapidly superseded madder, its natural counterpart. Despite its chemical synthesis, alizarin dye also requires mordants such as alum to attach its colour to the cloth fibres.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "5f985aeb-0585-573a-962e-a753c7e54d6f",
+                        "claimId": "0899069c-80aa-5b60-bfb9-79eee94a39fe",
+                        "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                        "quote": "(i) Ajrakh with Alizarin Dye:- Alizarin was one of the first chemical dyes for red, invented in 1868 by German chemists Graaebe and Liebermann.",
+                        "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "reactionId": null
+                },
+                {
+                  "sentence": {
+                    "id": "s2.b1.4",
+                    "text": "Alizarin molecules can form six-member chelate rings with aluminium ions; it is also likely that the large complexes are physically trapped within the fibre.",
+                    "level": "PROVISIONAL",
+                    "citations": [
+                      {
+                        "id": "edad227e-f51e-5457-b8c0-bdedcb452326",
+                        "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                        "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                        "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions.",
+                        "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      },
+                      {
+                        "id": "3c88bdb7-fc8a-5ee9-ac32-dd46df255d0e",
+                        "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                        "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                        "quote": "It is also likely that the large complexes are physically trapped within the fiber.",
+                        "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                        "context": null,
+                        "evidence": "QUOTED",
+                        "level": "PROVISIONAL"
+                      }
+                    ],
+                    "translated": false,
+                    "terms": []
+                  },
+                  "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da"
+                }
+              ]
+            },
+            {
+              "label": "Al root",
+              "materialId": null,
+              "termKey": null,
+              "outcomes": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "discipline": "MATERIALS",
+      "blocks": [
+        {
+          "id": "s3.b1",
+          "kind": "zoom_story",
+          "version": 1,
+          "reuse": null,
+          "levels": [
+            {
+              "level": "DISTRICT",
+              "sentence": {
+                "id": "s3.b1.1",
+                "text": "Ajrakh printing is practised at Kachchh and Barmer.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "24bf1e8d-7e37-5df8-a498-d0c33e8e0ece",
+                    "claimId": "f8cc4363-5bc9-50d2-bcc5-82285993a203",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Ajrakh printing is practiced at Kachchh & Barmer.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 9",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              "district": {
+                "districtLgd": 449,
+                "name": "Kachchh",
+                "stateName": "Gujarat"
+              },
+              "media": null,
+              "relevance": null,
+              "compound": null
+            },
+            {
+              "level": "WORKSHOP",
+              "sentence": {
+                "id": "s3.b1.2",
+                "text": "Outlines where white is required are printed with a carved block and a lime and tree-gum resist paste.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "1425b713-ec54-50d0-95af-13bd46973b16",
+                    "claimId": "f363ce3a-c4a6-5b24-87e7-2634e18175cf",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Preparation of Outline of design (Khariyanu/ Kiriyana):- Outlines of the design, where white is required, are printed with a carved wooden block and a resist paste containing lime and tree gum.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              "district": null,
+              "media": {
+                "id": "a1c3e5f7-0b2d-4f6a-8c9e-1d3f5a7b9c0e",
+                "display": "INLINE",
+                "provider": "wikimedia_commons",
+                "pageUrl": "https://commons.wikimedia.org/wiki/File:Ajrak_Printing_Materials_1.jpg",
+                "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Ajrak_Printing_Materials_1.jpg/960px-Ajrak_Printing_Materials_1.jpg",
+                "width": 4160,
+                "height": 3120,
+                "title": "Ajrak Printing Materials 1",
+                "alt": "Sticky gums used during indigo printing.",
+                "author": "SMarndi",
+                "site": "Wikimedia Commons",
+                "credit": null,
+                "licence": "CC BY-SA 4.0",
+                "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+                "sourceId": null,
+                "retrievedAt": "2026-11-17T10:20:00Z"
+              },
+              "relevance": "TEXT",
+              "compound": null
+            },
+            {
+              "level": "MOLECULE",
+              "sentence": {
+                "id": "s3.b1.3",
+                "text": "Alizarin molecules can form six-member chelate rings with aluminium ions; it is also likely that the large complexes are physically trapped within the fibre.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "edad227e-f51e-5457-b8c0-bdedcb452326",
+                    "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                    "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                    "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions.",
+                    "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "3c88bdb7-fc8a-5ee9-ac32-dd46df255d0e",
+                    "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                    "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                    "quote": "It is also likely that the large complexes are physically trapped within the fiber.",
+                    "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              "district": null,
+              "media": null,
+              "relevance": null,
+              "compound": {
+                "compoundId": "20675edc-039d-5c49-85f9-aba0597c7aab",
+                "pubchemCid": 6293,
+                "name": "Alizarin",
+                "formula": "C14H8O4",
+                "sourceId": "ffd974aa-9172-566a-8a38-dcc5c3c4f2d6"
+              }
+            }
+          ],
+          "datasets": [
+            {
+              "code": "DR_DISTRICT_SHAPES",
+              "title": "District shapes as drawn by the Designer Portal",
+              "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+              "edition": "791efb62cc30cf5d",
+              "period": "2026-10-17",
+              "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+              "licence": "Unconfirmed; indicative boundaries",
+              "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+              "attribution": "District boundaries are indicative.",
+              "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+              "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+            }
+          ],
+          "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "discipline": "HISTORY",
+      "blocks": [
+        {
+          "id": "s4.b1",
+          "kind": "timeline_map",
+          "version": 1,
+          "reuse": null,
+          "places": [
+            {
+              "name": "Fustat",
+              "wikidataId": "Q839456",
+              "latitude": 30.005,
+              "longitude": 31.2375
+            },
+            {
+              "name": "Dhamadka",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "name": "Ajrakhpur",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "name": "Sindh",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "name": "Kutch",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "points": [
+            {
+              "place": 0,
+              "yearFrom": 1401,
+              "yearTo": 1500,
+              "sentence": {
+                "id": "s4.b1.1",
+                "text": "15th-century resist-printed fragments from Gujarat were found at Fustat in Egypt.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "a8fba274-8398-5e67-84fc-7af01f82c336",
+                    "claimId": "c11f4137-eabe-5a86-91f5-a2a42aba85f2",
+                    "sourceId": "f60ab91b-7057-56fe-a4c0-17664472b776",
+                    "quote": "Early evidence of Gujarat's involvement in international trade of colourful block printed textiles comes from the fragments found at the Fostat excavations in Egypt. These have been dated back to the fifteenth century and have been printed by the resist printing technique.",
+                    "locator": "§ \"Abstract\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "place": 1,
+              "yearFrom": 1586,
+              "yearTo": 1586,
+              "sentence": {
+                "id": "s4.b1.2",
+                "text": "A legend links the craft to Dhamadka following a 16th-century migration.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "e3248188-5709-5f16-a717-25796fedea4a",
+                    "claimId": "77b4e851-c1cd-5561-81a9-018e6e5086a6",
+                    "sourceId": "f60ab91b-7057-56fe-a4c0-17664472b776",
+                    "quote": "According to popular legend, this textile tradition was started in the family of late Mohammad Siddiki when in the year 1586, Raja Bharmal I, invited his forefathers, to migrate from Sind and settle in Dhamadka, Kachchh.",
+                    "locator": "§ \"Abstract\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "place": 2,
+              "yearFrom": 2001,
+              "yearTo": 2001,
+              "sentence": {
+                "id": "s4.b1.3",
+                "text": "After a massive earthquake in 2001 the block printers were forced to relocate and settled in Ajrakhpur; over 100 families live there with 30 official workshops.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "f3e38295-2a1b-5e12-8c1a-49897c72c260",
+                    "claimId": "bc976cc1-204e-52e8-9b26-f1a91d33b7b3",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "After a massive earthquake in Kutch in 2001, the block printers were forced to relocate. They settled in Ajrakhpur village.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "9c5a26b8-9106-52eb-8704-2ebfd15db95a",
+                    "claimId": "bc976cc1-204e-52e8-9b26-f1a91d33b7b3",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "There are over one hundred families living in Ajrakhpur, and 30 official block printing workshops; almost all of the families in Ajrakhpur generate their primary income from Ajrakh.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ],
+          "routes": [
+            {
+              "start": 3,
+              "end": 4,
+              "yearFrom": 1586,
+              "yearTo": 1631,
+              "sentence": {
+                "id": "s4.b1.4",
+                "text": "Rao Bharmalji I (1586-1631) invited Khatri printers from Sindh and gave them land and tax exemptions.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "11b06c87-706e-57e1-9634-5fe424f7cd77",
+                    "claimId": "66c8488c-11fe-5f1b-8653-dddbdaef2393",
+                    "sourceId": "56c24809-a5fd-5d90-b6db-e55d7be09c07",
+                    "quote": "The erstwhile ruler of Kutch Rao Bharmalji - I (1586-1631), invited the cloth-printing Khatri artisans from Sindh and gave them permission to settle and earn their livelihoods anywhere in Kutch. They were given land by the state as well spared any taxation on their produce.",
+                    "locator": "§ \"Mushtak Khan\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ],
+          "datasets": [
+            {
+              "code": "DR_DISTRICT_SHAPES",
+              "title": "District shapes as drawn by the Designer Portal",
+              "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+              "edition": "791efb62cc30cf5d",
+              "period": "2026-10-17",
+              "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+              "licence": "Unconfirmed; indicative boundaries",
+              "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+              "attribution": "District boundaries are indicative.",
+              "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+              "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+            }
+          ],
+          "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+        }
+      ]
+    }
+  ],
+  "pieces": [
+    {
+      "blockId": "s1.b1",
+      "craftId": null,
+      "facet": "GEOGRAPHY",
+      "topicKey": "concept:falling-water-table"
+    },
+    {
+      "blockId": "s2.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "CHEMISTRY",
+      "topicKey": "reaction:kutch-ajrakh"
+    },
+    {
+      "blockId": "s3.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "MATERIALS",
+      "topicKey": "material:kutch-ajrakh"
+    },
+    {
+      "blockId": "s4.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "HISTORY",
+      "topicKey": "history:kutch-ajrakh"
+    }
+  ],
+  "sources": [
+    {
+      "id": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 3: Adapting to the present",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+      "kind": "PAPER",
+      "title": "Fiber-Safe Extraction of Red Mordant Dyes from Hair Fibers",
+      "authors": [
+        "Erica J. Tiedemann",
+        "Yiqi Yang"
+      ],
+      "year": 1995,
+      "doi": null,
+      "url": "https://cool.culturalheritage.org/jaic/articles/jaic34-03-004_2.html",
+      "publisher": "Journal of the American Institute for Conservation 34(3):195-206",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "ffd974aa-9172-566a-8a38-dcc5c3c4f2d6",
+      "kind": "COMPOUND_RECORD",
+      "title": "Alizarin (PubChem CID 6293)",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/6293",
+      "publisher": "National Library of Medicine",
+      "licence": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+      "attribution": "PubChem, National Library of Medicine, CID 6293",
+      "reliability": "A"
+    },
+    {
+      "id": "f60ab91b-7057-56fe-a4c0-17664472b776",
+      "kind": "WEB_PAGE",
+      "title": "AJRAKH: A Textile Tradition in Transition (Textile Society of America Symposium Proceedings 955)",
+      "authors": [
+        "Sharmila J. Dua"
+      ],
+      "year": 2016,
+      "doi": null,
+      "url": "https://digitalcommons.unl.edu/tsaconf/955",
+      "publisher": "Textile Society of America / DigitalCommons@University of Nebraska-Lincoln",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "56c24809-a5fd-5d90-b6db-e55d7be09c07",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh: An Introduction",
+      "authors": [
+        "Mushtak Khan (former Deputy Director, Crafts Museum, Delhi)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.sahapedia.org/ajrakh-introduction-0",
+      "publisher": "Sahapedia",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    }
+  ]
+}

@@ -1,14 +1,18 @@
 import { expect, test } from "@playwright/test";
 
-import { CRAFT_TAB_LABEL, type CraftTab } from "@/lib/craftProfile";
+import { CRAFT_TAB_LABEL, type CraftTab } from "@/lib/craftPageView";
 import type { User } from "@/lib/types";
 
 import { CRAFT_SLUG, NOT_FOUND_PATH, SCREENS_TIMEOUT_MS, credentials } from "./run";
-import { barProblems, chooseFirstLayer, depthProblems, menuProblems, openCraftTab } from "./screenChecks";
+import { barProblems, chooseFirstLayer, craftPageResponse, depthProblems, menuProblems, openCraftTab, overviewOutcome } from "./screenChecks";
 import { ScreenRun } from "./screenRun";
 import { submitSignIn } from "./signIn";
 
-const CRAFT_TABS_SHOWN: readonly CraftTab[] = ["process", "region"];
+const CRAFT_TABS_SHOWN: readonly [CraftTab, string][] = [
+  ["process", "process-stage"],
+  ["region", "craft-region-map"],
+  ["science", "concept-graph"]
+];
 
 test("every screen of production at this width", async ({ page }, testInfo) => {
   test.setTimeout(SCREENS_TIMEOUT_MS);
@@ -40,13 +44,15 @@ test("every screen of production at this width", async ({ page }, testInfo) => {
       await expect(page.getByRole("heading", { name: "Crafts", level: 1 })).toBeVisible();
       return [];
     });
+    const served = craftPageResponse(page, CRAFT_SLUG);
     await run.visit(`Craft ${CRAFT_TAB_LABEL.overview}`, `/crafts/${CRAFT_SLUG}`, async () => {
-      await expect(page.getByTestId("craft-panel-overview")).toBeVisible();
-      return [];
+      const outcome = await overviewOutcome(page, served);
+      if (outcome.note) run.note(outcome.note);
+      return outcome.problems;
     });
-    for (const tab of CRAFT_TABS_SHOWN) {
+    for (const [tab, content] of CRAFT_TABS_SHOWN) {
       await run.step(`Craft ${CRAFT_TAB_LABEL[tab]}`, async () => {
-        const opened = await openCraftTab(page, CRAFT_TAB_LABEL[tab], `craft-panel-${tab}`);
+        const opened = await openCraftTab(page, CRAFT_TAB_LABEL[tab], `craft-panel-${tab}`, content);
         if (opened === null) run.note(`no ${CRAFT_TAB_LABEL[tab]} tab`);
         return opened ?? [];
       });

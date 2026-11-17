@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "explainerId": "0c5e7a1d-2b3f-4c6d-8e9f-a0b1c2d3e4f5",
+  "version": 2,
+  "entries": [
+    {
+      "number": 1,
+      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv1",
+        "type": "document",
+        "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+        "author": [
+          {
+            "literal": "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan"
+          },
+          {
+            "literal": "facilitated by Textiles Committee, Ministry of Textiles)"
+          }
+        ],
+        "issued": {
+          "date-parts": [
+            [
+              2023
+            ]
+          ]
+        },
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Geographical Indications Registry, Chennai (IP India)",
+        "URL": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050"
+      },
+      "apa": "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan, & facilitated by Textiles Committee, Ministry of Textiles). (2023). Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy). Geographical Indications Registry, Chennai (IP India). https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "bibtex": "@misc{kv1,\n  author = {{Office of the Controller General of Patents, Designs \\& Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan} and {facilitated by Textiles Committee, Ministry of Textiles)}},\n  title = {{Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)}},\n  howpublished = {Geographical Indications Registry, Chennai (IP India)},\n  year = {2023},\n  url = {https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050},\n}\n",
+      "ris": "TY  - GOVDOC\r\nAU  - Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan\r\nAU  - facilitated by Textiles Committee, Ministry of Textiles)\r\nTI  - Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)\r\nPY  - 2023\r\nPB  - Geographical Indications Registry, Chennai (IP India)\r\nUR  - https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050\r\nID  - kv1\r\nER  - \r\n"
+    },
+    {
+      "number": 2,
+      "sourceId": "f0dde764-b68a-5ea6-8d1c-05ca4a7db2b7",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv2",
+        "type": "webpage",
+        "title": "Ajrakh process sample, IS.7:1 to 3-2007 (made by Ismail Mohammad Khatri, Ajrakhpur, 2006)",
+        "author": [
+          {
+            "literal": "Victoria"
+          },
+          {
+            "literal": "Albert Museum"
+          }
+        ],
+        "issued": {
+          "date-parts": [
+            [
+              2007
+            ]
+          ]
+        },
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Victoria and Albert Museum, London",
+        "URL": "https://collections.vam.ac.uk/item/O132500/"
+      },
+      "apa": "Victoria, & Albert Museum. (2007). Ajrakh process sample, IS.7:1 to 3-2007 (made by Ismail Mohammad Khatri, Ajrakhpur, 2006). Victoria and Albert Museum, London. https://collections.vam.ac.uk/item/O132500/",
+      "bibtex": "@misc{kv2,\n  author = {{Victoria} and {Albert Museum}},\n  title = {{Ajrakh process sample, IS.7:1 to 3-2007 (made by Ismail Mohammad Khatri, Ajrakhpur, 2006)}},\n  howpublished = {Victoria and Albert Museum, London},\n  year = {2007},\n  url = {https://collections.vam.ac.uk/item/O132500/},\n}\n",
+      "ris": "TY  - ELEC\r\nAU  - Victoria\r\nAU  - Albert Museum\r\nTI  - Ajrakh process sample, IS.7:1 to 3-2007 (made by Ismail Mohammad Khatri, Ajrakhpur, 2006)\r\nPY  - 2007\r\nPB  - Victoria and Albert Museum, London\r\nUR  - https://collections.vam.ac.uk/item/O132500/\r\nID  - kv2\r\nER  - \r\n"
+    },
+    {
+      "number": 3,
+      "sourceId": "84cc8e03-ef75-55a3-9fb6-ca8b8e872a93",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv3",
+        "type": "webpage",
+        "title": "Textile (two halves of an ajrakh shawl or cover), Sind, ca. 1855-1879, 5473A/(IS)",
+        "author": [
+          {
+            "literal": "Victoria"
+          },
+          {
+            "literal": "Albert Museum"
+          }
+        ],
+        "issued": {
+          "date-parts": [
+            [
+              2015
+            ]
+          ]
+        },
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Victoria and Albert Museum, London",
+        "URL": "https://collections.vam.ac.uk/item/O469296/"
+      },
+      "apa": "Victoria, & Albert Museum. (2015). Textile (two halves of an ajrakh shawl or cover), Sind, ca. 1855-1879, 5473A/(IS). Victoria and Albert Museum, London. https://collections.vam.ac.uk/item/O469296/",
+      "bibtex": "@misc{kv3,\n  author = {{Victoria} and {Albert Museum}},\n  title = {{Textile (two halves of an ajrakh shawl or cover), Sind, ca. 1855-1879, 5473A/(IS)}},\n  howpublished = {Victoria and Albert Museum, London},\n  year = {2015},\n  url = {https://collections.vam.ac.uk/item/O469296/},\n}\n",
+      "ris": "TY  - ELEC\r\nAU  - Victoria\r\nAU  - Albert Museum\r\nTI  - Textile (two halves of an ajrakh shawl or cover), Sind, ca. 1855-1879, 5473A/(IS)\r\nPY  - 2015\r\nPB  - Victoria and Albert Museum, London\r\nUR  - https://collections.vam.ac.uk/item/O469296/\r\nID  - kv3\r\nER  - \r\n"
+    },
+    {
+      "number": 4,
+      "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv4",
+        "type": "webpage",
+        "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+        "author": [
+          {
+            "literal": "Azera Parveen Rahman"
+          }
+        ],
+        "issued": {
+          "date-parts": [
+            [
+              2019
+            ]
+          ]
+        },
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Mongabay India",
+        "URL": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/"
+      },
+      "apa": "Azera Parveen Rahman. (2019). Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again. Mongabay India. https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "bibtex": "@misc{kv4,\n  author = {{Azera Parveen Rahman}},\n  title = {{Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again}},\n  howpublished = {Mongabay India},\n  year = {2019},\n  url = {https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/},\n}\n",
+      "ris": "TY  - ELEC\r\nAU  - Azera Parveen Rahman\r\nTI  - Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again\r\nPY  - 2019\r\nPB  - Mongabay India\r\nUR  - https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/\r\nID  - kv4\r\nER  - \r\n"
+    },
+    {
+      "number": 5,
+      "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv5",
+        "type": "webpage",
+        "title": "Ajrakh exhibition, Part 3: Adapting to the present",
+        "author": [
+          {
+            "literal": "Khamir (craft resource centre, Kachchh)"
+          }
+        ],
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Khamir",
+        "URL": "https://exhibitions-khamir.org/ajrakh/adapting"
+      },
+      "apa": "Khamir (craft resource centre, Kachchh). (n.d.). Ajrakh exhibition, Part 3: Adapting to the present. Khamir. Retrieved October 14, 2026, from https://exhibitions-khamir.org/ajrakh/adapting",
+      "bibtex": "@misc{kv5,\n  author = {{Khamir (craft resource centre, Kachchh)}},\n  title = {{Ajrakh exhibition, Part 3: Adapting to the present}},\n  howpublished = {Khamir},\n  url = {https://exhibitions-khamir.org/ajrakh/adapting},\n}\n",
+      "ris": "TY  - ELEC\r\nAU  - Khamir (craft resource centre, Kachchh)\r\nTI  - Ajrakh exhibition, Part 3: Adapting to the present\r\nPB  - Khamir\r\nUR  - https://exhibitions-khamir.org/ajrakh/adapting\r\nID  - kv5\r\nER  - \r\n"
+    },
+    {
+      "number": 6,
+      "sourceId": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+      "datasetCode": null,
+      "csl": {
+        "id": "kv6",
+        "type": "webpage",
+        "title": "Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo)",
+        "author": [
+          {
+            "literal": "Judy Frater"
+          }
+        ],
+        "issued": {
+          "date-parts": [
+            [
+              2025
+            ]
+          ]
+        },
+        "accessed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              14
+            ]
+          ]
+        },
+        "publisher": "Mingei International Museum, San Diego",
+        "URL": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/"
+      },
+      "apa": "Judy Frater. (2025). Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo). Mingei International Museum, San Diego. https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "bibtex": "@misc{kv6,\n  author = {{Judy Frater}},\n  title = {{Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo)}},\n  howpublished = {Mingei International Museum, San Diego},\n  year = {2025},\n  url = {https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/},\n}\n",
+      "ris": "TY  - ELEC\r\nAU  - Judy Frater\r\nTI  - Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo)\r\nPY  - 2025\r\nPB  - Mingei International Museum, San Diego\r\nUR  - https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/\r\nID  - kv6\r\nER  - \r\n"
+    }
+  ]
+}

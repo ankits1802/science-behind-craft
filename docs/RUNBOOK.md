@@ -110,6 +110,18 @@ Decision 0017; contract `docs/contracts/voice.md`.
   audio lives under `media/narration/<cacheId>/` in the media bucket (part MP3s, then
   `narration.json`); deleting a folder only makes the next listener synthesise it again. The
   voice is `AppSetting` `voice.voice_id`; changing it starts a new cache.
+- Film scores (decision 0058) use the same key through the media router: Settings, AI routing
+  shows Film music (`music_v2_5`) and Film sound effects (`eleven_text_to_sound_v3`), seeded by
+  migration `0022_elevenlabs_media`. The restricted key needs the Music and Sound Effects
+  permissions; the ElevenLabs image and video choices (`gemini-3.1-flash-image`,
+  `veo-3.1-fast-generate-001`, not in any chain until an admin adds them) need the Image and Video
+  permission and a Pro plan. Spend counts against the media sub-cap. Clips live under
+  `media/score/<cacheId>/` (MP3 and `clip.json`) and each score's manifest under
+  `media/score/<answerId>/<language>/score.json`; deleting either only makes the next ask make it
+  again. A finished ElevenLabs image or video is fetched only from `storage.googleapis.com`
+  (decision 0061); if a generation fails with "generation link answer is off its documented shape",
+  ElevenLabs has moved its downloads: add the new host to
+  `providers/elevenlabs_download.DOWNLOAD_HOSTS` after checking the reference.
 
 - Transport: `AppSetting` `voice.transport` is `RELAY` until the ElevenLabs spike passes. To switch,
   on the box: `INSERT INTO "AppSetting" (key, value) VALUES ('voice.transport', '"AGENT"') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;`
@@ -134,7 +146,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Copies changed secrets into `/kalavigyan/env`.
 3. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
 4. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, builds the venv with uv, then `blue_green.sh release <sha>`:
-   1. migrate (`alembic upgrade head`) and seed (`seed_crafts`, `seed_claims`, `seed_districts`) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and fill missing craft descriptor vectors (`embed_craft_descriptors`; a failure is a warning too);
+   1. migrate (`alembic upgrade head`), seed (`seed_crafts`, `seed_claims`, `seed_districts`) and import the curated dossiers (`import_curation`, decision 0053; a refused dossier exits 2 and stops the release like a failed seed) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and fill missing craft descriptor vectors (`embed_craft_descriptors`; a failure is a warning too);
    2. start the other colour;
    3. wait for `/health`;
    4. switch nginx;
@@ -146,7 +158,9 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
 
-Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, runs `app.scripts.voice_upkeep`, `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016), `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013) and `app.scripts.link_compounds` (links every unlinked compound with a formula to its PubChem record and prints `{linked, notFound, failed, ok}`, decision 0045) in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/coverage-enrichment/<run id>/`; the step fails when any of them fails. Since commit fdf478c it no longer researches crafts or rebuilds pieces (`app.scripts.rebuild_pieces` and `app.scripts.enrich_coverage` are not run; the dataset is curated by Claude Code, `docs/plans/dataset-curation.md`).
+Alert digest (`.github/workflows/alert-digest.yml`): Mondays at 03:30 UTC (09:00 India time) and on dispatch, runs `app.scripts.send_alert_digest` on the box over SSM, logging to `deploy/logs/alert-digest/<run id>/`. It prints `{enabled, weekOf, readers, sent, failed, ok}`; while `ALERT_DIGEST_ENABLED` is unset or false it sends nothing and succeeds. To switch it on, after an SES sender identity is verified for `MAIL_FROM_ADDRESS` (region `MAIL_SES_REGION`) and the account is out of the SES sandbox: put `ALERT_DIGEST_ENABLED=true` at `/kalavigyan/env/ALERT_DIGEST_ENABLED` as above and re-render the box `.env` (`sudo kv-render-env`). Enabled without `MAIL_FROM_ADDRESS` it fails without sending. Readers opt in under Settings (decision 0063).
+
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, runs `app.scripts.voice_upkeep`, `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016), `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013), `app.scripts.link_compounds` (links every unlinked compound with a formula to its PubChem record and prints `{linked, notFound, failed, ok}`, decision 0045) and last `app.scripts.recheck_saved` (re-checks every saved explainer for new cited claims in its fields, writes "This answer got better" notes, no model call, prints `{checked, notified, ok}`, decision 0063) in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/coverage-enrichment/<run id>/`; the step fails when any of them fails. Since commit fdf478c it no longer researches crafts or rebuilds pieces (`app.scripts.rebuild_pieces` and `app.scripts.enrich_coverage` are not run; the dataset is curated by Claude Code, `docs/plans/dataset-curation.md`).
 
 Running the same sha again re-renders the env and restarts the live colour.
 
@@ -171,11 +185,11 @@ After the backend deploy that carries migration `0016_river_reaches` (decision 0
    gh workflow run geo-etl.yml --repo cxacraftecosystem-ui/KalaVigyan -f datasets=riverlines -f load=true
    ```
    The `rivers` job's summary gives the reaches, basins and the largest file; `load-rivers` prints the topologies uploaded and the rows written. Check: `GET /api/rivers/<mainRiv>` for a basin of `RiverBasin` answers 200 with an `ETag`. Re-running is safe: a file already stored under its digest is not uploaded again, and a changed file goes to a new key beside the old one.
-2. CHIRPS monthly normals for every district over one period: datasets `chirps`, states `all`, shards `12`, load on.
+2. Rainfall and temperature, 1981 to last year, with their trends (decision 0065): after the backend deploy that carries migration `0021_climate_trend_stats` (the load writes the stats `TREND_PER_DECADE` and `TREND_P_VALUE`, which the database refuses before it). Datasets `chirps,ghcncams`, states `all`, shards `24`, load on, prune on.
    ```bash
-   gh workflow run geo-etl.yml --repo cxacraftecosystem-ui/KalaVigyan -f datasets=chirps -f states=all -f shards=12 -f load=true
+   gh workflow run geo-etl.yml --repo cxacraftecosystem-ui/KalaVigyan -f datasets=chirps,ghcncams -f states=all -f shards=24 -f load=true -f prune=true
    ```
-   Needed while any district with a polygon lacks the twelve `monthly_precipitation` rows of the CHIRPS dataset row's period (run 43884310432 lost the CHIRPS rows of 15 states, decision 0027); a seasons block shows rainfall only for a district with all twelve. Check, read-only on the box: `select count(distinct v."districtLgd") from "DistrictEnvValue" v join "EnvDataset" d on d.id = v."datasetId" where d.code = 'CHIRPS_3_0' and v.variable = 'monthly_precipitation' and v."depthOrPeriod" like d.period || '-%'` should be 752.
+   `chirps` runs on 24 shards (45 annual and 540 monthly files a shard, about four times the old ten-year run, so each shard stays well inside the 350-minute limit) and writes the CHIRPS dataset row over `1981-<last year>`: the yearly series, the annual and twelve monthly normals and the trend of every district with all years. `ghcncams` is one job whatever the shards: it downloads the GHCN CAMS file (about 190 MB) once and writes each district's yearly mean temperature, normal and trend over the same years. `prune` deletes each loaded district's older rows of the two datasets, so the ten-year normals of the last CHIRPS load (`2016-2025`) do not linger beside the new ones. Then the seasons blocks credit the rainfall as a monthly normal over `1981-<last year>`, and the climate builder finds trends once `climate_risk` is built. Checks, read-only on the box: `select count(distinct v."districtLgd") from "DistrictEnvValue" v join "EnvDataset" d on d.id = v."datasetId" where d.code = 'CHIRPS_3_0' and v.variable = 'monthly_precipitation' and v."depthOrPeriod" like d.period || '-%'` should be 752, and `select d.code, count(distinct v."districtLgd") from "DistrictEnvValue" v join "EnvDataset" d on d.id = v."datasetId" where d.code in ('CHIRPS_3_0', 'GHCN_CAMS_T2M') and v.stat = 'TREND_PER_DECADE' and v."depthOrPeriod" = d.period group by d.code` should give 752 for CHIRPS and, for GHCN CAMS, 752 less the districts the run summary lists under `districtsWithoutCells` (a district with no 0.5 degree land cell, such as an island). Then replace the placeholder Kachchh trend in `shared/explainer.phase-d.golden.json` with the loaded row (`docs/TECH_DEBT.md`, decision 0062).
 
 ## How to curate a craft
 
@@ -212,6 +226,28 @@ elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make pla
    backend/.venv/Scripts/python.exe tools/curation/check.py
    ```
 
+## Import the curated dossiers again
+
+The deploy imports every checked dossier after the seeds (above). To re-run it on the box by hand
+(it is idempotent: a second run reports an empty `changed` for every dossier and withdraws no
+more edge sentences):
+
+```bash
+cd /opt/kalavigyan/current/backend && sudo -u kalavigyan bash -c 'set -a; . /opt/kalavigyan/.env; set +a; .venv/bin/python -m app.scripts.import_curation'
+```
+
+It prints one JSON report: `withdrawnEdgeSentences`, `imported`, `refused`, and per dossier its
+`status`, `changed` row counts, `problems` and `droppedSentences` (overview sentences the prose
+validator refused). Exit 2 means a dossier was refused; its `problems` are the checker's lines.
+To see a dossier's craft page without a database, from `backend/` on the laptop:
+
+```bash
+.venv/Scripts/python.exe -m app.scripts.import_curation --preview Kutch-Ajrakh --out ../shared/craft.page.golden.json
+```
+
+That command also regenerates the craft page fixture after a change to the Kutch Ajrakh dossier
+or the page; `tests/contracts/test_craft_page_contract.py` fails until it is rerun.
+
 ## Roll back
 
 Backend, on the box. This is instant: the previous release is still in the other slot.
@@ -244,7 +280,7 @@ As provisioned on 2026-11-16, each layer was checked:
 
 ## E2E production run
 
-Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the three known-answer questions at Detailed depth, up to 10 minutes each: the mordant in English and Hindi (alum), and the water of Kachchh for Kutch Ajrakh, which passes only on a `region_story` with a traced river and every step cited. Until the river lines are loaded, dispatch without `rivers_loaded` and a missing story is written to the report's notes, not failed; from the first run after the Geo ETL `riverlines` load add `-f rivers_loaded=true` (decision 0050).
+Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region, Shared science), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the four known-answer questions, up to 10 minutes each: at Detailed depth the mordant in English and Hindi (alum) and the water of Kachchh for Kutch Ajrakh, which passes only on a `region_story` with a traced river and every step cited; at Expert depth how indigo turns blue on Kutch Ajrakh cloth (decision 0061), which passes when every generated explainer the stream sends is drawn in a `sandbox="allow-scripts"` frame whose document opens with the sandbox policy, draws something, offers no peer connection, and attempts no network request (each one is aborted and recorded) and no load its policy refuses; when the builder chose no concept the report notes it and does not fail. Until the river lines are loaded, dispatch without `rivers_loaded` and a missing story is written to the report's notes, not failed; from the first run after the Geo ETL `riverlines` load add `-f rivers_loaded=true` (decision 0050). After the questions it opens the English answer's stored explainer (`/ask?explainer=<id>`) and downloads, through its Export menu, the report PDF and the APA, BibTeX, RIS and CSL-JSON citations: each must open (a PDF with pages, a parseable CSL-JSON list) and carry every source the answer streamed (its DOI or URL link in the PDF, APA and BibTeX, its title in RIS and CSL-JSON). An account that may build lesson packs also builds one from that explainer and checks its PPTX and PDF the same way; the Researcher account only notes that step in the report (decision 0070; `docs/PROGRESS.md`, Waiting on the owner).
 
 The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no two-step), active on the roster, email verified, voice consent unset.
 
