@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       questions:
-        description: Also ask the two known-answer questions at Detailed depth (English and Hindi)
+        description: Also ask the three known-answer questions at Detailed depth (the mordant in English and Hindi, and Kachchh's water)
+        type: boolean
+        default: false
+      rivers_loaded:
+        description: The river lines are loaded, so the water question fails without a region story
         type: boolean
         default: false
 
@@ -23,7 +27,7 @@ jobs:
     name: Drive production at every width
     if: github.repository == 'cxacraftecosystem-ui/KalaVigyan'
     runs-on: ubuntu-26.04
-    timeout-minutes: 45
+    timeout-minutes: 55
     defaults:
       run:
         working-directory: frontend
@@ -31,6 +35,7 @@ jobs:
       E2E_PRODUCTION: "1"
       E2E_BASE_URL: ${{ vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
       E2E_QUESTIONS: ${{ inputs.questions && '1' || '0' }}
+      E2E_RIVERS_LOADED: ${{ inputs.rivers_loaded && '1' || '0' }}
       E2E_REPORT_DIR: production-run
       E2E_RUN_ID: ${{ github.run_id }}
       E2E_WORKERS: "4"

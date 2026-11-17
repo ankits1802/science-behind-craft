@@ -48,7 +48,7 @@ sudo kv-blue-green status
 Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME>` in Parameter Store, and `/opt/kalavigyan/.env` on the box. The one exception is the E2E account (`E2E_EMAIL`, `E2E_PASSWORD`): only the E2E production workflow reads it, so it is a GitHub secret alone (E2E production run, below).
 
 - GitHub secrets: `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `ORIGIN_VERIFY_SECRET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `GOOGLE_CLIENT_ID`, `MASTER_ADMIN_EMAIL`, `MASTER_ADMIN_NAME`.
-- GitHub variables: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`, `EC2_INSTANCE_ID`, `MEDIA_BUCKET`, `API_BASE_URL`, `CLOUDFRONT_DISTRIBUTION_ID`, `WEB_ORIGIN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
+- GitHub variables: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`, `AWS_RIVER_LOAD_ROLE_ARN` (decision 0050), `EC2_INSTANCE_ID`, `MEDIA_BUCKET`, `API_BASE_URL`, `CLOUDFRONT_DISTRIBUTION_ID`, `WEB_ORIGIN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
 - Parameter Store also holds non-secret config (`APP_ENV`, `BACKEND_CORS_ORIGINS`, `FORWARDED_CLIENT_HOPS`, `REDIS_URL`, `SEARXNG_URL`, …). See `infra/.env.example` for every name.
 - Copied from the DR box without printing them: `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `GOOGLE_CLIENT_ID`, `MASTER_ADMIN_EMAIL`, `MASTER_ADMIN_NAME`.
 - `CROSS_PORTAL_TOKEN`: copied without printing from the shared SSM SecureString `/iit/shared/cross-portal-token` (the designer and documentation portals' value) into `/kalavigyan/env/CROSS_PORTAL_TOKEN` and the GitHub secret on 2026-11-16. `DESIGNER_PORTAL_API_URL` and `FIELD_REPOSITORY_API_URL` are in Parameter Store. The box `.env` gets all three at the next deploy's render.
@@ -146,11 +146,71 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
 
-Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016) and `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.rebuild_pieces` (answers again the stale knowledge pieces of the 10 most-asked crafts, request ids `enrichment-rebuild-<id>`, one JSON report, decision 0033), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, runs `app.scripts.voice_upkeep`, `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016), `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013) and `app.scripts.link_compounds` (links every unlinked compound with a formula to its PubChem record and prints `{linked, notFound, failed, ok}`, decision 0045) in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/coverage-enrichment/<run id>/`; the step fails when any of them fails. Since commit fdf478c it no longer researches crafts or rebuilds pieces (`app.scripts.rebuild_pieces` and `app.scripts.enrich_coverage` are not run; the dataset is curated by Claude Code, `docs/plans/dataset-curation.md`).
 
 Running the same sha again re-renders the env and restarts the live colour.
 
 Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there is no Actions deploy.
+
+## Geo ETL
+
+**Geo ETL** (`.github/workflows/geo-etl.yml`, dispatch only) first lints and tests `etl/geo`, then extracts the district statistics on a matrix and, for `riverlines`, the river lines and one TopoJSON per basin in a single job. With `load` it upserts the district tables, and uploads the topologies under `media/rivers/<edition>/<mainRiv>/<sha256>/` (content-addressed, decision 0050) then replaces `RiverBasin` and `RiverReach` in one transaction. The load jobs read `DATABASE_URL`; the river load assumes `kalavigyan-river-load` through GitHub OIDC (the variable `AWS_RIVER_LOAD_ROLE_ARN`; the role may only put and read objects under `media/rivers/` and list that prefix) and reads `AWS_REGION` and `MEDIA_BUCKET`. It holds no long-lived AWS key. Contracts: `docs/contracts/geo.md`; datasets and licences: `docs/DATA_SOURCES.md`.
+
+Before the first river load, once: the owner applies `infra/terraform` (it adds the role `kalavigyan-river-load`, its policy and the output `river_load_role_arn`) and sets the repository variable, by re-running `infra/scripts/seed_secrets.py` or directly:
+
+```bash
+gh variable set AWS_RIVER_LOAD_ROLE_ARN --repo cxacraftecosystem-ui/KalaVigyan --body "$(terraform -chdir=infra/terraform output -raw river_load_role_arn)"
+```
+
+The `load-rivers` job stops with a named error when the variable is unset.
+
+After the backend deploy that carries migration `0016_river_reaches` (decision 0043), dispatch these one at a time (the `geo-etl` concurrency group keeps one pending run):
+
+1. River lines and basin topologies: datasets `riverlines`, load on (states and shards do not apply).
+   ```bash
+   gh workflow run geo-etl.yml --repo cxacraftecosystem-ui/KalaVigyan -f datasets=riverlines -f load=true
+   ```
+   The `rivers` job's summary gives the reaches, basins and the largest file; `load-rivers` prints the topologies uploaded and the rows written. Check: `GET /api/rivers/<mainRiv>` for a basin of `RiverBasin` answers 200 with an `ETag`. Re-running is safe: a file already stored under its digest is not uploaded again, and a changed file goes to a new key beside the old one.
+2. CHIRPS monthly normals for every district over one period: datasets `chirps`, states `all`, shards `12`, load on.
+   ```bash
+   gh workflow run geo-etl.yml --repo cxacraftecosystem-ui/KalaVigyan -f datasets=chirps -f states=all -f shards=12 -f load=true
+   ```
+   Needed while any district with a polygon lacks the twelve `monthly_precipitation` rows of the CHIRPS dataset row's period (run 43884310432 lost the CHIRPS rows of 15 states, decision 0027); a seasons block shows rainfall only for a district with all twelve. Check, read-only on the box: `select count(distinct v."districtLgd") from "DistrictEnvValue" v join "EnvDataset" d on d.id = v."datasetId" where d.code = 'CHIRPS_3_0' and v.variable = 'monthly_precipitation' and v."depthOrPeriod" like d.period || '-%'` should be 752.
+
+## How to curate a craft
+
+The plan is `docs/plans/dataset-curation.md`; the dossier format and every rule are in
+`docs/contracts/curation.md` (decision 0051). Run from the repository root on the laptop with the
+backend environment (`backend\.venv\Scripts\python.exe` on Windows; `backend/.venv/bin/python`
+elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make plain HTTP requests.
+
+1. Read each source as the verifier will, and copy quotes only from these numbered lines:
+   ```bash
+   backend/.venv/Scripts/python.exe tools/curation/fetch.py "https://<the source page or PDF>" --out <scratch file>
+   ```
+   When it prints `read: ARCHIVE ...`, the live page refused and the text came from the Wayback
+   Machine: put the printed `archivedUrl` on the source.
+2. Write `backend/app/data/curation/<CraftSlug>.json` (`<CraftSlug>` as on the master list, for
+   example `Kutch-Ajrakh`), recording every query in `searched`.
+3. Verify every quote against a fresh fetch; this writes `<CraftSlug>.check.json` beside it and
+   prints one line per source that could not be read and per quote not found:
+   ```bash
+   backend/.venv/Scripts/python.exe tools/curation/verify.py backend/app/data/curation/<CraftSlug>.json
+   ```
+   Drop each failing quote, each claim left without one, and each unreadable source with its
+   claims, then verify again.
+4. Run the offline checks; this prints one line per problem and regenerates
+   `backend/app/data/curation/index.json`:
+   ```bash
+   backend/.venv/Scripts/python.exe tools/curation/check.py backend/app/data/curation/<CraftSlug>.json
+   ```
+   Fix and repeat steps 3 and 4 until both print nothing. An edit to a source or a quote needs
+   step 3 again; prose and structure edits need only step 4.
+5. Before a wave is committed, check every dossier and keep the index it writes; CI runs the same
+   checks with `--check-index`, which writes nothing and fails on a stale index:
+   ```bash
+   backend/.venv/Scripts/python.exe tools/curation/check.py
+   ```
 
 ## Roll back
 
@@ -184,7 +244,7 @@ As provisioned on 2026-11-16, each layer was checked:
 
 ## E2E production run
 
-Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the two known-answer questions at Detailed depth (English and Hindi, alum as the mordant), up to 10 minutes each.
+Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the three known-answer questions at Detailed depth, up to 10 minutes each: the mordant in English and Hindi (alum), and the water of Kachchh for Kutch Ajrakh, which passes only on a `region_story` with a traced river and every step cited. Until the river lines are loaded, dispatch without `rivers_loaded` and a missing story is written to the report's notes, not failed; from the first run after the Geo ETL `riverlines` load add `-f rivers_loaded=true` (decision 0050).
 
 The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no two-step), active on the roster, email verified, voice consent unset.
 
@@ -202,6 +262,7 @@ The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no
    ```bash
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true
+   gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true -f rivers_loaded=true
    ```
 
 The run summary has a table per screen and width, and one per question. Two artifacts carry the run id: `e2e-production-screenshots-<run id>` and `e2e-production-report-<run id>` (`KalaVigyan_Eval-Run_<date>_<time>_<Width>-Screens_Report.json`, `..._Known-Answers_Report.json` with each answer's sentences, citations, sources and timing, and `..._Summary_Report.md`). Each question is one Detailed answer (`HYBRID` research) under the Researcher daily cap.

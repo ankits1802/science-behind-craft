@@ -296,6 +296,7 @@ def main():
         variables = {
             "AWS_REGION": REGION,
             "AWS_DEPLOY_ROLE_ARN": tf["deploy_role_arn"],
+            "AWS_RIVER_LOAD_ROLE_ARN": tf["river_load_role_arn"],
             "EC2_INSTANCE_ID": tf["instance_id"],
             "MEDIA_BUCKET": tf["media_bucket"],
             "API_BASE_URL": tf["api_base_url"],

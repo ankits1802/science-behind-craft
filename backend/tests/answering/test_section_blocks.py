@@ -8,11 +8,18 @@ from app.science.ladder import process_ladder
 from app.services.answer_events import cited_claims
 from app.services.answer_translation import translated_block
 from app.services.research_ledger import ResearchLedger
-from app.services.section_blocks import BlockRefused, KeptSentence, prose_block, prose_problems
+from app.services.section_blocks import (
+    BlockRefused,
+    KeptSentence,
+    prose_block,
+    prose_problems,
+    section_sentences,
+)
+from app.services.stated_names import register_places_named, unstated_names
 
 from ..planner.fakes import FakeModel
 from ..science.golden_process import KUT, RED, golden_records, stage_id
-from .fakes import ALUM_CLAIM_ID, SOURCES, VIEWS, WRITTEN_LAKE_ID, translation
+from .fakes import ALUM_CLAIM_ID, GUESS_CLAIM_ID, SOURCES, VIEWS, WRITTEN_LAKE_ID, translation
 from .test_translation_flow import reply
 
 CITED = cited_claims(list(VIEWS), SOURCES)
@@ -39,6 +46,44 @@ def test_a_block_with_an_uncited_sentence_is_refused_whole() -> None:
 def test_a_figure_no_cited_claim_or_quote_holds_refuses_the_block() -> None:
     sentences = [kept("Mordant baths held 9 g/L alum.", WRITTEN_LAKE_ID)]
     assert prose_problems(sentences, CITED) == ["sentence 1 states 9, which no cited claim or quote holds"]
+
+
+@pytest.mark.parametrize(
+    ("text", "named"),
+    [
+        ("Mordant baths held 8 g/L alum in March.", "March"),
+        ("Mordant baths held 8 g/L alum through the monsoon.", "monsoon"),
+        ("Mordant baths held 8 g/L alum in Kachchh.", "Kachchh"),
+        ("Mordant baths held 8 g/L alum in Gujarat.", "Gujarat"),
+    ],
+)
+def test_a_time_or_place_no_cited_claim_or_quote_states_refuses_the_block(text: str, named: str) -> None:
+    assert prose_problems([kept(text, WRITTEN_LAKE_ID)], CITED) == [
+        f"sentence 1 names {named}, which no cited claim or quote states"
+    ]
+
+
+def test_a_place_a_quote_states_or_a_compass_word_is_no_problem() -> None:
+    assert (
+        unstated_names("Dyers in Kachchh work in winter.", ["dyers of kachchh work in the cold season"]) == []
+    )
+    assert unstated_names("West of the river, North of the town.", []) == []
+    assert register_places_named("Bhuj is in Kachchh, Gujarat; Mon is in Nagaland.") == [
+        "Kachchh",
+        "Gujarat",
+        "Mon",
+        "Nagaland",
+    ]
+
+
+def test_a_sentence_naming_what_its_sources_do_not_is_dropped_alone() -> None:
+    sentences = [
+        kept("Alum is the mordant.", ALUM_CLAIM_ID),
+        kept("Mordant baths held 8 g/L alum in March.", WRITTEN_LAKE_ID),
+        kept("Lime in the wash water may brighten the red in Gujarat.", GUESS_CLAIM_ID),
+    ]
+    split = section_sentences(sentences, CITED)
+    assert ([s.text for s in split.facts], split.open_questions) == (["Alum is the mordant."], ())
 
 
 async def test_translating_a_ladder_changes_its_sentences_only_and_keeps_their_citations() -> None:

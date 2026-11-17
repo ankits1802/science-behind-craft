@@ -34,6 +34,8 @@ from .answer_events import CitedClaims, cited_claims
 from .answer_sections import ClaimsOf
 from .answer_translation import AnswerTranslation
 from .answering import AnswerAsk, AnswerPipeline
+from .block_builders import BlockBuilders
+from .builder_interface import BuilderTools
 from .craft_process import process_records
 from .craft_resolver import CraftIndexStore, DatabaseCraftResolver
 from .live_sources import LiveSourcesStore
@@ -155,6 +157,8 @@ def build_answer_pipeline(
     live: LiveSourcesStore,
     plan_model: StructuredModel,
     compose_model: StructuredModel,
+    builder_plan_model: StructuredModel,
+    builder_compose_model: StructuredModel,
     translate_model: StructuredModel,
     embed: TextEmbedder,
     shield: ShieldedWork,
@@ -162,8 +166,6 @@ def build_answer_pipeline(
     async def resolve(query: CraftQuery) -> CraftResolution:
         async with sessions() as session:
             return await DatabaseCraftResolver(session, store=index, embed=embed).resolve(query)
-
-    understander = ModelUnderstander(model=plan_model, resolve=resolve)
 
     async def research(
         request: PlanRequest, progress: ResearchProgress, trail: ResearchTrail
@@ -175,14 +177,16 @@ def build_answer_pipeline(
         )
         return await planner.research(request, progress=progress, trail=trail)
 
+    tools = BuilderTools(sessions, live, builder_plan_model, builder_compose_model)
     return AnswerPipeline(
-        understand=understander.understand,
+        understand=ModelUnderstander(model=plan_model, resolve=resolve).understand,
         research=research,
         compose=ModelComposer(model=compose_model).compose,
         store=SqlAnswerStore(sessions, embed=embed, shield=shield),
         translation=build_answer_translation(sessions, model=translate_model),
         pieces=SqlPieceStore(sessions, embed=embed, shield=shield),
         enrichment=build_answer_enrichment(sessions, live),
+        builders=BlockBuilders.from_registry(tools),
     )
 
 

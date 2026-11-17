@@ -12,8 +12,13 @@ from geo_etl.layers import Options, Result, download, failure
 from geo_etl.rows import Rows
 
 URL = HYDRORIVERS.url
+ARCHIVE = "HydroRIVERS_v10_as_shp.zip"
 MAJOR_ORD_FLOW = 4
 COLUMNS = ["HYRIV_ID", "ORD_STRA", "ORD_FLOW", "DIS_AV_CMS", "LENGTH_KM", "UPLAND_SKM"]
+
+
+def cached_archive(cache: Path) -> Path:
+    return download(URL, cache / "hydrorivers" / ARCHIVE)
 
 
 def shapefile_member(archive: Path) -> str:
@@ -80,7 +85,7 @@ def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
     )
     failures: list[dict] = []
     try:
-        archive = download(URL, options.cache / "hydrorivers" / "HydroRIVERS_v10_as_shp.zip")
+        archive = cached_archive(options.cache)
         xmin, ymin, xmax, ymax = districts.total_bounds
         rivers = load_rivers(archive, (xmin - 2, ymin - 2, xmax + 2, ymax + 2)).to_crs(INDIA_LCC)
         table = metrics(to_lcc(districts), rivers)

@@ -2,7 +2,14 @@ from __future__ import annotations
 
 from fastapi import Request, Response, status
 
-__all__ = ["PRIVATE_NO_CACHE", "etag_matches", "quoted_etag", "revalidated"]
+__all__ = [
+    "PRIVATE_NO_CACHE",
+    "etag_matches",
+    "not_modified",
+    "quoted_etag",
+    "revalidated",
+    "revalidation_headers",
+]
 
 PRIVATE_NO_CACHE = "private, no-cache"
 
@@ -20,10 +27,19 @@ def etag_matches(if_none_match: str | None, etag: str) -> bool:
     return "*" in tags or bare(etag) in tags
 
 
-def revalidated(request: Request, response: Response, version: str) -> Response | None:
-    etag = quoted_etag(version)
-    headers = {"ETag": etag, "Cache-Control": PRIVATE_NO_CACHE}
-    if etag_matches(request.headers.get("if-none-match"), etag):
+def revalidation_headers(version: str) -> dict[str, str]:
+    return {"ETag": quoted_etag(version), "Cache-Control": PRIVATE_NO_CACHE}
+
+
+def not_modified(request: Request, version: str) -> Response | None:
+    headers = revalidation_headers(version)
+    if etag_matches(request.headers.get("if-none-match"), headers["ETag"]):
         return Response(status_code=status.HTTP_304_NOT_MODIFIED, headers=headers)
-    response.headers.update(headers)
     return None
+
+
+def revalidated(request: Request, response: Response, version: str) -> Response | None:
+    answer = not_modified(request, version)
+    if answer is None:
+        response.headers.update(revalidation_headers(version))
+    return answer

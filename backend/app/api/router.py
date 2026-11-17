@@ -9,7 +9,9 @@ from app.api.routes import (
     map_layers,
     me,
     media,
+    molecules,
     password_change,
+    rivers,
     secrets,
     settings,
     terms,
@@ -31,6 +33,8 @@ api_router.include_router(knowledge.router)
 api_router.include_router(listen.router)
 api_router.include_router(map_layers.router)
 api_router.include_router(media.router)
+api_router.include_router(molecules.router)
+api_router.include_router(rivers.router)
 api_router.include_router(secrets.router)
 api_router.include_router(settings.router)
 api_router.include_router(terms.router)

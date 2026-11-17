@@ -13,7 +13,8 @@ import type { UnderstoodChange } from "@/components/answer/UnderstoodLine";
 import { useListen } from "@/components/answer/useListen";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { languageFor, type AnswerLanguage } from "@/lib/answerLanguages";
-import type { Term, TermSpan } from "@/lib/explainerContract";
+import type { TermSpan } from "@/lib/explainerBlockBase";
+import type { Term } from "@/lib/explainerContract";
 import type { ExplainerState } from "@/lib/explainerState";
 import { explainerSourceNumbers, hasTranslatedText, shownSections, showsEarlierResearch, termQuestion } from "@/lib/explainerView";
 

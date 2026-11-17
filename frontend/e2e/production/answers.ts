@@ -5,6 +5,7 @@ import { blockSentences } from "@/lib/explainerView";
 import type { AnswerSentence } from "@/lib/types";
 
 import type { TappedChunk, TappedStream } from "./streamTap";
+import { NO_REGION_STORY, waterStoryFound, waterStoryOutcome, withRegionStory, type CheckOutcome, type RegionStoryRecord } from "./waterStory";
 
 export const ANSWER_DEADLINE_MS = 10 * 60_000;
 export const STALL_LIMIT_MS = 150_000;
@@ -13,16 +14,21 @@ export const EXPECTED_DEPTH_LABEL = "Detailed";
 export const KNOWN_ANSWER = /\balum\b|फिटकरी|फिटकिरी|फ़िटकरी/i;
 export const LATIN = "Latn";
 
-export type KnownAnswerQuestion = { label: string; language: string; script: string; question: string };
+export type KnownAnswerCheck = "MORDANT" | "WATER_STORY";
+export type KnownAnswerQuestion = { label: string; language: string; script: string; question: string; check: KnownAnswerCheck };
+export type KnownAnswerOptions = { riversLoaded: boolean };
 
+export const RIVERS_NOT_LOADED: KnownAnswerOptions = { riversLoaded: false };
 export const KNOWN_ANSWER_QUESTIONS: readonly KnownAnswerQuestion[] = [
-  { label: "English", language: "en", script: LATIN, question: "Which mordant fixes the red in Kutch Ajrakh block printing?" },
+  { label: "English", language: "en", script: LATIN, check: "MORDANT", question: "Which mordant fixes the red in Kutch Ajrakh block printing?" },
   {
     label: "Hindi",
     language: "hi",
     script: "Deva",
+    check: "MORDANT",
     question: "कच्छ की अजरख छपाई में लाल रंग पक्का करने के लिए कौन सा मॉर्डेंट इस्तेमाल होता है?"
-  }
+  },
+  { label: "Water", language: "en", script: LATIN, check: "WATER_STORY", question: "How does the water of Kachchh shape Kutch Ajrakh?" }
 ];
 
 export type WaitOutcome = "stalled" | "timeout" | "never-started";
@@ -71,9 +77,11 @@ export type AnswerRecord = {
   followUps: string[];
   scripts: { translated: number; englishFallback: number; other: number };
   knownAnswerFound: boolean;
+  regionStory: RegionStoryRecord;
   pageSentences: number | null;
   pageSentencesWithoutChip: number | null;
   problems: string[];
+  notes: string[];
 };
 
 function isComment(block: string): boolean {
@@ -170,9 +178,12 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
   let craft: string | null = null;
   let error: string | null = null;
   let notEnoughEvidence: string | null = null;
+  let regionStory = NO_REGION_STORY;
   for (const { at, event } of parsed.events) {
-    if (event.type === "block") sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence)));
-    else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
+    if (event.type === "block") {
+      sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence)));
+      regionStory = withRegionStory(regionStory, event.data.block);
+    } else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
     else if (event.type === "source") {
       const { id, kind, title, publisher, year, doi, url } = event.data;
       sources.push({ id, kind, title, publisher, year, doi, url });
@@ -217,10 +228,12 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     sentences,
     followUps,
     scripts: scriptCounts(sentences, question.script),
-    knownAnswerFound: sentences.some((sentence) => KNOWN_ANSWER.test(`${sentence.text} ${sentence.original ?? ""}`)),
+    knownAnswerFound: question.check === "WATER_STORY" ? waterStoryFound(regionStory) : sentences.some((sentence) => KNOWN_ANSWER.test(`${sentence.text} ${sentence.original ?? ""}`)),
+    regionStory,
     pageSentences: null,
     pageSentencesWithoutChip: null,
-    problems: []
+    problems: [],
+    notes: []
   };
 }
 
@@ -235,7 +248,12 @@ export function scriptProblems(sentences: readonly SentenceRecord[], script: str
   });
 }
 
-export function answerProblems(record: AnswerRecord, question: KnownAnswerQuestion): string[] {
+export function knownAnswerOutcome(record: AnswerRecord, question: KnownAnswerQuestion, options: KnownAnswerOptions = RIVERS_NOT_LOADED): CheckOutcome {
+  if (question.check === "WATER_STORY") return waterStoryOutcome(record.regionStory, options.riversLoaded);
+  return { problems: record.knownAnswerFound ? [] : ["no sentence names alum, the known mordant"], notes: [] };
+}
+
+export function answerProblems(record: AnswerRecord, question: KnownAnswerQuestion, options: KnownAnswerOptions = RIVERS_NOT_LOADED): string[] {
   const problems: string[] = [];
   const sent = new Set(record.sources.map((source) => source.id));
   if (record.httpStatus !== 200) problems.push(`the stream answered ${record.httpStatus ?? "nothing"}`);
@@ -249,9 +267,8 @@ export function answerProblems(record: AnswerRecord, question: KnownAnswerQuesti
   if (record.refusedFrames > 0) problems.push(`${record.refusedFrames} stream frames broke the explainer contract`);
   const orphans = record.sentences.flatMap((sentence) => sentence.sourceIds).filter((id) => !sent.has(id));
   if (orphans.length > 0) problems.push(`${new Set(orphans).size} cited sources never arrived as source events`);
-  if (!record.knownAnswerFound) problems.push("no sentence names alum, the known mordant");
   if (record.pageSentencesWithoutChip) problems.push(`${record.pageSentencesWithoutChip} sentences on the page show no citation`);
   const shown = new Set(record.sentences.filter((sentence) => sentence.kind === "sentence" && sentence.citations > 0).map((sentence) => `${sentence.sectionId}:${sentence.id}`)).size;
   if (record.pageSentences !== null && record.pageSentences !== shown) problems.push(`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`);
-  return [...problems, ...scriptProblems(record.sentences, question.script)];
+  return [...problems, ...knownAnswerOutcome(record, question, options).problems, ...scriptProblems(record.sentences, question.script)];
 }

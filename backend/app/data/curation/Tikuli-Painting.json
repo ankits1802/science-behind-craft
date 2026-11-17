@@ -1,0 +1,3879 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Tikuli-Painting",
+  "version": 1,
+  "curatedAt": "2026-11-17T18:00:06+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Tikuli painting Patna Bihar craft history",
+      "site": "web search"
+    },
+    {
+      "query": "Tikuli art Bihar masonite board enamel paint",
+      "site": "web search"
+    },
+    {
+      "query": "\"tikuli\" art research paper journal Bihar",
+      "site": "web search"
+    },
+    {
+      "query": "टिकुली कला पटना",
+      "site": "web search"
+    },
+    {
+      "query": "tikuli art shodhganga thesis Bihar folk art",
+      "site": "web search"
+    },
+    {
+      "query": "tikuli Patna glass bindi gold foil museum collection",
+      "site": "web search"
+    },
+    {
+      "query": "\"Tikuli\" \"Gai Ghat\" Digha Danapur artisans families MDF board",
+      "site": "web search"
+    },
+    {
+      "query": "Tikuli art Development Commissioner Handicrafts Patna cluster",
+      "site": "web search"
+    },
+    {
+      "query": "tikuli painting GI tag application Bihar",
+      "site": "web search"
+    },
+    {
+      "query": "craftrevival.org tikuli Patna glass bindi",
+      "site": "web search"
+    },
+    {
+      "query": "tikuli art Patna The Hindu OR Times of India OR Telegraph artisans enamel hardboard",
+      "site": "web search"
+    },
+    {
+      "query": "PIB Padma Shri 2024 Ashok Kumar Biswas Tikuli",
+      "site": "web search"
+    },
+    {
+      "query": "folkartopedia टिकुली कला का वर्तमान स्वरूप परंपरा या आधुनिक घटना",
+      "site": "web search"
+    },
+    {
+      "query": "folkartopedia tikuli art Upendra Maharathi masonite Jagdamba Devi",
+      "site": "web search"
+    },
+    {
+      "query": "telegraphindia tikuli Patna artisans",
+      "site": "web search"
+    },
+    {
+      "query": "\"tikuli\" Bihar hindustantimes OR indianexpress OR thehindu",
+      "site": "web search"
+    },
+    {
+      "query": "\"Nasriganj\" Danapur tikuli cluster SHG (no source gives Nasriganj's district)",
+      "site": "web search"
+    },
+    {
+      "query": "tikuli",
+      "site": "api.openalex.org"
+    },
+    {
+      "query": "tikuli",
+      "site": "api.crossref.org"
+    },
+    {
+      "query": "tikuli (file search)",
+      "site": "commons.wikimedia.org"
+    },
+    {
+      "query": "tikuli (site search)",
+      "site": "folkartopedia.com"
+    },
+    {
+      "query": "Patna, Danapur, Varanasi, Kolkata, Bihar, Mithila (entity ids)",
+      "site": "wikidata.org"
+    },
+    {
+      "query": "handle 10603/266246 (live page timed out; no Wayback snapshot)",
+      "site": "shodhganga.inflibnet.ac.in"
+    },
+    {
+      "query": "Art and Crafts page (certificate failure; no Wayback snapshot)",
+      "site": "state.bihar.gov.in"
+    },
+    {
+      "query": "home page (no tikuli text)",
+      "site": "patna.nic.in"
+    },
+    {
+      "query": "Painting in Bihar (not cited: its tikuli text repeats the Bihar Tourism page)",
+      "site": "en.wikipedia.org"
+    },
+    {
+      "query": "Tikuli Art of Bihar (not cited: no author or publisher stated)",
+      "site": "globalinch.org"
+    },
+    {
+      "query": "Reviving Bihar's tikuli art (not cited: repeats the Gaon Connection and Village Square text)",
+      "site": "pravasisamwad.com"
+    },
+    {
+      "query": "टिकुली कला (not cited: copy of the Folkartopedia article)",
+      "site": "bharatdiscovery.org"
+    },
+    {
+      "query": "Padma Shri award to Ashok Kumar Biswas (not cited: gives his home locality)",
+      "site": "prabhatkhabar.com"
+    },
+    {
+      "query": "Hindi paper on Ashok Kumar Biswas, IJRAR25D3284 (not cited: the PDF text extracts garbled)",
+      "site": "ijrar.org"
+    },
+    {
+      "query": "Emergence of Cultural and Fashion Uniqueness from Bihar (not cited: passing mention only)",
+      "site": "sciencepublishinggroup.com"
+    },
+    {
+      "query": "UMSAS profile (not cited: no tikuli fact beyond its museum holding tikuli art)",
+      "site": "folkartopedia.com"
+    },
+    {
+      "query": "retailer and blog pages (not cited: D sources)",
+      "site": "itokri.com, memeraki.com, rooftopapp.com, weavehand.com"
+    },
+    {
+      "query": "application 1633 details table and Statement of Case (the verifier's extraction keeps only the document list; documents download only through a form post, a plain request returns 404)",
+      "site": "search.ipindia.gov.in"
+    },
+    {
+      "query": "Digha, Gai Ghat, Kanpur, Delhi, Bihar (entity ids; no Wikidata item for Digha in Patna beyond Q15213979)",
+      "site": "wikidata.org"
+    },
+    {
+      "query": "File:TIkuli_Art_by_Ashok_Kumar_Biswas.jpg (not used: a reproduction of a living artist's painting with no recorded permission)",
+      "site": "commons.wikimedia.org"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "WEB_PAGE",
+      "title": "Tikuli Painting",
+      "publisher": "Upendra Maharathi Shilp Anusandhan Sansthan",
+      "url": "https://umsas.org.in/tikuli-painting-details/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Design and Technology Development Workshop for Tikuli Art at Tikuli Cluster Danapur",
+      "authors": [
+        "Hema Vishwakarma"
+      ],
+      "publisher": "Upendra Maharathi Shilp Anusandhan Sansthan",
+      "url": "https://umsas.org.in/wp-content/uploads/2022/01/03-DTDW-Report-Tikuli-Art-Hema-Vishwakarma.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17",
+      "year": 2018
+    },
+    {
+      "id": "S03",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Shri Ashok Kumar Biswas",
+      "publisher": "Padma Awards, Government of India",
+      "url": "https://padmaawards.gov.in/Document/pdf/CitationsForTickets/2024/202436.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17",
+      "year": 2024
+    },
+    {
+      "id": "S04",
+      "kind": "WEB_PAGE",
+      "title": "Tikuli Paintings",
+      "publisher": "National Portal of India",
+      "url": "https://www.india.gov.in/explore-india/odop/details/tikuli-paintings",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S05",
+      "kind": "WEB_PAGE",
+      "title": "Tikuli Painting",
+      "publisher": "Department of Tourism, Government of Bihar",
+      "url": "https://tourism.bihar.gov.in/en/experiences/art-and-craft/textiles-and-handicraft/tikuli-painting",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S06",
+      "kind": "WEB_PAGE",
+      "title": "Art and Crafts",
+      "publisher": "Government of Bihar",
+      "url": "https://betastate.bihar.gov.in/artandcrafts",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S07",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Krishna (Tikuli Painting)",
+      "publisher": "Bihar Museum",
+      "url": "https://www.biharmuseum.org/krishna-tikuli-painting/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S08",
+      "kind": "WEB_PAGE",
+      "title": "Tikuli Art Exhibition",
+      "publisher": "Bihar Museum",
+      "url": "https://www.biharmuseum.org/tikuli-art-exhibition/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17",
+      "year": 2026
+    },
+    {
+      "id": "S09",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: 657, Tikuli Art",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/657",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S10",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: 1633",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1633",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S11",
+      "kind": "OTHER",
+      "title": "Joint Intervention for Craft of Bihar: A NIFT - SIDBI initiative",
+      "authors": [
+        "Vikas Kumar"
+      ],
+      "publisher": "National Institute of Fashion Technology, Patna",
+      "url": "https://nift.ac.in/patna/sites/patna/files/inline-files/NIFT-SIDBI%20Newsletter.pdf",
+      "archivedUrl": "https://web.archive.org/web/20240712165329id_/https://nift.ac.in/patna/sites/patna/files/inline-files/NIFT-SIDBI%20Newsletter.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S12",
+      "kind": "PAPER",
+      "title": "Culture and Art Forms of Bihar creating a sense of community",
+      "authors": [
+        "Shashi Singh",
+        "Fulena Rajak",
+        "Anjali Sharma"
+      ],
+      "publisher": "ITM Web of Conferences",
+      "year": 2025,
+      "url": "https://www.itm-conferences.org/articles/itmconf/pdf/2025/05/itmconf_iccp-ci2024_03011.pdf",
+      "doi": "10.1051/itmconf/20257403011",
+      "archivedUrl": "https://web.archive.org/web/20250805203945id_/https://www.itm-conferences.org/articles/itmconf/pdf/2025/05/itmconf_iccp-ci2024_03011.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S13",
+      "kind": "PAPER",
+      "title": "Reviving Tikuli Art: An Exploration of History, Challanges, and Evolution",
+      "authors": [
+        "Anjali Singh",
+        "Ranjana Kumari"
+      ],
+      "publisher": "International Journal of Research and Analytical Reviews",
+      "year": 2025,
+      "url": "https://www.ijrar.org/download1.php?file=IJRAR25C1109.pdf",
+      "doi": "10.56975/ijrar.v12i3.317102",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S14",
+      "kind": "WEB_PAGE",
+      "title": "टिकुली कला का वर्तमान स्वरूप: परंपरा या आधुनिक घटना?",
+      "authors": [
+        "राकेश कुमार झा"
+      ],
+      "publisher": "Folkartopedia",
+      "year": 2020,
+      "url": "https://www.folkartopedia.com/crafts/present-form-of-tikuli-art-traditional-or-accidental-hindi-sk/",
+      "language": "hi",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "An 800-Year-Old Art Form Is Helping over 300 Women in Bihar Earn Livelihoods",
+      "authors": [
+        "Nazariya"
+      ],
+      "publisher": "The Better India",
+      "url": "https://thebetterindia.com/93754/tikuli-art-revival-bihar-women-artisans-empowerment/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S16",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Tikuli Art of Bihar: From adorning women to empowering them",
+      "authors": [
+        "Lovely Kumari"
+      ],
+      "publisher": "Gaon Connection",
+      "year": 2022,
+      "url": "https://www.gaonconnection.com/english/bihar-patna-tikuli-art-culture-tradition-women-empowerment-livelihood-madhubani-50628/articleshow/124942037.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S17",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Tikuli art - Born from bindis",
+      "authors": [
+        "Gurvinder Singh"
+      ],
+      "publisher": "Village Square",
+      "year": 2022,
+      "url": "https://villagesquare.in/tikuli-art-born-from-women-bindis-seeing-revival/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S18",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Tikuli Art Of Bihar: The Colourful Heartbeat Of Patna's Artisan Community",
+      "authors": [
+        "OT Staff"
+      ],
+      "publisher": "Outlook Traveller",
+      "year": 2025,
+      "url": "https://www.outlooktraveller.com/experiences/heritage/tikuli-art-of-bihar-explained-the-colourful-heartbeat-of-patnas-artisan-community",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S19",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Tikuli Painting in Bihar: History, Technique and the Revival",
+      "authors": [
+        "Athmaja Biju"
+      ],
+      "publisher": "Abirpothi",
+      "year": 2025,
+      "url": "https://www.abirpothi.com/tikuli-painting-in-bihar-history-technique-and-the-revival/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S20",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Bihar's Tikuli Painting Set to Shine Globally as GI Tag Nears Approval",
+      "publisher": "Patna Press",
+      "year": 2026,
+      "url": "https://patnapress.com/bihar-tikuli-painting-gi-tag/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S21",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "First woman elephant mahout among 34 unsung heroes awarded Padma Shri",
+      "authors": [
+        "PTI"
+      ],
+      "publisher": "The Tribune",
+      "year": 2024,
+      "url": "https://www.tribuneindia.com/news/india/first-woman-elephant-mahout-among-34-unsung-heroes-awarded-padma-shri-584575",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S22",
+      "kind": "PAPER",
+      "title": "Potential of Bihar Handicrafts (Threats and Opportunities) With Context to Patna",
+      "authors": [
+        "Md. Aatir Usmani",
+        "Akshay Kumar Pandey",
+        "Mukund Murari",
+        "Uday Bhanu Shukla",
+        "Aradhya Rai",
+        "Zobya Arzoo"
+      ],
+      "publisher": "International Research Journal on Advanced Engineering and Management",
+      "year": 2026,
+      "url": "https://goldncloudpublications.com/index.php/irjaem/article/download/1670/1557",
+      "doi": "10.47392/irjaem.2026.0310",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Tikuli is the local word in Bihar for the bindi, the bright dot that women wear on the forehead between the eyebrows.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 5",
+          "quote": "The word 'tikuli' is the local term for 'bindi', which is usually a bright, colorful dot that women wear between their brows."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 2",
+          "quote": "The word 'tikuli' is the local term for 'bindi', which is usually a bright, colourful dot that women wear between their brows."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "para 3",
+          "quote": "Tikuli is the term that is locally used for bindis, which are essentially colorful dots that women wear as accessories between their eyebrows."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "The name tikuli comes from tikli, a Hindi word that means bindi or dot.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "para 1",
+          "quote": "The name Tikuli comes from the word 'tikli', which means 'bindi' or 'dot' in Hindi."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 3",
+          "quote": "is derived from the Hindi word 'tikli,' meaning bindi-a traditional decorative ornamentation worn on the forehead by Indian women"
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Modern tikuli painting uses glossy enamel paints on hardboard or medium-density fibreboard in place of the glass of the old ornaments.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "para 2",
+          "quote": "Modern Tikuli practice shifts from glass to hardboard or medium-density fibreboard and uses enamel paints that produce a glossy, durable surface."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 10",
+          "quote": "Artists typically begin with hardboards and use enamel paints to create complex compositions."
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli designs today decorate wall paintings, wall plates, coasters, table mats, trays, pen stands, earrings, fabrics and saris instead of forehead bindis.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 22",
+          "quote": "Today, instead of tikulis that were used as bindis, the art form adorns wall paintings, coasters, table mats, trays, pen-stands, earrings, as on fabrics and saris."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 3",
+          "quote": "to make decorative wall plates, coasters, table mats, wall hanging, trays, pen stands and other utility items"
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli art has become a source of income and empowerment for women artisans in Bihar.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 5",
+          "quote": "However, in today's time, Tikuli art serves as a source of empowerment for the women of Bihar."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 1",
+          "quote": "One such art form from Bihar is Tikuli art, empowering the state's women artisans."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "para 7",
+          "quote": "Women artisans in particular use Tikuli work as a source of income and as a way to claim visibility within local craft economies."
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Present-day tikuli painting shows a clear influence of Mithila or Madhubani painting in its composition and themes.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 5",
+          "quote": "Mithila painting has a clear influence in the paintings of Tikuli art at present."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "Influenced by Madhubani in terms of composition and themes"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para 22",
+          "quote": "Tikuli has a shadow of the famous Madhubani art techniques."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Tikuli Art bears a resemblance to Madhubani painting, with Mithila's style clearly influencing contemporary Tikuli works."
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli art combines the traditions of Madhubani art and Patna Kalam art with a Japanese technique of enamel paint on timber.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 9",
+          "quote": "the art form that combines the traditions of Madhubani art, Patna Kalam art and a Japanese art technique of using enamel paints on timber"
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mithila painting is done on paper and cloth, whereas tikuli painting is done on hardboard or MDF.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 5",
+          "quote": "while Mithila painting is done on paper and cloth, painting in Tikuli painting is done on hardboard MDF"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Mithila paintings typically adorn paper and fabric, whereas Tikuli paintings are crafted on hardboard or MDF."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli paintings are relatively small, while Mithila paintings are usually larger.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 5",
+          "quote": "In Mithila painting the paintings are larger while in Tikuli painting are relatively small."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Mithila paintings tend to be larger in scale, whereas Tikuli paintings are generally more compact."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli painting depicts the life of common people alongside religion, while Mithila painting has kept mainly to religious subjects.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 5",
+          "quote": "Mithila painting has been confined mainly by the painters to religious subjects, while the Tikuli style depicts the life of the common people along with religion."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Mithila paintings often explore religious themes, while Tikuli art depicts everyday life alongside spiritual motifs."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Common tikuli themes are festivals of Bihar, Indian wedding scenes and Krishna Leela, with many stories of Lord Krishna.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "para 17",
+          "quote": "The themes mostly revolve around festivals of Bihar, Indian wedding scenes, and Krishna Leela."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "featuring vibrant scenes of Indian weddings, traditional festivals like Chhath Puja, Diwali, and Holi, as well as epic tales from the Ramayana, Mahabharata, and Krishna Leela"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 23",
+          "quote": "The theme of the paintings are usually drawn from Indian folklore, especially from the stories of Lord Krishna."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli enamel colours are mostly bright crimson, yellow, cobalt blue and deep green, chosen to stand out against a dark base.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 23",
+          "quote": "The enamel paints used in the craft are mostly bright crimson, yellow, cobalt blue and deep green, so that the designs come out vibrantly over a dark fibreboard."
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the revived craft, women painted the designs in single strokes, in a complementary colour scheme built from primary colours.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "was painted by women in single strokes in a complimentary colour scheme using primary colors to create a piece of art"
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "A Bihar Museum record describes a tikuli painting by Ashok Kumar Biswas that shows the whole life of Krishna, from his birth to his final departure.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para 1",
+          "quote": "This Tikuli painting by Padma Shri awardee Ashok Kumar Biswas beautifully captures the entirety of Krishna's life. The artwork illustrates key moments from his birth to his final departure"
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Tikuli art is believed to have originated in Patna about 800 years ago.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "It is believed that this art originated approximately 800 years ago in the region around Patna."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "section D, Tikuli Works",
+          "quote": "Originating in the city of Patna, the skill is thought to date back approximately 800 years."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 1",
+          "quote": "Tikuli art originated 800 years ago from Patna."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "para 2",
+          "quote": "Tikuli is a type of hand painting and its history spread over 800 years. The painting with its modern evolution and varied manifestations, find its origin in Patna, Bihar."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 3",
+          "quote": "Tikuli art originated in Patna over 800 years ago."
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli art is an ancient craft that dates back to the Mauryan period, when royal and aristocratic women wore tikulis.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 1",
+          "quote": "reviving Tikuli Art, an ancient craft dating back to the Mauryan period"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 3",
+          "quote": "Historically, Tikuli art was practiced during the Mauryan period, as evidenced by ancient sculptures depicting women with ornate bindis."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 13",
+          "quote": "There is archeological evidence that the tikulis were a part and parcel of the ornaments used by women in the Mauryan era, particularly royalty and aristocratic women"
+        },
+        {
+          "sourceId": "S20",
+          "locator": "para 3",
+          "quote": "It started as a way for bindi-making artists to earn more income and has roots going back to the Mauryan period."
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L06"
+      },
+      "text": "Tikuli art originated in Bihar and has its roots in the Mithila region.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "para 1",
+          "quote": "Tikuli art is a traditional folk art form that originated in Bihar and has its roots in the Mithila region."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Mughals patronised tikuli art, and the craft flourished under Mughal rule.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 1",
+          "quote": "The Mughals also patronized this form of art and greatly appreciated its importance."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "It was not only patronized by the royals but it flourished during the Mughal rule."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "This art form received patronage and encouragement during the Mughal period."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 3",
+          "quote": "The Mughals were active patrons of the art form, and appreciated its many salient features."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L07"
+      },
+      "text": "Traders from distant states of northern and western India came to Patna to buy embellished tikulis in bulk.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "Traders from the far-off states of northern and western India to Patna where bulk purchasers of the gorgeously embellished Tikulis"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 3",
+          "quote": "the tikuli art-form managed to influence traders from across the country to flock to Patna to buy Tikuli art in bulk"
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikulis were once produced in Patna on a mass scale and exported to cities such as Kanpur and Delhi.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 8",
+          "quote": "The art of making bindis commercially in such an elaborate manner flourished in the city of Patna. The tikulis used to be produced in a mass scale and were exported to cities like Kanpur and Delhi"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the past, tikulis were worn mainly by queens and aristocratic women, who prized them as possessions.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 3",
+          "quote": "In the past times, Tikuli were mainly used by queens and aristocrat women. Beautiful hand crafted Tikuli were revered as proud possessions of the women."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "Tikuli were mainly adorned by Queens and Aristocrat women of yore."
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Around the 17th century, craftsmen began making miniature art pieces with the tikuli method, motifs and thick, shiny paint.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 9",
+          "quote": "Then around the 17th century craftsmen started making miniature art pieces in the same method, with the same tikuli motifs and thick, shiny paint."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Old tikulis began as glass melted in a furnace and blown like a balloon into a thin sheet.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "Earlier, the glass was melted in the furnace as a balloon."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "Originally, it involved melting glass, blowing it into a thin sheet"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "Initially, glass was melted in a furnace and shaped like a balloon."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Once the glass had cooled, it was cut into round pieces of various sizes with a special tool.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "When cooled, it was harvested to the required size with a special tool."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 15",
+          "quote": "The glass sheet was cut into round pieces in different sizes"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "Glass was melted in a furnace and then cut into the desired shape."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The cut glass pieces were then overlaid with gold foil, or with gold or silver foil in one account.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "Then gold work was pasted on it."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "Subsequently, it was overlaid with gold or silver foil."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "section D, Tikuli Works",
+          "quote": "It entailed melting glass, tracing a pattern in natural colors, and then decorating it with gold foil"
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Designs of flowers, leaves, gods and goddesses were then scratched in with a sharp bamboo point and filled with colours.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "After that, with the sharp pencil of the boss, pictures of flowers, leaves, gods and goddesses were scratched and painted with various colors."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 16",
+          "quote": "with sharp bamboo tools, traced patterns on the tikulis and filled them with natural colours"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "Thereafter, images of deities, nature-related motifs and other designs were etched onto it."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Finally, the tikuli received a coat of adhesive, given as acacia glue or gond, and was rubbed with a soft cloth.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "Then it was coated with acacia glue. In the end, she was rubbed with a soft cloth."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 16",
+          "quote": "the final touch was a layer of gond (adhesive) applied to the tikuli before it was ready to be used"
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Making a single glass tikuli took seven to ten days.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "Due to this process it took seven to ten days to make one piece of Tikuli."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "The creation of a single Tikuli would take approximately seven to ten days."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "crafting a single piece of Tikuli could take anywhere from seven to ten days"
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Three artisans shared the making of a tikuli: one blew and cut the glass, one applied the gold, and one scratched and coloured the design.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 2",
+          "quote": "One artist inflated the glass as a balloon and cut it with a special kind of scissors, another made gold work on it, and the third scratched it with a bamboo pointed pencil and filled them with different colors."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "One artisan would shape and cut the glass, another would apply intricate goldwork, and a third would etch designs with a precision tool and fill them with vibrant hues."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Muslim artisans cut the glass sheets into round pieces and handed them to Hindu artists, who covered them with gold foil.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 15",
+          "quote": "The glass sheet was cut into round pieces in different sizes, a work undertaken by Muslim artisans, and then handed over to Hindu artists who covered the tikulis with gold foil."
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "During British rule, machine-made bindis replaced tikulis and thousands of tikuli artists lost their work.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "Later, post British raj and industrialization, machine made bindis replaced Tikuli. For more than a decade there after Tikuli artists were jobless."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 6",
+          "quote": "With the decline of the Mughal Empire, and the coming of the British Raj, Tikuli art faced a severe blow."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 6",
+          "quote": "Thousands of Tikuli artists were left jobless as machine-made bindis came into the market, and Tikuli art was lost in the chaos."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "para 4",
+          "quote": "अंग्रेजी शासन के दौर में टिकुली सहित कई स्वदेशी कलात्मक वस्तुएं मशीनों द्वारा निर्मित होने लगीं जिससे हजारों पारंपरिक कलाकार बेरोजगार हुए।"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "para 5",
+          "quote": "The craft nearly disappeared in the early twentieth century as industrially produced bindis and decorative objects replaced labour-intensive handmade pieces."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "By the year 1900, tikuli art was facing the threat of extinction.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "Thus, by the year 1900, the Tikuli art was facing the threat of extinction."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The rising cost of raw materials and gold also led to the decline of the handmade tikuli.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 16",
+          "quote": "the rising cost of the raw materials and gold led to the decline of the handcrafted tikuli"
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Because glass was impractical to transport and gold was costly, tikuli artists moved to painting on wood and later on hardboard or MDF.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "the fragility of glass made it impractical for transportation, and the high cost of gold posed a significant challenge"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "Tikuli artists transitioned to painting on wood and later adopted hardboard or MDF board"
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The painter and designer Upendra Maharathi began reviving tikuli art in 1954.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "In 1954, Chitracharya Padmashree Upendra Maharathi, painter, artist and designer, provided a new dimension to the Tikuli art."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 7",
+          "quote": "In 1954, Chitracharya Padmashree Upendra Maharathi single-handedly took on the initiative of reviving this dying art form."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 21",
+          "quote": "it was in 1954, when artist Upendra Maharathi hit upon the idea of doing tikuli work on timber instead of glass and gold"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 904",
+          "quote": "In 1954, visionary steps were taken to revive this ancient art form by the renowned artist Chitracharaya Padmashree Upendra Maharathi."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli art remained dormant until Upendra Maharathi tried to revive it in 1950.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 12",
+          "quote": "The art remained dormant until Upendra Maharathi, a renowned artist, tried to revive it in 1950."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Maharathi took the idea of painting tikuli on glazed hardboard from the commercial hardboard paintings of traditional motifs he saw in Japan.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "Inspired by his visit to Japan and witnessing colourful hardboard paintings depicting the centuries old Nipponese motifs and being sold commercially to both foreigners and locals, Shri Maharathi adopted the Japanese method to portray the dying Tikuli art on glazed hardboard."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 8",
+          "quote": "He got the idea of portraying Tikuli art on glazed hardboard during his stay in Japan, where artists were commercially selling traditional motifs on colorful hardboard."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 21",
+          "quote": "On a visit to Japan, Maharathi had seen works of art done with enamel paint on timber and he brought that idea back to Bihar and to tikuli art."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "para 5",
+          "quote": "जापान प्रवास के दौरान उन्हें हार्ड-बोर्ड पर टिकुली कला को पारंपरिक शैली में उतारने का खयाल आया, ताकि बाजार के साथ भी उसे जोड़ा जा सके।"
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Maharathi's process laid 12 coats of enamel paint one after another on masonite board, rubbing the dry surface with wood charcoal to a glass-like shine before painting.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 5",
+          "quote": "प्रक्रिया यह थी कि मासोंनाइट बोर्ड पर इनेमल पेंट की एक-के-बाद एक 12 परतें चढ़ायी जाये और सूखने पर उसे काठ (लकड़ी) कोयले से घिसकर कांच समान चमकीला बना उस पर चित्रकांन किया जाये।"
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Upendra Maharathi wrote nothing about what kind of pictures should be painted in the tikuli process he devised.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 5",
+          "quote": "उन्होंने इसके निर्माण की एक प्रकिया विकसित की।"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "para 5",
+          "quote": "चित्र किस तरह के बनाये जाएं, इस बारे में उन्होंने कुछ नहीं लिखा।"
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "At the 1982 Asian Games, Prime Minister Indira Gandhi chose tikuli paintings as the official gift for all 5,000 participating athletes.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 4",
+          "quote": "In the 1982 Asian Games, the then Prime Minister of India chose Shri Biswas's Tikuli Paintings as the official gift for all the participating athletes from across the globe."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para 13",
+          "quote": "But the art came back into prominence in 1982 when the then Prime Minister Indira Gandhi gifted tikuli pieces as an official memento to all the 5,000 athletes participating in the Asiad games."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "para 6",
+          "quote": "1982 में एशियाड गेम्स के प्रतियोगियों और अतिथितियों को सम्मानित करने हेतु उन्हें एक-एक चित्र दिया जाना था।"
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Asiad gift pictures were painted on masonite board in the style of Jagdamba Devi, the first Padma Shri awardee of Madhubani painting.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 6",
+          "quote": "तब पूर्व लिखित प्रक्रिया के तहत तैयार मार्सोनाईट बोर्ड पर मधुबनी पेंटिंग की प्रथम पद्मश्री जगदंबा देवी की चित्र-शैली में चित्र उकेर गया"
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "After the Asiad gift paintings, Jagdamba Devi's painting style came to be accepted as the authentic style of tikuli art and entered the market.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 6",
+          "quote": "तब से जगदंबा देवी की चित्र शैली टिकुली कला की प्रामाणिक शैली मान ली गयी और अब वह बाजार का हिस्सा है।"
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "With the Jagdamba Devi style taken as tikuli art, the traditional form of tikuli art died out.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 7",
+          "quote": "इसके दो दुष्परिणाम हुए। पहला, पारंपरिक टिकली कला विलुप्त हो गयी"
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Once Jagdamba Devi's style was taken as tikuli art, the art market refused to accept pictures in her style as Mithila paintings.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 7",
+          "quote": "दूसरा, कला बाजार ने जगदम्बा देवी शैली के चित्रों को मिथिला चित्र मानने से ही इनकार कर दिया।"
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Rakesh Kumar Jha, writing in Folkartopedia, says the Bihar government spends lakhs of rupees every year in the name of tikuli art.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 7",
+          "quote": "टिकुली कला के नाम पर आज बिहार सरकार हर वर्ष लाखों रुपये खर्च कर रही है।"
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ashok Kumar Biswas, a folk artist from Bihar, turned tikuli into a folk painting while training rural and suburban women free of charge.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 1",
+          "quote": "Shri Ashok Kumar Biswas is a thriving folk artist from Bihar"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "para 1",
+          "quote": "by transforming it into the form of a folk painting and providing gratis training to uplift the women of rural and sub-urban areas of Bihar"
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ashok Kumar Biswas and his wife, the entrepreneur Shibani Biswas, have kept tikuli art alive since 1974.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 9",
+          "quote": "Since, 1974 the undeterred efforts and undying spirit of painter and craftsman Ashok K. Biswas and his wife, entrepreneur Smt. Shibani Biswas has not only helped the craft survive"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 904",
+          "quote": "Ashok Kumar Biswas and Shibani Biswas: This dynamic duo has been instrumental in keeping Tikuli art alive since 1974."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ashok Kumar Biswas trained at the Shilp Anusandhan Sansthan in Patna in 1973, guided by Upendra Maharathi and Lai Babu Gupta.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 2",
+          "quote": "After being skillfully trained from the Shilp Anusandhan Sansthan, Patna in 1973, he devotionally committed himself to the elevation of the fading Tikuli Art."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "para 2",
+          "quote": "His mentors, Shri Upendra Maharathi (Padma Shri awardee) and Shri Lai Babu Gupta, two of the prominent artists of Bihar"
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ashok Kumar Biswas received the Padma Shri in 2024 for reviving tikuli art over five decades.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "p. 904",
+          "quote": "Ashok Kumar Biswas was awarded the Padma Shri in 2024 for his contributions to Tikuli art"
+        },
+        {
+          "sourceId": "S21",
+          "locator": "para 7",
+          "quote": "Tikuli painter Ashok Kumar Biswas credited for revival and modification of the Mauryan era artform through his efforts over last five decades"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "para 1",
+          "quote": "has consecrated five decades of his life towards reviving Tikuli Art"
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Biswas received the State Award of the Government of Bihar in 2008 and the Kala Shri Award of the Government of India in 2009.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 5",
+          "quote": "He was honoured with the State Award in 2008 by the Government of Bihar; the Kala Shri Award by the Government of India in 2009"
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Approximately 8000 women have been trained in tikuli art by Ashok Kumar Biswas, and many of them earn their livelihood from it.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 3",
+          "quote": "Approximately 8000 women have been trained by him, out of which a multitude earn their livelihood with their creativity."
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Biswas trains women in tikuli art at a small centre in Nasriganj village, about 12 kilometres from Patna.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 5",
+          "quote": "The small room is his training centre located in Nasriganj village, about 12 kilometres from the state capital of Patna."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 6",
+          "quote": "who operates out of a small workshop in Nasriganj village near Patna"
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli painting is now part of both the Make in India movement and the One District, One Product movement.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para 4",
+          "quote": "Tikuli painting is now a part of both, the 'Make in India' Movement and 'One District, One Product' Movement."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Upendra Maharathi and the Padma Shri awardee Ambika Devi played a pivotal role in bringing national and international recognition to tikuli art.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "para 7",
+          "quote": "In modern times, Upendra Maharathi and the Padma Shri awardee Smt. Ambika Devi played a pivotal role in bringing recognition to Tikuli art at national and international levels."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The serious revival of tikuli art began in 2012, when the Bihar state government took an active interest.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 15",
+          "quote": "But the serious revival really began in 2012 when the state government took active interest."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The Patna-based Upendra Maharathi institute held training sessions and fairs to make tikuli art popular with art lovers and the public.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 17",
+          "quote": "director of the Patna-based Upendra Maharathi Handicraft Research Institute"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para 18",
+          "quote": "They conducted training sessions and held fairs to make Tikuli art popular among art enthusiasts and the general public."
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "In April 2026 the Bihar Museum opened Hidden Treasures of Tikuli Art, in which 33 artists showed 66 artworks together.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "para 1",
+          "quote": "The landmark exhibition titled 'Hidden Treasures of Tikuli Art' by Bihar Museum, Patna was inaugurated by Shri Arun Shankar Prasad, Honorable Minister of Art and Culture, Bihar, on April 5, 2026"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "para 1",
+          "quote": "a total of 33 artists, including Padma Shri awardee Shri Ashok Kumar Vishwas, displayed their 66 artworks collectively."
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Until 1984, the government bought tikuli artwork directly from the artists, but it no longer does so.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 27",
+          "quote": "Till 1984, the government purchased the artwork directly from the artists and paid them for their work. But not any more"
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Under a 2017 handicrafts policy of the Bihar government and DC (Handicrafts), new artists were trained in tikuli art and nearly three hundred benefited.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 29",
+          "quote": "In 2017, the Bihar government and the DC (Handicraft), Ministry of Textile, a policy -- Integrated Development & Promotion of Handicrafts -- was introduced to promote tikuli art among new artists."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 29",
+          "quote": "Training is being provided to new artists under the collaboration, in Tikuli art, and nearly three hundred artists have benefitted from it"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "NIFT Patna and SIDBI started a 40-day training programme in December 2022 for tikuli and four other Bihar crafts.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 4",
+          "quote": "NIFT Patna in association with SIDBI has launched a series of training programs for five Bihar-based handicrafts namely, Tikuli, Silki, Sujani, Bawanbuti, and Cotton weaving. The formal inauguration of the program was done on 01st Dec 2022"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 16",
+          "quote": "The Programme is a 40-day intensive training program for interested participants in five Bihar-based crafts"
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L07"
+      },
+      "text": "According to Ashok Kumar Biswas, Patna, Varanasi and Kolkata are the main hubs for buying and selling tikuli art.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 30",
+          "quote": "The hubs of buying and selling Tikuli art, according to Biswas, are Patna, Varanasi and Kolkata."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 12",
+          "quote": "Tikuli art has become more and more popular with items now offered for sale in places like Kolkata, Varanasi, and Patna."
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "The Kolkata-based non-profit Sasha Association for Craft Producers gives tikuli makers an alternative marketing platform.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 30",
+          "quote": "Kolkata based non-profit, Sasha Association for craft producers, has done a lot to provide an alternative marketing platform for art and handicraft products, including Tikuli"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 12",
+          "quote": "The artists involved in Tikuli art now have easier access to markets because of groups like the Sasha Association for Craft Producers, which has expanded their audience."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Middlemen acting as agents take a major chunk of the income of tikuli artisans.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 37",
+          "quote": "Middlemen acting as agents, however, are a cause for concern, as they take a major chunk of the artisans' income."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One tikuli artisan said fairs had been their main source of income and that, because of COVID, their income was now barely one-third.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 41",
+          "quote": "The fairs were our main source of income as we could display our products and also book orders. But because of COVID our income is barely one-third now."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Everyone agrees, according to a Village Square report, that the tikuli revival was possible because the work involves no outdoor labour and offers flexible working hours.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 31",
+          "quote": "Everyone agrees that the revival has been possible since it involves no outdoor work and offers flexible working hours."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In the Danapur cluster, 50% of the tikuli production process is outsourced.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "50% process is out sourced."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "The existing tikuli market of the Danapur cluster is limited to buyers in the low price range, with no luxury segment products.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "Existing market is limited to low price range buyers. • Lack of luxury segment products."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In the Danapur cluster, tikuli skills are lost when young girls trained in the craft relocate after marriage.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "Loss of skill due to relocation of young girls after marriage."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In the Danapur cluster workshop survey, a tikuli tray was priced at Rs 800 and wall hangings or table mats at Rs 1000 to 2400.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 1",
+          "quote": "T I K U L I C L U S T E R D A N A P U R 1 6 J U L Y - 2 0 A U G U S T 2 0 1 8"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 26",
+          "quote": "PRODUCTS PRICE (IN RS.) 1 Lifestyle Products 400-1000 2 Mobile Holder 250 3 Tray 800"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 26",
+          "quote": "9 Wall Hanging / Table Mat 1000-2400"
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L07"
+      },
+      "text": "In a survey of 101 consumers in Patna, 19.6% recognised tikuli art, against 86.3% for Madhubani painting.",
+      "quotes": [
+        {
+          "sourceId": "S22",
+          "locator": "abstract",
+          "quote": "Primary data were collected from 101 consumers in Patna through a structured Google Form survey"
+        },
+        {
+          "sourceId": "S22",
+          "locator": "results, Figure 2",
+          "quote": "Madhubani Painting emerged as the most widely recognised craft (86.3%), followed by Bamboo Craft (46.1%), Bhagalpuri Silk (44.1%), Stone Craft (28.4%), Tikuli Art (19.6%)"
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Upendra Maharathi Shilp Anusandhan Sansthan filed Geographical Indication application 657 for Tikuli Art in 2019, and the application is now withdrawn.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "application details",
+          "quote": "Application Number | 657 | | Geographical Indications | Tikuli Art | | Status | Withdrawn | | Applicant Name | Upendra Maharathi Shilp Anushandhan Sansthan |"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "application details",
+          "quote": "Date of Filing | 07-08-2019 |"
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Geographical Indication application 1633 for tikuli painting was filed in 2025 with a map of the tikuli painting artisan cluster.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "document 19",
+          "quote": "1633 - GI - Annexure- 3 Map -Tikuli Painting Artisan Cluster - 15-10-2025"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "document 13",
+          "quote": "1633 - Form GI-1 - 15-10-2025"
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The Bihar Museum is gathering documentation to support a proposal for a Geographical Indication tag for tikuli art.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "para 13",
+          "quote": "efforts are also being made to obtain a Geographical Indication (GI) tag for it. For the protection and promotion of Tikuli art, both domestically and internationally, the Bihar Museum is actively gathering documentation to support this proposal."
+        },
+        {
+          "sourceId": "S20",
+          "locator": "para 1",
+          "quote": "The Bihar Museum Society has formally applied for a Geographical Indication (GI) tag, which would officially identify the craft as unique to the region."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "The tikuli craft gives regular livelihood support to about 300-500 artisan families in the Digha, Danapur and Gai Ghat mahallas of Patna town.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "para 3",
+          "quote": "This crafts provide livelihood support to about 300-500 artisans families on regular basis in Digha, Danapur and Gai Ghat mahallas of Patna town of Bihar."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 10",
+          "quote": "About 300-500 artist families regularly depend on these crafts for their living in the Patna town of Bihar's Digha, Danapur, and Gai Ghat mahallas."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "The tikuli cluster at Danapur lies in a satellite town of Patna on the bank of the River Ganges.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 1",
+          "quote": "Tikuli Art AT T I K U L I C L U S T E R D A N A P U R"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 6",
+          "quote": "Danapur (also known as Dinapur Nizamat or Dinapur) is a satellite town of Patna in Bihar state of India."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 6",
+          "quote": "It is located on the bank of the River Ganges."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Tikuli art improved the economic status of an artisan family in Nargadda village of Bhojpur district.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 27",
+          "quote": "Sumitra Devi of the Nargadda village in the Bhojpur district of Bihar said that the art improved her family's economic status."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L05"
+      },
+      "text": "An artisan from Phulwari village in Madhubani district said a single tikuli art piece takes around one day to make, depending on raw material supply.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 32",
+          "quote": "It takes around one day to make a single art piece depending on the availability of raw material,\" said Aarti Kumari, of Phulwari village in the Madhubani district."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Tikuli artists first cut hardboard or MDF into round, rectangular, triangular or square pieces.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "The first hardboard or MDF pieces are cut into round, rectangular or square shapes."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 11",
+          "quote": "They cut the hardboard into various shapes like circular, rectangular, triangular, or square."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "The creative process begins with cutting these boards into various shapes, such as circles, rectangles, or squares."
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "After the board is cut and coated with enamel, the design is painted once the surface has become shiny and smooth.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "The first hardboard or MDF pieces are cut into round, rectangular or square shapes. The enamel is then painted with a brush pasted on it."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "When the board becomes shiny and smooth, the Mithila style painting is done with a brush of 000 sizes."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "para 13",
+          "quote": "After the final coat of enamel, the artisans paint the design."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The cut board is given 4-5 coats of enamel, each rubbed down with sandpaper, to make a polished base.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "para 12",
+          "quote": "The artists apply 4-5 coats of enamel thereafter on the cut wooden piece. After every coat, they rub the wood with sandpaper, thus giving it a polished surface."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "The base was prepared out of wood which was coated and smoothed using sand paper 4-5 times"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "layered with four to five coats of enamel, each layer smoothed with sandpaper to achieve a lustrous finish"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "The enamel is then painted with a brush pasted on it. Each coat of paint is then rubbed with sand paper or water paper."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "In the Danapur cluster, base coating, drying and sanding are repeated 5-6 times until the base looks smooth and shiny.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 21",
+          "quote": "Drying followed by sanding • Application of base coat • This process is repeated 5-6 times till the base appears smooth and shiny"
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The enamel base coat is black or dark brown, worked until it glistens like polished granite.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 21",
+          "quote": "Enamel base coat (black/dark brown)"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "till the base was a dark brown/black glistening surface like polished granite"
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Once the base is smooth and shiny, the design outline is traced on tracing paper, dusted with talcum powder and traced onto the base with a pen.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "pp. 21-22",
+          "quote": "This process is repeated 5-6 times till the base appears smooth and shiny TRACING OF DESIGN OUTLINE ON TRACING PAPER APPLICATION OF TALCUM POWDER 22 TRACING OF DESIGN ON BASE"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 16",
+          "quote": "Pen to trace design on the final base."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "After tracing, the design is outlined, five colours are filled in one at a time with drying between each, and a black outline is added.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 22",
+          "quote": "TRACING OF DESIGN ON BASE PAINTING DESIGN • Outline • Drying of Outline • Filling in Colour One- Drying • Filling in Colour Two- Drying • Filling in Colour Three- Drying • Filling in Colour Four- Drying • Filling in Colour Five- Drying • Black Outline- Drying"
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "After the black outline dries, the outline is finished in white paint, dust is wiped off, and wall hangings get loops or frames.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "pp. 22-23",
+          "quote": "Black Outline- Drying 23 FINISHING • Finishing outline with White paint - Drying • Wiping any dust particles on the surface. FINISHING OF WALL HANGING BY ATTACHING LOOPS / FRAMING"
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "Some tikuli pieces are embellished with gold foil, jewels or mica once the design is painted.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "para 13",
+          "quote": "It is also embellished with gold foil and jewels."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Finally, some pieces are embellished with gold foil or mica, adding an extra layer of elegance."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Designs are painted with fine brushes in natural pigments ground and mixed with water and gum arabic into a paste.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "Next, intricate designs are crafted onto the surface using fine brushes and natural pigments. These colors are carefully prepared by grinding pigments and blending them with water and Arabic gum to create a vibrant paste."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "Round brushes of sizes 0, 00 and 000 are used for painting, and flat brushes up to number 30 for preparing the base coat.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 18",
+          "quote": "0, 00, 000 round Brushes are used for painting whereas flat brushes up to number 30 is used for preparing the base coat."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "Brushes of 000 sizes are used exclusively in the Tikuli art all over the world."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The fine brushes used for tikuli painting are made of squirrel or sable hair.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "para 16",
+          "quote": "The artists use squirrel or sable hair to make the brushes, and the size range varies from 0.0-20."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "using enamel paint and a fine sable/squirrel hair brush"
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T03"
+      },
+      "text": "Small plastic colour palettes are used to mix the colours for tikuli painting.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 18",
+          "quote": "Plastic small colour palettes are used to mix colours."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Enamel paint bought through a wholesaler in Patna is used for both the base coat and the main ornamentation.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 18",
+          "quote": "Enamel paint is used to prepare base coat and main ornamentation process. Asian paints enamel paint is used. Source: Through whole seller within Patna."
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Enamel paint makes the tikuli surface heatproof and waterproof, which has led to coasters, trays and mobile stands being made.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 11",
+          "quote": "Since, enamel paint makes the surface heat proof and water proof, making utilitarian items like coasters, trays and mobile stands have been practiced."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 5",
+          "quote": "In Tikuli painting, it is heatproof and waterproof due to Inmel being painted."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "The use of enamel in Tikuli art makes it durable, heat-resistant, and waterproof."
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Thinner is needed to dilute the enamel paint to the right consistency and to clean excess paint from brushes.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 18",
+          "quote": "It is used to dilute the enamel paint to achieve the right consistency for painting and also to clean excess paint and the used Brushes"
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Coasters and wall paintings are usually made on coated medium-density and high-density fibreboards bought from suppliers in Patna.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 17",
+          "quote": "Coasters and wall paintings are usually made on coated medium density and high density fibre boards. Source: Through whole sellers and suppliers within Patna."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Coaster stands, trays, mobile stands and boxes are made of ply board, which also comes from suppliers in Patna.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 17",
+          "quote": "Coaster stands, trays, mobile stands and boxes are made of ply board. Source: Through whole sellers and suppliers within Patna."
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "MDF board and colours are the basic raw materials of tikuli craft.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "para 3",
+          "quote": "The basic raw materials used in Tikuli craft is the MDF board and the colors."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 10",
+          "quote": "MDF board and paint are the two primary raw materials utilised in Tikuli crafts."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Tikuli artists started using hardboard, inspired by Ashok Biswas, after enamel painting on wood had proved difficult to transport.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "Tikuli made through Inamal paint on wood was difficult because of its difficulty in transporting. But that problem was overcome when the hardboard arrived."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "Inspired by Ashok Biswas, Tikuli artists started using hardboards."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "Previously, enamel paint on wood posed transportation challenges, but the advent of hardboards revolutionized the craft."
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "In recent years tikuli artists have also used MDF board alongside hardboard.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para 4",
+          "quote": "a special type of wood (MDF Board) has also been used indiscriminately in Tikuli painting along with hardboard"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "p. 902",
+          "quote": "In recent years, Tikuli artists have increasingly adopted MDF boards alongside hardboards."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M10"
+      },
+      "text": "Framing materials such as three-ply nylon loops, thin cotton fabric and Fevibond are sourced locally, while wood framing is outsourced to vendors in Kolkata.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 19",
+          "quote": "Raw materials like Three ply nylon loop, thin cotton fabric and Fevibond is locally sourced. Wood framing is out sourced through vendors in Kolkata"
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L11"
+      },
+      "text": "The craftswomen buy their brushes and palettes themselves with a contractor's help, from wholesalers in Kolkata through vendors or locally.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 18",
+          "quote": "Source: Through whole sellers in Kolkata through vendors or is purchased locally. It is purchased by the crafts women themselves from the assistance of the contractor."
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M08"
+      },
+      "text": "Wood dust left from cutting ply board and fibreboard is used to finish the edges and crevices of tikuli products.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 17",
+          "quote": "Edges and surfaces crevices coaster stand, trays, mobile stands and boxes are finished using wood fillings (dust) Source: Waste from cutting ply board and HDF/MDF."
+        }
+      ]
+    },
+    {
+      "id": "C102",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M09"
+      },
+      "text": "Waste cotton fabric from households, preferably knitted, is reused to clean brushes and excess paint.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 19",
+          "quote": "Cotton fabric (preferably knitted) is required to clean Brushes and excess paint. Source: Waste fabric rom households are reused."
+        }
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Tikuli colours are chemical-based enamel paints that are neither organic nor biodegradable.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "Chemical based colour/paint in other words non- organic and nonbiodegradable paint"
+        }
+      ]
+    },
+    {
+      "id": "C104",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The enamel paint of tikuli work is toxic, a problem that also hinders exports of the products.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 24",
+          "quote": "The paint is toxic and hinder exports."
+        }
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Spring and summer suit tikuli making best, because enamel paints need dry air at room temperature.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "para 16",
+          "quote": "Spring and summer are the most suitable for making this art, as the craft requires dry air at room temperature due to usage of enamel paints."
+        }
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tikuli art faced the threat of extinction in the mid-20th century because of industrialisation and changing aesthetic preferences.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "para 5",
+          "quote": "In the mid-20th century, Tikuli art faced the threat of extinction due to industrialisation and changing aesthetic preferences."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "After Upendra Maharathi died in 1981, Ashok Kumar Biswas continued the effort to revive tikuli art, carrying on Maharathi's tradition.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 12",
+          "quote": "The art remained dormant until Upendra Maharathi, a renowned artist, tried to revive it in 1950. After his demise in 1981, artist Ashok Kumar Biswas continued the effort."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para 6",
+          "quote": "Another artist, Ashok Kumar Biswas, remains instrumental in reviving Tikuli art in the last few decades, carrying on Maharathi's tradition."
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "In one account, a layer of lacquer is applied to protect and enhance the painted artwork, adding both shine and durability.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "p. 903",
+          "quote": "To protect and enhance the artwork, a layer of lacquer is applied, adding both shine and durability."
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ashok Kumar Biswas has trained hundreds of women artists and made tikuli a source of livelihood for more than 300 women he trained.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "para 2",
+          "quote": "not only revived the art form but also made it a source of livelihood for more than 300 women he trained in the art."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "para 9",
+          "quote": "Biswas has trained hundreds of women artists in the art form"
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "According to Ashok Kumar Biswas, about 98% of the 7,000-odd tikuli artisans are women.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 26",
+          "quote": "Biswas said that tikuli is also a symbol of women's empowerment as about 98% of the 7,000-odd tikuli artisans are women."
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The director of the Upendra Maharathi institute said that about a decade earlier there were only 300 tikuli artisans, mostly women, as others had left for lack of good income.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para 17",
+          "quote": "About a decade ago, there were only 300 - mostly women - artisans. The others had shifted to other professions because of lack of good income"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para 17",
+          "quote": "director of the Patna-based Upendra Maharathi Handicraft Research Institute"
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Rakesh Kumar Jha, writing in Folkartopedia, calls for serious research on tikuli art so that the traditional art form can be revived.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 7",
+          "quote": "ऐसे में जरूरत इस बात की है कि टिकुली कला पर गंभीर शोध हो, ताकि न केवल वह कला पुनर्जीवित हो सके"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Patna",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q80484",
+      "role": "ORIGIN",
+      "claimIds": [
+        "C015"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Patna",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q80484",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C074"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Danapur",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q1022305",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C074",
+        "C075"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Nargadda",
+      "kind": "VILLAGE",
+      "district": "Bhojpur",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C076"
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Phulwari",
+      "kind": "VILLAGE",
+      "district": "Madhubani",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C077"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Mithila",
+      "kind": "REGION",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q2891737",
+      "role": "ORIGIN",
+      "claimIds": [
+        "C017"
+      ]
+    },
+    {
+      "id": "L07",
+      "name": "Patna",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q80484",
+      "role": "MARKET",
+      "claimIds": [
+        "C061",
+        "C019"
+      ]
+    },
+    {
+      "id": "L08",
+      "name": "Varanasi",
+      "kind": "TOWN",
+      "district": "Varanasi",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "wikidata": "Q79980",
+      "role": "MARKET",
+      "claimIds": [
+        "C061"
+      ]
+    },
+    {
+      "id": "L09",
+      "name": "Kolkata",
+      "kind": "TOWN",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "wikidata": "Q1348",
+      "role": "MARKET",
+      "claimIds": [
+        "C061"
+      ]
+    },
+    {
+      "id": "L10",
+      "name": "Patna",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q80484",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C091",
+        "C094",
+        "C095"
+      ]
+    },
+    {
+      "id": "L11",
+      "name": "Kolkata",
+      "kind": "TOWN",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "wikidata": "Q1348",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C100",
+        "C099"
+      ]
+    },
+    {
+      "id": "L12",
+      "name": "Digha",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q15213979",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C074"
+      ]
+    },
+    {
+      "id": "L13",
+      "name": "Gai Ghat",
+      "kind": "TOWN",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q30625430",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C074"
+      ]
+    },
+    {
+      "id": "L14",
+      "name": "Kanpur",
+      "kind": "TOWN",
+      "district": "Kanpur Nagar",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "wikidata": "Q66568",
+      "role": "MARKET",
+      "claimIds": [
+        "C020"
+      ]
+    },
+    {
+      "id": "L15",
+      "name": "Delhi",
+      "kind": "STATE",
+      "state": "Delhi",
+      "country": "India",
+      "wikidata": "Q1353",
+      "role": "MARKET",
+      "claimIds": [
+        "C020"
+      ]
+    },
+    {
+      "id": "L16",
+      "name": "Bihar",
+      "kind": "STATE",
+      "state": "Bihar",
+      "country": "India",
+      "wikidata": "Q1165",
+      "role": "ORIGIN",
+      "claimIds": [
+        "C017"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "PERSON",
+      "name": "Ashok Kumar Biswas",
+      "honours": [
+        "Padma Shri",
+        "State Award, Government of Bihar",
+        "Kala Shri Award, Government of India"
+      ],
+      "placeId": "L02",
+      "claimIds": [
+        "C046",
+        "C047",
+        "C048",
+        "C049",
+        "C050",
+        "C051",
+        "C052",
+        "C014",
+        "C107",
+        "C109"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "ORGANISATION",
+      "name": "Upendra Maharathi Shilp Anusandhan Sansthan",
+      "localNames": [
+        "UMSAS",
+        "Upendra Maharathi Handicraft Research Institute"
+      ],
+      "placeId": "L02",
+      "claimIds": [
+        "C056",
+        "C071",
+        "C048",
+        "C111"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Bihar Museum",
+      "localNames": [
+        "Bihar Museum Society"
+      ],
+      "placeId": "L02",
+      "claimIds": [
+        "C073",
+        "C057",
+        "C014"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "ORGANISATION",
+      "name": "Sasha Association for Craft Producers",
+      "placeId": "L09",
+      "claimIds": [
+        "C062"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "PERSON",
+      "name": "Upendra Maharathi",
+      "honours": [
+        "Padma Shri"
+      ],
+      "placeId": "L16",
+      "claimIds": [
+        "C035",
+        "C036",
+        "C037",
+        "C038",
+        "C039",
+        "C048",
+        "C054",
+        "C107"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Cutting the board",
+      "stageType": "SHAPE",
+      "order": 1,
+      "orderClaimId": "C079",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C078"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C078"
+        }
+      ],
+      "claimIds": [
+        "C078"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Building the enamel base",
+      "stageType": "PREP",
+      "order": 2,
+      "orderClaimId": "C079",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C091"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T02",
+          "claimId": "C088"
+        },
+        {
+          "toolId": "T05",
+          "claimId": "C080"
+        }
+      ],
+      "claimIds": [
+        "C079",
+        "C080",
+        "C081",
+        "C082"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Tracing the design",
+      "stageType": "OTHER",
+      "order": 3,
+      "orderClaimId": "C083",
+      "materials": [
+        {
+          "materialId": "M07",
+          "claimId": "C083"
+        },
+        {
+          "materialId": "M06",
+          "claimId": "C083"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T04",
+          "claimId": "C083"
+        }
+      ],
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Painting the design",
+      "stageType": "OTHER",
+      "order": 4,
+      "orderClaimId": "C084",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C091"
+        },
+        {
+          "materialId": "M05",
+          "claimId": "C093"
+        },
+        {
+          "materialId": "M09",
+          "claimId": "C102"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C088"
+        },
+        {
+          "toolId": "T03",
+          "claimId": "C090"
+        }
+      ],
+      "claimIds": [
+        "C084",
+        "C013",
+        "C087"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Finishing and framing",
+      "stageType": "FINISH",
+      "order": 5,
+      "orderClaimId": "C085",
+      "materials": [
+        {
+          "materialId": "M10",
+          "claimId": "C099"
+        },
+        {
+          "materialId": "M12",
+          "claimId": "C086"
+        },
+        {
+          "materialId": "M18",
+          "claimId": "C086"
+        },
+        {
+          "materialId": "M19",
+          "claimId": "C086"
+        },
+        {
+          "materialId": "M08",
+          "claimId": "C101"
+        },
+        {
+          "materialId": "M20",
+          "claimId": "C108"
+        }
+      ],
+      "claimIds": [
+        "C085",
+        "C086",
+        "C108"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Hardboard",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C097",
+        "C078",
+        "C037",
+        "C003"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Medium- and high-density fibreboard (MDF, HDF)",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C094",
+        "C096",
+        "C098",
+        "C078"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Ply board",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C095"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Enamel paint",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "claimIds": [
+        "C091",
+        "C092",
+        "C080",
+        "C103",
+        "C104"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Thinner",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C093"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Talcum powder",
+      "kind": "MINERAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Tracing paper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Wood dust",
+      "kind": "WOOD",
+      "role": "OTHER",
+      "claimIds": [
+        "C101"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Cotton cleaning cloth",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C102"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Framing materials",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C099"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Glass",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C023",
+        "C024"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Gold foil",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C025",
+        "C030",
+        "C086"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Silver foil",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C025"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Acacia glue",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "localNames": [
+        "gond"
+      ],
+      "claimIds": [
+        "C027"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Wood charcoal",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C038"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Gum arabic",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "claimIds": [
+        "C087"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Natural pigments",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C087",
+        "C026"
+      ]
+    },
+    {
+      "id": "M18",
+      "name": "Mica",
+      "kind": "MINERAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C086"
+      ]
+    },
+    {
+      "id": "M19",
+      "name": "Jewels",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C086"
+      ]
+    },
+    {
+      "id": "M20",
+      "name": "Lacquer",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C108"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Round brushes (sizes 0, 00, 000)",
+      "claimIds": [
+        "C088",
+        "C089"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Flat brushes",
+      "claimIds": [
+        "C088"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Colour palette",
+      "claimIds": [
+        "C090"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Pen",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Sandpaper or water paper",
+      "claimIds": [
+        "C080"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Pointed bamboo pencil",
+      "claimIds": [
+        "C026",
+        "C029"
+      ]
+    },
+    {
+      "id": "T07",
+      "name": "Glass-cutting scissors",
+      "claimIds": [
+        "C029"
+      ]
+    },
+    {
+      "id": "T08",
+      "name": "Glass furnace",
+      "claimIds": [
+        "C023"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "CLIMATE",
+      "claimIds": [
+        "C105"
+      ]
+    }
+  ],
+  "market": {
+    "prices": [
+      {
+        "claimId": "C069",
+        "date": "2018",
+        "placeId": "L03"
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "tikuli",
+      "meaning": "The local term for the bindi, the bright dot women wear between the brows.",
+      "claimIds": [
+        "C001"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "tikli",
+      "meaning": "A Hindi word meaning bindi or dot.",
+      "language": "hi",
+      "claimIds": [
+        "C002"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "gond",
+      "meaning": "An adhesive applied as the final layer of the old glass tikuli.",
+      "claimIds": [
+        "C027"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C015",
+        "C016"
+      ],
+      "about": "How old tikuli art is: about 800 years, or as old as the Mauryan period"
+    },
+    {
+      "claimIds": [
+        "C015",
+        "C017"
+      ],
+      "about": "Where tikuli art began: Patna, or the Mithila region"
+    },
+    {
+      "claimIds": [
+        "C035",
+        "C036"
+      ],
+      "about": "The year Upendra Maharathi began reviving tikuli art: 1954 or 1950"
+    },
+    {
+      "claimIds": [
+        "C080",
+        "C081",
+        "C038"
+      ],
+      "about": "How many coats of enamel the base receives"
+    },
+    {
+      "claimIds": [
+        "C037",
+        "C097"
+      ],
+      "about": "Who brought hardboard into tikuli painting: Upendra Maharathi, or artists inspired by Ashok Biswas"
+    },
+    {
+      "claimIds": [
+        "C091",
+        "C087"
+      ],
+      "about": "What the designs are painted with: enamel paint, or natural pigments bound with gum arabic"
+    },
+    {
+      "claimIds": [
+        "C032",
+        "C106"
+      ],
+      "about": "When tikuli art faced extinction: by 1900, or in the mid-20th century"
+    },
+    {
+      "claimIds": [
+        "C051",
+        "C109"
+      ],
+      "about": "How many women Ashok Kumar Biswas has trained: hundreds, or about 8000"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "How old is tikuli art: about 800 years, or as old as the Mauryan period?",
+      "claimIds": [
+        "C015",
+        "C016"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "Did tikuli art begin in Patna or in the Mithila region?",
+      "claimIds": [
+        "C015",
+        "C017"
+      ]
+    },
+    {
+      "id": "O03",
+      "question": "What did traditional tikuli pictures look like before the Jagdamba Devi style was adopted for the Asiad gift paintings?",
+      "claimIds": [
+        "C039",
+        "C041",
+        "C042",
+        "C043",
+        "C112"
+      ],
+      "settledBy": "Serious research on tikuli art, which Rakesh Kumar Jha calls for in Folkartopedia."
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/TIkuli_Art.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:TIkuli_Art.jpg",
+      "author": "Kislaykomal",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "caption": "Square tikuli pieces in progress on a work table, beside small tins of paint and brushes.",
+      "stageId": "P04"
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Tikuli is the local word in Bihar for the bindi, and tikuli painting is now made with glossy enamel paints on hardboard or MDF board.",
+        "claimIds": [
+          "C001",
+          "C003"
+        ]
+      },
+      {
+        "text": "It is believed to have originated in Patna about 800 years ago, while other sources trace the craft back to the Mauryan period.",
+        "claimIds": [
+          "C015",
+          "C016"
+        ]
+      },
+      {
+        "text": "After machine-made bindis replaced the old glass tikulis, Upendra Maharathi began a revival that Ashok Kumar Biswas carried on, turning tikuli into a folk painting.",
+        "claimIds": [
+          "C023",
+          "C031",
+          "C035",
+          "C107",
+          "C047",
+          "C046"
+        ]
+      },
+      {
+        "text": "Today the craft gives livelihood support to about 300-500 artisan families in the Digha, Danapur and Gai Ghat mahallas of Patna town, and is a source of income for women artisans in Bihar.",
+        "claimIds": [
+          "C074",
+          "C005"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Centres",
+        "value": "Digha, Danapur and Gai Ghat, Patna",
+        "claimIds": [
+          "C074"
+        ]
+      },
+      {
+        "label": "Origin",
+        "value": "Believed to be Patna, about 800 years ago (sources differ)",
+        "claimIds": [
+          "C015",
+          "C016"
+        ]
+      },
+      {
+        "label": "Materials",
+        "value": "Enamel paint on hardboard or MDF board",
+        "claimIds": [
+          "C003",
+          "C096"
+        ]
+      },
+      {
+        "label": "Base coats",
+        "value": "4-5 or 5-6 coats of enamel, sanded between coats",
+        "claimIds": [
+          "C080",
+          "C081"
+        ]
+      },
+      {
+        "label": "Revival",
+        "value": "Upendra Maharathi, from 1954 or 1950",
+        "claimIds": [
+          "C035",
+          "C036"
+        ]
+      },
+      {
+        "label": "Padma Shri artist",
+        "value": "Ashok Kumar Biswas, honoured in 2024",
+        "claimIds": [
+          "C049"
+        ]
+      },
+      {
+        "label": "GI applications",
+        "value": "657 (withdrawn), 1633 (filed 2025)",
+        "claimIds": [
+          "C071",
+          "C072"
+        ]
+      },
+      {
+        "label": "Markets",
+        "value": "Patna, Varanasi and Kolkata",
+        "claimIds": [
+          "C061"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Tikulis were forehead ornaments worn mainly by queens and aristocratic women, and the Mughals patronised the craft.",
+            "claimIds": [
+              "C001",
+              "C021",
+              "C018"
+            ]
+          },
+          {
+            "text": "Glass was melted and blown into a thin sheet, cut into rounds, covered with gold foil, scratched with designs and coloured, and one tikuli took seven to ten days.",
+            "claimIds": [
+              "C023",
+              "C024",
+              "C025",
+              "C026",
+              "C028"
+            ]
+          },
+          {
+            "text": "Muslim artisans cut the glass and Hindu artists applied the gold foil, with three artisans sharing each piece.",
+            "claimIds": [
+              "C030",
+              "C029"
+            ]
+          },
+          {
+            "text": "Under British rule, machine-made bindis replaced tikulis, and the art faced extinction by 1900, or in the mid-20th century by another account.",
+            "claimIds": [
+              "C031",
+              "C032",
+              "C106"
+            ]
+          },
+          {
+            "text": "Upendra Maharathi began reviving the craft in 1954, or in 1950 by one account, after seeing commercial hardboard paintings in Japan.",
+            "claimIds": [
+              "C035",
+              "C036",
+              "C037"
+            ]
+          },
+          {
+            "text": "At the 1982 Asian Games, tikuli paintings were the official gift for all the participating athletes.",
+            "claimIds": [
+              "C040"
+            ]
+          },
+          {
+            "text": "Ashok Kumar Biswas carried on the revival after Maharathi died in 1981, and with Shibani Biswas he has kept the art alive since 1974.",
+            "claimIds": [
+              "C107",
+              "C047"
+            ]
+          },
+          {
+            "text": "Biswas received the Padma Shri in 2024 for reviving tikuli art over five decades.",
+            "claimIds": [
+              "C049"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "Tikuli artists first cut hardboard or MDF into round, rectangular, triangular or square pieces.",
+            "claimIds": [
+              "C078",
+              "C079"
+            ]
+          },
+          {
+            "text": "The board is given 4-5 coats of enamel, or 5-6 in the Danapur cluster, with sanding after each coat until the black or dark brown base is smooth and shiny.",
+            "claimIds": [
+              "C080",
+              "C081",
+              "C082"
+            ]
+          },
+          {
+            "text": "The design outline is traced on tracing paper, dusted with talcum powder and traced onto the base with a pen.",
+            "claimIds": [
+              "C083"
+            ]
+          },
+          {
+            "text": "The design is outlined, five colours are filled in one at a time with drying between each, and a black outline is added.",
+            "claimIds": [
+              "C084"
+            ]
+          },
+          {
+            "text": "The outline is then finished in white paint, dust is wiped off, and wall hangings get loops or frames.",
+            "claimIds": [
+              "C085"
+            ]
+          },
+          {
+            "text": "Another account says the designs are painted in natural pigments mixed with water and gum arabic, then protected with a layer of lacquer.",
+            "claimIds": [
+              "C087",
+              "C108"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "MDF board and colours are the basic raw materials, with ply board used for coaster stands, trays, mobile stands and boxes.",
+            "claimIds": [
+              "C096",
+              "C095"
+            ]
+          },
+          {
+            "text": "Enamel paint, bought through a wholesaler in Patna, serves for both the base coat and the ornamentation, and thinner dilutes it.",
+            "claimIds": [
+              "C091",
+              "C093"
+            ]
+          },
+          {
+            "text": "Enamel makes the surface heatproof and waterproof, which suits coasters, trays and mobile stands.",
+            "claimIds": [
+              "C092"
+            ]
+          },
+          {
+            "text": "Round brushes of sizes 0, 00 and 000 are used for painting and flat brushes up to number 30 for the base coat.",
+            "claimIds": [
+              "C088"
+            ]
+          },
+          {
+            "text": "The fine brushes are made of squirrel or sable hair.",
+            "claimIds": [
+              "C089"
+            ]
+          },
+          {
+            "text": "Because glass was impractical to transport and gold was costly, artists moved to wood and later to hardboard or MDF.",
+            "claimIds": [
+              "C034"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Present-day tikuli painting shows a clear influence of Mithila or Madhubani painting in its composition and themes.",
+            "claimIds": [
+              "C006"
+            ]
+          },
+          {
+            "text": "Mithila painting is done on paper and cloth and is usually larger, whereas tikuli painting is done on hardboard or MDF and is relatively small.",
+            "claimIds": [
+              "C008",
+              "C009"
+            ]
+          },
+          {
+            "text": "Common themes are festivals of Bihar, Indian wedding scenes and Krishna Leela.",
+            "claimIds": [
+              "C011"
+            ]
+          },
+          {
+            "text": "The enamel colours are mostly bright crimson, yellow, cobalt blue and deep green against a dark base.",
+            "claimIds": [
+              "C012"
+            ]
+          },
+          {
+            "text": "The Asiad gift pictures of 1982 were painted in the style of Jagdamba Devi, and her style came to be accepted as the authentic style of tikuli art.",
+            "claimIds": [
+              "C040",
+              "C041",
+              "C042"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Traders once came to Patna to buy tikulis in bulk, and tikulis were exported to cities such as Kanpur and Delhi.",
+            "claimIds": [
+              "C019",
+              "C020"
+            ]
+          },
+          {
+            "text": "According to Ashok Kumar Biswas, Patna, Varanasi and Kolkata are the main hubs for buying and selling tikuli art.",
+            "claimIds": [
+              "C061"
+            ]
+          },
+          {
+            "text": "Ashok Kumar Biswas says about 98% of the 7,000-odd tikuli artisans are women, and the Upendra Maharathi institute's director says there were only 300 artisans about a decade earlier.",
+            "claimIds": [
+              "C110",
+              "C111"
+            ]
+          },
+          {
+            "text": "Until 1984 the government bought tikuli artwork directly from the artists, and a 2017 handicrafts policy trained new artists.",
+            "claimIds": [
+              "C058",
+              "C059"
+            ]
+          },
+          {
+            "text": "Middlemen acting as agents take a major chunk of the income of tikuli artisans.",
+            "claimIds": [
+              "C063"
+            ]
+          },
+          {
+            "text": "In the Danapur cluster workshop survey, a tray was priced at Rs 800 and wall hangings or table mats at Rs 1000 to 2400.",
+            "claimIds": [
+              "C069"
+            ]
+          },
+          {
+            "text": "Geographical Indication application 657 for Tikuli Art was withdrawn, and application 1633 was filed in 2025.",
+            "claimIds": [
+              "C071",
+              "C072"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

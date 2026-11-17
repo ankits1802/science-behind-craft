@@ -6,6 +6,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 
 from app.research.citations import SourceRef, cited_source_ids
+from app.research.reactions import ReactionSpecies, mhchem_equation, reaction_level
 from app.research.vocabulary import LEVEL_ORDER, weakest_level
 from app.schemas.science import (
     CONDITION_QUANTITIES,
@@ -19,13 +20,10 @@ from app.schemas.science import (
     DeltaH,
     ProcessStageView,
     ProcessView,
-    ReactionSpecies,
     ReactionView,
     StageCondition,
     StageMaterialView,
-    mhchem_equation,
     process_claims,
-    reaction_level,
     sources_differ,
 )
 

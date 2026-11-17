@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 from datetime import datetime
 from typing import Any
 
 from app.core.errors import InvalidInput
 from app.research.evidence import EvidenceItem, SearchQuery, SourceDocument
+from app.research.vocabulary import CANONICAL_LANGUAGE
 
 from ..adapter import Clock, HttpSourceAdapter, build_document, utc_now
 from ..http import RatePolicy, SourceHttp
@@ -16,6 +18,14 @@ from .mediawiki import (
     language_and_native,
     primary_language,
     with_language,
+)
+from .wikidata_places import (
+    PLACE_SEARCH_LIMIT,
+    PlaceCandidate,
+    PlacePoint,
+    coordinates_from_bindings,
+    coordinates_query,
+    exact_candidates,
 )
 from .wikidata_statements import (
     ITEM_ID,
@@ -34,6 +44,7 @@ WIKIDATA_RATE = WIKIMEDIA_RATE
 WIKIDATA_SPARQL_RATE = RatePolicy(min_interval=1.0)
 WIKIDATA_LICENCE = "CC0 1.0"
 ENTITY_PROPS = "info|labels|descriptions|aliases"
+SPARQL_JSON = "application/sparql-results+json"
 
 
 class WikidataAdapter(HttpSourceAdapter):
@@ -42,6 +53,26 @@ class WikidataAdapter(HttpSourceAdapter):
     def __init__(self, http: SourceHttp, *, sparql: SourceHttp, clock: Clock = utc_now) -> None:
         super().__init__(http, clock=clock)
         self.sparql = sparql
+
+    async def place_candidates(self, name: str) -> list[PlaceCandidate]:
+        params = {
+            "action": "wbsearchentities",
+            "search": name.strip(),
+            "language": CANONICAL_LANGUAGE,
+            "uselang": CANONICAL_LANGUAGE,
+            "type": "item",
+            "limit": str(PLACE_SEARCH_LIMIT),
+        }
+        payload = await action_api(self.http, WIKIDATA_API, params)
+        return exact_candidates(name, payload.get("search") or [])
+
+    async def place_points(self, item_ids: Sequence[str]) -> dict[str, PlacePoint]:
+        response = await self.sparql.get(
+            WIKIDATA_SPARQL,
+            params={"query": coordinates_query(item_ids), "format": "json"},
+            headers={"Accept": SPARQL_JSON},
+        )
+        return coordinates_from_bindings(_bindings(response.json(self.sparql.service)))
 
     async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
         language = primary_language(query.language)
@@ -117,10 +148,14 @@ class WikidataAdapter(HttpSourceAdapter):
         response = await self.sparql.get(
             WIKIDATA_SPARQL,
             params={"query": statements_query(item_id, language), "format": "json"},
-            headers={"Accept": "application/sparql-results+json"},
+            headers={"Accept": SPARQL_JSON},
         )
-        bindings = ((response.json(self.sparql.service).get("results")) or {}).get("bindings") or []
-        return statements_from_bindings(bindings)
+        return statements_from_bindings(_bindings(response.json(self.sparql.service)))
+
+
+def _bindings(payload: Any) -> list[Any]:
+    results = payload.get("results") if isinstance(payload, dict) else None
+    return (results or {}).get("bindings") or []
 
 
 def _term(entity: dict[str, Any], terms: str, language: str) -> str | None:

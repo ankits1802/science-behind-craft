@@ -1,6 +1,7 @@
 # Plan: the answer experience
 
-Status: approved by the owner, 2026-11-17 (section 8); phase A built, not yet deployed (section 5).
+Status: approved by the owner, 2026-11-17 (section 8); phase A deployed, phase B built and reviewed,
+not yet deployed (section 5).
 Supersedes the chat-style answer and the live voice call. PLAN section 0 still binds: accuracy over speed, every claim cited, research not limited
 to named sources, the knowledge base grows from every answer, no review gates.
 
@@ -198,7 +199,7 @@ cited, cached per term and language; "Ask about it" starts a follow-up.
 | Rainfall trends | CHIRPS annual series 1981 to 2025 per district, a trend per district |
 | Glossary | `Term` table seeded from craft aliases, Wikidata labels and the master list |
 | Images | Commons and Openverse adapters (one adapter per service), `MediaRef` table |
-| 3D | 3Dmol.js (BSD) vendored, PubChem 3D conformers through the PubChem adapter |
+| 3D | 3Dmol.js (BSD) from npm, pinned to an exact version (decision 0049), PubChem 3D conformers through the PubChem adapter |
 | Units | Indian traditional units in Pint with cited regional values; a value is only shown with its region and source |
 | PDF export | print stylesheet plus server render; citations through citeproc (APA, BibTeX) |
 | Lesson builder | slides as HTML (vendored reveal.js) and PPTX (python-pptx), reading list, quiz |
@@ -265,7 +266,7 @@ production, the E2E run at three widths, and one deploy.
 |---|---|---|
 | A. Foundation | explainer contract and stream events; block renderer shell; never-blocking craft detection; depth by role; dictation; Listen with highlighting; research trail; prose, process ladder, images and terms; knowledge pieces and reuse; retire the live voice call | an Expert answer for Kutch Ajrakh streams as sections, reuses its pieces on a second ask, and every sentence is cited |
 | B. Place and matter | river lines and tracer; region story; map layers; reaction player; material cards; 3D molecules; expert panel; seasons and supply (CHIRPS monthly) | the water story for Kachchh plays from real geometry; experts differ is shown where sources disagree |
-| C. Play | sandboxed generated explainers; what-if lab; film mode; powers-of-ten zoom; trade routes | a generated explainer passes the static check and runs with no network |
+| C. Play | sandboxed generated explainers; what-if lab; film mode with ElevenLabs music and sound effects under the narration; powers-of-ten zoom; trade routes; ElevenLabs image and video as further media routes beside the existing ones | a generated explainer passes the static check and runs with no network |
 | D. Learn and act | quiz, compare, shared-science explorer, local measures, market and GI, climate and risk, ask the map, follow-ups that build, alerts, lesson builder, PDF and citation export | a professor builds a lesson pack from one explainer |
 | E. Field voices | artisan voices from the portals' transcripts | named, credited artisan quotes appear for a craft, each cited to its recording |
 
@@ -276,14 +277,47 @@ pictures. Built: the explainer
 contract (decision 0030), understanding and depth (0031), sectioned composition (0032), knowledge
 pieces and reuse (0033), pictures and terms (0034), Listen with the live call switched off (0035),
 the asking screen (0036), the explainer view (0037), the review fixes (0038) and step 7 of section
-2.3, pictures and term spans in the stream with https pictures allowed on every page (0039). Open:
-process stages found by answers do not reach the Process tab until a source states their order
-(0038), the E2E run passing at all three widths after the phone layout fix (finding 8a.3), and
-Listen, which needs the server's address on the ElevenLabs key's allow-list. `docs/PROGRESS.md`
-and `docs/TECH_DEBT.md` hold the details.
+2.3, pictures and term spans in the stream with https pictures allowed on every page (0039). The E2E
+run passes at all three widths after the phone layout fix (run 44001978530), and Listen works with
+a key restricted to the server's address. Open: process stages found by answers do not reach the
+Process tab until a source states their order (0038). `docs/PROGRESS.md` and `docs/TECH_DEBT.md`
+hold the details.
 
-Then the **curation run** (owner offer of 2026-11-17): every craft through Expert depth once, with a
-one-time budget, producing the stored pieces of section 2.2 so most first questions are fast.
+**Phase B status (2026-11-18).** Built and reviewed, not yet deployed: all eight kinds are in
+`BUILT_BLOCK_KINDS` on both sides. Open: the deploy, the Geo ETL `riverlines` load (region stories
+wait for it, after the owner creates the river load role) and the proof in production, the water
+story for Kachchh from real geometry (the E2E's third known-answer question) and "Experts differ"
+where sources disagree. The contract is fixed (decision 0042): the eight kinds' final
+fields and validators, the block builder and renderer registries (empty but wired), the expert
+panel, the river data contract and the Kutch Ajrakh fixture. Lanes 0043 to 0049 build the data,
+builders and renderers; 0050 is the review. The place renderers are built (decision 0048: the
+river story, map layers, seasons and supply), and all four have joined the built kinds.
+The matter builders are built (decision 0045: the reaction player, material cards and 3D
+molecules with their conformer route), and so are their renderers and the expert panel's
+(decision 0049: the player, cards, 3Dmol.js molecules, seat cards and "Experts differ"); the
+review joined the three matter kinds to the built kinds on both sides (decision 0050). The expert panel is built
+and joined the built kinds (decision 0046: seats per depth and field, a reading share for each
+seat's sources, one cited panel call per section, "Experts differ" only for two stored facts
+about one subject from two sources, panel spend within the answer's headroom). The region story
+and map layers are built and joined the built kinds (decision 0044: rivers crossing a craft's
+districts by stream order and discharge, traced, with steps a model only chooses from stored
+claims, unnamed until a dataset names rivers, kept as cross-craft pieces by basin or districts;
+a section's map layer chosen by the words its sentences use); stories wait for the river load.
+Seasons and supply are built and joined the built kinds (decision 0047: stages and claims placed
+only on the months or season their own text names, a season given months only by a cited quote
+that states them, CHIRPS rainfall of the craft's district; supply origins a model only picks from
+stated words, placed only with Wikidata coordinates, else listed without a pin). The review (decision 0050) released
+the conformer route's connection before PubChem, rebuilt map layers and molecules in reused
+sections, started no builder for a section with nothing checked, gave phase B blocks one order,
+kept a supply link, a story step's district, a season row and every sentence of prose and expert
+takes to the materials, places, months and seasons their sources state, held builder plan calls
+to the answer's headroom, content-addressed river files and refused a changed one, moved the
+river load to a scoped OIDC role, named the rainfall district, and added the water question to the
+production E2E.
+
+Then the **curation run**: the owner chose on 2026-11-17 that it costs no API spend. Claude Code
+curates every craft into a verified dossier (`docs/plans/dataset-curation.md`, decision 0051), and
+the import turns each dossier into stored claims, so most first questions are fast.
 
 Rough effort: A two days, B two days, C two to three days, D two to three days, E one day once the
 portal routes exist; the curation run one to two days of background running.

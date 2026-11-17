@@ -3,7 +3,7 @@
 What is knowingly below standard, why it was left, and what clears it. Add an entry in the same
 change that takes the shortcut; delete it in the change that clears it.
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
 ## Infrastructure
 
@@ -220,10 +220,10 @@ Last reviewed: 2026-11-17.
   `app/(protected)/admin/access/page.tsx` (813), `components/forms/DateTimeField.tsx` (743).
   Many are ports from the designer portal.
 - **Frontend import boundaries** are not linted.
-- **Geo ETL tests** (`etl/geo/tests`) do not run in any workflow; `geo-etl.yml` only extracts and
-  loads.
+- **Geo ETL tests** (`etl/geo/tests`) run, with ruff, only at the start of a Geo ETL dispatch
+  (decision 0043); a push that changes `etl/geo` is not tested until the next dispatch.
 - Clears it: a lint rule set for size and boundaries with a baseline for the existing files, a
-  nesting count in `tools/hygiene/budgets.py`, and a test job in `geo-etl.yml`.
+  nesting count in `tools/hygiene/budgets.py`, and a push-triggered test job for `etl/geo`.
 
 ### Planner and tiered research: gaps left on 2026-11-16 (decision 0009)
 
@@ -502,7 +502,8 @@ Last reviewed: 2026-11-17.
 
 - **What:** maps drawn without the layer list (the craft page) print the caption from
   `components/map/MapAttribution.tsx`; `/map` prints the server's `boundary.caption`
-  (`schemas/region.BOUNDARY_CAPTION`). The two are equal today.
+  (`research/datasets.BOUNDARY_CAPTION` since decision 0042). The two are equal today. Explainer
+  map blocks carry the server's caption in the block.
 - **Clears it:** have the craft page read the caption from `GET /map/layers` (or a shared
   boundary route) and delete the client constants.
 
@@ -679,13 +680,6 @@ Last reviewed: 2026-11-17.
 - **What:** the contract lists every `OUTSIDE` reading in the review queue; no review queue
   exists, so they are only shown with their status.
 - **Clears it:** the review-queue lane lists readings whose `envelope_check` is `OUTSIDE`.
-
-### Compound lookup is not scheduled
-
-- **What:** `app/scripts/link_compounds` fills PubChem CIDs, properties and sources for seeded
-  compounds, but no workflow runs it, so compounds show name and formula only.
-- **Why left:** changing the deploy or a scheduled workflow was outside the lane.
-- **Clears it:** run it after the seeds in Deploy backend or in the daily Coverage enrichment.
 
 ### The science seed never deletes
 
@@ -894,14 +888,12 @@ Last reviewed: 2026-11-17.
 
 ### Declared block kinds check only what `research` can see
 
-- **What:** the later kinds' models refuse what `research` can check (uncited blocks, orders,
-  coordinates without Wikidata, personal data in artisan quotes), but not rules that live in
-  `schemas/`: a region story's or map layer's `boundaryCaption` is not compared with
-  `schemas.region.BOUNDARY_CAPTION`, and a reaction step's equation not rebuilt with
-  `schemas.science.mhchem_equation`. The simulation's static check (plan 2.6) does not exist.
-- **Why left:** `research` may not import `schemas`, and those kinds are built in phases B and C.
-- **Clears it:** the phase that builds each kind checks it in its producer and adds a contract
-  test; moving `BOUNDARY_CAPTION` into `research` would let the model check it.
+- **What:** decision 0042 cleared phase B's part: the caption and dataset rows moved to
+  `research/datasets` and the reaction rules to `research/reactions`, so region stories, map
+  layers and reaction steps check them. Left: the simulation's static check (plan 2.6) does not
+  exist.
+- **Why left:** the simulation is built in phase C.
+- **Clears it:** phase C's simulation lane adds the static check and its escape-attempt tests.
 
 ## Understanding and depth (decision 0031)
 
@@ -1286,3 +1278,534 @@ Last reviewed: 2026-11-17.
   cap, above the reserve.
 - **Why left:** the coverage job has the same shape; the cap bounds the overshoot.
 - **Clears it:** hold each rebuild to the smaller of its depth's cap and what the day has left.
+
+## Phase B contract (decision 0042)
+
+### Months and seasons are read in English only
+
+- **What:** `research/calendar` reads capitalised English month names, their abbreviations and
+  ranges joined by `to`, `till`, `until`, `through` or a dash, and three season words. Indian
+  month names (Shravan, Kartik), `between June and September` (read as the two months only) and
+  other seasons (post-monsoon, spring) place nothing.
+- **Why left:** a season row shows only what a source names; reading less is safe, reading more
+  needs a cited calendar of regional months.
+- **Clears it:** a cited table of regional month names and seasons with their Gregorian months
+  (owner O5's rule, as for local units), read by `months_named`.
+
+### The phase B fixture's river ids are placeholders
+
+- **What:** `shared/explainer.phase-b.golden.json` names reach ids 1, 2, 3 and outlet 3 under
+  `placeholders`; every other id resolves.
+- **Why left:** the river lines are built (decision 0043) but load only on GitHub Actions after
+  the deploy; the real ids come from that load.
+- **Clears it:** after the first `riverlines` load (decision 0043), take the Kachchh river from
+  `river_store.rivers_crossing(session, [449])` and `trace_river`, write its reach ids and outlet
+  into the fixture, and remove `placeholders` from the fixture and its model.
+
+### PubChem records stored before decision 0042 keep random ids
+
+- **What:** `link_compounds` now stores a new record source under `record_source_id(cid)`;
+  record sources it stored earlier keep their random ids, and it reuses them (found by URL).
+- **Why left:** ids already cited by stored claims or pieces must not move.
+- **Clears it:** nothing needed while every reader takes the id from `Compound.sourceId`; a
+  migration could rewrite them if a reader ever derives the id from the CID.
+
+## River lines, tracer and monthly rainfall (decision 0043)
+
+### The river ETL has run only on synthetic networks
+
+- **What:** `python -m geo_etl rivers` and `etl/geo/load_rivers.py` are tested on hand-made
+  networks and files; neither has read the real HydroRIVERS Asia file, uploaded a topology or
+  written `RiverReach`. The network checks may stop the first run on a real defect.
+- **Why left:** the extraction and load run only on GitHub Actions, after the deploy that carries
+  migration `0016_river_reaches`.
+- **Clears it:** the first Geo ETL dispatch with `riverlines` and `load` (`docs/RUNBOOK.md`, Geo
+  ETL); any problem it names is decided in an addendum to decision 0043.
+
+### Districts reached are computed on every trace
+
+- **What:** `river_store.trace_river` intersects every reach of the path with the district
+  polygons each time it runs; a long main stem has about a thousand reaches.
+- **Why left:** it always follows the stored district shapes and serves one story at a time; it
+  has not been measured.
+- **Clears it:** time it in production after the load; if slow, a reach-district table with entry
+  fractions filled by the river load and refilled when districts are seeded again.
+
+### The largest basin files are a few MB
+
+- **What:** the Ganga-Brahmaputra and Indus topologies hold every stored reach of the basin (tens
+  of thousands), estimated at a few MB of JSON each; the API sends them uncompressed and the client
+  loads a whole basin to draw one path.
+- **Why left:** the contract serves one file per basin (decision 0042).
+- **Clears it:** read the sizes in the `rivers` job summary after the load; if too large for a
+  phone, a per-path or per-district topology, a coarser threshold for the largest basins, or
+  compressed responses, in a contract change.
+
+### CHIRPS monthly normals are complete only after a full run
+
+- **What:** the region story's seasons rainfall reads the twelve `monthly_precipitation` rows of
+  the CHIRPS dataset row's period; districts whose CHIRPS shard failed in run 43884310432 (15
+  states, decision 0027) have none until CHIRPS is loaded again, and a district with a month from
+  another period has no rainfall.
+- **Clears it:** the CHIRPS dispatch in `docs/RUNBOOK.md`, Geo ETL, then the count check there.
+
+## Place renderers (decision 0048)
+
+### Place renderers not yet seen running
+
+- **What:** the river flow, the layer pills, the rainfall bars and the supply pins are checked by
+  typecheck, lint and server-rendered unit specs, not in a browser: the lazy chunks under a Next
+  build, the flow timing, touch targets on the map badges, and the contrast of the `errand` and
+  `archive` tones in dark mode are unverified.
+- **Clears it:** once the kinds are built, the production E2E asks the Kutch Ajrakh water question
+  at 1440, 834 and 390 px, with screenshots of the story before, during and after the flow and
+  with reduced motion on.
+
+### The river spec reads a hand-written basin
+
+- **What:** `e2e/place-renderers-unit.spec.ts` decodes a small quantized topology written for the
+  test (reaches 1, 2, 3 and a tributary inside Kachchh), because no basin file exists yet.
+- **Why left:** HydroRIVERS and the basin TopoJSON are lane 0043's.
+- **Clears it:** when lane 0043 commits a golden basin file for the fixture's river, the spec parses
+  it with `riverBasinOf` and draws the fixture story from it. Decision 0043 committed
+  `shared/river.topology.golden.json` (the fixture's placeholder river 1, 2, 3 and a tributary,
+  written by the geo ETL's encoder, reproduced by `etl/geo/tests/test_rivers.py` and parsed by
+  `e2e/river-topology-golden-unit.spec.ts`); the place spec can now draw from it.
+
+### Map layer blocks carry district codes without names
+
+- **What:** a map layer's `highlighted` districts are LGD codes only, so the map layer reads
+  "Outlined · pH 7.9" (as on `/map`, entry "Map layer values carry no district names"). The
+  seasons rainfall names its district since decision 0050.
+- **Why left:** version 1 of the kind is fixed (decision 0042) and the client holds no register.
+- **Clears it:** a version 2 of `map_layer` with `DistrictRef`s, or the districts route of that
+  entry, then "Kachchh · pH 7.9".
+
+### A stretch is the reaches with a vertex inside the district
+
+- **What:** a step's stretch and a district's entry point are found on the simplified basin lines
+  (`regionStory.stretchOf`, `districtEntries`); a reach that crosses a district corner without a
+  vertex inside it is left out of the stretch, and its district lights at the previous district's
+  point.
+- **Why left:** the server's order (`river.districtLgds`, PostGIS on full geometry) still decides
+  the order, and the error is a few kilometres at district scale.
+- **Clears it:** serve each reach's districts in the basin file (lane 0043 computes them already)
+  and read them instead of testing vertices.
+
+### A map chunk that failed to load stays hidden
+
+- **What:** `lazyBlock` turns a failed import into a block that draws nothing, and `React.lazy`
+  keeps that result, so a dropped connection while the chunk loads hides the map until the page
+  reloads.
+- **Why left:** a retry needs an error boundary per block; the answer is otherwise unaffected.
+- **Clears it:** a per-block error boundary with Try again that re-creates the lazy component.
+
+## Reaction player, material cards and 3D molecules (decision 0045)
+
+### The reaction player shows no conditions or reaction energies
+
+- **What:** version 1 of `ReactionStep` (decision 0042) has no conditions or ΔH, so the player
+  shows species, equations and levels only; the Process tab still shows each reaction's cited
+  conditions and ΔH.
+- **Why left:** the kind's fields were fixed by decision 0042 and the matter renderers are built
+  against them in parallel; a field change is a new version.
+- **Clears it:** a version 2 step carrying the reaction view's cited conditions and `deltaH`, with
+  its renderer, fixture and both sides' tests.
+
+### A material card cites no PubChem record for its formula
+
+- **What:** a card shows a formula and CID only from a compound linked to its PubChem record, but
+  version 1 of `MaterialCardBlock` has no source field, so the record is not in the explainer's
+  sources; the CID itself is the reader's link to the record.
+- **Why left:** the kind's fields are fixed (decision 0042).
+- **Clears it:** a version 2 card with the compound's record `sourceId`, cited like the molecule.
+
+### Each matter builder reads the craft's matter again
+
+- **What:** the reaction, card and molecule builders each call `craft_matter`, so a chemistry
+  section reads the craft's process rows three times and a materials section twice.
+- **Why left:** builders share nothing but `BuilderTools`; the reads are short and need no lock.
+- **Clears it:** a per-answer matter read held by the builder tools and shared by the builders.
+
+### Cards and molecules can repeat across a chemistry and a materials section
+
+- **What:** a builder sees one section, so an answer with both a `CHEMISTRY` and a `MATERIALS`
+  section can show the same material's card or the same molecule in both.
+- **Why left:** the registry contract gives a builder its own section only.
+- **Clears it:** `BuildAsk` carrying the blocks earlier sections were given, or a per-answer
+  record of shown materials and compounds.
+
+### A missing 3D conformer is never asked again
+
+- **What:** `ConformerCache` keeps PubChem's "no 3D conformer" for good, so a conformer PubChem
+  adds later is not seen until the object is deleted.
+- **Why left:** PubChem computes conformers only for small, rigid, single-component molecules;
+  a compound refused once is very unlikely to gain one.
+- **Clears it:** re-ask a kept miss whose `checkedAt` is older than a few months.
+
+### The compound lookup holds its session across PubChem calls
+
+- **What:** `link_compounds` keeps one database session open while it asks PubChem for each
+  pending compound (decision 0040's rule is never to wait on HTTP with a connection held).
+- **Why left:** it is a nightly script with its own engine and a handful of compounds, not the
+  answer path; its database test drives it with one transaction.
+- **Clears it:** read the pending compounds, look them up with no session open, then write the
+  links in a second short session; adapt `tests/db/test_compound_lookup_db.py`.
+
+### Card local names come from the glossary only
+
+- **What:** a card's `localNames` are its term's; a local name a cited claim states (for example
+  "locally known as kachika") but the glossary lacks is not shown.
+- **Why left:** the glossary is the one home of names; a name read from free text needs the same
+  checks the glossary seed applies.
+- **Clears it:** the glossary seed adding local names stated in claims about the term's concept.
+
+## Expert panel (decision 0046)
+
+### Panels spend only in the first half of a capped answer
+
+- **What:** builders' plan and compose calls (panels, region stories, supply maps, material cards;
+  decision 0050 added the plan calls) hold `AnswerSpend.headroom()`, so for every role but Master
+  Admin such a call is refused once it would leave the answer less than half its depth's cap. At
+  the starting caps ($0.25, $0.50, $1.00) a Basic answer hears a panel in its first section or
+  two at most, and later sections of long answers hear none and get no story, map or cards.
+- **Why left:** a panel call is about as dear as the section's own compose call, and a section
+  refused for spend stops the whole answer; the caps are starting values (owner O3).
+- **Clears it:** set the caps from measured spend (the debt "Per-answer caps are starting values"),
+  then lower `OPTIONAL_WORK_KEEPS`, or let a section refused by the answer cap end `EMPTY` instead
+  of stopping the answer.
+
+### One failing take sentence drops the view, with no regenerate
+
+- **What:** prose gets one regenerate for failing sentences; a panel take does not, so a view with
+  one unquoted or unsupported sentence is not shown at all.
+- **Why left:** the panel is optional work inside a 45 s wait and the first half of the cap.
+- **Clears it:** one regenerate of the failing seats' takes when the wait and the headroom allow.
+
+### The panel hears only the claims the section's sentences rest on
+
+- **What:** `BuildAsk.cited` holds the claims of the section's composed sentences; stored claims
+  the research retrieved but the prose did not use are not offered, so a disagreement the prose
+  left out is never found.
+- **Why left:** the builder interface (decision 0042) passes the checked blocks and their claims
+  only; widening it changes `answer_sections` for every builder.
+- **Clears it:** `BuildAsk` carrying the views of the section pack's stored hits, offered after
+  the cited claims.
+
+### Experts differ only on claims stored on one concept
+
+- **What:** "one subject" is the claims' stored concept, so two claims on different concepts that
+  disagree about one fact (or a claim about a concept edge) are never shown as a difference.
+- **Why left:** the concept is the only stored subject; a model's word that two claims concern one
+  thing is not evidence.
+- **Clears it:** the concept graph of feature 7 (shared-science explorer) linking concepts that
+  name one thing, read as one subject.
+
+### Reused expert views keep the seats that stored them
+
+- **What:** a stored panel is reused with its section (one reuse set), so a later question that
+  seated other experts sees the earlier answer's seats.
+- **Why left:** dropping a view would break its mirrored difference; the set is reused whole.
+- **Clears it:** reuse a set's views only for seats the new understanding seats, removing the
+  differences and agreements that name a dropped seat.
+
+### The reading share does not steer queries
+
+- **What:** each seat's preferred kinds take every other early read of what was found, but which
+  kinds are found depends on the queries the plan call writes; GI journals and government reports
+  come mostly from the web tier and only when a query looks for them.
+- **Why left:** the plan call is told each seat's kinds; reserving queries per tier would split an
+  already small section share further.
+- **Clears it:** a measured look at which kinds Expert sections read, then a tier share in
+  `planned_queries` if seats' kinds are missed.
+
+### The panel call has not met Claude Sonnet yet
+
+- **What:** the prompt and schema were checked against the portable schema rules and recorded
+  replies only.
+- **Why left:** nothing runs against production models from the laptop.
+- **Clears it:** the phase B known-answer question in production (Kutch Ajrakh, Expert, history)
+  showing an "Experts differ" card, and Usage showing the panel's spend per answer.
+
+## Matter and expert renderers (decision 0049)
+
+### Matter renderers not yet seen running
+
+- **What:** typecheck, lint and server-rendered unit specs check the player, the cards, the panel
+  and the molecule's frame, not a browser: the 3Dmol.js chunk under a Next build, its first draw,
+  the reveal turn, Explore on touch screens, the transparent canvas in dark mode, and the cast's
+  `archive` tone in dark mode are unverified.
+- **Clears it:** once the kinds are built, the production E2E asks a Kutch Ajrakh chemistry
+  question at 1440, 834 and 390 px, with screenshots of the player playing and paused, a card, the
+  molecule before and after Explore, and reduced motion on.
+
+### 3Dmol.js keeps two listeners after a molecule is gone
+
+- **What:** a 3Dmol.js viewer adds a `mouseup` and `touchend` listener on `document.body` and a
+  `resize` listener on `window` that it never removes; disposing a scene clears the models, loses
+  the WebGL context and removes the canvas, but those listeners stay until the page unloads.
+- **Why left:** the library has no teardown for them, and an explainer draws at most one molecule
+  per section.
+- **Clears it:** a 3Dmol.js release with a viewer teardown, called from `MoleculeScene.dispose`.
+
+### The conformer is fetched again on every draw
+
+- **What:** `fetchConformer` goes through `apiFetch`, which never keeps responses, so a molecule
+  drawn again (another answer, a reload) asks the route again, although the route allows a week's
+  private caching.
+- **Why left:** the route serves from the private bucket without calling PubChem, so a repeat
+  costs one small request; `apiFetch`'s only cache opt-in revalidates by ETag, which the route
+  does not send.
+- **Clears it:** the conformer route sending an ETag (the record's hash), then
+  `revalidateFromHttpCache` on the fetch.
+
+### Keyboard readers can turn a molecule but not tilt or zoom it
+
+- **What:** Turn rotates a quarter about the vertical axis; tilting and zooming need a pointer
+  (Explore), because 3Dmol.js reads only mouse, touch and wheel input.
+- **Why left:** the name, formula and record are text; the model is an illustration.
+- **Clears it:** Tilt and Zoom buttons calling the viewer's `rotate` about `x` and `zoom`.
+
+## Curation tooling (decision 0051)
+
+### The LGD register is read in two places
+
+- **What:** `services/district_seed.py` reads `lgd_register.json` itself to seed states and
+  districts; `data/district_register.py` reads it for the curation checker's name lookup.
+- **Why left:** the seed also builds geometry and is proven only by the database job; changing it
+  was outside the curation lane.
+- **Clears it:** `district_seed` taking its state and district names from
+  `data/district_register`.
+
+### Two atomic text writers in tools
+
+- **What:** `tools/hygiene/baseline.write_baseline` and `tools/curation/output.write_text_atomically`
+  both write through a temporary file and replace.
+- **Why left:** `tools/` has no shared module, and the hygiene package should not import curation.
+- **Clears it:** one `tools` module both import, when a third writer appears.
+
+### Long HTML and plain-text sources are cut at 200,000 characters
+
+- **What:** `tools/curation/reading.source_text` reuses `app.fetcher.extract`, which caps HTML and
+  plain text at `FETCH_TEXT_MAX_CHARS`; a quote past the cap fails and the check file marks the
+  source `truncated`. PDFs use curation's own caps (2,000 pages).
+- **Why left:** one HTML reader for the live fetcher and curation; long books usually come as PDFs.
+- **Clears it:** a cap option on `extract` that curation passes.
+
+### The tools have not met a GI journal yet
+
+- **What:** the PDF path is tested on a hand-built PDF, and the live and Wayback paths were run once
+  on a Wikipedia page; no multi-hundred-page GI journal or Wayback-only source has been verified.
+- **Why left:** the pilot (wave 0) is the first real use.
+- **Clears it:** the pilot's verify runs, recording the largest PDF read and any extraction gap.
+
+## Region story and map layers (decision 0044)
+
+### Rivers are drawn unnamed
+
+- **What:** HydroRIVERS names no river, so the region story builder always sends `river.name` null
+  and the client labels the course generically, even when a step's claim names the river ("the
+  river Saran in Dhamadka"). The contract allows a name stated by a step, but matching a claim's
+  name to a traced path would be a model's identity claim about a path.
+- **Why left:** no open, linked river-name dataset is loaded; owner rule: paths and places come
+  from claims or datasets, never a model.
+- **Clears it:** an open dataset that names reaches or basins (Wikidata rivers matched by mouth and
+  source coordinates, or OpenStreetMap waterway names under ODbL after a licence decision), loaded
+  by the geo ETL and offered to the builder as a dataset row the name cites.
+
+### A researched geography section rebuilds a stored story
+
+- **What:** a stored region story is reused only together with its facet's reused section; a
+  researched geography section (a new craft in the same district, or a stale craft set) makes one
+  plan-model call for a new story, which supersedes the stored one of its basin, even when the
+  stored story still passes the reuse rule.
+- **Why left:** the registry refuses a builder block with a reuse mark (decision 0042 point 9), and
+  a stored block shown without its mark would hide that it is earlier research.
+- **Clears it:** a registry path that places a reusable stored piece with its mark (the entry names
+  the piece slot it reads), so the builder spends nothing when a current story exists.
+
+### "No river data" is logged once per answer, not once per process
+
+- **What:** the region story builder notes that the river lines are not loaded once per builder,
+  and the registry is built per request, so every geography section logs it once until the load.
+- **Why left:** no process-held builder state exists; the state would be module-level otherwise.
+- **Clears it:** the Geo ETL `riverlines` load, after which nothing is logged; or a process-held
+  notice passed in `BuilderTools`.
+
+### Story steps are only the section's own claims
+
+- **What:** steps are chosen from the fact-level stored claims the section's checked blocks cite
+  (at most 12), so a story never adds a stored place or water claim the prose did not use, and its
+  steps repeat sentences of the section's prose.
+- **Why left:** those claims are already checked and cited for this question; searching place
+  claims per district is a retrieval change.
+- **Clears it:** an offer of the district's stored place claims (by `CraftLocation` district and
+  the GEOGRAPHY concept headings) beside the section's, ranked by the question.
+
+### Map layer subjects are a fixed English word list
+
+- **What:** `geo/section_layers.LAYER_SUBJECTS` picks a section's layer by whole English words in
+  its sentences (rain, monsoon, clay, pH ...); a subject the list lacks falls back to registry
+  order, so a climate section about humidity shows the annual mean temperature.
+- **Why left:** builders see English sentences, and a deterministic list keeps the model out of a
+  value the server chooses.
+- **Clears it:** glossary terms linked to layers (a `Term` per registry layer with its local
+  names), marked by the existing `TermMarker` instead of a word list.
+
+### Many-district stories are not stored
+
+- **What:** a story without a river is keyed by every district (`lgd-<code>` joined by `+`); past
+  `TOPIC_KEY_MAX_CHARS` (about 23 districts) the key is refused, the story is shown but not kept,
+  and the lookup offers no district key for such a craft.
+- **Why left:** crafts practised in more than 20 mapped districts are rare, and a key per district
+  would let one story answer for another district's craft.
+- **Clears it:** a stored district list on the piece (a `districtLgds` column with a GIN index)
+  looked up by overlap instead of an exact key.
+
+### The place builders have not run against loaded rivers
+
+- **What:** the builders are tested on fixture reaches and, on GitHub Actions, on a hand-made
+  network in Kachchh; no answer has yet traced a real HydroRIVERS basin, so the time of a large
+  basin's trace (the Ganga's links and PostGIS district hits) inside the 20 s wait is unmeasured.
+- **Why left:** the river lines load only after the deploy (decision 0043).
+- **Clears it:** after the `riverlines` load, one Expert answer for a Ganga craft and one for Kutch
+  Ajrakh in production, recording the builder's time; if a trace nears the wait, cache traces per
+  crossing reach.
+
+## Seasons and supply (decision 0047)
+
+### A season gets months only from a quote the section offers
+
+- **What:** a season row is given months only by a quote among the section's cited claims and the
+  craft's stage claims that states the season's months; most climate sections cite none, so their
+  rows show the season chip alone. No regional season calendar is stored.
+- **Why left:** owner rule: a named Indian season maps to months only where a source states the
+  mapping, and no cited calendar is curated yet.
+- **Clears it:** cited regional season calendars per state or district (for example the India
+  Meteorological Department's season definitions), stored as claims on a district concept and
+  offered to the seasons builder with the section's claims.
+
+### The season mapping reads short English word lists
+
+- **What:** `calendar.season_months` maps a season only when the words between it and one month
+  range are on short lists (`SPAN_WORDS_AFTER`, `SPAN_WORDS_BEFORE`) and no reference word
+  (`POINT_WORDS`: after, before, end, onset, early ...) stands just before the season word; any
+  other phrasing maps nothing, and an enumeration whose items share those words (`the monsoon, the
+  summer months of June to September`) could still give a range to the wrong season.
+- **Why left:** reading less only leaves a row with its season chip; a parser would be a new
+  dependency for one rule.
+- **Clears it:** tests on the real climate quotes the curation run stores, widening or narrowing the
+  lists with each case found.
+
+### Supply origins are placed through Wikidata only
+
+- **What:** an origin is pinned only with a Wikidata item's P625; a district the register holds
+  (with its polygon) whose name finds no single Wikidata item is listed without a pin, and a
+  village with namesakes is pinned only when its sentence names a word of the right item's
+  description.
+- **Why left:** version 1 of `SupplyLink` has no field that cites a district row, and the client
+  links every pin to its Wikidata item (decision 0047).
+- **Clears it:** a version 2 link with `districtLgd`, placed at the register district's centroid and
+  citing `DR_DISTRICT_SHAPES`, on both sides.
+
+### Place lookups are asked again for every supply map
+
+- **What:** each supply map searches Wikidata for every origin again (the source HTTP cache keeps an
+  answer ten minutes per process); only a stored piece keeps its coordinates. The supply builder
+  also reads the craft's matter again, after the material card and molecule builders of the same
+  section (as in "Each matter builder reads the craft's matter again").
+- **Why left:** a section has few origins, and stored pieces answer repeat questions.
+- **Clears it:** a stored place table keyed by origin and context words with the item, its
+  coordinates and revision, refreshed monthly; one matter read shared by a section's builders.
+
+### Seasons are built for climate sections only
+
+- **What:** the seasons builder runs for `CLIMATE` sections; a process section about when the work
+  is done shows its ladder without a month strip.
+- **Why left:** a process section's ladder already lists every stage, and a strip listing the cited
+  stages again would repeat it.
+- **Clears it:** a strip of timed stages only in process sections, once the production E2E shows how
+  often a climate section is planned.
+
+### The seasons and supply builders have not met production
+
+- **What:** both are tested on fixtures, recorded Wikidata answers and, on GitHub Actions, the
+  seeded claims; neither has run on production claims, and the supply builder's time inside its
+  30 s wait (one plan-model call, up to 8 searches paced at 0.2 s and one SPARQL query paced at 1 s)
+  is unmeasured.
+- **Why left:** they reach readers with the next deploy.
+- **Clears it:** the Kutch Ajrakh climate and materials questions in the production E2E, recording
+  each builder's time and the rows and pins shown.
+
+## Phase B review fixes (decision 0050)
+
+### Prose and takes are not checked for river names
+
+- **What:** `stated_names.unstated_names` refuses months, seasons and register states and districts
+  a sentence names and no cited claim or quote states; a river name ("the Narmada") is not
+  checked, because nothing lists river names.
+- **Why left:** no open river-name dataset is loaded (entry "Rivers are drawn unnamed"); a
+  hand-written list would be names without a source.
+- **Clears it:** the river-name dataset of that entry, its names joined to `register_places_named`.
+
+### Register place names are matched as written
+
+- **What:** the check reads every state and district name of the LGD register as written, whole
+  words: an alias (Kutch for Kachchh) is not read, so a story step naming Kutch stays unplaced and
+  a sentence naming Kutch is not checked, and a district name that is also a common word or a
+  person's name (Mon, Anand, Sagar, Korea) drops a sentence whose sources do not repeat it.
+  District names made only of compass words (Delhi's North, South West) are skipped.
+- **Why left:** the register has no aliases; failing closed drops a sentence rather than showing
+  an unstated place.
+- **Clears it:** a cited alias table for districts, read by `register_places_named` and by the
+  step district check.
+
+### A negation within five words rules a timing out
+
+- **What:** `calendar.year_months` and `only_season` drop a month or season when a negating or
+  excluding word stands within five words before it in its clause, so a sentence about the
+  season that negates something else ("so they do not expand in the rainy season") places no row.
+- **Why left:** telling the negated verb apart needs a parser; a wrong month on screen is worse
+  than a missing row.
+- **Clears it:** a dependency parse of the claim (spaCy, a recorded decision) that drops only
+  mentions inside the negation's scope.
+
+### Superseded river files stay in the bucket
+
+- **What:** topology keys carry their SHA-256, so a load whose content changed writes new objects
+  and leaves the earlier ones under `media/rivers/<edition>/<mainRiv>/<old sha256>/`.
+- **Why left:** the river load role may write and read only; deleting needs a wider grant, and
+  the files are small next to the bucket's media.
+- **Clears it:** a lifecycle rule on `media/rivers/` expiring objects no `RiverBasin` row names,
+  or a delete step in the load with `s3:DeleteObject` on that prefix.
+
+### The stream's reaction event outlives the reaction player
+
+- **What:** `research/stream.py` still declares the `reaction` event and the client still parses
+  it into `ReactionsPanel`, although no server path emits it since the explainer (decision 0030)
+  and reactions now arrive as `reaction_player` blocks.
+- **Why left:** removing an event changes the stream contract on both sides and the frontend
+  state; it shows nothing today.
+- **Clears it:** drop `ReactionEvent`, the client's `reaction` event, `reactions` state and
+  `ReactionsPanel` in one change with `docs/contracts/research.md`.
+
+### The water question needs `rivers_loaded` set by hand
+
+- **What:** the production E2E's water question fails a missing region story only when dispatched
+  with `rivers_loaded` true; it cannot tell on its own whether the river lines are loaded.
+- **Why left:** no route says whether rivers are loaded, and adding one for a test would be an
+  admin surface with no reader.
+- **Clears it:** dispatch with `rivers_loaded` true from the first run after the `riverlines` load,
+  then make it the default.
+
+### The answer route and the nightly rebuild each wire the answer's models
+
+- **What:** `api/routes/knowledge.answer_pipelines` and `scripts/rebuild_pieces.rebuild_pipeline`
+  each build the plan, compose, builder, translate and embedding models from an `AnswerSpend`; a
+  new model must be added to both (decision 0050 added the builder plan model to both, and a test
+  checks both).
+- **Why left:** the route builds principals with the reader's id and role and the script without,
+  and the models come from `providers`, which `services` may not import, so the shared builder
+  is a new provider module.
+- **Clears it:** one `providers/answer_models.answer_models(spend, user=)` returning the set, which
+  `build_answer_pipeline` takes as one argument.

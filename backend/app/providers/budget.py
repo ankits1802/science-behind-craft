@@ -10,6 +10,7 @@ from app.core.roles import is_uncapped
 from app.services.ai_providers import UNKNOWN_TOKEN_PRICE, UNKNOWN_UNIT_PRICE, AiModel
 
 CACHED_INPUT_FRACTION = Decimal("0.25")
+OPTIONAL_WORK_KEEPS = Decimal("0.5")
 RESERVATION_TTL = timedelta(minutes=15)
 MICRO = Decimal("0.000001")
 MILLION = Decimal(1_000_000)
@@ -84,6 +85,30 @@ class AnswerSpend:
 
     def release(self, held: Decimal) -> None:
         self.held_usd -= held
+
+    def headroom(self, keeps: Decimal = OPTIONAL_WORK_KEEPS) -> AnswerHeadroom:
+        return AnswerHeadroom(self, keeps)
+
+
+@dataclass(eq=False)
+class AnswerHeadroom:
+    answer: AnswerSpend
+    keeps: Decimal
+
+    def left(self, ceilings: Ceilings) -> Decimal:
+        cap = ceilings.answer_usd.get(self.answer.depth)
+        if cap is None:
+            return Decimal(0)
+        return self.answer.left(ceilings) - cap * self.keeps
+
+    def hold(self, amount: Decimal) -> None:
+        self.answer.hold(amount)
+
+    def settle(self, held: Decimal, cost: Decimal) -> None:
+        self.answer.settle(held, cost)
+
+    def release(self, held: Decimal) -> None:
+        self.answer.release(held)
 
 
 @dataclass(frozen=True)

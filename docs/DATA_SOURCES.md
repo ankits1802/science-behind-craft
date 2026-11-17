@@ -32,7 +32,7 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 | `CHELSA_2_1_1981_2010` | Open download without registration; licence text not confirmed on 2026-11-15 ([site](https://chelsa-climate.org/)) | No, until confirmed | CHELSA V2.1, Karger et al. | https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/ |
 | `CHIRPS_3_0` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | Climate Hazards Center, UC Santa Barbara (CHIRPS3) | https://data.chc.ucsb.edu/products/CHIRPS/v3.0/ |
 | `COPERNICUS_DEM_GLO90` | [Copernicus DEM licence (GLO-90 free worldwide)](https://registry.opendata.aws/copernicus-dem/) | Yes | Produced using Copernicus WorldDEM-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved | https://copernicus-dem-90m.s3.amazonaws.com/ |
-| `HYDRORIVERS_1_0` | [HydroSHEDS License Agreement](https://www.hydrosheds.org/terms-of-use): free for non-commercial and commercial use, attribution required | Yes | HydroRIVERS, WWF HydroSHEDS (https://www.hydrosheds.org) | https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_as_shp.zip |
+| `HYDRORIVERS_1_0` | [HydroSHEDS v1 License Agreement](https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf) (Appendix A, checked 2026-11-17): free for non-commercial and commercial use; distributed only inside derived products, never on its own; attribution required | Yes, inside the app; the lines are never a download or export | The Exhibit B statement, below (River lines) | https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_as_shp.zip |
 | `USGS_MRDS` | [Public domain (U.S. Government work)](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits) | Yes | U.S. Geological Survey Mineral Resources Data System | https://mrdata.usgs.gov/services/wfs/mrds |
 | `GLIM_1_0_05DEG` | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Yes | Hartmann and Moosdorf (2012), GLiM | https://doi.pangaea.de/10.1594/PANGAEA.788537?format=textfile |
 
@@ -74,7 +74,7 @@ attribution; only short quoted passages are stored, with a link back.
 | Adapter | Service | Licence and attribution |
 |---|---|---|
 | `wikipedia` | Wikipedia Action API (English and Indian-language wikis) | CC BY-SA 4.0, read live from each wiki's rightsinfo; attributed to "Wikipedia contributors" with the article title and revision |
-| `wikidata` | Wikidata Action API and query service (SPARQL) | Structured data CC0 1.0; cited by item id and revision |
+| `wikidata` | Wikidata Action API and query service (SPARQL) | Structured data CC0 1.0; cited by item id and revision; an item's coordinate location (P625) places a supply origin, linked by its item id (decision 0047) |
 | `pubchem` | PubChem PUG REST and PUG View, National Library of Medicine | Compound properties: NCBI places no restrictions (https://www.ncbi.nlm.nih.gov/home/about/policies/). GHS hazards keep the reporting source's terms; for ECHA, non-commercial reuse with "Source: European Chemicals Agency, http://echa.europa.eu/" (https://echa.europa.eu/web/guest/legal-notice) |
 | `wikimedia_commons` | Wikimedia Commons file metadata | Each file's own licence (short name and URL) and author, attributed "author, licence, via Wikimedia Commons" |
 
@@ -93,7 +93,11 @@ The physical constants behind the stage envelopes (decision 0015) are claims in
 | Brass melts | Brass, 1382181158 (Properties) | 900 to 940 °C |
 
 Seeded compounds are matched to PubChem records by `app/scripts/link_compounds` through the
-`pubchem` adapter (terms above); each linked compound cites its PubChem record.
+`pubchem` adapter (terms above); each linked compound cites its PubChem record. It runs nightly
+in the Coverage enrichment job. A linked compound's 3D conformer (PubChem's computed 3D record,
+`record/SDF?record_type=3d`, same terms) is fetched once through the same adapter, at most one
+call per 0.25 s, kept in the private bucket and drawn in the explainer citing the compound's
+record (decision 0045).
 
 ## Live web sources
 
@@ -161,7 +165,7 @@ Method notes carried in each row's `method`:
 - SoilGrids is read from the ISRIC WCS at native 250 m in Homolosine; stored integers are divided by the ISRIC conversion factor (10 for clay, sand, silt, soc, phh2o, cec; 100 for bdod and nitrogen). Uncertainty rows are the district mean of the Q0.05 and Q0.95 layers. SoilGrids masks built-up land, water and bare rock; a district masked throughout gets no SoilGrids rows and is listed under `districtsWithoutValues` and `districtsWithoutCells` in the summary (Mumbai, 482: 0 of 2,720 cells unmasked on 2026-11-17).
 - WorldCover is read from the 3 degree COG tiles. The workflow can read an overview (`--worldcover-factor`, default 4, so about 40 m, nearest neighbour); the effective resolution is written to each row's `resolution`, loaded into `DistrictEnvValue.resolution` and sent with every region value and layer (decision 0016).
 - Hansen forest is `treecover2000 >= 30%`; loss is counted only inside that 2000 forest, by `lossyear`.
-- CHIRPS uses the last `--chirps-years` (default 10) complete years available; `monsoon_share_jjas` is June to September over the annual normal.
+- CHIRPS uses the last `--chirps-years` (default 10) complete years available; `monsoon_share_jjas` is June to September over the annual normal. The twelve `monthly_precipitation` normals of a district are written only when every year of the period has every month; they are the rainfall of an explainer's `seasons` block, cited by the CHIRPS dataset row with its period and 0.05 degree grid (decision 0043) and named by its district and state from the LGD register ("Rainfall · Kachchh, Gujarat · monthly normal · 2016-2025", decision 0050).
 - Slope is computed from the DEM with central differences, using metres per degree at each row's latitude.
 - HydroRIVERS lengths are reaches clipped to the district in WGS 84 / India NSF LCC. A major river is `ORD_FLOW <= 4` (long-term discharge of at least 100 m3/s). Distance is from the Designer Portal district centroid.
 
@@ -180,6 +184,18 @@ These sources were considered and not used:
 
 - **GSI Bhukosh / NGDR** (1:2M geology and mineral occurrences): downloads need a registered Bhukosh account, and there is no bulk download without logging in. That breaks the owner's no-registration rule. Revisit if GSI publishes an open bulk download; it would replace both MRDS and GLiM for India.
 - **OneGeology**: a portal over national map services, with no bulk download for India. Reading it would mean scraping WMS tiles, which gives pictures, not attributes.
+
+### River lines (decision 0043)
+
+The river story draws HydroRIVERS v1.0 (Asia) lines, not just their district totals.
+
+- **Which reaches.** Every reach with an upstream area of at least 100 km2 (`UPLAND_SKM`), of every basin (`MAIN_RIV`) one of whose reaches of that size crosses a district polygon. The whole basin is kept, from its sources in Tibet, Nepal or Bhutan to its mouth, and so is every reach a kept reach flows into. A river's source as drawn is its first reach of that size, not the dataset's 10 km2 headwater.
+- **Files.** One TopoJSON per basin in the private media bucket, under `media/rivers/v10/<MAIN_RIV>/<sha256>/` (the file's own SHA-256, so a stored basin row and its file never drift, and a file that no longer matches its row is not served; decision 0050): each reach simplified on its own at 0.005 degree (about 550 m) with its ends kept, so junctions stay joined, and quantized to 100,000 steps over the basin. Served only to signed-in readers through `GET /api/rivers/<MAIN_RIV>`; never a download or an export.
+- **Licence, checked 2026-11-17.** The HydroRIVERS Technical Documentation v1.0 (October 2019, section 4.1) puts the data under the HydroSHEDS License Agreement, which is Appendix A of the [HydroSHEDS Technical Documentation v1.4](https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf) (April 2022). The data are free for non-commercial and commercial use; they may be distributed only incorporated into derived products, never as a stand-alone product (2.1.2); and Exhibit B's statement must go with the product's documentation or metadata. The website's [terms of use](https://www.hydrosheds.org/terms-of-use) cover the site's own pages, not the data. The dataset row carries the statement as its attribution, so every citation of the river shows it:
+
+  > This product KalaVigyan incorporates data from the HydroSHEDS version 1 database which is © World Wildlife Fund, Inc. (2006-2022) and has been used herein under license. WWF has not evaluated the data as altered and incorporated within KalaVigyan, and therefore gives no warranty regarding its accuracy, completeness, currency or suitability for any particular purpose. Portions of the HydroSHEDS v1 database incorporate data which are the intellectual property rights of © USGS (2006-2008), NASA (2000-2005), ESRI (1992-1998), CIAT (2004-2006), UNEP-WCMC (1993), WWF (2004), Commonwealth of Australia (2007), and Her Royal Majesty and the British Crown and are used under license. The HydroSHEDS v1 database and more information are available at https://www.hydrosheds.org.
+
+- **Citation.** HydroRIVERS asks to be cited as Lehner and Grill (2013), above, with a link to https://www.hydrosheds.org.
 
 ### Climate: CHELSA chosen over WorldClim
 

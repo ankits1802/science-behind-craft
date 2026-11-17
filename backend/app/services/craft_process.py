@@ -197,11 +197,15 @@ def _material(link: Any, concept_claims: Mapping[uuid.UUID, list[uuid.UUID]]) ->
         quantity_text=staged.quantityText,
         compound=None if compound is None else _compound(compound),
         claim_ids=tuple(claim_ids),
+        material_id=material.id,
+        concept_id=material.conceptId,
     )
 
 
 def _compound(compound: Compound) -> CompoundRecord:
-    return CompoundRecord(compound.id, compound.name, compound.formula, compound.pubchemCid)
+    return CompoundRecord(
+        compound.id, compound.name, compound.formula, compound.pubchemCid, compound.sourceId
+    )
 
 
 def _reactions(rows: _Rows) -> list[ReactionRecord]:

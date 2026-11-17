@@ -1,0 +1,1212 @@
+{
+  "schemaVersion": 1,
+  "craft": {
+    "slug": "Kutch-Ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/Kutch-Ajrakh"
+  },
+  "placeholders": {
+    "mainRiv": 3,
+    "reachIds": [
+      1,
+      2,
+      3
+    ]
+  },
+  "sections": [
+    {
+      "id": "s1",
+      "discipline": "GEOGRAPHY",
+      "blocks": [
+        {
+          "id": "s1.b1",
+          "kind": "region_story",
+          "version": 1,
+          "reuse": null,
+          "river": {
+            "datasetCode": "HYDRORIVERS_1_0",
+            "mainRiv": 3,
+            "reachIds": [
+              1,
+              2,
+              3
+            ],
+            "districtLgds": [
+              449
+            ],
+            "name": "Saran"
+          },
+          "districts": [
+            {
+              "districtLgd": 449,
+              "name": "Kachchh",
+              "stateName": "Gujarat"
+            }
+          ],
+          "steps": [
+            {
+              "districtLgd": null,
+              "sentence": {
+                "id": "s1.b1.1",
+                "text": "Ajrakh activities prevailed at Dhamadka for the past 450 years because of a water source from a stream of the Indus river; this stream dried up in 1989.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "077b97c6-2c58-512f-9645-16bb15d621d8",
+                    "claimId": "6f85ec91-39be-5e17-849d-ac0a2052b590",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "The Ajrakh activities prevailed at Dhamadka since the past 450 years, as it was having a potential water source from one of the water stream of the Indus river.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "16f621e6-5a49-5770-a361-087ad7f2c20d",
+                    "claimId": "6f85ec91-39be-5e17-849d-ac0a2052b590",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "This water stream dried up in 1989 and water levels from wells and tanks continued to fall.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "districtLgd": null,
+              "sentence": {
+                "id": "s1.b1.2",
+                "text": "The river Saran in Dhamadka dried up by 1989, largely because bore pumps diverted water toward the Kandla Free Trade Zone.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "4e0caa74-00cf-57da-be98-9c43443cb428",
+                    "claimId": "47766797-6f8a-5369-bf51-6122e1c52329",
+                    "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                    "quote": "In Dhamadka, the river Saran was always flowing, but it died a slow death by 1989. This was largely due to the increase in bore pumps which diverted the water towards the Kandla Free Trade Zone.",
+                    "locator": "§ \"We are running out of water\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "districtLgd": null,
+              "sentence": {
+                "id": "s1.b1.3",
+                "text": "After the 2001 earthquake about a hundred families moved from Dhamadka to their present location 40 km away, in search of good quality groundwater.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "b307d090-ab32-5dcd-93d2-95397d90e146",
+                    "claimId": "fd18a5bd-27b8-5995-aa28-c2a05c7de469",
+                    "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+                    "quote": "Last time something like this had happened, the entire village of a hundred families moved from their earlier settlement in Dhamadka to their present location, 40 km away, in search of good quality groundwater. This transition was after the devastating earthquake in 2001 .",
+                    "locator": "§ \"History repeats itself\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "districtLgd": null,
+              "sentence": {
+                "id": "s1.b1.4",
+                "text": "Excess iron in groundwater threatened Ajrakh in Dhamadka and is again threatening it in Ajrakhpur.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "02b489ed-7b2a-5ece-bb34-caf590e4b31f",
+                    "claimId": "faa466c1-8940-5552-a7f5-851cebb40f64",
+                    "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+                    "quote": "Excess iron in groundwater that threatened Ajrakh in Dhamadka, is once again threatening the craft in Ajrakhpur.",
+                    "locator": "§ \"Share this article\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ],
+          "layers": [
+            "river-density"
+          ],
+          "datasets": [
+            {
+              "code": "DR_DISTRICT_SHAPES",
+              "title": "District shapes as drawn by the Designer Portal",
+              "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+              "edition": "791efb62cc30cf5d",
+              "period": "2026-10-17",
+              "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+              "licence": "Unconfirmed; indicative boundaries",
+              "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+              "attribution": "District boundaries are indicative.",
+              "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+              "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+            },
+            {
+              "code": "HYDRORIVERS_1_0",
+              "title": "HydroRIVERS v1.0 (Asia)",
+              "publisher": "WWF HydroSHEDS",
+              "edition": "v10",
+              "period": "static",
+              "nativeResolution": "15 arc-second network (reaches with upstream area >= 10 km2 or discharge >= 0.1 m3/s)",
+              "licence": "HydroSHEDS v1 License Agreement: free for non-commercial and commercial use; distributed only inside derived products, never on its own; attribution required",
+              "licenceUrl": "https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf",
+              "attribution": "This product KalaVigyan incorporates data from the HydroSHEDS version 1 database which is © World Wildlife Fund, Inc. (2006-2022) and has been used herein under license. WWF has not evaluated the data as altered and incorporated within KalaVigyan, and therefore gives no warranty regarding its accuracy, completeness, currency or suitability for any particular purpose. Portions of the HydroSHEDS v1 database incorporate data which are the intellectual property rights of © USGS (2006-2008), NASA (2000-2005), ESRI (1992-1998), CIAT (2004-2006), UNEP-WCMC (1993), WWF (2004), Commonwealth of Australia (2007), and Her Royal Majesty and the British Crown and are used under license. The HydroSHEDS v1 database and more information are available at https://www.hydrosheds.org.",
+              "citation": "Lehner, B., Grill, G. (2013). Global river hydrography and network routing: baseline data and new approaches to study the world's large river systems. Hydrological Processes 27(15), 2171-2186. https://doi.org/10.1002/hyp.9740",
+              "url": "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_as_shp.zip"
+            }
+          ],
+          "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "discipline": "GEOLOGY",
+      "blocks": [
+        {
+          "id": "s2.b1",
+          "kind": "map_layer",
+          "version": 1,
+          "reuse": null,
+          "layer": "soil-ph-0-5cm",
+          "layerVersion": "42329c3ed50736b8e2a8b77623370bf5e482138c3208e675fb9bfd48ae54dce0",
+          "title": "Soil pH, 0-5 cm",
+          "datasets": [
+            {
+              "code": "SOILGRIDS_2_0",
+              "title": "SoilGrids 2.0",
+              "publisher": "ISRIC World Soil Information",
+              "edition": "2.0",
+              "period": "modelled, 2020 release",
+              "nativeResolution": "250 m",
+              "licence": "CC BY 4.0",
+              "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+              "attribution": "SoilGrids 2.0, ISRIC World Soil Information",
+              "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021",
+              "url": "https://files.isric.org/soilgrids/latest/data/"
+            },
+            {
+              "code": "DR_DISTRICT_SHAPES",
+              "title": "District shapes as drawn by the Designer Portal",
+              "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
+              "edition": "791efb62cc30cf5d",
+              "period": "2026-10-17",
+              "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+              "licence": "Unconfirmed; indicative boundaries",
+              "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+              "attribution": "District boundaries are indicative.",
+              "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+              "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+            }
+          ],
+          "highlighted": [
+            449
+          ],
+          "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "discipline": "CLIMATE",
+      "blocks": [
+        {
+          "id": "s3.b1",
+          "kind": "seasons",
+          "version": 1,
+          "reuse": null,
+          "rows": [
+            {
+              "stageId": null,
+              "label": "Monsoon humidity",
+              "months": [],
+              "season": "MONSOON",
+              "sentence": {
+                "id": "s3.b1.1",
+                "text": "Monsoon humidity slows production.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "9452769c-fdad-5ab5-b14b-4b1292bd3643",
+                    "claimId": "be782149-da24-5ed4-ad0a-f590cbdd7f8b",
+                    "sourceId": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+                    "quote": "The monsoon is a slack period for production since the humiditiy affects the printing and dyeing quality, and there is no place for drying.",
+                    "locator": "§ \"These days we use Whatsapp!\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ],
+          "rainfall": null,
+          "datasets": []
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "discipline": "CHEMISTRY",
+      "blocks": [
+        {
+          "id": "s4.b1",
+          "kind": "reaction_player",
+          "version": 1,
+          "reuse": null,
+          "steps": [
+            {
+              "reactionId": "d2e727af-a1bd-55a8-a151-f1aff8414e61",
+              "stageId": "5ced8309-b0f4-571a-8482-4223d1d4fccc",
+              "kind": "REDOX",
+              "label": "Scrap iron dissolving into iron acetate",
+              "species": [
+                {
+                  "role": "REACTANT",
+                  "formula": "Fe",
+                  "name": "Iron",
+                  "coefficient": 1,
+                  "compoundId": null
+                },
+                {
+                  "role": "REACTANT",
+                  "formula": "CH3COOH",
+                  "name": "Acetic acid",
+                  "coefficient": 2,
+                  "compoundId": null
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": "Fe(CH3COO)2",
+                  "name": "Iron(II) acetate",
+                  "coefficient": 1,
+                  "compoundId": "94770553-9c7d-51ec-b3ca-3463f31703b8"
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": "H2",
+                  "name": "Hydrogen",
+                  "coefficient": 1,
+                  "compoundId": null
+                }
+              ],
+              "equation": "Fe + 2 CH3COOH -> Fe(CH3COO)2 + H2",
+              "balanced": true,
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "f5e2ff39-d761-5d50-bcff-34138c663abe",
+                  "claimId": "feaa25b3-b79c-59ce-9c6b-1a841c7e12ed",
+                  "sourceId": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+                  "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3).",
+                  "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "bbda0126-cff0-5edb-b58b-1b9ee4f8bc1a",
+                  "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Kut printing is usually undertaken in the afternoon.The kut is a smooth finer paste made from jaggery, or molasses, in which scrap iron such as horse-hoes and besan (gram flour) have been fermented for ten to fifteen days.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "20ef34b8-306d-53a1-8a4f-57ef6b92b628",
+                  "claimId": "6401aedc-bb18-5c46-914b-c614fdec277e",
+                  "sourceId": "8a32aea5-44f7-5a50-942b-97534f0e5d8e",
+                  "quote": "The darker shade of purple at the center of the leaves was block printed with a paste of iron acetate made of fermented scrap iron, which together with the myrobalan tannin created the corrosive dye that caused fiber loss.",
+                  "locator": "§ \"Indian Block-Printed Textiles: Past and Present\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "reactionId": "c33b87a8-1dc1-5040-a4dc-07a182f52911",
+              "stageId": "03634aef-562d-5f0d-a265-63e42ada73fd",
+              "kind": "REDOX",
+              "label": "Indigo reduced to soluble leucoindigo in the vat",
+              "species": [
+                {
+                  "role": "REACTANT",
+                  "formula": "C16H10N2O2",
+                  "name": "Indigo",
+                  "coefficient": 1,
+                  "compoundId": "18eabd7b-cf22-5e24-8945-507844794a88"
+                },
+                {
+                  "role": "REACTANT",
+                  "formula": "H^+",
+                  "name": "Hydrogen ion",
+                  "coefficient": 2,
+                  "compoundId": null
+                },
+                {
+                  "role": "REACTANT",
+                  "formula": "e^-",
+                  "name": "Electron",
+                  "coefficient": 2,
+                  "compoundId": null
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": "C16H12N2O2",
+                  "name": "Leucoindigo",
+                  "coefficient": 1,
+                  "compoundId": "c6aada74-85ae-5f31-948a-7fec302f71b8"
+                }
+              ],
+              "equation": "C16H10N2O2 + 2 H^+ + 2 e^- -> C16H12N2O2",
+              "balanced": true,
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "51bfc60f-8b8b-54f8-8f27-4b7cab358fa4",
+                  "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "d4702aa6-01c0-5374-b4ef-c9d6ff878739",
+                  "claimId": "a5761723-d8b3-5547-aa5c-919a865593de",
+                  "sourceId": "48309f78-3f0e-511e-a874-703135c913a6",
+                  "quote": "Indigo is transformed to leucoindigo by the action of indigo-reducing bacteria (indigo → leucoindigo) ( Figure 1 ). Although indigo is not soluble in water, leucoindigo is soluble in water.",
+                  "locator": "§ \"Introduction\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "ae32c96b-8c5d-544d-b6a3-1771f1b4e2d2",
+                  "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+                  "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+                  "quote": "On oxidisation, indigo white is converted into granules of indigo blue which has then to be reduced through fermentation into soluble indigo white, before dyeing can begin.",
+                  "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "reactionId": "e6df0432-d41b-5ad2-aded-4ff814786935",
+              "stageId": "03634aef-562d-5f0d-a265-63e42ada73fd",
+              "kind": "REDOX",
+              "label": "Leucoindigo oxidised back to blue indigo in air",
+              "species": [
+                {
+                  "role": "REACTANT",
+                  "formula": "C16H12N2O2",
+                  "name": "Leucoindigo",
+                  "coefficient": 2,
+                  "compoundId": "c6aada74-85ae-5f31-948a-7fec302f71b8"
+                },
+                {
+                  "role": "REACTANT",
+                  "formula": "O2",
+                  "name": "Oxygen",
+                  "coefficient": 1,
+                  "compoundId": null
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": "C16H10N2O2",
+                  "name": "Indigo",
+                  "coefficient": 2,
+                  "compoundId": "18eabd7b-cf22-5e24-8945-507844794a88"
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": "H2O",
+                  "name": "Water",
+                  "coefficient": 2,
+                  "compoundId": null
+                }
+              ],
+              "equation": "2 C16H12N2O2 + O2 -> 2 C16H10N2O2 + 2 H2O",
+              "balanced": true,
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "b07d4901-bd3a-5371-9c26-335792e34e39",
+                  "claimId": "90d52dfd-901a-5287-b34a-16498a1a1912",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "f6057a5d-5586-5a32-a3ab-7f0120f4509a",
+                  "claimId": "00cedcde-83f0-541b-91ab-27b13ffb72b5",
+                  "sourceId": "48309f78-3f0e-511e-a874-703135c913a6",
+                  "quote": "Therefore, leucoindigo penetrates textiles dipped in indigo fermentation fluid, followed by a brief exposure to air to oxidize leucoindigo (leucoindigo → indigo).",
+                  "locator": "§ \"Introduction\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "62415cc2-cfd9-55e7-a036-b6314195d149",
+                  "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+                  "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+                  "quote": "The fabric would first be dipped into a prepared dye vat and then exposed to air, so that the indigo white could revert into insoluble indigo blue and be bonded to the cotton fibre.",
+                  "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da",
+              "stageId": "eb895bd5-83a3-511a-9e64-ba7e452afea8",
+              "kind": "COMPLEXATION",
+              "label": "Alizarin binding to the alum mordant",
+              "species": [
+                {
+                  "role": "REACTANT",
+                  "formula": "Al^3+",
+                  "name": "Aluminium from the alum mordant",
+                  "coefficient": null,
+                  "compoundId": null
+                },
+                {
+                  "role": "REACTANT",
+                  "formula": "C14H8O4",
+                  "name": "Alizarin",
+                  "coefficient": null,
+                  "compoundId": "20675edc-039d-5c49-85f9-aba0597c7aab"
+                },
+                {
+                  "role": "PRODUCT",
+                  "formula": null,
+                  "name": "Aluminium-alizarin lake",
+                  "coefficient": null,
+                  "compoundId": null
+                }
+              ],
+              "equation": null,
+              "balanced": false,
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "bcc71322-675e-51c1-b19c-84258612d340",
+                  "claimId": "cd8140e6-98fc-5882-b261-766e143dd8c2",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Red Dyeing:- Alizarin crystals or the crushed and steeped roots of majeeta or Indian Madder are gently heated in a large copper pot.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "59e42547-3723-53f0-b468-8af16d07504c",
+                  "claimId": "542cae98-9a85-5410-a375-69334290d130",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design, where Pa, Gach pastes have been printed.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "affc1bd0-6880-526d-9596-9dbb65a46218",
+                  "claimId": "0899069c-80aa-5b60-bfb9-79eee94a39fe",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Derived from coal tar this crystalline red dye rapidly superseded madder, its natural counterpart. Despite its chemical synthesis, alizarin dye also requires mordants such as alum to attach its colour to the cloth fibres.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "edad227e-f51e-5457-b8c0-bdedcb452326",
+                  "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                  "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                  "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions.",
+                  "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s4.b2",
+          "kind": "material_card",
+          "version": 1,
+          "reuse": null,
+          "materialId": "bbcf61d3-1b84-5c95-b7fa-1811026d5606",
+          "compoundId": "71198a45-7ba8-5ee1-90c4-a41b2ff84150",
+          "termKey": "alum",
+          "name": "Alum (fatakdi)",
+          "materialKind": "MORDANT",
+          "role": "MORDANT",
+          "formula": "KAl(SO4)2·12H2O",
+          "pubchemCid": null,
+          "wikidataId": null,
+          "localNames": [
+            "fatakdi",
+            "fitkari",
+            "karam"
+          ],
+          "facts": [
+            {
+              "id": "s4.b2.1",
+              "text": "Alum is used as a mordant to fasten the colours.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "c7c60b8b-8e49-5da9-9b60-3b3a7d360670",
+                  "claimId": "1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Alum is used as a mordant in the process to fasten the colours.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            },
+            {
+              "id": "s4.b2.2",
+              "text": "Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (kachika).",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "c106d4a7-5722-56bc-8fc8-7a0df35c5b0e",
+                  "claimId": "924ebc33-e949-5655-95a4-538d13f8fca7",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (locally known as kachika).",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ],
+          "handling": [
+            {
+              "id": "s4.b2.3",
+              "text": "The final wash is usually done early in the morning when water is cool, as warm afternoon water may dissolve some of the alum.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "c55e7e8a-e1f1-511a-a63a-0b447d239b67",
+                  "claimId": "aef422e3-a33e-5e74-96f4-3268621b710d",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "It is usually done early in the morning when the water is cool as the warm water of the afternoon may dissolve some of the alum.It clears the excess dyes and makes the whiteness of the Ajrakh stars shine bright.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "bfeaaf18-3f99-5c87-bd5b-fd4d5c2d7edd",
+                  "claimId": "aef422e3-a33e-5e74-96f4-3268621b710d",
+                  "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                  "quote": "Final Wash (Vichharana):The final washing and beating to remove any loose colour is vital.",
+                  "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ]
+        },
+        {
+          "id": "s4.b3",
+          "kind": "molecule_3d",
+          "version": 1,
+          "reuse": null,
+          "compoundId": "20675edc-039d-5c49-85f9-aba0597c7aab",
+          "pubchemCid": 6293,
+          "name": "Alizarin",
+          "formula": "C14H8O4",
+          "sourceId": "ffd974aa-9172-566a-8a38-dcc5c3c4f2d6"
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "discipline": "HISTORY",
+      "blocks": [
+        {
+          "id": "s5.b1",
+          "kind": "expert_view",
+          "version": 1,
+          "reuse": null,
+          "seat": "HISTORIAN",
+          "take": [
+            {
+              "id": "s5.b1.1",
+              "text": "Rao Bharmalji I (1586-1631) invited Khatri printers from Sindh and gave them land and tax exemptions.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "11b06c87-706e-57e1-9634-5fe424f7cd77",
+                  "claimId": "66c8488c-11fe-5f1b-8653-dddbdaef2393",
+                  "sourceId": "56c24809-a5fd-5d90-b6db-e55d7be09c07",
+                  "quote": "The erstwhile ruler of Kutch Rao Bharmalji - I (1586-1631), invited the cloth-printing Khatri artisans from Sindh and gave them permission to settle and earn their livelihoods anywhere in Kutch. They were given land by the state as well spared any taxation on their produce.",
+                  "locator": "§ \"Mushtak Khan\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ],
+          "agreesWith": [],
+          "differs": [
+            {
+              "seat": "ANTHROPOLOGIST",
+              "thisView": {
+                "id": "s5.b1.2",
+                "text": "The technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited Khatri craftsmen to the banks of the Dhamadka river.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "5ce04f15-f5b3-5827-bdae-96cbce262cf1",
+                    "claimId": "994587f8-d0df-54c3-9861-88c2b1f6fa88",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "This intricate and exclusively handcrafted block-printing technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited craftsmen from Khatri community to come and practice their art on the banks of Dhamadka river.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 9",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              "otherView": {
+                "id": "s5.b1.3",
+                "text": "Khamir's account says Hindu Khatris fled Sindh to Kachchh in the 7th century after Arab invasion; Ajrakhpur and Dhamadka Khatris trace their line to Jinda Jeeva, said to have arrived around 1650.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "b9684b00-b882-5a55-a901-00a9b0aa9fdf",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "The sweet water of this river was excellent for washing and dyeing.\" While the Khatris of Ajrakhpur and Dhamadka trace their ancestral line to Jinda Jeeva, memories of the Khatris from North and East Kachchh go back only 4-5 generations.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "e685726a-e5f0-544f-9d23-510d64a67d88",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "During the 7th century, the Khatris of Sindh were Hindu. It is said that Sindh was invaded by Arabs and forced the people to convert to Islam. Those who converted stayed in Sindh. Those who refused fled to modern-day Kachchh.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "6c0030a5-52a2-5285-a944-3d03fd7728ab",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "Among them was Jinda Jeeva, our ancestor who came here in 1650.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ]
+        },
+        {
+          "id": "s5.b2",
+          "kind": "expert_view",
+          "version": 1,
+          "reuse": null,
+          "seat": "ANTHROPOLOGIST",
+          "take": [
+            {
+              "id": "s5.b2.1",
+              "text": "Khatris made cloth for Maldharis and farming communities, often trading cloth for produce, milk or ghee; designs were not interchangeable between communities.",
+              "level": "PROVISIONAL",
+              "citations": [
+                {
+                  "id": "54020905-e9e2-52ee-8a55-8699f6f9d092",
+                  "claimId": "83ddf93b-f10c-5ed6-9e5d-e96df3d84101",
+                  "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                  "quote": "They produced cloth for maldharis (cattle herders), both Hindus and Muslims as well as farming communities across Kachchh. They used the barter system and exchanged cloth for produce from farmers, while cattle herders gave them milk or ghee.",
+                  "locator": "§ \"Our cloth is their identity\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                },
+                {
+                  "id": "45a310d0-9140-55d5-ba00-a5a2426e782b",
+                  "claimId": "83ddf93b-f10c-5ed6-9e5d-e96df3d84101",
+                  "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                  "quote": "While there was a diversity of designs, they were not interchangeable among communities.",
+                  "locator": "§ \"Our cloth is their identity\"",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ],
+              "translated": false,
+              "terms": []
+            }
+          ],
+          "agreesWith": [],
+          "differs": [
+            {
+              "seat": "HISTORIAN",
+              "thisView": {
+                "id": "s5.b2.2",
+                "text": "Khamir's account says Hindu Khatris fled Sindh to Kachchh in the 7th century after Arab invasion; Ajrakhpur and Dhamadka Khatris trace their line to Jinda Jeeva, said to have arrived around 1650.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "b9684b00-b882-5a55-a901-00a9b0aa9fdf",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "The sweet water of this river was excellent for washing and dyeing.\" While the Khatris of Ajrakhpur and Dhamadka trace their ancestral line to Jinda Jeeva, memories of the Khatris from North and East Kachchh go back only 4-5 generations.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "e685726a-e5f0-544f-9d23-510d64a67d88",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "During the 7th century, the Khatris of Sindh were Hindu. It is said that Sindh was invaded by Arabs and forced the people to convert to Islam. Those who converted stayed in Sindh. Those who refused fled to modern-day Kachchh.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "6c0030a5-52a2-5285-a944-3d03fd7728ab",
+                    "claimId": "90aba209-adf6-53f1-bfc6-cb078cb948bf",
+                    "sourceId": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+                    "quote": "Among them was Jinda Jeeva, our ancestor who came here in 1650.",
+                    "locator": "§ \"From Sindh to Kachchh\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              },
+              "otherView": {
+                "id": "s5.b2.3",
+                "text": "The technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited Khatri craftsmen to the banks of the Dhamadka river.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "5ce04f15-f5b3-5827-bdae-96cbce262cf1",
+                    "claimId": "994587f8-d0df-54c3-9861-88c2b1f6fa88",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "This intricate and exclusively handcrafted block-printing technique came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch, who invited craftsmen from Khatri community to come and practice their art on the banks of Dhamadka river.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 9",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "discipline": "MATERIALS",
+      "blocks": [
+        {
+          "id": "s6.b1",
+          "kind": "supply_map",
+          "version": 1,
+          "reuse": null,
+          "links": [
+            {
+              "material": "Indigo",
+              "materialId": "e3302885-722e-57cf-ad15-6f0c41b1a678",
+              "termKey": "indigo",
+              "origin": "Shikarpur",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null,
+              "sentence": {
+                "id": "s6.b1.1",
+                "text": "Indigo came from Shikarpur in Sindh and was also grown in Dhamadka.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "a9c9921f-8679-57af-8484-5ca04da21c2d",
+                    "claimId": "49b3a295-9419-5e14-8751-849598399e69",
+                    "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                    "quote": "Blue extract from the indigo plant mostly came from Shikarpur in Sindh, but it was also grown in Dhamadka.",
+                    "locator": "§ \"We work in harmony with nature\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "material": "Indigo",
+              "materialId": "e3302885-722e-57cf-ad15-6f0c41b1a678",
+              "termKey": "indigo",
+              "origin": "Dhamadka",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null,
+              "sentence": {
+                "id": "s6.b1.2",
+                "text": "Indigo came from Shikarpur in Sindh and was also grown in Dhamadka.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "a9c9921f-8679-57af-8484-5ca04da21c2d",
+                    "claimId": "49b3a295-9419-5e14-8751-849598399e69",
+                    "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                    "quote": "Blue extract from the indigo plant mostly came from Shikarpur in Sindh, but it was also grown in Dhamadka.",
+                    "locator": "§ \"We work in harmony with nature\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "material": "Blocks",
+              "materialId": null,
+              "termKey": null,
+              "origin": "Pethapur",
+              "wikidataId": null,
+              "latitude": null,
+              "longitude": null,
+              "sentence": {
+                "id": "s6.b1.3",
+                "text": "Blocks are carved from teak (sag); printers today buy blocks from block-makers in Pethapur near Gandhinagar.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "044896db-5844-58ff-9b15-1f22027ca674",
+                    "claimId": "0151b1fa-d92d-574c-bf7c-9ee318395b9e",
+                    "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                    "quote": "Today block printers buy their blocks from block-makers in Pethapur near Gandhinagar, Kachchh.",
+                    "locator": "§ \"Crafting the block\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "dbb742ed-b48a-51a6-b26c-4d88da877987",
+                    "claimId": "0151b1fa-d92d-574c-bf7c-9ee318395b9e",
+                    "sourceId": "ba479ec5-4b93-570b-be74-2eab9711e777",
+                    "quote": "Today, blocks are made using teak wood (sag).",
+                    "locator": "§ \"Crafting the block\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pieces": [
+    {
+      "blockId": "s1.b1",
+      "craftId": null,
+      "facet": "GEOGRAPHY",
+      "topicKey": "water:basin-3"
+    },
+    {
+      "blockId": "s3.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "CLIMATE",
+      "topicKey": "climate:kachchh"
+    },
+    {
+      "blockId": "s4.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "CHEMISTRY",
+      "topicKey": "reaction:kutch-ajrakh"
+    },
+    {
+      "blockId": "s4.b2",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "CHEMISTRY",
+      "topicKey": "reaction:kutch-ajrakh"
+    },
+    {
+      "blockId": "s5.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "HISTORY",
+      "topicKey": "history:kutch-ajrakh"
+    },
+    {
+      "blockId": "s5.b2",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "HISTORY",
+      "topicKey": "history:kutch-ajrakh"
+    },
+    {
+      "blockId": "s6.b1",
+      "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "facet": "MATERIALS",
+      "topicKey": "material:kutch-ajrakh"
+    }
+  ],
+  "sources": [
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "3cb53e85-da56-502e-8333-4fdbbb34b3ae",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 3: Adapting to the present",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+      "kind": "WEB_PAGE",
+      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+      "authors": [
+        "Azera Parveen Rahman"
+      ],
+      "year": 2019,
+      "doi": null,
+      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "publisher": "Mongabay India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+      "kind": "WEB_PAGE",
+      "title": "Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo)",
+      "authors": [
+        "Judy Frater"
+      ],
+      "year": 2025,
+      "doi": null,
+      "url": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "publisher": "Mingei International Museum, San Diego",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "8a32aea5-44f7-5a50-942b-97534f0e5d8e",
+      "kind": "WEB_PAGE",
+      "title": "Indian Block-Printed Textiles: Past and Present",
+      "authors": [
+        "Yael Rosenfield"
+      ],
+      "year": 2016,
+      "doi": null,
+      "url": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "publisher": "The Metropolitan Museum of Art",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "48309f78-3f0e-511e-a874-703135c913a6",
+      "kind": "WEB_PAGE",
+      "title": "Microbial Communities Associated With Indigo Fermentation That Thrive in Anaerobic Alkaline Environments",
+      "authors": [
+        "Keiichi Aino",
+        "Kikue Hirota",
+        "Takahiro Okamoto",
+        "Zhihao Tu",
+        "Hidetoshi Matsuyama",
+        "Isao Yumoto"
+      ],
+      "year": 2018,
+      "doi": null,
+      "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "publisher": "Frontiers in Microbiology 9:2196 (doi:10.3389/fmicb.2018.02196)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+      "kind": "WEB_PAGE",
+      "title": "Dyeing cotton fabrics is an ancient Indian art",
+      "authors": [
+        "Amit Mitra"
+      ],
+      "year": 1992,
+      "doi": null,
+      "url": "https://www.downtoearth.org.in/amp/story/environment/dyeing-cotton-fabrics-is-an-ancient-indian-art-30445",
+      "publisher": "Down To Earth",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+      "kind": "PAPER",
+      "title": "Fiber-Safe Extraction of Red Mordant Dyes from Hair Fibers",
+      "authors": [
+        "Erica J. Tiedemann",
+        "Yiqi Yang"
+      ],
+      "year": 1995,
+      "doi": null,
+      "url": "https://cool.culturalheritage.org/jaic/articles/jaic34-03-004_2.html",
+      "publisher": "Journal of the American Institute for Conservation 34(3):195-206",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "ffd974aa-9172-566a-8a38-dcc5c3c4f2d6",
+      "kind": "COMPOUND_RECORD",
+      "title": "Alizarin (PubChem CID 6293)",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/6293",
+      "publisher": "National Library of Medicine",
+      "licence": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+      "attribution": "PubChem, National Library of Medicine, CID 6293",
+      "reliability": "A"
+    },
+    {
+      "id": "56c24809-a5fd-5d90-b6db-e55d7be09c07",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh: An Introduction",
+      "authors": [
+        "Mushtak Khan (former Deputy Director, Crafts Museum, Delhi)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.sahapedia.org/ajrakh-introduction-0",
+      "publisher": "Sahapedia",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "5de57c2d-f9af-57c3-8a42-3b624976dbb8",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 1: The Khatris and their community",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/khatris-community",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "ba479ec5-4b93-570b-be74-2eab9711e777",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh exhibition, Part 2: The art of Ajrakh",
+      "authors": [
+        "Khamir (craft resource centre, Kachchh)"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/art-of-ajrakh",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    }
+  ]
+}

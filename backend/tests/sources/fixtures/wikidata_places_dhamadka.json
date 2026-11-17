@@ -1,0 +1,28 @@
+{
+ "searchinfo": {
+  "search": "Dhamadka"
+ },
+ "search": [
+  {
+   "id": "Q72976285",
+   "title": "Q72976285",
+   "pageid": 72634872,
+   "concepturi": "http://www.wikidata.org/entity/Q72976285",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q72976285",
+   "display": {
+    "label": {
+     "value": "Dhamadka Branch Post Office",
+     "language": "en"
+    }
+   },
+   "label": "Dhamadka Branch Post Office",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Dhamadka Branch Post Office"
+   }
+  }
+ ],
+ "success": 1
+}

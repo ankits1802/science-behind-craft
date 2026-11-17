@@ -13,8 +13,10 @@ __all__ = [
     "figures_in",
     "fold_digits",
     "formulas_in",
+    "normalise_quote_lines",
     "normalise_quote_text",
     "numbers_in",
+    "occurs_in_key",
     "quote_key",
     "quote_occurs",
     "quote_overlap",
@@ -103,10 +105,14 @@ STOP_WORDS = frozenset(
 )
 
 
-def normalise_quote_text(text: str) -> str:
+def normalise_quote_lines(text: str) -> list[str]:
     folded = unicodedata.normalize("NFKC", text).replace(SOFT_HYPHEN, "")
-    joined = LINE_BREAK_HYPHEN.sub(r"\1\2", folded)
-    return WHITESPACE.sub(" ", joined.translate(TYPOGRAPHIC)).strip()
+    joined = LINE_BREAK_HYPHEN.sub(r"\1\2", folded).translate(TYPOGRAPHIC)
+    return [line for line in (WHITESPACE.sub(" ", raw).strip() for raw in joined.splitlines()) if line]
+
+
+def normalise_quote_text(text: str) -> str:
+    return " ".join(normalise_quote_lines(text))
 
 
 def quote_key(text: str) -> str:
@@ -114,12 +120,16 @@ def quote_key(text: str) -> str:
 
 
 def quote_occurs(quote: str, text: str) -> bool:
+    return occurs_in_key(quote, quote_key(text))
+
+
+def occurs_in_key(quote: str, key: str) -> bool:
     needle = quote_key(quote)
     if not needle:
         return False
     opening = OPEN_BOUNDARY if needle[0].isalnum() else ""
     closing = CLOSE_BOUNDARY if needle[-1].isalnum() else ""
-    return re.search(opening + re.escape(needle) + closing, quote_key(text)) is not None
+    return re.search(opening + re.escape(needle) + closing, key) is not None
 
 
 def trivial_quote(quote: str) -> bool:

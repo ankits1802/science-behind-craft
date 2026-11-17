@@ -5,8 +5,8 @@ from datetime import UTC, datetime, timedelta
 
 from app.models import Source
 from app.research.depth import depth_at_least
-from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece
-from app.research.piece_reuse import ClaimState, reusable_groups
+from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece, piece_slot
+from app.research.piece_reuse import ClaimState, reusable_groups, with_region_story
 from app.research.piece_topics import TopicSubjects, facet_topics
 from app.services.answer_events import cited_claims
 from app.services.knowledge_view import ClaimView
@@ -38,12 +38,15 @@ class MemoryPieces:
         }
         cited = cited_claims(list(self.views), self.sources)
         newest_first = sorted(self.pieces, key=lambda piece: piece.created_at, reverse=True)
+        own = [piece for piece in newest_first if piece.craft_id == CRAFT_ID]
+        regions = [piece for piece in newest_first if piece.craft_id is None]
         reused = {}
         for facet, topic in topics.items():
             ask_for = ReuseAsk(craft_id=CRAFT_ID, facet=facet, topic_key=topic, depth=ask.depth)
-            groups = reusable_groups(newest_first, ask_for, states)
+            groups = reusable_groups(own, ask_for, states)
             if groups:
-                reused[facet] = ReusedSection(pieces=groups[0], cited=cited)
+                shown = with_region_story(groups[0], regions, depth=ask.depth, current=states)
+                reused[facet] = ReusedSection(pieces=shown, cited=cited)
         return PieceLookup(craft_id=CRAFT_ID, topics=topics, reused=reused)
 
     async def keep(
@@ -59,7 +62,7 @@ class MemoryPieces:
                 if storable(block):
                     new = knowledge_piece(
                         block,
-                        slot,
+                        piece_slot(block, slot),
                         piece_id=piece_id(answer_id, f"{block.id}-{len(self.kept)}"),
                         answer_id=uuid.uuid5(answer_id, str(len(self.kept))),
                         created_at=created_at,

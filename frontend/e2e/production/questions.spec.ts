@@ -17,7 +17,7 @@ function unaskedProblem(label: string, error: unknown): string {
   return `${label}: could not ask the question: ${clip(message)}`;
 }
 
-test("two known-answer questions at Detailed depth, in English and Hindi", async ({ page }) => {
+test("three known-answer questions at Detailed depth: the mordant in English and Hindi, and Kachchh's water", async ({ page }) => {
   test.skip(!questionsRequested(), "Dispatch with questions=true to ask the known-answer questions.");
   test.setTimeout(QUESTIONS_TIMEOUT_MS);
   await installStreamTap(page);

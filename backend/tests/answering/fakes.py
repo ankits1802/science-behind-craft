@@ -90,7 +90,12 @@ WEB = Source(
 
 
 def stored_view(
-    claim_id: uuid.UUID, text: str, level: str, cite: tuple[int, Source, str | None, str | None]
+    claim_id: uuid.UUID,
+    text: str,
+    level: str,
+    cite: tuple[int, Source, str | None, str | None],
+    *,
+    concept_id: uuid.UUID | None = None,
 ) -> knowledge_view.ClaimView:
     number, source, quote, locator = cite
     row = ClaimSource(
@@ -101,7 +106,7 @@ def stored_view(
         locator=locator,
     )
     return knowledge_view.ClaimView(
-        claim_id, text, level, "MATERIAL", None, citations=[knowledge_view.citation(row, level)]
+        claim_id, text, level, "MATERIAL", concept_id, citations=[knowledge_view.citation(row, level)]
     )
 
 

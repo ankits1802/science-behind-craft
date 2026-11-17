@@ -5,9 +5,8 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
+from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE
 from app.schemas.region import (
-    BOUNDARY_CAPTION,
-    BOUNDARY_DATASET_CODE,
     DATASET_FACETS,
     CraftRegion,
     MapLayer,

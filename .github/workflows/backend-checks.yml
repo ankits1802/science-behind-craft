@@ -54,7 +54,7 @@ jobs:
         run: uv run ruff format --check .
       - name: Unit tests
         run: uv run pytest -q
-      - name: Hygiene tool lint and tests
+      - name: Tools lint and tests (hygiene, curation)
         working-directory: .
         run: |
           backend/.venv/bin/python -m ruff check tools
@@ -63,6 +63,9 @@ jobs:
       - name: Hygiene check
         working-directory: .
         run: backend/.venv/bin/python tools/hygiene_check.py
+      - name: Curation check
+        working-directory: .
+        run: backend/.venv/bin/python tools/curation/check.py --check-index
       - name: Migration renders offline
         env:
           DATABASE_URL: postgresql://kalavigyan:kalavigyan@localhost:5432/kalavigyan_test

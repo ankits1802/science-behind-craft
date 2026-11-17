@@ -142,7 +142,7 @@ test("a dropped block leaves its section's note of what was searched, and late b
   const empty = settled.sections.find((section) => section.id === "s4");
   expect(empty).toMatchObject({ state: "EMPTY", blocks: [], searched: "Searched 12 stored claims and 3 papers; none was cited closely enough." });
   expect(shownSections(settled.sections, false).map((section) => section.id)).toEqual(["s1", "s2", "s3", "s4"]);
-  const refused = quietly(() => explainerEventOf(`event: block\ndata: ${JSON.stringify({ sectionId: "s3", block: { ...prose, id: "s3.b2", kind: "molecule_3d" } })}`));
+  const refused = quietly(() => explainerEventOf(`event: block\ndata: ${JSON.stringify({ sectionId: "s3", block: { ...prose, id: "s3.b2", kind: "what_if" } })}`));
   expect(refused.value).toBeNull();
   expect(String(refused.logged[0])).toContain("block.block.kind");
 });

@@ -1,11 +1,11 @@
 "use client";
 
-import { Fragment } from "react";
-import { ArrowRight, FlaskConical } from "lucide-react";
+import { FlaskConical } from "lucide-react";
 
 import { ChemEquation } from "@/components/answer/ChemEquation";
 import { EvidenceLevelBadge, EvidenceSignalBadge, type EvidenceSignal } from "@/components/answer/EvidenceBadge";
 import { CitationChips } from "@/components/answer/CitationContext";
+import { SpeciesRow } from "@/components/answer/SpeciesRow";
 import { ConditionList } from "@/components/craft/ConditionList";
 import {
   citationsOf,
@@ -14,10 +14,9 @@ import {
   isUnbalanced,
   REACTION_KIND_LABEL,
   reactionSpoken,
-  speciesNamesLine,
-  speciesSides
+  speciesNamesLine
 } from "@/lib/processView";
-import type { ProcessReaction, ReactionSpecies } from "@/lib/scienceContract";
+import type { ProcessReaction } from "@/lib/scienceContract";
 
 function balanceSignal(reaction: ProcessReaction): EvidenceSignal | null {
   if (reaction.balanced) return "BALANCED";
@@ -66,30 +65,4 @@ export function ReactionCard({ reaction }: { reaction: ProcessReaction }) {
       </p>
     </article>
   );
-}
-
-function SpeciesRow({ reaction }: { reaction: ProcessReaction }) {
-  const { reactants, products } = speciesSides(reaction);
-  return (
-    <div className="mt-3">
-      <p className="sr-only">{reactionSpoken(reaction)}</p>
-      <p aria-hidden className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-ink-700">
-        <SpeciesGroup species={reactants} />
-        <ArrowRight className="h-4 w-4 shrink-0 text-ink-500" />
-        <SpeciesGroup species={products} />
-      </p>
-    </div>
-  );
-}
-
-function SpeciesGroup({ species }: { species: readonly ReactionSpecies[] }) {
-  return species.map((entry, index) => (
-    <Fragment key={`${entry.formula ?? ""}:${entry.name ?? ""}:${index}`}>
-      {index > 0 ? <span className="text-ink-500">+</span> : null}
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-line-200 bg-surface-50 px-2.5 py-0.5">
-        {entry.formula ? <ChemEquation equation={entry.formula} display={false} label={entry.formula} /> : null}
-        {entry.name ? <span className="text-xs text-ink-700">{entry.name}</span> : null}
-      </span>
-    </Fragment>
-  ));
 }

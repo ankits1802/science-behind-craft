@@ -80,3 +80,22 @@ async def test_an_answer_holds_its_reservations_against_its_depth_cap(sessions: 
         factory, Principal(role="MASTER_ADMIN", answer=master_answer), "5"
     )
     assert master_decision.allowed and master.outcome == "RESERVED"
+
+
+async def test_optional_work_reserves_only_inside_the_answer_s_kept_half(sessions: Any) -> None:
+    factory, session = sessions
+    await app_settings.set_value(session, app_settings.ANSWER_CAP_USD, {"DETAILED": 0.5})
+    await session.commit()
+    answer = AnswerSpend(depth="DETAILED")
+    _, prose_decision = await reserved(factory, Principal(role="ADMIN", answer=answer), "0.2")
+    panel, panel_decision = await reserved(factory, Principal(role="ADMIN", answer=answer.headroom()), "0.1")
+    _, more_decision = await reserved(factory, Principal(role="ADMIN", answer=answer), "0.1")
+    assert prose_decision.allowed and more_decision.allowed
+    assert (panel_decision.allowed, panel.outcome, panel.errorKind) == (False, "REFUSED_CEILING", ANSWER_CAP)
+    assert answer.held_usd == Decimal("0.3")
+    master_answer = AnswerSpend(depth="DETAILED")
+    master, master_decision = await reserved(
+        factory, Principal(role="MASTER_ADMIN", answer=master_answer.headroom()), "5"
+    )
+    assert master_decision.allowed and master.outcome == "RESERVED"
+    assert master_answer.held_usd == Decimal("5")

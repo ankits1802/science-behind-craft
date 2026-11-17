@@ -1,14 +1,14 @@
 import { DatasetCredit } from "@/components/DatasetCredit";
 import { CHOROPLETH_TONES, NO_DATA_TONE } from "@/components/map/DistrictLayer";
 import type { MapLayer } from "@/lib/regionContract";
-import { layerCaption, layerClassLabels, layerSummary, toneIndex } from "@/lib/regionView";
+import { layerCaption, layerClassLabels, layerSummary, NO_DATA_LABEL, toneIndex } from "@/lib/regionView";
 import { cn } from "@/lib/utils";
 
 export function choroplethTone(classIndex: number, classCount: number): string {
   return CHOROPLETH_TONES[toneIndex(classIndex, classCount, CHOROPLETH_TONES.length)];
 }
 
-function Swatch({ className }: { className: string }) {
+export function Swatch({ className }: { className: string }) {
   return (
     <svg width={14} height={14} aria-hidden className="shrink-0">
       <rect x={0.5} y={0.5} width={13} height={13} rx={3} className={cn("stroke-line-200", className)} />
@@ -31,7 +31,7 @@ export function ChoroplethLegend({ layer }: { layer: MapLayer }) {
         ))}
         <li className="inline-flex items-center gap-1.5">
           <Swatch className={NO_DATA_TONE} />
-          No data
+          {NO_DATA_LABEL}
         </li>
       </ul>
       <p className="text-xs text-ink-500">{layerCaption(layer)}</p>

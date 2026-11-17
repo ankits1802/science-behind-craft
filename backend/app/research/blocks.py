@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Callable, Iterator, Mapping
+from collections.abc import Callable, Iterator, Mapping, Sequence
 from itertools import pairwise
-from typing import Any, Literal, Self
+from typing import Any, ClassVar, Literal, Self
 
 from pydantic import AwareDatetime, Field, model_validator
+from pydantic.alias_generators import to_camel
 
 from app.models.enums import IMAGE_RELEVANCE
 
@@ -22,6 +23,7 @@ __all__ = [
     "BLOCK_ID_PATTERN",
     "IMAGES_MAX",
     "IMAGE_RELEVANCE",
+    "SENTENCE",
     "BlockBase",
     "ExplainerSentence",
     "ImageItem",
@@ -32,17 +34,23 @@ __all__ = [
     "ProcessLadderBlock",
     "ProseBlock",
     "ReuseMarker",
-    "payload_sentences",
-    "with_payload_sentences",
+    "SentenceSpec",
+    "named_in",
+    "require_facts",
+    "sentences_in_payload",
+    "stated_texts",
+    "with_sentences_in_payload",
 ]
 
 BLOCK_ID_MAX_CHARS = 80
 BLOCK_ID_PATTERN = r"^[a-z0-9]+(?:[.-][a-z0-9]+)*$"
 IMAGES_MAX = 8
 
+SENTENCE = "sentence"
+
 ImageRelevance = Literal[*IMAGE_RELEVANCE]
 SentenceChange = Callable[[Mapping[str, Any]], dict[str, Any]]
-LADDER_KIND = "process_ladder"
+SentenceSpec = tuple[tuple[str, Any], ...]
 
 
 class ReuseMarker(ContractModel):
@@ -62,13 +70,18 @@ class ExplainerSentence(AnswerSentence):
 
 
 class BlockBase(ContractModel):
+    SENTENCES: ClassVar[SentenceSpec] = ()
+
     id: str = Field(min_length=1, max_length=BLOCK_ID_MAX_CHARS, pattern=BLOCK_ID_PATTERN)
     kind: str
     version: int
     reuse: ReuseMarker | None
 
     def cited_sentences(self) -> Iterator[AnswerSentence]:
-        yield from ()
+        yield from _model_sentences(self, self.SENTENCES)
+
+    def shown_labels(self) -> list[str]:
+        return []
 
     def citations(self) -> Iterator[Citation]:
         for sentence in self.cited_sentences():
@@ -99,17 +112,16 @@ class BlockBase(ContractModel):
 
 
 class ProseBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("sentences", [SENTENCE]),)
+
     kind: Literal["prose"]
     version: Literal[1]
     sentences: list[ExplainerSentence] = Field(min_length=1)
 
     @model_validator(mode="after")
     def _facts_only_once_each(self) -> Self:
-        _require_facts(self.id, self.sentences)
+        require_facts(self.id, self.sentences)
         return self
-
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        yield from self.sentences
 
 
 class LadderMaterial(ContractModel):
@@ -145,7 +157,7 @@ class LadderStage(ContractModel):
 
     @model_validator(mode="after")
     def _level_follows_the_stage_sentences(self) -> Self:
-        _require_facts(f"stage {self.stage_id}", self.sentences)
+        require_facts(f"stage {self.stage_id}", self.sentences)
         expected = weakest_level(sentence.level for sentence in self.sentences)
         if self.level != expected:
             raise ValueError(f"stage {self.stage_id} is {expected}, not {self.level}")
@@ -163,6 +175,8 @@ class LadderStage(ContractModel):
 
 
 class ProcessLadderBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("stages", [(("sentences", [SENTENCE]),)]),)
+
     kind: Literal["process_ladder"]
     version: Literal[1]
     craft: CraftRef
@@ -175,10 +189,6 @@ class ProcessLadderBlock(BlockBase):
         if any(a >= b for a, b in pairwise(ordinals)):
             raise ValueError(f"ladder {self.id} lists its stages by rising ordinal")
         return self
-
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        for stage in self.stages:
-            yield from stage.sentences
 
     def citations(self) -> Iterator[Citation]:
         for stage in self.stages:
@@ -212,8 +222,19 @@ class ImagesBlock(BlockBase):
     def illustrated_claim_ids(self) -> set[str]:
         return {str(claim_id) for item in self.items for claim_id in item.claim_ids}
 
+    def shown_labels(self) -> list[str]:
+        return [item.media.title for item in self.items]
 
-def _require_facts(owner: str, sentences: list[ExplainerSentence]) -> None:
+
+def stated_texts(sentence: AnswerSentence) -> list[str]:
+    return [sentence.original or sentence.text, *(c.quote for c in sentence.citations if c.quote)]
+
+
+def named_in(name: str, sentence: AnswerSentence) -> bool:
+    return any(quote_occurs(name.casefold(), text.casefold()) for text in stated_texts(sentence))
+
+
+def require_facts(owner: str, sentences: Sequence[ExplainerSentence]) -> None:
     ids = [sentence.id for sentence in sentences]
     if len(set(ids)) != len(ids):
         raise ValueError(f"{owner} lists each sentence once")
@@ -221,19 +242,54 @@ def _require_facts(owner: str, sentences: list[ExplainerSentence]) -> None:
         raise ValueError(f"{owner} states facts only; a hypothesis is an open question")
 
 
-def payload_sentences(payload: Mapping[str, Any]) -> list[Mapping[str, Any]]:
-    if payload["kind"] == LADDER_KIND:
-        return [sentence for stage in payload["stages"] for sentence in stage["sentences"]]
-    return list(payload.get("sentences", ()))
+def sentences_in_payload(payload: Mapping[str, Any], spec: SentenceSpec) -> list[Mapping[str, Any]]:
+    found: list[Mapping[str, Any]] = []
+
+    def kept(sentence: Mapping[str, Any]) -> dict[str, Any]:
+        found.append(sentence)
+        return dict(sentence)
+
+    with_sentences_in_payload(payload, spec, kept)
+    return found
 
 
-def with_payload_sentences(payload: Mapping[str, Any], change: SentenceChange) -> dict[str, Any]:
-    if payload["kind"] == LADDER_KIND:
-        stages = [
-            {**stage, "sentences": [change(sentence) for sentence in stage["sentences"]]}
-            for stage in payload["stages"]
-        ]
-        return {**payload, "stages": stages}
-    if "sentences" in payload:
-        return {**payload, "sentences": [change(sentence) for sentence in payload["sentences"]]}
-    return dict(payload)
+def with_sentences_in_payload(
+    payload: Mapping[str, Any], spec: SentenceSpec, change: SentenceChange
+) -> dict[str, Any]:
+    return _changed_object(payload, spec, change)
+
+
+def _model_sentences(owner: Any, spec: SentenceSpec) -> Iterator[AnswerSentence]:
+    for name, node in spec:
+        yield from _node_sentences(getattr(owner, name), node)
+
+
+def _node_sentences(value: Any, node: Any) -> Iterator[AnswerSentence]:
+    if value is None:
+        return
+    if node == SENTENCE:
+        yield value
+    elif isinstance(node, list):
+        for item in value:
+            yield from _node_sentences(item, node[0])
+    else:
+        yield from _model_sentences(value, node)
+
+
+def _changed_object(value: Mapping[str, Any], spec: SentenceSpec, change: SentenceChange) -> dict[str, Any]:
+    changed = dict(value)
+    for name, node in spec:
+        key = to_camel(name)
+        if key in changed:
+            changed[key] = _changed_node(changed[key], node, change)
+    return changed
+
+
+def _changed_node(value: Any, node: Any, change: SentenceChange) -> Any:
+    if value is None:
+        return None
+    if node == SENTENCE:
+        return change(value)
+    if isinstance(node, list):
+        return [_changed_node(item, node[0], change) for item in value]
+    return _changed_object(value, node, change)

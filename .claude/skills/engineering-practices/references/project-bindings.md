@@ -28,7 +28,12 @@ backend/app/research/    research and answering contracts: typed models, protoco
                          rules shared by the resolver, planner, source adapters, fetcher,
                          composer, claim writer and answer stream (docs/contracts/research.md),
                          and the explainer: document, blocks, terms, images, stored pieces,
-                         depth by role (docs/contracts/explainer.md, decision 0030)
+                         depth by role (docs/contracts/explainer.md, decision 0030); dataset
+                         rows, rivers, month and season words, reaction rules and the expert
+                         panel (decision 0042)
+backend/app/curation/    curated craft dossiers: the Pydantic model, the offline rules, the
+                         check file and the index, shared by tools/curation and the importer
+                         (docs/contracts/curation.md, decision 0051)
 backend/app/sources/     adapters for external research sources: shared paced HTTP, record
                          rules and the adapter skeleton; sources/scholarly/ has one module per
                          scholarly service and the registry (decision 0005); sources/reference/
@@ -79,11 +84,13 @@ backend/migrations/      Alembic migrations
 backend/tests/           DB-free tests; backend/tests/db/ needs Postgres (marker `db`)
 etl/crafts/              craft data pipeline (aliases, Wikidata links, seed claims); imports
                          backend/app/data as its shared home
-etl/geo/                 per-district environment statistics from open datasets (package geo_etl)
+etl/geo/                 per-district environment statistics from open datasets (package geo_etl),
+                         and HydroRIVERS river lines with one TopoJSON per basin (decision 0043)
 frontend/                Next.js App Router web client (npm)
 infra/                   Terraform, deploy scripts and systemd units, secret seeding, Supabase lockdown
 shared/                  files both sides check (craft-master.sha1, the *.golden.* contract files)
-tools/                   developer tooling: the hygiene check and its tests
+tools/                   developer tooling: the hygiene check, the curation tools (fetch, verify,
+                         check, schema; tools/curation) and their tests
 docs/                    living documents, contracts, decisions
 ```
 
@@ -104,6 +111,7 @@ composer  -> research, core, models
 retrieval -> research, core, models
 sources   -> research, core, models
 fetcher   -> sources, research, core
+curation  -> research, models, data
 research  -> core, models
 science   -> schemas, research, core
 geo       -> schemas, research, core
@@ -170,7 +178,8 @@ records (`services/audit.py`), managed keys (`services/managed_secrets.py`), the
 (`providers/elevenlabs.py`), the media router and Gemini media wire
 (`providers/media_router.py`, `providers/gemini_media.py`), generated names (`services/naming.py`),
 the S3 adapter (`services/object_store.py`), personal-data patterns (`research/evidence.py`), the research and answering contracts (`research/`), the craft master
-list and text normalisation (`data/craft_master_loader.py`, `data/craft_text.py`), the portals'
+list and text normalisation (`data/craft_master_loader.py`, `data/craft_text.py`), LGD state and
+district names (`data/district_register.py`), the curated dossier model and rules (`curation/`), the portals'
 signed peer feed (`services/portal_peer.py`).
 
 The registered vocabulary: role names and capabilities in `core/roles.py`, enums in
@@ -201,7 +210,8 @@ no dev servers. Database tests, migrations and seeds run on GitHub Actions (Back
 | backend DB-free tests | `cd backend; .venv\Scripts\python.exe -m pytest -q -m "not db"` |
 | hygiene check (ratchet) | `backend\.venv\Scripts\python.exe tools\hygiene_check.py` |
 | accept a lower baseline after a clean-up | `backend\.venv\Scripts\python.exe tools\hygiene_check.py --update-baseline` |
-| hygiene tool lint and tests | `backend\.venv\Scripts\python.exe -m ruff check tools` and `... -m pytest -q tools\tests` |
+| tools lint and tests (hygiene, curation) | `backend\.venv\Scripts\python.exe -m ruff check tools` and `... -m pytest -q tools\tests` |
+| curation checks and index (offline) | `backend\.venv\Scripts\python.exe tools\curation\check.py` (`--check-index` in CI); fetch and verify in `docs/RUNBOOK.md` |
 | craft data tests | `cd etl\crafts; .venv\Scripts\python.exe -m pytest -q tests` |
 | geo ETL tests | `cd etl\geo; python -m pip install -e .` in a venv, then `python -m pytest -q tests` |
 | frontend type check | `cd frontend; npm run typecheck` |
@@ -233,7 +243,7 @@ not tracked (`.gitignore`).
 | `docs/PLAN.md` | the product plan; section 0 is the owner's direction and overrides the rest |
 | `docs/ARCHITECTURE.md` | layers, module map, import direction, how a question flows |
 | `docs/CORE_API.md` | the catalogue of shared components |
-| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media |
+| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media, curated dossiers |
 | `docs/decisions/` | decision log: one short file per decision, numbered |
 | `docs/TECH_DEBT.md` | debt register |
 | `docs/PROGRESS.md` | where work stands and what comes next |

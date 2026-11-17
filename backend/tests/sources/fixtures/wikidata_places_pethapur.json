@@ -1,0 +1,138 @@
+{
+ "searchinfo": {
+  "search": "Pethapur"
+ },
+ "search": [
+  {
+   "id": "Q2764770",
+   "title": "Q2764770",
+   "pageid": 2653483,
+   "concepturi": "http://www.wikidata.org/entity/Q2764770",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q2764770",
+   "display": {
+    "label": {
+     "value": "Pethapur",
+     "language": "en"
+    },
+    "description": {
+     "value": "village in Gujarat state, India",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur",
+   "description": "village in Gujarat state, India",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur"
+   }
+  },
+  {
+   "id": "Q19605411",
+   "title": "Q19605411",
+   "pageid": 21204788,
+   "concepturi": "http://www.wikidata.org/entity/Q19605411",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q19605411",
+   "display": {
+    "label": {
+     "value": "Pethapur State",
+     "language": "en"
+    },
+    "description": {
+     "value": "princely state of the British Raj",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur State",
+   "description": "princely state of the British Raj",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur State"
+   }
+  },
+  {
+   "id": "Q72979358",
+   "title": "Q72979358",
+   "pageid": 72637912,
+   "concepturi": "http://www.wikidata.org/entity/Q72979358",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q72979358",
+   "display": {
+    "label": {
+     "value": "Pethapur Branch Post Office",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur Branch Post Office",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur Branch Post Office"
+   }
+  },
+  {
+   "id": "Q72973365",
+   "title": "Q72973365",
+   "pageid": 72631953,
+   "concepturi": "http://www.wikidata.org/entity/Q72973365",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q72973365",
+   "display": {
+    "label": {
+     "value": "Pethapur Branch Post Office",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur Branch Post Office",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur Branch Post Office"
+   }
+  },
+  {
+   "id": "Q72968874",
+   "title": "Q72968874",
+   "pageid": 72627505,
+   "concepturi": "http://www.wikidata.org/entity/Q72968874",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q72968874",
+   "display": {
+    "label": {
+     "value": "Pethapur Branch Post Office",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur Branch Post Office",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur Branch Post Office"
+   }
+  },
+  {
+   "id": "Q69674718",
+   "title": "Q69674718",
+   "pageid": 69337635,
+   "concepturi": "http://www.wikidata.org/entity/Q69674718",
+   "repository": "wikidata",
+   "url": "//www.wikidata.org/wiki/Q69674718",
+   "display": {
+    "label": {
+     "value": "Pethapur Sub Post Office",
+     "language": "en"
+    }
+   },
+   "label": "Pethapur Sub Post Office",
+   "match": {
+    "type": "label",
+    "language": "en",
+    "text": "Pethapur Sub Post Office"
+   }
+  }
+ ],
+ "success": 1
+}

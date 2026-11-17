@@ -8,15 +8,14 @@ from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from app.research.base import ContractModel, HttpsUrl
+from app.research.base import ContractModel
 from app.research.crafts import CraftRef
+from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE, DatasetRef
 from app.research.stream import SourceRef
 from app.research.vocabulary import EnvStat, EvidenceLevel
 
 __all__ = [
     "AGGREGATIONS",
-    "BOUNDARY_CAPTION",
-    "BOUNDARY_DATASET_CODE",
     "DATASET_FACETS",
     "DEPTH_PATTERN",
     "INHERITED_REASON",
@@ -35,7 +34,6 @@ __all__ = [
     "MapLayerList",
     "MapLayerSummary",
     "PlaceBasis",
-    "RegionDataset",
     "RegionFacet",
     "RegionPlace",
     "RegionValue",
@@ -77,10 +75,6 @@ STATE_AGGREGATIONS = MappingProxyType(
 DEPTH_PATTERN = r"^\d+-\d+cm$"
 INHERITED_REASON = "NO_DISTRICT_POLYGON"
 MASTER_LIST_LABEL = "IIT Crafts Master List, 2026-10-20"
-BOUNDARY_DATASET_CODE = "DR_DISTRICT_SHAPES"
-BOUNDARY_CAPTION = (
-    "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
-)
 LAYER_ID_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
 LAYER_CLASS_MAX = 5
 
@@ -88,20 +82,6 @@ RegionFacetName = Literal[*REGION_FACETS]
 PlaceScope = Literal[*PLACE_SCOPES]
 PlaceBasisKind = Literal[*PLACE_BASES]
 Aggregation = Literal[*AGGREGATIONS]
-
-
-class RegionDataset(ContractModel):
-    code: str = Field(min_length=1, max_length=80)
-    title: str = Field(min_length=1)
-    publisher: str | None
-    edition: str = Field(min_length=1)
-    period: str = Field(min_length=1)
-    native_resolution: str = Field(min_length=1)
-    licence: str = Field(min_length=1)
-    licence_url: HttpsUrl | None
-    attribution: str | None
-    citation: str | None
-    url: HttpsUrl | None
 
 
 class PlaceBasis(ContractModel):
@@ -195,7 +175,7 @@ class CraftRegion(ContractModel):
     schema_version: Literal[1]
     craft: CraftRef
     places: list[RegionPlace]
-    datasets: list[RegionDataset]
+    datasets: list[DatasetRef]
     sources: list[SourceRef]
 
     @model_validator(mode="after")
@@ -218,7 +198,7 @@ def basis_source_ids(places: Sequence[RegionPlace]) -> list[str]:
 
 class BoundaryNote(ContractModel):
     caption: str
-    dataset: RegionDataset
+    dataset: DatasetRef
 
     @model_validator(mode="after")
     def _the_survey_of_india_caption(self) -> Self:
@@ -247,7 +227,7 @@ class MapLayerSummary(ContractModel):
 
 class MapLayerList(ContractModel):
     layers: list[MapLayerSummary]
-    datasets: list[RegionDataset]
+    datasets: list[DatasetRef]
     boundary: BoundaryNote
 
     @model_validator(mode="after")
@@ -272,7 +252,7 @@ class LayerClass(ContractModel):
 
 class MapLayer(ContractModel):
     layer: MapLayerSummary
-    dataset: RegionDataset
+    dataset: DatasetRef
     resolution: str = Field(min_length=1)
     classes: list[LayerClass] = Field(min_length=1, max_length=LAYER_CLASS_MAX)
     values: dict[str, float] = Field(min_length=1)

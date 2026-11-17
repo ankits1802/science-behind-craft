@@ -45,7 +45,7 @@ function questionsSection(report: AnswersReport | undefined, requested: boolean)
   const lines = [
     "### Questions",
     "",
-    "| Question | Ended | Sentences | Cited | Citations | Sources | Alum | Script | Done in | Result |",
+    "| Question | Ended | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |",
     "|---|---|---|---|---|---|---|---|---|---|"
   ];
   for (const record of report.questions) {
@@ -55,6 +55,8 @@ function questionsSection(report: AnswersReport | undefined, requested: boolean)
   }
   const problems = [...report.unasked, ...report.questions.flatMap((record) => record.problems.map((problem) => `${record.label}: ${problem}`))];
   if (problems.length > 0) lines.push("", "#### Answer problems", "", ...problems.map((problem) => `- ${cell(problem)}`));
+  const notes = report.questions.flatMap((record) => record.notes.map((note) => `${record.label}: ${note}`));
+  if (notes.length > 0) lines.push("", "#### Answer notes", "", ...notes.map((note) => `- ${cell(note)}`));
   return lines;
 }
 

@@ -6,7 +6,6 @@ from typing import Any
 
 from fastapi import Depends, HTTPException, Request, status
 
-from app.api.media_deps import media_bucket
 from app.api.voice_deps import current_voice, voice_runtime
 from app.core.db import sessionmaker
 from app.core.deps import get_current_user
@@ -14,6 +13,7 @@ from app.core.errors import AppError
 from app.core.roles import Capability, can
 from app.models import User
 from app.schemas.listen import ListenOffer
+from app.services.object_store import media_bucket
 from app.voice.languages import LISTEN_LANGUAGES
 from app.voice.listen import Narrator
 from app.voice.listen_store import SqlListenStore

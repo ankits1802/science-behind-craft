@@ -5,8 +5,10 @@ import { Loader2, SearchX } from "lucide-react";
 
 import { ExplainerBlockView } from "@/components/answer/ExplainerBlockView";
 import { useExplainerReading } from "@/components/answer/ExplainerReading";
+import { ExpertPanel } from "@/components/answer/experts/ExpertPanel";
 import { headingView } from "@/lib/answerLanguages";
 import type { SectionView } from "@/lib/explainerState";
+import { sectionRuns } from "@/lib/expertPanel";
 import { DISCIPLINE_LABEL, sectionAnchor, workingLabel } from "@/lib/explainerView";
 
 export const SECTION_VIEWPORT = { margin: "-45% 0px -45% 0px", amount: "some" } as const;
@@ -57,9 +59,13 @@ export function ExplainerSectionView({
       </header>
       {section.blocks.length > 0 ? (
         <div className="mt-4 grid gap-6">
-          {section.blocks.map((block) => (
-            <ExplainerBlockView key={block.id} block={block} reduce={reduce} />
-          ))}
+          {sectionRuns(section.blocks).map((run) =>
+            run.kind === "experts" ? (
+              <ExpertPanel key={run.key} views={run.views} reduce={reduce} />
+            ) : (
+              <ExplainerBlockView key={run.block.id} block={run.block} reduce={reduce} />
+            )
+          )}
         </div>
       ) : null}
       {section.state === "EMPTY" && section.searched ? (

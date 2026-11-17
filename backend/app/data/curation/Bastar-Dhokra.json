@@ -1,0 +1,4687 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Bastar-Dhokra",
+  "version": 1,
+  "curatedAt": "2026-11-17T23:46:00+05:30",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Bastar Dhokra geographical indication application number GI journal",
+      "site": "web search"
+    },
+    {
+      "query": "Bastar Dhokra applications 83 and 387",
+      "site": "search.ipindia.gov.in (the document viewer answers POST only, so its PDFs cannot be cited)"
+    },
+    {
+      "query": "Geographical Indications Journal No. 24",
+      "site": "web.archive.org snapshots of ipindia.nic.in/girindia/journal"
+    },
+    {
+      "query": "Bastar dhokra Ghadwa lost wax casting process beeswax resin brass",
+      "site": "web search"
+    },
+    {
+      "query": "Bastar dhokra bell metal alloy composition copper zinc tin analysis",
+      "site": "web search"
+    },
+    {
+      "query": "Kondagaon Bhelwapadar dhokra bell metal artisans Ghadwa",
+      "site": "web search"
+    },
+    {
+      "query": "Chhattisgarh Hastshilp Vikas Board bell metal Dhokra Kondagaon Jagdalpur",
+      "site": "web search"
+    },
+    {
+      "query": "kondagaon.gov.in bell metal dhokra shilpgram Bhelwapadar",
+      "site": "web search (no district page found)"
+    },
+    {
+      "query": "bastar dhokra; dhokra lost wax; ghadwa bastar; bastar bell metal; dokra casting",
+      "site": "api.openalex.org"
+    },
+    {
+      "query": "Sustainability and livelihood of small-scale handicraft producers: a SWOT analysis of Dhokra artisans (Kondagaon)",
+      "site": "sciencedirect.com and doaj.org (refused, HTTP 403, no archive; not used)"
+    },
+    {
+      "query": "A Case Study on Metallurgical Aspects of Dhokra Art",
+      "site": "link.springer.com (abstract not readable; not used)"
+    },
+    {
+      "query": "cire perdue casting; metalcraftsmen of India (Reeves 1962 and Mukherjee 1978, cited by the V&A); Bastar brass; dhokra",
+      "site": "archive.org (neither book has an open copy; only M. V. Krishnan's 1976 book of a similar title; not used)"
+    },
+    {
+      "query": "The Tribal Art of Middle India (Verrier Elwin)",
+      "site": "archive.org (its catalogue records give 1951 while Sahapedia gives 1950, so no year is stated; lending copy behind a login; not used)"
+    },
+    {
+      "query": "Ghasia in The Tribes and Castes of the Central Provinces of India",
+      "site": "archive.org"
+    },
+    {
+      "query": "Bastar objects",
+      "site": "api.vam.ac.uk and collections.vam.ac.uk"
+    },
+    {
+      "query": "museum collection Bastar brass figure lost-wax Ghasia OR Ghadwa",
+      "site": "web search and nationalcraftsmuseum.nic.in"
+    },
+    {
+      "query": "Dhokra Shilp, the bell metal craft of Bastar",
+      "site": "dsource.in"
+    },
+    {
+      "query": "Gadhwa metal craft of Bastar",
+      "site": "sahapedia.org"
+    },
+    {
+      "query": "brass; bronze; bell metal; beeswax; dammar; paraffin (paraffin page refused)",
+      "site": "cameo.mfa.org (paraffin page refused; the dammar page was dropped, as no source ties trade dammar to the craft's damar)"
+    },
+    {
+      "query": "dhokra bastar; dhokra chhattisgarh; kondagaon dhokra; bell metal bastar",
+      "site": "commons.wikimedia.org"
+    },
+    {
+      "query": "Dhokra craft Kondagaon",
+      "site": "gaatha.org (no named author and it sells the craft, so rated D: cited only for a dated price and beside A to C sources)"
+    },
+    {
+      "query": "Dhokra in Kondagaon craft city",
+      "site": "villagesquare.in"
+    },
+    {
+      "query": "Handicraft (Art and Culture)",
+      "site": "bastar.gov.in"
+    },
+    {
+      "query": "Bastar Dhokra",
+      "site": "incredibleindia.gov.in (no named author and its text follows the MAP Academy article, which is cited instead; not used)"
+    },
+    {
+      "query": "Dhokra",
+      "site": "imp-art.org (MAP Academy)"
+    },
+    {
+      "query": "Workshop on Dhokra art of Bastar",
+      "site": "ncf.nic.in (lists a planned project only, not that it took place; not used)"
+    },
+    {
+      "query": "Shaping Dhokra",
+      "site": "deccanherald.com (only a caption extractable; not used)"
+    },
+    {
+      "query": "Dhokra metal casting and its Harappan connection",
+      "site": "livehistoryindia.com (no named author; not used)"
+    },
+    {
+      "query": "Traditional Dhokra Artifacts Casting Technique",
+      "site": "gyansanchay.csjmu.ac.in (about Betul, not Bastar; not used)"
+    },
+    {
+      "query": "Kondagaon district tehsils, to place Makdi tehsil",
+      "site": "en.wikipedia.org (checked, not cited; kondagaon.gov.in is cited instead)"
+    },
+    {
+      "query": "Dhokra; bell metal; Bastar",
+      "site": "handicrafts.nic.in, Development Commissioner (Handicrafts) (connection timed out and the Wayback snapshot had no readable text; not used)"
+    },
+    {
+      "query": "Kondagaon district tehsils, blocks and date of constitution",
+      "site": "kondagaon.gov.in (the About District page is cited; the tehsil page holds no text)"
+    },
+    {
+      "query": "author of the MAP Academy Dhokra article",
+      "site": "imp-art.org (the page and its own citation lines name no author; only the site's page script names the account that posted it, so no author is recorded)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: Bastar Dhokra, Application Number 83",
+      "publisher": "Geographical Indications Registry, Intellectual Property India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/83",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: Bastar Dhokra (Logo), Application Number 387",
+      "publisher": "Geographical Indications Registry, Intellectual Property India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/387",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S03",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 24",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2008,
+      "url": "https://ipindia.nic.in/girindia/journal/24.pdf",
+      "archivedUrl": "https://web.archive.org/web/20130809233523id_/http://ipindia.nic.in/girindia/journal/24.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S04",
+      "kind": "WEB_PAGE",
+      "title": "Handicraft (Art and Culture)",
+      "publisher": "District Bastar, Government of Chhattisgarh",
+      "url": "https://bastar.gov.in/en/departments/handicraft/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S06",
+      "kind": "BOOK",
+      "title": "The Tribes and Castes of the Central Provinces of India, Volume III",
+      "authors": [
+        "R. V. Russell",
+        "Hira Lal"
+      ],
+      "publisher": "Macmillan and Co.",
+      "year": 1916,
+      "url": "https://archive.org/download/tribescastesofce03russ/tribescastesofce03russ_djvu.txt",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S07",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Mata Devi, sculpture, IS.132-1984",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://collections.vam.ac.uk/item/O66546/mata-devi-sculpture-unknown",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S08",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Sculpture, IS.5-1983",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://collections.vam.ac.uk/item/O66529/sculpture-baghel-jaidev/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S09",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Figure of Tribal Musician, accession 85/6831",
+      "publisher": "National Crafts Museum and Hastkala Academy",
+      "url": "https://nationalcraftsmuseum.nic.in/artifacts-detail/13083",
+      "archivedUrl": "https://web.archive.org/web/20260307212252id_/https://nationalcraftsmuseum.nic.in/artifacts-detail/13083",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S10",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Dhokra Female Figurine, accession 2002/8278",
+      "publisher": "National Crafts Museum and Hastkala Academy",
+      "url": "https://nationalcraftsmuseum.nic.in/artifacts-detail/6512",
+      "archivedUrl": "https://web.archive.org/web/20251206235406id_/https://nationalcraftsmuseum.nic.in/artifacts-detail/6512",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S11",
+      "kind": "PAPER",
+      "title": "Dhokra Metal Casting Process of Barkai Village, Chattisgarh Artisans",
+      "authors": [
+        "Pulkit Jawa"
+      ],
+      "publisher": "International Journal for Multidisciplinary Research",
+      "year": 2025,
+      "url": "https://www.ijfmr.com/papers/2025/4/54854.pdf",
+      "doi": "10.36948/ijfmr.2025.v07i04.54854",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S12",
+      "kind": "ENCYCLOPEDIA",
+      "title": "बस्तर के घढ़वा धातु शिल्प : रूप और सन्दर्भ / Gadhwa metal craft: form and context",
+      "authors": [
+        "मुश्ताक खान"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/%E0%A4%AC%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A4%B0-%E0%A4%95%E0%A5%87-%E0%A4%98%E0%A5%9D%E0%A4%B5%E0%A4%BE-%E0%A4%A7%E0%A4%BE%E0%A4%A4%E0%A5%81-%E0%A4%B6%E0%A4%BF%E0%A4%B2%E0%A5%8D%E0%A4%AA-%E0%A4%B0%E0%A5%82%E0%A4%AA-%E0%A4%94%E0%A4%B0-%E0%A4%B8%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%AD-gadhwa-metal-craft-form-and-context",
+      "language": "hi",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S13",
+      "kind": "ENCYCLOPEDIA",
+      "title": "घढ़वा धातु ढलाई पद्यति / Gadhwa metal casting: process and technique",
+      "authors": [
+        "मुश्ताक खान"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/%E0%A4%98%E0%A5%9D%E0%A4%B5%E0%A4%BE-%E0%A4%A7%E0%A4%BE%E0%A4%A4%E0%A5%81-%E0%A4%A2%E0%A4%B2%E0%A4%BE%E0%A4%88-%E0%A4%AA%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A4%A4%E0%A4%BF-gadhwa-metal-casting-process-and-technique",
+      "language": "hi",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S14",
+      "kind": "ENCYCLOPEDIA",
+      "title": "बस्तर की पहचान के चितेरे - जयदेव बघेल / The art of Jaidev Baghel",
+      "authors": [
+        "मुश्ताक खान"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/%E0%A4%AC%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A4%B0-%E0%A4%95%E0%A5%80-%E0%A4%AA%E0%A4%B9%E0%A4%9A%E0%A4%BE%E0%A4%A8-%E0%A4%95%E0%A5%87-%E0%A4%9A%E0%A4%BF%E0%A4%A4%E0%A5%87%E0%A4%B0%E0%A5%87-%E0%A4%9C%E0%A4%AF%E0%A4%A6%E0%A5%87%E0%A4%B5-%E0%A4%AC%E0%A4%98%E0%A5%87%E0%A4%B2-the-art-of-jaidev-baghel",
+      "language": "hi",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S15",
+      "kind": "WEB_PAGE",
+      "title": "Dhokra Shilp: The Bell Metal Craft of Bastar",
+      "authors": [
+        "Palash Vaswani"
+      ],
+      "publisher": "D'source, Industrial Design Centre, IIT Bombay",
+      "url": "https://dsource.in/sites/default/files/resource/dhokra-shilp/downloads/file/dhokra_shilp_bell_metal_craft_bastar.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S16",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Dhokra",
+      "publisher": "Impart Encyclopedia of Art",
+      "year": 2023,
+      "url": "https://imp-art.org/articles/dhokra/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S17",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Brass",
+      "publisher": "CAMEO: Conservation and Art Materials Encyclopedia Online, Museum of Fine Arts, Boston",
+      "url": "https://cameo.mfa.org/wiki/Brass",
+      "archivedUrl": "https://web.archive.org/web/20260610000446id_/https://cameo.mfa.org/wiki/Brass",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S18",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Bronze",
+      "publisher": "CAMEO: Conservation and Art Materials Encyclopedia Online, Museum of Fine Arts, Boston",
+      "url": "https://cameo.mfa.org/wiki/Bronze",
+      "archivedUrl": "https://web.archive.org/web/20260514003738id_/https://cameo.mfa.org/wiki/Bronze",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S19",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Bell metal",
+      "publisher": "CAMEO: Conservation and Art Materials Encyclopedia Online, Museum of Fine Arts, Boston",
+      "url": "https://cameo.mfa.org/wiki/Bell_metal",
+      "archivedUrl": "https://web.archive.org/web/20260512003858id_/https://cameo.mfa.org/wiki/Bell_metal",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S20",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Beeswax",
+      "publisher": "CAMEO: Conservation and Art Materials Encyclopedia Online, Museum of Fine Arts, Boston",
+      "url": "https://cameo.mfa.org/wiki/Beeswax",
+      "archivedUrl": "https://web.archive.org/web/20260415010713id_/https://cameo.mfa.org/wiki/Beeswax",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S23",
+      "kind": "WEB_PAGE",
+      "title": "Dhokra craft Kondagaon",
+      "publisher": "Gaatha",
+      "url": "https://gaatha.org/Craft-of-India/dhokra-craft-kondagaon/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S24",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Dhokra balances preservation & evolution amidst challenges",
+      "authors": [
+        "Deepanwita Gita Niyogi"
+      ],
+      "publisher": "Village Square",
+      "year": 2024,
+      "url": "https://villagesquare.in/dhokra-art-challenges-evolution-chhattisgarh/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S25",
+      "kind": "WEB_PAGE",
+      "title": "About District",
+      "publisher": "District Administration Kondagaon, Government of Chhattisgarh",
+      "url": "https://kondagaon.gov.in/en/about-district/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-17"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "Bastar Dhokra is registered as a geographical indication under application number 83, filed by the Chhattisgarh Hastshilp Vikas Board on 12 March 2007.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 1-5",
+          "quote": "Application Number | 83 | | Geographical Indications | Bastar Dhokra | | Status | Registered | | Applicant Name | Chhattisgarh Hastshilp Vikas Board |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "lines 6-7",
+          "quote": "Date of Filing | 12-03-2007 |"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1061-1063",
+          "quote": "G.I. - APPLICATION NUMBER 83 Application is made by The Chhattisgarh hastshilp vikas board C35, Ravi Nagar, Raipur"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registry issued certificate number 62 for Bastar Dhokra on 22 April 2008, after publishing it in Geographical Indications Journal number 24.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 11-15",
+          "quote": "Journal Number | 24 | | Availability Date | 21-01-2008 | | Certificate Number | 62 | | Certificate Date | 22-04-2008 |"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 16-18",
+          "quote": "it is informed that the issue No.24 of the Geographical Indication Journal dated 1st August 2008 / Sravana- 10 Saka 1930 has been made available to the public from 21st January 2008"
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Form GI-1 for the Bastar Dhokra logo, GI application 387, is dated November 2012, and its certificate of registration February 2014.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "line 14",
+          "quote": "387 - Form GI-1 - 05-11-2012"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "line 2",
+          "quote": "387 - Certificate of Registration - 03-02-2014"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "An art encyclopedia states that Bastar Dhokra received a Geographical Indication tag in 2014.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 15-16",
+          "quote": "Bastar Dhokra received a Geographical Indication tag in 2014"
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application lists statues of local deities and of nature and human forms, candle stands, door handles, flower vases, mobile holders, face masks, water jugs and key rings.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1064-1066",
+          "quote": "Statues and statuettes of local deities, nature and human forms, Candle stand, Door handle, Flower vase, Mobile holder, Face mask, Water jug, Key rings"
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Dhokra products are cast in bell metal by the lost wax process and show a finish of bell metal wire work.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1114-1116",
+          "quote": "Dhokra products are cast in bell metal by lost wax process and display an intriguing finish having bell metal wire work"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "In Bastar, Dhokra is made by the Ghadwa community, and for that reason it is also known as Ghadawa art.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1164-1166",
+          "quote": "The Dhokra art is a major attraction of Bastar. They are prepared by the Ghadawa community and hence it is also known as the Ghadawa art."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 28-29",
+          "quote": "Dhokra shilp is widely practiced by the Ghadwa community of Bastar."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 141-142",
+          "quote": "the town is best known for its Dhokra craft, a traditional lost-wax metal casting technique practiced by the Ghadwa community"
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "Dhokra Shilp is the regional word for the craft of bell metal casting, one of the most distinguished crafts of Chhattisgarh.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 25-27",
+          "quote": "\"Dhokra Shilp\" is the regional word for the craft of bell metal casting. It is one of the most distinguished craft of Chattisgarh."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Bastar district specializes in making items by the Dhokra technique, a process that calls for a great deal of precision and skill.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 3-4",
+          "quote": "The Bastar district specializes in the preparation of items from the Dhokra Handicraft. This process calls for a great deal of precision and skill."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Dhokra casters make hollow brass objects and images by the lost-wax process, modelling each piece in wax over a clay core.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "lines 18-19",
+          "quote": "The Dhokras use lost-wax process to cast hollow brass objects and images. A replica of the desired product is made with wax on a clay core, with all its finer details of designs and decorations."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1111-1112",
+          "quote": "Hollow casting - It is more traditional method which involves the use of the clay core."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "The casting method of the traditional Ghadwa metal artisans of Bastar is a primitive form of the lost wax process, followed for many generations.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 1-2",
+          "quote": "बस्तर के पारम्परिक घढ़वा धातु शिल्पियों द्वारा प्रयुक्त की जाने वाली धातु ढलाई पद्यति , लॉस्ट वेक्स प्रोसेस का ही आदिम रूप है। वे अनेक पीढ़ियों से इस पद्यति का अनुसरण करते आ रहे हैं।"
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Bastar and Kondagaon are among the major centres of Dhokra casting in Chhattisgarh.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 7-8",
+          "quote": "Major centres of the craft include Bastar and Kondagaon in Chhattisgarh"
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Kondagaon, one of the bigger towns in the area, is considered the centre of handicraft manufacturing.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 154-155",
+          "quote": "Kondagaon is one of the bigger towns in the area and is considered to be the centre of handicrafts manufacturing."
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "The GI statement of case derives the name Ghadwa from ghalna, meaning to melt, because these casters melt metal in the lost wax technique.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1166-1169",
+          "quote": "The name Ghadwa is derived from the world 'Ghalna', which means to melt and as these people prepare the craft items by melting the metal using a lost wax technique, so they are given the name 'Ghadwa'"
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Ghadwa is also explained as meaning one who shapes and creates, such as a maker of idols and ornaments.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1169-1170",
+          "quote": "'Ghadwa' means the act of shaping and creating"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 53-54",
+          "quote": "Term \"ghadwa\" means giving shape and creating."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 6-7",
+          "quote": "वे कहते हैं घढ़वा का शाब्दिक अर्थ घढ़ने वाला है अर्थात वह व्यक्ति जो मूर्तियां और गहने आदि गढता है, घढवा कहलाता है"
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "A Victoria and Albert Museum record says the Gharuas, or Ghadwas, of Bastar take their name from the gharas, or water pots, they made.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "lines 14-15",
+          "quote": "Made by artisans known in Bastar as Gharuas ( Ghadwas). Their name derives from the Gharas or water pots made by them."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "A story told by most Ghadwa says a Bastar maharaja, admiring an anklet presented at his court, named its makers Ghadwa because they shaped ornaments.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 8-9",
+          "quote": "इनमें से एक प्रमुख कहानी जो थोडे़ बहुत परिवर्तन के साथ अधिकांशतः घढवा लोगों द्वारा मान्य की जाती है"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 8-9",
+          "quote": "बस्तर रियासत के समय में बस्तर के राज दरवार में किसी व्यक्ति ने पैर में पहनने का आभूषण पैरी महाराज को भेंट दिया था ।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 8-9",
+          "quote": "महाराज ने गहने के कलात्मक सौन्दर्य से प्रभावित होकर कहा कि भाई तुम लोग तो गहने घढ़ते हो, इसलिए तुम घढ़वा हो, आज से तुम्हे घढ़वा कहा जायेगा ।"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1170-1173",
+          "quote": "The various stories related to the origin of the name 'Ghadwa' only indicate that it was for the very first time awarded by a contemporary king to craftsmen as a token of appreciation."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "In some regions the Ghadwa craftsmen are also called Ghasia, Khaser, Mangan and Vishwakarma.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1172-1174",
+          "quote": "In some regions the craftsmen are also called 'Ghasia','Khaser', 'Mangan' and 'Vishwakarma'."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 57-58",
+          "quote": "These are also called as 'Ghasis', 'Khaser', 'Mangan' & 'Vishwakarma' in different regions."
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Russell and Hira Lal's ethnography of the Central Provinces records that the Ghasia of Bastar served as horse-keepers and also made and mended brass vessels.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "lines 1156-1159",
+          "quote": "In Bastar they are described as an inferior caste who serve as horse-keepers and also make and mend brass vessels."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 5-6",
+          "quote": "रसल और हीरालाल ने अपनी पुस्तक में, सेन्ट्रल प्रविंस के गजेटियर 1871 के हवाले से लिखा है घसिया एक द्रविडियन मूल की जाति है जो बस्तर में पीतल के बर्तन सुधारने और बनाने का काम भी करती है ।"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mushtak Khan writes that Verrier Elwin's Tribal Art of Middle India gives an authentic account of Bastar metal craft, recording Ghasia brass utensils, ornaments and images.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 5-6",
+          "quote": "बस्तर के धातु-शिल्प का प्रमाणिक उल्लेख सन १९५० में प्रकाशित डा. वैरियर एल्विन की पुस्तक ट्राइबल आर्ट ऑफ़ मिडिल इंडिया में मिलता है । उन्होंने बस्तर में धसिया जाति के लोगों द्वारा पीतल के बर्तन, गहने और मूर्तियां बनाये जाने का उल्लेख किया था ।"
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Many Bastar metal casters now call themselves an independent Ghadwa tribal caste rather than Ghasia, though many accept that the casting branch of the Ghasia became the Ghadwa.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 6-7",
+          "quote": "परंतु आज बस्तर के अनेक धातु शिल्पी अपने को घसिया जाति का नहीं मानतें वे अपने का स्वतन्त्र घढ़वा आदिवासी जाति का बताते हैं।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 6-7",
+          "quote": "बहुत से घढ़वा यह बात भी स्वीकारते हैं कि, घसिया जाति की वह शाखा जो धातु ढलाई का कार्य करने लगी, घढ़वा कहलाने लगी है ।"
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Bastar metal casters do not regard themselves as part of the Dhokra community and do not call their own craft Dhokra.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 1-2",
+          "quote": "यहां के धातु-शिल्पी स्वयं को ढोकरा समुदाय का अंग नही मानते और वे अपने शिल्प को भी ढोकरा नाम से संबोधित नही करते ।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 1-2",
+          "quote": "बंगाल के आदिवासी-लोक धातु शिल्प को ढोकरा धातु शिल्प इसलिए कहा जाता है कि वहां धातु ढलाई का कार्य ढोकरा कमार आदिवासी समुदाय के लोग करते हैं।"
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Use of the term Dhokra for this tribal metal craft in all likelihood began in the decade of 1970 and soon entered common speech.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 1",
+          "quote": "इस शब्द का प्रचलन संभवतः 1970 के दशक में आरंभ हुआ और जल्द ही आम बोल-चाल में आ गया ।"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The term Dhokra is believed to derive from the word dhokna, which means to cast.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 25-26",
+          "quote": "The term \"Dhokra\" is believed to be deriving from the word \"dhokna\", which means to cast."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The name Dhokra comes from the Dhokra Damar community of metal artisans, who practise the craft in West Bengal.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 7-8",
+          "quote": "The craft tradition derives its name from the Dhokra Damar community of metal artisans, who practise the craft in West Bengal."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI statement of case cites the statue of the dancing girl unearthed at Mohenjodaro as proof of the craft's origin and continuity.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1207-1209",
+          "quote": "It is of interest to know that the statue of the dancing girl, unearthed at Mohenjodaro is the proof of origin and continuity of the craft."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bastar's casters once worked for the royal families of Bastar, making tribal idols, and there were very few of them.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1216-1218",
+          "quote": "The artisans used to work for the Royal families of Bastar and make tribal idolatry statues. There were very few artisans at that time."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "After the 1960 resettlement of Bengali refugees, officers, leaders and media visiting Bastar spread the craft's popularity and brought it into the newspapers.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1217-1219",
+          "quote": "In 1960 after the Bangla -refugee rehabilitation, some I.A.S. and I.C.S. officers were posted in the region for administering the settlement activities."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1219-1220",
+          "quote": "With these officers, some famous leaders and media people were also attracted to visit the place."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1220-1222",
+          "quote": "This filtering-in of people from various regions gave an automatic popularity to the Dhokra craft and soon the sector found space in newspapers."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Manik Ghadwa in 1969 and Sukhchand Ghadwa in 1970 received National Awards from the Government of India.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 4-5",
+          "quote": "१९६९ में मानिक घढ़वा और १९७० में सुखचंद घढ़वा को भारत सरकार द्वारा राष्ट्रिय पुरस्कार से सम्मानित किया गया।"
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Dhokra in general has been promoted since the 1960s through displays and sales at handicraft outlets in India and abroad, including the Festivals of India.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 14-15",
+          "quote": "Dhokra art began to be promoted through displays and sales at handicrafts outlets at national and international levels, including Festivals of India, from the 1960s onwards."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "After 1980 Jaidev Baghel of Kondagaon achieved international popularity, drawing traders from around the world and the village's younger generation to the trade.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1226-1229",
+          "quote": "After 1980'S Mr. Jaidev Baghel, one of the bell metal artisans from Kondagaon achieved international popularity. This attracted the attention of traders world-wide towards Kondagaon and as a result the new generation in the village also started taking keen interest in the trade."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Jaidev Baghel was born in 1950 into a traditional Ghadwa metal-casting family of Kondagaon and learnt casting from his father.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 1-2",
+          "quote": "जयदेव बघेल का जन्म सन १९५० में ,कोंडगांव के एक पारम्परिक धातुशिल्पी, घढ़वा परिवार में हुआ था।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 392-394",
+          "quote": "Born in Kondagaon, he belongs to the artisan community. He learnt the techniques of casting metals from his father"
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Jaidev Baghel of Kondagaon, a Ghadwa metal caster, received the National Award in 1977.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 18-19",
+          "quote": "जयदेव बघेल को १९७७ में राष्ट्रिय पुरस्कार मिला।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 394-395",
+          "quote": "A winner of the National Award in 1977 and several other awards"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "lines 14-15",
+          "quote": "Notable Dhokra artists include Jaidev Baghel, who won a National Award in 1977"
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Jaidev Baghel received the Shikhar Samman from the Madhya Pradesh government and the title of Shilp Guru from the Government of India.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 26-27",
+          "quote": "उन्हें मध्य प्रदेश राज्य सरकार द्वारा शिखर सम्मान एवं भारत सरकार द्वारा राष्ट्रिय पुरस्कर तथा शिल्पगुरु की उपाधि से सम्मानित किया था।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 392-393",
+          "quote": "This place is also famous for the legend Dr. Jaidev Baghel, also known as the \"shilp guru\"."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1257-1259",
+          "quote": "In the world of myth and legend shilp guru Shri Jaidev Baghel of Bastar recounts"
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Jaidev Baghel was the first Bastar metal caster to build a workshop apart from his home, where many casters worked together as one unit.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 9-10",
+          "quote": "जयदेव बघेल बस्तर के पहले धातुशिल्पी थे जिन्होंने घर से अलग कार्यशाला बनवाई और अनेक धातु शिल्पियों को एक साथ बैठाकर एक वर्क यूनिट के रूप में कार्य आरम्भ किया।"
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The Kondagaon metal caster Jaidev Baghel, subject of documentaries in India, Britain and Switzerland, died in 2014.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 27-28",
+          "quote": "सन १९८२ में आर्ट काउन्सिल ऑफ़ ग्रेट ब्रिटेन और बी. बी. सी. लन्दन द्वारा उन पर केंद्रित वृत्तचित्र बनाये गए। सन १९८७ में स्विट्जरलैंड के बाज़ल म्यूजियम द्वारा उन एक वृत्तचित्र बनाया गया। उनका निधन सन २०१४ में हुआ।"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "lines 27-28",
+          "quote": "१९७८ में भारत सरकार के फिल्म्स डिवीज़न ने उन पर आधारित एक वृत्तचित्र बनाया था।"
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A Victoria and Albert Museum record names Jaider Baghel as one of the craftsmen brought from India to The Living Arts exhibition at the Serpentine Gallery in 1982.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "lines 13-14",
+          "quote": "Made by Jaider Baghel, one of the craftsmen brought from India to The Living Arts Exhibition at the Serpentine Gallery for the Festival of India, 1982."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Mushtak Khan writes that Jaidev Baghel tried, through his writing, to spread a legend of his own making about the origin of Ghadwa metal casting.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "lines 21-22",
+          "quote": "लेखन के माध्यम से उन्होंने घढ़वा धातु ढलाई के उदभव के बारे एक स्वयं रचित किंवदंती को प्रचारित करने का प्रयास किया था।"
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In a legend recounted by Jaidev Baghel, a forest fire melted metal ore around a waxen hive inside a hollow stone, and the solid metal kept the hive's shape.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1258-1260",
+          "quote": "shilp guru Shri Jaidev Baghel of Bastar recounts, how metal casting first came into being."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1263-1267",
+          "quote": "An insect had hollowed a stone (or used stone with hole perhaps) and made waxen hive for home inside and the hollow of the stone. With the forest fire, the metal ore within the stone had melted and dropped down; upon solidifying it bored the impression of the waxen hive."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C041",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Most Ghadwa metal artisans cannot say how their casting began, and say only that the work has come down from their ancestors.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 50-51",
+          "quote": "धातु ढलाई कला का आरंभ किस प्रकार हुआ इस संबंध में अधिकांश घढ़वा धातु शिल्पी कुछ बता नही पाते, वे कहते हैं यह काम उनके पूर्वजों से चला आ रहा है"
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The origins of Dhokra are unknown, but it was likely practised by nomadic communities and received patronage from rulers of the kingdom of Bastar.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 7-8",
+          "quote": "While the origins of the craft are unknown, it is likely that it was practised by nomadic communities in central and eastern India and received patronage from rulers of the kingdom of Bastar."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C043",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "It is still unclear whether the Ghadwa community originated in the jungles of Bastar or migrated there from Orissa.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 53-54",
+          "quote": "It is still unclear whether the community originated in the jungles of Bastar or migrated from Orissa."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Some hold that the Ghadwa are native to Bastar, because their customs, dress, songs, dances and deities are those of other Bastar tribes.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 9-10",
+          "quote": "कुछ लोग यह मानते हैं कि घढ़वा बस्तर के ही मूल निवासी हैं, क्योंकि इनका रहन-सहन, रीति-रिवाज, आचार व्यवहार, वेश भूषा, नृत्य-गीत, देवी-देवता वही हैं जो बस्तर में रहने वाले अन्य आदिवासियों के हैं"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 53-55",
+          "quote": "As their culture and traditions have strikingly similarities with the tribal's of Bastar, many do believe that their traces are from Bastar."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C045",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Another account holds that Ghadwa families were invited from Orissa to cast an idol of the goddess Danteshwari when a Bastar king built his palace.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 10-11",
+          "quote": "कहते हैं कि एक बार बस्तर महाराज ने अपना महल बनवाया तब उन्हे दंतेश्वरी देवी की धातु मूर्ति बनवाने की आवश्यकता हुई ।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 56-58",
+          "quote": "Some believe that in the historical period, when king built his palace, he searched some craftsmen to make the idol of Danteshwari Devi. Few of the ghadwa families were invited from Orissa and then they settled in this region."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C046",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ghadwa craftsmen first supplied villagers with everyday utensils, and jewellery and figures of local deities only slowly became part of their work.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 58-60",
+          "quote": "The Ghadwa craftsmen used to supply the utensils of daily use to the villagers. Slowly jewelry and forms of local deities also became part of their work."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "For Dhokra as a whole, the economic effects of the COVID-19 pandemic raised the cost of raw materials and finished goods, and the number of active artisans has fallen markedly.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 15-16",
+          "quote": "However, the economic effects of the COVID-19 pandemic have led to rising prices for procurement of resources, and therefore, higher costs of finished goods. There has also been a marked decline in the number of active Dhokra artisans."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bastar Dhokra making is a twelve-stage process, from building the clay model to cooling and finishing the cast piece.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1541-1543",
+          "quote": "The unique 12-stage process of Dhokra making is the original creative instinct of the craft persons."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1357-1359",
+          "quote": "The process is carried out in twelve different steps as follows: Preparing vague model and coating it with first layer"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 8-9",
+          "quote": "बस्तर की परंपरागत धातु शिल्प निर्माण की प्रक्रिया कुल बारह चरणों में पूरी होती है ।"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1483-1485",
+          "quote": "Cooling and finishing: The model is left to cool for 1-6 hours depending on the size."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI statement of case divides the whole process into five major parts: modelling, moulding, dewaxing, casting and finishing.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1322-1324",
+          "quote": "The entire process can be broadly divided into five major parts as follows: Modeling 2 Moulding 3 Dewaxing 4 Casting 5 Finishing"
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "The core of a figure is shaped from black soil brought from the fields and kneaded with paddy husk, then left to dry in the sun.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 4-5",
+          "quote": "सबसे पहले खेत से लायी गयी काली मिटटी में धान का छिलका मिलाकर गूंथ लिया जाता है । इस प्रकार तैयार की गई मिटटी से मूर्ति का ढांचा या कोर बनाया जाता है ।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1113-1115",
+          "quote": "A basic model is prepared by using black soil mixed with rice husk in appropriate ratio. Soft pliable dough is made by adding water in it. A basic model of craft is made and dried in the sun."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "The GI method mixes 1 kg of black field soil, called chikti mitti, with 100 grams of rice husk and kneads it with water into a soft dough.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1359-1362",
+          "quote": "Black soil in the fields (locally known as chikti mitti) is brought and mixed with rice husk in the ratio - 1 kg of black soil with 100 Gms of rice husk. Water is added to knead it into soft pliable dough."
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Once the core is dry it is covered with clean, sticky riverside soil mixed with powdered dung or wood coal, in proportions of 85-90% soil to 10-15% dung or coal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1363-1366",
+          "quote": "When the model properly dries, clean sticky riverside soil (locally known as rui mitti) is brought and cleaned again; enough water as well as powdered dung or wood coal is added and mixed thoroughly"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1366-1368",
+          "quote": "Proportions are in the range 85-90% soil to 10-15% cow dung or wood coal."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 98-99",
+          "quote": "The ratio typically ranges from 85-90% soil to 10-15% cow dung/coal."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "When the coated model is hard and dry it is filed into shape with metal files, and fallen soil is softened into a paste to fill it.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1363-1372",
+          "quote": "When the model gets hard and dry, it is filed and shaped with metal files to bring into a proper shape. The pieces of dry sticky soil which have fallen are gathered, soften with water into a paste"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1117-1118",
+          "quote": "The hard & dry model is filed & shaped with metal files to achieve a proper shape."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Crushed leaves of the sem or country bean creeper are rubbed over the dry model until it turns green, to keep the next soil from sticking to it.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1375-1377",
+          "quote": "Fresh and 'semi' or 'sem' or country bean creeper leaves are brought, crushed by rubbing them between both palms till a green liquid oozes out."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1377-1378",
+          "quote": "all over the model until the models looks totally green. This is to prevent the soil from sticking to the model"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1121-1122",
+          "quote": "The purpose of applying green liquid to model is to prevent the soil from sticking to the model."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Another account says that rubbing green sem leaves on the core makes the wound wax stick to it instead of falling off.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 16-17",
+          "quote": "हरी पत्ती रगड़ने से मूर्ति पर लपेटा जाने वाला मोम झड़ता नहीं है, चिपका रहता है ।"
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M13"
+      },
+      "text": "Lima bean leaves, called sem patta, are chosen over other leaves for this coating because of their high water content.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1309-1311",
+          "quote": "Bean Leaves (Sem Patta): Lima bean leaves picked up from the plants. Also, other plant leaves could serve the same purpose, but bean leaves are chosen, because of their high water content."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 683-684",
+          "quote": "Lima bean (sem patta) leaves picked up from the plants due to their water content."
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "Raw beeswax is melted in a pot and filtered through coarse cotton cloth into a clay pot of water, where it sets and floats.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1408-1411",
+          "quote": "raw bee wax is heated in a pot over fire. The melted bees wax is filtered through coarse cotton clot into another wide mouthed clay pot filled with water. The wax cools and sets as it falls in it and floats on the top."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 807-808",
+          "quote": "The molten wax is filtered through the cotton cloth into another clay pot filled with water."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 5-6",
+          "quote": "पिघले हुए मोम को सूती कपड़े से छानते हुए पानी भरे बर्तन में इक्कठा किया जाता है।"
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The prepared wax is softened in the sun and pushed through a hand-held or standing press fitted with metal sieves to make strings of the thickness needed.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1413-1415",
+          "quote": "Wax stings are made from the prepared wax; it is softened by leaving it in the sun. It is put through a hand held or standing press"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1416-1417",
+          "quote": "in which metal sieves are inserted according to the thickness of the strings required"
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 102-103",
+          "quote": "6. Making wax strings (Tikkal Banana): The prepared wax is softened in the sun and pressed through a hand-held or standing press (pichki). Metal sieves are fitted into the press depending on the desired thickness."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 18-19",
+          "quote": "मोम को पिचकी (यह एक प्रकार का यंत्र होता है) में रखकर और दबाकर, मोम का तार निकाला जाता है ।"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "In Bastar the wax-thread press, like the one sweet makers use to make sevaiyyan, is called phichki pharni.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1414-1416",
+          "quote": "similar to that used by halwais to make sevaiyyan (called phichki pharni in Bastar, somewhat like a spaghetti press)"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1123-1125",
+          "quote": "The wax threads are made using hand-held press, which is also known as phichki-pharni in Bastar."
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Wax strings are wrapped closely around the hard, green-coated model, and further designs are added in plain wax.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1418-1421",
+          "quote": "When wax strings are ready as required, they are wrapped closely around the model, which is hard and dry and green with the application of sem-leaf liquid. When the model is totally covered with wax strings, designs of choice can be made with plain wax too."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 103-104",
+          "quote": "7. Wrapping of strings (Tikkal Chadana): Wax strings are tightly wrapped around the dry clay form"
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "A channel is made at the bottom of the decorated model for pouring the metal, and a pin made of wax is inserted in it.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1421-1423",
+          "quote": "A channel at appropriate spots at the bottom is made where the liquid metal is to be poured for casting and a pin made from wax is inserted in it."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "For a solid casting no clay core is made, and the whole figure is modelled in wax.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 5-6",
+          "quote": "जब ठोस आकृति बनानी होती है तब प्रतिमा का कोर नहीं बनाया जाता , आकृति मोम से ही बना दी जाती है।"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1110-1111",
+          "quote": "Solid casting - Where a solid piece of wax is used to create the mould instead of a clay core."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P08"
+      },
+      "text": "The waxed model is first coated with sieved riverside soil and powdered wood coal, mixed in proportions of about 85-90% soil to 10-15% coal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1424-1427",
+          "quote": "Powdered sticky riverside soil and powdered wood coal are sieved separately through clean cloth. Mixed in the proportions 90-85% and 10-15%, water is added and kneaded to make dough like consistency and applied over the model."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P09"
+      },
+      "text": "A second coat of unrefined sticky riverside soil follows, taking care to keep the holes and channels for the metal clear.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1427-1430",
+          "quote": "Unrefined sticky riverside soil is taken and mixed with enough water and another layer is applied on the dry model. Care is taken to keep the holes or the channels for the metal clear."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "A final layer of powdered termite-hill soil covers the model, with larger wax channels added to form an inverted funnel for pouring the metal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1460-1461",
+          "quote": "Soil from the termite hill is brought, powdered and kneaded to make a smooth mixture."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1461-1464",
+          "quote": "a bigger channel or channels from wax are added to the earlier channels (for pouring metal) made at the bottom and covered with termite soil mixture to make the passage ready (inverted funnel shape) and dried."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P11"
+      },
+      "text": "The firing furnace is a round pit about one foot deep and 2 to 2.5 feet across, dug in dry ground, though it can also be square or rectangular.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1466-1468",
+          "quote": "On dry land a round pit one foot deep is dug with a diameter of 2 or 2.5 feet. The furnace can be square or a rectangle."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 109-110",
+          "quote": "A round pit, about one foot deep and 2-2.5 feet in diameter, is dug on dry land."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P11"
+      },
+      "text": "The mould is fired on burning wood coal, propped upright with wooden sticks and covered with wood, while a pipe is blown to keep the fire steady.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1468-1470",
+          "quote": "After the soil is dry, wood coals is spread over it and at the bottom and light it"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1469-1472",
+          "quote": "the model is then placed over it for firing. Wood is then kept all around and on top of the model and lights it. Wooden sticks are used to prop up the model to keep it erect. The pola or pipe is to blow on and to keep the fire burning steadily."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P11"
+      },
+      "text": "When the fired mould turns red it is held upside down, and molten metal from the crucible is poured into its funnel to replace the wax.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1476-1477",
+          "quote": "The model in the first furnace turns red on being properly kept in fire."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1478-1482",
+          "quote": "The model is held upside down for the liquid bell metal to be poured in the channels or funnels made at the bottom. The crucible is then lifted with long-handled pincers and the molten metal is poured in the funnel so that it can pass through the channel to replace the wax inside the model."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 1162-1164",
+          "quote": "The wax inside the model is replaced by molten metal poured through funnel."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P12"
+      },
+      "text": "The cast is left to cool for 1-6 hours depending on its size, and water is sprinkled on it if it has not cooled.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1484-1486",
+          "quote": "The model is left to cool for 1-6 hours depending on the size. If it has not cooled down, water is sprinkled lightly on it to cool."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P12"
+      },
+      "text": "The outer mould is broken gently with a wooden mallet, and the piece is cleaned with wire brushes and files.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1485-1487",
+          "quote": "When it is cooled down the outer mould is broken gently with a wooden mallet."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1486-1488",
+          "quote": "Wire brushes are used to clean the dried soil sticked to it and filed to gently rub and clean."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P13"
+      },
+      "text": "In an older method still followed in interior Bastar, a clay cup filled with brass scrap is joined permanently to the mould's channel with clay.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 2491-2493",
+          "quote": "When the craft was not in its present commercialized form, the method of pouring liquid metal was different. It's still followed at many places in the interiors of Bastar."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 2493-2495",
+          "quote": "While making the model, a separate pot filled with a sufficient amount of brass scrap is made. One side of the pot is kept open, which is then joined to the channel of the model and is fixed permanently with clay."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 6-7",
+          "quote": "इसी समय सांचे के निचले भाग में विशेष रूप से बनाये गए मिटटी के कटौरे में मूर्ति के अनुपात के अनुरूप, आवश्यक पीतल रख लिया जाता है । अब इस कटौरे को मूर्ति के पैर की तरफ से उसी मिटटी से जोड़ दिया जाता है ।"
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P13"
+      },
+      "text": "When the sealed mould is red hot it is turned upside down, so the brass melted in the attached cup flows into the space the wax has left.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 2496-2498",
+          "quote": "When the model becomes red hot, it is lifted from the wooden furnace and turned upside down, which makes the liquid metal flow inside the model."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 7-8",
+          "quote": "इसी समय भट्ठी में रखे सांचे को उलट दिया जाता है जिसके परिणाम स्वरूप पिघला हुआ पीतल इन सांचों से होता हुआ पूरी मूर्ति पर फैल जाता है और रिक्त जगह भर जाती है।"
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P13"
+      },
+      "text": "Casting with the brass sealed into the mould has declined, and melting the brass separately in a crucible has become the popular practice.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 7-8",
+          "quote": "आजकल सांचे में पीतल रखकर मूर्ती ढालने का चलन कम हो गया है। पीतल को अलग क्रूसिबल में लेकर आग पर गलाने का प्रचलन लोकप्रिय हो गया है।"
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L05"
+      },
+      "text": "At Karanpur, a little-known village of traditional craftsmen 40 km from Kondagaon, a bell metal craftsman and his son still fix the metal pot to the mould and use pure beeswax.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 156",
+          "quote": "Another less known place is Karanpur, where traditional craftsmen reside. It is 40 km from Kondagaon."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 398-399",
+          "quote": "Karanpur is a tiny village, 40 km from Kondagaon, surrounded by lush green jungles."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 399-400",
+          "quote": "It is home traditional bell metal craftsmen Bhondia Ram Baghel and his son Manglu Baghel."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 399-401",
+          "quote": "They still use the oldest technique of casting, which is fixing the metal pot with the cast and usage of pure bee wax."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In conventional Dhokra practice objects are small and cast one at a time, while large objects are cast in segments and soldered together.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 11-12",
+          "quote": "In conventional practice, Dhokra objects are small in size and are cast and moulded individually, but in the case of large objects, the segments are cast separately, then soldered together."
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The common tools of Bastar bell metal casting are the chisel, wooden mallet, hammer, phichki-pharni hand press, pliers, tongs and wire brushes.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 688-691",
+          "quote": "The common tools used are: - Chisel, - Wooden Mallet, - Hammer,"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 719-722",
+          "quote": "Phichki-Pharni (Hand-held press), - Pliers, - Tongs, - Wire brushes."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "The main raw material is brass, collected as brass scrap or used brass utensils.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 669-670",
+          "quote": "The primary raw material is brass which is collected from brass scrap or used brass utensils."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI method describes the casting bell metal as a mixture of two alloys, brass and bronze.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1315-1316",
+          "quote": "Bell Metal: It is a mixture of two alloys, brass and bronze, is used for casting."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "In a second furnace, metal pieces in the proportion of 200 grams of bronze to 800 grams of brass are melted in a crucible.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1471-1473",
+          "quote": "Another furnace is made to melt the metal pieces ( 200 gm bronze to 800gm brass)"
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 110-111",
+          "quote": "Meanwhile, metal pieces (e.g., 200 g bronze to 800 g brass) are melted in a crucible surrounded by lit wood coals."
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "In the bell metal mixture, brass gives the cast surface its shine and bronze adds glitter.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1315-1317",
+          "quote": "Brass adds the shine to the surface, while bronze adds glitter."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI specification states that Dhokra products consist of an alloy of bronze, brass, nickel and zinc.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1114-1117",
+          "quote": "Dhokra products consist of an alloy of bronze, brass, nickel, and zinc"
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The Bastar district administration describes the metal craft of Bastar as made from a mixed metal of copper and tin.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 1-2",
+          "quote": "In the metal arts, artifacts of copper and tin mixed metal are made, mainly in which statues of goddesses, idols of worship, idols of tribal culture, and home furnishings are made."
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Brass is an alloy of copper and zinc that is harder and stronger than copper and more malleable than bronze or zinc.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "lines 2-3",
+          "quote": "An alloy of copper and zinc that is harder and stronger than copper and more malleable than bronze or zinc."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Bronze is an alloy of copper and tin, sometimes with small amounts of zinc, lead, silver, aluminium or phosphorus, and is harder than brass.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "lines 2-3",
+          "quote": "An alloy of copper and tin sometimes containing small amounts of zinc, lead, silver, aluminum, or phosphorus."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "lines 2-3",
+          "quote": "Bronze is stronger, harder, and more durable than brass or iron."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "In general use, bell metal is copper with 15 to 40 per cent tin, sometimes with small amounts of zinc, iron or lead for damping.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "lines 2-3",
+          "quote": "Bell metal is usually composed of copper with 15-40% tin, but may contain small amounts of zinc, iron, or lead for damping."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Liquid bell metal starts to give off green-blue flames, which signal that it has reached the ideal temperature for pouring.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 1160-1162",
+          "quote": "The liquid bell metal starts emitting green blue flames, which is an indicator of the ideal temperature of its liquid state."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI application explains that brass alone is too viscous to flow easily into the mould, while heavier, less viscous bronze helps the melt run through narrow channels.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1316-1319",
+          "quote": "Brass being more viscous does not easily flow into the casts; bronze being heavy and less viscous helps in the molten mixture to flow easily and through narrow channels."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P11"
+      },
+      "text": "Blowing through the pipe raises the fire to about 1000-1200 degrees Celsius, the heat needed to melt the metal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1473-1476",
+          "quote": "The pola pipe is then blowed on so that the fire is burning at high temperature, reaching almost 1000-1200° C, which is required to melt the metal pieces."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 110-111",
+          "quote": "Air is blown continuously through the pipe to maintain the temperature (1000-1200°C)."
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Wax is indispensable to the process because it melts out and burns away, making room for the molten metal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1530-1532",
+          "quote": "And of course wax is indispensable in this process, since it conveniently melts out and burns, thus giving way to the molten metal."
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Because dewaxing happens inside a closed mould, the wax is hard to reclaim, as it vaporises and burns or soaks into the mould's clay.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "lines 116-119",
+          "quote": "Because of the closed system of dewaxing firing, it was difficult to reclaim the wax, which was either vaporized and burned or absorbed into the mould's clay."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "lines 7-8",
+          "quote": "इसी समय गर्मी पाकर मूर्ति में लपेटा हुआ मोम भी पिघलता है जिसे सांचे की मिटटी सोख लेती है ।"
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M10"
+      },
+      "text": "Rice husk, called bhoosa, holds the soil together, makes the mould porous and keeps it from cracking during firing.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1273-1276",
+          "quote": "Rice Husk (Bhoosa): Husk obtained from the mills is mixed with the soil, to hold it together, as clay tends to break apart easily when dry; it also makes the mould porous and avoids the cracking of the mould during firing."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 674-675",
+          "quote": "Rice husk is procured from mill. It is mixed with soil as clay tends to break while drying. It also prevents the cracking of mould during firing."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Wax suits this craft because it is soft and malleable, so it can be drawn into wires of any diameter and moulded into any shape.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1158-1161",
+          "quote": "Wax is the appropriate medium for this craft because of its unique softness and malleability. It can be drawn out in wires of required diameters and can be moulded into desired shapes."
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The beeswax is pure wax taken directly from hives found in the forests.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 806-807",
+          "quote": "The Bee Wax is extracted directly from the hives available in the forests."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "line 1313",
+          "quote": "Bee Wax (Madhumakkhi ka mome): Pure bees' wax extracted directly from the hives is taken."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Paraffin or candle wax can replace beeswax, but because candle wax breaks easily it is mixed with damar and incense.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1314-1315",
+          "quote": "Paraffin Wax (Mombatti ka mome): Candle wax or paraffin wax can also be used. Since candle wax breaks easily, it is mixed with Damar (Coal tar) and Agarbatti dhoop."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 810-811",
+          "quote": "Other type of wax used is Candle Wax. As candle wax breaks easily, it is mixed with coal tar & incense stick powder."
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Wax threads were at first made only from beeswax, and paraffin wax began to be mixed in later.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 5-6",
+          "quote": "मोम के तार बनाने के लिए पहले तो केवल मधुमक्खी के छत्ते का मोम ही प्रयुक्त किया जाता था परन्तु बाद में इसमें पैराफिन वेक्स मिलाया जाने लगा।"
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M08"
+      },
+      "text": "A little mustard, linseed, sesame or mahua oil is sometimes mixed into the cleaned wax to make it flexible.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 5-6",
+          "quote": "साफ किये गए मोम में कभी-कभी थोड़ा सा सरसो, अलसी, तिल अथवा महुआ का तेल मिलाया जाता है जिससे मोम में लोच आ जाती है ।"
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "One account describes the modelling wax as pure beeswax mixed with resin from the Damara orientalis tree and nut oil.",
+      "quotes": [
+        {
+          "sourceId": "S24",
+          "locator": "lines 9-10",
+          "quote": "A layer of wax, consisting of pure beeswax, resin from the Damara Orientalis tree, and nut oil, is applied to this core."
+        }
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "In the tribal metal casting of Bengal, Bihar, Orissa and Chhattisgarh, figures are shaped by winding threads of wax and sal tree gum, called dhuan, over a clay base.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 3-4",
+          "quote": "इस परंपरा का एक विशेष रूप पश्चिमी बंगाल, बिहार, उड़ीसा एवं छत्तीसगढ़ के आदिवासी-लोक धातु शिल्प में आज भी देखा जा सकता है ।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 3-4",
+          "quote": "इस पद्यति में मोम एवं साल वृक्ष के गौंद (धुअन) के तारों को मिटटी के आधार पर लपेटकर मूर्ति को आकार दिया जाता है ।"
+        }
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Beeswax is secreted by worker bees to build honeycomb cells, and is refined by melting the combs in hot water and filtering out impurities.",
+      "quotes": [
+        {
+          "sourceId": "S20",
+          "locator": "lines 2-3",
+          "quote": "Beeswax is secreted by the worker bees to form honeycomb cells. The wax is prepared by melting the combs in hot water then filtering out the impurities"
+        }
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M12"
+      },
+      "text": "Cow dung is mixed into the river soil so that the wax melts out of the mould without sticking to the soil.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1305-1307",
+          "quote": "Cow Dung (Gobar): Cow dung is mixed to the river soil as it allows the wax to melt out of the cast and not get stuck on to the soil."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 674-680",
+          "quote": "It is mixed with river soil, which allows the wax to melt out of the cast."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W10"
+      },
+      "text": "In the GI method's list of raw materials, wood coal is given the local name koyla.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1320-1321",
+          "quote": "Wood Coal (Koyla): Used to prepare mixture for covering layer on model."
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M14"
+      },
+      "text": "The fine clay used for the mould is collected from termite hills.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 681-682",
+          "quote": "The fine clay is collected from termite bills."
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M16"
+      },
+      "text": "Firewood for the furnaces, called jalawan, is generally gathered from nearby forests.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1319-1320",
+          "quote": "Fire Wood (Jalawan): It is generally obtained from near by forests."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 685-686",
+          "quote": "It generally obtained from nearby forests."
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M09"
+      },
+      "text": "The GI application describes the black field soil, called aari or chikti mitti, as volcanic in origin and so containing clay that holds it together.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1270-1272",
+          "quote": "Black Soil (Aari mitti or Chikti mitti): This is mud or soil procured from the beds of the fields. This soil is volcanic in origin, hence contains clay, which holds the soil together."
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M11"
+      },
+      "text": "The riverside soil, called rui mitti, comes from river beds and is red, very soft and easy to shape, file and finish.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1276-1279",
+          "quote": "River side soil (Rui mitti): This soil is procured from the river beds. The soil is very soft and easy to shape, mould, file and hence provide good final shape and finishing. The soil is red in color."
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M11"
+      },
+      "text": "Soil must be picked with precision, because the wrong soil can break apart when the mould is heated.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1278-1280",
+          "quote": "Precision in picking is important here too, as the wrong soil may lead to breaking when heated."
+        }
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bastar Dhokra pieces range in size from 1 inch to 14 feet.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1116-1117",
+          "quote": "The minimum to maximum size varies from 1\" (inch) to 14' (feet)."
+        }
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Most designs rely on intricate handwork of drawing and arranging bell metal wires, and depict tribal people, their tools, instruments, animals and nature.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1117-1120",
+          "quote": "intricate handwork of drawing and arranging of the bell metal wires. Mostly the products depict tribal culture, people and their tools, instruments, animals and nature."
+        }
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bastar casters make idols of deities and puja accessories such as bells, oil lamps and incense stick holders.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1161-1163",
+          "quote": "They make idols of deities, and puja accessories like bells, oil lamps, incense stick holders, etc."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "lines 2991-2992",
+          "quote": "Accessories like bell, oil lamps, incense stick holder and utility products like grain containers are the most saleable artifacts."
+        }
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Because all decoration is done with thin wax threads, most of the detailing is linear, which gives the craft its ancient, tribal feel.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1532-1533",
+          "quote": "Since all the decoration is done with thin wax threads, thus, deriving all the ornamental"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1533-1535",
+          "quote": "Most of the detailing is linear, giving the craft an ancient and tribal feel. This is the peculiar quality of the Dhokra craft."
+        }
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lost-wax casting gives Dhokra objects in general distinct surface decoration such as parallel and spiral lines, latticework and pellets.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "lines 6-7",
+          "quote": "The use of the lost-wax technique results in the finished object featuring distinct surface decoration, such as parallel and spiral lines, latticework and pellets."
+        }
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Popular motifs include the makdi and designs of fruits and seeds, and a trumpet design is used specially.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1542-1544",
+          "quote": "The motif popularly used is Makdi and fruits and seeds designs are used."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1544-1545",
+          "quote": "Trumphet design is a specially used design."
+        }
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Artisans design their pieces from imagination without the support of sketches, and their fingerprints often remain visible.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1545-1547",
+          "quote": "Thread work is very common and also the fingerprint will be very much visible. The artisans design the products without any support of sketch, but by imagination."
+        }
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "According to the GI description, the traditional products are mostly decorative items with very little or no utility.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1156-1157",
+          "quote": "The traditional products are mostly decorative items with very less or no utility."
+        }
+      ]
+    },
+    {
+      "id": "C121",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Earlier, bell metal pieces were made only for ritual and daily use, as figures of local deities, lamps and utensils.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 2987-2989",
+          "quote": "Earlier bell metal crafts were used for ritualistic and daily use purposes only. Figurines of local deities in various sizes, lamps and utensils were made."
+        }
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The most common product used to be the idol of Danteshwari Mata, the goddess most worshipped by the Gond of Bastar.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 2988-2990",
+          "quote": "Idol of Danteshwari Mata, most worshipped Goddess by the Gond tribal's of Bastar, was most the common product."
+        }
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W13"
+      },
+      "text": "Figures of the lovers Jhitku and Mitki, a local legend, are among the favourite products of the bell metal craft of Bastar.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 2987-2991",
+          "quote": "Figurines of lovers \"Jhitku Mitki\", the local legend, are also amongst one of the favorites."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "lines 43-44",
+          "quote": "This tale of love, loss, and sacrifice lives on through the Jhitku-Mitki sculptures crafted by the Ghadwa community of Bastar."
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W16"
+      },
+      "text": "Ghadwa casters made paila, grain-measuring vessels of graded sizes used across Chhattisgarh in place of scales and weights.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 13-14",
+          "quote": "घढ़वा कहते हैं बस्तर में धातु ढलाई द्वारा बनाए जाने वाले पारम्परिक बर्तन और गहने निम्न प्रकार थे।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 18-19",
+          "quote": "केवल बस्तर ही नहीं समूचे छत्तीसगढ़ में अनाज अथवा धान नापने के लिए एक प्रकार के बर्तन जिसे पैला कहते हैं , बनाये जाते हैं। विभिन्न माप के लिए अलग -अलग माप के पैला बनाये जाते हैं।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 17-18",
+          "quote": "तराजू और बाँट से तौलना यहाँ रोजमर्रा की जिंदगी में चलन में नहीं है।"
+        }
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W14"
+      },
+      "text": "Casting the kundri, the Halbi name for a common cooking pan, was once the test of a Ghadwa caster's skill.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 15-16",
+          "quote": "कुंढरी - कुंडरी हल्बी बोली का शब्द है ,सामान्य कढ़ाई को बस्तर में कुंडरी कहा जाता है।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 15-16",
+          "quote": "इसका बनाना घढ़वा शिल्पी के कौशल की कसौटी मानी जाती थी।"
+        }
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Cheap iron pans and aluminium pots in the market ended Ghadwa casting of the kundri cooking pan and the bhandwa rice pot.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lines 15-16",
+          "quote": "बाजार में लोहे की सस्ती और सुलभ कढ़ाइयाँ मिलने से घढ़वा शिल्पियों द्वारा इनका बनाया जाना समाप्त हो गया है।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 16-17",
+          "quote": "भण्डवा - यह चावल पकाने की एक गोल बड़ी हांडी है।"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "lines 16-17",
+          "quote": "बाजार में एल्युमीनियम की सस्ती हांडियां मिलने से घढ़वा शिल्पियों द्वारा इनका बनाया जाना समाप्त हो गया है।"
+        }
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "In 2025 brass cost about ₹550 per kilogram in Kondagaon, one of the most expensive inputs for its artisans.",
+      "quotes": [
+        {
+          "sourceId": "S23",
+          "locator": "lines 72-73",
+          "quote": "It is locally sourced, but remains one of the most expensive inputs for artisans. As of 2025, the price of brass is approximately ₹550 per kilogram."
+        }
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "The whole Ghadwa family takes part in casting, and the women fetch, sieve and pound the clay for moulds and decorate the figures.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 1-2",
+          "quote": "धातु ढलाई के कार्य में सारा घढ़वा परिवार सहायता करता है । घर की स्त्रियों और बच्चों की भूमिका इस कार्य में बड़ी महत्वपूर्ण होती है । स्त्रियां सांचों के लिए मिटटी लाती और उसे छानकर कूटकर तैयार करती हैं । वे मूर्ति पर अंलकरण का कार्य करती हैं।"
+        }
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Casting work runs only eight months a year, and in the four rainy months most Ghadwa families turn to farming.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "lines 1-2",
+          "quote": "परंतु यह काम आठ महीने ही चलता है । बरसात के चार महीने अधिकांश घढ़वा खेतीबाड़ी में बिताते हैं ।"
+        }
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI method dries the model in the sun after the core is made, again after the second coat of soil, and again after the leaf paste.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "line 1362",
+          "quote": "A basic model of the form wanted is made and left to dry in the sun."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1366-1367",
+          "quote": "This is patted all over the dry model and again leaved to dry in the sun."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1378-1379",
+          "quote": "Model is again dried in the sun."
+        }
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Kondagaon's craft city, also called Shilpa Nagari, gives artisans machinery and space to make their work and sell it directly to buyers.",
+      "quotes": [
+        {
+          "sourceId": "S24",
+          "locator": "lines 2-3",
+          "quote": "For Kuldip, the designated space at craft city, also called Shilpa Nagari, is a refuge and a platform to showcase his intricate creations."
+        },
+        {
+          "sourceId": "S24",
+          "locator": "lines 13-14",
+          "quote": "To address these challenges, the craft city was established, providing artisans like Kuldip with the necessary machinery to create and sell their masterpieces directly to patrons."
+        }
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Few customers and unfair prices are pushing many Dhokra craftspeople out of the craft into construction or farm work.",
+      "quotes": [
+        {
+          "sourceId": "S24",
+          "locator": "lines 11-12",
+          "quote": "Artisans bewail the lack of customers and the struggle to receive fair prices for their products, making it difficult to cover the costs of labour and raw materials. This market inequality is compelling many craftspeople to transition to jobs in construction or agriculture."
+        }
+      ]
+    },
+    {
+      "id": "C134",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The Bastar district administration describes the district as almost covered with forests.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 3",
+          "quote": "Bastar district is almost covered with forests."
+        }
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Kondagaon district was constituted in January 2012, with its headquarters at Kondagaon.",
+      "quotes": [
+        {
+          "sourceId": "S25",
+          "locator": "line 5",
+          "quote": "Constitution of the District | 01, Jan 2012"
+        },
+        {
+          "sourceId": "S25",
+          "locator": "line 7",
+          "quote": "District Head Quarter | Kondagaon"
+        }
+      ]
+    },
+    {
+      "id": "C137",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Bhelwapadarpara, about two kilometres from Kondagaon, is known for its community of bell metal craftsmen.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "lines 154-155",
+          "quote": "Bhelwapadrapara, which is about 2kms from Kondagaon is famous for bell-metal craftsmen community."
+        }
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L06"
+      },
+      "text": "Barkai, a small village of Makdi tehsil in Bastar district, Chhattisgarh, is a tribal craftsmen's village known especially for brass metal work.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "lines 9-11",
+          "quote": "Barkai is a small village of tehsil-Makdi, Bastar district in Chasttisgarh state, India. It is a tribal craftsmen's village, especially brass metal work."
+        }
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Victoria and Albert Museum holds a cast brass Mata Devi figure, IS.132-1984, made around the 1950s by Ghadwa artisans of Bastar.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "lines 1-3",
+          "quote": "Mata Devi Sculpture ca. 1950s (made)"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "lines 14-15",
+          "quote": "Made by artisans known in Bastar as Gharuas ( Ghadwas)."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "lines 9-10",
+          "quote": "Materials and techniques | Cast brass"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "lines 18-19",
+          "quote": "Accession number | IS.132-1984"
+        }
+      ]
+    },
+    {
+      "id": "C144",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Such Mata Devi images were bought by the Maria and Muria tribes of the district.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "lines 14-15",
+          "quote": "Such images are bought by Maria and Muria tribes of the district."
+        }
+      ]
+    },
+    {
+      "id": "C145",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Victoria and Albert Museum also holds a cast bell metal sculpture of Jalengin Mata Devi on a lion or tiger, made in Bastar in the early 1980s.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "lines 10-11",
+          "quote": "Jalengin Mat Devi on Lion/Tiger, cast bell metal, Madhya Pradesh, early 1980s."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "lines 14-15",
+          "quote": "Production | Bastar, Madhya Pradesh, Central India."
+        }
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The National Crafts Museum and Hastkala Academy holds metal figures recorded as from Bastar district, among them one catalogued as a Dhokra figurine.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "lines 5-11",
+          "quote": "RepositoryNational Crafts Museum and Hastkala Academy - CollectionMuseum Collection Provenance - CountryIndia - StateChhattisgarh - DistrictBastar"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "lines 1-2",
+          "quote": "Title : Dhokra Female Figurine Accession No : 2002/8278"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "lines 9-11",
+          "quote": "CountryIndia - StateChhattisgarh - DistrictBastar"
+        }
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry's record of application 83 lists 110 authorised users of the Bastar Dhokra geographical indication.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 18-19",
+          "quote": "Authorized User Details | Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 130",
+          "quote": "| 110 | AU/65944/GI/83/110 |"
+        }
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registration of Bastar Dhokra as a geographical indication is valid up to 11 March 2027.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 16",
+          "quote": "Registration Valid Upto | 11-03-2027"
+        }
+      ]
+    },
+    {
+      "id": "C151",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The geographical area registered for the Bastar Dhokra geographical indication is Chhattisgarh.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 9-10",
+          "quote": "| Goods | Handicraft | | Geographical Area | Chhattisgarh |"
+        }
+      ]
+    },
+    {
+      "id": "C152",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry lists authorised users of Bastar Dhokra at Bhelwapadarpara, at Karanpur in Kondagaon tehsil, at Dahikonga and at Barkai.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 50",
+          "quote": "Village & Post: Bhelwapadarpara, Kondagaon | Registered"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 88",
+          "quote": "Village & Post: Karanpur, Thana & Tehsil: Kondagaon"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 80",
+          "quote": "Village & Post - Dahikonga, Kondagaon | Registered"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 25",
+          "quote": "Village & Post: Barkai | Registered"
+        }
+      ]
+    },
+    {
+      "id": "C153",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L06"
+      },
+      "text": "The Kondagaon district administration lists Makdi among the district's seven tehsils.",
+      "quotes": [
+        {
+          "sourceId": "S25",
+          "locator": "line 16",
+          "quote": "Number of Tehsils | 07 (Kondagaon, Keshakal, Pharasgaon, Makdi, Baderajpur, Dhanora,Mardapal)"
+        }
+      ]
+    },
+    {
+      "id": "C154",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI specification says that Bastar Dhokra products consist mainly of showcase and utility items.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1117-1118",
+          "quote": "The products consist mainly of showcase and utility items."
+        }
+      ]
+    },
+    {
+      "id": "C155",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Jaidev Baghel was the first traditional artist of present-day Chhattisgarh to receive an honorary doctorate, from Ravishankar University in Raipur.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 27",
+          "quote": "वे वर्तमान छत्तीसगढ़ राज्य के ऐसे पहले पारम्परिक कलाकार थे जिसे किसी विश्व विद्यालय (रविशंकर विश्व विद्यालय , रायपुर) ने मानद डॉक्टरेट की उपाधि से सम्मानित किया था।"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Bastar",
+      "kind": "DISTRICT",
+      "district": "Bastar",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C009",
+        "C012"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Kondagaon",
+      "kind": "TOWN",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C013",
+        "C012",
+        "C032"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Kondagaon",
+      "kind": "TOWN",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "MARKET",
+      "claimIds": [
+        "C131"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Bhelwapadarpara",
+      "kind": "VILLAGE",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C137",
+        "C152"
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Karanpur",
+      "kind": "VILLAGE",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C077",
+        "C152"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Barkai",
+      "kind": "VILLAGE",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C138",
+        "C152",
+        "C153"
+      ]
+    },
+    {
+      "id": "L07",
+      "name": "Dahikonga",
+      "kind": "VILLAGE",
+      "district": "Kondagaon",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C152"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Ghadwa",
+      "localNames": [
+        "Ghadawa",
+        "Gharua",
+        "Gadhwa",
+        "घढ़वा",
+        "Khaser",
+        "Mangan",
+        "Vishwakarma"
+      ],
+      "claimIds": [
+        "C007",
+        "C011",
+        "C019",
+        "C022",
+        "C023",
+        "C043",
+        "C046",
+        "C128",
+        "C129",
+        "C030",
+        "C041"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "PERSON",
+      "name": "Jaidev Baghel",
+      "honours": [
+        "National Award (1977)",
+        "Shilp Guru",
+        "Shikhar Samman",
+        "Honorary doctorate, Ravishankar University, Raipur"
+      ],
+      "placeId": "L02",
+      "claimIds": [
+        "C032",
+        "C033",
+        "C034",
+        "C035",
+        "C036",
+        "C037",
+        "C039",
+        "C155"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Chhattisgarh Hastshilp Vikas Board",
+      "claimIds": [
+        "C001"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Rough core model",
+      "stageType": "SHAPE",
+      "order": 1,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M09",
+          "claimId": "C051"
+        },
+        {
+          "materialId": "M10",
+          "claimId": "C051"
+        }
+      ],
+      "claimIds": [
+        "C050",
+        "C051"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Second layer of riverside soil",
+      "stageType": "SHAPE",
+      "order": 2,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M11",
+          "claimId": "C053"
+        },
+        {
+          "materialId": "M12",
+          "claimId": "C053"
+        },
+        {
+          "materialId": "M15",
+          "claimId": "C053"
+        }
+      ],
+      "claimIds": [
+        "C053"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Shaping and filling",
+      "stageType": "SHAPE",
+      "order": 3,
+      "orderClaimId": "C048",
+      "tools": [
+        {
+          "toolId": "T02",
+          "claimId": "C054"
+        }
+      ],
+      "claimIds": [
+        "C054"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Leaf paste",
+      "stageType": "PREP",
+      "order": 4,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M13",
+          "claimId": "C055"
+        }
+      ],
+      "claimIds": [
+        "C055",
+        "C056"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Preparing wax",
+      "stageType": "PREP",
+      "order": 5,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C058"
+        }
+      ],
+      "claimIds": [
+        "C058"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Making wax strings",
+      "stageType": "PREP",
+      "order": 6,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C059"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C059"
+        }
+      ],
+      "claimIds": [
+        "C059"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Wrapping wax strings",
+      "stageType": "SHAPE",
+      "order": 7,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C061"
+        }
+      ],
+      "claimIds": [
+        "C061",
+        "C062"
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "Layer of riverside soil and wood coal",
+      "stageType": "SHAPE",
+      "order": 8,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M11",
+          "claimId": "C064"
+        },
+        {
+          "materialId": "M15",
+          "claimId": "C064"
+        }
+      ],
+      "claimIds": [
+        "C064"
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "Layer of unrefined riverside soil",
+      "stageType": "SHAPE",
+      "order": 9,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M11",
+          "claimId": "C065"
+        }
+      ],
+      "claimIds": [
+        "C065"
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "Layer of termite-hill soil",
+      "stageType": "SHAPE",
+      "order": 10,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M14",
+          "claimId": "C066"
+        }
+      ],
+      "claimIds": [
+        "C066"
+      ]
+    },
+    {
+      "id": "P11",
+      "name": "Firing, dewaxing and casting",
+      "stageType": "CAST",
+      "order": 11,
+      "orderClaimId": "C048",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C070"
+        },
+        {
+          "materialId": "M15",
+          "claimId": "C068"
+        },
+        {
+          "materialId": "M16",
+          "claimId": "C068"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T05",
+          "claimId": "C070"
+        },
+        {
+          "toolId": "T06",
+          "claimId": "C070"
+        },
+        {
+          "toolId": "T07",
+          "claimId": "C068"
+        }
+      ],
+      "claimIds": [
+        "C067",
+        "C068",
+        "C070",
+        "C091"
+      ]
+    },
+    {
+      "id": "P12",
+      "name": "Cooling and finishing",
+      "stageType": "FINISH",
+      "order": 12,
+      "orderClaimId": "C048",
+      "duration": {
+        "text": "1-6 hours",
+        "claimId": "C071"
+      },
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C072"
+        },
+        {
+          "toolId": "T04",
+          "claimId": "C072"
+        }
+      ],
+      "claimIds": [
+        "C071",
+        "C072"
+      ]
+    },
+    {
+      "id": "P13",
+      "name": "Casting with a sealed metal cup (older method)",
+      "stageType": "CAST",
+      "materials": [
+        {
+          "materialId": "M02",
+          "claimId": "C074"
+        }
+      ],
+      "claimIds": [
+        "C074",
+        "C075",
+        "C076"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Bell metal",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C081",
+        "C082",
+        "C084",
+        "C085",
+        "C088",
+        "C083",
+        "C090",
+        "C089"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Brass",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C080",
+        "C086",
+        "C127"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Bronze",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C087",
+        "C082"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Beeswax",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "localNames": [
+        "Madhumakkhi ka mome"
+      ],
+      "claimIds": [
+        "C096",
+        "C058",
+        "C095",
+        "C092",
+        "C093",
+        "C105"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Paraffin or candle wax",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "localNames": [
+        "Mombatti ka mome"
+      ],
+      "claimIds": [
+        "C097",
+        "C098"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Damar",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "localNames": [
+        "damar"
+      ],
+      "claimIds": [
+        "C097",
+        "C101",
+        "C103"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Incense (agarbatti dhoop)",
+      "kind": "OTHER",
+      "role": "BINDER",
+      "localNames": [
+        "agarbatti dhoop"
+      ],
+      "claimIds": [
+        "C097"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Vegetable oil",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C100"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Black field soil",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "localNames": [
+        "aari mitti",
+        "chikti mitti"
+      ],
+      "claimIds": [
+        "C110",
+        "C050",
+        "C051"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Rice husk",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "localNames": [
+        "bhoosa"
+      ],
+      "claimIds": [
+        "C094",
+        "C050"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Riverside soil",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "localNames": [
+        "rui mitti"
+      ],
+      "claimIds": [
+        "C111",
+        "C112",
+        "C053"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Cow dung",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "localNames": [
+        "gobar"
+      ],
+      "claimIds": [
+        "C106"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Sem leaves",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "localNames": [
+        "sem patta"
+      ],
+      "claimIds": [
+        "C057",
+        "C055"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Termite-mound soil",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "claimIds": [
+        "C108",
+        "C066"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Wood coal",
+      "kind": "FUEL",
+      "role": "FUEL",
+      "localNames": [
+        "koyla"
+      ],
+      "claimIds": [
+        "C107",
+        "C068"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Firewood",
+      "kind": "FUEL",
+      "role": "FUEL",
+      "localNames": [
+        "jalawan"
+      ],
+      "claimIds": [
+        "C109"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Wax-thread press",
+      "localNames": [
+        "phichki pharni",
+        "pichki"
+      ],
+      "claimIds": [
+        "C059",
+        "C060",
+        "C079"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Metal files",
+      "claimIds": [
+        "C054"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Wooden mallet",
+      "claimIds": [
+        "C072",
+        "C079"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Wire brush",
+      "claimIds": [
+        "C072",
+        "C079"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Crucible",
+      "claimIds": [
+        "C070",
+        "C082"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Long-handled pincers",
+      "claimIds": [
+        "C070"
+      ]
+    },
+    {
+      "id": "T07",
+      "name": "Blowing pipe",
+      "localNames": [
+        "pola"
+      ],
+      "claimIds": [
+        "C068",
+        "C091"
+      ]
+    },
+    {
+      "id": "T09",
+      "name": "Chisel",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "T10",
+      "name": "Hammer",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "T11",
+      "name": "Pliers",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "T12",
+      "name": "Tongs",
+      "claimIds": [
+        "C079"
+      ]
+    }
+  ],
+  "reactions": [
+    {
+      "id": "R01",
+      "kind": "PHASE_CHANGE",
+      "stageId": "P11",
+      "reactants": [
+        {
+          "name": "Bell metal"
+        }
+      ],
+      "products": [
+        {
+          "name": "Molten bell metal"
+        }
+      ],
+      "claimIds": [
+        "C091"
+      ]
+    },
+    {
+      "id": "R02",
+      "kind": "PHASE_CHANGE",
+      "stageId": "P11",
+      "reactants": [
+        {
+          "name": "Wax"
+        }
+      ],
+      "products": [
+        {
+          "name": "Molten wax"
+        }
+      ],
+      "claimIds": [
+        "C092"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "VEGETATION",
+      "placeId": "L01",
+      "claimIds": [
+        "C134",
+        "C096",
+        "C109"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "claimIds": [
+        "C110",
+        "C111",
+        "C108"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "claimIds": [
+        "C129",
+        "C130"
+      ]
+    }
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "83",
+      "certificateNumber": "62",
+      "filedOn": "2007-03-12",
+      "registeredOn": "2008-04-22",
+      "journalIssue": "24",
+      "proprietors": [
+        "Chhattisgarh Hastshilp Vikas Board"
+      ],
+      "claimIds": [
+        "C001",
+        "C002",
+        "C149",
+        "C150",
+        "C151"
+      ],
+      "authorisedUserCount": 110
+    },
+    "prices": [
+      {
+        "claimId": "C127",
+        "date": "2025",
+        "placeId": "L02"
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "Ghadwa",
+      "meaning": "The name of the metal-casting community of Bastar; sources derive it from ghalna (to melt), explain it as one who shapes and creates, or link it to the gharas (water pots) these artisans made.",
+      "claimIds": [
+        "C015",
+        "C016",
+        "C017"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "Ghalna",
+      "meaning": "To melt.",
+      "language": "hi",
+      "claimIds": [
+        "C015"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "Dhokra Shilp",
+      "meaning": "The regional word for the craft of bell metal casting.",
+      "claimIds": [
+        "C008"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "Phichki pharni",
+      "meaning": "The hand-held press, like a sevaiyyan press, used in Bastar to make wax threads.",
+      "claimIds": [
+        "C060"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "Chikti mitti",
+      "meaning": "Black soil from the beds of fields, also called aari mitti.",
+      "claimIds": [
+        "C110"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "Rui mitti",
+      "meaning": "Soft red soil from river beds.",
+      "claimIds": [
+        "C111"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "Bhoosa",
+      "meaning": "Rice husk.",
+      "claimIds": [
+        "C094"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "Sem patta",
+      "meaning": "Bean leaves; the GI method names both the lima bean and the country bean.",
+      "claimIds": [
+        "C057",
+        "C055"
+      ]
+    },
+    {
+      "id": "W09",
+      "term": "Jalawan",
+      "meaning": "Firewood.",
+      "claimIds": [
+        "C109"
+      ]
+    },
+    {
+      "id": "W10",
+      "term": "Koyla",
+      "meaning": "Wood coal.",
+      "claimIds": [
+        "C107"
+      ]
+    },
+    {
+      "id": "W11",
+      "term": "Damar",
+      "meaning": "A material mixed into wax for modelling; the GI method calls it coal tar, and another account a resin of the Damara orientalis tree.",
+      "claimIds": [
+        "C097",
+        "C101"
+      ]
+    },
+    {
+      "id": "W12",
+      "term": "Dhuan",
+      "meaning": "Gum of the sal tree, wound with wax into threads.",
+      "language": "hi",
+      "claimIds": [
+        "C103"
+      ]
+    },
+    {
+      "id": "W13",
+      "term": "Jhitku-Mitki",
+      "meaning": "Legendary lovers of Bastar folklore, made as paired figures.",
+      "claimIds": [
+        "C123"
+      ]
+    },
+    {
+      "id": "W14",
+      "term": "Kundri",
+      "meaning": "A common cooking pan (kadhai); a word of the Halbi dialect.",
+      "language": "hlb",
+      "claimIds": [
+        "C125"
+      ]
+    },
+    {
+      "id": "W15",
+      "term": "Bhandwa",
+      "meaning": "A large round pot for cooking rice.",
+      "claimIds": [
+        "C126"
+      ]
+    },
+    {
+      "id": "W16",
+      "term": "Paila",
+      "meaning": "A vessel for measuring grain, made in graded sizes.",
+      "claimIds": [
+        "C124"
+      ]
+    },
+    {
+      "id": "W17",
+      "term": "Shilpa Nagari",
+      "meaning": "The craft city in Kondagaon.",
+      "claimIds": [
+        "C131"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C002",
+        "C004"
+      ],
+      "about": "the year in which Bastar Dhokra received its geographical indication"
+    },
+    {
+      "claimIds": [
+        "C015",
+        "C016",
+        "C017"
+      ],
+      "about": "where the name Ghadwa comes from"
+    },
+    {
+      "claimIds": [
+        "C025",
+        "C026"
+      ],
+      "about": "where the name Dhokra comes from"
+    },
+    {
+      "claimIds": [
+        "C008",
+        "C023"
+      ],
+      "about": "whether Dhokra is the local name for the metal craft of Bastar"
+    },
+    {
+      "claimIds": [
+        "C055",
+        "C056"
+      ],
+      "about": "why sem leaf juice is rubbed over the core"
+    },
+    {
+      "claimIds": [
+        "C055",
+        "C057"
+      ],
+      "about": "which bean's leaves are used as sem"
+    },
+    {
+      "claimIds": [
+        "C081",
+        "C084",
+        "C085",
+        "C088"
+      ],
+      "about": "which metals the bell metal of Bastar casting contains"
+    },
+    {
+      "claimIds": [
+        "C097",
+        "C101",
+        "C103"
+      ],
+      "about": "whether the damar mixed into the wax is a tar or a tree resin, and from which tree"
+    },
+    {
+      "claimIds": [
+        "C120",
+        "C121",
+        "C046",
+        "C124",
+        "C154"
+      ],
+      "about": "whether the craft's pieces were decorative or made for ritual and daily use"
+    },
+    {
+      "claimIds": [
+        "C138",
+        "C153"
+      ],
+      "about": "whether Makdi tehsil, where Barkai lies, is in Bastar or Kondagaon district"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Where does the name Ghadwa come from?",
+      "claimIds": [
+        "C015",
+        "C016",
+        "C017",
+        "C018"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "How did metal casting begin among the Ghadwa of Bastar?",
+      "claimIds": [
+        "C041",
+        "C040",
+        "C039",
+        "C042"
+      ]
+    },
+    {
+      "id": "O03",
+      "question": "Did the Ghadwa originate in Bastar or migrate there from Orissa?",
+      "claimIds": [
+        "C043",
+        "C044",
+        "C045"
+      ]
+    },
+    {
+      "id": "O04",
+      "question": "Is Dhokra the right name for the metal craft of Bastar, and where does the name come from?",
+      "claimIds": [
+        "C023",
+        "C024",
+        "C025",
+        "C026",
+        "C008"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/54/AT_WORKSHOP.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:AT_WORKSHOP.jpg",
+      "author": "Sushilsakhuja",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Working on a figure at a workshop in Kondagaon, Bastar (2006)",
+      "claimIds": [
+        "C013"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Dokra_from_tribes_of_Bastar_DSCN1172_01.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Dokra_from_tribes_of_Bastar_DSCN1172_01.jpg",
+      "author": "Sumita Roy Dutta",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Cast musician figures with linear wire-like decoration, labelled by the photographer as Dhokra from the tribes of Bastar (2021)",
+      "claimIds": [
+        "C116"
+      ]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Dokra_from_tribes_of_Bastar_DSCN1172_03.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Dokra_from_tribes_of_Bastar_DSCN1172_03.jpg",
+      "author": "Sumita Roy Dutta",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Cast deer with parallel lines and lattice decoration, labelled by the photographer as Dhokra from the tribes of Bastar (2021)",
+      "claimIds": [
+        "C117"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Bastar Dhokra is bell metal cast by the lost wax process and finished with bell metal wire work, made in Bastar by the Ghadwa community.",
+        "claimIds": [
+          "C006",
+          "C007"
+        ]
+      },
+      {
+        "text": "Kondagaon and Bastar are among its major centres, and it is registered as a geographical indication under application number 83.",
+        "claimIds": [
+          "C012",
+          "C009",
+          "C001"
+        ]
+      },
+      {
+        "text": "Each hollow piece is modelled in wax over a clay core, coated in layers of soil and fired, and molten metal is poured in to replace the wax.",
+        "claimIds": [
+          "C010",
+          "C061",
+          "C064",
+          "C070"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Geographical indication",
+        "value": "Application 83, certificate 62",
+        "claimIds": [
+          "C001",
+          "C002"
+        ]
+      },
+      {
+        "label": "Community",
+        "value": "Ghadwa",
+        "claimIds": [
+          "C007"
+        ]
+      },
+      {
+        "label": "Centres",
+        "value": "Kondagaon, Bhelwapadarpara, Karanpur, Dahikonga and Barkai; Bastar district",
+        "claimIds": [
+          "C013",
+          "C137",
+          "C077",
+          "C152",
+          "C138",
+          "C009"
+        ]
+      },
+      {
+        "label": "Metal",
+        "value": "Bell metal, with brass from scrap",
+        "claimIds": [
+          "C006",
+          "C080"
+        ]
+      },
+      {
+        "label": "Modelling wax",
+        "value": "Beeswax, or candle wax mixed with damar",
+        "claimIds": [
+          "C096",
+          "C097"
+        ]
+      },
+      {
+        "label": "Stages",
+        "value": "Twelve",
+        "claimIds": [
+          "C048"
+        ]
+      },
+      {
+        "label": "Furnace heat",
+        "value": "About 1000-1200 °C",
+        "claimIds": [
+          "C091"
+        ]
+      },
+      {
+        "label": "Size range",
+        "value": "1 inch to 14 feet",
+        "claimIds": [
+          "C113"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Russell and Hira Lal recorded the Ghasia of Bastar making and mending brass vessels, and Mushtak Khan calls Verrier Elwin's Tribal Art of Middle India an authentic account of Bastar metal craft.",
+            "claimIds": [
+              "C020",
+              "C021"
+            ]
+          },
+          {
+            "text": "Many Bastar casters now call themselves an independent Ghadwa tribal caste, though many accept that the casting branch of the Ghasia became the Ghadwa.",
+            "claimIds": [
+              "C022"
+            ]
+          },
+          {
+            "text": "The artisans once worked for the royal families of Bastar making tribal idols, and the craft grew popular after officers, leaders and media came with the 1960 resettlement of Bengali refugees.",
+            "claimIds": [
+              "C028",
+              "C029"
+            ]
+          },
+          {
+            "text": "Manik Ghadwa in 1969 and Sukhchand Ghadwa in 1970 received National Awards, and Jaidev Baghel of Kondagaon received the National Award in 1977.",
+            "claimIds": [
+              "C030",
+              "C034"
+            ]
+          },
+          {
+            "text": "From the 1960s Dhokra was promoted at handicraft outlets and the Festivals of India, and a Victoria and Albert Museum record names Jaider Baghel among the craftsmen at The Living Arts exhibition at the Serpentine Gallery in 1982.",
+            "claimIds": [
+              "C031",
+              "C038"
+            ]
+          },
+          {
+            "text": "Jaidev Baghel was the first Bastar metal caster to build a workshop apart from his home, where many casters worked together as one unit.",
+            "claimIds": [
+              "C036"
+            ]
+          },
+          {
+            "text": "The Victoria and Albert Museum and the National Crafts Museum and Hastkala Academy hold cast metal figures made in Bastar.",
+            "claimIds": [
+              "C142",
+              "C146"
+            ]
+          },
+          {
+            "text": "Jaidev Baghel received the Shikhar Samman, the title of Shilp Guru and an honorary doctorate from Ravishankar University in Raipur.",
+            "claimIds": [
+              "C035",
+              "C155"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "The GI statement of case describes a twelve-stage process in five major parts: modelling, moulding, dewaxing, casting and finishing.",
+            "claimIds": [
+              "C048",
+              "C049"
+            ]
+          },
+          {
+            "text": "A core of black field soil kneaded with rice husk is dried in the sun, covered with riverside soil mixed with dung or wood coal, and filed into shape.",
+            "claimIds": [
+              "C050",
+              "C053",
+              "C054"
+            ]
+          },
+          {
+            "text": "Crushed sem leaves are rubbed over the dry model, and strings pressed from filtered beeswax are wrapped closely around it.",
+            "claimIds": [
+              "C055",
+              "C058",
+              "C059",
+              "C061"
+            ]
+          },
+          {
+            "text": "A wax channel and pin are set at the bottom, and coats of riverside soil with wood coal, unrefined riverside soil and termite-hill soil build the mould.",
+            "claimIds": [
+              "C062",
+              "C064",
+              "C065",
+              "C066"
+            ]
+          },
+          {
+            "text": "The mould is fired upright on burning wood coal in a round pit furnace, while the metal melts in a crucible in a second furnace.",
+            "claimIds": [
+              "C068",
+              "C067",
+              "C082"
+            ]
+          },
+          {
+            "text": "When the mould turns red it is held upside down and the molten metal is poured into its funnel to replace the wax.",
+            "claimIds": [
+              "C070"
+            ]
+          },
+          {
+            "text": "After cooling for 1-6 hours the outer mould is broken with a wooden mallet and the piece is cleaned with wire brushes and files.",
+            "claimIds": [
+              "C071",
+              "C072"
+            ]
+          },
+          {
+            "text": "In an older method still followed in interior Bastar, a clay cup of brass scrap is sealed to the mould's channel and the brass flows in when the red-hot mould is turned upside down.",
+            "claimIds": [
+              "C074",
+              "C075"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "The main raw material is brass collected as scrap or used brass utensils, and the GI method describes the casting bell metal as a mixture of brass and bronze.",
+            "claimIds": [
+              "C080",
+              "C081"
+            ]
+          },
+          {
+            "text": "Wax threads were at first made only of pure beeswax from forest hives and paraffin wax was mixed in later, while candle wax, which breaks easily, is mixed with damar and incense.",
+            "claimIds": [
+              "C096",
+              "C098",
+              "C097"
+            ]
+          },
+          {
+            "text": "Wax suits the craft because it is soft and malleable, so it can be drawn into wires of any diameter.",
+            "claimIds": [
+              "C095"
+            ]
+          },
+          {
+            "text": "Cow dung mixed into the river soil lets the wax melt out without sticking to the soil, and wood coal, called koyla, goes into the covering layer.",
+            "claimIds": [
+              "C106",
+              "C107"
+            ]
+          },
+          {
+            "text": "Firewood, called jalawan, is generally gathered from nearby forests.",
+            "claimIds": [
+              "C109"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "CHEMISTRY",
+        "sentences": [
+          {
+            "text": "Brass is an alloy of copper and zinc, and bronze is an alloy of copper and tin.",
+            "claimIds": [
+              "C086",
+              "C087"
+            ]
+          },
+          {
+            "text": "Sources differ on the bell metal: in general use it is copper with 15 to 40 per cent tin, while the GI method describes a mixture of brass and bronze.",
+            "claimIds": [
+              "C088",
+              "C081"
+            ]
+          },
+          {
+            "text": "For Bastar, the GI specification states an alloy of bronze, brass, nickel and zinc, while the district administration describes a mixed metal of copper and tin.",
+            "claimIds": [
+              "C084",
+              "C085"
+            ]
+          },
+          {
+            "text": "The metal pieces are melted in the proportion of 200 grams of bronze to 800 grams of brass.",
+            "claimIds": [
+              "C082"
+            ]
+          },
+          {
+            "text": "Beeswax is secreted by worker bees and is refined by melting the combs in hot water and filtering out impurities.",
+            "claimIds": [
+              "C105"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PHYSICS",
+        "sentences": [
+          {
+            "text": "Blowing through the pipe raises the fire to about 1000-1200 degrees Celsius, the heat needed to melt the metal.",
+            "claimIds": [
+              "C091"
+            ]
+          },
+          {
+            "text": "The GI application explains that brass alone is too viscous to flow easily into the mould, while heavier, less viscous bronze helps the melt run through narrow channels.",
+            "claimIds": [
+              "C090"
+            ]
+          },
+          {
+            "text": "Rice husk holds the soil together, makes the mould porous and keeps it from cracking during firing.",
+            "claimIds": [
+              "C094"
+            ]
+          },
+          {
+            "text": "Wax melts out and burns away to make room for the metal, and in a closed mould it vaporises or soaks into the clay.",
+            "claimIds": [
+              "C092",
+              "C093"
+            ]
+          },
+          {
+            "text": "Liquid bell metal gives off green-blue flames when it reaches the ideal temperature.",
+            "claimIds": [
+              "C089"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOLOGY",
+        "sentences": [
+          {
+            "text": "The GI application describes the black field soil, called aari or chikti mitti, as volcanic in origin and containing clay that holds it together.",
+            "claimIds": [
+              "C110"
+            ]
+          },
+          {
+            "text": "The riverside soil, called rui mitti, is red, very soft and easy to shape, file and finish.",
+            "claimIds": [
+              "C111"
+            ]
+          },
+          {
+            "text": "Soil must be picked with precision, because the wrong soil can break when heated.",
+            "claimIds": [
+              "C112"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Most designs rely on drawing and arranging bell metal wires, and depict tribal people, their tools, instruments, animals and nature.",
+            "claimIds": [
+              "C114"
+            ]
+          },
+          {
+            "text": "Because all decoration is done with thin wax threads, most of the detailing is linear.",
+            "claimIds": [
+              "C116"
+            ]
+          },
+          {
+            "text": "Popular motifs include the makdi and designs of fruits and seeds, and a trumpet design is used specially.",
+            "claimIds": [
+              "C118"
+            ]
+          },
+          {
+            "text": "Bastar casters make idols of deities and puja accessories such as bells, oil lamps and incense stick holders, in sizes from 1 inch to 14 feet.",
+            "claimIds": [
+              "C115",
+              "C113"
+            ]
+          },
+          {
+            "text": "The idol of Danteshwari Mata used to be the most common product, and figures of the legendary lovers Jhitku and Mitki are among the favourites.",
+            "claimIds": [
+              "C122",
+              "C123"
+            ]
+          },
+          {
+            "text": "Artisans design their pieces from imagination without sketches, and their fingerprints often remain visible.",
+            "claimIds": [
+              "C119"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "The Chhattisgarh Hastshilp Vikas Board filed application number 83 for Bastar Dhokra, and the registry issued certificate number 62.",
+            "claimIds": [
+              "C001",
+              "C002"
+            ]
+          },
+          {
+            "text": "In 2025 brass cost about ₹550 per kilogram, one of the most expensive inputs for Kondagaon artisans.",
+            "claimIds": [
+              "C127"
+            ]
+          },
+          {
+            "text": "Kondagaon's craft city, Shilpa Nagari, gives artisans machinery and space to make their work and sell it directly to buyers.",
+            "claimIds": [
+              "C131"
+            ]
+          },
+          {
+            "text": "Few customers and unfair prices are pushing many craftspeople into construction or farm work, and for Dhokra as a whole the number of active artisans has fallen since the COVID-19 pandemic.",
+            "claimIds": [
+              "C132",
+              "C047"
+            ]
+          },
+          {
+            "text": "Cheap iron pans and aluminium pots in the market ended the casting of the kundri cooking pan and the bhandwa rice pot.",
+            "claimIds": [
+              "C126"
+            ]
+          },
+          {
+            "text": "The whole Ghadwa family takes part in casting, with women preparing the clay for moulds and decorating the figures.",
+            "claimIds": [
+              "C128"
+            ]
+          },
+          {
+            "text": "The registry lists 110 authorised users, and the registration is valid up to 11 March 2027.",
+            "claimIds": [
+              "C149",
+              "C150"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "The Bastar district administration describes the district as almost covered with forests.",
+            "claimIds": [
+              "C134"
+            ]
+          },
+          {
+            "text": "Kondagaon district was constituted in January 2012, with its headquarters at Kondagaon.",
+            "claimIds": [
+              "C136"
+            ]
+          },
+          {
+            "text": "Bell metal craftsmen also work at Bhelwapadarpara, about two kilometres from Kondagaon, and at Karanpur, 40 km from Kondagaon.",
+            "claimIds": [
+              "C137",
+              "C077"
+            ]
+          },
+          {
+            "text": "The GI registry lists authorised users at Bhelwapadarpara, Karanpur, Dahikonga and Barkai, and the registered geographical area is Chhattisgarh.",
+            "claimIds": [
+              "C152",
+              "C151"
+            ]
+          },
+          {
+            "text": "Sources differ on the district of Barkai, a craftsmen's village known for brass work: one places its tehsil, Makdi, in Bastar district, while the Kondagaon district administration lists Makdi among its tehsils.",
+            "claimIds": [
+              "C138",
+              "C153"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

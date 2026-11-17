@@ -4,6 +4,8 @@ from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
 from app.core.db import dispose_engine, sessionmaker
 from app.core.shielded import ShieldedWork
 from app.providers import budget
@@ -21,6 +23,31 @@ from app.services.live_sources import LiveSourcesStore
 from app.services.piece_rebuild import StaleGroup, rebuild_group, run_piece_rebuild, stale_groups
 
 
+def rebuild_pipeline(
+    depth: str,
+    *,
+    sessions: async_sessionmaker[AsyncSession],
+    index: CraftIndexStore,
+    live: LiveSourcesStore,
+    shield: ShieldedWork,
+) -> AnswerPipeline:
+    spend = AnswerSpend(depth=depth)
+    principal = Principal(answer=spend)
+    optional = Principal(answer=spend.headroom())
+    return build_answer_pipeline(
+        sessions=sessions,
+        index=index,
+        live=live,
+        plan_model=router_structured_model(AiTask.PLAN, principal),
+        compose_model=router_structured_model(AiTask.COMPOSE, principal),
+        builder_plan_model=router_structured_model(AiTask.PLAN, optional),
+        builder_compose_model=router_structured_model(AiTask.COMPOSE, optional),
+        translate_model=router_structured_model(AiTask.TRANSLATE, principal),
+        embed=router_embedder(principal),
+        shield=shield,
+    )
+
+
 async def run() -> dict[str, Any]:
     day_started_at = budget.day_start()
     sessions = sessionmaker()
@@ -28,21 +55,9 @@ async def run() -> dict[str, Any]:
     shield = ShieldedWork()
     index = CraftIndexStore()
 
-    def pipeline_for(depth: str) -> AnswerPipeline:
-        principal = Principal(answer=AnswerSpend(depth=depth))
-        return build_answer_pipeline(
-            sessions=sessions,
-            index=index,
-            live=live,
-            plan_model=router_structured_model(AiTask.PLAN, principal),
-            compose_model=router_structured_model(AiTask.COMPOSE, principal),
-            translate_model=router_structured_model(AiTask.TRANSLATE, principal),
-            embed=router_embedder(principal),
-            shield=shield,
-        )
-
     async def rebuild(group: StaleGroup) -> str:
-        return await rebuild_group(group, pipeline_for(group.depth))
+        pipeline = rebuild_pipeline(group.depth, sessions=sessions, index=index, live=live, shield=shield)
+        return await rebuild_group(group, pipeline)
 
     async def remaining() -> Decimal:
         return ENRICHMENT_DAILY_BUDGET_USD - await spent_since(ENRICHMENT_TAG, day_started_at)

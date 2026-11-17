@@ -3,7 +3,7 @@
 import { createContext, useContext } from "react";
 
 import type { AnswerLanguage } from "@/lib/answerLanguages";
-import type { TermSpan } from "@/lib/explainerContract";
+import type { TermSpan } from "@/lib/explainerBlockBase";
 import type { ListenMark } from "@/lib/listen";
 
 export type ExplainerReading = {

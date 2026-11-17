@@ -8,7 +8,15 @@ from typing import Annotated, Any, Literal, Self
 from pydantic import AwareDatetime, Field, TypeAdapter, model_validator
 
 from .base import ContractModel, HttpsUrl, absent
-from .blocks import BlockBase, ImagesBlock, ProcessLadderBlock, ProseBlock
+from .blocks import (
+    BlockBase,
+    ImagesBlock,
+    ProcessLadderBlock,
+    ProseBlock,
+    SentenceChange,
+    sentences_in_payload,
+    with_sentences_in_payload,
+)
 from .blocks_matter import (
     MaterialCardBlock,
     Molecule3dBlock,
@@ -25,6 +33,7 @@ from .blocks_people import (
     InPracticeBlock,
     OpenQuestionsBlock,
     QuizBlock,
+    expert_pairing_problems,
 )
 from .blocks_place import MapLayerBlock, RegionStoryBlock, SeasonsBlock, SupplyMapBlock, TimelineMapBlock
 from .citations import SourceRef
@@ -63,6 +72,8 @@ __all__ = [
     "TrailEvent",
     "Understood",
     "explainer_blocks",
+    "payload_sentences",
+    "with_payload_sentences",
 ]
 
 EXPLAINER_SCHEMA_VERSION = 1
@@ -151,7 +162,19 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "designs": "DEFERRED",
     }
 )
-BUILT_BLOCK_KINDS = ("prose", "process_ladder", "images")
+BUILT_BLOCK_KINDS = (
+    "prose",
+    "process_ladder",
+    "images",
+    "region_story",
+    "map_layer",
+    "expert_view",
+    "seasons",
+    "supply_map",
+    "reaction_player",
+    "material_card",
+    "molecule_3d",
+)
 
 Block = Annotated[
     ProseBlock
@@ -276,6 +299,9 @@ class ExplainerSection(ContractModel):
         cited = set().union(*(block.cited_claim_ids() for block in self.blocks))
         if any(not block.illustrated_claim_ids() <= cited for block in self.blocks):
             raise ValueError(f"section {self.id} shows images only for claims it cites")
+        pairing = expert_pairing_problems(self.blocks)
+        if pairing:
+            raise ValueError(f"section {self.id}: {'; '.join(pairing)}")
         return self
 
 
@@ -309,6 +335,19 @@ class Explainer(ContractModel):
 def explainer_blocks(explainer: Explainer) -> Iterator[BlockBase]:
     for section in explainer.sections:
         yield from section.blocks
+
+
+def payload_sentences(payload: Mapping[str, Any]) -> list[Mapping[str, Any]]:
+    return sentences_in_payload(payload, _sentence_spec(payload))
+
+
+def with_payload_sentences(payload: Mapping[str, Any], change: SentenceChange) -> dict[str, Any]:
+    return with_sentences_in_payload(payload, _sentence_spec(payload), change)
+
+
+def _sentence_spec(payload: Mapping[str, Any]) -> tuple[tuple[str, Any], ...]:
+    model = BLOCK_MODELS.get(str(payload.get("kind")))
+    return model.SENTENCES if model is not None else ()
 
 
 def _require_built(block: BlockBase) -> None:

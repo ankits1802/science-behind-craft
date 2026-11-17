@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from app.schemas.science import ReactionSpecies, mhchem_equation
+from app.research.reactions import ReactionSpecies, mhchem_equation
 
 from .balance import CHECKER_VERSION, ProposedSpecies, balance
 

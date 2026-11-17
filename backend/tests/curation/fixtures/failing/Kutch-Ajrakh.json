@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Kutch-Ajrakh",
+  "version": 1,
+  "curatedAt": "2026-11-17T10:00:00+05:30",
+  "curator": "claude-code",
+  "coverage": "THIN",
+  "searched": [
+    {
+      "query": "Kutch Ajrakh block printing",
+      "site": "recorded test sources"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "BOOK",
+      "title": "Recorded test source on block printing",
+      "authors": [
+        "Test Author"
+      ],
+      "publisher": "Test Press",
+      "year": 2020,
+      "url": "https://example.org/test/block-printing",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S02",
+      "kind": "WEB_PAGE",
+      "title": "Recorded test page on a printing village, call 98765 43210",
+      "publisher": "Example Crafts",
+      "url": "https://example.org/test/printing-village",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S03",
+      "kind": "WEB_PAGE",
+      "title": "Recorded test page that no claim quotes",
+      "url": "https://example.org/test/unused",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-17"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ajrakh cloth is printed on both sides of the cotton with carved wooden blocks.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 3",
+          "quote": "Ajrakh is printed on both sides of the cotton cloth with carved wooden blocks"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The printers of Ajrakhpur in Kachchh moved there from Dhamadka after the earthquake of 2002.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 4",
+          "quote": "The printers of Ajrakhpur in Kachchh moved there from Dhamadka after the earthquake of 2001."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "The washing stage uses this material (GI method of production).",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 5",
+          "quote": "the cloth is washed in a solution of camel dung, soda ash and castor oil to remove starch"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Areas printed with an alum paste develop their red colour when the cloth is boiled with madder roots.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 6",
+          "quote": "alum paste"
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "The black printing liquid comes from iron filings fermented with jaggery for about 15 days.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 7",
+          "quote": "Iron filings fermented with jaggery for about 15 days give the black printing liquid"
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "About 40 families of Khatri printers in the village now work on ajrakh cloth for local and urban buyers.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para 1",
+          "quote": "about 40 families of Khatri printers now work on ajrakh cloth for local and urban buyers"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The printed cloth is dried in the open sun on the sand beside the workshops.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para 2",
+          "quote": "The printed cloth is dried in the open sun on the sand beside the workshops"
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ajrakh cloth is printed on both sides of the cotton with carved wood blocks.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 3",
+          "quote": "Ajrakh is printed on both sides of the cotton cloth with carved wooden blocks"
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Some writers say the craft of ajrakh printing began in Sindh centuries ago.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 3",
+          "quote": "Ajrakh is printed on both sides of the cotton cloth with carved wooden blocks"
+        }
+      ],
+      "hypothesis": true
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Ajrakhpur",
+      "kind": "VILLAGE",
+      "district": "Kutch",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C002"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Khatri",
+      "claimIds": [
+        "C006"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Washing",
+      "stageType": "SCOUR",
+      "claimIds": [
+        "C003"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Drying",
+      "stageType": "DRY",
+      "claimIds": [
+        "C007"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Alum",
+      "kind": "MORDANT",
+      "role": "MORDANT",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Iron and jaggery liquid",
+      "kind": "MORDANT",
+      "role": "MORDANT",
+      "claimIds": [
+        "C005"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "CLIMATE",
+      "placeId": "L01",
+      "claimIds": [
+        "C007"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Ajrakh cloth is printed on both sides with carved wooden blocks by Khatri printers in Ajrakhpur, Kachchh.",
+        "claimIds": [
+          "C001",
+          "C002",
+          "C006"
+        ]
+      },
+      {
+        "text": "The printers also run a large museum, school and guest house for visiting tourists.",
+        "claimIds": [
+          "C002"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Centre",
+        "value": "Ajrakhpur, Kachchh",
+        "claimIds": [
+          "C002"
+        ]
+      },
+      {
+        "label": "Families",
+        "value": "About 40",
+        "claimIds": [
+          "C006"
+        ]
+      }
+    ]
+  }
+}

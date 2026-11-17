@@ -4,7 +4,7 @@ import { CitationChips } from "@/components/answer/CitationContext";
 import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
 import { useExplainerReading } from "@/components/answer/ExplainerReading";
 import { sentenceView } from "@/lib/answerLanguages";
-import type { ExplainerSentence as Sentence } from "@/lib/explainerContract";
+import type { ExplainerSentence as Sentence } from "@/lib/explainerBlockBase";
 import { sentenceSegments, type TextPart } from "@/lib/explainerView";
 import { wordRanges } from "@/lib/listen";
 import type { EvidenceLevel } from "@/lib/types";

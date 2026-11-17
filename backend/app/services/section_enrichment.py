@@ -7,9 +7,9 @@ from collections.abc import Awaitable, Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Self
 
-from app.research.blocks import ImagesBlock, with_payload_sentences
+from app.research.blocks import ImagesBlock
 from app.research.crafts import CraftRef
-from app.research.explainer import Block
+from app.research.explainer import Block, with_payload_sentences
 from app.research.sections import block_id
 from app.research.term_marking import GlossaryEntry, TermMarker
 
@@ -114,9 +114,14 @@ class PictureSearches:
         if ask is not None and section_id not in self._running:
             self._running[section_id] = asyncio.create_task(self._enrichment.pictures(ask))
 
-    async def sent(self, section_id: str, stream: ExplainerStream) -> ImagesBlock | None:
+    async def sent(
+        self, section_id: str, stream: ExplainerStream, *, ordinal: int | None = None
+    ) -> ImagesBlock | None:
         task = self._running.pop(section_id, None)
         block = await task if task is not None else None
-        if block is not None:
-            await stream.blocks(section_id, [block], {})
+        if block is None:
+            return None
+        if ordinal is not None:
+            block = block.model_copy(update={"id": block_id(section_id, ordinal)})
+        await stream.blocks(section_id, [block], {})
         return block

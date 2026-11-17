@@ -18,6 +18,7 @@ CONTENT_TYPES = {
     ".xml": "application/atom+xml",
     ".txt": "text/plain",
     ".html": "text/html",
+    ".sdf": "chemical/x-mdl-sdfile",
 }
 
 

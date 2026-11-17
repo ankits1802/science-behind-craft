@@ -11,21 +11,23 @@ from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.core.errors import AppError
+from app.core.errors import AppError, InvalidInput
 from app.core.shielded import ShieldedWork
 from app.data.craft_master_loader import ID_NAMESPACE
 from app.models import KnowledgePiece as PieceRow
 from app.models.enums import EXPLAINER_DEPTHS
 from app.research.blocks import ProcessLadderBlock
+from app.research.blocks_matter import ReactionPlayerBlock
 from app.research.depth import depth_at_least
 from app.research.embedding import TextEmbedder, checked_vectors
 from app.research.explainer import Block
-from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece
-from app.research.piece_reuse import reusable_groups
+from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece, piece_slot
+from app.research.piece_reuse import REGION_STORY_FACETS, reusable_groups, with_region_story
 from app.research.piece_topics import facet_topics
 from app.retrieval.indexing import embed_pieces
 from app.retrieval.text import query_text
 from app.science.ladder import ladder_problems
+from app.science.reaction_player import reaction_player_problems
 from app.science.records import ProcessRecords
 
 from . import knowledge_view
@@ -38,12 +40,14 @@ from .piece_lookup import (
     claim_states,
     topic_subjects,
 )
+from .region_pieces import region_story_pieces
 
 __all__ = ["BuiltSection", "PieceStore", "SqlPieceStore", "piece_id", "storable"]
 
 logger = logging.getLogger(__name__)
 
 NO_DISTANCE = 2.0
+PROCESS_BLOCKS = (ProcessLadderBlock, ReactionPlayerBlock)
 
 
 @dataclass(frozen=True)
@@ -87,17 +91,25 @@ class SqlPieceStore:
             if ask.fresh or not topics:
                 return PieceLookup(craft_id=craft.id, topics=topics)
             pieces = await candidate_pieces(session, craft.id, topics)
-            states, cited = await claim_states(session, pieces)
-            ladders = any(isinstance(piece.payload, ProcessLadderBlock) for piece in pieces)
-            records = await process_records(session, craft) if ladders else None
+            region_facets = [facet for facet in topics if facet in REGION_STORY_FACETS]
+            regions = (
+                await region_story_pieces(session, craft, region_facets) if pieces and region_facets else []
+            )
+            states, cited = await claim_states(session, [*pieces, *regions])
+            checked = any(isinstance(piece.payload, PROCESS_BLOCKS) for piece in pieces)
+            records = await process_records(session, craft) if checked else None
         reused: dict[str, ReusedSection] = {}
         for facet, topic in topics.items():
             reuse = ReuseAsk(craft_id=craft.id, facet=facet, topic_key=topic, depth=ask.depth)
             groups = [
-                group for group in reusable_groups(pieces, reuse, states) if _ladders_hold(group, records)
+                group
+                for group in reusable_groups(pieces, reuse, states)
+                if _process_blocks_hold(group, records)
             ]
             if groups:
-                reused[facet] = ReusedSection(pieces=await self._closest(groups, ask.question), cited=cited)
+                closest = await self._closest(groups, ask.question)
+                shown = with_region_story(closest, regions, depth=ask.depth, current=states)
+                reused[facet] = ReusedSection(pieces=shown, cited=cited)
         return PieceLookup(craft_id=craft.id, topics=topics, reused=reused)
 
     async def keep(
@@ -135,33 +147,49 @@ class SqlPieceStore:
                 )
 
 
-def _ladders_hold(group: Sequence[KnowledgePiece], records: ProcessRecords | None) -> bool:
-    ladders = [piece.payload for piece in group if isinstance(piece.payload, ProcessLadderBlock)]
-    if ladders and records is None:
+def _process_blocks_hold(group: Sequence[KnowledgePiece], records: ProcessRecords | None) -> bool:
+    checked = [piece.payload for piece in group if isinstance(piece.payload, PROCESS_BLOCKS)]
+    if checked and records is None:
         return False
-    problems = [problem for ladder in ladders for problem in ladder_problems(ladder, records)]
+    problems = [problem for block in checked for problem in _process_problems(block, records)]
     if problems:
-        logger.info("a stored ladder no longer matches the process rows: %s", "; ".join(problems))
+        logger.info("a stored block no longer matches the process rows: %s", "; ".join(problems))
     return not problems
+
+
+def _process_problems(block: Block, records: ProcessRecords) -> list[str]:
+    if isinstance(block, ReactionPlayerBlock):
+        return reaction_player_problems(block, records)
+    if isinstance(block, ProcessLadderBlock):
+        return ladder_problems(block, records)
+    return []
 
 
 def _pieces(
     lookup: PieceLookup, *, answer_id: uuid.UUID, depth: str, sections: Sequence[BuiltSection]
 ) -> list[KnowledgePiece]:
     created_at = datetime.now(UTC)
-    return [
-        knowledge_piece(
-            block,
-            PieceSlot(lookup.craft_id, section.facet, lookup.topics[section.facet], depth),
-            piece_id=piece_id(answer_id, block.id),
-            answer_id=answer_id,
-            created_at=created_at,
-        )
-        for section in sections
-        if lookup.craft_id is not None and section.facet in lookup.topics
-        for block in section.blocks
-        if storable(block)
-    ]
+    kept: list[KnowledgePiece] = []
+    for section in sections:
+        if lookup.craft_id is None or section.facet not in lookup.topics:
+            continue
+        shared = PieceSlot(lookup.craft_id, section.facet, lookup.topics[section.facet], depth)
+        for block in section.blocks:
+            slot = _slot(block, shared) if storable(block) else None
+            if slot is not None:
+                piece = piece_id(answer_id, block.id)
+                kept.append(
+                    knowledge_piece(block, slot, piece_id=piece, answer_id=answer_id, created_at=created_at)
+                )
+    return kept
+
+
+def _slot(block: Block, section: PieceSlot) -> PieceSlot | None:
+    try:
+        return piece_slot(block, section)
+    except InvalidInput:
+        logger.info("block %s names no topic key short enough to be stored", block.id)
+        return None
 
 
 async def _insert(session: AsyncSession, piece: KnowledgePiece) -> None:
@@ -197,6 +225,7 @@ async def _supersede(session: AsyncSession, piece: KnowledgePiece) -> None:
             PieceRow.kind == piece.kind,
             PieceRow.depth.in_(shallower),
             PieceRow.id != piece.id,
+            PieceRow.createdFromAnswerId.is_distinct_from(piece.created_from_answer_id),
             PieceRow.supersededById.is_(None),
             PieceRow.createdAt <= piece.created_at,
         )

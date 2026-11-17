@@ -66,5 +66,9 @@
   "narrationFiles": [
     {"generatedAt": "2026-11-17T09:00:00Z", "part": 1, "fileName": "KalaVigyan_Explainer_2026-11-17_1430_Narration_Part-01.mp3"},
     {"generatedAt": "2026-11-17T20:15:00Z", "part": 12, "fileName": "KalaVigyan_Explainer_2026-11-18_0145_Narration_Part-12.mp3"}
+  ],
+  "riverTopologies": [
+    {"edition": "v10", "mainRiv": 41071234, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-41071234.json", "key": "media/rivers/v10/41071234/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-41071234.json"},
+    {"edition": "v10", "mainRiv": 40000001, "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", "fileName": "KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-40000001.json", "key": "media/rivers/v10/40000001/ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad/KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-40000001.json"}
   ]
 }

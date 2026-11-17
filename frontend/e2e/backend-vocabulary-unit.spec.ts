@@ -4,6 +4,8 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, IMAGE_RELEVANCE, MEDIA_DISPLAYS, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
+import { EXPERT_SEATS } from "@/lib/explainerExperts";
+import { SEASONS } from "@/lib/explainerPlace";
 import { TRAIL_GROUPS, TRAIL_STAGES } from "@/lib/explainerStream";
 import { MEDIA_JOB_STATUSES, MEDIA_KINDS } from "@/lib/mediaContract";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
@@ -48,7 +50,9 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["research/explainer.py", "TRAIL_GROUPS", TRAIL_GROUPS],
   ["models/enums.py", "MEDIA_DISPLAYS", MEDIA_DISPLAYS],
   ["models/enums.py", "IMAGE_RELEVANCE", IMAGE_RELEVANCE],
-  ["models/enums.py", "TERM_BASES", TERM_BASES]
+  ["models/enums.py", "TERM_BASES", TERM_BASES],
+  ["research/blocks_people.py", "EXPERT_SEATS", EXPERT_SEATS],
+  ["research/calendar.py", "SEASONS", SEASONS]
 ];
 
 for (const [file, name, client] of PAIRS) {

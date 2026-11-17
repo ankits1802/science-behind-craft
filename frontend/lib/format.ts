@@ -58,6 +58,22 @@ export function countNoun(count: number, one: string, many = `${one}s`): string 
   return `${count} ${byCount(count, one, many)}`;
 }
 
+export function numberRuns(numbers: readonly number[]): string[] {
+  const runs: string[] = [];
+  let start = 0;
+  numbers.forEach((value, index) => {
+    if (numbers[index + 1] === value + 1) return;
+    runs.push(index === start ? String(numbers[start]) : `${numbers[start]}–${value}`);
+    start = index + 1;
+  });
+  return runs;
+}
+
+export function listText(names: readonly string[]): string {
+  if (names.length <= 1) return names.join("");
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
+
 export function blankToNull(value: FormDataEntryValue | null) {
   if (typeof value !== "string") return value;
   const trimmed = value.trim();

@@ -71,6 +71,7 @@ from app.models.knowledge import (
 )
 from app.models.knowledge_pieces import KnowledgePiece
 from app.models.media_refs import MediaRef, MediaRefClaim
+from app.models.rivers import RiverBasin, RiverReach
 from app.models.science import (
     Compound,
     ConditionReading,
@@ -146,6 +147,8 @@ __all__ = [
     "Reaction",
     "ReactionCitation",
     "ReviewEvent",
+    "RiverBasin",
+    "RiverReach",
     "RoleRequest",
     "RoutePolicy",
     "SavedItem",

@@ -22,9 +22,12 @@ __all__ = [
     "file_name",
     "generated_media_file_name",
     "media_key",
+    "molecule_key",
     "narration_file_name",
     "narration_key",
     "place_field",
+    "river_topology_file_name",
+    "river_topology_key",
 ]
 
 PORTAL = "KalaVigyan"
@@ -32,6 +35,9 @@ FILE_MAX = 150
 SUBJECT_MAX = 40
 MEDIA_PREFIX = "media"
 NARRATION_FOLDER = "narration"
+MOLECULE_FOLDER = "molecules"
+RIVER_FOLDER = "rivers"
+RIVER_TOPOLOGY_SUBJECT = "HydroRIVERS-1-0"
 NARRATION_PARTS_MAX = 99
 MEDIA_NAMES = {
     "IMAGE": ("Generated-Image", "Image", "png"),
@@ -127,9 +133,36 @@ def narration_file_name(generated_at: datetime, part: int) -> str:
 
 
 def narration_key(cache_id: str, leaf: str) -> str:
-    if len(cache_id) != 64 or any(ch not in "0123456789abcdef" for ch in cache_id):
+    if not _hex_digest(cache_id):
         raise InvalidInput("A narration key is filed under its 64-hex cache id")
     return f"{MEDIA_PREFIX}/{NARRATION_FOLDER}/{cache_id}/{_one_file_name(leaf, 'narration')}"
+
+
+def molecule_key(pubchem_cid: int, leaf: str) -> str:
+    if pubchem_cid < 1:
+        raise InvalidInput("A molecule key is filed under its PubChem CID")
+    return f"{MEDIA_PREFIX}/{MOLECULE_FOLDER}/{pubchem_cid}/{_one_file_name(leaf, 'molecule')}"
+
+
+def river_topology_file_name(main_riv: int) -> str:
+    if main_riv < 1:
+        raise InvalidInput("A river topology is filed under its outlet reach id")
+    return (
+        "_".join((PORTAL, "Dataset", RIVER_TOPOLOGY_SUBJECT, "River-Topology", f"Basin-{main_riv}")) + ".json"
+    )
+
+
+def river_topology_key(edition: str, main_riv: int, sha256: str) -> str:
+    if not edition or not edition.isascii() or not edition.replace("-", "").isalnum():
+        raise InvalidInput("A river topology key is filed under the dataset's ASCII edition")
+    if not _hex_digest(sha256):
+        raise InvalidInput("A river topology key is filed under the 64-hex SHA-256 of its content")
+    folder = f"{MEDIA_PREFIX}/{RIVER_FOLDER}/{edition}/{main_riv}/{sha256}"
+    return f"{folder}/{river_topology_file_name(main_riv)}"
+
+
+def _hex_digest(value: str) -> bool:
+    return len(value) == 64 and all(ch in "0123456789abcdef" for ch in value)
 
 
 def content_disposition(leaf: str, *, inline: bool) -> str:

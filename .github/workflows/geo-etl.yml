@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       datasets:
-        description: "Layers, comma separated: soilgrids,worldcover,hansen,chelsa,chirps,copdem,hydrorivers,mrds,glim or all"
+        description: "Layers, comma separated: soilgrids,worldcover,hansen,chelsa,chirps,copdem,hydrorivers,mrds,glim,riverlines or all (riverlines ignores states and shards)"
         type: string
         default: all
       states:
@@ -41,13 +41,36 @@ env:
   CPL_VSIL_CURL_CACHE_SIZE: "200000000"
 
 jobs:
+  test:
+    name: Test the geo ETL
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e . pytest ruff
+      - name: Lint
+        run: ruff check . && ruff format --check .
+      - name: Tests
+        run: python -m pytest -q tests
+
   plan:
     name: Plan the extract matrix
+    needs: test
     runs-on: ubuntu-26.04
     timeout-minutes: 5
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
       count: ${{ steps.plan.outputs.count }}
+      rivers: ${{ steps.plan.outputs.rivers }}
     steps:
       - id: plan
         env:
@@ -62,7 +85,8 @@ jobs:
 
           raster = ["soilgrids", "worldcover", "hansen", "chelsa", "chirps", "copdem"]
           vector = ["hydrorivers", "mrds", "glim"]
-          known = raster + vector
+          lines = ["riverlines"]
+          known = raster + vector + lines
           text = os.environ["DATASETS"].replace(" ", "").lower()
           chosen = known if text in ("", "all") else [v for v in text.split(",") if v]
           unknown = sorted(set(chosen) - set(known))
@@ -75,7 +99,7 @@ jobs:
           if states not in ("", "all"):
               shards = min(shards, len({v for v in states.split(",") if v}))
           include = []
-          for layer in [k for k in known if k in chosen]:
+          for layer in [k for k in raster + vector if k in chosen]:
               if layer in raster and shards > 1:
                   include += [{"layer": layer, "shard": f"{i}/{shards}", "part": f"{layer}-shard{i}of{shards}"} for i in range(1, shards + 1)]
               else:
@@ -83,12 +107,16 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
               out.write(f"matrix={json.dumps({'include': include})}\n")
               out.write(f"count={len(include)}\n")
+              out.write(f"rivers={'true' if 'riverlines' in chosen else 'false'}\n")
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
               summary.write(f"{len(include)} extract jobs: {', '.join(i['part'] for i in include)}\n")
+              if "riverlines" in chosen:
+                  summary.write("River lines and basin topologies: one job\n")
 
   extract:
     name: Extract ${{ matrix.part }}
     needs: plan
+    if: ${{ needs.plan.outputs.count != '0' }}
     runs-on: ubuntu-26.04
     timeout-minutes: 350
     strategy:
@@ -218,3 +246,98 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python load.py --out out
+
+  rivers:
+    name: River lines and basin topologies
+    needs: plan
+    if: ${{ needs.plan.outputs.rivers == 'true' }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+      - name: Restore the download cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/kalavigyan-geo
+          key: kalavigyan-geo-riverlines-${{ hashFiles('etl/geo/geo_etl/catalog.py') }}-${{ github.run_id }}
+          restore-keys: |
+            kalavigyan-geo-riverlines-${{ hashFiles('etl/geo/geo_etl/catalog.py') }}-
+            kalavigyan-geo-riverlines-
+      - name: Build
+        run: python -m geo_etl rivers --out out/rivers --cache "$HOME/.cache/kalavigyan-geo"
+      - name: Validate for loading
+        run: python load_rivers.py --out out/rivers --dry-run
+      - name: Summary
+        run: |
+          python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          m = json.load(open("out/rivers/river_basins.json", encoding="utf-8"))
+          sizes = sorted(b["bytes"] for b in m["basins"])
+          print(f"{m['reaches']} reaches with upstream area >= {m['uplandMinSkm']} km2 in {len(sizes)} basins")
+          print(f"largest topology {sizes[-1]} bytes, median {sizes[len(sizes) // 2]} bytes")
+          EOF
+      - name: Upload the outputs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: geo-river-lines
+          path: etl/geo/out/rivers/
+          if-no-files-found: error
+          retention-days: 90
+
+  load-rivers:
+    name: Load river lines
+    needs: rivers
+    if: ${{ inputs.load }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      RIVER_LOAD_ROLE_ARN: ${{ vars.AWS_RIVER_LOAD_ROLE_ARN }}
+      S3_BUCKET: ${{ vars.MEDIA_BUCKET }}
+    defaults:
+      run:
+        working-directory: etl/geo
+    steps:
+      - name: Check the repository variables
+        working-directory: .
+        run: |
+          set -euo pipefail
+          for v in AWS_REGION RIVER_LOAD_ROLE_ARN S3_BUCKET; do
+            [ -n "${!v}" ] || { echo "::error::repository variable for $v is not set (see docs/RUNBOOK.md)"; exit 1; }
+          done
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: etl/geo/pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+      - name: Download the outputs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: geo-river-lines
+          path: etl/geo/out/rivers
+      - name: Assume the river load role
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd
+        with:
+          role-to-assume: ${{ vars.AWS_RIVER_LOAD_ROLE_ARN }}
+          role-session-name: geo-etl-rivers-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Upload topologies and replace the river tables
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python load_rivers.py --out out/rivers

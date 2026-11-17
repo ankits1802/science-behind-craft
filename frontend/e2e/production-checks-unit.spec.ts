@@ -6,16 +6,22 @@ import { expect, test } from "@playwright/test";
 import { splitSseBuffer } from "@/lib/answerStream";
 import { explainerEventOf } from "@/lib/explainerStream";
 
-import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
+import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, knownAnswerOutcome, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
 import { NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
 import type { AnswersReport, ScreensReport } from "./production/report";
 import { runFileName } from "./production/run";
 import type { TappedChunk, TappedStream } from "./production/streamTap";
 import { summaryMarkdown } from "./production/summaryMarkdown";
+import { RIVERS_NOT_LOADED_NOTE } from "./production/waterStory";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 const GOLDEN = readFileSync(join(SHARED, "explainer.stream.golden.sse"), "utf8");
-const [ENGLISH, HINDI] = KNOWN_ANSWER_QUESTIONS;
+const [ENGLISH, HINDI, WATER] = KNOWN_ANSWER_QUESTIONS;
+const PHASE_B = JSON.parse(readFileSync(join(SHARED, "explainer.phase-b.golden.json"), "utf8")) as {
+  sections: { blocks: Record<string, unknown>[] }[];
+  sources: Record<string, unknown>[];
+};
+const STORY = PHASE_B.sections.flatMap((section) => section.blocks).find((found) => found.id === "s1.b1") as Record<string, unknown>;
 const CITATION = { id: "c1", claimId: "k1", sourceId: "s1", quote: "alum", locator: null, context: null, evidence: "QUOTED", level: "PROVISIONAL" };
 const SOURCE = { id: "s1", kind: "PAPER", title: "Mordants", authors: [], year: 2020, doi: null, url: "https://example.org/m", publisher: null, licence: null, attribution: null, reliability: "B" };
 
@@ -115,6 +121,30 @@ test("an answer without done, with an uncited sentence or opened twice fails", (
   expect(answerProblems(wrong, ENGLISH)).toEqual(["no sentence names alum, the known mordant"]);
 });
 
+function waterAnswer(...frames: string[]): string {
+  return [block("source", SOURCE), ...PHASE_B.sources.map((source) => block("source", source)), ...frames, block("done", { answerId: null })].join("");
+}
+
+test("the water question passes only when a region story with a river path and cited steps arrives", () => {
+  const story = recordOf(waterAnswer(block("block", { sectionId: "s1", block: STORY })), WATER);
+  expect(story.regionStory).toEqual({ blocks: 1, withRiver: 1, steps: 4, citedSteps: 4 });
+  expect(story.knownAnswerFound).toBe(true);
+  expect(answerProblems(story, WATER, { riversLoaded: true })).toEqual([]);
+  const riverless = recordOf(waterAnswer(block("block", { sectionId: "s1", block: { ...STORY, river: null } })), WATER);
+  expect(riverless.knownAnswerFound).toBe(false);
+  expect(answerProblems(riverless, WATER)).toEqual(["1 region stories arrived without a river path"]);
+});
+
+test("without a region story the water question fails once rivers are loaded, and before that only records the absence", () => {
+  const absent = recordOf(waterAnswer(sentence("w1", "Alum is the mordant.")), WATER);
+  expect(absent.regionStory.blocks).toBe(0);
+  expect(answerProblems(absent, WATER)).toEqual([]);
+  expect(knownAnswerOutcome(absent, WATER).notes).toEqual([RIVERS_NOT_LOADED_NOTE]);
+  expect(answerProblems(absent, WATER, { riversLoaded: true })).toEqual(["no region story arrived although the river lines are loaded"]);
+  expect(knownAnswerOutcome(absent, WATER, { riversLoaded: true }).notes).toEqual([]);
+  expect(answerProblems(recordOf(waterAnswer(sentence("w1", "Alum is the mordant.")), ENGLISH), ENGLISH)).toEqual([]);
+});
+
 test("the page must show every streamed sentence with a citation chip", () => {
   const record = recordOf([block("source", SOURCE), sentence("p1", "Alum is the mordant."), block("done", { answerId: null })].join(""), ENGLISH);
   record.pageSentences = 2;
@@ -178,7 +208,7 @@ test("the step summary orders widths from widest and escapes table cells", () =>
     role: "RESEARCHER",
     problemCount: 0,
     unasked: [],
-    questions: [recordOf(HINDI_ANSWER, HINDI)]
+    questions: [recordOf(HINDI_ANSWER, HINDI), { ...recordOf(waterAnswer(sentence("w2", "Alum is the mordant.")), WATER), notes: [RIVERS_NOT_LOADED_NOTE] }]
   };
   const markdown = summaryMarkdown([screens("Phone", 390, ["a | b"]), screens("Desktop", 1440, [])], {
     runId: "7",
@@ -189,7 +219,8 @@ test("the step summary orders widths from widest and escapes table cells", () =>
   expect(markdown).toContain("| Screen | Desktop | Phone |");
   expect(markdown).toContain("| Ask | Pass | Fail (1) |");
   expect(markdown).toContain("- Phone · Ask: a \\| b");
-  expect(summaryMarkdown([screens("Desktop", 1440, []), answers], { runId: null, baseUrl: null, startedAt: "x", questionsRequested: true })).toContain(
-    "| Hindi | done | 2 | 2 | 2 | 1 | Yes | 1 translated, 1 English, 0 other |"
-  );
+  const withAnswers = summaryMarkdown([screens("Desktop", 1440, []), answers], { runId: null, baseUrl: null, startedAt: "x", questionsRequested: true });
+  expect(withAnswers).toContain("| Question | Ended | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |");
+  expect(withAnswers).toContain("| Hindi | done | 2 | 2 | 2 | 1 | Yes | 1 translated, 1 English, 0 other |");
+  expect(withAnswers).toContain(`#### Answer notes\n\n- Water: ${RIVERS_NOT_LOADED_NOTE}`);
 });

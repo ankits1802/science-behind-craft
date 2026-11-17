@@ -4,6 +4,7 @@ import type { SourceRef } from "@/lib/types";
 
 export const CRAFT_REGION_PATH = (slug: string) => `/crafts/${encodeURIComponent(slug)}/region`;
 export const MAP_LAYERS_PATH = "/map/layers";
+export const BOUNDARY_DATASET_CODE = "DR_DISTRICT_SHAPES";
 export const MAP_LAYER_PATH = (id: string) => `/map/layers/${encodeURIComponent(id)}`;
 
 export const REGION_FACETS = ["SOIL", "CLIMATE", "WATER", "FOREST", "LAND_COVER", "TERRAIN", "GEOLOGY"] as const;
@@ -101,7 +102,7 @@ export type MapLayer = {
 const DEPTH = nullable(matching(/^\d+-\d+cm$/, "a depth such as 0-5cm"));
 const facetShape = oneOf(REGION_FACETS);
 
-const datasetShape: Shape<RegionDataset> = object<RegionDataset>({
+export const datasetShape: Shape<RegionDataset> = object<RegionDataset>({
   code: text,
   title: text,
   publisher: nullable(text),

@@ -5,9 +5,11 @@ from pydantic import TypeAdapter, ValidationError
 
 from app.research.explainer import BLOCK_MODELS, BUILT_BLOCK_KINDS, Block
 
+from ..contracts.phase_b_golden import phase_b_blocks
+
 CLAIM = "826c1d72-9373-59f0-85c3-6bb38aa89320"
 SOURCE = "d0f53ee9-4b97-5df7-a367-686957bdb7c8"
-STAGE = "5ced8309-b0f4-571a-8482-4223d1d4fccc"
+ENVELOPE = frozenset({"id", "kind", "version", "reuse"})
 CRAFTS = [
     {"slug": "Kutch-Ajrakh", "name": "Kutch Ajrakh", "path": "/crafts/Kutch-Ajrakh"},
     {
@@ -65,45 +67,6 @@ def envelope(kind: str) -> dict[str, Any]:
 
 
 DECLARED: dict[str, dict[str, Any]] = {
-    "region_story": {
-        "river": {"name": None, "datasetCode": "HYDRORIVERS_1_0", "reachIds": [1, 2]},
-        "districts": [{"districtLgd": 101, "name": "District A", "stateName": "State A"}],
-        "steps": [{"districtLgd": 101, "sentence": sentence()}],
-        "layers": ["water-river-distance"],
-        "boundaryCaption": "External boundaries of India as depicted by Survey of India.",
-    },
-    "map_layer": {
-        "layer": "soil-ph",
-        "layerVersion": "v1",
-        "basis": "District mean of topsoil pH",
-        "datasetCodes": ["SOILGRIDS_2_0"],
-        "highlighted": [101],
-        "boundaryCaption": "External boundaries of India as depicted by Survey of India.",
-    },
-    "reaction_player": {
-        "steps": [
-            {
-                "reactionId": "d9643f49-fefc-5e3a-ad08-a5ae499a4161",
-                "label": "Scrap iron dissolving into iron acetate",
-                "equation": "Fe + 2 CH3COOH -> Fe(CH3COO)2 + H2",
-                "balanced": True,
-                "level": "PROVISIONAL",
-                "citations": [citation()],
-            }
-        ]
-    },
-    "material_card": {
-        "materialId": None,
-        "name": "Alum",
-        "formula": None,
-        "pubchemCid": None,
-        "wikidataId": "Q1",
-        "localNames": ["fatakdi"],
-        "role": "MORDANT",
-        "facts": [sentence()],
-        "handling": [],
-    },
-    "molecule_3d": {"pubchemCid": 6293, "name": "Alizarin", "formula": "C14H8O4", "sourceId": SOURCE},
     "simulation": {
         "concept": "Iron darkening a madder red",
         "title": "Iron in the wash water",
@@ -151,29 +114,6 @@ DECLARED: dict[str, dict[str, Any]] = {
                 "pubchemCid": None,
                 "sentence": sentence("z.2"),
             },
-        ]
-    },
-    "expert_view": {
-        "seat": "HYDROLOGIST",
-        "take": [sentence()],
-        "agreesWith": ["CHEMIST"],
-        "differs": [{"seat": "HISTORIAN", "thisView": sentence("e.1"), "otherView": sentence("e.2")}],
-    },
-    "seasons": {
-        "rows": [{"stageId": STAGE, "label": "Kut printing", "months": [10, 11, 12], "sentence": sentence()}],
-        "rainfall": None,
-    },
-    "supply_map": {
-        "links": [
-            {
-                "material": "Alum",
-                "materialId": None,
-                "origin": "Kutch",
-                "wikidataId": None,
-                "latitude": None,
-                "longitude": None,
-                "sentence": sentence(),
-            }
         ]
     },
     "compare": {
@@ -228,6 +168,11 @@ DECLARED: dict[str, dict[str, Any]] = {
     },
 }
 
+DECLARED |= {
+    block["kind"]: {key: value for key, value in block.items() if key not in ENVELOPE}
+    for block in phase_b_blocks().values()
+    if block["kind"] not in BUILT_BLOCK_KINDS
+}
 BLOCK = TypeAdapter(Block)
 
 
@@ -271,25 +216,9 @@ def test_each_declared_kind_validates_inside_the_one_envelope(kind: str) -> None
             {"routes": [{"start": 0, "end": 1, "sentence": sentence()}]},
             "two different listed points",
         ),
-        ("expert_view", {"agreesWith": ["HYDROLOGIST"]}, "never its own"),
-        (
-            "region_story",
-            {"steps": [{"districtLgd": 102, "sentence": sentence()}]},
-            "only districts it lists",
-        ),
-        ("seasons", {"rows": [{**DECLARED["seasons"]["rows"][0], "months": [12, 1]}]}, "once each, in order"),
-        ("map_layer", {"datasetCodes": []}, "at least 1"),
         ("simulation", {"html": "x" * (200 * 1024 + 1)}, "larger than"),
     ],
 )
 def test_declared_kinds_keep_their_rules(kind: str, changes: dict[str, Any], message: str) -> None:
     with pytest.raises(ValidationError, match=message):
         BLOCK.validate_python(declared(kind, **changes))
-
-
-def test_supply_origins_are_placed_only_with_wikidata_coordinates() -> None:
-    link = {**DECLARED["supply_map"]["links"][0], "latitude": 23.2, "longitude": 69.8}
-    with pytest.raises(ValidationError, match="Wikidata coordinates"):
-        BLOCK.validate_python(declared("supply_map", links=[link]))
-    placed = BLOCK.validate_python(declared("supply_map", links=[link | {"wikidataId": "Q1"}]))
-    assert placed.links[0].latitude == 23.2

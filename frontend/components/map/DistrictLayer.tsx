@@ -68,6 +68,16 @@ export const DistrictFills = memo(function DistrictFills({
   );
 });
 
+export function DistrictOutlines({ shapes, className }: { shapes: readonly DistrictShape[]; className: string }) {
+  return (
+    <g className="pointer-events-none" data-testid="district-outlines">
+      {shapes.map((shape) => (
+        <path key={shape.lgd} d={shapePath(shape)} fillRule="evenodd" data-lgd={shape.lgd} className={`fill-none ${className}`} strokeWidth={2} strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      ))}
+    </g>
+  );
+}
+
 const TAG_FONT = 17;
 const TAG_HEIGHT = 30;
 const TAG_LIFT = 12;

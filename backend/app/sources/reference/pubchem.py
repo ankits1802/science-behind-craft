@@ -17,6 +17,7 @@ from ..records import UnusableRecord, clean_text, title_of
 from .pubchem_hazards import HazardReport, hazard_report
 
 __all__ = [
+    "CONFORMER_MAX_BYTES",
     "PUBCHEM_LICENCE",
     "PUBCHEM_PUBLISHER",
     "PUBCHEM_RATE",
@@ -42,6 +43,12 @@ FORMULA = re.compile(r"(?:[A-Z][a-z]?\d*){2,}|[A-Z][a-z]?\d+")
 FORMULA_PART = re.compile(r"([A-Z][a-z]?)\d*")
 NATIVE_ID = re.compile(r"^([1-9]\d{0,11})(:ghs)?$")
 GHS_HEADING = "GHS Classification"
+CONFORMER_MAX_BYTES = 256 * 1024
+CONFORMER_PARAMS = {"record_type": "3d"}
+SDF_END = "$$$$"
+MOLFILE_VERSIONS = ("V2000", "V3000")
+THREE_D = "3D"
+DIMENSION_COLUMNS = slice(20, 22)
 
 
 @dataclass(frozen=True)
@@ -68,6 +75,37 @@ class PubChemAdapter(HttpSourceAdapter):
             return []
         table = await self._properties(cids)
         return [_compound(table[cid]) for cid in cids if cid in table]
+
+    async def conformer(self, cid: int) -> str | None:
+        if cid < 1:
+            raise InvalidInput(f"{cid} is not a PubChem CID")
+        url = f"{PUG_REST}/compound/cid/{cid}/record/SDF"
+        try:
+            response = await self.http.get(url, params=CONFORMER_PARAMS)
+        except ExternalFailure as failure:
+            if failure.status == 404:
+                return None
+            raise
+        return self._conformer_sdf(cid, response.body)
+
+    def _conformer_sdf(self, cid: int, body: bytes) -> str:
+        if len(body) > CONFORMER_MAX_BYTES:
+            raise self._unusable_conformer(cid, f"is over {CONFORMER_MAX_BYTES} bytes")
+        try:
+            sdf = body.decode("ascii")
+        except UnicodeDecodeError:
+            raise self._unusable_conformer(cid, "is not ASCII") from None
+        lines = sdf.split("\n")
+        if len(lines) < 4 or lines[0].strip() != str(cid):
+            raise self._unusable_conformer(cid, "names another record")
+        if lines[1][DIMENSION_COLUMNS] != THREE_D or not any(v in lines[3] for v in MOLFILE_VERSIONS):
+            raise self._unusable_conformer(cid, "is not a 3D molfile")
+        if sdf.rstrip().split("\n")[-1].strip() != SDF_END:
+            raise self._unusable_conformer(cid, "does not end its record")
+        return sdf
+
+    def _unusable_conformer(self, cid: int, problem: str) -> ExternalFailure:
+        return ExternalFailure(f"the {self.name} 3D conformer of CID {cid} {problem}", service=self.name)
 
     async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
         cids = await self._matching_cids(query.text, k)

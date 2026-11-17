@@ -88,3 +88,20 @@ python etl/geo/load.py --prune
 - `--prune` deletes rows for each `(datasetId, districtLgd)` pair in this load that are no longer in the files. Districts and datasets absent from the load are untouched.
 - Exit codes: 0 loaded, 1 validation failed, 2 env var not set, 3 `AdminDistrict` empty. Everything runs in one transaction; any failure rolls back.
 - Needs `psycopg` (v3) and `pandas` with `pyarrow`, all in `etl/geo/pyproject.toml`.
+
+## River lines (decision 0043)
+
+`python -m geo_etl rivers --out out/rivers` (the `riverlines` dataset of `geo-etl.yml`) reads every HydroRIVERS v1.0 Asia reach with `UPLAND_SKM >= 100` (`geo_etl/rivers.LINE_UPLAND_MIN_SKM`), keeps the whole basin of every reach that crosses a district polygon, checks the network (`network_problems`) and writes nothing when it finds a problem. It writes, in `out/rivers/`:
+
+| File | Content |
+|---|---|
+| `river_reaches.parquet` | GeoParquet, one row per reach: `hyrivId`, `nextDown`, `mainRiv`, `ordStra`, `uplandSkm`, `disAvCms`, `lengthKm` and the line (EPSG:4326) |
+| `topology/<mainRiv>.json` | One TopoJSON per basin (`geo_etl/topology.py`, the contract in `docs/contracts/region.md`, Rivers) |
+| `river_basins.json` | `generatedAt`, `dataset` (the `HYDRORIVERS_1_0` row with `retrievedAt`), `uplandMinSkm`, `simplifyDegrees`, `reaches`, `basins` (`mainRiv`, `reaches`, `file`, `sha256`, `bytes`) |
+
+`python load_rivers.py --out out/rivers [--dry-run]` checks the files again (network, counts, hashes), uploads each topology to the media bucket under `geo_etl/rivers.topology_key(edition, mainRiv, sha256)`, `media/rivers/<edition>/<mainRiv>/<sha256>/<file>` (`ContentType` `application/json`, SSE-S3, metadata `sha256`; an object already stored under its digest is left alone, and a changed file lands beside the old one; decision 0050), then in one transaction upserts the dataset row and replaces every row of:
+
+- `RiverBasin`: `mainRiv` (key), `datasetId`, `reachCount`, `topologySha256`.
+- `RiverReach`: `hyrivId` (key), `nextDown`, `mainRiv`, `ordStra`, `uplandSkm`, `disAvCms`, `lengthKm`, `geom` (written as hex EWKB).
+
+It reads the database URL from `DATABASE_URL` (`--dsn-env`) and the bucket from `S3_BUCKET` (`--bucket-env`), AWS credentials from the standard `AWS_*` variables (on GitHub Actions the short-lived ones of the `kalavigyan-river-load` role, decision 0050), and never takes a value on the command line. Exit codes: 0 loaded, 1 validation failed, 2 an env var not set; a missing table stops it with a pointer to this file. `backend/tests/contracts/test_river_contract.py` pins these column lists, the topology object name and the key to the backend's models and `services/naming`.

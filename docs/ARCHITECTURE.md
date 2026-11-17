@@ -5,7 +5,7 @@ imports may point, and the contracts between lanes. The target design is `docs/P
 0 overrides the rest); this page describes what exists and is updated in the same change that
 makes it untrue.
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
 ## Deployed pieces
 
@@ -31,7 +31,7 @@ are in `docs/RUNBOOK.md`; what the box assumes from the code is in `docs/contrac
 | `frontend/` | Next.js web client (npm, Node 26) |
 | `infra/` | Terraform, deploy scripts, systemd units, secret seeding, Supabase lockdown SQL |
 | `shared/` | Files checked by more than one side (`craft-master.sha1`, the `*.golden.*` contract files) |
-| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package with its tests |
+| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `curation/` (fetch, verify, check and schema for curated dossiers, decision 0051); their tests |
 | `docs/` | Plan, architecture, catalogue, contracts, decisions, debt, progress, runbook, data sources |
 | `.claude/skills/` | Practice skills (engineering, backend, frontend), naming, frontend design system |
 
@@ -79,9 +79,14 @@ sources        sources/     external research sources: paced HTTP, record rules,
 fetcher        fetcher/     the separate kv-fetcher process: address-pinned https fetch,
                             robots.txt, caps, trafilatura and pypdf extraction (no DB, no AWS)
                  |
+curation       curation/    curated craft dossiers: the model, the offline rules, the check
+                            file and the index, read by tools/curation and the importer;
+                            imports research/, models/ and data/ only (decision 0051)
+                 |
 contracts      research/    research and answering types, protocols, post-check rules; the
                             explainer document, blocks, stored pieces and depth by role
-                            (decision 0030)
+                            (decision 0030); dataset rows, rivers, the calendar words,
+                            reaction rules and the expert panel (decision 0042)
                  |
 shared         core/        settings, db, security (passwords, tokens, secret keys), roles,
                             deps, logging, rate limits, India time, HTTP revalidation, work
@@ -107,7 +112,7 @@ into `geo/records`, and the routes hand them to `geo/region_view` and `geo/layer
 ## API surface
 
 All routes are under `/api` except `/health` and `/health/ready`. Route groups (`api/routes/`):
-`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `knowledge`, `listen` (an explainer read aloud, decision 0035), `map_layers`, `media`, `secrets`,
+`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `knowledge`, `listen` (an explainer read aloud, decision 0035), `map_layers`, `media`, `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
 `settings`, `terms` (a glossary term's cited summary, decision 0034), `usage`, `voice` (404 throughout while `VOICE_CALL_ENABLED` is off, decision 0035). Shapes, headers and error forms are in `docs/contracts/backend.md`; the web client's
 side is `docs/contracts/frontend.md`. `GET /api/crafts/{slug}/process` (in `crafts`) answers a craft's
 stages, materials, conditions and reactions (`docs/contracts/science.md`);
@@ -147,7 +152,8 @@ district statistics (`docs/contracts/region.md`).
    reuse nothing. The other sections run in parallel (`services/answer_sections`, decision 0032). Each section
    researches its own field within its share of the depth's budget (Basic and Detailed `HYBRID`,
    Expert `DEEP`): the planner (decision 0009) plans facets and queries for that field and its
-   experts, searches stored claims (every craft's, for any craft) and, for what they do not cover
+   experts (each seat speaking to the field is named with the kinds of source it reads, and those
+   kinds take every other early read; decision 0046), searches stored claims (every craft's, for any craft) and, for what they do not cover
    (every facet in `DEEP`), scholarly, reference and web sources, and reads the best documents,
    streaming each source to the trail as it is found and read. The composer (decision 0010) writes
    the section's cited sentences and chooses process stages (Claude Sonnet first, Gemini next); what
@@ -259,6 +265,43 @@ answers 404 and no voice button is drawn. The steps hold when the setting is tru
    answers `services/term_summaries.TermLookup.summary`: the cached summary while its claims are
    visible, else the defining stored claims, the Wikipedia lead or one web search with a
    `SUMMARISE` call, kept as quoted claims and cached per term and language.
+3. Later blocks (decision 0042): `services/block_builders.BLOCK_BUILDERS` maps a block kind to the
+   fields it may be added to, listed in the order a section reads its blocks (`PIECE_BLOCK_ORDER`).
+   A researched section with a checked prose or ladder block starts its field's builders together
+   with its pictures; their blocks go out after the section's own and before the pictures, each
+   builder bounded by its wait, and a failing builder adds nothing. A reused section starts only
+   the builders of kinds that are never stored as pieces (map layers, molecules) over its placed
+   pieces (decision 0050). Builders implement `services/builder_interface`; only kinds already
+   built start, and every phase B kind is built. The matter
+   builders (`services/matter_builders`, decision 0045) read the craft's matter in one short
+   session (`services/craft_matter`), then add the reaction player (the Process tab's reactions,
+   re-checked against the rows), material cards (stored rows and glossary terms, one plan-model
+   call sorting stored claims into facts and handling) and one molecule whose 3D conformer the
+   PubChem adapter fetched once into the private bucket (`services/molecule_conformers`), served
+   to signed-in readers by `GET /api/molecules/{pubchemCid}/conformer`, which releases its
+   database connection before the bucket and PubChem (decision 0050). The place builders
+   (`services/place_builders`, decision 0044) read a craft's cited districts in one short session
+   (`services/place_offers`): a geography section's region story offers the rivers crossing them
+   (by stream order and discharge, traced through the stored network), the districts and the
+   layers with values there, and one plan-model call chooses a river, the stored claims for its
+   steps and their order by ref, a step keeping its district only when its sentence names it; it
+   is kept as a cross-craft piece by basin or districts and reused with its geography section
+   (`services/region_pieces`). Geology and climate sections get the
+   registry layer their sentences name, built as the layer route answers it. Climate sections also
+   get a seasons strip and materials sections a supply map (`services/season_supply_builders`,
+   decision 0047): the craft's stages and the section's claims placed only on the months or season
+   their own text names, a season given months only by a cited quote that states them, the CHIRPS
+   rainfall of the first craft district with twelve normals; supply links whose material and
+   origin words one plan-model call chose and the sentence states, placed only with Wikidata
+   coordinates the Wikidata adapter reads. The expert panel
+   (`services/expert_views`, decision 0046) makes one `COMPOSE` call per section for the seats
+   speaking to its field (`research/expert_panel.speaking_seats`), over the stored facts the
+   section's checked sentences rest on; a take passes the prose checks (which also refuse a month,
+   season, state or district no source states, `services/stated_names`) or is not shown, "Experts
+   differ" is kept only for two stored facts about one concept from two sources, and the call
+   spends only from the answer's headroom (`providers/budget.AnswerHeadroom`).
+   The web client draws each block kind through one renderer
+   (`components/answer/blockRenderers.ts`); a kind without one is not drawn.
 
 ## Data
 
@@ -269,13 +312,19 @@ environment data come from open datasets (`docs/contracts/geo.md`, `docs/DATA_SO
 Seeds (`app/scripts/seed_crafts`, `seed_claims`, `seed_districts`) run on every deploy and are
 idempotent. `seed_claims` also runs the science seed (`app/data/science_seed.json`: constants,
 materials, compounds, reactions, readings; decision 0015); `app/scripts/link_compounds` looks
-the seeded compounds up in PubChem. After them, `app/scripts/sync_portal_crafts` adds every craft the two portals hold
+the seeded compounds up in PubChem, nightly in the Coverage enrichment run (decision 0045). After them, `app/scripts/sync_portal_crafts` adds every craft the two portals hold
 beyond the master list, with their aliases, spellings and merge redirects, through the signed
 peer route of `docs/contracts/portal-craft-feed.md`; it also runs daily (decision 0003).
 Then `app/scripts/embed_craft_descriptors` fills missing craft name-and-alias vectors for the
 resolver; the daily Coverage enrichment run fills them first too (decision 0016). The region
 routes read the geo ETL's per-district statistics and compute state aggregates in Postgres per
-request; nothing environmental is queried live (decision 0016).
+request; nothing environmental is queried live (decision 0016). River lines (decision 0043) are
+HydroRIVERS reaches the geo ETL loads into `RiverReach` and `RiverBasin` and writes as one
+TopoJSON per basin to the media bucket (`riverlines` in the Geo ETL run); `services/river_store`
+traces a river through a reach (`geo/river_trace`: the largest upstream branch to the source,
+`NEXT_DOWN` to the mouth) and orders the districts it crosses with PostGIS, and
+`GET /api/rivers/{mainRiv}` serves the basin's file. A district's CHIRPS monthly normals reach a
+`seasons` block through `services/monthly_rain`.
 
 ## Frontend
 
@@ -301,7 +350,17 @@ draws the understood line, the research trail, the section bar and the sections,
 per built block kind (`ProseBlockView`, `ProcessLadder`, `ImageStrip`), over two contexts: the
 citation numbering (`CitationContext`) and the reading (`ExplainerReading`: language, original
 text, hidden terms, the term sheet and the word Listen is reading). Pure rules are in
-`lib/explainerView.ts`, `lib/termSummary.ts` and `lib/listen.ts`.
+`lib/explainerView.ts`, `lib/termSummary.ts` and `lib/listen.ts`. The place kinds (decision 0048)
+are `components/answer/place/`: the region story (a river from the served basin TopoJSON flowing
+across the real district polygons, `lib/riverTopology.ts`, `lib/riverGeometry.ts`,
+`lib/regionStory.ts`), the map layer on `IndiaMap`, the seasons strip (`lib/seasonsView.ts`) and
+the supply list with its pin map (`lib/supplyView.ts`); map code reaches the browser only when a
+map block is drawn (`components/answer/lazyBlock.tsx`). The matter kinds (decision 0049) are
+`components/answer/matter/`: the reaction player (`lib/reactionPlayer.ts`), material cards, and
+3D molecules drawn by 3Dmol.js through its one adapter (`lib/moleculeViewer.ts`, imported only
+when a molecule nears the viewport) from the conformer route (`lib/conformer.ts`); a section's
+expert views are one panel with its "Experts differ" cards (`components/answer/experts/`,
+`lib/expertPanel.ts`).
 
 The craft page reads the profile, then the process and region routes, each parsed by its
 contract shape and cross-checked at the boundary (`lib/craftProfile.ts`, `lib/processView.ts`,
@@ -330,9 +389,9 @@ client-side move to `/ask` keeps the first page's policy (decision 0039); plain 
 
 | Workflow | Runs |
 |---|---|
-| Backend checks | ruff, DB-free pytest, hygiene tool tests, hygiene check, offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector |
+| Backend checks | ruff, DB-free pytest, tools tests (hygiene, curation), hygiene check, the curation check of every dossier and the index (`tools/curation/check.py --check-index`, no network), offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector |
 | Frontend checks | typecheck, lint, unit specs, smoke specs |
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |
 | Geo ETL | `etl/geo` tests and the district statistics build |
 | Deploy backend | after Backend checks succeed on a push to `main` of `cxacraftecosystem-ui/KalaVigyan` |
-| E2E production | on dispatch only: Playwright against the deployed site at 1440, 834 and 390 px wide, every screen signed in as the E2E Researcher, and with `questions=true` two known-answer questions in Hybrid (decision 0029) |
+| E2E production | on dispatch only: Playwright against the deployed site at 1440, 834 and 390 px wide, every screen signed in as the E2E Researcher, and with `questions=true` three known-answer questions at Detailed depth: the mordant in English and Hindi, and Kachchh's water, which needs a region story with a traced river once `rivers_loaded` is set (decisions 0029 and 0050) |

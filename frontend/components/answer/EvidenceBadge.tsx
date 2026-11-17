@@ -26,10 +26,11 @@ const KIND: Record<EvidenceKind, BadgeMeta> = {
   INFERRED: { label: "Model-inferred", Icon: Lightbulb, className: ATTENTION }
 };
 
-export type EvidenceSignal = "SOURCES_DIFFER" | "OUTSIDE_RANGE" | "UNBALANCED" | "BALANCED";
+export type EvidenceSignal = "SOURCES_DIFFER" | "EXPERTS_DIFFER" | "OUTSIDE_RANGE" | "UNBALANCED" | "BALANCED";
 
 const SIGNAL: Record<EvidenceSignal, BadgeMeta> = {
   SOURCES_DIFFER: { label: "Sources differ", Icon: GitCompareArrows, className: ATTENTION },
+  EXPERTS_DIFFER: { label: "Experts differ", Icon: GitCompareArrows, className: ATTENTION },
   OUTSIDE_RANGE: { label: "Outside usual range", Icon: TriangleAlert, className: ATTENTION },
   UNBALANCED: { label: "Unbalanced", Icon: Scale, className: ATTENTION },
   BALANCED: { label: "Balanced", Icon: Scale, className: "border-line-200 bg-card text-ink-700" }

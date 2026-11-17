@@ -296,9 +296,48 @@ def test_a_released_hold_frees_the_answer_cap() -> None:
     assert spent.left(ceilings()) == Decimal("0.25")
 
 
+def test_optional_work_spends_only_while_the_answer_keeps_half_its_cap() -> None:
+    answer = budget.AnswerSpend(depth="DETAILED")
+    optional = answer.headroom()
+    assert optional.left(ceilings()) == Decimal("0.25")
+    optional.hold(Decimal("0.1"))
+    answer.hold(Decimal("0.1"))
+    assert (answer.held_usd, answer.left(ceilings()), optional.left(ceilings())) == (
+        Decimal("0.2"),
+        Decimal("0.3"),
+        Decimal("0.05"),
+    )
+    optional.settle(Decimal("0.1"), Decimal("0.04"))
+    answer.release(Decimal("0.1"))
+    assert (answer.spent_usd, answer.held_usd, optional.left(ceilings())) == (
+        Decimal("0.04"),
+        Decimal(0),
+        Decimal("0.21"),
+    )
+    refused = budget.evaluate(
+        ceilings(),
+        budget.SpendState(),
+        estimate_usd=Decimal("0.22"),
+        is_media=False,
+        role="ADMIN",
+        answer_left_usd=optional.left(ceilings()),
+    )
+    assert (refused.allowed, refused.reason) == (False, budget.ANSWER_CAP)
+    uncapped = budget.evaluate(
+        ceilings(),
+        budget.SpendState(),
+        estimate_usd=Decimal("5"),
+        is_media=False,
+        role="MASTER_ADMIN",
+        answer_left_usd=optional.left(ceilings()),
+    )
+    assert uncapped.allowed
+
+
 def test_a_depth_without_a_cap_leaves_nothing_to_spend() -> None:
     capped = ceilings(**{app_settings.ANSWER_CAP_USD: {"BASIC": 0.25}})
     assert budget.AnswerSpend(depth="EXPERT").left(capped) == Decimal(0)
+    assert budget.AnswerSpend(depth="EXPERT").headroom().left(capped) == Decimal(0)
 
 
 def test_budget_changes_merge_answer_caps_by_depth() -> None:

@@ -26,6 +26,18 @@ export function RetryPanel({ message, onRetry, className }: { message: string; o
   );
 }
 
+export function RetryLine({ message, onRetry, className }: { message: string; onRetry: () => void; className?: string }) {
+  return (
+    <div role="alert" className={cn("flex flex-wrap items-center gap-3 text-sm text-ink-700", className)}>
+      <span>{message}</span>
+      <button type="button" className="field-button-secondary" onClick={onRetry}>
+        <RotateCw className="h-4 w-4" aria-hidden />
+        Try again
+      </button>
+    </div>
+  );
+}
+
 export function RemoteView<T>({
   remote,
   failed,

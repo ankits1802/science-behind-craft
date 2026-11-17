@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
@@ -11,12 +12,21 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import ExternalFailure, InvalidInput
+from app.data.craft_master_loader import ID_NAMESPACE
 from app.models import Compound, Source
 from app.science.formula import hill_formula, parse_formula
 from app.sources.reference.pubchem import PUBCHEM_LICENCE, PUBCHEM_PUBLISHER, PubChemAdapter, PubChemCompound
 from app.sources.reference.registry import reference_sources
 
-__all__ = ["CANDIDATES", "CompoundFinder", "LinkReport", "find_compound", "link_compounds", "pubchem_finder"]
+__all__ = [
+    "CANDIDATES",
+    "CompoundFinder",
+    "LinkReport",
+    "find_compound",
+    "link_compounds",
+    "pubchem_finder",
+    "record_source_id",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -96,11 +106,16 @@ def _same_composition(candidate: PubChemCompound, counts: dict[str, int]) -> boo
     return found.neutral and dict(found.counts) == counts
 
 
+def record_source_id(cid: int) -> uuid.UUID:
+    return uuid.uuid5(ID_NAMESPACE, f"pubchem-record:{cid}")
+
+
 async def _record_source(session: AsyncSession, found: PubChemCompound, now: datetime) -> Source:
     existing = (await session.scalars(select(Source).where(Source.url == found.url))).first()
     if existing is not None:
         return existing
     source = Source(
+        id=record_source_id(found.cid),
         kind="COMPOUND_RECORD",
         title=f"{found.title} (PubChem CID {found.cid})",
         authors=[],

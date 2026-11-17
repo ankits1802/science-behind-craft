@@ -1,4 +1,5 @@
-import { INDIA_BOUNDS, indiaRings, type Polygon } from "@/components/map/indiaGeometry";
+import { INDIA_BOUNDS } from "@/components/map/indiaBounds";
+import { indiaRings, type Polygon } from "@/components/map/indiaGeometry";
 
 const VIEW_WIDTH = 1000;
 

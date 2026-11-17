@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from geo_etl import catalog
+from geo_etl import catalog, rivers
 from geo_etl.coverage import coverage_of
 from geo_etl.districts import SHAPES_PATH, districts_without_shapes, load_districts, sha256_of
 from geo_etl.layers import Options, Result, chelsa, chirps, copdem, geology, hansen, hydrorivers, soilgrids, worldcover
@@ -251,6 +251,22 @@ def add_extract_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--shard", help="k/n: process the k-th of n state groups, balanced by area")
 
 
+def river_lines(args: argparse.Namespace) -> int:
+    try:
+        manifest = rivers.build(Path(args.out), cache=Path(args.cache))
+    except rivers.RiverNetworkError as error:
+        for problem in error.problems[: rivers.PROBLEMS_SHOWN]:
+            print(problem, file=sys.stderr)
+        print(f"{len(error.problems)} river network problems; nothing written", file=sys.stderr)
+        return 1
+    largest = max((basin["bytes"] for basin in manifest["basins"]), default=0)
+    print(
+        f"{manifest['reaches']} reaches in {len(manifest['basins'])} basins into {args.out}, "
+        f"largest topology {largest} bytes"
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="geo_etl")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -261,7 +277,12 @@ def main(argv: list[str] | None = None) -> int:
     run_parser = sub.add_parser("run")
     add_extract_args(run_parser)
     run_parser.add_argument("--out", default=str(ROOT / "out"))
+    rivers_parser = sub.add_parser("rivers")
+    rivers_parser.add_argument("--out", default=str(ROOT / "out" / "rivers"))
+    rivers_parser.add_argument("--cache", default=str(Path.home() / ".cache" / "kalavigyan-geo"))
     args = parser.parse_args(argv)
+    if args.command == "rivers":
+        return river_lines(args)
     if args.command == "extract":
         return extract(args)
     if args.command == "combine":

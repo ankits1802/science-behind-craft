@@ -15,6 +15,7 @@ from app.research.explainer import (
 )
 from app.research.media_refs import MediaRef
 
+from ..research.test_explainer_blocks import declared
 from .explainer_golden import (
     DOCUMENT,
     citations_in,
@@ -100,8 +101,9 @@ def test_the_ladder_uses_the_seeded_stages_and_the_science_rows() -> None:
 def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
     assert set(BLOCK_MODELS) == set(BLOCK_KINDS) == set(BLOCK_PHASES)
     assert len(BLOCK_KINDS) == 21
-    assert BUILT_BLOCK_KINDS == ("prose", "process_ladder", "images")
-    assert {kind for kind, phase in BLOCK_PHASES.items() if phase == "A"} == set(BUILT_BLOCK_KINDS)
+    assert BUILT_BLOCK_KINDS[:3] == ("prose", "process_ladder", "images")
+    assert {kind for kind, phase in BLOCK_PHASES.items() if phase == "A"} <= set(BUILT_BLOCK_KINDS)
+    assert {BLOCK_PHASES[kind] for kind in BUILT_BLOCK_KINDS} <= {"A", "B"}
     assert BLOCK_PHASES["designs"] == "DEFERRED"
     for kind, model in BLOCK_MODELS.items():
         assert model.model_fields["kind"].annotation.__args__ == (kind,)
@@ -111,18 +113,7 @@ def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
 
 def test_a_block_that_is_not_built_is_never_shown() -> None:
     body = document()
-    section(body, "s3")["blocks"].append(
-        {
-            "id": "s3.b2",
-            "kind": "molecule_3d",
-            "version": 1,
-            "reuse": None,
-            "pubchemCid": 6293,
-            "name": "Alizarin",
-            "formula": "C14H8O4",
-            "sourceId": seed_source_id("ie:ajrakh:S1"),
-        }
-    )
+    section(body, "s3")["blocks"].append(declared("what_if") | {"id": "s3.b2"})
     with pytest.raises(ValidationError, match="not built yet"):
         Explainer.model_validate(body)
 

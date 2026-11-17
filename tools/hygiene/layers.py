@@ -15,6 +15,7 @@ LAYER_IMPORTS: dict[str, frozenset[str]] = {
     "models": frozenset({"models"}),
     "core": frozenset({"core", "models"}),
     "research": frozenset({"research", "core", "models"}),
+    "curation": frozenset({"curation", "research", "models", "data"}),
     "sources": frozenset({"sources", "research", "core", "models"}),
     "fetcher": frozenset({"fetcher", "sources", "research", "core"}),
     "retrieval": frozenset({"retrieval", "research", "core", "models"}),

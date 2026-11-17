@@ -175,6 +175,12 @@ async def save_order(
     session: AsyncSession, task: AiTask, entries: list[dict[str, Any]], actor_id: Any
 ) -> None:
     providers = await provider_rows(session)
+    kept_params = {
+        (route.providerId, route.model): dict(route.params or {})
+        for route in (
+            await session.execute(select(RoutePolicy).where(RoutePolicy.task == task.value))
+        ).scalars()
+    }
     await session.execute(delete(RoutePolicy).where(RoutePolicy.task == task.value))
     for ordinal, entry in enumerate(entries, start=1):
         provider = providers.get(str(entry["provider"]).upper())
@@ -189,6 +195,7 @@ async def save_order(
                 maxOutputTokens=entry.get("maxOutputTokens"),
                 temperature=entry.get("temperature"),
                 enabled=bool(entry.get("enabled", True)),
+                params=kept_params.get((provider.id, entry["model"]), {}),
                 updatedById=actor_id,
             )
         )

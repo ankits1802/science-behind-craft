@@ -187,3 +187,48 @@ resource "aws_iam_role_policy" "deploy" {
     ]
   })
 }
+
+resource "aws_iam_role" "river_load" {
+  name                 = "${var.project}-river-load"
+  description          = "Assumed by the Geo ETL in ${var.github_repo} on ${var.github_deploy_ref} to upload river topologies."
+  max_session_duration = 3600
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Federated = local.oidc_provider_a }
+      Action    = "sts:AssumeRoleWithWebIdentity"
+      Condition = {
+        StringEquals = {
+          "${local.oidc_provider}:aud" = "sts.amazonaws.com"
+          "${local.oidc_provider}:sub" = "repo:${var.github_oidc_subject_repo}:ref:${var.github_deploy_ref}"
+        }
+      }
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "river_load" {
+  name = "${var.project}-river-load"
+  role = aws_iam_role.river_load.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid      = "WriteAndHeadRiverTopologies"
+        Effect   = "Allow"
+        Action   = ["s3:PutObject", "s3:GetObject"]
+        Resource = "${aws_s3_bucket.media.arn}/media/rivers/*"
+      },
+      {
+        Sid      = "TellMissingRiverTopologies"
+        Effect   = "Allow"
+        Action   = "s3:ListBucket"
+        Resource = aws_s3_bucket.media.arn
+        Condition = {
+          StringLike = { "s3:prefix" = ["media/rivers/*"] }
+        }
+      },
+    ]
+  })
+}

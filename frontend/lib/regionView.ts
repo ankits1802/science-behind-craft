@@ -192,6 +192,13 @@ export function layerFills(layer: MapLayer): Map<number, number> {
   return new Map(Object.entries(layer.values).map(([lgd, value]) => [Number(lgd), layerClassOf(layer, value)]));
 }
 
+export const NO_DATA_LABEL = "No data";
+
+export function districtReading(layer: MapLayer, lgd: number): string {
+  const value = layer.values[String(lgd)];
+  return value === undefined ? NO_DATA_LABEL : formatMeasure(value, layer.layer.unit);
+}
+
 export function layerClassLabels(layer: MapLayer): string[] {
   return layer.classes.map((band) => formatRange(band.min, band.max, layer.layer.unit) ?? "");
 }

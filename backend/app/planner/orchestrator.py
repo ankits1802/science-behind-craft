@@ -15,7 +15,7 @@ from .drafting import draft_plan
 from .failures import FailureLog
 from .live_search import merged_evidence, run_searches
 from .plans import effective_mode, retrieval_plan, search_question
-from .policy import DEEP_REFERENCE_RESERVE, LIVE_BUDGETS
+from .policy import LIVE_BUDGETS, reference_reserve, seat_reading_kinds
 from .reading import DocumentReader, LiveSources, reading_order
 from .references import cited_dois, follow_references
 
@@ -34,6 +34,14 @@ class PlannedQuestion:
 class LiveFindings:
     evidence: tuple[PackedEvidence, ...] = ()
     documents: tuple[SourceDocument, ...] = ()
+
+
+@dataclass(frozen=True)
+class _Reading:
+    log: FailureLog
+    report: ResearchProgress
+    trail: ResearchTrail | None
+    seat_kinds: tuple[tuple[str, ...], ...]
 
 
 class ResearchPlanner:
@@ -76,7 +84,8 @@ class ResearchPlanner:
             self._retriever, craft_slug=_slug(plan.craft), mode=plan.mode, question=planned.search_question
         )
         log = FailureLog()
-        findings = await self._live(plan, log, report, trail) if plan.queries else LiveFindings()
+        reading = _Reading(log, report, trail, seat_reading_kinds(request))
+        findings = await self._live(plan, reading) if plan.queries else LiveFindings()
         return EvidencePack(
             plan=plan,
             degraded=planned.degraded,
@@ -87,25 +96,23 @@ class ResearchPlanner:
             failures=log.failures,
         )
 
-    async def _live(
-        self, plan: RetrievalPlan, log: FailureLog, report: ResearchProgress, trail: ResearchTrail | None
-    ) -> LiveFindings:
-        await report("RESEARCHING", len(plan.queries))
+    async def _live(self, plan: RetrievalPlan, reading: _Reading) -> LiveFindings:
+        log, trail = reading.log, reading.trail
+        await reading.report("RESEARCHING", len(plan.queries))
         evidence = merged_evidence(plan, await run_searches(plan, self._sources.searchers, log))
         if evidence:
-            await report("READING", len(evidence))
+            await reading.report("READING", len(evidence))
             if trail is not None:
                 await trail.found(evidence)
         reader = DocumentReader(self._sources, mode=plan.mode, log=log, on_read=trail.read if trail else None)
         source = self._sources.doi_source
         follows = any(budget.follows_references for budget in LIVE_BUDGETS[plan.mode].values())
+        ordered = reading_order(evidence, len(plan.facets), reading.seat_kinds)
         if source is None or not follows:
-            documents = await reader.read_best(
-                reading_order(evidence, len(plan.facets)), limit=plan.max_fetches
-            )
+            documents = await reader.read_best(ordered, limit=plan.max_fetches)
             return LiveFindings(tuple(evidence), tuple(documents))
-        primary_limit = plan.max_fetches - DEEP_REFERENCE_RESERVE
-        documents = await reader.read_best(reading_order(evidence, len(plan.facets)), limit=primary_limit)
+        primary_limit = plan.max_fetches - reference_reserve(plan.max_fetches)
+        documents = await reader.read_best(ordered, limit=primary_limit)
         cited = cited_dois(evidence, documents, mode=plan.mode, limit=plan.max_fetches - len(documents))
         followed = await follow_references(cited, source=source, reader=reader, log=log)
         known = {entry.item.source_key for entry in evidence} | {entry.item.id for entry in evidence}

@@ -3,12 +3,13 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from functools import lru_cache
 from typing import Any
 
-from app.core.config import Settings
+from app.core.config import Settings, get_settings
 from app.core.errors import ExternalFailure, NotConfigured, failure_kind
 
-__all__ = ["SERVER_SIDE_ENCRYPTION", "ObjectStore", "PresignedGet", "object_store"]
+__all__ = ["SERVER_SIDE_ENCRYPTION", "ObjectStore", "PresignedGet", "media_bucket", "object_store"]
 
 SERVER_SIDE_ENCRYPTION = "AES256"
 SERVICE = "s3"
@@ -79,6 +80,18 @@ def object_store(settings: Settings, *, client: Any = None) -> ObjectStore:
         region=settings.aws_region,
         client=client or _s3_client(settings.aws_region),
     )
+
+
+def media_bucket() -> ObjectStore | None:
+    settings = get_settings()
+    return _bucket(settings.s3_bucket, settings.aws_region)
+
+
+@lru_cache(maxsize=2)
+def _bucket(bucket: str | None, region: str) -> ObjectStore | None:
+    if not bucket:
+        return None
+    return object_store(get_settings())
 
 
 def _s3_client(region: str) -> Any:

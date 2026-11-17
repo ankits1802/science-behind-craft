@@ -15,6 +15,7 @@ from app.research.vocabulary import FACT_LEVELS, weakest_level
 
 from .answer_events import CitedClaims
 from .knowledge_view import ClaimView
+from .stated_names import unstated_names
 from .write_back_plan import composed_sentences
 
 __all__ = [
@@ -66,7 +67,14 @@ def section_sentences(sentences: Sequence[KeptSentence], cited: CitedClaims) -> 
     facts: list[KeptSentence] = []
     open_questions: list[KeptSentence] = []
     for sentence in sentences:
-        level = _level(_views(sentence, cited))
+        views = _views(sentence, cited)
+        unstated = unstated_names(sentence.text, _supports(views))
+        if unstated:
+            logger.warning(
+                "dropped a sentence naming %s, which no cited claim or quote states", ", ".join(unstated)
+            )
+            continue
+        level = _level(views)
         if level == OPEN_QUESTION_LEVEL:
             open_questions.append(sentence)
         elif sentence.open_question and level is None:
@@ -86,11 +94,16 @@ def prose_problems(sentences: Sequence[KeptSentence], cited: CitedClaims) -> lis
             continue
         if _level(views) not in FACT_LEVELS:
             problems.append(f"sentence {number} is not a fact")
-        supports = [view.text for view in views] + [c["quote"] for c in citations if c["quote"]]
+        supports = _supports(views)
         figures = unsupported_figures(sentence.text, supports)
         if figures:
             problems.append(
                 f"sentence {number} states {', '.join(figures)}, which no cited claim or quote holds"
+            )
+        unstated = unstated_names(sentence.text, supports)
+        if unstated:
+            problems.append(
+                f"sentence {number} names {', '.join(unstated)}, which no cited claim or quote states"
             )
     return problems
 
@@ -125,6 +138,11 @@ def cited_sentence(sentence_id: str, sentence: KeptSentence, cited: CitedClaims)
 
 def _views(sentence: KeptSentence, cited: CitedClaims) -> list[ClaimView]:
     return [cited.views[claim_id] for claim_id in sentence.claim_ids if claim_id in cited.views]
+
+
+def _supports(views: Sequence[ClaimView]) -> list[str]:
+    quotes = [citation["quote"] for citation in _citations(views) if citation["quote"]]
+    return [*(view.text for view in views), *quotes]
 
 
 def _level(views: Sequence[ClaimView]) -> str | None:

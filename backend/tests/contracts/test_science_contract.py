@@ -4,6 +4,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
+from app.research.reactions import mhchem_equation
 from app.schemas.science import (
     CitedClaim,
     ConditionReading,
@@ -12,7 +13,6 @@ from app.schemas.science import (
     ReactionView,
     StageCondition,
     envelope_status,
-    mhchem_equation,
     sources_differ,
 )
 

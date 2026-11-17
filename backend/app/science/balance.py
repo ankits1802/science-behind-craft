@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from sympy import Matrix, Rational
 
 from app.core.errors import InvalidInput
-from app.schemas.science import SPECIES_ROLES
+from app.research.reactions import SPECIES_ROLES
 
 from .formula import Formula, parse_formula
 

@@ -8,7 +8,8 @@ import { ExplainerSentence } from "@/components/answer/ExplainerSentence";
 import type { OpenCitation } from "@/components/answer/SourceDialog";
 import { FieldDialog } from "@/components/dialogs/FieldDialog";
 import { failureMessage, useRemote } from "@/components/hooks/useRemote";
-import type { Term, TermSpan } from "@/lib/explainerContract";
+import type { TermSpan } from "@/lib/explainerBlockBase";
+import type { Term } from "@/lib/explainerContract";
 import { fetchTerm } from "@/lib/termSummary";
 
 type Looked = { key: string; term: Term | null };

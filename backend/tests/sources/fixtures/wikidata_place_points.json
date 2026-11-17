@@ -1,0 +1,43 @@
+{
+ "head": {
+  "vars": [
+   "item",
+   "coordinates",
+   "rank"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "item": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1250069"
+    },
+    "coordinates": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(68.666666666 28.0)"
+    },
+    "rank": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#NormalRank"
+    }
+   },
+   {
+    "item": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q2764770"
+    },
+    "coordinates": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(72.6386 23.2908)"
+    },
+    "rank": {
+     "type": "uri",
+     "value": "http://wikiba.se/ontology#NormalRank"
+    }
+   }
+  ]
+ }
+}

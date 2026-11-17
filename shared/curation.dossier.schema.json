@@ -1,0 +1,1696 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KalaVigyan curated craft dossier",
+  "$defs": {
+    "CitedQuote": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceId": {
+          "pattern": "^S\\d{2,3}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "locator": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Locator",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sourceId",
+        "locator",
+        "quote"
+      ],
+      "title": "CitedQuote",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "discipline": {
+          "enum": [
+            "OVERVIEW",
+            "PROCESS",
+            "CHEMISTRY",
+            "PHYSICS",
+            "MATERIALS",
+            "GEOGRAPHY",
+            "GEOLOGY",
+            "CLIMATE",
+            "ECOLOGY",
+            "BOTANY",
+            "HISTORY",
+            "ECONOMICS",
+            "DESIGN",
+            "HEALTH"
+          ],
+          "title": "Discipline",
+          "type": "string"
+        },
+        "subject": {
+          "$ref": "#/$defs/Subject"
+        },
+        "text": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "quotes": {
+          "items": {
+            "$ref": "#/$defs/CitedQuote"
+          },
+          "minItems": 1,
+          "title": "Quotes",
+          "type": "array"
+        },
+        "hypothesis": {
+          "default": false,
+          "title": "Hypothesis",
+          "type": "boolean"
+        },
+        "sensitivity": {
+          "default": "OPEN",
+          "enum": [
+            "OPEN",
+            "ATTRIBUTE_REQUIRED",
+            "RESTRICTED"
+          ],
+          "title": "Sensitivity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "discipline",
+        "subject",
+        "text",
+        "quotes"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "Community": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^G\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "COMMUNITY",
+            "PERSON",
+            "ORGANISATION"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "localNames": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Localnames",
+          "type": "array"
+        },
+        "honours": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Honours",
+          "type": "array"
+        },
+        "placeId": {
+          "anyOf": [
+            {
+              "pattern": "^L\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Placeid"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "claimIds"
+      ],
+      "title": "Community",
+      "type": "object"
+    },
+    "Conflict": {
+      "additionalProperties": false,
+      "properties": {
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Claimids",
+          "type": "array"
+        },
+        "about": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "About",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claimIds",
+        "about"
+      ],
+      "title": "Conflict",
+      "type": "object"
+    },
+    "EnvironmentLink": {
+      "additionalProperties": false,
+      "properties": {
+        "factor": {
+          "enum": [
+            "WATER",
+            "SOIL",
+            "CLIMATE",
+            "LANDFORM",
+            "VEGETATION",
+            "OTHER"
+          ],
+          "title": "Factor",
+          "type": "string"
+        },
+        "placeId": {
+          "anyOf": [
+            {
+              "pattern": "^L\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Placeid"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "factor",
+        "claimIds"
+      ],
+      "title": "EnvironmentLink",
+      "type": "object"
+    },
+    "GiRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "applicationNumber": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Applicationnumber"
+        },
+        "certificateNumber": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Certificatenumber"
+        },
+        "filedOn": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filedon"
+        },
+        "registeredOn": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Registeredon"
+        },
+        "journalIssue": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Journalissue"
+        },
+        "proprietors": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Proprietors",
+          "type": "array"
+        },
+        "authorisedUserCount": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authorisedusercount"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claimIds"
+      ],
+      "title": "GiRecord",
+      "type": "object"
+    },
+    "KeyFact": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "value",
+        "claimIds"
+      ],
+      "title": "KeyFact",
+      "type": "object"
+    },
+    "Market": {
+      "additionalProperties": false,
+      "properties": {
+        "gi": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GiRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prices": {
+          "items": {
+            "$ref": "#/$defs/Price"
+          },
+          "title": "Prices",
+          "type": "array"
+        },
+        "workforce": {
+          "items": {
+            "$ref": "#/$defs/Workforce"
+          },
+          "title": "Workforce",
+          "type": "array"
+        }
+      },
+      "title": "Market",
+      "type": "object"
+    },
+    "Material": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^M\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "FIBRE",
+            "DYE",
+            "MORDANT",
+            "MINERAL",
+            "CLAY",
+            "METAL",
+            "WOOD",
+            "RESIN",
+            "FUEL",
+            "WATER",
+            "OTHER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "INPUT",
+            "MORDANT",
+            "DYE",
+            "RESIST",
+            "BINDER",
+            "FLUX",
+            "FUEL",
+            "PRODUCT",
+            "OTHER"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "localNames": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Localnames",
+          "type": "array"
+        },
+        "botanicalName": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Botanicalname"
+        },
+        "pubchemCid": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pubchemcid"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "role",
+        "claimIds"
+      ],
+      "title": "Material",
+      "type": "object"
+    },
+    "MaterialUse": {
+      "additionalProperties": false,
+      "properties": {
+        "materialId": {
+          "pattern": "^M\\d{2,3}$",
+          "title": "Materialid",
+          "type": "string"
+        },
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "materialId",
+        "claimId"
+      ],
+      "title": "MaterialUse",
+      "type": "object"
+    },
+    "OpenQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^O\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        },
+        "settledBy": {
+          "anyOf": [
+            {
+              "maxLength": 600,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Settledby"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "claimIds"
+      ],
+      "title": "OpenQuestion",
+      "type": "object"
+    },
+    "Overview": {
+      "additionalProperties": false,
+      "properties": {
+        "lede": {
+          "items": {
+            "$ref": "#/$defs/OverviewSentence"
+          },
+          "maxItems": 4,
+          "minItems": 2,
+          "title": "Lede",
+          "type": "array"
+        },
+        "keyFacts": {
+          "items": {
+            "$ref": "#/$defs/KeyFact"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Keyfacts",
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/$defs/OverviewSection"
+          },
+          "title": "Sections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lede",
+        "keyFacts"
+      ],
+      "title": "Overview",
+      "type": "object"
+    },
+    "OverviewSection": {
+      "additionalProperties": false,
+      "properties": {
+        "discipline": {
+          "enum": [
+            "OVERVIEW",
+            "PROCESS",
+            "CHEMISTRY",
+            "PHYSICS",
+            "MATERIALS",
+            "GEOGRAPHY",
+            "GEOLOGY",
+            "CLIMATE",
+            "ECOLOGY",
+            "BOTANY",
+            "HISTORY",
+            "ECONOMICS",
+            "DESIGN",
+            "HEALTH"
+          ],
+          "title": "Discipline",
+          "type": "string"
+        },
+        "sentences": {
+          "items": {
+            "$ref": "#/$defs/OverviewSentence"
+          },
+          "maxItems": 8,
+          "minItems": 3,
+          "title": "Sentences",
+          "type": "array"
+        }
+      },
+      "required": [
+        "discipline",
+        "sentences"
+      ],
+      "title": "OverviewSection",
+      "type": "object"
+    },
+    "OverviewSentence": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "claimIds"
+      ],
+      "title": "OverviewSentence",
+      "type": "object"
+    },
+    "Picture": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^I\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "pageUrl": {
+          "title": "Pageurl",
+          "type": "string"
+        },
+        "author": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Author",
+          "type": "string"
+        },
+        "licence": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Licence",
+          "type": "string"
+        },
+        "licenceUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Licenceurl"
+        },
+        "caption": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Caption",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "title": "Claimids",
+          "type": "array"
+        },
+        "stageId": {
+          "anyOf": [
+            {
+              "pattern": "^P\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stageid"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "pageUrl",
+        "author",
+        "licence",
+        "caption"
+      ],
+      "title": "Picture",
+      "type": "object"
+    },
+    "Place": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^L\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "VILLAGE",
+            "TOWN",
+            "DISTRICT",
+            "STATE",
+            "COUNTRY",
+            "REGION",
+            "RIVER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "district": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "District"
+        },
+        "state": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State"
+        },
+        "country": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Country",
+          "type": "string"
+        },
+        "wikidata": {
+          "anyOf": [
+            {
+              "pattern": "^Q[1-9]\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wikidata"
+        },
+        "role": {
+          "enum": [
+            "PRACTISED",
+            "ORIGIN",
+            "HISTORIC_CENTRE",
+            "MATERIAL_SOURCE",
+            "MARKET",
+            "MIGRATED_FROM",
+            "MIGRATED_TO"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "country",
+        "role",
+        "claimIds"
+      ],
+      "title": "Place",
+      "type": "object"
+    },
+    "Price": {
+      "additionalProperties": false,
+      "properties": {
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        },
+        "date": {
+          "title": "Date",
+          "type": "string"
+        },
+        "placeId": {
+          "pattern": "^L\\d{2,3}$",
+          "title": "Placeid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claimId",
+        "date",
+        "placeId"
+      ],
+      "title": "Price",
+      "type": "object"
+    },
+    "Reaction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^R\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "REDOX",
+            "ACID_BASE",
+            "COMPLEXATION",
+            "PRECIPITATION",
+            "DEHYDRATION",
+            "DEHYDROXYLATION",
+            "PHASE_CHANGE",
+            "POLYMERISATION",
+            "HYDROLYSIS",
+            "OTHER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "stageId": {
+          "anyOf": [
+            {
+              "pattern": "^P\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stageid"
+        },
+        "reactants": {
+          "items": {
+            "$ref": "#/$defs/Species"
+          },
+          "minItems": 1,
+          "title": "Reactants",
+          "type": "array"
+        },
+        "products": {
+          "items": {
+            "$ref": "#/$defs/Species"
+          },
+          "minItems": 1,
+          "title": "Products",
+          "type": "array"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "reactants",
+        "products",
+        "claimIds"
+      ],
+      "title": "Reaction",
+      "type": "object"
+    },
+    "Search": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "site": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query",
+        "site"
+      ],
+      "title": "Search",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^S\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "PAPER",
+            "BOOK",
+            "BOOK_CHAPTER",
+            "WEB_PAGE",
+            "ENCYCLOPEDIA",
+            "DATASET",
+            "GI_JOURNAL",
+            "GOVERNMENT_REPORT",
+            "COMPOUND_RECORD",
+            "OTHER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "subKind": {
+          "anyOf": [
+            {
+              "enum": [
+                "THESIS",
+                "MUSEUM_RECORD",
+                "NGO_REPORT",
+                "NEWS"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subkind"
+        },
+        "title": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "authors": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "publisher": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publisher"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "maximum": 2100,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "doi": {
+          "anyOf": [
+            {
+              "pattern": "^10\\.\\d{4,9}/\\S+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Doi"
+        },
+        "archivedUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Archivedurl"
+        },
+        "language": {
+          "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$",
+          "title": "Language",
+          "type": "string"
+        },
+        "licence": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Licence"
+        },
+        "access": {
+          "enum": [
+            "OPEN",
+            "ABSTRACT_ONLY",
+            "RESTRICTED"
+          ],
+          "title": "Access",
+          "type": "string"
+        },
+        "reliability": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "title": "Reliability",
+          "type": "string"
+        },
+        "retrievedAt": {
+          "format": "date",
+          "title": "Retrievedat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "url",
+        "language",
+        "access",
+        "reliability",
+        "retrievedAt"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Species": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Species",
+      "type": "object"
+    },
+    "Stage": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^P\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "localName": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Localname"
+        },
+        "stageType": {
+          "enum": [
+            "PREP",
+            "SCOUR",
+            "MORDANT",
+            "DYE",
+            "RESIST",
+            "PRINT",
+            "WASH",
+            "DRY",
+            "SHAPE",
+            "CARVE",
+            "FIRE",
+            "CAST",
+            "FINISH",
+            "OTHER"
+          ],
+          "title": "Stagetype",
+          "type": "string"
+        },
+        "order": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order"
+        },
+        "orderClaimId": {
+          "anyOf": [
+            {
+              "pattern": "^C\\d{3,4}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Orderclaimid"
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timing"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "season": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timing"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "materials": {
+          "items": {
+            "$ref": "#/$defs/MaterialUse"
+          },
+          "title": "Materials",
+          "type": "array"
+        },
+        "tools": {
+          "items": {
+            "$ref": "#/$defs/ToolUse"
+          },
+          "title": "Tools",
+          "type": "array"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "stageType",
+        "claimIds"
+      ],
+      "title": "Stage",
+      "type": "object"
+    },
+    "Subject": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "CRAFT",
+            "STAGE",
+            "MATERIAL",
+            "PLACE",
+            "TOOL",
+            "COMMUNITY",
+            "TERM"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Subject",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^W\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "term": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Term",
+          "type": "string"
+        },
+        "meaning": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Meaning",
+          "type": "string"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "script": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z][a-z]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Script"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "term",
+        "meaning",
+        "claimIds"
+      ],
+      "title": "Term",
+      "type": "object"
+    },
+    "Timing": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "claimId"
+      ],
+      "title": "Timing",
+      "type": "object"
+    },
+    "Tool": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^T\\d{2,3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "localNames": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Localnames",
+          "type": "array"
+        },
+        "claimIds": {
+          "items": {
+            "pattern": "^C\\d{3,4}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "claimIds"
+      ],
+      "title": "Tool",
+      "type": "object"
+    },
+    "ToolUse": {
+      "additionalProperties": false,
+      "properties": {
+        "toolId": {
+          "pattern": "^T\\d{2,3}$",
+          "title": "Toolid",
+          "type": "string"
+        },
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "toolId",
+        "claimId"
+      ],
+      "title": "ToolUse",
+      "type": "object"
+    },
+    "Workforce": {
+      "additionalProperties": false,
+      "properties": {
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        },
+        "year": {
+          "maximum": 2100,
+          "minimum": 1000,
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "claimId",
+        "year"
+      ],
+      "title": "Workforce",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1,
+      "default": 1,
+      "title": "Schemaversion",
+      "type": "integer"
+    },
+    "craftSlug": {
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+      "title": "Craftslug",
+      "type": "string"
+    },
+    "version": {
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "curatedAt": {
+      "format": "date-time",
+      "title": "Curatedat",
+      "type": "string"
+    },
+    "curator": {
+      "const": "claude-code",
+      "default": "claude-code",
+      "title": "Curator",
+      "type": "string"
+    },
+    "coverage": {
+      "enum": [
+        "FULL",
+        "THIN"
+      ],
+      "title": "Coverage",
+      "type": "string"
+    },
+    "searched": {
+      "items": {
+        "$ref": "#/$defs/Search"
+      },
+      "minItems": 1,
+      "title": "Searched",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "minItems": 1,
+      "title": "Claims",
+      "type": "array"
+    },
+    "places": {
+      "items": {
+        "$ref": "#/$defs/Place"
+      },
+      "title": "Places",
+      "type": "array"
+    },
+    "communities": {
+      "items": {
+        "$ref": "#/$defs/Community"
+      },
+      "title": "Communities",
+      "type": "array"
+    },
+    "stages": {
+      "items": {
+        "$ref": "#/$defs/Stage"
+      },
+      "title": "Stages",
+      "type": "array"
+    },
+    "materials": {
+      "items": {
+        "$ref": "#/$defs/Material"
+      },
+      "title": "Materials",
+      "type": "array"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/Tool"
+      },
+      "title": "Tools",
+      "type": "array"
+    },
+    "reactions": {
+      "items": {
+        "$ref": "#/$defs/Reaction"
+      },
+      "title": "Reactions",
+      "type": "array"
+    },
+    "environment": {
+      "items": {
+        "$ref": "#/$defs/EnvironmentLink"
+      },
+      "title": "Environment",
+      "type": "array"
+    },
+    "market": {
+      "$ref": "#/$defs/Market"
+    },
+    "glossary": {
+      "items": {
+        "$ref": "#/$defs/Term"
+      },
+      "title": "Glossary",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/Conflict"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "openQuestions": {
+      "items": {
+        "$ref": "#/$defs/OpenQuestion"
+      },
+      "title": "Openquestions",
+      "type": "array"
+    },
+    "pictures": {
+      "items": {
+        "$ref": "#/$defs/Picture"
+      },
+      "maxItems": 6,
+      "title": "Pictures",
+      "type": "array"
+    },
+    "overview": {
+      "$ref": "#/$defs/Overview"
+    }
+  },
+  "required": [
+    "craftSlug",
+    "version",
+    "curatedAt",
+    "coverage",
+    "searched",
+    "sources",
+    "claims",
+    "overview"
+  ],
+  "type": "object"
+}

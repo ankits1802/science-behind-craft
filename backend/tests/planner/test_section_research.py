@@ -25,12 +25,13 @@ class Trail:
         self.read_ids.append(document.item.id)
 
 
-async def test_a_section_plan_names_its_field_and_its_experts() -> None:
+async def test_a_section_plan_names_its_field_and_the_experts_who_speak_to_it() -> None:
     model = model_for()
     share = ResearchShare(queries=1, native_queries=0, fetches=3)
     await draft_plan(model, request(focus="CHEMISTRY", seats=("CHEMIST", "DESIGN_HISTORIAN"), share=share))
     (call,) = model.calls
-    assert "Section: chemistry\nExperts: chemist, design historian\n" in call["user"]
+    experts = "Experts: chemist, reading paper, book, compound record, encyclopedia"
+    assert f"Section: chemistry\n{experts}\n" in call["user"]
     assert "Queries: at most 1\n" in call["user"]
 
 

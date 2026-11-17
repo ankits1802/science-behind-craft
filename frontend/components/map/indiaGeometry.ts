@@ -1,10 +1,3 @@
-export const INDIA_BOUNDS = {
-  minLongitude: 68.2060,
-  maxLongitude: 97.3940,
-  minLatitude: 6.7560,
-  maxLatitude: 37.0820
-} as const;
-
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
 const VALUES = new Map<string, number>([...ALPHABET].map((character, index) => [character, index]));

@@ -6,8 +6,13 @@ models are `backend/app/schemas/science.py`; the client's types and runtime shap
 (Kutch Ajrakh, from the seeded GI Journal claims). Change the three together, with
 `backend/tests/contracts/test_science_contract.py` and `frontend/e2e/contracts-unit.spec.ts`.
 Design choices: decision 0014. PLAN 7 is the specification; PLAN 0 overrides it.
+`ReactionSpecies`, `mhchem_equation`, `reaction_level` and the unbalanced cap live in
+`backend/app/research/reactions.py` since decision 0042, shared with the explainer's reaction
+player (`reactionSpeciesShape` on the client); the rules below are unchanged. The reaction
+player's steps are this route's reaction views, in process order, and are re-checked against
+these rows when built and reused (`science/reaction_player`, decision 0045).
 
-Last reviewed: 2026-11-16 (lane 0015).
+Last reviewed: 2026-11-17 (decision 0042).
 
 ## Route
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import uuid
 from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol
 
 from app.composer.candidates import research_summary
@@ -43,11 +43,12 @@ from .answer_translation import (
     needs_english_rendering,
     translate_segments,
 )
+from .block_builders import BlockBuilders
 from .explainer_document import explainer_document
 from .explainer_events import ExplainerStream, status_message
 from .piece_lookup import PieceAsk
 from .piece_store import BuiltSection, PieceStore
-from .reused_sections import ReusedShowing, reused_follow_ups, stream_reused
+from .reused_sections import ReuseBuilds, ReusedShowing, reused_follow_ups, stream_reused
 from .section_enrichment import Enrichment, EnrichmentTools
 from .stored_explainer import stream_stored_answer
 
@@ -117,6 +118,7 @@ class AnswerPipeline:
     translation: AnswerTranslation
     pieces: PieceStore
     enrichment: EnrichmentTools
+    builders: BlockBuilders = field(default_factory=BlockBuilders)
 
 
 @dataclass(frozen=True)
@@ -222,9 +224,7 @@ async def _researched_answer(
     titles = await _translated(_title_segments(specs), stream.language, pipeline.translation)
     lookup = await pipeline.pieces.reusable(_piece_ask(ask, understanding, specs))
     run = _Run(ask, understanding, pipeline, stream, answer_id, await pipeline.enrichment.for_answer(craft))
-    reused = await stream_reused(
-        specs, lookup, ReusedShowing(stream, titles, pipeline.translation, run.enrichment)
-    )
+    reused = await stream_reused(specs, lookup, _reused_showing(run, titles))
     open_specs = [spec for spec in specs if spec.discipline not in lookup.reused]
     for spec in open_specs:
         await stream.section_started(spec, titles=titles, state="RESEARCHING")
@@ -236,6 +236,13 @@ async def _researched_answer(
     built = [BuiltSection(outcome.spec.discipline, outcome.built) for outcome in researched if outcome.built]
     await pipeline.pieces.keep(lookup, answer_id=answer_id, depth=understanding.depth, sections=built)
     return answer_id
+
+
+def _reused_showing(run: _Run, titles: Mapping[str, str]) -> ReusedShowing:
+    builds = ReuseBuilds(
+        run.pipeline.builders.for_reuse(), run.answer_id, _plan_request(run.ask, run.understanding)
+    )
+    return ReusedShowing(run.stream, titles, run.pipeline.translation, run.enrichment, builds)
 
 
 async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutcome]:
@@ -251,6 +258,7 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
         ledger=ResearchLedger(request_limits(base, base.mode), len(specs)),
         enrichment=run.enrichment,
         process=await _process(run.understanding.craft, specs, pipeline.store),
+        builders=pipeline.builders,
     )
     return await run_sections(specs, context)
 

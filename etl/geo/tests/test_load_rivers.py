@@ -1,0 +1,194 @@
+import datetime as dt
+import hashlib
+import json
+
+import geopandas as gpd
+import pytest
+from shapely.geometry import LineString
+
+import load_rivers
+from geo_etl.rivers import topology_key, write_rivers
+from load_rivers import (
+    BASIN_COLUMNS,
+    REACH_COLUMNS,
+    output_problems,
+    reach_rows,
+    read_outputs,
+    replace_rivers,
+    stored_sha256,
+    upload_topologies,
+)
+
+SOURCE, MOUTH, COAST = 41000010, 41000040, 41000090
+DATASET_ID = "8c5f1d2e-0000-4000-8000-000000000043"
+
+
+def reaches() -> gpd.GeoDataFrame:
+    rows = [
+        (SOURCE, MOUTH, MOUTH, [(69.0, 23.6), (69.1, 23.4)]),
+        (MOUTH, 0, MOUTH, [(69.1, 23.4), (69.2, 23.1)]),
+        (COAST, 0, COAST, [(70.0, 22.0), (70.1, 21.9)]),
+    ]
+    return gpd.GeoDataFrame(
+        [
+            {
+                "hyrivId": rid,
+                "nextDown": down,
+                "mainRiv": main,
+                "ordStra": 2,
+                "uplandSkm": 150.0,
+                "disAvCms": 0.5,
+                "lengthKm": 4.2,
+                "geometry": LineString(coords),
+            }
+            for rid, down, main, coords in rows
+        ],
+        geometry="geometry",
+        crs="EPSG:4326",
+    )
+
+
+@pytest.fixture
+def outputs(tmp_path):
+    write_rivers(reaches(), tmp_path, retrieved_at=dt.datetime(2026, 11, 17, tzinfo=dt.UTC))
+    return read_outputs(tmp_path)
+
+
+class MissingKey(Exception):
+    def __init__(self, code: str) -> None:
+        super().__init__(code)
+        self.response = {"Error": {"Code": code}}
+
+
+class FakeBucket:
+    def __init__(self, stored: dict[str, str]):
+        self.stored = stored
+        self.puts: list[dict] = []
+
+    def head_object(self, Bucket, Key):
+        if Key not in self.stored:
+            raise MissingKey("404")
+        return {"Metadata": {"sha256": self.stored[Key]}}
+
+    def put_object(self, **kwargs):
+        self.puts.append(kwargs)
+
+
+def test_written_outputs_pass_the_load_checks(outputs):
+    assert output_problems(outputs) == []
+
+
+def test_a_changed_topology_or_count_is_refused(outputs):
+    basin = outputs.manifest["basins"][0]
+    (outputs.folder / basin["file"]).write_bytes(b"{}")
+    outputs.manifest["reaches"] = 4
+    outputs.manifest["basins"][1]["reaches"] = 5
+    assert output_problems(outputs) == [
+        f"basin {MOUTH}'s topology does not match its sha256",
+        f"basin {COAST} lists 5 reaches, the file holds 1",
+        "the manifest counts 4 reaches, the file holds 3",
+    ]
+
+
+def test_only_topologies_not_stored_under_their_digest_are_uploaded(outputs):
+    first, second = outputs.manifest["basins"]
+    key_first, key_second = (topology_key("v10", b["mainRiv"], b["sha256"]) for b in (first, second))
+    assert key_second.split("/")[3:5] == [str(COAST), second["sha256"]]
+    stale = topology_key("v10", second["mainRiv"], hashlib.sha256(b"older").hexdigest())
+    bucket = FakeBucket({key_first: first["sha256"], stale: "older"})
+    assert upload_topologies(bucket, "kalavigyan-media", outputs) == (1, 1)
+    [put] = bucket.puts
+    body = (outputs.folder / second["file"]).read_bytes()
+    assert put == {
+        "Bucket": "kalavigyan-media",
+        "Key": key_second,
+        "Body": body,
+        "ContentType": "application/json",
+        "ServerSideEncryption": "AES256",
+        "Metadata": {"sha256": hashlib.sha256(body).hexdigest()},
+    }
+    assert json.loads(body)["objects"]["reaches"]["geometries"][0]["id"] == COAST
+
+
+def test_a_head_error_other_than_missing_stops_the_upload():
+    class Refusing:
+        def head_object(self, Bucket, Key):
+            raise MissingKey("403")
+
+    assert stored_sha256(FakeBucket({}), "b", "k") is None
+    with pytest.raises(MissingKey):
+        stored_sha256(Refusing(), "b", "k")
+
+
+def test_reach_rows_carry_the_line_as_ewkb_in_wgs84(outputs):
+    rows = reach_rows(outputs.reaches)
+    assert [row[:7] for row in rows] == [
+        [SOURCE, MOUTH, MOUTH, 2, 150.0, 0.5, 4.2],
+        [MOUTH, 0, MOUTH, 2, 150.0, 0.5, 4.2],
+        [COAST, 0, COAST, 2, 150.0, 0.5, 4.2],
+    ]
+    assert rows[0][7].upper().startswith("0102000020E6100000")
+
+
+class FakeCursor:
+    def __init__(self):
+        self.executed: list[str] = []
+        self.copied: dict[str, list[list]] = {}
+        self._answer: list = []
+
+    def execute(self, sql, params=None):
+        self.executed.append(sql)
+        if "information_schema.columns" in sql:
+            table = params[0]
+            names = {"RiverBasin": BASIN_COLUMNS, "RiverReach": REACH_COLUMNS}.get(table)
+            if names is None:
+                names = ["code", "title", "licence", "edition", "licenceUrl", "attribution"]
+            self._answer = [(name, "text") for name in names]
+        elif sql.startswith('insert into "EnvDataset"'):
+            self._answer = [(DATASET_ID, "HYDRORIVERS_1_0")]
+
+    def fetchall(self):
+        return self._answer
+
+    def fetchone(self):
+        return self._answer[0]
+
+    def copy(self, sql):
+        rows = self.copied.setdefault(sql, [])
+
+        class Copy:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+            def write_row(self, row):
+                rows.append(row)
+
+        return Copy()
+
+
+def test_replace_rivers_writes_the_dataset_row_then_basins_then_reaches(outputs):
+    cursor = FakeCursor()
+    assert replace_rivers(cursor, outputs) == (2, 3)
+    deletes = [sql for sql in cursor.executed if sql.startswith("delete")]
+    assert deletes == ['delete from "RiverReach"', 'delete from "RiverBasin"']
+    basin_copy, reach_copy = cursor.copied
+    assert basin_copy.startswith('copy "RiverBasin" ("mainRiv", "datasetId", "reachCount", "topologySha256")')
+    assert [row[:3] for row in cursor.copied[basin_copy]] == [[MOUTH, DATASET_ID, 2], [COAST, DATASET_ID, 1]]
+    assert [row[0] for row in cursor.copied[reach_copy]] == [SOURCE, MOUTH, COAST]
+
+
+def test_a_missing_river_table_stops_the_load(outputs):
+    cursor = FakeCursor()
+    cursor.execute = lambda sql, params=None: setattr(cursor, "_answer", [])
+    with pytest.raises(SystemExit, match='table "RiverBasin" does not exist'):
+        replace_rivers(cursor, outputs)
+
+
+def test_main_validates_without_connecting(outputs, capsys, monkeypatch):
+    assert load_rivers.main(["--out", str(outputs.folder), "--dry-run"]) == 0
+    assert "3 reaches in 2 basins" in capsys.readouterr().out
+    monkeypatch.delenv("KALAVIGYAN_TEST_DSN_UNSET", raising=False)
+    assert load_rivers.main(["--out", str(outputs.folder), "--dsn-env", "KALAVIGYAN_TEST_DSN_UNSET"]) == 2

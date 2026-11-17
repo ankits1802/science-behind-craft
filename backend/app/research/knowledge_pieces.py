@@ -12,13 +12,17 @@ from typing import Any, Literal, Self
 from pydantic import AwareDatetime, Field, TypeAdapter, model_validator
 
 from .base import ContractModel
-from .blocks import BlockBase, ImagesBlock, ReuseMarker
+from .blocks import BlockBase, ReuseMarker
+from .blocks_place import RegionStoryBlock
 from .depth import depth_at_least
-from .explainer import BUILT_BLOCK_KINDS, Block
-from .subject_keys import TopicKey
+from .explainer import BUILT_BLOCK_KINDS, Block, with_payload_sentences
+from .piece_topics import FACET_NAMESPACES
+from .subject_keys import TopicKey, topic_key
 from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, BlockKind, Depth, Discipline
 
 __all__ = [
+    "BASIN_SUBJECT_PREFIX",
+    "DISTRICT_SUBJECT_PREFIX",
     "PIECE_SCHEMA_VERSION",
     "PIECE_SENTENCE_PREFIX_CHARS",
     "PIECE_STALE_CHANGES",
@@ -29,8 +33,10 @@ __all__ = [
     "ReuseAsk",
     "knowledge_piece",
     "piece_content_hash",
+    "piece_slot",
     "piece_text",
     "placed_block",
+    "region_topic",
     "rests_on",
     "reuse_refusal",
 ]
@@ -40,7 +46,8 @@ PIECE_STALE_CHANGES = ("RETRACTED", "LEVEL_CHANGED", "HIDDEN", "TEXT_CHANGED")
 PLACEMENT_FIELDS = frozenset({"id", "reuse"})
 REUSE_REFUSALS = ("CRAFT", "FACET", "TOPIC", "DEPTH", "STALE", "SUPERSEDED", "CLAIM_NOT_VISIBLE")
 PIECE_SENTENCE_PREFIX_CHARS = 12
-SENTENCES_FIELD = "sentences"
+BASIN_SUBJECT_PREFIX = "basin"
+DISTRICT_SUBJECT_PREFIX = "lgd"
 BLOCKS = TypeAdapter(Block)
 
 ReuseRefusal = Literal[*REUSE_REFUSALS]
@@ -162,23 +169,28 @@ def placed_block(piece: KnowledgePiece, block_id: str) -> Block:
 
 
 def piece_text(block: BlockBase) -> str:
-    texts = [sentence.text for sentence in block.cited_sentences()]
-    if isinstance(block, ImagesBlock):
-        texts += [item.media.title for item in block.items]
-    return " ".join(texts)
+    return " ".join([*(sentence.text for sentence in block.cited_sentences()), *block.shown_labels()])
+
+
+def piece_slot(block: BlockBase, slot: PieceSlot) -> PieceSlot:
+    if not isinstance(block, RegionStoryBlock):
+        return slot
+    main_riv = block.river.main_riv if block.river is not None else None
+    lgds = [district.district_lgd for district in block.districts]
+    return PieceSlot(
+        None, slot.facet, region_topic(slot.facet, main_riv=main_riv, district_lgds=lgds), slot.depth
+    )
+
+
+def region_topic(facet: str, *, main_riv: int | None, district_lgds: Collection[int]) -> str:
+    if main_riv is not None:
+        subjects = [f"{BASIN_SUBJECT_PREFIX}-{main_riv}"]
+    else:
+        subjects = [f"{DISTRICT_SUBJECT_PREFIX}-{lgd}" for lgd in district_lgds]
+    return topic_key(FACET_NAMESPACES[facet], *subjects)
 
 
 def _piece_sentence_ids(payload: dict[str, Any], piece_id: uuid.UUID) -> dict[str, Any]:
     prefix = f"p{piece_id.hex[:PIECE_SENTENCE_PREFIX_CHARS]}"
     counter = itertools.count(1)
-
-    def renamed(value: Any, key: str | None = None) -> Any:
-        if isinstance(value, dict):
-            return {name: renamed(item, name) for name, item in value.items()}
-        if isinstance(value, list) and key == SENTENCES_FIELD:
-            return [renamed(item) | {"id": f"{prefix}.{next(counter)}"} for item in value]
-        if isinstance(value, list):
-            return [renamed(item) for item in value]
-        return value
-
-    return renamed(payload)
+    return with_payload_sentences(payload, lambda sentence: {**sentence, "id": f"{prefix}.{next(counter)}"})

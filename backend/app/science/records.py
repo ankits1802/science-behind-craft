@@ -52,6 +52,7 @@ class CompoundRecord:
     name: str
     formula: str | None
     pubchem_cid: int | None
+    source_id: uuid.UUID | None = None
 
 
 @dataclass(frozen=True)
@@ -64,6 +65,8 @@ class MaterialRecord:
     quantity_text: str | None
     compound: CompoundRecord | None
     claim_ids: tuple[uuid.UUID, ...]
+    material_id: uuid.UUID | None = None
+    concept_id: uuid.UUID | None = None
 
 
 @dataclass(frozen=True)

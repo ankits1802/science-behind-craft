@@ -10,9 +10,12 @@ from ..records import clean_text
 from .mediawiki import primary_language
 
 __all__ = [
+    "ENTITY_PREFIX",
     "EXTERNAL_ID_NAMES",
     "ITEM_ID",
+    "ONTOLOGY_PREFIX",
     "Statement",
+    "binding_value",
     "external_ids_of",
     "statement_lines",
     "statements_from_bindings",
@@ -84,10 +87,15 @@ def external_ids_of(statements: Iterable[Statement]) -> dict[str, str]:
     return found
 
 
+def binding_value(row: Mapping[str, Any], name: str) -> str | None:
+    cell = row.get(name)
+    return clean_text(cell.get("value")) if isinstance(cell, Mapping) else None
+
+
 def _statement(row: Mapping[str, Any]) -> Statement | None:
-    property_iri = _value(row, "property") or ""
-    label = _value(row, "propertyLabel")
-    value_type = (_value(row, "type") or "").removeprefix(ONTOLOGY_PREFIX)
+    property_iri = binding_value(row, "property") or ""
+    label = binding_value(row, "propertyLabel")
+    value_type = (binding_value(row, "type") or "").removeprefix(ONTOLOGY_PREFIX)
     number = property_iri.removeprefix(ENTITY_PREFIX).removeprefix("P")
     if not number.isdigit() or not label:
         return None
@@ -98,17 +106,17 @@ def _statement(row: Mapping[str, Any]) -> Statement | None:
 
 
 def _rendered_value(row: Mapping[str, Any], value_type: str) -> str | None:
-    raw = _value(row, "value")
+    raw = binding_value(row, "value")
     if raw is None:
         return None
     if value_type == "WikibaseItem":
-        return _value(row, "valueLabel") or raw.removeprefix(ENTITY_PREFIX)
+        return binding_value(row, "valueLabel") or raw.removeprefix(ENTITY_PREFIX)
     if value_type == "Quantity":
-        unit = _value(row, "unit")
-        unit_label = _value(row, "unitLabel")
+        unit = binding_value(row, "unit")
+        unit_label = binding_value(row, "unitLabel")
         return raw if unit in (None, UNITLESS) or not unit_label else f"{raw} {unit_label}"
     if value_type == "Time":
-        return _time_text(raw, _value(row, "precision"))
+        return _time_text(raw, binding_value(row, "precision"))
     if value_type == "CommonsMedia":
         return unquote(raw.removeprefix(FILE_PATH_PREFIX))
     return raw
@@ -119,8 +127,3 @@ def _time_text(raw: str, precision: str | None) -> str | None:
         return None
     sign = "-" if raw.startswith("-") else ""
     return sign + raw.lstrip("+-")[: TIME_FORMATS[int(precision)]]
-
-
-def _value(row: Mapping[str, Any], name: str) -> str | None:
-    cell = row.get(name)
-    return clean_text(cell.get("value")) if isinstance(cell, Mapping) else None

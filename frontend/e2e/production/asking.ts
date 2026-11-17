@@ -6,11 +6,12 @@ import {
   STALL_LIMIT_MS,
   answerProblems,
   answerRecord,
+  knownAnswerOutcome,
   type AnswerRecord,
   type KnownAnswerQuestion,
   type WaitOutcome
 } from "./answers";
-import { CRAFT_SLUG } from "./run";
+import { CRAFT_SLUG, riversLoaded } from "./run";
 import { settle } from "./screenRun";
 import { glanceAtTaps, pageNow, readTaps } from "./streamTap";
 
@@ -75,6 +76,8 @@ export async function askKnownAnswer(page: Page, question: KnownAnswerQuestion):
   const streams = await readTaps(page, clickedAt);
   const record = answerRecord({ question, stream: streams.at(-1) ?? null, streamsOpened: streams.length, clickedAt, waited });
   if (!waited) await readPageSentences(page, record);
-  record.problems.push(...answerProblems(record, question));
+  const options = { riversLoaded: riversLoaded() };
+  record.problems.push(...answerProblems(record, question, options));
+  record.notes.push(...knownAnswerOutcome(record, question, options).notes);
   return record;
 }

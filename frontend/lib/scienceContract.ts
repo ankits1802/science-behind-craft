@@ -98,20 +98,19 @@ const conditionShape: Shape<StageCondition> = object<StageCondition>({
   claims: list(citedClaimShape, 1)
 });
 
+export const reactionSpeciesShape: Shape<ReactionSpecies> = object<ReactionSpecies>({
+  role: oneOf(["REACTANT", "PRODUCT"] as const),
+  formula: nullable(text),
+  name: nullable(text),
+  coefficient: nullable(integer),
+  compoundId: nullable(UUID)
+});
+
 const reactionShape: Shape<ProcessReaction> = object<ProcessReaction>({
   id: UUID,
   kind: oneOf(REACTION_KINDS),
   label: text,
-  species: list(
-    object<ReactionSpecies>({
-      role: oneOf(["REACTANT", "PRODUCT"] as const),
-      formula: nullable(text),
-      name: nullable(text),
-      coefficient: nullable(integer),
-      compoundId: nullable(UUID)
-    }),
-    2
-  ),
+  species: list(reactionSpeciesShape, 2),
   balanced: boolean,
   equation: nullable(text),
   checkerVersion: nullable(text),

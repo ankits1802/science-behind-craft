@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { RotateCw } from "lucide-react";
 
 import { failureMessage, useRemote, type Remote } from "@/components/hooks/useRemote";
 import { ChoroplethLegend, choroplethTone } from "@/components/map/ChoroplethLegend";
@@ -10,10 +9,10 @@ import { IndiaMapStage } from "@/components/map/IndiaMapStage";
 import type { MapPoint } from "@/components/map/layout";
 import { MapAttribution } from "@/components/map/MapAttribution";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
+import { RetryLine } from "@/components/RemotePanels";
 import { fetchMapLayer } from "@/lib/mapLayers";
-import { formatMeasure } from "@/lib/measure";
 import type { BoundaryNote, MapLayer } from "@/lib/regionContract";
-import { layerFills } from "@/lib/regionView";
+import { districtReading, layerFills } from "@/lib/regionView";
 
 type Pinned = { layerId: string; lgd: number };
 
@@ -58,24 +57,11 @@ export function MapLayerView({ points, layerId, boundary }: { points: MapPoint[]
   );
 }
 
-function districtReading(layer: MapLayer, lgd: number): string {
-  const value = layer.values[String(lgd)];
-  return value === undefined ? "No data" : formatMeasure(value, layer.layer.unit);
-}
-
-function LayerStatus({ layer, shapes }: { layer: Remote<MapLayer>; shapes: Remote<DistrictShape[]> }) {
+export function LayerStatus({ layer, shapes }: { layer: Remote<MapLayer>; shapes: Remote<DistrictShape[]> }) {
   const failure = layer.failure ?? shapes.failure;
   if (failure) {
     const retry = layer.failure ? layer.retry : shapes.retry;
-    return (
-      <div role="alert" className="mt-4 flex flex-wrap items-center gap-3 border-t border-line-200 pt-4 text-sm text-ink-700">
-        <span>{failureMessage(failure, "Couldn't load this layer.")}</span>
-        <button type="button" className="field-button-secondary" onClick={retry}>
-          <RotateCw className="h-4 w-4" aria-hidden />
-          Try again
-        </button>
-      </div>
-    );
+    return <RetryLine message={failureMessage(failure, "Couldn't load this layer.")} onRetry={retry} className="mt-4 border-t border-line-200 pt-4" />;
   }
   if (!layer.data || !shapes.data) {
     return (

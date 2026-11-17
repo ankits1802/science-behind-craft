@@ -1,7 +1,27 @@
 import { languageCodeShape } from "@/lib/answerLanguages";
 import { answerSentenceShape, citationShape, craftLinkShape, HTTPS_URL, INSTANT, shownLevelShape, sourceRefShape, UUID, type CraftLink } from "@/lib/answerShapes";
+import { envelope, explainerSentenceShape, TERM_KEY, WIKIDATA_ID, type BlockEnvelope, type ExplainerSentence } from "@/lib/explainerBlockBase";
+import { expertViewBlockShape, type ExpertViewBlock } from "@/lib/explainerExperts";
+import {
+  materialCardBlockShape,
+  molecule3dBlockShape,
+  reactionPlayerBlockShape,
+  type MaterialCardBlock,
+  type Molecule3dBlock,
+  type ReactionPlayerBlock
+} from "@/lib/explainerMatter";
+import {
+  mapLayerBlockShape,
+  regionStoryBlockShape,
+  seasonsBlockShape,
+  supplyMapBlockShape,
+  type MapLayerBlock,
+  type RegionStoryBlock,
+  type SeasonsBlock,
+  type SupplyMapBlock
+} from "@/lib/explainerPlace";
 import { MATERIAL_KINDS, MATERIAL_ROLES, STAGE_TYPES } from "@/lib/scienceContract";
-import { integer, list, matching, nullable, object, oneOf, optional, ShapeError, tagged, text, type Shape } from "@/lib/shape";
+import { integer, list, matching, nullable, object, oneOf, optional, tagged, text, type Shape } from "@/lib/shape";
 import type { AnswerSentence, Citation, EvidenceLevel, SourceRef } from "@/lib/types";
 
 export const DEPTHS = ["BASIC", "DETAILED", "EXPERT"] as const;
@@ -44,7 +64,7 @@ export const BLOCK_KINDS = [
   "artisan_voice",
   "designs"
 ] as const;
-export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images"] as const;
+export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d"] as const;
 export const WORKING_SECTION_STATES = ["RESEARCHING", "WRITING", "CHECKING"] as const;
 export const FINAL_SECTION_STATES = ["READY", "EMPTY"] as const;
 export const MEDIA_DISPLAYS = ["INLINE", "LINK_CARD"] as const;
@@ -57,10 +77,6 @@ export type BlockKind = (typeof BLOCK_KINDS)[number];
 export type WorkingSectionState = (typeof WORKING_SECTION_STATES)[number];
 export type FinalSectionState = (typeof FINAL_SECTION_STATES)[number];
 
-export type TermSpan = { text: string; termKey: string };
-export type ExplainerSentence = AnswerSentence & { terms: TermSpan[] };
-export type ReuseMarker = { pieceId: string; storedAt: string };
-type BlockEnvelope<K extends BlockKind> = { id: string; kind: K; version: 1; reuse: ReuseMarker | null };
 export type ProseBlock = BlockEnvelope<"prose"> & { sentences: ExplainerSentence[] };
 export type LadderMaterial = {
   materialId: string;
@@ -102,7 +118,22 @@ export type MediaRef = {
 };
 export type ImageItem = { media: MediaRef; claimIds: string[]; relevance: (typeof IMAGE_RELEVANCE)[number] };
 export type ImagesBlock = BlockEnvelope<"images"> & { items: ImageItem[] };
-export type ExplainerBlock = ProseBlock | ProcessLadderBlock | ImagesBlock;
+export type BlockByKind = {
+  prose: ProseBlock;
+  process_ladder: ProcessLadderBlock;
+  region_story: RegionStoryBlock;
+  map_layer: MapLayerBlock;
+  reaction_player: ReactionPlayerBlock;
+  material_card: MaterialCardBlock;
+  molecule_3d: Molecule3dBlock;
+  images: ImagesBlock;
+  expert_view: ExpertViewBlock;
+  seasons: SeasonsBlock;
+  supply_map: SupplyMapBlock;
+};
+export type TypedBlockKind = keyof BlockByKind;
+export type BuiltBlockKind = (typeof BUILT_BLOCK_KINDS)[number];
+export type ExplainerBlock = BlockByKind[BuiltBlockKind];
 export type ExplainerSection = {
   id: string;
   discipline: Discipline;
@@ -139,26 +170,6 @@ export type Term = {
 };
 
 export const SECTION_ID = matching(/^s[1-9]\d{0,2}$/, "a section id");
-const BLOCK_ID = matching(/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/, "a block id");
-const TERM_KEY = matching(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "a term key");
-const termSpanShape: Shape<TermSpan> = object<TermSpan>({ text, termKey: TERM_KEY });
-export const explainerSentenceShape: Shape<ExplainerSentence> = {
-  expected: "a cited sentence with its marked terms",
-  parse(value, path) {
-    if (typeof value !== "object" || value === null || Array.isArray(value)) throw new ShapeError(path, "an object");
-    const { terms, ...sentence } = value as Record<string, unknown>;
-    return { ...answerSentenceShape.parse(sentence, path), terms: list(termSpanShape).parse(terms, path ? `${path}.terms` : "terms") };
-  }
-};
-
-function envelope<K extends BlockKind>(kind: K) {
-  return {
-    id: BLOCK_ID,
-    kind: oneOf([kind] as const) as Shape<K>,
-    version: oneOf([1] as const),
-    reuse: nullable(object<ReuseMarker>({ pieceId: UUID, storedAt: INSTANT }))
-  };
-}
 
 const ladderStageShape: Shape<LadderStage> = object<LadderStage>({
   stageId: UUID,
@@ -193,14 +204,27 @@ export const mediaRefShape: Shape<MediaRef> = object<MediaRef>({
   retrievedAt: INSTANT
 });
 
-export const explainerBlockShape: Shape<ExplainerBlock> = tagged<ExplainerBlock>("kind", {
+export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K]> } = {
   prose: object<ProseBlock>({ ...envelope("prose"), sentences: list(explainerSentenceShape, 1) }),
   process_ladder: object<ProcessLadderBlock>({ ...envelope("process_ladder"), craft: craftLinkShape, processId: UUID, stages: list(ladderStageShape, 1) }),
+  region_story: regionStoryBlockShape,
+  map_layer: mapLayerBlockShape,
+  reaction_player: reactionPlayerBlockShape,
+  material_card: materialCardBlockShape,
+  molecule_3d: molecule3dBlockShape,
   images: object<ImagesBlock>({
     ...envelope("images"),
     items: list(object<ImageItem>({ media: mediaRefShape, claimIds: list(UUID, 1), relevance: oneOf(IMAGE_RELEVANCE) }), 1)
-  })
-} satisfies Record<(typeof BUILT_BLOCK_KINDS)[number], Shape<ExplainerBlock>>);
+  }),
+  expert_view: expertViewBlockShape,
+  seasons: seasonsBlockShape,
+  supply_map: supplyMapBlockShape
+};
+
+export const explainerBlockShape: Shape<ExplainerBlock> = tagged<ExplainerBlock>(
+  "kind",
+  Object.fromEntries(BUILT_BLOCK_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<BuiltBlockKind, Shape<ExplainerBlock>>
+);
 
 export const understoodShape: Shape<Understood> = object<Understood>({
   crafts: list(craftLinkShape),
@@ -238,7 +262,7 @@ export const termShape: Shape<Term> = object<Term>({
   language: languageCodeShape,
   localNames: list(text),
   craftSlugs: list(text),
-  wikidataId: nullable(matching(/^Q[1-9]\d*$/, "a Wikidata id")),
+  wikidataId: nullable(WIKIDATA_ID),
   basis: oneOf(TERM_BASES),
   summary: list(answerSentenceShape, 1),
   sources: list(sourceRefShape),

@@ -8,7 +8,7 @@ from typing import Any, Protocol
 
 from app.core.errors import AppError
 from app.data.craft_text import script_of
-from app.research.blocks import payload_sentences, with_payload_sentences
+from app.research.explainer import payload_sentences, with_payload_sentences
 from app.research.terms import spans_still_shown
 from app.research.translation import (
     TRANSLATION_ITEM_MAX_CHARS,

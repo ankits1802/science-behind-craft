@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "crafts": [
+    {
+      "craftSlug": "Bastar-Dhokra",
+      "file": "Bastar-Dhokra.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-17T23:46:00+05:30",
+      "counts": {
+        "sources": 22,
+        "claims": 140,
+        "hypotheses": 7,
+        "corroborated": 38,
+        "places": 7,
+        "communities": 3,
+        "stages": 13,
+        "orderedStages": 12,
+        "materials": 16,
+        "tools": 11,
+        "reactions": 2,
+        "environment": 3,
+        "terms": 17,
+        "conflicts": 10,
+        "openQuestions": 4,
+        "pictures": 3,
+        "overviewSections": 9
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 27,
+        "CHEMISTRY": 7,
+        "PHYSICS": 6,
+        "MATERIALS": 12,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 3,
+        "CLIMATE": 2,
+        "BOTANY": 1,
+        "HISTORY": 40,
+        "ECONOMICS": 12,
+        "DESIGN": 15
+      },
+      "sourcesByReliability": {
+        "A": 8,
+        "B": 12,
+        "C": 1,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-17T18:17:55.879059Z"
+      }
+    },
+    {
+      "craftSlug": "Kutch-Ajrakh",
+      "file": "Kutch-Ajrakh.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-17T18:17:00Z",
+      "counts": {
+        "sources": 20,
+        "claims": 132,
+        "hypotheses": 5,
+        "corroborated": 53,
+        "places": 12,
+        "communities": 8,
+        "stages": 14,
+        "orderedStages": 11,
+        "materials": 32,
+        "tools": 3,
+        "reactions": 2,
+        "environment": 7,
+        "terms": 17,
+        "conflicts": 14,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 25,
+        "CHEMISTRY": 13,
+        "MATERIALS": 9,
+        "GEOGRAPHY": 10,
+        "CLIMATE": 2,
+        "ECOLOGY": 1,
+        "BOTANY": 4,
+        "HISTORY": 22,
+        "ECONOMICS": 16,
+        "DESIGN": 23
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 7,
+        "C": 1,
+        "D": 3
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-17T18:19:11.323744Z"
+      }
+    },
+    {
+      "craftSlug": "Tikuli-Painting",
+      "file": "Tikuli-Painting.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-17T18:00:06Z",
+      "counts": {
+        "sources": 22,
+        "claims": 112,
+        "hypotheses": 0,
+        "corroborated": 42,
+        "places": 16,
+        "communities": 5,
+        "stages": 5,
+        "orderedStages": 5,
+        "materials": 20,
+        "tools": 8,
+        "reactions": 0,
+        "environment": 1,
+        "terms": 3,
+        "conflicts": 8,
+        "openQuestions": 3,
+        "pictures": 1,
+        "overviewSections": 5
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 5,
+        "PROCESS": 12,
+        "MATERIALS": 13,
+        "GEOGRAPHY": 4,
+        "CLIMATE": 1,
+        "ECOLOGY": 3,
+        "HISTORY": 35,
+        "ECONOMICS": 25,
+        "DESIGN": 13,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 5,
+        "B": 7,
+        "C": 9,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-17T18:01:47.491336Z"
+      }
+    }
+  ]
+}

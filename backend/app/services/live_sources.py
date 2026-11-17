@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import time
 from collections.abc import Callable
+from typing import TypeVar
 
 import httpx
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -13,6 +14,7 @@ from app.planner.reading import LiveSources
 from app.research.images import ImageSource
 from app.services.scholarly_keys import scholarly_keys
 from app.services.web_sources import web_search_config
+from app.sources.adapter import HttpSourceAdapter
 from app.sources.fetcher_client import FetcherClient
 from app.sources.http import source_client
 from app.sources.images.registry import image_sources
@@ -24,6 +26,8 @@ __all__ = ["DOI_SOURCE", "LIVE_SOURCES_TTL_SECONDS", "LiveSourcesStore", "live_s
 
 DOI_SOURCE = "crossref"
 LIVE_SOURCES_TTL_SECONDS = 600
+
+AdapterT = TypeVar("AdapterT", bound=HttpSourceAdapter)
 
 
 def live_source_client() -> httpx.AsyncClient:
@@ -71,6 +75,13 @@ class LiveSourcesStore:
                     self._sources = await live_sources(session, self._client)
                 self._built_at = self._clock()
             return self._sources
+
+    async def reference(self, sessions: async_sessionmaker[AsyncSession], kind: type[AdapterT]) -> AdapterT:
+        sources = await self.get(sessions)
+        found = next((source for source in sources.searchers if isinstance(source, kind)), None)
+        if found is None:
+            raise NotConfigured(kind.name, f"The {kind.name} adapter is not among the live sources")
+        return found
 
     async def images(self) -> tuple[ImageSource, ...]:
         async with self._lock:

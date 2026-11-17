@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterator
-from typing import Literal, Self
+from collections.abc import Iterator, Sequence
+from typing import ClassVar, Literal, Self
 
 from pydantic import Field, model_validator
 
 from .base import ContractModel, HttpsUrl, PartialDate
-from .blocks import BlockBase, ExplainerSentence
+from .blocks import SENTENCE, BlockBase, ExplainerSentence, SentenceSpec, require_facts
 from .citations import AnswerSentence
 from .crafts import CraftRef
 from .evidence import personal_data_in
@@ -34,6 +34,7 @@ __all__ = [
     "PracticeNote",
     "QuizBlock",
     "QuizQuestion",
+    "expert_pairing_problems",
 ]
 
 EXPERT_SEATS = (
@@ -68,8 +69,20 @@ class ExpertDifference(ContractModel):
     this_view: ExplainerSentence
     other_view: ExplainerSentence
 
+    @model_validator(mode="after")
+    def _two_views_from_different_evidence(self) -> Self:
+        mine, theirs = self.this_view, self.other_view
+        if _claims_of(mine) & _claims_of(theirs) or _sources_of(mine) & _sources_of(theirs):
+            raise ValueError(f"the difference with {self.seat} rests each view on its own claims and sources")
+        return self
+
 
 class ExpertViewBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (
+        ("take", [SENTENCE]),
+        ("differs", [(("this_view", SENTENCE), ("other_view", SENTENCE))]),
+    )
+
     kind: Literal["expert_view"]
     version: Literal[1]
     seat: ExpertSeat
@@ -79,16 +92,47 @@ class ExpertViewBlock(BlockBase):
 
     @model_validator(mode="after")
     def _never_differs_with_itself(self) -> Self:
+        require_facts(f"expert view {self.id}", list(self.cited_sentences()))
         others = [*self.agrees_with, *(difference.seat for difference in self.differs)]
-        if self.seat in others or len(set(self.agrees_with)) != len(self.agrees_with):
+        if self.seat in others or len(set(others)) != len(others):
             raise ValueError(f"expert view {self.id} names each other seat once and never its own")
         return self
 
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        yield from self.take
-        for difference in self.differs:
-            yield difference.this_view
-            yield difference.other_view
+
+def expert_pairing_problems(blocks: Sequence[BlockBase]) -> list[str]:
+    views = [block for block in blocks if isinstance(block, ExpertViewBlock)]
+    by_seat = {view.seat: view for view in views}
+    problems = [] if len(by_seat) == len(views) else ["each seat gives one view per section"]
+    for view in views:
+        for seat in view.agrees_with:
+            other = by_seat.get(seat)
+            if other is None or view.seat not in other.agrees_with:
+                problems.append(f"{view.seat} and {seat} agree only when both views say so")
+        for difference in view.differs:
+            mirror = _difference_with(by_seat.get(difference.seat), view.seat)
+            if mirror is None or not _mirrored(difference, mirror):
+                problems.append(f"{view.seat} and {difference.seat} differ only when both views state it")
+    return problems
+
+
+def _difference_with(view: ExpertViewBlock | None, seat: str) -> ExpertDifference | None:
+    if view is None:
+        return None
+    return next((difference for difference in view.differs if difference.seat == seat), None)
+
+
+def _mirrored(one: ExpertDifference, other: ExpertDifference) -> bool:
+    return _claims_of(one.this_view) == _claims_of(other.other_view) and _claims_of(
+        one.other_view
+    ) == _claims_of(other.this_view)
+
+
+def _claims_of(sentence: AnswerSentence) -> frozenset[str]:
+    return frozenset(citation.claim_id for citation in sentence.citations)
+
+
+def _sources_of(sentence: AnswerSentence) -> frozenset[str]:
+    return frozenset(citation.source_id for citation in sentence.citations)
 
 
 class CompareRow(ContractModel):
@@ -98,6 +142,8 @@ class CompareRow(ContractModel):
 
 
 class CompareBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("rows", [(("left", SENTENCE), ("right", SENTENCE))]),)
+
     kind: Literal["compare"]
     version: Literal[1]
     crafts: list[CraftRef] = Field(min_length=2, max_length=2)
@@ -110,10 +156,6 @@ class CompareBlock(BlockBase):
             raise ValueError(f"compare {self.id} sets two different crafts side by side")
         return self
 
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        for row in self.rows:
-            yield from (side for side in (row.left, row.right) if side is not None)
-
 
 class PracticeNote(ContractModel):
     audience: Audience
@@ -121,6 +163,8 @@ class PracticeNote(ContractModel):
 
 
 class InPracticeBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("notes", [(("sentences", [SENTENCE]),)]),)
+
     kind: Literal["in_practice"]
     version: Literal[1]
     notes: list[PracticeNote] = Field(min_length=1)
@@ -131,10 +175,6 @@ class InPracticeBlock(BlockBase):
         if len(set(audiences)) != len(audiences):
             raise ValueError(f"in practice {self.id} has one note per audience")
         return self
-
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        for note in self.notes:
-            yield from note.sentences
 
 
 class QuizQuestion(ContractModel):
@@ -151,13 +191,11 @@ class QuizQuestion(ContractModel):
 
 
 class QuizBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("questions", [(("explanation", SENTENCE),)]),)
+
     kind: Literal["quiz"]
     version: Literal[1]
     questions: list[QuizQuestion] = Field(min_length=1, max_length=QUIZ_MAX_QUESTIONS)
-
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        for question in self.questions:
-            yield question.explanation
 
 
 class OpenQuestion(ContractModel):
@@ -174,13 +212,11 @@ class OpenQuestion(ContractModel):
 
 
 class OpenQuestionsBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("items", [(("sentence", SENTENCE),)]),)
+
     kind: Literal["open_questions"]
     version: Literal[1]
     items: list[OpenQuestion] = Field(min_length=1)
-
-    def cited_sentences(self) -> Iterator[AnswerSentence]:
-        for item in self.items:
-            yield item.sentence
 
 
 class ArtisanRef(ContractModel):

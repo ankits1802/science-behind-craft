@@ -55,7 +55,7 @@ from app.research.retrieval import RESTRICTED_SENSITIVITY
 from app.research.stream import SourceRef
 from app.services.knowledge_view import craft_ref, source_ref
 
-__all__ = ["dataset_records", "region_records", "region_values"]
+__all__ = ["dataset_records", "district_places", "region_records", "region_values"]
 
 
 async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
@@ -77,6 +77,11 @@ async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
         datasets=await dataset_records(session, codes),
         sources=await _place_sources(session, places),
     )
+
+
+async def district_places(session: AsyncSession, craft: Craft) -> tuple[PlaceRecord, ...]:
+    places = region_places(await _locations(session, craft), ())
+    return tuple(place for place in places if place.scope == "DISTRICT" and place.district_lgd is not None)
 
 
 async def dataset_records(session: AsyncSession, codes: Iterable[str]) -> dict[str, DatasetRecord]:

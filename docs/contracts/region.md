@@ -9,7 +9,7 @@ Design choices: decision 0014; the producer: decision 0016 (`backend/app/geo/`,
 `services/region_records.py`, `services/map_layer_store.py`). PLAN 8 is the specification, PLAN 0 overrides it, and the stored
 tables are the geo lane's (`docs/contracts/geo.md`, `docs/DATA_SOURCES.md`).
 
-Last reviewed: 2026-11-16.
+Last reviewed: 2026-11-18 (rivers and monthly rainfall, decisions 0042 and 0043; river ranking, 0044; content-addressed river files and the rainfall's district, 0050).
 
 Golden values are shapes for tests, not measurements: the district numbers in the fixtures are
 written by hand. The dataset rows are the real `EnvDataset` rows from `etl/geo`. The layer file's
@@ -43,6 +43,11 @@ RegionValue {datasetCode, variable, depth|null, period, stat, aggregation, value
 RegionDataset {code, title, publisher|null, edition, period, nativeResolution, licence,
                licenceUrl|null, attribution|null, citation|null, url|null}
 ```
+
+`RegionDataset` is `research/datasets.DatasetRef` on the server since decision 0042, the one
+dataset-row shape the region contract and the explainer's dataset citations share; it lives there
+with `BOUNDARY_CAPTION` and `BOUNDARY_DATASET_CODE` so explainer blocks can check them. The JSON
+is unchanged; the client keeps the name `RegionDataset` (`datasetShape`).
 
 ### Places
 
@@ -156,3 +161,93 @@ BoundaryNote {caption, dataset}
   the `DR_DISTRICT_SHAPES` dataset, drawn beneath every map. The DR outline is the only
   international border drawn; there is no tile basemap.
 - Geography and environment data are open datasets only (PLAN 0).
+
+## Rivers (decision 0042; built by decision 0043)
+
+The river data other lanes build to. The models are `backend/app/research/rivers.py`; the
+explainer's `region_story` refers to rivers by these ids (`docs/contracts/explainer.md`).
+
+```
+RiverReach {hyrivId, nextDown, mainRiv, ordStra, uplandSkm, disAvCms, lengthKm,
+            geometry: [[longitude, latitude], ...] (>= 2)}
+RiverTrace {datasetCode: "HYDRORIVERS_1_0", mainRiv, reachIds[] (>= 1), districtLgds[]}
+```
+
+- **Reaches.** One row per HydroRIVERS v1.0 reach in India and the basins that cross it, with the
+  dataset's own fields: `HYRIV_ID`, `NEXT_DOWN` (0 at an outlet), `MAIN_RIV` (the outlet reach of
+  the river system, which is the basin key), `ORD_STRA` (Strahler order), `UPLAND_SKM`,
+  `DIS_AV_CMS`, `LENGTH_KM` and the line in WGS84. A reach flows into another reach or ends its
+  river, and ends it exactly when it is the outlet (`hyrivId == mainRiv`). Kept: every reach
+  with `UPLAND_SKM >= 100` km² (`LINE_UPLAND_MIN_SKM`) of a basin at least one of whose kept
+  reaches crosses a district polygon, the whole basin, so every `nextDown` is stored and a river's
+  source as drawn is its first reach of that size. Stored by the geo ETL (`etl/geo`, run on GitHub
+  Actions, `riverlines`) in `RiverReach` (a `LINESTRING` in EPSG:4326) and `RiverBasin`
+  (`mainRiv`, the `HYDRORIVERS_1_0` dataset row, reach count, topology SHA-256), migration
+  `0016_river_reaches`; a load replaces both tables.
+- **The traced path.** A river is shown from its source to its outlet: from a reach downstream
+  over `nextDown` to the outlet, and upstream at each junction to the reach with the largest
+  `UPLAND_SKM` (ties: the lowest `HYRIV_ID`), to a headwater (no reach flows into it); traced
+  from the outlet it is the basin's main stem. `reachIds` is that path from the headwater down,
+  once each, the last `mainRiv`. `services/river_store.trace_river(session, reachId)` traces it
+  (`geo/river_trace`, at most 10,000 reaches, a cycle or a `nextDown` not stored refused) and
+  `trace_problems(trace, reaches)` checks every trace against every stored reach of its basin
+  (any `ReachTopology`): each reach stored and in the basin, each flowing into the next, the first
+  a headwater. `rivers_crossing(session, districtLgds)` offers, per basin, the reach with the
+  largest upstream area inside those districts, with its Strahler order and mean discharge,
+  ranked by order, then discharge, then upstream area (decision 0044), at most five: the reach a
+  story traces from. `stored_trace_problems(session, trace)` checks a stored story's path against
+  the reaches stored now (its own and any flowing into its source), and `rivers_loaded(session)`
+  says whether any basin is stored.
+- **Districts reached.** `districtLgds` lists each district the path crosses once, in the order
+  the path first enters it (measured along the path from the source; `ST_Intersects` of the reach
+  lines with `AdminDistrict.geom`, dumped into parts, ordered by reach, then by the
+  `ST_LineLocatePoint` of each part's start, then by LGD). Computed by PostGIS each time a river
+  is traced, so it always follows the stored district shapes (decision 0043).
+- **Geometry served.** `GET /api/rivers/{mainRiv}` (signed in) answers one TopoJSON topology per
+  basin, read from the private media bucket where the ETL wrote it (key from `services/naming`,
+  under `media/rivers/<edition>/<mainRiv>/<sha256>/`, with its naming golden row): object `reaches`
+  (`RIVER_REACHES_OBJECT`), a `GeometryCollection` of `LineString`s, each `id` its `HYRIV_ID` and
+  `properties {nextDown, ordStra}`, simplified for drawing at district scale and quantized:
+  each reach on its own, topology-preserving Douglas-Peucker at 0.005 degree, which keeps both
+  ends so every junction stays a shared position, then 100,000 steps over the basin's box, one
+  delta-encoded arc per reach, reaches by `HYRIV_ID`. The key is
+  `media/rivers/<edition>/<mainRiv>/<sha256>/KalaVigyan_Dataset_HydroRIVERS-1-0_River-Topology_Basin-<mainRiv>.json`
+  (`naming.river_topology_key(edition, mainRiv, sha256)`, the `riverTopologies` golden rows), the
+  edition the dataset row's and the folder the file's own SHA-256, the `RiverBasin` row's
+  `topologySha256`, so a load writes changed files beside the old ones and a row and its object
+  never drift (decision 0050).
+  `Content-Type: application/json`, `Cache-Control: private, no-cache`, `ETag` the file's SHA-256
+  (a matching `If-None-Match` answers 304 from the stored hash, without reading the bucket), 404
+  for an unknown basin, a basin with no stored file or a file whose SHA-256 is not the row's (the
+  client then hides the river; decision 0050), 503 when the bucket is not configured or
+  does not answer, 422 for an id no reach can have (outside 1 to 99,999,999). The basin row is
+  read and its connection released before the bucket is read; files are kept in a per-process
+  cache by hash. `shared/river.topology.golden.json` is the phase B fixture's placeholder river
+  as the geo ETL writes it (reproduced by `etl/geo/tests/test_rivers.py`, parsed by
+  `e2e/river-topology-golden-unit.spec.ts`). The client draws
+  the path's reaches from it with the districts from its district shapes, the boundary caption
+  beneath, and the HydroRIVERS dataset row as the river's citation. The client
+  (`frontend/lib/riverTopology.ts`, decision 0048) accepts exactly `type: "Topology"`, an optional
+  `bbox` of four numbers and an optional `transform {scale, translate}`, `objects.reaches` and
+  `arcs` (each at least two positions, delta-encoded when `transform` is present); each geometry
+  is `{type: "LineString", id (integer), arcs (indexes, negative reversed), properties {nextDown,
+  ordStra}}`. Any other field, an arc index out of range, a coordinate off the globe, a reach
+  listed twice or a basin without its outlet reach (`nextDown` 0) is refused, as is a story whose
+  `reachIds` are not all in the basin.
+
+## Monthly rainfall (decision 0042; built by decision 0043)
+
+A `seasons` block's rainfall is the CHIRPS monthly normal of a district: twelve
+`DistrictEnvValue` rows of the `CHIRPS_3_0` dataset, one per month, variable
+`monthly_precipitation`, `depthOrPeriod` `<period>-<MM>` (`2016-2025-07`), `stat` `NORMAL`, unit
+`mm/month`, read on the 0.05 degree grid, over the period the dataset row names
+(`geo/rainfall`, `docs/DATA_SOURCES.md`). The CHIRPS layer writes them only when every year of
+the period has every month. `services/monthly_rain.district_rainfall(session, district)` takes
+the district's `DistrictRef` (LGD code, register name and state) and answers `MonthlyRain
+{district: DistrictRef, datasetCode, period, millimetres[12]}` with the dataset row (`DatasetRef`,
+which carries the period and the grid); a district missing any month, or with a value below zero
+or in another unit, has no rainfall. The seasons builder takes the first of the craft's mapped
+districts with a register row (`place_offers.district_refs`) that has rainfall
+(`season_supply_builders.craft_rainfall`, decisions 0047 and 0050); when none has, the block shows
+its rows without rainfall. The client credits it as "Rainfall · <district>, <state> · monthly
+normal · <period>".

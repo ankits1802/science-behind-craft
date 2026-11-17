@@ -40,13 +40,16 @@ DEGRADABLE_TASKS = frozenset(
     {AiTask.COMPOSE, AiTask.EXTRACT, AiTask.VOICE_TURN, AiTask.PLAN, AiTask.WEB_READ}
 )
 EMBED_DIMENSIONS = 1536
+REASONING_EFFORT_PARAM = "reasoningEffort"
+REASONING_EFFORTS = frozenset({"low", "medium", "high", "xhigh", "max"})
+TASK_REASONING_EFFORT: dict[AiTask, str] = {AiTask.COMPOSE: "medium"}
 
 
 @dataclass(frozen=True)
 class Principal:
     user_id: uuid.UUID | None = None
     role: str | None = None
-    answer: budget.AnswerSpend | None = None
+    answer: budget.AnswerSpend | budget.AnswerHeadroom | None = None
 
 
 @dataclass(frozen=True)
@@ -65,6 +68,14 @@ class RouteChoice:
     data_class: str = "ANY"
     learned: dict[str, list[str]] = field(default_factory=dict)
     extra: dict[str, Any] = field(default_factory=dict)
+    params: dict[str, Any] = field(default_factory=dict)
+
+
+def reasoning_effort(task: AiTask, choice: RouteChoice) -> str | None:
+    chosen = choice.params.get(REASONING_EFFORT_PARAM)
+    if chosen in REASONING_EFFORTS:
+        return chosen
+    return TASK_REASONING_EFFORT.get(task)
 
 
 @dataclass
@@ -171,6 +182,7 @@ async def load_routes(session: AsyncSession, task: AiTask) -> list[RouteChoice]:
             data_class=provider.dataClass,
             learned=dict(provider.learned or {}),
             extra=dict(provider.extra or {}),
+            params=dict(route.params or {}),
         )
         for route, provider in rows
     ]
@@ -400,6 +412,7 @@ async def _call(
             user=user,
             max_tokens=max_tokens,
             temperature=temperature,
+            reasoning_effort=reasoning_effort(task, choice),
             json_schema=json_schema,
         )
     )

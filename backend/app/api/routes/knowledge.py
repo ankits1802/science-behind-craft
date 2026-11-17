@@ -150,13 +150,17 @@ PipelineFor = Callable[[str], AnswerPipeline]
 
 def answer_pipelines(request: Request, user: User = Depends(get_current_user)) -> PipelineFor:
     def build(depth: str) -> AnswerPipeline:
-        principal = Principal(user_id=user.id, role=user.role, answer=AnswerSpend(depth=depth))
+        spend = AnswerSpend(depth=depth)
+        principal = Principal(user_id=user.id, role=user.role, answer=spend)
+        optional = Principal(user_id=user.id, role=user.role, answer=spend.headroom())
         return build_answer_pipeline(
             sessions=sessionmaker(),
             index=request.app.state.craft_index,
             live=request.app.state.live_sources,
             plan_model=router_structured_model(AiTask.PLAN, principal),
             compose_model=router_structured_model(AiTask.COMPOSE, principal),
+            builder_plan_model=router_structured_model(AiTask.PLAN, optional),
+            builder_compose_model=router_structured_model(AiTask.COMPOSE, optional),
             translate_model=router_structured_model(AiTask.TRANSLATE, principal),
             embed=router_embedder(principal),
             shield=request.app.state.shielded_work,

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 import uuid
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterator, Sequence
 from itertools import combinations, pairwise
 from types import MappingProxyType
 from typing import Literal, Self
@@ -12,6 +12,7 @@ from pydantic import Field, model_validator
 from app.research.base import ContractModel
 from app.research.citations import Citation, SourceRef, cited_source_ids
 from app.research.crafts import CraftRef
+from app.research.reactions import SPECIES_ROLES, ReactionSpecies, mhchem_equation, reaction_level
 from app.research.vocabulary import (
     EvidenceLevel,
     MaterialKind,
@@ -29,10 +30,7 @@ __all__ = [
     "SCIENCE_SCHEMA_VERSION",
     "SOURCES_DIFFER_CELSIUS",
     "SOURCES_DIFFER_RELATIVE",
-    "SPECIES_ROLES",
     "UNAVAILABLE_LEVEL",
-    "UNBALANCED_LEVEL_CAP",
-    "UNBALANCED_REASON",
     "CitedClaim",
     "CompoundRef",
     "ConditionReading",
@@ -41,14 +39,11 @@ __all__ = [
     "EnvelopeCheck",
     "ProcessStageView",
     "ProcessView",
-    "ReactionSpecies",
     "ReactionView",
     "StageCondition",
     "StageMaterialView",
     "envelope_status",
-    "mhchem_equation",
     "process_claims",
-    "reaction_level",
     "sources_differ",
 ]
 
@@ -58,16 +53,12 @@ CONDITION_UNITS = MappingProxyType(
     {"TEMPERATURE": "°C", "PH": "pH", "DURATION": "h", "CONCENTRATION": "g/L", "PRESSURE": "kPa"}
 )
 ENVELOPE_STATUSES = ("WITHIN", "OUTSIDE", "NONE")
-SPECIES_ROLES = ("REACTANT", "PRODUCT")
 SOURCES_DIFFER_RELATIVE = 0.15
 SOURCES_DIFFER_CELSIUS = 25.0
-UNBALANCED_REASON = "unbalanced"
-UNBALANCED_LEVEL_CAP = "HYPOTHESIS"
 UNAVAILABLE_LEVEL = "UNAVAILABLE"
 
 ConditionQuantity = Literal[*CONDITION_QUANTITIES]
 EnvelopeStatus = Literal[*ENVELOPE_STATUSES]
-SpeciesRole = Literal[*SPECIES_ROLES]
 
 
 class CitedClaim(ContractModel):
@@ -161,20 +152,6 @@ class StageCondition(ContractModel):
         if self.sources_differ != sources_differ(self.quantity, self.readings):
             raise ValueError(f"condition {self.id} breaks the sources-differ rule")
         _require_weakest(self.level, self.claims, f"condition {self.id}")
-        return self
-
-
-class ReactionSpecies(ContractModel):
-    role: SpeciesRole
-    formula: str | None = Field(max_length=120)
-    name: str | None = Field(max_length=300)
-    coefficient: int | None = Field(ge=1)
-    compound_id: uuid.UUID | None
-
-    @model_validator(mode="after")
-    def _named_or_formulated(self) -> Self:
-        if not (self.formula or self.name):
-            raise ValueError("a species has a formula, a name or both")
         return self
 
 
@@ -302,27 +279,6 @@ def sources_differ(quantity: str, readings: Sequence[ConditionReading]) -> bool:
         if scale > 0 and gap / scale > SOURCES_DIFFER_RELATIVE:
             return True
     return False
-
-
-def mhchem_equation(species: Sequence[ReactionSpecies]) -> str | None:
-    if any(not s.formula for s in species):
-        return None
-    sides = [" + ".join(_term(s) for s in species if s.role == role) for role in SPECIES_ROLES]
-    return " -> ".join(sides)
-
-
-def reaction_level(
-    levels: Iterable[str], *, balanced: bool, species: Sequence[ReactionSpecies]
-) -> tuple[str, str | None]:
-    level = weakest_level(levels)
-    if balanced or mhchem_equation(species) is None:
-        return level, None
-    return weakest_level((level, UNBALANCED_LEVEL_CAP)), UNBALANCED_REASON
-
-
-def _term(species: ReactionSpecies) -> str:
-    coefficient = species.coefficient
-    return f"{coefficient} {species.formula}" if coefficient and coefficient > 1 else str(species.formula)
 
 
 def _representative(reading: ConditionReading) -> float:

@@ -4,7 +4,7 @@ Where work stands and what comes next. Update it in the same change that finishe
 piece of work. The plan is `docs/PLAN.md` (section 0 overrides the rest); the build order is its
 section 17.
 
-Last updated: 2026-11-17.
+Last updated: 2026-11-18.
 
 ## Done
 
@@ -438,12 +438,142 @@ Last updated: 2026-11-17.
   0.0.7 serves the signed craft feed with the flag on; the first sync verified both signatures
   (designer 459 crafts, documentation 462), synced 462, created none, merged one and found no
   name conflicts. It runs daily at 21:37 UTC.
+- **Phase B contract (decision 0042, 2026-11-17).** The eight phase B kinds have their final
+  fields and fail-closed validators (`research/blocks_place.py`, `blocks_matter.py`,
+  `blocks_people.py`), with what the server fills and what a model may only choose; dataset rows
+  and the boundary caption moved to `research/datasets.py`, the reaction rules to
+  `research/reactions.py`; month and season words (`research/calendar.py`), the river data
+  contract (`research/rivers.py`, `docs/contracts/region.md` Rivers) and the 18-seat expert panel
+  (`research/expert_panel.py`). Each kind declares where its sentences sit, so translation, term
+  marking and piece ids walk any kind. The block builder registry (`services/block_builders.py`)
+  is called once from the sectioned flow and is empty; the renderer registry
+  (`components/answer/blockRenderers.ts`) holds the phase A kinds. PubChem record sources get a
+  stable id. `shared/explainer.phase-b.golden.json` (Kutch Ajrakh, river reach ids placeholders)
+  is checked on both sides. Nothing a reader sees changes.
+- **River lines, the tracer and monthly rainfall (decision 0043, 2026-11-17).** The geo ETL's
+  `riverlines` step keeps every HydroRIVERS v1.0 reach of 100 km2 or more of each basin that
+  crosses a district, checks the network and writes one TopoJSON per basin (junctions kept,
+  quantized); its load uploads them to `media/rivers/` and replaces `RiverBasin` and `RiverReach`
+  (migration `0016_river_reaches`). `services/river_store` traces a river through any reach (the
+  largest upstream branch to the source, `NEXT_DOWN` to the mouth, bounded and cycle-safe) with
+  the districts it crosses in path order from PostGIS, and offers the rivers crossing a district;
+  `GET /api/rivers/{mainRiv}` serves a basin's file with its hash as ETag. The CHIRPS monthly
+  normals the ETL already writes reach a `seasons` block through `services/monthly_rain`. The
+  HydroSHEDS licence was checked and the dataset row now carries its Exhibit B statement. Every
+  Geo ETL dispatch lints and tests `etl/geo` first. Nothing is loaded until the dispatch after
+  the deploy (`docs/RUNBOOK.md`, Geo ETL).
+- **Reaction player, material cards and 3D molecules built on the server (decision 0045,
+  2026-11-17).** Three registry entries (`services/matter_builders.py`) for chemistry and
+  materials sections: the craft's stored reactions in process order, re-checked against the
+  process rows when built and reused; material cards from the stored material, its glossary term
+  and compound, with stored claims sorted into facts and handling by one plan-model call; one
+  molecule per section for a named compound whose 3D conformer PubChem has, fetched once through
+  the PubChem adapter into the private bucket and served by `GET /api/molecules/{pubchemCid}/conformer`.
+  The builder interface moved to `services/builder_interface.py`; only built kinds start; pieces
+  of one answer no longer supersede each other; `link_compounds` runs nightly. The three kinds
+  joined `BUILT_BLOCK_KINDS` on both sides with the review (decision 0050).
+- **Place renderers (decision 0048, 2026-11-17).** The client draws `region_story` (the river
+  from the basin TopoJSON of `GET /api/rivers/{mainRiv}`, water flowing from source to outlet and
+  lighting each district in the server's path order, steps that outline their district and draw
+  their stretch, layer pills, Replay; the full story at once under reduced motion), `map_layer`
+  (the route's choropleth on `IndiaMap` with the highlighted districts outlined), `seasons` (a
+  twelve-month strip with CHIRPS rainfall bars and month or season rows) and `supply_map`
+  (origins by material, Wikidata-placed origins pinned). Map code loads only when a map block is
+  drawn; every map carries the boundary caption; every layout is shrinkable columns for 390 px.
+  All four are built (decisions 0044 and 0047).
+- **Matter and expert renderers (decision 0049, 2026-11-17).** The client draws
+  `reaction_player` (a cast of the reaction's species lit per step by role, the steps in order
+  with each balanced equation through `ChemEquation`, its badges and citations; Play, Pause,
+  Previous, Next and Replay; every step at once under reduced motion), `material_card` (stored
+  name, local names, role, formula with its PubChem link, cited facts and handling) and
+  `molecule_3d` (3Dmol.js 2.5.5 from npm, pinned, loaded only when the block nears the viewport,
+  drawing the conformer route's SDF, which is checked as the PubChem adapter checks it; nothing
+  is drawn without WebGL or a conformer; Turn and Explore; its record cited with a numbered chip).
+  A section's expert views form one panel: seat cards with their cited takes and agreements, and
+  one "Experts differ" card per pair with both citations side by side. The CSP is unchanged.
+  The matter kinds joined `BUILT_BLOCK_KINDS` on both sides with the review (decision 0050), so
+  readers see them after the next deploy.
+- **Expert panel (decision 0046, 2026-11-17).** Each section hears the seated experts of its
+  field (the stored understanding's seats, the depth's first 2, 4 or 10, never the artisan's
+  voice before phase E). Its plan call names them with the kinds of source each reads, and its
+  reads alternate between the facets' best items and each seat's preferred kind, within the
+  section's own share; an Expert section now keeps only its share's part for references, so it
+  reads what it found again. One `COMPOSE` call (Claude Sonnet first) writes each seat's take
+  from the stored facts the section's checked sentences rest on; a take passes the prose checks
+  or is not shown. "Experts differ" is kept only for two stored facts about one concept from two
+  sources, both shown as stored with their citations, in both seats' views; two views citing one
+  claim agree. Panel calls spend only while the answer keeps half its cap (Master Admins
+  uncapped). `expert_view` joined `BUILT_BLOCK_KINDS` on both sides, so readers see it after the
+  next deploy.
+- **Region story and map layers built (decision 0044, 2026-11-17).** A geography section of a
+  craft with cited districts gets a region story: the rivers crossing those districts, ranked by
+  Strahler order and discharge and traced through the stored network, are offered with the
+  districts and the layers that hold values there, and one plan-model call picks a river, the
+  stored claims that become steps, their order and districts, and the layers, by ref only; the
+  server fills every value and cites the boundary, HydroRIVERS and layer dataset rows, and draws
+  the river unnamed (HydroRIVERS names none). Until the river lines are loaded it adds nothing.
+  Geology and climate sections get the registry layer their sentences name, as the layer route
+  answers it. Stories are kept as cross-craft pieces by basin or districts and reused with their
+  facet's section while their river still follows the stored reaches. Both kinds joined
+  `BUILT_BLOCK_KINDS` on both sides; map layers show after the next deploy, region stories after
+  the Geo ETL `riverlines` load.
+- **Seasons and supply built (decision 0047, 2026-11-17).** A climate section gets a seasons
+  strip: the craft's stages in process order placed on the months or season their own stored
+  claim names (a date is not a month of the year), a stage the section cites but no claim dates
+  listed without a month, and the section's own claims that name a month or season; a season is
+  given months only where a cited quote states them (`monsoon ... from June to September`), and
+  the row then cites that quote too. The CHIRPS rainfall of the first craft district with twelve
+  normals shows above it with its period and grid; without one the rows show alone. A materials
+  section gets a supply map: one plan-model call picks, from the section's claims and its named
+  materials' own claims, the material and origin words a statement states; origins are placed
+  only with Wikidata coordinates (`wbsearchentities` and one P625 query through the Wikidata
+  adapter, a namesake chosen only by a place its sentence names), and any other origin is listed
+  without a pin. Both kinds joined `BUILT_BLOCK_KINDS` on both sides, so readers see them after the
+  next deploy.
+- **Phase B review fixes (decision 0050, 2026-11-18).** Every phase B kind is built: the reaction
+  player, material cards and 3D molecules joined the built kinds on both sides. The conformer route
+  releases its connection before the bucket and PubChem. Reused sections rebuild the kinds that are
+  never pieces (map layers, molecules), and a section with nothing checked starts no builder.
+  Phase B blocks have one order, and region stories are looked up only for geography. Supply links
+  need a statement about their material; story steps are placed only in a district their sentence
+  names; season rows ignore months and seasons their clause rules out; prose and expert takes drop
+  a sentence naming a month, season, state or district no source states. Builder plan calls spend
+  from the answer's headroom. River files are content-addressed and a changed one is not served;
+  the river load assumes a scoped OIDC role. Rainfall names its district. The production E2E asks
+  a third known-answer question about Kachchh's water.
+- **Curation tooling (decision 0051, 2026-11-17).** The dossier of `docs/plans/dataset-curation.md`
+  is one Pydantic model in `backend/app/curation/` with its JSON Schema in
+  `shared/curation.dossier.schema.json` (`docs/contracts/curation.md`); `tools/curation/fetch.py`
+  shows a source as the verifier reads it (live, else its Wayback snapshot), `verify.py` re-fetches
+  every source and writes `<CraftSlug>.check.json`, and `check.py` runs the offline rules and
+  regenerates `backend/app/data/curation/index.json`. Backend checks runs `check.py --check-index`
+  on every dossier.
+- **Curation pilot, wave 0 (2026-11-18).** Kutch Ajrakh, Bastar Dhokra and Tikuli Painting are
+  curated as FULL dossiers in `backend/app/data/curation/`: 20, 22 and 22 sources, 132, 140 and
+  112 claims, and 269, 231 and 207 verified quotes. Each had an independent critic, who
+  re-fetched every source and found 14, 18 and 9 faults the checker cannot see. The faults were
+  undated counts, unattributed pages rated too high, unrecorded conflicts, claims stretching their
+  quotes and repeated facts, and all were fixed. Each craft cost about 0.9 to 1.1 million tokens of
+  Claude Code subscription use, against the plan's 200 to 400 thousand. Wave 1 waits for the
+  owner. The importer and the craft page rebuild (plan section 8) come next.
+- **Opus 5.5 composes at medium effort (decision 0052, 2026-11-18).** Opus 5.5 leads the
+  `COMPOSE` route (then Sonnet 5.5, Gemini 3.8 Flash, GPT-6.1 Terra). The router passes a
+  per-route reasoning effort from `RoutePolicy.params.reasoningEffort`, defaulting to `medium`
+  for composing. Saving a route order keeps each route's params. The paid nightly enrichment was
+  removed (commit fdf478c), and the dataset is curated by Claude Code instead.
 
 ## Next
 
-1. Close phase A of the answer experience (`docs/plans/answer-experience.md`, phase A status):
-   the E2E run at three widths after the phone layout fix (finding 8a.3), and Listen once the
-   server's Elastic IP is on the ElevenLabs key's allow-list (the key answers `ip_not_allowed`).
+0. Close phase B (lanes 0043 to 0050 are built, every phase B kind is in `BUILT_BLOCK_KINDS`).
+   After the owner applies the river load role and the deploy that carries migration 0016,
+   dispatch Geo ETL with `riverlines` and `load` (region stories wait for it, decision 0044) and
+   then `chirps` (`docs/RUNBOOK.md`, Geo ETL); put the traced Kachchh river's ids into the phase B
+   fixture; then dispatch E2E production with `questions` and `rivers_loaded` to prove the water
+   story for Kachchh (plan section 5).
+
+1. Curation (`docs/plans/dataset-curation.md`): `app.scripts.import_curation` and the craft page
+   rebuild (overview from curated claims, key facts, district places, conflicts, seed edge
+   sentences hidden), then wave 1, the 209 GI crafts, once the owner approves it.
 2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
@@ -455,6 +585,11 @@ Last updated: 2026-11-17.
 5. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
 
 ## Waiting on the owner
+
+- River load role (decision 0050): `terraform apply` in `infra/terraform` creates
+  `kalavigyan-river-load`; then set the repository variable `AWS_RIVER_LOAD_ROLE_ARN` to the
+  `river_load_role_arn` output (or re-run `infra/scripts/seed_secrets.py`) before the first Geo ETL
+  `riverlines` load.
 
 - E2E production run: after the next backend deploy, run `app.scripts.provision_e2e_account` on the
   box, set `E2E_EMAIL` (`e2e-researcher@kalavigyan.example`) and `E2E_PASSWORD` as GitHub secrets,

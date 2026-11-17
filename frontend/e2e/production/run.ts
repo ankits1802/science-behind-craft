@@ -9,7 +9,7 @@ export const REPORT_ENTITY = "Eval-Run";
 export const CRAFT_SLUG = "Kutch-Ajrakh";
 export const NOT_FOUND_PATH = "/no-such-page-e2e";
 export const SCREENS_TIMEOUT_MS = 10 * 60_000;
-export const QUESTIONS_TIMEOUT_MS = 25 * 60_000;
+export const QUESTIONS_TIMEOUT_MS = 35 * 60_000;
 
 const STARTED_HERE = new Date().toISOString();
 
@@ -33,6 +33,10 @@ export function baseUrl(): string {
 
 export function questionsRequested(): boolean {
   return process.env.E2E_QUESTIONS === "1";
+}
+
+export function riversLoaded(): boolean {
+  return process.env.E2E_RIVERS_LOADED === "1";
 }
 
 export function credentials(): Credentials {

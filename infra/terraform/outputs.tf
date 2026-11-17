@@ -38,6 +38,11 @@ output "deploy_role_arn" {
   value       = aws_iam_role.deploy.arn
 }
 
+output "river_load_role_arn" {
+  description = "Role the Geo ETL assumes through OIDC to upload river topologies (AWS_RIVER_LOAD_ROLE_ARN)."
+  value       = aws_iam_role.river_load.arn
+}
+
 output "box_role_name" {
   description = "Instance role of the box."
   value       = aws_iam_role.box.name

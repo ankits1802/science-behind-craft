@@ -79,6 +79,13 @@ export const QUANTITY_LABEL: Record<StageCondition["quantity"], string> = {
   PRESSURE: "Pressure"
 };
 
+export function materialRoleText(role: StageMaterial["role"] | null, kind: StageMaterial["kind"] | null): string | null {
+  const roleLabel = role ? MATERIAL_ROLE_LABEL[role] : null;
+  const kindLabel = kind ? MATERIAL_KIND_LABEL[kind] : null;
+  if (roleLabel && kindLabel && roleLabel !== kindLabel) return `${roleLabel} · ${kindLabel}`;
+  return roleLabel ?? kindLabel;
+}
+
 const PUBCHEM_COMPOUND = "https://pubchem.ncbi.nlm.nih.gov/compound/";
 
 export function shownVariants(process: CraftProcess): ProcessVariant[] {
@@ -113,7 +120,9 @@ export function isUnbalanced(reaction: ProcessReaction): boolean {
   return reaction.levelReason === UNBALANCED_REASON;
 }
 
-export function speciesSides(reaction: ProcessReaction): { reactants: ReactionSpecies[]; products: ReactionSpecies[] } {
+export type SpeciesReaction = Pick<ProcessReaction, "species" | "balanced">;
+
+export function speciesSides(reaction: Pick<ProcessReaction, "species">): { reactants: ReactionSpecies[]; products: ReactionSpecies[] } {
   return {
     reactants: reaction.species.filter((species) => species.role === "REACTANT"),
     products: reaction.species.filter((species) => species.role === "PRODUCT")
@@ -132,12 +141,12 @@ function spokenSide(species: readonly ReactionSpecies[], balanced: boolean): str
     .join(" + ");
 }
 
-export function reactionSpoken(reaction: ProcessReaction): string {
+export function reactionSpoken(reaction: SpeciesReaction): string {
   const { reactants, products } = speciesSides(reaction);
   return `${spokenSide(reactants, reaction.balanced)} gives ${spokenSide(products, reaction.balanced)}`;
 }
 
-export function speciesNamesLine(reaction: ProcessReaction): string {
+export function speciesNamesLine(reaction: Pick<ProcessReaction, "species">): string {
   const { reactants, products } = speciesSides(reaction);
   return `${reactants.map(speciesName).join(" · ")} → ${products.map(speciesName).join(" · ")}`;
 }

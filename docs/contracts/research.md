@@ -7,7 +7,7 @@ code is the typed models, protocols and error types in `backend/app/research/` a
 and writers against these types and change a type only together with this page and its tests
 (`backend/tests/research/`). Design choices: decision 0002.
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
 ## Ground rules (PLAN section 0 and the bindings)
 
@@ -208,7 +208,7 @@ the four T3 reference adapters; none needs a key.
 | Adapter `name` | Service | Id after the colon | `fetch` content | Source type, trust | Licence |
 |---|---|---|---|---|---|
 | `wikipedia` | Action API search and TextExtracts | `<language>:<page id>` | `FULL_TEXT` | `ENCYCLOPEDIA`, `B` | the wiki's rightsinfo text, read live |
-| `wikidata` | `list=search`, `wbgetentities`, SPARQL statements | `Q…`, or `<language>:Q…` outside English | `EXCERPT` | `DATASET`, `B` | `CC0 1.0` |
+| `wikidata` | `list=search`, `wbgetentities`, SPARQL statements; `wbsearchentities` and SPARQL P625 for places | `Q…`, or `<language>:Q…` outside English | `EXCERPT` | `DATASET`, `B` | `CC0 1.0` |
 | `pubchem` | PUG REST (names, formulas, properties), PUG View (GHS) | `<CID>` or `<CID>:ghs` | `EXCERPT` | `COMPOUND_RECORD`, `A` | NCBI policy URL; for `:ghs` the reporting sources' licence URLs |
 | `wikimedia_commons` | Action API file search with `extmetadata` | page id, or `<language>:<page id>` outside English | `EXCERPT` | `OTHER`, `C` | the file's licence short name |
 
@@ -231,6 +231,11 @@ the four T3 reference adapters; none needs a key.
   `not_found`, rate limits `rate_limit`, read-only `unavailable`, anything else `error`.
 - Commons files without a licence are left out of results. Wikidata time values coarser than a
   year, and deprecated statements, are left out of the text.
+- Wikidata also places a named origin (decision 0047): `place_candidates(name)` asks
+  `wbsearchentities` (English items, 10 hits) and keeps the hits whose matched label or alias is
+  the name; `place_points(itemIds)` asks one SPARQL query (1 to 20 ids) for coordinate location
+  (P625) and answers Earth points in range only, a preferred statement over normal ones, never a
+  deprecated one, and no point for an item whose best rank holds two different points.
 
 ### Web search adapters (`app/sources/web/`, decision 0007)
 
@@ -421,8 +426,10 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   answer language (`ANSWER_LANGUAGES`); `englishQuestion` is the question in English when the
   caller has it (the answering service passes the question itself when it is written in Latin
   script), else the planner uses the plan call's rendering. An explainer section adds `focus`
-  (its discipline; the plan call gets a `Section` line), `seats` (the understanding's experts; an
-  `Experts` line), `share` (`ResearchShare {queries, nativeQueries, fetches}`, its part of the
+  (its discipline; the plan call gets a `Section` line), `seats` (the understanding's experts:
+  the plan call's `Experts` line names each seat speaking in the section,
+  `expert_panel.speaking_seats` of `focus`, `seats` and `depth`, with the source kinds it reads,
+  and the reading order shares the section's reads with them; decision 0046), `share` (`ResearchShare {queries, nativeQueries, fetches}`, its part of the
   depth budget: `planner/policy.request_limits` takes the smaller of the share and the mode and
   depth limits) and `fresh` (live queries run for covered facets too, finding 8a.2; decision 0032).
   `split_share(total, parts)` splits a budget evenly, the remainder to the first parts.
@@ -505,7 +512,9 @@ document is read), which the answer stream turns into `trail` events.
 - **Dedupe and rank**: hits merge by `source_key` and id into `PackedEvidence`; the kept item
   is the most trusted, then the one with quotes, then the best ranked. Order: trust, then hits
   (distinct searcher-and-query pairs), then best rank, then id.
-- **Read**: the best item per facet first, then by rank, through the searcher that found it
+- **Read**: the best item per facet first, alternating with the best item of each speaking
+  seat's most preferred source kind found (`policy.seat_reading_kinds`, decision 0046), then by
+  rank, through the searcher that found it
   (`foundBy[0]`; `web` dispatches to SearXNG or Brave, which read through the fetcher), until
   `maxFetches` documents or `READ_ATTEMPT_FACTOR` (2) attempts per allowed document, at most
   `READ_CONCURRENCY` (8) at once, each within `DOCUMENT_TIMEOUT_SECONDS` (45). Where the tier's
@@ -513,9 +522,10 @@ document is read), which the answer stream turns into `trail` events.
   the `OpenAccessLocator`; an open copy (PDF, else landing page) is read through the `Fetcher`
   as `FULL_TEXT`, with the copy's own licence (none when the locator gives none, never the
   record's) and `externalIds.open_access_url` and `sha256`.
-- **Follow references** (`DEEP`, with a `doi_source`): `DEEP_REFERENCE_RESERVE` (6) of the
-  fetches wait while the primary items are read; then DOIs cited in documents whose tier
-  `follows_references` (at most `REFERENCES_PER_DOCUMENT` 5 new per document, in text order)
+- **Follow references** (`DEEP`, with a `doi_source`): the same part of the plan's fetches as
+  `DEEP_REFERENCE_RESERVE` (6) is of `DEEP`'s 20 (`policy.reference_reserve`: 6 of 20, 1 of 4,
+  none of 3; decision 0046) wait while the primary items are read; then DOIs cited in
+  documents whose tier `follows_references` (at most `REFERENCES_PER_DOCUMENT` 5 new per document, in text order)
   are fetched as `<doi_source>:<doi>` and opened like any scholarly item. They join the
   evidence after the searched items with `followedFrom` set and the parent's facets.
 
@@ -577,6 +587,10 @@ evidence[PackedEvidence], documents[SourceDocument], failures[ResearchFailure]}`
   - `TRIVIAL_QUOTE`: a span shorter than 20 characters once folded (`quotes.trivial_quote`).
   - `UNRELATED_QUOTE`: the verified spans carry fewer than half of the sentence's content words
     (`quotes.quote_overlap`, `QUOTE_OVERLAP_MIN`).
+- After the post-checks the sectioned flow drops, alone, a sentence that names a month, a
+  season, or a state or district of the LGD register that none of its stored claims' texts or
+  quotes states (`services/stated_names.unstated_names`, decision 0050); the same check refuses a
+  prose block and an expert take (`section_blocks.prose_problems`).
 - `sentence_level(sentence, allowed)` is the weakest level of the cited candidates, computed by
   the server, never by the model. Hypothesis-level sentences go to `openQuestions`.
 - Reactions are not composer output: they come from stored `Reaction` rows checked by the
@@ -869,7 +883,12 @@ stream: each step opens its own.
    (`services/section_enrichment`, decision 0039), in English, before translation; then the
    section's pictures are searched from the claims those blocks cite and sent as an `images`
    block after them (6 s per image service, 8 s for the step; a failure or timeout sends none and
-   leaves the section `READY`). Reused sections get pictures the same way.
+   leaves the section `READY`). Reused sections get pictures the same way. The registered block
+   builders of the section's field (`services/block_builders`, decision 0042; built kinds only:
+   the region story and map layers of decision 0044, the expert panel of decision 0046) start
+   with the pictures from the checked blocks; their blocks are marked, translated and sent after
+   the section's own and before the pictures, each builder bounded by its wait and never failing
+   the section (`docs/contracts/explainer.md`, Block builders).
    A refused block is logged and dropped. Hypothesis-level sentences are `open_question` events
    (`open.<n>` across the answer). The sources a block cites are sent before it, once per answer.
    In another language each block, then the section's open questions, is translated on its own
@@ -905,7 +924,9 @@ the role) must be one of `selectable_depths` (every depth for a known role, none
 one) and the asker must hold `ASK_STANDARD`, else 403 with `refusal_for`, before any work; then
 the ask window (429). Model calls run as the asker's `Principal` with one
 `providers/budget.AnswerSpend` for the asked depth, so the per-answer cap, the per-role daily cap
-and the monthly ceiling apply to every role but Master Admin. The asker's name is a withheld
+and the monthly ceiling apply to every role but Master Admin. The block builders' compose model
+holds the same answer's `headroom()`: a call is refused unless the answer keeps half its cap
+after it (`OPTIONAL_WORK_KEEPS`, decision 0046). The asker's name is a withheld
 search term. `/answers/config` lists the depths with their labels and the role's default.
 
 ### Translation (`research/translation.py`, `services/answer_translation.py`, decision 0023)

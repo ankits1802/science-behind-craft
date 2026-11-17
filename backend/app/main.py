@@ -31,6 +31,7 @@ from app.core.shielded import ShieldedWork
 from app.services import two_factor
 from app.services.craft_resolver import CraftIndexStore
 from app.services.live_sources import LiveSourcesStore
+from app.services.river_topology import TopologyCache
 from app.voice.runtime import VoiceRuntime
 from app.voice.sessions import VOICE_CONSENT_HEADER
 
@@ -98,6 +99,7 @@ def create_app() -> FastAPI:
     app.state.live_sources = LiveSourcesStore()
     app.state.shielded_work = ShieldedWork()
     app.state.voice_runtime = VoiceRuntime()
+    app.state.river_topologies = TopologyCache()
 
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception) -> JSONResponse:

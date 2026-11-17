@@ -24,6 +24,8 @@ from app.science.records import ProcessRecords
 from .answer_events import CitedClaims
 from .answer_trail import stored_key
 from .answer_translation import AnswerTranslation, translated_block, translated_sentences
+from .block_builders import AddedBlocks, BlockBuilders, SectionBuilds
+from .builder_interface import BuildAsk
 from .explainer_events import ExplainerStream
 from .research_ledger import ResearchLedger, may_research_fresh
 from .section_blocks import (
@@ -79,6 +81,7 @@ class SectionContext:
     ledger: ResearchLedger
     enrichment: Enrichment
     process: ProcessRecords | None = None
+    builders: BlockBuilders = field(default_factory=BlockBuilders)
 
 
 @dataclass(frozen=True)
@@ -142,23 +145,25 @@ async def _section(spec: SectionSpec, share: ResearchShare, context: SectionCont
         await context.stream.section_state(spec.id, "RESEARCHING")
         attempts.append(await _attempt(spec, context, fresh, fresh=True))
     shown = attempts[-1]
-    async with context.enrichment.searching() as pictures:
+    async with context.enrichment.searching() as pictures, context.builders.building() as builds:
         pictures.start(spec.id, shown.blocks)
-        blocks = await _shown(spec, shown, context, pictures)
+        builds.start(BuildAsk(context.answer_id, spec, context.base, shown.blocks, shown.cited))
+        blocks, added = await _shown(spec, shown, context, pictures, builds)
     packs = tuple(attempt.pack for attempt in attempts)
     searched = None if blocks else searched_note(research_summary(*packs))
+    sources = {**_sources(shown.cited, context.process), **added.sources}
     await context.stream.section_done(spec.id, searched=searched)
-    await _quote_trail(shown, blocks, context)
+    await _quote_trail(shown, blocks, context, sources)
     return SectionOutcome(
         spec,
         blocks=blocks,
-        built=shown.blocks,
+        built=(*shown.blocks, *added.blocks),
         searched=searched,
         plans=tuple(pack.plan for pack in packs),
         packs=packs,
         follow_ups=tuple(shown.composed.follow_ups),
-        claim_ids=shown.claim_ids,
-        sources=_sources(shown.cited, context.process),
+        claim_ids=tuple(dict.fromkeys([*shown.claim_ids, *_claim_ids(added.blocks, ())])),
+        sources=sources,
     )
 
 
@@ -262,8 +267,12 @@ def _prose(prose_id: str, facts: Sequence[KeptSentence], cited: CitedClaims) -> 
 
 
 async def _shown(
-    spec: SectionSpec, attempt: _Attempt, context: SectionContext, pictures: PictureSearches
-) -> tuple[Block, ...]:
+    spec: SectionSpec,
+    attempt: _Attempt,
+    context: SectionContext,
+    pictures: PictureSearches,
+    builds: SectionBuilds,
+) -> tuple[tuple[Block, ...], AddedBlocks]:
     sources = _sources(attempt.cited, context.process)
     texts = _claim_texts(attempt.cited, context.process)
     shown: list[Block] = []
@@ -271,16 +280,26 @@ async def _shown(
         translated = await _in_language(block, context, texts)
         await context.stream.blocks(spec.id, [translated], sources)
         shown.append(translated)
-    images = await pictures.sent(spec.id, context.stream)
+    found = await builds.added(spec.id, first_ordinal=len(shown) + 1)
+    added = AddedBlocks(tuple(context.enrichment.marked(block) for block in found.blocks), found.sources)
+    for block in added.blocks:
+        translated = await _in_language(block, context, texts)
+        await context.stream.blocks(spec.id, [translated], {**sources, **added.sources})
+        shown.append(translated)
+    images = await pictures.sent(spec.id, context.stream, ordinal=len(shown) + 1)
     if images is not None:
         shown.append(images)
     open_questions = await _open_in_language(attempt.open_questions, context, texts)
     await context.stream.open_questions(open_questions, sources)
-    return tuple(shown)
+    return tuple(shown), added
 
 
-async def _quote_trail(attempt: _Attempt, blocks: Sequence[Block], context: SectionContext) -> None:
-    sources = _sources(attempt.cited, context.process)
+async def _quote_trail(
+    attempt: _Attempt,
+    blocks: Sequence[Block],
+    context: SectionContext,
+    sources: Mapping[str, Mapping[str, Any]],
+) -> None:
     trail = context.stream.trail
     ladder = {sid for block in blocks if block.kind == "process_ladder" for sid in block.cited_source_ids()}
     cited = dict.fromkeys(source_id for block in blocks for source_id in block.cited_source_ids())

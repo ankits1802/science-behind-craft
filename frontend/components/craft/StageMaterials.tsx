@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { ChemEquation } from "@/components/answer/ChemEquation";
 import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
 import { ClaimList } from "@/components/craft/ClaimList";
-import { MATERIAL_KIND_LABEL, MATERIAL_ROLE_LABEL, pubchemHref } from "@/lib/processView";
+import { materialRoleText, pubchemHref } from "@/lib/processView";
 import type { StageMaterial } from "@/lib/scienceContract";
 
 export function StageMaterials({ materials }: { materials: readonly StageMaterial[] }) {
@@ -26,13 +26,11 @@ export function StageMaterials({ materials }: { materials: readonly StageMateria
 }
 
 function MaterialHeading({ material }: { material: StageMaterial }) {
-  const role = MATERIAL_ROLE_LABEL[material.role];
-  const kind = MATERIAL_KIND_LABEL[material.kind];
   return (
     <div className="flex flex-wrap items-start justify-between gap-2">
       <span className="min-w-0">
         <span className="block text-sm font-semibold text-ink-900">{material.name}</span>
-        <span className="block text-xs text-ink-500">{kind === role ? role : `${role} · ${kind}`}</span>
+        <span className="block text-xs text-ink-500">{materialRoleText(material.role, material.kind)}</span>
       </span>
       <EvidenceLevelBadge level={material.level} />
     </div>

@@ -1,4 +1,5 @@
-import type { Discipline, ExplainerBlock, ExplainerSentence, LadderStage, TermSpan, WorkingSectionState } from "@/lib/explainerContract";
+import type { ExplainerSentence, TermSpan } from "@/lib/explainerBlockBase";
+import type { BlockByKind, Discipline, ExplainerBlock, LadderStage, TypedBlockKind, WorkingSectionState } from "@/lib/explainerContract";
 import type { SectionState, SectionView } from "@/lib/explainerState";
 import { TRAIL_GROUPS, TRAIL_STAGES, type TrailEntry } from "@/lib/explainerStream";
 import { byCount, formatDate } from "@/lib/format";
@@ -11,6 +12,7 @@ export type TrailCount = { group: TrailGroup; count: number; noun: string };
 export type TextRange = { from: number; to: number };
 export type TextPart = { text: string; marked: boolean };
 export type TextSegment = { text: string; term: TermSpan | null; parts: TextPart[] };
+export type TypedBlock = BlockByKind[TypedBlockKind];
 
 export const DISCIPLINE_LABEL: Record<Discipline, string> = {
   OVERVIEW: "Overview",
@@ -62,10 +64,15 @@ export function stageCitations(stage: LadderStage): Citation[] {
   ];
 }
 
-export function blockCitations(block: ExplainerBlock): Citation[] {
-  if (block.kind === "prose") return block.sentences.flatMap((sentence) => sentence.citations);
+export function blockCitations(block: TypedBlock): Citation[] {
   if (block.kind === "process_ladder") return block.stages.flatMap(stageCitations);
-  return [];
+  if (block.kind === "reaction_player") return block.steps.flatMap((step) => step.citations);
+  return blockSentences(block).flatMap((sentence) => sentence.citations);
+}
+
+export function blockSourceIds(block: TypedBlock): string[] {
+  const cited = blockCitations(block).map((citation) => citation.sourceId);
+  return block.kind === "molecule_3d" ? [...cited, block.sourceId] : cited;
 }
 
 export function explainerSourceNumbers(
@@ -74,10 +81,11 @@ export function explainerSourceNumbers(
   reactions: readonly AnswerReaction[] = []
 ): Map<string, number> {
   const numbers = new Map<string, number>();
-  const take = (citations: readonly Citation[]) => {
-    for (const citation of citations) if (!numbers.has(citation.sourceId)) numbers.set(citation.sourceId, numbers.size + 1);
+  const number = (sourceIds: readonly string[]) => {
+    for (const sourceId of sourceIds) if (!numbers.has(sourceId)) numbers.set(sourceId, numbers.size + 1);
   };
-  for (const section of sections) for (const block of section.blocks) take(blockCitations(block));
+  const take = (citations: readonly Citation[]) => number(citations.map((citation) => citation.sourceId));
+  for (const section of sections) for (const block of section.blocks) number(blockSourceIds(block));
   for (const section of openQuestions) for (const sentence of section.sentences) take(sentence.citations);
   for (const reaction of reactions) take(reaction.citations);
   return numbers;
@@ -167,8 +175,13 @@ export function hasTranslatedText(sections: readonly SectionView[]): boolean {
   );
 }
 
-export function blockSentences(block: ExplainerBlock): ExplainerSentence[] {
+export function blockSentences(block: TypedBlock): ExplainerSentence[] {
   if (block.kind === "prose") return block.sentences;
   if (block.kind === "process_ladder") return block.stages.flatMap((stage) => stage.sentences);
+  if (block.kind === "region_story") return block.steps.map((step) => step.sentence);
+  if (block.kind === "seasons") return block.rows.map((row) => row.sentence);
+  if (block.kind === "supply_map") return block.links.map((link) => link.sentence);
+  if (block.kind === "material_card") return [...block.facts, ...block.handling];
+  if (block.kind === "expert_view") return [...block.take, ...block.differs.flatMap((difference) => [difference.thisView, difference.otherView])];
   return [];
 }

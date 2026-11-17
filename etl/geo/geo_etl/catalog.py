@@ -162,9 +162,21 @@ HYDRORIVERS = Dataset(
     period="static",
     nativeResolution="15 arc-second network (reaches with upstream area >= 10 km2 or discharge >= 0.1 m3/s)",
     crs="EPSG:4326",
-    licence="HydroSHEDS License Agreement: free for non-commercial and commercial use, attribution required",
-    licenceUrl="https://www.hydrosheds.org/terms-of-use",
-    attribution="HydroRIVERS, WWF HydroSHEDS (https://www.hydrosheds.org)",
+    licence=(
+        "HydroSHEDS v1 License Agreement: free for non-commercial and commercial use; distributed only inside "
+        "derived products, never on its own; attribution required"
+    ),
+    licenceUrl="https://data.hydrosheds.org/file/technical-documentation/HydroSHEDS_TechDoc_v1_4.pdf",
+    attribution=(
+        "This product KalaVigyan incorporates data from the HydroSHEDS version 1 database which is © World "
+        "Wildlife Fund, Inc. (2006-2022) and has been used herein under license. WWF has not evaluated the data as "
+        "altered and incorporated within KalaVigyan, and therefore gives no warranty regarding its accuracy, "
+        "completeness, currency or suitability for any particular purpose. Portions of the HydroSHEDS v1 database "
+        "incorporate data which are the intellectual property rights of © USGS (2006-2008), NASA (2000-2005), "
+        "ESRI (1992-1998), CIAT (2004-2006), UNEP-WCMC (1993), WWF (2004), Commonwealth of Australia (2007), and "
+        "Her Royal Majesty and the British Crown and are used under license. The HydroSHEDS v1 database and more "
+        "information are available at https://www.hydrosheds.org."
+    ),
     redistributable=True,
     citation=(
         "Lehner, B., Grill, G. (2013). Global river hydrography and network routing: baseline data and new "

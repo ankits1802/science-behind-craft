@@ -21,11 +21,13 @@ __all__ = [
     "SECTION_SENTENCES_MAX",
     "SECTION_SYSTEM_PROMPT",
     "SOURCE_RULES",
+    "candidate_blocks",
     "compose_message",
     "compose_schema",
     "regenerate_message",
     "regenerate_schema",
     "section_schema",
+    "sentence_schema",
 ]
 
 MAX_SECTIONS = 6
@@ -80,20 +82,20 @@ REGENERATE_SYSTEM_PROMPT = (
 
 
 def compose_schema() -> dict[str, Any]:
-    section = schema_object(heading=TEXT, sentences=_array(_sentence()))
+    section = schema_object(heading=TEXT, sentences=_array(sentence_schema()))
     return schema_object(sections=_array(section), followUps=_array(TEXT))
 
 
 def section_schema(stage_ids: Sequence[str] = ()) -> dict[str, Any]:
     if not stage_ids:
-        return schema_object(sentences=_array(_sentence()), followUps=_array(TEXT))
+        return schema_object(sentences=_array(sentence_schema()), followUps=_array(TEXT))
     stages = _array({"type": "string", "enum": list(stage_ids)})
-    return schema_object(sentences=_array(_sentence()), stages=stages, followUps=_array(TEXT))
+    return schema_object(sentences=_array(sentence_schema()), stages=stages, followUps=_array(TEXT))
 
 
 def regenerate_schema(failed: int) -> dict[str, Any]:
     index = {"type": "integer", "enum": list(range(max(failed, 1)))}
-    return schema_object(sentences=_array(_sentence(index=index)))
+    return schema_object(sentences=_array(sentence_schema(index=index)))
 
 
 def compose_message(request: ComposeRequest) -> str:
@@ -117,7 +119,7 @@ def _context(request: ComposeRequest) -> list[str]:
         f"Answer language: {request.language}",
         craft_line(request.craft),
         *_focus_lines(request.focus),
-        *(block for candidate in request.candidates for block in _candidate_blocks(candidate)),
+        *(block for candidate in request.candidates for block in candidate_blocks(candidate)),
     ]
 
 
@@ -131,7 +133,7 @@ def _focus_lines(focus: ComposeFocus | None) -> list[str]:
     return lines
 
 
-def _candidate_blocks(candidate: ComposeCandidate) -> list[str]:
+def candidate_blocks(candidate: ComposeCandidate) -> list[str]:
     texts = candidate.cited_texts
     return [
         untrusted_block(candidate.id, f"{candidate.source_label}; passage {n} of {len(texts)}", text)
@@ -139,7 +141,7 @@ def _candidate_blocks(candidate: ComposeCandidate) -> list[str]:
     ]
 
 
-def _sentence(**extra: dict[str, Any]) -> dict[str, Any]:
+def sentence_schema(**extra: dict[str, Any]) -> dict[str, Any]:
     quote = schema_object(source=TEXT, quote=TEXT)
     return schema_object(**extra, text=TEXT, quotes=_array(quote))
 

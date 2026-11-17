@@ -3,12 +3,10 @@
 import { motion } from "framer-motion";
 import { History } from "lucide-react";
 
-import { ImageStrip } from "@/components/answer/ImageStrip";
-import { ProcessLadder } from "@/components/answer/ProcessLadder";
-import { ProseBlockView } from "@/components/answer/ProseBlockView";
+import { hasRenderer, renderBlock } from "@/components/answer/blockRenderers";
 import { riseItem } from "@/components/guide/guideMotion";
-import type { ExplainerBlock, ReuseMarker } from "@/lib/explainerContract";
-import { reusedLabel } from "@/lib/explainerView";
+import type { ReuseMarker } from "@/lib/explainerBlockBase";
+import { reusedLabel, type TypedBlock } from "@/lib/explainerView";
 
 function ReuseNote({ reuse }: { reuse: ReuseMarker }) {
   return (
@@ -19,22 +17,12 @@ function ReuseNote({ reuse }: { reuse: ReuseMarker }) {
   );
 }
 
-function BlockBody({ block }: { block: ExplainerBlock }) {
-  switch (block.kind) {
-    case "prose":
-      return <ProseBlockView block={block} />;
-    case "process_ladder":
-      return <ProcessLadder block={block} />;
-    case "images":
-      return <ImageStrip block={block} />;
-  }
-}
-
-export function ExplainerBlockView({ block, reduce }: { block: ExplainerBlock; reduce: boolean }) {
+export function ExplainerBlockView({ block, reduce }: { block: TypedBlock; reduce: boolean }) {
+  if (!hasRenderer(block)) return null;
   return (
     <motion.div variants={riseItem(reduce)} initial="hidden" animate="show" data-testid="explainer-block" data-kind={block.kind} data-block-id={block.id}>
       {block.reuse ? <ReuseNote reuse={block.reuse} /> : null}
-      <BlockBody block={block} />
+      {renderBlock(block)}
     </motion.div>
   );
 }

@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from app.core.errors import InvalidInput
 from app.geo.records import DatasetRecord
-from app.schemas.region import RegionDataset
+from app.research.datasets import DatasetRef
 
 __all__ = ["region_dataset", "value_grid"]
 
 
-def region_dataset(dataset: DatasetRecord) -> RegionDataset:
-    return RegionDataset(
+def region_dataset(dataset: DatasetRecord) -> DatasetRef:
+    return DatasetRef(
         code=dataset.code,
         title=dataset.title,
         publisher=dataset.publisher,

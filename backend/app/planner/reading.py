@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
+from itertools import zip_longest
 
 from app.research.evidence import EvidenceItem, OpenAccessLocator, SourceAdapter, SourceDocument
 from app.research.evidence_pack import PackedEvidence
@@ -38,13 +39,33 @@ class LiveSources:
             raise ValueError(f"live searchers have distinct names, not {names}")
 
 
-def reading_order(evidence: Sequence[PackedEvidence], facet_count: int) -> list[PackedEvidence]:
-    chosen: dict[str, PackedEvidence] = {}
-    for facet_index in range(facet_count):
-        best = next((e for e in evidence if facet_index in e.facet_indexes and e.item.id not in chosen), None)
-        if best is not None:
-            chosen[best.item.id] = best
-    return [*chosen.values(), *(entry for entry in evidence if entry.item.id not in chosen)]
+def reading_order(
+    evidence: Sequence[PackedEvidence], facet_count: int, seat_kinds: Sequence[Sequence[str]] = ()
+) -> list[PackedEvidence]:
+    chosen: set[str] = set()
+    facets = [_first(evidence, chosen, lambda e, i=i: i in e.facet_indexes) for i in range(facet_count)]
+    seats = [_preferred(evidence, chosen, kinds) for kinds in seat_kinds]
+    firsts = [entry for pair in zip_longest(facets, seats) for entry in pair if entry is not None]
+    return [*firsts, *(entry for entry in evidence if entry.item.id not in chosen)]
+
+
+def _preferred(
+    evidence: Sequence[PackedEvidence], chosen: set[str], kinds: Sequence[str]
+) -> PackedEvidence | None:
+    for kind in kinds:
+        found = _first(evidence, chosen, lambda e, kind=kind: e.item.source_type == kind)
+        if found is not None:
+            return found
+    return None
+
+
+def _first(
+    evidence: Sequence[PackedEvidence], chosen: set[str], wanted: Callable[[PackedEvidence], bool]
+) -> PackedEvidence | None:
+    found = next((entry for entry in evidence if entry.item.id not in chosen and wanted(entry)), None)
+    if found is not None:
+        chosen.add(found.item.id)
+    return found
 
 
 class DocumentReader:

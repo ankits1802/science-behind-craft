@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_engine
 from app.models import Compound, Source
 from app.services.claim_seed import seed_id
-from app.services.compound_lookup import link_compounds
+from app.services.compound_lookup import link_compounds, record_source_id
 from app.sources.reference.pubchem import PubChemCompound
 
 from ..science.test_compound_lookup import FakeFinder
@@ -50,6 +50,7 @@ async def test_a_seeded_compound_is_linked_to_its_pubchem_record(session: AsyncS
         "C14H8O4",
         Decimal("240.21"),
     )
+    assert alizarin.sourceId == record_source_id(6293)
     source = await session.get(Source, alizarin.sourceId)
     assert (source.kind, source.url, source.reliability) == (
         "COMPOUND_RECORD",

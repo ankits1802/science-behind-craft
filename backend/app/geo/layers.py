@@ -11,9 +11,8 @@ from typing import Any
 from app.core.errors import InvalidInput
 from app.geo.datasets import region_dataset, value_grid
 from app.geo.records import DatasetRecord, LayerListing, LayerSpec, LayerValues, StoredLayer
+from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE
 from app.schemas.region import (
-    BOUNDARY_CAPTION,
-    BOUNDARY_DATASET_CODE,
     LAYER_CLASS_MAX,
     BoundaryNote,
     LayerClass,
@@ -24,7 +23,6 @@ from app.schemas.region import (
 )
 
 __all__ = [
-    "BOUNDARY_DATASET_CODE",
     "BREAK_FIGURES",
     "LAYERS_BY_ID",
     "MAP_LAYERS",
