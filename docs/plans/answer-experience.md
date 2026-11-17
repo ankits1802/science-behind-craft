@@ -340,6 +340,8 @@ offline (`docs/TECH_DEBT.md`, Craft Process tab on phones hangs).
    on every object, required lists complete), test the exact schema against Anthropic's rules, and
    never fall back to free text: a rejected format is a provider failure that moves to the next
    route (Gemini), logged as such.
+   Fixed by decision 0032's portable schemas; on 2026-11-17 Claude Sonnet went back to COMPOSE
+   route 1 in production and composed 36 sections of the enrichment run with no refusal.
 2. **No live research when stored composition fails.** The planner skips live research when stored
    coverage looks sufficient; when composition from stored claims then yields no block, the answer
    must run live research for that facet instead of ending with not enough evidence.

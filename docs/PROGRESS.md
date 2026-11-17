@@ -423,6 +423,11 @@ Last updated: 2026-11-17.
   KaTeX equation and the Process page scrolled 114 px sideways at 390 px; the reaction, answer
   reaction and material grids are `grid-cols-1`, so each card holds the screen's width and the
   equation scrolls inside it.
+- **Production proof of phase A (2026-11-17):** E2E run 44001978530 passes every screen at desktop,
+  tablet and phone; both known-answer questions pass (27 cited sentences, 52 citations); the Hindi
+  answer reused all five stored blocks of the English one; every section carried pictures. Claude
+  Sonnet is COMPOSE route 1 again (Gemini 2, GPT 3) and composed 36 enrichment sections with no
+  refusal. All 1,958 claims and the five pieces have vectors.
 
 ## Next
 
