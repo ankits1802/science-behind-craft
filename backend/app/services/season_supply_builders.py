@@ -128,4 +128,4 @@ async def _concept_names(session: AsyncSession, concept_ids: Collection[uuid.UUI
     if not concept_ids:
         return {}
     rows = await session.execute(select(Concept.id, Concept.name).where(Concept.id.in_(list(concept_ids))))
-    return dict(rows.tuples())
+    return dict(rows.tuples().all())

@@ -76,7 +76,7 @@ jobs:
         run: npm ci
 
       - name: Audit the lockfile
-        run: npm audit --audit-level=low
+        run: node scripts/audit.mjs
 
       - name: No comments in source
         run: |

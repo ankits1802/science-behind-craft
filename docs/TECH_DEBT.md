@@ -1809,3 +1809,16 @@ Last reviewed: 2026-11-18.
   is a new provider module.
 - **Clears it:** one `providers/answer_models.answer_models(spend, user=)` returning the set, which
   `build_answer_pipeline` takes as one argument.
+
+## Frontend audit exceptions
+
+### picomatch ReDoS advisory excepted in development tooling
+
+- **What:** Frontend checks run `frontend/scripts/audit.mjs`. It fails on any advisory in production
+  dependencies, on any other advisory without an entry in `frontend/audit-exceptions.json`, and on
+  an entry the audit no longer reports. GHSA-fc5q-39xc-vjpf (picomatch, high) is excepted: it
+  reaches only ESLint tooling (`eslint-config-next`, `typescript-eslint`), never the built site.
+- **Why left:** no fixed picomatch exists. 4.0.7 is the newest release and is affected, and npm's
+  only suggestion is a downgrade of `eslint-config-next` to 14.
+- **Clears it:** a fixed picomatch. The audit then stops reporting the advisory, the check fails
+  on the stale entry, and removing the entry clears this.

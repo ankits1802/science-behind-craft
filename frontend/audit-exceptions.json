@@ -1,0 +1,8 @@
+[
+  {
+    "advisory": "GHSA-fc5q-39xc-vjpf",
+    "package": "picomatch",
+    "reason": "ReDoS in extglob matching. It reaches only ESLint tooling (eslint-config-next, typescript-eslint), never the built site, and no fixed release exists: 4.0.7 is the newest and is affected.",
+    "added": "2026-11-18"
+  }
+]
