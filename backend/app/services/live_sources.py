@@ -10,10 +10,12 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from app.core.config import get_settings
 from app.core.errors import NotConfigured
 from app.planner.reading import LiveSources
+from app.research.images import ImageSource
 from app.services.scholarly_keys import scholarly_keys
 from app.services.web_sources import web_search_config
 from app.sources.fetcher_client import FetcherClient
 from app.sources.http import source_client
+from app.sources.images.registry import image_sources
 from app.sources.reference.registry import reference_sources
 from app.sources.scholarly.registry import scholarly_sources
 from app.sources.web.registry import web_search
@@ -56,6 +58,7 @@ class LiveSourcesStore:
         self._client_factory = client_factory
         self._client: httpx.AsyncClient | None = None
         self._sources: LiveSources | None = None
+        self._images: tuple[ImageSource, ...] | None = None
         self._built_at = 0.0
         self._lock = asyncio.Lock()
 
@@ -69,7 +72,17 @@ class LiveSourcesStore:
                 self._built_at = self._clock()
             return self._sources
 
+    async def images(self) -> tuple[ImageSource, ...]:
+        async with self._lock:
+            if self._client is None:
+                self._client = self._client_factory()
+            if self._images is None:
+                settings = get_settings()
+                fetcher = FetcherClient(settings.fetcher_url, self._client)
+                self._images = image_sources(self._client, searxng_url=settings.searxng_url, fetcher=fetcher)
+            return self._images
+
     async def aclose(self) -> None:
-        client, self._client, self._sources = self._client, None, None
+        client, self._client, self._sources, self._images = self._client, None, None, None
         if client is not None:
             await client.aclose()

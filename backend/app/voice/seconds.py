@@ -15,6 +15,9 @@ __all__ = [
     "agent_hold_key",
     "capped_seconds",
     "ledger_entry",
+    "listen_hold_key",
+    "listen_refund_key",
+    "listen_settle_key",
     "refund_key",
     "relay_audio_key",
     "relay_refund_key",
@@ -56,6 +59,18 @@ def refund_key(session_id: uuid.UUID) -> str:
 
 def settle_key(session_id: uuid.UUID) -> str:
     return f"voice-settle:{session_id}"
+
+
+def listen_hold_key(request_id: uuid.UUID) -> str:
+    return f"listen:{request_id}:hold"
+
+
+def listen_refund_key(request_id: uuid.UUID) -> str:
+    return f"listen-refund:{request_id}"
+
+
+def listen_settle_key(request_id: uuid.UUID) -> str:
+    return f"listen-settle:{request_id}"
 
 
 def capped_seconds(charge: int, remaining: int | None) -> int:

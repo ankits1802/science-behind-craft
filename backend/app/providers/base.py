@@ -1,9 +1,15 @@
 from __future__ import annotations
 
+import logging
 from abc import ABC, abstractmethod
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 
 from app.core.errors import ExternalFailure
+
+logger = logging.getLogger(__name__)
+
+FORMAT_REFUSAL_KIND = "error"
 
 
 @dataclass
@@ -32,6 +38,18 @@ class ChatResult:
 
 class ProviderError(ExternalFailure):
     pass
+
+
+def names_the_format(message: str, needles: Sequence[str]) -> bool:
+    low = message.lower()
+    return any(needle in low for needle in needles)
+
+
+def format_refused(service: str, model: str) -> ProviderError:
+    logger.warning("%s refused the structured output format for %s; the next route answers", service, model)
+    return ProviderError(
+        f"{service} refused the structured output format for {model}", status=400, kind=FORMAT_REFUSAL_KIND
+    )
 
 
 @dataclass(frozen=True)

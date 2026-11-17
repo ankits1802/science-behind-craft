@@ -4,8 +4,10 @@ import time
 
 from app.core.retry_after import retry_after_of
 
-from .base import Adapter, ChatRequest, ChatResult, ProviderError
+from .base import Adapter, ChatRequest, ChatResult, ProviderError, format_refused, names_the_format
 from .usage import anthropic_usage
+
+_FORMAT_NEEDLES = ("output_config.format", "json_schema", "schema")
 
 _NO_SAMPLING = (
     "claude-fable-5",
@@ -99,7 +101,7 @@ class AnthropicAdapter(Adapter):
                 meta["thinking"] = "forced_on"
                 if not self.rejects(model, "effort"):
                     output_config["effort"] = "low"
-        if req.json_schema and not self.rejects(model, "format"):
+        if req.json_schema:
             output_config["format"] = {"type": "json_schema", "schema": req.json_schema}
             meta["structured"] = True
         if output_config:
@@ -112,9 +114,6 @@ class AnthropicAdapter(Adapter):
             ("temperature", "temperature"),
             ("disabled", "thinking_disabled"),
             ("effort", "effort"),
-            ("output_config.format", "format"),
-            ("json_schema", "format"),
-            ("format", "format"),
         ):
             if needle in low and not self.rejects(model, param):
                 self.learn(model, param)
@@ -136,6 +135,8 @@ class AnthropicAdapter(Adapter):
                 async with self.client.messages.stream(**params) as stream:
                     msg = await stream.get_final_message()
             except a.BadRequestError as e:
+                if req.json_schema and names_the_format(str(e.message), _FORMAT_NEEDLES):
+                    raise format_refused("Anthropic", req.model) from e
                 if self._adapt(req.model, str(e.message)):
                     continue
                 raise ProviderError(

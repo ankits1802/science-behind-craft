@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Literal, Self
+from collections.abc import Sequence
+from typing import Literal, Protocol, Self
 
 from pydantic import Field, model_validator
 
@@ -19,6 +20,7 @@ __all__ = [
     "EvidencePack",
     "PackedEvidence",
     "ResearchFailure",
+    "ResearchTrail",
 ]
 
 PACK_SCHEMA_VERSION = 1
@@ -63,7 +65,7 @@ class EvidencePack(ContractModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> Self:
-        if self.stored.craft_slug != self.plan.craft.slug:
+        if self.stored.craft_slug != (self.plan.craft.slug if self.plan.craft else None):
             raise ValueError("stored knowledge belongs to the planned craft")
         if [entry.facet_index for entry in self.coverage] != list(range(len(self.plan.facets))):
             raise ValueError("coverage lists each planned facet once, in facet order")
@@ -93,3 +95,9 @@ def _check_documents(
         raise ValueError("each evidence item is read once")
     if not set(ids) <= {entry.item.id for entry in evidence}:
         raise ValueError("every document reads an evidence item in the pack")
+
+
+class ResearchTrail(Protocol):
+    async def found(self, evidence: Sequence[PackedEvidence]) -> None: ...
+
+    async def read(self, document: SourceDocument) -> None: ...

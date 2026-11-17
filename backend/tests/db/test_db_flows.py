@@ -194,7 +194,7 @@ async def test_signup_waits_for_approval(client: httpx.AsyncClient, outbox: dict
     me = (await client.get("/api/auth/me", headers=bearer(student_token))).json()
     assert me["role"] == "STUDENT"
     assert "ASK_STANDARD" in me["capabilities"]
-    assert "ASK_DEEP" not in me["capabilities"]
+    assert "MARK_CLAIM_LEVEL" not in me["capabilities"]
     assert "passwordHash" not in me
 
     forbidden = await client.get("/api/users", headers=bearer(student_token))

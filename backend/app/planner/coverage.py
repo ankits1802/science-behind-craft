@@ -12,7 +12,7 @@ __all__ = ["covering_claims", "facet_coverage", "stored_knowledge"]
 
 
 async def facet_coverage(
-    retriever: KnowledgeRetriever, *, craft_slug: str, mode: str, facets: Sequence[Facet]
+    retriever: KnowledgeRetriever, *, craft_slug: str | None, mode: str, facets: Sequence[Facet]
 ) -> tuple[FacetCoverage, ...]:
     coverage: list[FacetCoverage] = []
     for index, facet in enumerate(facets):
@@ -35,7 +35,7 @@ def covering_claims(hits: KnowledgeHits, *, mode: str) -> tuple[uuid.UUID, ...]:
 
 
 async def stored_knowledge(
-    retriever: KnowledgeRetriever, *, craft_slug: str, mode: str, question: str
+    retriever: KnowledgeRetriever, *, craft_slug: str | None, mode: str, question: str
 ) -> KnowledgeHits:
     return await retriever.search(
         KnowledgeQuery(craft_slug=craft_slug, text=question, mode=mode, limit=STORED_PACK_LIMIT)

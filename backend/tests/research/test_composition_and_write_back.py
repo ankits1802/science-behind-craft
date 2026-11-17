@@ -199,7 +199,7 @@ def test_the_not_enough_evidence_message_lists_what_was_searched() -> None:
     assert not_enough_evidence_message(SEARCHED) == (
         "There is not enough cited evidence to answer this about Kutch Ajrakh yet. "
         "Searched 0 stored claims and 0 stored source passages. "
-        "No live research ran in VERIFIED mode. "
+        "No live research ran. "
         "Found 0 items, read 0 documents and recorded 0 failed requests."
     )
 

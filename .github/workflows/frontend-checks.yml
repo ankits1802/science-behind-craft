@@ -8,9 +8,15 @@ on:
       - "shared/roles.json"
       - "shared/naming-golden.json"
       - "backend/app/research/vocabulary.py"
+      - "backend/app/research/explainer.py"
+      - "backend/app/research/blocks.py"
+      - "backend/app/research/media_refs.py"
+      - "backend/app/research/terms.py"
       - "backend/app/models/enums.py"
       - "backend/app/schemas/**"
       - "backend/app/core/roles.py"
+      - "backend/app/research/depth.py"
+      - "backend/app/api/routes/knowledge.py"
       - "infra/terraform/variables.tf"
       - ".github/workflows/frontend-checks.yml"
   push:
@@ -21,9 +27,15 @@ on:
       - "shared/roles.json"
       - "shared/naming-golden.json"
       - "backend/app/research/vocabulary.py"
+      - "backend/app/research/explainer.py"
+      - "backend/app/research/blocks.py"
+      - "backend/app/research/media_refs.py"
+      - "backend/app/research/terms.py"
       - "backend/app/models/enums.py"
       - "backend/app/schemas/**"
       - "backend/app/core/roles.py"
+      - "backend/app/research/depth.py"
+      - "backend/app/api/routes/knowledge.py"
       - "infra/terraform/variables.tf"
       - ".github/workflows/frontend-checks.yml"
   workflow_dispatch:
@@ -78,6 +90,9 @@ jobs:
 
       - name: Lint
         run: npx eslint . --max-warnings=0
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Unit specs
         run: npm run test:unit

@@ -10,7 +10,7 @@ from typing import Any
 from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import AppError, NotConfigured
+from app.core.errors import SPEND_REFUSAL_KIND, AppError, NotConfigured
 from app.core.logging import redact_secrets, request_id_scope
 from app.models import EnrichmentJob
 from app.research.composition import ComposedAnswer
@@ -41,7 +41,7 @@ ENRICHMENT_JOB_MAX_USD = Decimal("10")
 ENRICHMENT_CRAFTS_PER_RUN = 25
 ENRICHMENT_MODE = "HYBRID"
 ENRICHMENT_TAG = "enrichment-"
-STOP_RUN_KINDS = frozenset({"ceiling", "no_route"})
+STOP_RUN_KINDS = frozenset({SPEND_REFUSAL_KIND, "no_route"})
 BUDGET_STOP = "BUDGET"
 ERROR_MAX_CHARS = 1000
 

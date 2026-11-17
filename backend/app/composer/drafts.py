@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import logging
 import re
 import uuid
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -29,7 +30,10 @@ __all__ = [
     "free_text_problem",
     "parsed_answer",
     "parsed_replacements",
+    "parsed_section",
 ]
+
+logger = logging.getLogger(__name__)
 
 LINK_OR_MARKUP = re.compile(r"https?:|www\.|<|>|\]\(", re.IGNORECASE)
 
@@ -60,6 +64,7 @@ class DraftSection:
 class DraftAnswer:
     sections: tuple[DraftSection, ...]
     follow_ups: tuple[str, ...]
+    stage_ids: tuple[str, ...] = ()
 
     @property
     def failed(self) -> list[DraftSentence]:
@@ -72,6 +77,23 @@ def parsed_answer(reply: Mapping[str, Any], allowed: Mapping[str, ComposeCandida
     return DraftAnswer(
         sections=tuple(_section(raw, allowed) for raw in sections),
         follow_ups=tuple(_usable_follow_ups(follow_ups)),
+    )
+
+
+def parsed_section(
+    reply: Mapping[str, Any],
+    allowed: Mapping[str, ComposeCandidate],
+    *,
+    title: str,
+    stage_ids: Sequence[str],
+    limits: tuple[int, int],
+) -> DraftAnswer:
+    max_sentences, max_follow_ups = limits
+    sentences = _list(reply, "sentences")[:max_sentences]
+    return DraftAnswer(
+        sections=(DraftSection(title, tuple(checked_sentence(s, title, allowed) for s in sentences)),),
+        follow_ups=tuple(_usable_follow_ups(_list(reply, "followUps"))[:max_follow_ups]),
+        stage_ids=_chosen_stages(reply, stage_ids),
     )
 
 
@@ -139,6 +161,16 @@ def _heading_problem(heading: str) -> str | None:
 def _usable_follow_ups(raw: list[Any]) -> list[str]:
     texts = [str(item).strip() for item in raw]
     return [text for text in texts if text and free_text_problem(text) is None][:FOLLOW_UPS_MAX]
+
+
+def _chosen_stages(reply: Mapping[str, Any], offered: Sequence[str]) -> tuple[str, ...]:
+    if not offered:
+        return ()
+    chosen = [str(stage) for stage in _list(reply, "stages")]
+    unknown = [stage for stage in chosen if stage not in offered]
+    if unknown:
+        logger.warning("compose chose %d process stage(s) that were not offered", len(unknown))
+    return tuple(stage for stage in dict.fromkeys(chosen) if stage in offered)
 
 
 def _list(raw: Mapping[str, Any], key: str) -> list[Any]:

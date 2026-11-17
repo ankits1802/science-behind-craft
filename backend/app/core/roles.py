@@ -26,11 +26,11 @@ ROLE_LABELS: dict[str, str] = {
 ROLES_BY_RANK: tuple[str, ...] = tuple(sorted(ROLE_RANK, key=lambda role: -ROLE_RANK[role]))
 
 TWO_FACTOR_REQUIRED_ROLES = frozenset({PROFESSOR, ADMIN, MASTER_ADMIN})
+UNCAPPED_ROLES = frozenset({MASTER_ADMIN})
 
 
 class Capability(StrEnum):
     ASK_STANDARD = "ASK_STANDARD"
-    ASK_DEEP = "ASK_DEEP"
     VOICE = "VOICE"
     GENERATE_IMAGE = "GENERATE_IMAGE"
     GENERATE_VIDEO = "GENERATE_VIDEO"
@@ -60,7 +60,6 @@ class Capability(StrEnum):
 
 CAPABILITY_MIN_ROLE: dict[Capability, str] = {
     Capability.ASK_STANDARD: STUDENT,
-    Capability.ASK_DEEP: RESEARCHER,
     Capability.VOICE: STUDENT,
     Capability.GENERATE_IMAGE: STUDENT,
     Capability.GENERATE_VIDEO: RESEARCHER,
@@ -148,6 +147,10 @@ def may_manage_target(actor: Any, target: Any) -> bool:
     if is_master_admin(actor):
         return True
     return role_rank(actor) > role_rank(target)
+
+
+def is_uncapped(user_or_role: Any) -> bool:
+    return role_value(user_or_role) in UNCAPPED_ROLES
 
 
 def requires_two_factor(user_or_role: Any) -> bool:

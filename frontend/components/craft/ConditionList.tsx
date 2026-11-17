@@ -1,7 +1,7 @@
 "use client";
 
 import { EvidenceLevelBadge, EvidenceSignalBadge } from "@/components/answer/EvidenceBadge";
-import { CitationChips } from "@/components/craft/CitationContext";
+import { CitationChips } from "@/components/answer/CitationContext";
 import { QUANTITY_LABEL, readingClaim, readingRange } from "@/lib/processView";
 import type { ConditionReading, StageCondition } from "@/lib/scienceContract";
 

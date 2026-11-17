@@ -8,10 +8,13 @@ from typing import Literal
 from app.core.errors import InvalidInput
 from app.models.enums import (
     ANSWER_MODES,
+    BLOCK_KINDS,
     CHUNK_ACLS,
     CONCEPT_TYPES,
+    DISCIPLINES,
     ENV_STATS,
     EVIDENCE_LEVELS,
+    EXPLAINER_DEPTHS,
     LIVE_TIERS,
     MATERIAL_KINDS,
     MATERIAL_ROLES,
@@ -29,6 +32,7 @@ __all__ = [
     "ANSWER_LANGUAGE_SPECS",
     "CANONICAL_LANGUAGE",
     "EVIDENCE_LABELS",
+    "FACT_LEVELS",
     "LABEL_LEVELS",
     "LEVEL_ORDER",
     "RETRIEVAL_TIERS",
@@ -38,7 +42,10 @@ __all__ = [
     "AnswerLanguage",
     "AnswerLanguageSpec",
     "AnswerMode",
+    "BlockKind",
     "ChunkAcl",
+    "Depth",
+    "Discipline",
     "EnvStat",
     "EvidenceLabel",
     "EvidenceLevel",
@@ -67,6 +74,7 @@ SHOWN_LEVELS = (*EVIDENCE_LEVELS, "UNAVAILABLE")
 EVIDENCE_LABELS = ("QUOTED", "INFERRED")
 LABEL_LEVELS = {"QUOTED": "PROVISIONAL", "INFERRED": "HYPOTHESIS"}
 LEVEL_ORDER = {level: rank for rank, level in enumerate(EVIDENCE_LEVELS)}
+FACT_LEVELS = tuple(level for level in EVIDENCE_LEVELS if level != "HYPOTHESIS")
 
 
 @dataclass(frozen=True)
@@ -118,6 +126,9 @@ MaterialRole = Literal[*MATERIAL_ROLES]
 ReactionKind = Literal[*REACTION_KINDS]
 EnvStat = Literal[*ENV_STATS]
 MediaKind = Literal[*MEDIA_KINDS]
+Depth = Literal[*EXPLAINER_DEPTHS]
+BlockKind = Literal[*BLOCK_KINDS]
+Discipline = Literal[*DISCIPLINES]
 
 
 def weakest_level(levels: Iterable[str]) -> str:

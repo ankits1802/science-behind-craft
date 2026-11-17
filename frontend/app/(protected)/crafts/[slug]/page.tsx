@@ -5,7 +5,7 @@ import { useParams, usePathname, useRouter, useSearchParams } from "next/navigat
 import { BookOpen } from "lucide-react";
 
 import { SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
-import { CitationProvider, type CitationLookup } from "@/components/craft/CitationContext";
+import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
 import { ClaimList, NoSourceFound } from "@/components/craft/ClaimList";
 import { CraftHeader } from "@/components/craft/CraftHeader";
 import { CraftRegionTab } from "@/components/craft/CraftRegionTab";

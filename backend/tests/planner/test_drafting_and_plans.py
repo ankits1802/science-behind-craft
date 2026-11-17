@@ -10,6 +10,7 @@ from app.planner.plans import effective_mode, retrieval_plan
 from app.research.crafts import craft_block
 from app.research.planning import FacetCoverage
 from app.research.retrieval import KnowledgeHits
+from app.research.structured import schema_problems
 from app.research.untrusted import UNTRUSTED_TAG
 
 from ..research.fixtures import AJRAKH
@@ -20,11 +21,12 @@ OPEN = FacetCoverage(facet_index=1, claim_ids=(claim("c").claim_id,))
 
 
 async def test_the_plan_schema_offers_only_registered_values() -> None:
-    schema = plan_schema(4)
+    schema = plan_schema()
     facet = schema["properties"]["facets"]["items"]["properties"]
     assert facet["type"]["enum"] == list(CONCEPT_TYPES)
-    assert schema["properties"]["queries"]["maxItems"] == 4
     assert schema["properties"]["queries"]["items"]["properties"]["tier"]["enum"] == ["T3", "T4"]
+    assert schema["properties"]["queries"]["items"]["properties"]["facetIndex"]["enum"] == list(range(8))
+    assert schema_problems(schema) == []
     assert schema["required"] == [
         "intent",
         "needsRegion",
@@ -34,7 +36,6 @@ async def test_the_plan_schema_offers_only_registered_values() -> None:
         "nativeCraftName",
         "englishQuestion",
     ]
-    assert schema["properties"]["nativeQueries"]["maxItems"] == 0
 
 
 async def test_the_question_reaches_the_model_only_as_untrusted_data() -> None:

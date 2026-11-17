@@ -5,7 +5,7 @@ import { ArrowRight, FlaskConical } from "lucide-react";
 
 import { ChemEquation } from "@/components/answer/ChemEquation";
 import { EvidenceLevelBadge, EvidenceSignalBadge, type EvidenceSignal } from "@/components/answer/EvidenceBadge";
-import { CitationChips } from "@/components/craft/CitationContext";
+import { CitationChips } from "@/components/answer/CitationContext";
 import { ConditionList } from "@/components/craft/ConditionList";
 import {
   citationsOf,

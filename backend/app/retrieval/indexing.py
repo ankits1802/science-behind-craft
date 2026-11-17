@@ -5,27 +5,39 @@ from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from itertools import batched
 
+from pydantic import TypeAdapter
 from sqlalchemy import ColumnElement, Select, delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
-from app.models import Chunk, Claim, Source
+from app.models import Chunk, Claim, KnowledgePiece, Source
 from app.research.embedding import TextEmbedder, checked_vectors
+from app.research.explainer import Block
+from app.research.knowledge_pieces import piece_text
 from app.research.retrieval import HIDDEN_CLAIM_STATUSES, RESTRICTED_SENSITIVITY, VISIBLE_SENSITIVITY
 
 from .chunking import TextChunk, chunk_text
 from .text import document_text
 
-__all__ = ["EMBED_BATCH", "EmbeddedCounts", "embed_pending", "embed_written", "replace_source_chunks"]
+__all__ = [
+    "EMBED_BATCH",
+    "EmbeddedCounts",
+    "embed_pending",
+    "embed_pieces",
+    "embed_written",
+    "replace_source_chunks",
+]
 
 EMBED_BATCH = 50
 DEFAULT_CHUNK_ACL = "PUBLIC"
+BLOCKS = TypeAdapter(Block)
 
 
 @dataclass(frozen=True)
 class EmbeddedCounts:
     claims: int
     chunks: int
+    pieces: int = 0
 
 
 @dataclass(frozen=True)
@@ -55,7 +67,24 @@ async def replace_source_chunks(
 async def embed_pending(
     session: AsyncSession, embed: TextEmbedder, *, batch_size: int = EMBED_BATCH
 ) -> EmbeddedCounts:
-    return await _embed(session, embed, claim_scope=None, chunk_scope=None, batch_size=batch_size)
+    counts = await _embed(session, embed, claim_scope=None, chunk_scope=None, batch_size=batch_size)
+    pieces = await embed_pieces(session, embed, piece_ids=None, batch_size=batch_size)
+    return EmbeddedCounts(claims=counts.claims, chunks=counts.chunks, pieces=pieces)
+
+
+async def embed_pieces(
+    session: AsyncSession,
+    embed: TextEmbedder,
+    *,
+    piece_ids: Collection[uuid.UUID] | None,
+    batch_size: int = EMBED_BATCH,
+) -> int:
+    if batch_size < 1:
+        raise InvalidInput(f"An embedding batch holds at least one text, not {batch_size}")
+    scope = None if piece_ids is None else KnowledgePiece.id.in_(list(piece_ids))
+    pending = await _pending_pieces(session, scope)
+    await _fill(session, embed, KnowledgePiece, pending, batch_size=batch_size)
+    return len(pending)
 
 
 async def embed_written(
@@ -141,6 +170,14 @@ async def _pending_chunks(session: AsyncSession, scope: ColumnElement[bool] | No
     return [_Pending(row.id, document_text(row.text, title=row.title)) for row in rows]
 
 
+async def _pending_pieces(session: AsyncSession, scope: ColumnElement[bool] | None) -> list[_Pending]:
+    statement = select(KnowledgePiece.id, KnowledgePiece.payload).where(
+        KnowledgePiece.embedding.is_(None), KnowledgePiece.supersededById.is_(None)
+    )
+    rows = await session.execute(_scoped(statement, scope).order_by(KnowledgePiece.id))
+    return [_Pending(row.id, document_text(piece_text(BLOCKS.validate_python(row.payload)))) for row in rows]
+
+
 def _scoped[T: tuple[object, ...]](statement: Select[T], scope: ColumnElement[bool] | None) -> Select[T]:
     return statement if scope is None else statement.where(scope)
 
@@ -148,7 +185,7 @@ def _scoped[T: tuple[object, ...]](statement: Select[T], scope: ColumnElement[bo
 async def _fill(
     session: AsyncSession,
     embed: TextEmbedder,
-    model: type[Claim] | type[Chunk],
+    model: type[Claim] | type[Chunk] | type[KnowledgePiece],
     pending: Sequence[_Pending],
     *,
     batch_size: int,

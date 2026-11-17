@@ -100,24 +100,6 @@ export type CraftRef = {
   path?: string | null;
 };
 
-export type CraftMatch =
-  | { status: "RESOLVED"; craft: CraftRef }
-  | { status: "AMBIGUOUS"; candidates: CraftRef[] }
-  | { status: "NONE" };
-
-export type AnswerPayload = {
-  answerId: string | null;
-  question: string;
-  mode: AnswerMode;
-  language: string;
-  craft: CraftRef | null;
-  sections: AnswerSection[];
-  openQuestions: AnswerSection[];
-  reactions: AnswerReaction[];
-  sources: SourceRef[];
-  followUps: string[];
-};
-
 export type CraftLocationPrecision = "STATE" | "DISTRICT" | "POINT";
 
 export type CraftLocation = {

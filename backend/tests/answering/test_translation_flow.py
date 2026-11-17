@@ -30,8 +30,7 @@ ALUM_SHORT_HI = "फिटकरी वह मॉर्डेंट है ज�
 LAKE_HI = "मॉर्डेंट के घोल में 8 g/L फिटकरी थी और उसे 60 °C तक गरम किया गया।"
 WASH_HI = "लाल लेक 20 धुलाइयों तक टिकी रही।"
 WASH_WITHOUT_NUMBER_HI = "लाल लेक कई धुलाइयों तक टिकी रही।"
-MORDANT_HI = "मॉर्डेंट"
-FASTNESS_HI = "पक्कापन"
+CHEMISTRY_HI = "रसायन"
 FOLLOW_UP_HI = "कच्छ अजरख के लिए फिटकरी का घोल कैसे तैयार किया जाता है?"
 TRANSLATING = {"step": "TRANSLATING", "message": "Translating the answer into Hindi"}
 
@@ -43,7 +42,7 @@ def reply(**texts: str) -> str:
 
 
 def verified(question: str = QUESTION) -> AnswerAsk:
-    return AnswerAsk(question=question, mode="VERIFIED", language="hi")
+    return AnswerAsk(question=question, depth="BASIC", language="hi")
 
 
 def stored() -> FakeStore:
@@ -58,50 +57,58 @@ def schema_keys(call: dict[str, Any]) -> list[str]:
     return call["schema"]["properties"]["items"]["items"]["properties"]["key"]["enum"]
 
 
-async def test_a_verified_answer_in_hindi_translates_each_claim_and_keeps_its_citations() -> None:
-    model = FakeModel([reply(**{"s1.1": ALUM_HI, "open.1": LIME_HI})])
-    found = events(await streamed(verified(), pipeline(store=stored(), translated=translation(model))))
+def block_sentences(found: list[tuple[str, dict]]) -> list[dict[str, Any]]:
+    return [sentence for payload in payloads(found, "block") for sentence in payload["block"]["sentences"]]
+
+
+async def test_a_verified_answer_in_hindi_translates_each_block_and_keeps_its_citations() -> None:
+    model = FakeModel([reply(**{"s1.b1.1": ALUM_HI}), reply(**{"open.1": LIME_HI})])
+    found = events(
+        await streamed(verified(), pipeline(store=stored(), translated=translation(model), spent=True))
+    )
     assert TRANSLATING in payloads(found, "status")
-    (sentence,) = payloads(found, "sentence")
-    assert sentence["sentence"]["text"] == ALUM_HI
-    assert sentence["sentence"]["translated"] is True
-    assert sentence["sentence"]["original"] == "Alum is the mordant that binds alizarin to cotton in Ajrakh."
-    assert sentence["sentence"]["citations"][0]["claimId"] == str(ALUM_CLAIM_ID)
-    assert sentence["sentence"]["citations"][0]["quote"] == "Alum is the mordant"
+    (sentence,) = block_sentences(found)
+    assert sentence["text"] == ALUM_HI
+    assert sentence["translated"] is True
+    assert sentence["original"] == "Alum is the mordant that binds alizarin to cotton in Ajrakh."
+    assert sentence["citations"] == VIEWS[0].citations
     (guess,) = payloads(found, "open_question")
     assert (guess["sentence"]["text"], guess["sentence"]["original"]) == (
         LIME_HI,
         "Lime in the wash water may brighten the red.",
     )
-    assert payloads(found, "section") == [{"id": "s1", "heading": "Materials and tools"}]
-    assert len(model.calls) == 1
-    assert schema_keys(model.calls[0]) == ["s1.1", "open.1"]
+    assert guess["sentence"]["citations"] == VIEWS[3].citations
+    assert [payload["title"] for payload in payloads(found, "section_started")] == ["Materials and tools"]
+    assert [schema_keys(call) for call in model.calls] == [["s1.b1.1"], ["open.1"]]
 
 
 async def test_cached_claim_translations_make_no_second_model_call() -> None:
-    model = FakeModel([reply(**{"s1.1": ALUM_HI, "open.1": LIME_HI})])
+    model = FakeModel([reply(**{"s1.b1.1": ALUM_HI}), reply(**{"open.1": LIME_HI})])
     cache = MemoryCache()
-    first = events(await streamed(verified(), pipeline(store=stored(), translated=translation(model, cache))))
-    second = events(
-        await streamed(verified(), pipeline(store=stored(), translated=translation(model, cache)))
+    first = events(
+        await streamed(verified(), pipeline(store=stored(), translated=translation(model, cache), spent=True))
     )
-    assert len(model.calls) == 1
+    second = events(
+        await streamed(verified(), pipeline(store=stored(), translated=translation(model, cache), spent=True))
+    )
+    assert len(model.calls) == 2
     assert sorted(cache.rows) == sorted([(ALUM_CLAIM_ID, "hi"), (GUESS_CLAIM_ID, "hi")])
-    texts = [payload["sentence"]["text"] for payload in payloads(second, "sentence")]
-    assert texts == [ALUM_HI]
-    assert payloads(first, "sentence") == payloads(second, "sentence")
+    assert [sentence["text"] for sentence in block_sentences(second)] == [ALUM_HI]
+    assert payloads(first, "block") == payloads(second, "block")
 
 
 async def test_a_question_in_devanagari_searches_stored_claims_in_english() -> None:
     model = FakeModel(
         [
             reply(question="Why does alum keep Ajrakh red?"),
-            reply(**{"s1.1": ALUM_HI, "open.1": LIME_HI}),
+            reply(**{"s1.b1.1": ALUM_HI}),
+            reply(**{"open.1": LIME_HI}),
         ]
     )
     store = stored()
     await streamed(
-        verified("अजरख को फिटकरी लाल क्यों रखती है?"), pipeline(store=store, translated=translation(model))
+        verified("अजरख को फिटकरी लाल क्यों रखती है?"),
+        pipeline(store=store, translated=translation(model), spent=True),
     )
     assert store.questions == ["Why does alum keep Ajrakh red?"]
     assert schema_keys(model.calls[0]) == ["question"]
@@ -111,42 +118,46 @@ async def test_a_question_in_devanagari_searches_stored_claims_in_english() -> N
 async def test_an_english_question_in_verified_mode_makes_no_model_call() -> None:
     model = FakeModel([])
     store = stored()
-    ask = AnswerAsk(question=QUESTION, mode="VERIFIED")
-    found = events(await streamed(ask, pipeline(store=store, translated=translation(model))))
+    ask = AnswerAsk(question=QUESTION, depth="BASIC")
+    found = events(await streamed(ask, pipeline(store=store, translated=translation(model), spent=True)))
     assert model.calls == []
     assert store.questions == [QUESTION]
-    assert "translated" not in payloads(found, "sentence")[0]["sentence"]
+    assert "translated" not in block_sentences(found)[0]
 
 
-async def test_a_researched_answer_in_hindi_translates_sentences_headings_and_follow_ups_in_one_call() -> (
-    None
-):
-    translated = {
-        "s1.1": ALUM_SHORT_HI,
-        "s1.2": LAKE_HI,
-        "s2.1": WASH_HI,
-        "open.1": LIME_HI,
-        "heading:s1": MORDANT_HI,
-        "heading:s2": FASTNESS_HI,
-        "follow-up:0": FOLLOW_UP_HI,
-    }
-    model = FakeModel([reply(**translated)])
+async def test_a_researched_answer_in_hindi_translates_the_title_each_block_and_the_follow_ups() -> None:
+    english = events(
+        await streamed(AnswerAsk(question=QUESTION, depth="DETAILED"), pipeline(replies=[REPLY]))
+    )
+    model = FakeModel(
+        [
+            reply(s1=CHEMISTRY_HI),
+            reply(**{"s1.b1.1": ALUM_SHORT_HI, "s1.b1.2": LAKE_HI, "s1.b1.3": WASH_HI}),
+            reply(**{"s1.open.1": LIME_HI}),
+            reply(**{"follow-up:0": FOLLOW_UP_HI}),
+        ]
+    )
     cache = MemoryCache()
     research = FakeResearch()
-    ask = AnswerAsk(question=QUESTION, mode="HYBRID", language="hi")
+    ask = AnswerAsk(question=QUESTION, depth="DETAILED", language="hi")
     found = events(
         await streamed(
             ask, pipeline(research=research, replies=[REPLY], translated=translation(model, cache))
         )
     )
-    assert len(model.calls) == 1
-    assert schema_keys(model.calls[0]) == list(translated)
-    assert payloads(found, "section") == [
-        {"id": "s1", "heading": MORDANT_HI, "original": "Mordant"},
-        {"id": "s2", "heading": FASTNESS_HI, "original": "Fastness"},
+    assert [schema_keys(call) for call in model.calls] == [
+        ["s1"],
+        ["s1.b1.1", "s1.b1.2", "s1.b1.3"],
+        ["s1.open.1"],
+        ["follow-up:0"],
     ]
-    texts = [payload["sentence"]["text"] for payload in payloads(found, "sentence")]
-    assert texts == [ALUM_SHORT_HI, LAKE_HI, WASH_HI]
+    (started,) = payloads(found, "section_started")
+    assert (started["title"], started["original"]) == (CHEMISTRY_HI, "The chemistry")
+    assert [sentence["text"] for sentence in block_sentences(found)] == [ALUM_SHORT_HI, LAKE_HI, WASH_HI]
+    assert [s["citations"] for s in block_sentences(found)] == [
+        s["citations"] for s in block_sentences(english)
+    ]
+    assert all(sentence["translated"] for sentence in block_sentences(found))
     assert payloads(found, "follow_ups") == [{"items": [FOLLOW_UP_HI]}]
     assert sorted(cache.rows) == sorted(
         [(WRITTEN_LAKE_ID, "hi"), (WRITTEN_WASH_ID, "hi"), (GUESS_CLAIM_ID, "hi")]
@@ -156,29 +167,27 @@ async def test_a_researched_answer_in_hindi_translates_sentences_headings_and_fo
 
 
 async def test_a_sentence_failing_its_check_twice_is_shown_in_english() -> None:
-    first = {
-        "s1.1": ALUM_SHORT_HI,
-        "s1.2": LAKE_HI,
-        "s2.1": WASH_WITHOUT_NUMBER_HI,
-        "open.1": LIME_HI,
-        "heading:s1": MORDANT_HI,
-        "heading:s2": FASTNESS_HI,
-        "follow-up:0": FOLLOW_UP_HI,
-    }
-    model = FakeModel([reply(**first), reply(**{"s2.1": WASH_WITHOUT_NUMBER_HI})])
-    ask = AnswerAsk(question=QUESTION, mode="HYBRID", language="hi")
+    model = FakeModel(
+        [
+            reply(s1=CHEMISTRY_HI),
+            reply(**{"s1.b1.1": ALUM_SHORT_HI, "s1.b1.2": LAKE_HI, "s1.b1.3": WASH_WITHOUT_NUMBER_HI}),
+            reply(**{"s1.b1.3": WASH_WITHOUT_NUMBER_HI}),
+            reply(**{"s1.open.1": LIME_HI}),
+            reply(**{"follow-up:0": FOLLOW_UP_HI}),
+        ]
+    )
+    ask = AnswerAsk(question=QUESTION, depth="DETAILED", language="hi")
     found = events(await streamed(ask, pipeline(replies=[REPLY], translated=translation(model))))
-    assert len(model.calls) == 2
-    assert schema_keys(model.calls[1]) == ["s2.1"]
-    wash = payloads(found, "sentence")[2]["sentence"]
+    assert schema_keys(model.calls[2]) == ["s1.b1.3"]
+    wash = block_sentences(found)[2]
     assert wash["text"] == "The red lake withstood 20 washes."
     assert "translated" not in wash and "original" not in wash
 
 
 async def test_a_question_in_tamil_script_plans_without_an_english_rendering() -> None:
     research = FakeResearch()
-    ask = AnswerAsk(question="அஜ்ரக் ஏன் சிவப்பாக இருக்கிறது?", mode="HYBRID", language="ta")
-    model = FakeModel([reply(), reply()])
+    ask = AnswerAsk(question="அஜ்ரக் ஏன் சிவப்பாக இருக்கிறது?", depth="DETAILED", language="ta")
+    model = FakeModel([reply()] * 8)
     await streamed(ask, pipeline(research=research, replies=[REPLY], translated=translation(model)))
     (request,) = research.requests
     assert (request.language, request.english_question) == ("ta", None)
@@ -189,10 +198,12 @@ async def test_a_failed_translation_route_shows_the_answer_in_english() -> None:
         async def __call__(self, **_: object) -> object:
             raise RouterError("no_route", "No enabled route can run TRANSLATE")
 
-    found = events(await streamed(verified(), pipeline(store=stored(), translated=translation(NoRoute()))))
+    found = events(
+        await streamed(verified(), pipeline(store=stored(), translated=translation(NoRoute()), spent=True))
+    )
     assert [name for name, _ in found if name == "error"] == []
-    (sentence,) = payloads(found, "sentence")
-    assert sentence["sentence"]["text"] == "Alum is the mordant that binds alizarin to cotton in Ajrakh."
+    (sentence,) = block_sentences(found)
+    assert sentence["text"] == "Alum is the mordant that binds alizarin to cotton in Ajrakh."
 
 
 async def test_voice_sentences_translate_through_the_same_cache() -> None:

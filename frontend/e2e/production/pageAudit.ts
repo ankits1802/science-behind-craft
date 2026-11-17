@@ -37,7 +37,7 @@ export function auditPage(options: AuditOptions): PageAudit {
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     const text = flat(node.textContent);
     const parent = node.parentElement;
-    if (!text || !parent || parent.closest("svg, script, style, noscript, template") || !shown(parent)) continue;
+    if (!text || !parent || parent.closest("svg, script, style, noscript, template, .katex-mathml") || !shown(parent)) continue;
     if (!parent.closest(options.citedSelector)) copy.push(text);
     if (textOverflow.size >= options.limit) continue;
     let box: Element = parent;

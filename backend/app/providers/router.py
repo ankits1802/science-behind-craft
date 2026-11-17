@@ -14,7 +14,7 @@ from sqlalchemy import case, func, select, text, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.core.errors import STOP_KINDS, AppError
+from app.core.errors import SPEND_REFUSAL_KIND, STOP_KINDS, AppError
 from app.core.logging import current_request_id
 from app.models import ManagedSecret, Provider, RoutePolicy, SecretTestResult, UsageEvent
 from app.services import app_settings, managed_secrets
@@ -46,6 +46,7 @@ EMBED_DIMENSIONS = 1536
 class Principal:
     user_id: uuid.UUID | None = None
     role: str | None = None
+    answer: budget.AnswerSpend | None = None
 
 
 @dataclass(frozen=True)
@@ -241,19 +242,39 @@ async def reserve(
     units: float | None = None,
 ) -> tuple[uuid.UUID, budget.BudgetDecision]:
     await session.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": BUDGET_LOCK_KEY})
-    settings_values = await app_settings.load_all(session)
-    ceilings = budget.Ceilings.from_settings(settings_values)
+    ceilings = budget.Ceilings.from_settings(await app_settings.load_all(session))
     spend = await current_spend(session, principal)
-    is_media = task in MEDIA_TASKS
+    answer = principal.answer
     decision = budget.evaluate(
         ceilings,
         spend,
         estimate_usd=estimate_usd,
-        is_media=is_media,
+        is_media=task in MEDIA_TASKS,
         role=principal.role,
         request_budget_usd=request_budget_usd,
+        answer_left_usd=answer.left(ceilings) if answer else None,
     )
-    event = UsageEvent(
+    if answer is not None and decision.allowed:
+        answer.hold(estimate_usd)
+    event = _reserved_event(
+        task, choice, principal, estimate_usd=estimate_usd, decision=decision, units=units
+    )
+    session.add(event)
+    await session.flush()
+    await session.commit()
+    return event.id, decision
+
+
+def _reserved_event(
+    task: AiTask,
+    choice: RouteChoice | None,
+    principal: Principal,
+    *,
+    estimate_usd: Decimal,
+    decision: budget.BudgetDecision,
+    units: float | None,
+) -> UsageEvent:
+    return UsageEvent(
         userId=principal.user_id,
         role=principal.role,
         task=task.value,
@@ -262,17 +283,13 @@ async def reserve(
         routeOrdinal=choice.ordinal if choice else None,
         estimatedCostUsd=estimate_usd if decision.allowed else Decimal(0),
         costUsd=Decimal(0),
-        isMedia=is_media,
+        isMedia=task in MEDIA_TASKS,
         units=units,
         requestId=current_request_id(),
         outcome="RESERVED" if decision.allowed else "REFUSED_CEILING",
         errorKind=None if decision.allowed else decision.reason,
         settledAt=None if decision.allowed else datetime.now(UTC),
     )
-    session.add(event)
-    await session.flush()
-    await session.commit()
-    return event.id, decision
 
 
 async def settle(
@@ -432,7 +449,7 @@ async def run(
         spend = await current_spend(session, who)
         await managed_secrets.refresh_if_stale(session)
 
-    degrade = budget.month_fraction(ceilings, spend) >= ceilings.degrade_at
+    degrade = budget.degrades(ceilings, spend, role=who.role)
 
     def output_cap(choice: RouteChoice) -> int:
         return max_tokens or choice.max_output_tokens or DEFAULT_MAX_OUTPUT_TOKENS
@@ -465,7 +482,10 @@ async def run(
             )
         if not decision.allowed:
             raise RouterError(
-                "ceiling", decision.message or "Budget reached", reason=decision.reason, attempts=attempts
+                SPEND_REFUSAL_KIND,
+                decision.message or "Budget reached",
+                reason=decision.reason,
+                attempts=attempts,
             )
         key_value = managed_secrets.peek_secret(choice.key_name)
         outcome: _CallOutcome | None = None
@@ -526,6 +546,8 @@ async def run(
                     cached_tokens=outcome.cached_tokens,
                     overrides=overrides,
                 )
+                if who.answer is not None:
+                    who.answer.settle(estimate_usd, cost)
                 await settle(
                     session,
                     event_id,
@@ -555,6 +577,8 @@ async def run(
                 )
             assert failure is not None
             stopped = failure.kind in STOP_KINDS
+            if who.answer is not None:
+                who.answer.release(estimate_usd)
             await settle(
                 session,
                 event_id,

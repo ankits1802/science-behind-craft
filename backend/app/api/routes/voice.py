@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import ValidationError
 
 from app.api.multipart_form import BodyTooLarge, form_file, limited_body
-from app.api.voice_deps import current_voice, voice_runtime, voice_store
+from app.api.voice_deps import current_voice, require_voice_call, voice_runtime, voice_store
 from app.core.config import get_settings
 from app.core.db import sessionmaker
 from app.core.deps import get_current_user
@@ -44,7 +44,7 @@ from app.voice.transcript import stored_transcript, transcript_view
 from app.voice.turns import TurnTools
 from app.voice.wiring import turn_tools
 
-router = APIRouter(prefix="/voice", tags=["voice"])
+router = APIRouter(prefix="/voice", tags=["voice"], dependencies=[Depends(require_voice_call)])
 logger = logging.getLogger(__name__)
 
 LLM_BODY_LIMIT = 512 * 1024

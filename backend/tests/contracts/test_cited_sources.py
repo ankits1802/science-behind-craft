@@ -1,7 +1,8 @@
 import pytest
 from pydantic import ValidationError
 
-from app.schemas.science import CraftProcess, cited_source_ids, process_claims
+from app.research.citations import cited_source_ids
+from app.schemas.science import CraftProcess, process_claims
 from app.schemas.voice import VoiceTranscript
 
 from .golden import golden_json

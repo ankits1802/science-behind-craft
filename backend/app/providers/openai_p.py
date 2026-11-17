@@ -4,10 +4,11 @@ import time
 
 from app.core.retry_after import retry_after_of
 
-from .base import Adapter, ChatRequest, ChatResult, ProviderError
+from .base import Adapter, ChatRequest, ChatResult, ProviderError, format_refused, names_the_format
 from .usage import openai_usage
 
 _LOCAL_PLACEHOLDER_KEY = "not-required"
+_FORMAT_NEEDLES = ("json_schema", "response_format", "json_object")
 
 
 class OpenAICompatAdapter(Adapter):
@@ -68,18 +69,19 @@ class OpenAICompatAdapter(Adapter):
                 params["temperature"] = req.temperature
         self._reasoning(req, params, extra_body, meta)
         if req.json_schema:
-            if self.native and not self.rejects(model, "json_schema"):
-                params["response_format"] = {
-                    "type": "json_schema",
-                    "json_schema": {"name": "inference", "schema": req.json_schema, "strict": False},
-                }
-                meta["structured"] = "json_schema"
-            elif not self.rejects(model, "response_format"):
-                params["response_format"] = {"type": "json_object"}
-                meta["structured"] = "json_object"
+            params["response_format"] = self._response_format(req.json_schema)
+            meta["structured"] = params["response_format"]["type"]
         if extra_body:
             params["extra_body"] = extra_body
         return params, meta
+
+    def _response_format(self, schema: dict) -> dict:
+        if self.native:
+            return {
+                "type": "json_schema",
+                "json_schema": {"name": "inference", "schema": schema, "strict": False},
+            }
+        return {"type": "json_object"}
 
     def _adapt(self, model: str, message: str, params: dict) -> bool:
         low = message.lower()
@@ -88,9 +90,6 @@ class OpenAICompatAdapter(Adapter):
             ("max_tokens", "max_tokens"),
             ("max_completion_tokens", "max_completion_tokens"),
             ("reasoning_effort", "reasoning_effort"),
-            ("json_schema", "json_schema"),
-            ("response_format", "response_format"),
-            ("json_object", "response_format"),
         ]
         for needle, param in checks:
             if needle in low and not self.rejects(model, param):
@@ -131,6 +130,8 @@ class OpenAICompatAdapter(Adapter):
             try:
                 resp = await self.client.chat.completions.create(**params)
             except o.BadRequestError as e:
+                if req.json_schema and names_the_format(str(e), _FORMAT_NEEDLES):
+                    raise format_refused(self.preset, req.model) from e
                 if self._adapt(req.model, str(e), params):
                     continue
                 raise ProviderError(

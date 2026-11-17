@@ -3,7 +3,7 @@
 import { Droplets, Gem, Layers, Mountain, Sprout, Thermometer, Trees, type LucideIcon } from "lucide-react";
 
 import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
-import { useCitations } from "@/components/craft/CitationContext";
+import { useCitations } from "@/components/answer/CitationContext";
 import { sourceHref } from "@/lib/citations";
 import type { PlaceBasis, RegionDataset, RegionFacet, RegionFacetName, RegionPlace } from "@/lib/regionContract";
 import { datasetOf, FACET_LABEL, inheritedNote, placeSubtitle, shownFacets, valueLabel, valueProvenance, valueReading } from "@/lib/regionView";

@@ -1,12 +1,15 @@
 import { scriptOf } from "@/lib/answerLanguages";
-import { parseSseBlock, splitSseBuffer, type AnswerEvent } from "@/lib/answerStream";
+import { splitSseBuffer } from "@/lib/answerStream";
+import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
+import { blockSentences } from "@/lib/explainerView";
 import type { AnswerSentence } from "@/lib/types";
 
 import type { TappedChunk, TappedStream } from "./streamTap";
 
 export const ANSWER_DEADLINE_MS = 10 * 60_000;
 export const STALL_LIMIT_MS = 150_000;
-export const EXPECTED_MODE = "HYBRID";
+export const EXPECTED_DEPTH = "DETAILED";
+export const EXPECTED_DEPTH_LABEL = "Detailed";
 export const KNOWN_ANSWER = /\balum\b|फिटकरी|फिटकिरी|फ़िटकरी/i;
 export const LATIN = "Latn";
 
@@ -25,7 +28,7 @@ export const KNOWN_ANSWER_QUESTIONS: readonly KnownAnswerQuestion[] = [
 export type WaitOutcome = "stalled" | "timeout" | "never-started";
 export type AnswerEnd = "done" | "error" | "closed" | WaitOutcome;
 
-export type TimedEvent = { at: number; event: AnswerEvent };
+export type TimedEvent = { at: number; event: ExplainerEvent };
 export type ParsedStream = { events: TimedEvent[]; heartbeats: number; longestSilenceMs: number; unparsed: number };
 
 export type SentenceRecord = {
@@ -47,7 +50,7 @@ export type AnswerRecord = {
   label: string;
   question: string;
   expectedLanguage: string;
-  request: { mode: string | null; language: string | null; craftSlug: string | null };
+  request: { depth: string | null; language: string | null; craftSlug: string | null };
   httpStatus: number | null;
   streamsOpened: number;
   endedWith: AnswerEnd;
@@ -60,6 +63,7 @@ export type AnswerRecord = {
   sentenceCount: number;
   citedSentenceCount: number;
   uncitedSentenceCount: number;
+  refusedFrames: number;
   openQuestionCount: number;
   citationCount: number;
   sources: SourceRecord[];
@@ -87,7 +91,7 @@ export function parseTappedStream(chunks: readonly TappedChunk[], startedAt: num
       parsed.heartbeats += 1;
       return;
     }
-    const event = parseSseBlock(block);
+    const event = explainerEventOf(block);
     if (event) parsed.events.push({ at, event });
     else parsed.unparsed += 1;
   };
@@ -122,9 +126,9 @@ function requestOf(body: string | null): AnswerRecord["request"] {
   try {
     const parsed = JSON.parse(body ?? "") as Record<string, unknown>;
     const text = (key: string) => (typeof parsed[key] === "string" ? (parsed[key] as string) : null);
-    return { mode: text("mode"), language: text("language"), craftSlug: text("craftSlug") };
+    return { depth: text("depth"), language: text("language"), craftSlug: text("craftSlug") };
   } catch {
-    return { mode: null, language: null, craftSlug: null };
+    return { depth: null, language: null, craftSlug: null };
   }
 }
 
@@ -167,7 +171,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
   let error: string | null = null;
   let notEnoughEvidence: string | null = null;
   for (const { at, event } of parsed.events) {
-    if (event.type === "sentence") sentences.push(sentenceRecord("sentence", event.data.sectionId, event.data.sentence));
+    if (event.type === "block") sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence)));
     else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
     else if (event.type === "source") {
       const { id, kind, title, publisher, year, doi, url } = event.data;
@@ -175,11 +179,12 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     } else if (event.type === "status") statusSteps.push({ step: event.data.step, message: event.data.message, atMs: at - clickedAt });
     else if (event.type === "follow_ups") followUps = event.data.items;
     else if (event.type === "done") answerId = event.data.answerId;
-    else if (event.type === "match" && event.data.status === "RESOLVED") craft = event.data.craft.slug;
+    else if (event.type === "understood") craft = event.data.crafts[0]?.slug ?? null;
     else if (event.type === "error") error = event.data.message;
     else if (event.type === "not_enough_evidence") notEnoughEvidence = event.data.message;
   }
-  const atOf = (type: AnswerEvent["type"]) => parsed.events.find(({ event }) => event.type === type)?.at;
+  const atOf = (type: ExplainerEvent["type"]) => parsed.events.find(({ event }) => event.type === type)?.at;
+  const firstSentenceAt = parsed.events.find(({ event }) => event.type === "block" && blockSentences(event.data.block).length > 0)?.at;
   const body = sentences.filter((sentence) => sentence.kind === "sentence");
   return {
     label: question.label,
@@ -195,7 +200,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     notEnoughEvidence,
     timing: {
       firstByteMs: since(stream?.chunks[0]?.at, clickedAt),
-      firstSentenceMs: since(atOf("sentence"), clickedAt),
+      firstSentenceMs: since(firstSentenceAt, clickedAt),
       doneMs: since(atOf("done"), clickedAt),
       totalMs: since(stream?.endedAt, clickedAt),
       heartbeats: parsed.heartbeats,
@@ -205,6 +210,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     sentenceCount: sentences.length,
     citedSentenceCount: body.filter((sentence) => sentence.citations > 0).length,
     uncitedSentenceCount: sentences.filter((sentence) => sentence.citations === 0).length,
+    refusedFrames: parsed.unparsed,
     openQuestionCount: sentences.length - body.length,
     citationCount: sentences.reduce((sum, sentence) => sum + sentence.citations, 0),
     sources,
@@ -236,10 +242,11 @@ export function answerProblems(record: AnswerRecord, question: KnownAnswerQuesti
   if (record.streamsOpened !== 1) problems.push(`the question opened ${record.streamsOpened} answer streams, not 1`);
   if (record.endedWith !== "done") problems.push(`the stream ended with ${record.endedWith}, not done`);
   if (record.error) problems.push(`the stream sent an error: ${record.error}`);
-  if (record.request.mode !== EXPECTED_MODE) problems.push(`the request asked in ${record.request.mode ?? "no mode"}, not ${EXPECTED_MODE}`);
+  if (record.request.depth !== EXPECTED_DEPTH) problems.push(`the request asked at ${record.request.depth ?? "no depth"}, not ${EXPECTED_DEPTH}`);
   if (record.request.language !== question.language) problems.push(`the request asked for ${record.request.language ?? "no language"}, not ${question.language}`);
   if (record.citedSentenceCount < 1) problems.push("no cited sentence arrived");
   if (record.uncitedSentenceCount > 0) problems.push(`${record.uncitedSentenceCount} sentences arrived without a citation`);
+  if (record.refusedFrames > 0) problems.push(`${record.refusedFrames} stream frames broke the explainer contract`);
   const orphans = record.sentences.flatMap((sentence) => sentence.sourceIds).filter((id) => !sent.has(id));
   if (orphans.length > 0) problems.push(`${new Set(orphans).size} cited sources never arrived as source events`);
   if (!record.knownAnswerFound) problems.push("no sentence names alum, the known mordant");

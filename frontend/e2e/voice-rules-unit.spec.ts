@@ -65,7 +65,7 @@ test("less than the 30 seconds a session needs hides voice; unlimited keeps it",
 });
 
 test("the config's voice block is the contract's availability, and a block off the contract hides voice loudly", () => {
-  expect(normaliseAskConfig({ modes: ["HYBRID"], voice: golden("voice.availability.golden.json") }).voice).toEqual(AVAILABLE);
+  expect(normaliseAskConfig({ voice: golden("voice.availability.golden.json") }).voice).toEqual(AVAILABLE);
   const legacy = quietly(() => voiceAvailabilityOf({ configured: false, languages: [] }));
   expect(legacy.value).toEqual(NO_VOICE);
   expect(String(legacy.logged[0])).toContain("answers/config voice.transport");
@@ -86,7 +86,7 @@ test("voice asks in the ask mode it can serve and an offered language", () => {
 });
 
 test("the voice languages are the ones the config lists, not a list in the client", () => {
-  const config = normaliseAskConfig({ modes: ["HYBRID"], voice: golden("voice.availability.golden.json") });
+  const config = normaliseAskConfig({ voice: golden("voice.availability.golden.json") });
   expect(config.voice.languages.map((language) => language.code)).toEqual(["en", "hi", "ta", "ur"]);
   const withBengali = { ...(golden("voice.availability.golden.json") as Record<string, unknown>), languages: [{ code: "bn", label: "Bengali", autonym: "বাংলা", script: "Beng", direction: "ltr" }] };
   expect(voiceAvailabilityOf(withBengali).languages.map((language) => language.code)).toEqual(["bn"]);

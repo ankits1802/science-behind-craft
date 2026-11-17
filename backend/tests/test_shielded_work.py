@@ -6,7 +6,6 @@ import pytest
 
 from app.core.shielded import ShieldedWork
 from app.services.answer_store import SqlAnswerStore
-from app.services.answering import KeptAnswer
 
 from .answering.fakes import ANSWER_ID
 from .craft_fixtures import FixedEmbedder
@@ -79,19 +78,19 @@ async def test_shutdown_waits_a_bounded_time_and_reports_what_is_left(
 async def test_the_answer_stores_write_back_outlives_a_learner_who_leaves() -> None:
     shield, release = ShieldedWork(), asyncio.Event()
     store = SqlAnswerStore(None, embed=FixedEmbedder(), shield=shield)
-    written: list[KeptAnswer] = []
+    written: list[Any] = []
 
-    async def kept(*_: Any) -> KeptAnswer:
+    async def kept(answer_id: Any, *_: Any) -> tuple[()]:
         await release.wait()
-        written.append(KeptAnswer(answer_id=ANSWER_ID, claims_of=()))
-        return written[-1]
+        written.append(answer_id)
+        return ()
 
     store._kept = kept
-    caller = asyncio.create_task(store.keep(None, None, None))
+    caller = asyncio.create_task(store.keep(ANSWER_ID, None, None))
     await asyncio.sleep(0)
     caller.cancel()
     with pytest.raises(asyncio.CancelledError):
         await caller
     release.set()
     await shield.drain()
-    assert [answer.answer_id for answer in written] == [ANSWER_ID]
+    assert written == [ANSWER_ID]

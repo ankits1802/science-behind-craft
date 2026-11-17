@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Protocol
 
-from app.core.errors import ExternalFailure, InvalidInput, Refused
+from app.core.errors import SPEND_REFUSAL_KIND, ExternalFailure, InvalidInput, Refused
 from app.core.logging import request_id_scope
 from app.providers.media_router import MediaAsk, MediaCall
 from app.providers.router import RouterError
@@ -35,7 +35,7 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 RETRY_DELAY_SECONDS = 15
-FINAL_ROUTER_KINDS = frozenset({"bad_request", "ceiling", "no_route", "unsupported"})
+FINAL_ROUTER_KINDS = frozenset({"bad_request", SPEND_REFUSAL_KIND, "no_route", "unsupported"})
 BLOCKED_KIND = "refusal"
 
 

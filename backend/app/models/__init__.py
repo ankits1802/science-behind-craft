@@ -38,6 +38,7 @@ from app.models.crafts import (
     GiRegistration,
 )
 from app.models.evaluation import EvalCase, EvalResult, EvalRun
+from app.models.glossary import Term, TermConcept, TermCraft, TermSummary
 from app.models.identity import (
     AccessRoster,
     AuditLog,
@@ -68,6 +69,8 @@ from app.models.knowledge import (
     Source,
     WebFetch,
 )
+from app.models.knowledge_pieces import KnowledgePiece
+from app.models.media_refs import MediaRef, MediaRefClaim
 from app.models.science import (
     Compound,
     ConditionReading,
@@ -122,11 +125,14 @@ __all__ = [
     "GiRegistration",
     "Invite",
     "Job",
+    "KnowledgePiece",
     "LiveCandidate",
     "ManagedSecret",
     "Material",
     "MediaAsset",
     "MediaJob",
+    "MediaRef",
+    "MediaRefClaim",
     "Message",
     "Objection",
     "PasswordResetRequest",
@@ -146,6 +152,10 @@ __all__ = [
     "SecretTestResult",
     "Source",
     "StageMaterial",
+    "Term",
+    "TermConcept",
+    "TermCraft",
+    "TermSummary",
     "TwoFactorChallenge",
     "UsageEvent",
     "User",

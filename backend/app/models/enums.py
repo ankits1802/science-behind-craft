@@ -190,7 +190,50 @@ CHANNELS = ("TEXT", "VOICE")
 MESSAGE_ROLES = ("USER", "ASSISTANT", "SYSTEM")
 MEDIA_KINDS = ("IMAGE", "VIDEO")
 MEDIA_VISIBILITIES = ("PRIVATE", "CRAFT_SHARED")
+MEDIA_DISPLAYS = ("INLINE", "LINK_CARD")
+IMAGE_RELEVANCE = ("TEXT", "VISION")
+TERM_BASES = ("STORED", "WIKIPEDIA", "WEB_SEARCH")
 EVAL_RUN_STATUSES = ("QUEUED", "RUNNING", "SUCCEEDED", "FAILED")
+EXPLAINER_DEPTHS = ("BASIC", "DETAILED", "EXPERT")
+BLOCK_KINDS = (
+    "prose",
+    "process_ladder",
+    "region_story",
+    "map_layer",
+    "reaction_player",
+    "material_card",
+    "molecule_3d",
+    "images",
+    "simulation",
+    "what_if",
+    "timeline_map",
+    "zoom_story",
+    "expert_view",
+    "seasons",
+    "supply_map",
+    "compare",
+    "in_practice",
+    "quiz",
+    "open_questions",
+    "artisan_voice",
+    "designs",
+)
+DISCIPLINES = (
+    "OVERVIEW",
+    "PROCESS",
+    "CHEMISTRY",
+    "PHYSICS",
+    "MATERIALS",
+    "GEOGRAPHY",
+    "GEOLOGY",
+    "CLIMATE",
+    "ECOLOGY",
+    "BOTANY",
+    "HISTORY",
+    "ECONOMICS",
+    "DESIGN",
+    "HEALTH",
+)
 
 UserRole = pg_enum("UserRole", USER_ROLES)
 AuthProvider = pg_enum("AuthProvider", AUTH_PROVIDERS)

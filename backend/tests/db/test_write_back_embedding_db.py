@@ -21,6 +21,7 @@ from .write_back_seed import (
     answer,
     answer_store,
     expected_claim_id,
+    kept_answer,
     key,
     said,
     seeded_session,
@@ -96,9 +97,9 @@ async def test_a_failed_embedding_keeps_the_written_claims_for_later(session: As
 
 async def test_stored_answers_rank_by_any_word_of_the_question(session: AsyncSession) -> None:
     store = answer_store(session)
-    await store.keep(
-        AnswerAsk(question="Why alum?", mode="HYBRID"),
-        zelvar_pack(),
+    await kept_answer(
+        store,
+        AnswerAsk(question="Why alum?", depth="DETAILED"),
         answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)),
     )
     claim_id = expected_claim_id("mordant baths held 8 g/l alum and were heated to 60 °c")

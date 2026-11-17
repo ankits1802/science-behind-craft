@@ -8,6 +8,7 @@ from typing import Literal, Protocol, Self, runtime_checkable
 from pydantic import Field, field_validator, model_validator
 
 from .base import ContractModel
+from .blocks_people import ExpertSeat
 from .crafts import QUESTION_MAX_CHARS, CraftRef
 from .evidence import SearchQuery
 from .retrieval import MODE_CLAIM_LEVELS
@@ -16,6 +17,8 @@ from .vocabulary import (
     RETRIEVAL_TIERS,
     AnswerLanguage,
     AnswerMode,
+    Depth,
+    Discipline,
     FacetType,
     LiveTier,
     RetrievalTier,
@@ -29,13 +32,18 @@ __all__ = [
     "NATIVE_QUERY_TIER",
     "PLAN_INTENTS",
     "WITHHELD_TERMS_MAX",
+    "WITHHELD_TERM_MAX_CHARS",
+    "WITHHELD_TERM_MIN_CHARS",
     "Facet",
     "FacetCoverage",
     "ModePolicy",
     "PlanRequest",
     "PlannedQuery",
     "Planner",
+    "ResearchShare",
     "RetrievalPlan",
+    "split_share",
+    "withheld_name",
 ]
 
 PLAN_SCHEMA_VERSION = 1
@@ -43,6 +51,8 @@ MAX_FACETS = 8
 PLAN_INTENTS = ("OVERVIEW", "MATERIALS", "PROCESS", "SCIENCE", "PLACE", "HISTORY", "COMPARISON", "OTHER")
 
 WITHHELD_TERMS_MAX = 20
+WITHHELD_TERM_MIN_CHARS = 2
+WITHHELD_TERM_MAX_CHARS = 200
 FACET_COVERED_MIN_CLAIMS = 2
 OPEN_QUESTION_LEVEL = "HYPOTHESIS"
 NATIVE_QUERY_TIER = "T3"
@@ -108,21 +118,67 @@ class PlannedQuery(ContractModel):
     query: SearchQuery
 
 
+class ResearchShare(ContractModel):
+    queries: int = Field(ge=0)
+    native_queries: int = Field(ge=0)
+    fetches: int = Field(ge=0)
+
+    def capped(self, cap: ResearchShare) -> ResearchShare:
+        return ResearchShare(
+            queries=min(self.queries, cap.queries),
+            native_queries=min(self.native_queries, cap.native_queries),
+            fetches=min(self.fetches, cap.fetches),
+        )
+
+
+def split_share(total: ResearchShare, parts: int) -> list[ResearchShare]:
+    if parts < 1:
+        raise ValueError("a research budget is split into at least one part")
+    return [
+        ResearchShare(
+            queries=_part(total.queries, parts, index),
+            native_queries=_part(total.native_queries, parts, index),
+            fetches=_part(total.fetches, parts, index),
+        )
+        for index in range(parts)
+    ]
+
+
+def _part(total: int, parts: int, index: int) -> int:
+    return total // parts + (1 if index < total % parts else 0)
+
+
 class PlanRequest(ContractModel):
     question: str = Field(min_length=2, max_length=QUESTION_MAX_CHARS)
     mode: AnswerMode
-    craft: CraftRef
+    craft: CraftRef | None
+    depth: Depth | None = None
     language: AnswerLanguage = CANONICAL_LANGUAGE
     withheld_terms: tuple[str, ...] = Field(default=(), max_length=WITHHELD_TERMS_MAX)
     english_question: str | None = Field(default=None, min_length=2, max_length=QUESTION_MAX_CHARS)
+    focus: Discipline | None = None
+    seats: tuple[ExpertSeat, ...] = ()
+    share: ResearchShare | None = None
+    fresh: bool = False
 
     @field_validator("withheld_terms")
     @classmethod
     def _terms_are_words(cls, terms: tuple[str, ...]) -> tuple[str, ...]:
         cleaned = tuple(term.strip() for term in terms)
-        if any(len(term) < 2 or len(term) > 200 for term in cleaned):
-            raise ValueError("a withheld term is 2 to 200 characters")
+        if any(not _withheld_length(term) for term in cleaned):
+            raise ValueError(
+                f"a withheld term is {WITHHELD_TERM_MIN_CHARS} to {WITHHELD_TERM_MAX_CHARS} characters"
+            )
         return cleaned
+
+
+def withheld_name(name: str | None) -> tuple[str, ...]:
+    trimmed = (name or "").strip()
+    return (trimmed,) if _withheld_length(trimmed) else ()
+
+
+def _withheld_length(term: str) -> bool:
+    return WITHHELD_TERM_MIN_CHARS <= len(term) <= WITHHELD_TERM_MAX_CHARS
 
 
 class FacetCoverage(ContractModel):
@@ -137,7 +193,7 @@ class FacetCoverage(ContractModel):
 class RetrievalPlan(ContractModel):
     schema_version: Literal[1] = PLAN_SCHEMA_VERSION
     mode: AnswerMode
-    craft: CraftRef
+    craft: CraftRef | None
     intent: PlanIntent
     language: AnswerLanguage
     needs_region: bool

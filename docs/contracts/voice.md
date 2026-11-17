@@ -10,7 +10,15 @@ files: `shared/voice.availability.golden.json`, `voice.session-agent`, `voice.se
 `voice.turn.golden.sse` (the relay turn). PLAN 10 is the specification. Design choices:
 decision 0014.
 
-Last reviewed: 2026-11-16, against the ElevenLabs documentation of that day.
+Last reviewed: 2026-11-17, against the ElevenLabs documentation of that day.
+
+**The live call is switched off (owner, 2026-11-17; decision 0035).** `VOICE_CALL_ENABLED`
+(`Settings.voice_call_enabled`, default false) guards every route under `/api/voice`: while it is
+false each answers 404 before anything else is read, and `/answers/config` sends the hidden
+`VoiceAvailability` (`configured` false), so no voice button is drawn. Nothing is deleted; the rest
+of this page describes the call as it runs when the setting is true. Turning it on brings back the
+craft page's Talk dock only: the mic on `/ask` is dictation (decision 0036), and no call starts
+from there. Listening to finished explainers is Listen, below.
 
 ## ElevenLabs facts this contract rests on
 
@@ -29,6 +37,8 @@ Verified on the official documentation (2026-11-16):
 | Client tools are `{type: "client", name, description, parameters, expects_response}`; the browser registers handlers as `clientTools` (`@elevenlabs/react` `useConversation`, `startSession({conversationToken})` for WebRTC) | eleven-agents/customization/tools/client-tools, eleven-agents/libraries/react |
 | Speech to text `POST /v1/speech-to-text` (multipart `model_id` such as `scribe_v2`, `file`, `language_code`, `keyterms`) answers `{language_code, language_probability, text, words[{text, start, end, type}]}` | api-reference/speech-to-text/convert |
 | Text to speech `POST /v1/text-to-speech/{voice_id}/stream` (`text`, `model_id`, `language_code`; `output_format` default `mp3_44100_128`); `enable_logging=false` (zero retention) is for enterprise customers only | api-reference/text-to-speech/stream |
+| Text to speech with timings `POST /v1/text-to-speech/{voice_id}/with-timestamps` (`text`, `model_id`, `language_code`, `previous_text`, `next_text`; `output_format` default `mp3_44100_128`) answers `{audio_base64, alignment {characters, character_start_times_seconds, character_end_times_seconds}, normalized_alignment}`; `alignment` covers the text as sent (2026-11-17) | api-reference/text-to-speech/convert-with-timestamps |
+| `eleven_v4` is the narration model ("audiobooks & video narration"), at most 10,000 characters a generation; the v4 family speaks all thirteen answer languages (2026-11-17) | overview/models, elevenlabs.io/v4 |
 | Speech to text `language_code` takes ISO 639-1 or ISO 639-3; the Scribe v3 language list names English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Odia, Punjabi, Assamese and Urdu (`eng` ... `urd`); Eleven v4 Turbo lists the same thirteen and takes their ISO 639-1 codes as `language_code` (decision 0025) | api-reference/speech-to-text/convert, overview/capabilities/speech-to-text, overview/models |
 
 **Unverified** (the P1a spike of PLAN 10.1, run by lane 0017 on GitHub Actions, settles each one
@@ -265,6 +275,24 @@ the call's hard end.
   lists them as `language_presets` (not provisioned).
 - The agent's `custom_llm.url` is `<PUBLIC_API_URL>/api/voice/llm/v1` (unverified item 2); the
   bearer is the workspace secret `KALAVIGYAN_VOICE_LLM_BEARER` (`provision_voice_agent.py`).
+
+## Listen (decision 0035)
+
+`GET /api/answers/{answerId}/listen?language=&section=` (the `VOICE` capability; 30 in 10 minutes,
+Master Admin unlimited) reads aloud the reader's own explainer (`Answer.payload.explainer`, the `Explainer`
+document), or one section of it, through `ElevenLabs.narration` (`eleven_v4`, character timings).
+
+| Rule | Value |
+|---|---|
+| What is read | each block's cited sentences in reading order (prose, a ladder's stage sentences); pictures, titles and labels are not read; a translated sentence in the explainer's language, an untranslated one in English, one request per language |
+| Parts | whole sentences, at most `PART_CHARACTERS` (2,000) characters and one language each; neighbours' text as `previous_text` and `next_text`; one track per part |
+| Words | runs of non-space characters of a sentence; `start` the first character's start, `end` the last character's end, seconds to the millisecond, never earlier than the previous word |
+| Cache | per block: SHA-256 of `kalavigyan-narration`, `NARRATION_VERSION`, model, voice id, explainer language and piece content hash (U+001F between); parts at `media/narration/<cacheId>/KalaVigyan_Explainer_<date>_<HHMM>_Narration_Part-NN.mp3`, then `narration.json` (the `NarrationManifest`) last; presigned GET links of 3,600 s |
+| Seconds | a cache hit is free; misses hold `ceil(characters × 60 / 1000)` `VOICE_SECONDS` under `listen:<requestId>:hold` (429 + `Retry-After` until midnight IST when less is left), then `listen-refund:<requestId>` or `listen-settle:<requestId>` settle to the audio (bytes at 128 kbit/s); Master Admin never refused |
+| Answers | 200 `ListenScript {schemaVersion 1, answerId, language, tracks[{blockId, audioUrl, durationSeconds, words[{sentenceId, text, start, end}]}]}` (`schemas/listen.py`, `shared/listen.script.golden.json`, `frontend/lib/listen.ts`); 404 another reader's answer, no explainer, another language or nothing to read; 422 a malformed `language` or `section`; 503 the bucket, key or ElevenLabs failing |
+
+`/answers/config` carries `listen {languages}`: the answer languages the narration model speaks when
+the bucket, the key and ElevenLabs answer, else `[]`, and the client draws no Listen control.
 
 ## Secrets (names only)
 

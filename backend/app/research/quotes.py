@@ -7,7 +7,9 @@ from collections.abc import Iterable
 __all__ = [
     "QUOTE_MIN_CHARS",
     "QUOTE_OVERLAP_MIN",
+    "content_stem",
     "content_stems",
+    "content_words",
     "figures_in",
     "fold_digits",
     "formulas_in",
@@ -157,9 +159,17 @@ def unsupported_figures(text: str, cited_texts: Iterable[str]) -> list[str]:
     return [figure for figure in figures_in(text) if figure not in supported]
 
 
-def content_stems(text: str) -> set[str]:
+def content_words(text: str) -> list[str]:
     words = (word.casefold() for word in CONTENT_WORD.findall(quote_key(text)))
-    return {word[:STEM_CHARS] for word in words if word not in STOP_WORDS}
+    return [word for word in words if word not in STOP_WORDS]
+
+
+def content_stems(text: str) -> set[str]:
+    return {content_stem(word) for word in content_words(text)}
+
+
+def content_stem(word: str) -> str:
+    return word.casefold()[:STEM_CHARS]
 
 
 def _figure_text(text: str) -> str:

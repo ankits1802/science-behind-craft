@@ -129,12 +129,12 @@ Last reviewed: 2026-11-17.
 - **What:** PLAN 5.2's gate (300 match cases, top-1 at least 95%, in CI on seeded fixtures) does
   not exist. The resolver's weights, `FUZZY_MIN_SIMILARITY` 0.85, `SEMANTIC_MIN_SIMILARITY` 0.6
   and the hand list `GENERIC_TOKENS` were set from about 30 questions tried by hand against the
-  master list (decision 0004). The model choice among the top 5 (PLAN 5.2 step 6,
-  `MODEL_CHOICE`) is not built; a learner picks from the pills instead.
+  master list (decision 0004). The model choice among the top 5 (PLAN 5.2 step 6) is now the
+  understanding step's `PLAN` call (decision 0031), unmeasured as well.
 - **Why left:** the cases have to be written from real questions in several scripts; owner
   direction is 1-2 known-answer checks at a time, not a large suite on every change.
-- **Clears it:** collect the cases as answers are corrected, run them in Backend checks, tune the
-  constants against them, and add the model choice if top-1 stays below the gate.
+- **Clears it:** collect the cases as answers are corrected, run them in Backend checks, and tune
+  the constants and the understanding prompt against them.
 
 ### Scholarly adapters: gaps left on 2026-11-16 (decision 0005)
 
@@ -890,3 +890,434 @@ Last reviewed: 2026-11-17.
 - **Why left:** nothing runs on the laptop, and Yahoo is not registered yet.
 - **Clears it:** Backend checks green on the batch, then after the deploy add a password in
   Settings from a Google-only account (and a Yahoo one once Yahoo is registered).
+
+## Explainer contract (decision 0030)
+
+### The answer stream re-exports the citation shapes
+
+- **What:** `SourceRef`, `Citation` and `AnswerSentence` live in `research/citations.py`;
+  `research/stream.py` re-exports them so `geo/`, `science/records.py`, `schemas/region.py`,
+  `schemas/voice.py`, `services/craft_process.py`, `services/region_records.py` and two test
+  helpers keep importing them from the stream: two import paths for one home.
+- **Why left:** those files belong to other lanes working in the tree at the same time; the move
+  was needed only to break the stream-to-explainer cycle.
+- **Clears it:** switch each importer to `research.citations` when it is next touched, then drop
+  the three names from `stream.__all__`.
+
+### Declared block kinds check only what `research` can see
+
+- **What:** the later kinds' models refuse what `research` can check (uncited blocks, orders,
+  coordinates without Wikidata, personal data in artisan quotes), but not rules that live in
+  `schemas/`: a region story's or map layer's `boundaryCaption` is not compared with
+  `schemas.region.BOUNDARY_CAPTION`, and a reaction step's equation not rebuilt with
+  `schemas.science.mhchem_equation`. The simulation's static check (plan 2.6) does not exist.
+- **Why left:** `research` may not import `schemas`, and those kinds are built in phases B and C.
+- **Clears it:** the phase that builds each kind checks it in its producer and adds a contract
+  test; moving `BOUNDARY_CAPTION` into `research` would let the model check it.
+
+## Understanding and depth (decision 0031)
+
+### Comparison questions answer for one craft
+
+- **What:** the understanding step chooses at most one craft; a second craft a comparison
+  question names is only offered, so `understood.crafts` never holds two and the answer covers the
+  first craft.
+- **Why left:** researching and composing two crafts side by side is the `compare` block of phase
+  D.
+- **Clears it:** phase D lets the understanding choose several crafts for a comparison and runs
+  research per craft into a `compare` block.
+
+### Any-craft claims are read only by any-craft questions
+
+- **What:** research for any craft writes its claims on shared concepts (no craft, no
+  sub-category). A later question about a particular craft does not read them, because the craft
+  scope reads the craft's and its family's concepts only.
+- **Why left:** which shared findings apply to which craft is a curation choice; reading all of
+  them in every craft answer would mix crafts.
+- **Clears it:** link shared concepts to the crafts they concern (through the concept graph of
+  feature 7 or a reviewer's link), and let the craft scope read linked shared concepts.
+
+### The answer cap follows the asked depth
+
+- **What:** `AnswerSpend` is made for the depth the reader asked for; when the understanding step
+  degrades Expert to Detailed past the degrade mark, the answer is still held to Expert's cap.
+- **Why left:** the pipeline is built before the understanding runs; a degraded answer plans
+  Hybrid and spends less anyway.
+- **Clears it:** let the understanding step set the effective depth on the answer's
+  `AnswerSpend` before research starts.
+
+### A hold is not released when a call raises something unexpected
+
+- **What:** the router releases an answer's hold on every provider failure, but an exception
+  outside `ProviderError` (a bug, a cancellation) leaves the estimate held, so that answer has
+  less room under its cap; the `UsageEvent` stays `RESERVED` and stops counting after the
+  15-minute reservation window, as before.
+- **Why left:** the call loop of `router.run` (181 lines, in the baseline) needs splitting before
+  a `finally` can be added cleanly.
+- **Clears it:** split `router.run` into reserve, call and settle steps and release the hold in a
+  `finally`.
+
+### Retired stream vocabulary still listed
+
+- **What:** the answering flow no longer sends the `RESOLVING` status or the `match`, `section`
+  and `sentence` events; all four stay in `research/stream.py` (and `RESOLVING` in the client's
+  `lib/answerShapes.answerStatusShape`) for the contract golden `shared/answer-stream.golden.sse`,
+  which only the backend reads now that the web client reads the explainer stream (decision 0037).
+- **Why left:** dead vocabulary, harmless to readers; removing it rewrites the golden and its
+  tests, outside the review fixes of 0038.
+- **Clears it:** drop `RESOLVING`, `match`, `section`, `sentence` and their golden from
+  `research/stream.py` and `answerStatusShape`.
+
+### Per-answer caps are starting values, edited only through the API
+
+- **What:** `AI_ANSWER_CAP_USD` starts at $0.25 Basic, $0.50 Detailed and $1.00 Expert, set
+  before any Expert answer was measured; the Settings hub has no AI budget screen, so a Master
+  Admin changes the caps (like the ceilings) only through `PUT /settings/ai-budget`.
+- **Why left:** owner O3: start modest and raise once phase A measures real costs; the budget
+  screen was never built.
+- **Clears it:** after the first Expert answers in production, set the caps from their measured
+  spend (Usage, by request id), and add the AI budget to the Settings hub.
+
+### The understanding call shares the PLAN route
+
+- **What:** the understanding call runs on the `PLAN` route, so Usage counts it as planning and
+  the Settings hub cannot route it apart from the plan call.
+- **Why left:** the `PLAN` route is already "Plan and craft choice" with Gemini Flash Lite first,
+  as the plan asks; a separate task needs an `AiTask` value, a migration and its routes.
+- **Clears it:** add an `UNDERSTAND` task if the owner wants it routed or reported apart.
+
+## Asking screen (decision 0036)
+
+### Dictation languages not yet tried on each browser
+
+- **What:** the plan (2.5) asks for each answer language to be checked on each target browser
+  before it is offered. The screen offers dictation in all 13 answer languages (`<code>-IN`
+  locales, `lib/dictation.ts`) wherever the browser has the Web Speech API, hides a language the
+  browser reports unavailable (`SpeechRecognition.available`) or refuses
+  (`language-not-supported`), but nobody has yet dictated in Odia, Punjabi, Assamese or Urdu on
+  Chrome, Edge and Safari, or checked Android Chrome's continuous mode, which is known to repeat
+  final words.
+- **Why left:** nothing runs on the laptop, and the production E2E drives a headless browser with
+  no microphone.
+- **Clears it:** after the deploy, dictate one sentence per language on Chrome, Edge and Safari
+  (desktop and Android Chrome) and record what each does here; switch Android Chrome to
+  single-utterance mode if its repeats show.
+
+## Pictures and terms (decision 0034)
+
+### Relevance is by text only
+
+- **What:** plan 2.7 asks for one cheap vision call on the top candidates; every picture is
+  chosen by its words against the claim text (`relevance: TEXT`), so a picture whose title and
+  description happen to share two words with a claim is shown even if it depicts something else.
+- **Why left:** the vision call needs an image route and per-answer spend; text relevance came
+  first.
+- **Clears it:** a `CAPTION` route call on the top two candidates per section, recorded as
+  `VISION` on `MediaRefClaim`, dropping a picture the model says does not show the claim.
+
+### Link cards need the page's own site to serve the picture
+
+- **What:** a SearXNG image result is kept only when its image and page share a registrable name
+  (`research/images.same_site`), judged by a short list of second-level labels (`ac`, `co`,
+  `gov`, `org`, ...) instead of the Public Suffix List. Sites that serve pictures from a CDN on
+  another name are left out, and a public suffix outside the list could pair two unrelated sites.
+- **Why left:** owner O2 asks for the thumbnail from the source site; no dependency carries the
+  Public Suffix List today.
+- **Clears it:** vendor the Public Suffix List (or `tldextract` with a pinned snapshot) and use it
+  in `site_of`.
+
+### Brave image results are not used
+
+- **What:** web image results come from SearXNG only; plan section 7 names Brave for image results
+  too, and the Brave key already backs web search.
+- **Why left:** one image search per service was enough for phase A.
+- **Clears it:** an `images` method on `BraveAdapter` (`/res/v1/images/search`) used when SearXNG
+  answers fewer than two link cards.
+
+### Local words without a stated meaning are not terms
+
+- **What:** the glossary takes a seed concept's local word only when the concept's name states
+  what it means (`Kut (iron-water black paste)`, `Alum (fatakdi)`). Local words listed beside
+  other names (`lokhand`, `gud`, `datla`, `mavi`, `gudh`) are not terms, and two spellings of
+  one word become one term only when they are at least 80 % alike (`harde`, `harda`).
+- **Why left:** the seed records those words without their meaning, and a guessed meaning would
+  be an uncited fact.
+- **Clears it:** a curated `localTerms` meaning in `etl/crafts` (or claims that define them), then
+  the glossary plan reads it.
+
+### The glossary seed never removes a term or link
+
+- **What:** `seed_terms` upserts terms by key and adds craft and concept links; a term or link
+  that a later seed no longer produces stays.
+- **Why left:** the claim and science seeds behave the same way (see "The science seed never
+  deletes"); no removal has been needed yet.
+- **Clears it:** a seed step that deletes links the plan no longer has, and terms with no links
+  and no cached summary.
+
+### Term summaries and pictures written back are not embedded at once
+
+- **What:** claims and sources kept by a term summary are stored without vectors; they get them
+  from `app/scripts/embed_knowledge` (run by the daily Coverage enrichment workflow), so up to a
+  day passes before semantic retrieval finds them.
+- **Why left:** the term route has no embedder in its request path and the summary is already
+  cached for the reader.
+- **Clears it:** pass `router_embedder(principal)` into `SqlTermStore` and call `embed_written`
+  after the write-back, as `store_live_research` does.
+
+### Term summaries never expire while their claims stand
+
+- **What:** a cached `TermSummary` is served until a claim it rests on is hidden, retracted or
+  rejected; a better stored claim, or a newer Wikipedia revision, does not replace it.
+- **Why left:** plan 2.8 asks for a cache per term and language; claim visibility is the guard
+  that matters for accuracy.
+- **Clears it:** an age limit (or a stored claim newer than `checkedAt`) after which the next tap
+  builds the summary again.
+
+### Image and term enums are check constraints
+
+- **What:** `MediaRef.display`, `MediaRefClaim.relevance` and `TermSummary.basis` are strings with
+  `CHECK` constraints built from `models/enums.py`, not Postgres enum types like the other
+  vocabularies.
+- **Why left:** the schema tests only know enum types the first migration declares, and lanes
+  adding tables in the same batch would each have had to change that test machinery.
+- **Clears it:** once the tests accept enum types created by later migrations, turn the three
+  columns into `pg_enum` types in one migration.
+
+## Pictures and terms in the stream (decision 0039)
+
+### Translated sentences lose the spans the translation rewrites
+
+- **What:** a translated sentence keeps a span only where the English span's text survives
+  (`research/terms.spans_still_shown`). A term the translation renders in its own script (alum as
+  फिटकरी) is not underlined, although the glossary may hold that local name.
+- **Why left:** marking translated text needs word boundaries that hold in Indian scripts (their
+  vowel signs are not word characters to Python's `re`) and a check that the local name is the
+  translation's word for that term.
+- **Clears it:** after translation, mark the glossary's local names in the answer's script with
+  grapheme-aware boundaries, next to the spans kept, and check them like English spans.
+
+### Reused sections search for pictures again
+
+- **What:** each reuse of a stored section searches the image services anew, although the
+  pictures chosen for the same claims are already stored as `MediaRef` rows with `MediaRefClaim`
+  links.
+- **Why left:** reading stored pictures needs a lookup by claim and a rule for when a stored
+  picture is still current; a search costs no AI spend and is bounded by the 8 s wait.
+- **Clears it:** read the `MediaRefClaim` rows of the cited claims first and search only when none
+  are stored.
+
+### The stored-only answer shows no pictures or terms
+
+- **What:** when spend is refused, `services/stored_explainer` streams prose blocks with no spans
+  and no `images` block.
+- **Why left:** step 7 was wired into the sectioned flow; the stored-only answer is its fallback.
+- **Clears it:** pass the answer's `Enrichment` to `stream_stored_answer` and mark and search as
+  the sectioned flow does.
+
+### The nightly rebuild searches pictures nobody sees
+
+- **What:** `app/scripts/rebuild_pieces` answers through `build_answer_pipeline`, so each rebuilt
+  section also searches pictures and stores them as `MediaRef` rows, though its stream is
+  discarded.
+- **Why left:** the rebuild needs the same term marking so its pieces carry spans; pictures cost
+  no AI spend and stored ones serve the craft page later.
+- **Clears it:** build the rebuild's pipeline with enrichment tools whose picture step answers
+  nothing.
+
+### Pictures and terms in the stream not yet seen running
+
+- **What:** the step 7 wiring has run only on fakes here; no production answer has streamed a
+  picture or a span yet.
+- **Why left:** nothing runs on the laptop.
+- **Clears it:** after the deploy, load `/ask`, ask the Kutch Ajrakh known-answer questions and
+  see each section's pictures with their credits and underlined terms that open their summary.
+
+## Explainer view (decision 0037)
+
+### Listen re-renders every sentence on each time update
+
+- **What:** the word being read travels through the reading context, so each `timeupdate`
+  (about four a second) re-renders every sentence of the explainer.
+- **Why left:** not measured as slow on an Expert answer; memoising every sentence first would be
+  a guess.
+- **Clears it:** measure on a long answer on a phone; if it drops frames, give each sentence a
+  selector on the mark (only the sentence being read re-renders).
+
+### The understood line finds its controls by id
+
+- **What:** a part of the understood line moves focus to its control under the question box
+  through element ids (`components/ask/AskOptions.focusAskOption`), not refs.
+- **Why left:** the controls live in the asking screen's components and the explainer only needs
+  to hand focus over; threading refs through both trees for one focus call was heavier.
+- **Clears it:** if the asking screen gains a focus API (refs from `useAskScreen`), call it
+  instead.
+
+## Listen and the switched-off call (decision 0035)
+
+### Narration not yet heard from ElevenLabs
+
+- **What:** `ElevenLabs.narration` follows the documented `/with-timestamps` shape; no request has
+  reached ElevenLabs, so `eleven_v4` on that endpoint, the alignment spelling the text in every
+  language, bracketed text read as text rather than as a v4 audio tag, and the real speaking rate
+  behind the 1,000-characters-a-minute hold are unverified (decision 0035, Unverified).
+- **Why left:** no provider call with a real key from the laptop; nothing is deployed by agents.
+- **Clears it:** after the deploy, press Listen on one English and one Hindi Kutch Ajrakh answer;
+  if `eleven_v4` is refused, set `NARRATION_MODEL` to `eleven_v4_turbo`; replace the fixture
+  with the recorded answer.
+
+### Two readers missing the same block both pay for it
+
+- **What:** the narration cache is checked, then filled; two requests that miss the same block at
+  the same moment both synthesise it and both are billed (the second write wins, both are valid).
+- **Why left:** rare until many readers open the same new answer at once; a lock across processes
+  needs a table or a lease.
+- **Clears it:** an in-flight lease per cache id (a row with a short expiry, or an S3 conditional
+  put with `If-None-Match`) so the second request waits for the first.
+
+### Narration objects never age out
+
+- **What:** `media/narration/<cacheId>/` objects stay forever; a block that changes (a claim
+  retracted, a translation corrected) gets a new cache id and the old audio is orphaned.
+- **Why left:** the bucket lifecycle is Terraform, which agents do not change; the cost is small.
+- **Clears it:** a lifecycle rule expiring `media/narration/` objects not read for a year, or a
+  sweep of cache ids no stored explainer or piece names.
+
+### Listen has no fallback voice
+
+- **What:** PLAN 10.6 reads aloud with the Gemini voice when ElevenLabs is down; Listen is hidden
+  instead (`listen.languages` empty), because the Gemini voice gives no word timings.
+- **Why left:** highlighting needs timings; a fallback without them is a second Listen.
+- **Clears it:** a Gemini read-aloud that highlights by sentence only, if the owner wants Listen
+  while ElevenLabs is down.
+
+### The Listen route repeats the throttle shape
+
+- **What:** `api/routes/listen.throttle` repeats the `Retry-After` arithmetic of the other route
+  throttles (`terms`, `knowledge`, `voice`, `auth`, `password_change`).
+- **Why left:** those routes belong to other lanes working in the tree at the same time.
+- **Clears it:** one `core/rate_limit.refused(attempt, detail)` that raises the 429 with its
+  `Retry-After`, used by every route.
+
+## Sectioned composition (decision 0032)
+
+### Sections share the depth's budget evenly
+
+- **What:** `split_share` gives every section the same part of the depth's queries and documents
+  (Basic: 2 queries over 3 or 4 sections), whether or not its stored claims already cover it; a
+  section without a query share reaches live research only through the fresh retry, and only
+  while the ledger has something left.
+- **Why left:** which fields need live research is known only after each section's plan call.
+- **Clears it:** plan every section first, then hand the budget to the sections with open facets.
+
+### Two sections can read the same document
+
+- **What:** each section runs its own planner and `DocumentReader`; the adapters cache searches
+  for 600 s but not reads, so a paper found by two fields is fetched twice.
+- **Why left:** a shared reader needs a per-answer cache passed through the planner.
+- **Clears it:** one per-answer read cache (by evidence id) held by the answering service.
+
+### A late failure drops the whole prose block
+
+- **What:** a prose block is refused whole when one sentence has no stored citation after the
+  write-back (for example a write-back skipped as invalid), although its other sentences passed;
+  the model's one regenerate covers only what the composer's checks see.
+- **Why left:** plan 2.1 drops a block with an uncited fact; such skips should be rare.
+- **Clears it:** count refused blocks by reason in production; if they occur, regenerate the
+  section once with the refused sentences named.
+
+### Section titles and progress counts are generic
+
+- **What:** a section's title is its field's label ("The chemistry"), not one written for the
+  question; the `status` line's counts are the first section's to reach each step.
+- **Why left:** `section_started` goes out before anything is composed and has no later title
+  event; per-section progress is carried by `section_state`.
+- **Clears it:** a title from the understanding call (validated like a heading), and a status
+  line that sums the sections' counts.
+
+### Schema counts are prompt lines
+
+- **What:** with portable schemas, the whole-answer composer's six sections, the voice turn's one
+  section of three sentences and the translation's length limit are no longer enforced by the
+  schema; the section composer and the planner trim on our side, the voice turn and the coverage
+  job's whole-answer composer do not.
+- **Why left:** the voice call is switched off and the coverage job only writes claims.
+- **Clears it:** trim in `parsed_answer` to its form's limits (sections, sentences, follow-ups).
+
+### Stored plans and the explainer are not read back yet
+
+- **What:** `Answer.plan` holds one plan per section and attempt and `Answer.mode` the first
+  section's mode; the data migration wrapping older plans has no database test of an old row.
+  The explainer is stored as the reader saw it (translated), not in English.
+- **Why left:** nothing reads them yet besides Listen, which wants the shown language.
+- **Clears it:** a DB test that seeds a pre-0014 plan and runs the upgrade, when a reader of
+  `Answer.plan` is written.
+
+## Stored knowledge pieces (decision 0033)
+
+### Topic keys match only the same glossary terms
+
+- **What:** a facet's topic is the glossary terms the question names (else the place or the
+  craft), so "Why does alum fix alizarin?" and "How do alum and alizarin bond?" meet, but a
+  rephrasing that names one more or one fewer term researches again; a question in an Indian
+  script matches only the glossary's local names, so it falls back to the craft's topic.
+- **Why left:** accuracy over speed; a model-chosen topic would be another model output to check,
+  and rendering every question in English costs a TRANSLATE call before any reuse.
+- **Clears it:** measure reuse in production; if near misses are common, add the planner's facet
+  targets to the stored piece and accept a stored set whose terms are a subset of the question's
+  when its vector is near the question's.
+
+### Answers never grow the Process tab
+
+- **What:** plan 2.2 wants process stages found by answers to land in the science tables, so the
+  craft page's Process tab and later ladders use them. No answer writes `Process` or
+  `ProcessStage` rows: stage concepts a `PROCESS` section cites stay concepts (their claims still
+  appear in prose). Lane 0033 made the cited stages the process of a craft with none, numbered in
+  the order the model wrote its sentences; decision 0038 removed that, since step numbers and
+  order would have come from the model, not from a source.
+- **Why left:** no source-stated order exists to build from: the write-back records claims on
+  stage concepts, not which stage follows which.
+- **Clears it:** a cited-order route: write `PRECEDES` edges between stage concepts only from
+  claims that state the sequence, with their citations; create a live process only when those
+  edges order every stage, taking ordinals from the edges; take stage names only from curated or
+  seeded concepts, never from a planner's facet targets; or a professor places the stages from
+  the review screen.
+
+### A rebuild that composes nothing is tried every night
+
+- **What:** a stale piece whose rebuild shows no block stays stale and unsuperseded, so the
+  nightly job tries it again each night (within the budget, most-asked crafts first).
+- **Why left:** a retracted claim usually leaves its topic answerable; a topic that cannot be is
+  rare and bounded by the daily budget.
+- **Clears it:** record each rebuild attempt on the piece and skip one tried in the last week.
+
+### The rebuild may overshoot the day by one answer
+
+- **What:** the rebuild checks the day's remaining budget before each group (at least
+  `ENRICHMENT_QUESTION_RESERVE_USD`), and one Expert group can spend up to the Expert per-answer
+  cap, above the reserve.
+- **Why left:** the coverage job has the same shape; the cap bounds the overshoot.
+- **Clears it:** hold each rebuild to the smaller of its depth's cap and what the day has left.
+
+### Knowledge pieces not yet seen running
+
+- **What:** migration `0015_knowledge_pieces`, its trigger and the piece DB tests
+  (`backend/tests/db/test_knowledge_pieces_db.py`) have run only offline here; they run on GitHub
+  Actions with the next Backend checks.
+- **Why left:** nothing runs on the laptop.
+- **Clears it:** Backend checks green on the batch, then in production ask the same Kutch Ajrakh
+  question twice and see the second answer's sections marked "From earlier research".
+
+## Review fixes (decision 0038)
+
+### Craft Process tab on phones hangs (finding 8a.3)
+
+- **What:** E2E production run 43959098727 reached Craft Overview on the phone project (Pixel 7,
+  390 px) and timed out on the Process tab after the test's 10 minutes (plan section 8a). The
+  cause is not known.
+- **Why left:** it could not be reproduced here: it needs the deployed site (or a built one with
+  its API), and nothing runs on the laptop. No change in the explainer or craft-page code was
+  made blind.
+- **Clears it:** dispatch **E2E production** on the phone project with a trace for the Process
+  step (or a step time budget in `screenRun.step` so one stuck step reports itself and the run
+  goes on), find whether the page, the audit or the full-page screenshot hangs, and fix it in
+  `components/craft/` or `e2e/production/`.

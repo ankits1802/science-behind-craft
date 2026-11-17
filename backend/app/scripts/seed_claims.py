@@ -11,11 +11,13 @@ async def run() -> dict[str, Any]:
     from app.core.db import dispose_engine, session_scope
     from app.services.claim_seed import seed_claims
     from app.services.science_seed import seed_science
+    from app.services.term_glossary import seed_terms
 
     try:
         async with session_scope() as session:
             claims = await seed_claims(session)
-            return {**claims, "science": await seed_science(session)}
+            science = await seed_science(session)
+            return {**claims, "science": science, "terms": await seed_terms(session)}
     finally:
         await dispose_engine()
 

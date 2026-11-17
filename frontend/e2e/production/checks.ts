@@ -1,4 +1,4 @@
-import type { AnswerMode, UserRole } from "@/lib/types";
+import type { UserRole } from "@/lib/types";
 
 export const DESKTOP_NAV_MIN_WIDTH = 1024;
 export const NO_LAYER_LABEL = "Craft places";
@@ -29,14 +29,15 @@ export const GAP_COPY_PATTERNS: readonly RegExp[] = [
   /\bin a (?:future|later) (?:release|version|phase|update)\b/gi
 ];
 
-export type NavExpectation = { bar: string[]; menu: string[]; modes: AnswerMode[] };
+export type NavExpectation = { bar: string[]; menu: string[]; depths: string[] };
 
 const LEARNER_BAR = ["Ask", "Crafts", "Map"];
 const LEARNER_MENU = ["Ask", "Crafts", "Map", "Settings"];
+const EVERY_DEPTH = ["Basic", "Detailed", "Expert"];
 
 export const NAV_BY_ROLE: Partial<Record<UserRole, NavExpectation>> = {
-  STUDENT: { bar: LEARNER_BAR, menu: LEARNER_MENU, modes: ["VERIFIED", "HYBRID"] },
-  RESEARCHER: { bar: LEARNER_BAR, menu: LEARNER_MENU, modes: ["VERIFIED", "HYBRID", "DEEP"] }
+  STUDENT: { bar: LEARNER_BAR, menu: LEARNER_MENU, depths: EVERY_DEPTH },
+  RESEARCHER: { bar: LEARNER_BAR, menu: LEARNER_MENU, depths: EVERY_DEPTH }
 };
 
 export function navExpectation(role: UserRole): NavExpectation | null {

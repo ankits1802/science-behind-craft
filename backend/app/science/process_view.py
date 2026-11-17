@@ -5,7 +5,7 @@ from collections import defaultdict
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 
-from app.research.stream import SourceRef
+from app.research.citations import SourceRef, cited_source_ids
 from app.research.vocabulary import LEVEL_ORDER, weakest_level
 from app.schemas.science import (
     CONDITION_QUANTITIES,
@@ -23,7 +23,6 @@ from app.schemas.science import (
     ReactionView,
     StageCondition,
     StageMaterialView,
-    cited_source_ids,
     mhchem_equation,
     process_claims,
     reaction_level,

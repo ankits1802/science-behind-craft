@@ -4,7 +4,7 @@ import uuid
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from sqlalchemy import func, select, update
+from sqlalchemy import ColumnElement, and_, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -37,12 +37,16 @@ STAGE_CONCEPT_TYPE = "PROCESS_STAGE"
 RAISABLE_LEVEL = "HYPOTHESIS"
 QUOTED_LEVEL = "PROVISIONAL"
 CLOSED_STATUSES = ("REJECTED", "RETRACTED")
+SHARED_OWNER = "shared"
 
 
 @dataclass(frozen=True)
 class _CraftKeys:
-    craft_id: uuid.UUID
+    craft_id: uuid.UUID | None
     sub_category_id: uuid.UUID | None
+
+
+SHARED_CONCEPT_KEYS = _CraftKeys(craft_id=None, sub_category_id=None)
 
 
 def write_back_claim_id(dedupe_key: str) -> uuid.UUID:
@@ -147,7 +151,8 @@ async def _concept_id_for(session: AsyncSession, craft: _CraftKeys, subject: Wri
     if found is not None:
         return found
     concept_id = uuid.uuid5(
-        ID_NAMESPACE, f"live-concept:{craft.craft_id}:{subject.concept_type}:{_folded(subject.concept_name)}"
+        ID_NAMESPACE,
+        f"live-concept:{craft.craft_id or SHARED_OWNER}:{subject.concept_type}:{_folded(subject.concept_name)}",
     )
     await session.execute(
         insert(Concept)
@@ -163,7 +168,9 @@ async def _concept_id_for(session: AsyncSession, craft: _CraftKeys, subject: Wri
     return concept_id
 
 
-async def _craft_keys(session: AsyncSession, slug: str) -> _CraftKeys:
+async def _craft_keys(session: AsyncSession, slug: str | None) -> _CraftKeys:
+    if slug is None:
+        return SHARED_CONCEPT_KEYS
     row = (await session.execute(select(Craft.id, Craft.subCategoryId).where(Craft.slug == slug))).first()
     if row is None:
         raise InvalidInput(f"No craft has the slug {slug!r}")
@@ -172,10 +179,7 @@ async def _craft_keys(session: AsyncSession, slug: str) -> _CraftKeys:
 
 async def _given_concept(session: AsyncSession, craft: _CraftKeys, subject: WriteBackSubject) -> uuid.UUID:
     concept = await session.get(Concept, subject.concept_id)
-    owned = concept is not None and (
-        concept.craftId == craft.craft_id
-        or (craft.sub_category_id is not None and concept.subCategoryId == craft.sub_category_id)
-    )
+    owned = concept is not None and _owns(craft, concept)
     if not owned or concept.type != subject.concept_type:
         raise InvalidInput(f"The concept {subject.concept_id} is not a {subject.concept_type} of this craft")
     return concept.id
@@ -185,7 +189,7 @@ async def _named_concept(
     session: AsyncSession, craft: _CraftKeys, subject: WriteBackSubject
 ) -> uuid.UUID | None:
     name = _folded(subject.concept_name)
-    if subject.concept_type == STAGE_CONCEPT_TYPE:
+    if subject.concept_type == STAGE_CONCEPT_TYPE and craft.craft_id is not None:
         stage = await session.scalar(
             select(ProcessStage.conceptId)
             .join(Process, Process.id == ProcessStage.processId)
@@ -199,10 +203,7 @@ async def _named_concept(
         )
         if stage is not None:
             return stage
-    owners = [Concept.craftId == craft.craft_id]
-    if craft.sub_category_id is not None:
-        owners.append(Concept.subCategoryId == craft.sub_category_id)
-    for owner in owners:
+    for owner in _owner_conditions(craft):
         found = await session.scalar(
             select(Concept.id)
             .where(owner, Concept.type == subject.concept_type, func.lower(Concept.name) == name)
@@ -236,3 +237,20 @@ def _note(claim: ClaimWriteBack) -> str:
 
 def _folded(name: str) -> str:
     return " ".join(name.split()).lower()
+
+
+def _owns(craft: _CraftKeys, concept: Concept) -> bool:
+    if craft.craft_id is None:
+        return concept.craftId is None and concept.subCategoryId is None
+    if concept.craftId == craft.craft_id:
+        return True
+    return craft.sub_category_id is not None and concept.subCategoryId == craft.sub_category_id
+
+
+def _owner_conditions(craft: _CraftKeys) -> list[ColumnElement[bool]]:
+    if craft.craft_id is None:
+        return [and_(Concept.craftId.is_(None), Concept.subCategoryId.is_(None))]
+    owners = [Concept.craftId == craft.craft_id]
+    if craft.sub_category_id is not None:
+        owners.append(Concept.subCategoryId == craft.sub_category_id)
+    return owners

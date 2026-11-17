@@ -64,7 +64,7 @@ class WriteBackCitation(ContractModel):
 
 class ClaimWriteBack(ContractModel):
     schema_version: Literal[1] = WRITE_BACK_SCHEMA_VERSION
-    craft_slug: str = Field(min_length=1, max_length=SLUG_MAX_CHARS)
+    craft_slug: str | None = Field(min_length=1, max_length=SLUG_MAX_CHARS)
     subject: WriteBackSubject
     predicate: str = Field(min_length=1, max_length=120)
     text: str = Field(min_length=1, max_length=1000)
@@ -120,10 +120,12 @@ class WriteBackResult(ContractModel):
     created: bool
 
 
-def claim_dedupe_key(craft_slug: str, concept_type: str, concept_name: str, predicate: str, text: str) -> str:
+def claim_dedupe_key(
+    craft_slug: str | None, concept_type: str, concept_name: str, predicate: str, text: str
+) -> str:
     parts = [
         DEDUPE_NAMESPACE,
-        craft_slug,
+        craft_slug or "",
         concept_type,
         _fold(concept_name),
         predicate.strip().casefold(),

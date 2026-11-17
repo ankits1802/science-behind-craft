@@ -333,6 +333,11 @@ DEFAULT_ROUTES: dict[AiTask, tuple[tuple[AiProvider, str], ...]] = {
         (AiProvider.GEMINI, "gemini-3.8-flash"),
         (AiProvider.DEEPSEEK, "deepseek-v4-pro"),
     ),
+    AiTask.SUMMARISE: (
+        (AiProvider.GEMINI, "gemini-3.5-flash-lite"),
+        (AiProvider.ANTHROPIC, "claude-haiku-5-5"),
+        (AiProvider.OPENAI, "gpt-6-luna"),
+    ),
     AiTask.EMBED: ((AiProvider.GEMINI, "gemini-embedding-2"),),
     AiTask.EVAL_JUDGE: ((AiProvider.ANTHROPIC, "claude-opus-5-5"), (AiProvider.GEMINI, "gemini-4-argon")),
     AiTask.IMAGE: (

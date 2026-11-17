@@ -133,6 +133,14 @@ def ask_attempt(user_id: str) -> tuple[bool, float]:
     return _windows.attempt(f"ask:{user_id}", 30, 600)
 
 
+def term_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"term:{user_id}", 60, 600)
+
+
+def listen_attempt(user_id: str) -> tuple[bool, float]:
+    return _windows.attempt(f"listen:{user_id}", 30, 600)
+
+
 def voice_session_attempt(user_id: str) -> tuple[bool, float]:
     return _windows.attempt(f"voice:{user_id}", 10, 600)
 

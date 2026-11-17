@@ -8,7 +8,17 @@ from app.research.evidence import Quote
 from app.research.write_back import ClaimWriteBack
 from app.services.write_back_plan import INFERRED_REASON, QUOTED_REASON, write_back_plan
 
-from ..composer.fixtures import ALUM_CLAIM_ID, GUESS_CLAIM_ID, QUESTION, answer, pack, quote, sentence
+from ..composer.fixtures import (
+    ALUM_CLAIM_ID,
+    GUESS_CLAIM_ID,
+    PLAN,
+    QUESTION,
+    STORED,
+    answer,
+    pack,
+    quote,
+    sentence,
+)
 from ..planner.fakes import FakeModel
 
 ANSWER_ID = uuid.UUID("0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9")
@@ -161,3 +171,20 @@ async def test_composer_output_feeds_the_write_back_contract() -> None:
     (claim,) = plan.claims
     assert ClaimWriteBack.model_validate(claim.model_dump()) == claim
     assert claim.passing_quotes == [FIGURE_QUOTE]
+
+
+def test_research_for_any_craft_writes_claims_that_name_no_craft() -> None:
+    any_craft = pack(
+        plan=PLAN.model_copy(update={"craft": None}),
+        stored=STORED.model_copy(update={"craft_slug": None}),
+    )
+    plan = write_back_plan(
+        any_craft,
+        composed(cited(FIGURE_TEXT, (ABSTRACT_ID, FIGURE_QUOTE))),
+        found_by="ANSWER",
+        answer_id=ANSWER_ID,
+    )
+    (claim,) = plan.claims
+    assert claim.craft_slug is None
+    parts = ["claim-write-back/v1", "", "MATERIAL", "alum", "states", FIGURE_TEXT.casefold().rstrip(" .")]
+    assert claim.dedupe_key == hashlib.sha256("\x1f".join(parts).encode("utf-8")).hexdigest()

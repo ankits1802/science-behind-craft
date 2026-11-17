@@ -62,5 +62,9 @@
     {"startedAt": "2026-11-17T09:00:00Z", "subject": "Summary", "what": "Report", "ext": "md", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Summary_Report.md"},
     {"startedAt": "2026-11-17T09:00:00Z", "subject": "Phone Craft Process", "what": "Snapshot", "ext": "png", "sequence": "05", "fileName": "KalaVigyan_Eval-Run_2026-11-17_1430_Phone-Craft-Process_Snapshot_05.png"},
     {"startedAt": "2026-11-17T20:15:00Z", "subject": "Tablet Not found", "what": "Snapshot", "ext": "png", "sequence": "11", "fileName": "KalaVigyan_Eval-Run_2026-11-18_0145_Tablet-Not-Found_Snapshot_11.png"}
+  ],
+  "narrationFiles": [
+    {"generatedAt": "2026-11-17T09:00:00Z", "part": 1, "fileName": "KalaVigyan_Explainer_2026-11-17_1430_Narration_Part-01.mp3"},
+    {"generatedAt": "2026-11-17T20:15:00Z", "part": 12, "fileName": "KalaVigyan_Explainer_2026-11-18_0145_Narration_Part-12.mp3"}
   ]
 }

@@ -16,6 +16,7 @@ from app.research.retrieval import (
 )
 
 __all__ = [
+    "EVERY_CRAFT",
     "RANKING_DEPTH",
     "TEXT_SEARCH_CONFIG",
     "CraftScope",
@@ -37,18 +38,27 @@ TEXT_SEARCH_CONFIG = "english"
 
 @dataclass(frozen=True)
 class CraftScope:
-    craft_id: uuid.UUID
+    craft_id: uuid.UUID | None
     sub_category_id: uuid.UUID | None
 
 
+EVERY_CRAFT = CraftScope(craft_id=None, sub_category_id=None)
+
+
 def scope_concepts(scope: CraftScope, *, facets: Sequence[str] = ()) -> Select[tuple[uuid.UUID]]:
-    owners: list[ColumnElement[bool]] = [Concept.craftId == scope.craft_id]
-    if scope.sub_category_id is not None:
-        owners.append(and_(Concept.craftId.is_(None), Concept.subCategoryId == scope.sub_category_id))
-    statement = select(Concept.id).where(or_(*owners), Concept.sensitivity == VISIBLE_SENSITIVITY)
+    visible = Concept.sensitivity == VISIBLE_SENSITIVITY
+    owned = [or_(*_owners(scope))] if scope.craft_id is not None else []
+    statement = select(Concept.id).where(*owned, visible)
     if facets:
         statement = statement.where(Concept.type.in_(list(facets)))
     return statement
+
+
+def _owners(scope: CraftScope) -> list[ColumnElement[bool]]:
+    owners: list[ColumnElement[bool]] = [Concept.craftId == scope.craft_id]
+    if scope.sub_category_id is not None:
+        owners.append(and_(Concept.craftId.is_(None), Concept.subCategoryId == scope.sub_category_id))
+    return owners
 
 
 def scope_claims(scope: CraftScope, *, facets: Sequence[str] = ()) -> ColumnElement[bool]:

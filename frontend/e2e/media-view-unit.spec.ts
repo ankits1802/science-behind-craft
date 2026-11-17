@@ -186,7 +186,7 @@ test("the CSP lets images, video and downloads reach the media bucket the Terraf
   const rules = await nextConfig.headers!();
   const csp = rules[0].headers.find((header) => header.key === "Content-Security-Policy")?.value ?? "";
   const directive = (name: string) => csp.split("; ").find((entry) => entry.startsWith(`${name} `))?.split(" ") ?? [];
-  expect(directive("img-src")).toEqual(["img-src", "'self'", "data:", origin]);
+  expect(directive("img-src")).toEqual(["img-src", "'self'", "data:", origin, "https:"]);
   expect(directive("media-src")).toEqual(["media-src", "'self'", origin]);
   expect(directive("connect-src")).toContain(origin);
 });

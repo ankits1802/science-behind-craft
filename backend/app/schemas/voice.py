@@ -10,10 +10,10 @@ from pydantic import Field, TypeAdapter, ValidationError, model_validator
 
 from app.core.errors import InvalidInput
 from app.research.base import ContractModel
+from app.research.citations import cited_source_ids
 from app.research.crafts import SLUG_MAX_CHARS, CraftRef
 from app.research.stream import AnswerSentence, ErrorEvent, SourceRef, StatusEvent, sse_frame
 from app.research.vocabulary import AnswerLanguage, TextDirection
-from app.schemas.science import cited_source_ids
 
 __all__ = [
     "CLIENT_TOOL_NAMES",

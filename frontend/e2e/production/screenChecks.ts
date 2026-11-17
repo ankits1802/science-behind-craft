@@ -1,6 +1,5 @@
 import { expect, type Page } from "@playwright/test";
 
-import { MODE_LABEL } from "@/lib/askConfig";
 import { ROLE_LABELS } from "@/lib/permissions";
 import type { User } from "@/lib/types";
 
@@ -41,11 +40,11 @@ export async function barProblems(page: Page, user: User): Promise<string[]> {
   return labelProblems("the navigation bar", expected.bar, bar);
 }
 
-export async function modeProblems(page: Page, user: User): Promise<string[]> {
+export async function depthProblems(page: Page, user: User): Promise<string[]> {
   const expected = navExpectation(user.role);
   if (!expected) return [];
-  const shown = await page.getByRole("group", { name: "Mode" }).getByRole("button").allInnerTexts();
-  return labelProblems("the Mode choice", expected.modes.map((mode) => MODE_LABEL[mode]), shown);
+  const shown = await page.getByRole("group", { name: "Depth" }).getByRole("button").allInnerTexts();
+  return labelProblems("the Depth choice", expected.depths, shown);
 }
 
 export async function openCraftTab(page: Page, label: string, panel: string): Promise<boolean> {

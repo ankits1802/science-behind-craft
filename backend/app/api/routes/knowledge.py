@@ -1,28 +1,33 @@
 import hashlib
 import logging
+from collections.abc import Callable
 from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Self
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
-from pydantic import Field
+from pydantic import Field, model_validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.voice_deps import current_voice, voice_runtime, voice_store
+from app.api.listen_deps import offered_listen
+from app.api.voice_deps import current_voice, voice_call_enabled, voice_runtime, voice_store
 from app.core.config import get_settings
 from app.core.db import get_session, sessionmaker
 from app.core.deps import get_current_user, refusal_for
 from app.core.errors import AppError
 from app.core.rate_limit import ask_attempt
-from app.core.roles import Capability, can
+from app.core.roles import Capability, can, is_uncapped, role_value
 from app.models import User
+from app.providers.budget import AnswerSpend
 from app.providers.embedding import router_embedder
 from app.providers.router import Principal
 from app.providers.structured import router_structured_model
+from app.research.depth import DEPTH_LABELS, default_depth, selectable_depths
+from app.research.planning import withheld_name
 from app.research.stream import event_stream
-from app.research.vocabulary import ANSWER_LANGUAGES, AnswerLanguage, language_option
+from app.research.vocabulary import ANSWER_LANGUAGES, AnswerLanguage, Depth, language_option
 from app.schemas.common import APIModel
 from app.services import knowledge_view
 from app.services.ai_providers import AiTask
@@ -40,8 +45,6 @@ NOTICE_VERSION = "2026-11-16"
 NOTICE_PUBLISHED_AT = "2026-11-16T00:00:00+05:30"
 NOTICE_TITLE = "Privacy notice"
 
-ANSWER_MODES = ("VERIFIED", "HYBRID", "DEEP")
-DEFAULT_ANSWER_MODE = "HYBRID"
 THROTTLED_DETAIL = "You have asked a lot in the last few minutes. Wait a little and ask again."
 
 
@@ -89,7 +92,10 @@ async def offered_voice(
     store: SqlVoiceStore = Depends(voice_store),
     runtime: VoiceRuntime = Depends(voice_runtime),
     voice: VoiceSettings = Depends(current_voice),
+    enabled: bool = Depends(voice_call_enabled),
 ) -> dict[str, Any]:
+    if not enabled:
+        return dict(HIDDEN_VOICE)
     try:
         return await voice_availability(
             user, store=store, runtime=runtime, voice=voice, now=datetime.now(UTC)
@@ -101,76 +107,93 @@ async def offered_voice(
 
 @router.get("/answers/config")
 async def answers_config(
-    user: User = Depends(get_current_user), voice: dict[str, Any] = Depends(offered_voice)
+    user: User = Depends(get_current_user),
+    voice: dict[str, Any] = Depends(offered_voice),
+    listen: dict[str, Any] = Depends(offered_listen),
 ) -> dict[str, Any]:
-    modes = [mode for mode in ANSWER_MODES if can(user, mode_capability(mode))]
+    depths = selectable_depths(user)
     return {
-        "modes": modes,
-        "defaultMode": DEFAULT_ANSWER_MODE if DEFAULT_ANSWER_MODE in modes else next(iter(modes), None),
+        "depths": [{"depth": depth, "label": DEPTH_LABELS[depth]} for depth in depths],
+        "defaultDepth": default_depth(user) if depths else None,
         "voice": voice,
+        "listen": listen,
         "languages": answer_languages(),
     }
 
 
 class AskRequest(APIModel):
     question: str = Field(min_length=2, max_length=1000)
-    mode: Literal["VERIFIED", "HYBRID", "DEEP"] = DEFAULT_ANSWER_MODE
-    craftSlug: str | None = Field(default=None, max_length=200)
+    depth: Depth | None = None
+    craftSlug: str | None = Field(default=None, min_length=1, max_length=200)
+    anyCraft: bool = False
     language: AnswerLanguage | None = None
+    fresh: bool = False
     conversationId: str | None = Field(default=None, max_length=64)
+
+    @model_validator(mode="after")
+    def _one_craft_or_any(self) -> Self:
+        if self.anyCraft and self.craftSlug is not None:
+            raise ValueError("Ask about one craft or any craft, not both.")
+        return self
 
 
 def answer_languages() -> list[dict[str, str]]:
     return [language_option(code) for code in ANSWER_LANGUAGES]
 
 
-def mode_capability(mode: str) -> Capability:
-    return Capability.ASK_DEEP if mode == "DEEP" else Capability.ASK_STANDARD
-
-
 def withheld_terms(user: User) -> tuple[str, ...]:
-    name = (user.name or "").strip()
-    return (name,) if 2 <= len(name) <= 200 else ()
+    return withheld_name(user.name)
 
 
-def answer_pipeline(request: Request, user: User = Depends(get_current_user)) -> AnswerPipeline:
-    principal = Principal(user_id=user.id, role=user.role)
-    return build_answer_pipeline(
-        sessions=sessionmaker(),
-        index=request.app.state.craft_index,
-        live=request.app.state.live_sources,
-        plan_model=router_structured_model(AiTask.PLAN, principal),
-        compose_model=router_structured_model(AiTask.COMPOSE, principal),
-        translate_model=router_structured_model(AiTask.TRANSLATE, principal),
-        embed=router_embedder(principal),
-        shield=request.app.state.shielded_work,
-    )
+PipelineFor = Callable[[str], AnswerPipeline]
+
+
+def answer_pipelines(request: Request, user: User = Depends(get_current_user)) -> PipelineFor:
+    def build(depth: str) -> AnswerPipeline:
+        principal = Principal(user_id=user.id, role=user.role, answer=AnswerSpend(depth=depth))
+        return build_answer_pipeline(
+            sessions=sessionmaker(),
+            index=request.app.state.craft_index,
+            live=request.app.state.live_sources,
+            plan_model=router_structured_model(AiTask.PLAN, principal),
+            compose_model=router_structured_model(AiTask.COMPOSE, principal),
+            translate_model=router_structured_model(AiTask.TRANSLATE, principal),
+            embed=router_embedder(principal),
+            shield=request.app.state.shielded_work,
+        )
+
+    return build
 
 
 @router.post("/answers/stream")
 async def answers_stream(
     payload: AskRequest,
     user: User = Depends(get_current_user),
-    pipeline: AnswerPipeline = Depends(answer_pipeline),
+    pipelines: PipelineFor = Depends(answer_pipelines),
 ) -> StreamingResponse:
-    capability = mode_capability(payload.mode)
-    if not can(user, capability):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, refusal_for(capability))
-    allowed, retry = ask_attempt(str(user.id))
-    if not allowed:
-        raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS,
-            THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
-        )
+    depth = payload.depth or default_depth(user)
+    if not can(user, Capability.ASK_STANDARD) or depth not in selectable_depths(user):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, refusal_for(Capability.ASK_STANDARD))
+    if not is_uncapped(user):
+        allowed, retry = ask_attempt(str(user.id))
+        if not allowed:
+            raise HTTPException(
+                status.HTTP_429_TOO_MANY_REQUESTS,
+                THROTTLED_DETAIL,
+                {"Retry-After": str(max(1, int(retry + 0.999)))},
+            )
     ask = AnswerAsk(
         question=payload.question,
-        mode=payload.mode,
+        depth=depth,
         craft_slug=payload.craftSlug,
+        any_craft=payload.anyCraft,
         language=payload.language,
         user_id=user.id,
+        role=role_value(user),
         withheld_terms=withheld_terms(user),
+        fresh=payload.fresh,
     )
+    pipeline = pipelines(depth)
     return StreamingResponse(
         event_stream(lambda emit: answer_question(ask, pipeline, emit)),
         media_type="text/event-stream",

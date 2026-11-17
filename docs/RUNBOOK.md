@@ -101,6 +101,16 @@ Microsoft sign-in is built the same way and stays off: leave `MICROSOFT_CLIENT_I
 
 Decision 0017; contract `docs/contracts/voice.md`.
 
+- The live call is off (decision 0035): `VOICE_CALL_ENABLED` defaults to false, so every
+  `/api/voice` route answers 404 and no voice button is drawn. Turning it on means adding
+  `VOICE_CALL_ENABLED=true` to the environment **Deploy backend** writes to the box `.env` (a
+  workflow change and a deploy); the call then starts from the craft page's Talk button only (the
+  mic on `/ask` is dictation, decision 0036).
+- Listen (decision 0035) needs only `ELEVENLABS_API_KEY` (Settings, API keys) and `S3_BUCKET`. Its
+  audio lives under `media/narration/<cacheId>/` in the media bucket (part MP3s, then
+  `narration.json`); deleting a folder only makes the next listener synthesise it again. The
+  voice is `AppSetting` `voice.voice_id`; changing it starts a new cache.
+
 - Transport: `AppSetting` `voice.transport` is `RELAY` until the ElevenLabs spike passes. To switch,
   on the box: `INSERT INTO "AppSetting" (key, value) VALUES ('voice.transport', '"AGENT"') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;`
   (the same for `voice.max_live_sessions`, default 5, and `voice.voice_id`).
@@ -136,7 +146,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
 
-Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016) and `app.scripts.embed_knowledge` (fills every missing claim and chunk vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, first runs `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016) and `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013), then `app.scripts.rebuild_pieces` (answers again the stale knowledge pieces of the 10 most-asked crafts, request ids `enrichment-rebuild-<id>`, one JSON report, decision 0033), then `app.scripts.enrich_coverage`, in `/opt/kalavigyan/current/backend` on the box over SSM (up to 65 minutes; the step fails when either fails), logging to `deploy/logs/coverage-enrichment/<run id>/`. It researches the least covered crafts within $2.50 a day, writes back cited claims, prints one JSON report and fails when any craft's job failed (decision 0011). Its model calls are `UsageEvent` rows whose request id starts with `enrichment-`, and each craft run is an `EnrichmentJob` row.
 
 Running the same sha again re-renders the env and restarts the live colour.
 
@@ -174,7 +184,7 @@ As provisioned on 2026-11-16, each layer was checked:
 
 ## E2E production run
 
-Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the two known-answer questions in Hybrid (English and Hindi, alum as the mordant), up to 10 minutes each.
+Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the two known-answer questions at Detailed depth (English and Hindi, alum as the mordant), up to 10 minutes each.
 
 The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no two-step), active on the roster, email verified, voice consent unset.
 
@@ -194,7 +204,7 @@ The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true
    ```
 
-The run summary has a table per screen and width, and one per question. Two artifacts carry the run id: `e2e-production-screenshots-<run id>` and `e2e-production-report-<run id>` (`KalaVigyan_Eval-Run_<date>_<time>_<Width>-Screens_Report.json`, `..._Known-Answers_Report.json` with each answer's sentences, citations, sources and timing, and `..._Summary_Report.md`). Each question is one Hybrid answer under the Researcher daily cap.
+The run summary has a table per screen and width, and one per question. Two artifacts carry the run id: `e2e-production-screenshots-<run id>` and `e2e-production-report-<run id>` (`KalaVigyan_Eval-Run_<date>_<time>_<Width>-Screens_Report.json`, `..._Known-Answers_Report.json` with each answer's sentences, citations, sources and timing, and `..._Summary_Report.md`). Each question is one Detailed answer (`HYBRID` research) under the Researcher daily cap.
 
 ## Terraform
 

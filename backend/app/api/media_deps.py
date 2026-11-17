@@ -12,7 +12,7 @@ from app.media.store import SqlMediaStore
 from app.providers.media_router import MediaRouter
 from app.services.object_store import ObjectStore, object_store
 
-__all__ = ["media_deps"]
+__all__ = ["media_bucket", "media_deps"]
 
 
 def media_deps() -> MediaDeps:
@@ -20,10 +20,15 @@ def media_deps() -> MediaDeps:
     return MediaDeps(
         store=SqlMediaStore(sessionmaker()),
         budget=MediaRouter(session_factory=sessionmaker()),
-        links=_links(settings.s3_bucket, settings.aws_region),
+        links=media_bucket(),
         bundle_key=secret_key_or_none(BUNDLE_KEY_NAME, settings.media_bundle_hmac_key),
         now=datetime.now(UTC),
     )
+
+
+def media_bucket() -> ObjectStore | None:
+    settings = get_settings()
+    return _links(settings.s3_bucket, settings.aws_region)
 
 
 @lru_cache(maxsize=2)

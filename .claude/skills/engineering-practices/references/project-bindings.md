@@ -5,7 +5,7 @@ The only project-specific file of the three practice skills (`engineering-practi
 the project; the facts below do. Review this file whenever the layout, tooling or commands
 change, and update the date.
 
-Last reviewed: 2026-11-16.
+Last reviewed: 2026-11-17.
 
 ## What this repository is
 
@@ -26,18 +26,22 @@ backend/app/data/        vendored datasets and their pure loaders (craft master 
                          LGD register, seed claims, craft text normalisation)
 backend/app/research/    research and answering contracts: typed models, protocols and
                          rules shared by the resolver, planner, source adapters, fetcher,
-                         composer, claim writer and answer stream (docs/contracts/research.md)
+                         composer, claim writer and answer stream (docs/contracts/research.md),
+                         and the explainer: document, blocks, terms, images, stored pieces,
+                         depth by role (docs/contracts/explainer.md, decision 0030)
 backend/app/sources/     adapters for external research sources: shared paced HTTP, record
                          rules and the adapter skeleton; sources/scholarly/ has one module per
                          scholarly service and the registry (decision 0005); sources/reference/
                          the Wikipedia, Wikidata, PubChem and Commons adapters (decision 0006);
                          sources/web/ the SearXNG and Brave adapters and their fallback, and
-                         sources/fetcher_client.py the client of the fetcher (decision 0007)
+                         sources/fetcher_client.py the client of the fetcher (decision 0007);
+                         sources/images/ the Openverse adapter and the image sources
+                         (Commons, Openverse, SearXNG pictures; decision 0034)
 backend/app/fetcher/     the separate fetcher process (python -m app.fetcher, kv-fetcher): no
                          database, no AWS, no API settings (decision 0007)
 backend/app/planner/     the planner and tiered live research: plan call, facet coverage,
                          parallel search, dedupe, reading, references, evidence pack
-                         (decision 0009)
+                         (decision 0009); the understanding step before it (decision 0031)
 backend/app/composer/    the composer: evidence pack to candidates, the COMPOSE call, the
                          post-checks, one regenerate, the not-enough-evidence answer
                          (decision 0010)
@@ -50,7 +54,9 @@ backend/app/science/     the science engine: formulas, balancing (sympy), units 
 backend/app/geo/         the region profile and map layers: places, state aggregates, facets,
                          the layer registry and its classes, built from stored rows (decision 0016)
 backend/app/voice/       voice calls: sessions and their binding, the custom-LLM turn, relay turns,
-                         the encrypted transcript, daily upkeep, agent provisioning (decision 0017)
+                         the encrypted transcript, daily upkeep, agent provisioning (decision 0017;
+                         switched off by VOICE_CALL_ENABLED, decision 0035); Listen: narration of
+                         finished explainers with word timings and its cache (decision 0035)
 backend/app/media/       stage illustrations and clips: claim set, prompt, bundle, MP4 and PNG
                          checks, the job routes' steps, the worker queue and its SQL (decision 0018)
 backend/app/worker.py    the kv-worker process (python -m app.worker): the media queue
@@ -58,10 +64,12 @@ backend/app/services/    domain services: crafts, knowledge, access, credentials
 backend/app/providers/   model-provider adapters (and the one ElevenLabs adapter), the AI router,
                          the budget rules and the quota ledger
 backend/app/api/         entry points: router.py and api/routes/<area>.py (thin handlers)
-backend/app/scripts/     entry points: seed commands run by the deploy (seed_crafts, seed_claims,
-                         seed_districts, seed_admin) and the portal craft sync
+backend/app/scripts/     entry points: seed commands run by the deploy (seed_crafts, seed_claims
+                         with the science seed and the term glossary, seed_districts,
+                         seed_admin) and the portal craft sync
                          (sync_portal_crafts, also run daily), embed_craft_descriptors,
                          embed_knowledge, the daily coverage enrichment (enrich_coverage),
+                         the nightly rebuild of stale knowledge pieces (rebuild_pieces),
                          the PubChem compound lookup (link_compounds), the daily voice upkeep
                          (voice_upkeep), the voice agent's provisioning (provision_voice_agent)
                          and the E2E account's provisioning (provision_e2e_account); shared
@@ -198,7 +206,7 @@ no dev servers. Database tests, migrations and seeds run on GitHub Actions (Back
 | geo ETL tests | `cd etl\geo; python -m pip install -e .` in a venv, then `python -m pytest -q tests` |
 | frontend type check | `cd frontend; npm run typecheck` |
 | frontend lint | `cd frontend; npm run lint` |
-| frontend unit specs | `cd frontend; npm run test:unit` |
+| frontend unit specs | `cd frontend; npm run test:unit` (Playwright's Chromium: `npx playwright install chromium` once) |
 
 The hygiene check enforces what a tool can decide: import direction in `backend/app`, UTF-8
 without a byte-order mark and LF line endings for every tracked or new text file, and the
@@ -225,7 +233,7 @@ not tracked (`.gitignore`).
 | `docs/PLAN.md` | the product plan; section 0 is the owner's direction and overrides the rest |
 | `docs/ARCHITECTURE.md` | layers, module map, import direction, how a question flows |
 | `docs/CORE_API.md` | the catalogue of shared components |
-| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the portals' craft feed, process science, region, voice, media |
+| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media |
 | `docs/decisions/` | decision log: one short file per decision, numbered |
 | `docs/TECH_DEBT.md` | debt register |
 | `docs/PROGRESS.md` | where work stands and what comes next |

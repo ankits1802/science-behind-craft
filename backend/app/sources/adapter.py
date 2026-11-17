@@ -17,7 +17,15 @@ from app.research.vocabulary import LiveTier
 from .http import SourceHttp
 from .records import UnusableRecord, published_since
 
-__all__ = ["Clock", "HttpSourceAdapter", "build_document", "checked_k", "native_id", "utc_now"]
+__all__ = [
+    "Clock",
+    "HttpSourceAdapter",
+    "build_document",
+    "checked_k",
+    "native_id",
+    "usable_records",
+    "utc_now",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -60,19 +68,23 @@ class HttpSourceAdapter(ABC):
     async def _fetch_document(self, native: str, retrieved_at: datetime) -> SourceDocument: ...
 
     def _usable_items(self, records: Iterable[Any], retrieved_at: datetime) -> list[EvidenceItem]:
-        items: list[EvidenceItem] = []
-        for position, record in enumerate(records):
-            try:
-                items.append(self._item(record, retrieved_at))
-            except UnusableRecord as error:
-                logger.warning("%s left out result %d: %s", self.name, position, error)
-            except ValidationError as error:
-                fields = sorted({".".join(str(p) for p in e["loc"]) for e in error.errors()})
-                logger.warning("%s left out result %d: invalid %s", self.name, position, ", ".join(fields))
-        return items
+        return usable_records(self.name, records, lambda record: self._item(record, retrieved_at))
 
     def _not_found(self, native: str, what: str) -> ExternalFailure:
         return ExternalFailure(f"{self.name} has {what} for {native}", kind="not_found", service=self.name)
+
+
+def usable_records[T](service: str, records: Iterable[Any], build: Callable[[Any], T]) -> list[T]:
+    kept: list[T] = []
+    for position, record in enumerate(records):
+        try:
+            kept.append(build(record))
+        except UnusableRecord as error:
+            logger.warning("%s left out result %d: %s", service, position, error)
+        except ValidationError as error:
+            fields = sorted({".".join(str(p) for p in e["loc"]) for e in error.errors()})
+            logger.warning("%s left out result %d: invalid %s", service, position, ", ".join(fields))
+    return kept
 
 
 def checked_k(k: int) -> int:

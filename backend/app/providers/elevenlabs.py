@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+import binascii
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -16,6 +18,8 @@ __all__ = [
     "ELEVENLABS_API",
     "ELEVENLABS_KEY_NAME",
     "ELEVENLABS_SERVICE",
+    "NARRATION_MAX_CHARACTERS",
+    "NARRATION_MODEL",
     "SPEECH_MAX_BYTES",
     "STT_LANGUAGE_CODES",
     "STT_MODEL",
@@ -27,6 +31,8 @@ __all__ = [
     "ConversationToken",
     "ElevenLabs",
     "HeardSpeech",
+    "TimedSpeech",
+    "audio_seconds",
     "speech_seconds",
 ]
 
@@ -38,8 +44,11 @@ STT_MODEL = "scribe_v3"
 TTS_MODEL = "eleven_v4_turbo"
 TTS_OUTPUT_FORMAT = "mp3_44100_128"
 TTS_BITS_PER_SECOND = 128_000
+NARRATION_MODEL = "eleven_v4"
+NARRATION_MAX_CHARACTERS = 10_000
 SPEECH_MAX_BYTES = 8 * 1024 * 1024
 REQUEST_TIMEOUT = httpx.Timeout(20.0, connect=5.0)
+NARRATION_TIMEOUT = httpx.Timeout(90.0, connect=5.0)
 PROBE_TIMEOUT = httpx.Timeout(3.0)
 PAGE_SIZE = 100
 PAGES_MAX = 20
@@ -83,8 +92,19 @@ class HeardSpeech:
     seconds: int
 
 
+@dataclass(frozen=True)
+class TimedSpeech:
+    audio: bytes
+    starts: tuple[float, ...]
+    ends: tuple[float, ...]
+
+
 def speech_seconds(byte_count: int) -> int:
-    return math.ceil(byte_count * 8 / TTS_BITS_PER_SECOND)
+    return math.ceil(audio_seconds(byte_count))
+
+
+def audio_seconds(byte_count: int) -> float:
+    return byte_count * 8 / TTS_BITS_PER_SECOND
 
 
 class ElevenLabs:
@@ -153,10 +173,32 @@ class ElevenLabs:
             params={"output_format": TTS_OUTPUT_FORMAT},
             json={"text": text, "model_id": TTS_MODEL, "language_code": language},
         )
-        audio = response.content
-        if not audio or len(audio) > SPEECH_MAX_BYTES:
-            raise _off_contract(f"text to speech ({len(audio)} bytes)")
-        return audio
+        return _checked_audio(response.content)
+
+    async def narration(
+        self, text: str, *, voice_id: str, language: str, previous_text: str = "", next_text: str = ""
+    ) -> TimedSpeech:
+        if language not in TTS_LANGUAGES:
+            raise InvalidInput(f"{NARRATION_MODEL} is not set up to speak language {language!r}")
+        if not text.strip() or len(text) > NARRATION_MAX_CHARACTERS:
+            raise InvalidInput(f"{NARRATION_MODEL} speaks 1 to {NARRATION_MAX_CHARACTERS} characters at once")
+        body: dict[str, Any] = {"text": text, "model_id": NARRATION_MODEL, "language_code": language}
+        body |= {
+            name: value
+            for name, value in (("previous_text", previous_text), ("next_text", next_text))
+            if value
+        }
+        answer = await self._json(
+            "POST",
+            f"/v1/text-to-speech/{quote(voice_id, safe='')}/with-timestamps",
+            params={"output_format": TTS_OUTPUT_FORMAT},
+            json=body,
+            timeout=NARRATION_TIMEOUT,
+        )
+        starts, ends = _aligned_times(text, answer.get("alignment"))
+        return TimedSpeech(
+            audio=_checked_audio(_decoded(answer.get("audio_base64"))), starts=starts, ends=ends
+        )
 
     async def agent_ids(self, name: str) -> list[str]:
         agents = await self._pages("/v1/convai/agents", "agents", {"search": name})
@@ -252,6 +294,46 @@ class ElevenLabs:
 
 def _text(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def _checked_audio(audio: bytes) -> bytes:
+    if not audio or len(audio) > SPEECH_MAX_BYTES:
+        raise _off_contract(f"text to speech ({len(audio)} bytes)")
+    return audio
+
+
+def _decoded(value: Any) -> bytes:
+    if not _text(value):
+        raise _off_contract("narration audio")
+    try:
+        return base64.b64decode(value, validate=True)
+    except binascii.Error:
+        raise _off_contract("narration audio") from None
+
+
+def _aligned_times(text: str, alignment: Any) -> tuple[tuple[float, ...], tuple[float, ...]]:
+    if not isinstance(alignment, dict):
+        raise _off_contract("narration alignment")
+    marks = alignment.get("characters")
+    starts = alignment.get("character_start_times_seconds")
+    ends = alignment.get("character_end_times_seconds")
+    if not (isinstance(marks, list) and isinstance(starts, list) and isinstance(ends, list)):
+        raise _off_contract("narration alignment")
+    if not len(marks) == len(starts) == len(ends):
+        raise _off_contract("narration alignment")
+    if not all(map(_timed_mark, marks, starts, ends, strict=True)):
+        raise _off_contract("narration alignment")
+    if "".join(marks) != text:
+        raise _off_contract("narration alignment, which does not spell the text sent,")
+    spread = [
+        (float(start), float(end)) for mark, start, end in zip(marks, starts, ends, strict=True) for _ in mark
+    ]
+    return tuple(start for start, _ in spread), tuple(end for _, end in spread)
+
+
+def _timed_mark(mark: Any, start: Any, end: Any) -> bool:
+    numbers = isinstance(start, int | float) and isinstance(end, int | float)
+    return isinstance(mark, str) and bool(mark) and numbers and 0 <= start <= end
 
 
 def _is_named_tool(tool: Mapping[str, Any]) -> bool:

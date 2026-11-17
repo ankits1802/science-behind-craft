@@ -21,8 +21,11 @@ from app.research.composition import ComposedAnswer, ComposedSection, ComposedSe
 from app.research.crafts import CraftRef
 from app.research.evidence_pack import EvidencePack
 from app.research.retrieval import KnowledgeHits
+from app.research.sections import AnswerPlans, SectionPlan
+from app.research.understanding import Understanding
 from app.retrieval.indexing import replace_source_chunks
 from app.services.answer_store import SqlAnswerStore
+from app.services.answering import AnswerAsk
 from app.services.research_write_back import store_live_research
 from app.sources.adapter import build_document
 
@@ -44,6 +47,15 @@ FIGURE_TEXT = "Mordant baths held 8 g/L alum and were heated to 60 °C."
 FIGURE_QUOTE = "Mordanting baths of 8 g/L alum were heated to 60 °C"
 WASH_TEXT = "The red withstood 20 washes."
 WASH_QUOTE = "the lake withstood 20 washes"
+UNDERSTOOD = Understanding(
+    craft=ZELVAR,
+    candidates=[],
+    disciplines=["CHEMISTRY", "PROCESS"],
+    seats=["CHEMIST", "TECHNOLOGIST"],
+    depth="DETAILED",
+    language="en",
+    basis="MODEL",
+)
 
 
 async def seeded_session() -> AsyncIterator[AsyncSession]:
@@ -94,11 +106,11 @@ async def _seed(session: AsyncSession) -> None:
     await session.flush()
 
 
-def zelvar_pack() -> EvidencePack:
+def zelvar_pack(craft: CraftRef | None = ZELVAR) -> EvidencePack:
     return EvidencePack(
-        plan=PLAN.model_copy(update={"craft": ZELVAR}),
+        plan=PLAN.model_copy(update={"craft": craft}),
         degraded=False,
-        stored=KnowledgeHits(craft_slug=ZELVAR.slug),
+        stored=KnowledgeHits(craft_slug=craft.slug if craft else None),
         coverage=({"facetIndex": 0},),
         evidence=(packed(ABSTRACT_ITEM, "crossref"), packed(LONG_ITEM, "web")),
         documents=(
@@ -117,8 +129,8 @@ def answer(*sentences: ComposedSentence, guesses: tuple[ComposedSentence, ...] =
     return ComposedAnswer(sections=sections, open_questions=list(guesses))
 
 
-def expected_claim_id(text: str) -> uuid.UUID:
-    parts = ["claim-write-back/v1", ZELVAR.slug, "MATERIAL", "alum", "states", text]
+def expected_claim_id(text: str, craft_slug: str = ZELVAR.slug) -> uuid.UUID:
+    parts = ["claim-write-back/v1", craft_slug, "MATERIAL", "alum", "states", text]
     digest = hashlib.sha256("\x1f".join(parts).encode("utf-8")).hexdigest()
     return uuid.uuid5(uuid.uuid5(uuid.NAMESPACE_DNS, "craft-master.kalavigyan"), f"claim-write-back:{digest}")
 
@@ -133,3 +145,15 @@ def answer_store(session: AsyncSession) -> SqlAnswerStore:
         return AsyncSession(bind=session.bind, expire_on_commit=False, autoflush=False)
 
     return SqlAnswerStore(sessions, embed=FixedEmbedder(), shield=ShieldedWork())
+
+
+async def kept_answer(
+    store: SqlAnswerStore, ask: AnswerAsk, composed: ComposedAnswer
+) -> tuple[uuid.UUID, tuple[tuple[uuid.UUID, ...], ...]]:
+    pack = zelvar_pack()
+    answer_id = await store.begin(ask, UNDERSTOOD)
+    claims_of = await store.keep(answer_id, pack, composed)
+    plans = AnswerPlans(sections=[SectionPlan(section_id="s1", discipline="CHEMISTRY", plan=pack.plan)])
+    claim_ids = list(dict.fromkeys(claim for claims in claims_of for claim in claims))
+    await store.finish(answer_id, plans=plans, claim_ids=claim_ids, explainer=None)
+    return answer_id, claims_of

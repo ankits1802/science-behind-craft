@@ -17,6 +17,7 @@ from app.research.retrieval import (
 )
 from app.retrieval.hybrid import CORPUS_TIER, StoredKnowledgeSearch
 from app.retrieval.statements import (
+    EVERY_CRAFT,
     RANKING_DEPTH,
     CraftScope,
     chunk_conditions,
@@ -141,3 +142,10 @@ def test_the_query_contract_refuses_repeats_and_out_of_range_limits() -> None:
 def test_the_stored_search_implements_the_retriever_contract() -> None:
     search = StoredKnowledgeSearch(cast(AsyncSession, object()), embed=FixedEmbedder())
     assert isinstance(search, KnowledgeRetriever)
+
+
+def test_any_craft_reads_every_visible_concept() -> None:
+    sql, params = compiled(claim_lexical_ranking(claim_conditions(EVERY_CRAFT, mode="HYBRID"), "alum"))
+    assert "craftId" not in sql and "subCategoryId" not in sql
+    assert '"Concept".sensitivity = %(sensitivity_1)s' in sql
+    assert params_with(params, "sensitivity_") == ["OPEN", "OPEN", "RESTRICTED"]

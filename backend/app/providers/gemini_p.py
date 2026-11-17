@@ -6,9 +6,21 @@ import httpx
 
 from app.core.retry_after import retry_after_of
 
-from .base import Adapter, ChatRequest, ChatResult, MediaPoll, MediaRequest, MediaResult, ProviderError
+from .base import (
+    Adapter,
+    ChatRequest,
+    ChatResult,
+    MediaPoll,
+    MediaRequest,
+    MediaResult,
+    ProviderError,
+    format_refused,
+    names_the_format,
+)
 from .gemini_media import GeminiMediaWire
 from .usage import gemini_cached_tokens
+
+_SCHEMA_NEEDLES = ("response_json_schema", "schema")
 
 
 class GeminiAdapter(Adapter):
@@ -36,7 +48,7 @@ class GeminiAdapter(Adapter):
             cfg["temperature"] = req.temperature
         elif req.temperature is not None:
             meta["dropped"].append("temperature")
-        if req.json_schema and not self.rejects(req.model, "json_schema"):
+        if req.json_schema:
             cfg["response_mime_type"] = "application/json"
             cfg["response_json_schema"] = req.json_schema
             meta["structured"] = True
@@ -63,12 +75,7 @@ class GeminiAdapter(Adapter):
 
     def batch_adapt(self, model: str, message: str) -> bool:
         low = message.lower()
-        for needle, param in (
-            ("thinking", "thinking"),
-            ("temperature", "temperature"),
-            ("response_json_schema", "json_schema"),
-            ("schema", "json_schema"),
-        ):
+        for needle, param in (("thinking", "thinking"), ("temperature", "temperature")):
             if needle in low and not self.rejects(model, param):
                 self.learn(model, param)
                 return True
@@ -86,13 +93,10 @@ class GeminiAdapter(Adapter):
                 )
             except err.ClientError as e:
                 msg = str(e).lower()
+                if e.code == 400 and req.json_schema and names_the_format(msg, _SCHEMA_NEEDLES):
+                    raise format_refused("Gemini", req.model) from e
                 if e.code == 400:
-                    for needle, param in (
-                        ("thinking", "thinking"),
-                        ("temperature", "temperature"),
-                        ("response_json_schema", "json_schema"),
-                        ("schema", "json_schema"),
-                    ):
+                    for needle, param in (("thinking", "thinking"), ("temperature", "temperature")):
                         if needle in msg and not self.rejects(req.model, param):
                             self.learn(req.model, param)
                             break

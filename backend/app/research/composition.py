@@ -20,7 +20,15 @@ from .quotes import (
     trivial_quote,
     unsupported_figures,
 )
-from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, AnswerMode, EvidenceLevel, LiveTier, weakest_level
+from .vocabulary import (
+    CANONICAL_LANGUAGE,
+    AnswerLanguage,
+    AnswerMode,
+    Discipline,
+    EvidenceLevel,
+    LiveTier,
+    weakest_level,
+)
 
 __all__ = [
     "CANDIDATE_KINDS",
@@ -30,6 +38,7 @@ __all__ = [
     "SENTENCE_MAX_CHARS",
     "VIOLATION_KINDS",
     "ComposeCandidate",
+    "ComposeFocus",
     "ComposeRequest",
     "ComposedAnswer",
     "ComposedSection",
@@ -39,7 +48,9 @@ __all__ = [
     "ResearchSummary",
     "SearchedQuery",
     "SentenceViolation",
+    "StageOption",
     "not_enough_evidence_message",
+    "searched_note",
     "sentence_level",
     "sentence_violations",
 ]
@@ -91,7 +102,7 @@ class SearchedQuery(ContractModel):
 
 
 class ResearchSummary(ContractModel):
-    craft: CraftRef
+    craft: CraftRef | None
     mode: AnswerMode
     stored_claims: int = Field(ge=0)
     stored_passages: int = Field(ge=0)
@@ -102,12 +113,31 @@ class ResearchSummary(ContractModel):
     failures: int = Field(ge=0)
 
 
+class StageOption(ContractModel):
+    id: uuid.UUID
+    ordinal: int = Field(ge=0)
+    name: str = Field(min_length=1, max_length=300)
+
+
+class ComposeFocus(ContractModel):
+    discipline: Discipline
+    title: str = Field(min_length=1, max_length=HEADING_MAX_CHARS)
+    stages: list[StageOption] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _stages_once_each(self) -> Self:
+        if len({stage.id for stage in self.stages}) != len(self.stages):
+            raise ValueError("each process stage is offered once")
+        return self
+
+
 class ComposeRequest(ContractModel):
     question: str = Field(min_length=2, max_length=QUESTION_MAX_CHARS)
     language: AnswerLanguage = CANONICAL_LANGUAGE
-    craft: CraftRef
+    craft: CraftRef | None
     candidates: list[ComposeCandidate] = Field(default_factory=list)
     searched: ResearchSummary
+    focus: ComposeFocus | None = None
 
     @field_validator("language")
     @classmethod
@@ -157,14 +187,17 @@ class ComposedSection(ContractModel):
 class ComposedAnswer(ContractModel):
     sections: list[ComposedSection] = Field(default_factory=list)
     open_questions: list[ComposedSentence] = Field(default_factory=list)
+    stage_ids: list[uuid.UUID] = Field(default_factory=list)
     follow_ups: list[str] = Field(default_factory=list, max_length=FOLLOW_UPS_MAX)
     not_enough_evidence: ResearchSummary | None = None
 
     @model_validator(mode="after")
     def _answers_or_says_why_not(self) -> Self:
-        answered = bool(self.sections or self.open_questions)
+        answered = bool(self.sections or self.open_questions or self.stage_ids)
         if answered == (self.not_enough_evidence is not None):
-            raise ValueError("an answer has cited sentences or a not-enough-evidence summary, never both")
+            raise ValueError("an answer shows something cited or a not-enough-evidence summary, never both")
+        if len(set(self.stage_ids)) != len(self.stage_ids):
+            raise ValueError("an answer chooses each process stage once")
         return self
 
 
@@ -221,8 +254,16 @@ def sentence_level(sentence: ComposedSentence, allowed: Mapping[str, ComposeCand
 
 
 def not_enough_evidence_message(summary: ResearchSummary) -> str:
+    about = f" about {summary.craft.name}" if summary.craft else ""
+    return " ".join([f"There is not enough cited evidence to answer this{about} yet.", *_searched(summary)])
+
+
+def searched_note(summary: ResearchSummary) -> str:
+    return " ".join(_searched(summary))
+
+
+def _searched(summary: ResearchSummary) -> list[str]:
     parts = [
-        f"There is not enough cited evidence to answer this about {summary.craft.name} yet.",
         f"Searched {_count(summary.stored_claims, 'stored claim')} and "
         f"{_count(summary.stored_passages, 'stored source passage')}.",
     ]
@@ -230,14 +271,14 @@ def not_enough_evidence_message(summary: ResearchSummary) -> str:
         listed = "; ".join(f'{query.tier} "{query.text}"' for query in summary.queries)
         parts.append(f"Live research ran {_count(len(summary.queries), 'query', 'queries')}: {listed}.")
     else:
-        parts.append(f"No live research ran in {summary.mode} mode.")
+        parts.append("No live research ran.")
     if summary.services:
         parts.append(f"Sources searched: {', '.join(summary.services)}.")
     parts.append(
         f"Found {_count(summary.evidence_found, 'item')}, read {_count(summary.documents_read, 'document')}"
         f" and recorded {_count(summary.failures, 'failed request')}."
     )
-    return " ".join(parts)
+    return parts
 
 
 def _count(n: int, singular: str, plural: str | None = None) -> str:

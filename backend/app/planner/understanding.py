@@ -1,0 +1,138 @@
+from __future__ import annotations
+
+import logging
+from collections.abc import Awaitable, Callable, Sequence
+from dataclasses import dataclass
+
+from app.core.errors import AppError, ExternalFailure, spend_refusal
+from app.research.crafts import MAX_CANDIDATES, CraftQuery, CraftRef, CraftResolution
+from app.research.depth import depth_policy, effective_depth
+from app.research.structured import StructuredModel
+from app.research.understanding import UnderstandAsk, Understanding, UnknownCraft
+
+from .understanding_prompt import (
+    UNDERSTAND_SYSTEM_PROMPT,
+    UnderstandReply,
+    parsed_reply,
+    understand_message,
+    understand_schema,
+)
+
+__all__ = ["CraftChoice", "ModelUnderstander", "Reading", "Resolve", "chosen_craft"]
+
+logger = logging.getLogger(__name__)
+
+Resolve = Callable[[CraftQuery], Awaitable[CraftResolution]]
+
+
+@dataclass(frozen=True)
+class Reading:
+    reply: UnderstandReply | None
+    degraded: bool = False
+    refusal: str | None = None
+
+
+@dataclass(frozen=True)
+class CraftChoice:
+    craft: CraftRef | None
+    others: tuple[CraftRef, ...] = ()
+
+
+class ModelUnderstander:
+    def __init__(self, *, model: StructuredModel, resolve: Resolve) -> None:
+        self._model = model
+        self._resolve = resolve
+
+    async def understand(self, ask: UnderstandAsk) -> Understanding:
+        resolution = await self._resolution(ask)
+        if ask.craft_slug is not None and (resolution is None or resolution.status != "RESOLVED"):
+            raise UnknownCraft(ask.craft_slug)
+        offered = _offered(resolution)
+        reading = await self._read(ask, offered)
+        choice = chosen_craft(ask, resolution, reading.reply)
+        if choice.craft is None and not ask.any_craft and reading.reply is not None:
+            choice = await self._named(reading.reply, offered)
+        return _understanding(ask, choice, reading)
+
+    async def _resolution(self, ask: UnderstandAsk) -> CraftResolution | None:
+        query = CraftQuery(text=ask.question, craft_slug=ask.craft_slug, language=ask.language)
+        try:
+            return await self._resolve(query)
+        except AppError as error:
+            if ask.craft_slug is not None or spend_refusal(error):
+                raise
+            logger.warning("finding the craft failed, so the question is understood without it: %s", error)
+            return None
+
+    async def _read(self, ask: UnderstandAsk, offered: Sequence[CraftRef]) -> Reading:
+        try:
+            reply = await self._model(
+                system=UNDERSTAND_SYSTEM_PROMPT,
+                user=understand_message(ask, offered),
+                schema=understand_schema(offered),
+            )
+        except AppError as error:
+            logger.warning("understanding the question fell back to the craft resolver: %s", error)
+            return Reading(reply=None, refusal=spend_refusal(error))
+        try:
+            return Reading(reply=parsed_reply(reply, offered), degraded=reply.degraded)
+        except ExternalFailure as error:
+            logger.warning("understanding the question fell back to the craft resolver: %s", error)
+            return Reading(reply=None, degraded=reply.degraded)
+
+    async def _named(self, reply: UnderstandReply, offered: Sequence[CraftRef]) -> CraftChoice:
+        chosen: CraftRef | None = None
+        others: list[CraftRef] = list(offered)
+        for name in reply.craft_names:
+            try:
+                resolution = await self._resolve(CraftQuery(text=name))
+            except AppError as error:
+                logger.warning("a craft the question names could not be looked up: %s", error)
+                continue
+            if chosen is None and resolution.status == "RESOLVED":
+                chosen = resolution.craft
+            others.extend(candidate.craft for candidate in resolution.candidates)
+        return CraftChoice(craft=chosen, others=_distinct(others, without=chosen))
+
+
+def chosen_craft(
+    ask: UnderstandAsk, resolution: CraftResolution | None, reply: UnderstandReply | None
+) -> CraftChoice:
+    offered = _offered(resolution)
+    if ask.craft_slug is not None:
+        return CraftChoice(craft=resolution.craft if resolution else None)
+    if ask.any_craft or resolution is None or resolution.status == "NONE":
+        return CraftChoice(craft=None, others=tuple(offered))
+    if resolution.status == "RESOLVED":
+        return CraftChoice(craft=resolution.craft, others=tuple(offered[1:]))
+    picked = (reply.chosen(offered) if reply else None) or offered[0]
+    return CraftChoice(craft=picked, others=_distinct(offered, without=picked))
+
+
+def _understanding(ask: UnderstandAsk, choice: CraftChoice, reading: Reading) -> Understanding:
+    depth = effective_depth(ask.depth, ask.role, past_degrade=reading.degraded)
+    reply = reading.reply
+    return Understanding(
+        craft=choice.craft,
+        candidates=list(choice.others[:MAX_CANDIDATES]),
+        disciplines=list(reply.disciplines) if reply else [],
+        seats=list(reply.seats[: depth_policy(depth).max_experts]) if reply else [],
+        depth=depth,
+        language=ask.language,
+        basis="MODEL" if reply else "RESOLVER",
+        refusal=reading.refusal,
+    )
+
+
+def _offered(resolution: CraftResolution | None) -> list[CraftRef]:
+    return [candidate.craft for candidate in resolution.candidates] if resolution else []
+
+
+def _distinct(crafts: Sequence[CraftRef], *, without: CraftRef | None) -> tuple[CraftRef, ...]:
+    seen = {without.slug} if without else set()
+    kept: list[CraftRef] = []
+    for craft in crafts:
+        if craft.slug not in seen:
+            seen.add(craft.slug)
+            kept.append(craft)
+    return tuple(kept)

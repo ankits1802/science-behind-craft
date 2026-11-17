@@ -10,9 +10,9 @@ from app.core.errors import InvalidInput
 from app.models import Source
 from app.research.composition import ComposedAnswer
 from app.research.planning import OPEN_QUESTION_LEVEL
-from app.research.vocabulary import LEVEL_ORDER, weakest_level
+from app.research.vocabulary import weakest_level
 
-from .knowledge_view import ClaimView, order_claims, section_heading, source_ref
+from .knowledge_view import ClaimView, source_ref
 from .write_back_plan import composed_sentences
 
 __all__ = [
@@ -24,7 +24,6 @@ __all__ = [
     "StreamEvent",
     "cited_claims",
     "composed_answer_events",
-    "stored_answer_events",
     "stored_follow_ups",
 ]
 
@@ -96,20 +95,6 @@ class _Answer:
             self._sections[heading] = f"s{len(self._sections) + 1}"
             self.events.append(("section", {"id": self._sections[heading], "heading": heading}))
         return self._sections[heading]
-
-
-def stored_answer_events(craft_name: str, cited: CitedClaims) -> list[StreamEvent]:
-    ranked = sorted(cited.views.values(), key=lambda c: (-c.rank, LEVEL_ORDER.get(c.level, 9)))
-    findings = [c for c in ranked if c.level != OPEN_QUESTION_LEVEL][:STORED_ANSWER_LIMIT]
-    open_questions = [c for c in ranked if c.level == OPEN_QUESTION_LEVEL][:STORED_OPEN_QUESTION_LIMIT]
-    if not findings and not open_questions:
-        return []
-    answer = _Answer(cited.sources)
-    for view in order_claims(findings):
-        answer.add(section_heading(view.concept_type), view.text, view.level, view.citations)
-    for view in open_questions:
-        answer.add(None, view.text, view.level, view.citations)
-    return [*answer.events, ("follow_ups", {"items": stored_follow_ups(craft_name, answer.headings)})]
 
 
 def stored_follow_ups(craft_name: str, headings: list[str]) -> list[str]:

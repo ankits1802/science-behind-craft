@@ -26,9 +26,11 @@ from app.services.claim_writer import SqlClaimWriter, write_back_claim_id
 from app.services.coverage_selection import least_covered_crafts
 from app.services.knowledge_view import claims_for
 from app.services.live_source_store import keep_document, live_source_id
+from app.services.research_write_back import store_live_research
 from app.sources.adapter import build_document
 
 from ..composer.fixtures import ABSTRACT_ITEM, LONG_ITEM, LONG_TEXT
+from ..craft_fixtures import FixedEmbedder
 from ..research.fixtures import RETRIEVED
 from .write_back_seed import (
     ABSTRACT_ID,
@@ -46,6 +48,7 @@ from .write_back_seed import (
     answer,
     answer_store,
     expected_claim_id,
+    kept_answer,
     said,
     seeded_session,
     write,
@@ -255,15 +258,30 @@ async def test_tagged_spend_sums_only_the_tagged_events_of_the_day(session: Asyn
 
 async def test_an_answer_keeps_its_research_and_cites_what_it_wrote(session: AsyncSession) -> None:
     store = answer_store(session)
-    ask = AnswerAsk(question="Why does alum keep Zelvar red?", mode="HYBRID")
-    kept = await store.keep(ask, zelvar_pack(), answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)))
+    ask = AnswerAsk(question="Why does alum keep Zelvar red?", depth="DETAILED")
+    composed = answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE))
+    answer_id, claims_of = await kept_answer(store, ask, composed)
     claim_id = expected_claim_id("mordant baths held 8 g/l alum and were heated to 60 °c")
-    assert kept.claims_of == ((claim_id,),)
-    row = await session.get(Answer, kept.answer_id)
+    assert claims_of == ((claim_id,),)
+    row = await session.get(Answer, answer_id)
     assert (row.question, row.mode, row.craftId, row.claimIds) == (ask.question, "HYBRID", CRAFT, [claim_id])
     assert row.tiersUsed == ["T0", "T1", "T2", "T3", "T4"]
+    assert row.plan["schemaVersion"] == 1
+    assert [(s["sectionId"], s["discipline"]) for s in row.plan["sections"]] == [("s1", "CHEMISTRY")]
+    assert row.plan["sections"][0]["plan"]["mode"] == "HYBRID"
+    assert row.payload is None
+    assert row.understanding == {
+        "schemaVersion": 1,
+        "craft": {"slug": "Zelvar-Dye", "name": "Zelvar Dye", "path": "/crafts/Zelvar-Dye"},
+        "candidates": [],
+        "disciplines": ["CHEMISTRY", "PROCESS"],
+        "seats": ["CHEMIST", "TECHNOLOGIST"],
+        "depth": "DETAILED",
+        "language": "en",
+        "basis": "MODEL",
+    }
     (cite,) = await citations(session, claim_id)
-    assert (cite.foundBy, cite.answerId) == ("ANSWER", kept.answer_id)
+    assert (cite.foundBy, cite.answerId) == ("ANSWER", answer_id)
     cited = await store.cited([claim_id])
     view = cited.views[claim_id]
     assert (view.level, view.citations[0]["quote"], view.citations[0]["sourceId"]) == (
@@ -276,9 +294,9 @@ async def test_an_answer_keeps_its_research_and_cites_what_it_wrote(session: Asy
 
 async def test_verified_answers_read_only_reviewed_and_verified_claims(session: AsyncSession) -> None:
     store = answer_store(session)
-    await store.keep(
-        AnswerAsk(question="Why alum?", mode="HYBRID"),
-        zelvar_pack(),
+    await kept_answer(
+        store,
+        AnswerAsk(question="Why alum?", depth="DETAILED"),
         answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)),
     )
     verified = await store.stored_claims(ZELVAR.slug, "alum", "VERIFIED")
@@ -286,3 +304,25 @@ async def test_verified_answers_read_only_reviewed_and_verified_claims(session: 
     claim_id = expected_claim_id("mordant baths held 8 g/l alum and were heated to 60 °c")
     assert claim_id not in verified.views
     assert claim_id in hybrid.views
+
+
+async def test_research_for_any_craft_writes_its_claims_on_shared_concepts(session: AsyncSession) -> None:
+    stored = await store_live_research(
+        session,
+        zelvar_pack(craft=None),
+        answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)),
+        embed=FixedEmbedder(),
+        found_by="ANSWER",
+        answer_id=ANSWER,
+    )
+    claim_id = expected_claim_id("mordant baths held 8 g/l alum and were heated to 60 °c", craft_slug="")
+    assert [(result.claim_id, result.created) for result in stored.results] == [(claim_id, True)]
+    claim = await session.get(Claim, claim_id)
+    concept = await session.get(Concept, claim.subjectId)
+    assert (concept.craftId, concept.subCategoryId, concept.type, concept.name) == (
+        None,
+        None,
+        "MATERIAL",
+        "alum",
+    )
+    assert claim.subjectId != ALUM_CONCEPT

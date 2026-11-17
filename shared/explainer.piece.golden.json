@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "7d4e2c10-5a6b-4c7d-9e8f-0a1b2c3d4e5f",
+  "craftId": "54081f83-8396-5a46-a3bc-a467984eebc2",
+  "kind": "prose",
+  "facet": "GEOGRAPHY",
+  "topicKey": "water:kachchh",
+  "language": "en",
+  "depth": "EXPERT",
+  "payload": {
+    "id": "s1.b1",
+    "kind": "prose",
+    "version": 1,
+    "reuse": null,
+    "sentences": [
+      {
+        "id": "s2.b1.1",
+        "text": "Presence of iron in the water supply dulls and darkens the final result; alum, tin or chrome deposits help brighten colours.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "bf7fda76-2629-5609-ac54-d4c011fbb573",
+            "claimId": "826c1d72-9373-59f0-85c3-6bb38aa89320",
+            "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+            "quote": "Water enriched with alum, tin or chrome mineral deposits will help brighten the colors but presence of iron in the water supply dulls and darkens the final result.",
+            "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false,
+        "terms": [
+          {
+            "text": "alum",
+            "termKey": "alum"
+          }
+        ]
+      },
+      {
+        "id": "s2.b1.2",
+        "text": "Ajrakh printing got concentrated where extra soft water was available.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "c333691c-bb17-5c97-a725-c037ff9f24ce",
+            "claimId": "6d42a538-0a5e-5cfb-b8f5-68012eb0d4d6",
+            "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+            "quote": "The district gazetteers of 1971 have mentioned that Ajrakh Printing-Ajrakh is another popular variety in hand-printing of textiles in Kutch. Ajrakh printing originally came from Sindh and got concentrated where extra soft water was available.",
+            "locator": "GI Journal No. 188 copy (application 1050), PDF p. 3",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false,
+        "terms": [
+          {
+            "text": "soft water",
+            "termKey": "soft-water"
+          }
+        ]
+      },
+      {
+        "id": "s2.b1.3",
+        "text": "Excess iron in groundwater threatened Ajrakh in Dhamadka and is again threatening it in Ajrakhpur.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "02b489ed-7b2a-5ece-bb34-caf590e4b31f",
+            "claimId": "faa466c1-8940-5552-a7f5-851cebb40f64",
+            "sourceId": "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+            "quote": "Excess iron in groundwater that threatened Ajrakh in Dhamadka, is once again threatening the craft in Ajrakhpur.",
+            "locator": "§ \"Share this article\"",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false,
+        "terms": []
+      }
+    ]
+  },
+  "claimIds": [
+    "6d42a538-0a5e-5cfb-b8f5-68012eb0d4d6",
+    "826c1d72-9373-59f0-85c3-6bb38aa89320",
+    "faa466c1-8940-5552-a7f5-851cebb40f64"
+  ],
+  "sourceIds": [
+    "907e2c52-14e7-5e41-9b27-9c10f70906a9",
+    "d0f53ee9-4b97-5df7-a367-686957bdb7c8"
+  ],
+  "contentHash": "ae583a3bc299d098d3ec7b9e7faebf91a7f2f135d512a1218997b78d348e87f0",
+  "createdFromAnswerId": "3b9f1e2d-6c7a-4d8b-9e0f-1a2b3c4d5e6f",
+  "createdAt": "2026-11-12T08:15:00Z",
+  "staleSince": null,
+  "supersededById": null
+}

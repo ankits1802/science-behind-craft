@@ -7,7 +7,7 @@ code is the typed models, protocols and error types in `backend/app/research/` a
 and writers against these types and change a type only together with this page and its tests
 (`backend/tests/research/`). Design choices: decision 0002.
 
-Last reviewed: 2026-11-16.
+Last reviewed: 2026-11-17.
 
 ## Ground rules (PLAN section 0 and the bindings)
 
@@ -78,7 +78,8 @@ the one mapping from an HTTP status to a kind (429 `rate_limit`, 5xx `unavailabl
   `ACCEPT_SCORE` 0.85 and at least `ACCEPT_MARGIN` 0.15 above the runner-up;
   `FUZZY_MIN_SIMILARITY` 0.85 (rapidfuzz `ratio`, not `pg_trgm`; decision 0004);
   `MAX_CANDIDATES` 5.
-- `stream.match_event(resolution)` turns a resolution into the `match` event.
+- The answer flow does not stop on a resolution: the understanding step (below) turns it into
+  the `understood` event.
 
 ### The resolver (`services/craft_resolver.py`, decision 0004)
 
@@ -119,7 +120,8 @@ out) and `checked_vectors(vectors, expected=)`, which raises `ExternalFailure` (
   score becomes `0.8 * score + 0.2 * (named place matches)`, with a `PLACE` reason. Ranked by
   score, then name; at most 5; reason scores and candidate scores are rounded to 6 places.
 - **Decision**: `clear_winner` gives `RESOLVED`; otherwise any candidates give `AMBIGUOUS`;
-  none give `NONE`. The model choice of PLAN 5.2 step 6 is not built (`docs/TECH_DEBT.md`).
+  none give `NONE`. The model choice among the candidates (PLAN 5.2 step 6) is the
+  understanding step's (decision 0031).
 - **Failures**: an embedding failure is an `ExternalFailure` (or the router's `RouterError`);
   the answer stream turns any `AppError` from the resolver into one `error` event and `done`.
 
@@ -255,6 +257,25 @@ the four T3 reference adapters; none needs a key.
   `services.web_sources.web_search_config(session)` reads `SEARXNG_URL` and the managed Brave
   key, and `services.live_sources` passes the one fetcher client (below).
 
+### Image sources (`research/images.py`, decision 0034)
+
+`ImageSource.images(ImageQuery {text, language}, k) -> list[ImageCandidate]` is the second
+interface of three adapters, beside their evidence search; pictures are never evidence and never
+cited as sources of a sentence (an `images` block names the claims a picture illustrates).
+
+| Adapter `name` | Service | Key | Kept |
+|---|---|---|---|
+| `wikimedia_commons` | Action API file search, `imageinfo` with `iiurlwidth=960` | none | image files with an https page; thumbnail, original size, author, licence and licence URL from `extmetadata`; `utm_` parameters dropped |
+| `openverse` | `api.openverse.org/v1/images/` with `license=by,by-sa,cc0,pdm`, at most 20 | none (anonymous) | open licences (`CC BY 2.0`, `CC0 1.0`, ...) with a creator, not mature; the Openverse thumbnail, the original URL for de-duplication, tags as the description |
+| `searxng` | SearXNG JSON API with `categories=images` | none | https pages whose own site serves `img_src` (`research/images.same_site`); no licence, so always a link card |
+
+`ImageCandidate {provider, pageUrl, imageUrl, originalUrl, width?, height?, title, description?,
+author?, site, credit?, licence?, licenceUrl?, retrievedAt}`: titles, authors, sites and credits
+are clipped to 300 characters on a word boundary and descriptions to 2000; `alt` is the
+description, else the title. `media_ref_of` turns one into a `MediaRef`
+(`docs/contracts/explainer.md`). Unusable records are logged and left out (`usable_records`), as
+for evidence.
+
 ### Quote matching (`research/quotes.py`)
 
 `normalise_quote_text`: NFKC, soft hyphens removed, a hyphen at a line break joined, typographic
@@ -350,10 +371,11 @@ inside. Retrieved text never goes into a system or tool message.
 chunks) tiers. `retrieval.hybrid.StoredKnowledgeSearch(session, embed=TextEmbedder)` implements
 it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
-- `KnowledgeQuery {craftSlug, text (1-1000), mode, facets[FacetType] (distinct), chunkAcls
+- `KnowledgeQuery {craftSlug | null, text (1-1000), mode, facets[FacetType] (distinct), chunkAcls
   (distinct, default ["PUBLIC"]), limit (1-50, default 12)}`. The caller passes the ACLs the
   reader may see (`RESEARCHER` for researchers and above); nothing widens them. An unknown slug
-  is `InvalidInput`.
+  is `InvalidInput`; a null slug (any craft) reads every visible concept
+  (`retrieval/statements.EVERY_CRAFT`), and the hits carry a null `craftSlug`.
 - `KnowledgeHits {craftSlug, claims[ClaimHit], chunks[ChunkHit]}`, each at most `limit`, best
   first. `ClaimHit {claimId, text, level, subjectType (CONCEPT, EDGE), subjectId, score,
   lexicalRank?, vectorRank?}`; `ChunkHit {chunkId, sourceId, ordinal, locator?, text, score,
@@ -392,12 +414,22 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
 `Planner.plan(PlanRequest) -> RetrievalPlan`. The planner runs after a craft is resolved.
 
-- `PlanRequest {question, mode, craft, language="en", englishQuestion?}`. `language` is the
+- `PlanRequest {question, mode, craft | null, depth?, language="en", englishQuestion?}`. A null
+  `craft` is any craft: stored searches read every visible concept, queries carry no craft name
+  and the plan call sees `crafts.ANY_CRAFT_LINE` in place of the craft block. `depth` bounds the
+  queries and fetches by `research/depth.research_budget(mode, depth)`. `language` is the
   answer language (`ANSWER_LANGUAGES`); `englishQuestion` is the question in English when the
   caller has it (the answering service passes the question itself when it is written in Latin
-  script), else the planner uses the plan call's rendering.
-- `RetrievalPlan {schemaVersion 1, mode, craft, intent, language, needsRegion,
-  facets[Facet] (1-8), tiers[], queries[PlannedQuery], maxFetches}`; stored in `Answer.plan`.
+  script), else the planner uses the plan call's rendering. An explainer section adds `focus`
+  (its discipline; the plan call gets a `Section` line), `seats` (the understanding's experts; an
+  `Experts` line), `share` (`ResearchShare {queries, nativeQueries, fetches}`, its part of the
+  depth budget: `planner/policy.request_limits` takes the smaller of the share and the mode and
+  depth limits) and `fresh` (live queries run for covered facets too, finding 8a.2; decision 0032).
+  `split_share(total, parts)` splits a budget evenly, the remainder to the first parts.
+- `RetrievalPlan {schemaVersion 1, mode, craft | null, intent, language, needsRegion,
+  facets[Facet] (1-8), tiers[], queries[PlannedQuery], maxFetches}`; stored per section in
+  `Answer.plan` as `research/sections.AnswerPlans {schemaVersion 1, sections[{sectionId,
+  discipline, plan}]}` (migration `0014_sectioned_answer_plans` wraps older rows).
   `intent` is one of `OVERVIEW`, `MATERIALS`, `PROCESS`, `SCIENCE`, `PLACE`, `HISTORY`,
   `COMPARISON`, `OTHER`. `Facet {type: FacetType, target}`.
   `PlannedQuery {tier: LiveTier, facetIndex, query: SearchQuery}`.
@@ -413,7 +445,7 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   a query on a tier the plan does not run, a query naming a missing facet, or a native-language
   query (`query.language` other than English) that is not `T3` (`NATIVE_QUERY_TIER`) in the plan's
   language, does not construct. Native-language queries count apart from the English limit. Past 80% of the monthly ceiling the router degrades and the planner plans DEEP as
-  HYBRID.
+  HYBRID, for every role but Master Admin, whose calls are never degraded (decision 0031).
 - `PlanRequest.withheldTerms` (at most 20, each 2-200 characters): words a search query must
   never carry, such as the asker's own names (PLAN 6, search egress).
 - Coverage: `FacetCoverage {facetIndex, claimIds[]}` is `covered` when it holds at least
@@ -428,19 +460,32 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 that should answer one JSON object. `providers/structured.router_structured_model(task,
 principal)` runs it through the AI router (`router.run` with `json_schema`), so the routes of
 the Settings hub, the spend reservation and the monthly ceiling apply; `degraded` is the
-router's own flag. `reply_object(reply)` reads the object (a Markdown code fence around it is
+router's own flag (`providers/budget.degrades`: past the degrade mark, never for Master Admin). `reply_object(reply)` reads the object (a Markdown code fence around it is
 accepted) and raises `ExternalFailure` (service `model`) for anything else; the caller still
 validates the object against its own model.
+
+Every schema sent uses only `PORTABLE_SCHEMA_KEYWORDS` (`type`, `enum`, `items`, `properties`,
+`required`, `additionalProperties`), every object refuses additional properties and requires every
+property (`schema_problems(schema)` lists what breaks this, so Anthropic structured outputs accept
+it); counts and lengths are told in the prompt and enforced on our side. A provider that refuses
+the format (Anthropic `output_config.format`, Gemini `response_json_schema`, an OpenAI-compatible
+`response_format` of `json_schema` for OpenAI itself or `json_object` for the others) is a failure
+of kind `error` (`providers/base.format_refused`), logged, and the router moves to the next route; a
+schema is never dropped for free text, and a format learned as refused before is still sent
+(decisions 0032 and 0038, finding 8a.1).
 
 ### The planner (`app/planner/`, decision 0009)
 
 `planner.orchestrator.ResearchPlanner(model=, retriever=, sources=LiveSources)` implements
-`Planner` and adds `research(PlanRequest, *, progress=None) -> EvidencePack`. `progress` is a
-`stream.ResearchProgress` (`async (step, count)`), called with `SEARCHING_STORED` (facet count)
-before the stored search, `RESEARCHING` (query count) before live search and `READING`
-(evidence count) before reading when anything was found.
+`Planner` and adds `research(PlanRequest, *, progress=None, trail=None) -> EvidencePack`.
+`progress` is a `stream.ResearchProgress` (`async (step, count)`), called with
+`SEARCHING_STORED` (facet count) before the stored search, `RESEARCHING` (query count) before
+live search and `READING` (evidence count) before reading when anything was found. `trail` is an
+`evidence_pack.ResearchTrail` (`found(evidence)` once the hits are merged, `read(document)` as each
+document is read), which the answer stream turns into `trail` events.
 
-- **Draft**: one `PLAN` call with `plan_schema(max_queries, max_native_queries)` (intent from
+- **Draft**: one `PLAN` call with `plan_schema()` (portable; the limits are lines of the message;
+  intent from
   `PLAN_INTENTS`, facet types from `CONCEPT_TYPES`, tiers from `LIVE_TIERS`; also `nativeQueries`
   `{facetIndex, text}`, `nativeCraftName` and `englishQuestion`); the question goes in an
   `untrusted_block`, as written. `native_query_limit(language, mode)` is 0 for English and for a
@@ -499,7 +544,7 @@ evidence[PackedEvidence], documents[SourceDocument], failures[ResearchFailure]}`
 
 `Composer.compose(ComposeRequest) -> ComposedAnswer`.
 
-- `ComposeRequest {question, language ("en" only: the composer writes and checks English;
+- `ComposeRequest {question, craft | null (any craft), language ("en" only: the composer writes and checks English;
   translation follows, decision 0023), craft, candidates[ComposeCandidate] (unique ids, may be
   empty), searched: ResearchSummary (same craft)}`; `request.allowed` maps id to candidate.
 - `ComposeCandidate {id, kind, text, quotes[], sourceLabel, level}`. `CLAIM`: `id` is the claim
@@ -553,9 +598,9 @@ Gemini).
   that returned evidence and the services that failed, sorted.
 - **Call**: system `COMPOSE_SYSTEM_PROMPT` (rules only), user `compose_message(request)`
   (language, the craft name and slug in a block (`crafts.craft_block`), one block per passage,
-  the question in a block), schema `compose_schema()` (each quote 20-300 characters):
-  `{sections[{heading, sentences[{text, quotes[{source, quote}] (at least one)}]}] (at most 6),
-  followUps[]}`. The cited ids of a sentence are its quotes' sources, in order, split into
+  the question in a block), schema `compose_schema()` (portable; quote lengths, at least one
+  quote and at most 6 sections are rules of the prompt checked on our side):
+  `{sections[{heading, sentences[{text, quotes[{source, quote}]}]}], followUps[]}`. The cited ids of a sentence are its quotes' sources, in order, split into
   `claimIds` (allowed `CLAIM` candidates) and `evidenceIds` (anything else).
 - **Unusable reply** (not a JSON object; `sections`, `sentences` or `followUps` missing or not a
   list; a heading empty, over 120 characters, or carrying a figure, a link, markup or personal
@@ -570,6 +615,15 @@ Gemini).
 - **Result**: passing sentences by section, hypothesis-level ones to `openQuestions`, empty
   sections dropped. No candidates: no call, `notEnoughEvidence`. Nothing passing:
   `notEnoughEvidence`.
+- **A section** (decision 0032): `ComposeRequest.focus` (`ComposeFocus {discipline, title,
+  stages[StageOption {id, ordinal, name}]}`, built by `compose_request(pack, question, focus=)`)
+  switches the call to `SECTION_SYSTEM_PROMPT` and `section_schema(stage_ids)`: `{sentences[],
+  stages[] (an enum of the offered stage ids, present only when stages are offered), followUps[]}`.
+  The message adds the `Section` line and, for a ladder, the stored stages inside an untrusted
+  block. At most `SECTION_SENTENCES_MAX` (8) sentences and `SECTION_FOLLOW_UPS_MAX` (2) follow-ups
+  are kept; a stage id that was not offered is never chosen (logged). The same checks and the
+  one regenerate apply. `ComposedAnswer.stageIds` carries the chosen stages; an answer showing only
+  a ladder is an answer.
 
 ## Write-back of live research (`research/write_back.py`)
 
@@ -577,13 +631,14 @@ Gemini).
 created}]`. What live research found becomes stored, cited claims so the next answer is
 faster.
 
-- `ClaimWriteBack {schemaVersion 1, craftSlug, subject, predicate, text, textLang="en",
+- `ClaimWriteBack {schemaVersion 1, craftSlug | null, subject, predicate, text, textLang="en",
   valueNum?, valueUnit?, label, levelReason, citations[WriteBackCitation] (at least one),
   foundBy, answerId?}`.
 - `subject = WriteBackSubject {conceptId?, conceptType, conceptName}`: the writer attaches the
   claim to that craft's concept of that type and name, creating it when absent, so the stored
   answer path (`knowledge_view.claims_for`, which reads `retrieval/statements.claim_conditions`)
-  finds it.
+  finds it. A null `craftSlug` (research for any craft) attaches it to a shared concept, owned by
+  no craft and no sub-category, and the dedupe key takes an empty craft (decision 0031).
 - `WriteBackCitation {evidence: EvidenceItem, quote: Quote?, quoteCheck, relation}`: the
   source row is found or created by `evidence.source_key` with `origin=LIVE_RESEARCH`; the
   quote must be one of `evidence.quotes` (already matched against the document); no quote
@@ -648,6 +703,14 @@ faster.
   `ENRICHMENT_DAILY_BUDGET_USD` (2.50) bounds the day, measured from `UsageEvent` rows tagged
   with the request id `enrichment-<job id>` (`providers/router.tagged_spend`); each craft gets an
   `EnrichmentJob` row. The report is one JSON object; any failed craft exits 1.
+- The nightly piece rebuild (`python -m app.scripts.rebuild_pieces`, in the same workflow before
+  the coverage job, decision 0033): `services/piece_rebuild.stale_groups` lists the stale,
+  unsuperseded pieces of the 10 crafts most asked about by signed-in readers in 30 days, one group
+  per facet, depth and stored question; each is answered again through `answer_understood` with
+  `fresh`, for that facet only, at its depth, as a principal held to the depth's per-answer cap,
+  its calls tagged `enrichment-rebuild-<id>` so `ENRICHMENT_DAILY_BUDGET_USD` covers both jobs. It
+  stops below `ENRICHMENT_QUESTION_RESERVE_USD` or on a spend refusal; the report is one JSON
+  object and any failed group exits 1.
 
 ## Answer stream (`research/stream.py`)
 
@@ -659,18 +722,21 @@ fields that were set.
 
 | Event | Payload | Notes |
 |---|---|---|
-| `match` | `{status:"RESOLVED", craft}` / `{status:"AMBIGUOUS", candidates (1-5)}` / `{status:"NONE"}` | first; AMBIGUOUS is followed only by `done` |
+| `match` | `{status:"RESOLVED", craft}` / `{status:"AMBIGUOUS", candidates (1-5)}` / `{status:"NONE"}` | kept in the vocabulary; the answering flow sends `understood` instead (decision 0031) |
 | `status` | `{step, message}` | new; progress while research runs. `step` one of `RESOLVING`, `PLANNING`, `SEARCHING_STORED`, `RESEARCHING`, `READING`, `COMPOSING`, `WRITING_BACK`, `TRANSLATING`; `message` a short user-facing sentence |
 | `source` | `SourceRef {id, kind, title, authors[], year, doi, url, publisher, licence, attribution, reliability}` | before the first citation naming it; `url` https or null |
-| `section` | `{id, heading, original?}` | `original` is the English heading when `heading` is a translation |
-| `sentence` | `{sectionId, sentence: AnswerSentence}` | |
+| `section` | `{id, heading, original?}` | kept in the vocabulary; the answering flow sends `section_started` instead (decision 0032) |
+| `sentence` | `{sectionId, sentence: AnswerSentence}` | kept in the vocabulary; sentences now arrive inside `prose` and `process_ladder` blocks (decision 0032) |
 | `open_question` | `{sectionId, heading?, sentence}` | hypothesis-level sentences |
 | `reaction` | `{id, label, equation, balanced, level, conditions, citations (at least one)}` | |
 | `follow_ups` | `{items[]}` | |
 | `not_enough_evidence` | `{message}` | new; nothing cited could be shown. `message` is `not_enough_evidence_message` (what was searched); followed only by `done` |
 | `done` | `{answerId}` | last |
 | `error` | `{message}` | shown verbatim; never internal detail |
+| `understood`, `trail`, `section_started`, `section_state`, `block`, `section_done` | `docs/contracts/explainer.md` | the explainer stream (decision 0030); how the events above map onto it is in that page |
 
+`SourceRef`, `Citation` and `AnswerSentence` live in `research/citations.py` (with
+`cited_source_ids`, the first-citation walk) and are re-exported here.
 `AnswerSentence {id, text, level, citations (at least one), translated?, original?}`: a
 translated sentence, and only one, carries `translated: true` and its English `original`;
 `Citation {id, claimId, sourceId, quote (at most 300) | null, locator, context, evidence
@@ -685,66 +751,162 @@ cancels the producer, and a producer failure is raised after the frames sent bef
 `origin_read_timeout` (120 s) and nginx's `proxy_read_timeout` (300 s); a test reads both from
 `infra/terraform` and fails if either drops to 60 s or less.
 
-Compatibility: the web client (`frontend/lib/answerStream.ts`) ignores comment lines and event
-names it does not know; it shows `status` as the progress line and `not_enough_evidence` as the
-empty state. Shared fixtures, each parsed and reduced by `e2e/answer-stream-golden-unit.spec.ts`:
+Compatibility: the web client reads only the explainer stream (`frontend/lib/explainerStream.ts`,
+decision 0037): it skips comment lines, event names it does not know and the retired `match`,
+`section` and `sentence`, logs and drops a frame off the contract, shows `status` as the
+progress line and `not_enough_evidence` as the empty state. Shared fixtures, each parsed and
+reduced by `e2e/answer-stream-golden-unit.spec.ts` (the flow's two) or read by the backend only
+(`answer-stream.golden.sse`):
 `shared/answer-stream.golden.sse` (every event kind; the backend validates each event against
 these models), `shared/answer-stream.research.golden.sse` and
 `shared/answer-stream.not-enough.golden.sse` (written by hand; the backend answering flow must
-produce them byte for byte, `tests/answering/test_answer_flow.py`). Change the fixtures, the
+produce them byte for byte, `tests/answering/test_answer_flow.py`; the researched one runs with a
+fake glossary and two fake picture sources, so it carries term spans and an `images` block,
+decision 0039). Change the fixtures, the
 models and the client together.
 
-### The answering service (`services/answering.py`, decision 0012)
+### Understanding the question (`research/understanding.py`, `planner/understanding.py`, decision 0031)
 
-`answer_question(AnswerAsk, AnswerPipeline, emit)`; `AnswerAsk {question, mode, craft_slug?,
-language?, user_id?, withheld_terms}`; `AnswerPipeline {resolve, research(PlanRequest,
-ResearchProgress), compose(ComposeRequest), store: AnswerStore, translation:
-answer_translation.AnswerTranslation}`; `AnswerStore {stored_claims
-(slug, question, mode), keep(ask, pack, answer) -> KeptAnswer {answer_id, claims_of},
-cited(claim_ids)}`, the reads returning `answer_events.CitedClaims {views, sources}`.
+`Understander.understand(UnderstandAsk) -> Understanding`; `planner.understanding.
+ModelUnderstander(model=StructuredModel, resolve=)` implements it with the craft resolver and one
+`PLAN` call (Gemini Flash Lite first).
+
+- `UnderstandAsk {question, depth, language="en", craftSlug?, anyCraft=false, role?}`; a craft
+  and any craft together do not construct.
+- `Understanding {schemaVersion 1, craft | null, candidates[CraftRef] (0-5), disciplines
+  [Discipline], seats[ExpertSeat], depth, language, basis: MODEL | RESOLVER, refusal?}`, stored on
+  `Answer.understanding`. `craft` null is any craft; each craft appears once across `craft` and
+  `candidates`; disciplines and seats are listed once each, seats at most the depth's
+  `max_experts`. `MODEL` names at least one discipline; `RESOLVER` (the model call failed or its
+  reply was unusable) names none and no seats; only `RESOLVER` carries a `refusal`, the router's
+  own words when spend was refused. `understood()` is the stream's `Understood` event.
+- The call: system `UNDERSTAND_SYSTEM_PROMPT`; user `understand_message` (depth label, the
+  depth's expert range, the listed crafts each in a `craft_block`, the question in an untrusted
+  block); schema `understand_schema(offered)` `{craft: enum of the listed slugs and "", craftNames
+  [string], disciplines[DISCIPLINES], seats[EXPERT_SEATS]}` with only `type`, `enum`, `items`,
+  `properties`, `required` and `additionalProperties: false`. The reply must choose a listed craft
+  or none and name at least one discipline; duplicates are dropped, at most three names are kept.
+- The choice: a slug the reader gave is kept (an unknown one raises `UnknownCraft`); `anyCraft`
+  is any craft with every resolver candidate offered; a resolver failure (not a spend refusal, no
+  slug given) is logged and the question proceeds with no candidates, so the model's reply and
+  the crafts it names decide, else any craft; a `RESOLVED` craft stands, the other
+  candidates offered; `AMBIGUOUS` takes the model's pick, else the top candidate, and offers the
+  rest; `NONE` resolves each model-named craft with a text-only `CraftQuery`, chooses the first
+  `RESOLVED` one and offers every other candidate found, else any craft. At most five offers.
+- The depth is `effective_depth(asked, role, past_degrade=reply.degraded)`.
+
+### The answering service (`services/answering.py`, decisions 0012, 0031 and 0032)
+
+`answer_question(AnswerAsk, AnswerPipeline, emit)`; `AnswerAsk {question, depth, craft_slug?,
+any_craft, language?, user_id?, role?, withheld_terms, fresh}`; `AnswerPipeline {understand(UnderstandAsk),
+research(PlanRequest, ResearchProgress, ResearchTrail), compose(ComposeRequest), store: AnswerStore,
+translation: answer_translation.AnswerTranslation, pieces: piece_store.PieceStore, enrichment:
+section_enrichment.EnrichmentTools}`;
+`PieceStore {reusable(PieceAsk {question, craft, facets, depth, fresh}) -> PieceLookup {craft_id,
+topics, reused}, keep(lookup, *, answer_id, depth, sections[BuiltSection {facet, blocks}])}`
+(decision 0033, `docs/contracts/explainer.md`, stored pieces as served);
+`EnrichmentTools {glossary(CraftRef) -> [GlossaryEntry], pictures(SectionImagesAsk) ->
+ImagesBlock | None, wait_seconds}` (decision 0039, `answer_store.build_answer_enrichment` over the
+glossary and `section_images`).
+`answer_understood(ask, understanding, pipeline, emit)` runs step 3 below for an understanding
+already known and raises instead of sending `error` (the nightly rebuild uses it); `AnswerStore {stored_claims (slug, question,
+mode), begin(ask, understanding) -> answer id, keep(answer_id, pack, composed) -> claims of each
+composed sentence, cited(claim_ids), process(slug) -> science.records.ProcessRecords | None,
+finish(answer_id, *, plans: AnswerPlans, claim_ids, explainer: Explainer | None)}`, the reads
+returning `answer_events.CitedClaims {views, sources}`. `begin` writes the `Answer` row (its
+understanding and the depth's mode), `keep` one section's write-back, and `finish` the plans, the
+claims shown, the tiers used and, when a section is ready, the explainer document in
+`Answer.payload.explainer` (`answer_store.EXPLAINER_PAYLOAD_KEY`); each runs on
+`core/shielded.ShieldedWork`.
 `answer_store.build_answer_pipeline(sessions=, index=, live=, plan_model=, compose_model=,
-translate_model=, embed=, shield=)` wires the database resolver, `ResearchPlanner` over `retrieval.hybrid.
-SessionScopedSearch` and the process-held `live_sources.LiveSourcesStore` (rebuilt every
-`LIVE_SOURCES_TTL_SECONDS` 600 on one HTTP client), `ModelComposer` and `SqlAnswerStore`. No
-database session is held across a model call or the stream: each step opens its own.
+translate_model=, embed=, shield=)` wires the `ModelUnderstander` over the database resolver and
+`plan_model`, `ResearchPlanner` over `retrieval.hybrid.SessionScopedSearch` and the process-held
+`live_sources.LiveSourcesStore` (rebuilt every `LIVE_SOURCES_TTL_SECONDS` 600 on one HTTP client),
+`ModelComposer` and `SqlAnswerStore`. No database session is held across a model call or the
+stream: each step opens its own.
 
-1. `status RESOLVING`, resolve. A resolver failure is `error` (`RESOLVER_FAILED_DETAIL`, or
-   the router's own words for a spend-cap refusal); a
-   given slug that does not resolve is `error` (`NOT_FOUND_DETAIL`) with no `match`; otherwise
-   `match`; `AMBIGUOUS` stops; `NONE` is `error` (`NO_CRAFT_DETAIL`).
-2. `VERIFIED`: `status SEARCHING_STORED`, the craft's `VERIFIED` and `REVIEWED` `APPROVED`
-   claims (`retrieval/statements.claim_conditions`, the scope T1 also reads) ranked by any
-   word of the question (`ts_rank_cd` over the OR query), at most 14
-   findings by concept section and 4 hypotheses; `answerId` null. No model call for a question
-   in Latin script; another script is first rendered in English by one TRANSLATE call.
-3. `HYBRID`, `DEEP`: `status PLANNING`, `research` (which reports its own steps), `status
-   COMPOSING` (candidate count, when there are candidates), compose, `status WRITING_BACK`
-   (document count, when documents were read), `keep` (an `Answer` row, then
-   `store_live_research` with `found_by=ANSWER` and its id, run on the process's
-   `core/shielded.ShieldedWork`, so it commits even when the learner leaves), then the citations of every claim
-   the sentences rest on (`knowledge_view.claims_by_id`). Each sentence keeps the visible
-   citations of its claims in order; one without any is dropped; its level is the weakest of
-   its claims' stored levels; a `HYPOTHESIS` sentence is an `open_question` (section `open`,
-   heading `Open questions`). Section ids `s1`, `s2`, ... in heading order; sentence ids
-   `<section>.<n>`. A `source` event precedes the first sentence citing it; `follow_ups` are
-   the composer's.
-4. Another answer language: `status TRANSLATING`, then the events are translated (below)
-   before they are sent.
-5. Nothing shown: `not_enough_evidence` with the composer's summary, or the pack's.
-6. Any `AppError` after the match is one `error`: a router `ceiling` refusal in its own words,
-   anything else `RESEARCH_FAILED_DETAIL`; any other exception is logged and `UNEXPECTED_DETAIL`.
-   `done {answerId}` always ends the stream.
+1. Understand. A resolver failure never blocks a question: without a given slug the question is
+   understood without the resolver's candidates (decision 0038). A spend refusal is `error` in the
+   router's own words; a given slug whose lookup fails is `error` (`RESOLVER_FAILED_DETAIL`), one
+   that does not resolve is `error` (`NOT_FOUND_DETAIL`). Otherwise `understood` is the first
+   event.
+2. A `refusal`: the stored-only answer of the chosen craft (`STORED_ONLY_MODE`, `VERIFIED`):
+   `status SEARCHING_STORED`, the craft's `VERIFIED` and `REVIEWED` `APPROVED` claims
+   (`retrieval/statements.claim_conditions`, the scope T1 also reads) ranked by any word of the
+   question (`ts_rank_cd` over the OR query), at most 14 findings and 4 hypotheses;
+   `answerId` null. No model call for a question in Latin script; another script is first
+   rendered in English by one TRANSLATE call. For any craft the refusal is the `error`.
+   `services/stored_explainer.stream_stored_answer` sends one section per concept heading
+   (`HEADING_DISCIPLINES` gives its discipline, else `OVERVIEW`), each `section_started` (state
+   `CHECKING`), its sources, one `prose` block of the claims and `section_done READY`; then the
+   hypotheses as `open_question` and the app's `follow_ups`.
+3. Otherwise the explainer (`services/answer_sections`, decision 0032): `status PLANNING`;
+   `begin`; the sections are `research/sections.section_specs(understanding.disciplines, depth)`:
+   the fields most important first, at most the depth's `max_sections`, `OVERVIEW` when none,
+   ids `s1`, `s2`, ... by order, titled by `DISCIPLINE_TITLES`; then `pieces.reusable` (decision
+   0033): each section whose facet has a reusable stored set streams it first (`trail FOUND` per
+   piece with `storedAt`, `section_started WRITING`, sources, the placed blocks, `section_done
+   READY`), and nothing is reused when the ask is `fresh` or for any craft; every other
+   `section_started` (`RESEARCHING`) is sent next. The depth's budget (`request_limits` of the question's plan
+   request) is split across the open sections (`services/research_ledger.ResearchLedger`), and up to
+   `SECTION_CONCURRENCY` (4) sections run at once, each on its own: research with its `focus`,
+   `seats` and `share` (the trail streams `FOUND` and `READ` per source as the planner reports
+   them, then `FOUND` for the stored sources of its stored claims); `section_state WRITING`;
+   compose with its focus (a `PROCESS` section of a known craft is offered the stored stages,
+   `science/ladder.ladder_stage_options`); `section_state CHECKING`; `keep` when anything was
+   composed or read; then its blocks, built by the server and checked before they are sent:
+   - a `process_ladder` (first, `<section>.b1`) from the stored process rows of the chosen stages
+     (`science/ladder.process_ladder`: stage sentences are the stage's fact-level claims as stored,
+     materials and conditions with their own citations, a condition's `stated` reading only when a
+     citation quote holds it, the stage's reactions), refused unless
+     `science/ladder.ladder_problems` is empty (every stage, sentence, material, condition and
+     reaction a stored row of that stage, of that craft's process);
+   - one `prose` block of the fact-level sentences, each with the visible citations of its claims
+     (`services/section_blocks.prose_block`), refused whole (`BlockRefused`) when a sentence cites
+     no stored claim, is not a fact, or states a figure that none of its claims' texts and quotes
+     holds.
+   Every sentence of the kept blocks is marked with the answer's glossary terms
+   (`services/section_enrichment`, decision 0039), in English, before translation; then the
+   section's pictures are searched from the claims those blocks cite and sent as an `images`
+   block after them (6 s per image service, 8 s for the step; a failure or timeout sends none and
+   leaves the section `READY`). Reused sections get pictures the same way.
+   A refused block is logged and dropped. Hypothesis-level sentences are `open_question` events
+   (`open.<n>` across the answer). The sources a block cites are sent before it, once per answer.
+   In another language each block, then the section's open questions, is translated on its own
+   (below) and sent as it is ready. `section_done` is `READY`, or `EMPTY` with
+   `composition.searched_note` of what the section searched; then `trail QUOTED` for the live
+   sources its sentences quoted and the stored sources its blocks cite. When a section shows no
+   block and its plan ran no live query in a mode that allows them, it researches once more with
+   `fresh` and the budget left (at least one query, `FRESH_MIN_FETCHES` 2 documents), going back
+   to `RESEARCHING` (finding 8a.2).
+4. In another language the section titles are translated in one call before the sections start
+   (`title` translated, `original` English), and the follow-ups in one call at the end.
+5. A section whose research or composition fails ends `EMPTY` with `SECTION_STOPPED_NOTE`; when
+   every section failed, the first failure is the answer's. A spend refusal in any section stops
+   every section and is the `error`.
+6. At least one ready section: `follow_ups` (the sections' own, first five, once each; when every
+   section was reused, `answer_events.stored_follow_ups` for the headings of the pieces' claims,
+   decision 0039). None:
+   `not_enough_evidence` with what every section searched. `finish` stores the plans, the claims
+   shown and the explainer document (`services/explainer_document`).
+7. Any `AppError` after `understood` is one `error`: a spend refusal in its own words
+   (`core/errors.spend_refusal`), anything else `RESEARCH_FAILED_DETAIL`; any other exception is
+   logged and `UNEXPECTED_DETAIL`. `done {answerId}` always ends the stream.
 
-Status messages (`status_message(step, count, craft)`): `Finding the craft`, `Planning the
-research on <craft>`, `Searching stored findings`, `Searching <n> live queries`, `Reading the
-best of <n> sources found`, `Writing a cited answer from <n> passages`, `Saving <n> sources for
-the next question` (singular for one), `Translating the answer into <language>`.
+Status messages (`explainer_events.status_message(step, count, craft)`; the steps after `PLANNING`
+are sent once per answer, when the first section reaches them): `Finding the craft` (in the vocabulary,
+no longer sent), `Planning the research on <craft>` (`Planning the research` for any craft),
+`Searching stored findings`, `Searching <n> live queries`, `Reading the best of <n> sources
+found`, `Writing a cited answer from <n> passages`, `Saving <n> sources for the next question`
+(singular for one), `Translating the answer into <language>`.
 
-Route (`api/routes/knowledge.py`): `VERIFIED` and `HYBRID` need `ASK_STANDARD`, `DEEP` needs
-`ASK_DEEP` (403 with `refusal_for`, before any work; an unknown role has neither); then the ask
-window (429). Model calls run as the asker's `Principal`, so the per-role daily cap and the
-monthly ceiling apply. The asker's name is a withheld search term. `/answers/config` lists the
-modes the asker may use, default `HYBRID`.
+Route (`api/routes/knowledge.py`): the body's `depth` (default `research/depth.default_depth` of
+the role) must be one of `selectable_depths` (every depth for a known role, none for an unknown
+one) and the asker must hold `ASK_STANDARD`, else 403 with `refusal_for`, before any work; then
+the ask window (429). Model calls run as the asker's `Principal` with one
+`providers/budget.AnswerSpend` for the asked depth, so the per-answer cap, the per-role daily cap
+and the monthly ceiling apply to every role but Master Admin. The asker's name is a withheld
+search term. `/answers/config` lists the depths with their labels and the role's default.
 
 ### Translation (`research/translation.py`, `services/answer_translation.py`, decision 0023)
 
@@ -759,11 +921,14 @@ original did not carry. `ModelTranslator` sends every item in one `TRANSLATE` ca
 failing ones back once with their problems (`TRANSLATION_ATTEMPTS` 2), and leaves out the rest;
 a router failure is raised to the caller, which keeps the English.
 
-- `translated_composed_events(events, language=, translation=, claim_texts=)`: sentences, open
-  questions, section headings and follow-ups in one call; `translated_stored_events(...)`: claim
-  sentences only (headings and follow-ups of a stored answer are the app's labels). A translated
-  sentence keeps its citations and gains `translated: true` and `original`; a translated heading
-  gains `original`; an item that fails twice stays English.
+- `translated_block(block, language=, translation=, claim_texts=)`: one checked block at a time
+  (decision 0032): the sentences of a `prose` block, or of every stage of a `process_ladder`, in
+  one call; stage names, materials and a condition's `stated` (the source's own words) stay as
+  stored. A section title gains `original`; the stored-only answer's titles and follow-ups are the
+  app's labels and stay English. A translated sentence keeps its citations and gains
+  `translated: true` and `original`; an item that fails twice stays English. Its term spans are
+  kept only where their text still occurs in the translation, first occurrences not overlapping
+  (`research/terms.spans_still_shown`, decision 0039).
 - **Voice**: `translated_sentences(sentences, *, language, translation, claim_texts)` takes
   verified English `AnswerSentence` payloads and returns them in the session language by the same
   rules; build `translation` with `answer_store.build_answer_translation(sessions,

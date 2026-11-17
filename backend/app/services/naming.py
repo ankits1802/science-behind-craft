@@ -22,6 +22,8 @@ __all__ = [
     "file_name",
     "generated_media_file_name",
     "media_key",
+    "narration_file_name",
+    "narration_key",
     "place_field",
 ]
 
@@ -29,6 +31,8 @@ PORTAL = "KalaVigyan"
 FILE_MAX = 150
 SUBJECT_MAX = 40
 MEDIA_PREFIX = "media"
+NARRATION_FOLDER = "narration"
+NARRATION_PARTS_MAX = 99
 MEDIA_NAMES = {
     "IMAGE": ("Generated-Image", "Image", "png"),
     "VIDEO": ("Generated-Video", "Video", "mp4"),
@@ -104,9 +108,28 @@ def generated_media_file_name(name: MediaName) -> str:
 
 
 def media_key(owner_id: uuid.UUID, leaf: str, *, token: uuid.UUID | None = None) -> str:
-    if not leaf or "/" in leaf or not leaf.isascii():
-        raise InvalidInput("A media key ends in one ASCII file name")
-    return f"{MEDIA_PREFIX}/{owner_id}/{(token or uuid.uuid4()).hex}/{leaf}"
+    return f"{MEDIA_PREFIX}/{owner_id}/{(token or uuid.uuid4()).hex}/{_one_file_name(leaf, 'media')}"
+
+
+def narration_file_name(generated_at: datetime, part: int) -> str:
+    if not 1 <= part <= NARRATION_PARTS_MAX:
+        raise InvalidInput(f"Narration part {part} does not fit Part-NN")
+    return file_name(
+        entity="Explainer",
+        what="Narration",
+        ext="mp3",
+        moment=generated_at,
+        place=PlaceParts(),
+        craft=None,
+        subject=None,
+        sequence=f"Part-{part:02d}",
+    )
+
+
+def narration_key(cache_id: str, leaf: str) -> str:
+    if len(cache_id) != 64 or any(ch not in "0123456789abcdef" for ch in cache_id):
+        raise InvalidInput("A narration key is filed under its 64-hex cache id")
+    return f"{MEDIA_PREFIX}/{NARRATION_FOLDER}/{cache_id}/{_one_file_name(leaf, 'narration')}"
 
 
 def content_disposition(leaf: str, *, inline: bool) -> str:
@@ -114,6 +137,12 @@ def content_disposition(leaf: str, *, inline: bool) -> str:
         raise InvalidInput("A download name is ASCII without quotes")
     kind = "inline" if inline else "attachment"
     return f"{kind}; filename=\"{leaf}\"; filename*=UTF-8''{quote(leaf, safe='')}"
+
+
+def _one_file_name(leaf: str, what: str) -> str:
+    if not leaf or "/" in leaf or not leaf.isascii():
+        raise InvalidInput(f"A {what} key ends in one ASCII file name")
+    return leaf
 
 
 def _media_parts(kind: str) -> tuple[str, str, str]:

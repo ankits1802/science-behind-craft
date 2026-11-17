@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Sequence
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 
 from app.research.evidence import EvidenceItem, OpenAccessLocator, SourceAdapter, SourceDocument
@@ -48,12 +48,20 @@ def reading_order(evidence: Sequence[PackedEvidence], facet_count: int) -> list[
 
 
 class DocumentReader:
-    def __init__(self, sources: LiveSources, *, mode: str, log: FailureLog) -> None:
+    def __init__(
+        self,
+        sources: LiveSources,
+        *,
+        mode: str,
+        log: FailureLog,
+        on_read: Callable[[SourceDocument], Awaitable[None]] | None = None,
+    ) -> None:
         self._sources = sources
         self._searchers = {searcher.name: searcher for searcher in sources.searchers}
         self._budgets = LIVE_BUDGETS[mode]
         self._log = log
         self._gate = asyncio.Semaphore(READ_CONCURRENCY)
+        self._on_read = on_read
 
     async def read_best(self, ordered: Sequence[PackedEvidence], *, limit: int) -> list[SourceDocument]:
         documents: list[SourceDocument] = []
@@ -68,6 +76,12 @@ class DocumentReader:
         return documents[:limit]
 
     async def read(self, entry: PackedEvidence) -> SourceDocument | None:
+        document = await self._opened(entry)
+        if document is not None and self._on_read is not None:
+            await self._on_read(document)
+        return document
+
+    async def _opened(self, entry: PackedEvidence) -> SourceDocument | None:
         async with self._gate:
             opened = await self.open_access_document(entry.item)
             if opened is not None:

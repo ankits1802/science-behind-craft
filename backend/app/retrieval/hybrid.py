@@ -14,6 +14,7 @@ from app.research.retrieval import ChunkHit, ClaimHit, KnowledgeHits, KnowledgeQ
 
 from .fusion import FusedItem, reciprocal_rank_fusion
 from .statements import (
+    EVERY_CRAFT,
     CraftScope,
     chunk_conditions,
     chunk_lexical_ranking,
@@ -113,7 +114,9 @@ class StoredKnowledgeSearch:
         ]
 
 
-async def craft_scope(session: AsyncSession, slug: str) -> CraftScope:
+async def craft_scope(session: AsyncSession, slug: str | None) -> CraftScope:
+    if slug is None:
+        return EVERY_CRAFT
     row = (await session.execute(select(Craft.id, Craft.subCategoryId).where(Craft.slug == slug))).first()
     if row is None:
         raise InvalidInput(f"No craft has the slug {slug!r}")

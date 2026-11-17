@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       questions:
-        description: Also ask the two known-answer questions in Hybrid (English and Hindi)
+        description: Also ask the two known-answer questions at Detailed depth (English and Hindi)
         type: boolean
         default: false
 

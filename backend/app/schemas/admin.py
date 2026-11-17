@@ -1,8 +1,9 @@
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import EmailStr, Field
 
 from app.core.security import MAX_PASSWORD_LENGTH
+from app.research.vocabulary import Depth
 from app.schemas.common import APIModel
 
 
@@ -73,4 +74,5 @@ class AppSettingsUpdate(APIModel):
     signUpMode: Literal["ROSTER", "OPEN_DOMAIN_ALLOWLIST", "CLOSED"] | None = None
     domainAllowlist: list[str] | None = Field(default=None, max_length=200)
     degradeAtFraction: float | None = Field(default=None, gt=0, le=1)
+    answerCapUsd: dict[Depth, Annotated[float, Field(ge=0, le=1_000)]] | None = None
     twoFactorCode: str | None = Field(default=None, max_length=64)

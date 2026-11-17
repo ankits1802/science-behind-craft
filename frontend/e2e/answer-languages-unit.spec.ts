@@ -18,7 +18,8 @@ import {
   type AnswerLanguage
 } from "@/lib/answerLanguages";
 import { answerSentenceShape, answerStatusShape } from "@/lib/answerShapes";
-import { emptyAnswer, reduceAnswer } from "@/lib/answerStream";
+import { askingExplainer, reduceExplainer } from "@/lib/explainerState";
+import { hasTranslatedText } from "@/lib/explainerView";
 import { DEFAULT_PREFERENCES, normalizePreferences, PREFERENCES_KEY } from "@/lib/preferences";
 import { parseShape } from "@/lib/shape";
 import type { AnswerSection, AnswerSentence, Citation } from "@/lib/types";
@@ -125,7 +126,7 @@ test("the choice is remembered in the existing preferences key", () => {
   expect(normalizePreferences({ theme: "dark", answerLanguage: "ta" }).answerLanguage).toBe("ta");
   expect(normalizePreferences({ answerLanguage: "Hindi" }).answerLanguage).toBe("auto");
   expect(normalizePreferences({}).answerLanguage).toBe("auto");
-  expect(read("frontend", "app", "(protected)", "ask", "page.tsx")).toContain("update({ answerLanguage: next })");
+  expect(read("frontend", "components", "ask", "useAskScreen.ts")).toContain("update({ answerLanguage: next })");
 });
 
 test("the config's languages are checked, and English is always offered", () => {
@@ -161,18 +162,24 @@ test("the answer renders every sentence and heading with its own lang and dir", 
   expect(block).toContain("<span lang={shown.lang} dir={shown.dir}>");
   expect(block).toContain("lang={heading.lang} dir={heading.dir}");
   expect(block).toContain("lang={paragraph.lang} dir={paragraph.dir}");
-  const view = read("frontend", "components", "answer", "AnswerView.tsx");
-  expect(view).toContain('label="Answer text"');
-  expect(view).toContain("{ value: ORIGINAL, label: ENGLISH.label }");
+  expect(read("frontend", "components", "answer", "ExplainerSentence.tsx")).toContain("<span lang={shown.lang} dir={shown.dir}>");
+  expect(read("frontend", "components", "answer", "ExplainerSectionView.tsx")).toContain("lang={heading.lang} dir={heading.dir}");
+  expect(read("frontend", "components", "answer", "ProseBlockView.tsx")).toContain("lang={paragraph.lang} dir={paragraph.dir}");
+  const header = read("frontend", "components", "answer", "ExplainerHeader.tsx");
+  expect(header).toContain('label="Answer text"');
+  expect(header).toContain("{ value: ORIGINAL_TEXT, label: ENGLISH.label }");
 });
 
 test("translated sentences and headings keep their originals through the stream", () => {
-  let state = emptyAnswer("अजरख क्यों?", "VERIFIED", "hi");
-  expect(state.payload.language).toBe("hi");
-  state = reduceAnswer(state, { type: "section", data: { id: "s1", heading: "सामग्री", original: "Materials and tools" } });
-  state = reduceAnswer(state, { type: "sentence", data: { sectionId: "s1", sentence: sentence("फिटकरी मॉर्डेंट है।", "Alum is the mordant.") } });
-  expect(state.payload.sections[0].original).toBe("Materials and tools");
-  expect(state.payload.sections[0].sentences[0].original).toBe("Alum is the mordant.");
+  let state = askingExplainer("अजरख क्यों?", "hi");
+  expect(state.language).toBe("hi");
+  state = reduceExplainer(state, { type: "section_started", data: { id: "s1", discipline: "MATERIALS", title: "सामग्री", original: "Materials and tools", order: 1, state: "WRITING" } });
+  const translated = { ...sentence("फिटकरी मॉर्डेंट है।", "Alum is the mordant."), terms: [] };
+  state = reduceExplainer(state, { type: "block", data: { sectionId: "s1", block: { id: "s1.b1", kind: "prose", version: 1, reuse: null, sentences: [translated] } } });
+  expect(state.sections[0].original).toBe("Materials and tools");
+  const block = state.sections[0].blocks[0];
+  expect(block.kind === "prose" ? block.sentences[0].original : null).toBe("Alum is the mordant.");
+  expect(hasTranslatedText(state.sections)).toBe(true);
   expect(parseShape(answerSentenceShape, sentence("फिटकरी मॉर्डेंट है।", "Alum is the mordant.")).original).toBe("Alum is the mordant.");
   expect(parseShape(answerStatusShape, { step: "TRANSLATING", message: "Translating the answer into Hindi" }).step).toBe("TRANSLATING");
 });

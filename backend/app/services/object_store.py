@@ -12,6 +12,7 @@ __all__ = ["SERVER_SIDE_ENCRYPTION", "ObjectStore", "PresignedGet", "object_stor
 
 SERVER_SIDE_ENCRYPTION = "AES256"
 SERVICE = "s3"
+MISSING_CODES = frozenset({"NoSuchKey", "404"})
 
 
 @dataclass(frozen=True)
@@ -35,6 +36,9 @@ class ObjectStore:
     async def put(self, key: str, body: bytes, *, content_type: str) -> None:
         await asyncio.to_thread(self._put, key, body, content_type)
 
+    async def get(self, key: str) -> bytes | None:
+        return await asyncio.to_thread(self._get, key)
+
     def presigned_get(self, key: str, *, disposition: str, seconds: int, now: datetime) -> PresignedGet:
         url = self._client.generate_presigned_url(
             "get_object",
@@ -44,6 +48,15 @@ class ObjectStore:
         if not url.startswith(f"{self.host}/"):
             raise NotConfigured("S3_BUCKET", "Presigned media links must use the bucket's regional host")
         return PresignedGet(url=url, expires_at=now + timedelta(seconds=seconds))
+
+    def _get(self, key: str) -> bytes | None:
+        try:
+            answer = self._client.get_object(Bucket=self.bucket, Key=key)
+            return bytes(answer["Body"].read())
+        except Exception as error:
+            if _error_code(error) in MISSING_CODES:
+                return None
+            raise _failure(error, "read") from error
 
     def _put(self, key: str, body: bytes, content_type: str) -> None:
         try:
@@ -76,10 +89,15 @@ def _s3_client(region: str) -> Any:
     return boto3.client(SERVICE, region_name=region, config=config)
 
 
+def _error_code(error: Exception) -> str:
+    response = getattr(error, "response", None) or {}
+    return str((response.get("Error") or {}).get("Code") or type(error).__name__)
+
+
 def _failure(error: Exception, action: str) -> ExternalFailure:
     response = getattr(error, "response", None) or {}
     status = (response.get("ResponseMetadata") or {}).get("HTTPStatusCode")
-    code = (response.get("Error") or {}).get("Code") or type(error).__name__
+    code = _error_code(error)
     kind = failure_kind(status) if isinstance(status, int) else "unavailable"
     return ExternalFailure(
         f"Could not {action} the media object ({code})",

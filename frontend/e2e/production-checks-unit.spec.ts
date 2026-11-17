@@ -3,7 +3,8 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { parseSseBlock, splitSseBuffer } from "@/lib/answerStream";
+import { splitSseBuffer } from "@/lib/answerStream";
+import { explainerEventOf } from "@/lib/explainerStream";
 
 import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
 import { NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
@@ -13,7 +14,7 @@ import type { TappedChunk, TappedStream } from "./production/streamTap";
 import { summaryMarkdown } from "./production/summaryMarkdown";
 
 const SHARED = join(__dirname, "..", "..", "shared");
-const GOLDEN = readFileSync(join(SHARED, "answer-stream.golden.sse"), "utf8");
+const GOLDEN = readFileSync(join(SHARED, "explainer.stream.golden.sse"), "utf8");
 const [ENGLISH, HINDI] = KNOWN_ANSWER_QUESTIONS;
 const CITATION = { id: "c1", claimId: "k1", sourceId: "s1", quote: "alum", locator: null, context: null, evidence: "QUOTED", level: "PROVISIONAL" };
 const SOURCE = { id: "s1", kind: "PAPER", title: "Mordants", authors: [], year: 2020, doi: null, url: "https://example.org/m", publisher: null, licence: null, attribution: null, reliability: "B" };
@@ -29,13 +30,14 @@ function block(name: string, data: unknown): string {
 }
 
 function sentence(id: string, text: string, extra: Record<string, unknown> = {}, citations: unknown[] = [CITATION]): string {
-  return block("sentence", { sectionId: "a", sentence: { id, text, level: "PROVISIONAL", citations, ...extra } });
+  const prose = { id: `s1.${id}`, kind: "prose", version: 1, reuse: null, sentences: [{ id, text, level: "PROVISIONAL", citations, terms: [], ...extra }] };
+  return block("block", { sectionId: "s1", block: prose });
 }
 
 function stream(text: string, language: string): TappedStream {
   return {
     url: "/api/answers/stream",
-    body: JSON.stringify({ question: "q", mode: "HYBRID", craftSlug: "Kutch-Ajrakh", language }),
+    body: JSON.stringify({ question: "q", depth: "DETAILED", craftSlug: "Kutch-Ajrakh", language }),
     requestedAt: 1_000,
     respondedAt: 1_100,
     status: 200,
@@ -51,14 +53,14 @@ function recordOf(text: string, question: KnownAnswerQuestion, streamsOpened = 1
 
 const HINDI_ANSWER = [
   block("source", SOURCE),
-  block("section", { id: "a", heading: "रंगबंधक" }),
+  block("section_started", { id: "s1", discipline: "CHEMISTRY", title: "रंगबंधक", original: "Mordants", order: 1, state: "WRITING" }),
   sentence("t1", "फिटकरी कपड़े पर लाल रंग को पक्का करती है।", { translated: true, original: "Alum fixes the red on the cloth." }),
   sentence("t2", "Alum forms a lake with alizarin at 60 °C."),
   block("done", { answerId: null })
 ].join("");
 
 test("a tapped stream parses the same in any chunking, counting heartbeats and silence", () => {
-  const whole = splitSseBuffer(GOLDEN).blocks.map(parseSseBlock).filter((event) => event !== null);
+  const whole = splitSseBuffer(GOLDEN).blocks.map(explainerEventOf).filter((event) => event !== null);
   for (const size of [1, 7, 64, GOLDEN.length]) {
     const parsed = parseTappedStream(chunked(GOLDEN, size), 1_000);
     expect(parsed.events.map(({ event }) => event)).toEqual(whole);
@@ -102,7 +104,9 @@ test("an answer without done, with an uncited sentence or opened twice fails", (
   const cut = recordOf([block("source", SOURCE), sentence("e1", "Alum is the mordant.")].join(""), ENGLISH);
   expect(answerProblems(cut, ENGLISH)).toContain("the stream ended with closed, not done");
   const uncited = recordOf([sentence("e2", "Alum is the mordant.", {}, []), block("done", { answerId: null })].join(""), ENGLISH);
-  expect(answerProblems(uncited, ENGLISH)).toEqual(expect.arrayContaining(["no cited sentence arrived", "1 sentences arrived without a citation"]));
+  expect(answerProblems(uncited, ENGLISH)).toEqual(expect.arrayContaining(["no cited sentence arrived", "1 stream frames broke the explainer contract"]));
+  const retired = recordOf([block("source", SOURCE), block("sentence", { sectionId: "a", sentence: {} }), sentence("e6", "Alum is the mordant."), block("done", { answerId: null })].join(""), ENGLISH);
+  expect(answerProblems(retired, ENGLISH)).toEqual(["1 stream frames broke the explainer contract"]);
   const twice = recordOf([block("source", SOURCE), sentence("e3", "Alum is the mordant."), block("done", { answerId: null })].join(""), ENGLISH, 2);
   expect(answerProblems(twice, ENGLISH)).toEqual(["the question opened 2 answer streams, not 1"]);
   const orphan = recordOf([sentence("e4", "Alum is the mordant."), block("done", { answerId: null })].join(""), ENGLISH);
@@ -128,8 +132,8 @@ test("gap copy is found with its context and ordinary copy is not", () => {
 test("nav labels must match the role exactly and in order", () => {
   expect(labelProblems("the menu", ["Ask", "Map"], [" Ask ", "Map"])).toEqual([]);
   expect(labelProblems("the menu", ["Ask", "Map"], ["Map", "Ask"])).toEqual(["the menu shows [Map, Ask]; this role should see [Ask, Map]"]);
-  expect(NAV_BY_ROLE.RESEARCHER?.modes).toContain("DEEP");
-  expect(NAV_BY_ROLE.STUDENT?.modes).not.toContain("DEEP");
+  expect(NAV_BY_ROLE.RESEARCHER?.depths).toEqual(["Basic", "Detailed", "Expert"]);
+  expect(NAV_BY_ROLE.STUDENT?.depths).toEqual(["Basic", "Detailed", "Expert"]);
   expect(NAV_BY_ROLE.PROFESSOR).toBeUndefined();
 });
 

@@ -1,11 +1,11 @@
-event: status
-data: {"step":"RESOLVING","message":"Finding the craft"}
-
-event: match
-data: {"status":"RESOLVED","craft":{"slug":"Kutch-Ajrakh","name":"Kutch Ajrakh","path":"/crafts/Kutch-Ajrakh"}}
+event: understood
+data: {"crafts":[{"slug":"Kutch-Ajrakh","name":"Kutch Ajrakh","path":"/crafts/Kutch-Ajrakh"}],"candidates":[],"depth":"DETAILED","language":"en"}
 
 event: status
 data: {"step":"PLANNING","message":"Planning the research on Kutch Ajrakh"}
+
+event: section_started
+data: {"id":"s1","discipline":"CHEMISTRY","title":"The chemistry","order":1,"state":"RESEARCHING"}
 
 event: status
 data: {"step":"SEARCHING_STORED","message":"Searching stored findings"}
@@ -16,8 +16,38 @@ data: {"step":"RESEARCHING","message":"Searching 2 live queries"}
 event: status
 data: {"step":"READING","message":"Reading the best of 4 sources found"}
 
+event: trail
+data: {"key":"crossref:10.1000/lake","stage":"FOUND","group":"PAPERS","title":"Alizarin lakes on cotton","url":"https://doi.org/10.1000/lake","publisher":"Journal of Dye Chemistry","year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"searxng:https://crafts.example.org/ajrakh","stage":"FOUND","group":"WEB","title":"Ajrakh fastness notes","url":"https://crafts.example.org/ajrakh","publisher":null,"year":null,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"searxng:https://crafts.example.org/workshops","stage":"FOUND","group":"WEB","title":"Workshops","url":"https://crafts.example.org/workshops","publisher":null,"year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"openalex:W9","stage":"FOUND","group":"PAPERS","title":"Alizarin lakes on cotton","url":"https://works.example.org/W9","publisher":null,"year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"crossref:10.1000/lake","stage":"READ","group":"PAPERS","title":"Alizarin lakes on cotton","url":"https://doi.org/10.1000/lake","publisher":"Journal of Dye Chemistry","year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"searxng:https://crafts.example.org/ajrakh","stage":"READ","group":"WEB","title":"Ajrakh fastness notes","url":"https://crafts.example.org/ajrakh","publisher":null,"year":null,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"searxng:https://crafts.example.org/workshops","stage":"READ","group":"WEB","title":"Workshops","url":"https://crafts.example.org/workshops","publisher":null,"year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"source:1a2b3c4d-0000-4000-8000-000000000001","stage":"FOUND","group":"STORED","title":"Ajrakh: the printed cloth of Kutch","url":null,"publisher":"Mapin","year":2016,"sourceId":"1a2b3c4d-0000-4000-8000-000000000001","storedAt":null}
+
+event: section_state
+data: {"sectionId":"s1","state":"WRITING"}
+
 event: status
 data: {"step":"COMPOSING","message":"Writing a cited answer from 4 passages"}
+
+event: section_state
+data: {"sectionId":"s1","state":"CHECKING"}
 
 event: status
 data: {"step":"WRITING_BACK","message":"Saving 3 sources for the next question"}
@@ -25,29 +55,32 @@ data: {"step":"WRITING_BACK","message":"Saving 3 sources for the next question"}
 event: source
 data: {"id":"1a2b3c4d-0000-4000-8000-000000000001","kind":"BOOK","title":"Ajrakh: the printed cloth of Kutch","authors":["A. Author"],"year":2016,"doi":null,"url":null,"publisher":"Mapin","licence":null,"attribution":null,"reliability":"A"}
 
-event: section
-data: {"id":"s1","heading":"Mordant"}
-
-event: sentence
-data: {"sectionId":"s1","sentence":{"id":"s1.1","text":"Alum is the mordant that binds alizarin to cotton.","level":"REVIEWED","citations":[{"id":"c0000000-0000-4000-8000-000000000001","claimId":"3f2a1b0c-9d8e-4f7a-8b6c-5d4e3f2a1b0c","sourceId":"1a2b3c4d-0000-4000-8000-000000000001","quote":"Alum is the mordant","locator":"p. 41","context":null,"evidence":"QUOTED","level":"REVIEWED"}]}}
-
 event: source
 data: {"id":"1a2b3c4d-0000-4000-8000-000000000002","kind":"PAPER","title":"Alizarin lakes on cotton","authors":["A. Author"],"year":2019,"doi":"10.1000/lake","url":"https://doi.org/10.1000/lake","publisher":"Journal of Dye Chemistry","licence":"CC BY 4.0","attribution":null,"reliability":"B"}
-
-event: sentence
-data: {"sectionId":"s1","sentence":{"id":"s1.2","text":"Mordant baths held 8 g/L alum and were heated to 60 °C.","level":"PROVISIONAL","citations":[{"id":"c0000000-0000-4000-8000-000000000002","claimId":"6c1e0f2a-3b4d-4e5f-8a9b-0c1d2e3f4a5b","sourceId":"1a2b3c4d-0000-4000-8000-000000000002","quote":"Mordanting baths of 8 g/L alum were heated to 60 °C","locator":null,"context":null,"evidence":"QUOTED","level":"PROVISIONAL"}]}}
 
 event: source
 data: {"id":"1a2b3c4d-0000-4000-8000-000000000003","kind":"WEB_PAGE","title":"Ajrakh fastness notes","authors":[],"year":null,"doi":null,"url":"https://crafts.example.org/ajrakh","publisher":null,"licence":null,"attribution":null,"reliability":"C"}
 
-event: section
-data: {"id":"s2","heading":"Fastness"}
+event: block
+data: {"sectionId":"s1","block":{"id":"s1.b1","kind":"prose","version":1,"reuse":null,"sentences":[{"id":"s1.b1.1","text":"Alum is the mordant that binds alizarin to cotton.","level":"REVIEWED","citations":[{"id":"c0000000-0000-4000-8000-000000000001","claimId":"3f2a1b0c-9d8e-4f7a-8b6c-5d4e3f2a1b0c","sourceId":"1a2b3c4d-0000-4000-8000-000000000001","quote":"Alum is the mordant","locator":"p. 41","context":null,"evidence":"QUOTED","level":"REVIEWED"}],"terms":[{"text":"Alum","termKey":"alum"},{"text":"alizarin","termKey":"alizarin"},{"text":"cotton","termKey":"cotton"}]},{"id":"s1.b1.2","text":"Mordant baths held 8 g/L alum and were heated to 60 °C.","level":"PROVISIONAL","citations":[{"id":"c0000000-0000-4000-8000-000000000002","claimId":"6c1e0f2a-3b4d-4e5f-8a9b-0c1d2e3f4a5b","sourceId":"1a2b3c4d-0000-4000-8000-000000000002","quote":"Mordanting baths of 8 g/L alum were heated to 60 °C","locator":null,"context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"terms":[{"text":"alum","termKey":"alum"}]},{"id":"s1.b1.3","text":"The red lake withstood 20 washes.","level":"PROVISIONAL","citations":[{"id":"c0000000-0000-4000-8000-000000000003","claimId":"8d2f1a3b-4c5e-4f60-9b1c-2d3e4f5a6b7c","sourceId":"1a2b3c4d-0000-4000-8000-000000000003","quote":"the lake withstood 20 washes","locator":null,"context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"terms":[]}]}}
 
-event: sentence
-data: {"sectionId":"s2","sentence":{"id":"s2.1","text":"The red lake withstood 20 washes.","level":"PROVISIONAL","citations":[{"id":"c0000000-0000-4000-8000-000000000003","claimId":"8d2f1a3b-4c5e-4f60-9b1c-2d3e4f5a6b7c","sourceId":"1a2b3c4d-0000-4000-8000-000000000003","quote":"the lake withstood 20 washes","locator":null,"context":null,"evidence":"QUOTED","level":"PROVISIONAL"}]}}
+event: block
+data: {"sectionId":"s1","block":{"id":"s1.b2","kind":"images","version":1,"reuse":null,"items":[{"media":{"id":"c129fda6-dbe5-5d98-aa83-84420c775a87","display":"INLINE","provider":"commons","pageUrl":"https://pictures.example.org/commons/1","imageUrl":"https://pictures.example.org/commons/1.jpg","width":null,"height":null,"title":"Alum mordant bath for alizarin dyeing","alt":"Alum mordant bath for alizarin dyeing","author":"A. Dyer","site":"pictures.example.org","credit":null,"licence":"CC BY-SA 4.0","licenceUrl":null,"sourceId":null,"retrievedAt":"2026-11-17T10:20:00Z"},"claimIds":["3f2a1b0c-9d8e-4f7a-8b6c-5d4e3f2a1b0c","6c1e0f2a-3b4d-4e5f-8a9b-0c1d2e3f4a5b"],"relevance":"TEXT"},{"media":{"id":"115c5537-23c7-5739-af4c-fcf7fc82cbd0","display":"LINK_CARD","provider":"searxng","pageUrl":"https://pictures.example.org/searxng/2","imageUrl":"https://pictures.example.org/searxng/2.jpg","width":null,"height":null,"title":"Red alizarin lake after many washes","alt":"Red alizarin lake after many washes","author":null,"site":"pictures.example.org","credit":"Crafts Museum","licence":null,"licenceUrl":null,"sourceId":null,"retrievedAt":"2026-11-17T10:20:00Z"},"claimIds":["8d2f1a3b-4c5e-4f60-9b1c-2d3e4f5a6b7c"],"relevance":"TEXT"}]}}
 
 event: open_question
 data: {"sectionId":"open","heading":"Open questions","sentence":{"id":"open.1","text":"Lime in the wash water may brighten the red.","level":"HYPOTHESIS","citations":[{"id":"c0000000-0000-4000-8000-000000000004","claimId":"7a6b5c4d-3e2f-4a1b-9c8d-7e6f5a4b3c2d","sourceId":"1a2b3c4d-0000-4000-8000-000000000001","quote":null,"locator":null,"context":null,"evidence":"INFERRED","level":"HYPOTHESIS"}]}}
+
+event: section_done
+data: {"sectionId":"s1","state":"READY","searched":null}
+
+event: trail
+data: {"key":"crossref:10.1000/lake","stage":"QUOTED","group":"PAPERS","title":"Alizarin lakes on cotton","url":"https://doi.org/10.1000/lake","publisher":"Journal of Dye Chemistry","year":2019,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"searxng:https://crafts.example.org/ajrakh","stage":"QUOTED","group":"WEB","title":"Ajrakh fastness notes","url":"https://crafts.example.org/ajrakh","publisher":null,"year":null,"sourceId":null,"storedAt":null}
+
+event: trail
+data: {"key":"source:1a2b3c4d-0000-4000-8000-000000000001","stage":"QUOTED","group":"STORED","title":"Ajrakh: the printed cloth of Kutch","url":null,"publisher":"Mapin","year":2016,"sourceId":"1a2b3c4d-0000-4000-8000-000000000001","storedAt":null}
 
 event: follow_ups
 data: {"items":["How is the alum bath prepared for Kutch Ajrakh?"]}

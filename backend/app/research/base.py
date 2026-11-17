@@ -12,6 +12,7 @@ __all__ = [
     "ContractModel",
     "HttpsUrl",
     "PartialDate",
+    "absent",
     "https_url",
 ]
 
@@ -29,6 +30,10 @@ class ContractModel(BaseModel):
         validate_by_alias=True,
         serialize_by_alias=True,
     )
+
+
+def absent(value: object) -> bool:
+    return value is None
 
 
 def https_url(value: str) -> str:

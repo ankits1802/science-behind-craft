@@ -240,3 +240,13 @@ async def test_an_unknown_craft_is_refused(session: AsyncSession) -> None:
         await StoredKnowledgeSearch(session, embed=FixedEmbedder()).search(
             KnowledgeQuery(craft_slug="Nowhere-Craft", text=QUESTION, mode="HYBRID")
         )
+
+
+async def test_any_craft_searches_every_crafts_visible_claims(session: AsyncSession) -> None:
+    found = await StoredKnowledgeSearch(session, embed=FixedEmbedder()).search(
+        KnowledgeQuery(craft_slug=None, text=QUESTION, mode="HYBRID", limit=50)
+    )
+    ids = {hit.claim_id for hit in found.claims}
+    assert found.craft_slug is None
+    assert {ALUM, OTHER_ALUM} <= ids
+    assert ids.isdisjoint({RETRACTED, RESTRICTED_ONLY, HIDDEN_CONCEPT})

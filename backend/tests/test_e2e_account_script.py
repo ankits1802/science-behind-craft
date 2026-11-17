@@ -21,10 +21,10 @@ def test_the_e2e_address_passes_every_api_address_check() -> None:
     assert E2E_ACCOUNT_EMAIL == "e2e-researcher@kalavigyan.example"
 
 
-def test_the_e2e_role_needs_no_two_step_and_may_ask_deep() -> None:
+def test_the_e2e_role_needs_no_two_step_and_may_ask() -> None:
     assert E2E_ACCOUNT_ROLE == "RESEARCHER"
     assert not requires_two_factor(E2E_ACCOUNT_ROLE)
-    assert can(E2E_ACCOUNT_ROLE, Capability.ASK_DEEP)
+    assert can(E2E_ACCOUNT_ROLE, Capability.ASK_STANDARD)
     assert not can(E2E_ACCOUNT_ROLE, Capability.MANAGE_ACCESS)
 
 

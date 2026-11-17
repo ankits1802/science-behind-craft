@@ -6,7 +6,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from typing import Any, Protocol
 
-from app.core.errors import AppError
+from app.core.errors import SPEND_REFUSAL_KIND, AppError
 from app.core.roles import PROFESSOR, Capability, can, daily_allowance, has_rank, role_value
 from app.providers.media_router import MediaAsk
 from app.providers.quota import remaining_today, seconds_until_next_day
@@ -267,7 +267,7 @@ async def _hold(deps: MediaDeps, ask: MediaAsk) -> uuid.UUID:
     try:
         return await deps.budget.hold(ask)
     except RouterError as error:
-        if error.kind == "ceiling":
+        if error.kind == SPEND_REFUSAL_KIND:
             raise MediaRefused("budget", error.message) from None
         raise MediaRefused("not_configured") from None
 

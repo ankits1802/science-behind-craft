@@ -107,6 +107,18 @@ honoured for the agent `KalaVigyan`.
 | `searxng` | Self-hosted SearXNG metasearch on the box | Results come from the engines SearXNG queries; each hit links to its page |
 | `brave` | Brave Web Search API (fallback, only with `BRAVE_SEARCH_API_KEY`) | Brave Search API terms; results are used to find pages, and the pages themselves are cited |
 
+## Pictures from the web
+
+Found through the image sources of decision 0034 and shown in an explainer's `images` block. A
+picture is never copied into the media bucket: the reader's browser loads it from its own host,
+with no referrer, and the card links to its page.
+
+| Adapter | Service | Terms and credit |
+|---|---|---|
+| `wikimedia_commons` | Wikimedia Commons file search (`imageinfo`, 960 px thumbnails) | Each file's own licence; shown inline only under CC0, CC BY, CC BY-SA or public domain with its author, credited author, licence (linked) and Wikimedia Commons; otherwise a link card |
+| `openverse` | Openverse image search (`api.openverse.org`, anonymous) | Only `by`, `by-sa`, `cc0` and `pdm` results with a creator; credited creator, licence and source site (Flickr, Wikimedia Commons, ...); the Openverse thumbnail is shown |
+| `searxng` | SearXNG image results | No licence is known, so always a link card: the source site's own image as thumbnail, the page title and site, opening the page |
+
 ## Variables and statistics
 
 Each row in `district_env.parquet` is one `(districtLgd, datasetCode, variable, depthOrPeriod, stat)`. Zonal statistics use exactextract with coverage-weighted, spherical-area cell weights, so partly covered edge cells count by the share inside the district. `depthOrPeriod` is `""` where it does not apply.

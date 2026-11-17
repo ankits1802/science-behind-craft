@@ -48,7 +48,7 @@ ClaimSubjectType = Literal[*CLAIM_SUBJECT_TYPES]
 
 
 class KnowledgeQuery(ContractModel):
-    craft_slug: str = Field(min_length=1, max_length=200)
+    craft_slug: str | None = Field(min_length=1, max_length=200)
     text: str = Field(min_length=1, max_length=QUESTION_MAX_CHARS)
     mode: AnswerMode
     facets: tuple[FacetType, ...] = ()
@@ -86,7 +86,7 @@ class ChunkHit(ContractModel):
 
 
 class KnowledgeHits(ContractModel):
-    craft_slug: str
+    craft_slug: str | None
     claims: tuple[ClaimHit, ...] = ()
     chunks: tuple[ChunkHit, ...] = ()
 

@@ -1,0 +1,69 @@
+{
+  "query": "Kutch Ajrakh resist paste",
+  "number_of_results": 0,
+  "results": [
+    {
+      "template": "images.html",
+      "url": "https://collections.vam.ac.uk/item/O132500/",
+      "title": "Ajrakh process sample, IS.7:1 to 3-2007 (made by Ismail Mohammad Khatri, Ajrakhpur, 2006)",
+      "content": "Strips of cotton cloth block-printed in progressive stages of the ajrakh process.",
+      "img_src": "https://framemark.vam.ac.uk/collections/2015HK4003/full/!100,100/0/default.jpg",
+      "thumbnail_src": "https://tse1.mm.example.net/th?id=OIP.ajrakh-sample",
+      "img_format": "jpeg",
+      "engine": "bing images",
+      "engines": ["bing images"],
+      "category": "images"
+    },
+    {
+      "template": "images.html",
+      "url": "https://shop.example.in/ajrakh-resist-printed-stole",
+      "title": "Ajrakh resist printed stole",
+      "content": "Hand block printed with lime and gum resist paste.",
+      "img_src": "https://cdn.imagehost.example.net/stole-ajrakh.jpg",
+      "thumbnail_src": "https://cdn.imagehost.example.net/stole-ajrakh-small.jpg",
+      "resolution": "800 x 800",
+      "engine": "duckduckgo images",
+      "engines": ["duckduckgo images"],
+      "category": "images"
+    },
+    {
+      "template": "images.html",
+      "url": "https://old.example.in/ajrakh-resist.html",
+      "title": "Ajrakh resist (insecure image)",
+      "content": "Resist paste printed with a carved block.",
+      "img_src": "http://old.example.in/images/ajrakh-resist.jpg",
+      "engine": "bing images",
+      "engines": ["bing images"],
+      "category": "images"
+    },
+    {
+      "template": "images.html",
+      "url": "https://museum.example.org/collection/ajrakh-thumbnail-only",
+      "title": "Ajrakh, thumbnail only",
+      "content": "No original image address.",
+      "thumbnail_src": "https://museum.example.org/thumbs/ajrakh.jpg",
+      "engine": "bing images",
+      "engines": ["bing images"],
+      "category": "images"
+    },
+    {
+      "template": "images.html",
+      "url": "https://museum.example.org/collection/ajrakh-resist-paste",
+      "title": "Printing lime and tree-gum resist paste on cotton, Ajrakhpur",
+      "content": "A printer presses a carved block of resist paste onto cotton cloth to keep the outlines white.",
+      "img_src": "https://media.museum.example.org/ajrakh/resist-paste-1200.jpg",
+      "thumbnail_src": "https://tse2.mm.example.net/th?id=OIP.resist-paste",
+      "resolution": "1200 x 800",
+      "author": "Museum photography studio",
+      "img_format": "jpeg",
+      "engine": "bing images",
+      "engines": ["bing images"],
+      "category": "images"
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": [],
+  "unresponsive_engines": []
+}

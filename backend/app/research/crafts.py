@@ -10,12 +10,14 @@ from .untrusted import untrusted_block
 __all__ = [
     "ACCEPT_MARGIN",
     "ACCEPT_SCORE",
+    "ANY_CRAFT_LINE",
     "CRAFT_NAME_MAX_CHARS",
     "FUZZY_MIN_SIMILARITY",
     "MATCH_REASON_KINDS",
     "MAX_CANDIDATES",
     "QUESTION_MAX_CHARS",
     "RESOLUTION_STATUSES",
+    "SLUG_MAX_CHARS",
     "CraftCandidate",
     "CraftQuery",
     "CraftRef",
@@ -24,6 +26,7 @@ __all__ = [
     "MatchReason",
     "clear_winner",
     "craft_block",
+    "craft_line",
 ]
 
 ACCEPT_SCORE = 0.85
@@ -46,6 +49,7 @@ MATCH_REASON_KINDS = (
     "MODEL_CHOICE",
 )
 RESOLUTION_STATUSES = ("RESOLVED", "AMBIGUOUS", "NONE")
+ANY_CRAFT_LINE = "Craft: any craft (the question names none on the list)"
 
 MatchReasonKind = Literal[*MATCH_REASON_KINDS]
 ResolutionStatus = Literal[*RESOLUTION_STATUSES]
@@ -121,3 +125,7 @@ class CraftResolver(Protocol):
 
 def craft_block(craft: CraftRef) -> str:
     return untrusted_block("craft", "craft name and slug", f"{craft.name} (slug {craft.slug})")
+
+
+def craft_line(craft: CraftRef | None) -> str:
+    return craft_block(craft) if craft else ANY_CRAFT_LINE

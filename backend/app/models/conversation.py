@@ -61,6 +61,7 @@ class Answer(Base):
         UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="SET NULL")
     )
     plan: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    understanding: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     payload: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     claimIds: Mapped[list[uuid.UUID]] = mapped_column(
         ARRAY(UUID(as_uuid=True)), nullable=False, server_default=sql_text("ARRAY[]::uuid[]")

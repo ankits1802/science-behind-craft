@@ -22,6 +22,11 @@ def pg_enum(name: str, values: tuple[str, ...]) -> ENUM:
     return ENUM(*values, name=name, create_type=False)
 
 
+def one_of(column: str, values: tuple[str, ...]) -> str:
+    listed = ", ".join(f"'{value}'" for value in values)
+    return f'"{column}" IN ({listed})'
+
+
 def uuid_pk() -> Mapped[uuid.UUID]:
     return mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
 

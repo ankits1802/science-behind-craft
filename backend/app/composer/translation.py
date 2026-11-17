@@ -8,7 +8,6 @@ from app.core.errors import ExternalFailure
 from app.research.structured import MODEL_SERVICE, StructuredModel, reply_object, schema_object
 from app.research.translation import (
     TRANSLATION_ATTEMPTS,
-    TRANSLATION_ITEM_MAX_CHARS,
     TranslationItem,
     TranslationRequest,
     translation_problems,
@@ -93,11 +92,8 @@ def checked_translation(item: TranslationItem, translated: str | None, *, langua
 
 
 def translate_schema(keys: Sequence[str]) -> dict[str, Any]:
-    item = schema_object(
-        key={"type": "string", "enum": list(keys)},
-        text={"type": "string", "minLength": 1, "maxLength": TRANSLATION_ITEM_MAX_CHARS},
-    )
-    return schema_object(items={"type": "array", "maxItems": len(keys), "items": item})
+    item = schema_object(key={"type": "string", "enum": list(keys)}, text={"type": "string"})
+    return schema_object(items={"type": "array", "items": item})
 
 
 def translate_message(

@@ -34,7 +34,6 @@ async def test_the_plan_call_asks_for_native_queries_only_outside_english(
     model = model_for()
     await draft_plan(model, request(mode, language=language))
     (call,) = model.calls
-    assert call["schema"]["properties"]["nativeQueries"]["maxItems"] == native
     assert f"Native-language queries: at most {native}" in call["user"]
 
 

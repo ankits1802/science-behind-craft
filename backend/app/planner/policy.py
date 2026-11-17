@@ -4,8 +4,9 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
 
+from app.research.depth import research_budget
 from app.research.evidence import SEARCH_MAX_K
-from app.research.planning import MODE_POLICIES
+from app.research.planning import MODE_POLICIES, PlanRequest, ResearchShare
 from app.research.vocabulary import CANONICAL_LANGUAGE
 from app.sources.reference.wikidata import WikidataAdapter
 from app.sources.reference.wikipedia import WIKIPEDIA_LANGUAGES, WikipediaAdapter
@@ -26,6 +27,7 @@ __all__ = [
     "STORED_PACK_LIMIT",
     "TierBudget",
     "native_query_limit",
+    "request_limits",
 ]
 
 PLAN_DRAFT_RETRIES = 1
@@ -75,3 +77,13 @@ def native_query_limit(language: str, mode: str) -> int:
     if language == CANONICAL_LANGUAGE or language not in WIKIPEDIA_LANGUAGES:
         return 0
     return MODE_POLICIES[mode].max_native_queries
+
+
+def request_limits(request: PlanRequest, mode: str) -> ResearchShare:
+    budget = research_budget(mode, request.depth)
+    limits = ResearchShare(
+        queries=budget.max_queries,
+        native_queries=native_query_limit(request.language, mode),
+        fetches=budget.max_fetches,
+    )
+    return limits if request.share is None else request.share.capped(limits)

@@ -1,0 +1,40 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import { expect, test } from "@playwright/test";
+
+import { renderChemistry } from "@/lib/chemistry";
+
+import { auditPage, type AuditOptions } from "./production/pageAudit";
+
+const KATEX_CSS = readFileSync(join(__dirname, "..", "node_modules", "katex", "dist", "katex.min.css"), "utf8");
+const OPTIONS: AuditOptions = { citedSelector: "[data-cited]", limit: 12 };
+const ALUM_LAKE = "2 Al^3+ + 3 C14H6O2(OH)2 -> Al2(C14H6O2(O)2)3 + 6 H+";
+const NARROW = "This sentence runs past its narrow box";
+
+function pageWith(equation: string): string {
+  return [
+    "<!doctype html><html><head><style>",
+    KATEX_CSS,
+    "body{margin:0;font-size:16px} main{width:300px;padding:16px} .equation{display:block;max-width:100%;overflow-x:auto}",
+    ".sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}",
+    "</style></head><body><main>",
+    `<p>Alum fixes the dye.<span class="sr-only">(read aloud)</span></p>`,
+    `<span role="math" class="equation">${equation}</span>`,
+    `<p data-testid="narrow" class="katex-mathml-note" style="width:40px;white-space:nowrap">${NARROW}</p>`,
+    "</main></body></html>"
+  ].join("");
+}
+
+test("the audit skips KaTeX's hidden MathML copy, and only it", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setContent(pageWith(renderChemistry(ALUM_LAKE, true)));
+  await expect(page.locator(".katex-mathml")).toHaveCount(1);
+  const audited = await page.evaluate(auditPage, OPTIONS);
+  await page.locator(".katex-mathml").evaluate((copy) => copy.remove());
+  expect(audited).toEqual(await page.evaluate(auditPage, OPTIONS));
+  expect(audited.textOverflow).toEqual([`main > p[data-testid="narrow"]: "${NARROW}" spills out of its box`]);
+  expect(audited.copy.startsWith("Alum fixes the dye. (read aloud) ")).toBe(true);
+  expect(audited.copy.endsWith(NARROW)).toBe(true);
+  expect(audited.pageOverflowPx).toBe(0);
+});

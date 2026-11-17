@@ -95,7 +95,7 @@ def _claim(
     citations = [_citation(sentence, context.documents[ref], inferred=inferred) for ref in cited]
     quoted = not inferred and any(citation.quote_check == "PASS" for citation in citations)
     return ClaimWriteBack(
-        craft_slug=context.pack.plan.craft.slug,
+        craft_slug=context.pack.plan.craft.slug if context.pack.plan.craft else None,
         subject=_subject(context.pack, context.packed[cited[0]]),
         predicate=WRITE_BACK_PREDICATE,
         text=sentence.text,

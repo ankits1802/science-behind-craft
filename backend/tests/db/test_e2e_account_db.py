@@ -84,7 +84,7 @@ async def test_the_provisioned_account_signs_in_without_two_step_and_may_ask_dee
     assert me["accessStatus"] == "ACTIVE"
     assert me["twoFactorRequired"] is False
     assert me["twoFactorEnabled"] is False
-    assert "ASK_DEEP" in me["capabilities"]
+    assert "PROPOSE_KNOWLEDGE" in me["capabilities"]
     assert "MANAGE_ACCESS" not in me["capabilities"]
 
 

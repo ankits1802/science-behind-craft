@@ -4,6 +4,7 @@ __all__ = [
     "FAILURE_KINDS",
     "NEXT_ROUTE_KINDS",
     "RETRYABLE_KINDS",
+    "SPEND_REFUSAL_KIND",
     "STOP_KINDS",
     "AppError",
     "ExternalFailure",
@@ -11,6 +12,7 @@ __all__ = [
     "NotConfigured",
     "Refused",
     "failure_kind",
+    "spend_refusal",
 ]
 
 FAILURE_KINDS = frozenset(
@@ -19,6 +21,7 @@ FAILURE_KINDS = frozenset(
 NEXT_ROUTE_KINDS = frozenset({"rate_limit", "unavailable", "auth", "not_found", "error"})
 STOP_KINDS = frozenset({"refusal", "bad_request"})
 RETRYABLE_KINDS = frozenset({"rate_limit", "unavailable"})
+SPEND_REFUSAL_KIND = "ceiling"
 STATUS_KINDS = {
     400: "bad_request",
     401: "auth",
@@ -84,3 +87,9 @@ def failure_kind(status: int) -> str:
     if status >= 500:
         return "unavailable"
     return STATUS_KINDS.get(status, "error")
+
+
+def spend_refusal(error: BaseException) -> str | None:
+    if getattr(error, "kind", None) != SPEND_REFUSAL_KIND:
+        return None
+    return str(error) or None

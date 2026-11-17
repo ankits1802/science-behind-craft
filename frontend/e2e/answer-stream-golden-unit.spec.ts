@@ -3,66 +3,92 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { emptyAnswer, parseSseBlock, reduceAnswer, splitSseBuffer, type AnswerEvent, type AnswerState } from "@/lib/answerStream";
+import { sseFields, splitSseBuffer } from "@/lib/answerStream";
+import { askingExplainer, reduceExplainer, type ExplainerState } from "@/lib/explainerState";
+import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
 
 const SHARED = join(__dirname, "..", "..", "shared");
+const RETIRED_EVENTS = new Set(["match", "section", "sentence"]);
 
-function eventsOf(name: string): AnswerEvent[] {
+function blocksOf(name: string): string[] {
   const { blocks, rest } = splitSseBuffer(readFileSync(join(SHARED, name), "utf8"));
   expect(rest).toBe("");
-  return blocks.map(parseSseBlock).filter((event): event is AnswerEvent => event !== null);
+  return blocks;
 }
 
-function reduced(name: string): AnswerState {
-  return eventsOf(name).reduce(reduceAnswer, emptyAnswer("Why alum?", "HYBRID"));
+function eventsOf(name: string): ExplainerEvent[] {
+  return blocksOf(name)
+    .map(explainerEventOf)
+    .filter((event): event is ExplainerEvent => event !== null);
 }
 
-test("the contract golden stream parses, skipping only the heartbeat", () => {
-  expect(eventsOf("answer-stream.golden.sse").map((event) => event.type)).toEqual([
-    "match",
-    "status",
-    "source",
-    "section",
-    "sentence",
-    "open_question",
-    "reaction",
-    "follow_ups",
-    "done"
-  ]);
+function reduced(name: string): ExplainerState {
+  return eventsOf(name).reduce(reduceExplainer, askingExplainer("Why alum?", "en"));
+}
+
+function quietly<T>(run: () => T): { value: T; logged: unknown[] } {
+  const logged: unknown[] = [];
+  const original = console.error;
+  console.error = (...args: unknown[]) => void logged.push(...args);
+  try {
+    return { value: run(), logged };
+  } finally {
+    console.error = original;
+  }
+}
+
+test("the buffer splitter keeps an unfinished block for the next chunk", () => {
+  const { blocks, rest } = splitSseBuffer('event: done\r\ndata: {"answerId":"x"}\r\n\r\nevent: sec');
+  expect(blocks).toEqual(['event: done\ndata: {"answerId":"x"}']);
+  expect(rest).toBe("event: sec");
 });
 
-test("the contract golden stream reduces to a cited answer", () => {
-  const state = reduced("answer-stream.golden.sse");
-  expect(state.phase).toBe("done");
-  expect(state.status).toBeNull();
-  expect(state.payload.craft).toEqual({ slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", path: "/crafts/Kutch-Ajrakh" });
-  expect(state.payload.sources.map((source) => source.id)).toEqual(["5b0c7d2e-8a51-4f3e-9d6a-0c2f1e4b7a10"]);
-  expect(state.payload.sections).toHaveLength(1);
-  expect(state.payload.sections[0].sentences[0].citations[0].quote).toBe("alum forms a red lake with alizarin at about 60 °C");
-  expect(state.payload.openQuestions[0].heading).toBe("Open questions");
-  expect(state.payload.reactions[0].balanced).toBe(true);
-  expect(state.payload.followUps).toEqual(["What happens at each step of Kutch Ajrakh?"]);
+test("multi-line data is joined, and comments, unknown and retired events are skipped", () => {
+  expect(explainerEventOf('event: follow_ups\ndata: {"items":\ndata: ["Why?"]}')).toEqual({ type: "follow_ups", data: { items: ["Why?"] } });
+  expect(explainerEventOf(": keep-alive")).toBeNull();
+  expect(explainerEventOf("event: ping\ndata: {}")).toBeNull();
+  expect(explainerEventOf('event: section\ndata: {"id":"a","heading":"Mordant"}')).toBeNull();
+  const broken = quietly(() => explainerEventOf("event: follow_ups\ndata: {not json"));
+  expect(broken.value).toBeNull();
+  expect(String(broken.logged[0])).toContain("follow_ups");
 });
 
-test("the backend's researched stream shows each step, then the cited answer", () => {
+test("the backend's researched stream parses, skipping only retired events, and settles with its answer id", () => {
+  const skipped = blocksOf("answer-stream.research.golden.sse").filter((block) => explainerEventOf(block) === null);
+  for (const block of skipped) expect(RETIRED_EVENTS.has(sseFields(block).name)).toBe(true);
   const events = eventsOf("answer-stream.research.golden.sse");
+  expect(events[0]).toEqual({
+    type: "understood",
+    data: { crafts: [{ slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", path: "/crafts/Kutch-Ajrakh" }], candidates: [], depth: "DETAILED", language: "en" }
+  });
   const steps = events.flatMap((event) => (event.type === "status" ? [event.data.step] : []));
-  expect(steps).toEqual(["RESOLVING", "PLANNING", "SEARCHING_STORED", "RESEARCHING", "READING", "COMPOSING", "WRITING_BACK"]);
-  const writing = events.slice(0, events.findIndex((event) => event.type === "source")).reduce(reduceAnswer, emptyAnswer("Why alum?", "HYBRID"));
-  expect(writing.phase).toBe("streaming");
-  expect(writing.status).toEqual({ step: "WRITING_BACK", message: "Saving 3 sources for the next question" });
+  expect(steps).toEqual(["PLANNING", "SEARCHING_STORED", "RESEARCHING", "READING", "COMPOSING", "WRITING_BACK"]);
   const state = reduced("answer-stream.research.golden.sse");
   expect(state.phase).toBe("done");
   expect(state.status).toBeNull();
-  expect(state.payload.answerId).toBe("0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9");
-  expect(state.payload.sections.map((section) => [section.heading, section.sentences.map((sentence) => sentence.id)])).toEqual([
-    ["Mordant", ["s1.1", "s1.2"]],
-    ["Fastness", ["s2.1"]]
+  expect(state.answerId).toBe("0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9");
+  expect(state.sources.map((source) => source.kind)).toEqual(["BOOK", "PAPER", "WEB_PAGE"]);
+  expect(state.openQuestions[0].sentences[0].citations[0].evidence).toBe("INFERRED");
+  expect(state.followUps).toEqual(["How is the alum bath prepared for Kutch Ajrakh?"]);
+  for (const section of state.sections) expect(section.state === "READY" || section.state === "EMPTY").toBe(true);
+  expect(state.sections.map((section) => [section.id, section.discipline, section.state])).toEqual([["s1", "CHEMISTRY", "READY"]]);
+  expect(state.sections[0].blocks.map((block) => [block.id, block.kind])).toEqual([
+    ["s1.b1", "prose"],
+    ["s1.b2", "images"]
   ]);
-  expect(state.payload.sources.map((source) => source.kind)).toEqual(["BOOK", "PAPER", "WEB_PAGE"]);
-  expect(state.payload.sections[0].sentences[1].citations[0].sourceId).toBe(state.payload.sources[1].id);
-  expect(state.payload.openQuestions[0].sentences[0].citations[0].evidence).toBe("INFERRED");
-  expect(state.payload.followUps).toEqual(["How is the alum bath prepared for Kutch Ajrakh?"]);
+  const [prose, images] = state.sections[0].blocks;
+  if (prose.kind !== "prose" || images.kind !== "images") throw new Error("the section streams its prose, then its pictures");
+  expect(prose.sentences.map((sentence) => sentence.terms.map((span) => span.termKey))).toEqual([["alum", "alizarin", "cotton"], ["alum"], []]);
+  expect(images.items.map((item) => item.media.display)).toEqual(["INLINE", "LINK_CARD"]);
+  const cited = new Set(prose.sentences.flatMap((sentence) => sentence.citations.map((citation) => citation.claimId)));
+  for (const item of images.items) for (const claimId of item.claimIds) expect(cited.has(claimId)).toBe(true);
+  expect(state.trail.map((entry) => [entry.key, entry.stage])).toEqual([
+    ["crossref:10.1000/lake", "QUOTED"],
+    ["searxng:https://crafts.example.org/ajrakh", "QUOTED"],
+    ["searxng:https://crafts.example.org/workshops", "READ"],
+    ["openalex:W9", "FOUND"],
+    ["source:1a2b3c4d-0000-4000-8000-000000000001", "QUOTED"]
+  ]);
 });
 
 test("the backend's not-enough-evidence stream settles on the empty state with what was searched", () => {
@@ -71,5 +97,7 @@ test("the backend's not-enough-evidence stream settles on the empty state with w
   expect(state.error).toBeNull();
   expect(state.status).toBeNull();
   expect(state.notice).toContain('T3 "Kutch Ajrakh alum mordant"');
-  expect(state.payload.sections).toEqual([]);
+  expect(state.sections.map((section) => [section.id, section.state, section.blocks.length])).toEqual([["s1", "EMPTY", 0]]);
+  expect(state.sections[0].searched).toContain('T3 "Kutch Ajrakh alum mordant"');
+  expect(state.answerId).toBe("0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9");
 });

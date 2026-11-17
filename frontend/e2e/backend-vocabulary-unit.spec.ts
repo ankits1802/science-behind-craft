@@ -3,6 +3,8 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
+import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, IMAGE_RELEVANCE, MEDIA_DISPLAYS, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
+import { TRAIL_GROUPS, TRAIL_STAGES } from "@/lib/explainerStream";
 import { MEDIA_JOB_STATUSES, MEDIA_KINDS } from "@/lib/mediaContract";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
 import { CONDITION_QUANTITIES, ENVELOPE_STATUSES, MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, STAGE_TYPES } from "@/lib/scienceContract";
@@ -35,7 +37,18 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["schemas/voice.py", "VOICE_MODES", VOICE_MODES],
   ["schemas/voice.py", "RELAY_AUDIO_TYPES", RELAY_AUDIO_TYPES],
   ["schemas/voice.py", "CLIENT_TOOL_NAMES", CLIENT_TOOL_NAMES],
-  ["schemas/media.py", "MEDIA_JOB_STATUSES", MEDIA_JOB_STATUSES]
+  ["schemas/media.py", "MEDIA_JOB_STATUSES", MEDIA_JOB_STATUSES],
+  ["models/enums.py", "EXPLAINER_DEPTHS", DEPTHS],
+  ["models/enums.py", "DISCIPLINES", DISCIPLINES],
+  ["models/enums.py", "BLOCK_KINDS", BLOCK_KINDS],
+  ["research/explainer.py", "BUILT_BLOCK_KINDS", BUILT_BLOCK_KINDS],
+  ["research/explainer.py", "WORKING_SECTION_STATES", WORKING_SECTION_STATES],
+  ["research/explainer.py", "FINAL_SECTION_STATES", FINAL_SECTION_STATES],
+  ["research/explainer.py", "TRAIL_STAGES", TRAIL_STAGES],
+  ["research/explainer.py", "TRAIL_GROUPS", TRAIL_GROUPS],
+  ["models/enums.py", "MEDIA_DISPLAYS", MEDIA_DISPLAYS],
+  ["models/enums.py", "IMAGE_RELEVANCE", IMAGE_RELEVANCE],
+  ["models/enums.py", "TERM_BASES", TERM_BASES]
 ];
 
 for (const [file, name, client] of PAIRS) {

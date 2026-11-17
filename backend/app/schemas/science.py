@@ -5,13 +5,13 @@ import uuid
 from collections.abc import Iterable, Iterator, Sequence
 from itertools import combinations, pairwise
 from types import MappingProxyType
-from typing import Literal, Protocol, Self
+from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
 from app.research.base import ContractModel
+from app.research.citations import Citation, SourceRef, cited_source_ids
 from app.research.crafts import CraftRef
-from app.research.stream import Citation, SourceRef
 from app.research.vocabulary import (
     EvidenceLevel,
     MaterialKind,
@@ -33,7 +33,6 @@ __all__ = [
     "UNAVAILABLE_LEVEL",
     "UNBALANCED_LEVEL_CAP",
     "UNBALANCED_REASON",
-    "Cited",
     "CitedClaim",
     "CompoundRef",
     "ConditionReading",
@@ -44,10 +43,8 @@ __all__ = [
     "ProcessView",
     "ReactionSpecies",
     "ReactionView",
-    "SourceCitation",
     "StageCondition",
     "StageMaterialView",
-    "cited_source_ids",
     "envelope_status",
     "mhchem_equation",
     "process_claims",
@@ -264,16 +261,6 @@ class CraftProcess(ContractModel):
         return self
 
 
-class SourceCitation(Protocol):
-    @property
-    def source_id(self) -> str: ...
-
-
-class Cited(Protocol):
-    @property
-    def citations(self) -> Sequence[SourceCitation]: ...
-
-
 def process_claims(process: CraftProcess) -> Iterator[CitedClaim]:
     for view in process.processes:
         for stage in view.stages:
@@ -290,13 +277,6 @@ def _stage_claims(stage: ProcessStageView) -> Iterator[CitedClaim]:
         yield from reaction.claims
         for condition in reaction.conditions:
             yield from condition.claims
-
-
-def cited_source_ids(cited: Iterable[Cited]) -> list[str]:
-    ordered: dict[str, None] = {}
-    for item in cited:
-        ordered.update((citation.source_id, None) for citation in item.citations)
-    return list(ordered)
 
 
 def envelope_status(

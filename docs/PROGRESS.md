@@ -278,17 +278,155 @@ Last updated: 2026-11-17.
   Hindi known-answer questions in Hybrid and checks them on the wire. `app.scripts.provision_e2e_account`
   creates or resets the account; `seed_admin` now shares its upsert (`services/password_accounts`).
 
+- **Explainer contract** (decision 0030, phase A of `docs/plans/answer-experience.md`):
+  `docs/contracts/explainer.md` and the typed models in `backend/app/research/` that the phase A
+  lanes build against: the explainer document (ordered sections by discipline, each `READY` with
+  blocks or `EMPTY` with what was searched), one block envelope with a version per kind for all 21
+  kinds of the plan (prose, process ladder and images built; the rest declared with their fields
+  and refused until built), term spans, glossary terms and pictures (`MediaRef`: inline only under
+  an open licence with its author, else a credited link card), six stream events (`understood`,
+  `trail`, `section_started`, `section_state`, `block`, `section_done`) beside today's, depth by
+  role as data (Basic and Detailed over `HYBRID`, Expert over `DEEP`; Master Admin uncapped and
+  never degraded), and stored knowledge pieces with topic-key normalisation, the reuse rule and
+  staleness. Client types and runtime shapes in `frontend/lib/explainerContract.ts` and
+  `explainerStream.ts`. Hand-written fixtures `shared/explainer.{document,piece,term}.golden.json`
+  and `explainer.stream.golden.sse` for Kutch Ajrakh are built from the seed claims and sources,
+  reproduced byte for byte by the backend and parsed by the client. The cited-sentence shapes and
+  the first-citation walk now live in `research/citations.py`.
+
+- **Asking screen** (decision 0036): `/ask` is a composer: the question box, dictation through the
+  browser's Web Speech API in the answer language (interim words live, Stop, the mic drawn only
+  where the browser has it and has not refused that language), and under it the craft (a
+  searchable picker with Any craft, never required; after the `understood` event it reads
+  "Kutch Ajrakh · detected", offers Any craft and the candidates one tap away), the depth (the
+  config's Basic, Detailed, Expert starting at the role's default) and the answer language. The
+  ask body sends `depth` (and `anyCraft` when chosen), never `mode`; changing the craft, depth or
+  language re-asks the same question. The Mode choice, the live call from the ask box and the
+  "Which craft?" stop are gone; the production E2E asks at Detailed.
+
+- **Understanding and depth** (decision 0031): every answer starts with one understanding step,
+  the craft resolver plus one `PLAN` call (Gemini Flash Lite first) that picks among ambiguous
+  candidates, resolves crafts the question names, and lists the fields it touches and the experts
+  to seat (kept on `Answer.understanding`, migration `0013_answer_understanding`, for the phase B
+  panel). A craft is never required: the best match proceeds with the others offered, nothing
+  found or `anyCraft` answers for any craft, and research, stored search, composition and claim
+  write-back all run without a craft (shared concepts). `understood` is the first event. The
+  request takes `depth` (role default otherwise, any depth for any known role; `mode` and
+  `ASK_DEEP` are retired); Basic and Detailed run Hybrid with 2/5 and 4/10 queries and documents,
+  Expert Deep with 8/20. Per-answer caps per depth live in the AI budget (`answerCapUsd`, $0.25,
+  $0.50, $1.00 to start); Master Admins have no caps of any kind and are never degraded, and
+  their spend still records on Usage. A spend refusal while understanding answers from the
+  craft's stored findings.
+
+- **Pictures and terms** (decision 0034): Wikimedia Commons, Openverse (open licences with a
+  creator only) and SearXNG image results are image sources, each the image method of its
+  service's one adapter; a section's pictures are chosen by the words they share with the claims
+  its blocks cite, inline under an open licence with the author, otherwise credited link cards
+  whose thumbnail the page's own site serves, and stored once as `MediaRef` rows with their
+  claims (`services/section_images`). The `Term` glossary (542 terms from the seed data: craft
+  names with aliases and matched Wikidata labels, local names whose meaning the seed states, and
+  compounds) is seeded by `seed_claims`; `research/term_marking` marks term spans on the server.
+  `GET /api/terms/{key}?language=` answers a cited summary: the defining stored claims, else the
+  Wikipedia lead of the term's item, else one web search and a checked `SUMMARISE` call (Gemini
+  Flash Lite first), kept as quoted claims and cached per term and language. Migration
+  `0012_images_and_terms` adds six tables and the `SUMMARISE` routes; pictures load with no
+  referrer. The answer stream calls both since decision 0039 (below).
+
+- **Explainer view** (decision 0037): `/ask` draws the answer as an explainer from the explainer
+  stream (`lib/explainerStream.streamExplainer`, one reducer `lib/explainerState.reduceExplainer`;
+  the old answer reducer and view are gone). It shows the understood line ("Answering for Kutch
+  Ajrakh · Expert · in English", each part a button to its control), the research trail (live,
+  then counts with Replay the trail), a section bar, and sections that build as blocks arrive with
+  their working state: prose with citation chips, Verified and Reviewed badges and underlined
+  terms that open a cited summary (`GET /terms/{key}`), the process ladder that fills as the reader
+  scrolls (filled under reduced motion), the picture strip (credited inline pictures and link
+  cards), the "From earlier research" mark, and an `EMPTY` section's note of what was searched.
+  Listen's client (a dock that plays tracks per block and highlights the sentence and word being
+  read) is drawn once the config lists the answer's language; its route is lane 0035's
+  (`docs/contracts/explainer.md`, Listen). The production E2E reads the explainer events.
+
+- **Listen, and the live call switched off** (decision 0035): `GET /api/answers/{answerId}/listen`
+  reads the reader's own explainer (or one section) aloud through ElevenLabs
+  (`/v1/text-to-speech/{voice}/with-timestamps`, `eleven_v4`): each block's cited sentences, each
+  in its own language, in parts of at most 2,000 characters, with word timings for highlighting.
+  Audio is cached per piece content hash, model, voice and language under `media/narration/` in
+  the private bucket and served by one-hour presigned links, so a second listener costs nothing;
+  misses are held and settled in `VOICE_SECONDS` (Master Admins never refused). `/answers/config`
+  lists `listen.languages` only when the bucket, the key and ElevenLabs answer. The live call is
+  off: `VOICE_CALL_ENABLED` (default false) makes every `/api/voice` route 404 and hides voice in
+  the config; nothing is deleted. Listen reads the explainer sectioned composition (0032) keeps
+  under `Answer.payload.explainer`.
+
+- **Sectioned composition** (decision 0032): an answer is an explainer of sections, one per
+  field the question touches (at most the depth's number), researched and composed in parallel:
+  each section plans for its field and experts within its share of the depth's budget, streams
+  its sources to the trail as they are found, read and quoted, and is composed by Claude Sonnet
+  first, Gemini next. The server builds the blocks: a `process_ladder` from the stored process
+  rows of the stages the model chose (refused unless every stage, sentence, material, condition
+  and reaction is a stored row), and a `prose` block refused whole when a sentence is uncited or
+  states a figure no cited claim or quote holds; a section left empty says what it searched, and
+  one whose stored claims composed nothing researches live once more (finding 8a.2). Each checked
+  block is translated on its own. Every structured-output schema now keeps to the keywords
+  Anthropic accepts, and a refused format moves to the next route instead of free text (finding
+  8a.1). The stored-only answer streams the same events. The plans of every section are kept on
+  `Answer.plan` (migration `0014_sectioned_answer_plans`) and the explainer on
+  `Answer.payload.explainer`.
+
+- **Stored knowledge pieces and reuse** (decision 0033): every checked English block of a
+  researched section (prose, process ladder) is kept as a `KnowledgePiece` with its craft, facet,
+  topic key, depth, claims, sources, content hash and vector (migration `0015_knowledge_pieces`).
+  Before planning, each section whose facet and topic (the glossary terms the question names,
+  else the craft's districts for place fields, else the craft) hold a deep enough piece set whose
+  claims are still visible as cited streams first, marked "From earlier research" with its date,
+  and is not researched; the rest share the depth's budget. Research again (`fresh`) bypasses
+  reuse and replaces what it bypassed. A trigger on `Claim` marks pieces stale when a claim they
+  rest on is retracted, hidden, deleted or changes level or text, so the next answer rebuilds
+  them; the Coverage enrichment run now rebuilds the stale pieces of the 10 most-asked crafts
+  first, within its daily budget (`app.scripts.rebuild_pieces`). Stage concepts a process section
+  cites stay concepts: no answer writes process rows (decision 0038).
+
+- **Phase A review fixes** (decision 0038): Master Admins are no longer throttled when asking (30
+  asks in 10 minutes for everyone else), and the term route shares `is_uncapped`. A failed craft
+  lookup never blocks a question: without a chosen craft the question proceeds and the model's
+  reply decides (any craft when nothing is found); only a spend refusal or a failed lookup of a
+  chosen craft stops it, and no message tells the reader to name a craft. Reader-facing notes no
+  longer name modes ("No live research ran.", "Research failed just now. Try again."). The
+  OpenAI-compatible adapter now treats a refused `response_format` as a provider failure that
+  moves to the next route, never free text, through one `providers/base.format_refused` shared
+  with Anthropic and Gemini. Answers no longer write process rows ordered by the model. The trail's
+  key prefixes and lengths have one home in `research/explainer.py`. No page's CSP lets web
+  pictures in until the stream sends them. The production audit skips KaTeX's hidden MathML copy
+  (finding 8a.4), checked in a browser by a unit spec, so Frontend checks install Chromium for the
+  unit specs. Decision 0035 and the voice contract now say that enabling the call brings back the
+  craft page's Talk dock only.
+
+- **Pictures and terms in the stream** (decision 0039, plan 2.3 step 7): every English sentence
+  of a section's prose and ladder is marked with the answer's glossary terms before translation,
+  and stored pieces keep the marked blocks; a translated sentence keeps the spans whose text it
+  still shows. Each section with blocks, researched or reused, searches its pictures from the
+  claims its blocks cite while those blocks are sent and streams an `images` block after them
+  (each image service 6 s, the step 8 s; a failure, a timeout or nothing relevant sends none and
+  the section stays ready); pictures are never stored as pieces. An answer made only of reused
+  sections offers the stored follow-ups. Every page's CSP `img-src` adds `https:`, so a move to `/ask`
+  inside the app still shows pictures. The research golden now carries spans and pictures, and a unit spec draws them through
+  the whole explainer view. Seen on fakes only; pictures need `/ask` loaded as a page (debt).
+
 ## Next
 
-1. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
+1. Finish phase A of the answer experience (`docs/plans/answer-experience.md`, phase A status):
+   the phone Process tab hang (finding 8a.3, reproduce with a traced **E2E production** phone
+   run); the owner's choice for pictures after a move to `/ask` inside the app (decision 0039,
+   `docs/TECH_DEBT.md`); then checks green on GitHub, one deploy, the Kutch Ajrakh known-answer
+   questions and the E2E run at three widths.
+2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
    engine follow-ups are in `docs/TECH_DEBT.md` (decision 0015).
-2. Run the known-answer questions with **E2E production** (`questions=true`) once deployed (PLAN
+3. Run the known-answer questions with **E2E production** (`questions=true`) once deployed (PLAN
    section 0, decision 0029), and clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher
    chunk access).
-3. The `WEB_READ` reader for long documents.
-4. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
+4. The `WEB_READ` reader for long documents.
+5. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
 
 ## Waiting on the owner
 

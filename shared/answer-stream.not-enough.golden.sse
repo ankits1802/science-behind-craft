@@ -1,17 +1,26 @@
-event: status
-data: {"step":"RESOLVING","message":"Finding the craft"}
-
-event: match
-data: {"status":"RESOLVED","craft":{"slug":"Kutch-Ajrakh","name":"Kutch Ajrakh","path":"/crafts/Kutch-Ajrakh"}}
+event: understood
+data: {"crafts":[{"slug":"Kutch-Ajrakh","name":"Kutch Ajrakh","path":"/crafts/Kutch-Ajrakh"}],"candidates":[],"depth":"DETAILED","language":"en"}
 
 event: status
 data: {"step":"PLANNING","message":"Planning the research on Kutch Ajrakh"}
+
+event: section_started
+data: {"id":"s1","discipline":"CHEMISTRY","title":"The chemistry","order":1,"state":"RESEARCHING"}
 
 event: status
 data: {"step":"SEARCHING_STORED","message":"Searching stored findings"}
 
 event: status
 data: {"step":"RESEARCHING","message":"Searching 2 live queries"}
+
+event: section_state
+data: {"sectionId":"s1","state":"WRITING"}
+
+event: section_state
+data: {"sectionId":"s1","state":"CHECKING"}
+
+event: section_done
+data: {"sectionId":"s1","state":"EMPTY","searched":"Searched 0 stored claims and 0 stored source passages. Live research ran 2 queries: T3 \"Kutch Ajrakh alum mordant\"; T4 \"Kutch Ajrakh alizarin lake\". Sources searched: semantic_scholar. Found 0 items, read 0 documents and recorded 1 failed request."}
 
 event: not_enough_evidence
 data: {"message":"There is not enough cited evidence to answer this about Kutch Ajrakh yet. Searched 0 stored claims and 0 stored source passages. Live research ran 2 queries: T3 \"Kutch Ajrakh alum mordant\"; T4 \"Kutch Ajrakh alizarin lake\". Sources searched: semantic_scholar. Found 0 items, read 0 documents and recorded 1 failed request."}

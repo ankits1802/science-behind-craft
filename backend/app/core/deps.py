@@ -156,7 +156,6 @@ async def get_current_user(
 
 
 CAPABILITY_REFUSALS: dict[Capability, str] = {
-    Capability.ASK_DEEP: "Deep research is for researchers and above.",
     Capability.GENERATE_VIDEO: "Video is for researchers and above.",
     Capability.MANAGE_ACCESS: "Managing who may sign in is for professors and admins.",
     Capability.LIST_USERS: "Managing users is for professors and admins.",

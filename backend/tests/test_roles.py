@@ -60,7 +60,6 @@ def test_shared_roles_file_agrees() -> None:
 
 MATRIX = {
     Capability.ASK_STANDARD: (True, True, True, True, True),
-    Capability.ASK_DEEP: (False, True, True, True, True),
     Capability.VOICE: (True, True, True, True, True),
     Capability.GENERATE_IMAGE: (True, True, True, True, True),
     Capability.GENERATE_VIDEO: (False, True, True, True, True),

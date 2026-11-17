@@ -6,7 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.routes.secrets import require_step_up
 from app.core.db import get_session
 from app.core.deps import require
-from app.core.roles import ROLE_RANK, Capability
+from app.core.errors import InvalidInput
+from app.core.roles import Capability
 from app.models import User
 from app.schemas.admin import AppSettingsUpdate, RouteOrderUpdate, RouteTestRequest
 from app.services import app_settings, audit, managed_secrets, route_policy
@@ -134,33 +135,11 @@ async def update_budget(
     session: AsyncSession = Depends(get_session),
 ) -> dict[str, Any]:
     await require_step_up(session, actor, payload.twoFactorCode)
-    changes: dict[str, Any] = {}
-    if payload.monthlyCeilingUsd is not None:
-        changes[app_settings.MONTHLY_CEILING_USD] = payload.monthlyCeilingUsd
-    if payload.mediaCapUsd is not None:
-        changes[app_settings.MEDIA_CAP_USD] = payload.mediaCapUsd
-    if payload.roleDailyUsd is not None:
-        unknown = set(payload.roleDailyUsd) - set(ROLE_RANK)
-        if unknown:
-            raise HTTPException(
-                status.HTTP_422_UNPROCESSABLE_ENTITY, f"Unknown roles: {', '.join(sorted(unknown))}"
-            )
-        changes[app_settings.ROLE_DAILY_USD] = payload.roleDailyUsd
-    if payload.degradeAtFraction is not None:
-        changes[app_settings.DEGRADE_AT_FRACTION] = payload.degradeAtFraction
-    if payload.signUpMode is not None:
-        changes[app_settings.SIGN_UP_MODE] = payload.signUpMode
-    if payload.domainAllowlist is not None:
-        changes[app_settings.DOMAIN_ALLOWLIST] = sorted(
-            {d.strip().lower() for d in payload.domainAllowlist if d.strip()}
-        )
-    current = await app_settings.load_all(session)
-    media = changes.get(app_settings.MEDIA_CAP_USD, current[app_settings.MEDIA_CAP_USD])
-    monthly = changes.get(app_settings.MONTHLY_CEILING_USD, current[app_settings.MONTHLY_CEILING_USD])
-    if media > monthly:
-        raise HTTPException(
-            status.HTTP_422_UNPROCESSABLE_ENTITY, "The media cap can't exceed the monthly ceiling."
-        )
+    update = {name: value for name, value in payload if value is not None and name != "twoFactorCode"}
+    try:
+        changes = app_settings.budget_changes(update, await app_settings.load_all(session))
+    except InvalidInput as error:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(error)) from None
     for key, value in changes.items():
         await app_settings.set_value(session, key, value, actor.id)
     if changes:

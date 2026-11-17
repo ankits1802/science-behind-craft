@@ -17,7 +17,7 @@ from app.research.planning import (
 from app.research.vocabulary import CANONICAL_LANGUAGE, RETRIEVAL_TIERS, STORED_TIERS
 
 from .drafting import DraftQuery, PlanDraft
-from .policy import DEGRADED_MODES, native_query_limit
+from .policy import DEGRADED_MODES, request_limits
 
 __all__ = [
     "DEFAULT_QUERY_TIER",
@@ -40,22 +40,22 @@ def effective_mode(mode: str, *, degraded: bool) -> str:
     return DEGRADED_MODES.get(mode, mode) if degraded else mode
 
 
-def open_facets(mode: str, coverage: Sequence[FacetCoverage]) -> list[int]:
+def open_facets(mode: str, coverage: Sequence[FacetCoverage], *, fresh: bool = False) -> list[int]:
     policy = MODE_POLICIES[mode]
     if not policy.max_queries:
         return []
-    return [
-        entry.facet_index for entry in coverage if not (policy.live_only_for_open_facets and entry.covered)
-    ]
+    stored_first = policy.live_only_for_open_facets and not fresh
+    return [entry.facet_index for entry in coverage if not (stored_first and entry.covered)]
 
 
 def retrieval_plan(
     request: PlanRequest, draft: PlanDraft, coverage: Sequence[FacetCoverage], *, mode: str
 ) -> RetrievalPlan:
     policy = MODE_POLICIES[mode]
-    facets = open_facets(mode, coverage)
-    native = native_queries(request, draft, facets, limit=native_query_limit(request.language, mode))
-    queries = [*planned_queries(request, draft, facets, limit=policy.max_queries), *native]
+    limits = request_limits(request, mode)
+    facets = open_facets(mode, coverage, fresh=request.fresh)
+    native = native_queries(request, draft, facets, limit=limits.native_queries)
+    queries = [*planned_queries(request, draft, facets, limit=limits.queries), *native]
     live_tiers = {query.tier for query in queries}
     return RetrievalPlan(
         mode=mode,
@@ -70,7 +70,7 @@ def retrieval_plan(
             if tier in policy.tiers and (tier in STORED_TIERS or tier in live_tiers)
         ],
         queries=queries,
-        max_fetches=policy.max_fetches if queries else 0,
+        max_fetches=limits.fetches if queries else 0,
     )
 
 
@@ -122,7 +122,7 @@ def search_question(request: PlanRequest, draft: PlanDraft) -> str:
 
 def search_query(
     text: str,
-    craft: CraftRef,
+    craft: CraftRef | None,
     *,
     withheld: Sequence[str],
     language: str = CANONICAL_LANGUAGE,
@@ -138,15 +138,20 @@ def search_query(
     return SearchQuery(text=anchored, language=language)
 
 
-def _first_query(craft: CraftRef, draft: PlanDraft, drafted: Sequence[DraftQuery], index: int) -> DraftQuery:
+def _first_query(
+    craft: CraftRef | None, draft: PlanDraft, drafted: Sequence[DraftQuery], index: int
+) -> DraftQuery:
     for query in drafted:
         if query.facet_index == index:
             return query
     target = draft.facets[index].target
-    return DraftQuery(facet_index=index, tier=DEFAULT_QUERY_TIER, text=f"{craft.name} {target}")
+    text = f"{craft.name} {target}" if craft else target
+    return DraftQuery(facet_index=index, tier=DEFAULT_QUERY_TIER, text=text)
 
 
-def _anchored(text: str, craft: CraftRef, native_name: str = "") -> str:
+def _anchored(text: str, craft: CraftRef | None, native_name: str = "") -> str:
+    if craft is None:
+        return text[:SEARCH_QUERY_MAX_CHARS].strip()
     if _names(text, craft.name) or (native_name and _names_natively(text, native_name)):
         return text[:SEARCH_QUERY_MAX_CHARS].strip()
     return f"{native_name or craft.name} {text}"[:SEARCH_QUERY_MAX_CHARS].strip()

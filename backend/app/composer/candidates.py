@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import uuid
 
-from app.research.composition import ComposeCandidate, ComposeRequest, ResearchSummary, SearchedQuery
+from app.research.composition import (
+    ComposeCandidate,
+    ComposeFocus,
+    ComposeRequest,
+    ResearchSummary,
+    SearchedQuery,
+)
 from app.research.evidence import SourceDocument
 from app.research.evidence_pack import EvidencePack
 from app.research.retrieval import ClaimHit
@@ -23,7 +29,9 @@ EVIDENCE_LEVEL = LABEL_LEVELS["QUOTED"]
 LABEL_MAX_CHARS = 300
 
 
-def compose_request(pack: EvidencePack, question: str) -> ComposeRequest:
+def compose_request(
+    pack: EvidencePack, question: str, *, focus: ComposeFocus | None = None
+) -> ComposeRequest:
     claims = [claim_candidate(hit) for hit in pack.stored.claims]
     documents = [candidate for doc in pack.documents if (candidate := document_candidate(doc)) is not None]
     return ComposeRequest(
@@ -31,6 +39,7 @@ def compose_request(pack: EvidencePack, question: str) -> ComposeRequest:
         craft=pack.plan.craft,
         candidates=[*claims, *documents],
         searched=research_summary(pack),
+        focus=focus,
     )
 
 
@@ -58,19 +67,21 @@ def document_candidate(document: SourceDocument) -> ComposeCandidate | None:
     )
 
 
-def research_summary(pack: EvidencePack) -> ResearchSummary:
-    found_by = {name for entry in pack.evidence for name in entry.found_by}
-    failed = {failure.service for failure in pack.failures}
+def research_summary(pack: EvidencePack, *more: EvidencePack) -> ResearchSummary:
+    packs = (pack, *more)
+    found_by = {name for each in packs for entry in each.evidence for name in entry.found_by}
+    failed = {failure.service for each in packs for failure in each.failures}
+    queries = (SearchedQuery(tier=q.tier, text=q.query.text) for each in packs for q in each.plan.queries)
     return ResearchSummary(
         craft=pack.plan.craft,
         mode=pack.plan.mode,
-        stored_claims=len(pack.stored.claims),
-        stored_passages=len(pack.stored.chunks),
-        queries=tuple(SearchedQuery(tier=q.tier, text=q.query.text) for q in pack.plan.queries),
+        stored_claims=len({hit.claim_id for each in packs for hit in each.stored.claims}),
+        stored_passages=len({hit.chunk_id for each in packs for hit in each.stored.chunks}),
+        queries=tuple(dict.fromkeys(queries)),
         services=tuple(sorted(found_by | failed)),
-        evidence_found=len(pack.evidence),
-        documents_read=len(pack.documents),
-        failures=len(pack.failures),
+        evidence_found=len({entry.item.id for each in packs for entry in each.evidence}),
+        documents_read=len({document.item.id for each in packs for document in each.documents}),
+        failures=sum(len(each.failures) for each in packs),
     )
 
 

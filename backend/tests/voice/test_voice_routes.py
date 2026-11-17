@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 
 from app.api import voice_deps
 from app.api.routes import voice as voice_routes
+from app.core.config import Settings
 from app.core.deps import get_current_user
 from app.main import create_app
 from app.models import User
@@ -73,7 +74,9 @@ def settings(transport: str = "RELAY") -> VoiceSettings:
 
 
 class Client:
-    def __init__(self, store: MemoryStore, *, transport: str = "RELAY", user: User | None = None) -> None:
+    def __init__(
+        self, store: MemoryStore, *, transport: str = "RELAY", user: User | None = None, call: bool = True
+    ) -> None:
         app = create_app()
         runtime = VoiceRuntime(client=httpx.AsyncClient(transport=httpx.MockTransport(elevenlabs_answer)))
         learner = user or User(
@@ -86,6 +89,7 @@ class Client:
         app.dependency_overrides[voice_deps.voice_store] = lambda: store
         app.dependency_overrides[voice_deps.current_voice] = lambda: settings(transport)
         app.dependency_overrides[voice_deps.voice_runtime] = lambda: runtime
+        app.dependency_overrides[voice_deps.voice_call_enabled] = lambda: call
         app.dependency_overrides[get_current_user] = lambda: learner
         self.http = TestClient(app)
 
@@ -261,3 +265,50 @@ def test_the_answer_config_carries_voice_availability() -> None:
 def test_the_voice_routes_live_under_the_api_prefix() -> None:
     paths = {route.path for route in voice_routes.router.routes}
     assert "/voice/llm/v1/chat/completions" in paths and json.dumps(sorted(paths))
+
+
+VOICE_CALL_ROUTES = [
+    ("GET", "/api/voice/notice"),
+    ("POST", "/api/voice/session"),
+    ("POST", f"/api/voice/session/{SESSION_ID}/end"),
+    ("GET", f"/api/voice/session/{SESSION_ID}/transcript"),
+    ("POST", VOICE_LLM_PATH),
+    ("POST", f"/api/voice/session/{SESSION_ID}/turns"),
+    ("GET", f"/api/voice/session/{SESSION_ID}/turns/{uuid.UUID(int=9)}/speech"),
+]
+
+
+@pytest.mark.parametrize(("method", "path"), VOICE_CALL_ROUTES, ids=[path for _, path in VOICE_CALL_ROUTES])
+def test_every_voice_call_route_is_404_while_the_call_is_switched_off(
+    method: str, path: str, now: datetime
+) -> None:
+    store = live_agent_store(now)
+    kept = dict(store.sessions)
+    response = Client(store, call=False).http.request(method, path, json={"craftSlug": CRAFT.slug})
+    assert response.status_code == 404
+    assert store.sessions == kept
+
+
+def test_every_voice_call_route_is_listed_for_the_switch() -> None:
+    listed = {path.replace(str(SESSION_ID), "{session_id}") for _, path in VOICE_CALL_ROUTES}
+    listed = {path.replace(str(uuid.UUID(int=9)), "{turn_id}").removeprefix("/api") for path in listed}
+    assert listed == {route.path for route in voice_routes.router.routes}
+
+
+def test_the_switched_off_call_shows_no_voice_in_the_answer_config() -> None:
+    voice = Client(MemoryStore(used_before=60), call=False).http.get("/api/answers/config").json()["voice"]
+    assert voice == {
+        "configured": False,
+        "transport": None,
+        "languages": [],
+        "noticeVersion": None,
+        "consentRequired": False,
+        "remainingSeconds": None,
+    }
+
+
+def test_the_call_is_switched_off_unless_the_setting_turns_it_on(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("VOICE_CALL_ENABLED", raising=False)
+    assert Settings().voice_call_enabled is False
+    monkeypatch.setenv("VOICE_CALL_ENABLED", "true")
+    assert Settings().voice_call_enabled is True

@@ -4,7 +4,7 @@ import { CRAFT_TAB_LABEL, type CraftTab } from "@/lib/craftProfile";
 import type { User } from "@/lib/types";
 
 import { CRAFT_SLUG, NOT_FOUND_PATH, SCREENS_TIMEOUT_MS, credentials } from "./run";
-import { barProblems, chooseFirstLayer, menuProblems, modeProblems, openCraftTab } from "./screenChecks";
+import { barProblems, chooseFirstLayer, depthProblems, menuProblems, openCraftTab } from "./screenChecks";
 import { ScreenRun } from "./screenRun";
 import { submitSignIn } from "./signIn";
 
@@ -34,7 +34,7 @@ test("every screen of production at this width", async ({ page }, testInfo) => {
   const signedIn = session.user;
   if (signedIn) {
     run.checkEveryScreen(() => menuProblems(page, signedIn));
-    await run.visit("Ask", "/ask", async () => [...(await barProblems(page, signedIn)), ...(await modeProblems(page, signedIn))]);
+    await run.visit("Ask", "/ask", async () => [...(await barProblems(page, signedIn)), ...(await depthProblems(page, signedIn))]);
     await run.visit("Crafts", "/crafts", async () => {
       await expect(page.getByRole("heading", { name: "Crafts", level: 1 })).toBeVisible();
       return [];

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "counts": {
     "oversizedFiles": 12,
-    "longFunctions": 52,
+    "longFunctions": 50,
     "wideFunctions": 9
   }
 }

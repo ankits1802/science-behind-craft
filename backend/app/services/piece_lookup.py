@@ -1,0 +1,136 @@
+from __future__ import annotations
+
+import logging
+import uuid
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+
+from pydantic import ValidationError
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models import AdminDistrict, Craft, CraftLocation, KnowledgePiece as PieceRow
+from app.research.crafts import CraftRef
+from app.research.knowledge_pieces import PIECE_SCHEMA_VERSION, KnowledgePiece
+from app.research.piece_reuse import ClaimState
+from app.research.piece_topics import TopicSubjects
+from app.research.term_marking import TermMarker
+from app.research.vocabulary import CANONICAL_LANGUAGE
+
+from . import knowledge_view
+from .answer_events import CitedClaims, cited_claims
+from .term_glossary import glossary_entries
+
+__all__ = [
+    "PIECE_CANDIDATES_MAX",
+    "PieceAsk",
+    "PieceLookup",
+    "ReusedSection",
+    "candidate_pieces",
+    "claim_states",
+    "craft_districts",
+    "stored_piece",
+    "topic_subjects",
+]
+
+logger = logging.getLogger(__name__)
+
+PIECE_CANDIDATES_MAX = 200
+
+
+@dataclass(frozen=True)
+class PieceAsk:
+    question: str
+    craft: CraftRef | None
+    facets: tuple[str, ...]
+    depth: str
+    fresh: bool = False
+
+
+@dataclass(frozen=True)
+class ReusedSection:
+    pieces: tuple[KnowledgePiece, ...]
+    cited: CitedClaims
+
+
+@dataclass(frozen=True)
+class PieceLookup:
+    craft_id: uuid.UUID | None = None
+    topics: Mapping[str, str] = field(default_factory=dict)
+    reused: Mapping[str, ReusedSection] = field(default_factory=dict)
+
+
+async def topic_subjects(session: AsyncSession, craft: Craft, question: str) -> TopicSubjects:
+    marker = TermMarker(await glossary_entries(session, [craft.id]))
+    terms = tuple(span.term_key for span in marker.spans(question))
+    return TopicSubjects(
+        craft_slug=craft.slug, question_terms=terms, districts=await craft_districts(session, craft)
+    )
+
+
+async def craft_districts(session: AsyncSession, craft: Craft) -> tuple[str, ...]:
+    names = await session.scalars(
+        select(AdminDistrict.name)
+        .join(CraftLocation, CraftLocation.districtLgd == AdminDistrict.lgd)
+        .where(CraftLocation.craftId == craft.id)
+        .distinct()
+        .order_by(AdminDistrict.name)
+    )
+    return tuple(names)
+
+
+async def candidate_pieces(
+    session: AsyncSession, craft_id: uuid.UUID, topics: Mapping[str, str]
+) -> list[KnowledgePiece]:
+    rows = await session.scalars(
+        select(PieceRow)
+        .where(
+            PieceRow.craftId == craft_id,
+            PieceRow.facet.in_(list(topics)),
+            PieceRow.topicKey.in_(list(topics.values())),
+            PieceRow.language == CANONICAL_LANGUAGE,
+        )
+        .order_by(PieceRow.createdAt.desc(), PieceRow.id)
+        .limit(PIECE_CANDIDATES_MAX)
+    )
+    pieces = [stored_piece(row) for row in rows]
+    return [piece for piece in pieces if piece is not None]
+
+
+async def claim_states(
+    session: AsyncSession, pieces: Sequence[KnowledgePiece]
+) -> tuple[dict[uuid.UUID, ClaimState], CitedClaims]:
+    wanted = dict.fromkeys(claim for piece in pieces for claim in piece.claim_ids)
+    views, sources = await knowledge_view.claims_by_id(session, wanted)
+    states = {
+        claim_id: ClaimState(level=view.level, citation_ids=frozenset(c["id"] for c in view.citations))
+        for claim_id, view in views.items()
+    }
+    return states, cited_claims(list(views.values()), sources)
+
+
+def stored_piece(row: PieceRow) -> KnowledgePiece | None:
+    try:
+        return KnowledgePiece.model_validate(
+            {
+                "schemaVersion": PIECE_SCHEMA_VERSION,
+                "id": row.id,
+                "craftId": row.craftId,
+                "kind": row.kind,
+                "facet": row.facet,
+                "topicKey": row.topicKey,
+                "language": row.language,
+                "depth": row.depth,
+                "payload": row.payload,
+                "claimIds": row.claimIds,
+                "sourceIds": row.sourceIds,
+                "contentHash": row.contentHash,
+                "createdFromAnswerId": row.createdFromAnswerId,
+                "createdAt": row.createdAt,
+                "staleSince": row.staleSince,
+                "supersededById": row.supersededById,
+            }
+        )
+    except ValidationError as refused:
+        logger.warning("stored piece %s no longer meets the piece contract: %s", row.id, refused)
+        return None

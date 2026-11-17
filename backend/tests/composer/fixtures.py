@@ -167,3 +167,12 @@ def answer(*sections: tuple[str, Sequence[dict[str, Any]]], follow_ups: Sequence
 
 def replacements(*items: tuple[int, dict[str, Any]]) -> str:
     return json.dumps({"sentences": [{"index": index, **item} for index, item in items]})
+
+
+def section_reply(
+    *items: dict[str, Any], stages: Sequence[object] | None = None, follow_ups: Sequence[str] = ()
+) -> str:
+    reply: dict[str, Any] = {"sentences": list(items), "followUps": list(follow_ups)}
+    if stages is not None:
+        reply["stages"] = [str(stage) for stage in stages]
+    return json.dumps(reply)

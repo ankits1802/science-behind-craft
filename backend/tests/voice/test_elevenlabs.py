@@ -171,3 +171,95 @@ async def test_client_tools_and_secrets_are_listed_by_name() -> None:
 def test_an_empty_key_is_not_configured() -> None:
     with pytest.raises(NotConfigured, match="ELEVENLABS_API_KEY"):
         ElevenLabs(api_key=" ", client=httpx.AsyncClient())
+
+
+NARRATED = "Alum fastens colours."
+
+
+async def test_narration_asks_for_character_timings_from_the_narration_model() -> None:
+    elevenlabs, seen = adapter(replying("narration_with_timestamps.json"))
+    speech = await elevenlabs.narration(
+        NARRATED, voice_id="voice_1", language="en", previous_text="Before.", next_text="After."
+    )
+    assert seen[0].method == "POST" and seen[0].url.path == "/v1/text-to-speech/voice_1/with-timestamps"
+    assert seen[0].url.params["output_format"] == "mp3_44100_128"
+    assert json.loads(seen[0].content) == {
+        "text": NARRATED,
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "previous_text": "Before.",
+        "next_text": "After.",
+    }
+    assert speech.audio == bytes([0xFF, 0xFB]) * 800
+    assert (len(speech.starts), speech.starts[5], speech.ends[11], speech.ends[-1]) == (21, 0.3, 0.72, 1.26)
+
+
+async def test_narration_without_neighbours_sends_no_context() -> None:
+    elevenlabs, seen = adapter(replying("narration_with_timestamps.json"))
+    await elevenlabs.narration(NARRATED, voice_id="voice_1", language="en")
+    assert set(json.loads(seen[0].content)) == {"text", "model_id", "language_code"}
+
+
+async def test_a_mark_of_several_code_points_times_each_of_them() -> None:
+    alignment = {
+        "characters": ["रं", "ग"],
+        "character_start_times_seconds": [0.0, 0.2],
+        "character_end_times_seconds": [0.2, 0.35],
+    }
+    body = {"audio_base64": "//s=", "alignment": alignment}
+    elevenlabs, _ = adapter(lambda request: httpx.Response(200, json=body))
+    speech = await elevenlabs.narration("रंग", voice_id="voice_1", language="hi")
+    assert (speech.starts, speech.ends) == ((0.0, 0.0, 0.2), (0.2, 0.2, 0.35))
+
+
+@pytest.mark.parametrize(
+    "alignment",
+    [
+        {
+            "characters": list("Alum"),
+            "character_start_times_seconds": [0, 1, 2, 3],
+            "character_end_times_seconds": [1, 2, 3, 4],
+        },
+        {
+            "characters": list("Alum!"),
+            "character_start_times_seconds": [0, 1],
+            "character_end_times_seconds": [1, 2],
+        },
+        {
+            "characters": list("Alum!"),
+            "character_start_times_seconds": [0, 1, 2, 3, 4],
+            "character_end_times_seconds": [1, 2, 1, 4, 5],
+        },
+        None,
+    ],
+    ids=["other text", "short timings", "ends before it starts", "no alignment"],
+)
+async def test_timings_off_the_documented_shape_fail_loudly(alignment: dict | None) -> None:
+    body = {"audio_base64": "//s=", "alignment": alignment}
+    elevenlabs, _ = adapter(lambda request: httpx.Response(200, json=body))
+    with pytest.raises(ExternalFailure, match="documented shape"):
+        await elevenlabs.narration("Alum!", voice_id="voice_1", language="en")
+
+
+async def test_narration_audio_that_is_not_base64_fails_loudly() -> None:
+    alignment = {
+        "characters": ["A"],
+        "character_start_times_seconds": [0],
+        "character_end_times_seconds": [1],
+    }
+    elevenlabs, _ = adapter(
+        lambda request: httpx.Response(200, json={"audio_base64": "%%%", "alignment": alignment})
+    )
+    with pytest.raises(ExternalFailure, match="documented shape"):
+        await elevenlabs.narration("A", voice_id="voice_1", language="en")
+
+
+async def test_narration_past_the_model_s_limit_or_in_an_unchecked_language_is_refused_before_any_request() -> (
+    None
+):
+    elevenlabs, seen = adapter(replying("narration_with_timestamps.json"))
+    with pytest.raises(InvalidInput, match="10000"):
+        await elevenlabs.narration("a" * 10_001, voice_id="voice_1", language="en")
+    with pytest.raises(InvalidInput, match="eleven_v4"):
+        await elevenlabs.narration("Hola.", voice_id="voice_1", language="es")
+    assert seen == []

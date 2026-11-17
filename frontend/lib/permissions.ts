@@ -75,10 +75,6 @@ export function canManageAccessEntry(user: User | null | undefined, admitRole: U
   return isMasterAdmin(user) || roleRank(admitRole) < roleRank(user);
 }
 
-export function canAskDeep(user: User | null | undefined) {
-  return hasRank(user, "RESEARCHER");
-}
-
 export function canShareMedia(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
 }

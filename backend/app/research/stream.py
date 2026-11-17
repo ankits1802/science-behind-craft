@@ -5,16 +5,17 @@ import contextlib
 import json
 from collections.abc import AsyncIterator, Awaitable, Callable, Mapping
 from types import MappingProxyType
-from typing import Annotated, Any, Literal, Self
+from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError, model_validator
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError
 
 from app.core.errors import InvalidInput
-from app.models.knowledge import QUOTE_MAX_CHARS
 
-from .base import ContractModel, HttpsUrl
-from .crafts import MAX_CANDIDATES, CraftRef, CraftResolution
-from .vocabulary import EvidenceLabel, ShownLevel, SourceType, TrustTier
+from .base import ContractModel, absent
+from .citations import AnswerSentence, Citation, SourceRef
+from .crafts import MAX_CANDIDATES, CraftRef
+from .explainer import EXPLAINER_EVENTS
+from .vocabulary import ShownLevel
 
 __all__ = [
     "HEARTBEAT_FRAME",
@@ -41,7 +42,6 @@ __all__ = [
     "StatusStep",
     "event_frame",
     "event_stream",
-    "match_event",
     "parse_event",
     "sse_frame",
 ]
@@ -62,50 +62,6 @@ STATUS_STEPS = (
 StatusStep = Literal[*STATUS_STEPS]
 ResearchProgress = Callable[[StatusStep, int], Awaitable[None]]
 Emit = Callable[[str, Any], Awaitable[None]]
-
-
-def _absent(value: object) -> bool:
-    return value is None
-
-
-class SourceRef(ContractModel):
-    id: str = Field(min_length=1)
-    kind: SourceType
-    title: str = Field(min_length=1)
-    authors: list[str]
-    year: int | None
-    doi: str | None
-    url: HttpsUrl | None
-    publisher: str | None
-    licence: str | None
-    attribution: str | None
-    reliability: TrustTier | None
-
-
-class Citation(ContractModel):
-    id: str = Field(min_length=1)
-    claim_id: str = Field(min_length=1)
-    source_id: str = Field(min_length=1)
-    quote: str | None = Field(max_length=QUOTE_MAX_CHARS)
-    locator: str | None
-    context: str | None
-    evidence: EvidenceLabel
-    level: ShownLevel
-
-
-class AnswerSentence(ContractModel):
-    id: str = Field(min_length=1)
-    text: str = Field(min_length=1)
-    level: ShownLevel
-    citations: list[Citation] = Field(min_length=1)
-    translated: bool = False
-    original: str | None = Field(default=None, min_length=1, exclude_if=_absent)
-
-    @model_validator(mode="after")
-    def _translation_keeps_its_original(self) -> Self:
-        if self.translated != (self.original is not None):
-            raise ValueError("a translated sentence, and only a translated one, carries its original")
-        return self
 
 
 class MatchResolved(ContractModel):
@@ -130,7 +86,7 @@ class StatusEvent(ContractModel):
 class SectionEvent(ContractModel):
     id: str = Field(min_length=1)
     heading: str = Field(min_length=1)
-    original: str | None = Field(default=None, min_length=1, exclude_if=_absent)
+    original: str | None = Field(default=None, min_length=1, exclude_if=absent)
 
 
 class SentenceEvent(ContractModel):
@@ -185,6 +141,7 @@ STREAM_EVENTS: Mapping[str, TypeAdapter[Any]] = MappingProxyType(
         "not_enough_evidence": TypeAdapter(NotEnoughEvidenceEvent),
         "done": TypeAdapter(DoneEvent),
         "error": TypeAdapter(ErrorEvent),
+        **EXPLAINER_EVENTS,
     }
 )
 
@@ -208,14 +165,6 @@ def event_frame(name: str, data: Any) -> str:
 
 def sse_frame(event: str, data: Any) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, separators=(',', ':'))}\n\n"
-
-
-def match_event(resolution: CraftResolution) -> BaseModel:
-    if resolution.status == "RESOLVED" and resolution.craft is not None:
-        return MatchResolved(status="RESOLVED", craft=resolution.craft)
-    if resolution.status == "AMBIGUOUS":
-        return MatchAmbiguous(status="AMBIGUOUS", candidates=[c.craft for c in resolution.candidates])
-    return MatchNone(status="NONE")
 
 
 async def event_stream(

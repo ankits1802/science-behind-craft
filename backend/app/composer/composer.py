@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import logging
+import uuid
 from collections import Counter
-from collections.abc import Mapping
-from dataclasses import replace
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass, replace
+from functools import partial
+from typing import Any
 
 from app.core.errors import ExternalFailure
 from app.research.composition import (
@@ -18,19 +21,53 @@ from app.research.composition import (
 from app.research.planning import OPEN_QUESTION_LEVEL
 from app.research.structured import StructuredModel, reply_object
 
-from .drafts import DraftAnswer, DraftSection, DraftSentence, parsed_answer, parsed_replacements
+from .drafts import (
+    DraftAnswer,
+    DraftSection,
+    DraftSentence,
+    parsed_answer,
+    parsed_replacements,
+    parsed_section,
+)
 from .prompt import (
     COMPOSE_SYSTEM_PROMPT,
     REGENERATE_SYSTEM_PROMPT,
+    SECTION_FOLLOW_UPS_MAX,
+    SECTION_SENTENCES_MAX,
+    SECTION_SYSTEM_PROMPT,
     compose_message,
     compose_schema,
     regenerate_message,
     regenerate_schema,
+    section_schema,
 )
 
-__all__ = ["ModelComposer", "assembled_answer"]
+__all__ = ["ModelComposer", "ReplyForm", "assembled_answer", "reply_form"]
 
 logger = logging.getLogger(__name__)
+
+Parse = Callable[[Mapping[str, Any], Mapping[str, ComposeCandidate]], DraftAnswer]
+
+
+@dataclass(frozen=True)
+class ReplyForm:
+    system: str
+    schema: dict[str, Any]
+    parse: Parse
+
+
+def reply_form(request: ComposeRequest) -> ReplyForm:
+    focus = request.focus
+    if focus is None:
+        return ReplyForm(COMPOSE_SYSTEM_PROMPT, compose_schema(), parsed_answer)
+    stage_ids = [str(stage.id) for stage in focus.stages]
+    parse = partial(
+        parsed_section,
+        title=focus.title,
+        stage_ids=stage_ids,
+        limits=(SECTION_SENTENCES_MAX, SECTION_FOLLOW_UPS_MAX),
+    )
+    return ReplyForm(SECTION_SYSTEM_PROMPT, section_schema(stage_ids), parse)
 
 
 class ModelComposer:
@@ -49,15 +86,15 @@ class ModelComposer:
 
     async def _first_draft(self, request: ComposeRequest) -> tuple[DraftAnswer, int]:
         user = compose_message(request)
-        schema = compose_schema()
+        form = reply_form(request)
         for attempt in range(COMPOSE_RETRIES):
-            reply = await self._model(system=COMPOSE_SYSTEM_PROMPT, user=user, schema=schema)
+            reply = await self._model(system=form.system, user=user, schema=form.schema)
             try:
-                return parsed_answer(reply_object(reply), request.allowed), COMPOSE_RETRIES - attempt
+                return form.parse(reply_object(reply), request.allowed), COMPOSE_RETRIES - attempt
             except ExternalFailure as error:
                 logger.warning("compose reply %d unusable: %s", attempt + 1, error)
-        reply = await self._model(system=COMPOSE_SYSTEM_PROMPT, user=user, schema=schema)
-        return parsed_answer(reply_object(reply), request.allowed), 0
+        reply = await self._model(system=form.system, user=user, schema=form.schema)
+        return form.parse(reply_object(reply), request.allowed), 0
 
     async def _regenerated(
         self, request: ComposeRequest, draft: DraftAnswer, failed: list[DraftSentence]
@@ -85,9 +122,15 @@ def assembled_answer(draft: DraftAnswer, request: ComposeRequest) -> ComposedAns
         open_questions += [s for s in kept if _is_open_question(s, allowed)]
         if stated:
             sections.append(ComposedSection(heading=section.heading, sentences=stated))
-    if not sections and not open_questions:
+    stage_ids = [uuid.UUID(stage) for stage in draft.stage_ids]
+    if not sections and not open_questions and not stage_ids:
         return ComposedAnswer(not_enough_evidence=request.searched)
-    return ComposedAnswer(sections=sections, open_questions=open_questions, follow_ups=list(draft.follow_ups))
+    return ComposedAnswer(
+        sections=sections,
+        open_questions=open_questions,
+        stage_ids=stage_ids,
+        follow_ups=list(draft.follow_ups),
+    )
 
 
 def _with_replacements(draft: DraftAnswer, replacements: Mapping[int, DraftSentence]) -> DraftAnswer:
@@ -103,7 +146,7 @@ def _with_replacements(draft: DraftAnswer, replacements: Mapping[int, DraftSente
                 sentences.append(replace(replacements[slot], heading=section.heading))
             slot += 1
         sections.append(DraftSection(section.heading, tuple(sentences)))
-    return DraftAnswer(sections=tuple(sections), follow_ups=draft.follow_ups)
+    return replace(draft, sections=tuple(sections))
 
 
 def _is_open_question(sentence: ComposedSentence, allowed: Mapping[str, ComposeCandidate]) -> bool:

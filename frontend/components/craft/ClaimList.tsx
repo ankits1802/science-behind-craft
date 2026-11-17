@@ -1,7 +1,7 @@
 "use client";
 
 import { EvidenceLevelBadge } from "@/components/answer/EvidenceBadge";
-import { CitationChips } from "@/components/craft/CitationContext";
+import { CitationChips } from "@/components/answer/CitationContext";
 import type { Citation, EvidenceLevel } from "@/lib/types";
 import { cn } from "@/lib/utils";
 

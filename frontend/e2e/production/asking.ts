@@ -1,10 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 
-import { MODE_LABEL } from "@/lib/askConfig";
-
 import {
   ANSWER_DEADLINE_MS,
-  EXPECTED_MODE,
+  EXPECTED_DEPTH_LABEL,
   STALL_LIMIT_MS,
   answerProblems,
   answerRecord,
@@ -29,10 +27,10 @@ async function chooseAutoLanguage(page: Page): Promise<void> {
   await expect(picker).toHaveText(AUTO_LANGUAGE);
 }
 
-async function chooseHybrid(page: Page): Promise<void> {
-  const hybrid = page.getByRole("group", { name: "Mode" }).getByRole("button", { name: MODE_LABEL[EXPECTED_MODE], exact: true });
-  if ((await hybrid.getAttribute("aria-pressed")) !== "true") await hybrid.click();
-  await expect(hybrid).toHaveAttribute("aria-pressed", "true");
+async function chooseDepth(page: Page): Promise<void> {
+  const depth = page.getByRole("group", { name: "Depth" }).getByRole("button", { name: EXPECTED_DEPTH_LABEL, exact: true });
+  if ((await depth.getAttribute("aria-pressed")) !== "true") await depth.click();
+  await expect(depth).toHaveAttribute("aria-pressed", "true");
 }
 
 async function waitForStreamEnd(page: Page, clickedAt: number): Promise<WaitOutcome | null> {
@@ -68,7 +66,7 @@ async function readPageSentences(page: Page, record: AnswerRecord): Promise<void
 export async function askKnownAnswer(page: Page, question: KnownAnswerQuestion): Promise<AnswerRecord> {
   await page.goto(`/ask?craft=${encodeURIComponent(CRAFT_SLUG)}`, { waitUntil: "domcontentloaded" });
   await settle(page);
-  await chooseHybrid(page);
+  await chooseDepth(page);
   await chooseAutoLanguage(page);
   await page.getByLabel("Your question").fill(question.question);
   const clickedAt = await pageNow(page);

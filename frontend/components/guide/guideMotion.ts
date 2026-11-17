@@ -1,4 +1,4 @@
-import type { Transition, Variants } from "framer-motion";
+import type { TargetAndTransition, Transition, Variants } from "framer-motion";
 
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -44,6 +44,11 @@ export function slideItem(reduce: boolean, distance = 12): Variants {
 export function scrollToStep(id: string, reduce: boolean): void {
   if (typeof document === "undefined") return;
   document.getElementById(id)?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
+
+export function soundBar(reduce: boolean, index: number): { animate: TargetAndTransition } {
+  if (reduce) return { animate: { scaleY: 0.64, transition: { duration: 0 } } };
+  return { animate: { scaleY: [0.27, 1, 0.27], transition: { duration: 0.9, ease: "easeInOut", repeat: Infinity, delay: index * 0.15 } } };
 }
 
 export function swapVariants(reduce: boolean): Variants {

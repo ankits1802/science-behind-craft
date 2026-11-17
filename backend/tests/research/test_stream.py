@@ -9,10 +9,7 @@ import pytest
 from app.core.errors import InvalidInput
 from app.models import ClaimSource, Craft, Source
 from app.research import stream
-from app.research.crafts import CraftCandidate, CraftResolution, MatchReason
 from app.services import knowledge_view
-
-from .fixtures import AJRAKH, BAGRU
 
 REPO = Path(__file__).resolve().parents[3]
 GOLDEN = REPO / "shared" / "answer-stream.golden.sse"
@@ -66,7 +63,7 @@ def schema_of(name: str) -> dict:
     return stream.STREAM_EVENTS[name].json_schema(by_alias=True)
 
 
-def test_the_event_names_are_the_frontend_set_plus_status() -> None:
+def test_the_event_names_are_the_frontend_set_plus_status_and_the_explainer_events() -> None:
     assert set(stream.STREAM_EVENTS) == {
         "match",
         "status",
@@ -79,6 +76,12 @@ def test_the_event_names_are_the_frontend_set_plus_status() -> None:
         "follow_ups",
         "done",
         "error",
+        "understood",
+        "section_started",
+        "section_state",
+        "block",
+        "section_done",
+        "trail",
     }
 
 
@@ -187,34 +190,6 @@ def test_what_the_stored_answer_path_emits_fits_the_contract() -> None:
     ref = stream.parse_event("source", knowledge_view.source_ref(source))
     assert ref.url == "https://doi.org/10.1000/ajrakh"
     assert stream.parse_event("sentence", {"sectionId": "s1", "sentence": view.payload()})
-
-
-def test_a_resolution_becomes_the_match_event() -> None:
-    def ranked(*crafts):
-        return [
-            CraftCandidate(
-                craft=c, score=s, reasons=[MatchReason(kind="EXACT_ALIAS", matched=c.name, score=s)]
-            )
-            for c, s in crafts
-        ]
-
-    resolved = CraftResolution(
-        status="RESOLVED", craft=AJRAKH, candidates=ranked((AJRAKH, 1.0)), normalised="ajrakh", script="Latn"
-    )
-    ambiguous = CraftResolution(
-        status="AMBIGUOUS",
-        craft=None,
-        candidates=ranked((AJRAKH, 0.6), (BAGRU, 0.5)),
-        normalised="x",
-        script="Latn",
-    )
-    none = CraftResolution(status="NONE", craft=None, candidates=[], normalised="x", script="Zyyy")
-    assert stream.match_event(resolved).model_dump() == {"status": "RESOLVED", "craft": AJRAKH.model_dump()}
-    assert stream.match_event(ambiguous).model_dump() == {
-        "status": "AMBIGUOUS",
-        "candidates": [AJRAKH.model_dump(), BAGRU.model_dump()],
-    }
-    assert stream.match_event(none).model_dump() == {"status": "NONE"}
 
 
 def test_the_heartbeat_beats_every_proxy_timeout() -> None:

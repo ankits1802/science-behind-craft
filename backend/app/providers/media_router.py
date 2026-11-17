@@ -10,7 +10,7 @@ from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.core.errors import STOP_KINDS
+from app.core.errors import SPEND_REFUSAL_KIND, STOP_KINDS
 from app.services import app_settings, managed_secrets
 from app.services.ai_providers import MEDIA_TASKS, AiTask, model_for
 
@@ -149,7 +149,9 @@ class MediaRouter:
                 units=ask.units,
             )
         if not decision.allowed:
-            raise RouterError("ceiling", decision.message or "Budget reached", reason=decision.reason)
+            raise RouterError(
+                SPEND_REFUSAL_KIND, decision.message or "Budget reached", reason=decision.reason
+            )
         return event_id
 
     async def _call(self, choice: RouteChoice, ask: MediaAsk, overrides: dict[str, Any]) -> MediaCall:
