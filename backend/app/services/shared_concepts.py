@@ -6,7 +6,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from sqlalchemy import and_, case, func, literal, select
+from sqlalchemy import String, and_, case, cast, func, literal, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Claim, Concept, Craft, Term, TermConcept, TermCraft
@@ -202,7 +202,7 @@ async def _ranked_claim_ids(
 ) -> list[uuid.UUID]:
     if not concept_ids:
         return []
-    level_rank = case(dict(LEVEL_ORDER), value=Claim.evidenceLevel, else_=len(LEVEL_ORDER))
+    level_rank = case(dict(LEVEL_ORDER), value=cast(Claim.evidenceLevel, String), else_=len(LEVEL_ORDER))
     names = case((func.strpos(func.lower(Claim.text), func.lower(Term.label)) > 0, 0), else_=1)
     numbered = (
         select(

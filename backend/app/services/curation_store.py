@@ -45,7 +45,9 @@ async def source_aliases(session: AsyncSession, plan: CurationPlan) -> dict[uuid
     if not by_doi:
         return {}
     stored = dict(
-        (await session.execute(select(Source.doi, Source.id).where(Source.doi.in_(list(by_doi))))).tuples()
+        (await session.execute(select(Source.doi, Source.id).where(Source.doi.in_(list(by_doi)))))
+        .tuples()
+        .all()
     )
     aliases: dict[uuid.UUID, uuid.UUID] = {}
     for doi, ids in by_doi.items():
@@ -120,7 +122,9 @@ async def _stages(session: AsyncSession, plan: CurationPlan) -> int:
             await session.execute(
                 select(ProcessStage.id, ProcessStage.ordinal).where(ProcessStage.processId == process)
             )
-        ).tuples()
+        )
+        .tuples()
+        .all()
     )
     if any(current[stage_id] != wanted[stage_id] for stage_id in current):
         await update_rows(
@@ -142,7 +146,9 @@ async def _with_compounds(session: AsyncSession, plan: CurationPlan) -> list[dic
                     Compound.pubchemCid.in_(list(set(cids.values())))
                 )
             )
-        ).tuples()
+        )
+        .tuples()
+        .all()
     )
     return [{**row, "compoundId": found.get(cids.get(row["id"]))} for row in plan.part("materials")]
 
