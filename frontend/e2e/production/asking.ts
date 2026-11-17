@@ -58,12 +58,13 @@ async function readPageSentences(page: Page, record: AnswerRecord): Promise<void
     .then(() => true)
     .catch(() => false);
   if (!settled) record.problems.push("the page still shows progress after the stream ended");
-  const chips = await page
+  const shown = await page
     .getByTestId("answer-view")
     .getByTestId("answer-sentence")
-    .evaluateAll((nodes) => nodes.map((node) => node.querySelectorAll('[data-testid="citation-chip"]').length));
-  record.pageSentences = chips.length;
-  record.pageSentencesWithoutChip = chips.filter((count) => count === 0).length;
+    .evaluateAll((nodes) => nodes.map((node) => ({ id: node.getAttribute("data-sentence-id"), chips: node.querySelectorAll('[data-testid="citation-chip"]').length })));
+  record.pageSentences = shown.length;
+  record.pageSentenceIds = shown.every((entry) => entry.id !== null) ? shown.map((entry) => entry.id as string) : null;
+  record.pageSentencesWithoutChip = shown.filter((entry) => entry.chips === 0).length;
 }
 
 async function generatedFrames(page: Page, record: AnswerRecord, watch: SandboxWatch, ended: boolean): Promise<void> {

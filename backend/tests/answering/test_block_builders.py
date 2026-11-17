@@ -213,6 +213,7 @@ def test_the_registry_adds_kinds_in_the_one_order_a_reused_section_reads() -> No
     kinds = [entry.kind for entry in BLOCK_BUILDERS]
     assert kinds == sorted(kinds, key=PIECE_BLOCK_ORDER.index)
     assert [entry.kind for entry in BLOCK_BUILDERS if entry.rebuilt_on_reuse] == [
+        "region_story",
         "map_layer",
         "climate_risk",
         "market_gi",

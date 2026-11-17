@@ -13,6 +13,7 @@ from app.research.datasets import BOUNDARY_DATASET_CODE
 from app.research.rivers import HYDRORIVERS_DATASET_CODE
 from app.research.structured import schema_problems
 from app.services import place_builders
+from app.services.block_builders import BLOCK_BUILDERS
 from app.services.place_builders import RegionStoryBuilder
 from app.services.region_story import RegionOffer, region_story_block, story_statements
 
@@ -23,6 +24,7 @@ from .fixtures import (
     codes,
     dataset_rows,
     expected_story,
+    golden_story,
     kachchh_offer,
     place_ask,
     place_tools,
@@ -170,3 +172,17 @@ async def test_the_story_is_a_built_kind_the_explainer_accepts(stored: dict[str,
     assert "region_story" in explainer.BUILT_BLOCK_KINDS
     event = explainer.BlockEvent.model_validate({"sectionId": "s1", "block": block.model_dump(by_alias=True)})
     assert event.block == block
+
+
+async def test_a_reused_section_without_a_stored_story_gets_one_built(stored: dict[str, Any]) -> None:
+    assert next(entry for entry in BLOCK_BUILDERS if entry.kind == "region_story").rebuilt_on_reuse
+    assert await story(stored) is not None
+
+
+async def test_a_section_that_already_carries_a_stored_story_builds_no_second(stored: dict[str, Any]) -> None:
+    kept = RegionStoryBlock.model_validate(golden_story())
+    ask = place_ask()
+    ask = dataclasses.replace(ask, blocks=(*ask.blocks, kept))
+    model = story_model()
+    assert (await RegionStoryBuilder(place_tools(model)).build(ask)).blocks == ()
+    assert stored["asked"] == []

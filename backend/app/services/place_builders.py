@@ -18,6 +18,7 @@ __all__ = ["REGION_STORY_WAIT_SECONDS", "MapLayerBuilder", "RegionStoryBuilder"]
 logger = logging.getLogger(__name__)
 
 REGION_STORY_WAIT_SECONDS = 20.0
+REGION_STORY_KIND = "region_story"
 
 
 class RegionStoryBuilder:
@@ -27,8 +28,10 @@ class RegionStoryBuilder:
 
     async def build(self, ask: BuildAsk) -> Built:
         craft = ask.request.craft
+        if craft is None or any(block.kind == REGION_STORY_KIND for block in ask.blocks):
+            return Built()
         statements = story_statements(ask.blocks, ask.cited)
-        if craft is None or not statements:
+        if not statements:
             return Built()
         async with self._tools.sessions() as session:
             loaded = await rivers_loaded(session)

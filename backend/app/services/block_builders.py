@@ -74,7 +74,13 @@ class BuilderEntry:
 
 
 BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
-    BuilderEntry("region_story", REGION_STORY_FACETS, RegionStoryBuilder, REGION_STORY_WAIT_SECONDS),
+    BuilderEntry(
+        "region_story",
+        REGION_STORY_FACETS,
+        RegionStoryBuilder,
+        REGION_STORY_WAIT_SECONDS,
+        rebuilt_on_reuse=True,
+    ),
     BuilderEntry("map_layer", frozenset({"GEOLOGY", "CLIMATE"}), MapLayerBuilder, rebuilt_on_reuse=True),
     BuilderEntry("seasons", frozenset({"CLIMATE"}), SeasonsBuilder),
     BuilderEntry(

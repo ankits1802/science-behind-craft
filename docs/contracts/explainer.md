@@ -259,6 +259,10 @@ never holds a database connection while it waits on a model, the router or HTTP 
 A reused section runs the `rebuilt_on_reuse` builders over its placed pieces and the reused
 claims (`BlockBuilders.for_reuse`, `reused_sections.ReuseBuilds`), sending what they add after the
 placed blocks and before the pictures, so a reused climate section keeps its map (decision 0050).
+`region_story` is rebuilt on reuse too, but only for a section that carries no stored story: a
+placed `region_story` piece stops the builder before any query or model call. Without it, a
+geography section answered from pieces kept before its craft had mapped places (Kutch Ajrakh until
+the curated import of 2026-11-18) never showed a story, since only a fresh section stores one.
 
 ### Matter builders as built (decision 0045)
 

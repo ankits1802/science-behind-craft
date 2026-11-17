@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 import { splitSseBuffer } from "@/lib/answerStream";
 import { explainerEventOf } from "@/lib/explainerStream";
 
-import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, knownAnswerOutcome, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
+import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, knownAnswerOutcome, pageSentenceProblems, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
 import { NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
 import type { AnswersReport, ScreensReport } from "./production/report";
 import { runFileName } from "./production/run";
@@ -152,6 +152,26 @@ test("the page must show every streamed sentence with a citation chip", () => {
   record.pageSentences = 2;
   record.pageSentencesWithoutChip = 1;
   expect(answerProblems(record, ENGLISH)).toEqual(["1 sentences on the page show no citation", "the page shows 2 sentences; the stream sent 1"]);
+  record.pageSentences = 1;
+  record.pageSentenceIds = ["p9"];
+  record.pageSentencesWithoutChip = 0;
+  expect(answerProblems(record, ENGLISH)).toEqual(["1 streamed sentences are not on the page: p1", "1 sentences on the page never arrived in the stream: p9"]);
+  record.pageSentenceIds = ["p1"];
+  expect(answerProblems(record, ENGLISH)).toEqual([]);
+});
+
+test("a stepped block needs only the sentence of the level it shows on the page", () => {
+  const story = { ...phaseCBlock("zoom_story", "s3.b1"), id: "s1.zoom" };
+  const levels = story.levels.map((level) => level.sentence.id);
+  const record = recordOf([block("source", SOURCE), sentence("p1", "Alum is the mordant."), block("block", { sectionId: "s1", block: story }), block("done", { answerId: null })].join(""), ENGLISH);
+  expect(levels.length).toBeGreaterThan(1);
+  expect(record.sentences.filter((entry) => entry.blockKind === "zoom_story").map((entry) => entry.blockId)).toEqual(levels.map(() => "s1.zoom"));
+  record.pageSentences = 2;
+  record.pageSentencesWithoutChip = 0;
+  record.pageSentenceIds = ["p1", levels[1]];
+  expect(pageSentenceProblems(record)).toEqual([]);
+  record.pageSentenceIds = ["p1"];
+  expect(pageSentenceProblems(record)).toEqual([`the stepped block s1.zoom shows none of its ${levels.length} sentences`]);
 });
 
 test("gap copy is found with its context and ordinary copy is not", () => {

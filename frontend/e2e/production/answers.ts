@@ -44,6 +44,8 @@ export type SentenceRecord = {
   kind: "sentence" | "open_question";
   id: string;
   sectionId: string;
+  blockId: string | null;
+  blockKind: string | null;
   text: string;
   original: string | null;
   translated: boolean;
@@ -83,6 +85,7 @@ export type AnswerRecord = {
   regionStory: RegionStoryRecord;
   generatedExplainer: GeneratedExplainerRecord;
   pageSentences: number | null;
+  pageSentenceIds: string[] | null;
   pageSentencesWithoutChip: number | null;
   problems: string[];
   notes: string[];
@@ -119,11 +122,13 @@ export function parseTappedStream(chunks: readonly TappedChunk[], startedAt: num
   return parsed;
 }
 
-function sentenceRecord(kind: SentenceRecord["kind"], sectionId: string, sentence: AnswerSentence): SentenceRecord {
+function sentenceRecord(kind: SentenceRecord["kind"], sectionId: string, sentence: AnswerSentence, block: { id: string; kind: string } | null = null): SentenceRecord {
   return {
     kind,
     id: sentence.id,
     sectionId,
+    blockId: block?.id ?? null,
+    blockKind: block?.kind ?? null,
     text: sentence.text,
     original: sentence.original ?? null,
     translated: sentence.translated === true,
@@ -186,7 +191,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
   let generatedExplainer = NO_GENERATED_EXPLAINER;
   for (const { at, event } of parsed.events) {
     if (event.type === "block") {
-      sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence)));
+      sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence, event.data.block)));
       regionStory = withRegionStory(regionStory, event.data.block);
       generatedExplainer = withGeneratedExplainer(generatedExplainer, event.data.block);
     } else if (event.type === "open_question") sentences.push(sentenceRecord("open_question", event.data.sectionId, event.data.sentence));
@@ -238,6 +243,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     regionStory,
     generatedExplainer,
     pageSentences: null,
+    pageSentenceIds: null,
     pageSentencesWithoutChip: null,
     problems: [],
     notes: []
@@ -267,6 +273,38 @@ export function knownAnswerOutcome(record: AnswerRecord, question: KnownAnswerQu
   return { problems: record.knownAnswerFound ? [] : ["no sentence names alum, the known mordant"], notes: [] };
 }
 
+export const STEPPED_BLOCK_KINDS: ReadonlySet<string> = new Set(["zoom_story"]);
+
+const NAMED_IDS_MAX = 8;
+
+function named(ids: readonly string[]): string {
+  return ids.length > NAMED_IDS_MAX ? `${ids.slice(0, NAMED_IDS_MAX).join(", ")} and ${ids.length - NAMED_IDS_MAX} more` : ids.join(", ");
+}
+
+export function pageSentenceProblems(record: AnswerRecord): string[] {
+  if (record.pageSentences === null) return [];
+  const cited = record.sentences.filter((sentence) => sentence.kind === "sentence" && sentence.citations > 0);
+  if (record.pageSentenceIds === null) {
+    const shown = new Set(cited.map((sentence) => `${sentence.sectionId}:${sentence.id}`)).size;
+    return record.pageSentences === shown ? [] : [`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`];
+  }
+  const onPage = new Set(record.pageSentenceIds);
+  const problems: string[] = [];
+  const missing = [...new Set(cited.filter((sentence) => !STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "") && !onPage.has(sentence.id)).map((sentence) => sentence.id))];
+  if (missing.length > 0) problems.push(`${missing.length} streamed sentences are not on the page: ${named(missing)}`);
+  const stepped = new Map<string, string[]>();
+  for (const sentence of cited) {
+    if (sentence.blockId !== null && STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "")) stepped.set(sentence.blockId, [...(stepped.get(sentence.blockId) ?? []), sentence.id]);
+  }
+  for (const [blockId, ids] of stepped) {
+    if (!ids.some((id) => onPage.has(id))) problems.push(`the stepped block ${blockId} shows none of its ${ids.length} sentences`);
+  }
+  const sent = new Set(cited.map((sentence) => sentence.id));
+  const unsent = [...new Set(record.pageSentenceIds.filter((id) => !sent.has(id)))];
+  if (unsent.length > 0) problems.push(`${unsent.length} sentences on the page never arrived in the stream: ${named(unsent)}`);
+  return problems;
+}
+
 export function answerProblems(record: AnswerRecord, question: KnownAnswerQuestion, options: KnownAnswerOptions = RIVERS_NOT_LOADED): string[] {
   const problems: string[] = [];
   const sent = new Set(record.sources.map((source) => source.id));
@@ -282,7 +320,5 @@ export function answerProblems(record: AnswerRecord, question: KnownAnswerQuesti
   const orphans = record.sentences.flatMap((sentence) => sentence.sourceIds).filter((id) => !sent.has(id));
   if (orphans.length > 0) problems.push(`${new Set(orphans).size} cited sources never arrived as source events`);
   if (record.pageSentencesWithoutChip) problems.push(`${record.pageSentencesWithoutChip} sentences on the page show no citation`);
-  const shown = new Set(record.sentences.filter((sentence) => sentence.kind === "sentence" && sentence.citations > 0).map((sentence) => `${sentence.sectionId}:${sentence.id}`)).size;
-  if (record.pageSentences !== null && record.pageSentences !== shown) problems.push(`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`);
-  return [...problems, ...knownAnswerOutcome(record, question, options).problems, ...scriptProblems(record.sentences, question.script)];
+  return [...problems, ...pageSentenceProblems(record), ...knownAnswerOutcome(record, question, options).problems, ...scriptProblems(record.sentences, question.script)];
 }

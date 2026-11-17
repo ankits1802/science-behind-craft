@@ -74,7 +74,7 @@ function SentenceRun({
   const citations = uniqueCitations(sentence.citations);
   const shown = sentenceView(sentence, language, original);
   return (
-    <motion.span variants={riseItem(reduce, 4)} initial="hidden" animate="show" className="inline" data-testid="answer-sentence" data-level={sentence.level}>
+    <motion.span variants={riseItem(reduce, 4)} initial="hidden" animate="show" className="inline" data-testid="answer-sentence" data-sentence-id={sentence.id} data-level={sentence.level}>
       <span lang={shown.lang} dir={shown.dir}>
         {shown.text}
       </span>

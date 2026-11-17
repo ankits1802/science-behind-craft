@@ -39,6 +39,7 @@ export function ExplainerSentence({ sentence }: { sentence: Sentence }) {
     <span
       className={cn("inline rounded-sm transition-colors", listening ? "bg-purple-50 box-decoration-clone dark:bg-purple-950/60" : null)}
       data-testid="answer-sentence"
+      data-sentence-id={sentence.id}
       data-level={sentence.level}
       data-listening={listening ? "true" : undefined}
     >
