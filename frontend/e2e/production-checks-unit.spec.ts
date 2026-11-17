@@ -160,6 +160,18 @@ test("the page must show every streamed sentence with a citation chip", () => {
   expect(answerProblems(record, ENGLISH)).toEqual([]);
 });
 
+test("a sentence a block repeats word for word counts as shown once its twin is on the page", () => {
+  const twins = ["t1", "t2"].map((id) => ({ id, text: "Indigo came from Sindh.", level: "PROVISIONAL", citations: [CITATION], terms: [] }));
+  const prose = block("block", { sectionId: "s1", block: { id: "s1.b1", kind: "prose", version: 1, reuse: null, sentences: twins } });
+  const record = recordOf([block("source", SOURCE), prose, block("done", { answerId: null })].join(""), ENGLISH);
+  record.pageSentences = 1;
+  record.pageSentencesWithoutChip = 0;
+  record.pageSentenceIds = ["t1"];
+  expect(pageSentenceProblems(record)).toEqual([]);
+  record.pageSentenceIds = [];
+  expect(pageSentenceProblems(record)).toEqual(["2 streamed sentences are not on the page: t1, t2"]);
+});
+
 test("a stepped block needs only the sentence of the level it shows on the page", () => {
   const story = { ...phaseCBlock("zoom_story", "s3.b1"), id: "s1.zoom" };
   const levels = story.levels.map((level) => level.sentence.id);

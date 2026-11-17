@@ -273,7 +273,7 @@ export function knownAnswerOutcome(record: AnswerRecord, question: KnownAnswerQu
   return { problems: record.knownAnswerFound ? [] : ["no sentence names alum, the known mordant"], notes: [] };
 }
 
-export const STEPPED_BLOCK_KINDS: ReadonlySet<string> = new Set(["zoom_story"]);
+export const STEPPED_BLOCK_KINDS: ReadonlySet<string> = new Set(["zoom_story", "concept_graph"]);
 
 const NAMED_IDS_MAX = 8;
 
@@ -289,8 +289,15 @@ export function pageSentenceProblems(record: AnswerRecord): string[] {
     return record.pageSentences === shown ? [] : [`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`];
   }
   const onPage = new Set(record.pageSentenceIds);
+  const shownTexts = new Set(cited.filter((sentence) => onPage.has(sentence.id)).map((sentence) => `${sentence.blockId} ${sentence.text}`));
   const problems: string[] = [];
-  const missing = [...new Set(cited.filter((sentence) => !STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "") && !onPage.has(sentence.id)).map((sentence) => sentence.id))];
+  const missing = [
+    ...new Set(
+      cited
+        .filter((sentence) => !STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "") && !onPage.has(sentence.id) && !shownTexts.has(`${sentence.blockId} ${sentence.text}`))
+        .map((sentence) => sentence.id)
+    )
+  ];
   if (missing.length > 0) problems.push(`${missing.length} streamed sentences are not on the page: ${named(missing)}`);
   const stepped = new Map<string, string[]>();
   for (const sentence of cited) {
