@@ -434,6 +434,10 @@ Last updated: 2026-11-17.
   adapter`); the kept item's own source now leads `found_by`. CORE failed every search because
   `/v3/search/works` answers 301 to the trailing-slash path and source HTTP follows no redirects;
   the adapter now asks the slash path. Semantic Scholar is rate-limited until its key is added.
+- **Craft sync from both portals is live (2026-11-17, run 44024826347):** the portals' release
+  0.0.7 serves the signed craft feed with the flag on; the first sync verified both signatures
+  (designer 459 crafts, documentation 462), synced 462, created none, merged one and found no
+  name conflicts. It runs daily at 21:37 UTC.
 
 ## Next
 
@@ -460,10 +464,6 @@ Last updated: 2026-11-17.
   them OpenAlex shares a small daily allowance per IP, Semantic Scholar's shared pool answers
   429 often, and Springer Nature stays off. An Elsevier institution token lets Elsevier return
   abstracts.
-
-- The designer and documentation portals' next batched release: add
-  `GET /api/cross-portal/peer/crafts` (`docs/contracts/portal-craft-feed.md`) and set
-  `CROSS_PORTAL_CRAFT_FEED_ENABLED=true` on both, then run **Craft sync** once.
 
 - Media (lane 0018): re-run `infra/scripts/seed_secrets.py` once so it generates
   `MEDIA_BUNDLE_HMAC_KEY` (with the voice keys below); media stays hidden until it exists.

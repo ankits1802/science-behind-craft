@@ -103,18 +103,6 @@ Last reviewed: 2026-11-17.
   service's interval.
 - **Clears it:** a shared store (Redis is on the box) behind the same functions.
 
-### Portals do not serve the craft feed yet
-
-- **What:** the craft sync (`app/scripts/sync_portal_crafts.py`, decision 0003) reads
-  `GET /api/cross-portal/peer/crafts` from the designer and documentation portals, and neither
-  serves it. Every run reports `not_found` for both portals and changes nothing: each deploy
-  prints a warning after the seeds, and the daily **Craft sync** workflow fails. Only the 455
-  master crafts are present until then.
-- **Why left:** KalaVigyan may not edit the portal repositories; the route is specified in
-  `docs/contracts/portal-craft-feed.md` for the portals' next batched release.
-- **Clears it:** both portals ship the route with `CROSS_PORTAL_CRAFT_FEED_ENABLED=true` (GitHub
-  secret and box `.env` on each), then run **Craft sync** once by hand and read its report.
-
 ### Craft descriptor embeddings are not filled
 
 - **What:** `app/scripts/embed_craft_descriptors.py` now runs after the seeds and the craft sync
