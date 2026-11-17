@@ -36,7 +36,9 @@ class CoreAdapter(HttpSourceAdapter):
 
     async def _search_records(self, query: SearchQuery, k: int) -> list[Any]:
         response = await self.http.get(
-            f"{CORE_API}/search/works", params={"q": query.text, "limit": str(k)}, secret_headers=self._secret
+            f"{CORE_API}/search/works/",
+            params={"q": query.text, "limit": str(k)},
+            secret_headers=self._secret,
         )
         return list(response.json(self.name).get("results") or [])
 

@@ -169,7 +169,7 @@ async def test_core_search_and_full_text_fetch() -> None:
     adapter, recorder = adapter_for(
         CoreAdapter,
         {
-            "api.core.ac.uk/v3/search/works": Reply("core_search.json"),
+            "api.core.ac.uk/v3/search/works/": Reply("core_search.json"),
             "api.core.ac.uk/v3/works/67302936": Reply("core_work.json"),
         },
         api_key="core-key",

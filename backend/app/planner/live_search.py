@@ -76,7 +76,7 @@ def _packed(plan: RetrievalPlan, group: Sequence[SearchHit]) -> PackedEvidence:
     return PackedEvidence(
         item=lead.item,
         facet_indexes=tuple(sorted({plan.queries[hit.query_index].facet_index for hit in group})),
-        found_by=tuple(dict.fromkeys(hit.searcher for hit in group)),
+        found_by=tuple(dict.fromkeys([lead.searcher, *(hit.searcher for hit in group)])),
         hits=len({(hit.searcher, hit.query_index) for hit in group}),
         best_rank=min(hit.rank for hit in group),
     )

@@ -428,6 +428,12 @@ Last updated: 2026-11-17.
   answer reused all five stored blocks of the English one; every section carried pictures. Claude
   Sonnet is COMPOSE route 1 again (Gemini 2, GPT 3) and composed 36 enrichment sections with no
   refusal. All 1,958 claims and the five pieces have vectors.
+- **Enrichment fixes (2026-11-17, run 44001067308):** 10 of 12 crafts succeeded within the $2.50
+  day. Two failed because a merged search result was fetched through the source that found it
+  first rather than the source of the kept item (`'openalex:W…' is not an id of the crossref
+  adapter`); the kept item's own source now leads `found_by`. CORE failed every search because
+  `/v3/search/works` answers 301 to the trailing-slash path and source HTTP follows no redirects;
+  the adapter now asks the slash path. Semantic Scholar is rate-limited until its key is added.
 
 ## Next
 
