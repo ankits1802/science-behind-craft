@@ -30,7 +30,8 @@ the Supabase session pooler, so a larger pool would trade this failure for the p
 5. `tests/retrieval/test_connection_release.py` records each session's queries, commits and
    embedding calls and fails if an embedding call comes while a connection is held; all three
    failed before this change.
-6. The production E2E bounds a craft tab click at 30 s and records why a click is refused (the
+6. Every production E2E action is bounded at 30 s (`actionTimeout`). The craft tab click and the
+   menu button click, which the screen check opens on every page, record why a click is refused (the
    page not answering a script, the tab moving, or what covers its centre, and Playwright's call
    log). Every screen step is bounded at 120 s. When a step overruns and the page no longer runs
    a script, the run pauses it through the Chrome debugger it attached at the start and records

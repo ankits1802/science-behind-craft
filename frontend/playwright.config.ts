@@ -17,7 +17,8 @@ const PRODUCTION_USE = {
   timezoneId: "Asia/Kolkata",
   screenshot: "off",
   trace: "off",
-  video: "off"
+  video: "off",
+  actionTimeout: 30_000
 } as const;
 
 const PRODUCTION_PROJECTS: Project[] = [
