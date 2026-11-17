@@ -25,9 +25,9 @@ export function ReactionsPanel({
         <FlaskConical className="h-5 w-5 text-purple-700 dark:text-purple-300" aria-hidden />
         Reactions
       </h2>
-      <ol className="mt-3 grid gap-3">
+      <ol className="mt-3 grid grid-cols-1 gap-3">
         {reactions.map((reaction) => (
-          <li key={reaction.id} className="rounded-md border border-line-200 bg-surface-50 p-4" data-testid="reaction">
+          <li key={reaction.id} className="min-w-0 rounded-md border border-line-200 bg-surface-50 p-4" data-testid="reaction">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-semibold text-ink-900">{reaction.label}</span>
               <span className="flex flex-wrap items-center gap-1.5">

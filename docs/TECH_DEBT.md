@@ -1126,8 +1126,9 @@ Last reviewed: 2026-11-17.
 
 ### Pictures and terms in the stream not yet seen running
 
-- **What:** the step 7 wiring has run only on fakes here; no production answer has streamed a
-  picture or a span yet.
+- **What:** production answers stream pictures (each researched or reused section of the Kutch
+  Ajrakh known-answer questions carried an `images` block on 2026-11-17); no browser has yet shown
+  the credits, the underlined terms or the term sheet.
 - **Why left:** nothing runs on the laptop.
 - **Clears it:** after the deploy, load `/ask`, ask the Kutch Ajrakh known-answer questions and
   see each section's pictures with their credits and underlined terms that open their summary.
@@ -1297,27 +1298,3 @@ Last reviewed: 2026-11-17.
   cap, above the reserve.
 - **Why left:** the coverage job has the same shape; the cap bounds the overshoot.
 - **Clears it:** hold each rebuild to the smaller of its depth's cap and what the day has left.
-
-### Knowledge pieces not yet seen running
-
-- **What:** migration `0015_knowledge_pieces`, its trigger and the piece DB tests
-  (`backend/tests/db/test_knowledge_pieces_db.py`) have run only offline here; they run on GitHub
-  Actions with the next Backend checks.
-- **Why left:** nothing runs on the laptop.
-- **Clears it:** Backend checks green on the batch, then in production ask the same Kutch Ajrakh
-  question twice and see the second answer's sections marked "From earlier research".
-
-## Review fixes (decision 0038)
-
-### Craft Process tab on phones hangs (finding 8a.3)
-
-- **What:** E2E production run 43959098727 reached Craft Overview on the phone project (Pixel 7,
-  390 px) and timed out on the Process tab after the test's 10 minutes (plan section 8a). The
-  cause is not known.
-- **Why left:** it could not be reproduced here: it needs the deployed site (or a built one with
-  its API), and nothing runs on the laptop. No change in the explainer or craft-page code was
-  made blind.
-- **Clears it:** dispatch **E2E production** on the phone project with a trace for the Process
-  step (or a step time budget in `screenRun.step` so one stuck step reports itself and the run
-  goes on), find whether the page, the audit or the full-page screenshot hangs, and fix it in
-  `components/craft/` or `e2e/production/`.

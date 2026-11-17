@@ -28,7 +28,7 @@ export function ReactionCard({ reaction }: { reaction: ProcessReaction }) {
   const signal = balanceSignal(reaction);
   const deltaClaim = deltaHClaim(reaction);
   return (
-    <article className="rounded-md border border-line-200 bg-card p-3.5" data-testid="process-reaction">
+    <article className="min-w-0 rounded-md border border-line-200 bg-card p-3.5" data-testid="process-reaction">
       <header className="flex flex-wrap items-start justify-between gap-2">
         <span className="min-w-0">
           <span className="flex items-center gap-1.5 text-sm font-semibold text-ink-900">

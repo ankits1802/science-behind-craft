@@ -269,16 +269,18 @@ production, the E2E run at three widths, and one deploy.
 | D. Learn and act | quiz, compare, shared-science explorer, local measures, market and GI, climate and risk, ask the map, follow-ups that build, alerts, lesson builder, PDF and citation export | a professor builds a lesson pack from one explainer |
 | E. Field voices | artisan voices from the portals' transcripts | named, credited artisan quotes appear for a craft, each cited to its recording |
 
-**Phase A status (2026-11-17).** Built and checked offline, not yet deployed: the explainer
+**Phase A status (2026-11-17).** Deployed (3b5cc6e, then the fixes of decisions 0040 and 0041):
+both known-answer questions pass in production with 27 cited sentences and 52 citations each,
+the Hindi answer reused all five stored blocks of the English one, and every section carried
+pictures. Built: the explainer
 contract (decision 0030), understanding and depth (0031), sectioned composition (0032), knowledge
 pieces and reuse (0033), pictures and terms (0034), Listen with the live call switched off (0035),
 the asking screen (0036), the explainer view (0037), the review fixes (0038) and step 7 of section
 2.3, pictures and term spans in the stream with https pictures allowed on every page (0039). Open:
 process stages found by answers do not reach the Process tab until a source states their order
-(0038), finding 8a.3, pictures after a move to `/ask` inside the app (0039, the owner's choice),
-and the phase's proof: checks green on GitHub, the Kutch Ajrakh known-answer questions in
-production, the E2E run at three widths and one deploy. `docs/PROGRESS.md` and
-`docs/TECH_DEBT.md` hold the details.
+(0038), the E2E run passing at all three widths after the phone layout fix (finding 8a.3), and
+Listen, which needs the server's address on the ElevenLabs key's allow-list. `docs/PROGRESS.md`
+and `docs/TECH_DEBT.md` hold the details.
 
 Then the **curation run** (owner offer of 2026-11-17): every craft through Expert depth once, with a
 one-time budget, producing the stored pieces of section 2.2 so most first questions are fast.
@@ -342,7 +344,11 @@ offline (`docs/TECH_DEBT.md`, Craft Process tab on phones hangs).
    coverage looks sufficient; when composition from stored claims then yields no block, the answer
    must run live research for that facet instead of ending with not enough evidence.
 3. **Craft Process tab on phones hangs.** The phone run reached Craft Overview and timed out on
-   Process (10 minutes). Find and fix in the explainer-UI or craft-page code.
+   Process (10 minutes). Found 2026-11-17 (decision 0040): the reactions grid's implicit `auto`
+   column grew to a long KaTeX equation, so the Process page scrolled 114 px sideways at 390 px,
+   and the screen check's unbounded click on the fixed menu button never landed. The reaction and
+   material grids are `grid-cols-1` (each card holds its width and the equation scrolls inside
+   it), and every production E2E action is bounded at 30 s.
 4. **E2E overflow false positives.** The overflow check flags KaTeX's visually hidden MathML copy
    (`.katex-mathml`); the check in `frontend/e2e/production/` must ignore elements inside it, and
    only it.

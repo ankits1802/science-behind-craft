@@ -10,7 +10,7 @@ import type { StageMaterial } from "@/lib/scienceContract";
 
 export function StageMaterials({ materials }: { materials: readonly StageMaterial[] }) {
   return (
-    <ul className="grid gap-2 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {materials.map((material) => (
         <li key={material.id} className="rounded-md border border-line-200 bg-card px-3 py-2.5" data-testid="process-material">
           <MaterialHeading material={material} />

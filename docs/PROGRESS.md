@@ -419,13 +419,16 @@ Last updated: 2026-11-17.
   into one content for `gemini-embedding-2`, so every multi-text embed returned one vector and all
   1,919 claims were stored without vectors (stored search ran lexical only). Each text is now its
   own content; the vectors are filled once on the box after the deploy.
+- **Phone Process layout** (plan finding 8a.3): the reactions grid's implicit column grew to a long
+  KaTeX equation and the Process page scrolled 114 px sideways at 390 px; the reaction, answer
+  reaction and material grids are `grid-cols-1`, so each card holds the screen's width and the
+  equation scrolls inside it.
 
 ## Next
 
-1. Finish phase A of the answer experience (`docs/plans/answer-experience.md`, phase A status):
-   the phone Process tab hang (finding 8a.3; the E2E now records why the click is refused, decision
-   0040), then the Kutch Ajrakh known-answer questions and the E2E run at three widths, and the
-   same question asked twice to see the second answer reuse the first.
+1. Close phase A of the answer experience (`docs/plans/answer-experience.md`, phase A status):
+   the E2E run at three widths after the phone layout fix (finding 8a.3), and Listen once the
+   server's Elastic IP is on the ElevenLabs key's allow-list (the key answers `ip_not_allowed`).
 2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science

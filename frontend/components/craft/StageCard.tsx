@@ -44,7 +44,7 @@ export function StageCard({ stage, position }: { stage: ProcessStageView; positi
         ) : null}
         {stage.reactions.length > 0 ? (
           <StagePart title="Reactions">
-            <div className="grid gap-2">
+            <div className="grid grid-cols-1 gap-2">
               {stage.reactions.map((reaction) => (
                 <ReactionCard key={reaction.id} reaction={reaction} />
               ))}
