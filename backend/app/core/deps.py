@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.requests import HTTPConnection
 
 from app.core.config import get_settings
-from app.core.db import get_session
+from app.core.db import get_session, release_connection
 from app.core.logging import set_log_user
 from app.core.roles import (
     ROLE_LABELS,
@@ -143,6 +143,7 @@ async def get_current_user_any_step(
     if credentials is None or not credentials.credentials:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=SIGN_IN_DETAIL)
     user = await user_from_token(session, credentials.credentials)
+    await release_connection(session)
     set_log_user(str(user.id))
     return user
 

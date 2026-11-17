@@ -28,6 +28,21 @@ Last reviewed: 2026-11-18.
 - **Clears it:** create the widget, set both values; Deploy backend copies them to Parameter
   Store.
 
+### The frontend can go live before the backend it needs
+
+- **What:** Vercel deploys every push to `main` straight to production through its git
+  integration, while Deploy backend waits for Backend checks. On 2026-11-18 release d51c504 failed
+  its database tests, so the backend stayed on 31890bf while Vercel served the new craft page,
+  whose `GET /api/crafts/{slug}/page` the old backend answers 404. The fix was promoting the
+  31890bf build by hand (`vercel promote`). Promoting an older build does not stop the next push
+  from taking the domain on the Hobby plan, so it was promoted again after the fix push, and the
+  new build was promoted once the backend was healthy.
+- **Why left:** found during that release; the frontend-checks and deploy workflows were not
+  changed mid-release.
+- **Clears it:** turn off Vercel's production deploys from git (`git.deploymentEnabled`) and have
+  Deploy backend call a Vercel deploy hook after its CloudFront smoke step, with a frontend-only
+  path that fires the same hook after Frontend checks when no backend file changed.
+
 ## Backend structure
 
 ### Python code over budget
