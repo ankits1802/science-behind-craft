@@ -92,6 +92,10 @@ async def get_session() -> AsyncIterator[AsyncSession]:
         yield session
 
 
+async def release_connection(session: AsyncSession) -> None:
+    await session.commit()
+
+
 @asynccontextmanager
 async def session_scope() -> AsyncIterator[AsyncSession]:
     async with sessionmaker()() as session:

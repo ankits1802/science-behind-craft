@@ -45,8 +45,9 @@ test("every screen of production at this width", async ({ page }, testInfo) => {
     });
     for (const tab of CRAFT_TABS_SHOWN) {
       await run.step(`Craft ${CRAFT_TAB_LABEL[tab]}`, async () => {
-        if (!(await openCraftTab(page, CRAFT_TAB_LABEL[tab], `craft-panel-${tab}`))) run.note(`no ${CRAFT_TAB_LABEL[tab]} tab`);
-        return [];
+        const opened = await openCraftTab(page, CRAFT_TAB_LABEL[tab], `craft-panel-${tab}`);
+        if (opened === null) run.note(`no ${CRAFT_TAB_LABEL[tab]} tab`);
+        return opened ?? [];
       });
     }
     await run.visit("Map", "/map");

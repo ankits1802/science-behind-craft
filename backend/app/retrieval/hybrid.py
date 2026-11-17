@@ -47,9 +47,9 @@ class StoredKnowledgeSearch:
         self._embed = embed
 
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits:
+        (vector,) = checked_vectors(await self._embed([query_text(query.text)]), expected=1)
         scope = await craft_scope(self._session, query.craft_slug)
         tsquery = or_tsquery(query.text)
-        (vector,) = checked_vectors(await self._embed([query_text(query.text)]), expected=1)
         conditions = claim_conditions(scope, mode=query.mode, facets=query.facets)
         claims = await self._fuse(
             claim_lexical_ranking(conditions, tsquery) if tsquery else None,

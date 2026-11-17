@@ -9,6 +9,7 @@ from pydantic import TypeAdapter
 from sqlalchemy import ColumnElement, Select, delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.db import release_connection
 from app.core.errors import InvalidInput
 from app.models import Chunk, Claim, KnowledgePiece, Source
 from app.research.embedding import TextEmbedder, checked_vectors
@@ -192,6 +193,7 @@ async def _fill(
 ) -> None:
     for group in batched(pending, batch_size, strict=False):
         texts = [item.text for item in group]
+        await release_connection(session)
         vectors = checked_vectors(await embed(texts), expected=len(texts))
         for item, vector in zip(group, vectors, strict=True):
             await session.execute(update(model).where(model.id == item.id).values(embedding=vector))

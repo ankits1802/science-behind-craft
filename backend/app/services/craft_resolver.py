@@ -8,6 +8,7 @@ from itertools import batched
 from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.db import release_connection
 from app.data.craft_master_loader import ACTIVE
 from app.models import AdminDistrict, AdminState, Craft, CraftAlias, CraftLocation, CraftSpelling
 from app.research.crafts import CraftQuery, CraftResolution
@@ -73,6 +74,7 @@ class DatabaseCraftResolver:
         return resolution_from(index, match, await self._semantic(query.text))
 
     async def _semantic(self, text: str) -> list[SemanticHit]:
+        await release_connection(self._session)
         (vector,) = checked_vectors(await self._embed([text]), expected=1)
         distance = Craft.descriptorEmbedding.cosine_distance(vector)
         rows = (

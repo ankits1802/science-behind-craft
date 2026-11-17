@@ -1,11 +1,15 @@
-import { expect, type Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 import { ROLE_LABELS } from "@/lib/permissions";
 import type { User } from "@/lib/types";
 
-import { DESKTOP_NAV_MIN_WIDTH, NO_LAYER_LABEL, labelProblems, navExpectation } from "./checks";
+import { DESKTOP_NAV_MIN_WIDTH, NO_LAYER_LABEL, clip, labelProblems, navExpectation } from "./checks";
 
 const LAYER_TIMEOUT_MS = 30_000;
+const TAB_CLICK_TIMEOUT_MS = 30_000;
+const ANSWER_TIMEOUT_MS = 5_000;
+const STEADY_GAP_MS = 500;
+const CALL_LOG_LINES = 6;
 
 function wideNav(page: Page): boolean {
   return (page.viewportSize()?.width ?? 0) >= DESKTOP_NAV_MIN_WIDTH;
@@ -47,13 +51,44 @@ export async function depthProblems(page: Page, user: User): Promise<string[]> {
   return labelProblems("the Depth choice", expected.depths, shown);
 }
 
-export async function openCraftTab(page: Page, label: string, panel: string): Promise<boolean> {
+export async function openCraftTab(page: Page, label: string, panel: string): Promise<string[] | null> {
   const tab = page.getByRole("tab", { name: label, exact: true });
-  if ((await tab.count()) === 0) return false;
-  await tab.click();
+  if ((await tab.count()) === 0) return null;
+  const refused = await tab.click({ timeout: TAB_CLICK_TIMEOUT_MS }).then(
+    () => null,
+    (error: unknown) => error
+  );
+  if (refused !== null) return [`the ${label} tab took no click in ${TAB_CLICK_TIMEOUT_MS / 1000} s`, ...(await clickDiagnosis(page, tab, refused))];
   await expect(tab).toHaveAttribute("aria-selected", "true");
   await expect(page.getByTestId(panel)).toBeVisible();
-  return true;
+  return [];
+}
+
+async function clickDiagnosis(page: Page, tab: Locator, error: unknown): Promise<string[]> {
+  const log = callLog(error);
+  const answers = await Promise.race([page.evaluate(() => true), page.waitForTimeout(ANSWER_TIMEOUT_MS).then(() => false)]).catch(() => false);
+  if (!answers) return [`the page ran no script for ${ANSWER_TIMEOUT_MS / 1000} s, so its main thread is stuck`, ...log];
+  const before = await tab.boundingBox();
+  await page.waitForTimeout(STEADY_GAP_MS);
+  const after = await tab.boundingBox();
+  const moved = JSON.stringify(before) !== JSON.stringify(after);
+  const covering = await tab.evaluate(coveringElement);
+  return [clip(`tab box ${JSON.stringify(after)}${moved ? `, moved from ${JSON.stringify(before)}` : ", steady"}; at its centre: ${covering}`), ...log];
+}
+
+function coveringElement(node: Element): string {
+  const box = node.getBoundingClientRect();
+  const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+  if (hit === null) return `nothing (viewport ${window.innerWidth}x${window.innerHeight})`;
+  if (node.contains(hit)) return "the tab itself";
+  const marks = ["id", "data-testid", "aria-label", "role", "class"].map((name) => (hit.getAttribute(name) ? `${name}=${hit.getAttribute(name)}` : "")).filter(Boolean);
+  return `<${hit.tagName.toLowerCase()} ${marks.join(" ")}>`;
+}
+
+function callLog(error: unknown): string[] {
+  const message = error instanceof Error ? error.message : String(error);
+  const lines = message.split("\n").map((line) => line.trim()).filter((line) => line.startsWith("- "));
+  return lines.slice(-CALL_LOG_LINES).map((line) => clip(`call log ${line}`));
 }
 
 export async function chooseFirstLayer(page: Page): Promise<{ problems: string[]; layer: string | null }> {

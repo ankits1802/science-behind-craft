@@ -45,6 +45,9 @@ class NearestSession:
         self.queries += 1
         return Rows(self.rows)
 
+    async def commit(self) -> None:
+        return None
+
 
 class RecordingEmbedder:
     def __init__(self) -> None:

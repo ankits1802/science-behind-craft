@@ -407,17 +407,21 @@ Last updated: 2026-11-17.
   claims its blocks cite while those blocks are sent and streams an `images` block after them
   (each image service 6 s, the step 8 s; a failure, a timeout or nothing relevant sends none and
   the section stays ready); pictures are never stored as pieces. An answer made only of reused
-  sections offers the stored follow-ups. Every page's CSP `img-src` adds `https:`, so a move to `/ask`
-  inside the app still shows pictures. The research golden now carries spans and pictures, and a unit spec draws them through
-  the whole explainer view. Seen on fakes only; pictures need `/ask` loaded as a page (debt).
+  sections offers the stored follow-ups. Every page's CSP `img-src` adds `https:`, so a move to
+  `/ask` inside the app still shows pictures. The research golden now carries spans and pictures,
+  and a unit spec draws them through the whole explainer view.
+- **No connection held across a model call** (decision 0040): phase A's first production run
+  (3b5cc6e, E2E run 43993673874) failed both questions on a pool deadlock, four parallel sections
+  each holding a connection while the router waited for another. Stored search embeds first, and
+  writing vectors and the craft resolver release their connection before embedding. The E2E now
+  bounds a craft tab click at 30 s and records why it was refused.
 
 ## Next
 
 1. Finish phase A of the answer experience (`docs/plans/answer-experience.md`, phase A status):
-   the phone Process tab hang (finding 8a.3, reproduce with a traced **E2E production** phone
-   run); the owner's choice for pictures after a move to `/ask` inside the app (decision 0039,
-   `docs/TECH_DEBT.md`); then checks green on GitHub, one deploy, the Kutch Ajrakh known-answer
-   questions and the E2E run at three widths.
+   the phone Process tab hang (finding 8a.3; the E2E now records why the click is refused, decision
+   0040), then the Kutch Ajrakh known-answer questions and the E2E run at three widths, and the
+   same question asked twice to see the second answer reuse the first.
 2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
