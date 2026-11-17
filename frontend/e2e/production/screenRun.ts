@@ -1,11 +1,12 @@
 import { join } from "node:path";
 
-import { expect, type ConsoleMessage, type Page, type Request, type Response } from "@playwright/test";
+import { expect, type CDPSession, type ConsoleMessage, type Page, type Request, type Response } from "@playwright/test";
 
 import { CITED_CONTENT, OVERFLOW_LIMIT, clip, gapCopyFindings } from "./checks";
 import { auditPage } from "./pageAudit";
 import type { ScreenOutcome, ScreensReport } from "./report";
 import { SCREENSHOT_DIR, baseUrl, runFileName, runId, runStartedAt, writeReport } from "./run";
+import { answersScript, stuckStack, watchScript } from "./stuckPage";
 
 export type ScreenCheck = () => Promise<string[]>;
 
@@ -15,6 +16,8 @@ const SETTLE_MS = 700;
 const IDLE_TIMEOUT_MS = 20_000;
 const LOADING_TIMEOUT_MS = 30_000;
 const LOADING_TEXT = /^(Loading…|Checking your admin view…)$/;
+const STEP_LIMIT_MS = 120_000;
+const ANSWER_WAIT_MS = 5_000;
 
 export async function settle(page: Page): Promise<string[]> {
   await page.waitForLoadState("networkidle", { timeout: IDLE_TIMEOUT_MS }).catch(() => undefined);
@@ -41,6 +44,8 @@ export class ScreenRun {
   private current: ScreenOutcome | null = null;
   private role: string | null = null;
   private everyScreenCheck: ScreenCheck | null = null;
+  private debuggerSession: CDPSession | null = null;
+  private stuckSince: string | null = null;
 
   constructor(page: Page, width: string) {
     this.page = page;
@@ -50,6 +55,10 @@ export class ScreenRun {
     page.on("pageerror", (error) => this.flag(`uncaught error: ${firstLine(error)}`));
     page.on("requestfailed", (request) => this.onRequestFailed(request));
     page.on("response", (response) => this.onResponse(response));
+  }
+
+  async watch(): Promise<void> {
+    this.debuggerSession = await watchScript(this.page).catch(() => null);
   }
 
   markSignedIn(role: string | null): void {
@@ -117,19 +126,50 @@ export class ScreenRun {
     const outcome: ScreenOutcome = { name, path: "", screenshot: null, durationMs: 0, problems: [], notes: [] };
     this.current = outcome;
     this.screens.push(outcome);
+    if (this.stuckSince) {
+      this.flag(`skipped: the page stopped running script during ${this.stuckSince}`);
+      return;
+    }
     const started = Date.now();
-    try {
+    if (!(await this.bounded(body))) await this.diagnoseStuck(name);
+    outcome.path = new URL(this.page.url()).pathname;
+    if (!this.stuckSince) {
+      outcome.screenshot = await this.capture(name).catch((error: unknown) => {
+        this.flag(`no screenshot: ${firstLine(error)}`);
+        return null;
+      });
+    }
+    outcome.durationMs = Date.now() - started;
+  }
+
+  private async bounded(body: () => Promise<void>): Promise<boolean> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const limit = new Promise<boolean>((resolve) => {
+      timer = setTimeout(() => resolve(false), STEP_LIMIT_MS);
+    });
+    const work = (async () => {
       await body();
       await this.audit();
-    } catch (error) {
-      this.flag(`could not finish: ${firstLine(error)}`);
-    }
-    outcome.path = new URL(this.page.url()).pathname;
-    outcome.screenshot = await this.capture(name).catch((error: unknown) => {
-      this.flag(`no screenshot: ${firstLine(error)}`);
-      return null;
-    });
-    outcome.durationMs = Date.now() - started;
+    })().then(
+      () => true,
+      (error: unknown) => {
+        this.flag(`could not finish: ${firstLine(error)}`);
+        return true;
+      }
+    );
+    const finished = await Promise.race([work, limit]);
+    clearTimeout(timer);
+    return finished;
+  }
+
+  private async diagnoseStuck(name: string): Promise<void> {
+    this.flag(`did not finish in ${STEP_LIMIT_MS / 1000} s`);
+    if (await answersScript(this.page, ANSWER_WAIT_MS)) return;
+    this.stuckSince = name;
+    const stack = this.debuggerSession
+      ? await stuckStack(this.debuggerSession).catch((error: unknown) => [`no stack: ${firstLine(error)}`])
+      : ["no debugger session"];
+    this.flag("the page stopped running script", ...stack);
   }
 
   private async runEveryScreenCheck(): Promise<void> {

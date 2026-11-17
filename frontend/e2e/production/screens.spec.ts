@@ -14,6 +14,7 @@ test("every screen of production at this width", async ({ page }, testInfo) => {
   test.setTimeout(SCREENS_TIMEOUT_MS);
   const account = credentials();
   const run = new ScreenRun(page, String(testInfo.project.metadata.width ?? testInfo.project.name));
+  await run.watch();
   const session: { user: User | null } = { user: null };
 
   await run.visit("Landing", "/", async () => {

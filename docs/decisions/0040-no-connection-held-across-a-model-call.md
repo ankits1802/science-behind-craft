@@ -32,7 +32,13 @@ the Supabase session pooler, so a larger pool would trade this failure for the p
    failed before this change.
 6. The production E2E bounds a craft tab click at 30 s and records why a click is refused (the
    page not answering a script, the tab moving, or what covers its centre, and Playwright's call
-   log), so a stuck tab no longer spends the whole ten-minute run (plan finding 8a.3).
+   log). Every screen step is bounded at 120 s. When a step overruns and the page no longer runs
+   a script, the run pauses it through the Chrome debugger it attached at the start and records
+   the stuck call frames with the code around each, or says the main thread is stuck outside
+   script; the remaining screens of that width are skipped and the report is still written (plan
+   finding 8a.3). `e2e/stuck-page-unit.spec.ts` spins a page forever and checks the stack names
+   the spinning function. The debugger's `Debugger.pause` is sent without waiting for its reply,
+   which only comes once the page resumes.
 
 ## Consequences
 

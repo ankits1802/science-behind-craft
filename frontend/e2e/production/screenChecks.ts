@@ -4,6 +4,7 @@ import { ROLE_LABELS } from "@/lib/permissions";
 import type { User } from "@/lib/types";
 
 import { DESKTOP_NAV_MIN_WIDTH, NO_LAYER_LABEL, clip, labelProblems, navExpectation } from "./checks";
+import { answersScript } from "./stuckPage";
 
 const LAYER_TIMEOUT_MS = 30_000;
 const TAB_CLICK_TIMEOUT_MS = 30_000;
@@ -66,7 +67,7 @@ export async function openCraftTab(page: Page, label: string, panel: string): Pr
 
 async function clickDiagnosis(page: Page, tab: Locator, error: unknown): Promise<string[]> {
   const log = callLog(error);
-  const answers = await Promise.race([page.evaluate(() => true), page.waitForTimeout(ANSWER_TIMEOUT_MS).then(() => false)]).catch(() => false);
+  const answers = await answersScript(page, ANSWER_TIMEOUT_MS);
   if (!answers) return [`the page ran no script for ${ANSWER_TIMEOUT_MS / 1000} s, so its main thread is stuck`, ...log];
   const before = await tab.boundingBox();
   await page.waitForTimeout(STEADY_GAP_MS);
