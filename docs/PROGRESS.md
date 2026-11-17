@@ -415,6 +415,10 @@ Last updated: 2026-11-17.
   each holding a connection while the router waited for another. Stored search embeds first, and
   writing vectors and the craft resolver release their connection before embedding. The E2E now
   bounds a craft tab click at 30 s and records why it was refused.
+- **One Gemini content per embedded text** (decision 0041): google-genai folded a list of texts
+  into one content for `gemini-embedding-2`, so every multi-text embed returned one vector and all
+  1,919 claims were stored without vectors (stored search ran lexical only). Each text is now its
+  own content; the vectors are filled once on the box after the deploy.
 
 ## Next
 

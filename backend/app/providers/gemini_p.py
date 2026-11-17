@@ -189,8 +189,9 @@ class GeminiAdapter(Adapter):
     async def embed(self, texts: list[str], model: str, dimensions: int | None = None) -> list[list[float]]:
         err = self._errors
         config = self._types.EmbedContentConfig(output_dimensionality=dimensions) if dimensions else None
+        contents = [self._types.Content(parts=[self._types.Part(text=text)]) for text in texts]
         try:
-            resp = await self.client.aio.models.embed_content(model=model, contents=texts, config=config)
+            resp = await self.client.aio.models.embed_content(model=model, contents=contents, config=config)
         except err.APIError as e:
             raise ProviderError(
                 f"Gemini embeddings error {e.code}: {e}", retryable=e.code in (429, 500, 503), status=e.code
