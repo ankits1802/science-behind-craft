@@ -4,7 +4,7 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
 
-revision: str = "0020_explainer_versions_and_alerts"
+revision: str = "0020_explainer_versions_alerts"
 down_revision: str | Sequence[str] | None = "0019_hidden_generated_explainers"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None

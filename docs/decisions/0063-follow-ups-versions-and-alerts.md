@@ -40,7 +40,7 @@ first schema existed with no code using it.
    retraction marks every version that shows the claim. A follow-up that adds nothing stores no
    version and emits no `version` event.
 4. **Versions are indexed columns.** `Answer.explainerId` and `Answer.explainerVersion` (migration
-   `0020_explainer_versions_and_alerts`; version 1 is the explainer's own answer, backfilled for
+   `0020_explainer_versions_alerts`; version 1 is the explainer's own answer, backfilled for
    every stored explainer) carry a unique pair, so two follow-ups racing on one version cannot both
    be stored: the second ends with "A newer version of this explainer was saved meanwhile". The
    asker is the answer rows' `userId`; every explainer, saved and note route answers 404 to anyone

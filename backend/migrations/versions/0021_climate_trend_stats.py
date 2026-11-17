@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from alembic import op
 
 revision: str = "0021_climate_trend_stats"
-down_revision: str | Sequence[str] | None = "0020_explainer_versions_and_alerts"
+down_revision: str | Sequence[str] | None = "0020_explainer_versions_alerts"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

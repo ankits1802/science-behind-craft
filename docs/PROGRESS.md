@@ -721,7 +721,7 @@ Last updated: 2026-11-18.
   the explainer's own (new blocks numbered after its own, already-cited sentences and shown kinds
   left out) and adding new fields after them, streams `builds_on` and `version`, and stores the
   merged document as the next version (`Answer.explainerId` and `explainerVersion`, migration
-  `0020_explainer_versions_and_alerts`, a unique pair so a racing follow-up is refused); earlier
+  `0020_explainer_versions_alerts`, a unique pair so a racing follow-up is refused); earlier
   versions are never touched. `GET /api/explainers/{id}`, `/versions` and `/versions/{n}` read
   them for the asker only. Saving reuses `SavedItem` (`/api/saved-explainers`); the nightly
   Coverage enrichment job ends with `app.scripts.recheck_saved`, which writes one "This answer got
