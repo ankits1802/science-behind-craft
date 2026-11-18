@@ -1,5 +1,5 @@
 import uuid
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Sequence
 from datetime import UTC, datetime
 
 import pytest
@@ -10,6 +10,7 @@ from app.core.db import get_engine
 from app.models import Claim, Craft, Term, TermConcept, TermCraft, TermSummary
 from app.research.composition import ComposedSentence, QuotedSpan
 from app.research.evidence import EvidenceItem
+from app.research.retrieval import EVERY_CHUNK_ACLS, OPEN_CHUNK_ACLS
 from app.research.term_marking import TermMarker
 from app.services.claim_seed import seed_id
 from app.services.term_glossary import glossary_entries, seed_terms
@@ -42,11 +43,11 @@ async def session() -> AsyncIterator[AsyncSession]:
             await transaction.rollback()
 
 
-def store_for(session: AsyncSession) -> SqlTermStore:
+def store_for(session: AsyncSession, acls: Sequence[str] = OPEN_CHUNK_ACLS) -> SqlTermStore:
     def sessions() -> AsyncSession:
         return AsyncSession(bind=session.bind, expire_on_commit=False, autoflush=False)
 
-    return SqlTermStore(sessions)
+    return SqlTermStore(sessions, acls=acls)
 
 
 def lookup(store: SqlTermStore, found: ResearchedSummary | None = None) -> TermLookup:
@@ -113,7 +114,7 @@ async def test_a_researched_summary_is_written_back_as_quoted_claims_of_the_term
         text=SENTENCE, evidence_ids=[item.id], spans=[QuotedSpan(ref=item.id, text=SENTENCE)]
     )
     found = ResearchedSummary("WEB_SEARCH", (build_document(item, TEXT, "FULL_TEXT"),), (sentence,))
-    store = store_for(session)
+    store = store_for(session, EVERY_CHUNK_ACLS)
     term = await store.term("neerani")
     assert term is not None
     await session.execute(
@@ -127,6 +128,7 @@ async def test_a_researched_summary_is_written_back_as_quoted_claims_of_the_term
     assert claim is not None
     assert (claim.evidenceLevel, claim.subjectId) == ("PROVISIONAL", term.concepts[0].concept_id)
     assert [source.url for source in summary.sources] == [PAGE]
+    assert await store_for(session).cached(term.id, "en") is None
 
 
 async def test_the_glossary_of_a_craft_marks_its_local_names_but_not_its_own_name(
