@@ -468,10 +468,11 @@ dictation through the browser's Web Speech API (`lib/dictation.ts`, the one adap
 reaches the server). The answer is the explainer (decision 0037): `lib/explainerStream.streamExplainer`
 parses each frame with the contract's shapes, `lib/explainerState.reduceExplainer` keeps the
 state (`components/ask/useAnswerStream.ts` drives it), and `components/answer/ExplainerView.tsx`
-draws the understood line, the research trail, the section bar and the sections, one component
-per built block kind (`ProseBlockView`, `ProcessLadder`, `ImageStrip`), over two contexts: the
-citation numbering (`CitationContext`) and the reading (`ExplainerReading`: language, original
-text, hidden terms, the term sheet and the word Listen is reading). Pure rules are in
+draws the understood line, the lede (`LedeBlock`, decision 0077), the research trail, the section
+bar and the sections, one component per built block kind (`ProseBlockView`, `ProcessLadder`,
+`ImageStrip`), over two contexts: the citation numbering (`CitationContext`, the lede's sources
+first) and the reading (`ExplainerReading`: language, original text, hidden terms, the term
+sheet and the word Listen is reading). Pure rules are in
 `lib/explainerView.ts`, `lib/termSummary.ts` and `lib/listen.ts`. The place kinds (decision 0048)
 are `components/answer/place/`: the region story (a river from the served basin TopoJSON flowing
 across the real district polygons, `lib/riverTopology.ts`, `lib/riverGeometry.ts`,
@@ -562,4 +563,4 @@ from opening nested windows, because Chromium ignores the policy's `webrtc 'bloc
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |
 | Geo ETL | `etl/geo` tests and the district statistics build |
 | Deploy backend | after Backend checks succeed on a push to `main` of `cxacraftecosystem-ui/KalaVigyan` |
-| E2E production | on dispatch only: Playwright against the deployed site at 1440, 834 and 390 px wide, every screen signed in as the E2E Researcher, and with `questions=true` three known-answer questions at Detailed depth: the mordant in English and Hindi, and Kachchh's water, which needs a region story with a traced river once `rivers_loaded` is set (decisions 0029 and 0050) |
+| E2E production | on dispatch only: Playwright against the deployed site (`frontend/e2e/production/matrix.ts`), every screen signed in as the E2E Researcher at 1920, 1440, 834, 390 and 360 px wide in light and dark, and with `questions=true` four known-answer questions asked at 1440 px in light: at Detailed depth the mordant in English and Hindi, and Kachchh's water, which needs a region story with a traced river once `rivers_loaded` is set, and at Expert depth indigo's generated explainer; each must show a lede with a cited sentence, live and in its saved explainer, which is checked again at 834 and 390 px in light and dark (decisions 0029, 0050, 0061 and 0077) |

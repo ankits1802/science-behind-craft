@@ -6,7 +6,19 @@ import { expect, test } from "@playwright/test";
 import { splitSseBuffer } from "@/lib/answerStream";
 import { explainerEventOf } from "@/lib/explainerStream";
 
-import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, knownAnswerOutcome, pageSentenceProblems, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
+import {
+  KNOWN_ANSWER_QUESTIONS,
+  NO_LEDE,
+  answerProblems,
+  answerRecord,
+  knownAnswerOutcome,
+  ledeProblems,
+  pageSentenceProblems,
+  parseTappedStream,
+  savedLedeProblems,
+  scriptProblems,
+  type KnownAnswerQuestion
+} from "./production/answers";
 import { NetworkQuiet, captureScreen, judgeCapture, readyForCapture, sightProblems } from "./production/capture";
 import { CITED_CONTENT, NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
 import {
@@ -42,6 +54,7 @@ import { PHASE_C, phaseCBlock } from "./playFixture";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 const GOLDEN = readFileSync(join(SHARED, "explainer.stream.golden.sse"), "utf8");
+const LEDE_GOLDEN = readFileSync(join(SHARED, "explainer.lede.golden.sse"), "utf8");
 const [ENGLISH, HINDI, WATER, INDIGO] = KNOWN_ANSWER_QUESTIONS;
 const PHASE_B = JSON.parse(readFileSync(join(SHARED, "explainer.phase-b.golden.json"), "utf8")) as {
   sections: { blocks: Record<string, unknown>[] }[];
@@ -184,6 +197,38 @@ test("the page must show every streamed sentence with a citation chip", () => {
   expect(answerProblems(record, ENGLISH)).toEqual([]);
 });
 
+test("a known answer opens with its lede: the stream's lede sentences are recorded first and the page must show one of them cited", () => {
+  const record = recordOf(LEDE_GOLDEN, ENGLISH);
+  expect(record.lede).toEqual({ sentences: 3, cited: 3, shown: null, shownCited: null });
+  expect(record.sentences.slice(0, 3).map((entry) => [entry.id, entry.blockKind, entry.citations])).toEqual([
+    ["lede.1", "lede", 1],
+    ["lede.2", "lede", 3],
+    ["lede.3", "lede", 1]
+  ]);
+  expect(record.timing.firstSentenceMs).not.toBeNull();
+  expect(ledeProblems(record)).toEqual([]);
+  record.pageSentences = record.sentences.length;
+  record.pageSentenceIds = record.sentences.map((entry) => entry.id);
+  record.pageSentencesWithoutChip = 0;
+  record.lede = { ...record.lede, shown: 3, shownCited: 3 };
+  expect(answerProblems(record, ENGLISH)).toEqual([]);
+  expect(ledeProblems({ ...record, lede: { ...record.lede, shown: 0, shownCited: 0 } })).toEqual(["the page shows no lede"]);
+  expect(ledeProblems({ ...record, lede: { ...record.lede, shown: 3, shownCited: 0 } })).toEqual(["no lede sentence on the page shows a citation"]);
+  record.pageSentenceIds = record.sentences.slice(3).map((entry) => entry.id);
+  expect(pageSentenceProblems(record)).toEqual(["3 streamed sentences are not on the page: lede.1, lede.2, lede.3"]);
+});
+
+test("an answer streamed without a lede fails once its page is read, and the saved explainer must show every lede sentence", () => {
+  const unled = recordOf(GOLDEN, ENGLISH);
+  expect(unled.lede).toEqual(NO_LEDE);
+  expect(ledeProblems(unled)).toEqual([]);
+  expect(ledeProblems({ ...unled, lede: { ...unled.lede, shown: 0, shownCited: 0 } })).toEqual(["the answer opened without a lede"]);
+  const led = recordOf(LEDE_GOLDEN, ENGLISH).lede;
+  expect(savedLedeProblems(led, 3)).toEqual([]);
+  expect(savedLedeProblems(led, 0)).toEqual(["the saved explainer shows 0 of the lede's 3 sentences"]);
+  expect(savedLedeProblems(NO_LEDE, 0)).toEqual([]);
+});
+
 test("a sentence a block repeats word for word counts as shown once its twin is on the page", () => {
   const twins = ["t1", "t2"].map((id) => ({ id, text: "Indigo came from Sindh.", level: "PROVISIONAL", citations: [CITATION], terms: [] }));
   const prose = block("block", { sectionId: "s1", block: { id: "s1.b1", kind: "prose", version: 1, reuse: null, sentences: twins } });
@@ -266,7 +311,7 @@ test("the step summary orders widths from widest and escapes table cells", () =>
     role: "RESEARCHER",
     problemCount: 0,
     unasked: [],
-    questions: [recordOf(HINDI_ANSWER, HINDI), { ...recordOf(waterAnswer(sentence("w2", "Alum is the mordant.")), WATER), notes: [RIVERS_NOT_LOADED_NOTE] }],
+    questions: [recordOf(LEDE_GOLDEN, ENGLISH), recordOf(HINDI_ANSWER, HINDI), { ...recordOf(waterAnswer(sentence("w2", "Alum is the mordant.")), WATER), notes: [RIVERS_NOT_LOADED_NOTE] }],
     exports: null
   };
   const markdown = summaryMarkdown([screens("Phone", 390, ["a | b"]), screens("Desktop", 1440, [])], {
@@ -279,8 +324,9 @@ test("the step summary orders widths from widest and escapes table cells", () =>
   expect(markdown).toContain("| Ask | Pass | Fail (1) |");
   expect(markdown).toContain("- Phone · Ask: a \\| b");
   const withAnswers = summaryMarkdown([screens("Desktop", 1440, []), answers], { runId: null, baseUrl: null, startedAt: "x", questionsRequested: true });
-  expect(withAnswers).toContain("| Question | Ended | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |");
-  expect(withAnswers).toContain("| Hindi | done | 2 | 2 | 2 | 1 | Yes | 1 translated, 1 English, 0 other |");
+  expect(withAnswers).toContain("| Question | Ended | Lede | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |");
+  expect(withAnswers).toContain("| English | done | 3 cited | 9 | 9 | 13 | 2 | Yes | English |");
+  expect(withAnswers).toContain("| Hindi | done | None | 2 | 2 | 2 | 1 | Yes | 1 translated, 1 English, 0 other |");
   expect(withAnswers).toContain(`#### Answer notes\n\n- Water: ${RIVERS_NOT_LOADED_NOTE}`);
 });
 

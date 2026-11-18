@@ -4,7 +4,7 @@ import { expect, test, type Browser, type Page } from "@playwright/test";
 
 import { explainerHref } from "@/lib/savedView";
 
-import { KNOWN_ANSWER_QUESTIONS, type AnswerRecord } from "./answers";
+import { KNOWN_ANSWER_QUESTIONS, savedLedeProblems, type AnswerRecord } from "./answers";
 import { askKnownAnswer } from "./asking";
 import { NetworkQuiet, captureScreen, readyForCapture, sightProblems, type Captured } from "./capture";
 import { clip } from "./checks";
@@ -50,7 +50,7 @@ async function answerViews(browser: Browser, page: Page, records: readonly Answe
         for (const record of answered) {
           await run.visit(`Question ${record.label}`, explainerHref(record.answerId), async () => {
             await expect(view.getByTestId("answer-view")).toBeVisible({ timeout: ANSWER_VIEW_TIMEOUT_MS });
-            return [];
+            return savedLedeProblems(record.lede, await view.getByTestId("answer-lede").getByTestId("answer-sentence").count());
           });
         }
         run.write();

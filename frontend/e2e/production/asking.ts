@@ -61,10 +61,18 @@ async function readPageSentences(page: Page, record: AnswerRecord): Promise<void
   const shown = await page
     .getByTestId("answer-view")
     .getByTestId("answer-sentence")
-    .evaluateAll((nodes) => nodes.map((node) => ({ id: node.getAttribute("data-sentence-id"), chips: node.querySelectorAll('[data-testid="citation-chip"]').length })));
+    .evaluateAll((nodes) =>
+      nodes.map((node) => ({
+        id: node.getAttribute("data-sentence-id"),
+        chips: node.querySelectorAll('[data-testid="citation-chip"]').length,
+        lede: node.closest('[data-testid="answer-lede"]') !== null
+      }))
+    );
+  const lede = shown.filter((entry) => entry.lede);
   record.pageSentences = shown.length;
   record.pageSentenceIds = shown.every((entry) => entry.id !== null) ? shown.map((entry) => entry.id as string) : null;
   record.pageSentencesWithoutChip = shown.filter((entry) => entry.chips === 0).length;
+  record.lede = { ...record.lede, shown: lede.length, shownCited: lede.filter((entry) => entry.chips > 0).length };
 }
 
 async function generatedFrames(page: Page, record: AnswerRecord, watch: SandboxWatch, ended: boolean): Promise<void> {

@@ -39,18 +39,23 @@ function scriptCell(record: AnswerRecord): string {
   return `${record.scripts.translated} translated, ${record.scripts.englishFallback} English, ${record.scripts.other} other`;
 }
 
+function ledeCell(record: AnswerRecord): string {
+  if (record.lede.sentences === 0) return "None";
+  return `${record.lede.shownCited ?? record.lede.cited} cited`;
+}
+
 function questionsSection(report: AnswersReport | undefined, requested: boolean): string[] {
   if (!requested) return ["### Questions", "", "Not asked: dispatch with questions=true to ask them."];
   if (!report) return ["### Questions", "", "No answers report was written."];
   const lines = [
     "### Questions",
     "",
-    "| Question | Ended | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |",
-    "|---|---|---|---|---|---|---|---|---|---|"
+    "| Question | Ended | Lede | Sentences | Cited | Citations | Sources | Known answer | Script | Done in | Result |",
+    "|---|---|---|---|---|---|---|---|---|---|---|"
   ];
   for (const record of report.questions) {
     lines.push(
-      `| ${cell(record.label)} | ${record.endedWith} | ${record.sentenceCount} | ${record.citedSentenceCount} | ${record.citationCount} | ${record.sources.length} | ${record.knownAnswerFound ? "Yes" : "No"} | ${scriptCell(record)} | ${seconds(record.timing.doneMs)} | ${verdict(record.problems.length)} |`
+      `| ${cell(record.label)} | ${record.endedWith} | ${ledeCell(record)} | ${record.sentenceCount} | ${record.citedSentenceCount} | ${record.citationCount} | ${record.sources.length} | ${record.knownAnswerFound ? "Yes" : "No"} | ${scriptCell(record)} | ${seconds(record.timing.doneMs)} | ${verdict(record.problems.length)} |`
     );
   }
   const problems = [...report.unasked, ...report.questions.flatMap((record) => record.problems.map((problem) => `${record.label}: ${problem}`))];

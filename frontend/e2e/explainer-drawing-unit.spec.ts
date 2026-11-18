@@ -14,18 +14,61 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ENGLISH } from "@/lib/answerLanguages";
 import { splitSseBuffer } from "@/lib/answerStream";
-import type { ExplainerBlock, ImagesBlock, ProseBlock } from "@/lib/explainerContract";
+import { explainerShape, type Explainer, type ExplainerBlock, type ImagesBlock, type ProseBlock } from "@/lib/explainerContract";
 import { askingExplainer, reduceExplainer, type ExplainerState } from "@/lib/explainerState";
 import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
+import { explainerStateOf } from "@/lib/explainerVersions";
 import type { UnderstoodPart } from "@/lib/explainerView";
+import { parseShape } from "@/lib/shape";
+
+import { shownText } from "./explainerRender";
 
 const ROOT = join(__dirname, "..", "..");
 const read = (...parts: string[]) => readFileSync(join(ROOT, ...parts), "utf8");
+const LEDE_QUESTION = "Which mordant fixes the red in Kutch Ajrakh block printing?";
+
+function streamed(name: string): ExplainerEvent[] {
+  const { blocks } = splitSseBuffer(read("shared", name));
+  return blocks.map(explainerEventOf).filter((event): event is ExplainerEvent => event !== null);
+}
 
 function researched(): ExplainerState {
-  const { blocks } = splitSseBuffer(read("shared", "answer-stream.research.golden.sse"));
-  const events = blocks.map(explainerEventOf).filter((event): event is ExplainerEvent => event !== null);
-  return events.reduce(reduceExplainer, askingExplainer("Why does alum keep Ajrakh red?", "en"));
+  return streamed("answer-stream.research.golden.sse").reduce(reduceExplainer, askingExplainer("Why does alum keep Ajrakh red?", "en"));
+}
+
+function document(name: string): Explainer {
+  return parseShape(explainerShape, JSON.parse(read("shared", name)));
+}
+
+function drawn(state: ExplainerState, streaming = false): string {
+  const view = createElement(ExplainerView, {
+    state,
+    streaming,
+    languages: [ENGLISH],
+    depthLabel: "Detailed",
+    change: { parts: new Set<UnderstoodPart>(), onChange: () => undefined },
+    listenLanguages: [],
+    onFollowUp: null,
+    onFreshResearch: null
+  });
+  return renderToStaticMarkup(createElement(AuthProvider, null, createElement(ThemeProvider, null, view)));
+}
+
+function sentenceChips(html: string): [string, string[]][] {
+  const marks = [...html.matchAll(/data-testid="answer-sentence" data-sentence-id="([^"]+)"/g)];
+  return marks.map((mark, index) => {
+    const close = html.indexOf("</p>", mark.index);
+    const end = Math.min(marks[index + 1]?.index ?? html.length, close < 0 ? html.length : close);
+    return [mark[1], [...html.slice(mark.index, end).matchAll(/<span class="tabular-nums">([^<]+)<\/span>/g)].map((found) => found[1])];
+  });
+}
+
+function listedSources(html: string): [string, string][] {
+  return [...html.matchAll(/<li id="source-(\d+)"[^>]*>.*?class="[^"]*font-medium text-ink-900[^"]*">([^<]*)/g)].map((found) => [found[1], shownText(found[2])]);
+}
+
+function at(html: string, testId: string): number {
+  return html.indexOf(`data-testid="${testId}"`);
 }
 
 function blockOf<K extends ExplainerBlock["kind"]>(state: ExplainerState, kind: K): Extract<ExplainerBlock, { kind: K }> {
@@ -92,18 +135,67 @@ test("a streamed sentence underlines its server-marked terms as buttons that ope
 });
 
 test("the whole explainer view draws the researched answer with its pictures and terms", () => {
-  const view = createElement(ExplainerView, {
-    state: researched(),
-    streaming: false,
-    languages: [ENGLISH],
-    depthLabel: "Detailed",
-    change: { parts: new Set<UnderstoodPart>(), onChange: () => undefined },
-    listenLanguages: [],
-    onFollowUp: null,
-    onFreshResearch: null
-  });
-  const html = renderToStaticMarkup(createElement(AuthProvider, null, createElement(ThemeProvider, null, view)));
+  const html = drawn(researched());
   expect(attributes(html, "data-kind")).toEqual(["prose", "images"]);
   expect(html).toContain('data-testid="image-strip"');
   expect(html.match(/data-testid="term-span"/g)?.length).toBe(4);
+});
+
+test("the lede opens the answer under the understood line: the question as its headline, its sentences cited and its sources numbered first", () => {
+  const expected = document("explainer.lede.golden.json");
+  const [trail] = streamed("explainer.stream.golden.sse").filter((event) => event.type === "trail");
+  const state = reduceExplainer(streamed("explainer.lede.golden.sse").reduce(reduceExplainer, askingExplainer(LEDE_QUESTION, "en")), trail);
+  const html = drawn(state);
+  expect(html.match(/data-testid="answer-lede"/g)?.length).toBe(1);
+  expect(at(html, "understood-line")).toBeLessThan(at(html, "answer-lede"));
+  expect(at(html, "answer-lede")).toBeLessThan(at(html, "research-trail"));
+  expect(at(html, "research-trail")).toBeLessThan(at(html, "section-bar"));
+  const headline = /<h2 id="[^"]+" lang="([^"]*)" dir="([^"]*)"[^>]*>([^<]*)<\/h2>/.exec(html.slice(at(html, "answer-lede")));
+  expect(headline?.slice(1)).toEqual(["en", "ltr", LEDE_QUESTION]);
+  expect(sentenceChips(html)).toEqual([
+    ["lede.1", ["1"]],
+    ["lede.2", ["1", "2"]],
+    ["lede.3", ["1"]],
+    ...["s1.b1.1", "s1.b1.2", "s2.b1.1", "s2.b1.2", "s3.b1.1", "s3.b1.2"].map((id): [string, string[]] => [id, ["1"]])
+  ]);
+  expect(listedSources(html)).toEqual(expected.sources.map((source, index) => [String(index + 1), source.title]));
+});
+
+test("the lede paragraph runs the panel's full width like the headline and section prose, so a right-to-left lede ends at the headline's edge", () => {
+  const html = drawn(streamed("explainer.lede.golden.sse").reduce(reduceExplainer, askingExplainer(LEDE_QUESTION, "en")));
+  const paragraph = /<p[^>]* class="([^"]*)"/.exec(html.slice(at(html, "answer-lede")));
+  expect(paragraph?.[1].split(" ").filter((name) => name.startsWith("max-w-"))).toEqual([]);
+});
+
+test("the lede is drawn while the answer streams, before any section has a block", () => {
+  const events = streamed("explainer.lede.golden.sse");
+  const opened = events.slice(0, events.findIndex((event) => event.type === "lede") + 1).reduce(reduceExplainer, askingExplainer(LEDE_QUESTION, "en"));
+  const html = drawn(opened, true);
+  expect(opened.sections.every((section) => section.blocks.length === 0)).toBe(true);
+  expect(at(html, "answer-lede")).toBeGreaterThan(-1);
+  expect(at(html, "answer-lede")).toBeLessThan(at(html, "answer-progress"));
+  expect(sentenceChips(html)).toEqual([
+    ["lede.1", ["1"]],
+    ["lede.2", ["1", "2"]],
+    ["lede.3", ["1"]]
+  ]);
+});
+
+test("a stored explainer opened from Saved draws its lede and numbers its sources as the streamed answer did", () => {
+  const explainer = document("explainer.lede.golden.json");
+  const mark = { explainerId: explainer.answerId, version: 1, answerId: explainer.answerId, basedOn: null, question: explainer.question, changes: [], createdAt: explainer.createdAt };
+  const saved = drawn(explainerStateOf({ schemaVersion: 1, mark, explainer }));
+  const live = drawn(streamed("explainer.lede.golden.sse").reduce(reduceExplainer, askingExplainer(LEDE_QUESTION, "en")));
+  expect(at(saved, "answer-lede")).toBeGreaterThan(-1);
+  expect(sentenceChips(saved)).toEqual(sentenceChips(live));
+  expect(listedSources(saved)).toEqual(listedSources(live));
+});
+
+test("an answer streamed without a lede draws as before, its sources numbered from its first section", () => {
+  const expected = document("explainer.document.golden.json");
+  const html = drawn(streamed("explainer.stream.golden.sse").reduce(reduceExplainer, askingExplainer(expected.question, "en")));
+  expect(expected.lede).toBeUndefined();
+  expect(html).not.toContain('data-testid="answer-lede"');
+  expect(listedSources(html)).toEqual(expected.sources.map((source, index) => [String(index + 1), source.title]));
+  expect(sentenceChips(html).flatMap(([, chips]) => chips)).not.toContain("·");
 });

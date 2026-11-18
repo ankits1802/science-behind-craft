@@ -2720,6 +2720,21 @@ Last reviewed: 2026-11-18.
   turns into a code at sign-in, or the owner's other choice; the run then builds the pack and
   checks its PPTX and PDF (`e2e/production/exportProof.ts` already does when the role allows).
 
+## The lede on the page (decision 0077)
+
+### Listen, film, the quiz and lesson packs leave the lede out
+
+- **What:** the explainer page opens with the lede (`components/answer/LedeBlock.tsx`), and so do
+  the report PDF and the citations export, but Listen narrates sections only
+  (`voice/narration.spoken_blocks`): it starts at the first section and never marks a lede word.
+  Film mode's scenes (`voice/film_scenes.film_scenes`, `lib/filmScenes.ts`), the quiz
+  (`research/quiz.py`) and lesson packs (`research/lesson_builder.py`) also read sections only.
+- **Why left:** decision 0077 kept these readers on sections; task 3-03 draws the lede and adds no
+  Listen or film behaviour.
+- **Clears it:** `spoken_blocks` yields the lede first for a whole-answer narration (the Listen
+  golden and the narration cache keys change with it) and film opens on a lede scene; the quiz and
+  lesson packs take the lede only if the owner wants the direct answer in them.
+
 ## Frontend audit exceptions
 
 ### picomatch ReDoS advisory excepted in development tooling

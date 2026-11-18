@@ -1,7 +1,8 @@
 import { scriptOf } from "@/lib/answerLanguages";
 import { splitSseBuffer } from "@/lib/answerStream";
+import type { LedeBlock } from "@/lib/explainerContract";
 import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
-import { blockSentences } from "@/lib/explainerView";
+import { blockSentences, ledeSentences } from "@/lib/explainerView";
 import type { AnswerSentence } from "@/lib/types";
 
 import { NO_GENERATED_EXPLAINER, generatedExplainerFound, generatedExplainerOutcome, withGeneratedExplainer, type GeneratedExplainerRecord } from "./generatedExplainer";
@@ -57,6 +58,10 @@ export type SentenceRecord = {
 
 export type SourceRecord = { id: string; kind: string; title: string; publisher: string | null; year: number | null; doi: string | null; url: string | null };
 
+export type LedeRecord = { sentences: number; cited: number; shown: number | null; shownCited: number | null };
+
+export const NO_LEDE: LedeRecord = { sentences: 0, cited: 0, shown: null, shownCited: null };
+
 export type AnswerRecord = {
   label: string;
   question: string;
@@ -84,6 +89,7 @@ export type AnswerRecord = {
   knownAnswerFound: boolean;
   regionStory: RegionStoryRecord;
   generatedExplainer: GeneratedExplainerRecord;
+  lede: LedeRecord;
   pageSentences: number | null;
   pageSentenceIds: string[] | null;
   pageSentencesWithoutChip: number | null;
@@ -139,6 +145,12 @@ function sentenceRecord(kind: SentenceRecord["kind"], sectionId: string, sentenc
   };
 }
 
+function ledeRecords(lede: LedeBlock): { record: LedeRecord; sentences: SentenceRecord[] } {
+  const opening = ledeSentences(lede);
+  const record = { ...NO_LEDE, sentences: opening.length, cited: opening.filter((sentence) => sentence.citations.length > 0).length };
+  return { record, sentences: opening.map((sentence) => sentenceRecord("sentence", lede.id, sentence, lede)) };
+}
+
 function requestOf(body: string | null): AnswerRecord["request"] {
   try {
     const parsed = JSON.parse(body ?? "") as Record<string, unknown>;
@@ -189,8 +201,13 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
   let notEnoughEvidence: string | null = null;
   let regionStory = NO_REGION_STORY;
   let generatedExplainer = NO_GENERATED_EXPLAINER;
+  let lede = NO_LEDE;
   for (const { at, event } of parsed.events) {
-    if (event.type === "block") {
+    if (event.type === "lede") {
+      const opening = ledeRecords(event.data.block);
+      sentences.push(...opening.sentences);
+      lede = opening.record;
+    } else if (event.type === "block") {
       sentences.push(...blockSentences(event.data.block).map((sentence) => sentenceRecord("sentence", event.data.sectionId, sentence, event.data.block)));
       regionStory = withRegionStory(regionStory, event.data.block);
       generatedExplainer = withGeneratedExplainer(generatedExplainer, event.data.block);
@@ -206,7 +223,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     else if (event.type === "not_enough_evidence") notEnoughEvidence = event.data.message;
   }
   const atOf = (type: ExplainerEvent["type"]) => parsed.events.find(({ event }) => event.type === type)?.at;
-  const firstSentenceAt = parsed.events.find(({ event }) => event.type === "block" && blockSentences(event.data.block).length > 0)?.at;
+  const firstSentenceAt = parsed.events.find(({ event }) => event.type === "lede" || (event.type === "block" && blockSentences(event.data.block).length > 0))?.at;
   const body = sentences.filter((sentence) => sentence.kind === "sentence");
   return {
     label: question.label,
@@ -242,6 +259,7 @@ export function answerRecord(input: AnswerInput): AnswerRecord {
     knownAnswerFound: knownAnswerFound(question, sentences, regionStory, generatedExplainer),
     regionStory,
     generatedExplainer,
+    lede,
     pageSentences: null,
     pageSentenceIds: null,
     pageSentencesWithoutChip: null,
@@ -312,6 +330,19 @@ export function pageSentenceProblems(record: AnswerRecord): string[] {
   return problems;
 }
 
+export function ledeProblems(record: AnswerRecord): string[] {
+  const { lede } = record;
+  if (lede.shown === null) return [];
+  if (lede.sentences === 0) return ["the answer opened without a lede"];
+  if (lede.shown === 0) return ["the page shows no lede"];
+  return lede.shownCited ? [] : ["no lede sentence on the page shows a citation"];
+}
+
+export function savedLedeProblems(lede: LedeRecord, shown: number): string[] {
+  if (lede.sentences === 0 || shown === lede.sentences) return [];
+  return [`the saved explainer shows ${shown} of the lede's ${lede.sentences} sentences`];
+}
+
 export function answerProblems(record: AnswerRecord, question: KnownAnswerQuestion, options: KnownAnswerOptions = RIVERS_NOT_LOADED): string[] {
   const problems: string[] = [];
   const sent = new Set(record.sources.map((source) => source.id));
@@ -327,5 +358,11 @@ export function answerProblems(record: AnswerRecord, question: KnownAnswerQuesti
   const orphans = record.sentences.flatMap((sentence) => sentence.sourceIds).filter((id) => !sent.has(id));
   if (orphans.length > 0) problems.push(`${new Set(orphans).size} cited sources never arrived as source events`);
   if (record.pageSentencesWithoutChip) problems.push(`${record.pageSentencesWithoutChip} sentences on the page show no citation`);
-  return [...problems, ...pageSentenceProblems(record), ...knownAnswerOutcome(record, question, options).problems, ...scriptProblems(record.sentences, question.script)];
+  return [
+    ...problems,
+    ...pageSentenceProblems(record),
+    ...ledeProblems(record),
+    ...knownAnswerOutcome(record, question, options).problems,
+    ...scriptProblems(record.sentences, question.script)
+  ];
 }

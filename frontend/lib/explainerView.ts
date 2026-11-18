@@ -81,6 +81,10 @@ export function blockSourceIds(block: TypedBlock): string[] {
   return block.kind === "molecule_3d" ? [...cited, block.sourceId] : cited;
 }
 
+export function ledeSentences(lede: LedeBlock): ExplainerSentence[] {
+  return lede.figure ? [...lede.sentences, ...blockSentences(lede.figure)] : lede.sentences;
+}
+
 export function ledeSourceIds(lede: LedeBlock): string[] {
   const own = lede.sentences.flatMap((sentence) => sentence.citations.map((citation) => citation.sourceId));
   return lede.figure ? [...own, ...blockSourceIds(lede.figure)] : own;
@@ -183,12 +187,13 @@ export function sentenceSegments(text: string, terms: readonly TermSpan[], mark:
   return segments;
 }
 
-export function hasTranslatedText(sections: readonly SectionView[]): boolean {
-  return sections.some(
-    (section) =>
-      section.original !== undefined ||
-      section.blocks.some((block) => blockSentences(block).some((sentence) => sentence.translated === true))
-  );
+function anyTranslated(sentences: readonly ExplainerSentence[]): boolean {
+  return sentences.some((sentence) => sentence.translated === true);
+}
+
+export function hasTranslatedText(sections: readonly SectionView[], lede: LedeBlock | null = null): boolean {
+  if (lede && anyTranslated(ledeSentences(lede))) return true;
+  return sections.some((section) => section.original !== undefined || section.blocks.some((block) => anyTranslated(blockSentences(block))));
 }
 
 export function blockSentences(block: TypedBlock): ExplainerSentence[] {

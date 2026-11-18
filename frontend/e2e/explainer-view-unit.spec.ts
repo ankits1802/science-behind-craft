@@ -11,6 +11,7 @@ import {
   blockSentences,
   COVERED_NOTE,
   explainerSourceNumbers,
+  hasTranslatedText,
   ladderReach,
   reusedLabel,
   showsEarlierResearch,
@@ -282,4 +283,14 @@ test("the lede stream reduces to the lede document: the lede first, then section
   const headed = reduced(upTo(events, (event) => event.type === "section_heading"), opened);
   expect(headed.sections[0].title).toBe("Alum holds the red, iron the black");
   expect(blockSentences(state.sections[0].blocks[0]).length).toBe(2);
+});
+
+test("a translated lede offers the English original even when no section is translated", () => {
+  const { lede } = document("explainer.lede.golden.json");
+  if (!lede) throw new Error("the lede golden holds a lede");
+  const [first, ...rest] = lede.sentences;
+  const translated = { ...lede, sentences: [{ ...first, text: "फिटकरी लाल रंग को पक्का करती है।", original: first.text, translated: true }, ...rest] };
+  expect(hasTranslatedText([], lede)).toBe(false);
+  expect(hasTranslatedText([], translated)).toBe(true);
+  expect(hasTranslatedText([])).toBe(false);
 });

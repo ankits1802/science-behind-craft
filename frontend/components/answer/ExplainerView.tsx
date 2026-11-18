@@ -8,6 +8,7 @@ import { ExplainerBody } from "@/components/answer/ExplainerBody";
 import { ExplainerHeader, ORIGINAL_TEXT } from "@/components/answer/ExplainerHeader";
 import { ExplainerReadingProvider, type ExplainerReading } from "@/components/answer/ExplainerReading";
 import { lazyBlock } from "@/components/answer/lazyBlock";
+import { LedeBlock } from "@/components/answer/LedeBlock";
 import { ListenDock } from "@/components/answer/ListenDock";
 import { openedSource, SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
 import { TermSheet } from "@/components/answer/TermSheet";
@@ -39,7 +40,10 @@ const FilmPlayer = lazyBlock(() => import("@/components/answer/film/FilmPlayer")
 
 function useCitationLookup(state: ExplainerState, onOpen: (open: OpenCitation) => void): CitationLookup {
   const sourcesById = useMemo(() => new Map(state.sources.map((source) => [source.id, source])), [state.sources]);
-  const numbers = useMemo(() => explainerSourceNumbers(state.sections, state.openQuestions, state.reactions), [state.sections, state.openQuestions, state.reactions]);
+  const numbers = useMemo(
+    () => explainerSourceNumbers(state.sections, state.openQuestions, state.reactions, state.lede),
+    [state.sections, state.openQuestions, state.reactions, state.lede]
+  );
   return useMemo(
     () => ({
       numbers,
@@ -60,7 +64,7 @@ export function ExplainerView({ state, streaming, languages, depthLabel, change,
   const terms = useTermState();
   const listen = useListen(state.answerId, state.language);
   const lookup = useCitationLookup(state, setOpened);
-  const translated = hasTranslatedText(state.sections);
+  const translated = hasTranslatedText(state.sections, state.lede);
   const original = translated && shown === ORIGINAL_TEXT;
   const filmable = state.phase === "done" && state.answerId !== null && listenLanguages.includes(state.language);
   const listenable = filmable && listen.status === "idle";
@@ -92,6 +96,7 @@ export function ExplainerView({ state, streaming, languages, depthLabel, change,
             tools={tools}
           />
           {versions}
+          {state.lede ? <LedeBlock lede={state.lede} reduce={reduce} /> : null}
           <AnswerIdProvider value={state.phase === "done" ? state.answerId : null}>
             <ExplainerBody state={state} sections={shownSections(state.sections, streaming)} streaming={streaming} reduce={reduce} active={active} onActive={setActive} onFollowUp={onFollowUp} />
           </AnswerIdProvider>
