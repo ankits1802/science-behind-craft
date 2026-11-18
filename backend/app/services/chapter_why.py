@@ -4,7 +4,13 @@ import uuid
 from collections.abc import Mapping, Sequence
 from types import MappingProxyType
 
-from app.composer.region_story import NO_CHOICE, StoryChoice, StoryStepChoice
+from app.composer.region_story import (
+    NO_CHOICE,
+    REPLY_LAYERS_MAX,
+    REPLY_STEPS_MAX,
+    StoryChoice,
+    StoryStepChoice,
+)
 from app.geo.layers import LAYERS_BY_ID
 from app.research.blocks import ExplainerSentence, stated_texts
 from app.research.blocks_climate import ClimateRiskBlock
@@ -30,7 +36,15 @@ from .chapter_prose import prose_blocks
 from .climate_risk import MEANING_WORDS, climate_risk_block
 from .region_story import DISTRICT_REF_PREFIX, region_story_block
 
-__all__ = ["FACTOR_LAYERS", "FACTOR_WORDS", "MEANING_MAX", "SEASON_DISCIPLINES", "STORY_ROLES", "why_chapter"]
+__all__ = [
+    "FACTOR_LAYERS",
+    "FACTOR_WORDS",
+    "MEANING_MAX",
+    "SEASON_DISCIPLINES",
+    "STORY_ROLES",
+    "story_choice",
+    "why_chapter",
+]
 
 KEY = "why"
 STORY_ROLES = (
@@ -171,8 +185,13 @@ def _region_story(
     factors = {step.factor for step in environment}
     wanted = {layer for factor in factors for layer in FACTOR_LAYERS.get(factor, ())}
     layers = [layer.id for layer in offer.layers if layer.id in wanted and layer.id in LAYERS_BY_ID]
-    choice = StoryChoice(river=NO_CHOICE, steps=steps, layers=layers)
-    return region_story_block(offer, statements, choice, block_id="why.region")
+    return region_story_block(offer, statements, story_choice(steps, layers), block_id="why.region")
+
+
+def story_choice(steps: Sequence[StoryStepChoice], layers: Sequence[str]) -> StoryChoice:
+    return StoryChoice(
+        river=NO_CHOICE, steps=list(steps[:REPLY_STEPS_MAX]), layers=list(layers[:REPLY_LAYERS_MAX])
+    )
 
 
 def _climate(

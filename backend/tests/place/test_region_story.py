@@ -5,7 +5,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
-from app.composer.region_story import StoryChoice
+from app.composer.region_story import StoryChoice, StoryStepChoice
 from app.core.errors import ExternalFailure
 from app.research import explainer
 from app.research.blocks_place import RegionStoryBlock
@@ -14,6 +14,7 @@ from app.research.rivers import HYDRORIVERS_DATASET_CODE
 from app.research.structured import schema_problems
 from app.services import place_builders
 from app.services.block_builders import BLOCK_BUILDERS
+from app.services.chapter_why import story_choice
 from app.services.place_builders import RegionStoryBuilder
 from app.services.region_story import RegionOffer, region_story_block, story_statements
 
@@ -186,3 +187,11 @@ async def test_a_section_that_already_carries_a_stored_story_builds_no_second(st
     model = story_model()
     assert (await RegionStoryBuilder(place_tools(model)).build(ask)).blocks == ()
     assert stored["asked"] == []
+
+
+def test_a_page_story_over_many_places_and_factors_stays_within_the_choice_s_limits() -> None:
+    steps = [StoryStepChoice(claim=f"c{n}", district=f"lgd:{n}") for n in range(1, 26)]
+    layers = [f"layer-{n}" for n in range(1, 13)]
+    choice = story_choice(steps, layers)
+    assert (len(choice.steps), len(choice.layers)) == (20, 10)
+    assert (choice.steps, choice.layers) == (steps[:20], layers[:10])
