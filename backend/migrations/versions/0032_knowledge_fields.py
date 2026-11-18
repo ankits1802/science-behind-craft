@@ -256,9 +256,8 @@ def _check(table: str, name: str, condition: str) -> sa.CheckConstraint:
 
 
 def _piece_subjects() -> None:
-    table = "KnowledgePieceSubject"
     op.create_table(
-        table,
+        "KnowledgePieceSubject",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("pieceId", sa.UUID(), nullable=False),
         sa.Column("kind", sa.String(length=16), nullable=False),
@@ -267,6 +266,13 @@ def _piece_subjects() -> None:
         sa.Column("compoundId", sa.UUID(), nullable=True),
         sa.Column("placeKey", sa.String(length=64), nullable=True),
         sa.Column("createdAt", STAMP, server_default=sa.text("now()"), nullable=False),
+        *_subject_rules("KnowledgePieceSubject"),
+    )
+    _subject_indexes("KnowledgePieceSubject")
+
+
+def _subject_rules(table: str) -> tuple[sa.Constraint, ...]:
+    return (
         _check(table, "kind", f'"kind" IN ({_listed(PIECE_SUBJECT_KINDS)})'),
         _check(table, "one_subject", _one_subject()),
         _check(table, "placeKey", f'"placeKey" IS NULL OR "placeKey" ~ \'{PLACE_KEY_PATTERN}\''),
@@ -276,6 +282,9 @@ def _piece_subjects() -> None:
         _fk(table, "compoundId", "Compound", "CASCADE"),
         sa.PrimaryKeyConstraint("id", name=op.f(f"{table}_pkey")),
     )
+
+
+def _subject_indexes(table: str) -> None:
     for _, column in SUBJECT_COLUMNS:
         op.create_index(
             f"{table}_pieceId_{column}_key",
@@ -287,8 +296,9 @@ def _piece_subjects() -> None:
         op.create_index(op.f(f"{table}_{column}_idx"), table, [column])
 
 
-def _section_columns() -> tuple[sa.Column, ...]:
-    return (
+def _article_sections() -> None:
+    op.create_table(
+        "ArticleSection",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("craftId", sa.UUID(), nullable=True),
         sa.Column("categoryId", sa.UUID(), nullable=True),
@@ -298,7 +308,7 @@ def _section_columns() -> tuple[sa.Column, ...]:
         sa.Column("status", sa.String(length=16), server_default="PROPOSED", nullable=False),
         sa.Column(
             "writtenByKind",
-            postgresql.ENUM(name="ActorKind", create_type=False),
+            postgresql.ENUM("USER", "SYSTEM", name="ActorKind", create_type=False),
             server_default="SYSTEM",
             nullable=False,
         ),
@@ -307,7 +317,9 @@ def _section_columns() -> tuple[sa.Column, ...]:
         sa.Column("reviewedAt", STAMP, nullable=True),
         sa.Column("createdAt", STAMP, server_default=sa.text("now()"), nullable=False),
         sa.Column("updatedAt", STAMP, server_default=sa.text("now()"), nullable=False),
+        *_section_rules("ArticleSection"),
     )
+    _section_indexes("ArticleSection")
 
 
 def _section_rules(table: str) -> tuple[sa.Constraint, ...]:
@@ -330,9 +342,7 @@ def _section_rules(table: str) -> tuple[sa.Constraint, ...]:
     )
 
 
-def _article_sections() -> None:
-    table = "ArticleSection"
-    op.create_table(table, *_section_columns(), *_section_rules(table))
+def _section_indexes(table: str) -> None:
     for column in ("craftId", "categoryId"):
         op.create_index(
             f"{table}_{column}_field_version_key",

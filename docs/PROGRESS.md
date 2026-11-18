@@ -932,6 +932,11 @@ Last updated: 2026-11-19.
     `fields` on `KnowledgePiece`, and `KnowledgePieceSubject` links to crafts, concepts, places
     and compounds.
 
+- **MCP server, slice 1 (2026-11-19, to release, off).** Decision 0103,
+  `docs/contracts/knowledge-api.md`: `POST /api/mcp` serves the public read tools `list_fields`,
+  `find_crafts`, `get_facts`, `get_section` and `list_components` to any agent, anonymous and
+  counted like a public page read, behind `MCP_SERVER_ENABLED`.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

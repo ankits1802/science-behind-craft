@@ -172,6 +172,16 @@ Running the same sha again re-renders the env and restarts the live colour.
 
 Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there is no Actions deploy.
 
+## MCP server
+
+The read tools of `docs/contracts/knowledge-api.md` at `POST <PUBLIC_API_URL>/mcp` (decision 0103).
+
+1. Switch on: put `MCP_SERVER_ENABLED=true` at `/kalavigyan/env/MCP_SERVER_ENABLED`, then
+   `sudo kv-render-env` on the box (a deploy also re-renders it).
+2. Check: `curl -s -X POST <PUBLIC_API_URL>/mcp -H 'content-type: application/json' -d
+   '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists five tools.
+3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
+
 ## AI spend and token limits
 
 No caps for now, on anyone, in money or tokens (owner, 2026-11-18; decision 0093). Every cap is

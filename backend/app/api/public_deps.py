@@ -22,6 +22,7 @@ __all__ = [
     "READER_VARY",
     "THROTTLED_DETAIL",
     "cached_read",
+    "counted_anonymous_read",
     "public_asset_reader",
     "public_reader",
     "read_headers",
@@ -42,6 +43,10 @@ async def public_reader(
         return user
     _refuse_when_spent(public_read_attempt(connection))
     return None
+
+
+async def counted_anonymous_read(connection: HTTPConnection) -> None:
+    _refuse_when_spent(public_read_attempt(connection))
 
 
 async def public_asset_reader(

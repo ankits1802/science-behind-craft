@@ -79,6 +79,7 @@ SERVICE_ROUTES = {
     ("GET", "/health/ready"),
     ("POST", "/api/artisan/llm/v1/chat/completions"),
     ("POST", "/api/voice/llm/v1/chat/completions"),
+    ("POST", "/api/mcp"),
 }
 ASKING_ROUTES = {
     ("GET", "/api/answers/config"),
