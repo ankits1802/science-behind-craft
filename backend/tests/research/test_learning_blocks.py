@@ -192,11 +192,13 @@ def trend(**changes: Any) -> dict[str, Any]:
 
 
 def test_a_trend_spans_thirty_years_in_its_variable_s_units_and_says_if_it_is_significant() -> None:
-    assert ClimateTrend.model_validate(trend()).significant is False
+    assert ClimateTrend.model_validate(trend()).significant is True
+    assert ClimateTrend.model_validate(trend(pValue=0.2, significant=False)).significant is False
     for changes, message in (
         ({"period": "2000-2025"}, "at least 30 years"),
         ({"slopeUnit": "mm/month per decade"}, "is given in mm/year and mm/year per decade"),
-        ({"pValue": 0.01}, "significant exactly when"),
+        ({"pValue": 0.2}, "significant exactly when"),
+        ({"significant": False}, "significant exactly when"),
     ):
         with pytest.raises(ValidationError, match=message):
             ClimateTrend.model_validate(trend(**changes))
