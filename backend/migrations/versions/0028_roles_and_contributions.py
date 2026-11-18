@@ -243,9 +243,10 @@ def _recreate_enum(enum_name: str, columns: Sequence[tuple[str, str, str | None]
         if default is not None:
             op.execute(f'ALTER TABLE "{table}" ALTER COLUMN "{column}" DROP DEFAULT')
         demoted = (
-            f"WHEN \"{column}\"::text = '{ARTISAN}' THEN '{DEMOTED_TO}' " if enum_name == "UserRole" else ""
+            f"CASE WHEN \"{column}\"::text = '{ARTISAN}' THEN '{DEMOTED_TO}' ELSE \"{column}\"::text END"
         )
-        cast = f'(CASE {demoted}ELSE "{column}"::text END)::"{enum_name}"'
+        source = demoted if enum_name == "UserRole" else f'"{column}"::text'
+        cast = f'({source})::"{enum_name}"'
         op.execute(f'ALTER TABLE "{table}" ALTER COLUMN "{column}" TYPE "{enum_name}" USING {cast}')
         if default is not None:
             op.execute(f'ALTER TABLE "{table}" ALTER COLUMN "{column}" SET DEFAULT \'{default}\'')
