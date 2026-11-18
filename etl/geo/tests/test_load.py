@@ -220,3 +220,14 @@ def test_script_dry_run_subprocess(out_dir):
     )
     assert completed.returncode == 0, completed.stderr
     assert "2 values, 1 geology rows, 3 datasets" in completed.stdout
+
+
+def test_key_match_uses_equality_for_not_null_columns_so_the_prune_can_hash():
+    clause = load.key_match(["districtLgd", "lithology"], {"districtLgd"})
+    assert clause == 's."districtLgd" = t."districtLgd" and s."lithology" is not distinct from t."lithology"'
+
+
+def test_every_value_key_column_matches_by_equality_once_the_table_marks_it_not_null():
+    clause = load.key_match(load.VALUE_KEY, set(load.VALUE_KEY))
+    assert "distinct" not in clause
+    assert clause.count(" = ") == len(load.VALUE_KEY)

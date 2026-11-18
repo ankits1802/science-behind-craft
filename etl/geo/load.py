@@ -182,6 +182,22 @@ def known_districts(cur) -> set[int] | None:
     return {int(r[0]) for r in cur.fetchall()}
 
 
+def not_null_columns(cur, table: str) -> set[str]:
+    cur.execute(
+        "select column_name from information_schema.columns "
+        "where table_schema = current_schema() and table_name = %s and is_nullable = 'NO'",
+        (table,),
+    )
+    return {r[0] for r in cur.fetchall()}
+
+
+def key_match(key: list[str], not_null: set[str]) -> str:
+    return " and ".join(
+        f"s.{quote(c)} = t.{quote(c)}" if c in not_null else f"s.{quote(c)} is not distinct from t.{quote(c)}"
+        for c in key
+    )
+
+
 def upsert(cur, table: str, frame: pd.DataFrame, key: list[str], columns: list[str], required: set[str], prune: bool):
     present = table_columns(cur, table)
     require(table, present, required)
@@ -194,6 +210,8 @@ def upsert(cur, table: str, frame: pd.DataFrame, key: list[str], columns: list[s
     with cur.copy(f"copy {stage} ({copy_cols}) from stdin") as copy:
         for record in frame[cols].itertuples(index=False, name=None):
             copy.write_row([clean(v) for v in record] + [now] * len(stamps))
+    cur.execute(f"analyze {stage}")
+    match = key_match(key, not_null_columns(cur, table))
     target = quote(table)
     insert_cols = ", ".join(quote(c) for c in [*cols, *stamps])
     conflict = ", ".join(quote(c) for c in key)
@@ -206,13 +224,11 @@ def upsert(cur, table: str, frame: pd.DataFrame, key: list[str], columns: list[s
     if has_unique(cur, table, key):
         cur.execute(f"{insert} on conflict ({conflict}) do update set {updates}")
     else:
-        same = " and ".join(f"s.{quote(c)} is not distinct from t.{quote(c)}" for c in key)
-        cur.execute(f"delete from {target} t where exists (select 1 from {stage} s where {same})")
+        cur.execute(f"delete from {target} t where exists (select 1 from {stage} s where {match})")
         cur.execute(insert)
     written = cur.rowcount
     pruned = 0
     if prune:
-        match = " and ".join(f"s.{quote(c)} is not distinct from t.{quote(c)}" for c in key)
         cur.execute(
             f'delete from {target} t where (t."datasetId", t."districtLgd") in '
             f'(select distinct "datasetId", "districtLgd" from {stage}) '
