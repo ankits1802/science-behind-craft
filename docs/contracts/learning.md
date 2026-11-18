@@ -155,7 +155,7 @@ quiz, downloadable as an HTML deck, PPTX and PDF. Capability `BUILD_LESSONS` (`c
 Professor and above; the client's `canBuildLessons`); a pack is its builder's alone.
 
 - **`LessonRequest {explainerId, version, title | null (the version's question when null),
-  sectionIds[] (1-14, each once, READY sections of that version, in the order wanted), quiz}`.**
+  sectionIds[] (1 to one per field, 16, each once, READY sections of that version, in the order wanted), quiz}`.**
 - **`LessonPack {schemaVersion 1, id, explainerId, version, title, craft | null, language,
   createdAt, slides[Slide] (3-60), readingList[ReadingItem] (1+), quiz: QuizBlock | null,
   sources[SourceRef]}`.** Built by the server from the stored version, no model: slides run

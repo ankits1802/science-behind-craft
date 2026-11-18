@@ -57,6 +57,8 @@ LEFT_OPEN_QUESTIONS: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "Who makes a living from {craft}, and how?",
         "DESIGN": "What do the patterns of {craft} mean?",
         "HEALTH": "How do artisans of {craft} work safely?",
+        "SOCIETY": "Which communities practise {craft}, and how does it support them?",
+        "POLICY": "Which laws, schemes and GI rules protect {craft}?",
     }
 )
 

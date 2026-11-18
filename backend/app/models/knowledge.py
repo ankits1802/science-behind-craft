@@ -18,14 +18,15 @@ from sqlalchemy import (
     UniqueConstraint,
     text as sql_text,
 )
-from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, TSVECTOR, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
-from app.models.base import Base, created_at, updated_at, uuid_pk
+from app.models.base import Base, created_at, one_of, subset_of, updated_at, uuid_pk
 from app.models.crafts import EMBEDDING_DIMENSIONS
 
 QUOTE_MAX_CHARS = 300
+FIELD_COLUMN_CHARS = 16
 
 
 class Source(Base):
@@ -166,6 +167,10 @@ class Claim(Base):
     createdByKind: Mapped[str] = mapped_column(e.ActorKind, nullable=False, server_default="SYSTEM")
     sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
     sourcesDiffer: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=sql_text("false"))
+    field: Mapped[str | None] = mapped_column(String(FIELD_COLUMN_CHARS))
+    fields: Mapped[list[str]] = mapped_column(
+        ARRAY(Text), nullable=False, server_default=sql_text("ARRAY[]::text[]")
+    )
     embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
     tsv: Mapped[Any] = mapped_column(
         TSVECTOR, Computed("to_tsvector('english'::regconfig, coalesce(\"text\", ''))", persisted=True)
@@ -183,6 +188,12 @@ class Claim(Base):
             postgresql_ops={"embedding": "vector_cosine_ops"},
         ),
         Index(None, "supersedesId"),
+        CheckConstraint('"field" IS NULL OR ' + one_of("field", e.DISCIPLINES), name="field"),
+        CheckConstraint(subset_of("fields", e.DISCIPLINES), name="fields"),
+        CheckConstraint('"field" IS NOT NULL OR cardinality("fields") = 0', name="fields_need_field"),
+        CheckConstraint('NOT ("field" = ANY ("fields"))', name="field_once"),
+        Index(None, "field"),
+        Index("Claim_fields_gin_idx", "fields", postgresql_using="gin"),
     )
 
 

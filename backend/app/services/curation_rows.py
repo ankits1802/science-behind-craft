@@ -170,6 +170,7 @@ def claim_rows(dossier: Dossier, check: CheckFile, concepts: ConceptPlan) -> lis
             "createdByKind": "SYSTEM",
             "sensitivity": claim.sensitivity,
             "sourcesDiffer": claim.id in differ,
+            "field": claim.discipline,
         }
         for claim in dossier.claims
     ]

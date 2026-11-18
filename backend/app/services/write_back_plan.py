@@ -30,7 +30,7 @@ SKIP_NO_EVIDENCE = "cites stored claims only"
 SKIP_INVALID = "breaks the write-back contract"
 SKIP_FIELD_ONLY = "a field interview alone supports only the speaker's own practice"
 SKIP_FIELD_BESIDE = "a field interview supports another discipline only beside an A or B source"
-FIELD_ONLY_DISCIPLINES = frozenset({"PROCESS", "MATERIALS", "DESIGN", "ECONOMICS"})
+FIELD_ONLY_DISCIPLINES = frozenset({"PROCESS", "MATERIALS", "DESIGN", "ECONOMICS", "SOCIETY"})
 FIELD_FOUND_BY = ("field_voices",)
 BESIDE_FIELD_TRUST = frozenset({"A", "B"})
 

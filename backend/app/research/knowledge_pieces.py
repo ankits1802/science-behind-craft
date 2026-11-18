@@ -11,6 +11,8 @@ from typing import Any, Literal, Self
 
 from pydantic import AwareDatetime, Field, TypeAdapter, model_validator
 
+from app.models.enums import BASIN_PLACE_PREFIX, DISTRICT_PLACE_PREFIX
+
 from .base import ContractModel
 from .blocks import BlockBase, ReuseMarker
 from .blocks_place import RegionStoryBlock
@@ -64,8 +66,8 @@ REUSE_REFUSALS = (
 )
 PIECE_SENTENCE_PREFIX_CHARS = 12
 UNSTORED_BLOCK_KINDS = frozenset({"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice"})
-BASIN_SUBJECT_PREFIX = "basin"
-DISTRICT_SUBJECT_PREFIX = "lgd"
+BASIN_SUBJECT_PREFIX = BASIN_PLACE_PREFIX
+DISTRICT_SUBJECT_PREFIX = DISTRICT_PLACE_PREFIX
 SIMULATION_NAMESPACE = "concept"
 CLAIM_KEYED_KINDS = frozenset({"simulation"})
 BLOCKS = TypeAdapter(Block)

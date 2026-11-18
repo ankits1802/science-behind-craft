@@ -10,6 +10,7 @@ from app.models.ai import (
     UsageEvent,
 )
 from app.models.alerts import AlertDigestSend, Notification
+from app.models.article_sections import ArticleSection
 from app.models.base import Base
 from app.models.conversation import (
     Answer,
@@ -88,7 +89,7 @@ from app.models.knowledge import (
     Source,
     WebFetch,
 )
-from app.models.knowledge_pieces import KnowledgePiece
+from app.models.knowledge_pieces import KnowledgePiece, KnowledgePieceSubject
 from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
 from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
@@ -116,6 +117,7 @@ __all__ = [
     "AnswerSentence",
     "AnswerTrace",
     "AppSetting",
+    "ArticleSection",
     "ArtisanContribution",
     "ArtisanConversation",
     "ArtisanConversationAudio",
@@ -170,6 +172,7 @@ __all__ = [
     "Invite",
     "Job",
     "KnowledgePiece",
+    "KnowledgePieceSubject",
     "LessonPack",
     "LiveCandidate",
     "ManagedSecret",

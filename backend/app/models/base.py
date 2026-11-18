@@ -27,6 +27,11 @@ def one_of(column: str, values: tuple[str, ...]) -> str:
     return f'"{column}" IN ({listed})'
 
 
+def subset_of(column: str, values: tuple[str, ...]) -> str:
+    listed = ", ".join(f"'{value}'" for value in values)
+    return f'"{column}" <@ ARRAY[{listed}]::text[]'
+
+
 def uuid_pk() -> Mapped[uuid.UUID]:
     return mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
 

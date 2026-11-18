@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from itertools import batched
 from typing import Any
 
-from sqlalchemy import Select, func, select, update
+from sqlalchemy import ColumnElement, Select, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -48,8 +48,9 @@ CLAIM_UPDATE_COLUMNS = (
     "version",
     "sensitivity",
     "sourcesDiffer",
+    "field",
 )
-COMPARED = ("subjectId", "text", "evidenceLevel", "status", "sensitivity", "sourcesDiffer")
+COMPARED = ("subjectId", "text", "evidenceLevel", "status", "sensitivity", "sourcesDiffer", "field")
 
 
 @dataclass(frozen=True)
@@ -62,6 +63,7 @@ class StoredClaim:
     status: str
     sensitivity: str
     sources_differ: bool
+    field: str | None
 
     def compared(self) -> dict[str, Any]:
         return {
@@ -71,6 +73,7 @@ class StoredClaim:
             "status": self.status,
             "sensitivity": self.sensitivity,
             "sourcesDiffer": self.sources_differ,
+            "field": self.field,
         }
 
 
@@ -166,17 +169,7 @@ def craft_curated_claims(craft_id: uuid.UUID) -> Select[tuple[uuid.UUID]]:
 async def stored_curated_claims(
     session: AsyncSession, marked: Select[tuple[uuid.UUID]]
 ) -> dict[uuid.UUID, StoredClaim]:
-    statement = select(
-        Claim.id,
-        Claim.subjectId,
-        Claim.text,
-        Claim.evidenceLevel,
-        Claim.levelReason,
-        Claim.status,
-        Claim.sensitivity,
-        Claim.sourcesDiffer,
-    ).where(Claim.id.in_(marked))
-    return {row[0]: StoredClaim(*row) for row in (await session.execute(statement)).tuples()}
+    return await _stored_where(session, Claim.id.in_(marked))
 
 
 async def write_claims(
@@ -200,6 +193,10 @@ async def write_claims(
 async def _stored_by_id(session: AsyncSession, claim_ids: set[uuid.UUID]) -> dict[uuid.UUID, StoredClaim]:
     if not claim_ids:
         return {}
+    return await _stored_where(session, Claim.id.in_(list(claim_ids)))
+
+
+async def _stored_where(session: AsyncSession, chosen: ColumnElement[bool]) -> dict[uuid.UUID, StoredClaim]:
     statement = select(
         Claim.id,
         Claim.subjectId,
@@ -209,7 +206,8 @@ async def _stored_by_id(session: AsyncSession, claim_ids: set[uuid.UUID]) -> dic
         Claim.status,
         Claim.sensitivity,
         Claim.sourcesDiffer,
-    ).where(Claim.id.in_(list(claim_ids)))
+        Claim.field,
+    ).where(chosen)
     return {row[0]: StoredClaim(*row) for row in (await session.execute(statement)).tuples()}
 
 

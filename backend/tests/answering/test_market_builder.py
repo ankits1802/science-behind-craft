@@ -218,9 +218,9 @@ async def test_a_reused_section_rebuilds_only_the_crafts_its_pieces_do_not_show(
     assert [block.craft for block in built.blocks] == [bagru]
 
 
-async def test_market_blocks_join_economics_and_pass_the_registry_s_checks() -> None:
+async def test_market_blocks_join_economics_and_policy_and_pass_the_registry_s_checks() -> None:
     entry = next(entry for entry in BLOCK_BUILDERS if entry.kind == "market_gi")
-    assert entry.disciplines == {"ECONOMICS"} and entry.rebuilt_on_reuse
+    assert entry.disciplines == {"ECONOMICS", "POLICY"} and entry.rebuilt_on_reuse
     assert "market_gi" in BUILT_BLOCK_KINDS
     _, bagru, markets = comparison()
     builders = BlockBuilders([(entry, MarketGiBuilder(TOOLS, offers=markets))])

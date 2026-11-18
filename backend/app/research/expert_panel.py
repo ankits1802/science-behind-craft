@@ -148,14 +148,14 @@ EXPERT_PANEL: Mapping[str, SeatBrief] = MappingProxyType(
                 "Anthropologist",
                 "Explains the communities who make and use the craft, their practice and what it means to them.",
                 ("FIELD_TESTIMONY", "PAPER", "BOOK", "WEB_PAGE"),
-                ("HISTORY", "OVERVIEW", "DESIGN", "ECONOMICS"),
+                ("SOCIETY", "HISTORY", "OVERVIEW", "DESIGN", "ECONOMICS"),
             ),
             _seat(
                 "ECONOMIST",
                 "Economist",
                 "Explains markets, prices, livelihoods and the costs of making, with their date and place.",
                 ("GOVERNMENT_REPORT", "PAPER", "DATASET"),
-                ("ECONOMICS",),
+                ("ECONOMICS", "SOCIETY", "POLICY"),
             ),
             _seat(
                 "DESIGN_HISTORIAN",
@@ -176,7 +176,7 @@ EXPERT_PANEL: Mapping[str, SeatBrief] = MappingProxyType(
                 "GI and policy expert",
                 "Explains Geographical Indication registration, standards and public schemes for the craft.",
                 ("GI_JOURNAL", "GOVERNMENT_REPORT"),
-                ("ECONOMICS", "HISTORY", "OVERVIEW"),
+                ("POLICY", "ECONOMICS", "HISTORY", "OVERVIEW"),
             ),
             _seat(
                 "ARTISAN",

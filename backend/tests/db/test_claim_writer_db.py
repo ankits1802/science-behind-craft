@@ -101,6 +101,7 @@ async def test_a_write_back_stores_a_cited_claim_with_its_provenance(session: As
         "PROVISIONAL",
     )
     assert (claim.origin, claim.status, claim.createdByKind) == ("LIVE_RESEARCH", "APPROVED", "SYSTEM")
+    assert (claim.field, claim.fields) == ("MATERIALS", [])
     assert claim.embedding is not None
     (cite,) = await citations(session, claim_id)
     assert (cite.sourceId, cite.quote, cite.quoteCheck, cite.relation) == (

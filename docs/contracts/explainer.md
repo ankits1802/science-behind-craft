@@ -1470,7 +1470,7 @@ How today's events map:
 |---|---|---|---|---|---|---|
 | `BASIC` | Basic | `HYBRID` (stored first, light) | 2, 5 | 3-4 | 2 | Student |
 | `DETAILED` | Detailed | `HYBRID` | 4, 10 | 5-7 | 4 | Researcher, Professor |
-| `EXPERT` | Expert | `DEEP` | 8, 20 | all relevant (1-14) | 6-10 | Admin, Master Admin |
+| `EXPERT` | Expert | `DEEP` | 8, 20 | all relevant (1-16, one per field) | 6-10 | Admin, Master Admin |
 
 - `VERIFIED`, `HYBRID` and `DEEP` stay internal (`ANSWER_MODES`, `MODE_POLICIES`). `VERIFIED` is
   the stored-only answer that still works when spend is refused.
@@ -1535,6 +1535,12 @@ table also holds `embedding` (1536 dimensions, filled like claims, never sent) a
   `REJECTED`, `RETRACTED`, `SUPERSEDED` or `WITHDRAWN` (migration `0017_curated_dossiers`), or its
   level, text or sensitivity changes, or it is deleted. Curated dossiers add Expert `prose` pieces
   with no answer id, one for the lede (facet `OVERVIEW`) and one per overview section (decision 0053).
+- **Component registry** (migration `0032_knowledge_fields`, decisions 0101 and 0102): a piece may
+  carry a stable `label` (`<owner>/<field>/<name>`, lower-case words joined by hyphens, unique),
+  with a `title` and a `description` of at most 600 characters written for a model, and secondary
+  `fields` besides its `facet`. `KnowledgePieceSubject {pieceId, kind (CRAFT, CONCEPT, PLACE,
+  COMPOUND), craftId | conceptId | placeKey (`lgd:<code>` or `basin:<id>`) | compoundId}` links it
+  to each subject it shows, exactly one column per kind, once per piece.
 - **Topic keys** (`research/piece_topics`): the facet's namespace (`FACET_NAMESPACES`) and as
   subjects the glossary terms the question names (`TermMarker` over the craft's glossary), else for
   `GEOGRAPHY`, `GEOLOGY` and `CLIMATE` the craft's districts, else the craft's slug. A key longer

@@ -41,7 +41,7 @@ __all__ = [
 
 logger = logging.getLogger(__name__)
 
-MARKET_FIELDS = frozenset({"ECONOMICS"})
+MARKET_FIELDS = frozenset({"ECONOMICS", "POLICY"})
 IMITATION_MAX = 3
 PRICES_MAX = 6
 MARKET_BLOCK_PREFIX = "market"

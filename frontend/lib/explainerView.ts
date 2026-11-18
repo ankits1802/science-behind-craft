@@ -30,7 +30,9 @@ export const DISCIPLINE_LABEL: Record<Discipline, string> = {
   HISTORY: "History",
   ECONOMICS: "Economics",
   DESIGN: "Design",
-  HEALTH: "Health"
+  HEALTH: "Health",
+  SOCIETY: "Society",
+  POLICY: "Policy"
 };
 
 export const WORKING_STATE_LABEL: Record<WorkingSectionState, string> = {

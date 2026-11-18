@@ -142,6 +142,17 @@ stored as free text or HTML. Every record is typed, cited, versioned and append-
       - `AUTO`: a fact that passes every gate goes live, marked unreviewed, and stays in the
         review queue;
       - `APPROVAL`: a Professor or Admin approves before it goes live.
+    - **Reviewers' own contributions are approved at once** (owner, 2026-11-19). A proposal made
+      by a Professor, Admin or Master Admin account, whether on the site, through the Knowledge
+      API or through the MCP server, goes live as approved whatever the switch says. It still
+      passes the automatic gates in 5, and it does not enter the review queue. The role is read
+      from the signed-in account behind the token at the moment of the write, never from the
+      request.
+    - **Admins review everyone else's contributions in admin settings** (owner, 2026-11-19). An
+      Admin or Master Admin sees every pending contribution from other people, whatever its
+      origin (the site, the Knowledge API, the MCP server, an artisan's testimony), and approves
+      or rejects each one there, with a reason kept for a rejection. The queue builds on the
+      testimony review that exists (`/testimony/review`), so there is one review path, not two.
 13. **No public credit for contributors** (owner, 2026-11-19).
     - Contributions show no contributor name.
     - Who proposed what is kept privately, for moderation, withdrawal and audit only.
@@ -237,6 +248,20 @@ stored as free text or HTML. Every record is typed, cited, versioned and append-
       - `claim_task` reserves a task for a set time, so two agents do not do the same work.
         `release_task` gives it back, and an expired reservation returns to the list.
       - A proposal that completes a task closes it once it passes the gates.
+    - **The method travels with the server** (owner question, 2026-11-19). A contributor's agent
+      researches and writes with the same method our curators use, in two forms built from the
+      `kalavigyan-craft-pages` skill:
+      - **MCP prompts** every client lists: research a field of a craft, write a section from
+        facts, propose a component. Each carries the method (what counts as a source, verbatim
+        quotes with locators, one fact per sentence, the field vocabulary, the page checklist) and
+        names the tools to call in order: `list_open_work`, `claim_task`, `get_facts` and
+        `get_section` to see what is held, the agent's own search, then `propose_fact` or
+        `propose_component`.
+      - **A downloadable `kalavigyan-contributor` skill**, the same method for agents that load
+        skills, offered as an MCP resource and on the site.
+      Contributors generate facts with their quotes and sources, never published prose. Our
+      gates fetch each source and re-find each quote themselves, and the section prose is
+      rebuilt on our side from the facts that pass.
 
 Scale: 500 crafts at about 150 facts each is about 75,000 facts, 200,000 quotes, 10,000 sections
 and 20,000 components. Postgres with pgvector and the page snapshots carry this without new

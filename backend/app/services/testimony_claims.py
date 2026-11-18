@@ -185,6 +185,7 @@ async def write_claim(session: AsyncSession, write: ClaimWrite) -> Claim:
         createdById=contribution.userId,
         createdByKind="USER",
         sensitivity=TESTIMONY_SENSITIVITY,
+        field=contribution.discipline,
     )
     session.add(claim)
     await session.flush()

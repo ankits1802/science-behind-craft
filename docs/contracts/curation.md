@@ -90,7 +90,7 @@ search stays under `searched`.
 
 | Field | Rule |
 |---|---|
-| `discipline` | one of the answer engine's 14 disciplines (`models/enums.DISCIPLINES`, titled by `research/sections.DISCIPLINE_TITLES`) |
+| `discipline` | one of the answer engine's 16 fields (`models/enums.DISCIPLINES`, titled by `research/sections.DISCIPLINE_TITLES`; `SOCIETY` and `POLICY` since migration `0032_knowledge_fields`, decision 0102); the importer also stamps it on the claim as `Claim.field` |
 | `subject` | `{type, ref}`: `CRAFT` (no `ref`), or `STAGE` (`P..`), `MATERIAL` (`M..`), `PLACE` (`L..`), `TOOL` (`T..`), `COMMUNITY` (`G..`), `TERM` (`W..`) with that part's id |
 | `text` | plain English, one sentence ending in `.`, `!` or `?`, 8 to 40 words |
 | `quotes` | at least one `{sourceId, locator, quote}`: `quote` verbatim from the text `fetch.py` shows, in the source's language, 25 to 300 characters once normalised; `locator` a page, section, paragraph, line or timestamp |

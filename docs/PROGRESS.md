@@ -921,6 +921,17 @@ Last updated: 2026-11-19.
   - Kutch Ajrakh v2: ten placed pictures, stage colours, native names, botanical names; the page
     golden carries the real Kachchh CHIRPS and GHCN CAMS yearly means for 1981 to 2025.
 
+- **Knowledge fields, step 1 of decision 0101 (2026-11-19, to release).** Migration
+  `0032_knowledge_fields`, decision 0102.
+  - The field vocabulary gains `SOCIETY` and `POLICY` (16 fields) across chapters, expert seats,
+    cues, titles, follow-ups, the planner's guidance, the dossier schema and the web client.
+  - `Claim.field` and `Claim.fields`, backfilled from curated, category and testimony disciplines,
+    then the first stored piece's facet, then the concept type; every claim writer stamps it.
+  - `ArticleSection` (one subject's prose per field, versioned, one published) and its tagged
+    rendering for a model's context; the component registry's `label`, `title`, `description` and
+    `fields` on `KnowledgePiece`, and `KnowledgePieceSubject` links to crafts, concepts, places
+    and compounds.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

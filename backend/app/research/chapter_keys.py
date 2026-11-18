@@ -45,6 +45,8 @@ DISCIPLINE_CHAPTERS: Mapping[str, str] = MappingProxyType(
         "ECOLOGY": "why",
         "HISTORY": "history",
         "ECONOMICS": "market",
+        "POLICY": "market",
+        "SOCIETY": "people",
     }
 )
 PICTURE_PLACEMENTS = ("MASTHEAD", "OPENER", "PLATE", "RECORD", "STAGE", "MATERIAL")

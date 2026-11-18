@@ -178,6 +178,22 @@ QUESTION_CUES: Mapping[str, tuple[str, ...]] = MappingProxyType(
         ),
         "DESIGN": ("design*", "motif*", "pattern*", "symbol*", "डिज़ाइन", "डिजाइन"),
         "HEALTH": ("safe", "safety", "toxic*", "health*", "harm*", "poison*", "स्वास्थ्य"),
+        "SOCIETY": ("communit*", "caste*", "tribe*", "tribal", "guild*", "livelihood*", "women", "समुदाय"),
+        "POLICY": (
+            "gi",
+            "geographical",
+            "indication*",
+            "law",
+            "laws",
+            "legal*",
+            "scheme*",
+            "policy",
+            "policies",
+            "regulat*",
+            "registr*",
+            "कानून",
+            "योजना",
+        ),
         "OVERVIEW": (),
     }
 )

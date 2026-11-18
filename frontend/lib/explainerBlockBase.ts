@@ -16,7 +16,9 @@ export const DISCIPLINES = [
   "HISTORY",
   "ECONOMICS",
   "DESIGN",
-  "HEALTH"
+  "HEALTH",
+  "SOCIETY",
+  "POLICY"
 ] as const;
 export const MEDIA_DISPLAYS = ["INLINE", "LINK_CARD"] as const;
 export const IMAGE_RELEVANCE = ["TEXT", "VISION"] as const;

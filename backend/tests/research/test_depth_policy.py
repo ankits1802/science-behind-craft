@@ -16,7 +16,7 @@ from app.research.depth import (
 PLAN_TABLE = {
     "BASIC": ("Basic", "HYBRID", (3, 4), (2, 2)),
     "DETAILED": ("Detailed", "HYBRID", (5, 7), (4, 4)),
-    "EXPERT": ("Expert", "DEEP", (1, 14), (6, 12)),
+    "EXPERT": ("Expert", "DEEP", (1, 16), (6, 12)),
 }
 
 

@@ -58,7 +58,8 @@ Start here in a new session. The owner closed the long build session after this 
 ## Owner decisions still open
 
 - The default of the review switch (decision 0101, item 12). The recommendation is `AUTO` for
-  research and `APPROVAL` for new contributors.
+  research and `APPROVAL` for new contributors. Settled already: a Professor's, Admin's or Master
+  Admin's own contribution is approved at once, whatever the switch says (owner, 2026-11-19).
 - Erased testimony leaves a placeholder claim, so its concept stays listed. Should the concept be
   removed when nothing else is left?
 - The short answer on the Ajrakh page says iron "oxidises with the tannic acid" (the source's

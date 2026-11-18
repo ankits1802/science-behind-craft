@@ -37,6 +37,7 @@ MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "versions" / "0
 CURATED_MIGRATION = MIGRATION.with_name("0017_curated_dossiers.py")
 LEARNING_MIGRATION = MIGRATION.with_name("0018_learning_block_kinds.py")
 SIGNATURE_MIGRATION = MIGRATION.with_name("0025_signature_block_kinds.py")
+FIELDS_MIGRATION = MIGRATION.with_name("0032_knowledge_fields.py")
 
 
 def golden_block(block_id: str) -> Any:
@@ -211,7 +212,9 @@ def test_the_migration_checks_the_same_vocabulary_as_the_models() -> None:
     assert migration.BLOCK_KINDS == learning.BLOCK_KINDS_BEFORE
     assert learning.BLOCK_KINDS == signature.BLOCK_KINDS_BEFORE
     assert signature.BLOCK_KINDS == BLOCK_KINDS
-    assert migration.DISCIPLINES == DISCIPLINES
+    fields = load_migration(FIELDS_MIGRATION)
+    assert migration.DISCIPLINES == fields.DISCIPLINES_BEFORE
+    assert fields.DISCIPLINES == DISCIPLINES
     assert migration.DEPTHS == EXPLAINER_DEPTHS
     assert HIDDEN_CLAIM_STATUSES[: len(migration.HIDDEN_CLAIM_STATUSES)] == migration.HIDDEN_CLAIM_STATUSES
     for column in ('"status"', '"evidenceLevel"', '"text"', '"sensitivity"'):

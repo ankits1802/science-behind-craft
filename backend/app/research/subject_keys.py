@@ -36,6 +36,8 @@ TOPIC_NAMESPACES = (
     "economy",
     "health",
     "ecology",
+    "society",
+    "policy",
     "concept",
 )
 SUBJECT_JOINER = "+"

@@ -7,6 +7,8 @@ from typing import Literal, Self
 
 from pydantic import AwareDatetime, Field, model_validator
 
+from app.models.enums import DISCIPLINES
+
 from .base import ContractModel
 from .blocks import ExplainerSentence, require_facts
 from .blocks_learning import QuizBlock
@@ -39,7 +41,7 @@ SLIDE_KINDS = ("TITLE", "SECTION", "QUIZ", "READING", "SOURCES")
 LESSON_FORMATS = ("html", "pptx", "pdf")
 LESSON_BULLETS_MAX = 5
 LESSON_SLIDES_MAX = 60
-LESSON_SECTIONS_MAX = 14
+LESSON_SECTIONS_MAX = len(DISCIPLINES)
 LESSON_TITLE_MAX_CHARS = 120
 RELIABILITY_ORDER = ("A", "B", "C", "D")
 INLINE = "INLINE"

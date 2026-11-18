@@ -23,6 +23,7 @@ from app.models import (
     Source,
 )
 from app.models.knowledge import QUOTE_MAX_CHARS
+from app.research.vocabulary import CONCEPT_TYPE_DISCIPLINES
 from app.services.craft_seed import ids_by_slug
 
 BATCH = 500
@@ -118,6 +119,12 @@ def claim_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def seed_field(row: dict[str, Any], concept_types: dict[str, str]) -> str | None:
+    if row["subjectType"] != "CONCEPT":
+        return None
+    return CONCEPT_TYPE_DISCIPLINES.get(concept_types.get(row["subjectKey"], ""))
+
+
 def claim_source_rows(row: dict[str, Any]) -> list[dict[str, Any]]:
     claim_id = seed_id("claim", row["id"])
     return [
@@ -175,6 +182,7 @@ def claim_seed_plan(data: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
         if row["subjectType"] == "EDGE":
             edge_claim.setdefault(seed_id("edge", row["subjectKey"]), seed_id("claim", row["id"]))
     edges = [edge_row(row) for row in data.get("edges") or []]
+    concept_types = {row["key"]: row["type"] for row in data.get("concepts") or []}
     for edge in edges:
         edge["claimId"] = edge_claim.get(edge["id"])
     return {
@@ -182,7 +190,7 @@ def claim_seed_plan(data: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
         "concepts": [concept_row(row) for row in data.get("concepts") or []],
         "edges": edges,
         "stages": stage_rows(data.get("concepts") or []),
-        "claims": [claim_row(row) for row in claims],
+        "claims": [claim_row(row) | {"field": seed_field(row, concept_types)} for row in claims],
         "claimSources": [cite for row in claims for cite in claim_source_rows(row)],
         "reviewEvents": [review_event_row(row) for row in claims],
     }

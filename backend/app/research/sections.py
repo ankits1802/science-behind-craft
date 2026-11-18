@@ -58,6 +58,8 @@ DISCIPLINE_TITLES: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "Economics",
         "DESIGN": "Design",
         "HEALTH": "Health and safety",
+        "SOCIETY": "Communities and livelihoods",
+        "POLICY": "GI, law and schemes",
     }
 )
 DISCIPLINE_FIELDS: Mapping[str, str] = MappingProxyType(
@@ -76,6 +78,8 @@ DISCIPLINE_FIELDS: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "economics and markets",
         "DESIGN": "design and art history",
         "HEALTH": "health, toxicology and safe handling",
+        "SOCIETY": "the communities, families and livelihoods of the craft",
+        "POLICY": "Geographical Indication, law and public schemes",
     }
 )
 FALLBACK_HEADINGS: Mapping[str, str] = MappingProxyType(
@@ -94,6 +98,8 @@ FALLBACK_HEADINGS: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "Who makes a living from {craft}",
         "DESIGN": "The patterns of {craft}",
         "HEALTH": "Working safely in {craft}",
+        "SOCIETY": "The people who keep {craft} alive",
+        "POLICY": "How the law protects {craft}",
     }
 )
 LABEL_WORD = re.compile(r"[^\W_]+")

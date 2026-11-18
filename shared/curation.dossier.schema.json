@@ -98,7 +98,9 @@
             "HISTORY",
             "ECONOMICS",
             "DESIGN",
-            "HEALTH"
+            "HEALTH",
+            "SOCIETY",
+            "POLICY"
           ],
           "title": "Discipline",
           "type": "string"
@@ -770,7 +772,9 @@
             "HISTORY",
             "ECONOMICS",
             "DESIGN",
-            "HEALTH"
+            "HEALTH",
+            "SOCIETY",
+            "POLICY"
           ],
           "title": "Discipline",
           "type": "string"

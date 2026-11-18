@@ -32,6 +32,7 @@ def planned(claim_id: uuid.UUID, **changes: Any) -> dict[str, Any]:
         "createdByKind": "SYSTEM",
         "sensitivity": "OPEN",
         "sourcesDiffer": False,
+        "field": "PROCESS",
     }
     return row | changes
 
@@ -47,6 +48,7 @@ def stored(claim_id: uuid.UUID, **changes: Any) -> StoredClaim:
         status=row["status"],
         sensitivity=row["sensitivity"],
         sources_differ=row["sourcesDiffer"],
+        field=row["field"],
     )
 
 
@@ -136,3 +138,11 @@ def test_an_overview_sentence_the_prose_validator_refuses_is_dropped() -> None:
     lede = next(piece for piece in pieces.pieces if piece.facet == "OVERVIEW")
     assert all("1634" not in sentence.text for sentence in lede.payload.cited_sentences())
     assert len(list(lede.payload.cited_sentences())) == len(dossier.overview.lede) - 1
+
+
+def test_a_claim_whose_field_changed_is_updated_with_the_new_field() -> None:
+    claim = uuid.UUID(int=21)
+    written = claim_writes([planned(claim, field="CHEMISTRY")], {claim: stored(claim)}, NOTE)
+    (update,) = written.updates
+    assert (update["id"], update["field"]) == (claim, "CHEMISTRY")
+    assert written.inserts == ()

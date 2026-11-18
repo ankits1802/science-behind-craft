@@ -25,6 +25,14 @@ def test_claims_and_sources_take_the_plan_ids() -> None:
     assert len(sources) == 21
 
 
+def test_each_claim_carries_the_field_its_dossier_gives_it() -> None:
+    fields = {row["id"]: row["field"] for row in plan_of(AJRAKH).part("claims")}
+    assert fields == {
+        expected_id(f"curation:Kutch-Ajrakh:{claim['id']}"): claim["discipline"]
+        for claim in raw(AJRAKH)["claims"]
+    }
+
+
 def test_sources_are_excerpts_imported_by_curation_with_their_reliability() -> None:
     plan = plan_of(AJRAKH)
     given = {source["id"]: source["reliability"] for source in raw(AJRAKH)["sources"]}

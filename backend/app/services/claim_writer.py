@@ -12,6 +12,7 @@ from app.core.errors import InvalidInput
 from app.data.craft_master_loader import ID_NAMESPACE
 from app.models import Claim, ClaimSource, Concept, Craft, Process, ProcessStage, ReviewEvent
 from app.research.quotes import quote_key
+from app.research.vocabulary import CONCEPT_TYPE_DISCIPLINES
 from app.research.write_back import (
     WRITE_BACK_ORIGIN,
     WRITE_BACK_STATUS,
@@ -94,6 +95,7 @@ class SqlClaimWriter:
                 origin=WRITE_BACK_ORIGIN,
                 status=WRITE_BACK_STATUS,
                 createdByKind="SYSTEM",
+                field=CONCEPT_TYPE_DISCIPLINES.get(claim.subject.concept_type),
             )
             .on_conflict_do_nothing()
             .returning(Claim.id)

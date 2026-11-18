@@ -26,6 +26,8 @@ FACET_NAMESPACES: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "economy",
         "DESIGN": "design",
         "HEALTH": "health",
+        "SOCIETY": "society",
+        "POLICY": "policy",
     }
 )
 PLACE_FACETS = frozenset({"GEOGRAPHY", "GEOLOGY", "CLIMATE"})

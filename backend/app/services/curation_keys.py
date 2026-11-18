@@ -74,6 +74,8 @@ DISCIPLINE_CONCEPT_TYPES: Mapping[str, str] = MappingProxyType(
         "ECONOMICS": "OUTCOME",
         "DESIGN": "DESIGN_PRINCIPLE",
         "HEALTH": "CONCEPT",
+        "SOCIETY": "TRADITION",
+        "POLICY": "HISTORICAL_CONTEXT",
     }
 )
 

@@ -1,9 +1,10 @@
+import { DISCIPLINES } from "@/lib/explainerBlockBase";
 import type { Explainer } from "@/lib/explainerContract";
 import type { ExplainerRef } from "@/lib/explainerState";
 import { byCount } from "@/lib/format";
 import type { CitationFormat, LessonFormat, LessonRequest, Slide } from "@/lib/lessonContract";
 
-export const LESSON_SECTIONS_MAX = 14;
+export const LESSON_SECTIONS_MAX = DISCIPLINES.length;
 export const LESSONS_HOME = "/lessons";
 export const NEW_LESSON_PATH = "/lessons/new";
 

@@ -48,6 +48,8 @@ def test_an_answer_for_any_craft_offers_only_its_own_open_questions_and_at_most_
         "ECONOMICS",
         "DESIGN",
         "HEALTH",
+        "SOCIETY",
+        "POLICY",
     }
 
 

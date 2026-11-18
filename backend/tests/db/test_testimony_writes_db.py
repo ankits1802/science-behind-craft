@@ -90,6 +90,7 @@ async def test_approval_writes_the_claim_its_citation_and_the_records(session: A
         "ATTRIBUTE_REQUIRED",
         "APPROVED",
     )
+    assert (claim.field, claim.fields) == ("PROCESS", [])
     assert (claim.predicate, claim.createdById, claim.createdByKind) == (
         "artisan_testimony",
         seeded.artisan.id,
