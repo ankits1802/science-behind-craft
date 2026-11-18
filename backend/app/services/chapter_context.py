@@ -120,8 +120,7 @@ class ChapterContext:
         sources = {**stored.sources, **self.records.sources, **self.rows.record_sources}
         uses = tuple(self._with_compound(use) for use in stored.materials)
         stages = tuple(self._with_listed(stage) for stage in stored.stages)
-        claims = {**stored.claims, **known}
-        return replace(stored, stages=stages, materials=uses, claims=claims, sources=sources)
+        return replace(stored, stages=stages, materials=uses, claims=known, sources=sources)
 
     def _with_listed(self, stage: StageRecord) -> StageRecord:
         curated = self.records.curated

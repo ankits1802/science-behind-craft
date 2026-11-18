@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from app.composer.timeline_map import TimelineChoice, TimelinePointChoice, TimelineRouteChoice
+from app.composer.timeline_map import (
+    REPLY_POINTS_MAX,
+    REPLY_ROUTES_MAX,
+    TimelineChoice,
+    TimelinePointChoice,
+    TimelineRouteChoice,
+)
 from app.data.district_register import load_district_other_names
 from app.research.blocks_journey import TimelineMapBlock
 from app.research.craft_page import OverviewSection, PageEvent, PagePlace
@@ -92,8 +98,14 @@ def _timeline(
             points.append(TimelinePointChoice(statement=ref, place=named[0], years="y1"))
     if not points and not routes:
         return None
-    entries = timeline_entries(TimelineOffer(statements), TimelineChoice(points=points, routes=routes))
+    entries = timeline_entries(TimelineOffer(statements), timeline_choice(points, routes))
     return timeline_block(entries, _placed(ctx, places), boundary, block_id="history.timeline")
+
+
+def timeline_choice(
+    points: Sequence[TimelinePointChoice], routes: Sequence[TimelineRouteChoice]
+) -> TimelineChoice:
+    return TimelineChoice(points=list(points[:REPLY_POINTS_MAX]), routes=list(routes[:REPLY_ROUTES_MAX]))
 
 
 def _names(place: PagePlace) -> list[str]:
