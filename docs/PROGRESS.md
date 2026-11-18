@@ -881,15 +881,38 @@ Last updated: 2026-11-18.
   `rivers_loaded`) passes every screen at the three widths, the four known-answer questions
   (English, Hindi, Water with its river story, Indigo at Expert) and the exports.
 
+- **Content, answer integrity and public reading (2026-11-18, 6ba5291 and 3a29b84).** Live:
+  29 curated crafts (wave 1 batch 1's twelve GI crafts and every craft of the field repository's
+  2nd, 3rd and 4th workshops, three of them FAMILY entries) and nine CATEGORY master dossiers, all
+  verified and critic-fixed, with the curation tools of decision 0051's wave 1 changes (portal
+  register, FAMILY and CATEGORY scopes); the claim ledger (decision 0080), the cited lede, narrative
+  headings and question order (decision 0077), drawn on the page by `LedeBlock`; public reading
+  of craft, category, map and science routes with chunk ACLs on quotes (decision 0079); craft page
+  contract v2 (0081), catalogue v2 with concept search (0082), category pages (0078, migration
+  `0026_curated_categories`), signature block kinds registered (migration
+  `0025_signature_block_kinds`); reader-facing dataset names and one normal per place (0075); the
+  release gate of decision 0076, which on its first production run (44301935063) fails, as
+  designed, on the half-drawn landing headline and the Region tab's length, and found two defects
+  (the Hindi answer's quiz route 404 and the unknown-craft page); the field-voices contract and
+  reader, off (0072). The Geo ETL run 44302045906 stores the reader-facing HydroRIVERS and CHELSA
+  rows. The audit of 18 November (score 3/10 against the owner's "magnificent" bar) and the owner's
+  decisions that follow from it are in the redesign plan below.
+
 ## Next
 
-0. Put the traced Kachchh river's ids into the phase B fixture (`docs/TECH_DEBT.md`, "The phase B
-   fixture's river ids are placeholders"); phases B, C and D are otherwise proven in production.
+0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
+   Direction C's specimen labels and collection wall and Direction B's photographic opening and vat
+   moment (boards: the KalaVigyan Design Directions artifact); public reading in the frontend;
+   the whole application in one release, every screen matched to its board at 360, 834 and 1440 in
+   both themes. In flight: the design system, the answer engine's richness (reaction steps,
+   generated explainers, the answer map's layers and India locator, Expert depth), transcripts and
+   images from both portals (field voices v2), students' first-entry profile and the Artisan role
+   with voice testimony. After them: Expert auto-generated media, comic stories, the minister
+   showcase questions with an answer-quality evaluation loop.
 
-1. Curation (`docs/plans/dataset-curation.md`): deploy the import (decision 0053) with the rebuilt
-   craft page (decision 0071), take the Kutch Ajrakh before and after screenshots from E2E
-   production at the three widths, retire `/profile` and `/process` in the backend; then wave 1,
-   the 209 GI crafts, once the owner approves it.
+1. Put the traced Kachchh river's ids into the phase B fixture (`docs/TECH_DEBT.md`, "The phase B
+   fixture's river ids are placeholders"); retire `/profile` and `/process` in the backend once the
+   redesigned frontend stops calling them. Further curation only for crafts the owner names.
 2. The first live media jobs to confirm decision 0018's unverified items; the ElevenLabs spike of
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
