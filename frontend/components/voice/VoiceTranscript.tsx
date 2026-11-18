@@ -9,7 +9,7 @@ import type { AnswerSentence, Citation, SourceRef } from "@/lib/types";
 import type { VoiceConversation } from "@/lib/voiceConversation";
 import type { VoiceTurn } from "@/lib/voiceContract";
 
-type Citing = { numbers: Map<string, number>; sourcesById: Map<string, SourceRef>; onOpen: (citation: Citation) => void };
+type Citing = { numbers: Map<string, number>; sourcesById: Map<string, SourceRef>; onOpen: (citations: readonly Citation[]) => void };
 
 function Heard({ text, language }: { text: string; language: AnswerLanguage | null }) {
   const shown = attributesForText(text, language);

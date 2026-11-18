@@ -7,15 +7,23 @@ const UNIT_TEXT: Record<string, string> = {
   l: "L",
   km2: "km²",
   "km/km2": "km/km²",
-  "m3/s": "m³/s"
+  "m3/s": "m³/s",
+  "kg/dm3": "g/cm³"
 };
 
+const BARE_UNITS: ReadonlySet<string> = new Set(["Strahler order"]);
+const PERCENT_UNITS: ReadonlySet<string> = new Set(["%", "coefficient of variation %"]);
+
+export const P_VALUE_UNIT = "p-value";
+const P_VALUE_FLOOR = 0.001;
 const MAX_DECIMALS = 2;
 
 export function measureParts(unit: string): MeasureParts {
   const trimmed = unit.trim();
   if (trimmed === "pH") return { prefix: "pH ", suffix: "", scale: 1 };
-  if (trimmed === "%") return { prefix: "", suffix: "%", scale: 1 };
+  if (PERCENT_UNITS.has(trimmed)) return { prefix: "", suffix: "%", scale: 1 };
+  if (trimmed === "degree") return { prefix: "", suffix: "°", scale: 1 };
+  if (BARE_UNITS.has(trimmed)) return { prefix: "", suffix: "", scale: 1 };
   if (trimmed.startsWith("fraction")) {
     const rest = trimmed.slice("fraction".length).trim();
     return { prefix: "", suffix: rest ? `% ${rest}` : "%", scale: 100 };
@@ -45,7 +53,12 @@ function scaled(value: number, parts: MeasureParts): number {
   return Number((value * parts.scale).toFixed(6));
 }
 
+export function pText(pValue: number): string {
+  return pValue < P_VALUE_FLOOR ? `p < ${P_VALUE_FLOOR}` : `p = ${formatNumber(pValue, pValue < 0.1 ? 3 : 2)}`;
+}
+
 export function formatMeasure(value: number, unit: string): string {
+  if (unit.trim() === P_VALUE_UNIT) return pText(value);
   const parts = measureParts(unit);
   const shown = scaled(value, parts);
   return `${parts.prefix}${formatNumber(shown)}${parts.suffix}`;

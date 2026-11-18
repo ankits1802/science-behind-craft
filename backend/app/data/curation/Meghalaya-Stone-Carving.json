@@ -1,0 +1,3229 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Meghalaya-Stone-Carving",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:30:00+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Meghalaya stone carving craft artisans",
+      "site": "web search"
+    },
+    {
+      "query": "Khasi monoliths memorial stones erection craft study",
+      "site": "web search"
+    },
+    {
+      "query": "Meghalaya handicrafts stone carving Development Commissioner Handicrafts",
+      "site": "web search"
+    },
+    {
+      "query": "Donborlin Blah stone carving Mawkawah",
+      "site": "web search (no result about the artisan)"
+    },
+    {
+      "query": "Shillong stone carver Khasi stone craft village news",
+      "site": "web search"
+    },
+    {
+      "query": "Mitri Khasi-Jaintia Hills Megaliths quarrying dressing stones",
+      "site": "web search"
+    },
+    {
+      "query": "Stone icon carving of Meghalaya",
+      "site": "globalinch.org (page has a title and no text)"
+    },
+    {
+      "query": "State award, master craftsman scheme and handicraft award notifications",
+      "site": "megindustry.gov.in"
+    },
+    {
+      "query": "District skill mapping, East and West Khasi Hills",
+      "site": "dcmsme.gov.in (TLS certificate refused, no Wayback copy)"
+    },
+    {
+      "query": "Monolith showpiece",
+      "site": "hunarsetu.com (shop page with no readable text)"
+    },
+    {
+      "query": "Aminda Rangsa, Nartiang megalith, culture and crafts pages",
+      "site": "meghalayatourism.in"
+    },
+    {
+      "query": "Nartiang Monoliths tourist place",
+      "site": "westjaintiahills.gov.in"
+    },
+    {
+      "query": "Meghalaya monuments of national importance: memorials, megalithic bridges, tank at Syndai",
+      "site": "asiguwahaticircle.gov.in"
+    },
+    {
+      "query": "Gurdon, The Khasis (1907)",
+      "site": "gutenberg.org and archive.org (both answered HTTP 503); en.wikisource.org/wiki/The_Khasis (HTTP 404, no Wayback copy)"
+    },
+    {
+      "query": "Rude Stone Monuments, India chapter",
+      "site": "en.wikisource.org"
+    },
+    {
+      "query": "Nartiang Durga temple",
+      "site": "en.wikipedia.org (read for the district; not cited)"
+    },
+    {
+      "query": "Larnai and Nartiang monoliths visit, Tangmang handicraft centre, Meghalaya craft villages",
+      "site": "borderlens.com, syllad.com, uniindia.com, cijtoday.com (nothing on stone carving)"
+    },
+    {
+      "query": "Aminda Rangsa art village",
+      "site": "curlytales.com (repeats the Meghalaya Tourism page; not cited)"
+    },
+    {
+      "query": "Megaliths and monuments in Meghalaya",
+      "site": "commons.wikimedia.org"
+    },
+    {
+      "query": "Garo stone carving Meghalaya memorial stones kima",
+      "site": "web search (Garo memorials are carved wooden kima posts, not stone: Journal of Indo-Pacific Archaeology, cited)"
+    },
+    {
+      "query": "Khasi monolith quarrying dressing stone how monoliths are cut and erected",
+      "site": "web search (only a travel blog on method; etribaltribune.com and incredibleindia.gov.in read, nothing on method beyond legend; not cited)"
+    },
+    {
+      "query": "stone carvers Meghalaya artisan stone carving village Jaintia Hills",
+      "site": "web search (meghalayatourism.in art and handicrafts page names no stone craft; villagesquare.in repeats the district page's Nartiang account; not cited)"
+    },
+    {
+      "query": "Development Commissioner Handicrafts Meghalaya stone craft cluster",
+      "site": "web search (Shken.in report on megindustry.gov.in, cited; a 2018-19 state award notice and a 2015-16 awardee profile name no stone carver)"
+    },
+    {
+      "query": "Action plan for the development of handloom and handicraft in the North East Region",
+      "site": "necouncil.gov.in (HTTP 404; the Wayback copy is an unreadable PDF)"
+    },
+    {
+      "query": "Present districts of Mawkawah, Syndai, Jarain, Nongtalang, Khanduli and Laitlyngkot",
+      "site": "westjaintiahills.gov.in, eastjaintiahills.gov.in and eastkhasihills.gov.in pages (no quotable district; the ASI pages name the former Jaintia Hills district)"
+    },
+    {
+      "query": "File descriptions, categories and licences of the chosen pictures",
+      "site": "commons.wikimedia.org API"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "PAPER",
+      "title": "Exploring the Monumentality of Khasi-Jaintia Hills Megaliths",
+      "authors": [
+        "Marco Mitri"
+      ],
+      "publisher": "Institute of Prehistoric and Protohistoric Archaeology, Kiel University",
+      "year": 2019,
+      "url": "https://www.jna.uni-kiel.de/index.php/jna/article/download/193/326",
+      "doi": "10.12766/jna.2019S.12",
+      "language": "en",
+      "licence": "All rights reserved",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "PAPER",
+      "title": "A Typological Classification of Megaliths of Mizoram",
+      "authors": [
+        "Malsawmliana"
+      ],
+      "publisher": "Institute of Prehistoric and Protohistoric Archaeology, Kiel University",
+      "year": 2019,
+      "url": "https://core.ac.uk/download/270214351.pdf",
+      "archivedUrl": "https://web.archive.org/web/20240612035059id_/https://core.ac.uk/download/270214351.pdf",
+      "doi": "10.12766/jna.2019S.8",
+      "language": "en",
+      "licence": "All rights reserved",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "BOOK",
+      "title": "Rude Stone Monuments in All Countries: Their Age and Uses, chapter 13 (India)",
+      "authors": [
+        "James Fergusson"
+      ],
+      "year": 1872,
+      "url": "https://en.wikisource.org/wiki/Rude_Stone_Monuments_in_All_Countries/Chapter_13",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Stone memorial of U-Maw Thodur-Briew, Nartiang",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/thodur-briew.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Stone memorial of U-Mawthoh-dur, Bhoi area",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/mawthoh-dur.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Tank, Syndai",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/tanksyndai.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Megalithic bridge known as Thul-Um-Wi, between Jowai and Jarain",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/thul-um-wi.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Megalithic bridge on the Um-Nyankanah, between Jowai and Syndai",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/um-nyakanah.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Megalithic bridge on the Um-Kumbeh, near Syndai",
+      "publisher": "Archaeological Survey of India, Guwahati Circle",
+      "url": "https://www.asiguwahaticircle.gov.in/umkumbeh.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Notification: Updated Master Craftsmen Scheme, empanelment of Master Craftsmen / State Awardees (No. M/Dind/Genl.14/2026/33)",
+      "publisher": "Directorate of Commerce and Industries, Government of Meghalaya",
+      "year": 2026,
+      "url": "https://megindustry.gov.in/notifications/notificationmastercraftman2627.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "State Award Scheme for Handicraft Artisans",
+      "publisher": "Department of Commerce & Industries, Meghalaya",
+      "url": "https://megindustry.gov.in/notifications/guidelines_state_award_2025.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "WEB_PAGE",
+      "title": "Local crafts",
+      "publisher": "Meghalaya Tourism, Government of Meghalaya",
+      "url": "https://meghalayatourism.in/experiences/culture-&-lifestyle/local-life-&-leisure/local-crafts/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "WEB_PAGE",
+      "title": "Culture of Meghalaya",
+      "publisher": "Meghalaya Tourism, Government of Meghalaya",
+      "url": "https://meghalayatourism.in/experiences/culture-&-lifestyle/culture-of-meghalaya/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "WEB_PAGE",
+      "title": "Nartiang Megalith",
+      "publisher": "Meghalaya Tourism, Government of Meghalaya",
+      "url": "https://meghalayatourism.in/explore/destinations/by-region/jaintia-hills/nartiang-megalith/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "WEB_PAGE",
+      "title": "Nartiang Monoliths",
+      "publisher": "District Administration, West Jaintia Hills, Government of Meghalaya",
+      "url": "https://westjaintiahills.gov.in/tourist-place/nartiang-monoliths/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "From megalith to monoliths, microliths and sculptures",
+      "authors": [
+        "H H. Mohrmen"
+      ],
+      "publisher": "The Shillong Times",
+      "year": 2025,
+      "url": "https://theshillongtimes.com/2025/01/13/from-megalith-to-monoliths-microliths-and-sculptures/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Meghalaya's Ancient Sentinels",
+      "publisher": "Live History India",
+      "url": "https://www.livehistoryindia.com/story/eras/meghalayas-ancient-sentinels",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "PAPER",
+      "title": "A Study of Traditional Mortuary Practices of the Jaintias of Meghalaya, India",
+      "authors": [
+        "Akoijam Milan Meitei",
+        "Queenbala Marak"
+      ],
+      "year": 2015,
+      "url": "https://journals.lib.washington.edu/index.php/JIPA/article/view/14715/12511",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Shken.in",
+      "authors": [
+        "Avinash Shende",
+        "Ravi Mokashi Punekar",
+        "Mandar Rane"
+      ],
+      "publisher": "Directorate of Commerce and Industries, Government of Meghalaya",
+      "year": 2016,
+      "url": "https://megindustry.gov.in/initiatives/shken/Shken.in_Report.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Meghalaya's Updated Master Craftsmen Scheme includes stone carving, described as cultural artifacts and utility products crafted from stone.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "heading, p. 1",
+          "quote": "Updated Master Craftsmen Scheme - Empanelment of Master Craftsmen / State Awardees"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "section 2, Eligible Craft Domains, p. 1",
+          "quote": "4 Stone Carving Cultural artifacts and utility products crafted from stone"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Among the Khasi-Pnar of the central and eastern Meghalaya Plateau, the practice of stone monuments is a living tradition.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 164",
+          "quote": "The central and eastern Meghalaya Plateau along the outlier formed by the Assam ranges in the northeastern part of India that was inhabited by the Khasi-Pnar community is one area in the region where the practice of stone monuments is a living tradition."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "Introduction, p. 126",
+          "quote": "Even today, megalithism is still a living tradition among some tribal groups in some parts of the world, including India and particularly among some of the northeastern Indian tribes like Khasis, Nagas and the Mizos"
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W12"
+      },
+      "text": "For the Khasi-Pnar, the importance of megalithic monuments shows in their language: Kyn-maw, memory, derives from Maw, stone.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "abstract, p. 163",
+          "quote": "the importance of their megalithic monuments is evident in their language itself, since the word \"Kyn-maw\" or \"memory\" derives from the word \"Maw\" or \"stone.\""
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Monoliths stand throughout the Khasi and Jaintia Hills, where they commemorate ancestors and mark historical events.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "Monoliths exist throughout the length and breadth of the Khasi and Jaintia Hills."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "Architecture and heritage",
+          "quote": "Sacred groves like Mawphlang preserve ancient rituals and ecological wisdom, while monoliths dot the landscape, commemorating ancestors and marking historical events."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Meghalaya's state award guidelines name Donborlin Blah of Mawkawah village among the state's National Award scheme recipients, as a merit certificate holder in stone carving.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "section 1, Introduction, p. 2",
+          "quote": "some of the Recipients in the National Award in the field of Handicraft from our state are"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "section 1, Introduction, p. 2",
+          "quote": "(2) Shri. Donborlin Blah, Vill. Mawkawah"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "section 1, Introduction, p. 2",
+          "quote": "these Artisans are merits certificate holders in Stone Carving and Fabric Flower, Cane & Bamboo respectively"
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Khasi megaliths drew the attention of British colonial writers once the British annexed the hills in the 1830s.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 164",
+          "quote": "of the Khasi-Pnar community attracted a lot of attention among the British colonial writers who curiously wrote about the preliterate Khasi society and its prehistoric practice"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "came into contact with the people after the British colonists annexed the hills in the 1830s"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mitri names H. Walters as giving the first documented report on Khasi megaliths, describing the three types of monument that represent Khasi megalithism.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "The first documented report was provided by H. Walters, who described the three types of monument that represent Khasi megalithism."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Godwin-Austen wrote on Khasi megaliths before the 1897 earthquake, and many monuments described in his paper are no longer standing.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "A treatise on the subject of megalithism was provided by H. H. Godwin-Austen, who also wrote his article before the major earth - quake that rocked the Khasi Hills in 1897. In fact, many of the mon - uments described in his paper are no longer standing today."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that many Khasi stone monuments had been erected within his own century, some within the last few years before he wrote.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "We do not know how far back they extend, but we do know that many were erected within the limits of the present century, and some within the last few years."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Godwin-Austen recorded a set of five stones erected in 1869 opposite an older set of five honouring an old lady for services she rendered her tribe after her death.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "Major Austen mentions a set of five being erected in 1869 on the opposite side of the road to an original set of the same number with which an old lady had previously been honoured, in consequence of the services which after her death she had rendered to her tribe."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that a Khasi who fell ill or into difficulties vowed to erect a stone to a deceased ancestor if his prayer was granted.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "If any of the Khassia tribe falls ill or gets into difficulties, he prays to some one of his deceased ancestors, whose spirit he fancies may be able and willing to assist him."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "he vows that, if it is granted, he will erect a stone in honour of the deceased."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The West Jaintia Hills district page says the tallest Nartiang menhir was erected by U Mar Phalyngki, a trusted lieutenant of the Jaintia king, to commemorate his victory in battle.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "Within the perimetre of these Megalithic collection stands the tallest Menhir erected by U Mar Phalyngki a trusted lieutenant of the Jaintia King to commemorate his victory in battle."
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The West Jaintia Hills district page says other Nartiang monoliths were erected by U Mar Phalyngki, U Luh Lyngskor Lamare and various clans of Nartiang village between 1500 AD and a year it prints as l835 AD.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "Other monoliths were erected by U Mar Phalyngki, U Luh Lyngskor Lamare and various clans of Nartiang village between 1500A.D.and l835A.D."
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Meghalaya Tourism says Nartiang's megaliths were raised to honour kings and nobles of the Jaintia kingdom, with additions made until the middle of the nineteenth century.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "megaliths in Northeast India-massive stone structures once raised to honor kings and nobles of the Jaintia kingdom. Some of these stones were erected half a millennia ago and additions were made till the middle of the nineteenth century"
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Live History India reports that local folklore attributes the Nartiang megaliths to U Mar Phalyngki, who is said to have been a minister in the Jaintia kingdom.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "While we don't know exactly when the megaliths at Nartiang were erected, local folklore gives us a clue. According to this they were built by a man named U Mar Phalyngki, who is said to have been a minister in the Jaintia kingdom"
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Nartiang was the summer capital of the Jaintia kings, whose kingdom controlled the region from 1500 CE until the British annexed it in 1835 CE.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "the Jaintia kingdom which controlled the region from 1500 CE, till its annexation by the British in 1835 CE"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "Naritang was the summer capital of the Jaintia kings, while their main capital was in Jaintiapur (now in Bangladesh)"
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The megalithic bridge Thul-Um-Wi, between Jowai and Jarain, has large slabs in three gigantic spans and is said to have been built by the Jaintia kings.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "monument 59, heading",
+          "quote": "MEGALITHIC BRIDGE KNOWN AS THUL-UM-WI,BETWEEN JOWAI AND JARAIN"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "monument 59",
+          "quote": "This Stone bridge of impressive design comprised of large slabs of three gigantic span lies over a river popularly known as 'Thul-Um-Wi'. The maegalithic bridge is said to be built by the Jaintia Kings."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The megalithic bridge over the Um-Nyakanah has huge stone slabs on big stone pillars and is said to have been built by Jaintia kings of the late medieval period.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "monument 60",
+          "quote": "The megalithic bridge comprised of huge stone slabs is found suppored by big stone pillars over a small river locally known as'Um-Nyakanah'."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "monument 60",
+          "quote": "the bridge is said to be constructed by the Jaintia Kings who ruled from Jaintiapur in late medieval period."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The megalithic bridge over the Um-Kumbeh near Syndai, of big stone slabs on stone pillars, can be dated to circa the 18th century CE.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "monument 61, heading",
+          "quote": "MEGALITHIC BRIDGE ON THE UM-KUMBEH,NEAR SYNDAI,DISTRICT:Jaintia Hills"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "monument 61",
+          "quote": "Megalithic bridge of big stone slabs supported by stone pillars is laid over the river 'Um-Kumbeh'. The bridge wonderfully designed with stone slabs can be dated to circa 18th century CE."
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The tank at Syndai is said to have been constructed by the Jaintia kings who ruled the area in the late medieval period.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "monument 64, heading",
+          "quote": "TANK, SYNDAIDISTRICT:Jaintia Hills LOCALITY:Syndai"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "monument 64",
+          "quote": "The tank is said to be constructed by the Jaintia kings who rule the area in the late medieval period"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "On the banks of the Lukha River near Shymplong village, a palanquin sculpted on a stone is believed to have been commissioned by the Jaintia king.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 2",
+          "quote": "On the banks of the Lukha River near Shymplong village, there is an image of a palanquin sculpted on a stone, believed to have been commissioned by the Jañtia king during the heydays of the Jañtiapur kingdom."
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Some rock engravings in Khanduli, on the northern border of the Jaintia Hills, were destroyed during road construction, Mohrmen reports.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 20",
+          "quote": "In Khanduli, on the northern border of Jañtia Hills adjoining Karbi Anglong, Assam, engravings on rocks depict a soldier or a king. Unfortunately, in the name of development, some of these engravings were destroyed during road construction."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Archaeological Survey of India notes that erecting monoliths was prevalent among most Khasi communities before they embraced Christianity.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "monument 62",
+          "quote": "The erection of monolith tradition was prevalent among the majority of Khasi communities before embracing the Christianity."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The Archaeological Survey of India describes the tradition of the large Nartiang stone memorials as still in vogue in some pocket areas.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "monument 63, heading",
+          "quote": "STONE MEMORIAL OF U-MAW THODUR-BRIEW, NARTIANGDISTRICT:Jaintia Hills LOCALITY:Nartiang"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "monument 63",
+          "quote": "It is famous for large megalithic stone memorials of the local tribes generally known as 'U Maw Thodur-Briew', a tradition still in vogue in some pocket areas."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W14"
+      },
+      "text": "Clan cists are still erected in some remote parts of the Khasi-Jaintia hills, though their practical use in community life has already faded.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 177",
+          "quote": "Although the tradition of erecting clan cists is still prev - alent in some remote parts of the hills, their practical use in the lives of the community has already faded"
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Godwin-Austen, whose paper on the Khasi stone monuments appeared in 1872, reported the use of spars of rounded logs to drag stones from the quarries.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "A treatise on the subject of megalithism was provided by H. H. Godwin-Austen"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "The most important contribution of his work was his report on the use of spars of rounded logs to drag stones from the quarries."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "References, p. 178",
+          "quote": "Godwin-Austen 1872: H.H. Godwin-Austen, On the stone monuments of the Khasi hill tribes and on some of the peculiar rites and customs of the people."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "C. B. Clarke, whose treatise on the Khasi stone monuments appeared in 1874, described the transport of big stones with the help of poles.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "The subject of Khasi megaliths received the attention of another worker, C. B. Clarke, who provides us with a detailed scientific treatise"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "He also mentions the method of transpor - tation of big stones with the help of poles"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "References, p. 178",
+          "quote": "Clarke 1874: C.B. Clarke, The Stone Monuments of the Khasi Hills."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Clarke's 1874 treatise also described the erecting of large Khasi monuments with the aid of a rudimentary form of pulley.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "The subject of Khasi megaliths received the attention of another worker, C. B. Clarke, who provides us with a detailed scientific treatise"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "the method of erect - ing large monuments with the aid of a rudimentary form of pulley"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "References, p. 178",
+          "quote": "Clarke 1874: C.B. Clarke, The Stone Monuments of the Khasi Hills."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Fergusson wrote that, in mountainous and rugged country, the Khasis moved great stones and erected them with perfect facility.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "Add to all this that their country is mountainous and rugged in the highest degree. Yet with all these disadvantages they move these great stones and erect them with perfect facility"
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Some Khasi-Jaintia stone cists are of finely dressed stones and others of rough slabs, their top slab usually resting on four or more slabs dressed into fine pillars.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 171",
+          "quote": "Some of them are finely dressed stones while others are made from rough stone slabs. Their basic structure is usually an overlying top slab supported by four or more vertical stone slabs equally dressed into fine pillars"
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W06"
+      },
+      "text": "Kors, cenotaphs or resting places of the Khasi-Jaintia Hills, are dry masonry structures built with well-dressed squarish stone blocks to provide seating.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 173",
+          "quote": "there are the cenotaphs or the resting places, which are locally known as the Kors . They are dry masonry structures built with well-dressed squarish stone blocks to provide (a seating) rest - ing facility."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Fergusson wrote that the Khasis, though possessing iron tools, kept to the practice of using rude unhewn-stone monuments.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "yet though possessing iron tools for, it may be, thousands of years, they at the present day adhere to the practice of using rude unhewn-stone monuments"
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W09"
+      },
+      "text": "Kynroh moo retaining walls, built of nicely cut flat stones laid one on another with only stones and soil and no cement, can still be seen in villages of the Jaintia Hills district.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 6",
+          "quote": "These are some examples of microliths still used by the Pnar and the War people of Jaintia Hills district."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 7",
+          "quote": "People's skill with stones is evident in the retaining walls (kynroh moo) built without using cement or any adhesive."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 7",
+          "quote": "Such walls, built using only stones and soil, can still be seen in villages of the district."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 7",
+          "quote": "These walls are made using nicely cut flat stones placed on top of one another without any cement."
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "A small tank at Syndai, 10.75 by 5.50 m, was excavated in a hard granite outcrop.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "monument 64, heading",
+          "quote": "TANK, SYNDAIDISTRICT:Jaintia Hills LOCALITY:Syndai"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "monument 64",
+          "quote": "A small tank (10.75x5.50m) is excavated on hard granite outcrop."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "In the Syndai area, the two thaw sum syiem, bathing pools carved out of a single rock near two stone bridges, carry many images of elephant heads sculpted on the stones.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 16",
+          "quote": "Other significant megalithic structures in the region are the two thaw sum syiem or bathing ghats or pools carved out of a single rock near two stone bridges."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 16",
+          "quote": "In the pool, one can see many images of elephant heads sculpted on the stones."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 16",
+          "quote": "These are some of the prominent stone images in the Syndai area."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Clarke named Cherra sandstone, Shillong sandstone and granite as the three basic rock types used for building Khasi-Jaintia megalithic monuments.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "The subject of Khasi megaliths received the attention of another worker, C. B. Clarke, who provides us with a detailed scientific treatise"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "His report mentions three types of rock, such as the Cherra sandstone, Shillong sandstone and granite, the three basic rock types used for building megalithic monuments."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Khasi-Jaintia menhirs are hewn from materials such as sandstone, gneiss and granite, depending on which raw materials are available.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "They are hewn from materials like sandstone, gneiss, and granite, depending on the availability of the raw materials."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W10"
+      },
+      "text": "Moo tylliat kre, the pair of round stones used for grinding millet where millet is still grown, are made of granite.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 5",
+          "quote": "In places where millet cultivation is still popular, one will find two round stones used for grinding millet (moo tylliat kre). It is made of granite stones"
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W11"
+      },
+      "text": "Maw jingshoh or moo tyndang, stones still used for grinding paste and spices, were selected from hard rocks that do not produce sand when the pieces strike each other.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 4",
+          "quote": "One such stone tool still popular are the two pieces of stones, maw jingshoh or moo tyndang, used for grinding paste and spices. The stones were selected from very unique hard rocks that do not produce sand even if the pieces hit against each other."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "The intricate designs adorning every corner of Aminda Rangsa art village are created from locally sourced materials.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, visiting",
+          "quote": "Aminda Rangsa Art Village is open to visitors year-round"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village",
+          "quote": "every corner of the village is adorned with intricate designs, created from locally sourced materials"
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Meghalaya Tourism says Handum Marak's wood and stone carvings at Aminda Rangsa celebrate the rich motifs and practices of Garo culture.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, visiting",
+          "quote": "Aminda Rangsa Art Village is open to visitors year-round"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village",
+          "quote": "Handum Marak's wood and stone carvings celebrate the rich motifs and practices of Garo culture."
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Wood and stone figurines scattered through Aminda Rangsa village depict Garo aesthetics and lifestyle.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, visiting",
+          "quote": "Aminda Rangsa Art Village is open to visitors year-round"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, highlights",
+          "quote": "Discover the wood and stone figurines scattered in the village, depicting Garo aesthetics and lifestyle"
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Khasi-Jaintia menhirs are undressed upright monoliths that stand sometimes alone, or in rows of 3, 5, 7, 9 and occasionally 11 to 30.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "Here, menhir refers to an undressed upright monolith. These stones occur sometimes alone or in rows of 3, 5, 7, 9 and occasionally 11 to 30."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Khasi-Jaintia menhirs vary in height from 1 m to 4 m, according to Godwin-Austen's 1872 account.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "Their height varies from 1 m to 4 m (Godwin-Austen 1872, 140)."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "At Nartiang, menhirs are generally erected in rows of three, four, five or seven, the central one generally larger.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "monument 63, heading",
+          "quote": "STONE MEMORIAL OF U-MAW THODUR-BRIEW, NARTIANGDISTRICT:Jaintia Hills LOCALITY:Nartiang"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "monument 63",
+          "quote": "It is observed that menhirs are erected generally in rows of three,four,five oe seven.The central one of a row is generally larger in size."
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that a person may be honoured with five, seven or ten stones, as two fives, because the number must always be unequal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "may have five, or seven, or ten-two fives, for the number must always be unequal-erected in their honour."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "The upright stones of a Mawbynna Nam varied in number, for example 1, 2, 5, 7, 9, 11 and up to 30, sometimes with one or two table stones.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 169",
+          "quote": "The number of upright stones also varied, for example 1, 2, 5, 7, 9, 11 and even up to 30 of them, sometimes with one or two table stones"
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "Khasi-Jaintia standing stones, called Maw Shynrang or the male stone, mostly stand in alignments of three or more with a table stone.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "Most of the menhirs found in the Khasi-Jaintia Hills are in alignments of three or more and they always occur in association with one type of table stone. These standing stones are technically called the Maw Shynrang or the male stone."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "Table stones found mostly with standing stones are rough and simple, sometimes oval or irregular, and are known as Maw Kynthei, the female stones.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 168",
+          "quote": "Type 1: These refer to table stones which are found mostly in asso - ciation with standing stones."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 168",
+          "quote": "They are rough and simple with some - times oval or irregular shapes (Fig. 3 - 5). Technically, they are always known as the Maw Kynthei or the \"Female Stones.\""
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "At Nartiang the upright menhirs, moo shynrang, are dedicated to male ancestors and the flat dolmens, moo kynthai, to women.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "with the standing monoliths or menhirs (moo shynrang), dedicated to the male ancestors and the flat ones, the dolmens (moo kynthai), are dedicated to the women."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 5",
+          "quote": "They consist of the menhirs locally known as Moo Shynrang (Men) and dolmens (the flat stones in the horizontal position) known as Moo Kynthai (Women)."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "These consists of Menhirs (Upright stones) Moo Shynrang and Dolmens (flat stones in the horizontal position) locally known as Moo Kynthai."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W13"
+      },
+      "text": "Mawbynna Niam stones, erected to proclaim the completion of the funerary rites, are generally three upright stones and one table stone, the middle upright ascribed to the clan's eldest maternal uncle.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 169",
+          "quote": "Mawbynna Niam: These are memorial stones erected to proclaim the completion of the funerary rites and rituals pertaining to the bone placement ceremony."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 169",
+          "quote": "They are generally formed of three upright stones and one table stone. The middle upright stone is always ascribed to the Kni Rangbah or the eldest maternal uncle of the clan."
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "Mawbynna Nam, literally memorial stone, is a general name for all types of memorial stone, with or without rites and rituals.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 169",
+          "quote": "Mawbynna Nam: Literally \"Memorial Stone,\" a general name for all types of memorial stone, which may or may not be associated with the performance of rites and rituals."
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The tallest recorded Khasi-Jaintia monument measures 8 m from the ground, with a maximum breadth of 0.78 m, at Nartiang village.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 167",
+          "quote": "The tallest recorded monument measures 8 m in height from the ground, with a maximum breadth of 0.78 m, and it is found in the village of Nartiang in the Jaintia Hills."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Live History India gives the tallest Nartiang menhir as almost 8 meters high and 18 inches thick.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 5",
+          "quote": "The tallest menhir is almost 8 meters high and 18 inches thick."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The Archaeological Survey of India records one menhir of the Nartiang memorial group as 9 m high.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "monument 63, heading",
+          "quote": "STONE MEMORIAL OF U-MAW THODUR-BRIEW, NARTIANGDISTRICT:Jaintia Hills LOCALITY:Nartiang"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "monument 63",
+          "quote": "The height of one menhir is 9m."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "At Nartiang a capstone is occasionally placed over the central menhir of a row to represent the shape of a head or hat.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "monument 63, heading",
+          "quote": "STONE MEMORIAL OF U-MAW THODUR-BRIEW, NARTIANGDISTRICT:Jaintia Hills LOCALITY:Nartiang"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "monument 63",
+          "quote": "The central one of a row is generally larger in size.A capstone is occasionally provided over it to represent the shape of head or hat."
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that the centre stone of a Khasi set is generally crowned by a capital or turban-like ornament.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "The centre stone generally is crowned by a capital, or turban-like ornament, and sometimes two are joined together, forming a trilithon"
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "According to Godwin-Austen's 1872 figures, the tallest stone of the Laitlyngkot group in the Khasi Hills measured 5.72 m and the largest table stone weighed about 21.2 metric tons.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 168",
+          "quote": "monuments consisting of 11 upright stones and table stones is found in a place called Laitlyngkot in the Khasi Hills. 4 The tallest stone measures 5.72 m from the ground, and the largest table stone weighs about 21.2 metric tons (Fig. 2) (Godwin-Austen 1872, 141)."
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Godwin-Austen estimated the weight of the largest stone in the Laitlyngkot group at 20 tons.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 168, note 4",
+          "quote": "According to Godwin-Austen, these formed the largest collection of huge stone slabs recorded from the hills"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 168, note 4",
+          "quote": "He esti - mated that the weight of the largest stone was 20 tons."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 168",
+          "quote": "is found in a place called Laitlyngkot in the Khasi Hills"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W07"
+      },
+      "text": "Maw Shongthait, resting stones, are mostly rough undressed slabs on four vertical supports, in many cases set beside footpaths leading to farms or markets.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 170",
+          "quote": "These are known in the local dialect as Maw Shongthait , literally translated as \"resting stones.\""
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 170",
+          "quote": "Most of them are made from rough and undressed stone slabs and there are four supporting vertical slabs (Fig. 6). They generally serve as a resting place for travelers as in many cases they are found on the sides of footpaths leading to farms or marketplaces."
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W05"
+      },
+      "text": "Stone cists, very common throughout the Khasi and Jaintia Hills, are called Maw-shyieng, the bone repository, and Maw-bah, the clan stone cist.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 170",
+          "quote": "In the local dialect, they are called Maw-shyieng or bone repository and Maw-bah or clan stone cist. These are very common throughout the Khasi and Jaintia Hills"
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W14"
+      },
+      "text": "Clan cists are usually larger than individual ones, between 1 and 2 m2 in area and 0.5 and 1.5 m high.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 171",
+          "quote": "These clan cists are usually larger than the ones for individuals, ranging between 1 and 2 m2 in area and 0.5 and 1.5 m in height."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W14"
+      },
+      "text": "In most parts of the Khasi Hills the clan cist is usually ringed with stone boulders, while Jaintia Hills clan cists are simpler, without stone circle or passageway, but with a generally larger, sturdier chamber.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 171",
+          "quote": "In most parts of the Khasi Hills, the clan cist is usually encir - cled with stone boulders roughly 3 - 4 m in diameter"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 173",
+          "quote": "In the Jaintia Hills, clan cists are found to be simpler in construction, without any stone circle or passageway, but the chamber is generally larger and stur - dier."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Stone jars along the Saipung Reserve of the Jaintia Hills are hollow jars hewn from locally available rocks, sometimes pear-shaped or tapering.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 174",
+          "quote": "along the Saipung Reserve of the Jain - tia Hills of Meghalaya. They are built in the shape of hollow jars and hewn from locally available rocks and are sometimes pear-shaped or taper towards the tip"
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A single megalithic cluster site in the Khasi-Jaintia Hills can hold more than 100 standing stones and more than 50 table stones.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 175",
+          "quote": "There could be a concentra - tion of as many as more than 100 standing stones and more than 50 table stones on a single cluster site."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W08"
+      },
+      "text": "In Nongtalang a few houses still have hujoi, square basins carved out of stone that collect water in the rainy season for washing the feet.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 26",
+          "quote": "In Nongtalang, a few houses still have hujoi, which are square basins carved out of stone. The hujoi are used for collecting water during the rainy season, and the water is used for washing the feet before entering the house."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W10"
+      },
+      "text": "The upper millet-grinding stone has two holes, one for a stick to move the cover and a bigger one for putting in the millet.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 5",
+          "quote": "there are two holes on the stone on the top - one for placing a stick to move the cover, and the other, a bigger hole, is for putting the millet for grinding."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "One side of the Syndai tank has a series of steps, and on the other side an elephant head is beautifully carved.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "monument 64, heading",
+          "quote": "TANK, SYNDAIDISTRICT:Jaintia Hills LOCALITY:Syndai"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "monument 64",
+          "quote": "One side of the tank contains a series of steps and on the other side an elephant head is beautifully carved."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Along the stone path from Jaintiapur to Nartiang, the most important carvings are on the stone bridge over the Umiaknieh near Krangshuri waterfall.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 14",
+          "quote": "Carvings on stones and sculptures on rocks can also be found along the stone path from Jañtiapur to Nartiang. The most important carvings are those found on the stone bridge on the river Umiaknieh near Krangshuri waterfall."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "At Nartiang a pattern for the Korkatia game is carved on the monolith in the garden behind the Jayantee Devi Temple.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 12",
+          "quote": "In Nartiang, there is also a pattern carved on a stone used for playing the Korkatia game. The carving of the game can be seen on the monolith in the garden at the back of the Jayantee Devi Temple."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "An image engraved on a huge rock by the Tisang River depicts the folk belief that u khmi, a giant moving underground, caused tremors.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 18",
+          "quote": "The image, engraved on a huge rock on the banks of the Tisang River, depicts the folk belief that u khmi was a giant whose movements underground caused tremors."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Michael Buam observed that most engravings in the southern Jaintia Hills relate to Hindu culture and faith, such as a Trishul engraved on rocks near Psadwar.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 17",
+          "quote": "Late D.R. Michael Buam (2017), a writer and filmmaker from Jañtia Hills, in his blog entry about the stone monuments in the region, made an important observation about the numerous sculptures and engravings in the southern part of Jañtia Hills."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 17",
+          "quote": "Most of these engravings are related to Hindu culture and faith, such as the Trishul engraved on rocks on the banks of Tisang (as locals call the downstream Myntdu River) near Psadwar village."
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One of the monoliths in Iawmusiang at Nangbah village bears an engraving of a rooster and an elephant.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 23",
+          "quote": "An engraving of a rooster and an elephant on one of the monoliths in Ïawmusiang at Nangbah village has been highlighted later (using black paint) by someone yet unknown."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that the Khasi hills apparently had no stone circles, no alignments and no sculptured stones of any sort.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "There are apparently no circles and no alignments on the hills, nor any of the forms which in the previous pages we have ascribed to battle-fields, and no tumuli nor any of their derivatives, and no sculptured stones of any sort."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "North East India's greatest concentration of megalithic remains is in the Khasi and Jaintia hills of Meghalaya.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "Introduction, p. 126",
+          "quote": "North East India has rich megalithic remains and the greatest concentration is observed in the Khasi and Jaintia hills of Meghalaya."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson wrote that rude-stone monuments exist in the western Khasi hill country in greater numbers than perhaps anywhere else of the same extent.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "Throughout the whole of the western portion of the hilly region, inhabited by tribes bearing the generic name of Khassias, rude-stone monuments exist in greater numbers than perhaps in any other portion of the globe of the same extent"
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The biggest collection of monoliths in a single area of the Khasi and Jaintia Hills lies north of the Nartiang market.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "However, the biggest collection of monoliths or Megalithic stones in one single area is to be found north of the Nartiang market."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Meghalaya Tourism says Nartiang, a quiet village in the hills of West Jaintia, holds one of the most striking collections of megaliths in Northeast India.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 1",
+          "quote": "In the mist-cloaked hills of West Jaintia, Nartiang stands silent and steadfast-where stone becomes scripture"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "This quiet village in the Jaintia Hills holds one of the most striking collections of megaliths in Northeast India-massive stone structures"
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Aminda Rangsa art village, with its wood and stone sculptures, lies in Gambegre Block of West Garo Hills, 20 km from Tura.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village",
+          "quote": "A sustainable cultural oasis of intricate wood and stone sculptures in the wilderness of West Garo Hills."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, location",
+          "quote": "It is located in the Gambegre Block, West Garo Hills, 20 km from Tura, the nearest town, and 2 km from Gambegre"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village, visiting",
+          "quote": "Aminda Rangsa Art Village is open to visitors year-round"
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Huge monolithic stone memorials known as U-Mawthoh-Dur stand in the Bhoi area of Meghalaya, pillars of diverse shape erected in memory of celebrated heroes.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "monument 62",
+          "quote": "A huge monolithic stone memorials of local tribes can be seen in the Bhoi area of Meghalaya. It is commonly known as 'U-Mawthoh-Dur'. The memorial pillars are of diverse shape and design erected in memory of the celebrated heroes."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Concentrations of Khasi and Jaintia monuments always stand at the highest point of the landscape, mostly on a ridge overlooking a valley.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 175",
+          "quote": "The concentration of monuments in the Khasi and Jaintia hills is always found at the highest point of the landscape, visible from a great distance when the area is devoid of vegetation cover. Such points are mostly the ridge of a hill overlooking either two sides or one side of a valley."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mitri concludes that Khasi megaliths are primarily territorial markers in the landscape, expressing clan solidarity and clan-based settlement.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 177",
+          "quote": "It may therefore be said with a great degree of accuracy that the Khasi megaliths are primarily territorial markers in the physical landscape that in a way exhibited clan solidarity and clan-based settlements."
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Mitri writes that many Khasi-Jaintia village names are prefixed by Maw, stone, and that Yule tried to explain such names, giving Mawsmai from the oath stone, Mawmluh the salt stone and Mawphlang the grassy stone.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 170",
+          "quote": "In fact, many of the places or villages in the Khasi-Jaintia Hills are prefixed by the name Maw (stone), directly connecting them with the megalithic monuments."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 166",
+          "quote": "He was the first per - son who made an effort to understand the implication of the Khasi village names with reference to the stones and provided examples of villages such as Mawsmai from the \"Oath Stone,\" Mawmluh \" Salt Stone,\" Mawphlang or \"Grassy Stone.\""
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 170",
+          "quote": "Thus Lt. Yule attempts to explain that the name Maw-mluh (salt) was derived from the lapping of salt from a sword (being a Khasi form of taking an oath) and the village name Maw-smai (oath) came from an oath between two parties."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "For the 2026-27 cycle, Meghalaya's Updated Master Craftsmen Scheme offers empanelled master trainers an honorarium of ₹20,000 a month and each trainee a stipend of ₹3,000 a month, though empanelment does not guarantee trainees or batches.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "p. 1",
+          "quote": "In pursuance of the objectives of the Updated Master Craftsmen Scheme, the Commerce & Industries Department, Government of Meghalaya, hereby invites applications"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "p. 1",
+          "quote": "from State Awardees/ Master Craftsmen who are permanent residents of the State for empanelment as Mastertrainers for the implementation of the Scheme for the annual cycle 2026-27."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "section 1, Scope, p. 1",
+          "quote": "Honorarium ₹20,000 per month to Master Craftsperson"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "section 1, Scope, p. 1",
+          "quote": "Trainee Stipend ₹3,000 per month for trainee"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "section 7, General Conditions",
+          "quote": "Empanelment does not guarantee automatic allocation of trainees or batches."
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Megalithic cluster sites of the Khasi-Jaintia Hills are mostly associated with market sites where exchanges take place and village assemblies are held.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 175",
+          "quote": "They are mostly associated with market sites where exchanges take place and where village assemblies are con - ducted."
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Some megalithic clusters stand at places known as centres of iron smelting and the traditional iron industry, which thrived until the last century.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 175",
+          "quote": "There are also clusters which were known to be centers of iron smelting and the tradition - al iron industry, which thrived till the last century."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The Amindagre Area People Welfare Association was formed to help keep the town clean and support local artists skilled in wood and stone carving.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "Aminda Rangsa Art Village",
+          "quote": "The Amindagre Area People Welfare Association was formed to help keep the town clean and support local artists skilled in wood and stone carving."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W05"
+      },
+      "text": "Mitri distinguishes the Maw-Shyieng, an individual's smaller, temporary bone repository used right after cremation, from the Maw-Bah, the clan's big bone repository for all its members.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "p. 171",
+          "quote": "The first type includes cists belonging to an individual or Maw-Shyieng (temporary bone repository); such cists are smaller and connected with the funerary ritual immediately after the body is cremated."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "p. 171",
+          "quote": "The second type belongs to the clan or Maw-Bah big bone repository, which houses the bones of all the clan members."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Fergusson cites a report by H. Walters in Asiatic Researches dated 1828, and gives Walters's account of urns of ashes placed in little circular cells near the villages.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, note to the Khassia hills",
+          "quote": "H. Walters, 1828, 'Asiatic Researches,' xvii. pp. 499 et seqq."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "chapter 13, Khassia hills",
+          "quote": "According to Mr. Walters, the urns containing the ashes are placed in little circular cells, with flat tops like stools, which exist in the immediate proximity of all the villages"
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Live History India says it is not known exactly when the Nartiang megaliths were erected, and that the folklore account could well be true, indicating a much more recent origin.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "While we don't know exactly when the megaliths at Nartiang were erected, local folklore gives us a clue."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "this story could well be true, indicating a much more recent origin of these megaliths"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C091",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Reporting a 2015 workshop at Nongstoin, a design report for Meghalaya's Directorate of Commerce and Industries names stone craft, wood carving and bamboo craft as the important crafts of the region's rural communities.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "Nongstoin field report, Summary",
+          "quote": "The Office of the DCI, Nongstoin organized the fourth Craft Design Workshop conducted by the IIT Design team at Nongstoin August 17-21, 2015."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "Nongstoin field report, About Nongstoin",
+          "quote": "About Nongstoin It is the district headquarters of the West Khasi Hills"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "Nongstoin field report, About Nongstoin",
+          "quote": "Stone craft, Wood carving and Bamboo craft are the important crafts among the rural communities of the region."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "About this design report",
+          "quote": "In conclusion to this project the design team is submitting this final report for record of the Office of the Directorate of Industries and Commerce, Government of Meghalaya"
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Meitei and Marak write that the Garo use megaliths in a modified form, erecting carved wooden posts called kima in honour of the dead rather than stone structures.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Introduction, p. 74",
+          "quote": "The Garo style of using megaliths is found in a modified form - they erect carved wooden posts called kima in honour of the dead but not the stone structure"
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "The Jaintias, also known as Pnar or Synteng, are a matrilineal, Mon-Khmer speaking people of eastern Meghalaya, traditionally megalith users and well known for erecting megaliths.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "p. 75",
+          "quote": "Jaintias are a matrilineal Mon-Khmer speaking group of people inhabiting the eastern part of Meghalaya, a hilly state of north-east India."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "p. 75",
+          "quote": "They are traditionally megalithic users and are well known for erecting megaliths, and for their matrilineal descent. They are known by different names, such as Pnar and Synteng."
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "From fieldwork at Nartiang and Shanpung in 2012 and 2014, Meitei and Marak found no record of new megaliths being erected in the region.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Introduction, p. 74",
+          "quote": "The data for this paper was collected from an ethnoarchaeological study conducted in the villages of Shanpung and Nartiang, in the months of December 2012 and January 2014 respectively"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "Though there is no record of erection of new megaliths in the region"
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Interviews by Meitei and Marak suggested that very simple iron implements could have been used in the past to construct Jaintia megaliths, supported by the region's traditional iron factories.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "Though there is no record of erection of new megaliths in the region, from interviews conducted it was learnt that in the past very simple tools (iron implements) could have been used to construct these structures."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "This is supported by the existence of traditional iron factories in the region."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C096",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Meitei and Marak report rich lore about how the large Jaintia megaliths were transported from one place to another after a series of rituals and prayers.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "However, rich lore exists about how the large structures were transported from one place to another after a series of rituals and accompanying prayers."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "At Shanpung, the mootymoh, the flat capstone of a moowasa cairn, is selected and taken from the village's sacred Kpep by the eldest man of the clan and family.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 76",
+          "quote": "In village Shanpung too, a sacred place (Kpep) exists where bones of the deceased are deposited."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 77",
+          "quote": "Mootymoh or capstone is a circular flat slab. It is kept on top of the mooshan stone and is the topmost part of the moowasa stone."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 77",
+          "quote": "Unlike mooshan stone, the mootymoh stone is selected and taken out from the sacred place of the village (Kpep). The eldest man of the clan and family (iing) takes it out and places the mootymoh stone whenever it is required."
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "In Shanpung, bones are deposited in the moowasa cairn on the day of cremation, and other elderly family members bring four or five mooshan stones to cover them.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Traditional mortuary practices, Shanpung, p. 78",
+          "quote": "In Shanpung village, the traditional mortuary practices are seen to be more systematic and it is still in practice."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Traditional mortuary practices, Shanpung, p. 78",
+          "quote": "After cremation, bones are collected and deposited in the moowasa stone (cairn) on the same day."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Traditional mortuary practices, Shanpung, p. 78",
+          "quote": "Other elderly members of the family bring four or five pieces of stone (mooshan stones) to cover the bones."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "In Shanpung, Meitei and Marak found that some clans have started using modern materials such as cement and mortar for the boundary of the moowasa cairn stones.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Conclusion, p. 80",
+          "quote": "In Shanpung, there is no ritual in the chadphur stone; additionally they have started using modern materials such as cement and mortar for making the boundary of the moowasa stone."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "Presently, it is seen that for some clans, cement and mortar is used as boundary markers of the cairn stones inside the Kpep"
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Meitei and Marak found Nartiang's mortuary stones in the Kpep unused, scattered and broken, as villagers now keep the bones of the deceased permanently inside tree trunks.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "In Nartiang, only the sacred place, Kpep, exists along with unused mortuary stones."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Discussion, p. 79",
+          "quote": "Now they place the bones of the deceased permanently inside the tree trunk. Thus, the mortuary stones inside the Kpep are scattered and broken down."
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W15"
+      },
+      "text": "A mookylliam, a small stone-built, coffin-like box with a big slab of stone on top, is each clan's permanent resting place for its ancestral bones, Meitei and Marak report.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 77",
+          "quote": "Mookylliam or dolmen is a small stone-built coffinlike box or ossuary to hold the bones of the dead"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 77",
+          "quote": "Mookylliam is circular in shape and surrounded on all sides by vertically erected stones with a big slab of stone at the top."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Shanpung village, p. 77",
+          "quote": "The mookylliam stone is the permanent resting place for keeping all the ancestral bones of each clan."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Nartiang",
+      "kind": "VILLAGE",
+      "district": "West Jaintia Hills",
+      "state": "Meghalaya",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C078",
+        "C077",
+        "C012",
+        "C013",
+        "C014",
+        "C053",
+        "C045",
+        "C050",
+        "C070"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Aminda Rangsa",
+      "kind": "VILLAGE",
+      "district": "West Garo Hills",
+      "state": "Meghalaya",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C079",
+        "C041",
+        "C042",
+        "C040"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Nongstoin",
+      "kind": "TOWN",
+      "district": "West Khasi Hills",
+      "state": "Meghalaya",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C091"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Khasi-Pnar",
+      "claimIds": [
+        "C002",
+        "C003",
+        "C006"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "PERSON",
+      "name": "Handum Marak",
+      "placeId": "L02",
+      "claimIds": [
+        "C041"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Amindagre Area People Welfare Association",
+      "placeId": "L02",
+      "claimIds": [
+        "C087"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "COMMUNITY",
+      "name": "Jaintia",
+      "localNames": [
+        "Pnar",
+        "Synteng"
+      ],
+      "claimIds": [
+        "C093"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Moving megaliths from the quarry",
+      "stageType": "PREP",
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C026"
+        },
+        {
+          "toolId": "T02",
+          "claimId": "C027"
+        }
+      ],
+      "claimIds": [
+        "C026",
+        "C027",
+        "C096"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Erecting megaliths",
+      "stageType": "OTHER",
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C028"
+        }
+      ],
+      "claimIds": [
+        "C028",
+        "C029"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Hewing and dressing",
+      "stageType": "SHAPE",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C037"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C037"
+        },
+        {
+          "materialId": "M03",
+          "claimId": "C037"
+        }
+      ],
+      "claimIds": [
+        "C037",
+        "C030",
+        "C031",
+        "C032"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Carving into rock and stone",
+      "stageType": "CARVE",
+      "materials": [
+        {
+          "materialId": "M03",
+          "claimId": "C034"
+        }
+      ],
+      "claimIds": [
+        "C034",
+        "C068",
+        "C035",
+        "C066",
+        "C070"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Placing mortuary stones over the bones",
+      "stageType": "OTHER",
+      "claimIds": [
+        "C098",
+        "C097"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Sandstone (Cherra and Shillong sandstone)",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C036",
+        "C037"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Gneiss",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C037"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Granite",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C036",
+        "C037",
+        "C038",
+        "C034"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Hard rock that sheds no sand",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C039"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Cement and mortar",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C099"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Spars of rounded logs",
+      "claimIds": [
+        "C026"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Poles",
+      "claimIds": [
+        "C027"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Rudimentary pulley",
+      "claimIds": [
+        "C028"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "LANDFORM",
+      "claimIds": [
+        "C081"
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "maw",
+      "meaning": "Stone; many places and villages in the Khasi-Jaintia Hills are prefixed by it.",
+      "claimIds": [
+        "C083",
+        "C003"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "Maw Shynrang, moo shynrang",
+      "meaning": "The male stone: an upright standing stone or menhir.",
+      "claimIds": [
+        "C048",
+        "C050"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "Maw Kynthei, moo kynthai",
+      "meaning": "The female stone: a flat table stone or dolmen.",
+      "claimIds": [
+        "C049",
+        "C050"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "Mawbynna Nam",
+      "meaning": "Literally memorial stone: a general name for all types of memorial stone, with or without rites and rituals.",
+      "claimIds": [
+        "C052",
+        "C047"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "Maw-shyieng",
+      "meaning": "Bone repository: an individual's smaller, temporary stone cist.",
+      "claimIds": [
+        "C061",
+        "C088"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "kor",
+      "meaning": "A cenotaph or resting place built in dry masonry of well-dressed squarish stone blocks.",
+      "claimIds": [
+        "C031"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "Maw Shongthait",
+      "meaning": "Resting stones: a slab on vertical supports beside a footpath.",
+      "claimIds": [
+        "C060"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "hujoi",
+      "meaning": "A square basin carved out of stone that collects rainwater for washing the feet.",
+      "claimIds": [
+        "C066"
+      ]
+    },
+    {
+      "id": "W09",
+      "term": "kynroh moo",
+      "meaning": "A retaining wall of cut flat stones laid without cement.",
+      "claimIds": [
+        "C033"
+      ]
+    },
+    {
+      "id": "W10",
+      "term": "moo tylliat kre",
+      "meaning": "The pair of round granite stones used for grinding millet.",
+      "claimIds": [
+        "C038",
+        "C067"
+      ]
+    },
+    {
+      "id": "W11",
+      "term": "maw jingshoh, moo tyndang",
+      "meaning": "The pair of stones used for grinding paste and spices.",
+      "claimIds": [
+        "C039"
+      ]
+    },
+    {
+      "id": "W12",
+      "term": "kyn-maw",
+      "meaning": "Memory; the word derives from maw, stone.",
+      "claimIds": [
+        "C003"
+      ]
+    },
+    {
+      "id": "W13",
+      "term": "Mawbynna Niam",
+      "meaning": "Memorial stones erected to proclaim the completion of the funerary rites, generally three upright stones and one table stone.",
+      "claimIds": [
+        "C051"
+      ]
+    },
+    {
+      "id": "W14",
+      "term": "Maw-bah",
+      "meaning": "The clan stone cist, the big bone repository that houses the bones of all the clan members.",
+      "claimIds": [
+        "C061",
+        "C088",
+        "C062",
+        "C063",
+        "C025"
+      ]
+    },
+    {
+      "id": "W15",
+      "term": "mookylliam",
+      "meaning": "A small stone-built, coffin-like box or ossuary for the bones of the dead, each clan's permanent resting place for its ancestral bones.",
+      "claimIds": [
+        "C101"
+      ]
+    },
+    {
+      "id": "W16",
+      "term": "mootymoh",
+      "meaning": "A circular flat capstone slab on top of a moowasa cairn.",
+      "claimIds": [
+        "C097"
+      ]
+    },
+    {
+      "id": "W17",
+      "term": "Kpep",
+      "meaning": "The village's sacred place where the bones of the deceased are deposited.",
+      "claimIds": [
+        "C097",
+        "C100"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C053",
+        "C054",
+        "C055"
+      ],
+      "about": "Height of the tallest Nartiang menhir: 8 m (Mitri) or almost 8 m (Live History India), while the Archaeological Survey of India records one menhir there as 9 m"
+    },
+    {
+      "claimIds": [
+        "C043",
+        "C045",
+        "C046",
+        "C047"
+      ],
+      "about": "Whether the stones of a row are always odd in number"
+    },
+    {
+      "claimIds": [
+        "C006",
+        "C007",
+        "C089"
+      ],
+      "about": "When British reports on Khasi megaliths began: Mitri places them after the British annexed the hills in the 1830s and names Walters's as the first, while Fergusson cites Walters's report as dated 1828"
+    },
+    {
+      "claimIds": [
+        "C058",
+        "C059"
+      ],
+      "about": "Weight of the largest stone at Laitlyngkot: about 21.2 metric tons or 20 tons"
+    },
+    {
+      "claimIds": [
+        "C032",
+        "C030",
+        "C031"
+      ],
+      "about": "Whether Khasi stone monuments were left unhewn or dressed"
+    },
+    {
+      "claimIds": [
+        "C074",
+        "C048",
+        "C069"
+      ],
+      "about": "Whether the hills hold stone alignments and carved stones"
+    },
+    {
+      "claimIds": [
+        "C012",
+        "C015"
+      ],
+      "about": "U Mar Phalyngki: a trusted lieutenant of the Jaintia king who erected the tallest menhir (district page), or, by local folklore, a minister in the Jaintia kingdom (Live History India)"
+    },
+    {
+      "claimIds": [
+        "C013",
+        "C014"
+      ],
+      "about": "When the last Nartiang monoliths were added: by a year the district page prints as l835 AD, or until the middle of the nineteenth century (Meghalaya Tourism)"
+    },
+    {
+      "claimIds": [
+        "C044",
+        "C053",
+        "C058"
+      ],
+      "about": "Menhir height: 1 m to 4 m in Godwin-Austen's range, against a tallest recorded 8 m at Nartiang and 5.72 m at Laitlyngkot"
+    },
+    {
+      "claimIds": [
+        "C024",
+        "C025",
+        "C094"
+      ],
+      "about": "Whether megaliths are still erected: a tradition still in vogue in some pocket areas (ASI) and clan cists still erected in some remote parts (Mitri), against no record of new megaliths in the region Meitei and Marak studied"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Who erected the Nartiang monoliths, and over which years?",
+      "claimIds": [
+        "C090",
+        "C012",
+        "C013",
+        "C014",
+        "C015"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "How were the megaliths quarried, shaped and raised, and with which tools?",
+      "claimIds": [
+        "C095",
+        "C026",
+        "C027",
+        "C028",
+        "C096"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Stone_Memorial_of_U-Maw_Thodur-Briew%2C_Nartiang%2C_West_Jaintia_Hills%2C_Meghalaya%2C_India.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Stone_Memorial_of_U-Maw_Thodur-Briew,_Nartiang,_West_Jaintia_Hills,_Meghalaya,_India.jpg",
+      "author": "Sreesarkar",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "The stone memorial of U-Maw Thodur-Briew at Nartiang, West Jaintia Hills",
+      "claimIds": [
+        "C045",
+        "C077"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Monolithic_stone_memorials_for_the_dead.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Monolithic_stone_memorials_for_the_dead.jpg",
+      "author": "Sreesarkar",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Monolithic stone memorials of the U-Maw Thodur-Briew group at Nartiang",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Traditional_Khasi_Monument_to_Honour_Ancestors_in_Cherrapunji%2C_India.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Traditional_Khasi_Monument_to_Honour_Ancestors_in_Cherrapunji,_India.jpg",
+      "author": "Sujan Bandyopadhyay",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A traditional Khasi monument honouring ancestors near Cherrapunji, with upright and flat stones",
+      "claimIds": [
+        "C048",
+        "C049"
+      ]
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/35/Megaliths_cherra.JPG",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Megaliths_cherra.JPG",
+      "author": "Bogman",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Monoliths below Cherrapunji (Sohra) in the Khasi Hills",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "I05",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Megalith_bridge_of_meghalaya.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Megalith_bridge_of_meghalaya.jpg",
+      "author": "Milesusin",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A megalithic bridge of stone slabs on stone pillars, identified on Commons as the bridge on the Um-Nyakaneth",
+      "claimIds": [
+        "C018"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Stone carving is one of the craft domains of Meghalaya's Updated Master Craftsmen Scheme, covering cultural artifacts and utility products crafted from stone.",
+        "claimIds": [
+          "C001"
+        ]
+      },
+      {
+        "text": "The Khasi and Jaintia hills hold North East India's greatest concentration of megalithic remains, and among the Khasi-Pnar the practice of stone monuments is a living tradition.",
+        "claimIds": [
+          "C075",
+          "C002"
+        ]
+      },
+      {
+        "text": "Carvings on stones and sculptures on rocks are found along the stone path from Jaintiapur to Nartiang, and pools carved out of a single rock in the Syndai area carry sculpted elephant heads.",
+        "claimIds": [
+          "C069",
+          "C035"
+        ]
+      },
+      {
+        "text": "A design report on a 2015 workshop names stone craft among the important crafts of rural communities around Nongstoin in West Khasi Hills, and Meghalaya Tourism describes Handum Marak's wood and stone carvings at Aminda Rangsa art village in West Garo Hills.",
+        "claimIds": [
+          "C091",
+          "C041",
+          "C079"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Recognised craft",
+        "value": "Stone carving is a craft domain of Meghalaya's Updated Master Craftsmen Scheme",
+        "claimIds": [
+          "C001"
+        ]
+      },
+      {
+        "label": "Stone carving centres",
+        "value": "Around Nongstoin, West Khasi Hills (2015 workshop report); Aminda Rangsa art village, West Garo Hills (Handum Marak)",
+        "claimIds": [
+          "C091",
+          "C041",
+          "C079"
+        ]
+      },
+      {
+        "label": "Carved stone",
+        "value": "Granite: the Syndai tank, excavated in a granite outcrop with a carved elephant head, and granite millet-grinding stones",
+        "claimIds": [
+          "C034",
+          "C068",
+          "C038"
+        ]
+      },
+      {
+        "label": "National recognition",
+        "value": "Donborlin Blah, merit certificate holder in stone carving under the National Award scheme",
+        "claimIds": [
+          "C005"
+        ]
+      },
+      {
+        "label": "Megalith rock types",
+        "value": "Sandstone, gneiss and granite",
+        "claimIds": [
+          "C037",
+          "C036"
+        ]
+      },
+      {
+        "label": "Megalith forms",
+        "value": "Upright male stones (Maw Shynrang) and flat female table stones (Maw Kynthei)",
+        "claimIds": [
+          "C048",
+          "C049"
+        ]
+      },
+      {
+        "label": "Menhir heights at Nartiang",
+        "value": "Tallest recorded 8 m (Mitri); one menhir 9 m (ASI); sources differ",
+        "claimIds": [
+          "C053",
+          "C055"
+        ]
+      },
+      {
+        "label": "Moving and raising megaliths",
+        "value": "Spars of rounded logs, poles and a rudimentary pulley (Godwin-Austen 1872; Clarke 1874)",
+        "claimIds": [
+          "C026",
+          "C027",
+          "C028"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Mitri writes that Khasi megaliths drew the attention of British colonial writers after the British annexed the hills in the 1830s and names H. Walters as giving the first documented report, while Fergusson cites a Walters report dated 1828; sources differ on when the reports began.",
+            "claimIds": [
+              "C006",
+              "C007",
+              "C089"
+            ]
+          },
+          {
+            "text": "Fergusson wrote that many Khasi stone monuments were erected within his own century, and Godwin-Austen recorded a set of five stones erected in 1869.",
+            "claimIds": [
+              "C009",
+              "C010"
+            ]
+          },
+          {
+            "text": "Godwin-Austen wrote before the 1897 earthquake, and many monuments described in his paper are no longer standing.",
+            "claimIds": [
+              "C008"
+            ]
+          },
+          {
+            "text": "The West Jaintia Hills district page says U Mar Phalyngki, a trusted lieutenant of the Jaintia king, erected the tallest Nartiang menhir, while Live History India says the attribution comes from local folklore and calls him a minister in the Jaintia kingdom.",
+            "claimIds": [
+              "C012",
+              "C015"
+            ]
+          },
+          {
+            "text": "The megalithic bridges over the Thul-Um-Wi and the Um-Nyakanah and the tank at Syndai, excavated in a hard granite outcrop, are said to have been built by the Jaintia kings, and the Um-Kumbeh bridge can be dated to circa the 18th century CE.",
+            "claimIds": [
+              "C017",
+              "C018",
+              "C020",
+              "C034",
+              "C019"
+            ]
+          },
+          {
+            "text": "Some rock engravings on the northern border of the Jaintia Hills were destroyed during road construction.",
+            "claimIds": [
+              "C022"
+            ]
+          },
+          {
+            "text": "Erecting monoliths was prevalent among most Khasi communities before they embraced Christianity; the Nartiang stone memorial tradition is still in vogue in some pocket areas, and clan cists are still erected in some remote parts of the hills.",
+            "claimIds": [
+              "C023",
+              "C024",
+              "C025"
+            ]
+          },
+          {
+            "text": "From fieldwork in 2012 and 2014, Meitei and Marak found no record of new megaliths being erected in the region and found Nartiang's mortuary stones unused, scattered and broken; sources differ on whether megaliths are still erected.",
+            "claimIds": [
+              "C094",
+              "C100"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "Godwin-Austen, in 1872, described stones dragged from the quarries on spars of rounded logs, and Clarke, in 1874, big stones transported with the help of poles and large monuments erected with the aid of a rudimentary form of pulley.",
+            "claimIds": [
+              "C026",
+              "C027",
+              "C028"
+            ]
+          },
+          {
+            "text": "Meitei and Marak report rich lore about how the large Jaintia megaliths were transported from one place to another after a series of rituals and prayers.",
+            "claimIds": [
+              "C096"
+            ]
+          },
+          {
+            "text": "Fergusson wrote that the Khasis kept to rude unhewn-stone monuments, while Mitri describes some cists of finely dressed stones and kors built of well-dressed squarish stone blocks; sources differ.",
+            "claimIds": [
+              "C032",
+              "C030",
+              "C031"
+            ]
+          },
+          {
+            "text": "At Syndai a small tank was excavated in a hard granite outcrop, and two thaw sum syiem bathing pools were carved out of a single rock.",
+            "claimIds": [
+              "C034",
+              "C035"
+            ]
+          },
+          {
+            "text": "Kynroh moo retaining walls are built of nicely cut flat stones using only stones and soil, without cement.",
+            "claimIds": [
+              "C033"
+            ]
+          },
+          {
+            "text": "In Shanpung, other elderly family members bring four or five mooshan stones to cover the bones in the moowasa cairn on the day of cremation, and the eldest man of the clan and family takes the mootymoh capstone from the sacred Kpep.",
+            "claimIds": [
+              "C098",
+              "C097"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Clarke named Cherra sandstone, Shillong sandstone and granite as the three basic rock types used for building megalithic monuments.",
+            "claimIds": [
+              "C036"
+            ]
+          },
+          {
+            "text": "Khasi-Jaintia menhirs are hewn from materials such as sandstone, gneiss and granite, depending on the availability of the raw materials.",
+            "claimIds": [
+              "C037"
+            ]
+          },
+          {
+            "text": "Millet-grinding stones are made of granite, and stones for grinding paste and spices were selected from hard rocks that do not produce sand.",
+            "claimIds": [
+              "C038",
+              "C039"
+            ]
+          },
+          {
+            "text": "The carvings of Aminda Rangsa art village are created from locally sourced materials.",
+            "claimIds": [
+              "C040"
+            ]
+          },
+          {
+            "text": "In Shanpung, some clans have started using modern materials such as cement and mortar for the boundary of the moowasa cairn stones.",
+            "claimIds": [
+              "C099"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Khasi-Jaintia menhirs are undressed upright monoliths that stand sometimes alone or in rows of 3, 5, 7, 9 and occasionally 11 to 30, called Maw Shynrang or the male stone, mostly with a rough table stone called Maw Kynthei or the female stone.",
+            "claimIds": [
+              "C043",
+              "C048",
+              "C049"
+            ]
+          },
+          {
+            "text": "Sources differ on whether a row is always odd in number: Fergusson wrote that it must always be unequal, while the Archaeological Survey of India records rows of three, four, five or seven at Nartiang.",
+            "claimIds": [
+              "C046",
+              "C045"
+            ]
+          },
+          {
+            "text": "A capstone is occasionally placed over the central menhir at Nartiang to represent a head or hat, while Fergusson wrote that the centre stone is generally crowned by a turban-like ornament.",
+            "claimIds": [
+              "C056",
+              "C057"
+            ]
+          },
+          {
+            "text": "Mitri gives the tallest recorded Khasi-Jaintia monument, at Nartiang, as 8 m high, while the Archaeological Survey of India records one Nartiang menhir as 9 m.",
+            "claimIds": [
+              "C053",
+              "C055"
+            ]
+          },
+          {
+            "text": "Stone cists called Maw-shyieng and Maw-bah are very common throughout the Khasi and Jaintia Hills, and Maw Shongthait resting stones of rough undressed slabs are in many cases set beside footpaths.",
+            "claimIds": [
+              "C061",
+              "C060"
+            ]
+          },
+          {
+            "text": "Carvings include elephant heads at Syndai, a Korkatia game pattern on a Nartiang monolith, and engravings related to Hindu culture and faith in the southern Jaintia Hills.",
+            "claimIds": [
+              "C068",
+              "C035",
+              "C070",
+              "C072"
+            ]
+          },
+          {
+            "text": "In Nongtalang a few houses still have hujoi, square basins carved out of stone for collecting water in the rainy season.",
+            "claimIds": [
+              "C066"
+            ]
+          },
+          {
+            "text": "A mookylliam, a small stone-built, coffin-like box with a big slab of stone on top, is each clan's permanent resting place for its ancestral bones.",
+            "claimIds": [
+              "C101"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "North East India's greatest concentration of megalithic remains is in the Khasi and Jaintia hills of Meghalaya, and the biggest collection in one area lies north of the Nartiang market.",
+            "claimIds": [
+              "C075",
+              "C077"
+            ]
+          },
+          {
+            "text": "Nartiang is a quiet village in the hills of West Jaintia, while Aminda Rangsa art village lies in Gambegre Block of West Garo Hills, 20 km from Tura.",
+            "claimIds": [
+              "C078",
+              "C079"
+            ]
+          },
+          {
+            "text": "Concentrations of monuments always stand at the highest point of the landscape, mostly on a ridge overlooking a valley.",
+            "claimIds": [
+              "C081"
+            ]
+          },
+          {
+            "text": "Many Khasi-Jaintia village names are prefixed by Maw, stone, and Yule tried to explain names such as Mawsmai, Mawmluh and Mawphlang by stones.",
+            "claimIds": [
+              "C083"
+            ]
+          },
+          {
+            "text": "Reporting a 2015 workshop at Nongstoin, the district headquarters of West Khasi Hills, a design report names stone craft, wood carving and bamboo craft as the important crafts of the region's rural communities.",
+            "claimIds": [
+              "C091"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Megalithic cluster sites are mostly associated with market sites where exchanges take place, and some stand at centres of iron smelting and the traditional iron industry.",
+            "claimIds": [
+              "C085",
+              "C086"
+            ]
+          },
+          {
+            "text": "For the 2026-27 cycle, Meghalaya's Updated Master Craftsmen Scheme offers empanelled master trainers an honorarium of ₹20,000 a month and each trainee a stipend of ₹3,000 a month, though empanelment does not guarantee trainees or batches.",
+            "claimIds": [
+              "C084"
+            ]
+          },
+          {
+            "text": "At Aminda Rangsa, the Amindagre Area People Welfare Association was formed to support local artists skilled in wood and stone carving.",
+            "claimIds": [
+              "C087"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -5,16 +5,17 @@ from collections.abc import Mapping, Sequence
 from types import MappingProxyType
 
 from app.research.planning import OPEN_QUESTION_LEVEL
-from app.research.sections import FALLBACK_DISCIPLINE, SectionSpec, block_id
+from app.research.sections import FALLBACK_DISCIPLINE, SectionSpec, block_id, fallback_heading, is_facet_label
 from app.research.vocabulary import CANONICAL_LANGUAGE, LEVEL_ORDER
 
 from .answer_events import STORED_ANSWER_LIMIT, STORED_OPEN_QUESTION_LIMIT, CitedClaims, stored_follow_ups
 from .answer_translation import AnswerTranslation, translated_block, translated_sentences
+from .claim_ledger import COVERED_NOTE
 from .explainer_events import ExplainerStream
 from .knowledge_view import ClaimView, order_claims, section_heading
 from .section_blocks import KeptSentence, cited_sentence, prose_block
 
-__all__ = ["HEADING_DISCIPLINES", "stream_stored_answer"]
+__all__ = ["HEADING_DISCIPLINES", "stored_heading", "stream_stored_answer"]
 
 HEADING_DISCIPLINES: Mapping[str, str] = MappingProxyType(
     {
@@ -43,12 +44,10 @@ async def stream_stored_answer(
     groups: dict[str, list[ClaimView]] = {}
     for view in order_claims(findings):
         groups.setdefault(section_heading(view.concept_type), []).append(view)
-    for order, (heading, views) in enumerate(groups.items(), start=1):
+    for order, (group, views) in enumerate(groups.items(), start=1):
+        discipline = HEADING_DISCIPLINES.get(group, FALLBACK_DISCIPLINE)
         spec = SectionSpec(
-            id=f"s{order}",
-            discipline=HEADING_DISCIPLINES.get(heading, FALLBACK_DISCIPLINE),
-            title=heading,
-            order=order,
+            id=f"s{order}", discipline=discipline, title=stored_heading(group, craft_name), order=order
         )
         await _stored_section(stream, spec, views, cited, translation=translation)
     sentences = [cited_sentence(f"open.{n}", _kept(view), cited) for n, view in enumerate(open_questions, 1)]
@@ -59,6 +58,12 @@ async def stream_stored_answer(
     await stream.open_questions(sentences, cited.sources)
     await stream.emit("follow_ups", {"items": stored_follow_ups(craft_name, list(groups))})
     return True
+
+
+def stored_heading(group: str, craft_name: str) -> str:
+    if not is_facet_label(group):
+        return group
+    return fallback_heading(HEADING_DISCIPLINES.get(group, FALLBACK_DISCIPLINE), craft_name)
 
 
 async def _stored_section(
@@ -77,8 +82,8 @@ async def _stored_section(
             payload, language=stream.language, translation=translation, claim_texts=_texts(cited)
         )
         block = type(block).model_validate(shown)
-    await stream.blocks(spec.id, [block], cited.sources)
-    await stream.section_done(spec.id, searched=None)
+    sent = await stream.blocks(spec.id, [block], cited.sources)
+    await stream.section_done(spec.id, searched=None if sent else COVERED_NOTE)
 
 
 def _kept(view: ClaimView) -> KeptSentence:

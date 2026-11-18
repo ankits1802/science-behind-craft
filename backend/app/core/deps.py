@@ -136,22 +136,46 @@ async def user_from_token(session: AsyncSession, token: str) -> User:
     return user
 
 
+def _bearer_token(credentials: HTTPAuthorizationCredentials | None) -> str | None:
+    if credentials is None or not credentials.credentials:
+        return None
+    return credentials.credentials
+
+
+async def _signed_in_user(session: AsyncSession, token: str) -> User:
+    user = await user_from_token(session, token)
+    await release_connection(session)
+    set_log_user(str(user.id))
+    return user
+
+
 async def get_current_user_any_step(
     credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
     session: AsyncSession = Depends(get_session),
 ) -> User:
-    if credentials is None or not credentials.credentials:
+    token = _bearer_token(credentials)
+    if token is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=SIGN_IN_DETAIL)
-    user = await user_from_token(session, credentials.credentials)
-    await release_connection(session)
-    set_log_user(str(user.id))
-    return user
+    return await _signed_in_user(session, token)
 
 
 async def get_current_user(
     connection: HTTPConnection,
     user: User = Depends(get_current_user_any_step),
 ) -> User:
+    refuse_pending_steps(user, connection)
+    return user
+
+
+async def get_optional_user(
+    connection: HTTPConnection,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    session: AsyncSession = Depends(get_session),
+) -> User | None:
+    token = _bearer_token(credentials)
+    if token is None:
+        return None
+    user = await _signed_in_user(session, token)
     refuse_pending_steps(user, connection)
     return user
 
@@ -216,6 +240,7 @@ __all__ = [
     "capabilities_of",
     "get_current_user",
     "get_current_user_any_step",
+    "get_optional_user",
     "has_rank",
     "is_break_glass_master",
     "is_configured_master_admin",

@@ -10,7 +10,7 @@ from app.services.builder_interface import BuilderTools
 from app.services.matter_builders import MaterialCardBuilder, MoleculeBuilder, ReactionPlayerBuilder
 from app.sources.reference.pubchem import PubChemAdapter
 
-from ..science.golden_process import ALIZARIN, claim_id
+from ..science.golden_process import ALIZARIN, claim_id, known_claim
 from ..sources.recorded import Recorder, Reply, fixed_clock, source_http
 from ..voice.listen_fakes import MemoryObjects
 from .fixtures import (
@@ -80,7 +80,7 @@ async def test_an_answer_for_any_craft_gets_no_matter_blocks(stored: dict[str, A
         assert (await builder.build(ask)).blocks == ()
 
 
-async def test_a_card_shows_the_stored_material_its_term_and_the_claims_the_model_sorted(
+async def test_a_card_shows_the_stored_material_its_term_and_the_claims_its_prose_has_not_shown(
     stored: dict[str, Any],
 ) -> None:
     model = CardModel(CARD_REPLY)
@@ -101,14 +101,13 @@ async def test_a_card_shows_the_stored_material_its_term_and_the_claims_the_mode
     assert [(s.id, s.citations[0].claim_id) for s in card.facts] == [
         ("s4.card1.1", str(claim_id(ALUM_OWN_CLAIM)))
     ]
-    assert [(s.id, s.citations[0].claim_id) for s in card.handling] == [
-        ("s4.card1.2", str(claim_id(PA_CLAIM)))
-    ]
+    assert card.handling == []
     assert built.sources == {}
     (call,) = model.calls
     assert '<untrusted_source ref="m1" label="material">' in call["user"]
     assert "Also called: fatakdi, fitkari, karam" in call["user"]
-    assert call["user"].count("<untrusted_source ref=") == 3
+    assert call["user"].count("<untrusted_source ref=") == 2
+    assert known_claim(PA_CLAIM).text not in call["user"]
 
 
 async def test_a_card_shows_a_formula_and_cid_only_from_its_pubchem_record(stored: dict[str, Any]) -> None:

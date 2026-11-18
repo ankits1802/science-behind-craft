@@ -26,6 +26,7 @@ from app.retrieval.statements import (
     claim_conditions,
     claim_lexical_ranking,
     claim_vector_ranking,
+    readable_citations,
 )
 
 from ..craft_fixtures import FixedEmbedder
@@ -126,6 +127,15 @@ def test_chunks_come_from_sources_cited_by_scoped_claims_within_the_reader_acl()
     assert vector_sql.startswith(
         'WITH scoped AS MATERIALIZED (SELECT "Chunk".id AS id, "Chunk".embedding <=> '
     )
+
+
+def test_a_citation_is_read_only_from_no_chunk_or_an_unrestricted_chunk_the_reader_may_quote() -> None:
+    sql, params = compiled(readable_citations([CRAFT], acls=("PUBLIC",)))
+    assert 'FROM "ClaimSource" LEFT OUTER JOIN "Chunk" ON "Chunk".id = "ClaimSource"."chunkId"' in sql
+    assert '"ClaimSource"."chunkId" IS NULL OR "Chunk".acl IN' in sql
+    assert params_with(params, "acl_") == [["PUBLIC"]]
+    assert '"Chunk".sensitivity != ' in sql and params_with(params, "sensitivity_") == ["RESTRICTED"]
+    assert params_with(params, "claimId_") == [[CRAFT]]
 
 
 def test_the_query_contract_refuses_repeats_and_out_of_range_limits() -> None:

@@ -5,7 +5,7 @@ event: status
 data: {"step":"PLANNING","message":"Planning the research on Kutch Ajrakh"}
 
 event: section_started
-data: {"id":"s1","discipline":"CHEMISTRY","title":"The chemistry","order":1,"state":"RESEARCHING"}
+data: {"id":"s1","discipline":"CHEMISTRY","title":"The chemistry behind Kutch Ajrakh","order":1,"state":"RESEARCHING"}
 
 event: status
 data: {"step":"SEARCHING_STORED","message":"Searching stored findings"}

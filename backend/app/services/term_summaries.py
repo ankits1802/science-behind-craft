@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Protocol
 
-from app.core.errors import Refused
+from app.core.errors import InvalidInput, Refused
 from app.research.citations import AnswerSentence, cited_source_ids
 from app.research.terms import TERM_SCHEMA_VERSION, TERM_SUMMARY_MAX_SENTENCES, Term
 from app.research.vocabulary import CANONICAL_LANGUAGE, FACT_LEVELS
@@ -16,19 +16,26 @@ from .knowledge_view import ClaimView
 from .term_research import GlossaryTerm, ResearchedSummary
 
 __all__ = [
+    "NEEDS_LOOKUP_MESSAGE",
+    "NEEDS_LOOKUP_REASON",
     "NO_SUMMARY_REASON",
     "UNKNOWN_TERM_REASON",
     "StoredClaims",
+    "StoredTermLookup",
     "TermLookup",
+    "TermReader",
     "TermResearch",
     "TermStore",
+    "cites_only_shown",
     "term_view",
 ]
 
 UNKNOWN_TERM_REASON = "unknown_term"
 NO_SUMMARY_REASON = "no_cited_summary"
+NEEDS_LOOKUP_REASON = "needs_lookup"
 UNKNOWN_TERM_MESSAGE = "No term has that address."
 NO_SUMMARY_MESSAGE = "This term has no cited summary yet."
+NEEDS_LOOKUP_MESSAGE = "Sign in to look this term up."
 STORED_BASIS = "STORED"
 
 
@@ -36,6 +43,7 @@ STORED_BASIS = "STORED"
 class StoredClaims:
     views: Sequence[ClaimView] = ()
     sources: Mapping[str, dict[str, Any]] = field(default_factory=dict)
+    changed_at: datetime | None = None
 
 
 class TermStore(Protocol):
@@ -56,6 +64,10 @@ class TermResearch(Protocol):
     async def researched(self, term: GlossaryTerm) -> ResearchedSummary | None: ...
 
 
+class TermReader(Protocol):
+    async def summary(self, key: str, language: str) -> Term: ...
+
+
 def utc_now() -> datetime:
     return datetime.now(UTC)
 
@@ -68,9 +80,7 @@ class TermLookup:
     clock: Callable[[], datetime] = utc_now
 
     async def summary(self, key: str, language: str) -> Term:
-        term = await self.store.term(key)
-        if term is None:
-            raise Refused(UNKNOWN_TERM_REASON, UNKNOWN_TERM_MESSAGE)
+        term = await _known_term(self.store, key)
         found = await self.store.cached(term.id, language)
         if found is not None:
             return found
@@ -87,9 +97,9 @@ class TermLookup:
         return translated
 
     async def _english(self, term: GlossaryTerm) -> Term:
-        stored = await self.store.defining_claims(term)
-        if stored.views:
-            return term_view(term, STORED_BASIS, stored, language=CANONICAL_LANGUAGE, checked_at=self.clock())
+        stored = await _stored_english(self.store, term)
+        if stored is not None:
+            return stored
         researched = await self.research.researched(term)
         if researched is None:
             raise Refused(NO_SUMMARY_REASON, NO_SUMMARY_MESSAGE)
@@ -106,6 +116,48 @@ class TermLookup:
         )
         shown = english.model_dump(mode="json", by_alias=True)
         return Term.model_validate({**shown, "language": language, "summary": translated})
+
+
+@dataclass(frozen=True)
+class StoredTermLookup:
+    store: TermStore
+
+    async def summary(self, key: str, language: str) -> Term:
+        term = await _known_term(self.store, key)
+        found = await self.store.cached(term.id, language)
+        if found is not None:
+            return found
+        english = await _stored_english(self.store, term) if language == CANONICAL_LANGUAGE else None
+        if english is None:
+            raise Refused(NEEDS_LOOKUP_REASON, NEEDS_LOOKUP_MESSAGE)
+        return english
+
+
+async def _known_term(store: TermStore, key: str) -> GlossaryTerm:
+    term = await store.term(key)
+    if term is None:
+        raise Refused(UNKNOWN_TERM_REASON, UNKNOWN_TERM_MESSAGE)
+    return term
+
+
+async def _stored_english(store: TermStore, term: GlossaryTerm) -> Term | None:
+    stored = await store.defining_claims(term)
+    if not stored.views:
+        return None
+    if stored.changed_at is None:
+        raise InvalidInput(
+            f"The stored claims defining the term {term.key} carry no time of their last change"
+        )
+    return term_view(term, STORED_BASIS, stored, language=CANONICAL_LANGUAGE, checked_at=stored.changed_at)
+
+
+def cites_only_shown(summary: Term, views: Mapping[uuid.UUID, ClaimView]) -> bool:
+    for sentence in summary.summary:
+        for citation in sentence.citations:
+            view = views.get(uuid.UUID(citation.claim_id))
+            if view is None or citation.id not in {shown["id"] for shown in view.citations}:
+                return False
+    return True
 
 
 def term_view(

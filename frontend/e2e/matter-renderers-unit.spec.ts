@@ -107,7 +107,7 @@ test("reduced motion shows every step with its equation, species and citations, 
   expect(html).not.toContain('data-testid="species-cast"');
   expect(html).toContain('aria-label="Iron + 2 Acetic acid gives Iron(II) acetate + Hydrogen"');
   expect(html).toContain("Aluminium from the alum mordant + Alizarin gives Aluminium-alizarin lake");
-  expect(html.match(/data-testid="citation-chip"/g)).toHaveLength(13);
+  expect(html.match(/data-testid="citation-chip"/g)).toHaveLength(11);
   expect(html.match(/>Balanced</g)).toHaveLength(3);
   for (const step of player().steps) expect(html).toContain(step.label);
 });

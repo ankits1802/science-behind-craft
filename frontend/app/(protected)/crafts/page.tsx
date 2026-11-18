@@ -7,6 +7,7 @@ import { BookOpen, RotateCw } from "lucide-react";
 
 import { EmptyState } from "@/components/EmptyState";
 import { FieldBlock } from "@/components/FormControls";
+import { ConceptMatches } from "@/components/crafts/ConceptMatches";
 import { PageHeader } from "@/components/PageHeader";
 import { SearchInput } from "@/components/SearchInput";
 import { Dropdown } from "@/components/ui/Dropdown";
@@ -14,10 +15,16 @@ import {
   catalogueCountLine,
   craftStatesLine,
   groupCrafts,
-  searchCraftCatalogue,
+  readerCount,
+  searchCatalogue,
+  shownCountLine,
   useCraftCatalogue,
-  type CatalogueCraft
+  withinCategory,
+  type CatalogueSearch
 } from "@/lib/craftCatalogue";
+import type { CatalogueCraft } from "@/lib/craftCatalogueContract";
+
+const NOTHING_FOUND: CatalogueSearch = { concepts: [], crafts: [] };
 
 export default function CraftsPage() {
   return (
@@ -49,11 +56,8 @@ function CraftIndex() {
     return () => clearTimeout(timer);
   }, [category, pathname, query, router]);
 
-  const visible = useMemo(() => {
-    if (!catalogue) return [];
-    const found = searchCraftCatalogue(catalogue, deferred);
-    return category ? found.filter((craft) => craft.categoryId === category) : found;
-  }, [catalogue, category, deferred]);
+  const found = useMemo(() => withinCategory(catalogue ? searchCatalogue(catalogue, deferred) : NOTHING_FOUND, category), [catalogue, category, deferred]);
+  const visible = found.crafts;
 
   const groups = useMemo(() => (catalogue ? groupCrafts(catalogue, visible) : []), [catalogue, visible]);
   const categoryOptions = useMemo(
@@ -62,7 +66,7 @@ function CraftIndex() {
       ...(catalogue?.categories ?? [])
         .slice()
         .sort((a, b) => a.sortOrder - b.sortOrder)
-        .map((row) => ({ value: row.id, label: row.name }))
+        .map((row) => ({ value: row.id, label: row.label ?? row.name }))
     ],
     [catalogue]
   );
@@ -100,8 +104,10 @@ function CraftIndex() {
       </section>
 
       <p className="mb-3 text-sm text-ink-500" role="status" data-testid="craft-count">
-        {filtered ? `${visible.length} of ${catalogue.crafts.length} crafts` : `${catalogue.crafts.length} crafts`}
+        {filtered ? shownCountLine(catalogue, visible) : null}
       </p>
+
+      <ConceptMatches matches={found.concepts} />
 
       {visible.length === 0 ? (
         <EmptyState title={deferred.trim() ? `No craft matches “${deferred.trim()}”.` : "No crafts in this category."} />
@@ -111,7 +117,7 @@ function CraftIndex() {
             <section key={group.key} className="panel overflow-hidden" aria-labelledby={`group-${group.key}`}>
               <h2 id={`group-${group.key}`} className="flex items-center justify-between gap-3 border-b border-line-200 bg-surface-50 px-4 py-2.5 text-sm font-semibold text-ink-900">
                 <span className="min-w-0 truncate">{group.heading}</span>
-                <span className="shrink-0 text-xs font-medium tabular-nums text-ink-500">{group.crafts.length}</span>
+                <GroupCount count={readerCount(group.crafts)} />
               </h2>
               <ul className="divide-y divide-line-200">
                 {group.crafts.map((craft) => (
@@ -126,6 +132,11 @@ function CraftIndex() {
   );
 }
 
+function GroupCount({ count }: { count: number }) {
+  if (count === 0) return null;
+  return <span className="shrink-0 text-xs font-medium tabular-nums text-ink-500">{count}</span>;
+}
+
 function CraftRow({ craft }: { craft: CatalogueCraft }) {
   const states = craftStatesLine(craft);
   return (
@@ -137,8 +148,8 @@ function CraftRow({ craft }: { craft: CatalogueCraft }) {
       >
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-medium text-ink-900">
-            {craft.name}
-            {craft.localName && craft.localName !== craft.name ? <span className="ml-2 font-normal text-ink-500">{craft.localName}</span> : null}
+            {craft.displayName}
+            {craft.localName && craft.localName !== craft.displayName ? <span className="ml-2 font-normal text-ink-500">{craft.localName}</span> : null}
           </span>
           {states ? <span className="block truncate text-xs text-ink-500">{states}</span> : null}
         </span>

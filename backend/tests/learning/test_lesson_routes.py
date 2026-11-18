@@ -102,7 +102,7 @@ def test_a_professor_builds_the_pack_the_contract_shows(monkeypatch: pytest.Monk
         assert (user_id, number) == (PROFESSOR.id, 1)
         return first_version()
 
-    async def every_claim_visible(session: Any, claim_ids: Any) -> tuple[dict, dict]:
+    async def every_claim_visible(session: Any, claim_ids: Any, **_kwargs: Any) -> tuple[dict, dict]:
         return dict.fromkeys(claim_ids), {}
 
     monkeypatch.setattr(lesson_packs, "explainer_version", version)

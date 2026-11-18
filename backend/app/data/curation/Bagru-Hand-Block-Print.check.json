@@ -1,0 +1,1866 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Bagru-Hand-Block-Print",
+  "dossierVersion": 1,
+  "dossierDigest": "59227dc93eb48e18c1ae2b92c6b2fe4311721421690d3cd54fdff62004ebc7a3",
+  "checkedAt": "2026-11-18T09:38:13.624172Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "fetchedAt": "2026-11-18T09:38:03.382218Z",
+      "contentType": "application/pdf",
+      "textSha256": "2fb18e523b59656860f2d239c161e7ab118b4788cc9a18a23a1ee94b40c2b5ea",
+      "characters": 69142,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/183",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/183",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/183",
+      "fetchedAt": "2026-11-18T09:38:06.494223Z",
+      "contentType": "text/html",
+      "textSha256": "7f0b45bc42d31edc37b617ece5a7958db3c08392769559551146866629ad1bc1",
+      "characters": 34392,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T09:37:58.935163Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.ulm.edu/~joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ulm.edu/~joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "finalUrl": "https://www.ulm.edu/employee/joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "fetchedAt": "2026-11-18T09:38:02.011144Z",
+      "contentType": "application/pdf",
+      "textSha256": "e1fa6ef2ff52e3336b2246cb93c40988d31acc40b4b3ebe905f759f3083f328d",
+      "characters": 431497,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://iisjoa.org/sites/default/files/iisjoa/April%202025/Paper%2012.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250813224018id_/https://iisjoa.org/sites/default/files/iisjoa/April%202025/Paper%2012.pdf",
+      "finalUrl": "https://web.archive.org/web/20250813224018id_/https://iisjoa.org/sites/default/files/iisjoa/April%202025/Paper%2012.pdf",
+      "fetchedAt": "2026-11-18T09:38:01.648906Z",
+      "contentType": "application/pdf",
+      "textSha256": "e7fa970a2d73ab6c7e9ab30d6e46b2f1105d91a927fc15b2e398ebccab3014c4",
+      "characters": 25875,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/14759756.2021.1950422",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20240330175124id_/https://www.tandfonline.com/doi/full/10.1080/14759756.2021.1950422",
+      "finalUrl": "https://web.archive.org/web/20240330175124id_/https://www.tandfonline.com/doi/full/10.1080/14759756.2021.1950422",
+      "fetchedAt": "2026-11-18T09:38:03.829178Z",
+      "contentType": "text/html",
+      "textSha256": "356a6d3059e778ce33bcc9eaff270dfbe0bafcdf54920a7e29217ea704e1f98b",
+      "characters": 1287,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://collections.penn.museum/collections/object/304133",
+      "route": "LIVE",
+      "readUrl": "https://collections.penn.museum/collections/object/304133",
+      "finalUrl": "https://collections.penn.museum/collections/object/304133",
+      "fetchedAt": "2026-11-18T09:38:03.779646Z",
+      "contentType": "text/html",
+      "textSha256": "a3f2667b00ab00072cdf4a0443c5b57c505c12c0201843bc5670e81f352b4998",
+      "characters": 1098,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "route": "LIVE",
+      "readUrl": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "finalUrl": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "fetchedAt": "2026-11-18T09:38:08.822444Z",
+      "contentType": "text/html",
+      "textSha256": "fe6b77d5c771d173572065ec0f28beccaad16dd56a3a4fdb321b32ba35ffbbc4",
+      "characters": 2904,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "route": "LIVE",
+      "readUrl": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "finalUrl": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "fetchedAt": "2026-11-18T09:38:10.136181Z",
+      "contentType": "text/html",
+      "textSha256": "4b799f2401030cc59dbf019bea987a40f15fb3463ba6b338645812d36b682304",
+      "characters": 3999,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "route": "LIVE",
+      "readUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "finalUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "fetchedAt": "2026-11-18T09:38:10.182952Z",
+      "contentType": "text/html",
+      "textSha256": "bbcc3729a83a487f9367d9017f6f406978d82438ec644338dad2bc7fa57b0cf4",
+      "characters": 8069,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://artsandculture.google.com/asset/hAHlNy5fiW14NQ",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/asset/hAHlNy5fiW14NQ",
+      "finalUrl": "https://artsandculture.google.com/asset/hAHlNy5fiW14NQ",
+      "fetchedAt": "2026-11-18T09:38:11.088640Z",
+      "contentType": "text/html",
+      "textSha256": "e93d810fa699220bcbb7d615efe6c07a5a5222f87e0822f3b94686283a0c6eaa",
+      "characters": 440,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+      "route": "LIVE",
+      "readUrl": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+      "finalUrl": "https://images.fibre2fashion.com/ArticleResources/PdfFiles/62/6198.pdf",
+      "fetchedAt": "2026-11-18T09:38:11.107534Z",
+      "contentType": "application/pdf",
+      "textSha256": "ecdb44b4a806dcfff1fc89204bc8cc55098e6e2bec6a3e866313d61d5a94e6c9",
+      "characters": 11535,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | BAGRU HAND BLOCK PRINT | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "| Class | 24 & 25 | | Goods | Handicraft | | Geographical Area | Rajasthan |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S02",
+      "quote": "| Application Number | 183 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 10-08-2009 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S02",
+      "quote": "| Applicant Name | Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti (BHTCDSAVS) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "G.I. APPLICATION NUMBER - 183",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "is hereby adve rtised as accepted under Sub-section (1) of Section 13 of Geographical Indications of Goods (Registration and Protection) Act, 1999.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S02",
+      "quote": "| Journal Number | 37 | | Availability Date | 04-01-2011 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S02",
+      "quote": "| Certificate Number | 150 | | Certificate Date | 11-05-2011 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "FROM APRIL 2011 - MARCH 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "150 183 Bagru Hand Block Print Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 09-08-2029 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "| 1 | 183 - GI - Renewal Letter - 22-04-2022 | 22-04-2022 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "About the Applicant : \"Bagru Haath Thappa Chhapai Dastkar Sanrakshan Avvam Vikas Samiti\" (BHTCDSAVS) is a registered society under Jaipur Cooperative society Act 1943 and its Registration No. is 640.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "Bagru has constituted an independent inspection committee of seven members headed by General Ma nager RUDA, A Govt. of Rajasthan undertaking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "There are more then 350 small and medium scale dying and printing units mainly in Bagru and a few in nearby villages e .g. at Jahota, Jairampura and Kaladera.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "As per BHTC DSAVS 25% of the total population of Bagru Town is dependent upon the business of Bagru Hand Block Prints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "Total annual turnover of Bagru Hand Block Printed pr oducts lies between Rupees 70-80 crores (2007-08).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "production units are not in the organized sector and therefore, outsource small segments of work for conducting different process to the diffe rent craftsmen working form small cottage industries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "Bagru Prints were produced to cater the need for rural population.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "The design and colours of bagru prints have been great ly improved and diversified to meet the requirement of the designers and export market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "Bagru Prints are produced mainly for the taste and needs of local communities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "By the early 1980s, the demand for Bagru fabrics in the local Haats (markets) had declined but new export channels helped bolster the fortune s of the industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "Martand Singh, Rta Kapur Chisti and Rahul Jain; Lustre Press Roli Books Pvt. Ltd., New Delhi, 2000",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S01",
+      "quote": "Because hand block printing was the main source of revenue during 18 th and 19th century, the town became known for its famous textile and continued to be known for Bagru Hand Block Print.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "The vision, devotion and creative sk ills of Late Shri Ram Gulam Jajpura",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Shri Rameshwar Lal Dosaya, Shri Lal Chand Chhipa, Pada m Shree - Ram Kis hor Chhipa, Smt. Bhanwari Devi etc. have gone a long way in bringing this textile cluster in forefront of the world textile map.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S09",
+      "quote": "A master-printer dedicated to the craft, Ramkishore Chippa Derawala, brings the story of Dabu from his little village for the world to see.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S09",
+      "quote": "Derawala, a Padma Shri recipient, told IANS",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S10",
+      "quote": "Ramkishore Chhipa Derawala workshop, Bagru, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S09",
+      "quote": "At first, when the marketing was only till the district level, the block-type and print colours used to be as per caste,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S09",
+      "quote": "This continued till the early part of 1970s, when the traditional hand-block printing technique and the community caught the government's eye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S09",
+      "quote": "Our natural dyes are made from pomegranate's rind and onion's leftovers, turmeric, phitkari (alum), and iron horseshoes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S01",
+      "quote": "Bagru Prints are mostly on cotton and sometimes on cotton x silk. A wide range of Made ups, Home furnishings and Ga rments are produced from Bagru Printed cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "Designs on Bagru Prints are obtained by stamping Wooden Hand Blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "The designs on Bagru Hand Block Print are usually repetitive.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "Colours used for Bagru Hand Block Print are mostly vegetable dyes (natural colours).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "Bagru Hand Block Print are produced using vegetable dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S06",
+      "quote": "The printing is done using natural dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "Traditional Bagru Hand Block Prints are dominated by two colours viz. Red and Black. Black colour of Bagru Prints impart reddish tinge.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "The ground colour of Bagru Hand Block Prints are mostly off white (cream).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S04",
+      "quote": "Bagru printing is one of the traditional techniques of printing with natural colour followed by the chippas of a remote place of Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S04",
+      "quote": "Motifs having some specialty are transferred onto light coloured background with wooden blocks fo llowing two styles - direct and resist style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S04",
+      "quote": "Bagru is known for its mastery in the second t ype, a special printing technique of Resist style called 'Dabu' printing. Its essence lies in printing with specially prepared Dabu paste i.e. applying thick black mud paste onto the fa bric and then dyeing the fabrics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "Traditional skill for production of Bagru Hand Block Print is an asset of a community known as \"Chhipas\" of Bagru.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Bagru Hand Block Print Textile production is more than 300 years old.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S06",
+      "quote": "Bagru printing is a traditional hand block printing method that is more than 300 years old.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "Bagru Prints are produced only in a limited Geographical area i.e. Bagru, Kaladera, Jahota and Jairampura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "Geographical Areas of production of Bagru Hand Block Print is Bagru, Kaladera, Jahota and Jairampura. Of these Bagru town is the main production centre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "Geographical Area Bagru Kaladera Jahota Jairampura Name of Tehsil/ Panchayat Sanganer Chomu Amber Amber District & State Jaipur, Rajasthan Jaipur, Rajasthan Jaipur, Rajasthan Jaipur, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S04",
+      "quote": "at a distance of 30-35 kms from Jaipur, on Jaipur - Ajmer road there lies a small typical village called 'Bagru'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "Bagru was a small town in Rajputana State, situated in 26 0 48' North and 75033' East on the Agra-Ajmer Road about 18 mile s South-West of Jaipur City.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "The place was famous for dyed and stamped chintzes\". (\"Imperial Gazetteer of India\", Provincial Series, Rajputana, 1908",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S01",
+      "quote": "small village town in Rajas than, is situated at a distance of 32 kms east of Jaipur city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S01",
+      "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book \"Block Printing and Dyeing of Bagru, Rajasthan\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S09",
+      "quote": "is practiced by a major artisan cluster in Bagru, a village of hand-block printers just 30 kilometers south of Jaipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S08",
+      "quote": "I visited Kaladera in Rajasthan, looking particularly for Indigo dyeing workshops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S08",
+      "quote": "The workshops I visited however specialise in layering up block printing, resist block printing and indigo dyeing processes to create designs that have a generally darker, indigo ground, with lighter and even white areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S04",
+      "quote": "Dabu was popular in all those ce nters of Rajasthan, where th ere was abundance of water. Bagru near Jaipur, Barmer and kaladera near Udaipur, Jodhpur, Akola n ear Chittorgarh etc. are centers where the technique is practiced w ith few changes in the material, ingredients, colour scheme and motifs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S01",
+      "quote": "Bagru, an early 16th century town near Jaipur, developed into a flourishing Textile Production Center and was at its peak in the 19 th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "According to Dr. G.N. Sharma, Bagru was famous and known for its Dyed or Printed Chintzes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "The place was famous for dyed and stamped chintzes\". (\"Imperial Gazetteer of India\", Provincial Series, Rajputana, 1908",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "according to historian Prof. Mohan Lal Gupta, Bagru Hand Block Print Industry was a flourishing industry for last five centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "District-wise Study of Culture and History in Rajasthan, Rajasthani Granthagar, Jodhpur, 2004",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "The hand printers, known as chhipa , came from Sawai Madhopur, Alwar, Jhunjhunu and Siker districts of Rajasthan to settle in Bagru and make it their home some 300 years ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book \"Block Printing and Dyeing of Bagru, Rajasthan\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "Block Printing and Dyeing of Bagru, Rajasthan\", B.C. Mohanty & J.P. Mohanty, Calico Museum of Textiles, Ahmedabad, 1983",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S04",
+      "quote": "There is no authentic record for reference on backdating Bagru's bl ock printing practices and there prevail different opinions behind its star ting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S04",
+      "quote": "it is estimated that this art form was introduced 450 years back when a community of Chhipas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S04",
+      "quote": "came to Bagru from Sawai Madhopur (Alwar ), and settled in Bagru.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S09",
+      "quote": "A tradition ongoing since 480 years now, was once rife with caste boundaries, until it found an international market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S01",
+      "quote": "According to a legend, at the very outset, some two families of chhipas were brought by the Thak ur of Bagru to settle in Bagru from Isarda, a village four miles from Jaipur and from then on migration of more families of chhipas continue d from different places.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "They perhaps came for the then royal patronage but more for the a bundant availability of water, which had excellent properties suitable for dyeing and printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book \"Block Printing and Dyeing of Bagru, Rajasthan\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S04",
+      "quote": "According to the opinion of other group, the ta le unfolds more than 400 years ago when the Thakur on the lease of the village decided to develop Bagru as a centre for block printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S04",
+      "quote": "Th e presence of abundant water in the overflowing ' Sanjaria' river and its clean sunny river be d led to the settlement of the Chippas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "The Sanjaria river, with its origin some 5 kms from Bagru westwards, was th en watering this village town and its water was surrounding the place then known as Bagora island, from which the name Bagru is perhaps derived.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "Name Bagru is derived from Bagora, the name of an island in a lake where the city was originally built",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "According to Dr. Asha Bhagat , the great researcher a nd art writer, Bagru near Jaipur was an important Dying and Pr inting Centre where Dabu printing was dominant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "although the Sanganer Prin t was introduced at Bagru around 1943 seven or eight decades earlier a family of printers immigrated here from village Jahota and started printing motifs of chaupar, camels, horse and dove on dhotis and turbans of banjaras (nomads) settled at Nagore",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "(\"Crafts and Craftsmen\", Kamlesh Mathur, Pointer Publishers Jaipur, 2004, p-66)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "The Bagr u print initiated for the Banjaras of Nagore and Kishangarh has become i mmensely popular among the Jats, Gujars, Meens, Malis, and Rajputs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "(\"Crafts and Craftsmen\", Kamlesh Mathur, Pointer Publishers Jaipur, 2004, p-66)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "| Provenience | India | Rajasthan | Bagru |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "| Date Made | Mid to Late 19th Century |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "| Technique | Block Printed | Mud Resist | Resist Dyed | Mordant Dyed | Woven |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "For Kagra, to be worn only by a woman. Cotton. Purple background covered with small individual red flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S04",
+      "quote": "came to Bagru from Sawai Madhopur (Alwar ), and settled in Bagru. Even today, their community works to gether in a place ca lled Chhippa Mohalla (Printer's Quarters) by the Sanjaria riverside.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S12",
+      "quote": "a community of Chhipas (literally meaning people who stamp or print) came to Bagru from Sawai Madhopur (Alwar), and settled in Bagru.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S01",
+      "quote": "This skill is available only in local artisan community known as \"Chhipas\" who have settled in Bagru town for last 300 years. For more than si x generations these Chhipa, men and women, have professionalized hand block printing as their righteous profession and means of earning.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "Turners locally known as Kharadiyes posses the skill of producing desired blocks using dried wood of plants like \"shisham\", \"gurjan\", \"mango\", \"teak\" and \"ardu\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "Kalams: - These are steel chisels of differe nt widths and cutting surfaces used by kharaudis, for engraving the motifs on the wooden printing blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "Bunta (bunti): - These are wooden hand-printi ng blocks of different shapes and types with motifs engraved on their bo ttom faces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "To the upper side of the bunta is fixed a wooden handle with which the block is held and over which the printer strikes, to transfer the impression of the motif to the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "The types of buntas are gad, rekh and data.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "The segmental block is called 'chand' and is generally one fourth of a circle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S01",
+      "quote": "Pathiya : Size approx 2'x 3'x 4' high, used for Dhabu printing and mostly used by old aged printers and women who can't stand for long. The printer sits on the floor.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "Mej : 5'x 20'x 3.5' high, these are meant for regular production where printers walk around the table.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "Gadi: - Size 18' x 18' x 3.6' high, Colour containers are put on the trolley to move around the big table.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": " Production Steps:  Scouring (Pre processing of fabric before printing) locally called \"Hari Sarana\"  Tannin or preparing fabric for printing locally called \"Peela Karna\" or Harda Rangai.  Printing with mordant in salts locally called \"Chapai\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": " Drying of printed fabric or Ageing before dyeing the fabric in natural dye locally called \"Sukhai\".  Washing or removal of excess mordant before dying locally called \"Khulai\".  Dyeing or fixing of colours after washing locally called \"Rangai\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": " Resist Printing or mud clay printing locally called \"Dhabu Datai\"  Dyeing with blue colour locally called \"Neel Rangai\".  Dyeing with yellow dye locally called \"Haldi Naspal Putai\".  Post mordant or fixing of yellow dye locally called \"Fitkari Rangai\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": " Final washing locally called \"Dhulai\" to get rid of all the excess dye and resist paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "The fabric that comes from mills or handloom sector contains natural and added impurities such as starch, oil and dust. To get good and even penetration of colours, the fabric is boiled with soap and de-sizing agents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S01",
+      "quote": "Traditionally cow dung was used for scouring. Cow dung and water are mixed together and the cloth is then left di pped in that paste overnight. The process of washing is a long one, generally carried out by the ladies.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "Traditionally cow dung was used for scouring.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "The next day, the clothes are washed and spread on larg e open grounds. Before the clothes dry completely, more water is sprinkled on them and thus they are made wet again. This process of sprinkling water and drying is repeated 5-6 times a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "This procedure is carried out until the cloth b ecomes white and bright. Generally, this process requires 3 to 6 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "After this the cloth is washed with pure water. Since it is tedious and time consuming, soaps have replaced cow dung now a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S04",
+      "quote": "Chippas re quire two days to prepare a paste by mixing cow-dung, soda ash and sesame oil and washes th e cloth with this mixt ure. This step is called scouring or locally as 'Hari sarana'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "'Harda' powder is mixed with water, and the cloth is submerged in it, squeezed and dried flat on the ground. Once the fabric is dried, it is folded and beaten with a wooden mallet to remove excess 'harda' powder and open up the fiber to accept the dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "This proce ss is known as 'peela karna'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S01",
+      "quote": "fabric is treated with myroba lan (harda) which co ntains tannic acid. Tannic acid attracts the mo rdants, which are applied with hand wood - block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "The tannic acid of myrobalam (harda) forms black colour with ferrous (syahee) which is traditionally made by reaction of old rusted horse shoe nails with jiggery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S04",
+      "quote": "Harda has natural Tanic acid in it that produces black prints with iron as mo rdant for Bagru black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "Syahi in combination with harda develops into a deep black colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S01",
+      "quote": "Pila Karana Solution: - This is used to give creamish yellow colour to the fabric. It is made of harda powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S04",
+      "quote": "Scoured fabrics are given thorough wash in this mixture giving a yellow tint to the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S01",
+      "quote": "Bagru print does not differ from Sanganeri Print except that whereas in the Sanganeri Print the background is white, in Ba gru Print it is off white or fawn.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S01",
+      "quote": "(\"Crafts and Craftsmen\", Kamlesh Mathur, Pointer Publishers Jaipur, 2004, p-66)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S04",
+      "quote": "This produces the light ground colour which differentiates 'Bagru' from 'Sanganer', always on white ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "A piec e of fabric is spread over a low bench covered with a thick pad made of several layers of hea vy cloth. The printer squats in front of this bench with the dye in a pan or ear thenware vessel by his side.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "Inside this vessel is thick cloth pad saturated with dye. The block is pressed on to this pad and motif is then stamped on to the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S01",
+      "quote": "The fabric is printed with two mordant-ferrous ('syahee') made out of rusted horse shoe nails, and aluminum sulphate ('beggar').",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "Usually ferrous is printed with the outline block (' rekh'). As it immediately shows a black impression, it is easy for another printer to place the filler block (' datta') with beggar some times the background block is applied before the outline block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "This printing is primarily done by male printers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "Although, women have tr aditionally done the dabu printi ng, men are also involving themselves in it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S11",
+      "quote": "The printing of dabu is often the occupation of women, working either in their homes or in the karkhana workshops of the printers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S01",
+      "quote": "The printed fabric is left for at least th ree-four days so that the print (mordant paste) penetrates into the fiber structure. Longer the ageing better is the result.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "Washing - locally called 'Dhulai' The printed fabric is washed in running water to remove excess mordants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "Washing or removal of excess mordant before dying locally called \"Khulai\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "Dying (fixing of colour) locally called 'Ghan Rangai' Dyeing is a process in which the dye reacts with two mordants at two different locations on the same print giving two different shades of colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "Alizarin is used as the dye throughout Rajasthan. The colours obtained in conjunction with the two mordants are red (with alum ) and black (with ferrous).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "Begar Paste: - This is the mordant alum which in combination with alizarine develops a rich red colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "Dyeing is carried out in large copper vessels (' tambri') which are heated by wood fire. Alizarin is filled in small cloth-bags (' potali') and dipped in the vessel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "The quantity of alizarin dye is calc ulated by the experienced dyer. ' Dhawadi phool', a local flower is boiled along with alizarin to avoid patches and staining.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "Alizarine and \"dhawai ka phool\" (Dhawai Flower W ood Fordia Floribunda) are mixed in specific ratios in water and mixture kept for required hours to get required reddish hue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "Once the dyed fabric is ready (usu ally it takes half a day), it is taken out of the copper vessel and left on the ground for drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "Alizarine Bath: - This is red colouring dye bath prepared by using vegetable dyes like maddar (Rubia tinctoria, Rubia manjista) which contains substances called alizarin e and purpurin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "To impart red colour shades natu ral/vegetable dyes like Maddar (Rubia tinctoria, Rubia manjista rich in alizarine and purpurin are used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "Nowadays synthetic alizarine is used due to shortage of vegetable alizarine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "In the event of non-availability of natural alizarin and indigo blue synthetic counter parts i.e. chemical dyes are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "Nowadays synthetic indigo granules available in market are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "For making the red outline, alum, Geru and natural gum are mixed together with water to ma ke a paste. As a type of foam forms, ghee and oil is added to it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "Bagru print is also famous for the use of tw o major colours - a red colour outline called 'Began' and a black colour called ' Syahi'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S01",
+      "quote": "Syahi Paste: - Syahi is essentially a fermented solution of iron and fermenting agent molasses (jiggery, gur) and gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S01",
+      "quote": "To give deep black colour Syahi past e made of fermented solution of iron with molasses and gum in combinatio n with Harda is used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "Black Syahi is essentially a fermented soluti on of iron, molasses, gum and the starch of tamarind flour. This paste when ap plied on harda treated fabric turns black on getting exposure to the air.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S01",
+      "quote": "The tannic acid of myrobalam (harda) forms black colour with ferrous (syahee) which is traditionally made by reaction of old rusted horse shoe nails with jiggery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S01",
+      "quote": "Dyes (paste and li quid both) are produced by using bark, flowers and roots of locally available tr ees, river water and available fine clay sand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S06",
+      "quote": "The colors are achieved through mixtures of flowers, tree barks, roots and clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "Yellow Curcuma longa L Haldi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "Light yellow Punica granatum L. Naspal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "Deep yellow Terminalia chebula Rstz Harada",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "Flatting yellow Butea monosperma (Lamk) Taub Dhak, Palas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "Orange-brown Nyctanthus arbortristis Linn. Harsinghar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "Red (Alizarin) Oldenlandia umbellata Linn. Indian Madar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Indigo Blue: - Indigo blue (nil) is a blue colouring matter extracted from Neel plants (Indigofera tinctoria). Nowadays synthetic indigo granules available in market are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Blue Indigofera tinctoria L Neel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "All possible Natural fabric (like cotton, cotton x silk, wool etc.) and man made fibers like rayon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "The special resist paste (clay-lime-gum-insect eaten wheat mixture) technique, a specialty of traditional printing of Rajasthan, is commonly known as 'dhabu'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "Dabu paste is prepared by mixing \"Kali Mitti\" (clay soil), lime (Bidhan) wheat flour and gum. These are mixed in specific ratios depending upon type of Dabu paste needed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S04",
+      "quote": "In general Dabu is made by mixing: (a) Lime dissolved in water, (b) Natural gum 'Bedhan' or the wheat flour spoiled by worms, and (c) Locally available black clay",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S01",
+      "quote": "\"Dabu\" (Resist) paste used at Bagru is made out of locally available black clay soil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S08",
+      "quote": "A resist paste is then mixed from lime, gum and a type of sticky clay naturally occurring in the bottom of ponds and river beds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S08",
+      "quote": "I visited Kaladera in Rajasthan, looking particularly for Indigo dyeing workshops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S04",
+      "quote": "While the chuna or lime is used to thicken solution. The mitti or clay holds the ingredients together; gond or gum helps in washing away the resist paste after the final dyeing is done",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "All these are mashed well into a thick paste and left overnight. It is then strained into liquid paste which is used for printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "The art of making ' dhabu' paste is kept secret and every family has its own recipe to make the paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S04",
+      "quote": "Each family follows its own secret of making Dabu paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S04",
+      "quote": "There are 3 types of Dabu depending on the final result and the colour required: (a) Kaligar Dabu that is processed only once (b) Dolidar Dabu that has little more of gum thus better adhesive strength and can withstand about two trips to the dye vats",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S04",
+      "quote": "(c) Gawarbali Dabu has oil and gawar seed powder added to the paste which gives strength to cloth to go through repeated dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S01",
+      "quote": "Dhabu acts as mechanical resist and prevents the penetration of dye during dyeing on areas covered with 'dhabu'. This technique is used only for creating patterns with indigo blue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S01",
+      "quote": "Resist paste is applied on those parts of printed motifs whose colour is sought to be protected and sealed off from the effects of further treatment that the cloth undergoes in subsequent process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "Since the resist paste 'dhabu' is thick and sticky no sharp definitions are achieve d.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S10",
+      "quote": "The most common resist used for indigo today is a mud paste called Dabu, which often displays the characteristic \"crack\" lines where the dye penetrated the cracks in the resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S04",
+      "quote": "The impression of cracks is equal and clear in this dabu in comparison with mitti dabu, where the cracks are arbitrary and not in control.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "It is applied with wooden block on the fabric and saw dust is sprinkled ove r it. Saw dust has two major functions at this stage-first to absorb water from the Dhabu paste and give additional layers of resist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S04",
+      "quote": "Saw dust is sprinkled over the surface, following the application of dabu to facilitate quick drying of the fabric. The saw dust also acts as a binder which pr events color penetration while dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S04",
+      "quote": "As Dabu printing is completed, sa w dust is sprinkled over the cloth before the prints dries completely to avoid sticking with each other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S11",
+      "quote": "the printer dusts the freshly printed sections of wet dabu with a light sprinkling of powder, thus ensuring not only quick drying but additionally preventing smudging. The dusting powder used is beden, the insect eaten waste of wheat flour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S08",
+      "quote": "The fabric is then dusted with the chaff from wheat to prevent the areas with resist mix sticking to one another if the fabric is crumpled or folded.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S08",
+      "quote": "I visited Kaladera in Rajasthan, looking particularly for Indigo dyeing workshops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S01",
+      "quote": "After printing, the fabric is left outside in the sun for drying before dipping in indigo tanks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "Before executing another work of dabu, the cloth must be dried properly first; otherwise the colours will spill over on a wet ground. It is therefore, that dabu work is not done during the rainy season.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "once the vat is ready for use, it is kept 'alive' by constant addition of indigo lime and jiggery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S01",
+      "quote": "An expert indigo dyer can tell the state of dye by the colour of the vat. He adds the exact quantity of every ingredient required, having learnt it by experience. There is no written recipe with the indigo dyer and every family has its ow n way of handling indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "The printed cloth is folded neatly like saree pleats and lowered gently into the indigo tank. When the cloth is totally submerged in the tank, the dyer still holding it under the liquid dye, opens each pleat to allow the fabric to have the indigo dye evenly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "The fabric is then taken out of tank, gently squ eezed and opened out to react with the atmospheric oxygen and turn the reduced indigo into oxidized indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "Indigo has poor affinity to the fabric in the presence of water, so the first 'dip' gives a pale sky blue shade. In order to get darker indigo blue, th e fabric is again dipped in the tank, pulled out and oxidized. This proce ss is repeated till the desired dark shade is achieved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S04",
+      "quote": "Natural indigo is boiled in Pawar seeds and kept overnight. The next day, this soluti on along with lime is dissolved in th e vats that are 15 feet deep and left untouched for a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S04",
+      "quote": "More dipping in the water brings a deeper blue colour and one can dip a fabric for maximum of 6 times. The fabric is then dipped in alum and water solution for fixing the colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S08",
+      "quote": "Then the fabric is dyed with indigo so it turns blue blue except where the resist mix has been applied to the fabric. It will be dyed again to intensify the blue. However before that happens, another layer of resist is applied to areas where the existing shade of blue is desired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S04",
+      "quote": "After each dip and airing more dabu pattern can be applied giving a full range of blue shades.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "For turning the fabric green it is taken for further process of yellow dyeing but before this it is printed with dhabu to retain some blue areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "Four persons hold it at each corner and fifth person dips a loose-woven woolen fabric which acts as a sponge in the dye extracted out of haldi (turmeric) and naspal (pomegranate rinds) and rubs it gently all over th e cloth to be dyed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S04",
+      "quote": "The other method is known as 'Potai'. In this process, a paste is made of pomegranate peel, turmeric and sesame oil. The dabu printed fabr ic is hold tightly by four persons and with a piece of woven cloth the artisan generously applie s the paste on the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S04",
+      "quote": "Bagru is known for its green shade that is acquired through two traditional methods:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S04",
+      "quote": "In the first method, the cloth is sent to the indigo vats, dipped, taken out and dried in the sun. It is then rinsed in a pre-boiled and cooled solution of pomegranate pe el and water that is prepared a day before.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S04",
+      "quote": "It is washed again and th en rinsed in a solution of alum and water to fix the colour and also for removing dabu paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S04",
+      "quote": "The other method is known as 'Potai'. In this process, a paste is made of pomegranate peel, turmeric and sesame oil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "The dye extracted from turmeric and pomegranate peals is very fugitive and in order to make it fast, post mordanting is done with alum (fitkari). In this process the fabric is dipped in a big copper vessel filled with water and diluted alum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "When it is completely dry it is fold ed and stored in dark places for at least 3 to 4 days so that the yellow dye sets in.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "Washing of the fabric is done in order to take out resist paste and excess or unattached dye from the surface. In this pr ocess the fabric is left in big tanks for at lest 3 to 4 hours till the resist paste becomes smooth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "The fabric is then beaten over a flat stone slab to remove the resist paste and excess dye. The beating of the cloth is generally done where there is a flow of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S01",
+      "quote": "Abundant flowing water for washing, processing etc., and a clean s unny bed are the important requisites for printing; and the Sanjaria River with its perennial water stream and stretches of sandy bed was aptly suitable for the purpose.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S01",
+      "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book \"Block Printing and Dyeing of Bagru, Rajasthan\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "The Sanjaria river, with its origin some 5 kms from Bagru westwards, was th en watering this village town",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "The study carried out by B.C. Mohanty and J.P. Mohanty resulted in publication of their findings in a book \"Block Printing and Dyeing of Bagru, Rajasthan\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S04",
+      "quote": "Today though the river runs dry these artisans thrive in Bagru practicing their same methods of the past thus ensuring survival of the traditional art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S04",
+      "quote": "Abundance in water and sun shine are the most essential requireme nt for this process. Almost every stage requires the cloth to be washed with water and dried in sunlight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S01",
+      "quote": "Climatic conditions at Bagru are ideal for production of Bagru Hand Block Prints. Locally available water has excellent properties, ideal for dyeing and printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "Effluent generated by the units is prim arily treated before discharge to the common dr ain.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "present treated effluent is distributed by Bagru Municipal Board to various users for agriculture purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "Also all production units are now planning for setting up a common effluent treatment plant to reuse the treated effluent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "GEOGRAPHICAL INDICATIONS JOURNAL NO. 37 January 04, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S04",
+      "quote": "Now-a-days the used water is treated for recycling or charged into underground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S05",
+      "quote": "Compromised use of traditional materials for pro - duction and rampant use of chemical dyes cause environmental and pol - lution issues in the geographic location",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S05",
+      "quote": "According to a leading handicraft retailer and craft preservation organization Gaatha Handicrafts there are numerous day-to-day challenges faced",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S05",
+      "quote": "In both Baru and Sanganer craftsmen have adopted cheaper and more easily available raw materials, that includes the usage of chemical dyes in abundance and the usage of natural dyes only for specific orders.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S05",
+      "quote": "IIS Univ.J.A. Vol.14 (2), 150-163 (2025)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S04",
+      "quote": "many Chhippas have given up the art of hand block prin ting. Yet there are a handful of artisans who engross themselves in their traditional an d distinct art of dyeing and printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "The artisans were asked about some of the key challenges that they faced when conducting the business. For this question, the respondents could also pick multiple",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "Key Challenges Bagru n = 17 Sanganer n = 32",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "Access to finance 14 82.4 6 18.8",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "Lack of Government Support 13 76.5 12 37.5",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "In Bagru lack of government support (76.5%) was prominently high - lighted as the major obstacle for their business.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "IIS Univ.J.A. Vol.14 (2), 150-163 (2025)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "In Bagru another major problem which the artisans faced was the open - ing of an industrial park as itled to the artisans in the original village of Bagru losing out on potential customers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "IIS Univ.J.A. Vol.14 (2), 150-163 (2025)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "The artisans were asked if they were using GI as a marketing tool for their business.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "Usage of GI as a marketing tool N=49 Use GI Bagru n = 17",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "Majority of the respondents of Bagru (94%) and Sanganer (96.9%) dis - agreed for usage of the GI tag as a marketing tool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "The respondents who do not use GI as a marketing tool responded that they were not aware of GI and its utility for their business",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "IIS Univ.J.A. Vol.14 (2), 150-163 (2025)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "they were facing stiff competition from screen-printed and digital-printed textile industries which are passing off their products as genuine block-printed products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "Colours and designs of Bagru Hand Bl ock Print enables identification of user community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S01",
+      "quote": "In contrast to th e courtly sensibility of th e Sanganer work, the Bagru Hand Block Prints are deeply rooted in th e local folk milieu. Their limited design and colour range is associated with traditional caste-and-custom-bound end uses of the area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S01",
+      "quote": "Martand Singh, Rta Kapur Chisti and Rahul Jain; Lustre Press Roli Books Pvt. Ltd., New Delhi, 2000",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S01",
+      "quote": "Motifs of Bagru Prints are small in size and can be one or two of following five groups: (i) Motifs of Flowers, Leaves and Buds; (ii) Motifs of Intertwisted Tendrils; (iii) Motifs of Trellis Designs; (iv) Motifs of Figurative Designs; (v) Motifs of Geometrical designs;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S04",
+      "quote": "The significant motifs of Bagru prints are: (i) Aath Kaliyan (ii) Bankadi (iii) Bada Bunta (iv)Hajura (v) Bewada (vi)Hara Dhania (vii) Kamal (viii) Chopad (ix) Kel (x) Pyala (xi) Chhota Bel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "Motifs of cuckoo and frog were printed on blue \"long skirt\" (ghaghra) measuring five yards at the bottom periphery and large bonsali flower s were printed on the red or block odhanies used by their women folk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "(\"Crafts and Craftsmen\", Kamlesh Mathur, Pointer Publishers Jaipur, 2004, p-66)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "Class-25 Clothing, mainly Fadat, Lugdi, Dhabli, Angochha, Tehmat, Janani dhoti, Bhchhauni, Chadara, Jazam, Chouka Chhint, Rumal, Dasti Rumal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "1. Fadat L : 4.10 - 4.30 M. W : 0.95 - 1.35 M. Women's (Ghagras) long (skirts) Cotton",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "3. Dhabli L : 5.00 - 7.50 M. W : 1.00 M. Men's Dhoti Cotton",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S09",
+      "quote": "The print Dabu or Daboo, believed to have originated in China",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S04",
+      "quote": "Dabu was developed centuries before the mughals invaded India2 and is originally an Indian printing technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S04",
+      "quote": "Although we don't get much phys ical proof, as the cl othes did not last due to adverse atmospheric condition in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S04",
+      "quote": "An 8th century sample of Dabu found in Central Asia is believed to be printed in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "Kalidar Dabu, dolidar dabu and gwar wali dabu are the most popular Dabu in Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "Five kg of kali mitti (clay) is kept in around half a litre of water for a night.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "Nearly half kg of finally stained chuna (Calcium hydroxide) and one kg of beedan (moth-eaten wheat flour) is added to this mud.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "Gond (gum) solution is periodically added to it to make this mixtur e adhesively strong.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "DABU - A unique style of mud printing Jasminder Kaur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S04",
+      "quote": "The village town is not popular for any palace or fort but for keeping alive the three-centuries -old tradition of printing with the splendid efforts of artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S04",
+      "quote": "According to the opinion of other group, the ta le unfolds more than 400 years ago when the Thakur on the lease of the village decided to develop Bagru as a centre for block printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S02",
+      "quote": "| Application Number | 183 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S02",
+      "quote": "Authorized User Details | Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S02",
+      "quote": "| 344 | AU/21208/GI/183/344 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S09",
+      "quote": "maintains that natural, vegetable dyes are still the pivot of Dabu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S09",
+      "quote": "Chemical colours are also being used these days as per the wishes of the designers, so we have to fit some 20 per cent of them with 80 per cent of natural dyes",
+      "result": "PASS"
+    }
+  ]
+}

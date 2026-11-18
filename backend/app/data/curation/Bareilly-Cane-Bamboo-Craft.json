@@ -1,0 +1,3125 @@
+{
+ "schemaVersion": 1,
+ "scope": "CRAFT",
+ "craftSlug": "Bareilly-Cane-Bamboo-Craft",
+ "version": 1,
+ "curatedAt": "2026-11-18T11:00:00+00:00",
+ "curator": "claude-code",
+ "coverage": "FULL",
+ "searched": [
+  {
+   "query": "Bareilly Cane and Bamboo Craft GI application number geographical indication",
+   "site": "web search"
+  },
+  {
+   "query": "GI application 926 (Bareilly Furniture)",
+   "site": "search.ipindia.gov.in GI registry record (annexure downloads are form-only and could not be read)"
+  },
+  {
+   "query": "Geographical Indications Journal No. 187",
+   "site": "search.ipindia.gov.in IPOJournal"
+  },
+  {
+   "query": "Registration details of Geographical Indications",
+   "site": "ipindia.gov.in"
+  },
+  {
+   "query": "bareilly cane; bareilly bamboo; bareilly furniture; bans bareilly; cane furniture uttar pradesh; cane and bamboo cluster",
+   "site": "api.openalex.org (OpenAlex)"
+  },
+  {
+   "query": "Cane industry of Uttar Pradesh with special reference to Bareilly: a case study (Alka Shiva, 2005)",
+   "site": "cabidigitallibrary.org (HTTP 403, no Wayback copy)"
+  },
+  {
+   "query": "Bamboo crafts and the role of women: a field study in Bareilly district (full text PDF)",
+   "site": "eprajournals.com (PDF could not be parsed; abstract page used)"
+  },
+  {
+   "query": "Wood craft of Bihar and Uttar Pradesh: a survey; Role of handicraft sector in the economic development of Uttar Pradesh",
+   "site": "granthaalayahpublication.org (HTTP 403)"
+  },
+  {
+   "query": "Census of India 2011 District Census Handbook Bareilly, Part A",
+   "site": "censusindia.gov.in (HTTP 404, no Wayback copy)"
+  },
+  {
+   "query": "bareilly gazetteer; imperial gazetteer united provinces",
+   "site": "archive.org catalogue (Nevill 1911, Imperial Gazetteer vol. VII, Atkinson; copy in.ernet.dli.2015.243997 was OCRed as Urdu and is unreadable)"
+  },
+  {
+   "query": "about district, history, tourism",
+   "site": "bareilly.nic.in"
+  },
+  {
+   "query": "Bareilly; List of geographical indications in India",
+   "site": "en.wikipedia.org"
+  },
+  {
+   "query": "बरेली",
+   "site": "hi.wikipedia.org (no cane or bamboo content)"
+  },
+  {
+   "query": "Bareilly cane furniture artisans bamboo Assam heat bending",
+   "site": "web search"
+  },
+  {
+   "query": "बरेली बेंत बांस फर्नीचर कारीगर जीआई टैग",
+   "site": "web search"
+  },
+  {
+   "query": "Bareilly cane furniture industry decline artisans",
+   "site": "web search"
+  },
+  {
+   "query": "Bareilly cane and bamboo craft, ODOP (English and Hindi); Neelam cane furniture business",
+   "site": "yourstory.com (pages render by script; the fetched text holds only the headline, so not used)"
+  },
+  {
+   "query": "Cane furniture of Bareilly",
+   "site": "asiainch.org (the page text describes Allahabad, not used)"
+  },
+  {
+   "query": "Zari and bamboo-cane workmanship at the UP International Trade Show",
+   "site": "amarujala.com (no year stated in the text, not used)"
+  },
+  {
+   "query": "Category:Bareilly; Culture of Bareilly; Cane furniture; Rattan furniture; Bamboo furniture",
+   "site": "commons.wikimedia.org (no picture of Bareilly cane or bamboo furniture found; a mid-19th-century wooden chest from Bareilly was not used, since its record does not show this craft)"
+  },
+  {
+   "query": "In Absence of Govt Aid, Bareilly's Traditional Industries on Verge of Extinction (a dated copy)",
+   "site": "newsclick.in (the article text states no date, so its present-tense decline reports and its count of 1,100 artisans and 50 traders, which differs from the GI application's nearly 1500, are not used)"
+  },
+  {
+   "query": "List of geographical indications in India, row for application 926",
+   "site": "en.wikipedia.org (gives 2023-24 for Bareilly Cane and Bamboo, against IP India's April 2024 to March 2025; rated D, so not used on its own)"
+  },
+  {
+   "query": "Brief Industrial Profile of District Bareilly, Cluster Cane & Bamboo; Skill Gap Assessment & Action Plan for Bareilly District",
+   "site": "dcmsme.gov.in (MSME-DI district profiles and skill mapping: certificate verification failed, no Wayback copy)"
+  },
+  {
+   "query": "Bareilly cane and bamboo cluster, Development Commissioner (Handicrafts) and ODOP",
+   "site": "odopup.in (the page renders by script; the fetched text holds no content)"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S01",
+   "kind": "GI_JOURNAL",
+   "title": "Geographical Indications Journal No. 187: Bareilly Cane & Bamboo Craft, G.I. Application No. 926",
+   "publisher": "Geographical Indications Registry, Government of India",
+   "year": 2023,
+   "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_187%5CJournal+187.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S02",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "GI Registry public record of Application 926 (Bareilly Furniture)",
+   "publisher": "Geographical Indications Registry, IP India",
+   "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/926",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S03",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Registration details of Geographical Indications",
+   "publisher": "IP India",
+   "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S04",
+   "kind": "BOOK",
+   "title": "Bareilly: A Gazetteer, being Volume XIII of the District Gazetteers of the United Provinces of Agra and Oudh",
+   "authors": [
+    "H. R. Nevill"
+   ],
+   "publisher": "Government Press, United Provinces",
+   "year": 1911,
+   "url": "https://archive.org/download/dli.ministry.07357/GR149_djvu.txt",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S05",
+   "kind": "BOOK",
+   "title": "The Imperial Gazetteer of India, new edition, Vol. VII: Bareilly to Berasia",
+   "publisher": "Clarendon Press",
+   "url": "https://archive.org/download/in.ernet.dli.2015.284080/2015.284080.The-Imperial_djvu.txt",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S06",
+   "kind": "BOOK",
+   "title": "Gazetteer of the North-Western Provinces: Bareilly District",
+   "authors": [
+    "Edwin T. Atkinson"
+   ],
+   "url": "https://archive.org/download/dli.ernet.432847/432847-Statistical%20Descriptive%20And%20Historical%20Account%20Of%20The%20North%20Western%20Provinces%20Bareilly%20District_djvu.txt",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S07",
+   "kind": "WEB_PAGE",
+   "title": "About District",
+   "publisher": "District Administration, Bareilly",
+   "url": "https://bareilly.nic.in/about-district/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S08",
+   "kind": "ENCYCLOPEDIA",
+   "title": "Bareilly",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Bareilly",
+   "language": "en",
+   "licence": "CC BY-SA 4.0",
+   "access": "OPEN",
+   "reliability": "D",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S10",
+   "kind": "PAPER",
+   "title": "Bamboo Crafts and the Role of Women: A Field Study in Bareilly District of Uttar Pradesh",
+   "authors": [
+    "Simran Shahid",
+    "Dr. Shikha"
+   ],
+   "publisher": "EPRA International Journal of Economic and Business Review",
+   "year": 2025,
+   "url": "https://eprajournals.com/IJES/article/17311",
+   "doi": "10.36713/epra23676",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S11",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "In Absence of Govt Aid, Bareilly's Traditional Industries on Verge of Extinction",
+   "publisher": "NewsClick",
+   "url": "https://www.newsclick.in/absence-govt-aid-bareillys-traditional-industries-verge-extinction",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S12",
+   "kind": "WEB_PAGE",
+   "title": "Cane furniture of Bareilly, Uttar Pradesh",
+   "publisher": "Global InCH",
+   "url": "https://globalinch.org/craft/cane-furniture-of-bareillly-uttar-pradesh/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "D",
+   "retrievedAt": "2026-11-18"
+  }
+ ],
+ "claims": [
+  {
+   "id": "C001",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says that in Bareilly cane and bamboo, and in one passage also wood, are the most commonly used materials for making furniture and household items needed in daily life.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 32",
+     "quote": "In the Bareilly, Cane and Bamboo furniture are the most commonly used materials to make various types of furniture and house hold items which are essential for daily life"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, p. 31",
+     "quote": "Cane and Bamboo are the most commonly used materials to make furniture and house hold items which are essential for daily life."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 29",
+     "quote": "In the Bareilly, Cane, Bamboo and wooden furniture are the most commonly used materials to make various types of furniture and house hold items"
+    }
+   ]
+  },
+  {
+   "id": "C002",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A Bareilly furniture frame is made of thick bamboo by heating, bending and joining, and is finally rounded with thin processed cane called gola.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "Furniture frame is made with thick bamboo by heating, bending and joining. Finally, the frame is rounded with thin processed cane called 'Gola'."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The production of furniture involves different stages such as frame making with bamboo, polishing and rounding with processed thin cane."
+    }
+   ]
+  },
+  {
+   "id": "C003",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "According to the GI application, the furniture is strong because bamboo forms the body structure while cane is used for binding and for weaving the seat.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, products, p. 34",
+     "quote": "It is strong because bamboo is used in the body structure while the cane is used in binding as well as weaving the seating part of the furniture."
+    }
+   ]
+  },
+  {
+   "id": "C004",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L02"
+   },
+   "text": "The Bareilly district administration describes Bareilly as a production centre for cane (bans) furniture.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "About District, paragraph 1",
+     "quote": "Although Bareilly is a production center for cane (bans) furniture"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "paragraph 1",
+     "quote": "Bareilly is famous as a production center for cane furniture."
+    }
+   ]
+  },
+  {
+   "id": "C005",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says Bareilly's furniture artisans work in three raw materials, bamboo, cane and wood, with hundreds of varieties in each.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 30",
+     "quote": "they are producing 3 different type of raw material furniture with the hundreds of variety in each category of raw material like bamboo, cane, and wood"
+    }
+   ]
+  },
+  {
+   "id": "C006",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Products named in the GI application include sofas, chairs, racks, tables, swing chairs, stools, beds, jhoola, diwan sets, coffee tables and dining tables.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, products, p. 34",
+     "quote": "The rich quality products include sofas, chairs, racks, tables and swing chairs. Stools, Beds, Jhoola, Diwan set, Sethi, Coffee table, Dining table, Table, Chair"
+    }
+   ]
+  },
+  {
+   "id": "C007",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bareilly's artisans also make decorative and everyday items in bamboo and cane, such as lamps, garden chairs, indoor and outdoor jhula and hanging items.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 30",
+     "quote": "make the variety of decorative item in the bamboo and cane including various type of usefull products for the education as well as decoration and daily need purpose like the lamps. gardem chairs, various type of jhula for outdoor and indoor purpose, different type of hanging items"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "paragraph 2",
+     "quote": "Articles such as furniture, dustbins, racks, lamps, baskets, pot holders, sofa sets and center tables are part of the huge repertoire of items produced."
+    }
+   ]
+  },
+  {
+   "id": "C008",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "A 2025 field study describes Bareilly district of Uttar Pradesh as renowned for its bamboo handicrafts.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "abstract",
+     "quote": "particularly in areas such as the Bareilly district of Uttar Pradesh, which is renowned for its bamboo handicrafts"
+    },
+    {
+     "sourceId": "S10",
+     "locator": "issue details",
+     "quote": "| Month | : | August | | Year | : | 2025 |"
+    }
+   ]
+  },
+  {
+   "id": "C009",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says the tradition of cane and bamboo work in Bareilly started nearly 80 to 100 years ago and passed from older to younger generations.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 28",
+     "quote": "The tradition of cane and bamboo work started nearly 80 to 100 years back and carried from older generations to younger generations."
+    }
+   ]
+  },
+  {
+   "id": "C010",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Another passage of the GI application says the tradition of cane and bamboo work started nearly 100 years ago.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 29",
+     "quote": "The tradition of cane and bamboo work started nearly 100 years back and carried from older generations to younger generations."
+    }
+   ]
+  },
+  {
+   "id": "C011",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L03"
+   },
+   "text": "The GI application also says Bareilly, known as Bans Bareilly, was a centre of craftsmanship and a hub of wooden and cane-bamboo furniture before the British reign in India.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, p. 31",
+     "quote": "Bareilly is known a Bans Bareilly was the center of craftsmanship and hub of Wooden and cane bamboo furniture industry before British reign in India."
+    }
+   ]
+  },
+  {
+   "id": "C012",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L03"
+   },
+   "text": "The Imperial Gazetteer of India noted Bareilly city for its furniture, made both of bamboo and of the ordinary timbers used for furniture.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "Bareilly City, p. 13",
+     "quote": "Bareilly is also noted for its furniture, made both of bamboo and of the ordinary timbers in use for this purpose."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "Bareilly District, industries",
+     "quote": "Bareilly city is noted for the production of furniture."
+    }
+   ]
+  },
+  {
+   "id": "C013",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L03"
+   },
+   "text": "Writing of Bareilly's industry of work in wood, Nevill's 1911 gazetteer says Bareilly was celebrated in old days for lacquered and gilt furniture, decorated with varnish laid on to represent metallic foliage or tracery.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "but in old days Bareilly was celebrated for its lacquered and gilt furniture, the distinctive feature being a decorative varnish laid on so as to represent metallic foliage or tracery on a black or white ground"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "There is a. large industry connected with work in wood at wood. Bareilly."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "title page",
+     "quote": "Government Press, United Provinces. 1911"
+    }
+   ]
+  },
+  {
+   "id": "C014",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Nevill wrote that the large industry of work in wood at Bareilly was, in its form at the time, of fairly recent origin.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "The industry-invits present form is of fairly recent origin"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "There is a. large industry connected with work in wood at wood. Bareilly."
+    }
+   ]
+  },
+  {
+   "id": "C015",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Writing of Bareilly's industry of work in wood, Nevill judged its furniture, though substantial, generally of inferior design and poor workmanship, with crude varnishing and rough joinery, staining and polishing seldom practised.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "The furniture is asa general rule of inferior design and though of a substantial nature is of poor workmanship, the varnishing being crude and the joinery rough, while staining and polishing are seldom practised"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "There is a. large industry connected with work in wood at wood. Bareilly."
+    }
+   ]
+  },
+  {
+   "id": "C016",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Nevill recorded that the painted woodwork of Bareilly had either disappeared or degenerated so as to be unworthy of notice.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "the painted wood-work of Bareilly has either disappeared or else degenerated so as to be unworthy of notice"
+    }
+   ]
+  },
+  {
+   "id": "C017",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Nevill recorded that Bareilly's carpenters were all Hindus, generally Barhais by caste.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "Bareilly carpenters hardly ever employ sai but work in shisham, twn and inferior woods, as well as bamboo. The sawyers are Muzalmans, but the carpenters are all Hindus, generally Barhais by caste."
+    }
+   ]
+  },
+  {
+   "id": "C018",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "The GI application attributes the name Bans Bareilly to the importance of bans craft, the plentiful bamboo and the city's big bamboo market.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 29",
+     "quote": "Bareilly is also known as Bans Bareilly due to the much significance of Bans craft with the maximum availability of Bans (bamboo as special quality)."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, p. 30",
+     "quote": "Bareilly known as Bans-Bareilly due to availability of best quality of cane bamboo and big bamboo market."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "paragraph 1",
+     "quote": "Colloquially called Baans bareilly due to its huge cane and bamboo mandi(market)"
+    }
+   ]
+  },
+  {
+   "id": "C019",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "The Imperial Gazetteer records a tradition that the old city was founded in 1537 and took the name Bans Bareli from Bas, a Barhela by caste, or from Bas and Barel, Katehriya Rajputs.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "Bareilly City, p. 13",
+     "quote": "Tradition relates that the old city was founded in 1537, and derived its name of Bans Bareli from Bas, a Barhela by caste, or from Bas and Barel, Katehriya Rajputs."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C020",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "According to the Imperial Gazetteer, the prefix Bans was then usually interpreted as the word bans, meaning bamboo, and was still used by the inhabitants.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "Bareilly City, p. 13",
+     "quote": "The prefix is now usually interpreted as being the word bans or ' bamboo,' and is still used by the inhabitants."
+    }
+   ]
+  },
+  {
+   "id": "C021",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "Atkinson's gazetteer of the North-Western Provinces says Bareilly is sometimes styled Bans Bareli, or the Bareilly of bamboos.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "Bareilly District, boundaries",
+     "quote": "Bareilly is sometimes styled Bans Bareli, or tho Bareilly of bamboos"
+    }
+   ]
+  },
+  {
+   "id": "C022",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L02"
+   },
+   "text": "The GI application, Wikipedia and the district administration say Jagat Singh Katehriya founded Bareilly, or in Wikipedia's words its earliest settlement, in 1537 and named it after his two sons, Bansaldev and Baraldev.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, p. 30",
+     "quote": "Bareilly was founded in 1537 by Jagat Singh Katehriya, a Rajput who named it Bareilly after his two sons Bansaldev and Baraldev."
+    },
+    {
+     "sourceId": "S08",
+     "locator": "lead",
+     "quote": "The earliest settlement in what is now Bareilly was established in 1537 by a local chieftain Jagat Singh Katehriya who named it 'Bans-Bareli' after his two sons Bansaldev and Bareldev."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "About District, paragraph 1",
+     "quote": "it was named for two princes: Bansaldev and Baraldev, sons of Jagat Singh Katehriya, who founded the city in 1537"
+    }
+   ]
+  },
+  {
+   "id": "C023",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "The Bareilly district administration states that the name Bans Bareilly is not derived from the bans market.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "About District, paragraph 1",
+     "quote": "\"Bans Bareilly\" is not derived from the bans market"
+    }
+   ]
+  },
+  {
+   "id": "C024",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The GI application places the production area of Bareilly cane and bamboo craft within Bareilly district of Uttar Pradesh.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, geographical area, p. 30",
+     "quote": "The geographical area of Production of Bareilly cane and bamboo Craft lies within Bareilly District of Uttar Pradesh"
+    }
+   ]
+  },
+  {
+   "id": "C025",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Bareilly district lies in the southern upper Ganga plain, an almost open plain with slight undulation that is more pronounced in the south.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, geographical area, p. 30",
+     "quote": "The district Bareilly is a part of southern upper Ganga Plain. It is almost an open plain with slight undulation, which is more pronounced in the south"
+    }
+   ]
+  },
+  {
+   "id": "C026",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L02"
+   },
+   "text": "Bareilly stands on the Ramganga river and is the headquarters of Bareilly Division.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, p. 31",
+     "quote": "Standing on the Ramganga River, it is the headquarters of Bareilly Division"
+    }
+   ]
+  },
+  {
+   "id": "C027",
+   "discipline": "BOTANY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Gazetteers of Bareilly district describe bamboos flourishing luxuriantly there, often as lofty hedges around its groves and villages.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "Bareilly District, p. 3",
+     "quote": "Groves and villages are often surrounded by bamboos, which flourish luxuriantly."
+    },
+    {
+     "sourceId": "S06",
+     "locator": "Bareilly District, groves",
+     "quote": "often surrounded by a lofty hedge of bamboos, which in this district thrive"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "p. 16, Groves",
+     "quote": "Groves are surrounded in many cases by a lofty hedge of bamboos"
+    }
+   ]
+  },
+  {
+   "id": "C028",
+   "discipline": "ECOLOGY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Nevill's gazetteer found building materials mostly obtainable locally, with an abundant supply of cheap timber, bamboos, tiles and thatching grass.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "Building materials",
+     "quote": "Other building materials are for the most part obtainable locally"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "Building materials",
+     "quote": "There is an abundant supply of cheap timber, bamboos, tiles, and thatching grass, which with ordinary mud suffice for the dwellings of the poor."
+    }
+   ]
+  },
+  {
+   "id": "C029",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Nevill's gazetteer recorded that Bareilly's carpenters worked in shisham and inferior woods, as well as bamboo.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "Bareilly carpenters hardly ever employ sai but work in shisham, twn and inferior woods, as well as bamboo. The sawyers are Muzalmans, but the carpenters are all Hindus, generally Barhais by caste."
+    }
+   ]
+  },
+  {
+   "id": "C030",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M01"
+   },
+   "text": "According to the GI application, bamboo also comes to Bareilly from Assam as a raw material.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 29",
+     "quote": "The bamboo has also come from Assam as a raw material."
+    }
+   ]
+  },
+  {
+   "id": "C031",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application lists bamboo, cane, cane peel, desi cane, plywood, nails and gola cane wire as the craft's raw materials.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 32",
+     "quote": "Raw materials: 1. Bamboo 2. Cane 3. Cane Peel 4. Desi Cane 5. Ply wood 6. Nails 7. Gola Cane Wire"
+    }
+   ]
+  },
+  {
+   "id": "C032",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M03"
+   },
+   "text": "Thick cane is used to make the frame of an article or piece of furniture, while pencil cane is used for designing and binding.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The thick cane is used for making frame of an article or furniture where as pencil cane is used for designing and binding purpose."
+    }
+   ]
+  },
+  {
+   "id": "C033",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M03"
+   },
+   "text": "Mota cane, meaning thick cane, is added to the furniture for better support.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Adding mota cane (thick cane) to the furniture for better support."
+    }
+   ]
+  },
+  {
+   "id": "C034",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application calls Bareilly's cane and bamboo products very strong, durable and eco-friendly, made from organic, natural material.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, products, p. 34",
+     "quote": "Cane and bamboo products at Bareilly are very strong, durable and eco-friendly."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "The furniture material used by manufacturers is organic, natural."
+    }
+   ]
+  },
+  {
+   "id": "C035",
+   "discipline": "PHYSICS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M01"
+   },
+   "text": "In Bareilly, furniture is made using bamboo because bamboo is flexible.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 32",
+     "quote": "In Bareilly, Furniture is made using bamboo as it is flexible."
+    }
+   ]
+  },
+  {
+   "id": "C036",
+   "discipline": "PHYSICS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "Slicing runs lengthwise along the densely packed fibres and is a fairly smooth operation, needing only the requisite amount of moisture in the culm.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Slicing is done longitudinally along the length of the densely packed fibres and a fairly smooth operation, requiring only the requisite amount of moisture in the Culm."
+    }
+   ]
+  },
+  {
+   "id": "C037",
+   "discipline": "PHYSICS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "The cane is heated on a slow fire, generally with a kerosene lamp, for flexibility before it is bent into shape.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The cane is heated on a slow fire, generally with a kerosene lamp for flexibility."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "A kerosene lamp is used to heat the cane before it can be bent into shape."
+    }
+   ]
+  },
+  {
+   "id": "C038",
+   "discipline": "PHYSICS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "The bamboo stick is heated with a kerosene lamp and bent to the desired shape; heated bamboo is easy to bend.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Then the bamboo stick is heated using kerosene lamp and it is bent as per the desired shape. Heated bamboo is easy to bend."
+    }
+   ]
+  },
+  {
+   "id": "C039",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "Production of cane products goes through various stages, beginning with the collection of raw material from the forests.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "There are various stages that go in the production of cane products, beginning with the collection of raw material from the forests."
+    }
+   ]
+  },
+  {
+   "id": "C040",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "To obtain a smooth surface, the upper layer of the raw cane collected from the forests is scraped off.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "beginning with the collection of raw material from the forests. To obtain a smooth surface, the upper layer of raw cane is scraped off."
+    }
+   ]
+  },
+  {
+   "id": "C041",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "The long cane sticks are cut into smaller pieces, followed by splitting the cane into thin strips that can be split as thin as required.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "The long cane sticks are cut into smaller pieces that are followed by splitting the cane to obtain thin strips. Cane can be further split, making it as thin as required."
+    }
+   ]
+  },
+  {
+   "id": "C042",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "The split cane is bent with a blowlamp into the shape needed for the furniture or article, which may cause burns on the surface that are removed by rubbing with sandpaper.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "The split cane is now bent using a blowlamp that may cause some burns on the surface; these are removed by rubbing with sandpaper."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The cane is bended in the desired shape for a furniture or article by process of heating with blow lamp."
+    }
+   ]
+  },
+  {
+   "id": "C043",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "Following this, the cane can be woven according to the design of the articles being made from it.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "Following this, the cane can be woven based on the design of the articles being fashioned from it."
+    }
+   ]
+  },
+  {
+   "id": "C044",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "After the finishing touches, the products may be dabbed with a coat of varnish before they are dispatched to the market.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, techniques, p. 33",
+     "quote": "After the finishing touches have been provided, the products may be dabbed with a coat of varnish before being dispatched to the market."
+    }
+   ]
+  },
+  {
+   "id": "C045",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "The whole stem of cane and bamboo is cut with a hacksaw and split lengthwise into various sizes with a billhook or dao.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The whole stem of cane and bamboo is cut with a hacksaw and split longitudinally into various sizes by a billhook."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The production of cane and bamboo articles involves the cutting of whole stems with a hack saw and slicing them into splits of various sizes using a bill hook or Dao."
+    }
+   ]
+  },
+  {
+   "id": "C046",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T02"
+   },
+   "text": "Craftsmen cut bamboo to the desired lengths with cutting tools called dao, and cut it to size by thickness with different kinds of knives.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The craftsmen cut the bamboo into sizes of desired length with the help of cutting tools called Dao. Bamboo length cut as per thickness with the help of different kinds of knives."
+    }
+   ]
+  },
+  {
+   "id": "C048",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P10"
+   },
+   "text": "The ends are joined with adhesive and nails, and the joints are blended with strips of pencil cane.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The ends are joined with adhesive and nail and the joints are blended with strips of pencil cane."
+    }
+   ]
+  },
+  {
+   "id": "C049",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "Items made in cane and bamboo are cleaned with sandpaper and polished with varnish.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The items produced in cane & bamboo are cleaned with sand-paper and polished with varnish."
+    }
+   ]
+  },
+  {
+   "id": "C050",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "Cane and bamboo furniture making starts by cutting the long bamboo sticks into the different sizes that the bamboo frame requires.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Cane and bamboo furniture making starts by:"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Cutting the lengthy bamboo sticks into required different sizes. It is cut into different sizes as per the size of the bamboo frame."
+    }
+   ]
+  },
+  {
+   "id": "C051",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "The cane is wrapped around the bamboo frame by weaving, a rounding process that is locally called binayi.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The cane is wrapped around the bamboo frame by weaving. This process of rounding is locally called as Binayi."
+    }
+   ]
+  },
+  {
+   "id": "C052",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P09"
+   },
+   "text": "Thin cane is soaked in water until it takes up moisture, and the bamboo is immersed in water for 2 hours to absorb moisture.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The thin cane is soaked in water until it attains moisture. The bamboo is immersed in water for 2 hours to absorb the moisture."
+    }
+   ]
+  },
+  {
+   "id": "C053",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "The artisan applies pressure on the bamboo stick for its initial shaping while using the burner.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Artisan applies pressure on the bamboo stick for initial shaping while using the burner for the purpose."
+    }
+   ]
+  },
+  {
+   "id": "C054",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T05"
+   },
+   "text": "Proper shaping of the bamboo is done with a wooden tool locally called mungri, which is used to bend and shape it.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Shaping is done with the help of wooden tool called Mungri locally. Proper shaping is obtained by shaping with Mungri."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Mungri: A wooden tool used to bend and shape the bamboo."
+    }
+   ]
+  },
+  {
+   "id": "C055",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P10"
+   },
+   "text": "Cane is joined to the bamboo with thin small iron nails, and the other parts of the furniture are bound tightly with thin cane strips.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Cane joined to the bamboo with thin small nails."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The ends of the cane are joined using small iron nails."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The other parts of furniture are joined tightly by binding using thin cane strips."
+    }
+   ]
+  },
+  {
+   "id": "C056",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "Skilled artisans create the design pattern, including simple motif patterns, while they weave.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Skilled artisan creates design pattern while weaving."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The artisan creates simple motif patterns while weaving"
+    }
+   ]
+  },
+  {
+   "id": "C057",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P11"
+   },
+   "text": "The frame is polished with sandpaper to a smooth texture, and the burnt skin layer is removed and smoothened.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "Thus the frame of the article is made and it is polished with sand paper to obtain smooth texture."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, method of production, p. 33",
+     "quote": "The burnt skin layer is removed and smoothened."
+    }
+   ]
+  },
+  {
+   "id": "C058",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T06"
+   },
+   "text": "A knife called chaaku is used to scrape off the burned bamboo skin and make the texture smooth.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Chaaku: Knife used to scrap the burned bamboo skin to make the texture smooth."
+    }
+   ]
+  },
+  {
+   "id": "C059",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T07"
+   },
+   "text": "The ari, another type of knife, is used to smoothen and beautify the bamboo texture.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Ari - Another type of knife used to smoothen and beautify the bamboo texture."
+    }
+   ]
+  },
+  {
+   "id": "C060",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T08"
+   },
+   "text": "A tool called jamboori, or jamura, is used to pull the cane.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Jamboori (Jamura: used to pull the cane)"
+    }
+   ]
+  },
+  {
+   "id": "C061",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T10"
+   },
+   "text": "The hammer, called hatoda, is used during furniture making to pierce the nails.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Hammer(Hatoda: Hammer is used during furniture making to pierce the nails)"
+    }
+   ]
+  },
+  {
+   "id": "C062",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T09"
+   },
+   "text": "The GI application's tool list includes a cutter, used to cut the thin cane.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, tools, p. 32",
+     "quote": "Cutter (used to cut the thin cane)"
+    }
+   ]
+  },
+  {
+   "id": "C063",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "According to the GI application, Bareilly's artisans create their motif patterns from their own imagination and skill, without using any traced design.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "The motif patterns are created with their own imaginative idea and skill without using any traced design."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "The artisans of Bareilly have their own distinct style of creating intricate designs."
+    }
+   ]
+  },
+  {
+   "id": "C064",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W11"
+   },
+   "text": "The GI application names the surahi-matka shape that artisans make for the back of a chair as one of the popular motifs available in the market.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 30",
+     "quote": "Surahi - Matka shape design that the artisans make for the back of the chair is one of the popular motifs available in the market."
+    }
+   ]
+  },
+  {
+   "id": "C065",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The cane weaving around the bamboo frame is done in such a way that the frame inside cannot be seen from outside.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, products, p. 34",
+     "quote": "the cane weaving around the bamboo frame is done in such a way that the frame which is inside cannot be seen from outside"
+    }
+   ]
+  },
+  {
+   "id": "C066",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says artisans use many natural patterns without using any colour, according to the need and demand of the market.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 30",
+     "quote": "The artisan are using many natural patterns without using any color in these craft according to the need and demand of the market."
+    }
+   ]
+  },
+  {
+   "id": "C067",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "According to the GI application, artisans still make traditional as well as contemporary furniture, with modern designs and patterns suited to the global market.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 30",
+     "quote": "the artisans still making traditional as well as contemporary furniture with the modern design and pattern according to the global market"
+    }
+   ]
+  },
+  {
+   "id": "C068",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application calls the woven cane and bamboo sofa sets and chairs remarkable among all its products, and the attractive intricate design patterns admirable for their uniqueness.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, description, p. 29",
+     "quote": "The cane and bamboo weaved sofa set and chairs are remarkable among all the products. The attractive intricate design patterns are admirable for their uniqueness."
+    }
+   ]
+  },
+  {
+   "id": "C069",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The motifs and designs developed by the artisans are made with domestic and ritual purposes in view, according to the GI application.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "The motifs and designs developed by the artisans are in view of domestic and ritual purposes."
+    }
+   ]
+  },
+  {
+   "id": "C070",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "NewsClick reported that Bareilly's cane artisans learnt the skill from their forefathers and have changed designs and diversified products to compete with wooden furniture.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "Few takers for cane furniture, paragraph 10",
+     "quote": "The artisans have leant the skill from their forefathers and inherited the business from them. But they have made several changes in designs and have diversified their products to compete with today's trendy wooden furniture."
+    }
+   ]
+  },
+  {
+   "id": "C071",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L02"
+   },
+   "text": "The district administration describes Bareilly city as a centre of furniture manufacturing.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "About District, paragraph 1",
+     "quote": "The city is a center of furniture manufacturing and trade in cotton, cereal and sugar."
+    }
+   ]
+  },
+  {
+   "id": "C072",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In 1911 Nevill's district gazetteer recorded about 1,500 persons employed in making furniture at Bareilly, as a rule in workshops owned by dealers.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "There are about 1,500 persons employed in the manufacture of furniture, as a rule in workshops owned by dealers,"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "p. 68, Other industries",
+     "quote": "Bareilly carpenters hardly ever employ sai but work in shisham, twn and inferior woods, as well as bamboo. The sawyers are Muzalmans, but the carpenters are all Hindus, generally Barhais by caste."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "title page",
+     "quote": "Government Press, United Provinces. 1911"
+    }
+   ]
+  },
+  {
+   "id": "C073",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L04"
+   },
+   "text": "A 2025 field study in Bareilly district reports that Fatehganj employs over 500 cane and bamboo workers, including 400 female artisans.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "abstract",
+     "quote": "Fatehganj employs over 500 cane and bamboo workers, including 400 female artisans."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "title",
+     "quote": "BAMBOO CRAFTS AND THE ROLE OF WOMEN : A FIELD STUDY IN BAREILLY DISTRICT OF UTTAR PRADESH"
+    },
+    {
+     "sourceId": "S10",
+     "locator": "issue details",
+     "quote": "| Month | : | August | | Year | : | 2025 |"
+    }
+   ]
+  },
+  {
+   "id": "C074",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G02"
+   },
+   "text": "Modern Gramodyog Sewa Sansthan filed GI application 926, for cane and bamboo craft, on 18 July 2022.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "G.I. APPLICATION NUMBER - 926 Application Date: 18-07-2022"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "A) Name of the Applicant : Modern Gramodyog Sewa Sansthan"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "D) Types of Goods : Class 20 - Cane & Bamboo Craft"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Applicant Name | Modern Gramodyog Sewa Sansthan |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Date of Filing | 18-07-2022 |"
+    }
+   ]
+  },
+  {
+   "id": "C075",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Application 926, for cane and bamboo craft in Class 20, was advertised as accepted in Geographical Indications Journal 187, dated 15 December 2023.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 187 dated December 15, 2023"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "under Application No. 926 in respect of Cane & Bamboo Craft falling in Class - 20 is hereby advertised as accepted"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Journal Number | 187 | | Availability Date | 15-12-2023 |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "document list",
+     "quote": "926 - GI - Journal Copy - 15-12-2023"
+    }
+   ]
+  },
+  {
+   "id": "C076",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI registry lists application 926 as registered, with certificate 639 dated 16 April 2024 and the registration valid up to 17 July 2032.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Status | Registered | | Applicant Name | Modern Gramodyog Sewa Sansthan |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Certificate Number | 639 | | Certificate Date | 16-04-2024 | | Registration Valid Upto | 17-07-2032 |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "document list",
+     "quote": "926 - Certificate of Registration - 16-04-2024"
+    }
+   ]
+  },
+  {
+   "id": "C077",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI registry's record of application 926 gives the name of the geographical indication as Bareilly Furniture.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Application Number | 926 | | Geographical Indications | Bareilly Furniture |"
+    }
+   ]
+  },
+  {
+   "id": "C078",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI journal and IP India's registration list name application 926 Bareilly Cane & Bamboo Craft.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "for Registration in Part - A of the Register of Bareilly Cane & Bamboo Craft under Application No. 926"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "p. 23",
+     "quote": "639 926 Bareilly Cane & Bamboo Craft Handicraft Uttar Pradesh"
+    }
+   ]
+  },
+  {
+   "id": "C079",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "IP India's list of registered geographical indications places Bareilly Cane & Bamboo Craft among the registrations of April 2024 to March 2025.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "p. 23, heading of the April 2024 to March 2025 section",
+     "quote": "FROM APRIL 2024 - MARCH 2025"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "p. 23, row 639 of that section",
+     "quote": "639 926 Bareilly Cane & Bamboo Craft Handicraft Uttar Pradesh"
+    }
+   ]
+  },
+  {
+   "id": "C081",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI registry's table of authorised users of application 926 numbers its entries up to 8.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "authorised users table",
+     "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "authorised users table, last row",
+     "quote": "| 8 | AU/66939/GI/926/8 |"
+    }
+   ]
+  },
+  {
+   "id": "C082",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application, advertised in December 2023, says nearly 1500 artisans are engaged in furniture work in Bareilly in bamboo, cane and wood, or in another passage in cane and bamboo furniture work.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, uniqueness, p. 35",
+     "quote": "Nearly 1500 artisans are engaged in the cane and bamboo furniture work in Bareilly with different quality of raw material and sending the products in the Global market with the support of exporter"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "Nearly 1500 artisans are engaged in the furniture work in Bareilly with different quality of raw material Bamboo, Cane, Wood"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "Geographical Indications Journal 187 dated December 15, 2023"
+    }
+   ]
+  },
+  {
+   "id": "C083",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says Bareilly's artisans get the chance to display their products at shilp melas and craft melas.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, uniqueness, p. 35",
+     "quote": "The artisans get chance to display the products in Shilp melas and craft melas."
+    }
+   ]
+  },
+  {
+   "id": "C084",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "According to the GI application, Bareilly furniture is in great demand in domestic and international markets.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "Bareilly furniture has great demand in domestic and international market which reflects the quality and design of the furniture"
+    }
+   ]
+  },
+  {
+   "id": "C085",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application's inspection body includes representatives of the Department of Industries in Bareilly and of the Development Commissioner (Handicraft)'s office at Bareilly.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, inspection body, p. 35",
+     "quote": "1. One Representative from the GMDIC, Department of Industries, Bareilly, Government of Uttar Pradesh 2. One Representative from O/o Development Commissioner (Handicraft), Govt. of India having office at Bareilly"
+    }
+   ]
+  },
+  {
+   "id": "C086",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "NABARD Uttar Pradesh and the state's Department of DIPEDC, MSME and Export Promotion facilitated the GI application.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, p. 28",
+     "quote": "Facilitated By: 1. NABARD, Uttar Pradesh 2. Department of DIPEDC, MSME and Export Promotion, Government of Utter Pradesh."
+    }
+   ]
+  },
+  {
+   "id": "C087",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "NewsClick reported that Bareilly's cane furniture was once a favourite of middle-class families for its affordable price, elegant look and low maintenance.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "Few takers for cane furniture, paragraph 2",
+     "quote": "Once a favourite of middle-class families because of its affordable price, elegant look, and low maintenance requirement"
+    }
+   ]
+  },
+  {
+   "id": "C088",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L03"
+   },
+   "text": "NewsClick wrote of the once-thriving cane furniture of Bareilly's Baans Mandi locality, such as intricately woven sofa sets, diwans, stools, tables, trays, side racks and swings.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "Few takers for cane furniture, paragraph 1",
+     "quote": "The narrow and dingy by-lanes of Baans Mandi locality is no more a hub of the once-thriving cane furniture - intricately woven sofa sets, diwan, stools, tables, trays, side racks and swings."
+    }
+   ]
+  },
+  {
+   "id": "C091",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G03"
+   },
+   "text": "A 2025 field study of bamboo crafts in Bareilly district found that women artisans face economic limits, a lack of market access, limited education and little technical skill.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "abstract",
+     "quote": "The results shows the numerous challenges that women craftsmen confront, including economic limits, a lack of market access, limited education, and little technical skills."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "title",
+     "quote": "BAMBOO CRAFTS AND THE ROLE OF WOMEN : A FIELD STUDY IN BAREILLY DISTRICT OF UTTAR PRADESH"
+    },
+    {
+     "sourceId": "S10",
+     "locator": "issue details",
+     "quote": "| Month | : | August | | Year | : | 2025 |"
+    }
+   ]
+  },
+  {
+   "id": "C092",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G03"
+   },
+   "text": "A 2025 field study of bamboo crafts in Bareilly district reports that many women artisans have low incomes and limited access to credit and financial services.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "abstract",
+     "quote": "Many women artisans have low incomes and limited access to credit and financial services."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "title",
+     "quote": "BAMBOO CRAFTS AND THE ROLE OF WOMEN : A FIELD STUDY IN BAREILLY DISTRICT OF UTTAR PRADESH"
+    },
+    {
+     "sourceId": "S10",
+     "locator": "issue details",
+     "quote": "| Month | : | August | | Year | : | 2025 |"
+    }
+   ]
+  },
+  {
+   "id": "C093",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says the furniture made at Bareilly is of different shapes, sizes, qualities and designs from centuries.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, specification, p. 29",
+     "quote": "The furniture made at Bareilly is of different Shape, Size, Quality and Designs from centuries."
+    }
+   ]
+  },
+  {
+   "id": "C094",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L03"
+   },
+   "text": "The GI application cites the Imperial Gazetteer's 1908 Provincial Series volume for the United Provinces as noting Bareilly city for the production of furniture.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 926, proof of origin, references, p. 31",
+     "quote": "Imperial Gazetteer of India; Provincial Series, United Provinces of Agra and Oudh, Vol.-I, 1908 - Bareilly city is noted for the production of furniture."
+    }
+   ]
+  },
+  {
+   "id": "C095",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "Atkinson suggested that Bareilly is styled Bans Bareli perhaps to distinguish it from the Rai Bareli district in Oudh.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "Bareilly District, boundaries",
+     "quote": "To distinguish it perhaps from tho Bai Bareli"
+    },
+    {
+     "sourceId": "S06",
+     "locator": "Bareilly District, boundaries",
+     "quote": "trict in Oudh, Bareilly is sometimes styled Bans Bareli, or tho Bareilly of bamboos"
+    }
+   ],
+   "hypothesis": true
+  }
+ ],
+ "places": [
+  {
+   "id": "L01",
+   "name": "Bareilly",
+   "kind": "DISTRICT",
+   "district": "Bareilly",
+   "state": "Uttar Pradesh",
+   "country": "India",
+   "wikidata": "Q1797378",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C024",
+    "C008"
+   ]
+  },
+  {
+   "id": "L02",
+   "name": "Bareilly",
+   "kind": "TOWN",
+   "district": "Bareilly",
+   "state": "Uttar Pradesh",
+   "country": "India",
+   "wikidata": "Q213026",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C004",
+    "C071"
+   ]
+  },
+  {
+   "id": "L03",
+   "name": "Bareilly",
+   "kind": "TOWN",
+   "district": "Bareilly",
+   "state": "Uttar Pradesh",
+   "country": "India",
+   "wikidata": "Q213026",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C012",
+    "C013",
+    "C011",
+    "C094",
+    "C088"
+   ]
+  },
+  {
+   "id": "L04",
+   "name": "Fatehganj (Purvi or Pashchimi not stated)",
+   "kind": "TOWN",
+   "district": "Bareilly",
+   "state": "Uttar Pradesh",
+   "country": "India",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C073"
+   ]
+  },
+  {
+   "id": "L05",
+   "name": "Assam",
+   "kind": "STATE",
+   "state": "Assam",
+   "country": "India",
+   "wikidata": "Q1164",
+   "role": "MATERIAL_SOURCE",
+   "claimIds": [
+    "C030"
+   ]
+  }
+ ],
+ "communities": [
+  {
+   "id": "G01",
+   "kind": "COMMUNITY",
+   "name": "Barhai carpenters",
+   "localNames": [
+    "Barhai"
+   ],
+   "claimIds": [
+    "C017"
+   ]
+  },
+  {
+   "id": "G02",
+   "kind": "ORGANISATION",
+   "name": "Modern Gramodyog Sewa Sansthan",
+   "claimIds": [
+    "C074",
+    "C076"
+   ]
+  },
+  {
+   "id": "G03",
+   "kind": "COMMUNITY",
+   "name": "Women cane and bamboo artisans",
+   "placeId": "L01",
+   "claimIds": [
+    "C073",
+    "C091",
+    "C092"
+   ]
+  }
+ ],
+ "stages": [
+  {
+   "id": "P01",
+   "name": "Collecting raw cane from the forests",
+   "stageType": "PREP",
+   "order": 1,
+   "orderClaimId": "C039",
+   "materials": [
+    {
+     "materialId": "M02",
+     "claimId": "C039"
+    }
+   ],
+   "claimIds": [
+    "C039"
+   ]
+  },
+  {
+   "id": "P02",
+   "name": "Scraping the upper layer of the cane",
+   "stageType": "PREP",
+   "order": 2,
+   "orderClaimId": "C040",
+   "materials": [
+    {
+     "materialId": "M02",
+     "claimId": "C040"
+    }
+   ],
+   "claimIds": [
+    "C040"
+   ]
+  },
+  {
+   "id": "P03",
+   "name": "Cutting cane and bamboo to size",
+   "stageType": "SHAPE",
+   "order": 3,
+   "orderClaimId": "C041",
+   "materials": [
+    {
+     "materialId": "M01",
+     "claimId": "C050"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C041"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T01",
+     "claimId": "C045"
+    },
+    {
+     "toolId": "T02",
+     "claimId": "C046"
+    }
+   ],
+   "claimIds": [
+    "C041",
+    "C045",
+    "C046",
+    "C050"
+   ]
+  },
+  {
+   "id": "P04",
+   "name": "Splitting into strips",
+   "stageType": "SHAPE",
+   "order": 4,
+   "orderClaimId": "C041",
+   "materials": [
+    {
+     "materialId": "M02",
+     "claimId": "C041"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T02",
+     "claimId": "C045"
+    }
+   ],
+   "claimIds": [
+    "C041",
+    "C045",
+    "C036"
+   ]
+  },
+  {
+   "id": "P05",
+   "name": "Heating and bending",
+   "stageType": "SHAPE",
+   "order": 5,
+   "orderClaimId": "C042",
+   "materials": [
+    {
+     "materialId": "M01",
+     "claimId": "C038"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C037"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T03",
+     "claimId": "C038"
+    },
+    {
+     "toolId": "T04",
+     "claimId": "C042"
+    },
+    {
+     "toolId": "T05",
+     "claimId": "C054"
+    }
+   ],
+   "claimIds": [
+    "C042",
+    "C037",
+    "C038",
+    "C053",
+    "C054",
+    "C035"
+   ]
+  },
+  {
+   "id": "P06",
+   "name": "Removing burns from the bent cane",
+   "stageType": "FINISH",
+   "order": 6,
+   "orderClaimId": "C042",
+   "materials": [
+    {
+     "materialId": "M11",
+     "claimId": "C042"
+    }
+   ],
+   "claimIds": [
+    "C042"
+   ]
+  },
+  {
+   "id": "P07",
+   "name": "Weaving cane around the frame",
+   "localName": "Binayi",
+   "stageType": "OTHER",
+   "order": 7,
+   "orderClaimId": "C043",
+   "materials": [
+    {
+     "materialId": "M05",
+     "claimId": "C002"
+    }
+   ],
+   "claimIds": [
+    "C043",
+    "C051",
+    "C056",
+    "C065",
+    "C002"
+   ]
+  },
+  {
+   "id": "P08",
+   "name": "Varnishing",
+   "stageType": "FINISH",
+   "order": 8,
+   "orderClaimId": "C044",
+   "materials": [
+    {
+     "materialId": "M12",
+     "claimId": "C044"
+    },
+    {
+     "materialId": "M11",
+     "claimId": "C049"
+    }
+   ],
+   "claimIds": [
+    "C044",
+    "C049"
+   ]
+  },
+  {
+   "id": "P09",
+   "name": "Soaking in water",
+   "stageType": "PREP",
+   "duration": {
+    "text": "2 hours",
+    "claimId": "C052"
+   },
+   "materials": [
+    {
+     "materialId": "M13",
+     "claimId": "C052"
+    }
+   ],
+   "claimIds": [
+    "C052"
+   ]
+  },
+  {
+   "id": "P10",
+   "name": "Joining, nailing and binding",
+   "stageType": "SHAPE",
+   "materials": [
+    {
+     "materialId": "M09",
+     "claimId": "C055"
+    },
+    {
+     "materialId": "M10",
+     "claimId": "C048"
+    },
+    {
+     "materialId": "M04",
+     "claimId": "C048"
+    },
+    {
+     "materialId": "M03",
+     "claimId": "C033"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T10",
+     "claimId": "C061"
+    }
+   ],
+   "claimIds": [
+    "C048",
+    "C055",
+    "C033",
+    "C061"
+   ]
+  },
+  {
+   "id": "P11",
+   "name": "Smoothing the bamboo frame",
+   "stageType": "FINISH",
+   "materials": [
+    {
+     "materialId": "M11",
+     "claimId": "C057"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T06",
+     "claimId": "C058"
+    },
+    {
+     "toolId": "T07",
+     "claimId": "C059"
+    }
+   ],
+   "claimIds": [
+    "C057",
+    "C058",
+    "C059"
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "id": "M01",
+   "name": "Bamboo",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "localNames": [
+    "bans"
+   ],
+   "claimIds": [
+    "C002",
+    "C030",
+    "C031",
+    "C035",
+    "C029"
+   ]
+  },
+  {
+   "id": "M02",
+   "name": "Cane",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "claimIds": [
+    "C031",
+    "C037",
+    "C039",
+    "C040"
+   ]
+  },
+  {
+   "id": "M03",
+   "name": "Thick cane",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "localNames": [
+    "mota cane"
+   ],
+   "claimIds": [
+    "C032",
+    "C033"
+   ]
+  },
+  {
+   "id": "M04",
+   "name": "Pencil cane",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "claimIds": [
+    "C032",
+    "C048"
+   ]
+  },
+  {
+   "id": "M05",
+   "name": "Thin processed cane",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "localNames": [
+    "gola"
+   ],
+   "claimIds": [
+    "C002",
+    "C031"
+   ]
+  },
+  {
+   "id": "M06",
+   "name": "Cane peel",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "claimIds": [
+    "C031"
+   ]
+  },
+  {
+   "id": "M07",
+   "name": "Desi cane",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "localNames": [
+    "desi cane"
+   ],
+   "claimIds": [
+    "C031"
+   ]
+  },
+  {
+   "id": "M08",
+   "name": "Plywood",
+   "kind": "WOOD",
+   "role": "INPUT",
+   "claimIds": [
+    "C031"
+   ]
+  },
+  {
+   "id": "M09",
+   "name": "Iron nails",
+   "kind": "METAL",
+   "role": "INPUT",
+   "claimIds": [
+    "C031",
+    "C048",
+    "C055"
+   ]
+  },
+  {
+   "id": "M10",
+   "name": "Adhesive",
+   "kind": "OTHER",
+   "role": "BINDER",
+   "claimIds": [
+    "C048"
+   ]
+  },
+  {
+   "id": "M11",
+   "name": "Sandpaper",
+   "kind": "OTHER",
+   "role": "OTHER",
+   "claimIds": [
+    "C042",
+    "C049",
+    "C057"
+   ]
+  },
+  {
+   "id": "M12",
+   "name": "Varnish",
+   "kind": "RESIN",
+   "role": "OTHER",
+   "claimIds": [
+    "C044",
+    "C049"
+   ]
+  },
+  {
+   "id": "M13",
+   "name": "Water",
+   "kind": "WATER",
+   "role": "INPUT",
+   "claimIds": [
+    "C052"
+   ]
+  },
+  {
+   "id": "M14",
+   "name": "Wood",
+   "kind": "WOOD",
+   "role": "INPUT",
+   "claimIds": [
+    "C005",
+    "C029"
+   ]
+  }
+ ],
+ "tools": [
+  {
+   "id": "T01",
+   "name": "Hacksaw",
+   "claimIds": [
+    "C045"
+   ]
+  },
+  {
+   "id": "T02",
+   "name": "Billhook",
+   "localNames": [
+    "dao"
+   ],
+   "claimIds": [
+    "C045",
+    "C046"
+   ]
+  },
+  {
+   "id": "T03",
+   "name": "Kerosene lamp",
+   "claimIds": [
+    "C037",
+    "C038"
+   ]
+  },
+  {
+   "id": "T04",
+   "name": "Blowlamp",
+   "claimIds": [
+    "C042"
+   ]
+  },
+  {
+   "id": "T05",
+   "name": "Wooden shaping tool",
+   "localNames": [
+    "mungri"
+   ],
+   "claimIds": [
+    "C054"
+   ]
+  },
+  {
+   "id": "T06",
+   "name": "Scraping knife",
+   "localNames": [
+    "chaaku"
+   ],
+   "claimIds": [
+    "C058"
+   ]
+  },
+  {
+   "id": "T07",
+   "name": "Smoothing knife",
+   "localNames": [
+    "ari"
+   ],
+   "claimIds": [
+    "C059"
+   ]
+  },
+  {
+   "id": "T08",
+   "name": "Cane puller",
+   "localNames": [
+    "jamboori",
+    "jamura"
+   ],
+   "claimIds": [
+    "C060"
+   ]
+  },
+  {
+   "id": "T09",
+   "name": "Cutter",
+   "claimIds": [
+    "C062"
+   ]
+  },
+  {
+   "id": "T10",
+   "name": "Hammer",
+   "localNames": [
+    "hatoda"
+   ],
+   "claimIds": [
+    "C061"
+   ]
+  }
+ ],
+ "environment": [
+  {
+   "factor": "VEGETATION",
+   "placeId": "L01",
+   "claimIds": [
+    "C027",
+    "C028"
+   ]
+  },
+  {
+   "factor": "LANDFORM",
+   "placeId": "L01",
+   "claimIds": [
+    "C025"
+   ]
+  }
+ ],
+ "market": {
+  "gi": {
+   "applicationNumber": "926",
+   "certificateNumber": "639",
+   "filedOn": "2022-07-18",
+   "registeredOn": "2024-04-16",
+   "journalIssue": "187",
+   "proprietors": [
+    "Modern Gramodyog Sewa Sansthan"
+   ],
+   "authorisedUserCount": 8,
+   "claimIds": [
+    "C074",
+    "C075",
+    "C076",
+    "C081"
+   ]
+  },
+  "workforce": [
+   {
+    "claimId": "C072",
+    "year": 1911
+   },
+   {
+    "claimId": "C082",
+    "year": 2023
+   },
+   {
+    "claimId": "C073",
+    "year": 2025
+   }
+  ]
+ },
+ "glossary": [
+  {
+   "id": "W01",
+   "term": "bans, baans",
+   "meaning": "Bamboo, as the GI application writes Bans (bamboo as special quality) and as the Imperial Gazetteer says the prefix of Bans Bareli was usually interpreted; the district administration writes cane (bans).",
+   "claimIds": [
+    "C018",
+    "C020",
+    "C004"
+   ]
+  },
+  {
+   "id": "W02",
+   "term": "gola",
+   "meaning": "Thin processed cane with which the bamboo furniture frame is finally rounded.",
+   "claimIds": [
+    "C002"
+   ]
+  },
+  {
+   "id": "W03",
+   "term": "binayi",
+   "meaning": "The local name of the rounding process in which cane is wrapped around the bamboo frame by weaving.",
+   "claimIds": [
+    "C051"
+   ]
+  },
+  {
+   "id": "W04",
+   "term": "mungri",
+   "meaning": "A wooden tool used to bend and shape the bamboo.",
+   "claimIds": [
+    "C054"
+   ]
+  },
+  {
+   "id": "W05",
+   "term": "mota cane",
+   "meaning": "Thick cane, added to the furniture for better support.",
+   "claimIds": [
+    "C033"
+   ]
+  },
+  {
+   "id": "W06",
+   "term": "dao",
+   "meaning": "A cutting tool used to cut bamboo to the desired length.",
+   "claimIds": [
+    "C046"
+   ]
+  },
+  {
+   "id": "W07",
+   "term": "jamboori, jamura",
+   "meaning": "A tool used to pull the cane.",
+   "claimIds": [
+    "C060"
+   ]
+  },
+  {
+   "id": "W08",
+   "term": "chaaku",
+   "meaning": "A knife used to scrape the burned bamboo skin and make the texture smooth.",
+   "claimIds": [
+    "C058"
+   ]
+  },
+  {
+   "id": "W09",
+   "term": "ari",
+   "meaning": "Another type of knife, used to smoothen and beautify the bamboo texture.",
+   "claimIds": [
+    "C059"
+   ]
+  },
+  {
+   "id": "W10",
+   "term": "hatoda",
+   "meaning": "Hammer, used during furniture making to pierce the nails.",
+   "claimIds": [
+    "C061"
+   ]
+  },
+  {
+   "id": "W11",
+   "term": "surahi-matka",
+   "meaning": "A shape design that artisans make for the back of a chair, one of the popular motifs.",
+   "claimIds": [
+    "C064"
+   ]
+  },
+  {
+   "id": "W12",
+   "term": "pencil cane",
+   "meaning": "Cane used for designing and binding, and for blending the joints.",
+   "claimIds": [
+    "C032",
+    "C048"
+   ]
+  }
+ ],
+ "conflicts": [
+  {
+   "claimIds": [
+    "C009",
+    "C010",
+    "C093",
+    "C011",
+    "C012",
+    "C029",
+    "C014"
+   ],
+   "about": "When cane and bamboo work began in Bareilly: nearly 80 to 100 years ago, nearly 100 years ago, from centuries or before British rule, while the gazetteers already record bamboo furniture there and Nevill called the industry's form of fairly recent origin"
+  },
+  {
+   "claimIds": [
+    "C002",
+    "C032"
+   ],
+   "about": "Whether the furniture frame is made of thick bamboo or of thick cane"
+  },
+  {
+   "claimIds": [
+    "C018",
+    "C019",
+    "C020",
+    "C021",
+    "C095",
+    "C022",
+    "C023"
+   ],
+   "about": "Where the name Bans Bareilly comes from, and whether the founding in 1537 is a record or a tradition"
+  },
+  {
+   "claimIds": [
+    "C020",
+    "C004"
+   ],
+   "about": "Whether bans means bamboo or cane"
+  },
+  {
+   "claimIds": [
+    "C077",
+    "C078"
+   ],
+   "about": "The name under which GI application 926 is recorded"
+  }
+ ],
+ "openQuestions": [
+  {
+   "id": "O01",
+   "question": "Which species of cane and bamboo do Bareilly's makers use, and from which forests does the cane come?",
+   "claimIds": [
+    "C030",
+    "C031",
+    "C039"
+   ]
+  },
+  {
+   "id": "O02",
+   "question": "Where does the name Bans Bareilly come from: bamboo, the bamboo market, the names of the founder's sons, or a wish to tell it apart from Rai Bareli?",
+   "claimIds": [
+    "C018",
+    "C019",
+    "C020",
+    "C021",
+    "C095",
+    "C022",
+    "C023"
+   ]
+  },
+  {
+   "id": "O03",
+   "question": "When did cane and bamboo furniture making begin in Bareilly?",
+   "claimIds": [
+    "C009",
+    "C010",
+    "C093",
+    "C011",
+    "C012",
+    "C014"
+   ]
+  }
+ ],
+ "overview": {
+  "lede": [
+   {
+    "text": "The GI application says that in Bareilly, Uttar Pradesh, cane and bamboo, and in one passage also wood, are the most commonly used materials for furniture and household items needed in daily life.",
+    "claimIds": [
+     "C001",
+     "C024"
+    ]
+   },
+   {
+    "text": "The GI application makes the furniture frame of thick bamboo by heating, bending and joining (another passage says thick cane), finally rounded with thin processed cane called gola.",
+    "claimIds": [
+     "C002",
+     "C032"
+    ]
+   },
+   {
+    "text": "The district administration calls Bareilly a production centre for cane (bans) furniture, and the GI journal text of December 2023 says nearly 1500 artisans are engaged in furniture work in Bareilly in bamboo, cane and wood.",
+    "claimIds": [
+     "C004",
+     "C082"
+    ]
+   },
+   {
+    "text": "Bareilly Cane & Bamboo Craft, which the GI registry's record names Bareilly Furniture, is GI application 926, advertised in Geographical Indications Journal 187 and registered with certificate 639 on 16 April 2024.",
+    "claimIds": [
+     "C078",
+     "C077",
+     "C075",
+     "C076"
+    ]
+   }
+  ],
+  "keyFacts": [
+   {
+    "label": "GI status",
+    "value": "Registered, application 926, certificate 639 dated 16 April 2024; the registry names it Bareilly Furniture",
+    "claimIds": [
+     "C076",
+     "C077"
+    ]
+   },
+   {
+    "label": "Centres",
+    "value": "Bareilly district, Uttar Pradesh, including Bareilly city and Fatehganj",
+    "claimIds": [
+     "C024",
+     "C004",
+     "C073"
+    ]
+   },
+   {
+    "label": "Materials",
+    "value": "Thick bamboo or, in another passage, thick cane for frames; pencil cane and thin processed cane (gola) for binding, rounding and weaving",
+    "claimIds": [
+     "C002",
+     "C032",
+     "C003"
+    ]
+   },
+   {
+    "label": "Key techniques",
+    "value": "Heating and bending bamboo and cane, joining with nails, weaving cane around the frame (binayi)",
+    "claimIds": [
+     "C038",
+     "C042",
+     "C055",
+     "C051"
+    ]
+   },
+   {
+    "label": "Products",
+    "value": "Sofas, chairs, racks, tables, swing chairs, stools, beds, diwan sets",
+    "claimIds": [
+     "C006"
+    ]
+   },
+   {
+    "label": "Makers",
+    "value": "Nearly 1500 artisans in furniture work (GI journal, December 2023); over 500 workers at Fatehganj, 400 of them women (2025 study)",
+    "claimIds": [
+     "C082",
+     "C073"
+    ]
+   },
+   {
+    "label": "Applicant",
+    "value": "Modern Gramodyog Sewa Sansthan, filed 18 July 2022",
+    "claimIds": [
+     "C074"
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "discipline": "HISTORY",
+    "sentences": [
+     {
+      "text": "Sources differ on when cane and bamboo work began in Bareilly: the GI application says nearly 80 to 100 years ago, or nearly 100 in another passage, while the Imperial Gazetteer and Nevill's 1911 gazetteer already record bamboo furniture and carpenters working in bamboo there.",
+      "claimIds": [
+       "C009",
+       "C010",
+       "C012",
+       "C029",
+       "C072"
+      ]
+     },
+     {
+      "text": "The application also says Bareilly's furniture is of different shapes, sizes, qualities and designs from centuries, and calls Bareilly a hub of wooden and cane-bamboo furniture before British reign in India.",
+      "claimIds": [
+       "C093",
+       "C011"
+      ]
+     },
+     {
+      "text": "In 1911 Nevill recorded about 1,500 persons employed in furniture manufacture, as a rule in workshops owned by dealers, and wrote that this industry of work in wood was, in its form then, of fairly recent origin.",
+      "claimIds": [
+       "C072",
+       "C014"
+      ]
+     },
+     {
+      "text": "Writing of Bareilly's work in wood, Nevill said that in old days Bareilly was celebrated for lacquered and gilt furniture, and that its painted woodwork had either disappeared or degenerated.",
+      "claimIds": [
+       "C013",
+       "C016"
+      ]
+     },
+     {
+      "text": "Sources differ on the name Bans Bareilly: the GI application ties it to bans craft, plentiful bamboo and a big bamboo market, while the district administration says it is not derived from the bans market.",
+      "claimIds": [
+       "C018",
+       "C023"
+      ]
+     },
+     {
+      "text": "Among these accounts, the GI application, Wikipedia and the district administration say Jagat Singh Katehriya founded Bareilly, or its earliest settlement, in 1537 and named it after his two sons.",
+      "claimIds": [
+       "C022"
+      ]
+     },
+     {
+      "text": "According to the Imperial Gazetteer, the prefix Bans was then usually interpreted as bans, bamboo, while the district administration writes of cane (bans) furniture.",
+      "claimIds": [
+       "C020",
+       "C004"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "PROCESS",
+    "sentences": [
+     {
+      "text": "Production of cane products begins with the collection of raw material from the forests, and the upper layer of the raw cane is scraped off for a smooth surface.",
+      "claimIds": [
+       "C039",
+       "C040"
+      ]
+     },
+     {
+      "text": "The long cane sticks are cut into smaller pieces and split into thin strips, and whole stems are cut with a hacksaw and split with a billhook or dao.",
+      "claimIds": [
+       "C041",
+       "C045"
+      ]
+     },
+     {
+      "text": "The split cane is bent with a blowlamp, which may cause burns on the surface, and these are removed by rubbing with sandpaper.",
+      "claimIds": [
+       "C042"
+      ]
+     },
+     {
+      "text": "Bamboo is immersed in water for 2 hours, heated with a kerosene lamp, bent to shape and shaped properly with a wooden tool called mungri.",
+      "claimIds": [
+       "C052",
+       "C038",
+       "C054"
+      ]
+     },
+     {
+      "text": "Cane is joined to the bamboo with thin small nails, and the joints are blended with strips of pencil cane.",
+      "claimIds": [
+       "C055",
+       "C048"
+      ]
+     },
+     {
+      "text": "The cane is wrapped around the bamboo frame by weaving, a rounding process locally called binayi, so that the frame inside cannot be seen from outside.",
+      "claimIds": [
+       "C051",
+       "C065"
+      ]
+     },
+     {
+      "text": "Finally the items are cleaned with sandpaper and polished with varnish before being dispatched to the market.",
+      "claimIds": [
+       "C049",
+       "C044"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "MATERIALS",
+    "sentences": [
+     {
+      "text": "The GI application lists bamboo, cane, cane peel, desi cane, plywood, nails and gola cane wire as raw materials.",
+      "claimIds": [
+       "C031"
+      ]
+     },
+     {
+      "text": "While one passage makes the furniture frame of thick bamboo, the GI application also says thick cane is used for making the frame of an article or furniture, and pencil cane for designing and binding.",
+      "claimIds": [
+       "C002",
+       "C032"
+      ]
+     },
+     {
+      "text": "Mota cane, meaning thick cane, is added to the furniture for better support.",
+      "claimIds": [
+       "C033"
+      ]
+     },
+     {
+      "text": "Bamboo also comes to Bareilly from Assam as a raw material, the GI application says.",
+      "claimIds": [
+       "C030"
+      ]
+     },
+     {
+      "text": "The GI application calls the cane and bamboo products very strong, durable and eco-friendly, made of organic, natural material.",
+      "claimIds": [
+       "C034"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "PHYSICS",
+    "sentences": [
+     {
+      "text": "Furniture is made using bamboo because it is flexible, and heated bamboo is easy to bend.",
+      "claimIds": [
+       "C035",
+       "C038"
+      ]
+     },
+     {
+      "text": "The cane is heated on a slow fire, generally with a kerosene lamp, for flexibility before it is bent into shape.",
+      "claimIds": [
+       "C037"
+      ]
+     },
+     {
+      "text": "Slicing runs lengthwise along the densely packed fibres and is fairly smooth, needing only the requisite amount of moisture in the culm.",
+      "claimIds": [
+       "C036"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "DESIGN",
+    "sentences": [
+     {
+      "text": "According to the GI application, the artisans create their motif patterns from their own imagination and skill without any traced design.",
+      "claimIds": [
+       "C063"
+      ]
+     },
+     {
+      "text": "The GI application names the surahi-matka shape made for the back of a chair as one of the popular motifs available in the market.",
+      "claimIds": [
+       "C064"
+      ]
+     },
+     {
+      "text": "Artisans use many natural patterns without any colour, and make traditional as well as contemporary furniture with modern designs for the global market.",
+      "claimIds": [
+       "C066",
+       "C067"
+      ]
+     },
+     {
+      "text": "The GI application calls the woven cane and bamboo sofa sets and chairs remarkable among all its products, and the attractive intricate design patterns admirable for their uniqueness.",
+      "claimIds": [
+       "C068"
+      ]
+     },
+     {
+      "text": "NewsClick reported that artisans have changed designs and diversified products to compete with wooden furniture.",
+      "claimIds": [
+       "C070"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "ECONOMICS",
+    "sentences": [
+     {
+      "text": "Modern Gramodyog Sewa Sansthan filed GI application 926 on 18 July 2022, and it was advertised in Geographical Indications Journal 187 dated 15 December 2023.",
+      "claimIds": [
+       "C074",
+       "C075"
+      ]
+     },
+     {
+      "text": "The registry records certificate 639 dated 16 April 2024, valid up to 17 July 2032, and numbers its authorised users up to 8.",
+      "claimIds": [
+       "C076",
+       "C081"
+      ]
+     },
+     {
+      "text": "The GI journal text of December 2023 says nearly 1500 artisans are engaged in furniture work in Bareilly in bamboo, cane and wood, or in cane and bamboo furniture work in another passage, and a 2025 study reports over 500 cane and bamboo workers at Fatehganj, including 400 female artisans.",
+      "claimIds": [
+       "C082",
+       "C073"
+      ]
+     },
+     {
+      "text": "NewsClick reported that Bareilly's cane furniture was once a favourite of middle-class families for its affordable price, elegant look and low maintenance.",
+      "claimIds": [
+       "C087"
+      ]
+     },
+     {
+      "text": "The 2025 study found that women artisans face economic limits, a lack of market access, limited education and little technical skill, and that many have low incomes and limited access to credit.",
+      "claimIds": [
+       "C091",
+       "C092"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

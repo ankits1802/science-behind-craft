@@ -79,7 +79,7 @@ test("the backend's researched stream parses, skipping only retired events, and 
   const [prose, images] = state.sections[0].blocks;
   if (prose.kind !== "prose" || images.kind !== "images") throw new Error("the section streams its prose, then its pictures");
   expect(prose.sentences.map((sentence) => sentence.terms.map((span) => span.termKey))).toEqual([["alum", "alizarin", "cotton"], ["alum"], []]);
-  expect(images.items.map((item) => item.media.display)).toEqual(["INLINE", "LINK_CARD"]);
+  expect(images.items.map((item) => item.media.display)).toEqual(["INLINE"]);
   const cited = new Set(prose.sentences.flatMap((sentence) => sentence.citations.map((citation) => citation.claimId)));
   for (const item of images.items) for (const claimId of item.claimIds) expect(cited.has(claimId)).toBe(true);
   expect(state.trail.map((entry) => [entry.key, entry.stage])).toEqual([

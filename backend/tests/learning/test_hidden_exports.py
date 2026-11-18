@@ -135,7 +135,7 @@ def test_the_citations_route_reads_the_hide_from_the_piece(
 
 def test_the_quiz_route_reads_the_explainer_with_its_hidden_marks(monkeypatch: pytest.MonkeyPatch) -> None:
     async def every_claim_shown(
-        session: Any, claim_ids: Sequence[uuid.UUID]
+        session: Any, claim_ids: Sequence[uuid.UUID], **_kwargs: Any
     ) -> tuple[dict[uuid.UUID, None], dict[Any, Any]]:
         return dict.fromkeys(claim_ids), {}
 

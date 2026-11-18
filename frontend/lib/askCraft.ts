@@ -1,5 +1,6 @@
 import type { CraftLink } from "@/lib/answerShapes";
-import { craftStatesLine, type CraftCatalogue } from "@/lib/craftCatalogue";
+import { craftStatesLine } from "@/lib/craftCatalogue";
+import type { CraftCatalogue } from "@/lib/craftCatalogueContract";
 import type { Understood } from "@/lib/explainerContract";
 
 export const ANY_CRAFT = "Any craft";
@@ -57,12 +58,12 @@ function knownName(understood: Understood | null, slug: string): string | null {
   return named?.name ?? null;
 }
 
-export function craftOptions(catalogue: CraftCatalogue | null, pick: CraftPick, understood: Understood | null): CraftOption[] {
+export function craftOptions(catalogue: Pick<CraftCatalogue, "crafts"> | null, pick: CraftPick, understood: Understood | null): CraftOption[] {
   const listed: CraftOption[] = (catalogue?.crafts ?? [])
     .filter((craft) => craft.status !== "MERGED")
     .map((craft) => {
       const states = craftStatesLine(craft);
-      return states ? { value: craft.slug, label: craft.name, hint: states } : { value: craft.slug, label: craft.name };
+      return states ? { value: craft.slug, label: craft.displayName, hint: states } : { value: craft.slug, label: craft.displayName };
     });
   const special: CraftOption[] = craftOffer(understood, pick).detected.length > 0 ? [{ value: ANY_CRAFT_VALUE, label: ANY_CRAFT }] : [];
   const picked = pick.craftSlug;

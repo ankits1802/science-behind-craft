@@ -13,6 +13,7 @@ from app.core.errors import ExternalFailure, NotConfigured
 from app.geo.rainfall import DistrictRainfall
 from app.models import Concept
 from app.research.blocks_place import SupplyLink
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.science.records import ProcessRecords
 from app.sources.reference.wikidata import WikidataAdapter
 
@@ -117,7 +118,7 @@ async def _stored_seasons(
     craft = await resolve_craft(session, craft_slug)
     if craft is None:
         return None
-    records = await process_records(session, craft)
+    records = await process_records(session, craft, acls=EVERY_CHUNK_ACLS)
     rainfall = await craft_rainfall(session, await mapped_districts(session, craft))
     names = await _concept_names(session, {cid for cid in concepts.values() if cid is not None})
     subjects = {claim: names[cid] for claim, cid in concepts.items() if cid is not None and cid in names}

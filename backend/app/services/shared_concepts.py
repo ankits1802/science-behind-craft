@@ -14,7 +14,7 @@ from app.research.blocks_learning import CONCEPT_CRAFTS_MAX
 from app.research.citations import SourceRef
 from app.research.crafts import CraftRef
 from app.research.offered_facts import OfferedFact
-from app.research.retrieval import HIDDEN_CLAIM_STATUSES, VISIBLE_SENSITIVITY
+from app.research.retrieval import HIDDEN_CLAIM_STATUSES, OPEN_CHUNK_ACLS, VISIBLE_SENSITIVITY
 from app.research.shared_science import (
     SHARED_SCIENCE_NODES_MAX,
     SharedConcept,
@@ -51,20 +51,22 @@ class TermOffers:
     sources: Mapping[str, SourceRef] = field(default_factory=dict)
 
 
-async def craft_shared_science(session: AsyncSession, craft: Craft) -> SharedScience:
-    found = await term_offers(session, await _shared_term_ids(session, craft.id), focus=craft.id)
+async def craft_shared_science(
+    session: AsyncSession, craft: Craft, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> SharedScience:
+    found = await term_offers(session, await _shared_term_ids(session, craft.id), focus=craft.id, acls=acls)
     return shared_science(
         CraftRef.model_validate(knowledge_view.craft_ref(craft)), found.offers, found.sources
     )
 
 
 async def shared_concept_of(
-    session: AsyncSession, term_key: str, focus: Craft | None
+    session: AsyncSession, term_key: str, focus: Craft | None, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
 ) -> SharedConcept | None:
     term_ids = await term_ids_of(session, [term_key])
     if not term_ids:
         return None
-    found = await term_offers(session, term_ids, focus=focus.id if focus is not None else None)
+    found = await term_offers(session, term_ids, focus=focus.id if focus is not None else None, acls=acls)
     if not found.offers:
         return None
     return shared_concept(found.offers[0], found.sources, focus=focus.slug if focus is not None else None)
@@ -79,7 +81,11 @@ async def term_ids_of(session: AsyncSession, keys: Sequence[str]) -> list[uuid.U
 
 
 async def term_offers(
-    session: AsyncSession, term_ids: Sequence[uuid.UUID], *, focus: uuid.UUID | None = None
+    session: AsyncSession,
+    term_ids: Sequence[uuid.UUID],
+    *,
+    focus: uuid.UUID | None = None,
+    acls: Sequence[str] = OPEN_CHUNK_ACLS,
 ) -> TermOffers:
     if not term_ids:
         return TermOffers()
@@ -88,7 +94,7 @@ async def term_offers(
     craft_ids = {craft_id for rows in crafts.values() for craft_id, _ in rows}
     concepts = await _term_concepts(session, term_ids, craft_ids)
     claim_ids = await _ranked_claim_ids(session, term_ids, [c for ids in concepts.values() for c in ids])
-    views, sources = await knowledge_view.claims_by_id(session, claim_ids)
+    views, sources = await knowledge_view.claims_by_id(session, claim_ids, acls=acls)
     refs = source_refs(sources)
     facts: dict[uuid.UUID, list[OfferedFact]] = defaultdict(list)
     for view in views.values():

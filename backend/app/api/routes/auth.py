@@ -23,6 +23,7 @@ from app.core.rate_limit import (
     ip_hash,
     refund_account,
     refund_ip,
+    retry_after_value,
     sign_in_attempt_by_account,
     sign_in_attempt_by_ip,
 )
@@ -308,7 +309,7 @@ def _refuse_when_ip_throttled(request: Request) -> None:
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS,
             THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
+            {"Retry-After": retry_after_value(retry)},
         )
 
 
@@ -371,7 +372,7 @@ async def login_with_password(
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS,
             THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
+            {"Retry-After": retry_after_value(retry)},
         )
     matched = await asyncio.to_thread(
         verify_password_or_decoy, payload.password or "", user.passwordHash if user else None
@@ -506,7 +507,7 @@ async def signup(
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS,
             THROTTLED_DETAIL,
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
+            {"Retry-After": retry_after_value(retry)},
         )
     if turnstile.required_but_missing() or not mailer.mail_configured():
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, SIGNUP_CLOSED_DETAIL)
@@ -852,7 +853,7 @@ async def forgot_password(
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS,
             "Too many reset requests. Try again later.",
-            {"Retry-After": str(max(1, int(retry + 0.999)))},
+            {"Retry-After": retry_after_value(retry)},
         )
     background.add_task(
         _request_password_reset,

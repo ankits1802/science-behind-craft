@@ -5,7 +5,7 @@ import { FlaskConical } from "lucide-react";
 import { ChemEquation } from "@/components/answer/ChemEquation";
 import { CitationChip } from "@/components/answer/CitationChip";
 import { EvidenceLevelBadge, EvidenceSignalBadge } from "@/components/answer/EvidenceBadge";
-import { uniqueCitations } from "@/lib/citations";
+import { citationsBySource } from "@/lib/citations";
 import type { AnswerReaction, Citation, SourceRef } from "@/lib/types";
 
 export function ReactionsPanel({
@@ -17,7 +17,7 @@ export function ReactionsPanel({
   reactions: AnswerReaction[];
   numbers: Map<string, number>;
   sourcesById: Map<string, SourceRef>;
-  onOpen: (citation: Citation) => void;
+  onOpen: (citations: readonly Citation[]) => void;
 }) {
   return (
     <section className="panel p-5 md:p-6" aria-labelledby="reactions-heading">
@@ -39,14 +39,8 @@ export function ReactionsPanel({
             {reaction.conditions ? <p className="mt-2 text-xs text-ink-500">{reaction.conditions}</p> : null}
             {reaction.citations.length > 0 ? (
               <p className="mt-2 text-xs">
-                {uniqueCitations(reaction.citations).map((citation) => (
-                  <CitationChip
-                    key={`${citation.sourceId}:${citation.claimId}`}
-                    citation={citation}
-                    number={numbers.get(citation.sourceId) ?? null}
-                    title={sourcesById.get(citation.sourceId)?.title ?? null}
-                    onOpen={onOpen}
-                  />
+                {citationsBySource(reaction.citations, numbers).map((group) => (
+                  <CitationChip key={group.sourceId} group={group} title={sourcesById.get(group.sourceId)?.title ?? null} onOpen={onOpen} />
                 ))}
               </p>
             ) : null}

@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import logging
 import uuid
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from typing import Any
 
-from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,7 +16,6 @@ from app.models import (
     CraftSubCategory,
     CuratedClaim,
     CuratedCraft,
-    KnowledgePiece as PieceRow,
     MediaRef as MediaRefRow,
     MediaRefClaim,
     Term,
@@ -26,16 +23,21 @@ from app.models import (
 )
 from app.research.citations import SourceRef
 from app.research.craft_page import PageCraft
+from app.research.craft_page_context import PageRelative
 from app.research.knowledge_pieces import KnowledgePiece
 from app.research.media_refs import MediaRef
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.science.records import ProcessRecords
 
 from . import knowledge_view
+from .craft_page_family import family_place, family_relatives, reader_name
+from .craft_page_market import MarketFacts, market_facts
+from .craft_page_offers import PageOffers, page_offers
 from .craft_process import process_records
-from .curated_index import CuratedPage
+from .curated_index import CuratedPage, stored_curated_page
 from .knowledge_view import ClaimView
-from .media_ref_store import stored_media_ref
-from .piece_lookup import stored_piece
+from .media_ref_store import stored_media_ref, stored_media_refs
+from .piece_lookup import stored_pieces
 from .term_glossary import glossary_entries
 
 __all__ = [
@@ -48,8 +50,6 @@ __all__ = [
     "craft_page_records",
     "page_craft",
 ]
-
-logger = logging.getLogger(__name__)
 
 PAGE_MODE = "HYBRID"
 PICTURES_SHOWN_MAX = 6
@@ -89,27 +89,38 @@ class CraftPageRecords:
     media: Mapping[uuid.UUID, MediaRef] = field(default_factory=dict)
     pictures: tuple[PictureRecord, ...] = ()
     terms: tuple[TermRecord, ...] = ()
+    market: MarketFacts = field(default_factory=MarketFacts)
+    relatives: tuple[PageRelative, ...] = ()
+    offers: PageOffers = field(default_factory=PageOffers)
+    catch_all: bool = False
 
 
 def page_craft(craft: Craft, names: tuple[str | None, str | None]) -> PageCraft:
     category, sub_category = names
+    place = family_place(category, sub_category)
     return PageCraft(
         id=craft.id,
         slug=craft.slug,
         name=craft.name,
         path=f"/crafts/{craft.slug}",
+        display_name=reader_name(craft.slug, craft.name, catch_all=bool(craft.isCatchAll), kind=place.kind),
         local_name=craft.localName,
+        local_names=[],
         category_name=category or craft.category,
         sub_category_name=sub_category,
+        family_label=place.family.label if place.family else None,
+        kind_label=place.kind.label if place.kind else None,
         gi_status=craft.giStatus,
         state_of_practice=list(craft.stateOfPractice or []),
         state_of_origin=list(craft.stateOfOrigin or []),
     )
 
 
-async def craft_page_records(session: AsyncSession, craft: Craft) -> CraftPageRecords:
+async def craft_page_records(
+    session: AsyncSession, craft: Craft, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> CraftPageRecords:
     curated = await _curated(session, craft.id)
-    views, sources = await knowledge_view.claims_for(session, craft, mode=PAGE_MODE)
+    views, sources = await knowledge_view.claims_for(session, craft, mode=PAGE_MODE, acls=acls)
     records = CraftPageRecords(
         craft=page_craft(craft, await _names(session, craft)),
         curated=curated,
@@ -118,12 +129,16 @@ async def craft_page_records(session: AsyncSession, craft: Craft) -> CraftPageRe
         sources={
             str(key): SourceRef.model_validate(knowledge_view.source_ref(row)) for key, row in sources.items()
         },
-        process=await process_records(session, craft),
+        process=await process_records(session, craft, acls=acls),
+        market=await market_facts(session, craft.id),
+        relatives=await family_relatives(session, craft, mode=PAGE_MODE),
+        offers=await page_offers(session, craft),
+        catch_all=bool(craft.isCatchAll),
     )
     if curated is None:
         return await _stored_extras(session, craft, records)
-    pieces = await _pieces(session, list(curated.piece_ids().values()))
-    media = await _media(session, [picture.media_ref_id for picture in curated.pictures])
+    pieces = await stored_pieces(session, list(curated.piece_ids().values()))
+    media = await stored_media_refs(session, [picture.media_ref_id for picture in curated.pictures])
     return replace(records, pieces=pieces, media=media)
 
 
@@ -140,13 +155,7 @@ async def _names(session: AsyncSession, craft: Craft) -> tuple[str | None, str |
 
 async def _curated(session: AsyncSession, craft_id: uuid.UUID) -> CuratedPage | None:
     page = await session.scalar(select(CuratedCraft.page).where(CuratedCraft.craftId == craft_id))
-    if page is None:
-        return None
-    try:
-        return CuratedPage.model_validate(page)
-    except ValidationError:
-        logger.warning("craft %s has a curated page index that no longer meets its model", craft_id)
-        return None
+    return stored_curated_page(craft_id, page)
 
 
 async def _facts(session: AsyncSession, views: Sequence[ClaimView]) -> dict[uuid.UUID, ClaimFacts]:
@@ -182,17 +191,6 @@ def _fact(claim: Any, concept: Any) -> ClaimFacts:
     )
 
 
-async def _pieces(session: AsyncSession, piece_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, KnowledgePiece]:
-    rows = await session.scalars(select(PieceRow).where(PieceRow.id.in_(list(piece_ids))))
-    pieces = (stored_piece(row) for row in rows)
-    return {piece.id: piece for piece in pieces if piece is not None}
-
-
-async def _media(session: AsyncSession, media_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, MediaRef]:
-    rows = await session.scalars(select(MediaRefRow).where(MediaRefRow.id.in_(list(media_ids))))
-    return {row.id: stored_media_ref(row) for row in rows}
-
-
 async def _stored_extras(session: AsyncSession, craft: Craft, records: CraftPageRecords) -> CraftPageRecords:
     claim_ids = [view.id for view in records.views]
     links = (
@@ -210,9 +208,7 @@ async def _stored_extras(session: AsyncSession, craft: Craft, records: CraftPage
         PictureRecord(stored_media_ref(row), tuple(claims))
         for row, claims in list(linked.values())[:PICTURES_SHOWN_MAX]
     )
-    return CraftPageRecords(
-        **{**records.__dict__, "pictures": pictures, "terms": await _terms(session, craft)}
-    )
+    return replace(records, pictures=pictures, terms=await _terms(session, craft))
 
 
 async def _terms(session: AsyncSession, craft: Craft) -> tuple[TermRecord, ...]:

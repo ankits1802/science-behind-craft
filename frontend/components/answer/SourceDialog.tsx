@@ -8,14 +8,89 @@ import { ActionGroup } from "@/components/ui/ActionGroup";
 import { highlightQuote, sourceByline, sourceHost, sourceHref, sourceKindLabel, sourceReliabilityLabel } from "@/lib/citations";
 import type { Citation, SourceRef } from "@/lib/types";
 
-export type OpenCitation = { citation: Citation; source: SourceRef | null; number: number | null };
+export type OpenCitation = { citations: readonly Citation[]; source: SourceRef | null; number: number | null };
+
+export function openedSource(citations: readonly Citation[], numbers: ReadonlyMap<string, number>, sourcesById: ReadonlyMap<string, SourceRef>): OpenCitation {
+  const sourceId = citations[0]?.sourceId ?? "";
+  return { citations, source: sourcesById.get(sourceId) ?? null, number: numbers.get(sourceId) ?? null };
+}
+
+function Passage({ citation }: { citation: Citation }) {
+  const parts = highlightQuote(citation.context, citation.quote);
+  return (
+    <div className="grid gap-2" data-testid="source-quote">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <EvidenceKindBadge kind={citation.evidence} />
+        <EvidenceLevelBadge level={citation.level} />
+        {citation.locator ? <span className="text-xs text-ink-500">{citation.locator}</span> : null}
+      </div>
+      {parts.length > 0 ? (
+        <blockquote className="rounded-md border-l-4 border-purple-300 bg-surface-50 px-4 py-3 text-sm leading-7 text-ink-700" data-testid="source-passage">
+          {parts.map((part, index) =>
+            part.mark ? (
+              <mark key={index} className="rounded-sm bg-purple-100 px-0.5 font-medium text-ink-900 dark:bg-purple-800/60 dark:text-white">
+                {part.text}
+              </mark>
+            ) : (
+              <span key={index}>{part.text}</span>
+            )
+          )}
+        </blockquote>
+      ) : (
+        <p className="text-sm text-ink-500">Inferred from the cited source; no passage is quoted.</p>
+      )}
+    </div>
+  );
+}
+
+export function SourceDetails({ open }: { open: OpenCitation }) {
+  const source = open.source;
+  return (
+    <div className="grid gap-4">
+      {open.number ? <span className="font-display text-sm font-bold tabular-nums text-purple-700 dark:text-purple-300">[{open.number}]</span> : null}
+      {open.citations.map((citation, index) => (
+        <Passage key={`${citation.id}:${index}`} citation={citation} />
+      ))}
+      <dl className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs">
+        {source ? (
+          <>
+            <dt className="text-ink-500">Type</dt>
+            <dd className="text-ink-900">{sourceKindLabel(source.kind)}</dd>
+          </>
+        ) : null}
+        {source?.reliability ? (
+          <>
+            <dt className="text-ink-500">Reliability</dt>
+            <dd className="text-ink-900">{sourceReliabilityLabel(source.reliability)}</dd>
+          </>
+        ) : null}
+        {source?.licence ? (
+          <>
+            <dt className="text-ink-500">Licence</dt>
+            <dd className="text-ink-900">{source.licence}</dd>
+          </>
+        ) : null}
+        {source?.attribution ? (
+          <>
+            <dt className="text-ink-500">Attribution</dt>
+            <dd className="text-ink-900">{source.attribution}</dd>
+          </>
+        ) : null}
+        {source?.doi ? (
+          <>
+            <dt className="text-ink-500">DOI</dt>
+            <dd className="break-all text-ink-900">{source.doi}</dd>
+          </>
+        ) : null}
+      </dl>
+    </div>
+  );
+}
 
 export function SourceDialog({ open, onClose }: { open: OpenCitation | null; onClose: () => void }) {
   const source = open?.source ?? null;
-  const citation = open?.citation ?? null;
   const href = source ? sourceHref(source) : null;
   const host = sourceHost(href);
-  const parts = citation ? highlightQuote(citation.context, citation.quote) : [];
 
   return (
     <FieldDialog
@@ -39,68 +114,7 @@ export function SourceDialog({ open, onClose }: { open: OpenCitation | null; onC
         </ActionGroup>
       }
     >
-      {citation ? (
-        <div className="grid gap-4">
-          <div className="flex flex-wrap items-center gap-1.5">
-            {open?.number ? <span className="font-display text-sm font-bold tabular-nums text-purple-700 dark:text-purple-300">[{open.number}]</span> : null}
-            <EvidenceKindBadge kind={citation.evidence} />
-            <EvidenceLevelBadge level={citation.level} />
-          </div>
-          {parts.length > 0 ? (
-            <blockquote className="rounded-md border-l-4 border-purple-300 bg-surface-50 px-4 py-3 text-sm leading-7 text-ink-700" data-testid="source-passage">
-              {parts.map((part, index) =>
-                part.mark ? (
-                  <mark key={index} className="rounded-sm bg-purple-100 px-0.5 font-medium text-ink-900 dark:bg-purple-800/60 dark:text-white">
-                    {part.text}
-                  </mark>
-                ) : (
-                  <span key={index}>{part.text}</span>
-                )
-              )}
-            </blockquote>
-          ) : (
-            <p className="text-sm text-ink-500">Inferred from the cited source; no passage is quoted.</p>
-          )}
-          <dl className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs">
-            {source ? (
-              <>
-                <dt className="text-ink-500">Type</dt>
-                <dd className="text-ink-900">{sourceKindLabel(source.kind)}</dd>
-              </>
-            ) : null}
-            {source?.reliability ? (
-              <>
-                <dt className="text-ink-500">Reliability</dt>
-                <dd className="text-ink-900">{sourceReliabilityLabel(source.reliability)}</dd>
-              </>
-            ) : null}
-            {citation.locator ? (
-              <>
-                <dt className="text-ink-500">Location</dt>
-                <dd className="text-ink-900">{citation.locator}</dd>
-              </>
-            ) : null}
-            {source?.licence ? (
-              <>
-                <dt className="text-ink-500">Licence</dt>
-                <dd className="text-ink-900">{source.licence}</dd>
-              </>
-            ) : null}
-            {source?.attribution ? (
-              <>
-                <dt className="text-ink-500">Attribution</dt>
-                <dd className="text-ink-900">{source.attribution}</dd>
-              </>
-            ) : null}
-            {source?.doi ? (
-              <>
-                <dt className="text-ink-500">DOI</dt>
-                <dd className="break-all text-ink-900">{source.doi}</dd>
-              </>
-            ) : null}
-          </dl>
-        </div>
-      ) : null}
+      {open && open.citations.length > 0 ? <SourceDetails open={open} /> : null}
     </FieldDialog>
   );
 }

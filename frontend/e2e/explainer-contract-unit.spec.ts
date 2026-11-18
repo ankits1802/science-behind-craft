@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { splitSseBuffer } from "@/lib/answerStream";
-import { explainerBlockShape, explainerSectionShape, explainerShape, termShape, type Explainer, type ExplainerBlock } from "@/lib/explainerContract";
+import { BLOCK_SHAPES, explainerBlockShape, explainerSectionShape, explainerShape, ledeBlockShape, termShape, type Explainer, type ExplainerBlock } from "@/lib/explainerContract";
 import { parseExplainerStreamBlock, type ExplainerEvent } from "@/lib/explainerStream";
 import { parseShape, ShapeError } from "@/lib/shape";
 
@@ -18,8 +18,8 @@ function explainer(): Explainer {
   return parseShape(explainerShape, golden("explainer.document.golden.json"));
 }
 
-function streamed(): ExplainerEvent[] {
-  const { blocks, rest } = splitSseBuffer(readFileSync(join(SHARED, "explainer.stream.golden.sse"), "utf8"));
+function streamed(name = "explainer.stream.golden.sse"): ExplainerEvent[] {
+  const { blocks, rest } = splitSseBuffer(readFileSync(join(SHARED, name), "utf8"));
   expect(rest).toBe("");
   return blocks.map(parseExplainerStreamBlock).filter((event): event is ExplainerEvent => event !== null);
 }
@@ -89,4 +89,32 @@ test("an empty section says what it searched", () => {
   const section = (golden("explainer.document.golden.json").sections as Record<string, unknown>[])[2];
   const empty = parseShape(explainerSectionShape, { ...section, state: "EMPTY", blocks: [], searched: "Searched stored findings." });
   expect(empty.searched).toBe("Searched stored findings.");
+});
+
+function mordantBath(sentence: unknown) {
+  return { id: "lede.figure", kind: "mordant_bath", version: 1, reuse: null, dye: "madder", fibre: "cotton", swatches: [{ mordant: "alum", colour: "red", sentence }] };
+}
+
+test("the lede golden parses as the backend writes it, the lede first and its stream with it", () => {
+  const document = parseShape(explainerShape, golden("explainer.lede.golden.json"));
+  expect(document).toEqual(golden("explainer.lede.golden.json"));
+  expect(document.lede?.headline).toBe(document.question);
+  expect(document.lede?.sentences.length).toBe(3);
+  expect(document.sections.map((section) => section.discipline)).toEqual(["CHEMISTRY", "MATERIALS", "PROCESS"]);
+  const events = streamed("explainer.lede.golden.sse");
+  const types = events.map((event) => event.type);
+  expect(types.indexOf("lede")).toBeLessThan(types.indexOf("block"));
+  expect(types.filter((type) => type === "section_heading").length).toBe(3);
+});
+
+test("a lede shows only built figures and answers in two or three sentences", () => {
+  const lede = golden("explainer.lede.golden.json").lede as Record<string, unknown>;
+  const MORDANT_BATH = mordantBath((lede.sentences as unknown[])[0]);
+  expect(parseShape(BLOCK_SHAPES.mordant_bath, MORDANT_BATH)).toEqual(MORDANT_BATH);
+  expect(() => parseShape(ledeBlockShape, { ...lede, figure: MORDANT_BATH })).toThrow(ShapeError);
+  expect(() => parseShape(explainerBlockShape, { ...MORDANT_BATH, id: "s1.b2" })).toThrow(ShapeError);
+  expect(() => parseShape(ledeBlockShape, { ...lede, sentences: (lede.sentences as unknown[]).slice(0, 1) })).toThrow(ShapeError);
+  expect(() => parseExplainerStreamBlock(`event: lede\ndata: ${JSON.stringify({ block: { ...lede, figure: MORDANT_BATH } })}`)).toThrow(ShapeError);
+  const heading = parseExplainerStreamBlock('event: section_heading\ndata: {"sectionId":"s1","title":"Alum holds the red"}');
+  expect(heading).toEqual({ type: "section_heading", data: { sectionId: "s1", title: "Alum holds the red" } });
 });

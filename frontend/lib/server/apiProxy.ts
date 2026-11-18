@@ -8,6 +8,7 @@ import {
 
 export const PROXY_SECRET_HEADER = "x-web-proxy-secret";
 export const VIEWER_ADDRESS_HEADER = "x-viewer-address";
+export const UNKNOWN_VIEWER = "unknown";
 
 export const API_SESSION_TOKEN_HEADER = "x-session-token";
 
@@ -74,13 +75,16 @@ function hostOf(value: string | null): string {
   return (value ?? "").split(",")[0].trim().replace(/:\d+$/, "");
 }
 
-export function isSecureContext(request: Request): boolean {
-  const forwardedProto = (request.headers.get("x-forwarded-proto") ?? "").split(",")[0].trim().toLowerCase();
-  const url = new URL(request.url);
-  const protocol = forwardedProto ? `${forwardedProto}:` : url.protocol;
+export function isSecureRequest(headers: Headers, url: URL | null): boolean {
+  const forwardedProto = (headers.get("x-forwarded-proto") ?? "").split(",")[0].trim().toLowerCase();
+  const protocol = forwardedProto ? `${forwardedProto}:` : (url?.protocol ?? "");
   if (protocol === "https:") return true;
-  const host = hostOf(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) || url.hostname;
+  const host = hostOf(headers.get("x-forwarded-host") ?? headers.get("host")) || (url?.hostname ?? "");
   return LOOPBACK.test(host);
+}
+
+export function isSecureContext(request: Request): boolean {
+  return isSecureRequest(request.headers, new URL(request.url));
 }
 
 export function cookieNames(secure: boolean): { session: string; marker: string } {
@@ -143,6 +147,10 @@ export function viewerAddress(headers: Headers): string | null {
   return forwarded || null;
 }
 
+export function viewerOrUnknown(headers: Headers): string {
+  return viewerAddress(headers) ?? UNKNOWN_VIEWER;
+}
+
 export function upstreamHeaders(request: Request, token: string | null, source: Env = env()): Headers {
   const headers = new Headers();
   request.headers.forEach((value, name) => {
@@ -154,8 +162,7 @@ export function upstreamHeaders(request: Request, token: string | null, source: 
   const secret = proxySecret(source);
   if (secret) {
     headers.set(PROXY_SECRET_HEADER, secret);
-    const viewer = viewerAddress(request.headers);
-    if (viewer) headers.set(VIEWER_ADDRESS_HEADER, viewer);
+    headers.set(VIEWER_ADDRESS_HEADER, viewerOrUnknown(request.headers));
   }
   return headers;
 }

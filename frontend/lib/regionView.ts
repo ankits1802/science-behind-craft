@@ -1,3 +1,4 @@
+import { listText } from "@/lib/format";
 import { formatRange, formatMeasure } from "@/lib/measure";
 import {
   INHERITED_REASON,
@@ -12,6 +13,7 @@ import {
   type RegionPlace,
   type RegionValue
 } from "@/lib/regionContract";
+import { MONTH_NAMES } from "@/lib/seasonsView";
 import { ShapeError } from "@/lib/shape";
 
 export const FACET_LABEL: Record<RegionFacetName, string> = {
@@ -43,6 +45,15 @@ const STAT_LABEL: Record<RegionValue["stat"], string> = {
   TREND_P_VALUE: "Trend significance (Mann–Kendall)"
 };
 
+const SHARE_OF: Record<string, string> = {
+  "fraction of land": "Share of district land",
+  "fraction of 2000 forest": "Share of the 2000 forest"
+};
+
+function statLabel(stat: RegionValue["stat"], unit: string): string {
+  return stat === "SHARE" ? (SHARE_OF[unit.trim()] ?? STAT_LABEL.SHARE) : STAT_LABEL[stat];
+}
+
 const STATE_AGGREGATION_LABEL: Record<Exclude<RegionValue["aggregation"], "DISTRICT">, string> = {
   STATE_AREA_MEAN: "State mean, area-weighted",
   STATE_SUM: "State total",
@@ -54,15 +65,22 @@ const VARIABLE_LABEL: Record<string, string> = {
   phh2o: "Soil pH (in water)",
   soc: "Soil organic carbon",
   cec: "Cation exchange capacity",
+  bdod: "Bulk density",
+  nitrogen: "Soil nitrogen",
+  monthly_precipitation: "Precipitation",
   annual_mean_temperature: "Annual mean temperature",
   max_temperature_warmest_month: "Warmest-month maximum temperature",
   min_temperature_coldest_month: "Coldest-month minimum temperature",
   annual_precipitation_cv: "Year-to-year precipitation variation",
   monsoon_share_jjas: "Monsoon share, June–September",
   distance_centroid_to_major_river: "Distance to a major river",
-  max_strahler_order: "Largest river order",
+  max_strahler_order: "Largest river order (Strahler)",
   max_discharge: "Largest river discharge",
   treecover2000: "Tree cover in 2000",
+  forest_canopy30: "Forest cover, canopy of 30% or more",
+  forest_canopy30_area: "Forest area, canopy of 30% or more",
+  forest_loss_canopy30: "Forest loss, canopy of 30% or more",
+  forest_loss_canopy30_share: "Share of the 2000 forest lost",
   mineral_occurrences: "Mineral sites",
   lithology: "Rock type",
   bare_sparse_vegetation: "Bare or sparse vegetation",
@@ -72,6 +90,8 @@ const VARIABLE_LABEL: Record<string, string> = {
 };
 
 const LAND_COVER_PREFIX = "landcover_";
+const MONTHLY_PERIOD = /^(\d{4})-(\d{4})-(0[1-9]|1[0-2])$/;
+const YEAR_SPAN = /^(\d{4})-(\d{4})$/;
 
 function sentenceCase(code: string): string {
   const words = code.replace(/_+/g, " ").trim();
@@ -87,8 +107,19 @@ export function depthText(depth: string): string {
   return depth.replace(/^(\d+)-(\d+)cm$/, "$1–$2 cm");
 }
 
-export function valueLabel(value: Pick<RegionValue, "variable" | "depth">): string {
-  return value.depth ? `${variableLabel(value.variable)}, ${depthText(value.depth)}` : variableLabel(value.variable);
+export function periodMonth(period: string): string | null {
+  const monthly = MONTHLY_PERIOD.exec(period);
+  return monthly ? MONTH_NAMES[Number(monthly[3]) - 1] : null;
+}
+
+export function periodText(period: string): string {
+  const monthly = MONTHLY_PERIOD.exec(period);
+  if (monthly) return `${monthly[1]}–${monthly[2]}`;
+  return period.replace(YEAR_SPAN, "$1–$2");
+}
+
+export function valueLabel(value: Pick<RegionValue, "variable" | "depth" | "period">): string {
+  return [variableLabel(value.variable), value.depth ? depthText(value.depth) : null, periodMonth(value.period)].filter(Boolean).join(", ");
 }
 
 export function valueReading(value: RegionValue): string {
@@ -98,21 +129,22 @@ export function valueReading(value: RegionValue): string {
 }
 
 export function statCaption(value: RegionValue): string {
-  if (value.aggregation === "DISTRICT") return STAT_LABEL[value.stat];
+  if (value.aggregation === "DISTRICT") return statLabel(value.stat, value.unit);
   const label = STATE_AGGREGATION_LABEL[value.aggregation];
   if (value.districtCount === null || value.districtTotal === null) return label;
   return `${label} of ${value.districtCount} of ${value.districtTotal} districts`;
 }
 
 export function valueProvenance(value: RegionValue, dataset: RegionDataset): string {
-  return [statCaption(value), dataset.title, value.resolution, value.period].join(" · ");
+  return [statCaption(value), dataset.title, value.resolution, periodText(value.period)].join(" · ");
 }
 
 export const STATE_PLACE_NOTE = "Practised across the state";
 
-export function placeSubtitle(place: RegionPlace): string {
+export function placeSubtitle(place: RegionPlace, named: readonly string[]): string {
   if (place.scope === "STATE") return STATE_PLACE_NOTE;
-  return place.districtName ? `${place.districtName} district · ${place.stateName}` : place.stateName;
+  const where = `District, ${place.stateName}`;
+  return named.length > 0 ? `${where} · includes ${listText(named)}` : where;
 }
 
 export function inheritedNote(place: RegionPlace): string | null {
@@ -216,9 +248,9 @@ export function layerOptions(list: MapLayerList): { value: string; label: string
   return list.layers
     .map((layer, at) => ({ layer, at }))
     .sort((a, b) => REGION_FACETS.indexOf(a.layer.facet) - REGION_FACETS.indexOf(b.layer.facet) || a.at - b.at)
-    .map(({ layer }) => ({ value: layer.id, label: layer.title, group: FACET_LABEL[layer.facet], hint: layer.period }));
+    .map(({ layer }) => ({ value: layer.id, label: layer.title, group: FACET_LABEL[layer.facet], hint: periodText(layer.period) }));
 }
 
 export function layerCaption(layer: MapLayer): string {
-  return [STAT_LABEL[layer.layer.stat], layer.dataset.title, layer.resolution, layer.layer.period].join(" · ");
+  return [statLabel(layer.layer.stat, layer.layer.unit), layer.dataset.title, layer.resolution, periodText(layer.layer.period)].join(" · ");
 }

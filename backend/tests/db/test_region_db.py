@@ -12,7 +12,7 @@ from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine, get_session
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, get_optional_user
 from app.main import app
 from app.models import (
     AdminDistrict,
@@ -34,12 +34,14 @@ from ..geo.golden_region import (
     GOLDEN_LAYERS,
     KACHCHH,
     KACHCHH_ROWS,
+    LISTED_ROWS,
     SOIL_PH,
     VAV_THARAD,
     WORLDCOVER_READ,
     golden_datasets,
     golden_methods,
 )
+from ..readers import sign_in_as
 
 pytestmark = pytest.mark.db
 
@@ -138,7 +140,7 @@ async def fetched(session: AsyncSession, path: str, **headers: str) -> httpx.Res
 
     reader = User(id=uuid.uuid4(), name="Reader", email="reader@example.com", role="STUDENT")
     app.dependency_overrides[get_session] = this_session
-    app.dependency_overrides[get_current_user] = lambda: reader
+    sign_in_as(app, lambda: reader)
     try:
         transport = httpx.ASGITransport(app=app)
         async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
@@ -146,6 +148,7 @@ async def fetched(session: AsyncSession, path: str, **headers: str) -> httpx.Res
     finally:
         app.dependency_overrides.pop(get_session, None)
         app.dependency_overrides.pop(get_current_user, None)
+        app.dependency_overrides.pop(get_optional_user, None)
 
 
 async def region(session: AsyncSession) -> CraftRegion:
@@ -177,11 +180,7 @@ async def test_the_layer_routes_reproduce_the_golden_list_and_layer(session: Asy
     ids = await store_datasets(session)
     soil = ("SOILGRIDS_2_0", "phh2o", "0-5cm", "DISTRICT_MEAN")
     session.add_all(env_row(ids, lgd, (*soil, value, "pH", None)) for lgd, value in SOIL_PH.items())
-    session.add_all(
-        env_row(ids, KACHCHH, row)
-        for row in KACHCHH_ROWS
-        if row[1] in {"annual_mean_temperature", "landcover_cropland"}
-    )
+    session.add_all(env_row(ids, KACHCHH, row) for row in LISTED_ROWS)
     await session.flush()
     listed = await fetched(session, "/api/map/layers")
     assert listed.status_code == 200, listed.text

@@ -1,0 +1,1190 @@
+{
+  "schemaVersion": 1,
+  "category": {
+    "slug": "Leather-Craft-Category",
+    "name": "Leather Craft Category",
+    "label": "Leather",
+    "palette": "hide",
+    "path": "/categories/Leather-Craft-Category",
+    "craftCount": 6
+  },
+  "curated": true,
+  "curation": {
+    "version": 1,
+    "curatedAt": "2026-11-18T09:00:00Z",
+    "coverage": "THIN",
+    "searched": [
+      {
+        "query": "vegetable tanning chrome tanning chemistry review open access collagen tannins",
+        "site": "web search"
+      },
+      {
+        "query": "Kolhapuri chappal geographical indication journal application method of production vegetable tanned leather",
+        "site": "web search"
+      },
+      {
+        "query": "Tholu Bommalata leather puppetry Andhra Pradesh history article pdf",
+        "site": "web search"
+      },
+      {
+        "query": "Santiniketan leather craft history Sriniketan Pratima Devi batik leather",
+        "site": "web search"
+      }
+    ]
+  },
+  "hero": {
+    "media": {
+      "id": "9bad5f62-fcfe-5be8-987c-387bf2d769d0",
+      "display": "INLINE",
+      "provider": "curation",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Indian_chappal,_Kolhapur,_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Indian_chappal%2C_Kolhapur%2C_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+      "width": null,
+      "height": null,
+      "title": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+      "alt": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+      "author": "Daderot",
+      "site": "commons.wikimedia.org",
+      "credit": null,
+      "licence": "CC0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceId": null,
+      "retrievedAt": "2026-11-18T09:00:00Z"
+    },
+    "caption": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto"
+  },
+  "overview": {
+    "lede": [
+      {
+        "id": "p6be467902b26.1",
+        "text": "Leather is animal skin or hide that tanning, a chemical treatment with vegetable tannins, mineral salts such as chromium sulfate, or oils, converts from perishable skin into a stable, non-decaying material.",
+        "level": "PROVISIONAL",
+        "claimIds": [
+          "852cafa2-a62b-50c3-ab6e-0af34744ff35",
+          "9ae35f63-8f90-58dc-b549-133f27514bce",
+          "89ea0d23-f1dc-5b3f-9ee7-ba8cacdf46d8"
+        ],
+        "terms": [],
+        "subCategories": [],
+        "crafts": []
+      },
+      {
+        "id": "p6be467902b26.2",
+        "text": "The category's footwear includes the bag-tanned Kolhapuri chappals of Maharashtra and Karnataka and the Chamba Chappal of Himachal Pradesh, and its other leather articles include Kanpur saddlery, Santiniketan leather goods and the leather shadow puppets of Andhra Pradesh and Karnataka.",
+        "level": "PROVISIONAL",
+        "claimIds": [
+          "d5b92396-9e80-55b7-a9e3-5149d460814e",
+          "8bef7a56-08a0-55d8-9044-21931407d209",
+          "e72658cb-c4ad-5b00-a243-4e2e2be10d48",
+          "31a90bd5-43a5-5657-9672-158134b552f7",
+          "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+          "006c72f8-9024-5bf2-8513-c64c3924db0a",
+          "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+          "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1"
+        ],
+        "terms": [],
+        "subCategories": [
+          "Leather-Footwear",
+          "Leather-Other-Articles"
+        ],
+        "crafts": [
+          "Kolhapuri-Chappal",
+          "Chamba-Chappal",
+          "Kanpur-Saddlery",
+          "Santiniketan-Leather-Goods",
+          "Andhra-Pradesh-Leather-Puppetry"
+        ]
+      },
+      {
+        "id": "p6be467902b26.3",
+        "text": "Chamar names a widespread caste of northern India whose hereditary occupation is tanning leather, and in the Kolhapuri trade the Dhors run the tanneries and the Chambhars make the chappals by hand.",
+        "level": "PROVISIONAL",
+        "claimIds": [
+          "b67a7053-21da-5a82-a894-01e83820f989",
+          "6db3e223-90e4-5c13-a142-31e0efc8cd12"
+        ],
+        "terms": [],
+        "subCategories": [
+          "Leather-Footwear"
+        ],
+        "crafts": [
+          "Kolhapuri-Chappal"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Sub-categories",
+        "value": "Footwear such as Kolhapuri and Chamba chappals; other articles such as saddlery, Santiniketan leather goods and shadow puppets",
+        "claimIds": [
+          "d5b92396-9e80-55b7-a9e3-5149d460814e",
+          "31a90bd5-43a5-5657-9672-158134b552f7",
+          "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+          "006c72f8-9024-5bf2-8513-c64c3924db0a",
+          "c729d5cb-745c-5e94-a4be-a2c04830e00f"
+        ]
+      },
+      {
+        "label": "Tanning methods",
+        "value": "Vegetable, chrome and syntan tanning",
+        "claimIds": [
+          "92216fa7-cc46-5a36-8b2e-51c9ecdd8e6d"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "OVERVIEW",
+        "title": "What it is",
+        "sentences": [
+          {
+            "id": "pb4817fbca4c4.1",
+            "text": "Leather is used for clothing, footwear, handbags, furniture, tools and sports equipment, and finished leather is fashioned into shoes and boots, belts, upholstery, saddles, gloves, luggage and purses.",
+            "level": "PROVISIONAL",
+            "claimIds": [
+              "852cafa2-a62b-50c3-ab6e-0af34744ff35",
+              "bc2820fa-2482-57dd-a30c-2836f04ad9b5"
+            ],
+            "terms": [],
+            "subCategories": [],
+            "crafts": []
+          },
+          {
+            "id": "pb4817fbca4c4.2",
+            "text": "Leathers are traditionally made by vegetable, chrome and syntan tanning, though newer sustainable methods have since been developed.",
+            "level": "PROVISIONAL",
+            "claimIds": [
+              "92216fa7-cc46-5a36-8b2e-51c9ecdd8e6d"
+            ],
+            "terms": [],
+            "subCategories": [],
+            "crafts": []
+          },
+          {
+            "id": "pb4817fbca4c4.3",
+            "text": "Among footwear, Kolhapuri chappals are handmade open footwear made of vegetable-tanned leather with traditional techniques and tools.",
+            "level": "PROVISIONAL",
+            "claimIds": [
+              "d5b92396-9e80-55b7-a9e3-5149d460814e"
+            ],
+            "terms": [],
+            "subCategories": [
+              "Leather-Footwear"
+            ],
+            "crafts": [
+              "Kolhapuri-Chappal"
+            ]
+          },
+          {
+            "id": "pb4817fbca4c4.4",
+            "text": "Among other articles, Kanpur Saddlery craftsmen make saddles, harnesses and other equestrian equipment from leather obtained from local tanneries, and Santiniketan leather goods are a byproduct of Rabindranath Tagore's Rural Reconstruction initiative at Visva-Bharati University.",
+            "level": "PROVISIONAL",
+            "claimIds": [
+              "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+              "006c72f8-9024-5bf2-8513-c64c3924db0a"
+            ],
+            "terms": [],
+            "subCategories": [
+              "Leather-Other-Articles"
+            ],
+            "crafts": [
+              "Kanpur-Saddlery",
+              "Santiniketan-Leather-Goods"
+            ]
+          },
+          {
+            "id": "pb4817fbca4c4.5",
+            "text": "Tholu bommalata, literally the dance of the leather puppets, is the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka, and togalu gombeyata is a traditional shadow theatre of Karnataka.",
+            "level": "PROVISIONAL",
+            "claimIds": [
+              "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+              "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1"
+            ],
+            "terms": [
+              {
+                "text": "Tholu bommalata",
+                "termKey": "tholu-bommalata"
+              },
+              {
+                "text": "togalu gombeyata",
+                "termKey": "togalu-gombeyata"
+              }
+            ],
+            "subCategories": [
+              "Leather-Other-Articles"
+            ],
+            "crafts": [
+              "Andhra-Pradesh-Leather-Puppetry"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "subCategories": [
+    {
+      "slug": "Leather-Footwear",
+      "name": "Leather (Footwear)",
+      "label": "Leather footwear",
+      "craftCount": 3,
+      "crafts": [
+        {
+          "slug": "Chamba-Chappal",
+          "name": "Chamba Chappal",
+          "path": "/crafts/Chamba-Chappal",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kolhapuri-Chappal",
+          "name": "Kolhapuri Chappal",
+          "path": "/crafts/Kolhapuri-Chappal",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kataki-Chappal",
+          "name": "Kataki Chappal",
+          "path": "/crafts/Kataki-Chappal",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Other-Leather-Footwear",
+          "name": "Other (Leather Footwear)",
+          "path": "/crafts/Other-Leather-Footwear",
+          "giStatus": "NON_GI",
+          "catchAll": true,
+          "curated": false
+        }
+      ],
+      "sentence": {
+        "id": "p6be467902b26.2",
+        "text": "The category's footwear includes the bag-tanned Kolhapuri chappals of Maharashtra and Karnataka and the Chamba Chappal of Himachal Pradesh, and its other leather articles include Kanpur saddlery, Santiniketan leather goods and the leather shadow puppets of Andhra Pradesh and Karnataka.",
+        "level": "PROVISIONAL",
+        "claimIds": [
+          "d5b92396-9e80-55b7-a9e3-5149d460814e",
+          "8bef7a56-08a0-55d8-9044-21931407d209",
+          "e72658cb-c4ad-5b00-a243-4e2e2be10d48",
+          "31a90bd5-43a5-5657-9672-158134b552f7",
+          "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+          "006c72f8-9024-5bf2-8513-c64c3924db0a",
+          "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+          "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1"
+        ],
+        "terms": [],
+        "subCategories": [
+          "Leather-Footwear",
+          "Leather-Other-Articles"
+        ],
+        "crafts": [
+          "Kolhapuri-Chappal",
+          "Chamba-Chappal",
+          "Kanpur-Saddlery",
+          "Santiniketan-Leather-Goods",
+          "Andhra-Pradesh-Leather-Puppetry"
+        ]
+      },
+      "openQuestion": null
+    },
+    {
+      "slug": "Leather-Other-Articles",
+      "name": "Leather (Other articles)",
+      "label": "Leather goods",
+      "craftCount": 3,
+      "crafts": [
+        {
+          "slug": "Andhra-Pradesh-Leather-Puppetry",
+          "name": "Andhra Pradesh Leather Puppetry",
+          "path": "/crafts/Andhra-Pradesh-Leather-Puppetry",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kanpur-Saddlery",
+          "name": "Kanpur Saddlery",
+          "path": "/crafts/Kanpur-Saddlery",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Santiniketan-Leather-Goods",
+          "name": "Santiniketan Leather Goods",
+          "path": "/crafts/Santiniketan-Leather-Goods",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Leather-Other-Articles-Others",
+          "name": "Others",
+          "path": "/crafts/Leather-Other-Articles-Others",
+          "giStatus": "NON_GI",
+          "catchAll": true,
+          "curated": false
+        }
+      ],
+      "sentence": {
+        "id": "p6be467902b26.2",
+        "text": "The category's footwear includes the bag-tanned Kolhapuri chappals of Maharashtra and Karnataka and the Chamba Chappal of Himachal Pradesh, and its other leather articles include Kanpur saddlery, Santiniketan leather goods and the leather shadow puppets of Andhra Pradesh and Karnataka.",
+        "level": "PROVISIONAL",
+        "claimIds": [
+          "d5b92396-9e80-55b7-a9e3-5149d460814e",
+          "8bef7a56-08a0-55d8-9044-21931407d209",
+          "e72658cb-c4ad-5b00-a243-4e2e2be10d48",
+          "31a90bd5-43a5-5657-9672-158134b552f7",
+          "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+          "006c72f8-9024-5bf2-8513-c64c3924db0a",
+          "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+          "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1"
+        ],
+        "terms": [],
+        "subCategories": [
+          "Leather-Footwear",
+          "Leather-Other-Articles"
+        ],
+        "crafts": [
+          "Kolhapuri-Chappal",
+          "Chamba-Chappal",
+          "Kanpur-Saddlery",
+          "Santiniketan-Leather-Goods",
+          "Andhra-Pradesh-Leather-Puppetry"
+        ]
+      },
+      "openQuestion": null
+    }
+  ],
+  "sourcesDiffer": [
+    {
+      "about": "How many tanneries Kanpur and its Jajmau cluster hold",
+      "claimIds": [
+        "5b94d767-0b1a-5934-9584-c76ca35b34b2",
+        "20674cd1-62d7-5233-9362-d25d1d7fa536"
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "key": "tholu-bommalata",
+      "label": "tholu bommalata",
+      "names": [
+        "tholu bommalata"
+      ],
+      "meaning": "Literally the dance (attam, ata) of the leather (tholu) puppets (bommalu): the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka.",
+      "language": "te",
+      "script": null,
+      "claimIds": [
+        "c729d5cb-745c-5e94-a4be-a2c04830e00f"
+      ]
+    },
+    {
+      "key": "togalu-gombeyata",
+      "label": "togalu gombeyata",
+      "names": [
+        "togalu gombeyata"
+      ],
+      "meaning": "Togalu signifies leather and gombeyata figure, doll, dance and performance: the traditional shadow theatre of Karnataka.",
+      "language": "kn",
+      "script": null,
+      "claimIds": [
+        "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1"
+      ]
+    },
+    {
+      "key": "charmakara",
+      "label": "charmakara",
+      "names": [
+        "charmakara"
+      ],
+      "meaning": "Sanskrit for skin worker, from which the name Chamar is derived.",
+      "language": "sa",
+      "script": null,
+      "claimIds": [
+        "b67a7053-21da-5a82-a894-01e83820f989"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "media": {
+        "id": "9bad5f62-fcfe-5be8-987c-387bf2d769d0",
+        "display": "INLINE",
+        "provider": "curation",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Indian_chappal,_Kolhapur,_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Indian_chappal%2C_Kolhapur%2C_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+        "width": null,
+        "height": null,
+        "title": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+        "alt": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+        "author": "Daderot",
+        "site": "commons.wikimedia.org",
+        "credit": null,
+        "licence": "CC0",
+        "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "sourceId": null,
+        "retrievedAt": "2026-11-18T09:00:00Z"
+      },
+      "caption": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+      "claimIds": [
+        "d5b92396-9e80-55b7-a9e3-5149d460814e",
+        "d5ae9ad2-da79-535c-a50b-7689ad0f08d5"
+      ]
+    },
+    {
+      "media": {
+        "id": "0bfab1b3-c9ed-5b81-930e-f8f246b2ef2c",
+        "display": "INLINE",
+        "provider": "curation",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Santiniketan_leather_bag.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/Santiniketan_leather_bag.jpg",
+        "width": null,
+        "height": null,
+        "title": "A Santiniketan leather bag",
+        "alt": "A Santiniketan leather bag",
+        "author": "BengaliHindu",
+        "site": "commons.wikimedia.org",
+        "credit": null,
+        "licence": "CC BY-SA 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceId": null,
+        "retrievedAt": "2026-11-18T09:00:00Z"
+      },
+      "caption": "A Santiniketan leather bag",
+      "claimIds": [
+        "006c72f8-9024-5bf2-8513-c64c3924db0a",
+        "d2ba5754-7c2e-5770-9142-7d1194dd38b5"
+      ]
+    }
+  ],
+  "openQuestions": [
+    {
+      "key": "O01",
+      "question": "Did shadow theatre spread from South India to South East Asia during the Satavahana and Chalukya period?",
+      "settledBy": null,
+      "claimIds": [
+        "17ad6bab-9c40-5a8b-8646-9cbb685b6110",
+        "3825018f-793e-5994-bf44-48264a264c96"
+      ],
+      "subCategories": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "852cafa2-a62b-50c3-ab6e-0af34744ff35",
+      "text": "Leather is animal skin or hide treated with chemicals to preserve it for use in clothing, footwear, handbags, furniture, tools and sports equipment.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "dcc2ec5d-ea48-5001-894a-d21f6e7193be",
+          "claimId": "852cafa2-a62b-50c3-ab6e-0af34744ff35",
+          "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+          "quote": "animalskins and hides that have been treated with chemicals to preserve them and make them suitable for use as clothing, footwear, handbags, furniture, tools, and sports equipment.",
+          "locator": "introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "9ae35f63-8f90-58dc-b549-133f27514bce",
+      "text": "Tanning is the chemical treatment that converts otherwise perishable skin into a stable, non-decaying material, and it is the most important chemical step in leather making.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "01d04d3e-0e65-50c9-ac9f-1ad95ec2cffd",
+          "claimId": "9ae35f63-8f90-58dc-b549-133f27514bce",
+          "sourceId": "21a074d3-69da-54dd-9e0d-eca64e5d8daa",
+          "quote": "the tanning process is the most important chemical process that converts animal skins into leather",
+          "locator": "abstract",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "15c6cb3e-567a-54c3-8dd7-67355b051ea6",
+          "claimId": "9ae35f63-8f90-58dc-b549-133f27514bce",
+          "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+          "quote": "The preservation process employed is a chemical treatment called tanning, which converts the otherwise perishable skin to a stable and nondecaying material.",
+          "locator": "introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "89ea0d23-f1dc-5b3f-9ee7-ba8cacdf46d8",
+      "text": "Tanning agents include vegetable tannins from sources such as tree bark, mineral salts such as chromium sulfate, and fish or animal oils.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "62edbd8e-a294-596b-8caf-b0039b69f6ef",
+          "claimId": "89ea0d23-f1dc-5b3f-9ee7-ba8cacdf46d8",
+          "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+          "quote": "Tanning agents include vegetable tannins (from sources such as tree bark), mineral salts (such as chromiumsulfate), and fish or animal oils.",
+          "locator": "introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "d5b92396-9e80-55b7-a9e3-5149d460814e",
+      "text": "Kolhapuri chappals are handmade open footwear made of vegetable-tanned leather with traditional techniques and tools.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "9110b368-fd56-5a7f-ab7c-654d2e0b42d0",
+          "claimId": "d5b92396-9e80-55b7-a9e3-5149d460814e",
+          "sourceId": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+          "quote": "Kolhapuri Chappal are handmade open Indian footwear made of tanned vegetable leather produced using traditional technique and tools.",
+          "locator": "Application 169, E) Specification, p. 7",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "8bef7a56-08a0-55d8-9044-21931407d209",
+      "text": "The Kolhapuri GI application states that the chappal is made completely and exclusively from bag-tanned vegetable leather.",
+      "level": "PROVISIONAL",
+      "discipline": "MATERIALS",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "1aa099bd-ec25-5aeb-a0df-7cfbf91b6286",
+          "claimId": "8bef7a56-08a0-55d8-9044-21931407d209",
+          "sourceId": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+          "quote": "The Kolhapuri chappal is completely and exclusively made from bag tanned vegetable leather.",
+          "locator": "Application 169, I) Method of Production, p. 8",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "e72658cb-c4ad-5b00-a243-4e2e2be10d48",
+      "text": "Before 1947, in undivided Bombay State, most Kolhapuri chappals were made from bag-tanned leathers by Chamars of Maharashtra and Karnataka.",
+      "level": "PROVISIONAL",
+      "discipline": "HISTORY",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "cc92097e-fda8-5c35-9c98-7c8e0259fc0a",
+          "claimId": "e72658cb-c4ad-5b00-a243-4e2e2be10d48",
+          "sourceId": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+          "quote": "In the un divided Bombay State (before 1947), most of the Kolhapuri chappals were produced form bag tanned leathers by chamars of Maharashtra and Karnataka",
+          "locator": "Application 169, H) Proof of Origin, p. 8",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "31a90bd5-43a5-5657-9672-158134b552f7",
+      "text": "Chamba Chappal of Himachal Pradesh is a registered GI handicraft in class 25, filed 25-05-2018 as application 614, with certificate 403 dated 14-09-2021.",
+      "level": "PROVISIONAL",
+      "discipline": "ECONOMICS",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "0c25ba3d-a310-5bb7-9938-a7072bd0880e",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+          "quote": "614 Chamba Chappal 25 Handicraft",
+          "locator": "New G.I. application details, p. 4",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "2d8c65a4-d393-5eb5-b231-e0b413221403",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Date of Filing | 25-05-2018 |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "4d91105e-ad49-5129-a923-d52a17e89002",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Certificate Date | 14-09-2021 |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "4e873bb9-cf1f-50c7-9daa-1b94a4044d5a",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Geographical Area | Himachal Pradesh |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "54837e29-06b7-5db7-89b3-852e24cc8073",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Geographical Indications | Chamba Chappal |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "ec0b219d-939f-5110-80e6-551471898c28",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Certificate Number | 403 |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "f5f6e7aa-741a-517f-ad94-dc359013dbb4",
+          "claimId": "31a90bd5-43a5-5657-9672-158134b552f7",
+          "sourceId": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+          "quote": "| Application Number | 614 |",
+          "locator": "application details",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+      "text": "Kanpur Saddlery craftsmen make saddles, harnesses and other equestrian equipment from high-quality leather obtained from local tanneries.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "07d31e8a-c88d-588f-ab3c-75ab8b3f3a9a",
+          "claimId": "a3c39395-7f6e-5e2c-90ef-177fae6912fe",
+          "sourceId": "85452b63-1490-5534-bdd8-7e8d73671c45",
+          "quote": "High-quality leather, obtained from local tanneries, is crafted meticulously to create saddles, harnesses and other equestrian equipment.",
+          "locator": "A leather legacy",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "006c72f8-9024-5bf2-8513-c64c3924db0a",
+      "text": "Santiniketan leather goods are a byproduct of Rabindranath Tagore's Rural Reconstruction initiative at Visva-Bharati University.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "14082449-356d-5517-a356-4f30a5838798",
+          "claimId": "006c72f8-9024-5bf2-8513-c64c3924db0a",
+          "sourceId": "9b33be6e-51de-5c74-bc92-86b21cd9ffad",
+          "quote": "Santiniketan leather goods are a byproduct of Rabindranath Tagore's Rural Reconstruction initiative at the Visva Bharati University.",
+          "locator": "Legacy of the Leather",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+      "text": "Tholu bommalata, literally the dance of the leather puppets, is the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "5e58dd33-511f-5ee8-ad85-13b79008b66e",
+          "claimId": "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+          "sourceId": "b06ea566-d456-5676-9b88-4b43a3e52b9a",
+          "quote": "literally means the dance (attam, ata) of the leather (tholu) puppets (bommalu)",
+          "locator": "Introduction, para. 1",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "91f91f34-dc9d-5aa4-bc9d-6a1bd365eb08",
+          "claimId": "c729d5cb-745c-5e94-a4be-a2c04830e00f",
+          "sourceId": "b06ea566-d456-5676-9b88-4b43a3e52b9a",
+          "quote": "Tholu bommalata is the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka.",
+          "locator": "Introduction, para. 1",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1",
+      "text": "Togalu gombeyata is a traditional shadow theatre of Karnataka whose name joins togalu, leather, with gombeyata, figure, doll, dance and performance.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "a661764a-a492-5b54-ba92-767caf5f50f7",
+          "claimId": "96b58cc2-6f9f-5eb8-a25a-034d3ee3c5b1",
+          "sourceId": "76991638-95ee-5014-aeca-33a1898f0bc7",
+          "quote": "Traditional shadow theatre from Karnataka in south-west India. Togalu signifies \"leather\" and gombeyata \"figure, doll, dance and performance\".",
+          "locator": "para. 1",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "b67a7053-21da-5a82-a894-01e83820f989",
+      "text": "Chamar names a widespread caste of northern India whose hereditary occupation is tanning leather, from the Sanskrit charmakara, skin worker.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "ea1b0d2a-d8ef-5e3d-b065-f54360b1a936",
+          "claimId": "b67a7053-21da-5a82-a894-01e83820f989",
+          "sourceId": "37cc4446-9121-5f45-8b5d-3c083dde91d8",
+          "quote": "widespreadcaste in northern India whose hereditary occupation is tanning leather; the name is derived from the Sanskrit word charmakara (\"skin worker\").",
+          "locator": "entry",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "6db3e223-90e4-5c13-a142-31e0efc8cd12",
+      "text": "In the Kolhapuri trade the Dhors run the tanneries and the Chambhars make the chappals by hand.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "74898e31-3390-5168-b8b3-10324e53dc6f",
+          "claimId": "6db3e223-90e4-5c13-a142-31e0efc8cd12",
+          "sourceId": "36a0b4bf-b047-5c90-a5b8-e2dd43459f8b",
+          "quote": "The Dhors, to which Vathkar belongs, run the tanneries, and the Chambhars make the chappals by hand.",
+          "locator": "para. 7",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "92216fa7-cc46-5a36-8b2e-51c9ecdd8e6d",
+      "text": "Leathers are traditionally made by three types of tanning, vegetable, chrome and syntan tanning, though newer sustainable methods have since been developed.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "c220d621-3b44-52da-8fb4-a1d30f40e03b",
+          "claimId": "92216fa7-cc46-5a36-8b2e-51c9ecdd8e6d",
+          "sourceId": "21a074d3-69da-54dd-9e0d-eca64e5d8daa",
+          "quote": "Traditionally, leathers are processed by the three types of tanning methods including vegetable tanning, chrome tanning and syntan tanning but recently the tanning processes are quite improved with the development of various sustainable tanning methods.",
+          "locator": "section 6.2, Tanning methods",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "bc2820fa-2482-57dd-a30c-2836f04ad9b5",
+      "text": "Finished leather is fashioned into shoes and boots, apparel, belts, upholstery, suede goods, saddles, gloves, luggage, purses and recreational equipment.",
+      "level": "PROVISIONAL",
+      "discipline": "OVERVIEW",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "90d80a21-b7d4-5f59-8c62-b774a2168041",
+          "claimId": "bc2820fa-2482-57dd-a30c-2836f04ad9b5",
+          "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+          "quote": "The leather is then ready to be fashioned into any of a multitude of products. These include shoes and boots, outer apparel, belts, upholstery materials, suede products, saddles, gloves, luggage and purses, and recreational equipment",
+          "locator": "Modern leather making",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "5b94d767-0b1a-5934-9584-c76ca35b34b2",
+      "text": "A study published in 2025 puts approximately 3,000 tanneries along the Ganga and a cluster of around 400 in Jajmau, Kanpur.",
+      "level": "PROVISIONAL",
+      "discipline": "GEOGRAPHY",
+      "sourcesDiffer": true,
+      "citations": [
+        {
+          "id": "0b412a96-4473-54ad-94bf-6a650aee5908",
+          "claimId": "5b94d767-0b1a-5934-9584-c76ca35b34b2",
+          "sourceId": "fe49376b-3023-5410-8394-a0c9e05cd5c2",
+          "quote": "Published online: 29 Oct 2025.",
+          "locator": "title page",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "c7dd05fe-6fb8-533f-a5a4-f8f359b28d3e",
+          "claimId": "5b94d767-0b1a-5934-9584-c76ca35b34b2",
+          "sourceId": "fe49376b-3023-5410-8394-a0c9e05cd5c2",
+          "quote": "There are approximately 3,000 tanneries located along the Ganga River (Dwivedi et al. 2018). A cluster of around 400 tanneries can be found in Jajmau, Kanpur",
+          "locator": "Introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "20674cd1-62d7-5233-9362-d25d1d7fa536",
+      "text": "A 2012 paper notes that CLRI records showed only 170 tanneries at Kanpur, while a study in 2000 found twice this number in one tanning cluster.",
+      "level": "PROVISIONAL",
+      "discipline": "GEOGRAPHY",
+      "sourcesDiffer": true,
+      "citations": [
+        {
+          "id": "a3a90324-39d5-5dda-8943-af1bcb39b493",
+          "claimId": "20674cd1-62d7-5233-9362-d25d1d7fa536",
+          "sourceId": "e8879b9c-7a15-5b62-88a3-8d3642666674",
+          "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+          "locator": "article information",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "aa11c908-c43e-5a8c-aa9f-222f055a2284",
+          "claimId": "20674cd1-62d7-5233-9362-d25d1d7fa536",
+          "sourceId": "e8879b9c-7a15-5b62-88a3-8d3642666674",
+          "quote": "While the records of Central Leather Research Institute, India showed only 170 tanneries at Kanpur, a study conducted in 2000 found twice this number in just one tanning cluster",
+          "locator": "Introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "d5ae9ad2-da79-535c-a50b-7689ad0f08d5",
+      "text": "Kolhapuri chappals are known for a decorative woven pattern fixed over their upper bands.",
+      "level": "PROVISIONAL",
+      "discipline": "DESIGN",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "fc3f85a6-9ece-518b-81bc-07f3242387ee",
+          "claimId": "d5ae9ad2-da79-535c-a50b-7689ad0f08d5",
+          "sourceId": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+          "quote": "Kolhapuri Chappals are renowned for aesthetically pleasing look and known for decorative woven pattern fixed over upper bands of these Chappals.",
+          "locator": "Application 169, E) Specification, p. 7",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "d2ba5754-7c2e-5770-9142-7d1194dd38b5",
+      "text": "Santiniketan leather goods are made from vegetable-tanned sheep and goat skins, which retain embossed imprints permanently.",
+      "level": "PROVISIONAL",
+      "discipline": "MATERIALS",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "b7252474-2baf-5f9f-a1cf-9e4ff398cdde",
+          "claimId": "d2ba5754-7c2e-5770-9142-7d1194dd38b5",
+          "sourceId": "9b33be6e-51de-5c74-bc92-86b21cd9ffad",
+          "quote": "Such vegetable-tanned leather pieces retain embossed imprints permanently, making them an ideal raw material for this craft. The leather pieces come from sheep and goat skins.",
+          "locator": "Legacy of the Leather",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "d01828b1-188d-549e-93c6-ec183a94fe01",
+          "claimId": "d2ba5754-7c2e-5770-9142-7d1194dd38b5",
+          "sourceId": "d9593d46-3ef6-5b30-974b-68fedb0249ea",
+          "quote": "trays, and domestic objects-made from vegetable-tanned goat and sheepskin and decorated through embossing, stencil work, and batik techniques",
+          "locator": "para. 3",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "17ad6bab-9c40-5a8b-8646-9cbb685b6110",
+      "text": "Shadow theatre probably spread from South India to South East Asia and beyond during that period, with local styles developing from Indonesia to China.",
+      "level": "HYPOTHESIS",
+      "discipline": "HISTORY",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "85858a39-2d72-5a8a-ba46-e20ece813e0b",
+          "claimId": "17ad6bab-9c40-5a8b-8646-9cbb685b6110",
+          "sourceId": "b06ea566-d456-5676-9b88-4b43a3e52b9a",
+          "quote": "It is probably during this period that shadow theatre from South India spread to South East Asia and beyond, and local styles developed in Indonesia, Burma, Thailand, Malaysia, Japan and China.",
+          "locator": "Introduction, para. 4",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "HYPOTHESIS"
+        }
+      ]
+    },
+    {
+      "id": "3825018f-793e-5994-bf44-48264a264c96",
+      "text": "Shadow puppetry in South India was already popular under the Satavahana and Chalukya dynasties, which Sahapedia dates to the 4th to 6th centuries AD.",
+      "level": "PROVISIONAL",
+      "discipline": "HISTORY",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "7015cd69-a45c-508f-b10e-134348208e8e",
+          "claimId": "3825018f-793e-5994-bf44-48264a264c96",
+          "sourceId": "b06ea566-d456-5676-9b88-4b43a3e52b9a",
+          "quote": "Shadow puppetry in South India has a very long history-it was indeed already popular under Satavahana and Chalukya dynasties (4th - 6th centuries AD).",
+          "locator": "Introduction, para. 4",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Leather",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://www.britannica.com/topic/leather",
+      "publisher": "Encyclopaedia Britannica",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B",
+      "number": 1
+    },
+    {
+      "id": "21a074d3-69da-54dd-9e0d-eca64e5d8daa",
+      "kind": "PAPER",
+      "title": "A review of the green chemistry approaches to leather tanning in imparting sustainable leather manufacturing",
+      "authors": [
+        "Mohammad Mahbubul Hassan",
+        "Jane Harris",
+        "James JC Busfield",
+        "Emiliano Bilotti"
+      ],
+      "year": 2023,
+      "doi": "10.1039/D3GC02948D",
+      "url": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "publisher": "Green Chemistry, Royal Society of Chemistry (author manuscript, UAL Research Online)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "number": 2
+    },
+    {
+      "id": "bec1af2a-39e1-511b-a8d0-ed2cf24b4e95",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 109: Kolhapuri Chappal, G.I. Application No. 169",
+      "authors": [],
+      "year": 2018,
+      "doi": null,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "number": 3
+    },
+    {
+      "id": "1630c6b0-928d-5437-bc6e-2b1ff97af06e",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry application details: Chamba Chappal, Application Number 614",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "publisher": "Geographical Indications Registry, IP India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "number": 4
+    },
+    {
+      "id": "85452b63-1490-5534-bdd8-7e8d73671c45",
+      "kind": "WEB_PAGE",
+      "title": "Kanpur Saddlery",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "publisher": "Incredible India, Ministry of Tourism, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C",
+      "number": 5
+    },
+    {
+      "id": "9b33be6e-51de-5c74-bc92-86b21cd9ffad",
+      "kind": "WEB_PAGE",
+      "title": "Santiniketan Leather Goods",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "publisher": "Incredible India, Ministry of Tourism, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C",
+      "number": 6
+    },
+    {
+      "id": "b06ea566-d456-5676-9b88-4b43a3e52b9a",
+      "kind": "WEB_PAGE",
+      "title": "Tholu Bommalata: Telugu Shadow Puppet Theatre",
+      "authors": [
+        "Serena Autiero"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "publisher": "Sahapedia",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B",
+      "number": 7
+    },
+    {
+      "id": "76991638-95ee-5014-aeca-33a1898f0bc7",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Togalu Gombeyata",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "publisher": "World Encyclopedia of Puppetry Arts, UNIMA",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B",
+      "number": 8
+    },
+    {
+      "id": "37cc4446-9121-5f45-8b5d-3c083dde91d8",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Chamar",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://www.britannica.com/topic/Chamar",
+      "publisher": "Encyclopaedia Britannica",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B",
+      "number": 9
+    },
+    {
+      "id": "36a0b4bf-b047-5c90-a5b8-e2dd43459f8b",
+      "kind": "OTHER",
+      "title": "The last original Kolhapuris",
+      "authors": [],
+      "year": 2017,
+      "doi": null,
+      "url": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "publisher": "The Hindu",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C",
+      "number": 10
+    },
+    {
+      "id": "fe49376b-3023-5410-8394-a0c9e05cd5c2",
+      "kind": "PAPER",
+      "title": "Occupational health risks and fate of chromium in sewage treatment co-treating tannery effluent",
+      "authors": [
+        "Karoll Michelle Cedeño Villarreal",
+        "Claire Furlong",
+        "Lena Breitenmoser",
+        "Christine Maria Hooijmans"
+      ],
+      "year": 2025,
+      "doi": "10.1080/10807039.2025.2568888",
+      "url": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "publisher": "Human and Ecological Risk Assessment: An International Journal, Taylor & Francis",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "number": 11
+    },
+    {
+      "id": "e8879b9c-7a15-5b62-88a3-8d3642666674",
+      "kind": "PAPER",
+      "title": "Groundwater Contaminated with Hexavalent Chromium [Cr (VI)]: A Health Survey and Clinical Examination of Community Inhabitants (Kanpur, India)",
+      "authors": [
+        "Sharma P",
+        "Bihari V",
+        "Agarwal SK",
+        "Verma V",
+        "Kesavachandran CN",
+        "Pangtey BS"
+      ],
+      "year": 2012,
+      "doi": "10.1371/journal.pone.0047877",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "publisher": "PLoS ONE",
+      "licence": "Creative Commons Attribution License",
+      "attribution": null,
+      "reliability": "A",
+      "number": 12
+    },
+    {
+      "id": "d9593d46-3ef6-5b30-974b-68fedb0249ea",
+      "kind": "WEB_PAGE",
+      "title": "Leathercraft at Santiniketan",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "publisher": "Prinseps",
+      "licence": null,
+      "attribution": null,
+      "reliability": "D",
+      "number": 13
+    }
+  ]
+}

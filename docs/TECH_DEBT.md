@@ -1598,6 +1598,16 @@ Last reviewed: 2026-11-18.
 - **Why left:** one HTML reader for the live fetcher and curation; long books usually come as PDFs.
 - **Clears it:** a cap option on `extract` that curation passes.
 
+### Category dossiers are curated but not imported or shown
+
+- **What:** dossiers with scope `CATEGORY` (`backend/app/data/curation/categories/`) pass the
+  checker and the verifier, but nothing imports them (the importer reads only the top folder),
+  no route serves them and no page shows them (`docs/contracts/curation.md`, Scope).
+- **Why left:** the owner asked for category master documents to be curated now; the category
+  page belongs to the app rebuild.
+- **Clears it:** the rebuild's category page, with an import of category dossiers into their own
+  rows and the member-craft links resolved by slug.
+
 ### The tools have not met a GI journal yet
 
 - **What:** the PDF path is tested on a hand-built PDF, and the live and Wayback paths were run once

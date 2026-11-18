@@ -31,3 +31,17 @@ test("ranges share their decimals and say open ends", () => {
   expect(formatRange(0.2, 0.35, "fraction")).toBe("20–35%");
   expect(formatRange(null, null, "g/L")).toBeNull();
 });
+
+test("a p-value reads with its significance and never as zero", () => {
+  expect(formatMeasure(0.0000123, "p-value")).toBe("p < 0.001");
+  expect(formatMeasure(0.0046, "p-value")).toBe("p = 0.005");
+  expect(formatMeasure(0.049, "p-value")).toBe("p = 0.049");
+  expect(formatMeasure(0.12, "p-value")).toBe("p = 0.12");
+});
+
+test("soil, terrain, river and rainfall units read as people write them", () => {
+  expect(formatMeasure(1.45, "kg/dm3")).toBe("1.45 g/cm³");
+  expect(formatMeasure(0.74, "degree")).toBe("0.74°");
+  expect(formatMeasure(6, "Strahler order")).toBe("6");
+  expect(formatMeasure(145.4, "coefficient of variation %")).toBe("145.4%");
+});

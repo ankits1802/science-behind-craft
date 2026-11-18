@@ -204,8 +204,12 @@ elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make pla
    ```
    When it prints `read: ARCHIVE ...`, the live page refused and the text came from the Wayback
    Machine: put the printed `archivedUrl` on the source.
-2. Write `backend/app/data/curation/<CraftSlug>.json` (`<CraftSlug>` as on the master list, for
-   example `Kutch-Ajrakh`), recording every query in `searched`.
+2. Write `backend/app/data/curation/<CraftSlug>.json` (`<CraftSlug>` as on the master list or the
+   portal craft register `backend/app/data/portal_craft_register.json`, for example
+   `Kutch-Ajrakh`), recording every query in `searched`. A catch-all or All India craft is
+   `"scope": "FAMILY"`; a category master document is
+   `backend/app/data/curation/categories/<CategorySlug>.json` with `"scope": "CATEGORY"` and
+   `categorySlug`, and the steps below take its path the same way (contract, Scope).
 3. Verify every quote against a fresh fetch; this writes `<CraftSlug>.check.json` beside it and
    prints one line per source that could not be read and per quote not found:
    ```bash
@@ -213,17 +217,20 @@ elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make pla
    ```
    Drop each failing quote, each claim left without one, and each unreadable source with its
    claims, then verify again.
-4. Run the offline checks; this prints one line per problem and regenerates
-   `backend/app/data/curation/index.json`:
+4. Run the offline checks; this prints one line per problem and writes nothing (the index is
+   the lead's, step 5):
    ```bash
    backend/.venv/Scripts/python.exe tools/curation/check.py backend/app/data/curation/<CraftSlug>.json
    ```
    Fix and repeat steps 3 and 4 until both print nothing. An edit to a source or a quote needs
-   step 3 again; prose and structure edits need only step 4.
-5. Before a wave is committed, check every dossier and keep the index it writes; CI runs the same
-   checks with `--check-index`, which writes nothing and fails on a stale index:
+   step 3 again; prose and structure edits need only step 4. The draft follows the curator
+   checklist in `docs/contracts/curation.md`.
+5. Once per batch, the lead checks every dossier and regenerates
+   `backend/app/data/curation/index.json`, then confirms it as CI will (`--check-index` writes
+   nothing and fails on a stale index):
    ```bash
-   backend/.venv/Scripts/python.exe tools/curation/check.py
+   backend/.venv/Scripts/python.exe tools/curation/check.py --write-index
+   backend/.venv/Scripts/python.exe tools/curation/check.py --check-index
    ```
 
 ## Import the curated dossiers again
@@ -236,9 +243,10 @@ more edge sentences):
 cd /opt/kalavigyan/current/backend && sudo -u kalavigyan bash -c 'set -a; . /opt/kalavigyan/.env; set +a; .venv/bin/python -m app.scripts.import_curation'
 ```
 
-It prints one JSON report: `withdrawnEdgeSentences`, `imported`, `refused`, and per dossier its
-`status`, `changed` row counts, `problems` and `droppedSentences` (overview sentences the prose
-validator refused). Exit 2 means a dossier was refused; its `problems` are the checker's lines.
+It prints one JSON report: `withdrawnEdgeSentences`, `imported`, `refused`, `waiting`, and per
+dossier its `status`, `changed` row counts, `problems` and `droppedSentences` (overview sentences
+the prose validator refused). Exit 2 means a dossier was refused; its `problems` are the
+checker's lines. `WAITING` is a portal-added craft the portal craft sync has not stored yet.
 To see a dossier's craft page without a database, from `backend/` on the laptop:
 
 ```bash
@@ -246,7 +254,25 @@ To see a dossier's craft page without a database, from `backend/` on the laptop:
 ```
 
 That command also regenerates the craft page fixture after a change to the Kutch Ajrakh dossier
-or the page; `tests/contracts/test_craft_page_contract.py` fails until it is rerun.
+or the page; `tests/contracts/test_craft_page_contract.py` fails until it is rerun. The page of a
+craft with no dossier, beside the Kutch Ajrakh one, is the second fixture:
+
+```bash
+.venv/Scripts/python.exe -m app.scripts.import_curation --register-preview Farrukhabad-Prints --with-dossier Kutch-Ajrakh --out ../shared/craft.page.register.golden.json
+```
+
+The same run imports the category dossiers of `curation/categories/` and reports them under
+`categories` (`imported`, `refused`, per dossier `status`, `changed`, `problems`); a refused one
+also exits 2. The category goldens are regenerated, from `backend/`, with:
+
+```bash
+.venv/Scripts/python.exe -m app.scripts.import_curation --category-page Leather-Craft-Category --dossier tests/curation/fixtures/categories/Leather-Craft-Category.json --out ../shared/category.page.golden.json
+.venv/Scripts/python.exe -m app.scripts.import_curation --category-page Paper-Craft-Category --out ../shared/category.page.not-curated.golden.json
+.venv/Scripts/python.exe -m app.scripts.import_curation --category-list --dossier tests/curation/fixtures/categories/Leather-Craft-Category.json --out ../shared/category.list.golden.json
+```
+
+`tests/contracts/test_category_contract.py` fails until they are rerun after a change to the
+fixture or the category page (`docs/contracts/category-page.md`).
 
 ## Roll back
 
@@ -280,7 +306,7 @@ As provisioned on 2026-11-16, each layer was checked:
 
 ## E2E production run
 
-Decision 0029. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app` with Playwright at 1440x900, 834x1194 and 390x844. It signs in through the login form, visits landing, login, Ask, Crafts, Kutch Ajrakh (Overview, Process, Region, Shared science), the map with a layer chosen, Settings and the 404 page, and fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy or a menu that does not match the role. With `questions=true` it also asks the four known-answer questions, up to 10 minutes each: at Detailed depth the mordant in English and Hindi (alum) and the water of Kachchh for Kutch Ajrakh, which passes only on a `region_story` with a traced river and every step cited; at Expert depth how indigo turns blue on Kutch Ajrakh cloth (decision 0061), which passes when every generated explainer the stream sends is drawn in a `sandbox="allow-scripts"` frame whose document opens with the sandbox policy, draws something, offers no peer connection, and attempts no network request (each one is aborted and recorded) and no load its policy refuses; when the builder chose no concept the report notes it and does not fail. Until the river lines are loaded, dispatch without `rivers_loaded` and a missing story is written to the report's notes, not failed; from the first run after the Geo ETL `riverlines` load add `-f rivers_loaded=true` (decision 0050). After the questions it opens the English answer's stored explainer (`/ask?explainer=<id>`) and downloads, through its Export menu, the report PDF and the APA, BibTeX, RIS and CSL-JSON citations: each must open (a PDF with pages, a parseable CSL-JSON list) and carry every source the answer streamed (its DOI or URL link in the PDF, APA and BibTeX, its title in RIS and CSL-JSON). An account that may build lesson packs also builds one from that explainer and checks its PPTX and PDF the same way; the Researcher account only notes that step in the report (decision 0070; `docs/PROGRESS.md`, Waiting on the owner).
+Decisions 0029 and 0076. **E2E production** (`.github/workflows/e2e-production.yml`, dispatch only, deploy repository only) drives `https://kalavigyan.vercel.app`, or a preview given as `base_url` (below), with Playwright at 1920x1080, 1440x900, 834x1194, 390x844 and 360x800, each in light and dark (projects `production-<width>-<scheme>`), plus a WebKit iPhone on a preview. It visits landing, sign up, forgot password, privacy, session ended and login, signs in through the login form, then visits Ask, Crafts, Kutch Ajrakh (Overview, Process, Region, Shared science, Sources, All evidence), Agra Marble Inlay, Cane Bamboo Craft, Sanganeri Hand Block Printing, an unknown craft, Compare idle and with Kutch Ajrakh and Bagru, Saved, the map with a layer chosen, Settings and the 404 page. Before each capture it scrolls to the end, waits for quiet network, fonts, 3D molecules and finished animations, and returns to the top. A screen fails on console errors, failed requests, sideways scroll, overflowing text, error alerts, gap copy, a menu that does not match the role, a page not in the run's theme, a headline word or the largest element below full opacity, a screen-high tile of one flat colour (judged from captures of at most eight screens, because Chromium stops painting a very tall full-page screenshot and fills the rest with background; where that happens the screen gets a note, not a failure), a citation cluster that repeats a source number, a picture that never loaded, a 3D molecule that never reported ready, Loading, Searching or Checking text left on screen, or a Region tab longer than three screens before "All measurements". With `questions=true` it also asks the four known-answer questions, up to 10 minutes each: at Detailed depth the mordant in English and Hindi (alum) and the water of Kachchh for Kutch Ajrakh, which passes only on a `region_story` with a traced river and every step cited; at Expert depth how indigo turns blue on Kutch Ajrakh cloth (decision 0061), which passes when every generated explainer the stream sends is drawn in a `sandbox="allow-scripts"` frame whose document opens with the sandbox policy, draws something, offers no peer connection, and attempts no network request (each one is aborted and recorded) and no load its policy refuses; when the builder chose no concept the report notes it and does not fail. Until the river lines are loaded, dispatch without `rivers_loaded` and a missing story is written to the report's notes, not failed; from the first run after the Geo ETL `riverlines` load add `-f rivers_loaded=true` (decision 0050). After the questions it opens the English answer's stored explainer (`/ask?explainer=<id>`) and downloads, through its Export menu, the report PDF and the APA, BibTeX, RIS and CSL-JSON citations: each must open (a PDF with pages, a parseable CSL-JSON list) and carry every source the answer streamed (its DOI or URL link in the PDF, APA and BibTeX, its title in RIS and CSL-JSON). An account that may build lesson packs also builds one from that explainer and checks its PPTX and PDF the same way; the Researcher account only notes that step in the report (decision 0070; `docs/PROGRESS.md`, Waiting on the owner). Each answer also fails on a repeated sentence or picture and on the screen gates above, and after the exports every stored answer is opened again at 834 and 390, light and dark (`<width> <scheme> answers` in the summary).
 
 The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no two-step), active on the roster, email verified, voice consent unset.
 
@@ -300,6 +326,32 @@ The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true -f rivers_loaded=true
    ```
+
+Professor and Admin screens (`/lessons`, `/admin`, at 1440 light) run only when all three of a role's secrets exist, and are skipped otherwise: `E2E_PROFESSOR_EMAIL`, `E2E_PROFESSOR_PASSWORD`, `E2E_PROFESSOR_TOTP_SECRET` and `E2E_ADMIN_EMAIL`, `E2E_ADMIN_PASSWORD`, `E2E_ADMIN_TOTP_SECRET`. Each account is a real Professor or Admin with two-step on; the TOTP secret is the base32 key shown when two-step was set up. Store them with `gh secret set <NAME> --repo cxacraftecosystem-ui/KalaVigyan`, pasting each value at the prompt.
+
+### Driving a Vercel preview
+
+The run refuses any site but production and this project's previews, `https://kalavigyan-<9 characters>-cxacraftecosystem-8028s-projects.vercel.app`, because it types the E2E passwords into it. Once per environment:
+
+1. Let the API accept preview origins. Put the two slugs in Parameter Store, either by hand or with `seed_secrets.py --preview-cors`, and run **Deploy backend** (it rewrites the box `.env` and restarts the API):
+   ```bash
+   aws ssm put-parameter --region ap-south-1 --type SecureString --overwrite --name /kalavigyan/env/BACKEND_CORS_PREVIEW_PROJECT --value kalavigyan
+   aws ssm put-parameter --region ap-south-1 --type SecureString --overwrite --name /kalavigyan/env/BACKEND_CORS_PREVIEW_SCOPE --value cxacraftecosystem-8028s-projects
+   ```
+   `seed_secrets.py` writes them only with `--preview-cors`; a run without it leaves them as they are. The API builds `https://kalavigyan-[a-z0-9]{9}-cxacraftecosystem-8028s-projects\.vercel\.app` from them and accepts nothing else on `vercel.app`; one without the other stops the API at start. Delete both parameters and deploy to stop accepting previews.
+2. Let the run past Vercel's deployment protection. In the Vercel project, Settings, Deployment Protection, Protection Bypass for Automation, create a secret, then store it as a GitHub secret, pasting the value at the prompt:
+   ```bash
+   gh secret set VERCEL_AUTOMATION_BYPASS_SECRET --repo cxacraftecosystem-ui/KalaVigyan
+   ```
+   The run sends it once, as `x-vercel-protection-bypass` with `x-vercel-set-bypass-cookie`, to the preview origin only, and the browser keeps Vercel's bypass cookie. Without it a protected preview answers 401 and the run warns.
+
+Then dispatch with the preview's deployment URL (a preview uses the production API, through the Preview env vars `seed_secrets.py` sets):
+```bash
+gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f base_url=https://kalavigyan-<id>-cxacraftecosystem-8028s-projects.vercel.app
+```
+The media bucket's CORS lists only production and localhost, so media a script fetches is refused on a preview.
+
+Google takes no wildcard in a client's authorised JavaScript origins, so it refuses every preview origin: on a preview the Google button on Login and Sign up does not load. The run expects exactly Google's refusal there (`[GSI_LOGGER]: The given origin is not allowed for the given client ID.` and a failed load under `https://accounts.google.com/gsi/`) and still fails on any other console error; a production run expects neither. The run signs in with its password accounts, so nothing else it checks depends on Google.
 
 The run summary has a table per screen and width, and one per question. Two artifacts carry the run id: `e2e-production-screenshots-<run id>` and `e2e-production-report-<run id>` (`KalaVigyan_Eval-Run_<date>_<time>_<Width>-Screens_Report.json`, `..._Known-Answers_Report.json` with each answer's sentences, citations, sources and timing, and `..._Summary_Report.md`). Each question is one Detailed answer (`HYBRID` research) under the Researcher daily cap.
 

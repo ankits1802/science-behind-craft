@@ -44,7 +44,8 @@ class ExpertPanelBuilder:
     async def build(self, ask: BuildAsk) -> Built:
         seats = speaking_seats(ask.section.discipline, ask.request.seats, depth=ask.request.depth)
         candidates = panel_candidates(ask.cited, ask.blocks)
-        if not seats or not candidates or not ask.blocks:
+        shown = _shown_claims(ask.blocks)
+        if not seats or not ask.blocks or all(candidate.id in shown for candidate in candidates):
             return Built()
         panel = PanelAsk(
             question=ask.request.question,
@@ -53,7 +54,8 @@ class ExpertPanelBuilder:
             seats=tuple(EXPERT_PANEL[seat] for seat in seats),
             candidates=tuple(candidates),
         )
-        views = expert_views(ask.section.id, await compose_takes(self._tools.compose_model, panel), ask.cited)
+        draft = await compose_takes(self._tools.compose_model, panel)
+        views = expert_views(ask.section.id, draft, ask.cited, shown=shown)
         cited = dict.fromkeys(source_id for view in views for source_id in view.cited_source_ids())
         missing = [source_id for source_id in cited if source_id not in ask.cited.sources]
         if missing:
@@ -73,12 +75,18 @@ class _Panel:
 def panel_candidates(cited: CitedClaims, blocks: Sequence[Block]) -> list[ComposeCandidate]:
     shown = dict.fromkeys(citation.claim_id for block in blocks for citation in block.citations())
     rest = sorted(str(claim_id) for claim_id in cited.views if str(claim_id) not in shown)
-    views = [_stored(claim, cited) for claim in [*shown, *rest]]
+    views = [_stored(claim, cited) for claim in [*rest, *shown]]
     return [_candidate(view) for view in views if view is not None]
 
 
-def expert_views(section_id: str, draft: PanelDraft, cited: CitedClaims) -> list[ExpertViewBlock]:
-    takes = {take.seat: kept for take in draft.takes if (kept := _kept_take(take, cited)) is not None}
+def expert_views(
+    section_id: str, draft: PanelDraft, cited: CitedClaims, *, shown: Collection[str] = frozenset()
+) -> list[ExpertViewBlock]:
+    takes = {
+        take.seat: kept
+        for take in draft.takes
+        if (kept := _kept_take(take, cited)) is not None and _adds_a_claim(take.seat, kept, shown)
+    }
     differences = _kept_differences(draft.differences, takes, cited)
     panel = _Panel(takes, differences, _agreements(takes, differences), cited)
     try:
@@ -130,6 +138,17 @@ def _kept_take(take: SeatTake, cited: CitedClaims) -> Take | None:
         logger.warning("the %s view is dropped: %s", take.seat, "; ".join(checked))
         return None
     return kept
+
+
+def _adds_a_claim(seat: str, take: Take, shown: Collection[str]) -> bool:
+    if any(str(claim) not in shown for sentence in take for claim in sentence.claim_ids):
+        return True
+    logger.info("the %s view only restates what its section shows, so it is not shown", seat)
+    return False
+
+
+def _shown_claims(blocks: Sequence[Block]) -> set[str]:
+    return {claim for block in blocks for claim in block.cited_claim_ids()}
 
 
 def _kept_differences(

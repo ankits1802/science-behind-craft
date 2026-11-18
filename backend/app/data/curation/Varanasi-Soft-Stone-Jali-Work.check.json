@@ -1,0 +1,1008 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Varanasi-Soft-Stone-Jali-Work",
+  "dossierVersion": 1,
+  "dossierDigest": "d4fe3044f0964980c7360245915021623c6ea6679498fa0327ee44bacd88f74e",
+  "checkedAt": "2026-11-18T10:29:59.268614Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2FIPOJournal%2F1_2559_1%2FJournal_101.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2FIPOJournal%2F1_2559_1%2FJournal_101.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2FIPOJournal%2F1_2559_1%2FJournal_101.pdf",
+      "fetchedAt": "2026-11-18T10:29:42.184310Z",
+      "contentType": "application/pdf",
+      "textSha256": "4b069f8c47b458dfad40057d6bcd48b3ab1a4b0a9411ba53f6c339fb7420a56f",
+      "characters": 321554,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/556",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/556",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/556",
+      "fetchedAt": "2026-11-18T10:29:56.812177Z",
+      "contentType": "text/html",
+      "textSha256": "815592d1445d18e2e82f7a6606c20b019a4792ebf0390c78bbffc56549d538cc",
+      "characters": 20388,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://archive.org/download/StoneCarvingUP/StoneCarvingUP_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/StoneCarvingUP/StoneCarvingUP_djvu.txt",
+      "finalUrl": "https://ia803208.us.archive.org/0/items/StoneCarvingUP/StoneCarvingUP_djvu.txt",
+      "fetchedAt": "2026-11-18T10:29:40.810609Z",
+      "contentType": "text/plain",
+      "textSha256": "9196e1c2bed85bf1f24b7fd08768d88107660839ddbbd0ce784870e4fcf791c5",
+      "characters": 110731,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://varanasi.nic.in/district-produce/varanasi-soft-stone-jali-work/",
+      "route": "LIVE",
+      "readUrl": "https://varanasi.nic.in/district-produce/varanasi-soft-stone-jali-work/",
+      "finalUrl": "https://varanasi.nic.in/district-produce/varanasi-soft-stone-jali-work/",
+      "fetchedAt": "2026-11-18T10:29:31.289302Z",
+      "contentType": "text/html",
+      "textSha256": "ef380f986a401a9c75c820b72e57b2164ef578f9b3ef93a729ad31530ddb6d2a",
+      "characters": 2176,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=74",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=74",
+      "finalUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=74",
+      "fetchedAt": "2026-11-18T10:29:31.287394Z",
+      "contentType": "text/html",
+      "textSha256": "95e28329b5a73371ebe686c68145999a374183601e952f2b915327e62bde3f63",
+      "characters": 1471,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.nabard.org/auth/writereaddata/file/2%20Details%20of%20GI%20products%20IInd%20draft.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/auth/writereaddata/file/2%20Details%20of%20GI%20products%20IInd%20draft.pdf",
+      "finalUrl": "https://www.nabard.org/auth/writereaddata/file/2%20Details%20of%20GI%20products%20IInd%20draft.pdf",
+      "fetchedAt": "2026-11-18T10:29:34.335978Z",
+      "contentType": "application/pdf",
+      "textSha256": "a8a075039a06a5f254a8d4479714123114e529f3929f0c3335fdbe5e38261df2",
+      "characters": 8128,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://indianpsu.com/up-government-brings-alive-vanishing-centuries-old-art-varanasi-soft-stone-under-cut-lattice-work/",
+      "route": "LIVE",
+      "readUrl": "https://indianpsu.com/up-government-brings-alive-vanishing-centuries-old-art-varanasi-soft-stone-under-cut-lattice-work/",
+      "finalUrl": "https://indianpsu.com/up-government-brings-alive-vanishing-centuries-old-art-varanasi-soft-stone-under-cut-lattice-work/",
+      "fetchedAt": "2026-11-18T10:29:32.777315Z",
+      "contentType": "text/html",
+      "textSha256": "eb5cddc4c050574edc1d0fe9e0884a2c0d48295f19ebd3b10eab5eb79e9a36b6",
+      "characters": 2352,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.ibef.org/experience-india/products/varanasi-softstone-jaliwork",
+      "route": "LIVE",
+      "readUrl": "https://www.ibef.org/experience-india/products/varanasi-softstone-jaliwork",
+      "finalUrl": "https://www.ibef.org/experience-india/products/varanasi-softstone-jaliwork",
+      "fetchedAt": "2026-11-18T10:29:37.309555Z",
+      "contentType": "text/html",
+      "textSha256": "17a1d52e0927480e65213cc319c1ad0b72d71c77ea6f553952e7e417fab33892",
+      "characters": 3115,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://cameo.mfa.org/wiki/Steatite",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260115054633id_/https://cameo.mfa.org/wiki/Steatite",
+      "finalUrl": "https://web.archive.org/web/20260115054633id_/https://cameo.mfa.org/wiki/Steatite",
+      "fetchedAt": "2026-11-18T10:29:36.325256Z",
+      "contentType": "text/html",
+      "textSha256": "9b2748244b3f7a5b73fd9f7ac3b98822011d08803a117ab9ce716d768101a280",
+      "characters": 2896,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://geology.com/rocks/soapstone.shtml",
+      "route": "LIVE",
+      "readUrl": "https://geology.com/rocks/soapstone.shtml",
+      "finalUrl": "https://geology.com/rocks/soapstone.shtml",
+      "fetchedAt": "2026-11-18T10:29:37.560677Z",
+      "contentType": "text/html",
+      "textSha256": "0e089226cab7c826970d7f102b7648e1c1a234e5dd4b77f78c19cbef0a2d683f",
+      "characters": 8864,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.lokmattimes.com/national/up-polls-varanasi-sculptors-urge-modi-government-to-help-revive-their-business/",
+      "route": "LIVE",
+      "readUrl": "https://www.lokmattimes.com/national/up-polls-varanasi-sculptors-urge-modi-government-to-help-revive-their-business/",
+      "finalUrl": "https://www.lokmattimes.com/national/up-polls-varanasi-sculptors-urge-modi-government-to-help-revive-their-business/",
+      "fetchedAt": "2026-11-18T10:29:37.987273Z",
+      "contentType": "text/html",
+      "textSha256": "8f840b16300f397954396e5a946aecee6c3f44fb0d5e5d900817fb7007eea8ef",
+      "characters": 4514,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "fetchedAt": "2026-11-18T10:29:38.661751Z",
+      "contentType": "text/html",
+      "textSha256": "13ce01cff20b3fa3a430be431a56274a1307e0c6eae16a016438eea5b84e02fc",
+      "characters": 2146,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Varanasi, Chandauli, Mirzapur, and Sonebha dra of Uttar Pradesh are famous for its exclusive Soft Stone Jali Work since generations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S04",
+      "quote": "Jali or fretwork is intricately carved on soft stone and its process requires supreme mastery of masonry and design making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S06",
+      "quote": "The Varanasi artisans of Soft stone craft are famous for making the beautiful Jali with undercut technique",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S06",
+      "quote": "The uniqueness is that it is created out of a single piece of stone, without any joints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S07",
+      "quote": "Its specialty is that unique artefacts are made from under cutwork in a single piece of stone without any joints",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "These st one are made without any joints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S04",
+      "quote": "Delicately chiseled and decorated with inlay work these elaborately carved jalis demand time in their making along with the skill and creativity of the masters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "The Varanasi Soft Stone jail work cluster in Uttar Pradesh represents the largest concentration of the soft Stone jail work in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "Varanasi Soft Stone jail work cluster is mainly concentrated in Varanasi district and scattered generally all parts of Mirzapur, Sonbhadra, Chandauli district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S06",
+      "quote": "All over Varanasi (U.P.) in the area of Ramnagar, Misir Pokhara, Luxa, Sarai Nandan, Lahartara, Bhithari, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "Ramnagar,Sonia and Kalimohal areas of Varanasi, is the places to where the instances of excellent artistry of stone craft are found.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "Sonia and Kalimohal areas of Varanasi are the places to where the instances of excellent artistry of soft stone craft are to be found",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "Ramnagar,Sonia and Kalimohal areas of Varanasi, is the places to where the instances of excellent artistry of stone craft are found. Most people of the areas, mainly the artisans of these areas, ear n their livelihood by creating outstanding artifacts with stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S06",
+      "quote": "Khoria, Gorara, Anguri stone which is available in Jhansi & Mahoba (the main area is Charkhari) district of Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S06",
+      "quote": "but the craftsmanship is available in Ramnagar (a part of Varanasi district).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S06",
+      "quote": "The base material of stone craft / shape stone is Khoria, Gorara, Anguri stone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "The base material of stone craft in Varana si is soapstone and occasionallymarble and gorara.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S01",
+      "quote": "Soft Stones/Soap Stone are excavated from open mines. Large sized boulders are carried to the workshops where they are given desire d shapes and sizes by skilled and seasoned craftsmen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "It is interesting to note, ther e is no homogeneity of color, ti nt and texture in soft stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Two pieces taken out, even from the same block of soft stone, are never alike.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "Soft Stone is an auspicious craft of Vara nasi and is famous for the creating designs with the natural veins of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S05",
+      "quote": "The soft stone jali work is a unique craft of the state recognised by the intricate carvings on the natural veins of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "While Marble is the hardest form of limestone, Soap Stone is the softest and is easy to work on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "For this specific property of it, any kind of carving can be done by hand on soft stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "Soft Stone is the most appealing of the ki nds of lime stones found in the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "While Marble is the hardest form of limestone, Soap Stone is the softest and is easy to work on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S05",
+      "quote": "The soft stone used in this craft is one of the softest limestones found in the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S09",
+      "quote": "A very soft rock composed primarily of the mineral talc. Steatite, commonly called soapstone, is composed of hydrated magnesium silicate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S10",
+      "quote": "Soapstone is composed primarily of talc and shares many physical properties with that mineral.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S10",
+      "quote": "Soapstone is a metamorphic rock that is composed primarily of talc, with varying amounts of chlorite, pyroxenes, micas, amphiboles, carbonates, and other minerals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "Soapstone is relatively soft because of its hi gh talc content, talc having a definitional value of 1 on the Mohs hardness scale.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "There is no fixed hardness fo r soapstone because the amount of talc it contains varies widely, from as little as 30% for architectural grades such as those used on countertops, to as much as 80% for carving grades.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S01",
+      "quote": "Common, non-architectural grades of soapstone can just barely be scratched wi th a fingernail and are thus considered to have a hardness of 2.5 on the Mohs scale.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "If a candidate rock cannot be scratched with a knife blade (hardness of 5.5), it is not soapstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S09",
+      "quote": "Native steatite is so soft it can be scratched with a fingernail, but baking results in dehydration and hardening of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S10",
+      "quote": "Its name is derived from its \"soapy\" feel and softness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Soft er grades may feel soapy when touched, hence the name.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S10",
+      "quote": "Soapstone with a fine grain size works best for highly detailed carvings. The presence of minerals other than talc and the level of metamorphism can influence its hardness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S10",
+      "quote": "Soapstone is composed primarily of talc and shares many physical properties with that mineral.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S10",
+      "quote": "soft and very easy to carve nonporous nonabsorbent low electrical conductivity heat resistant high specific heat capacity resistant to acids and alkalis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S09",
+      "quote": "Insoluble in water, cold acids or alkalis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S03",
+      "quote": "Bundelkhand also produces soap-stone (steatite) which is found in Lalitpur and the south-west oorner of Hamirpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "The best soap-stone carving, however, undoubtedly comes from Agra. The stone, being soft and tenacious, lends itself readily to the chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S01",
+      "quote": "The main techniques are following below:- 1. Cutting 2. Turning 3. Jali Making 4. Carving 5. Buffing GI Journal No. 101 87 November 28, 2017 6. Polishing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S01",
+      "quote": "Different size of Chisel, stone rasps(rifflers), sandbags and for personal protection Goggles or safety glasses",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "The crafts person while worki ng on the sajjar pathar first studies the natural design contains in the stone selected to work upon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "Th e shaping is done thereafter very carefully with chisel and hammers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "This slab is now converted in the form of the desired figure with a hammer and a chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "The stone is smoothened by rubbing with sand papers or file.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S08",
+      "quote": "Sandpaper is used to smoothen the stone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "The craftsmen, sprinkle water on the stone during the course of their work because of the friction generated due to the constant chiseling away of the unwanted",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "material results in the tools heating up.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "Water is sprinkled repeatedly to avoid heat generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Dimensions of the figure to be manufactured are marked on a stone slab. Extra edges are removed from the slab by beating with a hamm er.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S01",
+      "quote": "Big pieces of stone are cut vertically into smaller slabs, and rough sketches are ma de on it. The article is taken out from the slab with the aid of a saw.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S01",
+      "quote": "After that with the support of very fine iron tools, Jali making process has started and making the variou s very small holes in the various places of the craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "then the artisan start insert ing the iron Tili inside and removing the extra stone pieces from first cut step and the sa me process has repeated several times from various angles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "then after that only a sm all piece of stone will available in the inside of the craft, then the artisan start the shap ing and carving work within the inside figure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "This is the first Jali making process by one cut.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "In Varanasi, the artisans are making up to 3 cuts; means 3 different steps of Jali making like - Elephant - within elephant - within elephant is a example of 3 cut Jali work of a elephant piece as a craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "the artisans are making this jali work in a delic ate manner in one cut, two cut and up to three cut",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "The same type of process has adopted in Jali work in Glob, Birds figure, Li on, various type of animal figures including decorative items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "Making the Jali within Jali in a single piece of stone is a unique feature with exclusiv e way of working with the su pport of small tools is much popular across the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "Different type of Minor carvings is done by pointed chisel. A hammer and chisel do further smoothening.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "Befo re carving the stone is kept in boiling water overnight and treated chemically.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "This smoothens and whitens the surface of th e stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S01",
+      "quote": "Polishing is done for the final finishing with sand or carborundum pieces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "Se veral of the carved artifacts are painted. Others are fitted with the looking glasses, brass fittings etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "Fini shing is accomplished in a variety of ways from sand-papering, polishing with multani-mitti or clay, oil and cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "An outline is drawn on hard or soft stone wh ich is already cut to the appropriate size.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "Once the outline is incised indicating the sh ape, the final figure is brought out by removing the unwanted portions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "While for the harder stones this is done by chiseling out the extra material, with softer stones. This is done by scraping out the same with a sharp flat-edged iron tool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S01",
+      "quote": "The articles thus crafted, are buff shed for smoothness. Some are also lacquered to impart sheen and glow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S03",
+      "quote": "Benares. - With the exception of Agra and Muttra; there is more good stonecarving to be seen at Benares than in any other district of these Provinces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "According to the book Monograph on Stone carving in united province by H.S. CROSTHWAITE published in 1905",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "UNITED PROVINCES. BT H. S. CROSTHWAITE, I.C.S. ALLAHABAD:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "1906. PREFACE. This monograph has been written in accordance with G. O.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "In Benares and Mirzapur most of the workmen are Gonds, Mullahs, Telis, Barhais, Kunjrae and othe> similar castes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S03",
+      "quote": "In Benares this is explained by the faot that caste distinctions are specially strict in that city, and that nearly all thp stone-oarving is expended on religious edifices",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S03",
+      "quote": "Jdh work in these provinces is done is marble and sandstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S03",
+      "quote": "Jdli work is almost entirely used for arohiteotural ornament",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "In Varanasi the jali craft work can be seen on forts, zamindari homes, places of worship and ancient monuments all of which are a testimony tr its antiquity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "Varanasi is the one of the oldest clusters of various crafts and soft stone being one of the oldest cluster present in Vara nasi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S05",
+      "quote": "The rich tradition of this craft carried forward for generations now faces reluctance due to a lack of modern infrastructure to speed up production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "In addition, lack of copyright knowledge is another stumbling block resulting in the infiltration of inauthentic products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "Apart from creating different articles that catch the fancy of the local people and the tourists as well, the artisans create exclusive items that are placed in the trendy house to suit the decorative purpose.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S06",
+      "quote": "The Varanasi artisans of Soft stone craft are famous for making the beautiful Jali with undercut technique and making the very popular 'Elephant within the Elephant' art pieces by their unique human skill",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S07",
+      "quote": "For example, inside an elephant made of the same stone, another elephant, another elephant or any other animal, bird or figure is engraved inside it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S08",
+      "quote": "The most popular item is the undercut elephant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S06",
+      "quote": "They are making various types of decorative pieces using various forms of Birds, Animal, Ball, Statues with variety of carving and different type of traditional motifs in Jaali and upper side on the jaali.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "Statues of religious significance are also made using this technique. To further enhance the beauty of these sculptures they would be embedded with semi-precious stones and shell- work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S01",
+      "quote": "The stone craft of Varanasi in clude marble boxes, wall plat es, table tops, coasters, and ashtrays, paperweights, and candleholders, of different sizes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S01",
+      "quote": "Of soft stone working is not only restricted to ornate carvings on temples or sculptures of deities, but also used in making items like carved panels, tiles, paper we ights, pen stands, models of historical buildings, sculptures of animals and humans etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "Today small items of utility and decor are also produced such as table tops, boxes, coasters, trays,etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "From traditional designs, they have now expanded their portfolio to contemporary products such as tiles, paperweights, pen stands, and more.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S01",
+      "quote": "The se soft stone craft dolls, figuring mythological characters, were meant to delight and inculcate traditional values as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S02",
+      "quote": "Application Number | 556 | | Geographical Indications | Varanasi Soft Stone Jali Work | | Status | Registered | | Applicant Name | Banaras Handicraft Development Society |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S02",
+      "quote": "Date of Filing | 25-07-2016 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "G.I. APPLICATION NUMBER - 556 Application Date: 25-07-2016 Application is made by Banaras Handicraft Development Society",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "in the Geographical Indications Journal 101 dated 28th November, 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "in respect of Handicrafts-Soft Stone Jali work falling in Class 27 is hereby advertised as accepted",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S02",
+      "quote": "Journal Number | 101 | | Availability Date | 28-11-2017 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S02",
+      "quote": "Certificate Number | 315 | | Certificate Date | 28-03-2018 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S04",
+      "quote": "Certificate Date :28/03/2018",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S02",
+      "quote": "556 - Certificate of Registration - 18-05-2018 | 18-05-2018",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S02",
+      "quote": "Authorized User Details | Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S02",
+      "quote": "| 185 | AU/37461/GI/556/185 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S02",
+      "quote": "Registration Valid Upto | 24-07-2026",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S02",
+      "quote": "Class | 27 | | Goods | Handicraft | | Geographical Area | Uttar Pradesh |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S01",
+      "quote": "Facilitated by: Banaras Handicraft Development Industrial Cooperative Society Limited, Khojawa, Varanasi Uttar Pradesh and Human Welfare Association",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S04",
+      "quote": "Facilitated by : Banaras Handicraft Development Industrial Cooperative Society Limited and Human Welfare Association",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "To regulate the use of GI in the territory, it is proposed that the Inspection Committee shall consist of the following members:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "One representative from The Department of Industries, Government of Uttar Pradesh;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "One representative from O/o Development Commissioner (Handicraft), Govt. of India having office at Varanasi;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "Two representative - National/State Award winner - Varanasi Soft Stone Jali Work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "One Varanasi Soft Stone Jali Work - Master craftsman;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "with the support of the National Bank for Agriculture and Rural Development (NABARD), the craft was recognized under the GI (Geographical Indication) tag in 2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "is the Hindustani name for the stone fretwork, which, now the ohief beauty of Muttra carving, was originally introduced by the Muhanw dans at Agra and Fathpur-Sikri",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "for there are no signs of j'dli work in the early Hindu architecture, such as the Buddhist buildings at Saroath, or the mediaeval Jain temples at Deogarh : nor in the modern Hindu carving at Benares, influenced 8b it is by the Muhammadan style, is there much of this pierced stonework",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S03",
+      "quote": "It is said to have been invented by the Muhammadans to take the place of the images with whioh the Hindus adorned their temples.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S03",
+      "quote": "This is probably true; for there are no signs of j'dli work in the early Hindu architecture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S03",
+      "quote": "PREFACE. This monograph has been written in accordance with G. O.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S03",
+      "quote": "V H. S. CROSTHWAITE. July 1905.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "The Varanasi soft stone jali work was once widely visible in places of worship, forts and ancient sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S11",
+      "quote": "By ANI | Updated: March 5, 2022 23:30",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S11",
+      "quote": "In Varanasi, about three to four thousand families were associated with the stone carving business; which has now gone down to 300 to 250 families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "By ANI | Updated: March 5, 2022 23:30",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "Sculptors in Varanasi involved in stone carving business have appealed to PM Modi government at the Centre and the BJP government in Uttar Pradesh to take necessary steps for the revival of their business as it is on the verge of extinction.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "neither the artisans nor the businessmen are making any profits",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S11",
+      "quote": "By ANI | Updated: March 5, 2022 23:30",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S11",
+      "quote": "Chandan Lal, who is into the stone art business since 1973, said",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S11",
+      "quote": "the Mahoba mine, which has been closed, from where we used to get cheap stones, should be opened again so that we can get stones at cheaper rates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S11",
+      "quote": "By ANI | Updated: March 5, 2022 23:30",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S11",
+      "quote": "Young Anand Kumar Sahni, who recently joined his father in the stone art business, said",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S11",
+      "quote": "These stone products, first we send them to the exporter and from there these goods are exported to America and Canada. Mostly, candle stands and cosmetics boxes are sent to America.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S11",
+      "quote": "By ANI | Updated: March 5, 2022 23:30",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S11",
+      "quote": "The stone carvings are found in Ranipur, Madhavpur, Sudamapur, Ramnagar, Sankuldhara, Pokhara areas of Varanasi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S11",
+      "quote": "Harilal, an artisan who works in the Sudamapur stone factory, said",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S11",
+      "quote": "We want a proper exhaust system in the workshop so that we can avoid dust.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S12",
+      "quote": "Eastern Uttar Pradesh has rich deposits of beautiful soft stone and it has spawned a sizeable stone-carving industry, the main centre for which is Varanasi where stone-carving artisans belong to a community called the raidas.",
+      "result": "PASS"
+    }
+  ]
+}

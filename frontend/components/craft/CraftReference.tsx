@@ -72,7 +72,7 @@ export function CraftReference({ page, requested, onTab, voice }: { page: CraftP
             {tab === "overview" ? <CraftOverview page={page} /> : null}
             {tab === "process" ? <ProcessTimeline process={page.process} pictures={page.pictures} rows={stages.rows} /> : null}
             {tab === "region" ? <CraftRegionTab page={page} region={region} /> : null}
-            {tab === "science" && science ? <CraftSharedScience science={science} /> : null}
+            {tab === "science" && science ? <CraftSharedScience science={science} numbered={reading.numbers} /> : null}
             {tab === "sources" ? <CraftSourcesTab groups={sourceGroups(reading.sourcesById.values(), reading.numbers)} numbers={reading.numbers} /> : null}
             {tab === "evidence" && page.evidence ? <CraftEvidence evidence={page.evidence} /> : null}
           </section>

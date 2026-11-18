@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Blue-Pottery-Of-Jaipur",
+  "dossierVersion": 1,
+  "dossierDigest": "d33bffca641b994eff3b1023b14b80c694190981019a07cb02e3093f5f427a5e",
+  "checkedAt": "2026-11-18T09:58:19.101626Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/66",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/66",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/66",
+      "fetchedAt": "2026-11-18T09:57:46.227132Z",
+      "contentType": "text/html",
+      "textSha256": "ded9989aeb28db8a355550f7d3049acc982f6f4fb411b7574b91819419bb12a3",
+      "characters": 19659,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/64-blue-pottery-of-jaipur.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/64-blue-pottery-of-jaipur.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/64-blue-pottery-of-jaipur.pdf",
+      "fetchedAt": "2026-11-18T09:57:46.929961Z",
+      "contentType": "application/pdf",
+      "textSha256": "522ddf45be961eaaed3a8da0efc7f4dbaedc2801abf591d125cf1d5b66b2e357",
+      "characters": 7405,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://ipindiaservices.gov.in/GI_DOC/540/540%20-%20Statement%20of%20Case%20-%2028-12-2015.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20171210123629id_/http://ipindiaservices.gov.in/GI_DOC/540/540%20-%20Statement%20of%20Case%20-%2028-12-2015.pdf",
+      "finalUrl": "https://web.archive.org/web/20171210123629id_/http://ipindiaservices.gov.in/GI_DOC/540/540%20-%20Statement%20of%20Case%20-%2028-12-2015.pdf",
+      "fetchedAt": "2026-11-18T09:58:04.928346Z",
+      "contentType": "application/pdf",
+      "textSha256": "05bb3f6edd24336c2aa17d725975f5c90cf72db4c2f6cb248e9e8d7cc273398b",
+      "characters": 16476,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/540",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/540",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/540",
+      "fetchedAt": "2026-11-18T09:57:47.855848Z",
+      "contentType": "text/html",
+      "textSha256": "cebc3bbf0a906fbd826aa5723d564e513add4311a4133e13940b7678edfbc28c",
+      "characters": 1423,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T09:57:45.963350Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://archive.org/download/sim_journal-of-indian-art-and-industries_1916-10_17_129-136/sim_journal-of-indian-art-and-industries_1916-10_17_129-136_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/sim_journal-of-indian-art-and-industries_1916-10_17_129-136/sim_journal-of-indian-art-and-industries_1916-10_17_129-136_djvu.txt",
+      "finalUrl": "https://dn760109.eu.archive.org/0/items/sim_journal-of-indian-art-and-industries_1916-10_17_129-136/sim_journal-of-indian-art-and-industries_1916-10_17_129-136_djvu.txt",
+      "fetchedAt": "2026-11-18T09:57:54.265518Z",
+      "contentType": "text/plain",
+      "textSha256": "2f80d5b17f45e93b1fee27681170a740b86563c11060a931bd5b5c0e2e4038ba",
+      "characters": 199382,
+      "truncated": true,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://collections.vam.ac.uk/item/O79144/jar-unknown",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O79144/jar-unknown",
+      "finalUrl": "https://collections.vam.ac.uk/item/O79144/jar-unknown",
+      "fetchedAt": "2026-11-18T09:57:47.745968Z",
+      "contentType": "text/html",
+      "textSha256": "f52d10cb7744b544620989ad34c7d91f1c16e6ac423a818dfdefdce802480f2c",
+      "characters": 4113,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://collections.vam.ac.uk/item/O79143/jar-unknown",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O79143/jar-unknown",
+      "finalUrl": "https://collections.vam.ac.uk/item/O79143/jar-unknown",
+      "fetchedAt": "2026-11-18T09:57:49.469879Z",
+      "contentType": "text/html",
+      "textSha256": "7dc9033a6b515e5878dc9a179b21950d3e677e16cd5bb041737a983d81807b5a",
+      "characters": 3792,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://cgcri.csircentral.net/939/",
+      "route": "LIVE",
+      "readUrl": "https://cgcri.csircentral.net/939/",
+      "finalUrl": "https://cgcri.csircentral.net/939/",
+      "fetchedAt": "2026-11-18T09:57:48.347741Z",
+      "contentType": "text/html",
+      "textSha256": "2766e561b8bd8dcf1f34c35d25e48a2d5af7ecabf4c54459f4ae023649e7d290",
+      "characters": 1870,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://techindiacsir.anusandhan.net/online/pottery-and-low-cost-earthen-wares-T-1279-tech.htm",
+      "route": "LIVE",
+      "readUrl": "https://techindiacsir.anusandhan.net/online/pottery-and-low-cost-earthen-wares-T-1279-tech.htm",
+      "finalUrl": "https://techindiacsir.anusandhan.net/online/pottery-and-low-cost-earthen-wares-T-1279-tech.htm",
+      "fetchedAt": "2026-11-18T09:57:48.879475Z",
+      "contentType": "text/html",
+      "textSha256": "258263689aa997fc884d5b81729883d34ddb1d8edd0cf95816bff733c8cd2c88",
+      "characters": 925,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "finalUrl": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "fetchedAt": "2026-11-18T09:57:50.644062Z",
+      "contentType": "text/html",
+      "textSha256": "3fb74d7d421c4057bcaddd5e1f1c4f62426a4e93e2e1b3506f75dd92c425ddec",
+      "characters": 5777,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.avestia.com/MCM2016_Proceedings/files/paper/ICMIE/111.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.avestia.com/MCM2016_Proceedings/files/paper/ICMIE/111.pdf",
+      "finalUrl": "https://www.avestia.com/MCM2016_Proceedings/files/paper/ICMIE/111.pdf",
+      "fetchedAt": "2026-11-18T09:57:54.405408Z",
+      "contentType": "application/pdf",
+      "textSha256": "66915c0a7698ebf0640a81d0e85b1fce07590d3303454006c244c1db0b768a5b",
+      "characters": 10974,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.dsource.in/resource/blue-pottery-jaipur-rajasthan-0/making-process",
+      "route": "LIVE",
+      "readUrl": "https://www.dsource.in/resource/blue-pottery-jaipur-rajasthan-0/making-process",
+      "finalUrl": "https://www.dsource.in/resource/blue-pottery-jaipur-rajasthan-0/making-process",
+      "fetchedAt": "2026-11-18T09:57:51.384333Z",
+      "contentType": "text/html",
+      "textSha256": "43f0333e1578a7b89f222cb1a6d838b20f7449ed86a6b84b5096b1459fe91917",
+      "characters": 4649,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://ceramicartsnetwork.org/ceramics-monthly/ceramics-monthly-article/Clay-Culture-Jaipur-Blue-Pottery-202409",
+      "route": "LIVE",
+      "readUrl": "https://ceramicartsnetwork.org/ceramics-monthly/ceramics-monthly-article/Clay-Culture-Jaipur-Blue-Pottery-202409",
+      "finalUrl": "https://ceramicartsnetwork.org/ceramics-monthly/ceramics-monthly-article/Clay-Culture-Jaipur-Blue-Pottery-202409",
+      "fetchedAt": "2026-11-18T09:57:54.618906Z",
+      "contentType": "text/html",
+      "textSha256": "5f9976e863a2d20c9533888f9e236fa7aca5f6b1b5dab4d810a34af3e0ec851f",
+      "characters": 6760,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://www.outlooktraveller.com/experiences/heritage/jaipur-blue-pottery-a-story-of-no-clay-pottery",
+      "route": "LIVE",
+      "readUrl": "https://www.outlooktraveller.com/experiences/heritage/jaipur-blue-pottery-a-story-of-no-clay-pottery",
+      "finalUrl": "https://www.outlooktraveller.com/experiences/heritage/jaipur-blue-pottery-a-story-of-no-clay-pottery",
+      "fetchedAt": "2026-11-18T09:57:55.107775Z",
+      "contentType": "text/html",
+      "textSha256": "b43d329a2808a5958cfeeeaae39ecfe244befcba56002c94c316a39a54d4c4b5",
+      "characters": 4498,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://thefederal.com/category/the-eighth-column/the-persian-pottery-technique-that-india-made-its-own-174809",
+      "route": "LIVE",
+      "readUrl": "https://thefederal.com/category/the-eighth-column/the-persian-pottery-technique-that-india-made-its-own-174809",
+      "finalUrl": "https://thefederal.com/category/the-eighth-column/the-persian-pottery-technique-that-india-made-its-own-174809",
+      "fetchedAt": "2026-11-18T09:57:55.146652Z",
+      "contentType": "text/html",
+      "textSha256": "95ebe0dc023fa8af039547d490a8622add0604113e3c4ab92c9f68a67309d0ff",
+      "characters": 12155,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://30stades.com/enterprise/how-jaipur-man-ramnarayan-prajapati-set-up-successful-blue-pottery-business-global-exports",
+      "route": "LIVE",
+      "readUrl": "https://30stades.com/enterprise/how-jaipur-man-ramnarayan-prajapati-set-up-successful-blue-pottery-business-global-exports",
+      "finalUrl": "https://30stades.com/enterprise/how-jaipur-man-ramnarayan-prajapati-set-up-successful-blue-pottery-business-global-exports",
+      "fetchedAt": "2026-11-18T09:57:55.291140Z",
+      "contentType": "text/html",
+      "textSha256": "bf450c3f88fb1166bd7edc27f019b07c55069dfdd3ff5fb36ecc93b3d57f335a",
+      "characters": 10192,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://studiopotter.org/contributions-women-development-jaipur-blue-pottery",
+      "route": "LIVE",
+      "readUrl": "https://studiopotter.org/contributions-women-development-jaipur-blue-pottery",
+      "finalUrl": "https://studiopotter.org/contributions-women-development-jaipur-blue-pottery",
+      "fetchedAt": "2026-11-18T09:57:55.925400Z",
+      "contentType": "text/html",
+      "textSha256": "2783885fcf5949206b16683e3f460c3624ea2b2a290dda86ce6eb401fa9ab999",
+      "characters": 2378,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.mha.gov.in/sites/default/files/2023-01/Year_Wise_main_25042017.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20251006173217id_/https://www.mha.gov.in/sites/default/files/2023-01/Year_Wise_main_25042017.pdf",
+      "finalUrl": "https://web.archive.org/web/20251006173217id_/https://www.mha.gov.in/sites/default/files/2023-01/Year_Wise_main_25042017.pdf",
+      "fetchedAt": "2026-11-18T09:58:08.918261Z",
+      "contentType": "application/pdf",
+      "textSha256": "4568d447d07695fb7b959871126737158793360e08763838f90f28e521b54c10",
+      "characters": 189383,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://cbseacademic.nic.in/web_material/Curriculum23/publication/BLUE_POTTERY8.pdf",
+      "route": "LIVE",
+      "readUrl": "https://cbseacademic.nic.in/web_material/Curriculum23/publication/BLUE_POTTERY8.pdf",
+      "finalUrl": "https://cbseacademic.nic.in/web_material/Curriculum23/publication/BLUE_POTTERY8.pdf",
+      "fetchedAt": "2026-11-18T09:57:56.586767Z",
+      "contentType": "application/pdf",
+      "textSha256": "92ac88d74ae03cedefb269db99f4ff56950501c0d7ebf2c2e4ba3b0ebd7c6a24",
+      "characters": 35825,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.nabard.org/GI/blue-pottery-of-jaipur.aspx",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/blue-pottery-of-jaipur.aspx",
+      "finalUrl": "https://www.nabard.org/GI/blue-pottery-of-jaipur.aspx",
+      "fetchedAt": "2026-11-18T09:57:56.327280Z",
+      "contentType": "text/html",
+      "textSha256": "06437b31a9d9b4c4828296f055936301a12fd3cd2957f4c7ad2906889ff6073b",
+      "characters": 1104,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://bulandshahar.nic.in/history/",
+      "route": "LIVE",
+      "readUrl": "https://bulandshahar.nic.in/history/",
+      "finalUrl": "https://bulandshahar.nic.in/history/",
+      "fetchedAt": "2026-11-18T09:57:56.687167Z",
+      "contentType": "text/html",
+      "textSha256": "5b884136763841bee6b1e10b049ed310b92ba53260f155fea8f387683672ce4b",
+      "characters": 1171,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S03",
+      "quote": "Blue Pottery is based on ground quartz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "Blue pottery of Jaipur and its surrounding villages is unique in that primarily it is a ceramic body made of quartz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S15",
+      "quote": "The absence of clay is what distinguishes blue pottery from traditional pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S17",
+      "quote": "He says the distinctive feature of Blue Pottery is that it is not made with clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S03",
+      "quote": "The blue colour on the product is so dominant that it can be easily recognised on the naked eye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S03",
+      "quote": "The brilliance of blue created from the cobalt oxide is striking and is the key shade to create the visual appeal of these items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "Perhaps, the product owes its name from the use of blue colour prominently in the process of making of the product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S15",
+      "quote": "The term \"blue pottery\" refers to the extensive use of cobalt blue dye to give the items a striking tint.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "The pottery is completely hand painted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S03",
+      "quote": "Some of the unique features of Blue Pottery of Jaipur are it is completely hand painted",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S02",
+      "quote": "The blue pottery products are quite light weight. The surface shines but the shine is less glossy.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S03",
+      "quote": "The products are quite light weight. The surface of the product shines and with less glossy.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S11",
+      "quote": "A type of ceramics produced in Jaipur, Rajasthan, blue glaze pottery is decorated with hand-painted patterns, often floral or geometric, set against a distinct blue background.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S03",
+      "quote": "Blue Pottery is Turko-Persian in origin, but today is widely known as one of the distinctive crafts of Jaipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S15",
+      "quote": "The magnificent technique of blue pottery, Turko-Persian in origin, reached East India with Turkish conquests in the 14th century and later flourished under Mughal patronage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S18",
+      "quote": "It traces its roots to Turko-Persian culture (beginning in the ninth and tenth centuries)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S02",
+      "quote": "Blue pottery is practiced in many villages in the Jaipur district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S03",
+      "quote": "Many families in Jaipur and nearby villages like Sanganeq nevta, Muhana, Mahalan and Kotjewar are actively involved in producing these art works.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S20",
+      "quote": "In Jaipur the cluster of Blue Pottery includes Neota, Mehla, Mohana and KotJewar area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S18",
+      "quote": "Although Jaipur has been the prominent center, other areas where this style of pottery is practiced include the villages of Neota and Kotjewar near Jaipur and in the communities of Kumhar, Muslim, Natt, Rajput, and Regar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S16",
+      "quote": "In the village of Kot Jewar, 40 km from Jaipur, the ancient art of blue pottery has become the lifeblood of the community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S17",
+      "quote": "from Kot Jewar to Jaipur, a distance of about 40 km.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "| Class | 21 | | Goods | Handicraft | | Geographical Area | Rajasthan |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S11",
+      "quote": "The distinct blue colour is derived from jeypoorite and seypoorite, forms of cobalt oxides that were originally mined in the principality of Khetri (in present-day Rajasthan).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S06",
+      "quote": "Blue.-Obtained from cobalt from Khetri (Jaipur State).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S06",
+      "quote": "The following description is condensed from the Handbook of the Jaipur Museum, which was published in 1895",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S06",
+      "quote": "the cobalt and copper, with which it is coloured, are also found near Bhagore, on the estate of the Raja of Khetri, a Jaipur noble.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S06",
+      "quote": "The characteristic blue colour is derived from Syepoorite or Jeypoorite, an oxide of cobalt, and the green from an oxide of copper which is associated with it in the same mines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S11",
+      "quote": "purple - obtained from a stone known as saind found in Bharatpur district in present-day Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S06",
+      "quote": "Purple (Bazjnz).-This colour is obtained from Biana in the Bharatpur State from a stone called Saznd.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S06",
+      "quote": "Yellow.-From lead. The lead is melted and mixed with vamg (pewter) to reduce it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S06",
+      "quote": "then mixed with sandstone from Karauli and gives the required yellow colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S11",
+      "quote": "yellow - obtained by mixing lead and pewter, and yellow sandstone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S06",
+      "quote": "If the surface of the vessel not covered with designs should have a turquoise (fhzrozz) colour, it is painted with a preparation made of oxide of copper and gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S11",
+      "quote": "sometimes the entire surface may be treated with a mixture of copper oxide and gum to produce a solid turquoise colour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S03",
+      "quote": "The design is filled in with other metal oxides, each of which is transformed into a bright colour by firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S03",
+      "quote": "The oxide of cobalt becomes a deep blue, that of chromium changes to green, cadmium produces a bright yellow and iron oxide becomes a red-brown.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S11",
+      "quote": "iron may be used for red, cadmium for yellow and chromium for green",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S07",
+      "quote": "These with the green leaves are painted in green (copper oxide) and set against a turquoise (copper) ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S07",
+      "quote": "Earthenware jar and cover, Jaipur, about 1880",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S20",
+      "quote": "Blue pottery is adorned with blue colour derived from cobalt oxide, green derived from copper oxide and white",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S03",
+      "quote": "Blue-Copper Oxide,Green-Chrome Oxide,Dark brown-Manganese.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S16",
+      "quote": "cobalt oxide produces deep blue, copper oxide creates light blue, chrome oxide results in green",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S14",
+      "quote": "The colors of Jaipur pottery are as follows: copper to create turquoise; chromium to create green; cobalt to create dark blue and black; iron to create brown; cadmium to create yellow; and manganese to create purple.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S03",
+      "quote": "All the melts, but 80 per c€nt of the quartz is left, and this maintains the form of the vessel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S13",
+      "quote": "These raw materials are heated at a high temperature; melting point is reduced by borax.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S14",
+      "quote": "A combination of powdered glass, borax, zinc oxide, potassium nitrate, and boric acid are mixed together and heated until the mixture melts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S13",
+      "quote": "A special glaze is prepared using different raw material like powdered glass, borax, zinc oxide, potassium nitrate, and boric acid.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S14",
+      "quote": "After it cools, the resulting glass is again ground into a fine-powdered frit and mixed with maida and water to create the final glaze.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S13",
+      "quote": "Splinters are collected and then grounded. The grounded frit is mixed with water to form glaze",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S03",
+      "quote": "the unfired pieces are hand painted with oxide colours, dipped in clear glaze and fired once in wooden kilns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S03",
+      "quote": "The piece is then dipped into a homemade glaze of glass, borax and lead oxide which is made adhesive by the addition of boiled flour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S03",
+      "quote": "Glaze -,Sindoor (red lead), Suhaga (Borax powder), Crushed glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S11",
+      "quote": "This glaze is prepared by melting borax, vermilion and glass at high temperatures. Once the solution has cooled and solidified, it is pulverised into a fine powder and mixed with a flour paste to form a thick glaze solution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S06",
+      "quote": "Suhaga (borax) ... ... § seefs Sindhur (vermilion)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S06",
+      "quote": "It is then melted in a crucible and this melted liquid is Sheiwad to cool and solidify. The solid lump is then broken into fine grains and passed through a mill in order to reduce it to a fine powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S09",
+      "quote": "Subramanian, R B V (2003) CGCRI gives new life to Jaipur blue pottery - a success story",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S09",
+      "quote": "The technological intervention has not only eliminated lead, a toxic material and a proven health hazard in blue pottery, but made the body five times stronger, eco-friendly, export-worthy and free from other defects of water leakage and glaze blackening.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S09",
+      "quote": "an ailing traditional blue pottery due to contents of lead in the body and glaze compositions",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S09",
+      "quote": "Apart from the presence of lead in compositions, the blue pottery also suffered from defects like water leakage due to higher porosity, fragileness due to lower strength, glaze blackening etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S10",
+      "quote": "This lead high strength eco-friendly blue pottery glaze and the technology was transferred to the artisans in several clusters around Jaipur through series of T&D programs as well as implementation at units' level by CGCRI.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S10",
+      "quote": "Developed Lead-free Body possessing Dry Strength ~ 150% higher. Developed Blue Pottery with Lead-free Engobe and Glaze having Fired Strength ~ 405% Higher.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S16",
+      "quote": "Traditionally, lead was used in the glaze, but modern techniques have shifted towards lead-free coatings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S16",
+      "quote": "a word of caution comes from author Dave Abram in 'The Rough Guide to India,'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S16",
+      "quote": "None of it-despite what some shop owners claim-should be used for hot food, as the glazes are unstable and potentially toxic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S02",
+      "quote": "Since it does not crack much and is impervious, it is found very suitable and hygienic for daily use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S12",
+      "quote": "For this assessment 30 male workers are selected using convenient sampling.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S12",
+      "quote": "It was found that 100 % of workers experienced the discomfort in the lower back and knee.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S12",
+      "quote": "A significant population of the workers are working in poor postures which have high risk of Musculoskeletal disorders (MSDs) and is one of the main reason for absenteeism and leaving the profession of blue pottery manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S12",
+      "quote": "Budapest, Hungary - August 22 - 23, 2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S12",
+      "quote": "Blue pottery manufacturing is one of the famous art in India, very old profession employing many people. As an unorganized sector, no statistical data are available to date such as the number of people employed, accident rates, and other problems.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S02",
+      "quote": "Requires only one firing for baking and glazing unlike clay pottery where two firings are required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S14",
+      "quote": "Jaipur potters do not bisque fire their wares",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "By wetting the edges, even the dry pieces can be joined.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S14",
+      "quote": "the attachment area is wet with water until it becomes leather hard to ease the transition from completely dry to wet dough and prevent cracking between the two parts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S14",
+      "quote": "Because of the low plasticity of the dough, many of the objects in Jaipur blue pottery are made in plaster molds, using press-molding techniques.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S20",
+      "quote": "The dough used in blue pottery lacks plasticity due to which they can\"t be hard-pressed on wheel to make large products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S07",
+      "quote": "As the pieces were made of a mixture of feldspar and starch they could not be thrown on a wheel but were either raised by hand or shaped in a mould.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S08",
+      "quote": "As the pieces were made of a mixture of feldspar and starch they could not be thrown on a wheel but were either raised by hand or in a mould.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S06",
+      "quote": "The clay and felspar, which are the principal ingredients in its manufacture, are, however, obtained in the State",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "The quartz composition of the ceramic is well suited to the hot and dry climate of the area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S16",
+      "quote": "Production halts during the monsoon, as the traditional technique relies on sun-drying, making work impossible during the rainy season.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S20",
+      "quote": "Some other problems faced by the blue pottery industry are:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S20",
+      "quote": "7. Dependency on sun for drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S14",
+      "quote": "After being dipped in the glaze, all pieces are set in the sun to dry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S20",
+      "quote": "The final products are dipped in this solution in a way that it gets an even coating. The product is finally dried in sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S16",
+      "quote": "where these blue creations claim space on rooftops and courtyards of artists' homes, absorbing the abundant sunlight as part of their careful drying process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S03",
+      "quote": "The use of blue glaze on pottery made from Multani mitti, or Fuller's earth, is an imported technique, first developed by enterprising Mongol artisans who combined Chinese glazing technology with Persian decorative arts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S16",
+      "quote": "Mongol artisans fused Chinese glazing methods with Persian decorative motifs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S03",
+      "quote": "This technique traveled south to India with early Muslim potentates in the 14th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S15",
+      "quote": "The magnificent technique of blue pottery, Turko-Persian in origin, reached East India with Turkish conquests in the 14th century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S03",
+      "quote": "During its infancy, it was used to make tiles to decorate mosques, tombs and palaces in Central Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S14",
+      "quote": "at first it was used to make tiles to decorate mosques, tombs, and palaces in Central Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S03",
+      "quote": "The Art of blue pottery cnme to Jaipur from Persia and Afghanistan via Mughal Courts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S03",
+      "quote": "Gradually the blue glaze technique grew beyond an architectural accessory to Kashmiri potters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S03",
+      "quote": "From there, the technique traveled to the plains of Delhi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "It travelled from Delhi to Jaipur in the 17th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S15",
+      "quote": "it was later introduced in Delhi and moved to Jaipur artisans in the 17th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S20",
+      "quote": "The blue pottery travelled from Mughal courts to Rajasthan in 1562 when the Mughal ruler Akbar sent some gift items including vases of Mughal art or blue pottery made in khurja but the art could be developed only in the times of Sawai Ram Singh I",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S02",
+      "quote": "Man Singh I was the first to bring the art of blue and white to Jaipur subsequent to his interactions with the Mughals and through his campaigns in Afghanistan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S02",
+      "quote": "through his campaigns in Afghanistan. This was possibly temporary.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "Sawai Ram Singh tr (1835-1880) set up a school of art in 1866",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S02",
+      "quote": "the School of Art was established in 1866 at Jaipur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S11",
+      "quote": "Introduced in Jaipur from Delhi and Khurja by the ruler of Jaipur, Ram Singh II, blue glaze pottery thrived primarily under the aegis of the Jaipur School of Art, founded in 1866.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S11",
+      "quote": "Introduced in Jaipur from Delhi and Khurja by the ruler of Jaipur, Ram Singh II",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S15",
+      "quote": "under the reign of Sawai Ram Singh, local artisans were sent to Delhi to be trained in this Indian craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S17",
+      "quote": "Jaipur ruler Maharaja Sawai Ram Singh II was a great patron of the arts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S17",
+      "quote": "He sent artisans to Delhi to learn from the masters there.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S06",
+      "quote": "It was not until the opening of the School of Art in 1866 that pottery of any value was made in Jaipur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S06",
+      "quote": "A Delhi potter was the first to manufacture pottery at the School of Art. After him came a family of potters from Biana in the Bharatpur State, whose direct descendants still carry on the manufacture and the work of instruction at the institution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S07",
+      "quote": "The school in Jaipur, Rajasthan, produced pottery in the late 19th century after one of the pupils of Bhola, who was a chief artist of Delhi fritware, introduced the technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S08",
+      "quote": "The school, in Jaipur, produced pottery in the late 19th century after one of the pupils of Bhola, who was a chief artist of Delhi fritware, introduced the technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S07",
+      "quote": "Pickle jars or martabans, as they were locally known, owing to the fort on the coast of Burma through which they were imported into India, were first copied in Delhi and later at Jaipur, where they were decorated in response to European taste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S11",
+      "quote": "Under the institute's director, Opendronath Sen, the pottery was displayed at the 1883 Jaipur Exhibition, encouraging a rise in local production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S11",
+      "quote": "However, years of waning patronage and the advent of modern technologies forced the art into neglect and decline.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S03",
+      "quote": "the craft was practiced by one family who guarded its secrets so closely and refused to share their trade secrets with their fellow craftsmen so there was an eventual lowering of standards and a gradual dying out of the craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S18",
+      "quote": "Yet even during its revival, production techniques remained closely guarded secrets, and it is largely believed that because they were not popularized, the original blue pottery techniques were lost.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S02",
+      "quote": "In 1957, when the School that had started in 1866 was suddenly closed by the Government of India, it took a Maharani- Gayatri Devi of Jaipur- to inject a third dose of life",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S20",
+      "quote": "The family gradually lost its hold and the art of blue pottery almost vanished by the time of independence. In 1954 the art school was closed down.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S20",
+      "quote": "The school established in 1963 was named Sawai Ram Singh Shilp Kala Mandir and Shri Kripal Singh Shekhawat,a renowned artist of Rajasthan was made the first director of the school to train people in blue pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S18",
+      "quote": "The social reformer and freedom fighter Ms.Kamaladevi Chattopadhyay assigned the task of researching and developing this pottery technique to a prominent artist, Mr. Kripal Singh Shekhawat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S18",
+      "quote": "During the post-Independence era of the 1950s and beyond, the pottery tradition was again revived, with success this time, by two women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S11",
+      "quote": "Successful attempts to revive the blue pottery industry were led by the social reformer Kamaladevi Chattopadhyay and artist Kirpal Singh Shekhawat, with support from Maharani Gayatri Devi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S03",
+      "quote": "The craft received a much needed boost in the 1960's as intemationally renowned artist Kripal Singh Shekhawat entered the freld of Blue Pottery and raised the bar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S11",
+      "quote": "Kirpal Singh Shekhawat, principal of the Jaipur School of Art, referred to artefacts in the Albert Hall Museum, Jaipur, as well as the decorative tiles that clad cenotaphs around Jaipur, to re-establish the region's blue glaze pottery tradition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S19",
+      "quote": "Shri Kirpal Singh Shekhawat RAJ PS24 Art",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S17",
+      "quote": "Kripal Singh Shekhawat, a renowned craftsman who revived Blue Pottery and was conferred with the Padma Shri in 1974.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S18",
+      "quote": "MGD girls' school was the first educational institute to support the teaching of the Jaipur pottery techniques by creating a proper pottery studio with a kiln.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S03",
+      "quote": "The rulers of Jaipur were exceptionally partial to blue-glazed ware, and many marble halls in Rambagh Palace has as its centre piece a bubbling fountain lined with ravishing blue tiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S06",
+      "quote": "There are, however, numerous evidences still extant in the architecture of Jaipur to show that the early rulers of Jaipur had a great liking for porcelain tiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S02",
+      "quote": "When the technique arrived in the country, the purpose was religious as the Mughals wanted tiles to be made for the mosques, resembling those of Persia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S02",
+      "quote": "But it's revival in Jaipur, by the Maharajas, was with a purpose of achieving architectural extravagance",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S02",
+      "quote": "Slowly with the decline in the royal patronage, the artisans resorted to more mundane and utility products, trying to capture the middle class",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S11",
+      "quote": "Emerging in the nineteenth century, the designs found on blue glaze pottery in Jaipur were developed based on ceramics from the workshops of Delhi and Khurja (in present-day Uttar Pradesh) that were established during the Sultanate period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S11",
+      "quote": "The impressive collections of the wealthy Mughals served as a reference point for the revival of the art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S11",
+      "quote": "Their assorted chini-khanas that housed their collections of Chinese and Persian pottery provided inspiration for the artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S06",
+      "quote": "It has already been stated that the Jaipur ware is practically the same as that of Delhi; but it is, in some respects, an improvement upon it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S06",
+      "quote": "It is fine white pottery with a thick semi-translucent glaze, and (as was pointed out some years ago, we think by Sir George Birdwood) it is really the same as that of the well-known Ushabti figures of Ancient Egypt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S06",
+      "quote": "The designs - are usually conventional and mythological.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S14",
+      "quote": "A sketch of the design is first done in pencil on the clay's surface, then outlined with cobalt oxide, and finally filled in with other oxides according to color.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S11",
+      "quote": "The design is then applied onto the treated surface of the piece, rendered first in pencil and then with paint.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S02",
+      "quote": "The traditional motifs like tessellating type ot iaali, all over motifs and the stylized floral designs reflect their Persian origins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S03",
+      "quote": "The traditional motifs like tessellating type ofjaali, all over the motifs and the stylized floral designs reflect socio-cultural history",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S02",
+      "quote": "Most of the items comprise of domestic kitchenware such as cups, plates, flower vases, tea pots, urns, tea coasters, napkin holders, bread holder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S02",
+      "quote": "Also small items such as table top accessories, door knobs, pen stands, paper weights, tiles, incense stick stands, candle stands, bathroom fittings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S02",
+      "quote": "The artisans have started making even buttons and costume jewellery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S14",
+      "quote": "Many of the common motifs in Jaipur pottery are flower patterns or geometric designs-both are commonly seen in the Islamic arts from which Jaipur pottery evolved, but animals such as elephants and peacocks are also recurring images.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S03",
+      "quote": "The production of the blue pottery of Jaipur in Rajasthan involves basically major nine steps. These are Preparation of dough, Glaze making, Bharan nikaalna (Fabrication of the wares), Pendi lagana (addition of the base)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S03",
+      "quote": "Rezmaal ka kaam (finishing), Engobe/Astaar lagana (application of white base color), Rangaai (painting design), Bharana/bhatti ko jamana (loading of articles in the kiln), Pakana (Firing).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S02",
+      "quote": "basically eleven steps to name: Preparation of dough Glaze Making Bharan nikaalna (Fabrication of the wares) Pendi lagana (addition of the base)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S02",
+      "quote": "Rezmaal ka kaam (finishing) Engobe/Asfaar lagana (application of white base color) Rangaai (painting design Bharana/bhatti ko jamana (loading of articles in the kiln) Pakana (Firing)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S20",
+      "quote": "The whole process can be divided into following main steps; 1. Making of the Dough 2. Making of the Molds 3. Casting of the Products 4. Scrubbing 5. Finishing 6. Attaching the Base 7. Smoothening 8. Designing 9. Colour Making 10. Painting 11. Glazing 12. Firing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S16",
+      "quote": "The base mixture consists of ground quartz stone, Kaanch (glass), Katira Gond (edible gum), Multani Mitti (Fuller's Earth), Saaji (soda bicarbonate), and Maida (flour), which is used for coating and occasionally as a substitute for Fuller's Earth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "Saaji (soda bicarbonate), Multan mitti (Fuller's earth), Kaatira gond (natural resin)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S06",
+      "quote": "Stone (quartz locally obtained)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S06",
+      "quote": "Kach (glass) es ia sk oa TE ... I} seer Sajjt (borax) fis ae er Katira (gum)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S06",
+      "quote": "Multani matt (Multan clay, or fuller's earth)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S14",
+      "quote": "The other ingredients are quartz, glass, rock salt, and gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S14",
+      "quote": "The ratios are roughly 1 part each of gum, salt, and clay (Fullers Earth, which is usually bentonite, kaolinite, montmorillonite, and attapulgite): 7 parts glass: 40 parts quartz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S14",
+      "quote": "Doraya refers to preparing the materials as making dough, rather than making a clay body, because the ingredients in a typical clay body constitute only one part of the recipe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S14",
+      "quote": "The raw materials are mixed with water and left overnight. The next day they are kneaded together into a uniform consistency and again left for 2-3 days before use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S06",
+      "quote": "pulverized, and reduced to a fine-grained powder by means of a wire gauze sieve.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S06",
+      "quote": "Sufficient water is poured over it to produce a soft paste-like composition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S06",
+      "quote": "This composition is very similar to the kneaded flour prepared for making bread.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S15",
+      "quote": "It is then rolled and flattened into a 4-5 millimetre thick 'Chapatti' (pancake) and placed in moulds",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S20",
+      "quote": "a round shape like chapatti with an approximate thickness of 4-5 mm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S13",
+      "quote": "A good amount of dough is flattened to a round roti like shape of approximate 1cm thickness with a flattening tool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S06",
+      "quote": "The hollow empty spaces of the moulds are then packed with dry ashes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S14",
+      "quote": "They fill the inside of the mold with raakh or burnt wood ash to fit the chappati to the mold from the inside out",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S13",
+      "quote": "The mold with dough in it is then filled with burnt wood dust and pressed gently so that dough takes the exact shape of the mold.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S13",
+      "quote": "The product is left for drying for 1-2 days along with burnt wood dust in itself.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S14",
+      "quote": "After it has dried completely, the excess raakh is brushed off using akoochi or small broom.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S13",
+      "quote": "Molds are made from Plaster of Paris (POP).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S13",
+      "quote": "The molds if maintained properly can be used for more numbers of times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S06",
+      "quote": "The moulds are made of clay and are baked before use. The soft contents of the mould are emptied on to a slab and dried in the sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S14",
+      "quote": "Rather than making a foot with a plaster mold, the dried, plaster-cast form is placed upside down on a potter's wheel and the foot is thrown directly onto the form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S13",
+      "quote": "Products like vases are provided with base to give them stability. The base is attached to the product with some amount of dough and sprinkled with water to make it leather hard.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S03",
+      "quote": "A vase, for example, will be made up in four parts; a wheel-turned neck; two moulded hemispheres; and a wheel-turned base.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S20",
+      "quote": "All these four parts are joined together using the dough and the surface is smoothed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S13",
+      "quote": "The rough edge of the product is smoothened by rubbing it on stone gently. After this, the product is rubbed with the sandpaper to remove grains and to make surface of product even.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S14",
+      "quote": "the dried pieces are smoothed with a slurry mixture of dough and water to fill any holes on the surface that may have been caused by the ash placed in the mold during drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S13",
+      "quote": "The product is coated with, dough mixed with water to fill the pores and later the product is dried and rubbed with sandpaper again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S14",
+      "quote": "the pieces are again coated by hand with a slip that is a mixture of quartz powder, powdered glass, and edible flour called maida.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S15",
+      "quote": "It is then dried after being immersed in a solution of quartz powder, powdered glass, edible refined flour (maida), and water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S03",
+      "quote": "The outlines are drawn in cobalt oxide using a squirel-tail brush (little ground squirrels are frequently run over, and the painten collect the tails, from which they make their own brushed).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S13",
+      "quote": "If the product is circular shape then the outline is easy to give, product is just placed on potter's wheel and by touching the tip of brush to the product a neat line could be drawn.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "In order to create the underglaze colors, oxides are mixed with gum, which acts as a binding agent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S15",
+      "quote": "These oxides are combined with edible gum and crushed on the stone before being applied with a brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S13",
+      "quote": "the coat of product should not be too thick or thin, and it should be evenly coated. Too thick will give matte finish and when it is too thin it will leave the pores exposed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S13",
+      "quote": "The products are properly stacked inside so that it doesn't touch each other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S13",
+      "quote": "The kiln is closed from top and heating is done from below using wood and charcoal, and an even circulation of heat within the kiln is maintained by leaving the center core open for heat to move freely.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S20",
+      "quote": "The stacking is done with utmost care so that no two products stick to each other",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S20",
+      "quote": "If products stick to each other there are possibilities of them turning black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "they are frred at 800 - 8500 C for six hours in a closed kiln fuelled with charcoal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S11",
+      "quote": "the object is baked in a kiln at 800-850° C for six hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S14",
+      "quote": "It is a wood-fired kiln with a small pit located right in front of the small opening where they throw the wood inside, with smaller stoke holes around the base.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S14",
+      "quote": "It is fired in oxidation for 8 hours to 1832°F (1000°C).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S13",
+      "quote": "The firing takes place for 4-5 hours and the firing has to be controlled to be gradual because changes in temperature might cause cracks in products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S17",
+      "quote": "It is then placed in the furnace and baked at 750 to 850 degrees Celsius.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S17",
+      "quote": "They are then fired for about five hours and left to cool the next day. The furnace is opened only on the third day,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S03",
+      "quote": "The kiln is left to cool for three days, avoiding any rapid temperature change which so easily cracks the china.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "They are allowed to cool in the kiln for about three days, and are then removed, being ready for use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S11",
+      "quote": "is then cooled for about three days before it is considered a finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S16",
+      "quote": "The firing process relies on locally sourced, seasoned Khezadi wood, while other essential ingredients include charcoal, water, borax powder, zinc oxide, potassium nitrate, and boric acid-each contributing to its unique texture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S15",
+      "quote": "In certain regions, diesel furnaces have replaced traditional wood or charcoal-fueled kilns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S20",
+      "quote": "The new furnaces being used are diesel and gas powered.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S14",
+      "quote": "most closely resembling a geodesic dome, the door of the kiln is also its chimney and is located right at the apex in the middle of the dome.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S17",
+      "quote": "The manufacturing ratio is 50:50, meaning that only half of the items remain fit for sale after being baked in the furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S16",
+      "quote": "the craft comes with challenges, including a high damage ratio of 30-40%.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S16",
+      "quote": "any post-firing breakage means starting from scratch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S03",
+      "quote": "Once made, the blue pottery items cannot b€ reworked.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S03",
+      "quote": "The smallest mistake could lead to the piece either cracking up or tuming black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S16",
+      "quote": "Creating a single piece of blue pottery takes around 15 days to complete, whether it's a single plate or a batch of one hundred.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S16",
+      "quote": "Other key instruments include Regmaal (sandpaper in 60, 100, and 180 grades), the Patti (iron blade/knife), Saancha (iron cutter), Koochi (broom), Chaak (potter's wheel), brushes, and the Bhatti (heating kiln).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S01",
+      "quote": "| Application Number | 66 | | Geographical Indications | Blue Pottery of Jaipur | | Status | Registered | | Applicant Name | Development Commissioner (Handicrafts) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S01",
+      "quote": "| Date of Filing | 14-08-2006 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "74 66 Blue Pottery of Jaipur Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S01",
+      "quote": "| Journal Number | Supp 1 | | Availability Date | 24-03-2008 | | Certificate Number | 74 | | Certificate Date | 10-07-2008 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "| Geographical Indications | Blue Pottery of Jaipur | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "| Registration Valid Upto | 13-08-2026 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "| 160 | AU/21933/GI/66/160 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S17",
+      "quote": "it is historically linked to Jaipur and even got the Geographical Indication or GI tag in 2006.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S21",
+      "quote": "it was registered under GI in 2006 with support from NABARD. The organisation also took the initiative to register artisans/producers of this community as authorized users.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S11",
+      "quote": "Jaipur's blue glaze pottery received a Geographical Indication (GI) tag in 2008, and while the industry remains protected in Jaipur, several other workshops producing similar wares have cropped up in regions such as Chinhat near Lucknow in present-day Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S04",
+      "quote": "| Application Number | 540 | | Geographical Indications | Blue Pottery of Jaipur (Logo) | | Status | Registered | | Applicant Name | Development Commissioner (Handicraft) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S04",
+      "quote": "| Date of Filing | 28-12-2015 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "| Journal Number | 93 | | Availability Date | 30-11-2016 | | Certificate Number | 293 | | Certificate Date | 29-04-2017 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "| Registration Valid Upto | 27-12-2025 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S03",
+      "quote": "The producers of other area and even producers of other countries are making the similar typ€ print and selling in the name of Blue pottery of Jaipur for deriving premium price associated with it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S02",
+      "quote": "And since they stand competition from the factory made cheap look-alikes, the artisans are forced to keep low rates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S06",
+      "quote": "The Jaipur School of Art Catalogue for 1905 contains five plates of illustrations of no fewer than eighty-seven separate specimens of pottery varying in price from a small menu-holder at four annas to a vase twenty inches high at five and a half rupees.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S02",
+      "quote": "There is a story/legend which tells of how Maharaja",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S02",
+      "quote": "Maharaja's kite master was defeated by a potter called Churamani, who had coated his kite string with glass dust of his blue green pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S14",
+      "quote": "One day, two of his family members came to Jaipur and were flying a kite. They ended up crossing and cutting the Maharaja's kite. The Maharaja discovered that they were potters from Iran/Iraq and they ended up making pottery for the Maharaja to appease him after ruining his kite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S16",
+      "quote": "The craft, which flourished under Mughal patronage, was once believed to serve a more utilitarian purpose-detecting poisoned food.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S16",
+      "quote": "Mughal kings used blue pottery to check their food. If the colour of the glaze changed, it conveyed that the food had been tampered with, or poisoned.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S03",
+      "quote": "watched as his kite masters were engaged in battle with two brothers from Achnera (near Agra.) who were to father the turquoise blue pottery of Jaipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S20",
+      "quote": "When the ruler saw the two brothers Churaman and Kaluram managed to bring down the royal kites almost every time",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S20",
+      "quote": "Thus their family migrated from Achnera and settled down in the Ganga Meharon ki Gali within the four walls of the pink city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S20",
+      "quote": "In 1866 Maharaja Sawai Ram Singh II established his school of arts and industries in Kishanpol Bazar and Churaman was made the head of the bluepottery section.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S17",
+      "quote": "Prajapati says Kot Jewar was once a hub of Blue Pottery. There were other centres like Jaipur, Mahla, and Nevta but with time the units shut down.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S17",
+      "quote": "The final step is to glaze the artefact using a mixture of sindoor, borax and glass powder. This mixture is melted in the furnace at 1200 degrees Celsius, then cooled in water and ground into a fine powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S13",
+      "quote": "The kiln is left for cooling for 2-3 days and then products are taken out.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S14",
+      "quote": "After cooling for 2-3 days, the kiln is unloaded and the pieces are sorted",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S20",
+      "quote": "Thereafter, the kiln is left for slow cooling for 2-3 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S22",
+      "quote": "Currently Bulandshahr is a district of the state Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S22",
+      "quote": "Yarning , fabricing work in Jahangirabad , work of the kitchenware in Khurja",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S22",
+      "quote": "Khurja is recognized for ceramic work.",
+      "result": "PASS"
+    }
+  ]
+}

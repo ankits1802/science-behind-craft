@@ -1,0 +1,1926 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Mysuru-Stone-Carving",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:58:00+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {"query": "Mysore stone carving craft chloritic schist soapstone artisans", "site": "web search"},
+    {"query": "Karnataka stone carving Hoysala tradition sculptors Mysuru Shivarapatna", "site": "web search"},
+    {"query": "Mysore stone carving handicrafts Karnataka State Handicrafts Development Corporation", "site": "web search"},
+    {"query": "Arun Yogiraj Mysuru sculptor family five generations krishna shile H.D. Kote stone", "site": "web search"},
+    {"query": "Mysuru sculptors stone carving tradition Wadiyar patronage shilpi family", "site": "web search"},
+    {"query": "Somanathapura Keshava temple soapstone chloritic schist Hoysala Mysuru district ASI", "site": "web search"},
+    {"query": "Ram Lalla idol stone Gujjegowdanapura H.D. Kote Mysuru krishna shile schist", "site": "web search (re-run): Star of Mysore and The Hans India pages on the source of the Krishna Shile read and used; they differ on the taluk of Gujjegowdanapura, recorded as a conflict"},
+    {"query": "Mysuru sculptors krishna shile idols Hoysala style stone carving workshop", "site": "web search (re-run): a Star of Mysore report on Paramesh Acharya's Krishna Shile idol and a Star of Mysore interview with Arun Yogiraj read and used"},
+    {"query": "Mysore district gazetteer stone carving sculptors soapstone potstone industry", "site": "web search (re-run): led to the Mysore Gazetteer of 1929 on the Tamil Digital Library (its PDF link returned 404) and to the archive.org copies read below"},
+    {"query": "GI registry: the craft is NON_GI in the portal craft register; no GI application was looked up", "site": "search.ipindia.gov.in (not searched)"},
+    {"query": "Mysuru district pages on history, about the district, tourist places, culture, economy and Somanathapura", "site": "mysore.nic.in (history and about-district read; tourist-place, culture-heritage and economy pages returned 404)"},
+    {"query": "District Census Handbook Mysore, Part A, 2011", "site": "censusindia.gov.in (404; the Wayback Machine was unreachable from this machine)"},
+    {"query": "Mysore: a gazetteer compiled for government, Vol. I (Rice, 1897)", "site": "archive.org: its djvu text ends at the 200,000-character reading cap; the whole volume was then read from the 34 MB scan india.history.resource.89056 (S05)"},
+    {"query": "Carving the future of sculptures; JC Wadiyar statue, Hardinge Circle", "site": "arunyogiraj.com (both pages returned 404 with no readable archive)"},
+    {"query": "Sculptors mapping Mysuru; In Shivarapatna, a craft of stone-carving endures; Carving a modern legacy in sculptural tradition", "site": "deccanherald.com (canonical pages give headings only; the AMP page of Sculptors mapping Mysuru was read; Shivarapatna is a Kolar district tradition and was not used)"},
+    {"query": "Ram idol sculptor Arun Yogiraj (The Week), Arun Yogiraj (BBC), Ram Mandir idol sculptor (Indian Express), Supreme sculptor (Hindustan Times), MBA to master sculptor (ThePrint), Ram Lalla dark stone (WION)", "site": "theweek.in, bbc.com, indianexpress.com, hindustantimes.com, theprint.in, wionews.com (403, 404 or a bot check; not read)"},
+    {"query": "Somanathapura tourist pages", "site": "karnatakatourism.org and asibengalurucircle.in (404 or unreachable)"},
+    {"query": "Stone icon carving of Karnataka; Soapstone carving (CraftKatha)", "site": "globalinch.org and aiacaonline.org (read; not used: the first repeats Asia InCH nearly word for word, the second covers soapstone across several states with no author)"},
+    {"query": "Soapstone craft cluster study", "site": "chitrolekha.com (read; about Dhakotha in Odisha, not used)"},
+    {"query": "Pictures of Mysuru stone carving and of the Keshava Temple at Somanathapura", "site": "commons.wikimedia.org (categories Chennakesava Temple, Somanathapura and its reliefs; Arun Yogiraj and Hardinge Circle categories hold no files)"},
+    {"query": "Mysore gazetteer volumes on archive.org: Rice 1897 Vols I and II, Hayavadana Rao 1927 to 1930", "site": "archive.org search: Rice Vol. II read as S24 (scan 89057) and Rao Vol. III as S25 (in.ernet.dli.2015.31736); every copy of Rao Vol. V, with the Mysore District entries, exceeds the reading caps"},
+    {"query": "Rice 1897 Vol. I, Fine Arts, Sculpture (p. 509)", "site": "archive.org (S05): read; it names Sravana Belgola, Hoysala temple decoration and hero stones, but no Mysuru carver; not used"},
+    {"query": "Hayavadana Rao, Mysore Gazetteer Vol. III, sculpture and stone industries", "site": "archive.org (S25): the Sculpture paragraph names potstone or soapstone and the New Palace; the potstone paragraph of the mines chapter has no readable text in the OCR"},
+    {"query": "Somanathapura Keshava temple built 1258 Hoysala Narasimha III Somanatha dandanayaka", "site": "web search: Wikipedia's Somanathapura and Chennakeshava Temple articles give 1258, but no source rated A to C found gives it, so 1258 is not used"},
+    {"query": "A jewel in the Hoysala crown (Gouri Satya); Somanathapura temple exhibit", "site": "deccanherald.com and exhibits.jioinstitute.edu.in (archived copy): read; both repeat 1268 from the temple inscription; not used beyond S26, the exhibit page naming no author"},
+    {"query": "Arun Yogiraj (Wikipedia)", "site": "en.wikipedia.org: dropped; its sentence on the Mysore style rewrites the sculptor's own website (S10) and is not independent"},
+    {"query": "Soapstone Carving of Karnataka", "site": "asiainch.org: dropped; it describes soapstone carving across Karnataka, not this workshop, and is rated D"},
+    {"query": "Craft-wide sources on Mysuru stone carvers: artisan numbers, community, cooperative or census figures", "site": "web search, the gazetteers above and mysore.nic.in: no dated count of Mysuru stone carvers and no community named for them beyond Rice's Silpi of the Mysore State were found"},
+    {"query": "Pictures of present-day Mysuru stone carving: Mysore stone carving, Krishna shile, Jayachamarajendra Wadiyar statue Mysore, Hardinge circle statue", "site": "commons.wikimedia.org file search: no openly licensed picture of present-day Mysuru stone carving found"}
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "WEB_PAGE",
+      "title": "History of Mysuru",
+      "publisher": "District Mysuru, Government of Karnataka",
+      "url": "https://mysore.nic.in/en/history/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "WEB_PAGE",
+      "title": "About District",
+      "publisher": "District Mysuru, Government of Karnataka",
+      "url": "https://mysore.nic.in/en/about-district/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "WEB_PAGE",
+      "title": "Sacred Ensembles of the Hoysalas",
+      "publisher": "UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/1670/",
+      "language": "en",
+      "licence": "CC-BY-SA IGO 3.0",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "ENCYCLOPEDIA",
+      "title": "The Signed Sculptures of Lakshmi-Narasimha Temple of Harnahalli: Hoysala Sculptors and Their Intricate Designs",
+      "authors": ["Poorva Arun Salvi"],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/signed-sculptures-lakshmi-narasimha-temple-harnahalli-hoysala-sculptors-and-their-intricate-designs",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "BOOK",
+      "title": "Mysore: A Gazetteer Compiled for Government, Revised Edition, Vol. I, Mysore in General",
+      "authors": ["B. Lewis Rice"],
+      "publisher": "Archibald Constable and Company",
+      "year": 1897,
+      "url": "https://archive.org/download/india.history.resource.89056/89056.pdf",
+      "language": "en",
+      "licence": "Public domain",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Sculptors mapping Mysuru",
+      "authors": ["Rashmi Gopal Rao"],
+      "publisher": "Deccan Herald",
+      "year": 2019,
+      "url": "https://www.deccanherald.com/amp/story/india/karnataka/sculptors-mapping-mysuru-771032.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "His deft hands shaping Nalwadi's five-feet bust",
+      "publisher": "Star of Mysore",
+      "year": 2022,
+      "url": "https://starofmysore.com/his-deft-hands-shaping-nalwadis-five-feet-bust/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Breathing Life into Stones",
+      "authors": ["V. Shourabh"],
+      "publisher": "Star of Mysore",
+      "year": 2017,
+      "url": "https://starofmysore.com/breathing-life-stones/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Cast in Stone: Mysuru's Modern Architect",
+      "authors": ["Simrran Gill"],
+      "publisher": "Outlook Traveller",
+      "year": 2020,
+      "url": "https://www.outlooktraveller.com/see/mysurus-modern-architect-arun-yogiraj",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "WEB_PAGE",
+      "title": "About us: Crafting Heritage",
+      "publisher": "Arun Yogiraj",
+      "url": "https://www.arunyogiraj.com/about/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Mysuru sculptor's family elated at Lord Ram's idol selection for consecration",
+      "publisher": "Deccan Chronicle",
+      "year": 2024,
+      "url": "https://www.deccanchronicle.com/amp/nation/current-affairs/020124/mysuru-sculptors-family-elated-at-lord-rams-idol-selection-for-conse.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "'From a Family of Sculptors': Who Is Arun Yogiraj, Creator of Ayodhya Ram Idol?",
+      "publisher": "The Quint",
+      "year": 2024,
+      "url": "https://www.thequint.com/amp/story/news/india/arun-yogiraj-ram-lalla-idol-sculptor-ayodhya-temple-mba-graduate",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Sculptor's family in Mysuru ecstatic as idol chiseled by him chosen for Ayodhya temple",
+      "publisher": "The Hindu",
+      "year": 2024,
+      "url": "https://www.thehindu.com/news/national/karnataka/sculptors-family-in-mysuru-ecstatic-as-idol-chiseled-by-him-chosen-for-ayodhya-temple/article67744882.ece",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Ayodhya Temple: Why is Rama Lalla idol black?",
+      "authors": ["Srishti B Dutta"],
+      "publisher": "Indiatimes",
+      "year": 2024,
+      "url": "https://www.indiatimes.com/news/india/ayodhya-temple-why-is-rama-lalla-idol-black/articleshow/122455292.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Three sculptors at work to create Ram Lala idol for consecration",
+      "publisher": "The New Indian Express",
+      "year": 2023,
+      "url": "https://www.newindianexpress.com/nation/2023/dec/09/three-sculptors-at-work-to-create-ram-lala-idol-for-consecration-2640065.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Arun Yogiraj, man who sculpted Ayodhya temple's Ram Lalla, set to start Shilpa Kala Shaala",
+      "authors": ["Shilpa P"],
+      "publisher": "Deccan Herald",
+      "year": 2025,
+      "url": "https://www.deccanherald.com/amp/story/india/karnataka/arun-yogiraj-man-who-sculpted-ayodhya-temples-ram-lalla-set-to-start-shilpa-kala-shaala-3368775",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Somanathapura, a standing testimony to Hoysala craftsmanship",
+      "publisher": "Citizen Matters",
+      "year": 2014,
+      "url": "https://citizenmatters.in/somanathapura-temple/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Karnataka Rajyotsava Awards: Ram Mandir statue sculptor Arun Yogiraj, former India hockey coach Jude Felix among awardees",
+      "publisher": "The Indian Express",
+      "year": 2024,
+      "url": "https://indianexpress.com/article/cities/bangalore/karnataka-rajyotsava-awards-arun-yogiraj-jude-felix-9647382/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Arun Yogiraj: Meet the MBA-turned sculptor whose Ram Lalla idol has been selected for Ayodhya temple",
+      "publisher": "The Economic Times",
+      "year": 2024,
+      "url": "https://economictimes.indiatimes.com/news/india/arun-yogiraj-meet-the-mba-turned-sculptor-whose-ram-lalla-idol-has-been-selected-for-ayodhya-temple/articleshow/106468807.cms",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S21",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Somanathapura",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Somanathapura",
+      "language": "en",
+      "licence": "CC BY-SA 4.0",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S22",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Heggadadevankote",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Heggadadevankote",
+      "language": "en",
+      "licence": "CC BY-SA 4.0",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S24",
+      "kind": "BOOK",
+      "title": "Mysore: A Gazetteer Compiled for Government, Revised Edition, Vol. II, Mysore, by Districts",
+      "authors": ["B. Lewis Rice"],
+      "publisher": "Archibald Constable and Company",
+      "year": 1897,
+      "url": "https://archive.org/download/india.history.resource.89057/89057.pdf",
+      "language": "en",
+      "licence": "Public domain",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S25",
+      "kind": "BOOK",
+      "title": "Mysore Gazetteer Compiled for Government, New Edition, Vol. III, Economic",
+      "authors": ["C. Hayavadana Rao"],
+      "publisher": "Government Press, Bangalore",
+      "year": 1929,
+      "url": "https://archive.org/download/in.ernet.dli.2015.31736/2015.31736.Mysore-Gazetteer-Vol3_text.pdf",
+      "language": "en",
+      "licence": "Public domain",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S26",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "The stunner at Somanathapura",
+      "authors": ["Srikumar M Menon"],
+      "publisher": "Deccan Herald",
+      "year": 2019,
+      "url": "https://www.deccanherald.com/amp/story/india/karnataka/the-stunner-at-somanathapura-769399.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S27",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "City sculptor carves Ganesha idol for Maharashtra temple",
+      "publisher": "Star of Mysore",
+      "year": 2024,
+      "url": "https://starofmysore.com/city-sculptor-carves-ganesha-idol-for-maharashtra-temple/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S28",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Source of Krishna Shile for Ayodhya Ram Lalla idol: Ram Temple to be built at Gujjegowdanapura",
+      "publisher": "Star of Mysore",
+      "year": 2024,
+      "url": "https://starofmysore.com/source-of-krishna-shile-for-ayodhya-ram-lalla-idol-ram-temple-to-be-built-at-gujjegowdanapura-gtd/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S29",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Ram idol carved out of a three-billion-year-old rock",
+      "publisher": "Star of Mysore",
+      "year": 2024,
+      "url": "https://starofmysore.com/ram-idol-carved-out-of-a-three-billion-year-old-rock/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S30",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Rare Krishna Stone from Mysore Chosen for Ayodhya's Sri Rama Mandir Idol",
+      "authors": ["Coovercolly Indresh"],
+      "publisher": "The Hans India",
+      "year": 2024,
+      "url": "https://www.thehansindia.com/karnataka/rare-krishna-stone-from-mysore-chosen-for-ayodhyas-sri-rama-mandir-idol-851976",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S31",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Sculpting Magic",
+      "authors": ["Vikram Muthanna"],
+      "publisher": "Star of Mysore",
+      "year": 2024,
+      "url": "https://starofmysore.com/sculpting-magic/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "Mysuru is famous in the world for its sandalwood and rosewood artifacts, stone sculptures, incense sticks, ivory inlay work and silk sarees.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Modern Mysuru, paragraph 25", "quote": "Mysuru is famous in the world for its sandalwood and rosewood artifacts, stone sculptures, incense sticks, inlay work with ivory and its exquisite silk sarees."}
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "MATERIAL", "ref": "M02"},
+      "text": "Deccan Herald reports that for Arun Yogiraj's team at their Mysuru sculpting centre, steatite, a soft metamorphic rock, is the main sculpting stone, though marble and granite are also used.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 12", "quote": "While marble and granite are used, the main material used for sculpting is the steatite stone. A metamorphic rock, steatite is soft and can be easily carved."},
+        {"sourceId": "S06", "locator": "paragraph 3", "quote": "The handiwork belongs to Arun Yogiraj and his team belonging to B Basavanna Shilpi and Sons, now called Kashyapa Shilpa Kala Nikethana. An art and sculpting centre located on the busy Chamaraja Road, this is one place you do not want to miss during your trip to Mysuru."}
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M04"},
+      "text": "Outlook Traveller reports that Arun Yogiraj relies equally on marble and granite, and sometimes uses softer stones that are easier to cut for carving.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "paragraph 7", "quote": "Arun relies equally on marble and granite but sometimes also uses softer stones that are easier to cut into for carving."}
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "Arun Yogiraj's website describes the Mysore sculpting style he mastered as an improvisation of the methods used in Hoysala architecture.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "Sculptor as a Career, paragraph 12", "quote": "After years of practice, he mastered the Mysore sculpting style, an improvisation of the methods used in Hoysala Architecture."}
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "DESIGN",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj sculpts in the Dravidian and Hoysala styles, and in a contemporary style as well.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 5", "quote": "He sculpts in the Dravidian and the Hoysala styles and in contemporary style as well."}
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Sculptor Arun Yogiraj is the fifth generation of his family to take up sculpting.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "paragraph 3", "quote": "Sculpting to Arun has come in his blood since his forefathers were all adept sculptors and he is the fifth generation from his family to take up sculpting."},
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 5", "quote": "Arun belongs to the fifth generation of a family of sculptors and practises this craft that he learnt from his father Yogiraj Shilpi."},
+        {"sourceId": "S12", "locator": "paragraph 7", "quote": "Arun Yogiraj hails from a family of sculptors, who have been involved in this profession for five generations."},
+        {"sourceId": "S10", "locator": "Sculptor Family, paragraph 8", "quote": "Sculpting has been his family tradition for 5 generations"}
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "COMMUNITY", "ref": "G05"},
+      "text": "Arun Yogiraj's team belongs to B Basavanna Shilpi and Sons, now called Kashyapa Shilpa Kala Nikethana, an art and sculpting centre on Chamaraja Road in Mysuru.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "paragraph 3", "quote": "The handiwork belongs to Arun Yogiraj and his team belonging to B Basavanna Shilpi and Sons, now called Kashyapa Shilpa Kala Nikethana. An art and sculpting centre located on the busy Chamaraja Road, this is one place you do not want to miss during your trip to Mysuru."}
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Mysuru was ruled by the Gangas, Chalukyas, Cholas and Hoysalas, and after the Hoysalas came the Vijayanagara kings.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "About Mysuru History, paragraph 3", "quote": "The Mysuru was ruled by Gangas, Chalukyas, Cholas and Hoysalas. After the Hoysalas came, the Vijayanagar Kings and then the Mysuru Yadu dynasty came to power in 1399A.D."},
+        {"sourceId": "S02", "locator": "paragraph 8", "quote": "The region was governed by the Ganga Kings till the 10th century. The Cholas, Hoysalas and Vijayanagara Kings ruled over this region."}
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "A Hoysala inscription in Mysuru dates back to the 11th and 12th century.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "About Mysuru History, paragraph 3", "quote": "There is an inscription in Mysuru by the Hoysalas that dates back to the 11th and 12th century."}
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "B. Basavanna Shilpi, Arun Yogiraj's grandfather, trained under Shilpi Siddanthi Siddalinga Swami, the Royal Guru of the Mysore Palace.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 6", "quote": "His grandfather, B Basavanna Shilpi, trained under the renowned Shilpi Siddanthi Siddalinga Swami, who was the Royal Guru of the Mysore Palace."}
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "B. Basavanna Shilpi supplied 64 idols in just 11 months to the Gayatri Temple within the Mysore Palace premises.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 6", "quote": "His grandfather, B Basavanna Shilpi, trained under the renowned Shilpi Siddanthi Siddalinga Swami, who was the Royal Guru of the Mysore Palace. A national award-winner, Arun's grandfather has the distinction of supplying 64 idols in just 11 months to Gayatri Temple within the palace premises."}
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "Maharaja Jayachamarajendra Wadiyar presented Arun Yogiraj's grandfather with a golden chisel and a silver hammer.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 6", "quote": "His grandfather, B Basavanna Shilpi, trained under the renowned Shilpi Siddanthi Siddalinga Swami, who was the Royal Guru of the Mysore Palace."},
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 7", "quote": "He won the appreciation of not only Maharaja Jayachamarajendra Wadiyar, who presented him a golden chisel and a silver hammer"}
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "Arun Yogiraj's website says his grandfather was a national awardee and was honoured by the President of India in 1983.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "Sculptor Family, paragraph 8", "quote": "His grandfather was a national awardee and was honoured by the President of India in 1983."}
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj inherited the art from his late father B S Yogiraj Shilpi, grandfather B Basavanna Shilpi, great-grandfather Chowdappa Shilpi and his father Basappa Shilpi.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 8", "quote": "He has inherited the talent/Art from his late father B S Yogiraj Shilpi, grandfather B Basavanna Shilpi, great grandfather Chowdappa Shilpi and his father Basappa Shilpi."}
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G04"},
+      "text": "Arun Yogiraj learnt the craft from his father Yogiraj Shilpi, a state award-winning sculptor from a family of Mysore palace artists.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 5", "quote": "Arun belongs to the fifth generation of a family of sculptors and practises this craft that he learnt from his father Yogiraj Shilpi."},
+        {"sourceId": "S10", "locator": "Sculptor Family, paragraph 8", "quote": "Similarly his father was a state award winner for his art and sculptures."},
+        {"sourceId": "S15", "locator": "paragraph 11", "quote": "Yograj is the son of Yogiraj Shilpi, the famous sculptor hailing from a family of Mysore palace artists."}
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj's website says his inspiration and initial education in sculpting came from his home, which he considers his first school.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "Sculptor Family, paragraph 7", "quote": "His inspiration and initial education in sculpting came from his home, which he considers his first school."}
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj, an MBA graduate, left a private company and took up sculpting full-time in 2008 to continue the family tradition.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 8", "quote": "An MBA graduate, Yogiraj briefly worked for a private company, but he took up sculpting full-time in 2008."},
+        {"sourceId": "S13", "locator": "paragraph 5", "quote": "An MBA holder from the University of Mysore, Mr. Yogiraj quit his job in a private company to continue the family tradition of sculpting."},
+        {"sourceId": "S11", "locator": "paragraph 3", "quote": "He quit a corporate job after completing his MBA and took up sculpting in 2008."}
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "PROCESS",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "Arun Yogiraj's website says he began with Shilpa Shastra, whose precise measurements are often called 'Thadam' in their practice, or using rice grains for accuracy.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "Sculptor as a Career, paragraph 11", "quote": "In the beginning, he learned the ancient art of Shilpa Shastra. This traditional knowledge is deeply rooted in precise measurements, often referred to in their practice as \"Thadam\", or using rice grains for accuracy."}
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W03"},
+      "text": "Hoysala sculptors conformed to the sculptural norms of the shilpashastras, texts with guidelines for crafts.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Classical Literature and Sculptures, paragraph 46", "quote": "The sculptors conformed to the sculptural norms mentioned in the shilpashastras (texts with guidelines for crafts) which guided their construction at that time."}
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Hoysala temple sculptors signed their work, an unusual practice in the Indian subcontinent.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 22", "quote": "The numerous signatures left by the artists who created these Hoysala-style temples - an unusual practice in the Indian subcontinent - points to their high degree of artistic agency and the prestigious standing they enjoyed in Hoysala society."},
+        {"sourceId": "S04", "locator": "paragraph 2", "quote": "In this context, Hoysala temples are an exception, as most temples of the period display signed works of sculptors."}
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Where many Hoysala sculptors worked at once, carving only their initials was probably meant for easy assessment of correct payment for their work.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Signature of the Sculptors, paragraph 6", "quote": "In Hoysala temples, amid large-scale sculpting activities where many sculptors worked simultaneously, carving only initials of the sculptors' name was probably for easy assessment for correct payment of artists' work."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Signing their names and places of origin might have served Hoysala sculptors as an advertisement of their work.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Signature of the Sculptors, paragraph 5", "quote": "The utilitarian purpose behind signing the names and places of their origin might have been advertisement of their work."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C024",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The use of chlorite schist in temple construction was one of the trademarks of the Hoysala style of temple architecture.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Classical Literature and Sculptures, paragraph 47", "quote": "exuberant lathe-turned pillars, and usage of chlorite schist in the construction of temples were the trademarks of Hoysala style of temple architecture"}
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "UNESCO states that the three component temples of the Sacred Ensembles of the Hoysalas, the Keshava Temple at Somanathapura among them, are built with chloritic schist.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Authenticity, paragraph 29", "quote": "The three component parts are built with chloritic schist and reflect the features such as stellate plans, horizontal friezes of the adhisthana, artists' signatures, sculptural panels and carvings that became the hallmark of this period."},
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 20", "quote": "namely the Channakeshava Temple in Belur, the Hoysalesvara Temple in Halebidu, and the Keshava Temple in Somanathapura"}
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "The Keshava Temple at Somanathapura is one of the three Hoysala-style temple complexes, built between the 12th and 13th centuries, that make up the Sacred Ensembles of the Hoysalas.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 20", "quote": "The Sacred Ensembles of the Hoysalas is a serial property comprised of the three most representative Hoysala-style temple complexes constructed between the 12th and 13th centuries in the present State of Karnataka"},
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 20", "quote": "the Hoysalesvara Temple in Halebidu, and the Keshava Temple in Somanathapura"}
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Citizen Matters and Deccan Herald say the Keshava temple at Somanathapura was built in 1268 by Somanatha, a commander under the Hoysala king Narasimha III.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "A brief history, paragraph 3", "quote": "The temple was constructed in 1268 AD by commander of the Hoysala army, Somanatha, under the Hoysala king Narasimha III."},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "Somanathapura as the name suggests, is not a Shiva temple; it is a famous Hoysala styled Keshava temple."},
+        {"sourceId": "S26", "locator": "paragraph 2", "quote": "The Keshava Temple at Somanathapura was built in 1268 CE by Somanatha, who was a dandanayaka under the Hoysala King Narasimha III."}
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The Hoysala style combines features including a multi-tiered frieze, a thematically arranged gallery of religious and epic stories, and stone carvings covering the entire exterior surface.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 21", "quote": "The Hoysala-style is a combination of several features, including a stellate sanctum"},
+        {"sourceId": "S03", "locator": "Brief synthesis, paragraph 21", "quote": "a multi-tiered frieze, a thematically arranged sculptural gallery of religious, epic, and other stories along the circumambulatory platform, extensive sculptures and stone carvings that cover the entire exterior surface"}
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "On the outer wall of the Somanathapura temple, rows of elephants signifying strength sit below rows of horses for speed, and above them gods and goddesses in different poses.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The temple architecture, paragraph 7", "quote": "On the outer wall you can find carvings of rows of elephants signifying strength, above it rows of horses for speed and finally, gods and goddesses in different poses."},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "the heavily sculpted star shaped Trikuta style temple of Somanathapura"}
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "The sculptures of the Somanathapura temple show intricate details such as finger rings, bracelets and even fingernails.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The temple architecture, paragraph 8", "quote": "Look closely and you will be astonished to see intricate details on the sculptures such as finger rings, bracelets, even finger nails look exquisite."},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "A true work of art, the Gods come alive in the stones of Somanathapura."}
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G07"},
+      "text": "Of the various sculptors of the Keshava temple at Somanathapura, Mallithamma, the most famous, is said to have sculpted a majority of its carvings.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "A brief history, paragraph 3", "quote": "was sculpted by various sculptors, the most famous among them being Mallithamma, who is said to have sculpted a majority of the carvings found in the temple."},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "Somanathapura as the name suggests, is not a Shiva temple; it is a famous Hoysala styled Keshava temple."}
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G07"},
+      "text": "Kellson Colleyar argues that Mallitamma, in his nineties or older when the Keshava temple was built, might not have carved every image and might have set up a workshop to his designs.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Chief Sculptor: Mallitamma, paragraph 44", "quote": "According to Kellson Colleyar, Mallitamma might not have carved each and every image at the temples because when the Keshava temple was being built, he must have been in his nineties or older"},
+        {"sourceId": "S04", "locator": "Chief Sculptor: Mallitamma, paragraph 44", "quote": "Hence, it is very plausible that he might have set up a workshop at the site, and the sculptures were crafted according to the designs by Mallitamma."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G07"},
+      "text": "The Hoysala sculptor Mallitamma had a career of nearly 73 years, and his name appears on several temples, among them the Keshava temple of Somnathpura.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Chief Sculptor: Mallitamma, paragraph 44", "quote": "The chief sculptor of Lakshmi-Narasimha temple, Mallitamma was a very distinguished sculptor during the Hoysala period with his career spanning nearly 73 years."},
+        {"sourceId": "S04", "locator": "Chief Sculptor: Mallitamma, paragraph 44", "quote": "His name appears on several temples such as Amriteshvara temple of Amritapur; Lakshmi-Narasimha temples of Javagal, Harnahalli and Nuggehalli; Panchalingeshvara temple of Govindanahalli; and Keshva temple of Somnathpura."}
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "At Somanathapura, as was common practice under the Hoysalas, the names of sculptors such as Mallithamma, Balayya and Bhamayya are engraved on the walls beside their work.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The temple architecture, paragraph 8", "quote": "As was the common practice during the reign of the Hoysalas, the names of the sculptors, like Mallithamma, Balayya and Bhamayya, are engraved on the walls besides their work."},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "the heavily sculpted star shaped Trikuta style temple of Somanathapura"}
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "UNESCO states that the Hoysala style exerted a lasting influence on later temple construction in the region and beyond.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Criterion (ii), paragraph 24", "quote": "The Hoysala-style, as demonstrated by the property, exerted a lasting influence on later temple construction in the region and beyond."}
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "Star of Mysore, describing a sculptors' camp in Mysuru, writes that persistent knocking, proper application of pressure, accurate chiselling and cutting of edges are vital in getting the stone to shape.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "paragraph 8", "quote": "Persistent knocking, proper application of pressure, accurate chiselling and cutting of edges are vital in getting the stone to shape and for the final image to emerge."},
+        {"sourceId": "S08", "locator": "paragraph 7", "quote": "Lalit Kala Akademi, National Academy of Art, New Delhi and the University of Mysore had organised a Sculptors' Camp"},
+        {"sourceId": "S08", "locator": "Santosh Badiger, paragraph 13", "quote": "He has sculpted a Sarnath Buddha during the camp that concluded in Mysuru"}
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M02"},
+      "text": "Steatite is described as non-reactive, non-porous and non-absorbent, and hence ideal for temple idols worshipped with milk and ghee.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 13", "quote": "It is non-reactive, non-porous and non-absorbent, and hence ideal for temple idols that are subject to worship using milk, ghee etc."},
+        {"sourceId": "S06", "locator": "Unique material, paragraph 12", "quote": "A metamorphic rock, steatite is soft and can be easily carved."}
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "PHYSICS",
+      "subject": {"type": "MATERIAL", "ref": "M02"},
+      "text": "Steatite is described as resistant to temperatures as high as 1200°C, and to water, fire and acid.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 13", "quote": "It is resistant to high temperatures (as high as 1200°C), water, fire and acid."},
+        {"sourceId": "S06", "locator": "Unique material, paragraph 12", "quote": "A metamorphic rock, steatite is soft and can be easily carved."}
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "PHYSICS",
+      "subject": {"type": "MATERIAL", "ref": "M02"},
+      "text": "Arun Yogiraj says the stone loses 65% of its weight and subsequently becomes hard after exposure to air and oxidation.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 15", "quote": "A unique aspect of this craft is that the stone loses 65% of its weight and subsequently becomes hard after exposure to air and oxidation"}
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M09"},
+      "text": "Arun Yogiraj's wife is quoted saying Krishna sila is bluish-grey and turns black when coconut and burnt cocoa powder are applied.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "paragraph 15", "quote": "Krishna sila is bluish-grey and when you apply coconut and burnt cocoa powder, it turns black."},
+        {"sourceId": "S14", "locator": "paragraph 15", "quote": "said the sculptor Yogiraj's wife Vijetha, as quoted by Wion"}
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "Deccan Herald reports that after the final polish Arun Yogiraj's team uses filing tools, sandpaper and natural materials such as coconut oil and dry coconut ash, which render the statue jet black.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 16", "quote": "After the final polish, they use filing tools, sandpaper and natural materials like coconut oil and dry coconut ash, which render the statue a jet-black colour."},
+        {"sourceId": "S06", "locator": "paragraph 3", "quote": "The handiwork belongs to Arun Yogiraj and his team"}
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "Arun Yogiraj says his team's process is handmade: they sketch a rough drawing of the figure directly on the block and start shaping, etching, sculpting and chiselling.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 15", "quote": "The process is handmade and we sketch a rough drawing of the figure directly on the block and start shaping, etching, sculpting and chiselling."}
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P01"},
+      "text": "Arun Yogiraj says selection of stone is key, as the initial slab should be free of cavities and damage of any sort.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Challenges, paragraph 19", "quote": "Selection of stone is also key as the initial slab should be free of cavities and damages of any sort"}
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Deccan Herald reports that the raw material for Arun Yogiraj's workshop is procured from mines in Hassan and in H D Kote, a town and taluk headquarters in Mysore district.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Unique material, paragraph 14", "quote": "The raw material is procured from the mines in Hassan and H D Kote."},
+        {"sourceId": "S22", "locator": "paragraph 18", "quote": "Heggadadevanakote or H.D.Kote is a town and a taluk headquarters in Mysore district in the Indian state of Karnataka."},
+        {"sourceId": "S06", "locator": "paragraph 3", "quote": "The handiwork belongs to Arun Yogiraj and his team"}
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "The bust of Nalwadi entrusted to Mysuru's sculptor Arun Yogiraj is a single stone bust of black schist, Krishna Shile, from H. D. Kote.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 4", "quote": "the State Government had ordered a bust of Nalwadi to be carved and the same was entrusted to Mysuru's sculptor Arun Yogiraj"},
+        {"sourceId": "S07", "locator": "paragraph 6", "quote": "It is a single stone bust and the stone is black schist (Krishna Shile) from H.D. Kote."}
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The black Krishna Shila stone for the Ram Lalla idol was extracted from land in Gujjegowdanapura in Jayapura hobli in the Mysuru district.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "paragraph 10", "quote": "The black stone, known as '\"Krishna Shila\", was extracted from Ramadas's land in Gujjegowdanapura in Jayapura hobli in the Mysuru district."},
+        {"sourceId": "S13", "locator": "paragraph 9", "quote": "The stone that he used for sculpting the idol also belonged to Mysuru district."}
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj's 51-inch Ram Lalla idol in black stone, depicting a five-year-old child standing, was selected for the sanctum sanctorum of the Ayodhya temple.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "paragraph 5", "quote": "The 51-inch tall Ram idol is made from black stone and depicts the deity as a five-year-old child in a standing posture."},
+        {"sourceId": "S14", "locator": "paragraph 8", "quote": "The idol of Ram lalla, carved by Karnataka's renowned sculptor Arun Yogiraj, is made of black stone."},
+        {"sourceId": "S13", "locator": "paragraph 1", "quote": "Mysuru sculptor Arun Yogiraj whose Ram Lalla idol has been selected for the installation at the sanctum sanctorum of the Ayodhya temple"}
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T01"},
+      "text": "To introduce Sampradayika Shilpa Kale, Arun Yogiraj exhibited the uli and silver hammer he used to sculpt the eyes of the Sri Baala Rama statue.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 7", "quote": "People have seen Sri Baala Rama statue, but in order to introduce the Art work-Sampradayika Shilpa Kale behind it, recently I had exhibited 'Uli, Silver Hammer' (instruments) used for sculpting the eyes of that Statue"}
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "Deccan Chronicle reports that Arun Yogiraj's wife said he had told her the black stone given to him to chisel the Lord Ram idol was harder than granite.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "paragraph 7", "quote": "she said that Arun during one of his visits to Mysuru taking a break from sculpting had told her that the black stone given to him to chisel Lord Ram idol was \"harder than the granite"},
+        {"sourceId": "S11", "locator": "paragraph 4", "quote": "his wife Vijetha told Deccan Chronicle on Monday"}
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj carved the 12-feet statue of Adi Shankaracharya in a sitting posture that was unveiled at the Kedarnath Temple in November 2021.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 4", "quote": "who had gained national attention after carving the 12-feet 3D statue of Adi Guru Shankaracharya in sitting posture which was unveiled by Prime Minister Narendra Modi in November 2021 at the Kedarnath Temple"},
+        {"sourceId": "S19", "locator": "paragraph 7", "quote": "Arun Yogiraj crafted a 12 feet tall statue of Adi Shankaracharya in Kedarnath, showcasing his versatile sculpting skills."}
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "The New Indian Express describes Arun Yogiraj's statue of Netaji Subhash Chandra Bose at India Gate as a 28-ft-tall black granite statue.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 12", "quote": "The 28-ft-tall black granite statue of Netaji Subhash Chandra Bose placed at India Gate has also been carved out by Arun Yograj."}
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "The Quint and The Economic Times give Arun Yogiraj's statue of Subhash Chandra Bose behind the Amar Jawan Jyoti a height of 30 feet.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 10", "quote": "He also crafted a 30-foot statue of Bose, which has been installed at the Amar Jawan Jyoti behind the India Gate in New Delhi."},
+        {"sourceId": "S19", "locator": "paragraph 8", "quote": "Other notable works include the 30 feet statue of Subhash Chandra Bose, prominently displayed in the grand canopy behind the Amar Jawan Jyoti near the India Gate."}
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "DESIGN",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj and his team carved the 15-feet monolithic statue of Maharaja Jayachamarajendra Wadiyar at Harding Circle, a marble statue of the last ruling king of Mysore.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "paragraph 2", "quote": "Whether it's the striking 15-feet monolithic statue of Maharaja Jayachamarajendra Wadiyar at Harding Circle"},
+        {"sourceId": "S06", "locator": "paragraph 3", "quote": "The handiwork belongs to Arun Yogiraj and his team"},
+        {"sourceId": "S10", "locator": "Sculptor as a Career, paragraph 17", "quote": "he was allowed to sculpt a 15 foot marble statue of the last ruling king of Mysore, Jayachamarajendra Wadiyar"}
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "DESIGN",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Outlook Traveller gives Arun Yogiraj's white marble statue of Maharaja Jayachamarajendra Wodeyar a height of 14.5 ft.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "paragraph 6", "quote": "He got into sculpting and since then has delivered various works including life-size white marble sculptures of Dr B. R. Ambedkar, Sri Ramakrishna Paramahamsa as well as that of Maharaja Jayachamarajendra Wodeyar (which was a whopping 14.5 ft)."}
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "DESIGN",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj uses the photographs and drawings his grandfather documented in the early 1970s as references for his work.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Runs in the family, paragraph 8", "quote": "My grandfather maintained documentation in the form of photographs and drawings in the early 1970s, and this has been a valuable reference to me"},
+        {"sourceId": "S09", "locator": "paragraph 7", "quote": "He uses his grandfather's designs (done on paper at that time) as references."}
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Arun Yogiraj calls the craft a fine balance of arithmetic, geometry and art.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Challenges, paragraph 21", "quote": "The craft is a fine balance of arithmetic, geometry and art."}
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "Outlook Traveller reports that a sculpture takes Arun Yogiraj anywhere between two weeks and a month, depending on its size.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "paragraph 7", "quote": "The time taken by him to complete the sculpture can vary anywhere between two weeks to a month, depending on the size."}
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Deccan Herald reported that the availability of raw material depended on the people holding mine licences and permits, and Arun Yogiraj wished artisans could get stone from a government depot.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Challenges, paragraph 19", "quote": "The availability of raw material is dependent on the people who have the licences and permits of the mines. \"It would have helped if artisans could get the stone directly from a government depot rather than from private parties."}
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "COMMUNITY", "ref": "G06"},
+      "text": "Deccan Herald reported that Arun Yogiraj runs the Brahmarshi Kashayapa Shilpakala Shala trust, where children are trained in clay modelling, stone balancing, drawing and allied skills.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Looking ahead, paragraph 26", "quote": "He runs the Brahmarshi Kashayapa Shilpakala Shala trust in Saraswathipuram where children are trained in clay -modelling, stone-balancing, drawing and allied skills."}
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "TERM", "ref": "W04"},
+      "text": "As several youngsters inspired by him were inclined to take up Sampradayika Shilpa Kale, traditional art, Arun Yogiraj set out to launch a 'Shilpa Kala Shaala' with accommodation and food in Mysuru district to train students.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 2", "quote": "As several youngsters are inspired by him are inclined to take up this traditional Art (Sampradayika Shilpa Kale), he is all set to launch his new 'Shilpa Kala Shaala' at a two acre land at Kadakola in Mysuru district with accommodation and food facility to train 20 students."}
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj, sculptor of the Ram statue at Ayodhya, was among the winners in sculpture of the Karnataka government's Rajyotsava awards, to be presented at the 69th Rajyotsava celebrations.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 2", "quote": "Arun Yogiraj, the sculptor of the Ram statue installed at the Ram Mandir at Ayodhya"},
+        {"sourceId": "S18", "locator": "paragraph 2", "quote": "are among the winners in the fields of sculpture, judiciary, sports and environment"},
+        {"sourceId": "S18", "locator": "paragraph 1", "quote": "chosen by the Karnataka government for the annual state day or Rajyotsava awards"},
+        {"sourceId": "S18", "locator": "paragraph 6", "quote": "The awards will be presented as part of the 69th Rajyotsava celebrations on November 1, the state formation day for Karnataka."}
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj received the South Zone Young Talented Artist award from the Government of India in 2014.",
+      "quotes": [
+        {"sourceId": "S19", "locator": "paragraph 9", "quote": "He was awarded South Zone Young Talented Artist award by Government of India in 2014"}
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Mysuru city is the headquarters of Mysuru district in Karnataka State.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "paragraph 4", "quote": "Mysuru city is the headquarters of Mysuru district which forms the southern most district of Karnataka State."}
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The district of Mysuru is an undulating tableland that is partly covered by granite outcrops and fringed with green forests.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Mysuru Weather, paragraph 13", "quote": "The district of Mysuru is an undulating table land that is partly covered by granite outcrops and fringed with lush green forests."}
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M02"},
+      "text": "Rice's gazetteer of the Mysore State, Mysore in General, records steatite in the talcose schists in the west of the State, and potstone in beds of considerable size and veins.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Vol. I, Geology, p. 16", "quote": "Steatite occurs in the talcose schists in the west of M ysore; as also potstone, in beds of considerable size and veins"}
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Somanathapura lies in the Tirumakudlu Narsipur, or T Narasipura, taluk of Mysore district.",
+      "quotes": [
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "Somaathpur.- An insignificant village on the left bank of the Kaveri in the Tirumakudlu Narsipur taluq"},
+        {"sourceId": "S21", "locator": "paragraph 22", "quote": "Somanathapura, also spelled Somnathpur temple or Somanathpura is a town in T Narasipura Taluk, Mysore district in the state of Karnataka in India."}
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "Outlook Traveller describes Arun Yogiraj's grandfather, B. Basavanna Shilpi, as a recognised artist of the palace.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "paragraph 3", "quote": "Arun's grandfather, B. Basavanna Shilpi was a recognised artist of the palace and it is through him that his interest in the art form developed."}
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj's website says his hands first touched sculpting tools at the age of eleven, working alongside his father.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "Sculptor as a Career, paragraph 11", "quote": "His hands first touched the sculpting tools at the young age of eleven, working alongside his father."}
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "Deccan Herald writes that the craft is not without its challenges, as there is no scope for trial and error.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Challenges, paragraph 18", "quote": "The craft is not without its challenges as there is no scope for 'trial and error'."}
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "MATERIALS",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Citizen Matters says the Keshava temple at Somanathapura is made of soap stone, a malleable stone to work with.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "A brief history, paragraph 3", "quote": "The temple is made of soap stone, a malleable stone to work with"},
+        {"sourceId": "S17", "locator": "paragraph 1", "quote": "Somanathapura as the name suggests, is not a Shiva temple; it is a famous Hoysala styled Keshava temple."}
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "MATERIALS",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Rice's gazetteer says the epic incidents portrayed round the exterior base of the Somnathpur temple are carved in potstone.",
+      "quotes": [
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "Round the exterior base are pourtrayed consecutively, with considerable spirit, the leading incidents in the Rdmayana, Mahd Bhdrata and Bhagavata, carved in potstone"},
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "Somaathpur.- An insignificant village on the left bank of the Kaveri in the Tirumakudlu Narsipur taluq"}
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Rice's gazetteer says that, according to an inscription at its entrance, the Somnathpur temple was completed in 1269 by a high officer under the Hoysala king Narasimha III.",
+      "quotes": [
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "The building, according to a fine inscription at the entrance, was completed in 1269"},
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "a high officer under the Hoysala king Narasimha III., who also founded the city"},
+        {"sourceId": "S24", "locator": "Mysore District, Somnathpur, p. 306", "quote": "Somaathpur.- An insignificant village on the left bank of the Kaveri in the Tirumakudlu Narsipur taluq"}
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Rice's gazetteer of the Mysore State, Mysore in General, says the Somnathpur temple was completed in 1270 and erected by Soma or Somanatha, general of the Hoysala king Narasimha III.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Vol. I, Fine Arts, Architecture, p. 514", "quote": "The Somnathppr temple was completed in 1270, and was erected by Soma or Somandtha, the general of the Hoysala king Narasimha III, who also founded the agrahara of Somnathpur"}
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PHYSICS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Sahapedia says chlorite schist aids minute ornamentation, as it is softer while carving and gets hardened with exposure.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Ornamentation of Sculptures, paragraph 50", "quote": "The chlorite schist used in the construction of the temple was instrumental in shaping the Hoysala style of temple architecture. It aids in such minute ornamentation, as it is softer while carving and gets hardened with exposure"}
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Sahapedia quotes a description of the Chalukya and Hoysala builders' greenish or bluish-black chloritic schist as close-textured, very tractable under the chisel and suited to minute carving.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "Ornamentation of Sculptures, paragraph 50", "quote": "The Chalukya/Hoysala builders resorted to a stone of much finer grain-greenish or bluish-black chloritic schist. The latter is a close-textured stone, very tractable under the chisel and specifically suited to the preparation of minute carving"}
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Deccan Herald, writing of the Keshava Temple at Somanathapura, says chloritic schist, the stone of this and most other Hoysala temples, is softer than the granite and sandstone used earlier.",
+      "quotes": [
+        {"sourceId": "S26", "locator": "paragraph 14", "quote": "Chloritic schist, the stone used for construction in this and most other Hoysala temples, even if softer than the granite and sandstone used earlier, seems to have been pliant as clay in the hands of the Hoysala artisan."},
+        {"sourceId": "S26", "locator": "paragraph 2", "quote": "The Keshava Temple at Somanathapura was built in 1268 CE by Somanatha, who was a dandanayaka under the Hoysala King Narasimha III."}
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M10"},
+      "text": "The Mysore Gazetteer edited by C. Hayavadana Rao says that, for sculpture, potstone or soapstone is the common material used.",
+      "quotes": [
+        {"sourceId": "S25", "locator": "Chapter VIII, Industries and Manufactures, Sculpture, p. 254", "quote": "For sculpture, potstone or soapstone is the common material used."}
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Mysore Gazetteer edited by C. Hayavadana Rao says the erection of the New Palace at Mysore afforded an opportunity of reviving local artistic skill.",
+      "quotes": [
+        {"sourceId": "S25", "locator": "Chapter VIII, Industries and Manufactures, Sculpture, p. 254", "quote": "The erection of theNew Palace at Mysore has afforded an opportunity of reviving the artistic skill of local"}
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G08"},
+      "text": "Rice's gazetteer of the Mysore State says the Silpi, a section of the Badagi or carpenters, are properly sculptors and might be classed among masons.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Vol. I, Ethnography, Artisans, p. 249", "quote": "The Badagi (8,643) or carpenters, and Gaundar (3), the latter confined to the Civil and Military Station of Bangalore, have sections called Panchdchara, Gudigara, S'ilpi and Vis'vakarma."},
+        {"sourceId": "S05", "locator": "Vol. I, Ethnography, Artisans, p. 249", "quote": "S'ilpi are properly sculptors, and might be classed among masons."}
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Rice's gazetteer of the Mysore District says common granite for masonry is abundant throughout the District, where black hornblende of inferior quality and potstone are also found.",
+      "quotes": [
+        {"sourceId": "S24", "locator": "Mysore District, Rocks, p. 209", "quote": "Stone for masonry, principally common granite, is abundant throughout the District. Black hornblende of inferior quality, and potstone are also found."},
+        {"sourceId": "S24", "locator": "Mysore District, Situation, p. 206", "quote": "Situation.- The Mysore District forms the southernmost portion of the Province"}
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "COMMUNITY", "ref": "G09"},
+      "text": "Star of Mysore reports that Mysuru sculptor Paramesh Acharya and his sons crafted a 3-feet tall Ganesha idol from Krishna Shile, black stone, for a temple in Nashik district.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "paragraph 2", "quote": "Shilpashree Award-winning sculptor Paramesh Acharya, a resident of J.P. Nagar, Mysuru, along with his sons Sandesh Acharya and Santosh Acharya, crafted the idol from Krishna Shile (black stone)."},
+        {"sourceId": "S27", "locator": "paragraph 1", "quote": "A 3-feet tall idol of Lord Ganesha, carved by a city-based sculptor, is set to be consecrated at a temple in a village in Nashik district, Maharashtra."}
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Paramesh Acharya's son told Star of Mysore that the family sculpted its Ganesha idol at its workshop on the Mysuru-HD Kote road, using black stone from Gujjegowdanapura.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "paragraph 5", "quote": "Speaking to Star of Mysore on behalf of his father, Sandesh Acharya shared that the Ganesha idol stands 3-feet tall and 2.2 feet wide."},
+        {"sourceId": "S27", "locator": "paragraph 5", "quote": "It was sculpted at our workshop in Kotehundi on Mysuru-H.D. Kote road, using black stone sourced from Gujjegowdanapura in the district."}
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Star of Mysore reports that after Arun Yogiraj's Balak Ram idol was consecrated at Ayodhya, the work of Mysuru's sculptors gained increasing recognition and demand.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "paragraph 4", "quote": "Following the detailed carving of the Balak Ram idol by city sculptor Arun Yogiraj, which was consecrated at Ayodhya's Sri Ram Mandir, the work of Mysuru's sculptors has gained increasing recognition and demand."}
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "PROCESS",
+      "subject": {"type": "COMMUNITY", "ref": "G09"},
+      "text": "Star of Mysore reports that the team of Paramesh Acharya and his sons completed their intricate Krishna Shile idol within a month.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "paragraph 2", "quote": "Shilpashree Award-winning sculptor Paramesh Acharya, a resident of J.P. Nagar, Mysuru, along with his sons Sandesh Acharya and Santosh Acharya, crafted the idol from Krishna Shile (black stone)."},
+        {"sourceId": "S27", "locator": "paragraph 3", "quote": "The team worked tirelessly, completing the intricate sculpture within a month."}
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "Sculptor Suryaprakash, Arun Yogiraj's elder brother, told The Hans India that Krishna Shile is a stone found in the HD Kote area, traditionally called Balpa stone.",
+      "quotes": [
+        {"sourceId": "S30", "locator": "paragraph 5", "quote": "Explaining the characteristics of Krishna stone, Suryaprakash said, \"Krishna Shile is a stone found in the HD Kote area, traditionally called Balpa stone."},
+        {"sourceId": "S30", "locator": "paragraph 1", "quote": "Sculptor Suryaprakash, the elder brother of Arun Yogiraj, shared insights into the discovery and characteristics of this special rock"}
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "PHYSICS",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "Suryaprakash told The Hans India that Krishna Shile is smooth and can be scraped by hand, and is acid-proof, water-proof, fire-proof, dust-proof and harder than iron.",
+      "quotes": [
+        {"sourceId": "S30", "locator": "paragraph 5", "quote": "Explaining the characteristics of Krishna stone, Suryaprakash said, \"Krishna Shile is a stone found in the HD Kote area, traditionally called Balpa stone."},
+        {"sourceId": "S30", "locator": "paragraph 5", "quote": "It is smooth and can be scraped by hand. This stone is acid-proof, water-proof, fire-proof, dust-proof, and harder than iron."}
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The Hans India and one Star of Mysore report place Gujjegowdanapura, source of the Krishna Shile, in HD Kote taluk.",
+      "quotes": [
+        {"sourceId": "S30", "locator": "paragraph 1", "quote": "The Krishna stone, sourced from Gujjegoudanapura in H.D. Kote taluk, holds unique significance"},
+        {"sourceId": "S29", "locator": "paragraph 4", "quote": "The azure-coloured Krishna Shile (black schist) was excavated from Gujjegowdanapura at Jayapura Hobli in H.D. Kote Taluk."}
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Another Star of Mysore report places Gujjegowdanapura, where the Krishna Shile for the Ram Lalla idol was excavated, near Jayapura in Mysuru taluk.",
+      "quotes": [
+        {"sourceId": "S28", "locator": "paragraph 1", "quote": "Chamundeshwari MLA G.T. Devegowda (GTD) has declared the construction of a Sri Ram Temple at Gujjegowdanapura near Jayapura in Mysuru taluk."},
+        {"sourceId": "S28", "locator": "paragraph 1", "quote": "This location holds significance as it is where the black schist stone (Krishna Shile) was excavated for carving the Ram Lalla idol"}
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "Geologist C. Srikantappa, quoted by Star of Mysore, describes the Krishna Shile excavated at Gujjegowdanapura as a fine to medium-grained, sky-blue-coloured metamorphic rock of the type called soapstone.",
+      "quotes": [
+        {"sourceId": "S29", "locator": "paragraph 2", "quote": "according to Dr. C. Srikantappa, UGC-Emeritus Professor (retired), Department of Earth Science, University of Mysore"},
+        {"sourceId": "S29", "locator": "paragraph 4", "quote": "The azure-coloured Krishna Shile (black schist) was excavated from Gujjegowdanapura at Jayapura Hobli in H.D. Kote Taluk."},
+        {"sourceId": "S29", "locator": "paragraph 4", "quote": "It is a fine to medium-grained, sky-blue-coloured metamorphic rock and this type is generally called soapstone, because of its smooth surface texture and is an ideal rock for sculptors to carve idols"}
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Geologist C. Srikantappa told Star of Mysore that high-grade metamorphism altered original minerals of rocks around Mysuru to talc and chlorite, rendering the rock soft and giving the term soapstone.",
+      "quotes": [
+        {"sourceId": "S29", "locator": "paragraph 5", "quote": "Dr. Srikantappa said that geologically, rocks around Mysuru form a part of Archaean-Dharwar craton."},
+        {"sourceId": "S29", "locator": "paragraph 10", "quote": "The rocks underwent high-grade metamorphism, where original igneous minerals such as hypersthene, diopside, plagioclase and spinels underwent alteration to secondary minerals like green-coloured actinolite/tremolite, white-coloured talc, green to sky-blue-coloured chlorite"},
+        {"sourceId": "S29", "locator": "paragraph 11", "quote": "This alteration rendered the rock soft, leading to the use of the term soapstone."}
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P05"},
+      "text": "Arun Yogiraj told Star of Mysore that Shilpashastra prescribes a silver hammer and golden chisel for the eyes, and a fixed muhurta for Nethramilana, the carving of eyes.",
+      "quotes": [
+        {"sourceId": "S31", "locator": "Sculptor's Studio in Mysuru, paragraph 39", "quote": "SOM: Why did you use silver hammer & gold chisel to sculpt the eyes?"},
+        {"sourceId": "S31", "locator": "Sculptor's Studio in Mysuru, paragraph 40", "quote": "It is mentioned in Shilpashastra to use a silver hammer and golden chisel and a particular time (muhurta) is fixed for 'Nethramilana' (carving of eyes)."}
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P05"},
+      "text": "Arun Yogiraj told Star of Mysore that the beejakshara mantra is first inscribed on the uncarved blank eyes before the eyes are sculpted.",
+      "quotes": [
+        {"sourceId": "S31", "locator": "Sculptor's Studio in Mysuru, paragraph 41", "quote": "We first inscribe the 'beejakshara mantra' on the uncarved blank eyes before we begin sculpting the eyes."}
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Star of Mysore calls Arun Yogiraj a third-generation sculptor from Mysuru.",
+      "quotes": [
+        {"sourceId": "S31", "locator": "paragraph 1", "quote": "all thanks to the talented artist Arun Yogiraj, a third-generation sculptor from Mysuru."}
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "DESIGN",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "Arun Yogiraj told Star of Mysore that on the Balak Ram idol he carved the jewellery in Hoysala style, the attire in North Indian style and the kankana in South Indian style.",
+      "quotes": [
+        {"sourceId": "S31", "locator": "paragraph 25", "quote": "While sculpting the idol, I ensured that the jewellery was carved in Hoysala style. The attire was sculpted in North Indian style and again the 'kankana' was sculpted in South style."},
+        {"sourceId": "S31", "locator": "paragraph 26", "quote": "The Balak Ram idol is an amalgamation of the best Indian styles since the idol belongs to the entire nation."}
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "MATERIAL", "ref": "M10"},
+      "text": "The Mysore Gazetteer edited by C. Hayavadana Rao says superior cooking vessels, images of the Gods and various ornamental articles are also made from potstone or soapstone.",
+      "quotes": [
+        {"sourceId": "S25", "locator": "Chapter VIII, Industries and Manufactures, Sculpture, p. 254", "quote": "For sculpture, potstone or soapstone is the common material used."},
+        {"sourceId": "S25", "locator": "Chapter VIII, Industries and Manufactures, Sculpture, p. 254", "quote": "From this stone superior cooking vessels are also made, besides images of the Gods, and various ornamental articles."}
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Mysuru",
+      "kind": "TOWN",
+      "district": "Mysuru",
+      "state": "Karnataka",
+      "country": "India",
+      "wikidata": "Q10086",
+      "role": "PRACTISED",
+      "claimIds": ["C007", "C001", "C085"]
+    },
+    {
+      "id": "L02",
+      "name": "Somanathapura",
+      "kind": "TOWN",
+      "district": "Mysuru",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": ["C031", "C034", "C075"]
+    },
+    {
+      "id": "L03",
+      "name": "Gujjegowdanapura",
+      "kind": "VILLAGE",
+      "district": "Mysuru",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": ["C048", "C086", "C091", "C092"]
+    },
+    {
+      "id": "L04",
+      "name": "H. D. Kote",
+      "kind": "TOWN",
+      "district": "Mysuru",
+      "state": "Karnataka",
+      "country": "India",
+      "wikidata": "Q1707117",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": ["C046", "C047", "C089"]
+    },
+    {
+      "id": "L05",
+      "name": "Hassan",
+      "kind": "DISTRICT",
+      "district": "Hassan",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": ["C046"]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "PERSON",
+      "name": "Arun Yogiraj",
+      "honours": ["Karnataka Rajyotsava award (69th Rajyotsava)", "South Zone Young Talented Artist award, Government of India, 2014"],
+      "placeId": "L01",
+      "claimIds": ["C006", "C017", "C072", "C018", "C049", "C053", "C064", "C065", "C097", "C098"]
+    },
+    {
+      "id": "G02",
+      "kind": "PERSON",
+      "name": "B. Basavanna Shilpi",
+      "honours": ["National award, honoured by the President of India in 1983", "Golden chisel and silver hammer from Maharaja Jayachamarajendra Wadiyar"],
+      "placeId": "L01",
+      "claimIds": ["C011", "C012", "C013", "C014", "C071"]
+    },
+    {
+      "id": "G03",
+      "kind": "PERSON",
+      "name": "Shilpi Siddanthi Siddalinga Swami",
+      "placeId": "L01",
+      "claimIds": ["C011"]
+    },
+    {
+      "id": "G04",
+      "kind": "PERSON",
+      "name": "B. S. Yogiraj Shilpi",
+      "honours": ["State award"],
+      "placeId": "L01",
+      "claimIds": ["C016", "C015"]
+    },
+    {
+      "id": "G05",
+      "kind": "ORGANISATION",
+      "name": "Kashyapa Shilpa Kala Nikethana",
+      "localNames": ["B Basavanna Shilpi and Sons"],
+      "placeId": "L01",
+      "claimIds": ["C007"]
+    },
+    {
+      "id": "G06",
+      "kind": "ORGANISATION",
+      "name": "Brahmarshi Kashayapa Shilpakala Shala",
+      "claimIds": ["C062"]
+    },
+    {
+      "id": "G07",
+      "kind": "PERSON",
+      "name": "Mallithamma",
+      "localNames": ["Mallitamma"],
+      "placeId": "L02",
+      "claimIds": ["C031", "C033", "C034"]
+    },
+    {
+      "id": "G08",
+      "kind": "COMMUNITY",
+      "name": "Silpi",
+      "localNames": ["S'ilpi"],
+      "claimIds": ["C083"]
+    },
+    {
+      "id": "G09",
+      "kind": "PERSON",
+      "name": "Paramesh Acharya",
+      "honours": ["Shilpashree Award"],
+      "placeId": "L01",
+      "claimIds": ["C085", "C088"]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Selecting the stone",
+      "stageType": "PREP",
+      "materials": [
+        {"materialId": "M02", "claimId": "C002"}
+      ],
+      "claimIds": ["C045"]
+    },
+    {
+      "id": "P02",
+      "name": "Sketching the figure on the block",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C044",
+      "claimIds": ["C044"]
+    },
+    {
+      "id": "P03",
+      "name": "Shaping, etching, sculpting and chiselling",
+      "stageType": "CARVE",
+      "order": 2,
+      "orderClaimId": "C044",
+      "materials": [
+        {"materialId": "M02", "claimId": "C002"},
+        {"materialId": "M03", "claimId": "C047"},
+        {"materialId": "M04", "claimId": "C003"},
+        {"materialId": "M05", "claimId": "C003"}
+      ],
+      "claimIds": ["C044"]
+    },
+    {
+      "id": "P04",
+      "name": "Polishing, filing and blackening",
+      "stageType": "FINISH",
+      "order": 3,
+      "orderClaimId": "C043",
+      "materials": [
+        {"materialId": "M06", "claimId": "C043"},
+        {"materialId": "M07", "claimId": "C043"},
+        {"materialId": "M08", "claimId": "C043"},
+        {"materialId": "M09", "claimId": "C042"}
+      ],
+      "tools": [
+        {"toolId": "T03", "claimId": "C043"}
+      ],
+      "claimIds": ["C043", "C042"]
+    },
+    {
+      "id": "P05",
+      "name": "Carving the eyes",
+      "localName": "Nethramilana",
+      "stageType": "CARVE",
+      "tools": [
+        {"toolId": "T01", "claimId": "C050"},
+        {"toolId": "T02", "claimId": "C095"},
+        {"toolId": "T04", "claimId": "C095"}
+      ],
+      "claimIds": ["C095", "C096", "C050"]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Chloritic schist",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": ["C025", "C024", "C078", "C079", "C080"]
+    },
+    {
+      "id": "M02",
+      "name": "Steatite",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": ["C002", "C039", "C040", "C041", "C068"]
+    },
+    {
+      "id": "M03",
+      "name": "Black schist",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "localNames": ["Krishna Shile", "Krishna Shila", "Balpa stone"],
+      "claimIds": ["C047", "C048", "C051", "C089", "C090", "C093"]
+    },
+    {
+      "id": "M04",
+      "name": "Marble",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": ["C003", "C056"]
+    },
+    {
+      "id": "M05",
+      "name": "Granite",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": ["C003", "C054"]
+    },
+    {
+      "id": "M06",
+      "name": "Coconut oil",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": ["C043"]
+    },
+    {
+      "id": "M07",
+      "name": "Dry coconut ash",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": ["C043"]
+    },
+    {
+      "id": "M08",
+      "name": "Sandpaper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": ["C043"]
+    },
+    {
+      "id": "M09",
+      "name": "Coconut and burnt cocoa powder",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": ["C042"]
+    },
+    {
+      "id": "M10",
+      "name": "Potstone or soapstone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": ["C081", "C099", "C075", "C084"]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Uli",
+      "localNames": ["Uli"],
+      "claimIds": ["C050"]
+    },
+    {
+      "id": "T02",
+      "name": "Silver hammer",
+      "claimIds": ["C050", "C095"]
+    },
+    {
+      "id": "T03",
+      "name": "Filing tools",
+      "claimIds": ["C043"]
+    },
+    {
+      "id": "T04",
+      "name": "Golden chisel",
+      "claimIds": ["C095"]
+    }
+  ],
+  "environment": [
+    {"factor": "OTHER", "placeId": "L04", "claimIds": ["C046", "C047", "C089"]},
+    {"factor": "OTHER", "placeId": "L03", "claimIds": ["C048", "C086"]},
+    {"factor": "LANDFORM", "placeId": "L01", "claimIds": ["C067", "C084"]},
+    {"factor": "OTHER", "claimIds": ["C068"]}
+  ],
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "Krishna Shile, Krishna Shila",
+      "meaning": "Black schist, as Star of Mysore glosses Krishna Shile; the Krishna Shila of the Ram Lalla idol is a black stone from Mysuru district.",
+      "claimIds": ["C047", "C048"]
+    },
+    {
+      "id": "W02",
+      "term": "Thadam",
+      "meaning": "The term the sculptors' practice uses for the precise measurements of Shilpa Shastra, or using rice grains for accuracy.",
+      "claimIds": ["C019"]
+    },
+    {
+      "id": "W03",
+      "term": "shilpashastra, Shilpa Shastra",
+      "meaning": "Texts with guidelines for crafts, whose sculptural norms Hoysala sculptors conformed to.",
+      "claimIds": ["C020", "C019", "C095"]
+    },
+    {
+      "id": "W04",
+      "term": "Sampradayika Shilpa Kale",
+      "meaning": "Traditional art, the sculptural tradition behind the Sri Baala Rama statue.",
+      "claimIds": ["C063", "C050"]
+    },
+    {
+      "id": "W05",
+      "term": "Nethramilana",
+      "meaning": "The carving of the eyes, for which a particular time (muhurta) is fixed.",
+      "claimIds": ["C095"]
+    }
+  ],
+  "conflicts": [
+    {"claimIds": ["C002", "C003"], "about": "Whether Arun Yogiraj's workshop sculpts mainly in steatite or relies equally on marble and granite"},
+    {"claimIds": ["C043", "C042"], "about": "What is applied to the finished stone to turn it black: coconut oil and dry coconut ash, or coconut and burnt cocoa powder"},
+    {"claimIds": ["C054", "C055"], "about": "The height of Arun Yogiraj's statue of Subhash Chandra Bose at India Gate: 28 or 30 feet"},
+    {"claimIds": ["C056", "C057"], "about": "The height of Arun Yogiraj's statue of Maharaja Jayachamarajendra Wadiyar: 15 feet or 14.5 ft"},
+    {"claimIds": ["C027", "C076", "C077"], "about": "The year the Keshava temple at Somanathapura was built or completed: 1268, 1269 or 1270"},
+    {"claimIds": ["C025", "C074", "C075"], "about": "The stone of the Keshava temple at Somanathapura: chloritic schist, soap stone or potstone"},
+    {"claimIds": ["C091", "C092"], "about": "The taluk of Gujjegowdanapura, where the Krishna Shile for the Ram Lalla idol was excavated: H.D. Kote or Mysuru"},
+    {"claimIds": ["C006", "C097"], "about": "How many generations of Arun Yogiraj's family have been sculptors: five, or is he a third-generation sculptor"}
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Why did Hoysala sculptors sign their work, sometimes with only their initials?",
+      "claimIds": ["C022", "C023", "C021"]
+    },
+    {
+      "id": "O02",
+      "question": "How much of the carving at Somanathapura did Mallithamma do himself?",
+      "claimIds": ["C031", "C032"]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/12th_century_carving_exquisite_detail%2C_right_down_to_her_fingernails_Chennakesava_temple_at_Somanathapura%2C_Karnataka%2C_India.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:12th_century_carving_exquisite_detail,_right_down_to_her_fingernails_Chennakesava_temple_at_Somanathapura,_Karnataka,_India.jpg",
+      "author": "Nagarjun Kandukuru",
+      "licence": "CC BY 2.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "caption": "A carved figure at the Keshava temple, Somanathapura, detailed down to the rings and fingernails",
+      "claimIds": ["C030"]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Chennakeshava_Temple_Somanathapura_Mysore_Outer_wall_carvings.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Chennakeshava_Temple_Somanathapura_Mysore_Outer_wall_carvings.jpg",
+      "author": "Sharathchandrapk",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Carvings on the outer wall of the Keshava temple at Somanathapura",
+      "claimIds": ["C029"]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/A_relief_panel_outer_wall_showing_layers_of_carving_Vishnu_namaste_pose%2C_13th_century_Keshava_temple_Somanathpur.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:A_relief_panel_outer_wall_showing_layers_of_carving_Vishnu_namaste_pose,_13th_century_Keshava_temple_Somanathpur.jpg",
+      "author": "Ms Sarah Welch",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A relief panel on the outer wall of the Keshava temple at Somanathapura, showing layers of carving",
+      "claimIds": ["C028"]
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/97/Chennakeshava_temple_at_Somanathapura%2C_Mysore_district.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Chennakeshava_temple_at_Somanathapura,_Mysore_district.jpg",
+      "author": "Mashalti",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "The Keshava temple at Somanathapura, Mysore district, one of the three Hoysala temple complexes of the Sacred Ensembles of the Hoysalas",
+      "claimIds": ["C026"]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Mysuru is famous in the world for its sandalwood and rosewood artifacts, stone sculptures, incense sticks, ivory inlay work and silk sarees.",
+        "claimIds": ["C001"]
+      },
+      {
+        "text": "Arun Yogiraj, of a family of sculptors, and his team belong to Kashyapa Shilpa Kala Nikethana, an art and sculpting centre on Chamaraja Road in Mysuru.",
+        "claimIds": ["C006", "C007"]
+      },
+      {
+        "text": "His 51-inch Ram Lalla idol in black stone was selected for the sanctum sanctorum of the Ayodhya temple, and Mysuru sculptor Paramesh Acharya and his sons crafted a Ganesha idol from Krishna Shile, black stone.",
+        "claimIds": ["C049", "C085"]
+      },
+      {
+        "text": "Arun Yogiraj's website describes the Mysore sculpting style he mastered as an improvisation of the methods used in Hoysala architecture.",
+        "claimIds": ["C004"]
+      }
+    ],
+    "keyFacts": [
+      {"label": "Centre", "value": "Mysuru city, headquarters of Mysuru district", "claimIds": ["C007", "C066", "C085"]},
+      {"label": "Stones", "value": "Steatite, marble and granite for Arun Yogiraj's team (sources differ on the main one); black schist called Krishna Shile", "claimIds": ["C002", "C003", "C047"]},
+      {"label": "Stone sources", "value": "Mines in Hassan and H D Kote; Gujjegowdanapura for the Ram Lalla and Ganesha idols", "claimIds": ["C046", "C048", "C086"]},
+      {"label": "Gazetteer's sculpture stone", "value": "Potstone or soapstone, in the Mysore Gazetteer edited by C. Hayavadana Rao", "claimIds": ["C081"]},
+      {"label": "Style", "value": "Mysore sculpting style, described as an improvisation of Hoysala methods", "claimIds": ["C004"]},
+      {"label": "Lineage", "value": "Sources differ: five generations of sculptors in Arun Yogiraj's family, or a third-generation sculptor", "claimIds": ["C006", "C097"]},
+      {"label": "Finish", "value": "For Arun Yogiraj's team, filing tools, sandpaper and natural materials such as coconut oil and dry coconut ash, which render the statue jet black (another account names burnt cocoa powder)", "claimIds": ["C043", "C042"]},
+      {"label": "Time per sculpture", "value": "Two weeks to a month for Arun Yogiraj, depending on size; within a month for one idol by Paramesh Acharya's team", "claimIds": ["C060", "C088"]}
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Mysuru was ruled by the Gangas, Chalukyas, Cholas and Hoysalas before the Vijayanagara kings, and a Hoysala inscription in Mysuru dates back to the 11th and 12th century.",
+            "claimIds": ["C008", "C009"]
+          },
+          {
+            "text": "The Keshava Temple at Somanathapura, in the Tirumakudlu Narsipur taluk of Mysore district, is one of the three Hoysala-style temple complexes of the Sacred Ensembles of the Hoysalas, built between the 12th and 13th centuries.",
+            "claimIds": ["C026", "C070"]
+          },
+          {
+            "text": "Sources differ on its year: Citizen Matters and Deccan Herald say Somanatha built it in 1268 under the Hoysala king Narasimha III, while Rice's gazetteers say it was completed in 1269 or in 1270.",
+            "claimIds": ["C027", "C076", "C077"]
+          },
+          {
+            "text": "Hoysala sculptors signed their work, an unusual practice in the Indian subcontinent, and at Somanathapura the names of Mallithamma, Balayya and Bhamayya are engraved on the walls beside their work.",
+            "claimIds": ["C021", "C034"]
+          },
+          {
+            "text": "Rice's gazetteer of the Mysore State says the Silpi, a section of the Badagi or carpenters, are properly sculptors and might be classed among masons.",
+            "claimIds": ["C083"]
+          },
+          {
+            "text": "The Mysore Gazetteer edited by C. Hayavadana Rao says the erection of the New Palace at Mysore afforded an opportunity of reviving local artistic skill.",
+            "claimIds": ["C082"]
+          },
+          {
+            "text": "B. Basavanna Shilpi trained under Shilpi Siddanthi Siddalinga Swami, the Royal Guru of the Mysore Palace, and supplied 64 idols in just 11 months to the Gayatri Temple within the palace premises.",
+            "claimIds": ["C011", "C012"]
+          },
+          {
+            "text": "Maharaja Jayachamarajendra Wadiyar presented him with a golden chisel and a silver hammer, and his grandson Arun Yogiraj took up sculpting full-time in 2008.",
+            "claimIds": ["C013", "C014", "C018"]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "Arun Yogiraj says selection of stone is key, as the initial slab should be free of cavities and damage of any sort.",
+            "claimIds": ["C045"]
+          },
+          {
+            "text": "Arun Yogiraj says his team's process is handmade: they sketch a rough drawing of the figure directly on the block and start shaping, etching, sculpting and chiselling.",
+            "claimIds": ["C044"]
+          },
+          {
+            "text": "Star of Mysore, describing a sculptors' camp in Mysuru, writes that persistent knocking, proper application of pressure, accurate chiselling and cutting of edges are vital in getting the stone to shape.",
+            "claimIds": ["C038"]
+          },
+          {
+            "text": "Deccan Herald reports that after the final polish Arun Yogiraj's team uses filing tools, sandpaper and natural materials such as coconut oil and dry coconut ash, which render the statue jet black, while his wife is quoted naming coconut and burnt cocoa powder.",
+            "claimIds": ["C043", "C042"]
+          },
+          {
+            "text": "Arun Yogiraj told Star of Mysore that Shilpashastra prescribes a silver hammer and golden chisel for the eyes and a fixed muhurta for Nethramilana, the carving of eyes.",
+            "claimIds": ["C095"]
+          },
+          {
+            "text": "He said the beejakshara mantra is first inscribed on the uncarved blank eyes before the eyes are sculpted.",
+            "claimIds": ["C096"]
+          },
+          {
+            "text": "Outlook Traveller reports that a sculpture takes Arun Yogiraj anywhere between two weeks and a month, depending on its size, and Paramesh Acharya's team completed its intricate idol within a month.",
+            "claimIds": ["C060", "C088"]
+          },
+          {
+            "text": "Arun Yogiraj's website says he began with Shilpa Shastra, whose precise measurements are often called Thadam in their practice.",
+            "claimIds": ["C019"]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "The Mysore Gazetteer edited by C. Hayavadana Rao says that, for sculpture, potstone or soapstone is the common material used, and that images of the Gods and ornamental articles are also made from it.",
+            "claimIds": ["C081", "C099"]
+          },
+          {
+            "text": "Sources differ on the main stone of Arun Yogiraj's team: Deccan Herald names steatite, a soft metamorphic rock, while Outlook Traveller says he relies equally on marble and granite and sometimes uses softer stones.",
+            "claimIds": ["C002", "C003"]
+          },
+          {
+            "text": "Steatite is described as non-reactive, non-porous and non-absorbent, and hence ideal for temple idols worshipped with milk and ghee.",
+            "claimIds": ["C039"]
+          },
+          {
+            "text": "The bust of Nalwadi is of black schist, Krishna Shile, from H. D. Kote, and the black Krishna Shila stone for the Ram Lalla idol was extracted in Gujjegowdanapura in the Mysuru district.",
+            "claimIds": ["C047", "C048"]
+          },
+          {
+            "text": "Sculptor Suryaprakash says Krishna Shile is found in the HD Kote area and is traditionally called Balpa stone, and geologist C. Srikantappa describes it as a sky-blue-coloured metamorphic rock of the type called soapstone.",
+            "claimIds": ["C089", "C093"]
+          },
+          {
+            "text": "Sources name the stone of the Keshava Temple at Somanathapura differently: UNESCO says chloritic schist, Citizen Matters says soap stone, and Rice's gazetteer says its epic incidents are carved in potstone.",
+            "claimIds": ["C025", "C074", "C075"]
+          },
+          {
+            "text": "Sahapedia says chlorite schist aids minute ornamentation, as it is softer while carving and gets hardened with exposure, and Deccan Herald says it is softer than the granite and sandstone used earlier.",
+            "claimIds": ["C078", "C080"]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Arun Yogiraj sculpts in the Dravidian and Hoysala styles, and in a contemporary style as well.",
+            "claimIds": ["C005"]
+          },
+          {
+            "text": "On the Balak Ram idol he carved the jewellery in Hoysala style, the attire in North Indian style and the kankana in South Indian style.",
+            "claimIds": ["C098"]
+          },
+          {
+            "text": "He uses the photographs and drawings his grandfather documented in the early 1970s as references, and calls the craft a fine balance of arithmetic, geometry and art.",
+            "claimIds": ["C058", "C059"]
+          },
+          {
+            "text": "His team carved the monolithic statue of Maharaja Jayachamarajendra Wadiyar at Harding Circle, which sources give as 15 feet or 14.5 ft tall.",
+            "claimIds": ["C056", "C057"]
+          },
+          {
+            "text": "The Hoysala style combines a multi-tiered frieze, a thematically arranged gallery of religious and epic stories, and stone carvings covering the entire exterior surface.",
+            "claimIds": ["C028"]
+          },
+          {
+            "text": "On the outer wall of the Somanathapura temple, rows of elephants sit below rows of horses and gods and goddesses, and its sculptures show details such as finger rings, bracelets and fingernails.",
+            "claimIds": ["C029", "C030"]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Star of Mysore reports that after Arun Yogiraj's Balak Ram idol was consecrated at Ayodhya, the work of Mysuru's sculptors gained increasing recognition and demand.",
+            "claimIds": ["C087"]
+          },
+          {
+            "text": "Deccan Herald reported that the availability of raw material depended on the people holding mine licences and permits, and Arun Yogiraj wished artisans could get stone from a government depot.",
+            "claimIds": ["C061"]
+          },
+          {
+            "text": "Deccan Herald reported that Arun Yogiraj runs the Brahmarshi Kashayapa Shilpakala Shala trust, where children are trained in clay modelling, stone balancing and drawing.",
+            "claimIds": ["C062"]
+          },
+          {
+            "text": "As several youngsters inspired by him were inclined to take up Sampradayika Shilpa Kale, he set out to launch a Shilpa Kala Shaala in Mysuru district to train students.",
+            "claimIds": ["C063"]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOLOGY",
+        "sentences": [
+          {
+            "text": "The district of Mysuru is an undulating tableland partly covered by granite outcrops, and Rice's gazetteer says common granite for masonry is abundant throughout the District, where potstone is also found.",
+            "claimIds": ["C067", "C084"]
+          },
+          {
+            "text": "Rice's gazetteer of the Mysore State records steatite in the talcose schists in the west of the State, and potstone in beds of considerable size and veins.",
+            "claimIds": ["C068"]
+          },
+          {
+            "text": "Geologist C. Srikantappa told Star of Mysore that high-grade metamorphism altered original minerals of rocks around Mysuru to talc and chlorite, rendering the rock soft and giving the term soapstone.",
+            "claimIds": ["C094"]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -5,7 +5,7 @@ import { Loader2, MessageCircleQuestion, RotateCw } from "lucide-react";
 
 import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
 import { ExplainerSentence } from "@/components/answer/ExplainerSentence";
-import type { OpenCitation } from "@/components/answer/SourceDialog";
+import { openedSource, type OpenCitation } from "@/components/answer/SourceDialog";
 import { FieldDialog } from "@/components/dialogs/FieldDialog";
 import { failureMessage, useRemote } from "@/components/hooks/useRemote";
 import type { TermSpan } from "@/lib/explainerBlockBase";
@@ -25,7 +25,7 @@ function termLookup(term: Term, onOpen: (open: OpenCitation) => void): CitationL
   return {
     numbers,
     sourcesById,
-    onOpen: (citation) => onOpen({ citation, source: sourcesById.get(citation.sourceId) ?? null, number: numbers.get(citation.sourceId) ?? null })
+    onOpen: (citations) => onOpen(openedSource(citations, numbers, sourcesById))
   };
 }
 

@@ -92,7 +92,7 @@ export type ClimateRiskBlock = BlockEnvelope<"climate_risk"> & {
   datasets: RegionDataset[];
 };
 
-const PARTIAL_DATE = matching(/^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/, "a partial date");
+export const PARTIAL_DATE = matching(/^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/, "a partial date");
 const metricUnit = oneOf(METRIC_UNITS);
 
 const conversionShape: Shape<UnitConversion> = object<UnitConversion>({

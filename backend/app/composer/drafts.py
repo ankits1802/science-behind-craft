@@ -20,15 +20,19 @@ from app.research.composition import (
 )
 from app.research.evidence import personal_data_in
 from app.research.quotes import figures_in
+from app.research.sections import is_facet_label
 from app.research.structured import MODEL_SERVICE
 
 __all__ = [
+    "LEDE_DRAFT_HEADING",
     "DraftAnswer",
     "DraftSection",
     "DraftSentence",
+    "checked_heading",
     "checked_sentence",
     "free_text_problem",
     "parsed_answer",
+    "parsed_lede",
     "parsed_replacements",
     "parsed_section",
 ]
@@ -36,6 +40,8 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 LINK_OR_MARKUP = re.compile(r"https?:|www\.|<|>|\]\(", re.IGNORECASE)
+LEDE_DRAFT_HEADING = "The direct answer"
+HEADING_QUOTES = "\"'‘’“”"
 
 
 @dataclass(frozen=True)
@@ -65,6 +71,8 @@ class DraftAnswer:
     sections: tuple[DraftSection, ...]
     follow_ups: tuple[str, ...]
     stage_ids: tuple[str, ...] = ()
+    heading: str | None = None
+    headings: tuple[tuple[str, str], ...] = ()
 
     @property
     def failed(self) -> list[DraftSentence]:
@@ -94,7 +102,35 @@ def parsed_section(
         sections=(DraftSection(title, tuple(checked_sentence(s, title, allowed) for s in sentences)),),
         follow_ups=tuple(_usable_follow_ups(_list(reply, "followUps"))[:max_follow_ups]),
         stage_ids=_chosen_stages(reply, stage_ids),
+        heading=checked_heading(reply.get("heading")),
     )
+
+
+def parsed_lede(
+    reply: Mapping[str, Any],
+    allowed: Mapping[str, ComposeCandidate],
+    *,
+    section_ids: Sequence[str],
+    limit: int,
+) -> DraftAnswer:
+    sentences = _list(reply, "sentences")[:limit]
+    checked = tuple(checked_sentence(s, LEDE_DRAFT_HEADING, allowed) for s in sentences)
+    return DraftAnswer(
+        sections=(DraftSection(LEDE_DRAFT_HEADING, checked),),
+        follow_ups=tuple(_usable_follow_ups(_list(reply, "followUps"))),
+        headings=_chosen_headings(reply.get("headings"), section_ids),
+    )
+
+
+def checked_heading(raw: Any) -> str | None:
+    if not isinstance(raw, str):
+        return None
+    heading = raw.strip().strip(HEADING_QUOTES).strip()
+    problem = _heading_problem(heading) or ("names a field" if is_facet_label(heading) else None)
+    if problem:
+        logger.warning("a composed heading %s; the section keeps its own", problem)
+        return None
+    return heading
 
 
 def parsed_replacements(
@@ -161,6 +197,16 @@ def _heading_problem(heading: str) -> str | None:
 def _usable_follow_ups(raw: list[Any]) -> list[str]:
     texts = [str(item).strip() for item in raw]
     return [text for text in texts if text and free_text_problem(text) is None][:FOLLOW_UPS_MAX]
+
+
+def _chosen_headings(raw: Any, section_ids: Sequence[str]) -> tuple[tuple[str, str], ...]:
+    chosen: dict[str, str] = {}
+    for item in raw if isinstance(raw, list) else []:
+        section = item.get("section") if isinstance(item, Mapping) else None
+        heading = checked_heading(item.get("heading")) if isinstance(item, Mapping) else None
+        if section in section_ids and section not in chosen and heading is not None:
+            chosen[section] = heading
+    return tuple(chosen.items())
 
 
 def _chosen_stages(reply: Mapping[str, Any], offered: Sequence[str]) -> tuple[str, ...]:

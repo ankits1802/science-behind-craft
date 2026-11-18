@@ -1,0 +1,4333 @@
+{
+  "schemaVersion": 1,
+  "scope": "FAMILY",
+  "craftSlug": "Other-Stone-Carving",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:58:36+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "stone carving India sandstone marble granite soapstone khondalite schist craft",
+      "site": "web search"
+    },
+    {
+      "query": "dsource stone carving craft India tools chisel",
+      "site": "web search (no D'source page found)"
+    },
+    {
+      "query": "Development Commissioner Handicrafts stone carving craft description India centres",
+      "site": "web search"
+    },
+    {
+      "query": "Stone (Carving) craft page",
+      "site": "handicrafts.nic.in and handicrafts.gov.in (connection timed out; no Wayback snapshot read)"
+    },
+    {
+      "query": "indianculture.gov.in stone carving tradition India",
+      "site": "web search (no indianculture.gov.in page found)"
+    },
+    {
+      "query": "khondalite stone Odisha temples weathering properties paper",
+      "site": "web search"
+    },
+    {
+      "query": "Hoysala sculptures chloritic schist soapstone hardens on exposure research",
+      "site": "web search (no peer-reviewed source found; blog pages not used)"
+    },
+    {
+      "query": "Pattharkatti Gaya stone carving village artisans",
+      "site": "web search"
+    },
+    {
+      "query": "silicosis stone carvers Rajasthan study sandstone carving workers",
+      "site": "web search"
+    },
+    {
+      "query": "stone carving India artisans; khondalite weathering; soapstone carving India; Makrana marble; stone craft Rajasthan artisans; Hoysala chlorite schist",
+      "site": "api.openalex.org (open-access works)"
+    },
+    {
+      "query": "Pattharkatti stone; sandstone deterioration monuments India; Taj Mahal marble discoloration; stone carvers Odisha; Gwalior sandstone carving",
+      "site": "api.openalex.org (open-access works)"
+    },
+    {
+      "query": "Hoysala soapstone; stone craft cluster India; sandstone carving Rajasthan; stone carving Karnataka; Gwalior stone craft; stone artisans silicosis India",
+      "site": "api.openalex.org (open-access works)"
+    },
+    {
+      "query": "Ancient canal and stone quarries near Halebidu (Current Science)",
+      "site": "eprints.iisc.ac.in (HTTP 502; not read)"
+    },
+    {
+      "query": "Traditional soapstone storage, serving, and cookware used in the Southern states of India",
+      "site": "bnrc.springeropen.com (page needs a browser; not read)"
+    },
+    {
+      "query": "Chemical and Biochemical Onslaught of Anthropogenic Airborne Species on the Taj Mahal",
+      "site": "mdpi.com (HTTP 403; not read)"
+    },
+    {
+      "query": "Assessment of Respiratory Health Issues Among Stone Carvers of Rajasthan",
+      "site": "catalog.lib.kyushu-u.ac.jp (no extractable text)"
+    },
+    {
+      "query": "Prevalence of silicosis in stone carving and sandstone mining industry in Rajasthan",
+      "site": "oem.bmj.com (HTTP 429; not read)"
+    },
+    {
+      "query": "Medieval Craftsmanship in Stone (Summerhill)",
+      "site": "journal.iias.ac.in (connection timed out)"
+    },
+    {
+      "query": "The Crafts of Madhya Pradesh: An Overview",
+      "site": "granthaalayahpublication.org (HTTP 403)"
+    },
+    {
+      "query": "Integrated Design and Technical Development Project in Stone Carvings as Artwork, Bhubaneswar",
+      "site": "epch.in (read; not used: it describes Odisha stone carving, curated under Konark-Stone-Carving)"
+    },
+    {
+      "query": "Soapstone Carving craft page",
+      "site": "aiacaonline.org (read; not used: a pop-up shop page with no author)"
+    },
+    {
+      "query": "Khondalite",
+      "site": "en.wikipedia.org (read; not used as a source)"
+    },
+    {
+      "query": "Kolar traditional construction skills",
+      "site": "allresearchjournal.com (read; about construction law, not used)"
+    },
+    {
+      "query": "A 1300-year-old Buddhist stupa discovered in Jajpur",
+      "site": "historyofodisha.in (read; reposted text, not used)"
+    },
+    {
+      "query": "Stone carving in India, Jali in India",
+      "site": "commons.wikimedia.org categories (pictures)"
+    },
+    {
+      "query": "Konark Temple of Odisha: Some Geological Aspects of This Grand Heritage",
+      "site": "cehesh.in (read; not used here: Konark temple geology belongs to Konark-Stone-Carving)"
+    },
+    {
+      "query": "Pattharkatti Stone Carving GI application number Geographical Indication registry Gaya",
+      "site": "search.ipindia.gov.in (application 891 read and used; its GI journal copy and certificate are downloads only, not read)"
+    },
+    {
+      "query": "Thanagazi, Kishori Makrana; Sompura settlements Palitana, Halvad, Dhrangadhra, Wadhwan, Vadnagar, Visnagar; stone sources Dhrangadhra, Porbandar, Himmatnagar",
+      "site": "asiainch.org and indiacurrents.com (read; no district stated for these places, so they are not listed as places)"
+    },
+    {
+      "query": "Pindwara stone-carving factories and workforce count",
+      "site": "villagesquare.in (read; about 230 factories and roughly 15,000 workers are given with no year in the text, so not used as a workforce count)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "WEB_PAGE",
+      "title": "Stone Art",
+      "publisher": "Department of Art and Cultural Affairs, Government of Haryana",
+      "url": "https://artandculturalaffairshry.gov.in/stone-art/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "WEB_PAGE",
+      "title": "Stone Craft",
+      "publisher": "Department of Tourism, Government of Bihar",
+      "url": "https://tourism.bihar.gov.in/en/experiences/art-and-craft/textiles-and-handicraft/stone-craft",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "WEB_PAGE",
+      "title": "Stoneworking tools and toolmarks",
+      "authors": [
+        "W. Wootton",
+        "B. Russell",
+        "P. Rockwell"
+      ],
+      "publisher": "The Art of Making in Antiquity",
+      "url": "https://artofmaking.ac.uk/content/essays/2-stoneworking-tools-and-toolmarks-w-wootton-b-russell-p-rockwell/",
+      "archivedUrl": "https://web.archive.org/web/20261019215827id_/https://artofmaking.ac.uk/content/essays/2-stoneworking-tools-and-toolmarks-w-wootton-b-russell-p-rockwell/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "PAPER",
+      "title": "Assessment of thermal weathering effects and optimized simulation protocols for heritage Makrana marbles",
+      "authors": [
+        "Anupama Ghimire",
+        "Swathy Manohar"
+      ],
+      "publisher": "npj Heritage Science, Nature Publishing Group",
+      "year": 2025,
+      "url": "https://www.nature.com/articles/s40494-025-02076-0",
+      "doi": "10.1038/s40494-025-02076-0",
+      "language": "en",
+      "licence": "CC BY 4.0",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "PAPER",
+      "title": "Craft Study and Product Design Interventions: Soapstone Craft Cluster of Dhakotha Area in Kendujhar District of Odisha, India",
+      "authors": [
+        "Santosh Kumar Jha"
+      ],
+      "publisher": "The Chitrolekha Journal on Art and Design",
+      "year": 2017,
+      "url": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "doi": "10.21659/cjad.v1n1.v1n103",
+      "language": "en",
+      "licence": "CC BY-NC 4.0",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Stone Carving of Rajasthan",
+      "publisher": "Asia InCH, Encyclopedia of Intangible Cultural Heritage",
+      "url": "https://asiainch.org/craft/stone-carving-of-rajasthan/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "WEB_PAGE",
+      "title": "Jaisalmer Stone",
+      "authors": [
+        "Rashmi Sacher"
+      ],
+      "publisher": "Dastkari Haat Samiti on Google Arts & Culture",
+      "url": "https://artsandculture.google.com/story/cAUhxrXva9A6Jw",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "In Gujarat, Stone Carvings Reveal Secrets From The Past",
+      "authors": [
+        "Suman Bajpai"
+      ],
+      "publisher": "India Currents",
+      "year": 2024,
+      "url": "https://indiacurrents.com/stone-carvings-reveal-secrets-from-the-past-in-gujarat/",
+      "archivedUrl": "https://web.archive.org/web/20260123221130id_/https://indiacurrents.com/stone-carvings-reveal-secrets-from-the-past-in-gujarat/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "WEB_PAGE",
+      "title": "The Story of Stone",
+      "publisher": "Himalayan Academy",
+      "url": "https://www.himalayanacademy.com/monastery/temples/iraivan/bangalore/stone-story",
+      "archivedUrl": "https://web.archive.org/web/20220424183634id_/https://www.himalayanacademy.com/monastery/temples/iraivan/bangalore/stone-story",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "WEB_PAGE",
+      "title": "Patharkatti: Village of Stone Carvers in Bihar",
+      "publisher": "Folkartopedia",
+      "year": 2020,
+      "url": "https://www.folkartopedia.com/crafts/patharkatti-village-of-stone-carvers-in-bihar-sk/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "WEB_PAGE",
+      "title": "Stone Carving Tradition in Bihar: Brief Introduction",
+      "publisher": "Folkartopedia",
+      "url": "https://www.folkartopedia.com/crafts/stone-carving-tradition-in-bihar-brief-introduction-sk/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "200 Yrs Ago, How Queen Ahilyabai Made a Bihar Village's Black Granite World Famous",
+      "authors": [
+        "Gopi Karelia"
+      ],
+      "publisher": "The Better India",
+      "year": 2021,
+      "url": "https://thebetterindia.com/259174/patharkatti-village-bihar-black-granite-stone-artefacts-maharani-ahilyabai-history-art/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "This Bihar village brings stones to life",
+      "authors": [
+        "Kumar Gaurav"
+      ],
+      "publisher": "Village Square",
+      "year": 2024,
+      "url": "https://villagesquare.in/this-bihar-village-brings-stones-to-life/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "PAPER",
+      "title": "Sculpting - A Modern Menace",
+      "authors": [
+        "Umesh C Ojha",
+        "Sunil Kumar",
+        "Ramesh S Pal",
+        "Dipti Gothi",
+        "Pranzal Garg",
+        "Ganjam Yasaswini",
+        "Mahismita Patro",
+        "Rahul Kumar",
+        "Nipun Malhotra"
+      ],
+      "publisher": "Indian Journal of Occupational and Environmental Medicine",
+      "year": 2024,
+      "url": "https://www.ovid.com/jnls/ijoe/fulltext/10.4103/ijoem.ijoem_222_23~sculpting-a-modern-menace",
+      "doi": "10.4103/ijoem.ijoem_222_23",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "PAPER",
+      "title": "Lived Realities of Stone Carving Workers in Rajasthan: Health hazard of Silicosis",
+      "authors": [
+        "Tanya Chaudhary"
+      ],
+      "publisher": "School of Development Studies, Dr. B. R. Ambedkar University Delhi",
+      "year": 2026,
+      "url": "https://aud.delhi.gov.in/sites/default/files/2026-06/dd_wps_08_2026_tanya_3_may_26.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Temple carvers unite against scourge of silicosis",
+      "authors": [
+        "Priyanka Jain",
+        "Jibitesh Sahoo"
+      ],
+      "publisher": "Village Square",
+      "year": 2019,
+      "url": "https://villagesquare.in/temple-carvers-unite-against-scourge-of-silicosis/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "From Stone Carving To Folk Motifs: Bihar's Pattharkatti, Bavan Booti And Pidia Painting Earn GI Tag Status",
+      "publisher": "Free Press Journal",
+      "year": 2026,
+      "url": "https://www.freepressjournal.in/lifestyle/from-stone-carving-to-folk-motifs-bihars-pattharkatti-bavan-booti-and-pidia-painting-earn-gi-tag-status",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: Gaya Pattharkatti Stone Craft, Application Number 891",
+      "publisher": "Geographical Indications Registry, Intellectual Property India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/891",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Haryana's Department of Art and Cultural Affairs calls India's stone-carving tradition one of the richest in the world.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 2",
+          "quote": "The stone-carving tradition in India is one of the richest in the world."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The classical tradition of Indian stone carving was closely linked with architecture, as the carvings of major temples such as Puri and Khajuraho illustrate.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 3",
+          "quote": "The classical tradition of stone carving was closely linked with architecture. All major temples of India-be it Puri, Konark, Khajuraho, Kailash Temple, or the Shore Temple at Mahabalipuram-illustrate the rich tradition of Indian stone carvings."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Stone carving in general is a conservative craft; there are only a limited number of ways to shape stone, and techniques are broadly similar worldwide.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 4",
+          "quote": "Stone carving is generally a conservative craft. There are only a limited number of ways to shape stone and broad similarities in technique can be noted all around the world and throughout history."
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Rajasthan continues to be one of the major centres of stone carving in India, according to Haryana's culture department.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 6",
+          "quote": "Rajasthan continues to be one of major centres of stone carving in the country."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The tooth chisel, often used in marble carving and with a long history around the Aegean and Italy, is almost entirely absent from Pakistan and India, where granite, sandstone and schist are the dominant stones.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 4",
+          "quote": "The tooth chisel, therefore, a tool often used in marble carving, has a long history around the Aegean and Italy, areas rich in marble, but is almost entirely absent from Pakistan and India, where granite, sandstone and schist are the dominant stones."
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Guilds of masons and stone carvers have existed in India since the 7th century BC, according to Haryana's culture department.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 2",
+          "quote": "Guilds of masons and stone carvers have existed here since the 7th century B.C."
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Stone-carving skills were handed down as family lore from father to son, a practice still prevalent in some parts of India.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 2",
+          "quote": "The skills were handed down as family lore from father to son, a practise prevalent in some parts of the country even today."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "From medieval times the ready availability of high-quality stone, with brick almost unknown, let Rajasthani builders raise strong forts, palaces and temples.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 4",
+          "quote": "Right from the medieval times, the ready availability of high-quality stone (the use of brick was almost unknown) made it easy for the Rajasthani builder to construct strong and beautiful forts, palaces, and temples."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Stone carving is a very ancient tradition in Bihar, and it reached its zenith there during the Mauryan period.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para. 2",
+          "quote": "Stone carving is a very ancient tradition in Bihar. The craft achieved its zenith during the Mauryan period"
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L26"
+      },
+      "text": "The finest examples of Bihar's Mauryan stone carving are the rock-cut caves of the Barabar and Nagarjuni Hills in Jahanabad district.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para. 2",
+          "quote": "its finest examples are the rock-cut caves of Barabar and Nagarjuni Hills in Jahanabad District."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "Two stone-carving traditions emerged in Gujarat, one based on the Shilpa Shastras and the other on village traditions.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "para. 3",
+          "quote": "In Gujarat, two stone carving traditions emerged, one based on the Shilpa Shastras (the sacred guidelines for art and architecture) and the other on village traditions."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "India Currents writes that Gujarat's stonework evolved dramatically under Solanki rule (942-1304) and during the Sultanate reign (1403-1573).",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Solanki and Sultanate influence",
+          "quote": "The tradition of stonework in Gujarat evolved dramatically during two major periods: under Solanki rule (942-1304) and during the Sultanate reign (1403-1573)."
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "In Solanki-period Gujarat, Jain temples were distinguished from Hindu temples by heavy use of marble, against the limestone and sandstone prevalent in Hindu temples.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Solanki and Sultanate influence",
+          "quote": "During the Solanki rule, Hindu and Jain temples were architecturally similar."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "Solanki and Sultanate influence",
+          "quote": "The significant difference is the heavy use of marble in Jain temples, in contrast to the limestone and sandstone prevalent in Hindu temples."
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "Gujarat's Sultanate rulers built mosques and tombs on Islamic principles but engaged local stone craftsmen, long masters of Hindu and Jain temple architecture, for the embellishments.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Sultanate architecture followed Islamic principles",
+          "quote": "The rules commissioned mosques and tombs according to traditional Islamic principles. However, they engaged the local stone craftsmen, longtime masters of Hindu and Jain temple architecture, for the embellishments."
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "Most structures built in Gujarat during the Solanki period had their stone blocks fitted without mortar.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "An Architectural Jewel",
+          "quote": "As with most structures built during the Solanki period, the stone blocks were fitted without mortar."
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L27"
+      },
+      "text": "Jha's Dhakotha study, conducted in 2010-2011, describes soapstone carving there as a comparatively new craft with around 55-60 years of existence.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2",
+          "quote": "Soapstone carving is respectively a newer soapstone craft in Dhakotha area with around 55-60 year's existence in this area."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Abstract",
+          "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Folkartopedia, citing UMSAS, writes that some 400 years ago 1300 Gaud Brahmins built the Vishnupad Temple and most of their families stayed on.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "para. 2",
+          "quote": "Some 400 years ago, the 1300 Gaud Brahmins built the famous Vishnupadh Temple. Most of the families stayed back and continued the sculpture making from local stones."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Free Press Journal writes that in 1787 Queen Ahilyabai Holkar brought skilled craftsmen from Rajasthan to Gaya to build the Vishnupad temple.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Promoted by Ahilyabai Holkar",
+          "quote": "In 1787, Queen Ahilyabai Holkar brought skilled craftsmen from Rajasthan to Gaya, Bihar to construct the historic Vishnupad temple."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "para. 3",
+          "quote": "the stone carvers, who came from Rajasthan to Bihar in the 18th century, brought to the state."
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "The Free Press Journal calls Pattharkatti carving a 300-year-old craft reportedly promoted in the area by Queen Ahilyabai Holkar.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "Promoted by Ahilyabai Holkar",
+          "quote": "The traditional carving is a 300-year-old traditional craft was reportedly promoted in the area by Queen Ahilyabai Holkar, who discovered black granite hills while travelling."
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "The director of UMSAS told The Better India that black-stone sculptures across Bihar, especially in Nalanda district, are much older than the Vishnupada temple, and that such stones are found only in Patharkatti.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 5",
+          "quote": "We have found several sculptures made from black stone across Bihar, especially in the Nalanda district, which are much older than the Vishnupada temple."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "para. 5",
+          "quote": "Such stones are only found in Patharkatti village, and some settlements were living in the area before communities from Rajasthan came in"
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Stone carving at Patharkatti was traditionally limited to Gaud Brahmins who migrated from Rajasthan at the invitation of Rani Ahilyabai of Indore.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "para. 2",
+          "quote": "Traditionally, the work was limited to the Gaud Brahmins who migrated from Rajasthan on the invitation of Rani Ahilyabai of Indore."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "In the 1960s Upendra Maharathi Shilp Anusandhan Sansthan started a training centre at Patharkatti to bring people from other communities into the craft.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "para. 3",
+          "quote": "This craft was limited to the Gaud Brahmins till recently when in the 1960s Upendra Maharathi Shilp Anusandhan Sansthan started a training center to involve people from other communities."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "para. 6",
+          "quote": "The most recent attempt was made in the 1960s by UMSAS."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "According to folklore recounted by The Better India, the Maharaja of Tekari allotted the temple workers land in Patharkatti village, 40 kilometres from Gaya, where they could at first quarry stone for free.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 2",
+          "quote": "According to folklore, she was searching for craftsmen to erect the temple with stones that could survive harsh weather conditions."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "para. 2",
+          "quote": "On the completion of the structure, when the workers wanted to return home, the Maharaja of Tekari allotted them a piece of land in Patharkatti village, 40 kilometres away from Gaya."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "para. 2",
+          "quote": "Since the area fell under the Maharaja's jurisdiction, the artisans were allowed to quarry the stone for free initially, and later at an annual royalty of Rs 1.50."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "In a master builder's account published by Himalayan Academy, shilpis, sculptors, and sthapatis, sculptor-architect-builders, worked for millennia in tightly organised guilds.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "introduction",
+          "quote": "Here one master builder, V. Ganapati Sthapati speaks of his mystical craft."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "The Guilds",
+          "quote": "For millennia, shilpis (sculptors) and sthapatis (sculptor-architect-builders) worked in tightly-organized guilds."
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "In the guild tradition a master sthapati describes, training was hereditary, began formally at age 12 in the workshop and took no less than 10 years.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "The Guilds",
+          "quote": "Training was hereditary, from father to son, and started formally at the age 12. Students were given practical training, not in a separate college, but right in the workshop"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "The Guilds",
+          "quote": "A complete training extended for not less than 10 years."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W05"
+      },
+      "text": "In the sthapati tradition, one who works on architectural stones is called a takshaka and one who works on sculptural pieces a shilpi.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "The Guilds",
+          "quote": "One who works on architectural stones is called a takshaka, and one who works on a sculptural pieces is technically called a shilpi."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Stone artisans of the Sompura community trace their origins to Aparajita, son of Vishwakarma, the architect of heaven.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Gujarat in stone",
+          "quote": "Stone artisans from the Sompura community trace their origins to Aparajita, the son of heaven's architect, Vishwakarma."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In stone carving generally, Rockwell calls the point chisel the workhorse of carving, cutting away at least 85% of the stone removed in carving a statue.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 23",
+          "quote": "This chisel is the workhorse of carving. At least 85% of the stone removed in the process of carving a statue is cut away using this tool."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says the point tends to be held perpendicular to granite and other hard stones, shattering the surface, since at a shallower angle it would bounce off.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 24",
+          "quote": "On granite and other hard stones it tends to be held perpendicular to the surface of the stone; a stroke at this angle effectively shatters the surface of the stone. At a shallower angle the chisel would simply bounce off these hard materials."
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says metal carving tools need continual sharpening, and that in India teams of twenty carvers are routinely accompanied by as many as three blacksmiths.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 6",
+          "quote": "Since metal carving tools also need continual sharpening, blacksmiths and carvers have always had a very close relationship."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "para. 6",
+          "quote": "In India, teams of twenty carvers are routinely accompanied by as many as three blacksmiths."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says granite carvers in India still use the same basic range of tools as their predecessors centuries earlier.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 4",
+          "quote": "Granite carvers in India and marble carvers in Italy still use the same basic range of tools as their predecessors centuries earlier."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Across stone-carving traditions, the electric saw, drill, angle grinder and air hammer were relatively late twentieth-century introductions that are still only used sparsely.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 4",
+          "quote": "even mechanized tools -such as the electric saw, drill, angle grinder and air hammer- were relatively late, twentieth-century introductions which are still only used sparsely."
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In stone carving generally, abrasives from coarse emery to softer sandstone or pumice can be rubbed over the stone with water for a very smooth finish, the water removing the stone dust.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 85",
+          "quote": "For achieving a very smooth finish on stone, various kinds of abrasive materials can be rubbed across the surface."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "para. 85",
+          "quote": "These range from relatively coarse materials, like emery, to softer ones, such as sandstone or pumice. These materials are applied to the surface of the stone with water which helps to remove the stone dust created during the abrading process."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In stone carving generally, a carver reaches a high polish by working from the rougher abrasives through to the finer ones, applying each in turn.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 86",
+          "quote": "In order to achieve a high level of polish the carver will work from the rougher abrasives through to the finer ones, applying each in turn."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A high level of polish can only be achieved on certain stones, such as marble, granite or certain hard limestones.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 86",
+          "quote": "A high level of polish can only be achieved on certain types of stone, such as marble, granite or certain hard limestones."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says saw blades for soft limestone, sandstone or tuff tend to be toothed, while on harder stones a flat blade is used with abrasives mixed in water.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 61",
+          "quote": "Smaller saws could have been operated by a single worker but only when they were used on soft limestone, sandstone or tuff. On these soft stones the blade tends to be toothed while on harder stones it is flat and used in conjunction with abrasives mixed in water."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says carvers use the rasp mainly on marble, since it would have little effect on granite, while scrapers are easier for smoothing softer stones.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 78",
+          "quote": "It is mainly used by carvers on marble since it would have little effect on granite, while scrapers are easier to use for smoothing softer stones."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Art of Making in Antiquity essay says wooden wedges set in holes and soaked in water swell and force the stone to split along its natural bedding lines or faults.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "para. 19",
+          "quote": "Wooden wedges are obviously too weak to break the stone directly and are instead inserted into rectangular holes, usually carved with the point, and then soaked in water. As the wood becomes saturated it expands and forces the stone to split along its natural bedding lines or faults."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Jaisalmer's sandstone is extracted and broken with heavy machinery, and iron wedges are hammered into the rock to help cut it.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "Procuring & preparing the sandstone",
+          "quote": "Heavy machinery is required to extract and break the rock."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "Procuring & preparing the sandstone",
+          "quote": "Iron wedges are hammered into the rock to facilitate its cutting."
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "In Jaisalmer's stone factories, water on the giant hydraulic cutting blade softens the rock and cools it against the heat of cutting.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "Procuring & preparing the sandstone",
+          "quote": "The giant hydraulic blade used for cutting the rock. Water is used to soften the rock and to cool it, countering the heat produced in the cutting process."
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T03"
+      },
+      "text": "Jaisalmer artisans carve with small hand-held tools, mainly a hammer and chisels of different widths, the chisels diamond tipped for a hard, clean-cutting edge.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "The craft of carving",
+          "quote": "the stone will be carved using small hand-held tools, primarily a hammer and chisels of different widths."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "The craft of carving",
+          "quote": "The chisels are diamond tipped, to give them a hard edge for clean cutting."
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P08"
+      },
+      "text": "In Jaisalmer a design traced on butter paper is laid on the slab as a guide, while for geometric designs the craftsperson generally draws a grid directly on the slab.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "The craft of carving",
+          "quote": "A tracing of the design is made out on butter paper, and placed on the stone slab to be carved. This acts as a guide for the artisan to mark out the basic form of the design."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "The craft of carving",
+          "quote": "In the case of geometrical designs the craft person generally draws a grid directly on the slab."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "On Jaisalmer's carved panels the form is often cut with an electric tool, while the finer detailing is executed with a chisel.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "The craft of carving",
+          "quote": "Often the form is carved with an electric tool, while the finer detailing is executed using a chisel."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L27"
+      },
+      "text": "Dhakotha's soapstone carving is a phase-wise process shown in 12 stages, lettered A to L, ending in the final products.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2",
+          "quote": "As illustrated in figure-8, different phase wise craftsmanship process is displayed in a number of 12 different stages; these stages are marked in this figure, as- 8(A) to 8(L)."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage A",
+          "quote": "6.2.2.2.1.1. Stage-A: Raw soapstone"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1",
+          "quote": "Stage-L: Final products. [Process concluded]"
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "In stage B, primary stone cutting with chisel and hammer gives a semi-finished block that is ready for further work.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage B",
+          "quote": "Stage-B: Primary stone cutting with the help of chisel and hammer. This phase provides a semi-finished stone block, which is ready for further craftsmanship processes."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Dhakotha carvers then cut the edges with a hand-operated electric stone cutter to get a uniformly surfaced block.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage C",
+          "quote": "Stage-C: Edge cutting with the help of hand operated electricity stone cutter to receive a uniformly surfaced stone block."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "A conceptual line drawing is made on plain paper, and the finalised drawing is drawn on the block with erasable HB pencils.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage E",
+          "quote": "Stage-E: Conceptual line-drawing on plain paper."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage F",
+          "quote": "Stage-F: Finalized drawing gets drawn over the stone block received from 'Stage-D', with the help of erasable pencils, i.e., HB pencil."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Because pencil marks might rub off during chiselling, carvers turn the drawn lines into lines etched in the surface with a fine-tipped chisel.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage G",
+          "quote": "As the HB pencil marks might erase during the soapstone chiseling process, so, craftsmen convert, final pencil drawn line marks, into the surface-etched line marks, with the help of a fine tipped chisel."
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "Chiselling of the soapstone follows, and fine carving is then done with fine chisels.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage H",
+          "quote": "Stage-H: Chiseling process under progression."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage J",
+          "quote": "Stage-J: Fine carving under progression, with the help of fine chisels."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Sandpaper is applied over the chiselled soapstone surface to achieve the final finish.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.2.1, Stage K",
+          "quote": "Stage-K: Application of sand paper over a chiseled surface, to achieve final finishing."
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T03"
+      },
+      "text": "Dhakotha's soapstone carvers commonly use chisel, hammer, mallet, a Lakdi Pidha support and a Jute Chatti cushion, with chisels in many cutting-tip shapes.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.1",
+          "quote": "Among tools- chisel, hammer, mallet, Lakdi Pidha, Jute Chatti etc. are commonly used by craftsmen for carving soapstone statues and other carved products."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Table 3",
+          "quote": "Carves soapstone. Available with different cutting-tip variations"
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T14"
+      },
+      "text": "The Jute Chatti cushions half-made soapstone pieces and prevents sharp-edged chipping, since soapstone is a soft stone.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Table 3",
+          "quote": "Jute Chatti Provide cushioning to half-made stone products, during further craftsmanship processes and prevent sharp edged, stone chippings- as soapstone is a soft natured stone."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T13"
+      },
+      "text": "The Lakdi Pidha gives angular support and cushioning to soapstone pieces in progress and keeps their sharp edges from chipping.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Table 3",
+          "quote": "Provides angular support and cushioning to the under process stone products and prevent their sharp edges from unexpected chippings, during craftsmanship process."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "In Rajasthan's stone-carving industry, workers and union members describe stone processing as three steps: cutting, carving and polishing.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "section 2",
+          "quote": "Our discussion with the workers and the member of union unfolded that the processing of stone comprises three steps: stone cutting, stone-carving and stone polishing."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "Locally made machines became prominent in Rajasthan's stone carving after the 2000s, and from 2005 almost every other firm used cheaper Chinese machinery.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "section 2",
+          "quote": "The introduction of locally made machines in the process of stone-carving became prominent after 2000s, however in and after 2005, almost every other firm started using Chinese machinery because of lower costs associated with the latter."
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "A Patharkatti craftsman said hammers and chisels are the main tools, and a product takes anywhere between a day and six months.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 14",
+          "quote": "Depending on the object and raw materials used, it can take anywhere between a day to six months to prepare the product. Hammers and chisels are the main tools used to make the product."
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M14"
+      },
+      "text": "A Patharkatti craftsman said the stone need not be coloured black, because it turns black by itself once oil and wax are rubbed on it.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 14",
+          "quote": "The best part is that one need not colour the product black. It will automatically turn black once oil and wax is rubbed on it."
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Because their subject is divine, Rajasthan's sculptors of deity images are required to follow the Shilpa Shastra, an ancient Hindu treatise on sculpture and architecture.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 8",
+          "quote": "As the subject matter of these images is divine, the sculptors are required to work according to the guidelines laid down in the Shilpa Shastra, an ancient Hindu treatise on sculpture and architecture."
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "In the sthapati tradition, carvers cut along lines and forms marked on the stone by more competent sculptors, which needs great skill and years of experience.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "The Guilds",
+          "quote": "The carvers carve on the stone following the lines and forms marked out on the stone by the more competent sculptors. Superficially, this may seem mechanical, but it requires great skill and years of experience."
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W06"
+      },
+      "text": "In the chiselling of the eye, netron meelanam, the chief sthapati opens the eye of the deity image before its installation.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "Shilpi Goddess and Rituals",
+          "quote": "Another puja of great importance is the \"chiselling of the eye\" or netron meelanam. This means opening the eye of the God, in idol form, preceding installation. This is attended to by the project's chief sthapati."
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Soapstone is a metamorphic rock whose composition includes talc, mica, chlorite, carbonate and amphibole, and its high talc content makes it soft and craft-friendly.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 5",
+          "quote": "Soapstone is a metamorphic rockxii. Chemical composition of soapstone includes talk, mica, chlorite, carbonate, amphibole and other natural minerals."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 5",
+          "quote": "Due to higher amount of talk, as its basic composition, soapstone displays, soft and craft-friendly behaviorxiii."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The Dhakotha study describes soapstone as non-porous, non-absorbent, a low conductor of electricity, heat resistant and resistant to acid and alkaline substances.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 5",
+          "quote": "Among physical qualities, soapstone is a- nonporous, nonabsorbent, low conductor of electricity, heat resistant, higher specific heat capacity, resistant to acid and alkaline substances."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Dhakotha's craftsmen use blackish grey, pink, orange, light green and dark green soapstone.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 5",
+          "quote": "In Dhakotha craft clustersxiv, blackish grey, pink, orange, light green and dark green colored soapstone are used for craftsmanship purposes."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L28"
+      },
+      "text": "Several soapstone mines around Dhakotha in Kendujhar district make the cluster self-dependent for a continuous supply of raw material.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 5",
+          "quote": "As, there are several soapstone mines available around Dhakotha area, which is situated in Kendujhar districtxv, so, this feature makes Dhakotha craft cluster, selfdependent regarding continuous raw material availability."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The geologically old land of Rajasthan, rich in hard rocks such as granites, marbles, quartzite and slates, has been a stone-carver's paradise.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 4",
+          "quote": "The geologically old land of Rajasthan, rich in different kinds of hard rocks like granites, marbles, quartzite, slates, and other metamorphic rocks, has been a stone-carver's paradise."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L15"
+      },
+      "text": "The marble of the Taj Mahal was mined at the famous Makrana quarries, which also supplied the Dilwara Jain temples at Mount Abu.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 7",
+          "quote": "The quarries at Makrana are quite famous, for it is from these quarries that the marble used in the Taj Mahal was mined. Also built using marble from Makrana mines were the exquisite Dilwara Jain temples at Mt Abu."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L14"
+      },
+      "text": "Rupbas, near Agra, and Karauli still produce the red sandstone the Mughals used for their forts and palaces at Agra, Delhi and Fatehpur Sikri.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 7",
+          "quote": "Rupbas (near Agra) and Karauli still produce the red sandstone that was used by the Mughals to build their forts and palaces at Agra, Delhi, and Fatehpur Sikri."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L13"
+      },
+      "text": "Barmer produces yellow marble for delicate carvings and Ajmer produces granites, according to Haryana's culture department.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 7",
+          "quote": "Barmer produces yellow marble for delicate carvings, and Ajmer produces granites."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "In Jaipur white marble is carved into statues of gods and goddesses and animal and human figures, and artisans create marble images of the deities as well as domestic utensils such as bowls for grinding spices.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 8",
+          "quote": "In Jaipur, white marble is used for carving out statues of gods and goddesses as well as animal and human figures."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para. 6",
+          "quote": "Here one can see artisans creating marble images of the deities as well as domestic utensils such as bowls for grinding spices and kneading dough."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M11"
+      },
+      "text": "The soft stone quarried at Dungarpur, used by Rajasthan's carvers for images of deities, turns black when oiled.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 8",
+          "quote": "The soft chromatic stone mined from the quarries of Dungarpur are used by the stone carvers of the state for carving images of the deities. The stone becomes black when oiled."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "para. 3",
+          "quote": "Dungarpur has a soft shaded stone which turns black when oiled and is used for icon-making."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M12"
+      },
+      "text": "The green-spotted, copper-coloured tamra stone found in Sawai Madhopur is used for making images.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 3",
+          "quote": "The green-spotted copper coloured tamra stone found in Sawaimadhopur is used in making images."
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M13"
+      },
+      "text": "A very pliable soft stone from Bhilwara is used as a substitute for alabaster.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 3",
+          "quote": "A soft stone in Bhilwara is very pliable and it is used as a substitute for alabaster."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Asia InCH names yellow limestone, sandstone, and coloured and white marble as the main stones of Rajasthan's stone-carving areas.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 1",
+          "quote": "The main stone found here is the yellow lime stone, sand stone, and coloured and white marble."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "Jaisalmer's famous yellow sandstone is found in areas surrounding the city and comes from mines such as Jethwai, Cipla and Moolsagar.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "Procuring & preparing the sandstone",
+          "quote": "The famous yellow sandstone of Jaisalmer is found in areas surrounding the city. It comes from mines like Jethwai, Cipla and Moolsagar."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Makrana marble is a calcite marble from the Makrana and Parbatsar tehsils of Nagaur district in Rajasthan.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Results, Characterization of the Makrana marbles",
+          "quote": "Makrana marble is calcite marble from the Makrana and Parbatsar Tehsils of Nagaur District of Rajasthan, in India."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "White Makrana marble has interlocking recrystallized calcite grains that give it a high polish and excellent compressive strength.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Methods",
+          "quote": "White Makrana marble is distinguished by its interlocking recrystallized calcite grains, which provide a high polish and excellent compressive strength."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The Makrana marble samples studied had a bulk specific gravity of 2.7 and compressive strength from 60 MPa to 75 MPa.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Results, Characterization of the Makrana marbles",
+          "quote": "The bulk specific gravity was found to be 2.7, and compressive strength ranged from 60 MPa to 75 MPa."
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The freshly quarried Makrana marble in the study had an open porosity of 0.1-0.3%, which the authors call very good quality material.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "The Makrana marble in this study, freshly quarried, has an open porosity of 0.1-0.3%, indicating very good quality material."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The study's characterisation of its Makrana marbles found closely interlocked grains with open porosity ranging from 0.2% to 0.5%.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Results, Characterization of the Makrana marbles",
+          "quote": "The grains were closely interlocked with open porosity ranging from 0.2% to 0.5%."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Makrana marble from north-west India is a highly prized ornamental and masonry stone used in numerous heritage buildings and monuments worldwide.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Methods",
+          "quote": "Makrana marble, sourced from northwest India, is a highly prized ornamental and masonry stone used in numerous heritage buildings and monuments worldwide."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Himalayan Academy calls granite durable, withstanding erosion better than almost any other rock, and says this is why India's craftsmen chose it for sanctuaries.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "Granite",
+          "quote": "It's durable--capable of withstanding erosive forces better than almost any other rock. No wonder India's craftsmen chose it for their holy sanctuaries."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the shilpa tradition Himalayan Academy describes, stones are classed by their sound as male, female or neuter, and the Shastras prescribe male stones for male images.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "The Soul of Stone",
+          "quote": "There are three basic types of stones. One produces a metallic sound like that of a bell, another variety gives a slender, long note and a third has no sound at all."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "The Soul of Stone",
+          "quote": "Shastras prescribe male stones for male images, female stones for female Deities and neuter stones for temples stones and homes."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M14"
+      },
+      "text": "The specialty of Patharkatti's artisans is hard black stone, granite, though they also work on marble, sandstone and palewa.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "para. 4",
+          "quote": "The specialty of Pattherkatti and Gaya is that artisans work on black stone i.e. granite which is a hard stone. They also work on marble, sandstone, and palewa"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "para. 3",
+          "quote": "The basic raw material used in this craft is marble and Granite."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Pattharkatti stone carving",
+          "quote": "The ancient and unique craft is crafted by using hammers and chisels to carve black granite stone."
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M14"
+      },
+      "text": "A Patharkatti craftsman named Pirkasauti, Parajit, Tamra, Hansraj and Motia among the stones used, with Dhanmahua stone for intricate decorative work.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 14",
+          "quote": "We used different types of stones such as Pirkasauti, Parajit, Tamra, Hansraj, and Motia. For decorative materials, Dhanmahua stone is used as it can give intricate touches."
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bihar supplies lustrous grey-green stones with a black variety and blue-black pot stone, from which its artisans create many artefacts.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "para. 4",
+          "quote": "The state is abundant in supplying lustrous gray-green stones with black variety, blue-black pot stone and several other stones from which several artifacts are created by the artisans."
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "Pindwara's factories convert blocks of soapstone, sandstone and red stone into carved pillars, statues and articles fitted into temples across India and overseas.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 2",
+          "quote": "using Rajasthan's famous stones, including soapstone, sandstone and red stone."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 3",
+          "quote": "convert blocks of these stones into ornately carved pillars, statues and articles, which are then transported and fitted into temples across the country and even overseas."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "Gujarat abounds in a variety of stones ideal for carving and construction, and the Sompuras choose among sandstone, limestone and marble.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Gujarat in stone",
+          "quote": "Gujarat abounds in a variety of stones that are ideal for carving and construction."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "Gujarat in stone",
+          "quote": "Their choice of stone includes the sandstone of Dhrangadhra, the limestone of Porbandar, and the marble of Himmatnagar and neighboring Rajasthan."
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Water made slightly acidic by carbon dioxide and other gases reacts with calcium carbonate, marble's primary component, and leaches the stone's components.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "Water, slightly acidic due to carbon dioxide and other gases, reacts with marble's primary component, calcium carbonate, leading to the leaching of stone components."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Marble discolours from sources including black crusts from acid-rain dissolution of calcium carbonate and gypsum deposition, particulate deposits in its pores and metal-induced stains.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "Marble is particularly susceptible to discoloration from various sources, including black crusts resulting from the dissolution of calcium carbonate by acid rain and gypsum deposition, particulate deposits that penetrate the marble pores, metal-induced stains"
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Oxidation of iron sulfides and iron oxides stains white marble orange, yellow and brown, and the larger oxides expand and damage the calcite.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "Discoloration on white marble often occurs due to the oxidation of iron sulfides and iron oxides, which cause orange, yellow, and brown staining. These oxides have a larger structural volume than the original minerals, leading to expansion forces that damage the calcite minerals in marble."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Undulation and pitting on the Makrana marble floors of the Taj Mahal and Jaswant Thada show erosion attributed to tourist activity, acid rain and air pollution.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "Severe deterioration has been observed on the marble floors of significant heritage sites such as the Taj Mahal and Jaswant Thada. Surface undulation and pitting indicate erosion, which is attributed to continuous tourist activity, acid rain, and air pollution."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "Figures 1-3 indicate different deterioration in Makrana marble heritage structures such as the Taj Mahal and Jashwant Thada."
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The authors hypothesise that marble deterioration begins when thermal variations enlarge the stone's pores, after which other environmental factors accelerate the decay.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "The deterioration of marble is hypothesized to changes in the stone's open porosity, with thermal variations being the primary factor that initiates an increase in pore size. Once porosity is elevated, other environmental factors accelerate the degradation process"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Introduction",
+          "quote": "which is illustrated in the Fig. 4 as a hypothesis. which needs further testing from other researchers."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C105",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Jaipur, the capital city of Rajasthan, is the state's centre of marble carving.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 6",
+          "quote": "The capital city Jaipur is the centre of marble carving in Rajasthan."
+        }
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Asia InCH names Jaipur, Jodhpur, Jaisalmer and Dungarpur among the places where Rajasthan's stone carving is mainly found.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 1",
+          "quote": "Stone-carving is mainly found at Jaipur, Thanagazi, Kishori Makrana, Jodhpur, Jaisalmer, and Dungarpur."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Stone carving is practised widely in Jaisalmer, a city whose legacy of ornately carved stone architecture inspires its craftspersons today.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 2",
+          "quote": "Stone carving is practiced widely in Jaisalmer of Rajasthan."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "para. 1",
+          "quote": "The city has a rich legacy of ornately carved stone architecture, which acts as a source of inspiration for the craftspersons of today."
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Very fine examples of intricate jali work on the screens and panels of royal palaces are found at Ajmer, Udaipur, Jodhpur and Bikaner.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 6",
+          "quote": "At Ajmer, Udaipur, Jodhpur and Bikaner, one comes across some very fine examples of the intricate jali work done on screens and panels of the royal palaces."
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "Pindwara, a town in Sirohi district of Rajasthan, is famous for its stone-carving industry and called the main hub of India's temple-building industry.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 1",
+          "quote": "Pindwara, a small town in Sirohi district of Rajasthan, is the main hub for India's temple-building industry."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "Abstract",
+          "quote": "Pindwara as a city of Sirohi, southern part of Rajasthan is famous for its stone carving industry."
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "Stone carving is practised at Patharkatti in Gaya district, one of the major centres of stone craft in Bihar.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para. 3",
+          "quote": "This art is practiced at Patharkatti in Gaya district. It is one of the major centres of stone craft in Bihar."
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bihar Tourism names Nalanda, Kaimur and Patna as the other centres of stone craft in Bihar.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "para. 3",
+          "quote": "Other centres of the stone craft in Bihar are in Nalanda, Kaimur and Patna."
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L27"
+      },
+      "text": "Dhakotha is a village and gram panchayat in Anandapur subdivision of Kendujhar district, Odisha, situated on the bank of the Baitarini River.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 3.1",
+          "quote": "Dhakotha is a village as well as a gram panchayatiii, under the political subdivision of Anandapur in Kendujhar district of Odisha."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 3.1",
+          "quote": "Dhakotha soapstone craft cluster is surrounded by beautiful nature and situated on the bank of Baitarini River."
+        }
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L29"
+      },
+      "text": "India Currents writes that stone carving is still a vibrant profession in Gujarat because temple building has never ceased there.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Gujarat in stone",
+          "quote": "In Gujarat, stone carving is still a vibrant profession because temple building has never ceased."
+        }
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L22"
+      },
+      "text": "Gaya's stone crafts include statues, pestles, stem-handled drinking glasses, coasters and large platters for serving offerings to deities at temples.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "para. 4",
+          "quote": "The Gaya town of Bihar presents a huge variety when it comes to stone crafts like statues, images, pestle, stem handled drinking glasses, smoothly turned out coasters and large platters customarily used to serve offerings to deities at temples"
+        }
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Rajasthan's stone carvers are noted for jali, or latticework, carving, and most of the state's ancient palaces have jali work on their doors and windows.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 4",
+          "quote": "Apart from temple carvings, the stone carvers of Rajasthan are noted for their jali (latticework) carvings. Most ancient palatial buildings of Rajasthan sport jali work on their doors and windows."
+        }
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Jali screens of sandstone and marble in zenana windows let women in purdah watch the court unseen, while admitting fresh air and keeping out the elements.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "para. 4",
+          "quote": "The jali screens, sculpted from both sandstone and marble, were frequently used in the windows of the zenanas (women's quarters) enabling the women in purdah to view the events of the courts without being seen."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "para. 5",
+          "quote": "The screens also offered protection from the elements while allowing the passage of fresh air through the intricate geometric patterns."
+        }
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "In Rajasthan, panels combine relief work with trellis work, and sandstone is finely chiselled as if it were wood.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 1",
+          "quote": "In the panels made of stone, relief work is combined with trellis work. Sand stone is finely chiselled as if it were wood."
+        }
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Jaisalmer's carvers make overhangs or chhajja, windows or jharokha, lattice screens or jaali, and household items such as the chakla for rolling flatbread.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 2",
+          "quote": "Products such as overhang or chhajja, window or jharokha, pillar capital or monjisha, lattice worked screen or jaali, window ledge or kangra, arches or mihrab, tables, lamp stands, platform for rolling flatbread or chakla, tumblers, plates and pen stands are produced under this craft-form."
+        }
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L27"
+      },
+      "text": "Dhakotha's carvers mostly make statues of Hindu gods and goddesses, architectural decorations and household utility products in soapstone.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2.2.1",
+          "quote": "Mostly, statues of different Hindu gods, goddesses for religious purposes; architectural decorative and household daily-utility based soapstone products are being crafted by the carving craft community members."
+        }
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W08"
+      },
+      "text": "Pattharkatti means cut-stone, and its artisans transform rough black granite into statues of gods and goddesses, historical figures and saints.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para. 2",
+          "quote": "Pattharkatti, meaning cut-stone, whispers a tradition sustained for generations. Here, skilled artisans transform rough black granite into sculptures and statues of gods and goddesses, historical figures, saints, lovers, and teachers and reformers."
+        }
+      ]
+    },
+    {
+      "id": "C121",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W07"
+      },
+      "text": "The kharal, an oblong boat-shaped stone vessel, is used by local medical practitioners and chemists to prepare medicines and by homemakers to make masalas.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 10",
+          "quote": "Alongside the hookah lay kharal (oblong boat-shaped vessel), plates, and glasses covered in dust."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "para. 13",
+          "quote": "Kharal, for example, is used by local medical practitioners and chemists to prepare medicines. Homemakers use it to make masalas."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "para. 4",
+          "quote": "the mortar kharal (medicine grinder) tableware, plates, tapering glasses, glass covers"
+        }
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Silicosis is caused by long-term inhalation of inorganic dust with high concentrations, over 10%, of free crystalline silica.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Introduction",
+          "quote": "caused by the long-term inhalation of inorganic dust with high concentrations (>10%) of free crystalline silica."
+        }
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Of 114 silicosis patients from sculpting units in western Rajasthan, with data collected from January 2021 to April 2023, 109 used no personal protective equipment at work and had no awareness of preventive measures.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Methods and Materials",
+          "quote": "patients referred for compensation from sculpting units in western Rajasthan."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Methods and Materials",
+          "quote": "The data were collected between January 2021 and April 2023 from patients with an exposure history of stone carving/sculpting units"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Results",
+          "quote": "A total of 114 patients, ranging from 28 to 68 years of age, were included in the study."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Results",
+          "quote": "The majority of patients, 109 (95%), did not use any personal protective equipment (mask and gloves) while at work and did not have any awareness regarding preventive measures."
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "All patients in the sculpting study worked with motorized instruments, and none of their industries used wet drilling during stone carving.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Results",
+          "quote": "All patients were male, working in stone carving/sculpting industries using motorized instruments. None of the industries were using wet drilling methods during stone carving/sculpting."
+        }
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The sculpting study's authors write that carving was once done with chisels and hammers, but that motorized instruments nowadays generate excessive dust in a short time in the artisans' breathing zone.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Discussion",
+          "quote": "Carving in the ancient period was performed by chisels and hammers, but nowadays, the use of motorized instruments leads to excessive dust generation in a short period of time, which causes massive exposure in the breathing zone of artisans."
+        }
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the sculpting study of 2021 to 2023, lung opacities grew with increasing duration of exposure, significantly only for large opacities, and 94 of the 114 patients had abnormal spirometric findings.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Discussion",
+          "quote": "there was an overall increase in the size of small as well as large opacities with increasing duration of exposure. But increase in the size of opacities was statistically significant for only larger opacities"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Results",
+          "quote": "Spirometric findings of all the patients (114) were noted"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Results",
+          "quote": "whereas 94 (82.4%) patients had abnormal findings, which included restrictive, obstructive, or mixed patterns."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Methods and Materials",
+          "quote": "The data were collected between January 2021 and April 2023 from patients with an exposure history of stone carving/sculpting units"
+        }
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Silicosis has no cure and prevention is the only option, and ventilation, wet drilling, dust control equipment and respirators are recommended to cut exposure to silica dust.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Discussion",
+          "quote": "There is no cure for silicosis, and prevention is the only option."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Discussion",
+          "quote": "Currently, various preventive measures, including ventilation systems, wet drilling methods, dust control equipment, and personal protective equipment such as masks, goggles, hand gloves, and respirators, are recommended for decreasing workers' exposure to silica dust."
+        }
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "Health camps held in Pindwara since 2016 have screened over 5,000 workers and found silicosis in 35% of those screened.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 7",
+          "quote": "This changed in 2016, when two local NGOs, Aajeevika Bureau and Kotda Adivasi Sansthan (KAS), observed the unusual high mortality in the region"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 9",
+          "quote": "Since then, over 5,000 workers in Pindwara have undergone health screening, covering about one-third of the labor force."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 9",
+          "quote": "reveal that a startling 35% of the screened workers were diagnosed with Silicosis."
+        }
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L18"
+      },
+      "text": "Screening data from health camps held in Pindwara since 2016 put the median age of workers diagnosed with silicosis at just 34 years, after a median of 13 years of exposure.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 7",
+          "quote": "This changed in 2016, when two local NGOs, Aajeevika Bureau and Kotda Adivasi Sansthan (KAS), observed the unusual high mortality in the region"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 14",
+          "quote": "the health screening data in Pindwara highlights that the median age of workers diagnosed with Silicosis in the block is just 34 years, with only 13 years of median years of exposure of working in this industry!"
+        }
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Rajasthan's occupational health adviser for construction workers observed that stone carvers are prone to contract silicosis and other fatal lung diseases younger than mine workers.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "section 2",
+          "quote": "had observed that workers in stone-carving industries are prone to contract silicosis and other fatal lung diseases at a younger age as compared to workers who work in mines."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 13",
+          "quote": "However, in temple-building industry, the exposure levels to silica seem unprecedented, as this trend peaks among carving workers in their early to mid 30s."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 13",
+          "quote": "It highlights that in mining, the industry that is most commonly associated with silicosis, the prevalence of the disease peaks in workers in their late 40s to early 50s."
+        }
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "Carving with angle grinders makes dust harder to handle than straight-angle machine cutting of large blocks, where protective gear copes more easily.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "section 2",
+          "quote": "The stone cutting in large blocks entails cutting at straight angles using machinery and therefore the dust is easier to handle with protective gears as compared to the process of stone-carving which uses angle grinder to give angular designs to the stones."
+        }
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "TERM",
+        "ref": "W09"
+      },
+      "text": "Pindwara's stone carvers, the pathar gadhai mazdoor, died for years of a mysterious disease that health screening later revealed to be silicosis.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 7",
+          "quote": "For years, these stone carvers, or pathar gadhai mazdoor, have been dying of some mysterious disease and in total anonymity."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 8",
+          "quote": "it came to light that the mysterious death was Silicosis"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "section 2",
+          "quote": "in Pindwara, Sirohi as a Pathar Gadhai Majdoor (Stone-carving Labourer)"
+        }
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A 2026 working paper reports that the Government of Rajasthan's Silicosis Grant Disbursement Portal lets workers claim a relief or compensation amount of ₹ 5 lakhs in phases.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "title page",
+          "quote": "Digital Working Paper 08/2026"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "section 3",
+          "quote": "While the Government of Rajasthan is aware of the problem and has formed a Silicosis Grant Disbursement Portal which enables workers to claim a relief/compensation amount of ₹ 5 lakhs in phases"
+        }
+      ]
+    },
+    {
+      "id": "C134",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Village Square reports that the Sompura community historically carved temple stone by hand, and that after grinders and cutters arrived about two or three decades back their role shifted to designing and advising religious trusts.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 27",
+          "quote": "This community has historically been in the occupation of carving stones for temples, especially till the work was done manually with a hammer and chisel."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "para. 28",
+          "quote": "With the introduction of grinder and cutters about two or three decades back, and the simultaneous proliferation of temple building in the country, Sompuras have become profitable intermediaries. Today their role has shifted to designing and advising religious trusts."
+        }
+      ]
+    },
+    {
+      "id": "C135",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Pindwara's stone-carving industry is located there partly because the Sompura community has its roots in that region.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "para. 27",
+          "quote": "Besides the availability of cheap labor, the location of this industry in Pindwara is also due to the presence of the Sompura community, whose roots are in this region."
+        }
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Gujarat's Jain community continuously entrusts Sompuras with the repair and maintenance of its temples.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Gujarat in stone",
+          "quote": "The Jain community continuously entrusts Sompuras with the repair and maintenance of their temples."
+        }
+      ]
+    },
+    {
+      "id": "C137",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "Gaya Pattharkatti Stone Craft, GI application 891 filed by Aashirvaad Stone Handicraft Producer Company Limited on 12 May 2022 and published in journal 210, is registered, with a certificate of registration dated 27 March 2026.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "application details",
+          "quote": "| Application Number | 891 | | Geographical Indications | Gaya Pattharkatti Stone Craft |"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "application details",
+          "quote": "Gaya Pattharkatti Stone Craft | | Status | Registered |"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "application details",
+          "quote": "| Applicant Name | Aashirvaad Stone Handicraft Producer Company Limited |"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "application details",
+          "quote": "| Date of Filing | 12-05-2022 |"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "application details",
+          "quote": "| Journal Number | 210 | | Availability Date | 26-11-2025 |"
+        },
+        {
+          "sourceId": "S19",
+          "locator": "document details",
+          "quote": "891 - Certificate of Registration - 27-03-2026 | 27-03-2026"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "para. 1",
+          "quote": "The list of the art includes Pattharkatti Stone Carving, Bavan Booti Textile Weaving, and Pidia Painting received the prestigious Geographical Indication (GI) tag."
+        }
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "A Patharkatti craftsman told The Better India that his ancestors from Jaipur were employed by the Maharani for the temple work in 1787 and have lived in Patharkatti since.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 7",
+          "quote": "Our ancestors from Jaipur were employed by the Maharani for the temple work in 1787. Since then, we have been living in Patharkatti and passing down the skills from one generation to another."
+        }
+      ]
+    },
+    {
+      "id": "C139",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Better India writes that Ahilyabai only played a small role in the migration process, though she ended up generating livelihood for several families and enriching a tiny village with art and craft.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 3",
+          "quote": "While Ahilyabai only played a small role in the migration process, she ended up generating livelihood for several families, as well as enriching a tiny village with art and craft."
+        }
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L20"
+      },
+      "text": "The Better India dates the Vishnupada temple in Gaya district, which put Patharkatti village on the map of fine stone carving, to the 8th century.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "para. 1",
+          "quote": "the Vishnupada temple in Bihar's Gaya district is surrounded by rocks and water. The marvellous structure, which dates back to the 8th century, has put Patharkatti village on the map of the finest stone carvings."
+        }
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Asia InCH lists hammers, chisel, thin, thick and fine chisels, a brush and a metal stencil as tools of Jaisalmer's stone carving.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "para. 2",
+          "quote": "Stone carving is practiced widely in Jaisalmer of Rajasthan."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "para. 2",
+          "quote": "Tools such as hammers, chisel, thin chisel, thick chisel, fine chisel, brush and metal stencil are used for the production process."
+        }
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T16"
+      },
+      "text": "Dhakotha's soapstone carvers use filers, in flat, round, semi-circular and triangular forms, to clean the thick outer surface of blocks during carving.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Table 3",
+          "quote": "06. Filers Provides cleaning of un-useful, thick, outer surface of soapstone blocks during carving process of craftsmanship."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Table 3",
+          "quote": "Filers are available with different forms, i.e. flat, round, semi-circular, triangular etc."
+        }
+      ]
+    },
+    {
+      "id": "C143",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L27"
+      },
+      "text": "Jha's 2010-2011 study puts approximately 400 skilled and semi-skilled craftspeople of the Dhakotha area in soapstone carving.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2",
+          "quote": "6.2. Soapstone Craft-II: Carving Craft"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 6.2",
+          "quote": "Approximately 400 skilled and semi-skilled craftspeople of Dhakotha area are involved in this craft."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Abstract",
+          "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Rajasthan",
+      "kind": "STATE",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C004",
+        "C106"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Jaipur",
+      "kind": "TOWN",
+      "district": "Jaipur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C105",
+        "C070",
+        "C106"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Jodhpur",
+      "kind": "TOWN",
+      "district": "Jodhpur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C106"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Jaisalmer",
+      "kind": "TOWN",
+      "district": "Jaisalmer",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C107",
+        "C106",
+        "C141"
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Jaisalmer",
+      "kind": "DISTRICT",
+      "district": "Jaisalmer",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C075"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Dungarpur",
+      "kind": "TOWN",
+      "district": "Dungarpur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C106"
+      ]
+    },
+    {
+      "id": "L07",
+      "name": "Dungarpur",
+      "kind": "DISTRICT",
+      "district": "Dungarpur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C071"
+      ]
+    },
+    {
+      "id": "L08",
+      "name": "Ajmer",
+      "kind": "TOWN",
+      "district": "Ajmer",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "L09",
+      "name": "Udaipur",
+      "kind": "TOWN",
+      "district": "Udaipur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "L10",
+      "name": "Jodhpur",
+      "kind": "TOWN",
+      "district": "Jodhpur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "L11",
+      "name": "Bikaner",
+      "kind": "TOWN",
+      "district": "Bikaner",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "L12",
+      "name": "Ajmer",
+      "kind": "DISTRICT",
+      "district": "Ajmer",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C069"
+      ]
+    },
+    {
+      "id": "L13",
+      "name": "Barmer",
+      "kind": "DISTRICT",
+      "district": "Barmer",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C069"
+      ]
+    },
+    {
+      "id": "L14",
+      "name": "Karauli",
+      "kind": "DISTRICT",
+      "district": "Karauli",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C068"
+      ]
+    },
+    {
+      "id": "L15",
+      "name": "Makrana",
+      "kind": "TOWN",
+      "district": "Nagaur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C067",
+        "C076"
+      ]
+    },
+    {
+      "id": "L16",
+      "name": "Sawai Madhopur",
+      "kind": "DISTRICT",
+      "district": "Sawai Madhopur",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C072"
+      ]
+    },
+    {
+      "id": "L17",
+      "name": "Bhilwara",
+      "kind": "DISTRICT",
+      "district": "Bhilwara",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C073"
+      ]
+    },
+    {
+      "id": "L18",
+      "name": "Pindwara",
+      "kind": "TOWN",
+      "district": "Sirohi",
+      "state": "Rajasthan",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C109"
+      ]
+    },
+    {
+      "id": "L19",
+      "name": "Rajasthan",
+      "kind": "STATE",
+      "country": "India",
+      "role": "MIGRATED_FROM",
+      "claimIds": [
+        "C022",
+        "C019"
+      ]
+    },
+    {
+      "id": "L20",
+      "name": "Patharkatti",
+      "kind": "VILLAGE",
+      "district": "Gaya",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C110"
+      ]
+    },
+    {
+      "id": "L21",
+      "name": "Patharkatti",
+      "kind": "VILLAGE",
+      "district": "Gaya",
+      "state": "Bihar",
+      "country": "India",
+      "role": "MIGRATED_TO",
+      "claimIds": [
+        "C022",
+        "C138"
+      ]
+    },
+    {
+      "id": "L22",
+      "name": "Gaya",
+      "kind": "TOWN",
+      "district": "Gaya",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C114"
+      ]
+    },
+    {
+      "id": "L23",
+      "name": "Nalanda",
+      "kind": "DISTRICT",
+      "district": "Nalanda",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C111"
+      ]
+    },
+    {
+      "id": "L24",
+      "name": "Kaimur",
+      "kind": "DISTRICT",
+      "district": "Kaimur (Bhabua)",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C111"
+      ]
+    },
+    {
+      "id": "L25",
+      "name": "Patna",
+      "kind": "DISTRICT",
+      "district": "Patna",
+      "state": "Bihar",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C111"
+      ]
+    },
+    {
+      "id": "L26",
+      "name": "Jahanabad",
+      "kind": "DISTRICT",
+      "district": "Jehanabad",
+      "state": "Bihar",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C010"
+      ]
+    },
+    {
+      "id": "L27",
+      "name": "Dhakotha",
+      "kind": "VILLAGE",
+      "district": "Kendujhar",
+      "state": "Odisha",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C112",
+        "C119"
+      ]
+    },
+    {
+      "id": "L28",
+      "name": "Kendujhar",
+      "kind": "DISTRICT",
+      "district": "Kendujhar",
+      "state": "Odisha",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C065"
+      ]
+    },
+    {
+      "id": "L29",
+      "name": "Gujarat",
+      "kind": "STATE",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C113",
+        "C136"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Gaud Brahmins",
+      "claimIds": [
+        "C022",
+        "C018"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "COMMUNITY",
+      "name": "Sompura",
+      "claimIds": [
+        "C028",
+        "C134",
+        "C135",
+        "C136"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Upendra Maharathi Shilp Anusandhan Sansthan",
+      "localNames": [
+        "UMSAS"
+      ],
+      "claimIds": [
+        "C023"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "COMMUNITY",
+      "name": "Shilpis and sthapatis",
+      "localNames": [
+        "shilpi",
+        "sthapati"
+      ],
+      "claimIds": [
+        "C025",
+        "C026",
+        "C060"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Rough cutting of the soapstone block (Dhakotha)",
+      "stageType": "SHAPE",
+      "order": 1,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C052"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C046"
+        },
+        {
+          "toolId": "T04",
+          "claimId": "C046"
+        }
+      ],
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Edge cutting with an electric stone cutter (Dhakotha)",
+      "stageType": "SHAPE",
+      "order": 2,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C052"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T09",
+          "claimId": "C047"
+        }
+      ],
+      "claimIds": [
+        "C047"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Drawing the design on paper and on the block (Dhakotha)",
+      "stageType": "PREP",
+      "order": 3,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M20",
+          "claimId": "C048"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T15",
+          "claimId": "C048"
+        }
+      ],
+      "claimIds": [
+        "C048"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Etching the drawn lines (Dhakotha)",
+      "stageType": "CARVE",
+      "order": 4,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C049"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C049"
+        }
+      ],
+      "claimIds": [
+        "C049"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Chiselling and fine carving (Dhakotha)",
+      "stageType": "CARVE",
+      "order": 5,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C052"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C050"
+        },
+        {
+          "toolId": "T16",
+          "claimId": "C142"
+        }
+      ],
+      "claimIds": [
+        "C050",
+        "C142"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Sanding to the final finish (Dhakotha)",
+      "stageType": "FINISH",
+      "order": 6,
+      "orderClaimId": "C045",
+      "materials": [
+        {
+          "materialId": "M17",
+          "claimId": "C051"
+        }
+      ],
+      "claimIds": [
+        "C051"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Quarrying and splitting sandstone (Jaisalmer)",
+      "stageType": "PREP",
+      "materials": [
+        {
+          "materialId": "M06",
+          "claimId": "C040"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T08",
+          "claimId": "C040"
+        }
+      ],
+      "claimIds": [
+        "C040"
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "Tracing the design onto the slab (Jaisalmer)",
+      "stageType": "PREP",
+      "materials": [
+        {
+          "materialId": "M21",
+          "claimId": "C043"
+        }
+      ],
+      "claimIds": [
+        "C043"
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "Hand carving with hammer and chisels",
+      "stageType": "CARVE",
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C042"
+        },
+        {
+          "toolId": "T04",
+          "claimId": "C042"
+        }
+      ],
+      "claimIds": [
+        "C042",
+        "C057",
+        "C141"
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "Machine cutting and carving",
+      "stageType": "CARVE",
+      "materials": [
+        {
+          "materialId": "M19",
+          "claimId": "C041"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T12",
+          "claimId": "C041"
+        },
+        {
+          "toolId": "T11",
+          "claimId": "C044"
+        },
+        {
+          "toolId": "T10",
+          "claimId": "C131"
+        }
+      ],
+      "claimIds": [
+        "C041",
+        "C044",
+        "C056",
+        "C131"
+      ]
+    },
+    {
+      "id": "P11",
+      "name": "Rubbing with oil and wax (Patharkatti)",
+      "stageType": "FINISH",
+      "materials": [
+        {
+          "materialId": "M18",
+          "claimId": "C058"
+        }
+      ],
+      "claimIds": [
+        "C058"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Soapstone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C062",
+        "C063",
+        "C064",
+        "C065",
+        "C049",
+        "C052"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Granite",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C089",
+        "C066"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Marble",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C096",
+        "C097",
+        "C098",
+        "C070"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Makrana marble",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C076",
+        "C077",
+        "C078",
+        "C079",
+        "C080",
+        "C081",
+        "C067",
+        "C099"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Sandstone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C068",
+        "C117"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Jaisalmer yellow sandstone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C075",
+        "C040"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Schist",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C005"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Dungarpur soft stone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C071"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Tamra stone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "localNames": [
+        "tamra"
+      ],
+      "claimIds": [
+        "C072"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Bhilwara soft stone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C073"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Patharkatti black stone",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C091",
+        "C092",
+        "C058"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Yellow marble",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C069"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Sandpaper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C051"
+      ]
+    },
+    {
+      "id": "M18",
+      "name": "Oil and wax",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C058"
+      ]
+    },
+    {
+      "id": "M19",
+      "name": "Water",
+      "kind": "WATER",
+      "role": "OTHER",
+      "claimIds": [
+        "C041"
+      ]
+    },
+    {
+      "id": "M20",
+      "name": "Plain paper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C048"
+      ]
+    },
+    {
+      "id": "M21",
+      "name": "Butter paper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C043"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T03",
+      "name": "Chisel",
+      "claimIds": [
+        "C042",
+        "C052",
+        "C057",
+        "C046",
+        "C049",
+        "C050",
+        "C141"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Hammer",
+      "claimIds": [
+        "C042",
+        "C046",
+        "C057",
+        "C141"
+      ]
+    },
+    {
+      "id": "T08",
+      "name": "Iron wedge",
+      "claimIds": [
+        "C040"
+      ]
+    },
+    {
+      "id": "T09",
+      "name": "Hand-operated electric stone cutter",
+      "claimIds": [
+        "C047"
+      ]
+    },
+    {
+      "id": "T10",
+      "name": "Angle grinder",
+      "claimIds": [
+        "C131",
+        "C033"
+      ]
+    },
+    {
+      "id": "T11",
+      "name": "Electric carving tool",
+      "claimIds": [
+        "C044"
+      ]
+    },
+    {
+      "id": "T12",
+      "name": "Hydraulic cutting blade",
+      "claimIds": [
+        "C041"
+      ]
+    },
+    {
+      "id": "T13",
+      "name": "Wooden support block",
+      "localNames": [
+        "Lakdi Pidha"
+      ],
+      "claimIds": [
+        "C054",
+        "C052"
+      ]
+    },
+    {
+      "id": "T14",
+      "name": "Jute cushion",
+      "localNames": [
+        "Jute Chatti"
+      ],
+      "claimIds": [
+        "C053",
+        "C052"
+      ]
+    },
+    {
+      "id": "T15",
+      "name": "HB pencil",
+      "claimIds": [
+        "C048"
+      ]
+    },
+    {
+      "id": "T16",
+      "name": "Filer",
+      "claimIds": [
+        "C142"
+      ]
+    },
+    {
+      "id": "T17",
+      "name": "Mallet",
+      "claimIds": [
+        "C052"
+      ]
+    }
+  ],
+  "reactions": [],
+  "environment": [
+    {
+      "factor": "LANDFORM",
+      "placeId": "L01",
+      "claimIds": [
+        "C066"
+      ]
+    },
+    {
+      "factor": "OTHER",
+      "placeId": "L28",
+      "claimIds": [
+        "C065"
+      ]
+    }
+  ],
+  "market": {
+    "workforce": [
+      {
+        "claimId": "C143",
+        "year": 2010
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "jali, jaali",
+      "meaning": "Latticework; a lattice-worked screen carved in stone.",
+      "claimIds": [
+        "C115",
+        "C116",
+        "C118"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "shilpi",
+      "meaning": "A sculptor; in the sthapati tradition, one who works on sculptural pieces.",
+      "claimIds": [
+        "C025",
+        "C027"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "takshaka",
+      "meaning": "One who works on architectural stones.",
+      "claimIds": [
+        "C027"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "netron meelanam",
+      "meaning": "The chiselling of the eye, which opens the eye of the deity image before installation.",
+      "claimIds": [
+        "C061"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "kharal",
+      "meaning": "An oblong boat-shaped stone vessel, a mortar used as a medicine grinder.",
+      "claimIds": [
+        "C121"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "Pattharkatti",
+      "meaning": "Cut-stone.",
+      "claimIds": [
+        "C120"
+      ]
+    },
+    {
+      "id": "W09",
+      "term": "pathar gadhai mazdoor",
+      "meaning": "Stone carvers; a stone-carving labourer in Pindwara.",
+      "claimIds": [
+        "C132"
+      ]
+    },
+    {
+      "id": "W10",
+      "term": "chhajja",
+      "meaning": "An overhang.",
+      "claimIds": [
+        "C118"
+      ]
+    },
+    {
+      "id": "W11",
+      "term": "sthapati",
+      "meaning": "A sculptor-architect-builder.",
+      "claimIds": [
+        "C025"
+      ]
+    },
+    {
+      "id": "W12",
+      "term": "jharokha",
+      "meaning": "A window.",
+      "claimIds": [
+        "C118"
+      ]
+    },
+    {
+      "id": "W13",
+      "term": "chakla",
+      "meaning": "A platform for rolling flatbread.",
+      "claimIds": [
+        "C118"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C018",
+        "C019",
+        "C020",
+        "C021",
+        "C138",
+        "C139",
+        "C140"
+      ],
+      "about": "How old stone carving at Patharkatti is, when its carvers came from Rajasthan, and how large a part Queen Ahilyabai played"
+    },
+    {
+      "claimIds": [
+        "C079",
+        "C080"
+      ],
+      "about": "The open porosity of fresh Makrana marble in the same study"
+    },
+    {
+      "claimIds": [
+        "C032",
+        "C033",
+        "C056",
+        "C125"
+      ],
+      "about": "Whether mechanised tools are used sparsely or widely in Indian stone carving"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Does marble decay begin with thermal variations enlarging its pores?",
+      "claimIds": [
+        "C101"
+      ],
+      "settledBy": "The authors say the hypothesis needs further testing from other researchers."
+    },
+    {
+      "id": "O04",
+      "question": "How old is stone carving at Patharkatti, and how did its carvers come to settle there?",
+      "claimIds": [
+        "C018",
+        "C019",
+        "C020",
+        "C021",
+        "C138",
+        "C139",
+        "C140",
+        "C024"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Stone_activity_in_Jaipur.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Stone_activity_in_Jaipur.jpg",
+      "author": "Davide Mauro",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A roadside stone-carving workshop in Jaipur with white stone figures and blocks",
+      "claimIds": [
+        "C070"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/Jali_screen%2C_northern_India%2C_sandstone%2C_17th_century%2C_San_Diego_Museum_of_Art.JPG",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Jali_screen,_northern_India,_sandstone,_17th_century,_San_Diego_Museum_of_Art.JPG",
+      "author": "Wmpearl",
+      "licence": "CC0 1.0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "caption": "A 17th-century red sandstone jali screen from northern India, San Diego Museum of Art",
+      "claimIds": [
+        "C116"
+      ]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Jaisalmer%2C_Nathmal_%282002%29_06.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Jaisalmer,_Nathmal_(2002)_06.jpg",
+      "author": "LBM1948",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Carved stone facade with latticed windows, Nathmal Haveli, Jaisalmer",
+      "claimIds": [
+        "C107"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Haryana's culture department calls India's stone-carving tradition one of the richest in the world, its classical form closely linked with the architecture of temples such as Puri and Khajuraho.",
+        "claimIds": [
+          "C001",
+          "C002"
+        ]
+      },
+      {
+        "text": "Granite, sandstone and schist are the dominant stones of Pakistan and India, while white marble is carved at Jaipur, hard black granite at Patharkatti and soapstone at Dhakotha.",
+        "claimIds": [
+          "C005",
+          "C070",
+          "C091",
+          "C119"
+        ]
+      },
+      {
+        "text": "Centres the sources name include Jaipur, Jaisalmer, Dungarpur and Pindwara in Rajasthan, Patharkatti in Gaya district of Bihar and Dhakotha in Kendujhar district of Odisha.",
+        "claimIds": [
+          "C106",
+          "C109",
+          "C110",
+          "C112"
+        ]
+      },
+      {
+        "text": "Motorized carving instruments generate excessive dust, the authors of a sculpting study write, and health camps held in Pindwara since 2016 found silicosis in 35% of the workers they screened.",
+        "claimIds": [
+          "C125",
+          "C128"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Dominant stones",
+        "value": "Granite, sandstone and schist; also marble and soapstone",
+        "claimIds": [
+          "C005",
+          "C070",
+          "C062"
+        ]
+      },
+      {
+        "label": "Centres",
+        "value": "Jaipur, Jaisalmer, Dungarpur and Pindwara (Rajasthan); Patharkatti (Gaya, Bihar); Dhakotha (Kendujhar, Odisha)",
+        "claimIds": [
+          "C106",
+          "C109",
+          "C110",
+          "C112"
+        ]
+      },
+      {
+        "label": "Communities",
+        "value": "Sompura; Gaud Brahmins of Patharkatti",
+        "claimIds": [
+          "C028",
+          "C022"
+        ]
+      },
+      {
+        "label": "Hand tools",
+        "value": "Hammers and chisels; at Dhakotha also mallets, filers, a Lakdi Pidha support and a Jute Chatti cushion",
+        "claimIds": [
+          "C042",
+          "C057",
+          "C052",
+          "C142"
+        ]
+      },
+      {
+        "label": "Guilds",
+        "value": "Since the 7th century BC, according to Haryana's culture department",
+        "claimIds": [
+          "C006"
+        ]
+      },
+      {
+        "label": "Stages at Dhakotha",
+        "value": "12, from raw soapstone to final products",
+        "claimIds": [
+          "C045"
+        ]
+      },
+      {
+        "label": "Marble weathering",
+        "value": "Black crusts from acid rain, particulate deposits and iron staining",
+        "claimIds": [
+          "C097",
+          "C098"
+        ]
+      },
+      {
+        "label": "Health",
+        "value": "Silicosis from carving dust; found in 35% of Pindwara workers screened in camps held since 2016",
+        "claimIds": [
+          "C122",
+          "C128"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Guilds of masons and stone carvers have existed in India since the 7th century BC, according to Haryana's culture department, and the skills were handed down as family lore from father to son.",
+            "claimIds": [
+              "C006",
+              "C007"
+            ]
+          },
+          {
+            "text": "Stone carving in Bihar reached its zenith in the Mauryan period, whose finest examples are the rock-cut caves of the Barabar and Nagarjuni Hills in Jahanabad district.",
+            "claimIds": [
+              "C009",
+              "C010"
+            ]
+          },
+          {
+            "text": "India Currents writes that Gujarat's stonework evolved dramatically under Solanki rule (942-1304) and during the Sultanate reign (1403-1573), and in the Solanki period Jain temples stood apart from Hindu ones by heavy use of marble.",
+            "claimIds": [
+              "C012",
+              "C013"
+            ]
+          },
+          {
+            "text": "Gujarat's Sultanate rulers built mosques and tombs on Islamic principles but engaged local stone craftsmen, long masters of Hindu and Jain temple architecture, for the embellishments.",
+            "claimIds": [
+              "C014"
+            ]
+          },
+          {
+            "text": "Sources differ on when Patharkatti's carvers came: Folkartopedia says Gaud Brahmins built the Vishnupad Temple some 400 years ago, the Free Press Journal that Queen Ahilyabai Holkar brought craftsmen from Rajasthan in 1787, and a craftsman that his Jaipur ancestors were employed for the temple work in 1787.",
+            "claimIds": [
+              "C018",
+              "C019",
+              "C138"
+            ]
+          },
+          {
+            "text": "The Free Press Journal calls it a 300-year-old craft, while The Better India dates the Vishnupada temple to the 8th century, says Ahilyabai only played a small role in the migration, and quotes the UMSAS director that black-stone sculptures in Bihar are much older than the temple.",
+            "claimIds": [
+              "C020",
+              "C140",
+              "C139",
+              "C021"
+            ]
+          },
+          {
+            "text": "In the 1960s Upendra Maharathi Shilp Anusandhan Sansthan started a training centre at Patharkatti to bring other communities into a craft limited to Gaud Brahmins.",
+            "claimIds": [
+              "C023",
+              "C022"
+            ]
+          },
+          {
+            "text": "The 2010-2011 Dhakotha study describes soapstone carving there as a comparatively new craft with around 55-60 years of existence.",
+            "claimIds": [
+              "C017"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "In stone carving generally, Rockwell calls the point chisel the workhorse of carving, cutting away at least 85% of the stone removed in carving a statue.",
+            "claimIds": [
+              "C029"
+            ]
+          },
+          {
+            "text": "Sources differ on machines: The Art of Making in Antiquity essay says granite carvers in India still use the same basic range of tools as their predecessors and mechanised tools are still only used sparsely, while a Rajasthan study says almost every other firm started using Chinese machinery in and after 2005.",
+            "claimIds": [
+              "C032",
+              "C033",
+              "C056"
+            ]
+          },
+          {
+            "text": "The same essay says metal carving tools need continual sharpening, and that in India teams of twenty carvers are routinely accompanied by as many as three blacksmiths.",
+            "claimIds": [
+              "C031"
+            ]
+          },
+          {
+            "text": "At Dhakotha, soapstone carving is shown in 12 stages, among them rough cutting with chisel and hammer, edge cutting with an electric stone cutter, drawing the design, etching its lines, chiselling, fine carving and sanding.",
+            "claimIds": [
+              "C045",
+              "C046",
+              "C047",
+              "C048",
+              "C049",
+              "C050",
+              "C051"
+            ]
+          },
+          {
+            "text": "Dhakotha's carvers commonly use chisels with many cutting-tip shapes, hammers, mallets, filers, a Lakdi Pidha support and a Jute Chatti cushion.",
+            "claimIds": [
+              "C052",
+              "C142"
+            ]
+          },
+          {
+            "text": "In Jaisalmer a design traced on butter paper guides the artisan, the form is often carved with an electric tool, and the finer detailing is done with diamond-tipped chisels.",
+            "claimIds": [
+              "C043",
+              "C044",
+              "C042"
+            ]
+          },
+          {
+            "text": "Asia InCH lists hammers, thin, thick and fine chisels, a brush and a metal stencil among the tools of Jaisalmer's stone carving.",
+            "claimIds": [
+              "C141"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Soapstone is a metamorphic rock whose high talc content makes it soft and craft-friendly, and Dhakotha's craftsmen use blackish grey, pink, orange, light green and dark green soapstone.",
+            "claimIds": [
+              "C062",
+              "C064"
+            ]
+          },
+          {
+            "text": "Makrana marble, a calcite marble from Nagaur district of Rajasthan, was mined for the Taj Mahal and is a highly prized ornamental and masonry stone.",
+            "claimIds": [
+              "C076",
+              "C067",
+              "C081"
+            ]
+          },
+          {
+            "text": "Rupbas and Karauli still produce the red sandstone used by the Mughals, while Jaisalmer's famous yellow sandstone comes from mines around the city.",
+            "claimIds": [
+              "C068",
+              "C075"
+            ]
+          },
+          {
+            "text": "The soft stone of Dungarpur turns black when oiled, and a Patharkatti craftsman said his stone turns black once oil and wax are rubbed on it.",
+            "claimIds": [
+              "C071",
+              "C058"
+            ]
+          },
+          {
+            "text": "The specialty of Patharkatti's artisans is hard black granite, though they also work on marble, sandstone and palewa.",
+            "claimIds": [
+              "C091"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOLOGY",
+        "sentences": [
+          {
+            "text": "Rajasthan is a geologically old land rich in hard rocks such as granites, marbles, quartzite and slates.",
+            "claimIds": [
+              "C066"
+            ]
+          },
+          {
+            "text": "White Makrana marble has interlocking recrystallized calcite grains that give it a high polish.",
+            "claimIds": [
+              "C077"
+            ]
+          },
+          {
+            "text": "One part of a study gives fresh Makrana marble an open porosity of 0.1-0.3%, another part 0.2% to 0.5%.",
+            "claimIds": [
+              "C079",
+              "C080"
+            ]
+          },
+          {
+            "text": "Undulation and pitting on the marble floors of the Taj Mahal and Jaswant Thada are attributed to tourist activity, acid rain and air pollution.",
+            "claimIds": [
+              "C099"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "Rajasthan continues to be one of the major centres of stone carving in India, according to Haryana's culture department, and Jaipur is the state's centre of marble carving.",
+            "claimIds": [
+              "C004",
+              "C105"
+            ]
+          },
+          {
+            "text": "Stone carving is practised widely in Jaisalmer, and Pindwara in Sirohi district is called the main hub of India's temple-building industry.",
+            "claimIds": [
+              "C107",
+              "C109"
+            ]
+          },
+          {
+            "text": "Patharkatti in Gaya district is one of the major centres of stone craft in Bihar, and Bihar Tourism names Nalanda, Kaimur and Patna as the other centres.",
+            "claimIds": [
+              "C110",
+              "C111"
+            ]
+          },
+          {
+            "text": "Dhakotha, a village in Kendujhar district of Odisha on the bank of the Baitarini River, has several soapstone mines around it.",
+            "claimIds": [
+              "C112",
+              "C065"
+            ]
+          },
+          {
+            "text": "India Currents writes that stone carving is still a vibrant profession in Gujarat because temple building has never ceased there.",
+            "claimIds": [
+              "C113"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Rajasthan's stone carvers are noted for jali, or latticework, and jali screens of sandstone and marble let women in purdah watch the court without being seen.",
+            "claimIds": [
+              "C115",
+              "C116"
+            ]
+          },
+          {
+            "text": "Jaisalmer's carvers make overhangs or chhajja, windows or jharokha, lattice screens and household items such as the chakla.",
+            "claimIds": [
+              "C118"
+            ]
+          },
+          {
+            "text": "Rajasthan's sculptors of deity images are required to follow the Shilpa Shastra, an ancient Hindu treatise on sculpture and architecture.",
+            "claimIds": [
+              "C059"
+            ]
+          },
+          {
+            "text": "In the shilpa tradition Himalayan Academy describes, stones are classed by their sound as male, female or neuter, and the Shastras prescribe male stones for male images.",
+            "claimIds": [
+              "C090"
+            ]
+          },
+          {
+            "text": "Pattharkatti's artisans transform rough black granite into statues, and the kharal, an oblong boat-shaped stone vessel, is used to prepare medicines and masalas.",
+            "claimIds": [
+              "C120",
+              "C121"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "HEALTH",
+        "sentences": [
+          {
+            "text": "Silicosis is caused by long-term inhalation of inorganic dust with high concentrations of free crystalline silica.",
+            "claimIds": [
+              "C122"
+            ]
+          },
+          {
+            "text": "The authors of a western Rajasthan sculpting study write that motorized carving instruments generate excessive dust in a short time, and none of the sculpting units in that study used wet drilling.",
+            "claimIds": [
+              "C125",
+              "C124",
+              "C123"
+            ]
+          },
+          {
+            "text": "Of 114 silicosis patients from those sculpting units, with data collected from January 2021 to April 2023, 109 used no personal protective equipment at work.",
+            "claimIds": [
+              "C123"
+            ]
+          },
+          {
+            "text": "Health camps held in Pindwara since 2016 found silicosis in 35% of the screened workers, and the median age of those diagnosed was just 34 years.",
+            "claimIds": [
+              "C128",
+              "C129"
+            ]
+          },
+          {
+            "text": "Silicosis has no cure and prevention is the only option, and ventilation, wet drilling, dust control equipment and respirators are recommended to cut exposure to silica dust.",
+            "claimIds": [
+              "C127"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Gaya Pattharkatti Stone Craft, GI application 891 filed on 12 May 2022, is registered, with a certificate of registration dated 27 March 2026.",
+            "claimIds": [
+              "C137"
+            ]
+          },
+          {
+            "text": "Jha's 2010-2011 study puts approximately 400 skilled and semi-skilled craftspeople of the Dhakotha area in soapstone carving.",
+            "claimIds": [
+              "C143"
+            ]
+          },
+          {
+            "text": "Village Square reports that the Sompura community historically carved temple stone by hand, and that after grinders and cutters arrived about two or three decades back their role shifted to designing and advising religious trusts.",
+            "claimIds": [
+              "C134"
+            ]
+          },
+          {
+            "text": "A 2026 working paper reports that Rajasthan's Silicosis Grant Disbursement Portal lets workers claim a relief or compensation amount of ₹ 5 lakhs in phases.",
+            "claimIds": [
+              "C133"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,3100 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Paper-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "168ebf091af8250a3ad15a5321fcb1735365530ef4e6af365bdf5de0af3e74fc",
+  "checkedAt": "2026-11-18T11:00:15.746131Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.knhpi.org.in/hand-made-papers.php",
+      "route": "LIVE",
+      "readUrl": "https://www.knhpi.org.in/hand-made-papers.php",
+      "finalUrl": "https://www.knhpi.org.in/hand-made-papers.php",
+      "fetchedAt": "2026-11-18T10:55:30.669306Z",
+      "contentType": "text/html",
+      "textSha256": "53541836c6e8d2fcf270529c988a0d12f96b98ce538ad1c5bc8843f98e347cec",
+      "characters": 2876,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://www.knhpi.org.in/about-knphi.php",
+      "route": "LIVE",
+      "readUrl": "https://www.knhpi.org.in/about-knphi.php",
+      "finalUrl": "https://www.knhpi.org.in/about-knphi.php",
+      "fetchedAt": "2026-11-18T10:55:33.685547Z",
+      "contentType": "text/html",
+      "textSha256": "95db0ce43e1fa1657e1ae7f3cb866bde45a29fe8976809cf8870952bd87fd7c8",
+      "characters": 1447,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.knhpi.org.in/images/activity/FINAL-ANNUAL-REPORT-2015-16.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.knhpi.org.in/images/activity/FINAL-ANNUAL-REPORT-2015-16.pdf",
+      "finalUrl": "https://www.knhpi.org.in/images/activity/FINAL-ANNUAL-REPORT-2015-16.pdf",
+      "fetchedAt": "2026-11-18T10:59:45.102791Z",
+      "contentType": "application/pdf",
+      "textSha256": "fb5a495735df631a71a5d3855c5c9e89862ff00fbba2185eedbc2d1303634287",
+      "characters": 160388,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.frontiersin.org/articles/10.3389/fpls.2022.831589/full",
+      "route": "LIVE",
+      "readUrl": "https://www.frontiersin.org/articles/10.3389/fpls.2022.831589/full",
+      "finalUrl": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2022.831589/full",
+      "fetchedAt": "2026-11-18T10:55:29.570970Z",
+      "contentType": "text/html",
+      "textSha256": "d67925ffb8a76f922820dcecea18919d277d3197b420d993de3a58f23c43785a",
+      "characters": 48929,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.fdr.uni-hamburg.de/record/14090/files/comst-bulletin-9-025-058.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fdr.uni-hamburg.de/record/14090/files/comst-bulletin-9-025-058.pdf",
+      "finalUrl": "https://fdr-prod.s3-uhh.lzs.uni-hamburg.de/fdr-www/e2/92/89da-2e9d-49d8-a103-3274e479218d/data?response-content-type=application%2Foctet-stream&response-content-disposition=attachment%3B%20filename%3Dcomst-bulletin-9-025-058.pdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=136a984be63122011bd7%2F20261118%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261118T105529Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=5b7524ac9156afd8d2e44e013f558b87336b7cbb7e0eea53b926479667688b40",
+      "fetchedAt": "2026-11-18T10:55:32.214756Z",
+      "contentType": "application/pdf",
+      "textSha256": "b2939c6afe514779962cc689f6fef178438333e7460fba768215e74618990d95",
+      "characters": 70445,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.ezcc-india.org/pdf/book/sanjhi.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250520190025id_/https://www.ezcc-india.org/pdf/book/sanjhi.pdf",
+      "finalUrl": "https://web.archive.org/web/20250520190025id_/https://www.ezcc-india.org/pdf/book/sanjhi.pdf",
+      "fetchedAt": "2026-11-18T10:55:37.241744Z",
+      "contentType": "application/pdf",
+      "textSha256": "a8d656d608ac3cd422f13a36e7abb718d845d6c1f0b0c2017acea59dee194016",
+      "characters": 17517,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://researchjournal.co.in/upload/assignments/4_197-200.pdf",
+      "route": "LIVE",
+      "readUrl": "https://researchjournal.co.in/upload/assignments/4_197-200.pdf",
+      "finalUrl": "https://researchjournal.co.in/upload/assignments/4_197-200.pdf",
+      "fetchedAt": "2026-11-18T10:55:31.572039Z",
+      "contentType": "application/pdf",
+      "textSha256": "c7e405c6e4e23ee240a65af65a893d47c77fe78c04e944ba7e66b8691290b6a2",
+      "characters": 8346,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://imp-art.org/articles/sanjhi/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/sanjhi/",
+      "finalUrl": "https://imp-art.org/articles/sanjhi/",
+      "fetchedAt": "2026-11-18T10:55:33.399092Z",
+      "contentType": "text/html",
+      "textSha256": "d91c09db883cf7218c440f39862553560e2c7464cbf76e9b8ba83d9ad33ec4d4",
+      "characters": 5595,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://imp-art.org/articles/kari-kalamdani/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kari-kalamdani/",
+      "finalUrl": "https://imp-art.org/articles/kari-kalamdani/",
+      "fetchedAt": "2026-11-18T10:55:35.767251Z",
+      "contentType": "text/html",
+      "textSha256": "e0ee68437033a8b8f0f97a0728c662f59018aaf6f2d7bbf328a0dfb9c65e0236",
+      "characters": 6365,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://imp-art.org/definitions/sanganeri-paper/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/sanganeri-paper/",
+      "finalUrl": "https://imp-art.org/definitions/sanganeri-paper/",
+      "fetchedAt": "2026-11-18T10:55:38.233108Z",
+      "contentType": "text/html",
+      "textSha256": "fea0cc2d71a68f193b0f463345e7f7934deac472e6880f6ad92faf9c667d4afc",
+      "characters": 763,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/definitions/papier-mache/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/papier-mache/",
+      "finalUrl": "https://imp-art.org/definitions/papier-mache/",
+      "fetchedAt": "2026-11-18T10:55:41.124039Z",
+      "contentType": "text/html",
+      "textSha256": "e28ec3809f2aa0a788a77d232fb525233b410125e5edf90e7930462a235a7947",
+      "characters": 674,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://imp-art.org/definitions/khadi-paper/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/khadi-paper/",
+      "finalUrl": "https://imp-art.org/definitions/khadi-paper/",
+      "fetchedAt": "2026-11-18T10:55:43.302962Z",
+      "contentType": "text/html",
+      "textSha256": "13f88dd1b423e87585b4f6370a66304e4f2b8ae54cbbe81daa75568bbb93a208",
+      "characters": 486,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://encyclocraftsapr.com/hand-papermaking-in-jaipur/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/hand-papermaking-in-jaipur/",
+      "finalUrl": "https://encyclocraftsapr.com/hand-papermaking-in-jaipur/",
+      "fetchedAt": "2026-11-18T10:55:36.788406Z",
+      "contentType": "text/html",
+      "textSha256": "8b7c8c0f6a94636a83bd998e1235a62c0bb779029051f1e0a24db4d6aabba434",
+      "characters": 1856,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://encyclocraftsapr.com/sanjhi-hand-cut-stencils-for-patterning/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/sanjhi-hand-cut-stencils-for-patterning/",
+      "finalUrl": "https://encyclocraftsapr.com/sanjhi-hand-cut-stencils-for-patterning/",
+      "fetchedAt": "2026-11-18T10:55:39.332898Z",
+      "contentType": "text/html",
+      "textSha256": "8307d0c0fcf42affd932e63888c137ecdd5bf1e81d81e9b322846636c7843920",
+      "characters": 1882,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://encyclocraftsapr.com/kar-i-qalamdani-the-painted-papier-mache-of-kashmir/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/kar-i-qalamdani-the-painted-papier-mache-of-kashmir/",
+      "finalUrl": "https://encyclocraftsapr.com/kar-i-qalamdani-the-painted-papier-mache-of-kashmir/",
+      "fetchedAt": "2026-11-18T10:55:41.786397Z",
+      "contentType": "text/html",
+      "textSha256": "01a96034e8600dbf770de52a84d7c142d9d1dc539ab401c902494f28daac8967",
+      "characters": 1789,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.sahapedia.org/papier-mache-art-kashmir-photoessay",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/papier-mache-art-kashmir-photoessay",
+      "finalUrl": "https://www.sahapedia.org/papier-mache-art-kashmir-photoessay",
+      "fetchedAt": "2026-11-18T10:55:40.610150Z",
+      "contentType": "text/html",
+      "textSha256": "f1e1743c4843ef866b4898126ab90bc69926ea4804cc5838f7e52a5c069d692c",
+      "characters": 2591,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://globalinch.org/craft/papier-machekar-i-qalamdani-of-kashmir/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/papier-machekar-i-qalamdani-of-kashmir/",
+      "finalUrl": "https://globalinch.org/craft/papier-machekar-i-qalamdani-of-kashmir/",
+      "fetchedAt": "2026-11-18T10:55:44.736479Z",
+      "contentType": "text/html",
+      "textSha256": "5b02dcf877c97a1da9842f5e109aa97629de628c9f323644784321949e6ce225",
+      "characters": 9003,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://globalinch.org/craft/paper-papier-mache/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/paper-papier-mache/",
+      "finalUrl": "https://globalinch.org/craft/paper-papier-mache/",
+      "fetchedAt": "2026-11-18T10:55:46.478568Z",
+      "contentType": "text/html",
+      "textSha256": "634ee5a8c779d77d2a5915abcf83e0d0041d1875ededce4ca2952da738cf3378",
+      "characters": 567,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://globalinch.org/craft/handmade-paper-of-rajasthan/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/handmade-paper-of-rajasthan/",
+      "finalUrl": "https://globalinch.org/craft/handmade-paper-of-rajasthan/",
+      "fetchedAt": "2026-11-18T10:55:53.487755Z",
+      "contentType": "text/html",
+      "textSha256": "464bc6a692a57ae42fa7825c5565084afb5e4c9b856369c8df3607e35ad87823",
+      "characters": 486,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://globalinch.org/craft/kapyo-che-uttarayan-and-kites/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/kapyo-che-uttarayan-and-kites/",
+      "finalUrl": "https://globalinch.org/craft/kapyo-che-uttarayan-and-kites/",
+      "fetchedAt": "2026-11-18T10:55:55.338158Z",
+      "contentType": "text/html",
+      "textSha256": "759f774d034072116ce5925244a1f69c0690945ae30d7af3f296cc93ed561549",
+      "characters": 1208,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://globalinch.org/craft/clay-papier-mache-toys-of-pondicherry/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/clay-papier-mache-toys-of-pondicherry/",
+      "finalUrl": "https://globalinch.org/craft/clay-papier-mache-toys-of-pondicherry/",
+      "fetchedAt": "2026-11-18T10:55:57.098658Z",
+      "contentType": "text/html",
+      "textSha256": "b041b726eeaaee57e46cfb8dad0254990f842f501b7a130fd2b0af5703ebe35b",
+      "characters": 1055,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://globalinch.org/craft/handmade-paper-from-kagazipura-maharashtra/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/handmade-paper-from-kagazipura-maharashtra/",
+      "finalUrl": "https://globalinch.org/craft/handmade-paper-from-kagazipura-maharashtra/",
+      "fetchedAt": "2026-11-18T10:55:58.866069Z",
+      "contentType": "text/html",
+      "textSha256": "ee7394e1001697cc99df4e244681280bc59dbe76a7ce0aad8aa7a15f8d8b0921",
+      "characters": 5406,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://globalinch.org/craft/handmade-paper-of-ahmedabad-gujarat/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/handmade-paper-of-ahmedabad-gujarat/",
+      "finalUrl": "https://globalinch.org/craft/handmade-paper-of-ahmedabad-gujarat/",
+      "fetchedAt": "2026-11-18T10:56:00.660665Z",
+      "contentType": "text/html",
+      "textSha256": "1658931b2ac65c3fa81f19f0d1af8bb2cf5c657c7936e3ccd6baef54c7a6d0a7",
+      "characters": 636,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://globalinch.org/craft/sanjhihand-cutting-of-paper-for-rangoli-of-delhi/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/sanjhihand-cutting-of-paper-for-rangoli-of-delhi/",
+      "finalUrl": "https://globalinch.org/craft/sanjhihand-cutting-of-paper-for-rangoli-of-delhi/",
+      "fetchedAt": "2026-11-18T10:56:04.476423Z",
+      "contentType": "text/html",
+      "textSha256": "6bd6664f6c93e5818670f717f44046a7ac881980ff9d09082056c64176904b3b",
+      "characters": 3250,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://globalinch.org/craft/sanjhi-hand-cutting-of-paper-for-rangoli-of-rajasthan/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/sanjhi-hand-cutting-of-paper-for-rangoli-of-rajasthan/",
+      "finalUrl": "https://globalinch.org/craft/sanjhi-hand-cutting-of-paper-for-rangoli-of-rajasthan/",
+      "fetchedAt": "2026-11-18T10:56:06.204282Z",
+      "contentType": "text/html",
+      "textSha256": "f0df5c54e5bcba0a7d97667c960d119dff4739bafff7e51bcf34a0171f434808",
+      "characters": 319,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://globalinch.org/craft/papier-mache-clay-plaster-of-paris-of-madhya-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/papier-mache-clay-plaster-of-paris-of-madhya-pradesh/",
+      "finalUrl": "https://globalinch.org/craft/papier-mache-clay-plaster-of-paris-of-madhya-pradesh/",
+      "fetchedAt": "2026-11-18T10:56:07.953167Z",
+      "contentType": "text/html",
+      "textSha256": "211cc8c25b3301e85196dc1b734028d0aeedccc8303b77fc83e0e1cc4aa32681",
+      "characters": 358,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://globalinch.org/craft/mandana-paper-machie-craft-of-rajasthan/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/mandana-paper-machie-craft-of-rajasthan/",
+      "finalUrl": "https://globalinch.org/craft/mandana-paper-machie-craft-of-rajasthan/",
+      "fetchedAt": "2026-11-18T10:56:09.705569Z",
+      "contentType": "text/html",
+      "textSha256": "aec6375f2e7860c2aa170189f82cfaf08e96f2fc222a5e133086795dc93bb4fe",
+      "characters": 844,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://globalinch.org/craft/paper-machie-of-naranpura-ahmedabad/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/paper-machie-of-naranpura-ahmedabad/",
+      "finalUrl": "https://globalinch.org/craft/paper-machie-of-naranpura-ahmedabad/",
+      "fetchedAt": "2026-11-18T10:56:11.437706Z",
+      "contentType": "text/html",
+      "textSha256": "9fe24b4b7dad48974a73087ca4c26d3a9c6b552b87651c560eab6406daa8c667",
+      "characters": 458,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://globalinch.org/craft/handmade-paper-making-of-sikkim/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/handmade-paper-making-of-sikkim/",
+      "finalUrl": "https://globalinch.org/craft/handmade-paper-making-of-sikkim/",
+      "fetchedAt": "2026-11-18T10:56:13.215510Z",
+      "contentType": "text/html",
+      "textSha256": "6cfea6eda8fb48f01e6e2f7167983eab9d4339319fb8b83091aa743cc0a7ff59",
+      "characters": 1762,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://globalinch.org/craft/paper-craft-of-gujarat/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/paper-craft-of-gujarat/",
+      "finalUrl": "https://globalinch.org/craft/paper-craft-of-gujarat/",
+      "fetchedAt": "2026-11-18T10:56:15.004626Z",
+      "contentType": "text/html",
+      "textSha256": "7d381ca36d21afebeb9b816e424a1ea5776770c131e34763614461bd95afcd0a",
+      "characters": 567,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://globalinch.org/craft/papier-mache-of-bihar/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/papier-mache-of-bihar/",
+      "finalUrl": "https://globalinch.org/craft/papier-mache-of-bihar/",
+      "fetchedAt": "2026-11-18T10:56:16.764406Z",
+      "contentType": "text/html",
+      "textSha256": "689561d0c698e077754ba43f7ec96f36d0ab8654d6a2493dcfa291831f7f06b1",
+      "characters": 475,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://globalinch.org/craft/papier-mache-of-west-bengal/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/papier-mache-of-west-bengal/",
+      "finalUrl": "https://globalinch.org/craft/papier-mache-of-west-bengal/",
+      "fetchedAt": "2026-11-18T10:56:18.519358Z",
+      "contentType": "text/html",
+      "textSha256": "8774a206417752e704f18d8a1e842a4aa0cc63977acf7597f833f9685de188a7",
+      "characters": 432,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/181",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/181",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/181",
+      "fetchedAt": "2026-11-18T10:55:42.458000Z",
+      "contentType": "text/html",
+      "textSha256": "e58b34c0062103bb24e9bdd0a1a14a6af4e78a0dba15301d79afd7c8904fd1bc",
+      "characters": 23790,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/733",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/733",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/733",
+      "fetchedAt": "2026-11-18T10:55:44.228476Z",
+      "contentType": "text/html",
+      "textSha256": "069923a02cf4b201e609389ec33df9587891a9eb229ccb1b76b9ccf261e55606",
+      "characters": 8987,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://thebetterindia.com/247143/arunachal-pradesh-mon-shugu-ancient-paper-making-technique-tawang-monpa-tribe-kvic-india-nor41",
+      "route": "LIVE",
+      "readUrl": "https://thebetterindia.com/247143/arunachal-pradesh-mon-shugu-ancient-paper-making-technique-tawang-monpa-tribe-kvic-india-nor41",
+      "finalUrl": "https://thebetterindia.com/247143/arunachal-pradesh-mon-shugu-ancient-paper-making-technique-tawang-monpa-tribe-kvic-india-nor41/",
+      "fetchedAt": "2026-11-18T10:55:45.943896Z",
+      "contentType": "text/html",
+      "textSha256": "6355995e9d059203469e25e0c89f46c53d4d00587cda0326100598b0d6007f87",
+      "characters": 9352,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://kashmirlife.net/missing-paper-trail-1272/",
+      "route": "LIVE",
+      "readUrl": "https://kashmirlife.net/missing-paper-trail-1272/",
+      "finalUrl": "https://kashmirlife.net/missing-paper-trail-1272/",
+      "fetchedAt": "2026-11-18T10:55:47.533960Z",
+      "contentType": "text/html",
+      "textSha256": "543f2f134e7012f87cf561eea2bf54918b00c35633e0bdb76f2ce3371d58c353",
+      "characters": 1898,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://www.outlooktraveller.com/experiences/heritage/all-about-sanjhi-the-gi-tagged-paper-cutting-art-from-braj",
+      "route": "LIVE",
+      "readUrl": "https://www.outlooktraveller.com/experiences/heritage/all-about-sanjhi-the-gi-tagged-paper-cutting-art-from-braj",
+      "finalUrl": "https://www.outlooktraveller.com/experiences/heritage/all-about-sanjhi-the-gi-tagged-paper-cutting-art-from-braj",
+      "fetchedAt": "2026-11-18T10:55:48.346430Z",
+      "contentType": "text/html",
+      "textSha256": "2ba20fcf17a7cfe9ce28c519d3811b2911cb86ce7098552bfad9658fc5f78a46",
+      "characters": 3924,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=50",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=50",
+      "finalUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=50",
+      "fetchedAt": "2026-11-18T10:55:48.709158Z",
+      "contentType": "text/html",
+      "textSha256": "f59db3d15ccf501d9344ebce74d019f1598640c6f2b3cb07ca8cc5977dc5fb13",
+      "characters": 855,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://invest.up.gov.in/wp-content/uploads/2023/07/7-handicrafts_010723.pdf",
+      "route": "LIVE",
+      "readUrl": "https://invest.up.gov.in/wp-content/uploads/2023/07/7-handicrafts_010723.pdf",
+      "finalUrl": "https://invest.up.gov.in/wp-content/uploads/2023/07/7-handicrafts_010723.pdf",
+      "fetchedAt": "2026-11-18T10:55:49.108100Z",
+      "contentType": "application/pdf",
+      "textSha256": "fac1a4193011360f955919cd89cef3de66106ce7122d7b5e355678c76970fde2",
+      "characters": 3412,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S40",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/202",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/202",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/202",
+      "fetchedAt": "2026-11-18T10:55:45.903811Z",
+      "contentType": "text/html",
+      "textSha256": "ab8b512c842bade1a5b63682f2383f0aaa940f167792c4eaa11caabb7bee112a",
+      "characters": 2439,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S41",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/818",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/818",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/818",
+      "fetchedAt": "2026-11-18T10:55:47.590867Z",
+      "contentType": "text/html",
+      "textSha256": "10f0c7e60856cc024dc54ff1f52190f37cd73a4d9fdbb72a656da7fa0f812285",
+      "characters": 2981,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S42",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/861",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/861",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/861",
+      "fetchedAt": "2026-11-18T10:55:49.241140Z",
+      "contentType": "text/html",
+      "textSha256": "0334f5a4ac1a69747a0007be5ad0169328ef1bc03254ac465ce3953132b8f493",
+      "characters": 1746,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S43",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1365",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1365",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1365",
+      "fetchedAt": "2026-11-18T10:55:50.847897Z",
+      "contentType": "text/html",
+      "textSha256": "a4f4b9039728c75b3cae1473a794db564822006a6260b7826fdf73e965e6f91d",
+      "characters": 1600,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S44",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2Fpdf%2FJournal_39.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2Fpdf%2FJournal_39.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2Fpdf%2FJournal_39.pdf",
+      "fetchedAt": "2026-11-18T10:55:54.659468Z",
+      "contentType": "application/pdf",
+      "textSha256": "4dcc980cf31ac486edf630ae00f753bd0ba2954a52a8c7093b709d98e5038d5c",
+      "characters": 64372,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S45",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_170%5CJournal+170.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_170%5CJournal+170.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_170%5CJournal+170.pdf",
+      "fetchedAt": "2026-11-18T10:56:00.523257Z",
+      "contentType": "application/pdf",
+      "textSha256": "7cab2a2104bb4c7b076267fa8de7ad5db71aec28e7584d70b197e57cce0f5b0e",
+      "characters": 133623,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S46",
+      "url": "https://imp-art.org/definitions/wasli/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/wasli/",
+      "finalUrl": "https://imp-art.org/definitions/wasli/",
+      "fetchedAt": "2026-11-18T10:55:45.473381Z",
+      "contentType": "text/html",
+      "textSha256": "9f3d96aaaa8c5daa7a5a8c97d5c407330c5636e1be171f5af7988bf6a4f1f26e",
+      "characters": 648,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Handmade paper is a layer of entwined fibres held together by the natural internal bonding properties of cellulose fibres by hand, sheet by sheet on moulds in suspension of fibres in water with or without sizing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S38",
+      "quote": "A sheet of paper formed by hand using a mold and deckle is known as handmade paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S11",
+      "quote": "it is a composite material made of pulped paper mixed with a glue or adhesive paste and other fibrous materials",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S11",
+      "quote": "Meaning \"chewed paper\" in French, it is a composite material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S17",
+      "quote": "Objects made of papier mache are built of paper pulp, or layers of paper pulp - hence the name papier mache or 'mashed paper'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S17",
+      "quote": "However, the craft of papier mache refers, in practice, here actually to the technique of surface decoration rather than the creation of the body of the object.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S08",
+      "quote": "An art of fine paper stencilling used to create rangoli using dry powders, flowers or crushed stone, sanjhi originated in Vrindavan and Mathura, Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S07",
+      "quote": "'Sanjhi paper cutting' is an ancient craft of paper stenciling, found in Mathura and Vrindavan in Uttar Pradesh of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S37",
+      "quote": "Sanjhi is a traditional craft of delicate paper stencilling that originated in Vrindavan and Mathura in the state of Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S06",
+      "quote": "Sanjhi or Devasthanakala is a ritualistic folk art form of Vrajadham, linked to the worship of Lord Krishna",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S06",
+      "quote": "The difference between a Sanjhi and other decorative art from the other parts of the country, such as alpana, rangoli, jothi and chita, which are also auspicious designs made during festivities, is that a Sanjhi image is deified and worshipped while the others are not.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S24",
+      "quote": "It is important to remember that all sanjhis, whether a part of the folk tradition or of the temple tradition, are made to be worshipped.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S30",
+      "quote": "India still has the largest population of hand paper makers in the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S20",
+      "quote": "Uttarayan is the most jubilant festivals in Gujarat where the entire city lights up with kites in the sky. Gujarat is the hub of paper kite craft production and manufacture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S20",
+      "quote": "Patang is the local word for a kite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S35",
+      "quote": "Called 'Mon Shugu', this fine-textured handmade paper is an integral part of Monpa history.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "The handmade paper making in India goes as far back as to the 3rd century BC.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S13",
+      "quote": "In India the earliest extant texts on paper can be dated to the tenth century, when it is believed that the art of papermaking was introduced by invading armies and settlers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S03",
+      "quote": "The handmade paper making entered into India in the 11 th Century and saw its growth to the zenith during the Moghul period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S03",
+      "quote": "for the year 2015-16 before you",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S30",
+      "quote": "India's paper tradition has an antiquity of nearly a thousand years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "This art has been passed on from one generation of craftsmen to another.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "These craftsmen are known as \"Kagzi's\". Their name is derived from the Urdu word 'kavas', which means paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "They claimed that they were originally from Turkey and from there moved to China and then finally settled in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S13",
+      "quote": "the Muslim Kagzi, or paper making community, who had travelled from Persia in the entourage of the first Mughal Emperor Babur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S19",
+      "quote": "This community accompanied Mughal emperor Babur to India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "In the 16th century the then ruler of Amber, Raja Man Singh brought the Kagzis to Sanganer and settled them on the bank of the river Saraswati, where clean water was easily available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S13",
+      "quote": "Following an invitation by the ruler of Jaipur, Maharaja Sawai Jai Singh II, the Muslim Kagzi, or paper making community, who had travelled from Persia in the entourage of the first Mughal Emperor Babur, were settled in the village of Sanganer on the outskirts of Jaipur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S19",
+      "quote": "This community accompanied Mughal emperor Babur to India and settled in Sanganer on the invitation of Maharaja Jai Singh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S10",
+      "quote": "The craft gained popularity after papermakers, known as kagzis, received patronage from Raja Man Singh II in 1728.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "In Sanganer the 'Kagzi' community is the primary owner of the handmade paper industry in the town. Their history goes back to the 14th century when the ruler was Feroze Shah Tughlaq.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S13",
+      "quote": "In Jaipur, papermaking by hand has been a continuing tradition since the seventeenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "Even in those days the royalty used handmade paper made by them for official documents, miniature paintings, calligraphy, and to make copies of the Holy Quran and to maintain account books.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "Under the British handmade paper received a serious setback as the British encouraged the import of mill-made paper from the Western countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S03",
+      "quote": "The industrialization brought the doom for this industry also during the reign of British empire.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "By the 1930s there were only a handful of people from this community practicing their traditional trade. At this point, Mahatma Gandhi provided them with the much-needed support by buying handmade paper in bulk for his Ashram and other associates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S03",
+      "quote": "The pathetic condition of handmade paper industry was tried to be salvaged during the efforts of great visionaries, the likes of Mahatma Gandhi and Prof J. C. Kumarappa.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "After independence, the Khadi and Village Industries Commission (KVIC) included handmade paper in the list of crafts to be promoted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S03",
+      "quote": "And in the independent India, the responsibility for the survival of this industry was shouldered upon Khadi & V.I. Commission.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S03",
+      "quote": "And in the year 1991, there happened to be the rise of Kumarappa National Handmade Paper Institute at Sanganer Jaipur for the revival and strengthening of Indian handmade paper industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S38",
+      "quote": "Papermaking is considered an ancient traditional Kalpi craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S38",
+      "quote": "The Kalpi handmade paper industry saw growth due to the Indian Independence Movement and Mahatma Gandhi's \"Swadesi Movement\" slogan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S45",
+      "quote": "Papermaking is very old traditional profession of Kalpi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S39",
+      "quote": "Kalpi is recognized for handmade paper manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S39",
+      "quote": "Munnalal 'Khaddari,' a Gandhian, introduced the craft in the 1940s, although its roots in Kalpi's history may extend further.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S45",
+      "quote": "Munnalal 'Khaddari', a Gandhian formally introduced the craft here in the forties, though many locals say that Kalpi's association with papermaking dates further back into history.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S04",
+      "quote": "The art of making Monpa handmade paper originated over 1,000 years ago, and historically, the tradition of making paper is linked to the Buddhist religion and its practices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S35",
+      "quote": "the potential of a 1,000-year-old paper-making craft of the Monpa tribe in Arunachal Pradesh that was languishing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S04",
+      "quote": "The art of making Monpa handmade paper has great historic and religious significance as it is the paper used for writing Buddhist scriptures and hymns in monasteries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S35",
+      "quote": "In centuries past, this fine-textured handmade paper was used for writing Buddhist scriptures and manuscripts in monasteries, among other texts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S04",
+      "quote": "However, the practice of handmade paper has almost disappeared in the last 100 years, and now, the art of making paper is limited to a few households in the Tawang region of Arunachal Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S35",
+      "quote": "In 2003, a common facility was set up in Mukto village in Tawang district, where machines like boilers, beaters and dryers were brought to speed up the different processes at play.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S35",
+      "quote": "But the traditional paper makers, comprising six to seven families in Mukto, could not come together and use it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S05",
+      "quote": "In the middle of the fifteenth century, Sultan Shah Rukh Shahi Khan of Kashmir (Zayn al-ʿAbidīn, ruled 1418-1419 and 1420-1470) invited craftsmen to set up industries and crafts in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S05",
+      "quote": "the first paper-mill, in one of the king's gardens in the northern part of Srinagar, where water was abundant",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S36",
+      "quote": "Introduced during the reign of Sultan Zain-ul Abiden in the 14th century, historians believe that paper masters from Samarkand were invited to Kashmir, settled here by offering them huge land estates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S09",
+      "quote": "In the thirteenth century, Kashmiri paper or khosur kagaz, was a sought-after commodity for its fine quality, leading to a demand for kalamdans which were decorated with kari-kalamdani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S05",
+      "quote": "provided by Victor Jacquemont, a French botanist and explorer, who visited the region in 1831",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S05",
+      "quote": "His account is the earliest and most comprehensive account of paper-making in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S05",
+      "quote": "Kashmiri paper was used as a medium for official correspondence and farmāns issued by Mughal emperors and local rulers and even as a substitute for window glass, among many other uses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S05",
+      "quote": "From the second half of the nineteenth century, paper-making in Kashmir began to decline in quality and quantity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S05",
+      "quote": "When Hunter visited Nowshera in 1937, he witnessed the final sparkles of the once-thriving industry, now in despair.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S05",
+      "quote": "He was shocked by the state of poverty of the remaining paper-makers and their struggle to compete with imported paper, cheap prison-produced and machine-made paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S36",
+      "quote": "The impact was felt as soon as paper mills in India took off. Though for some time the handmade paper manufacture continued, it eventually came to a grinding halt when demand plummeted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S22",
+      "quote": "The credit of the existence of the papermaking industry in Maharashtra in Aurangabad and Daulatabad district is given to Mohammad bin Tughlaq.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S22",
+      "quote": "Kagzi families shifted and settled near the lakes and started producing paper from their homes. This settlement was hence referred to as the Kagazipura village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S23",
+      "quote": "Ahemedabad has been a founding handmade paper centre since 1411. The 'kagadi' artisans were patronised by the Islamic rulers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S29",
+      "quote": "A hand paper unit was also set up by the Directorate of Handicrafts & Handloom, Gangtok in 1957 to further promote the eco-friendly process of converting city waste into handmade paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S06",
+      "quote": "Stenciling is an art which is believed to have begun with the Chinese and the Egyptians sometime between 2000 and 3000 BC.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S06",
+      "quote": "There is no historical evidence about when this craft first came to India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S06",
+      "quote": "It is widely assumed that travellers from China first brought this expertise to India before the advent of Muslim rule, but it was made popular by the Muslim rulers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S06",
+      "quote": "In Vrindavan, the practice of Sanjhi has evolved through three stages: folk, poetic and temple.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S08",
+      "quote": "Traditionally, sanjhi created in non-temple spaces are created by unmarried girls who offer prayers to the goddess Sanjhi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S07",
+      "quote": "These non-temple 'sanjhis' are made by the unmarried girls who offer prayer to the goddess 'Sanjhi' for 'a husband and many children'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S06",
+      "quote": "A girl who offered prayers with devotion would be blessed with a good husband and many children.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S24",
+      "quote": "Thus, while the temple craft is practised only by male priests and their male apprentices, the folk aspect of the craft was, and is, practised chiefly by unmarried girls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "Traditionally, the artists were men as the priests of the temple created the Sanjhis for the evening worship every day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S06",
+      "quote": "In the fifteenth and sixteenth centuries it was regarded as a highly refined art form practiced by Brahmin priests.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S14",
+      "quote": "Initiated in the seventeenth century by the followers of the Pushti-marg Vaishnavite sect, elaborate depictions of episodes from the life of the Hindu god Krishna are patterned on the floor within the temple precincts of Vrindavan and Barsana in Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S24",
+      "quote": "became a temple tradition (according to Dasa) in the 17th century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S08",
+      "quote": "Practitioners of the art form believe that it originated roughly four hundred years ago and is associated with the Vallabhacharya Sect of Vaishnavism.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S37",
+      "quote": "The art of Sanjhi originated in the 16th and 17th centuries, with motifs adorning temple walls and floors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S06",
+      "quote": "Though the art of Sanjhi is still alive, its origins are lost in antiquity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S06",
+      "quote": "According to Hindu mythology, Radha, Lord Krishna's chosen gopini, would decorate the walls of her home with Sanjhi art to attract her beloved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S06",
+      "quote": "Seeing her, the other gopinis of Vrindavan also started beautifying their walls",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S08",
+      "quote": "The Delhi Crafts Council began working with sanjhi artisans in the 1990s hoping to revive and preserve the art form and collaborated with them on several exhibitions such as Kagaz (1990), Sanjhi Past Forward (2015) and Sanjhi Revisited (2017).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S17",
+      "quote": "The craft was originally known in Kashmir 'by its Iranian name viz. Kar- i-Qalamdani' (Qalamdani = pen-case). It is believed that in the initial stages the craft was restricted to the ornamentation of pen-cases.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S18",
+      "quote": "Papier- Mache in Jammu and Kashmir is locally known as kar-e-kalamdani, meaning pen case work taking from its Iranian name.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S09",
+      "quote": "kari-kalamdani is named after kalamdan, or pen stands, that were first created with this craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S17",
+      "quote": "Minimal decoration on early book jackets evolved to ornamentation of a range of products, from bangles to lamp-stands, screens, and cabinets, and - under Mughal patronage - to palanquins, ceilings, bedsteads, doors, and windows.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S09",
+      "quote": "this technique was also used, particularly during the Mughal period, on doors, panels, palanquins and bedsteads",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S15",
+      "quote": "The art form gained popularity overseas in the nineteenth century when the the booming trade in Kashmir shawls was packaged in specially sized kar-i-qalamdani boxes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S15",
+      "quote": "It is believed that the craft of Kar-i-qalamdani-the skill of pen craftsmanship-was introduced in Kashmir in the fifteenth century when the then King Ghiyas-ud-Din Zain-ul-Abideen invited artists from Persia to settle in Srinagar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S17",
+      "quote": "The craft is supposed to have come from Kashmir from Central Asia, under King Zain- Ul-Abidin, who invited accomplished artists from Central Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S17",
+      "quote": "according to national awardee Mohd. Shafi Nagoo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S17",
+      "quote": "According to Shafi Nagoo the craft can be traced in Kashmir to an Iranian by the name of Torab who came to Kashmir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S28",
+      "quote": "The art of papier-mache is said to have come from Samarkhand to India in the time of Timur Lane, in the fourteenth-fifteenth centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S11",
+      "quote": "Its use originated in present-day China, and the technique of crafting objects from it was well-established in Asia over several centuries before being introduced to Europe in the thirteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S17",
+      "quote": "The craft is found only in Kashmir district and is practised only by the Shia Muslim community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S09",
+      "quote": "sakthsazi (mould making, traditionally done by the Sunni Muslim craftspersons - sakhtasaz - located in Naupura) and naqqashi (painting, traditionally done by Shia Muslim craftspersons - naqqash - in Zadibal, Kamangarpura and Hasanabad areas of Srinagar)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S15",
+      "quote": "This traditional craft continues to be practiced by the Shia Muslim descendants of the Persian artists who settled in Srinagar centuries ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S32",
+      "quote": "Although the craft of papier mache is not traditional to West Bengal, it has been nurtured over the recent years by the Santiniketan school of artists who have pioneered the craft and passed it on to many artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S21",
+      "quote": "The craftspersons belong to the kuyavar and kosavar community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S20",
+      "quote": "The craft production of the kites dates back to the historic reign of the Mughal empire. The first centers of production were set up in Ahemadabad. The community of people who indulged in this craft was called Patangbaaz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S13",
+      "quote": "Craftspersons dip framed wire sieves into the tank in which the pulped cotton is immersed retaining just the required amount of pulp. Gently shaken the fibres spread evenly and interlock. The water is allowed to seep out and the sheet sun dried.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S13",
+      "quote": "The arduous cotton pulping process earlier done by hand is now semi-mechanised.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S22",
+      "quote": "The shredders, chindis or canvas rags and vegetable fibers are soaked in water overnight.This soaked mixture is then processed in the beater with a capacity of about 400 liters where it is stirred continuously till it settled down.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S22",
+      "quote": "A wooden rectangular frame overlaid by a bamboo/cane mesh is dipped horizontally into the Hauz and then lifted gradually upwards until the surface is reached.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S22",
+      "quote": "The gathered layer of the thin pulp is covered with the terrycloth sheets and these sheets are then transferred on the wooden ply to completely get rid of the water content.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S22",
+      "quote": "Then each paper sheet is manually separated and they are hung for drying for a day after which, the paper is polished with a machine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S29",
+      "quote": "A pulp is formed as the waste is mixed with water and put into a beater followed by lifting, a process of converting the pulp into rectangular shapes. Water is then removed by hydraulic pressing and individual sheets are left to dry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S29",
+      "quote": "The final step involves finishing and smoothing the paper through a series of hard pressure rollers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S04",
+      "quote": "By using a knife or dao, the outer greenish/grayish layers of the bark are scrapped and washed with water to remove the scrapped greenish/grayish layers to obtain the whitish creamy inside part of the bark.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S04",
+      "quote": "The washed bark is then sun-dried for 2 to 3 days and then soaked in water for softening.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S04",
+      "quote": "On a flat stone plate, the boiled fibers are beaten to a pulp with a wooden hammer locally known as Ruelong.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S04",
+      "quote": "Beating compresses the pulp, enhances the strength and durability of the paper, and is traditionally referred to as Thungu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "The fine pulp is then poured into rectangular frames made up of bamboo wrapped with cloth or galvanized net. The frames are then floated in a water tank and stirred continuously for uniform distribution of the pulp over the net.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "After some time, the frames are carefully taken out of the water tanks and sun-dried for 2 to 3 h.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "it takes about 5-7 days for paper production, starting from harvesting of the bark up to dispensing and drying of the pulp to produce paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "Jacquemont observed pulp-mills behind the Shalimar Garden (today Srinagar, Kashmir). An aqueduct supplied the mills with water from a canal built by the Mughal emperors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "the fibres were pounded under water-driven wooden stampers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "The resulting slurry in the form of flat, square, and dry cakes was exposed to the sun for bleaching.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "The fibres were then washed in the river and beaten again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "The first part is a rigid wooden frame made up of four bars mortised at the corners and several triangular-shaped crossbars.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "reeds laced together at regular intervals of three or four centimetres by a dozen silk threads",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "As a result, the paper sheet was made up of two layers of pulp resulting from the two immersions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "This corresponds to what is called today a 'double-dip'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "the sheets were removed from the pile and applied eight by eight to a wall covered with a thin layer of well-prepared and smoothed plaster.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "The coated wall absorbed the moisture and allowed the leaves to dry gently.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "first, a rubber armed with a piece of potter's clay, burnt in the fire like a pumice stone, rubbed both sides of each sheet in a brisk movement without pressing hard",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "The sheet was then passed to the sizer who applied the rice flour paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "This mitt was made of very hard and very thick wool felt",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "Then the sheet was passed to the burnisher who placed it on a board of very hard and highly polished wood, inclined and slightly convex, like a cylindrical surface. He rubbed it hard with a fist-sized granite pebble.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "polished it with all his strength but this time with a piece of perfectly polished jasper or agate",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S05",
+      "quote": "From this description we understand that the quality of Kashmiri paper lies in the repetitive sequences of sizing and polishing. In total, a sheet could undergo up to eight sizing/burnishing iterations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S05",
+      "quote": "The curved shape of the burnishing bench is a singularity of the Kashmiri paper technology since other sources and photographs report that the burnishing benches were flat or concave in other regions of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S16",
+      "quote": "Papier mache making is roughly divided between two sets of artists-sakhtasaz and naqqash. The sakhtasazi artists are involved with processing the base material and preparing the skeleton framework of the craft while the naqqashi artists deal with designing and polishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S16",
+      "quote": "The two sets of artists work in separate karkhanas (workspaces).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S15",
+      "quote": "Two distinct communities continue to be involved in crafting the kar-i-qalamdani-the sakht-kaz mould-makers and the artists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S17",
+      "quote": "There is also a group of people known as sakta makers who 'make papier mache objects out of pulp and sell these objects to the \"naqqash\" or papier mache painter...'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S15",
+      "quote": "The first stage involves the process of papier-mâché moulding, the sakhtsazi, where the shapes of the objects are crafted by the specialist Sakht-kaz community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S16",
+      "quote": "Press cuttings, pages from used school notebooks and tissue papers are kept in water for a period of five to six days, stretching to 15 in the winters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S17",
+      "quote": "Waste paper is soaked in water (usually in a large cauldron or pot) for about a week; the soaked paper is then beaten with a big hammer and/or ground in a maorata made of limestone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S17",
+      "quote": "The process is different in Kashmir from that in other European countries in that in Kashmir the paper is not pulped fully.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "The mould is first covered with ordinary paper, after which a layer (or several) of the prepared paper is patted on to it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "The thickness of the box (or any other product) is created by using several layers of prepared paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S17",
+      "quote": "The article removed from the mould is re-joined with the help of saresh, a thick glue made of natural gum and mishri or sugar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S17",
+      "quote": "After the joint is made secure, the object is gently rubbed with a wooden file called kathwa.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S16",
+      "quote": "It is coated with a mixture of chalk mitti (powder) and saresh (a type of adhesive), and polished with a kiln-burnt brick. This process is called gassayiee.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S09",
+      "quote": "This is followed by a layer of glue and chalk which is painted onto the inside and outside surfaces of the object and then smoothed with a baked brick known as kirkut.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S17",
+      "quote": "Chuna paste (made from 'kurkut' or pumice stone) is applied to smoothen the surfaces of the product",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S16",
+      "quote": "Once the piece acquires the desired texture, a layer of tissues is glued to it to make it water-resistant and prevent it from developing cracks. It receives several rounds of gassayiee with sandpaper followed by three or four thick coats of colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S09",
+      "quote": "The naqqashi work begins by coating the surface with a white solution consisting of gypsum and glue. After drying, the surface is further polished with a wet stone until it is perfectly smooth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S17",
+      "quote": "All the painting, including filling in of colours, is done with a brush made of a single cat hair.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S09",
+      "quote": "On this base, freehand designs are created with brushes created from the hair of Pashmina goats and pencils from cat fur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S09",
+      "quote": "The object is finally finished with a layer of varnish that is applied on top to seal the paint and provide lustre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S16",
+      "quote": "As the paint dries up, various designs are drawn on the papier mache item followed by a layer of varnish to lock the hues.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S17",
+      "quote": "The painter surface is coated with a transparent lacquer made from the badam tree. This protects the painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S17",
+      "quote": "The painter surface is coated with a transparent lacquer made from the badam tree.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S17",
+      "quote": "The drying process has to be natural; no heat is applied.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S06",
+      "quote": "The bridge areas are left uncut when the stencil is cut. The bridge not only creates the details of the design but also holds the stencil together in one piece.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S07",
+      "quote": "In addition to creating details and style, bridges are what hold a stencil together in one piece.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S06",
+      "quote": "A second line, parallel to the first, is drawn at a short distance away from the first line. If more than one copy is required the papers or banana leaves are pinned together on all sides and then cut.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S07",
+      "quote": "If more than one copy is required the papers are pinned together on all sides.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S07",
+      "quote": "The only tool used in this craft is a pair of scissors, which is very fine with long arms for easy manipulation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S06",
+      "quote": "Each craftsperson individualizes the curve on the scissors he uses, to suit his personal requirements.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S06",
+      "quote": "After use, the scissors are wrapped carefully in cloth to protect the tip and as a mark of respect to the tool that creates the Sanjhi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S06",
+      "quote": "each colour requires a separate paper cut of its own",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S06",
+      "quote": "Each stencil is folded at the corner tip and the craftsman uses this fold to gently lift up the paper once the colour has been applied through the cutout.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S06",
+      "quote": "moment of lifting the Sanjhi is crucial and has to be done in a single movement to ensure that the colours are not disturbed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S06",
+      "quote": "A common practice is to build a vedi of maximum size nine feet by twelve feet, plastered with mud and cow dung, on which the Sanjhi is created.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S07",
+      "quote": "The maximum size is 8 feet by 12 feet and the Sanjhi can be octagonal, square, rectangular, or circular.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S08",
+      "quote": "in the case of the jal-sanjhi the stencil is placed on still water on which powder, talcum or chalk is sprinkled and then layered with coloured powders",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S08",
+      "quote": "Sanjhis are also created every evening during Pitra Paksha in September or October, honouring one's ancestors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S07",
+      "quote": "In the temple tradition, 'Sanjhi' is created every evening during the 'Pitra Paksha' or the dark fortnight of waning moon in the month of 'Ashwin', in September or October.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S06",
+      "quote": "Each Sanjhi is created for just one day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S06",
+      "quote": "After the worship of the Sanjhi, it is effaced, so that a new image can be created for the following day's worship. The material used for making the Sanjhi is disposed of in the river Yamuna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "This elaborate creation is then as carefully effaced and the colors immersed in the flowing waters of the Yamuna River.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S13",
+      "quote": "Jaipur paper is largely made of cotton rags that are left over from the garment trade, though the waste of bamboo, sugarcane and jute is also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S10",
+      "quote": "It is typically made using traditional methods and natural materials such as cotton rags, silk and banana trunk fibres, flower petals and leaves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S12",
+      "quote": "A traditional Indian handmade paper produced from khadi rags.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "raw material being used by Indian Handmade Paper Industry is cotton hosiery waste, which is wastage from the hosiery industry and is already processed cotton fibre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "Now a days, cotton hosiery waste is scarcely available and getting costlier day by day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "for the year 2015-16 before you",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S04",
+      "quote": "Traditionally, handmade papers are made from wood-free materials, like silk cotton, banana fibers, cotton, kenaf, mat grass, bagasse, and agro-wastes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S38",
+      "quote": "Handmade paper is produced from cotton, silk, and agricultural waste (such as sugarcane, bark, or jute waste).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S05",
+      "quote": "When Jacquemont visited Kashmir in 1831, he noted that paper was made from fibrous repurposed materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S05",
+      "quote": "Old agricultural and household products such as cloth, rags, ropes, sacks and mats, once worn and tattered, were sent to the mill to be recycled into pulp.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S05",
+      "quote": "First, old cotton cloth collected from the city of Srinagar was used to produce low-grade paper. Second, old ropes and canvas bags made from coarse cloth and called tát were used to produce the best quality paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S05",
+      "quote": "Much later, in 1908, the then governor of Punjab, Sir Herbert William Emerson, was able to give a more complete",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S05",
+      "quote": "To make 40 quires39 of premium paper one needed 40 sīrs40 of old rags, 10 sīrs of hemp, 5 sīrs of sajjī, 1.5 sīrs of lime and 32 sīrs of white rice flour for the sizing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "In the 1890s, Lawrence noted that Nowshera paper-makers made three grades of paper, the difference between them being the proportion of raw",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "contained two parts of hemp fibres to 16 parts of rags",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "Farmāshi, also called Maharāji or Royal, was a fine and highly glazed paper used for official",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "Finally, Kalamdāni59 was chiefly manufactured from recycled materials and contained no hemp fibres",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S05",
+      "quote": "Possibly produced for papier-maché works, kār-e-kalamdānī",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S05",
+      "quote": "while kallamdani, 56 an inferior quality, was sold for 10 annas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S05",
+      "quote": "Kashmiri paper stands out among the many Indian handmade papers by its great fineness and extreme polish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S05",
+      "quote": "What distinguishes it above all is its whiteness and its extreme polish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S22",
+      "quote": "The paper from Daulatabad was unique and became famous for its glossiness and durability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S22",
+      "quote": "Nizam Shahi: Superior Quality",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S22",
+      "quote": "Murad Shahi Paper: Fine Quality",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S04",
+      "quote": "The thickness and length of the D. papyracea fibers are categorically more than that of the other common handmade papers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S04",
+      "quote": "The thickness and the length of the rice straw, sugarcane, and bamboo fibers have been reported as 8.8 mm and 1.5 mm, 20 mm and 1.7 mm, and 9.14 mm and 1.09-2.33 mm, respectively, which are significantly lesser than that of D. papyracea fibers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S29",
+      "quote": "The handmade paper is further treated with local herbs enabling preservation for several decades, a common practice for religious manuscripts in Sikkim.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S16",
+      "quote": "After they have been adequately soaked, large chunks of the paper are placed in a stone mortar and ground with a wooden pestle. A variety of rice flour called maand is then added to the ground paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S17",
+      "quote": "The paper is then mixed with starch made from the water of boiled rice and gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S28",
+      "quote": "The base of this craft is paper pulp coarsely mashed and mixed with copper sulphate and rice-flour paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S09",
+      "quote": "the sakhtasaz prepares the paper pulp by pounding waste paper, (that is shredded and soaked at times) along with straw, cloth and copper sulphate",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S17",
+      "quote": "Initially the moulds were made of clay, usually by the artisan himself. Nowadays, the craftspersons procure the moulds - made of wood and brass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S09",
+      "quote": "Usually, clay moulds were used, but have been replaced with Plaster of Paris (POP), wooden or metal moulds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S17",
+      "quote": "Traditionally colours derived from minerals and plants and vegetables were used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S17",
+      "quote": "Brown and black were obtained from green and dried walnut skins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S17",
+      "quote": "red was obtained from saffron",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S17",
+      "quote": "Violets and blues were obtained from indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S17",
+      "quote": "Some pigments were imported - white lead from Russia, lapiz lazuli (for the preparation of ultramarine) from Yarkhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S09",
+      "quote": "white, derived from white lead, was obtained from Russia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S17",
+      "quote": "Today, however, organic colours have been replaced by synthetic paints - poster and water colours bought in the market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S27",
+      "quote": "The raw materials are waste paper and clay. The big containers or kothis are light and long-lasting and are decorated with pieces of glass, paint, and relief work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S27",
+      "quote": "The making of decorative shelves and containers is also a highly evolved craft of western Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S08",
+      "quote": "Initially the stencils would be created out of banana leaves and a metal clipper known as nunni, or burning incense sticks would be used to fashion the stencils.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S08",
+      "quote": "Subsequently, these changed to plastic, paper coated with wax and finally paper stencils with handmade paper, banana rice paper and jute paper being used the most",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S06",
+      "quote": "traditional artists used only paper or banana leaf to make the stencils, younger craftsmen have started using plastic, which is light, pliable, washable, re-usable and easy to cut.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S20",
+      "quote": "Kites for Uttarayan are made from a special lightweight paper which ads velocity to the flight of the kite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S05",
+      "quote": "In fact, the alkaline lye was made from crude sodium carbonate or soda ash (sajjī) and lime (cūnā).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S05",
+      "quote": "The retting process in alkaline lye allowed the disintegration of the processed articles (woven and twisted) and the separation of the fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S05",
+      "quote": "The addition of sajjī throughout the pulp preparation allowed a better separation of the fibres and thus a more refined and homogeneous pulp.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S04",
+      "quote": "The cut pieces of bark are boiled in ash water (BlaPaa), which is prepared by passing water through ash.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S04",
+      "quote": "About 5 to 6 kilograms of bark are placed in 6 to 8 liters of ash water and boiled for 3-4 h.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S04",
+      "quote": "The boiling is meant to remove any organic substance present. Boiling softens the bark and makes it sticky in texture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S35",
+      "quote": "the inner fibrous bark of the Shugu Sheng shrub (Daphne papyracea) is dried, boiled with a solution of ash, made into pulp and then cut into sheets of paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S04",
+      "quote": "Plant cell walls are primarily made up of cellulose, hemicellulose, lignin, pectin, and glycoproteins. Non-cellulosic cell wall glycans contribute significantly to various physical properties such as density, crystallinity, and tensile strength of plant cell walls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S04",
+      "quote": "major classes of cell wall glycans such as xylan, arabinogalactans, and rhamnogalacturonan-I were present on D. papyracea paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S04",
+      "quote": "The presence of these polymers in the Himalayan Buddhist handmade paper of Arunachal Pradesh is correlated with its high tensile strength.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S04",
+      "quote": "A significant amount of 66% of glucose (Glc) and 28% of xylose (Xyl) was observed in the glycosyl residue composition of D. papyracea paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S04",
+      "quote": "A lower amount of Ara (4%) and Rha (1%) and trace amounts of Fuc and GalA were also observed in the handmade paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "Glycome profiling data revealed increase in epitope contents in the D. papyracea paper compared to print-copy paper. The most consistent changes in D. papyracea paper cell wall were observed for xylan backbone epitopes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S05",
+      "quote": "The strong pressure exerted by the worker in this operation tightened the grain of the paper and considerably thinned each sheet, without taking away its weight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S05",
+      "quote": "When handling a manuscript made in Kashmir in the nineteenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S05",
+      "quote": "The pages are as transparent and shiny as glass and make a typical crackling sound when turned.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "The thickness of the paper ranges from 0.06 mm to 0.15 mm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "the number of laid lines varies from 8 to 11 per 1 cm",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S05",
+      "quote": "Kashmiri paper had the great advantage of being strong but thin enough to allow sunlight to pass through.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S05",
+      "quote": "My new dwelling had according to the fashion of the country, windows of wooden network, which in summer admitted the air freely; but in winter these were covered with paper, which excluded the wind, without shutting out the light.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S04",
+      "quote": "Owing to its good tensile, double fold, bursting, and tearing strength, the paper could be used for writing, drawing, and printing purposes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "Compared to conventional paper, it's lifespan and durability is much longer. Maling also notes that it's 80 percent stronger in tensile strength.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "In February 2020, Maling Gombu, a Tawang-based social worker and lawyer, wrote to the Khadi and Village Industries Commission (KVIC)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S06",
+      "quote": "To the oil-lined shallow vessel, water is added. The oil being lighter, floats to the surface and forms an oil film on the water. The stencil is placed on it very carefully and the colours are filled in.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S06",
+      "quote": "A submerged Sanjhi is made by taking a shallow dish and coating the inside of the vessel with oil. Powders insoluble in water are used to create the Sanjhi on this oil base by using the cutout patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S06",
+      "quote": "Water is then poured into the dish, from the side, without disturbing the colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S04",
+      "quote": "Daphne papyracea Wall. ex G. Don is a branched, erect evergreen shrub belonging to the Thymelaeaceae family.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S04",
+      "quote": "The inner fibrous bark of the plant is an important source of handmade paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S04",
+      "quote": "In Arunachal Pradesh, the plant is locally known as \"Shukshing\" and is being used traditionally for making papers by the Monpa tribe of Tawang and West Kameng regions of Arunachal Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S04",
+      "quote": "It propagates in cool lime-free well-drained sandy loam, tolerates a dip in temperature up to -10°C, and prefers shady places but grows even in partial sunny places in forested areas (coniferous as well as broad-leaved) at an elevation of 700-3,200 m.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S04",
+      "quote": "D. papyracea can regenerate if cut 15 cm above the ground and mature within 4 to 5 years to harvest bark for making paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S04",
+      "quote": "Harvesting or collection: During this step, mature plants aged 5-6 years are collected and peeled off. The bark is collected, and the wood is used as fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S35",
+      "quote": "We are in talks with the forest department about establishing a plantation of the Shugu Sheng shrub to see long term prospects as it takes about three to five years to harvest it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S05",
+      "quote": "While all of the above sources mentioned the use of hemp in the preparation of the pulp, only Moorcroft noted that sunn hemp was used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S05",
+      "quote": "Sunn or san hemp (Crotalaria juncea L.), also known as Indian or brown hemp, is a different species from true hemp (Cannabis sativa L.) which can easily be differentiated by its characteristic leaves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S29",
+      "quote": "The basic raw material for the handmade paper stems from two sources - recycled paper and the lesser popular option now, locally available, Argali (Edgeworthia gardenia) bark.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S04",
+      "quote": "Handmade paper production excludes wood as a source of fibrous material, utilizes chemical-free approaches, and focuses on drying up the final products using natural renewable sources (sunlight).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S13",
+      "quote": "The product is strong and durable. No trees are cut in its production, instead it upcycles waste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S19",
+      "quote": "It is extremely eco-friendly as it is acid free and consumes less energy and water in comparison to machine made paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S04",
+      "quote": "It has also been documented that, on average, 17 trees are axed down to produce 1 metric ton of paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S04",
+      "quote": "D. papyracea is a non-grazing, non-timber forest product (NTFP) and not preferred for regular fuel and found growing well under shade and distributed across 1,800-3,000 m altitude.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S04",
+      "quote": "The best-suited habitat was found in the western parts of Arunachal Pradesh, depicting West Kameng and Tawang districts as highly suitable regions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S04",
+      "quote": "It was also found that the suitable distribution of D. papyracea was largely affected by the precipitation and temperature variables.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S04",
+      "quote": "the precipitation of the driest period (bio14) and isothermality (bio3) were the top two predictors in the Maxent model",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S16",
+      "quote": "The skeleton framework needs four to five days to harden. In the winters when it takes longer, bukharis (traditional heaters) are installed in the karkhanas to speed up the process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S05",
+      "quote": "The paper-mill, which operated only eight months a year, paid 9 rupees (16 francs) per month to the Raja for the mahasūl (patent).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S05",
+      "quote": "In winter, the workers subsisted only on their savings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S06",
+      "quote": "The celebration involving the creation of Sanjhis takes place in autumn, right after the rainy season when the woods are filled with flowers, which is why flowers are used to decorate them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S22",
+      "quote": "Water resources have depleted, it has become semi-arid and arid region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S13",
+      "quote": "Jaipur lays claim to being the largest center of hand papermaking in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S19",
+      "quote": "Production cluster centers around Sanganer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S04",
+      "quote": "Gradually, the art became an integral part of local custom and culture in West Kameng and Tawang regions of Arunachal Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S22",
+      "quote": "The geography of the place allowed the paper industry to flourish. There was an abundance of water and space required to making handmade paper which was provided by the nearby lakes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S05",
+      "quote": "the superiority in the texture being unquestionable due to the natural abundance of water and to the use of mills moved by streams",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S07",
+      "quote": "Along the river Jamuna in North India are two, virtually contiguous, towns-Mathura and Vrindavan-which are important centers of Hindu pilgrimage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S07",
+      "quote": "The region around and containing these two towns, known traditionally as Vraja or Vrajbhoomi, is the legendary place of the god Krishna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S14",
+      "quote": "Outside the temple tradition, sanjhi is practised by Ram Soni in Alwar, Rajasthan and Vijay Kumar Verma's family in Mathura, Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S25",
+      "quote": "Originating in Mathura, Sanjhi or paper stencil craft is produced in the region of Alwar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S20",
+      "quote": "The largest hub of kite production is Gujarat. Vadodara, Surat and Ahmedabad are the majr cities which are known for their kite markets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S26",
+      "quote": "Gwalior, Ujjain, Indore, and Harda are important centres for this craft. Gwalior is famous for its papier mache toys; Ujjain is famous for deities as well as for toys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S27",
+      "quote": "Bharatpur and Ajmer are important centres. Palai in Tonk district is famous for furniture made out of papier mache. Jaipur is well-known for toy animals and birds made out of papier mache.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S21",
+      "quote": "Traditionally, the toy industry in Pondicherry used clay; now the material used is papier mache and Plaster of Paris. The craft is concentrated largely in Kosapalayam, a village near Pondicherry town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S02",
+      "quote": "The Institute is an autonomous body under KVIC-Ministry of Micro, Small & Medium Enterprises, Govt of India engaged in the applied research and development, consultancy & technical services & Human resource & development for the growth of Indian handmade paper industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S02",
+      "quote": "The Institute is located in Sanganer, Jaipur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S03",
+      "quote": "Indian handmade paper industry is a tiny industry as compared to the Indian paper industry. As a matter of fact, it only makes 0.055 to 0.14% of the total paper & board industry in terms of tonnage and turnover.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S03",
+      "quote": "for the year 2015-16 before you",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S03",
+      "quote": "Although the Indian paper industry is growing year by year but there is a definite decline in the handmade paper industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S03",
+      "quote": "the handmade paper industry has registered the growth by 41% from 5,100 MT to 7,200 MT in the year 2015-16 as compared to 2014-15.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S03",
+      "quote": "Indian Handmade Paper Industry has been passing through a very bad phase for the last 7-8 years. The year 2015-16 has been slightly better than the previous year.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S03",
+      "quote": "The exports have increased from Rs 53 Crores to Rs 60 Crores.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S03",
+      "quote": "economies getting melting down and affecting the exports of handmade paper which is heavily dependent upon the foreign market to a very large extent (up to 81%).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S03",
+      "quote": "Domestic Market is just 19% as per one studies Conducted by M/S Sycom Project Consultants",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S03",
+      "quote": "for the year 2015-16 before you",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S34",
+      "quote": "| Geographical Indications | Kalpi Handmade Paper |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S34",
+      "quote": "| Applicant Name | Hasht Nirmit Kagaj Samiti |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S34",
+      "quote": "Industrial Estate, kalpi, Jalaun, Uttar Pradesh, India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S34",
+      "quote": "| Date of Filing | 30-12-2020 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S34",
+      "quote": "| Certificate Date | 14-06-2023 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S38",
+      "quote": "In 2023, it was bestowed with the GI tag.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S33",
+      "quote": "| Geographical Indications | Kashmir Paper Machie |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S33",
+      "quote": "| Applicant Name | TAHAFUZ |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S33",
+      "quote": "| Date of Filing | 17-07-2009 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S33",
+      "quote": "| Certificate Date | 06-01-2012 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S41",
+      "quote": "| Geographical Indications | Mathura Sanjhi Craft |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S41",
+      "quote": "| Date of Filing | 19-01-2022 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S41",
+      "quote": "| Certificate Date | 30-03-2024 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S37",
+      "quote": "This unique art form from Mathura has received a Geographical Indication (GI) tag, which acknowledges its distinct origins and cultural significance.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S35",
+      "quote": "the KVIC launched a Monpa handmade paper making unit on 25 December at an erstwhile abandoned government building in Tawang",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S04",
+      "quote": "Khadi and Village Industries Commission (KVIC), Government of Arunachal Pradesh, has commissioned a handmade paper making unit in Tawang to revive the art of making paper, enhancing productivity and empowering the local youth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S35",
+      "quote": "The Monpa handmade paper unit will also serve as a training center for the local youths.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S05",
+      "quote": "On 4 June 1831, Jacquemont saw twelve workers working",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S05",
+      "quote": "These were the best paid because their job was the most tedious and required strength and dexterity. They made 3 annas (about 0.30 francs) a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S05",
+      "quote": "A skilled craftsman, during a long summer day, could polish at most 36 sheets of ordinary quality, or just a few of sheets of finer quality paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S05",
+      "quote": "When Jacquemont visited Kashmir in 1831, he noted that paper was made from fibrous repurposed materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S05",
+      "quote": "When Jacquemont visited Kashmir in 1831, he noted that paper was made from fibrous repurposed materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S05",
+      "quote": "After the final burnishing, 24 sheets were rolled up together to form a dastā.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S05",
+      "quote": "A dastā of the most average grade was sold for 0.75-0.80 francs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S22",
+      "quote": "The major occupation of this paper village has changed to brick manufacturing and other professions so there is a decline in the paper production business.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S15",
+      "quote": "While the craft continues to have wide appeal the sakht-kaz mould-makers are facing difficulties, not only due to the lack of innovation in the shapes, but also the need for improved technologies of mould making and processing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S14",
+      "quote": "What was once considered the tool of their trade-the hand-cut stencil-is now central to the creative process and its final product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S06",
+      "quote": "the stencil used to create the image has become the final product",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S08",
+      "quote": "The stencil and its motifs are also used to make objects to be sold commercially, such as lampshades, notebooks, wall decorations, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S07",
+      "quote": "Asian Journal of Home Science (June to November, 2009) Vol. 4 No. 1 : 197-200",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S07",
+      "quote": "In Mathura and Vrindavan, there has been a decline in the number of artisans practicing 'Sanjhi paper cutting'. The reason of this decline is the low demand for their work in its traditional form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S13",
+      "quote": "The results feature shades of white to rainbow colors; paper embedded with leaves, grass and petals to silk thread, tinsel and other decorative items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S17",
+      "quote": "Well-known patterns include the hazara (thousand flowers) and the gul ander gul (flower within flower).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S17",
+      "quote": "The badam tarah represents the mango-shaped badam (almond) motif. The chinar is depicted often",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S09",
+      "quote": "popular designs and motifs include the hazara, or design of a thousand flowers, featuring roses, hyacinth, irises, etc; chinar (leaves or drawings of the chinar tree)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S16",
+      "quote": "Most of the motifs-like gul-andar-gul, gul-i-hazara, bagaldar, chinar, gonder, gul-i-wilayat and kashaan-retain their original Persian names.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S16",
+      "quote": "Many papier mache artworks carry the designs that also appear in other forms of Kashmiri handicrafts like shawls, carpets and woodwork, earning themselves names like kaleen (carpet), jamavar (a type of shawl worn by Kashmiris) and pashmina.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S17",
+      "quote": "The kingfisher and the bulbul are the birds most frequently depicted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S09",
+      "quote": "Birds such as the kingfisher and bulbul also feature in motifs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S17",
+      "quote": "the design is outlined in glue/gum; a patch of gold leaf is placed on the gummed area; the leaf adheres to the design outlined in glue/gum, creating a design in gold leaf",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S17",
+      "quote": "Any pattern that is depicted only in gold is known as sonposh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S09",
+      "quote": "When gold colour or gold leaves are used to create the design, it is called sonposh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S17",
+      "quote": "The 'box' is the ubiquitous papier mache product. Round, square, rectangular, and oval boxes, in all sizes, lined with velvet on the inside (or painted with black lacquer) are typical.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S31",
+      "quote": "This craft is found in Patna, Saraikella, Hazaribagh, Murhu, Khunti (Ranchi) and Madhubani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S31",
+      "quote": "Masks used in the Chhau dance represent the main item of production",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S31",
+      "quote": "Originally, the masks were made of wood, and then bamboo; today they are made of papier mache.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S31",
+      "quote": "This craft is found in Patna, Saraikella, Hazaribagh, Murhu, Khunti (Ranchi) and Madhubani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S31",
+      "quote": "Mask-making is a hereditary trade with some families, though even in these families only those who are dancers are allowed to make masks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S21",
+      "quote": "Figures that are part of ceremonial occasions are shown in orange or rose colour and grey is used to show those engaged in personal labour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S07",
+      "quote": "The motifs and designs that appear in the traditional Sanjhi paper cutting are the scenes of Vrindavan (Fig. 2) which includes peacock, the cows, the monkey, and the kadamba tree, the river flowing past the temple.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S07",
+      "quote": "The subject matter has always been the stories and motifs of Krishna legends",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S07",
+      "quote": "They later broadened to include a number of Mughal motifs like jali patterns and animals and flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S08",
+      "quote": "During the Mughal period, some sanjhi stencils were also inspired by Mughal motifs such as jaalis, geometric designs and the Tree of Life symbol.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S08",
+      "quote": "Through a concept known as chaski, a single composition may be divided into smaller units so that different colours can be used within different parts of the composition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S20",
+      "quote": "Gujarat is the hub of paper kite craft production and manufacture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S20",
+      "quote": "The initial shape of the kite was that of a prism and has slightly evolved since then.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S20",
+      "quote": "They are commonly engineered in quadrangular shape for better mobility and control to the kite flyers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S30",
+      "quote": "Today, paper and its products have grown and developed multi-fold due to several design and technique manipulations from folding, cutting, dyeing, recycling, layering and quilling.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S23",
+      "quote": "The pper from Ahmedabad is famous for its toughness and whiteness. Earlier, the industry of handmade paper was limited to its utilisation in 'khatavahi' (account ledgers used by traders).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S08",
+      "quote": "The word sanjhi comes from the Hindi word sanjh, meaning \"dusk\", referring to the time of the day when the sanjhi rangoli is normally created. Other accounts also link it to sajavat, meaning decoration, or sancha, meaning mould.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S07",
+      "quote": "Other meanings linked with 'Sanjhi' is 'sanjha' which means evening and 'sancha' which means mould.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S04",
+      "quote": "It is widely believed that the Buddhist scriptures written on handmade paper are well-preserved without any damage by termites and other insects in the monasteries for many generations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S04",
+      "quote": "This locally made paper product has great global potential and opens avenues for future research in preservations of age-old scriptures stored in the monasteries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S06",
+      "quote": "Nowadays, Sanjhis are made only on special occasions, unlike in the past when a new Sanjhi would be created every day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S07",
+      "quote": "This temple tradition is rare and is only practiced in some of the temples in Vrindavan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S06",
+      "quote": "It continues as a living tradition in the temples of Vrindavan but is nowadays practiced only by a select few.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S24",
+      "quote": "the temple tradition seems to have become confined to three important temples at Vrindavana and a single temple at Barsana, Radha's village",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S06",
+      "quote": "Sanjhi designs are made during the final five days of Pitr Paksha in the temples of Vrindavan, from the eleventh day of the lunar fortnight (Ekadasi) to the no-moon day (Amavasya), but at the Ladililala temple at Barsana, they are prepared every evening during the fortnight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S06",
+      "quote": "The ritual can be seen in the temples of Radha-Madanamohana, Radharamana and Radhavallabha in Vrindavan and the Nathdwara temple in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S06",
+      "quote": "Thus, the Sanjhis of Nathdwara are inextricably linked to those of Mathura and Vrindavan and Vrajabhoomi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S09",
+      "quote": "After the pulp has dried, it is removed from the mould, often by carefully sawing it in half and glueing it back together with a thick glue (originally made from a variety of flour and water).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S17",
+      "quote": "which is often wrapped in gummed turban cloth to strengthen it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S17",
+      "quote": "The background colour (zamin) is applied on to the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S37",
+      "quote": "Sanjhi art is considered a folk art, traditionally practiced by women who use it to adorn their homes and temples for festivals and special occasions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S40",
+      "quote": "| Geographical Indications | Thirukannur Papier Mache Craft |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S40",
+      "quote": "| Applicant Name | Pondicherry Crafts Foundation |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S40",
+      "quote": "| Date of Filing | 22-03-2010 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S40",
+      "quote": "| Certificate Date | 18-08-2011 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S42",
+      "quote": "| Geographical Indications | Arunachal Pradesh Monpa Handmade Paper |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S42",
+      "quote": "| Applicant Name | Youth Action for Social Welfare |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S42",
+      "quote": "| Date of Filing | 29-03-2022 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S42",
+      "quote": "| Certificate Date | 22-01-2024 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S43",
+      "quote": "| Geographical Indications | Gwalior Papier Mache Craft of Madhya Pradesh |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S43",
+      "quote": "| Applicant Name | Heritage Foundation |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S43",
+      "quote": "| Date of Filing | 25-09-2024 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S43",
+      "quote": "| 1 | 1365 - Certificate of Registration - 01-12-2025 | 01-12-2025 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S45",
+      "quote": "Kalpi has historically been a centre of handmade paper manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S45",
+      "quote": "Initially, fishermen on the Ganges here made paper out of old fishing nets, which had turned into a pulp like, semi-solid state after years of soaking and drying out in the hot sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S45",
+      "quote": "Handmade paper making cluster at Kalpi is a huge cluster engaging more than 5000 craftsmen and approximately 200 units.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S45",
+      "quote": "GI Journal No. 170 36 February 13, 2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S45",
+      "quote": "Kalpi has historically been a centre of handmade paper manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S45",
+      "quote": "A few steps away, a machine is beating the bits of rags to pulp using water and chemicals, the first step in the long process to sort out the fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S45",
+      "quote": "An expert Karigardrains out the mushy pulp on to a metallic sheet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S45",
+      "quote": "Unlike a papermaking machine that churns out hundreds of papers at one go, here paper is made by hand, one sheet at a time by specialized workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S45",
+      "quote": "After the pressed sheets have been made, a worker hangs them along a line to dry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S45",
+      "quote": "Kalpi has historically been a centre of handmade paper manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S45",
+      "quote": "The dried sheets are then cleaned and dipped in a glue solution to make them suitable for painting and drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S45",
+      "quote": "The sheets are then passed through heated rollers, a process known as calendaring to give them a smooth and shiny finish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S44",
+      "quote": "Different raw - materials are used to make Tirukanur Papier Mache Craft products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S44",
+      "quote": "Then the raw materials are mixed in different proportions, 1 bowl of paper powder is mixed with 2 bowl of chalk powder and 2 limestone powder is mixed together.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S44",
+      "quote": "The mixture of Paper powder, limestone and chalk powder is combined with starch powder paste and both are thoroughly mixed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S44",
+      "quote": "Different raw - materials are used to make Tirukanur Papier Mache Craft products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S44",
+      "quote": "Then the plaster of Paris is mixed with water and put over the clay model and allowed for curing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S44",
+      "quote": "The prepared paste is applied on the design or mould to make the product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S44",
+      "quote": "To increase the strength of the product, cut pieces of the papers are pasted inside the mould.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S44",
+      "quote": "The Moulds are exposed to sunlight for drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S04",
+      "quote": "Figure 3 depicts the process of making handmade paper from the bark of D. papyracea using the traditional method.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S04",
+      "quote": "The processed paper is sold in the market as a pack of 10 pieces at the rate of INR 22 per piece.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S04",
+      "quote": "Accepted 19 April 2022 Published 23 May 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S35",
+      "quote": "Back then, such was the scale of production that Monpas used to sell these papers to countries like Tibet, Bhutan, Thailand and Japan as no paper making industry existed in these countries at that time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S35",
+      "quote": "However, the local industry gradually began declining and the indigenous handmade paper was taken over by inferior Chinese paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S35",
+      "quote": "notes a release issued by the Press Information Bureau of the Government of India on 26 December 2020",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S09",
+      "quote": "Fayaz Ahmed Jan, one of the foremost kari-kalamdani artists, was awarded the Padma Shri for his contribution to the craft in 2019.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S46",
+      "quote": "A type of handmade paper originally conceived as a surface for Mughal miniature paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S46",
+      "quote": "has since been produced in varying thicknesses to be used as a medium for opaque colours or as construction paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S36",
+      "quote": "historians believe that paper masters from Samarkand were invited to Kashmir",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S36",
+      "quote": "Ganderbal and Nowshehra - does anybody remember Kaghazghari Mohalla - were the two main manufacturing bases.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S05",
+      "quote": "The pulp was produced in a few hamlets along the Sindh River, about 15 kilometres from the Shalimar Garden. One of them is clearly Ganderbal",
+      "result": "PASS"
+    }
+  ]
+}

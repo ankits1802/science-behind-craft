@@ -9,6 +9,7 @@ import { askingExplainer, reduceExplainer, type ExplainerState } from "@/lib/exp
 import { explainerEventOf, type ExplainerEvent, type TrailEntry } from "@/lib/explainerStream";
 import {
   blockSentences,
+  COVERED_NOTE,
   explainerSourceNumbers,
   ladderReach,
   reusedLabel,
@@ -27,12 +28,12 @@ const ROOT = join(__dirname, "..", "..");
 const read = (...parts: string[]) => readFileSync(join(ROOT, ...parts), "utf8");
 const QUESTION = "How is Kutch Ajrakh made, and why does its water matter?";
 
-function document(): Explainer {
-  return parseShape(explainerShape, JSON.parse(read("shared", "explainer.document.golden.json")));
+function document(name = "explainer.document.golden.json"): Explainer {
+  return parseShape(explainerShape, JSON.parse(read("shared", name)));
 }
 
-function streamed(): ExplainerEvent[] {
-  const { blocks } = splitSseBuffer(read("shared", "explainer.stream.golden.sse"));
+function streamed(name = "explainer.stream.golden.sse"): ExplainerEvent[] {
+  const { blocks } = splitSseBuffer(read("shared", name));
   return blocks.map(explainerEventOf).filter((event): event is ExplainerEvent => event !== null);
 }
 
@@ -147,6 +148,21 @@ test("a dropped block leaves its section's note of what was searched, and late b
   expect(String(refused.logged[0])).toContain("block.block.kind");
 });
 
+test("a section the answer already covered is not drawn, and the note matches the backend's", () => {
+  const backend = /^COVERED_NOTE = "([^"]+)"$/m.exec(read("backend", "app", "services", "claim_ledger.py"));
+  expect(backend?.[1]).toBe(COVERED_NOTE);
+  const state = reduced(streamed());
+  const events: ExplainerEvent[] = [
+    { type: "section_started", data: { id: "s4", discipline: "BOTANY", title: "Botany", order: 4, state: "WRITING" } },
+    { type: "section_done", data: { sectionId: "s4", state: "EMPTY", searched: COVERED_NOTE } }
+  ];
+  const started = reduced(events.slice(0, 1), state);
+  expect(shownSections(started.sections, true).map((section) => section.id)).toContain("s4");
+  const settled = reduced(events, state);
+  expect(shownSections(settled.sections, true).map((section) => section.id)).not.toContain("s4");
+  expect(shownSections(settled.sections, false).map((section) => section.id)).toEqual(["s1", "s2", "s3"]);
+});
+
 test("a settled answer ignores late understanding and status, and an error clears the progress line", () => {
   const empty = reduced([{ type: "not_enough_evidence", data: { message: "Not enough cited evidence yet." } }]);
   const late = reduced([{ type: "status", data: { step: "COMPOSING", message: "late" } }, { type: "done", data: { answerId: null } }], empty);
@@ -245,4 +261,25 @@ test("a word is found from where the last one ended, and Listen is offered only 
   expect(refused.value).toEqual([]);
   expect(String(refused.logged[0])).toContain("answers/config listen.languages");
   expect([1, 1.25, 1.5].map(nextRate)).toEqual([1.25, 1.5, 1]);
+});
+
+test("the lede stream reduces to the lede document: the lede first, then sections under their own headings", () => {
+  const expected = document("explainer.lede.golden.json");
+  const events = streamed("explainer.lede.golden.sse");
+  const state = reduced(events, askingExplainer(expected.question, "en"));
+  expect(state.phase).toBe("done");
+  expect(state.lede).toEqual(expected.lede);
+  expect(state.sections).toEqual(expected.sections);
+  expect(state.followUps).toEqual(expected.followUps);
+  expect([...explainerSourceNumbers(state.sections, [], [], state.lede).keys()]).toEqual(expected.sources.map((source) => source.id));
+  const opened = reduced(upTo(events, (event) => event.type === "lede"), askingExplainer(expected.question, "en"));
+  expect(opened.lede?.headline).toBe(expected.question);
+  expect(opened.sections.map((section) => [section.id, section.title, section.blocks.length])).toEqual([
+    ["s1", "The chemistry behind Kutch Ajrakh", 0],
+    ["s2", "What Kutch Ajrakh is made from", 0],
+    ["s3", "How Kutch Ajrakh is made", 0]
+  ]);
+  const headed = reduced(upTo(events, (event) => event.type === "section_heading"), opened);
+  expect(headed.sections[0].title).toBe("Alum holds the red, iron the black");
+  expect(blockSentences(state.sections[0].blocks[0]).length).toBe(2);
 });

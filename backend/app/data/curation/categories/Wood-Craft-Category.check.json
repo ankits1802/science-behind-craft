@@ -1,0 +1,2952 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Wood-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "d81c6bd01dd550284842c411742b10535468029bd890f0fe81b8b5bd54743dde",
+  "checkedAt": "2026-11-18T10:53:04.657820Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://archive.org/download/cu31924010093056/cu31924010093056.pdf",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/cu31924010093056/cu31924010093056.pdf",
+      "finalUrl": "https://dn721908.ca.archive.org/0/items/cu31924010093056/cu31924010093056.pdf",
+      "fetchedAt": "2026-11-18T10:44:16.991693Z",
+      "contentType": "application/pdf",
+      "textSha256": "371588e7a7ef1da1431a1734e825cf946c724fe058ce8c3fccd60e4ba52f3788",
+      "characters": 1285962,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://archive.org/download/india.history.resource.99941/99941_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/india.history.resource.99941/99941_djvu.txt",
+      "finalUrl": "https://dn710305.ca.archive.org/0/items/india.history.resource.99941/99941_djvu.txt",
+      "fetchedAt": "2026-11-18T10:51:15.445839Z",
+      "contentType": "text/plain",
+      "textSha256": "94bfa0253256eb757f4eadb37b531f7141aa7b866b63bae0168dcfd7cdae0178",
+      "characters": 48842,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://archive.org/download/monographonwoodc00maffrich/monographonwoodc00maffrich_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/monographonwoodc00maffrich/monographonwoodc00maffrich_djvu.txt",
+      "finalUrl": "https://dn760003.eu.archive.org/0/items/monographonwoodc00maffrich/monographonwoodc00maffrich_djvu.txt",
+      "fetchedAt": "2026-11-18T10:51:23.893539Z",
+      "contentType": "text/plain",
+      "textSha256": "4e21bfb714b7699969f62b3eaa426bd1d2d76309eb847768d98d3c8df3ca9eca",
+      "characters": 67259,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://archive.org/download/aclcpl00000351a966/ACL-CPL%2000351%20Monograph%20on%20Wood%20Manufactures%20in%20the%20Punjab%2C%201887-88_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/aclcpl00000351a966/ACL-CPL%2000351%20Monograph%20on%20Wood%20Manufactures%20in%20the%20Punjab%2C%201887-88_djvu.txt",
+      "finalUrl": "https://dn760102.eu.archive.org/0/items/aclcpl00000351a966/ACL-CPL%2000351%20Monograph%20on%20Wood%20Manufactures%20in%20the%20Punjab%2C%201887-88_djvu.txt",
+      "fetchedAt": "2026-11-18T10:51:34.739690Z",
+      "contentType": "text/plain",
+      "textSha256": "18c10473cf84ff5ef1214490223ed4419bcd6995e284bc629d9a2cb7fc04d9fe",
+      "characters": 110001,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://archive.org/download/in.ernet.dli.2015.22147/2015.22147.The-Common-Commercial-Timbers-Of-India-And-Their-Uses_text.pdf",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/in.ernet.dli.2015.22147/2015.22147.The-Common-Commercial-Timbers-Of-India-And-Their-Uses_text.pdf",
+      "finalUrl": "https://ia801409.us.archive.org/20/items/in.ernet.dli.2015.22147/2015.22147.The-Common-Commercial-Timbers-Of-India-And-Their-Uses_text.pdf",
+      "fetchedAt": "2026-11-18T10:51:45.863601Z",
+      "contentType": "application/pdf",
+      "textSha256": "b56f1f0d1819a1fba7379fd114fded4919e804756d29ca9ce59c7d6d1279523b",
+      "characters": 216307,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://archive.org/download/in.ernet.dli.2015.53540/2015.53540.Lac-Cultivation-In-India_text.pdf",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/in.ernet.dli.2015.53540/2015.53540.Lac-Cultivation-In-India_text.pdf",
+      "finalUrl": "https://dn790003.ca.archive.org/0/items/in.ernet.dli.2015.53540/2015.53540.Lac-Cultivation-In-India_text.pdf",
+      "fetchedAt": "2026-11-18T10:52:02.847264Z",
+      "contentType": "application/pdf",
+      "textSha256": "1f462c20b3a4016ac58a4a234ca203fd74387b54922f5ff63529abc55433f18b",
+      "characters": 353390,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://archive.org/download/dli.csl.75/75_text.pdf",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/dli.csl.75/75_text.pdf",
+      "finalUrl": "https://dn790007.ca.archive.org/0/items/dli.csl.75/75_text.pdf",
+      "fetchedAt": "2026-11-18T10:52:27.403237Z",
+      "contentType": "application/pdf",
+      "textSha256": "c099fe16d630cdc5412132ed6333c51996359a5c724654e95d19104d16665998",
+      "characters": 455117,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "finalUrl": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "fetchedAt": "2026-11-18T10:44:08.572961Z",
+      "contentType": "text/html",
+      "textSha256": "2c31b68a091ecd18c4d21766d6c795ecc74eeabeeb576df3f30a36cbfe1c32a7",
+      "characters": 51814,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://imp-art.org/articles/channapatna-wooden-toys/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/channapatna-wooden-toys/",
+      "finalUrl": "https://imp-art.org/articles/channapatna-wooden-toys/",
+      "fetchedAt": "2026-11-18T10:44:08.985924Z",
+      "contentType": "text/html",
+      "textSha256": "0a849aeffd4c0b0d8f7cf27c208a16009cd901ce46968d49a8b4a1813785390a",
+      "characters": 9637,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://imp-art.org/articles/pinjrakari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/pinjrakari/",
+      "finalUrl": "https://imp-art.org/articles/pinjrakari/",
+      "fetchedAt": "2026-11-18T10:44:10.982144Z",
+      "contentType": "text/html",
+      "textSha256": "cd6c575ad5d66db0e1ab7f3db3cc4dd0af93cb6cf0662c4970f27b967051edc9",
+      "characters": 7886,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/articles/lac-ware/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/lac-ware/",
+      "finalUrl": "https://imp-art.org/articles/lac-ware/",
+      "fetchedAt": "2026-11-18T10:44:13.759193Z",
+      "contentType": "text/html",
+      "textSha256": "7d733ec74a1fb03c9adce0b593cb4647b5b2b3f82adb853154e91ce86d37f91c",
+      "characters": 4888,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://imp-art.org/articles/lac-dye/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/lac-dye/",
+      "finalUrl": "https://imp-art.org/articles/lac-dye/",
+      "fetchedAt": "2026-11-18T10:44:15.692173Z",
+      "contentType": "text/html",
+      "textSha256": "900d75360e027e1ad0d133d130388bb5b3e39ba2fa135fc8245e051ca43d66b3",
+      "characters": 3453,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://imp-art.org/articles/tarkashi/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/tarkashi/",
+      "finalUrl": "https://imp-art.org/articles/tarkashi/",
+      "fetchedAt": "2026-11-18T10:44:17.775043Z",
+      "contentType": "text/html",
+      "textSha256": "cbd9110b32f0dacd2677f9b24f8d68dddf485e766e74b5569a3b8d08cc22a4b3",
+      "characters": 9377,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://imp-art.org/articles/kavad/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kavad/",
+      "finalUrl": "https://imp-art.org/articles/kavad/",
+      "fetchedAt": "2026-11-18T10:44:37.158131Z",
+      "contentType": "text/html",
+      "textSha256": "3fbf6e6351422b0bf0cda1e9d6705ba3a5e327aed40b317b564fddfd13b42de5",
+      "characters": 5715,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/nirmal-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/nirmal-painting/",
+      "finalUrl": "https://imp-art.org/articles/nirmal-painting/",
+      "fetchedAt": "2026-11-18T10:44:44.865370Z",
+      "contentType": "text/html",
+      "textSha256": "3cd269c9cb7025ca4aec89263bb4df5e3d1d16a202884a360fea2d48df7044e3",
+      "characters": 4108,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://imp-art.org/articles/sholapith/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/sholapith/",
+      "finalUrl": "https://imp-art.org/articles/sholapith/",
+      "fetchedAt": "2026-11-18T10:44:55.674699Z",
+      "contentType": "text/html",
+      "textSha256": "0144b6b38fb94613ee4ca21b6de398053ac6ca155cfa5cf9c710d136eae21441",
+      "characters": 4271,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://encyclocraftsapr.com/lacquer-craft-of-etikoppaka/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/lacquer-craft-of-etikoppaka/",
+      "finalUrl": "https://encyclocraftsapr.com/lacquer-craft-of-etikoppaka/",
+      "fetchedAt": "2026-11-18T10:44:11.225588Z",
+      "contentType": "text/html",
+      "textSha256": "e7b755df1a16ec08b2b1f5189b10060e3737868ec7f99e25764712fbe65de3dc",
+      "characters": 1861,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.nif.org.in/innovation/Revival_of_-dye-ing_skills/209",
+      "route": "LIVE",
+      "readUrl": "https://www.nif.org.in/innovation/Revival_of_-dye-ing_skills/209",
+      "finalUrl": "https://www.nif.org.in/innovation/Revival_of_-dye-ing_skills/209",
+      "fetchedAt": "2026-11-18T10:44:10.296612Z",
+      "contentType": "text/html",
+      "textSha256": "8db4f1c04c622448fd8f7f0ad61a89e0e854768f7023fd1e61746f4adc5fd60d",
+      "characters": 7889,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.downtoearth.org.in/economy/the-indian-story-that-needs-revival-68019",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/economy/the-indian-story-that-needs-revival-68019",
+      "finalUrl": "https://www.downtoearth.org.in/economy/the-indian-story-that-needs-revival-68019",
+      "fetchedAt": "2026-11-18T10:44:12.793516Z",
+      "contentType": "text/html",
+      "textSha256": "0ddbdacf4b5bd986ba56a8557f7412389884df56c9c591a0fbac4eb78e191c5d",
+      "characters": 6435,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.outlookbusiness.com/specials/good-businesses-2014/romancing-the-wood-1532",
+      "route": "LIVE",
+      "readUrl": "https://www.outlookbusiness.com/specials/good-businesses-2014/romancing-the-wood-1532",
+      "finalUrl": "https://www.outlookbusiness.com/specials/good-businesses-2014/romancing-the-wood-1532",
+      "fetchedAt": "2026-11-18T10:44:17.735118Z",
+      "contentType": "text/html",
+      "textSha256": "ee914623e9a5f903f6875aeab9ebc7fd13751013305280ce2a0652c14b0a656c",
+      "characters": 11340,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.forest-trends.org/wp-content/uploads/2018/01/doc_5687.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.forest-trends.org/wp-content/uploads/2018/01/doc_5687.pdf",
+      "finalUrl": "https://www.forest-trends.org/wp-content/uploads/2018/01/doc_5687.pdf",
+      "fetchedAt": "2026-11-18T10:44:29.871747Z",
+      "contentType": "application/pdf",
+      "textSha256": "d9aa5d656a6faa3e1de648dcf815ede2aeabd98d470a0e45289664379634bd69",
+      "characters": 18721,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://artsandculture.google.com/story/7AWB14oDicaODA",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/7AWB14oDicaODA",
+      "finalUrl": "https://artsandculture.google.com/story/7AWB14oDicaODA",
+      "fetchedAt": "2026-11-18T10:44:38.900938Z",
+      "contentType": "text/html",
+      "textSha256": "0dc8c6599f54faeebd03f2510770fed4f92cbf2c77a00a825d431e8271d9e8dc",
+      "characters": 9585,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://epch.in/sites/default/files/ecraftcil/issue61/pdf/CoP18_Geneva.pdf",
+      "route": "LIVE",
+      "readUrl": "https://epch.in/sites/default/files/ecraftcil/issue61/pdf/CoP18_Geneva.pdf",
+      "finalUrl": "https://epch.in/sites/default/files/ecraftcil/issue61/pdf/CoP18_Geneva.pdf",
+      "fetchedAt": "2026-11-18T10:44:45.992039Z",
+      "contentType": "application/pdf",
+      "textSha256": "09b881dce97e4453bcfd3cd312663c99fe9fea428e596523d9afdd6635840c41",
+      "characters": 8622,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://www.downtoearth.org.in/wildlife-biodiversity/cop19-cites-relaxes-restrictions-on-export-of-indian-shisham-products-86169",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/wildlife-biodiversity/cop19-cites-relaxes-restrictions-on-export-of-indian-shisham-products-86169",
+      "finalUrl": "https://www.downtoearth.org.in/wildlife-biodiversity/cop19-cites-relaxes-restrictions-on-export-of-indian-shisham-products-86169",
+      "fetchedAt": "2026-11-18T10:44:15.050809Z",
+      "contentType": "text/html",
+      "textSha256": "bce4f66b46a93c2279d82458276f76004db9554c370293c1aa7bf56fcd03edfa",
+      "characters": 3273,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://craftofgujarat.gujarat.gov.in/Trade?ID=17",
+      "route": "LIVE",
+      "readUrl": "https://craftofgujarat.gujarat.gov.in/Trade?ID=17",
+      "finalUrl": "https://craftofgujarat.gujarat.gov.in/Trade?ID=17",
+      "fetchedAt": "2026-11-18T10:45:04.753297Z",
+      "contentType": "text/html",
+      "textSha256": "16fccf08b42ed4cef89bd6c4e5735b45c05b8bec1f745ed631fe72ed8d1188ca",
+      "characters": 1869,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://www.thenewsminute.com/tamil-nadu/tns-arumbavur-wood-carvings-and-thanjavur-netti-work-get-gi-tag-124451",
+      "route": "LIVE",
+      "readUrl": "https://www.thenewsminute.com/tamil-nadu/tns-arumbavur-wood-carvings-and-thanjavur-netti-work-get-gi-tag-124451",
+      "finalUrl": "https://www.thenewsminute.com/tamil-nadu/tns-arumbavur-wood-carvings-and-thanjavur-netti-work-get-gi-tag-124451",
+      "fetchedAt": "2026-11-18T10:44:54.987541Z",
+      "contentType": "text/html",
+      "textSha256": "47ba32bf58088903a04f59c9e48d897df2dff0b10e9caaf3eb9a679a16aeb2a5",
+      "characters": 2431,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://poompuhar.com/tnhdc/welcome/GI",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250917143646id_/https://poompuhar.com/tnhdc/welcome/GI",
+      "finalUrl": "https://web.archive.org/web/20250917143646id_/https://poompuhar.com/tnhdc/welcome/GI",
+      "fetchedAt": "2026-11-18T10:45:03.046882Z",
+      "contentType": "text/html",
+      "textSha256": "4c97414e043817aaf2e180b8f12846fd38b0246513e1b564e3325ad2f254ebd5",
+      "characters": 973,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/431",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/431",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/431",
+      "fetchedAt": "2026-11-18T10:45:03.050168Z",
+      "contentType": "text/html",
+      "textSha256": "7a6c1cee98b3e7c8bd0a0c22622dff2db2f51ab9e3fb68ed2062bcc11b1763df",
+      "characters": 18401,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/84",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/84",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/84",
+      "fetchedAt": "2026-11-18T10:45:14.354377Z",
+      "contentType": "text/html",
+      "textSha256": "e9dd4b14955d158ce7729f2bd36570afc38ceac23e5c93c8e7f98ecd34da2148",
+      "characters": 4026,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/566",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/566",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/566",
+      "fetchedAt": "2026-11-18T10:45:25.632433Z",
+      "contentType": "text/html",
+      "textSha256": "985d980959503ee40e698cd81d98ec502befe247ed5f6ea0f48c3f742d698180",
+      "characters": 3601,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://search.ipindia.gov.in/GIRPublic/Application/Details/849",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250502131815id_/https://search.ipindia.gov.in/GIRPublic/Application/Details/849",
+      "finalUrl": "https://web.archive.org/web/20250502131815id_/https://search.ipindia.gov.in/GIRPublic/Application/Details/849",
+      "fetchedAt": "2026-11-18T10:45:43.447539Z",
+      "contentType": "text/html",
+      "textSha256": "6d3228cdc8cf2eb42cc88877fa8b80481bc1a9a38b4c6a1a8b4f745171a266ad",
+      "characters": 1911,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/918",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/918",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/918",
+      "fetchedAt": "2026-11-18T10:45:54.884039Z",
+      "contentType": "text/html",
+      "textSha256": "46672fa79d74f68e6c408a70b858592e56eda331474dfe08ae510e59dff6cbf1",
+      "characters": 1699,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/919",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/919",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/919",
+      "fetchedAt": "2026-11-18T10:45:58.072552Z",
+      "contentType": "text/html",
+      "textSha256": "a9a64aed97aed3438f44ffe5273246500133d032b6cd0bbd4a20bae02f30dcdf",
+      "characters": 1756,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://api.sci.gov.in/jonew/judis/19319.pdf",
+      "route": "LIVE",
+      "readUrl": "https://api.sci.gov.in/jonew/judis/19319.pdf",
+      "finalUrl": "https://api.sci.gov.in/jonew/judis/19319.pdf",
+      "fetchedAt": "2026-11-18T10:45:10.271987Z",
+      "contentType": "application/pdf",
+      "textSha256": "d6fa8b015f6829f4b06b02e61ee6e8bd5a851a435bfab48e3fdf571e31ec4671",
+      "characters": 98331,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://www.downtoearth.org.in/environment/protect-the-tuskers-damn-the-carvers-29891",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/environment/protect-the-tuskers-damn-the-carvers-29891",
+      "finalUrl": "https://www.downtoearth.org.in/environment/protect-the-tuskers-damn-the-carvers-29891",
+      "fetchedAt": "2026-11-18T10:44:16.914806Z",
+      "contentType": "text/html",
+      "textSha256": "e875888ce98ea8ecd7509a981784204a886673aaf14ddb752d40bcc149b9ac03",
+      "characters": 4371,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://pib.gov.in/PressReleasePage.aspx?PRID=1976624",
+      "route": "LIVE",
+      "readUrl": "https://pib.gov.in/PressReleasePage.aspx?PRID=1976624",
+      "finalUrl": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1976624&reg=48&lang=2",
+      "fetchedAt": "2026-11-18T10:45:13.098191Z",
+      "contentType": "text/html",
+      "textSha256": "27081328ecea98208ddb9817e01f22cb35ae1aed27f4b459bb7a75cc50c74b40",
+      "characters": 4348,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://www.downtoearth.org.in/news/wildlife-biodiversity/red-sanders-falls-back-in-iucn-s-endangered-category-81053",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/news/wildlife-biodiversity/red-sanders-falls-back-in-iucn-s-endangered-category-81053",
+      "finalUrl": "https://www.downtoearth.org.in/wildlife-biodiversity/red-sanders-falls-back-in-iucn-s-endangered-category-81053",
+      "fetchedAt": "2026-11-18T10:44:24.712164Z",
+      "contentType": "text/html",
+      "textSha256": "3b53d8548e62ca693474fa54be61dc7aa9be097765d085cbebfb89fbc36618d7",
+      "characters": 3737,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://www.downtoearth.org.in/environment/karnataka-hangs-on-to-its-sandalwood-13030",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/environment/karnataka-hangs-on-to-its-sandalwood-13030",
+      "finalUrl": "https://www.downtoearth.org.in/environment/karnataka-hangs-on-to-its-sandalwood-13030",
+      "fetchedAt": "2026-11-18T10:44:37.707514Z",
+      "contentType": "text/html",
+      "textSha256": "93d91d91731b694cf15a038ecf351c393b3ac6ff19a2b43379000777e1fd147f",
+      "characters": 4158,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://www.newsclick.in/Kashmir-Woodcarving-Declining-due-low-Demand-Lack-Interest-Younger-Generation",
+      "route": "LIVE",
+      "readUrl": "https://www.newsclick.in/Kashmir-Woodcarving-Declining-due-low-Demand-Lack-Interest-Younger-Generation",
+      "finalUrl": "https://www.newsclick.in/Kashmir-Woodcarving-Declining-due-low-Demand-Lack-Interest-Younger-Generation",
+      "fetchedAt": "2026-11-18T10:45:15.473138Z",
+      "contentType": "text/html",
+      "textSha256": "688eaeb06cfc2f861ef41d088915c3714a50c24cc64ba6f3a2cd0e4cd12f3d0c",
+      "characters": 7546,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S40",
+      "url": "https://nmji.in/occupational-wood-dust-exposure-and-lung-function-impairment-a-systematic-review-and-meta-analysis/",
+      "route": "LIVE",
+      "readUrl": "https://nmji.in/occupational-wood-dust-exposure-and-lung-function-impairment-a-systematic-review-and-meta-analysis/",
+      "finalUrl": "https://nmji.in/occupational-wood-dust-exposure-and-lung-function-impairment-a-systematic-review-and-meta-analysis/",
+      "fetchedAt": "2026-11-18T10:45:18.694978Z",
+      "contentType": "text/html",
+      "textSha256": "8dd3726c5e91b4c95d68d3a992e012e9b4d3e8cd1c9be1512e5171f7ef5f1e5a",
+      "characters": 33111,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S41",
+      "url": "https://www.msjonline.org/index.php/ijrms/article/view/5265",
+      "route": "LIVE",
+      "readUrl": "https://www.msjonline.org/index.php/ijrms/article/view/5265",
+      "finalUrl": "https://www.msjonline.org/index.php/ijrms/article/view/5265",
+      "fetchedAt": "2026-11-18T10:45:25.408194Z",
+      "contentType": "text/html",
+      "textSha256": "c3dded135b4936efd990ab48a47ee0edf2adc6aab7fa74fe9b80e02687737e58",
+      "characters": 5101,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S42",
+      "url": "https://cites.org/sites/default/files/eng/cop/18/prop/060319/E-CoP18-Prop-51.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20221130121104id_/http://cites.org/sites/default/files/eng/cop/18/prop/060319/E-CoP18-Prop-51.pdf",
+      "finalUrl": "https://web.archive.org/web/20221130121104id_/http://cites.org/sites/default/files/eng/cop/18/prop/060319/E-CoP18-Prop-51.pdf",
+      "fetchedAt": "2026-11-18T10:45:40.979533Z",
+      "contentType": "application/pdf",
+      "textSha256": "21470aee89e6e3598caaaa84c21bfe28dfdc3239004433dbc38ef9b8f69a7c1e",
+      "characters": 45241,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "As met with in architecture, furniture and cabinet work, wood is ornamented in various ways such as by carving, inlaying, veneering, painting,- lacquering, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "no aspect of Indian Art can have so much to teacji the student as that of wood-work. It has a vast antiquity",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "The turner [kharddi) with his lathe is met with in every village of India and has an assured position in the community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S04",
+      "quote": "The kharádi (turner) is found in every town and large village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S01",
+      "quote": "He prepares toys, nests of boxes, bed-posts, pdn ddns, hukka mouth-pieces, and the like.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "Inlaying, for example, is an art rarely practised by itself. There is no special craft devoted to it, and the designs adopted differ in no essential from those of carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "At the same time there are a few centres that have for long years past enjoyed the reputation of having expert inlayers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S22",
+      "quote": "Wood carving is an ancient art of India. Though traditionally wood has been used for making home posts, rafters, yokes, ploughs, toys, planks, furniture among others",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S08",
+      "quote": "Lac-turnery, the art of turning the wood on the lathe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S08",
+      "quote": "Lacquerware refers to a wide variety of lacquered wooden items which are prepared through the process of lac-turnery, an indigenous traditional handicraft practiced in and around the town of Channapatna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "The craft of lac-turnery is essentially Indian",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "lac is extensively employed as a decorative material in the metal and ivory crafts as well as in that of wood-turnery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "the circumstance that the wood and stone-carvers belong to one and the same caste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "Both in Peshawar in the extreme north of India and Rangoon in further India, the tradition exists that wood-carving originated in connection with boat-building",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S22",
+      "quote": "Emperor Ashoka's palace at Pataliputra was made in wood, and the grand temple at Bodh Gaya as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S22",
+      "quote": "In ancient India, the wood-worker made war chariots in addition to furniture, doors and panels. The Rigveda mentions him as sutradhar who was also the charioteer of the chariot he made.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "In the Brihat Sanhita, a celebrated work on astronomy dating from the sixth century A. D., a list is given of the kinds of wood most esteemed by Hindus for furniture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "Sdl, sandalwood, and teak are mentioned, but tun and shisham, which are used so generally nowadays, are not included.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "there is a curious collection of forgotten lore in the Silpa Sastra and the Puranas, which imposes certain rules in the selection and felling of trees",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "the timber of trees which have been struck by lightning or borne down by inundations, storms or elephants, or which have fallen towards the south quarter, or which grow on burial-grounds should not be used by carpenters",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "These hereditary carvers had a shastram or science of their own, which, with wonderful exactitude, and the keenest botanical knowledge, defined and described the various kinds of wood suitable for rough or delicate carving, the age, season, and locality in which these woods ought to be felled",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S03",
+      "quote": "No craft has suffered more than wood-carving. Formerly the nobility and well-to-do citizens took delight in embellishing their houses",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S03",
+      "quote": "with carved verandahs and balconies. All the chief entrances were filled with massive carved doors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S03",
+      "quote": "In Lower Bengal the end has already come, and wood-carving is practically extinct.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S03",
+      "quote": "It is said to have been introduced in 1764 by Hdfiz Rahmat Khan, who summoned a skilful stone-cutter from Delhi to direct the ornamentation of the Juma Masjid then under construction.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S03",
+      "quote": "In the hands of his pupils the art was extended to wood, a primary cause being the natural abundance of shisham wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S03",
+      "quote": "For some generations the Nagina lohdrs had been in the habit of making gunstocks, chdrpdi legs, and masnads of ebony and adorning them with a superficial floral carving to suit native taste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S03",
+      "quote": "Not until about thirty years ago did the industry attract European attention.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S03",
+      "quote": "The art is in the hands of a Hindu family of g'wasi-Brdhmanical pretensions, whose forefathers migrated from Rdjputdna in the train of a Chauhan chief in the fourteenth century and settled at Mainpuri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S13",
+      "quote": "FS Growse, a colonial administrator stationed in Mainpuri in the 1860s, records an oral narrative in which a thirteenth-century chieftain from Rajputana (present-day Rajasthan) is said to have migrated to present-day Uttar Pradesh, bringing with him a group of decorative artisans",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "It would appear that the art came to India from Persia (Shiraz) through Sind, perhaps 300 years or so ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "It was first acquired by the Hindus and then subsequently taught to the Parsis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S17",
+      "quote": "The small village of Etikoppaka in Andhra Pradesh has been known for its coloured lac coated turned wood objects for over two centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S11",
+      "quote": "Lac was known in the subcontinent from at least the first millennium BCE. It is mentioned in three texts from the period: the Atharvaveda, the Astadhyayi of Panini, and the Mahabharata",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S12",
+      "quote": "It is mentioned in three texts from the period: the Atharvaveda, the Astadhyayi of Panini, and the Mahabharata, where the Pandavas are almost killed in a flammable building made of lac resin and ghee.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S10",
+      "quote": "Pinjra work appears in historical documents during the reign of the Mughal emperor Akbar (r. 1556-1605); the Ain-i-Akbari, written by his grand vizier Abul Fazl, suggests that the craft had become highly developed and valued by this time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S01",
+      "quote": "Thrones Thrones, and State-chairs have, however, been made from the most ancient times and are usually named after the animal or chief object portrayed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "In some parts of the country low settees {chaukis) and reed stools {?nordhs) are in demand but chairs and sofas are of modern introduction.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "European ideas of comfort are steadily creeping into the every-day life of the people and accordingly a demand for household furnishing has set in",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S02",
+      "quote": "Wood-carving was first started in 1877 in a desultory kind of way",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S02",
+      "quote": "Throughout the whole period of its existence the wood-carving department of the school has been devoted to the ornamentation of European furniture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S02",
+      "quote": "the great bulk of the work done in the school has been in teakwood, and blackwood or 'rosewood' (Dalbergia latifolia), more particularly the latter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S02",
+      "quote": "The best specimens of the ancient teak carvings of Mysore were consumed in the fire of February 1897, which reduced to ashes the frontage and most ornate portion of the 'old palace",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S02",
+      "quote": "The Gudigars are reported to have come originally from Goa, their migration to the towns named above having been occasioned by the attempts of the early Portuguese invaders to convert them forcibly to Christianity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "These are known as gudigars. They claim to have come from Goa",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S03",
+      "quote": "Traditionally harhais claim descent from Viswakarma, son of Brahma",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S22",
+      "quote": "The carvers of Madurai, Tamil Nadu, known as asaris, claim to be direct descendants of Vishwakarma, the celestial architect.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S14",
+      "quote": "The suthars choose to use the surname Suthar, and in some cases add Jangid to their name to signify that they are descendants of Vishwakarma",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S15",
+      "quote": "The Nizam of Hyderabad is known to have commissioned a large number of furniture pieces from Nirmal artisans over the years, and many artisans were invited to set up workshops at Hyderabad in the 1950s.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "A modest but interesting industry is carried on at Udayagiri in the Nellore district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "In Udayagiri, a village of some note before the days of British rule, there lives an old Muhammadan, who twenty-five years ago used his knife with unusual skill in the manufacture of wooden sandals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "So he tried his hand on the shapening of spoons and forks",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "Recently in Kashmir a most unfortunate departure has taken place into realistic carving in walnut, in which bunches of water lilies or sprays of",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "leaves are carved over the surface of tables or other articles, the one object apparently being to display a marvellous degree of undercutting",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S03",
+      "quote": "Formerly Sahdranpur was renowned for the excellence of its carved chaukats of shisham wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S03",
+      "quote": "whereas the modern jdli trade is entirely in the hands of Muhammadans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S06",
+      "quote": "discovery of aniline dyes by Sir W. H. Perkin and others however, and the perfection of chemical dyes in general put an end to the cochineal and Indian lac dye trades, and lac dye has now only a very limited market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "Vizagapatam where chess-tables and men, dressing cases, work-boxes, tea-caddies, jewel-cases, glove-boxes, picture-frames, etc., have for many years past been extensively manufactured in sandal and other woods, veneered with tortoise-shell or bison and buffalo-horn",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "The chief woods employeid for ornamental work in India are teak, shisham, deodar,. sainda.\\- wood, ebony, walnut, iun, nim, Madras red-wood",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "dudhi or white-wood, red-cedar, sal, rohira, babul, jack-wood, etc.,* the order enumerated being approximately that of their importance",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "construction and is the main furniture wood of the country. Its popularity is due to its relatively small coefficient of expansion and contraction, and the fact that it is extremely durable and, practically speaking, immune to insect and fungus attack.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "Sapwood greyish-white ; heartwood light golden brown.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "Teak darkens considerably when seasoned, and with great age the wood often turns nearly black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "teak from Burma and Malabar are preferable for constructional work, but for beauty of grain and handsome \" figure \", the dark coloured timber obtainable from the Deccan and the Dangs is hard to beat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S02",
+      "quote": "Mysore teak is locally regarded as stronger than, though not so highly developed as the Burma wood, and its superiority in strength is usually attributed to its close grain, and to the presence of oil in its pores",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S05",
+      "quote": "Bombay blackwood or Indian rosewood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S05",
+      "quote": "An extremely handsome furniture wood. Bose-purple when freshly cut, toning to dark brown on exposure. Probably the finest furniture wood India possesses. Very strong and easy to work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S05",
+      "quote": "Often called shisham in Bombay Presidency. This is a confusing name as Dalbergia Sissoo is known as shisham in North India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S05",
+      "quote": "The heartwood varies from golden-brown to dark-brown. Very similar to blackwood, but without the purple colour of the latter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S05",
+      "quote": "Extremely suitable for chairs, wheel spokes and felloes, sporting requisites, and turnery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S05",
+      "quote": "Dalbergia Sissoo (sissoo). Strong and ornamental. The best chair wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S03",
+      "quote": "The wood par excellence for all kinds of carving is shisham (Dalhergia sissoo), which flourishes universally in the plains as well as on the lower ranges of the Himdlayas. The dark heart-wood is of great durability and is not readily attacked by whiteants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S03",
+      "quote": "Cedrela toona or tun is the staple timber of cabinet-makers, notably in the Sahiranpur district. This wood is soft and easily worked, and takes a natural dull-red polish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S03",
+      "quote": "Dudhi (Holarrhena antidysenterich), another speciality of Sahdranpur, is not so well known as formerly. The tree is found in the Sewdlik tract and yields a white soft wood, very easily chiselled.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S03",
+      "quote": "but have now Ic^t favour owing to their tendency to rapid discoloration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S03",
+      "quote": "The Nagina carvers are fond of using it in combination with their so-called \"ebony\" (abnus): the latter (Diospyros tomentosa) is a black and heavy heart-wood imported from Central India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S01",
+      "quote": "Sandal-wood is the most popular and most expensive of all woods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "Owing to its high price the hard-grained, durable, and fragrant sandalwood is used only for small articles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S05",
+      "quote": "is recognised as the premier carving wood of India, and Indian sandalwood carvings and small ornamental boxes are famous throughout the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S05",
+      "quote": "album, is used in the well known sandal wood carvings of Mysore, and this wood holds premier place in the world for carved boxes, etc., on account of its pleasant perfume.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S02",
+      "quote": "colour and marking, which depend greatly on its age and locale, four varieties of the wood are recognised :--bili (white), kempu (red), ndga (cobra), and navilu (peacock).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S02",
+      "quote": "The two latter are the best, and realise the highest prices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S05",
+      "quote": "an excellent wood for carving and is much used for this purpose in Kashmir, in addition to being a valuable furniture wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S08",
+      "quote": "The soft wood of the hale tree (Wrightia tinctoria) is first turned into circular shapes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S08",
+      "quote": "Hale wood is the basic raw material of lac-turnery. It is extremely close grained, moderately hard and easily turned into fine shapes by hand or machine. It has a very low moisture and oil content. The latter helps ensure an excellent finish and translucency after polishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S19",
+      "quote": "ivory wood (Wrightia tinctoria) or hale mara in Kannada is the popular choice. Ivory wood is soft, fine grained, white coloured and it easily absorbs dyes, imparting vibrant colours to the toys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S09",
+      "quote": "The toys, dolls and other objects manufactured in Channapatna are made of the wood of the ivorywood tree (Wrightia tinctoria), known as hale mara or alae mara in Kannada.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S17",
+      "quote": "Figures of gods and goddesses, miniature temple chariots, architectural carvings, boxes, and decorative elements were carved from the ivory colored ankudu tree (Wrightia tinctoria) sourced from nearby forests.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S18",
+      "quote": "`ankudu' (Wrightea tinctoria) wood is most suitable for making toys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S02",
+      "quote": "The wood which is most used is red sanders (Pterocarpus santalinus), which is obtained from the neighbouring hills and the forests of the Venkatagiri and Kdlahasti zamindaris.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S05",
+      "quote": "Carving , toys , combs } etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S05",
+      "quote": "These are made of any cheap close-grained wood suitable for ^carving such as, Adit a cordifolia, Holarrhena antidysenterica, Boehmeria rugulosa , Wrightia tinctoria , etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "For ornamental objects light coloured and uniformly grained woods, that are not liable to warp or split, are indispensable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "Rangata, the polishing stick, &c. The woods used are shisham and poplar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "At Ferozepore, the work of an old pupil of the Mayo School of Art is skilful in execution and artistic in design. He uses the farásh (Tamarix orientalis), and not, as elsewhere, the shisham and poplar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "accomplished by other woods, by ivory, by bone, by mother-ofpearl or by metals. It may be in large pieces or in fine wire",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "The ivory used is generally the waste stuff left by the turners of ivory bangles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S06",
+      "quote": "Lac is a resinous .substance secreted by an insect known as the lac insect",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S06",
+      "quote": "Coccidae which is comprised of the .Scale insects and Mealy bugs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S06",
+      "quote": "Laccifer lacca is by far the most important and produces the bulk of the lac of commerce.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S12",
+      "quote": "The resin secreted by the insects can be processed into shellac. This can be shaped into jewellery or used to finish wooden surfaces, which is why lacquer was originally made with lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S07",
+      "quote": "superior qualities are in demand and preference is given to pure shellac on account of its ability to take up colours homogeneously",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S14",
+      "quote": "Made from low-density wood from trees such as mango, semal, adulsa or neem, the construction begins with building the primary wooden structure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S16",
+      "quote": "Deriving its name from the plant Aeschynomene aspera, known as shola in Bangla",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S16",
+      "quote": "the soft white core of the shola plant, called pith or Indian cork, is used to make several religious and cultural objects",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S16",
+      "quote": "The sholapith craft is also known as netti in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S05",
+      "quote": "Cricket bats.--Salix alba is the best but Salix babylonica is the wood most used for this purpose in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S03",
+      "quote": "There is a distinct class of carpenters who earn their living by supplying the cloth-printers (chhipis) with the necessary dies (thappas). These dies are made of shisham, mango, and ebony and are often of delicate and skilful workmanship.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "The use of unseasonedwood has been the chiefstumbling-block to the adoption of India's lesser known timbers, and the importance of proper seasoning cannot be over-emphasized.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "the amount of seasoning which takes place in a log is, to all intents and purposes, negligible, in comparison with the rapid drying which can be effected with converted timber.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "experiments have shown that, even after 15 to 20 years, some species have the same amount of moisture in the centre of the log as they had when they were felled.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "Water submersion is not a seasoning process, it is merely a method of storage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "certain constituents of the sap such as the sugars, gums, and tannins, are leached out of the wood",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "there are two important points to be attended to in air-seasoning timber in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "The proper piling or stacking of the wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "The protection of the stack from the prevailing hot winds, the blazing Indian sun, and the rain.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "Mr. C. V. Sweet, late Seasoning Officer at Dehra Dun, has dealt with this question in detail",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "He divides the Indian woods into three classes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "Woods which are only moderately liable to crack, split, and warp, called medium refractory woods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "Woods which are capable ot withstanding rapid seasoning, or are particularly liable to staining, mould, and decay during seasoning, called non-refractory woods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "Air-seasons easily, and if properly stacked with a good air circulation, it can be dried quickly with little or no depreciation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "Blackwood can be air-seasoned and kiln-seasoned without trouble and with little degrade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "Kiln-seasoning attempts to carry out exactly the same process as natural drying but in a far shorter period of time ; estimated very roughly at one-twelfth of the time required to air-season the same timber.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "Kilnseasoning on a small scale is expensive, owing to the large outlay of capital required to instal seasoning kilns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S08",
+      "quote": "The preparation of hale wood for lac-turnery begins with seasoning. Logs are cut into small billets and stored away from heat and sunlight in a location with good air circulation for ten days to a month, depending on the moisture content of the wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S13",
+      "quote": "The wood is first seasoned - the planks are stacked and exposed to air, protected from sunlight and rain, for six to seven months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S02",
+      "quote": "proceeds to inscribe the design or pattern by drawing it on the smooth surface of the wood with a pencil. Ifthe design is very intricate, he draws it on a piece of paper of the same size as the slab, and glues it thereon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "The operation is started by either drawing the pattern that is intended to be produced on the smooth and white-washed sandalwood, or on a piece of paper pasted over its surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S02",
+      "quote": "He then proceeds to mark or engrave the pattern on the wood with an engraver, outlining the design in all its details. The next process is \" bosting,\" or cutting away roughly between the outlines of the pattern",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S02",
+      "quote": "He starts with a large tool, and goes over the work several times with tools of finer and finer edges",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S02",
+      "quote": "A peculiarity of the sandal-wood carver of Mysore is that he disdains a file, and does the cleanest and most finished work with the chisel alone, aided by the fine texture of the wood and the extreme sharpness of his tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S02",
+      "quote": "The tools are made from European umbrella spokes, ramrods, and country steel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "A mallet - usually a plain block of wood - and a dozen small chisels will suffice for all purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "They fall into two main classes, viz. the flat V chisels known as chaursi; and those with a bent rounded head, used in carving floreated patterns, called hirka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "The lath (adda) consists of two iron bars (killa), one fixed in the oround, the other to be adjusted for distance.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "On the inner side of each bar isa spike to which the block of wood to be turned (mochha) is attached.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "round which the thong of the bow (kaman) is once passed. The bow is worked backwards and forwards, and thus: imparts the necessary rotatory motion.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S08",
+      "quote": "Traditionally all lacquerware was produced using simple hand lathes called patris made by local carpenters. A bow string is used to turn a rotating axle in the center of wooden lathe. The turning tool is held in the free hand and pressure is added with the foot, shaping the spinning wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S08",
+      "quote": "The production time decreases considerably on the power lathe as both hands are free to operate turning tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S08",
+      "quote": "Cutting tools are applied to the revolving piece of wood so that thin continuous chips are scraped off.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S08",
+      "quote": "Once the desired shape is formed, it is sanded with sandpaper while it is still turning, until the surface is smooth and uniform.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S04",
+      "quote": "the colour is applied by pressing sticks (batti) of coloured lac to the revolving surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "a stick of sealing-wax (batti) is pressed against it, as it revolves on the lathe. The heat generated melts the lac and thus colours the wood irregularly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S08",
+      "quote": "A lac stick of the chosen colour is pressed to the revolving wood. The friction causes the lac to melt and spread uniformly over the area on which it is applied.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S07",
+      "quote": "The portion of the lac touching the article melts with the heat generated by friction and colours the wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "An article intended to be ornamented with lac is first turned to the desired shape and polished with a fine powder made from broken pottery. This polishing has the effect of filling up the pores.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "Lastly, a cotton rag, dipped in sweet oil (preferably sessanium), is held against the revolving object",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "the lac takes a polish that it never subsequently loses",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S08",
+      "quote": "the lacquered piece is buffed with the leaves of the talegiri (Pandanus odoratissimus)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S08",
+      "quote": "Final finishing is done using a screw pine leaf to help spread the lac on the turning wood and polish the object. Buffing lends a translucency to the finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S20",
+      "quote": "which she then buffs to a mirror-like gloss with a long, sharp-edged strip of screw pine leaf, locally called talegiri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S08",
+      "quote": "The preparation of lacquer from lac begins with heating and softening.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S08",
+      "quote": "A specific amount of lithophone is then added to the softened lac and is beaten continuously until a white tint appears.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S09",
+      "quote": "To prepare the coloured lac sticks, the lac chips are first heated over a coal fire. As they begin melting, dye or colourants are added to the melting lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S18",
+      "quote": "Lacquer pellets are heated slowly in an open oven while the colours and titanium dioxide in powder form are applied to the fluid in small quantity at regular intervals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S04",
+      "quote": "Borders are usually made in two or three colours superposed, and the pattern is etched with a chisel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S04",
+      "quote": "To produce a pattern in green the black is scraped through, for red both the green and black are scraped away, and for white the wood itself is exposed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "In this class of turnery the object is coated with first one colour, then on the top a second, a third or a fourth, uniformly all over.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "With a fine chisel or style the lac-coated Surface is now scratched, the hand being made to move lightly or to press heavily as may be necessary to bring out the colour required from the numerous layers beneath the surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "The ivory or bone is first formed into long strips of a",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "required shape, then cut transversely into a number of thin shps.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "These are laid on their places and the outhnes of the spaces required, scratched on the wood. These are then cut out and the ivory imbedded with glue or other cement as required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "the surface of the ivory is ornamented with black designs. This is accomplished by scratching a pattern on the surface of the ivory, then smearing over with black lakh (lac), fused by means of a hot bolt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "The excess of lakh above the surface is next removed by scraping with the edge of a flat knife.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S03",
+      "quote": "The first part of the process of tdrkashi consists of drawing the design in pencil on well-seasoned shisham. The lines are then deeply incised with a sharp knife, and into this brass wire is drawn and beaten down level with the surface of the wood with an iron hammer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S13",
+      "quote": "The artisan then lays the wire down on its sharp edge over the groove with one hand, and taps it into place with a hammer held in the other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S03",
+      "quote": "The dots that diversify the design and soon run up to thousands in a space of only a few inches square, are minute coils of wire twisted up on the point of a needle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S13",
+      "quote": "For the decorative dots, thin wire is coiled around the tip of a needle and often beaten directly into the surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "The process requires considerable time and labour. A plate of twelve inches diameter will occupy a workman for twenty days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "These are cut into long thin strips of various shapes and are",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "glued together in such a manner as to show, on transverse section, geometric patterns of rich and varied design",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "Thin strips or veneering ribbons are thus made by transverse section on a series of parellel strands and these ribbons are then glued to the surfaces of the boxes, cabinets, etc., as desired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S03",
+      "quote": "The thin panels of fretwork are sawn from a plank previously fretted by machine. In this way one passage of the machine fret-saw is actually doing five or six panels of jdli work at once.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S03",
+      "quote": "A separate block is used for the application of each colour: a single block contains only a portion of the design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S04",
+      "quote": "It may consist of as many as 2,000 separate pieces : these are joined together by a process of dowelling without the assistance of glue, the whole being held together by the frame.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S07",
+      "quote": "Seed lac is obtained by grinding and washing this stick lac. Shellac is made by melting seedlac or extracting it by a suitable solvent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S07",
+      "quote": "It contains, apart from woody matter, the lac resin, lac dye, bodies of insects and some wax.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S12",
+      "quote": "Lac dye gets its red colour from the laccaic acid present in the hemolymph or body fluid of the lac insect.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S06",
+      "quote": "It is the colouring matter of the in.sect bodies dead or alive which forms the crimson lac dye when lac is washed. It was for this colouring matter or lac dye, that lac was originally cultivated.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S12",
+      "quote": "It is obtained by separating the insects from the branch and the resin, crushing them and dissolving the result in an alkaline solution. This solution is then acidified and treated with chalk, which reforms the dissolved dye as a sediment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "The pigments employed are orpiment, sulphur, white pigments, lead, red mercury, prussian blue, lamp-black and indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "with the exception of indigo, practically all the other pigments used in the lac and lacquer-wares are metallic oxides.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S04",
+      "quote": "The colours are mostly mineral. Yellow is made with orpiment, green is the arsenite of copper, red with red-lead or vermilion, blue with lájward or Prussian-blue, black with lamp-black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S04",
+      "quote": "Yellow.-Quarter seer shellac and 2 chitáks sulphide of arsenic (hartál) ;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S04",
+      "quote": "warming gently, mount the mixture on a stick, cool, and take off the pigment and roll it into a cylinder",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S01",
+      "quote": "Recently, however, aniline dyes have been almost universally adopted with the result that the delicate artistic colours formerly produced have practically disappeared and the articles made at the present day fade and tarnish",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S08",
+      "quote": "These include lithophone, a compound of barium sulphate and zinc sulphide which is a white pigment that enables lac to lose its transparency and become opaque.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S08",
+      "quote": "Equally important are aniline colours which are used to prepare lac sticks. The following basic colours are used: rhodamine (rose), auromine (yellow), diamond green, purple, violet and red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S05",
+      "quote": "Can be kiln-seasoned, but care is needed as surface oxidization is apt to discolour the wood. This can, however, be avoided by proper treatment without difficulty.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S01",
+      "quote": "it receives a coating of finely divided tinfoil made into a -paste with glue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S01",
+      "quote": "Over the top of the tin, a layer of red or yellow lac is next given, with the result that the object obtains a rich fiery glow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S01",
+      "quote": "The art conceptions seen in wood-work have been greatly influenced by the grain of the timber employed, such as the deep under-cutting and sculpture that is possible with teik, red-wood and walnut",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S01",
+      "quote": "the low relief of shisham and deodar, the incised designs of ebony, the intricate and minute details of sandal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S05",
+      "quote": "the shrinkage of teak is less than the shrinkage of other timbers, and as a result, the \" working \" or \" moving \" of teak is slight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S05",
+      "quote": "the natural oil in teak wood retards the absorption of moisture, and, as a result, when teak is exposed to fluctuating weather conditions, it takes longer to respond to these conditions than other woods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S05",
+      "quote": "It is a relatively light wood, of extreme toughness, hardness, and elasticity, working easily and finishing to a fine surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S05",
+      "quote": "when once dried, it is not liable to shrink, swell, or split excessively when exposed to damp, wet or heat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S05",
+      "quote": "Walnut wood seasons slowly and shrinks considerably while doing so",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S05",
+      "quote": "although large planks are rather liable to split down the middle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S02",
+      "quote": "The wood is highly scented, close-grained and tough, and, from the fineness and evenness of its structure, is capable of the most delicate carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S03",
+      "quote": "Owing to the extreme hardness of the wood the carving is never deep. It is strictly Muhammadan in character and under-cutting is never practised.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S22",
+      "quote": "To carve a figure in wood is more difficult than sculpting with marble or stone, owing to wood tending to crack easily, to be damaged by insects, or to suffer from changes in the atmosphere.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S10",
+      "quote": "The pieces are held together by the resultant tension within the frame",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S10",
+      "quote": "The hardness of sheesham helps the wood hold tension better, making it particularly suited to this craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S13",
+      "quote": "Tarkashi is done preferably on locally sourced shisham (North Indian rosewood, Dalbergia sissoo), whose dense grain and coarseness help hold the inlay in place; its dark colour, due to its high oil content, also brings out the metal inlay by contrast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S04",
+      "quote": "The brass inlay of Chiníot is superior to that of Hoshiárpur in design and in finish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S04",
+      "quote": "speaking, inlaid, but rather laid on, and are retained in their place by the nails.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S04",
+      "quote": "The slightest warp in the wood is fatal to the effect, for the, brass ab once bulges up, and is not readily smoothed down again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S02",
+      "quote": "He is unable to make the boxes, which he turns out, during the hot months, as the wood cracks under the knife",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S03",
+      "quote": "In Muhammadan wood-carving the place of fantastic Hindu ornamentation is filled by a free use of geometric diapers ; and whereas Hindu work is as a rule deeply undercut, Muhammadan work is marked by flatness of relief.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S03",
+      "quote": "The Deputy Commissioner of Fyzabad writes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S03",
+      "quote": "The characteristic of leaving no \"space uncarved is typically Indian.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S03",
+      "quote": "There is never an \"effect of a bold ornament or a small design .in relief in the midst of a \"smooth space, - an effect very noticeable in Chinese and Japanese work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S02",
+      "quote": "The designs with which the Gudigars entirely cover the boxes, desks and other articles made, are of an extremely involved and elaborate pattern, consisting for the most part of intricate interlacing foliage and scroll work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S02",
+      "quote": "which leaves not the smallest portion of the surface of the wood untouched",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S03",
+      "quote": "The phulmekh or metal studs, which are used with such striking effect in most carved doors, are probably a survival of the spikes used in less peaceful times as a protection against the charge of war-elephants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S03",
+      "quote": "In India the most common form of door is composed of two leaves (jori kiwdr) which do not hang on hinges, but turn on pivots above and below.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S01",
+      "quote": "The Door or Chaukat. - Persons with any pretensions to social position, consider it essential to have a carved door. This in the Panjab is in fact a sign of position and wealth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S01",
+      "quote": "The essential features of the Muhammadan and Sikh work may be said to be their direct adaptation to deodar and subsequently very possibly to shisham wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S01",
+      "quote": "consequence flat or in low relief, with little undercutting (except in the very recent walnut wood-carving of Kashmir)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S02",
+      "quote": "The frame work or structure is that of the 'modern cabinet maker, but the ornamental details are adapted from Dravidian models.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S02",
+      "quote": "The general features of the style of wood-carying are directly copied from the stone temples of Southern India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S02",
+      "quote": "This is peculiarly so with the wood-carving, which is celebrated for its boldness of form, due to the influence of the stone-carvers, for its delicate tracery on flat surfaces",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S22",
+      "quote": "Madurai is famous for incised Blackwood tables, whose legs are in the form of elephant heads with extended trunks, also mythical Yali figures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S01",
+      "quote": "the graceful geometric panellings [khatamband) applied to ceilings - a speciality of Kashmir so far as India is concerned. These are in pine wood and are cheap and most -effective.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S14",
+      "quote": "The structure of the kavad resembles a cupboard, or more accurately, a closed shrine, which is revealed using several folding panels hinged together and opened and closed like doors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S01",
+      "quote": "The wood-work is painted in oil paints, with red or black as a background.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S01",
+      "quote": "The supports and feet of the brackets or tables are usually done on the turning-lathe and display a most delicate and charming touch in lac line colouring.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S11",
+      "quote": "Other forms of ornamental lacquering include abri or cloud work, atishi or fire work, nakshi or pattern work and tin foil decoration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S22",
+      "quote": "Temple cars of South India have exquisite woodwork.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S02",
+      "quote": "figurini and scroll-work on Hindu temple cars which are richly carved with swamis and grotesque figures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S15",
+      "quote": "The shine and surface treatment characteristic of Nirmal painting is also applied to other objects produced by Naqash artisans, namely figurines and furniture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S01",
+      "quote": "The chief centres of sandal-wood carving are, however, Sorab and Sugar in Mysore ;. Travancore, Trichinopoly,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S01",
+      "quote": "Tirupati, Madura and Coimbatore in Madras; and Kanara, Surat, Ahmedabad and Bombay in the Western Presidency.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S02",
+      "quote": "The art of sandal.wood carving is confined to a few families, belonging to the Gudigar caste, in the Sorab and Sdgar taluks of the Shimoga district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S01",
+      "quote": "In Mysore, in the Shimoga District, the most important centre of the craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S22",
+      "quote": "Shimoga is an important sandalwood carving centre in Karnataka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S01",
+      "quote": "Being the Official Catalogue of the Delhi Exhibition, 1902-1903.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S01",
+      "quote": "there are, for example, not more than eight families with 35 artizans in all.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "by the few sentences given above. The chief centres are- Patna,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "Murshidabad, Birbhum in BENGAL; Sylhet in ASSAM;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "Agra, Lucknow, Fatehpur, Benares and Mirzapur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "Ferozepur, Hoshiarpur in the Panjab ; Alwar, Jodhpur, Marwar, Bikanir in Rajputana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "Savantvadi and Bombay town in the Bombay Presidency ; Salem, Nandyal, Podanur in Madras",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "and lastly Bangalore and Chenapatnain MYSORE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S01",
+      "quote": "practically every town of any note has its lac turners",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S03",
+      "quote": "The lathe - not the chisel - is responsible for the lacquered toys and ornaments of Benares. A similar trade exists in the Mirzapur district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S10",
+      "quote": "The tradition of pinjra work has disappeared in most of its historical centres. In Kashmir, it is still practiced in Anantnag, Badgam, Baramula, Srinagar, Kupwara and Rajouri. In Punjab, only Amritsar is still an important centre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S04",
+      "quote": "Pinjra work is earried on ab all the great centres, but only at Chiníot and at Pesháwar is the work specially remarkable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S04",
+      "quote": "Pinjra work is exported from Pesháwar to Kábul, it 18 said, in considerable quantities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S21",
+      "quote": "Major places of India producing wooden handicra@s: Jaipur, Jodhpur, Saharanpur, Nagina, Rajkot, Barmer, Hoshiarpur, Srinagar, Amritsar, Jagdalpur, Bangalore, Ahmedabad, Kerala, Berhampur, Chennapatna and Mysore",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S21",
+      "quote": "Srinagar --Jammu & Kashmir Walnut & Deodar Wood Cra=",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S21",
+      "quote": "Saharanpur --U_ar Pradesh Wood Carving Furniture, Screens",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S21",
+      "quote": "Nagina-- U_ar Pradesh Wood Carving Boxes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S14",
+      "quote": "A painted, wooden structure, a kavad is a portable shrine or temple used within the oral storytelling tradition called kavad banchana, popular in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S14",
+      "quote": "The practice of kavad-making is primarily concentrated in Bassi in Chittorgarh, Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S15",
+      "quote": "Made by the Naqash community of Nirmal and Hyderabad in Telangana, Nirmal paintings are gold-flecked artworks created on lacquered boards of wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S22",
+      "quote": "The North has Kashmir's exquisite work in walnut. Gujarat and Rajasthan have beautiful woodwork in temples and palaces. Also wood carving of Saharanpur, Aligarh, Nagina and Lucknow is much admired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S22",
+      "quote": "Kerala has rosewood carving and coconut shell work. Beautiful architectural wood carvings are there in the palaces and temples of Mysore and Madurai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S02",
+      "quote": "the buildings of the kind in Malabar are invariably built of wood in all their characteristic portions",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S02",
+      "quote": "the style prevails all along the west coast country from the limits of Canara to Cape Comorin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S01",
+      "quote": "Mainpuri in the United Provinces. - This District has for many years been noted for its beautiful wood-work inlaid with brass-wire.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S01",
+      "quote": "Hoshiarpur and Jallandhar (with Simla as a summer resort), where ivory or bone and also brass are inlaid on skisham; Chiniot, where brass alone is used",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S01",
+      "quote": "Mysore, where ivory on shiskam, rosewood or ebony, is the form of the art adopted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S01",
+      "quote": "The art has for long been followed in Mysore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S11",
+      "quote": "Furniture that is layered with lac, is popular in parts of Punjab, particularly in the districts of Hoshiarpur and Jalandhar. In Kashmir, this craft is used to produce lacquered boxes, trays, tobacco jars, ashtrays and other items of decor.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S13",
+      "quote": "Mainpuri remains a major production centre and the work produced there is considered the finest; others in the state include Nagina in Bijnor district, Pilakhuwa in Ghaziabad district, and Saharanpur district, which is known for its woodwork.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S13",
+      "quote": "Jaipur in Rajasthan is also a major centre of production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S01",
+      "quote": "Sadeli work and the chief centres of the craft are Ahmedabad, Baroda, Bombay and Surat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S12",
+      "quote": "Today, lac is cultivated primarily in the states of Jharkhand, Chhattisgarh, Madhya Pradesh, Bihar, Odisha and West Bengal, often by Adivasi populations in forested areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S12",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S21",
+      "quote": "Wooden handicra=s US$ 584.09 million 2016--17",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S21",
+      "quote": "Wooden handicra=s provides livelihood to around 1.1 million ar1sans",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S21",
+      "quote": "The major importers of Indian wooden handicra=s are Australia, Canada, France, Germany, Italy, Japan, The Netherlands, UAE, Switzerland, Saudi Arabia, USA and UK",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S21",
+      "quote": "Timber species used in Indian Furniture Industry 50% Teak 30% Mahogany, cedar, Sheesham, mango etc 20% Sal and deodar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S21",
+      "quote": "Source: MCG estimate, 2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S02",
+      "quote": "Viewed as an industry, sandal-wood carving is certainly insignificant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S02",
+      "quote": "the producers are few in number, the variety of articles manufactured limited, and the market circumscribed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S03",
+      "quote": "he may now apply his skill in another direction by carving European articles de luxe, for which there is a considerable demand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S03",
+      "quote": "Hence the Mrkhdnas of Hoshidrpur and Jullundur in the Panjdb, and Nagina and Bahdranpur in the United Provinces. The total number of workmen employed in this special trade is small, but the rate of profit is high.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S03",
+      "quote": "the industry is quite modern, having sprung up in the last generation ; the chief cause of its prosperity being the fact that it provides tourists with convenient and portable mementos.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S03",
+      "quote": "the cheap articles of fretted tun-^wood., such as are sold on railway-station platforms.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S03",
+      "quote": "The articles displayed in the shops and hawked in the verandahs of Mussoorie hotels are not of local manufacture, but are a miscellaneous assortment from Sahdranpur, Nagina, Hoshidrpur, Jullundur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S01",
+      "quote": "The chief demand for inferior work has, however, been in Europe and America, where",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S01",
+      "quote": "small tables, picture frames, and brackets, in a most inartistic red-wood, have, for some years past, been exported by sTiip loads, with the starvation of the superior wood-carving industry of the province",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S01",
+      "quote": "In all low class work the fret-saw invariably displaces the pinjra-maker, cheap and more easily worked woods drive deoddr, shisham and walnut from the market, while bone takes the place of ivory in inlaying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S04",
+      "quote": "Apart from the use of wood in buildings, the demand for articles manufactured from wood was in the times preceding British rule very limited indeed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S04",
+      "quote": "being confined, with few exceptions, to the carved doors and windows of the houses of the better-to-do classes, the rough agricultural implements mentioned in the report, and the scanty furniture found in a Native house",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S04",
+      "quote": "Manufactures in wood, as remarked by the Financial Commissioner, are not of much commercial importance, at least as regards export to places outside the Province.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S07",
+      "quote": "As the wood turning industry is said to be more brisk in winter than in summer",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S02",
+      "quote": "Sandal has been for a long time a State monopoly, and has yielded the largest portion of the forest revenue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S05",
+      "quote": "It is probably the most valuable tree in the world, and every part of the tree, including the roots, fetches its price.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S05",
+      "quote": "Practically the whole supply of Indian walnut is taken up by the Government Rifle Factories, as, so far, no common substitute has been found to take its place for the wooden parts of rifles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S02",
+      "quote": "in the first arrangements for the conservancy of forests, these woods were reserved, and any wood, except teak and sandal, was allowed to be felled on payment of a small seigniorage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S02",
+      "quote": "Owing to the increase in the price of red sanders wood and the difficulty in procuring it, the carvers are now using a white wood called répalla or pala ( Wrightia tinctoria) for carving figures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S15",
+      "quote": "The frame and board of Nirmal paintings were originally made from the wood of the Tella Poniki or white sander tree, but due to the dwindling population of this species, artisans have switched to Indian teak wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S21",
+      "quote": "called for moving all the species of Dalbergia including Dalbergia la1folia (Rosewood) and Dalberia sissoo (Sheesham) to Appendix II of CITES, resul1ng in Indian exporters of wooden handicra=s using the said species to necessarily obtain CITES permit",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S23",
+      "quote": "Dalbergia genus (all species - around 200 including sheesham and rosewood) has been enlisted in the Appendix-II of the CITES in 2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S21",
+      "quote": "the survival of said species is not endangered in India and large number of exporters and ar1sans shall stand adversely affected",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S21",
+      "quote": "Notification No 13 (RE - 2013)/2009-2014 New Delhi, Dated : 14 May, 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S21",
+      "quote": "Export Promotion Council for Handicrafts has been nominated as the nodal agency for issuing certificate on due diligence adopted by the exporters in procuring wood from legal sources for manufacture of Handicraft articles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S12",
+      "quote": "Lac insects have a parasitic relationship with trees such as the Indian jujube (Ziziphus Mauritiana), kusum (Schleichera oleosa) and palash (Butea monosperma). The insects infest the trees by piercing the bark and drawing nutrients from the interior.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S08",
+      "quote": "It is found on a number of forest trees, particularly kusum (Schleichera oleosa).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S12",
+      "quote": "Lac insects are cultivated by tying an already infested branch or twig to a tree, and periodically harvesting these as the colony expands across the tree.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S16",
+      "quote": "Shola bhat or phool grows in three to five feet deep water in swampy environments. Reaching a height of five to six feet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S03",
+      "quote": "The beauties of wood-carving exposed to the weather are short-lived, and the unremitting energy of the whiteant ensures that the wood itself does not long outlast the carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S05",
+      "quote": "Available supplies are not large, but Kashmir can supply a certain amount of walnut wood annually.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S03",
+      "quote": "Inlay work is one of the chief Muhammadan arts. It was introduced into India through the Mughals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S04",
+      "quote": "The inlaid-work is also of Muhammadan origin, and was probably 'introduced from Arabia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S02",
+      "quote": "They say that the derivation of the term Gudigara is from gudi, a temple, and that they were so called because they were employed in their own country.as carvers and painters in the ornamentation of temples.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S01",
+      "quote": "to owe their name to the circumstance that they were originally the hereditary carvers and painters of the temple",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S11",
+      "quote": "The word \"lac\" derives from the Sanskrit laksha, meaning 100,000, referring to the large number of insects typically needed for making the resin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S10",
+      "quote": "Framed wooden latticework from the Punjab and Kashmir regions spanning both modern Pakistan and India, pinjrakari (Urdu, pinjra: 'cage', kari: 'craft') is found in abundance in Islamic, Sikh, and to a lesser extent Hindu architecture. The craft is also used to decorate furniture or objects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S13",
+      "quote": "A decorative craft in which thin metal wire is inlaid on shisham and other hardwood, tarkashi (Urdu and Persian: taar, 'wire'; kashi, 'drawing') is practised primarily in Uttar Pradesh, and more recently Rajasthan, in northern India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S21",
+      "quote": "With note received on 27 December 2016, the Republic of India enters a reserva;on with reference to the inclusion of Dalbergia spp. in Appendix II of the Conven;on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S21",
+      "quote": "India declared at the same ;me that its Export Promo;on Council for HandicraYs (EPCH) is the competent authority of the Republic of India to issue comparable cer;ficates",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S21",
+      "quote": "MoEFCC (Indian CITES management authority) has authorized EPCH as the designated authority to issue the comparable document i.e Vriksh Shipment Cer1ficate in lieu of CITES permit for export of handicra=s made from Dalbergia sissoo and Dalbergia la1folia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S21",
+      "quote": "First shipment cer1ficate was issued on 27th February 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S21",
+      "quote": "Acceptance of Vriksh Shipment cer1ficate as the comparable document in lieu of CITES permit",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S23",
+      "quote": "The 18th meeting of Conference of Parties (CoP) of CITES was held in Geneva from 17-28 August 2019 and delisting of Dalbergia sissoo from Appendix II of the CITES (CoP 18 Prop. 51) submitted by India with Bangladesh, Bhutan and Nepal as co-proponents",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S23",
+      "quote": "With no consensus, the Chair called for a vote. Proposal CoP18 Prop. 51 to delete Dalbergia sissoo from Appendix II was therefore rejected.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S42",
+      "quote": "The proponents propose delisting of Dalbergia sissoo DC., from CITES Appendix II as it does not meet the listing criteria",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S24",
+      "quote": "The Convention on International Trade in Endangered Species (CITES) relaxed restrictions on the export of furniture and handicrafts made of North Indian rosewood or shisham (Dalbergia sissoo) from India November 21, 2022.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S24",
+      "quote": "India had raised the request for the deletion of Shisham from CITES Appendix II at the 19th Conference of Parties (COP19) to CITES",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S24",
+      "quote": "While the proposal by India was not accepted, some relaxations were made in this regard to accommodate the needs of artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S24",
+      "quote": "the parties and the CITES Secretariat agreed to allow Indian artisans to ship any number of items made of North Indian rosewood, each weighing under 10 kg, without the CITES permit in a single consignment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S24",
+      "quote": "The restrictions on export of all shisham products were imposed when CITES added the species to Appendix II of the Convention in 2017.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S24",
+      "quote": "The decrease in exports of shisham products has affected the livelihoods of around 50,000 artisans, said the Union Ministry of Environment, Forest and Climate Change (MoEFCC).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S24",
+      "quote": "The Convention on International Trade in Endangered Species (CITES) relaxed restrictions on the export of furniture and handicrafts made of North Indian rosewood or shisham (Dalbergia sissoo) from India November 21, 2022.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S11",
+      "quote": "The lac insect is a crimson-red species referred to scientifically as kerria lacca or tachardia lacca",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S12",
+      "quote": "extracted from a resin produced by the insects Kerria lacca and Laccifer lacca",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S08",
+      "quote": "Lac is an encrustation produced by the insect Technadria lacca.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S01",
+      "quote": "There are said to be three qualities of the wood dependant on the age of the'tree, the locality of production, and the position in the stem from which derived.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S01",
+      "quote": "As a rule the darker the colour the better the quality.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S01",
+      "quote": "Mainpuri, in the United Provinces, where copper or brass wire are employed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S01",
+      "quote": "Recently (and in questionable taste), Nagina, in Oudh, has made a bid for inlaying its ebony work with ivory or bone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S01",
+      "quote": "Monghyr, in Bengal, where ivory or ebony is practised.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S01",
+      "quote": "Some beautiful inlaying is also turned out both at Ratnagiri and Aurangabad, but apparently at the Industrial Schools of these places only.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S01",
+      "quote": "Lastly, in Nepal, ivory is inlaid on black-wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S10",
+      "quote": "These parts are joined together without any adhesive; instead, the ends of abutting pieces are finely shaped to fit into each other",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S10",
+      "quote": "Depending on the pattern, a single panel can have as many as two thousand parts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S10",
+      "quote": "Today, artisans also use nails and glue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S10",
+      "quote": "First published: 9 March 2026",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S22",
+      "quote": "The main woods used for carving and making ornate furniture in India include teak, Blackwood, East Indian walnut, rosewood, sandalwood, mahogany, ebony, mango and neem.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C250",
+      "sourceId": "S25",
+      "quote": "Creation of a Sankheda product involves first shaping the teakwood pieces on a lathe, before applying powdered tin premixed in a solvent. A coat of lacquer is applied and then polished using a specific leaf. The finished pieces are assembled together to make the required furniture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S25",
+      "quote": "The Sankheda craftsmen belong to the Kharadi community which still caters to its traditional customers in designing furniture for rituals, weddings and celebrations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S25",
+      "quote": "The younger generation of craftsmen has a pulse on the commercial requirement of the market and is producing a variety of furniture for the urban needs and specifics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S25",
+      "quote": "Sankheda in Vadodara Disttrict",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S26",
+      "quote": "Tamil Nadu's unique Arumbavur wood carving, native to Arumbavur in Perambalur district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S26",
+      "quote": "The unique aspect of the Arambavur wood carvings is that it is often inspired by architectural details on temple sculptures and carvings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S26",
+      "quote": "As per the filing with the registry, the ornate Arumbavur wood carvings are",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S26",
+      "quote": "the ornate Arumbavur wood carvings are primarily made out of the wooden logs of Indian siris (Poo Vaagai, Albizia lebbeck), Mango (Mangifera indica), Lingam tree (Mavilangam), Indian Ash fiee (Othiyan - Odina wodier), Rosewood, Neem tree (Vembu - Azadirachta indica).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C255",
+      "sourceId": "S26",
+      "quote": "The Arumbavur wood carving artisans have their origins in Madurai. The artisans (predominantly the Boyar community) would travel to the place in which the temple car has to be made, stay in that temple for a period of upto four years and complete the work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C256",
+      "sourceId": "S28",
+      "quote": "Geographical Indications | Kallakurichi Wood Carving | | Status | Registered | | Applicant Name | Tamilnadu Handicrafts Development Corporation Ltd(Poompuhar), Government of Tamilnadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C256",
+      "sourceId": "S28",
+      "quote": "Date of Filing | 05-07-2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C256",
+      "sourceId": "S28",
+      "quote": "Certificate Date | 14-09-2021",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S27",
+      "quote": "the Hon'ble Chief Minister of Tamil Nadu has released the Geographical Indication Certificates obtained through the Geographical Indication Registry for the following handicrafts on 23.10.2021.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S27",
+      "quote": "Kallakurichi Wood Carving - Karupur kalamkari painting - Thajavur Pith Work - Arumbavur Wood Carving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S29",
+      "quote": "Geographical Indications | Bastar Wooden Craft | | Status | Registered | | Applicant Name | Chhattisgarh Hastshilp Vikas Board",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S29",
+      "quote": "Date of Filing | 12-03-2007",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S29",
+      "quote": "Geographical Area | Chhattisgarh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S29",
+      "quote": "Certificate Date | 22-04-2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S30",
+      "quote": "Geographical Indications | Wooden Mask of Kushmandi | | Status | Registered | | Applicant Name | Mahisbathan Hastashilpa samabay samiti Limited",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S30",
+      "quote": "Date of Filing | 17-08-2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S30",
+      "quote": "Geographical Area | West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S30",
+      "quote": "Certificate Date | 28-03-2018",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C260",
+      "sourceId": "S31",
+      "quote": "Geographical Indications | Arunachal Pradesh Wancho Wooden Craft | | Status | Registered | | Applicant Name | Directorate, Department of Textile & Handicrafts, Government of Arunachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C260",
+      "sourceId": "S31",
+      "quote": "Date of Filing | 08/03/2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C260",
+      "sourceId": "S31",
+      "quote": "Certificate Date | 02/01/2024",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S32",
+      "quote": "Geographical Indications | Chamoli Wooden Ramman Mask | | Status | Registered",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S32",
+      "quote": "Date of Filing | 01-07-2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S32",
+      "quote": "Geographical Area | Uttarakhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S32",
+      "quote": "Certificate Date | 08-11-2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S33",
+      "quote": "Geographical Indications | Uttarakhand Likhai (wood carving) | | Status | Registered | | Applicant Name | Kedarnath Souvenir Growth Centre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S33",
+      "quote": "Date of Filing | 01-07-2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S33",
+      "quote": "Certificate Date | 08-11-2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C264",
+      "sourceId": "S40",
+      "quote": "The qualitative synthesis included 55 studies.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C264",
+      "sourceId": "S40",
+      "quote": "Evidence from this review suggests that wood dust-exposed workers have a reduced FEV1, FVC, and PEFR, indicating obstructive and restrictive patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C264",
+      "sourceId": "S40",
+      "quote": "Occupational wood dust exposure and lung function impairment: A systematic review and meta-analysis. Natl Med J India 2026",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C265",
+      "sourceId": "S40",
+      "quote": "While several systematic reviews have established an association between wood dust exposure and upper respiratory tract cancers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C266",
+      "sourceId": "S41",
+      "quote": "Study was done in 300 subjects who were divided into two groups of 150 each. One group comprised carpenters with minimum 5 years exposure to wood dust. Other group comprised matching healthy subjects who served as controls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C266",
+      "sourceId": "S41",
+      "quote": "Lung functions of carpenters show statistically significant reduction compared to normal healthy adults.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C267",
+      "sourceId": "S34",
+      "quote": "By Act No. 28 of 1986 Chapter V-A was inserted therein whereby and restrictions were imposed on trade or commerce in wild animals, cattle and trophies.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C267",
+      "sourceId": "S34",
+      "quote": "By Act No.44 of 1991, Section 49-C was inserted in Chapter V-A whereby and where-under a total prohibition in trade of imported ivory was imposed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C267",
+      "sourceId": "S34",
+      "quote": "DATE OF JUDGMENT: 27/08/2003",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C268",
+      "sourceId": "S35",
+      "quote": "With this order there is now a total ban on selling and carving in ivory",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C268",
+      "sourceId": "S35",
+      "quote": "Most craftspeople have opted to carve in camel and buffalo bone or sandalwood instead.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C269",
+      "sourceId": "S36",
+      "quote": "The 77th meeting of the Standing Committee of Convention on International Trade in Endangered Species of wild fauna and flora (CITES) was held in Geneva, Switzerland from 6th to 10th November 2023.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C269",
+      "sourceId": "S36",
+      "quote": "The Red sanders (Pterocarpus santalinus) is a high market value tree, endemic to few districts in Andhra Pradesh. The species is listed as Appendix II under CITES since 1994.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C269",
+      "sourceId": "S36",
+      "quote": "India had also conducted Non Detrimental Finding for the species and had finalized a zero quota for export of Red sanders from wild.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C270",
+      "sourceId": "S37",
+      "quote": "It was classified as 'near threatened' in 2018 and has now joined the 'endangered' list once again in 2021.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C270",
+      "sourceId": "S37",
+      "quote": "Over the last three generations, the species has experienced a population decline of 50-80 per cent. It is assessed as Endangered",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S38",
+      "quote": "eight months after the notification of amendments in the Karnataka Forest (Amendment) Act 2001, stakeholders are yet to see any tangible evidence of the deregulation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S38",
+      "quote": "Though the amendment, recognises individuals growing sandalwood as absolute owners, it does not dilute the state's control.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C272",
+      "sourceId": "S38",
+      "quote": "As compared to 1977-1978 when Karnataka produced 3,000 tonnes of sandalwood, the corresponding figure for 2002 plummeted to 20 tonnes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C272",
+      "sourceId": "S38",
+      "quote": "Experts blame the downswing on lopsided laws, indiscriminate smuggling and rampant corruption",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S39",
+      "quote": "As per the Jammu and Kashmir Preservation of Specified Trees Act, 1969, a blanket ban was imposed on cutting walnut trees.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S39",
+      "quote": "The prohibition on cutting down a walnut tree directly affects their livelihood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S39",
+      "quote": "The Kashmir horticulture department has requested that the restriction on walnut tree cutting in Kashmir Valley be lifted.",
+      "result": "PASS"
+    }
+  ]
+}

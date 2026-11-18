@@ -1,12 +1,9 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Sequence
 from itertools import pairwise
 
 from app.models.enums import CONCEPT_RELATIONS
-from app.research.quotes import formulas_in, unsupported_figures
-from app.research.translation import protected_tokens
 
 from .limits import BARE_RELATION_SIDE_WORDS_MAX
 
@@ -14,10 +11,8 @@ __all__ = [
     "ABBREVIATIONS",
     "QUALIFYING_WORDS",
     "RELATION_PHRASES",
-    "figure_gaps",
     "relationship_sentence",
     "single_sentence",
-    "unsourced_hedges",
     "word_count",
 ]
 
@@ -190,11 +185,6 @@ GRAPH_FILLER = re.compile(
 )
 GRAPH_LABEL = re.compile(r"\b(?:" + "|".join(CONCEPT_RELATIONS) + r")\b")
 NOT_BARE = re.compile(r"[\d,;:()]")
-HEDGE = re.compile(
-    r"\b(?:may|might|could|possibly|probably|perhaps|likely|reportedly|allegedly|apparently|presumably"
-    r"|supposedly|purportedly|seemingly|believed|said to|thought to)\b",
-    re.IGNORECASE,
-)
 
 
 def word_count(text: str) -> int:
@@ -212,16 +202,6 @@ def relationship_sentence(text: str) -> bool:
     if GRAPH_REFERENCE.search(text) or GRAPH_FILLER.search(text) or GRAPH_LABEL.search(text):
         return True
     return _bare_relation(text)
-
-
-def unsourced_hedges(text: str, quotes: Sequence[str]) -> list[str]:
-    hedges = dict.fromkeys(found.group().casefold() for found in HEDGE.finditer(text))
-    return [hedge for hedge in hedges if not any(_has_words(hedge, quote) for quote in quotes)]
-
-
-def figure_gaps(text: str, supports: Sequence[str]) -> list[str]:
-    stated = {unit for support in supports for unit in _units(support)}
-    return [*unsupported_figures(text, supports), *(unit for unit in _units(text) if unit not in stated)]
 
 
 def _ends_sentence(token: str, following: str) -> bool:
@@ -246,12 +226,3 @@ def _bare_relation(text: str) -> bool:
         and not QUALIFYING_WORDS & {word.casefold() for word in side}
         for side in sides
     )
-
-
-def _has_words(words: str, text: str) -> bool:
-    return re.search(r"\b" + re.escape(words) + r"\b", text, re.IGNORECASE) is not None
-
-
-def _units(text: str) -> list[str]:
-    formulas = set(formulas_in(text))
-    return sorted(token for token in protected_tokens(text) if token not in formulas)

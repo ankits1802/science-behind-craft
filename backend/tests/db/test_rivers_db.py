@@ -10,12 +10,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine, get_session
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, get_optional_user
 from app.main import app
 from app.models import AdminDistrict, AdminState, DistrictEnvValue, EnvDataset, RiverBasin, RiverReach, User
 from app.research.blocks_place import DistrictRef
 from app.services.monthly_rain import district_rainfall
 from app.services.river_store import BasinFile, RiverCrossing, basin_file, rivers_crossing, trace_river
+
+from ..readers import sign_in_as
 
 pytestmark = pytest.mark.db
 
@@ -154,7 +156,7 @@ async def test_the_basin_route_revalidates_from_the_stored_hash(session: AsyncSe
 
     reader = User(id=uuid.uuid4(), name="Reader", email="reader@example.com", role="STUDENT")
     app.dependency_overrides[get_session] = this_session
-    app.dependency_overrides[get_current_user] = lambda: reader
+    sign_in_as(app, lambda: reader)
     try:
         transport = httpx.ASGITransport(app=app)
         async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
@@ -163,6 +165,7 @@ async def test_the_basin_route_revalidates_from_the_stored_hash(session: AsyncSe
     finally:
         app.dependency_overrides.pop(get_session, None)
         app.dependency_overrides.pop(get_current_user, None)
+        app.dependency_overrides.pop(get_optional_user, None)
     assert (same.status_code, same.headers["etag"]) == (304, f'"{SHA}"')
     assert unknown.status_code == 404
 

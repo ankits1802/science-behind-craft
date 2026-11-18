@@ -8,6 +8,7 @@ from app.research.blocks_learning import ConceptGraphBlock
 from app.research.craft_compare import compare_block
 from app.research.crafts import CraftRef
 from app.research.explainer import Block
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.research.shared_science import concept_node
 
 from . import knowledge_view
@@ -104,7 +105,7 @@ def _stored_comparison(tools: BuilderTools) -> CompareLoader:
             known = [row for row in rows if row is not None]
             if len(known) != len(crafts):
                 return CompareOffers()
-            return await comparison_offers(session, known, facets)
+            return await comparison_offers(session, known, facets, acls=EVERY_CHUNK_ACLS)
 
     return load
 
@@ -115,6 +116,8 @@ def _stored_concepts(tools: BuilderTools) -> GraphLoader:
             row = await knowledge_view.resolve_craft(session, craft.slug)
             if row is None:
                 return TermOffers()
-            return await term_offers(session, await term_ids_of(session, keys), focus=row.id)
+            return await term_offers(
+                session, await term_ids_of(session, keys), focus=row.id, acls=EVERY_CHUNK_ACLS
+            )
 
     return load

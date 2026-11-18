@@ -24,6 +24,7 @@ ROLE_LABELS: dict[str, str] = {
 }
 
 ROLES_BY_RANK: tuple[str, ...] = tuple(sorted(ROLE_RANK, key=lambda role: -ROLE_RANK[role]))
+LOWEST_ROLE: str = ROLES_BY_RANK[-1]
 
 TWO_FACTOR_REQUIRED_ROLES = frozenset({PROFESSOR, ADMIN, MASTER_ADMIN})
 UNCAPPED_ROLES = frozenset({MASTER_ADMIN})

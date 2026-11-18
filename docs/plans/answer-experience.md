@@ -229,14 +229,16 @@ cited, cached per term and language; "Ask about it" starts a follow-up.
    firing); "other crafts that share this" with links; a graph view for researchers.
 8. **Local measures converter.** Recipes in local units converted to metric with the region and the
    source of each conversion.
-9. **Artisan voices.** Quotes from field interviews about the craft. The owner confirmed on
-   2026-11-17 that consent covers all existing transcriptions. Source: the portals' existing
-   transcript API, the same one the Research app uses (`tools/field_repository/fieldrepo.py`):
-   `GET /api/data/transcripts/recordings.ndjson` and `turns.ndjson` on both portals. A nightly
-   KalaVigyan job pulls them, stores each transcript as a private `FIELD_INTERVIEW` source linked to
-   its craft, and indexes it for retrieval and for the artisan seat of the expert panel. It signs in
-   with each portal's master account (owner decision, section 8), keeps the credentials only in
-   Parameter Store and makes read-only calls. No portal change is needed.
+9. **Artisan voices.** Consented quotes from field interviews about the craft, and process
+   photographs, published and credited to the artisan and the workshop, never with contact or
+   identity details. The owner confirmed on 2026-11-17 that consent covers all existing
+   transcriptions and approved publishing on 2026-11-18. Source: the documentation portal's signed
+   field voices routes (`docs/contracts/field-voices.md`, decision 0072), which send only what
+   holds a publication grant. This replaces the first design, which pulled the transcript export
+   (`GET /api/data/transcripts/recordings.ndjson` and `turns.ndjson`) signed in with each portal's
+   master account. A nightly KalaVigyan job reads them, stores each recording as a
+   `FIELD_TESTIMONY` source linked to its crafts, and indexes the quotes for retrieval and for the
+   artisan seat of the expert panel. The portal work is listed at the end of the contract.
 10. **Designs from the workshops.** Prototypes and designs from designer-portal workshops for the
     craft, as their sharing settings allow. Needs a peer route in the portals (section 7).
 11. **Lesson builder.** Professors turn an explainer into a lesson pack: slides, reading list, quiz;
@@ -400,8 +402,8 @@ portal routes exist; the curation run one to two days of background running.
 
 ## 7. Dependencies
 
-- **Portal credentials** for feature 9: each portal's master account email and password in
-  KalaVigyan's Parameter Store.
+- **Portal routes** for feature 9: the documentation portal's field voices routes and its
+  publication consent (`docs/contracts/field-voices.md`); no portal password is needed.
 - **Feature 10** (designs): deferred until the workshops hold designs.
 - **Keys:** Brave (web search fallback and image results) and Semantic Scholar improve research;
   neither blocks.

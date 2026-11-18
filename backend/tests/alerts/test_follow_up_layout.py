@@ -26,7 +26,7 @@ def test_a_follow_up_deepens_sections_it_has_and_adds_the_rest_after_them() -> N
     )
     assert [(s.id, s.discipline, s.title, s.order) for s in layout.specs] == [
         ("s2", "GEOGRAPHY", "Why the water matters", 2),
-        ("s4", "HISTORY", "History", 4),
+        ("s4", "HISTORY", "Where Kutch Ajrakh comes from", 4),
     ]
     assert layout.titles == {"s2": "Why the water matters"}
     assert [spec.id for spec in layout.reusable] == ["s4"]

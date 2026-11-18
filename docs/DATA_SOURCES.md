@@ -8,7 +8,7 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 
 | Code | Title | Publisher | Edition | Period | Native resolution | CRS |
 |---|---|---|---|---|---|---|
-| `DR_DISTRICT_SHAPES` | District shapes as drawn by the Designer Portal | Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal | 791efb62cc30cf5d | 2026-10-17 | simplified to 0.01 degree, 0.001 degree coordinate grid | EPSG:4326 |
+| `DR_DISTRICT_SHAPES` | Indian district boundaries, matched to LGD codes | Indian districts GeoJSON on Kaggle | 2026 | 2026 | simplified to 0.01 degree, 0.001 degree coordinate grid | EPSG:4326 |
 | `SOILGRIDS_2_0` | SoilGrids 2.0 | ISRIC World Soil Information | 2.0 | modelled, 2020 release | 250 m | Interrupted Goode Homolosine (ESRI:54052) |
 | `ESA_WORLDCOVER_2021_V200` | ESA WorldCover 10 m 2021 v200 | European Space Agency | v200 | 2021 | 10 m (1/12000 degree) | EPSG:4326 |
 | `HANSEN_GFC_2025_V1_13` | Global Forest Change 2000-2025 | University of Maryland, Department of Geographical Sciences | GFC-2025-v1.13 | 2000-2025 | 1 arc-second (about 30 m) | EPSG:4326 |
@@ -26,11 +26,11 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 
 | Code | Licence | Redistributable | Attribution to display | URL |
 |---|---|---|---|---|
-| `DR_DISTRICT_SHAPES` | Unconfirmed; indicative boundaries ([source](https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson)) | No | District boundaries are indicative. | https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson |
+| `DR_DISTRICT_SHAPES` | For reference only (no licence URL stored) | No | District boundaries are indicative. | https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson |
 | `SOILGRIDS_2_0` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | SoilGrids 2.0, ISRIC World Soil Information | https://files.isric.org/soilgrids/latest/data/ |
 | `ESA_WORLDCOVER_2021_V200` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium | https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ |
 | `HANSEN_GFC_2025_V1_13` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | Hansen/UMD/Google/USGS/NASA | https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/ |
-| `CHELSA_2_1_1981_2010` | Open download without registration; licence text not confirmed on 2026-11-15 ([site](https://chelsa-climate.org/)) | No, until confirmed | CHELSA V2.1, Karger et al. | https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/ |
+| `CHELSA_2_1_1981_2010` | [Karger et al. 2017](https://doi.org/10.1038/sdata.2017.122) (the paper CHELSA asks to be cited; no licence text found) | No, until a licence is confirmed | CHELSA V2.1 | https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/ |
 | `CHIRPS_3_0` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Yes | Climate Hazards Center, UC Santa Barbara (CHIRPS3) | https://data.chc.ucsb.edu/products/CHIRPS/v3.0/ |
 | `GHCN_CAMS_T2M` | [Public domain (U.S. Government work on a federal server)](https://psl.noaa.gov/data/help/) (checked 2026-11-18) | Yes | GHCN_CAMS Gridded 2m Temperature (Land) data provided by the NOAA PSL, Boulder, Colorado, USA | https://downloads.psl.noaa.gov/Datasets/ghcncams/air.mon.mean.nc |
 | `COPERNICUS_DEM_GLO90` | [Copernicus DEM licence (GLO-90 free worldwide)](https://registry.opendata.aws/copernicus-dem/) | Yes | Produced using Copernicus WorldDEM-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved | https://copernicus-dem-90m.s3.amazonaws.com/ |
@@ -40,7 +40,7 @@ Owner direction: open datasets only, nothing that needs registration or a login.
 
 ## Citations
 
-- `DR_DISTRICT_SHAPES`: designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d).
+- `DR_DISTRICT_SHAPES`: no citation is stored for readers. Provenance (internal): designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d), built from the Kaggle dataset `adityaradha007/indian-districts-geojson` and joined to LGD codes; the combine step records the file's sha256 in `district_env_summary.json`.
 - `SOILGRIDS_2_0`: Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021
 - `ESA_WORLDCOVER_2021_V200`: Zanaga, D., Van De Kerchove, R., Daems, D., et al. (2022). ESA WorldCover 10 m 2021 v200. https://doi.org/10.5281/zenodo.7254221
 - `HANSEN_GFC_2025_V1_13`: Hansen, M. C., Potapov, P. V., Moore, R., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science 342, 850-853. https://doi.org/10.1126/science.1244693. Data GFC-2025-v1.13.
@@ -218,8 +218,9 @@ Method notes carried in each row's `method`:
 - CHIRPS runs from `--climate-first-year` (default 1981, the first year of the CHIRPS record; decision 0065) to the last complete year available, so the dataset row's period, the normals and the trend are one period (`1981-2025`); `monsoon_share_jjas` is June to September over the annual normal. The twelve `monthly_precipitation` normals of a district are written only when every year of the period has every month; they are the rainfall of an explainer's `seasons` block, cited by the CHIRPS dataset row with its period and 0.05 degree grid (decision 0043) and named by its district and state from the LGD register ("Rainfall · Kachchh, Gujarat · monthly normal · 1981-2025", decision 0050).
 - GHCN CAMS (decision 0065) is one netCDF file of monthly 2 m air temperature over land in Kelvin (`air`), downloaded whole once a month into the run's cache and read through GDAL's netCDF driver. A cell's annual mean is the mean of its twelve monthly means; a cell missing any month, or outside the file's valid range (150 to 400 K), has no value that year. Values are Kelvin less 273.15. The run starts at `--climate-first-year` (default 1981) and ends at the last year the file holds all twelve months of. On a 0.5 degree grid a small district is one or two cells, so the resolution is shown with every value.
 - Trends (decision 0065): for a district whose yearly series is complete over a period of at least 30 years, `TREND_PER_DECADE` is the Theil-Sen slope (the median of the slopes between every pair of years; Theil 1950, Sen 1968) times ten, and `TREND_P_VALUE` the two-sided Mann-Kendall test's p-value (normal approximation with the tie-corrected variance and a continuity correction; Kendall 1975, Gilbert 1987). A trend is significant when p < 0.05. A district missing any year has its yearly values but no normal and no trend. `DistrictEnvValue.value` keeps six decimals, so a p-value below 0.0000005 is stored as 0.
+- CHELSA GeoTIFFs are read at their native 30 arc-second grid with the scale and offset the file declares; raw 65535 is no data. District values are exactextract means weighted by each cell's spherical area inside the district (`coverage_weight = area_spherical_km2`), with the 10th and 90th percentiles across the district's cells. The stored method reads, in reader words, `chelsa.METHOD`. Annual rainfall and annual mean temperature normals are shown from the dataset of their trend (CHIRPS, GHCN CAMS); CHELSA's are shown only where that dataset has none for the place (decision 0075).
 - Slope is computed from the DEM with central differences, using metres per degree at each row's latitude.
-- HydroRIVERS lengths are reaches clipped to the district in WGS 84 / India NSF LCC. A major river is `ORD_FLOW <= 4` (long-term discharge of at least 100 m3/s). Distance is from the Designer Portal district centroid.
+- HydroRIVERS lengths are reaches clipped to the district in WGS 84 / India NSF LCC. A major river is `ORD_FLOW <= 4` (long-term discharge of at least 100 m3/s). Distance is from the district's centre (the centroid of its boundary polygon). The stored method reads, in reader words, `hydrorivers.METHOD`.
 
 `district_geology.parquet` also gets one row per district per source: MRDS as `lithology = mineral_occurrences` with the matching sites as JSON in `mineralOccurrences`, and GLiM as one row per lithology class with `areaShare`.
 
@@ -253,7 +254,7 @@ The river story draws HydroRIVERS v1.0 (Asia) lines, not just their district tot
 
 CHELSA V2.1 (1981-2010) was chosen over WorldClim 2.1 (1970-2000). It covers a more recent baseline at the same 30 arc-second resolution, and it handles terrain better through its orographic precipitation correction, which matters in the Himalayan and Western Ghats districts. Its GeoTIFFs are served as individual files from a public object store, so the workflow can read only the window it needs. WorldClim publishes zipped bundles that would have to be downloaded whole.
 
-CHELSA's licence is **unconfirmed**. The files download openly without registration, but on 2026-11-15 we could not find a licence statement on the CHELSA site to cite. Until one is confirmed, `redistributable` is `false` and CHELSA values must stay internal: no public display, no export. If the licence turns out to be CC BY 4.0, change `redistributable` in `catalog.py`, re-run the load and update this page. CHIRPS v3.0 (CC BY 4.0) covers recent rainfall and can be shown publicly now.
+CHELSA's licence is **unconfirmed**. The files download openly without registration, but on 2026-11-15 we could not find a licence statement on the CHELSA site to cite. The stored `licence` is therefore only the paper CHELSA asks to be cited, "Karger et al. 2017" linked to doi:10.1038/sdata.2017.122, with the full citation in `citation`, so no reader screen carries an admission. Until one is confirmed, `redistributable` is `false` and CHELSA values must stay internal: no public display, no export. If the licence turns out to be CC BY 4.0, change `redistributable` in `catalog.py`, re-run the load and update this page. CHIRPS v3.0 (CC BY 4.0) covers recent rainfall and can be shown publicly now.
 
 ### Temperature trends: GHCN CAMS (decision 0065)
 

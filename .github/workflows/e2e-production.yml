@@ -11,6 +11,10 @@ on:
         description: The river lines are loaded, so the water question fails without a region story
         type: boolean
         default: false
+      base_url:
+        description: A Vercel preview of this project to drive instead of production (https://kalavigyan-<id>-cxacraftecosystem-8028s-projects.vercel.app); empty drives production
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -27,13 +31,14 @@ jobs:
     name: Drive production at every width
     if: github.repository == 'cxacraftecosystem-ui/KalaVigyan'
     runs-on: ubuntu-26.04
-    timeout-minutes: 55
+    timeout-minutes: 90
     defaults:
       run:
         working-directory: frontend
     env:
       E2E_PRODUCTION: "1"
-      E2E_BASE_URL: ${{ vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
+      E2E_BASE_URL: ${{ inputs.base_url || vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
+      E2E_PREVIEW: ${{ inputs.base_url != '' && '1' || '0' }}
       E2E_QUESTIONS: ${{ inputs.questions && '1' || '0' }}
       E2E_RIVERS_LOADED: ${{ inputs.rivers_loaded && '1' || '0' }}
       E2E_REPORT_DIR: production-run
@@ -61,6 +66,7 @@ jobs:
         env:
           E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
           E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+          E2E_VERCEL_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           set -euo pipefail
           missing=""
@@ -70,17 +76,33 @@ jobs:
             echo "::error::Set the repository secrets:$missing (docs/RUNBOOK.md, E2E production run)"
             exit 1
           fi
+          if [ "$E2E_PREVIEW" = "1" ] && [ -z "$E2E_VERCEL_BYPASS" ]; then
+            echo "::warning::VERCEL_AUTOMATION_BYPASS_SECRET is not set, so a protected preview answers 401 (docs/RUNBOOK.md, E2E production run)"
+          fi
           echo "::add-mask::$E2E_PASSWORD"
           echo "E2E_RUN_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install the browsers
+        run: |
+          set -euo pipefail
+          if [ "$E2E_PREVIEW" = "1" ]; then
+            npx playwright install --with-deps chromium webkit
+          else
+            npx playwright install --with-deps chromium
+          fi
 
       - name: Drive production
         env:
           E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
           E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
-        run: npx playwright test --project=production-desktop --project=production-tablet --project=production-phone
+          E2E_VERCEL_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          E2E_PROFESSOR_EMAIL: ${{ secrets.E2E_PROFESSOR_EMAIL }}
+          E2E_PROFESSOR_PASSWORD: ${{ secrets.E2E_PROFESSOR_PASSWORD }}
+          E2E_PROFESSOR_TOTP_SECRET: ${{ secrets.E2E_PROFESSOR_TOTP_SECRET }}
+          E2E_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL }}
+          E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
+          E2E_ADMIN_TOTP_SECRET: ${{ secrets.E2E_ADMIN_TOTP_SECRET }}
+        run: npx playwright test --project='production-*'
 
       - name: Keep the screenshots
         if: always()

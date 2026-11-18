@@ -7,19 +7,20 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Self
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from fastapi.responses import StreamingResponse
 from pydantic import Field, model_validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.film_deps import offered_film
 from app.api.listen_deps import offered_listen
+from app.api.public_deps import cached_read, public_reader
 from app.api.voice_deps import current_voice, voice_call_enabled, voice_runtime, voice_store
 from app.core.config import get_settings
 from app.core.db import get_session, sessionmaker
 from app.core.deps import get_current_user, refusal_for
 from app.core.errors import AppError
-from app.core.rate_limit import ask_attempt
+from app.core.rate_limit import ask_attempt, retry_after_value
 from app.core.roles import Capability, can, is_uncapped, role_value
 from app.models import User
 from app.providers.budget import AnswerSpend
@@ -29,6 +30,7 @@ from app.providers.structured import router_structured_model
 from app.research.depth import DEPTH_LABELS, default_depth, selectable_depths
 from app.research.explainer_versions import BuildsOn
 from app.research.planning import withheld_name
+from app.research.retrieval import chunk_acls_for
 from app.research.stream import event_stream
 from app.research.vocabulary import ANSWER_LANGUAGES, AnswerLanguage, Depth, language_option
 from app.schemas.common import APIModel
@@ -83,19 +85,22 @@ async def privacy_notice() -> dict[str, Any]:
 
 @router.get("/crafts/{slug}/profile")
 async def craft_profile(
-    slug: str, _: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)
+    slug: str, user: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)
 ) -> dict[str, Any]:
     craft = await knowledge_view.resolve_craft(session, slug)
     if craft is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
-    return await knowledge_view.craft_profile(session, craft)
+    return await knowledge_view.craft_profile(session, craft, acls=chunk_acls_for(user))
 
 
 @router.get("/map/crafts")
 async def map_crafts(
-    _: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)
-) -> list[dict[str, Any]]:
-    return await knowledge_view.map_points(session)
+    request: Request,
+    response: Response,
+    reader: User | None = Depends(public_reader),
+    session: AsyncSession = Depends(get_session),
+) -> Any:
+    return cached_read(request, response, reader, await knowledge_view.map_points(session))
 
 
 async def offered_voice(
@@ -236,7 +241,7 @@ async def answers_stream(
             raise HTTPException(
                 status.HTTP_429_TOO_MANY_REQUESTS,
                 THROTTLED_DETAIL,
-                {"Retry-After": str(max(1, int(retry + 0.999)))},
+                {"Retry-After": retry_after_value(retry)},
             )
     pipeline = pipelines(ask.depth)
     return StreamingResponse(

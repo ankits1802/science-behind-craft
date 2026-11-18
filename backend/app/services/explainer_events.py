@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
 from typing import Any
 
+from app.research.blocks_lede import LedeBlock
 from app.research.explainer import Block
 from app.research.sections import SectionSpec
 from app.research.stream import Emit, StatusStep
@@ -11,12 +12,15 @@ from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .answer_events import OPEN_HEADING, OPEN_SECTION_ID
 from .answer_trail import TrailLog
+from .claim_ledger import ClaimLedger
 
-__all__ = ["ONCE_STEPS", "ExplainerStream", "shown_title", "status_message"]
+__all__ = ["ONCE_STEPS", "ExplainerStream", "InLanguage", "shown_title", "status_message"]
 
 ONCE_STEPS = frozenset(
     {"SEARCHING_STORED", "RESEARCHING", "READING", "COMPOSING", "WRITING_BACK", "TRANSLATING"}
 )
+
+InLanguage = Callable[[Block], Awaitable[Block]]
 
 
 def status_message(step: StatusStep, count: int = 0, craft: str = "", *, language: str = "") -> str:
@@ -43,10 +47,29 @@ class ExplainerStream:
         self.emit = emit
         self.trail = TrailLog(emit)
         self.language = language
+        self.ledger = ClaimLedger()
         self._lock = asyncio.Lock()
         self._sent_sources: set[str] = set()
         self._steps: set[str] = set()
         self._open_questions = 0
+        self._lede_settled = asyncio.Event()
+        self._lede_settled.set()
+
+    def hold_blocks_for_lede(self) -> None:
+        self._lede_settled.clear()
+
+    def release_blocks(self) -> None:
+        self._lede_settled.set()
+
+    async def lede(self, block: LedeBlock, sources: Mapping[str, Mapping[str, Any]]) -> None:
+        async with self._lock:
+            shown = self.ledger.admit_lede(block, sources)
+            await self._sources(shown.cited_source_ids(), {**sources, **self.ledger.sources.refs()})
+            await self.emit("lede", {"block": shown})
+
+    async def section_heading(self, section_id: str, *, title: str, original: str | None) -> None:
+        shown = {"title": title, **({"original": original} if original else {})}
+        await self.emit("section_heading", {"sectionId": section_id, **shown})
 
     async def status(self, step: StatusStep, count: int = 0, *, craft: str = "") -> None:
         if step in ONCE_STEPS and step in self._steps:
@@ -77,21 +100,37 @@ class ExplainerStream:
         await self.emit("section_done", {"sectionId": section_id, "state": state, "searched": searched})
 
     async def blocks(
-        self, section_id: str, blocks: Sequence[Block], sources: Mapping[str, Mapping[str, Any]]
-    ) -> None:
+        self,
+        section_id: str,
+        blocks: Sequence[Block],
+        sources: Mapping[str, Mapping[str, Any]],
+        *,
+        in_language: InLanguage | None = None,
+    ) -> list[Block]:
+        await self._lede_settled.wait()
         async with self._lock:
-            for block in blocks:
-                await self._sources(block.cited_source_ids(), sources)
+            admitted = self.ledger.admit(section_id, blocks, sources)
+        shown = list(await asyncio.gather(*map(in_language, admitted))) if in_language else admitted
+        async with self._lock:
+            known = {**sources, **self.ledger.sources.refs()}
+            for block in shown:
+                await self._sources(block.cited_source_ids(), known)
                 await self.emit("block", {"sectionId": section_id, "block": block})
+        return shown
+
+    def shown_sources(self) -> dict[str, dict[str, Any]]:
+        return self.ledger.sources.refs()
 
     async def open_questions(
         self, sentences: Sequence[Mapping[str, Any]], sources: Mapping[str, Mapping[str, Any]]
     ) -> None:
         async with self._lock:
             for sentence in sentences:
-                await self._sources(dict.fromkeys(c["sourceId"] for c in sentence["citations"]), sources)
+                merged = self.ledger.merged_sentence(sentence, sources)
+                known = {**sources, **self.ledger.sources.refs()}
+                await self._sources(dict.fromkeys(c["sourceId"] for c in merged["citations"]), known)
                 self._open_questions += 1
-                numbered = {**sentence, "id": f"{OPEN_SECTION_ID}.{self._open_questions}"}
+                numbered = {**merged, "id": f"{OPEN_SECTION_ID}.{self._open_questions}"}
                 await self.emit(
                     "open_question",
                     {"sectionId": OPEN_SECTION_ID, "heading": OPEN_HEADING, "sentence": numbered},

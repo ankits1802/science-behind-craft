@@ -83,10 +83,10 @@ test("every overview fact, sentence and side of a disagreement carries a citatio
   for (const block of html.split('data-testid="craft-fact"').slice(1)) expect(block.split("</div>")[0]).toContain('data-testid="citation-chip"');
   for (const sentence of html.split('data-testid="answer-sentence"').slice(1)) expect(sentence.split('data-testid="answer-sentence"')[0]).toContain('data-testid="citation-chip"');
   expect(count(html, "craft-differ-row")).toBe(14);
-  const first = html.split('data-testid="craft-differ-row"')[1].split("</li></ul>")[0];
-  expect(text(first)).toContain("How many stages the ajrakh process has");
-  expect(first.split("<li ").length - 1).toBe(3);
-  expect(first.split('data-testid="citation-chip"').length - 1).toBeGreaterThanOrEqual(3);
+  const rows = html.split('data-testid="craft-differ-row"').slice(1).map((row) => row.split("</li></ul>")[0]);
+  const stages = rows.find((row) => text(row).includes("How many stages the ajrakh process has")) ?? "";
+  expect(stages.split("<li ").length - 1).toBe(3);
+  expect(stages.split('data-testid="citation-chip"').length - 1).toBeGreaterThanOrEqual(3);
 });
 
 test("open questions show their hypotheses with chips, and what would settle them", () => {
@@ -193,7 +193,7 @@ test("sources list under their reliability grade with their numbers", () => {
   const page = curatedPage();
   const numbers = pageSourceNumbers(page, []);
   const html = drawn(page, createElement(CraftSourcesTab, { groups: sourceGroups(page.sources, numbers), numbers }));
-  expect(attribute(html, "craft-source-group", "data-reliability")).toEqual(["A", "B", "C", "D"]);
+  expect(attribute(html, "craft-source-group", "data-reliability")).toEqual(["A", "B", "C"]);
   expect(count(html, "craft-source")).toBe(20);
   expect(text(html)).toContain("A · peer-reviewed or official 9 sources");
   expect(text(html)).toContain("[1] Geographical Indications Journal No. 188");

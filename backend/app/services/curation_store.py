@@ -4,7 +4,7 @@ import uuid
 from collections.abc import Sequence
 from typing import Any
 
-from sqlalchemy import select, tuple_
+from sqlalchemy import Select, select, tuple_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
@@ -31,13 +31,20 @@ from app.models import (
 )
 
 from .curated_index import CuratedPage
-from .curation_plan import CurationPlan
+from .curation_claims import craft_curated_claims
+from .curation_plan import CurationPlan, PlanParts
 from .curation_writes import delete_rows, insert_missing, keep_only, sync_rows, update_rows
 
-__all__ = ["source_aliases", "write_evidence", "write_records", "write_structure"]
+__all__ = [
+    "source_aliases",
+    "write_evidence",
+    "write_media_and_terms",
+    "write_records",
+    "write_structure",
+]
 
 
-async def source_aliases(session: AsyncSession, plan: CurationPlan) -> dict[uuid.UUID, uuid.UUID]:
+async def source_aliases(session: AsyncSession, plan: PlanParts) -> dict[uuid.UUID, uuid.UUID]:
     by_doi: dict[str, list[uuid.UUID]] = {}
     for row in plan.part("sources"):
         if row["doi"]:
@@ -56,13 +63,15 @@ async def source_aliases(session: AsyncSession, plan: CurationPlan) -> dict[uuid
     return aliases
 
 
-async def write_evidence(session: AsyncSession, plan: CurationPlan) -> dict[str, int]:
-    claim_ids = plan.claim_ids()
+async def write_evidence(
+    session: AsyncSession, plan: PlanParts, *, marker: Any = CuratedClaim
+) -> dict[str, int]:
+    claim_ids = [row["id"] for row in plan.part("claims")]
     kept = [row["id"] for row in plan.part("claimSources")]
     return {
         "sources": await sync_rows(session, Source, plan.part("sources")),
         "concepts": await sync_rows(session, Concept, plan.part("concepts")),
-        "curatedClaims": await sync_rows(session, CuratedClaim, plan.part("curatedClaims"), key="claimId"),
+        "curatedClaims": await sync_rows(session, marker, plan.part("curatedClaims"), key="claimId"),
         "claimSources": await sync_rows(session, ClaimSource, plan.part("claimSources")),
         "droppedQuotes": await delete_rows(
             session, ClaimSource, ClaimSource.claimId.in_(claim_ids), keep_only(ClaimSource.id, kept)
@@ -157,12 +166,12 @@ async def write_records(
     session: AsyncSession, plan: CurationPlan, previous: CuratedPage | None
 ) -> dict[str, int]:
     craft = plan.craft.id
-    changed = {
-        "media": await insert_missing(session, MediaRef, plan.part("media")),
-        "mediaClaims": await _media_claims(session, plan, previous),
-        "terms": await insert_missing(session, Term, plan.part("terms")),
-        "termLinks": await insert_missing(session, TermCraft, plan.part("termCrafts"))
-        + await insert_missing(session, TermConcept, plan.part("termConcepts")),
+    shown = {picture.media_ref_id for picture in previous.pictures} if previous else set()
+    changed = await write_media_and_terms(
+        session, plan, previous_media=shown, marked=craft_curated_claims(craft)
+    )
+    changed["termLinks"] += await insert_missing(session, TermCraft, plan.part("termCrafts"))
+    changed |= {
         "giRecords": await sync_rows(session, CraftGiRecord, plan.part("giRecords"), key="craftId"),
         "prices": await _synced(session, CraftPrice, plan.part("prices"), CraftPrice.craftId == craft),
         "workforce": await _synced(
@@ -174,22 +183,33 @@ async def write_records(
     return changed
 
 
-async def _media_claims(session: AsyncSession, plan: CurationPlan, previous: CuratedPage | None) -> int:
-    links = plan.part("mediaClaims")
+async def write_media_and_terms(
+    session: AsyncSession,
+    plan: PlanParts,
+    *,
+    previous_media: set[uuid.UUID],
+    marked: Select[tuple[uuid.UUID]],
+) -> dict[str, int]:
+    media = {row["id"] for row in plan.part("media")} | previous_media
+    return {
+        "media": await insert_missing(session, MediaRef, plan.part("media")),
+        "mediaClaims": await _media_claims(session, plan.part("mediaClaims"), media, marked),
+        "terms": await insert_missing(session, Term, plan.part("terms")),
+        "termLinks": await insert_missing(session, TermConcept, plan.part("termConcepts")),
+    }
+
+
+async def _media_claims(
+    session: AsyncSession,
+    links: Sequence[dict[str, Any]],
+    media: set[uuid.UUID],
+    marked: Select[tuple[uuid.UUID]],
+) -> int:
     inserted = await insert_missing(session, MediaRefClaim, links)
-    media = {picture.media_ref_id for picture in plan.index.pictures}
-    media |= {picture.media_ref_id for picture in previous.pictures} if previous else set()
     if not media:
         return inserted
     kept = [(row["mediaRefId"], row["claimId"]) for row in links]
-    conditions = [
-        MediaRefClaim.mediaRefId.in_(list(media)),
-        MediaRefClaim.claimId.in_(_curated_claims(plan.craft.id)),
-    ]
+    conditions = [MediaRefClaim.mediaRefId.in_(list(media)), MediaRefClaim.claimId.in_(marked)]
     if kept:
         conditions.append(tuple_(MediaRefClaim.mediaRefId, MediaRefClaim.claimId).not_in(kept))
     return inserted + await delete_rows(session, MediaRefClaim, *conditions)
-
-
-def _curated_claims(craft_id: uuid.UUID) -> Any:
-    return select(CuratedClaim.claimId).where(CuratedClaim.craftId == craft_id)

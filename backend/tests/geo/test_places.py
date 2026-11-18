@@ -93,6 +93,13 @@ def test_a_district_place_without_a_label_is_named_for_its_district() -> None:
     assert place.place_label == "Kachchh"
 
 
+def test_a_district_place_is_named_for_the_district_its_values_describe_not_its_strongest_village() -> None:
+    ajrakhpur = location(id="a-ajrakhpur", place_label="Ajrakhpur", level="REVIEWED")
+    dhamadka = location(id="b-dhamadka", place_label="Dhamadka")
+    [place] = region_places([ajrakhpur, dhamadka], [])
+    assert (place.scope, place.place_label, place.district_name) == ("DISTRICT", "Kachchh", "Kachchh")
+
+
 def test_states_of_practice_match_lgd_names_and_all_india_is_no_state(
     caplog: pytest.LogCaptureFixture,
 ) -> None:

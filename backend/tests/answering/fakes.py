@@ -173,6 +173,7 @@ class FakeStore:
     finished: list[dict[str, Any]] = field(default_factory=list)
     asked_for: list[list[uuid.UUID]] = field(default_factory=list)
     questions: list[str] = field(default_factory=list)
+    modes: list[str] = field(default_factory=list)
     answer_id: uuid.UUID = ANSWER_ID
 
     @property
@@ -180,8 +181,9 @@ class FakeStore:
         return [understanding for _, understanding in self.begun]
 
     async def stored_claims(self, craft_slug: str, question: str, mode: str) -> CitedClaims:
-        assert (craft_slug, mode) == (AJRAKH.slug, "VERIFIED")
+        assert craft_slug == AJRAKH.slug
         self.questions.append(question)
+        self.modes.append(mode)
         return self.stored
 
     async def begin(self, ask: AnswerAsk, understanding: Understanding) -> uuid.UUID:

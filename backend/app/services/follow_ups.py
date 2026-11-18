@@ -5,7 +5,10 @@ import re
 import uuid
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
+from types import MappingProxyType
 
+from app.composer.candidates import research_summary
+from app.research.composition import FOLLOW_UPS_MAX, not_enough_evidence_message
 from app.research.explainer import Explainer, ExplainerSection, Understood, explainer_blocks
 from app.research.explainer_versions import (
     BuildsOnEvent,
@@ -14,15 +17,48 @@ from app.research.explainer_versions import (
     VersionMark,
     block_number,
 )
-from app.research.sections import DISCIPLINE_TITLES, SectionSpec, section_specs
+from app.research.sections import SectionSpec, fallback_heading, section_specs
 from app.research.understanding import Understanding
 
+from .answer_lede import Opening
+from .answer_sections import SectionOutcome
+from .answer_translation import AnswerTranslation, Segment, translate_segments
+from .explainer_events import ExplainerStream
 from .section_deepening import Deepening
 from .version_merge import merged_version
 
-__all__ = ["AnswerLayout", "FollowUp", "StoredAnswer", "answer_layout", "understood_for"]
+__all__ = [
+    "LEFT_OPEN_QUESTIONS",
+    "AnswerLayout",
+    "FollowUp",
+    "StoredAnswer",
+    "answer_layout",
+    "closed_answer",
+    "left_open",
+    "left_open_follow_ups",
+    "understood_for",
+]
 
 SECTION_NUMBER = re.compile(r"^s(?P<number>\d+)$")
+QUESTION_KEY = re.compile(r"[^\W_]+")
+LEFT_OPEN_QUESTIONS: Mapping[str, str] = MappingProxyType(
+    {
+        "OVERVIEW": "Who practises {craft} today, and where?",
+        "PROCESS": "What happens at each stage of {craft}?",
+        "CHEMISTRY": "What chemistry is at work in {craft}?",
+        "PHYSICS": "What physics is at work in {craft}?",
+        "MATERIALS": "Which materials does {craft} depend on?",
+        "GEOGRAPHY": "How do land and water shape {craft}?",
+        "GEOLOGY": "How do soil and stone shape {craft}?",
+        "CLIMATE": "How does the weather shape {craft}?",
+        "ECOLOGY": "What does {craft} take from its surroundings?",
+        "BOTANY": "Which plants does {craft} depend on?",
+        "HISTORY": "Where does {craft} come from?",
+        "ECONOMICS": "Who makes a living from {craft}, and how?",
+        "DESIGN": "What do the patterns of {craft} mean?",
+        "HEALTH": "How do artisans of {craft} work safely?",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -93,15 +129,67 @@ def understood_for(understanding: Understanding, follow_up: FollowUp | None) -> 
     return understanding.understood() if follow_up is None else follow_up.understood
 
 
-def answer_layout(understanding: Understanding, follow_up: FollowUp | None) -> AnswerLayout:
+def answer_layout(
+    understanding: Understanding, follow_up: FollowUp | None, *, question: str = ""
+) -> AnswerLayout:
     asked = follow_up.facets if follow_up is not None and follow_up.facets else understanding.disciplines
-    specs = section_specs(asked, understanding.depth)
+    craft = understanding.craft.name if understanding.craft else None
+    specs = section_specs(asked, understanding.depth, question=question, craft_name=craft)
     if follow_up is None:
         return AnswerLayout(specs=tuple(specs))
-    return _follow_up_layout(follow_up, [spec.discipline for spec in specs])
+    return _follow_up_layout(follow_up, [spec.discipline for spec in specs], craft)
 
 
-def _follow_up_layout(follow_up: FollowUp, disciplines: Sequence[str]) -> AnswerLayout:
+def left_open(
+    question: str, understanding: Understanding, outcomes: Sequence[SectionOutcome], opened: Opening
+) -> list[str]:
+    shown = {outcome.spec.discipline for outcome in outcomes if outcome.blocks}
+    unshown = [discipline for discipline in understanding.disciplines if discipline not in shown]
+    offered = [*opened.follow_ups, *(item for outcome in outcomes for item in outcome.follow_ups)]
+    craft = understanding.craft.name if understanding.craft else None
+    return left_open_follow_ups(opened.asked(question), offered, unshown, craft)
+
+
+def left_open_follow_ups(
+    asked: tuple[str, ...], offered: Sequence[str], unshown: Sequence[str], craft_name: str | None
+) -> list[str]:
+    facets = [LEFT_OPEN_QUESTIONS[d].format(craft=craft_name) for d in unshown if craft_name is not None]
+    questions = {_question_key(form) for form in asked}
+    chosen: dict[str, str] = {}
+    for item in [*offered, *facets]:
+        key = _question_key(item)
+        if key and key not in questions and key not in chosen:
+            chosen[key] = item
+    return list(chosen.values())[:FOLLOW_UPS_MAX]
+
+
+async def closed_answer(
+    outcomes: Sequence[SectionOutcome],
+    offered: Sequence[str],
+    stream: ExplainerStream,
+    translation: AnswerTranslation,
+) -> list[str]:
+    if any(outcome.blocks for outcome in outcomes):
+        english = list(offered)[:FOLLOW_UPS_MAX]
+        segments = [Segment(f"follow-up:{n}", item) for n, item in enumerate(english)]
+        found = await translate_segments(segments, language=stream.language, translation=translation)
+        follow_ups = [found.get(f"follow-up:{n}", item) for n, item in enumerate(english)]
+        await stream.emit("follow_ups", {"items": follow_ups})
+        return follow_ups
+    failures = [outcome.failure for outcome in outcomes if outcome.failure is not None]
+    if len(failures) == len(outcomes):
+        raise failures[0]
+    packs = [pack for outcome in outcomes for pack in outcome.packs]
+    message = not_enough_evidence_message(research_summary(*packs))
+    await stream.emit("not_enough_evidence", {"message": message})
+    return []
+
+
+def _question_key(text: str) -> str:
+    return " ".join(QUESTION_KEY.findall(text.casefold()))
+
+
+def _follow_up_layout(follow_up: FollowUp, disciplines: Sequence[str], craft: str | None) -> AnswerLayout:
     explainer = follow_up.explainer
     by_field = {section.discipline: section for section in explainer.sections}
     shown = frozenset(uuid.UUID(c.claim_id) for b in explainer_blocks(explainer) for c in b.citations())
@@ -113,7 +201,7 @@ def _follow_up_layout(follow_up: FollowUp, disciplines: Sequence[str]) -> Answer
     for discipline in disciplines:
         section = by_field.get(discipline)
         if section is None:
-            title = DISCIPLINE_TITLES[discipline]
+            title = fallback_heading(discipline, craft)
             specs.append(
                 SectionSpec(id=f"s{next(numbers)}", discipline=discipline, title=title, order=next(orders))
             )

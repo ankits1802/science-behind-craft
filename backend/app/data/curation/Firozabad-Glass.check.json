@@ -1,0 +1,2132 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Firozabad-Glass",
+  "dossierVersion": 1,
+  "dossierDigest": "35562849af60a863f59a39101f0e6208535b32efd16cbce44e7caafc5771b5b4",
+  "checkedAt": "2026-11-18T09:49:18.929249Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/155",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/155",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/155",
+      "fetchedAt": "2026-11-18T09:48:53.363112Z",
+      "contentType": "text/html",
+      "textSha256": "0002d6e16775b1a83a3a229296e61f573fe2248d2e0da8e45b53303b32b1d79e",
+      "characters": 14707,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/156",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/156",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/156",
+      "fetchedAt": "2026-11-18T09:48:55.210327Z",
+      "contentType": "text/html",
+      "textSha256": "ad04bd7bbca7abccecac1ab917a97339e1bbc0609932416323db81b01ad6c22c",
+      "characters": 2956,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20140802143551id_/http://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "finalUrl": "https://web.archive.org/web/20140802143551id_/http://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "fetchedAt": "2026-11-18T09:48:58.224263Z",
+      "contentType": "application/pdf",
+      "textSha256": "4c7524198ca402123f18b37f3c5d2aa4c00aee9dcb632347df669c8b851af588",
+      "characters": 233395,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/174-firozabad-glass.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/174-firozabad-glass.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/174-firozabad-glass.pdf",
+      "fetchedAt": "2026-11-18T09:48:54.215169Z",
+      "contentType": "application/pdf",
+      "textSha256": "0ea536409b8175446132b5019ff14098ef8f1d09619bfb6eb0f7e9cceecca5f7",
+      "characters": 29105,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://bookstore.teri.res.in/docs/books/Firozabad%20glass%20industry%20cluster.pdf",
+      "route": "LIVE",
+      "readUrl": "https://bookstore.teri.res.in/docs/books/Firozabad%20glass%20industry%20cluster.pdf",
+      "finalUrl": "https://bookstore.teri.res.in/docs/books/Firozabad%20glass%20industry%20cluster.pdf",
+      "fetchedAt": "2026-11-18T09:48:53.581709Z",
+      "contentType": "application/pdf",
+      "textSha256": "c11f631f9b1af5c5b43fea0f9a51062a74d616dc3beffc9911554223a95d8655",
+      "characters": 457681,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.dcmsme.gov.in/tcsp/Program%20Overview/Firozabad_V1.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260225065345id_/https://www.dcmsme.gov.in/tcsp/Program%20Overview/Firozabad_V1.pdf",
+      "finalUrl": "https://web.archive.org/web/20260225065345id_/https://www.dcmsme.gov.in/tcsp/Program%20Overview/Firozabad_V1.pdf",
+      "fetchedAt": "2026-11-18T09:49:03.421023Z",
+      "contentType": "application/pdf",
+      "textSha256": "2f653329f90bbdb0b275ccf497842209785d77e62cf8ba3b791c587501236093",
+      "characters": 108954,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.iapsmupuk.org/journal/index.php/IJCH/article/download/371/371/373",
+      "route": "LIVE",
+      "readUrl": "https://www.iapsmupuk.org/journal/index.php/IJCH/article/download/371/371/373",
+      "finalUrl": "https://www.iapsmupuk.org/journal/index.php/IJCH/article/download/371/371/373",
+      "fetchedAt": "2026-11-18T09:49:03.733505Z",
+      "contentType": "application/pdf",
+      "textSha256": "8816f87dab9577eff0a516cf7eb3ca003eecc6ce453d5b1b13fd0127e65312b1",
+      "characters": 10913,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://journals.christuniversity.in/index.php/ushus/article/download/1230/1052",
+      "route": "LIVE",
+      "readUrl": "https://journals.christuniversity.in/index.php/ushus/article/download/1230/1052",
+      "finalUrl": "https://journals.christuniversity.in/index.php/ushus/article/download/1230/1052",
+      "fetchedAt": "2026-11-18T09:49:14.014198Z",
+      "contentType": "application/pdf",
+      "textSha256": "cfafa1d463979628782d223249cff9d7631c83d8cc797f89309b7816daa1fbbe",
+      "characters": 17937,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3830144/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20220313221008id_/https://pubmed.ncbi.nlm.nih.gov/3830144/",
+      "finalUrl": "https://web.archive.org/web/20220313221008id_/https://pubmed.ncbi.nlm.nih.gov/3830144/",
+      "fetchedAt": "2026-11-18T09:49:06.606644Z",
+      "contentType": "text/html",
+      "textSha256": "be0e6002ab144f4d85b4571a78dd8f15fb435babccb9f0efce3baf19456e8eef",
+      "characters": 835,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2583177/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250204073711id_/https://pubmed.ncbi.nlm.nih.gov/2583177/",
+      "finalUrl": "https://web.archive.org/web/20250204073711id_/https://pubmed.ncbi.nlm.nih.gov/2583177/",
+      "fetchedAt": "2026-11-18T09:49:08.962443Z",
+      "contentType": "text/html",
+      "textSha256": "d8ab2e808810e907e322a555a4cfd6dfa2bb18c004a3739645e73a86a20618c6",
+      "characters": 1934,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://indiankanoon.org/doc/1964392/",
+      "route": "LIVE",
+      "readUrl": "https://indiankanoon.org/doc/1964392/",
+      "finalUrl": "https://indiankanoon.org/doc/1964392/",
+      "fetchedAt": "2026-11-18T09:49:05.428839Z",
+      "contentType": "text/html",
+      "textSha256": "c95d428c138ff2a9e82c9d6929b44334fe52539a9749bf3e3beb05af0a3220c2",
+      "characters": 93537,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://aigmf.com/Kanch-Apr-Jun-2011.pdf",
+      "route": "LIVE",
+      "readUrl": "https://aigmf.com/Kanch-Apr-Jun-2011.pdf",
+      "finalUrl": "https://aigmf.com/Kanch-Apr-Jun-2011.pdf",
+      "fetchedAt": "2026-11-18T09:49:10.440349Z",
+      "contentType": "application/pdf",
+      "textSha256": "2270b44ad56771839995b211cc7c3551d74a0a3ae9b7b74fe2b0ffced0192284",
+      "characters": 149389,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.aigmf.com/International-Seminar-Firozabad.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.aigmf.com/International-Seminar-Firozabad.pdf",
+      "finalUrl": "https://www.aigmf.com/International-Seminar-Firozabad.pdf",
+      "fetchedAt": "2026-11-18T09:49:10.173793Z",
+      "contentType": "application/pdf",
+      "textSha256": "a85e1bd9d4d56f6901d9d5d3799402f64a2cc8a106a6ad2c9f98a4883deda846",
+      "characters": 15240,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.downtoearth.org.in/pollution/firozabads-famous-glass-bangle-industry-continues-to-attract-infamy-for-poor-working-conditions",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/pollution/firozabads-famous-glass-bangle-industry-continues-to-attract-infamy-for-poor-working-conditions",
+      "finalUrl": "https://www.downtoearth.org.in/pollution/firozabads-famous-glass-bangle-industry-continues-to-attract-infamy-for-poor-working-conditions",
+      "fetchedAt": "2026-11-18T09:49:11.480267Z",
+      "contentType": "text/html",
+      "textSha256": "0d04eede9fa28a57dfe5f86388591c204a788ab8dce002a9368ff3f1e7922f00",
+      "characters": 698,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S03",
+      "quote": "It can be divided into the following four classes on the basis of the technology applied in their respective classes: (a) Glass Bangles (Choori) craft; (b) Glass Beads Craft; (c) Products manufactured using mouth/lungs blowing technique; and (d) Products manufactured using machinery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S03",
+      "quote": "Firozabad is the only place manufacturing glass bangles (Choori) and glassware manufactured using mouth blown technique in India. Firozabad has absolute monopoly in glass bangles and is World Glass Bangles Capital.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S06",
+      "quote": "It is popularly known as the Glass City or \"Suhag Nagri\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S12",
+      "quote": "Firozabad has earned the sobriquet of Suhag Nagri (the city that supplies bangles for married women).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S03",
+      "quote": "Due to sole manufacturer of glass bangles, Firozabad is nick named Suhag Nagri",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "(a) Bangles (Chooriware); (b) Kitchenware, like flask and containers; and (c) Tableware, like wine/beer glass and decorative items, like Christmas Tree.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "(e) The decorative items like chandeliers, Christmas Tree, animals' miniatures, statues of different kinds like of God & Goddess.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S03",
+      "quote": "Articles like statues of God and Goddess are also manufactured using dyes and mouth blown technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S13",
+      "quote": "It is the only cluster which is producing bangles and catering to the entire requirement of bangles in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S08",
+      "quote": "accounts for about 70% of all the glass tableware produced in India, in the unorganized sector and about 90% of the bangles made in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S08",
+      "quote": "Ushus JBMgt 12, 2 (2013), 1-15",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S05",
+      "quote": "Today, Firozabad is nicknamed 'suhag nagri' because it fulfils almost the entire country's demand for bangles and other glass ornaments worn by suhagins, or married women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S06",
+      "quote": "70% of the total glass production in the unorganized sector in India is contributed by Firozabad glass industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S13",
+      "quote": "Accounting for about 70% of the total glass production in small-sector in India, Firozabad glass industry is India's biggest glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "| Application Number | 155 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "| Applicant Name | The Glass Industries Syndicate |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "| Date of Filing | 09-02-2009 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "| Geographical Indications | Firozabad Glass | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "| Certificate Number | 202 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "| Certificate Date | 31-03-2014 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "| Registration Valid Upto | 08-02-2029 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S03",
+      "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 54 dated 28th November 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "| Journal Number | 54 | | Availability Date | 28-11-2013 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S03",
+      "quote": "is hereby advertised as accepted under Sub-section (1) of Section 13",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "Application 155 & 156 made by, The Glass Industrial Syndicate",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "Facilitated by Export Commissioner, Uttar Pradesh Government, Export Promotion Bureau",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "Firozabad Glass are merged together to proceed as a single application as per the order of Registrar of Geographical Indications dated 18-08-2009 under Application No. 155",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S02",
+      "quote": "| Application Number | 156 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | Firozabad Glass (Merged With Application No. 155) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "C) Type of Goods : Class - 21 - Household or kitchen utensils and containers; un-worked or semi-work glass (except glass used in buildings); Kitchen ware, Table ware, Chandeliers, Double walled Glass Refills; Glass Bangles; Beads; Tumblers and decorative items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "| Class | 9,11 & 21 | | Goods | Handicraft |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "| Application Number | 156 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | Firozabad Glass (Merged With Application No. 155) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "| Applicant Name | Export Commissioner, Uttar Pradesh Government Export Promotion Bureau |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S04",
+      "quote": "Name of the Applicant: Export commissioner, Uttar pradesh Governmenr",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S04",
+      "quote": "Class 9: apparatus and instruments for scientific research in research laboratories",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S04",
+      "quote": "class 11. in respect of apparatus for lighting like electric lamps and cFC lamp shells, electric lamp shades or covers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "| 124 | AU/31314/GI/155/124 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "| 125 | AU/33861/GI/155/125 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "| 127 | AU/38829/GI/155/127 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S03",
+      "quote": "Firozabad District, Uttar Pradesh. According to a report of the District Industry Centre Firozabad, Kanch Udhog Ki Adhtan Report, the glassware manufacturing activities are confined to in and around Firozabad town and a few other nearby places within the boundary of Firozabad district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "Agra Road, Station Road, Coal siding, Ashafabagh, Makkanpur, Dholpura and Raja ka Taal are the epicentre of glassware manufacturing in and around Firozabad town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S03",
+      "quote": "the glassware manufacturing activities are confined to in and around Firozabad town and a few other nearby places within the boundary of Firozabad district. Agra Road, Station Road, Coal siding, Ashafabagh, Makkanpur, Dholpura and Raja ka Taal are th e epicentre of glassware manufacturing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S03",
+      "quote": "G) Geographical Area of Production and Map as shown in page no.: Firozabad District, Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S03",
+      "quote": "Firozabad is located in north central India, in western Uttar Pradesh state, 40 km away from Agra and around 240 km away from Delhi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S06",
+      "quote": "is located about 240 km from Delhi, the capital of India, and about 40 km from Agra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S05",
+      "quote": "Firozabad lies about 250 km away from New Delhi, and 40 km from Agra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S03",
+      "quote": "Firozabad district was formed in February 1989 carving out areas from Agra and Mainpuri districts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S05",
+      "quote": "The DIC, Firozabad, was established after Firozabad became a district in 1989.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S06",
+      "quote": "A huge area of Firozabad falls under the Taj Trapezium Zone (TTZ). It is defined as an area of 10,400 sq. km. around the Taj Mahal to protect the monument from pollution",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S03",
+      "quote": "A report generated by the District Industry Centre Firozabad says that glass bangles (Choori) making technique originated in Jasrana sub division of Firozabad",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S03",
+      "quote": "carving out areas from Agra and Mainpuri districts) in the eighteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S03",
+      "quote": "The washer men of Jasrana use to mix dirty clothing with local soil (mud) and use to warm it overnight in containers put on fire.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S03",
+      "quote": "In the morning they use to find that there was a bright glass layer on cloths /container. This was gradually utilized for making joint-free glass bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "The Chall Ki Bhatti (local fossil fuel based furnace) was used to make glass bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "The artisans use to roll glass layer on wooden rods, which were cut into the shape of bangles (choori).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S03",
+      "quote": "In 1935 an artisan Rustam Ustad is said to have developed the craft of glass bangle making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S03",
+      "quote": "During ancient period, invaders brought many glass articles to India. Glass beads found at Ahicchatra (Uttar Pradesh) dates back between 300 B.C. and 1100 A.D. indicate Roman origin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S03",
+      "quote": "Similarly, glassware found in the Mughal period show Persian influence. These glass articles when rejected were collected and melted in locally made furnace called Bhainsa Bhatti. This is how gradually glass industry started in Firozabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S05",
+      "quote": "The Indian glass industry received royal patronage during the Mughal period (16th to 18th century AD). It was during this period that the foundations of the Firozabad bangle industry were laid.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S05",
+      "quote": "Among Firoz Shah's retinue were a number of glass workers from Rajasthan who specialized in making beads and bangles. Having settled in Firozabad, in due course they deployed their skills and taught them to local artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S05",
+      "quote": "During the reign of the great Mughal Emperor Akbar (1556-1605)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S05",
+      "quote": "The story goes that Raja Todar Mal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S05",
+      "quote": "Clay furnaces were made; silica was obtained from the sandy surface soil of nearby lands; wood, or wood charcoal, was used for fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S05",
+      "quote": "During the reign of the great Mughal Emperor Akbar (1556-1605)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S05",
+      "quote": "The story goes that Raja Todar Mal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S13",
+      "quote": "famous since 17 century for its exquisite production of glass works",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S12",
+      "quote": "initially his forefathers started production of glass bangles in village Urmara and Jasrana, presently in district Firozabad. Bangles were manufactured through small furnaces called 'Chhal ki Bhatti' and 'Kara Chhal Bhatti'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S12",
+      "quote": "visited Firozabad on April 28, 2011.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S03",
+      "quote": "The technological development saw introduction and use of Japanese Pot, Monkey Pot and now Regenerative Tank Furnace respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S03",
+      "quote": "Now natural gas burners are in use in Regenerative furnaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S03",
+      "quote": "GI Journal No. 54 14 November 28, 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S05",
+      "quote": "The Supreme Court delivered its judgment on this case on 30 December 1996. The Court banned the use of coke or coal by industries within the Trapezium, and ordered 292 coal-based industries in the Trapezium to switch to alternative fuels or else relocate outside the Trapezium.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S11",
+      "quote": "We, therefore, hold that the above-mentioned 292 industries shall as per the schedule indicated hereunder change-over to the natural gas as an industrial-fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S11",
+      "quote": "The industries which are not in a position to obtain gas connections - for any reason - shall stop functioning with the aid of coke/coal in the TTZ and may relocate themselves",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S05",
+      "quote": "This goal assumed particular significance in 1996, with the Supreme Court of India ordering 292 industrial units in the area known as the Taj Trapezium Zone - including the Firozabad pot furnace units - to stop burning coal and instead use natural gas as fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S05",
+      "quote": "Prior to 1996, all pot furnaces were fired by coal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S05",
+      "quote": "the Court ordered GAIL to supply natural gas to industrial units in the Taj Trapezium that could adapt their technologies to use this far more environmentally benign fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S11",
+      "quote": "(5) The GAIL shall commence supply of gas to the industries by June 30, 1997.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S05",
+      "quote": "The coal-burning pakai bhattis were completely excluded from GAIL's natural gas network because of safety and infrastructural considerations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S08",
+      "quote": "the honourable Supreme Court of India asked the industries to either switch over to the fuel sources from coal /Coke to natural gas which is considered as clean fuel, or get ready for permanent closure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S08",
+      "quote": "Most of the units have since switched over to natural gas as a fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S08",
+      "quote": "Ushus JBMgt 12, 2 (2013), 1-15",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S03",
+      "quote": "As per the Hon'ble Supreme Court Order natural gas is used as a fuel in place of conventional fossil fuels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S03",
+      "quote": "The standard height of the Glass melting pot Furnace chimney height is 60 feet for pollution control; the industries are increasingly taking their chimneys to the standard height.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S05",
+      "quote": "An estimated 100 000 tonnes of coal are consumed each year by pakai bhattis in Firozabad, generating very high levels of pollution",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S05",
+      "quote": "pakai bhattis are located in the midst of densely populated residential areas of Firozabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S08",
+      "quote": "These industries were using coal as the main source of fuel, which polluted the air quality, especially in terms of particulate matter and sulphur oxides. Many studies also identified that this had indeed caused damage to the white marble of Taj Mahal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S06",
+      "quote": "(a) Batch preparation The batch charge consists of raw materials such as silica sand and soda ash. The raw material is sieved, weighed and mixed in required proportions. The composition required for pots changes depending on the requirement of color and quality of the glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S06",
+      "quote": "The quality and color of melt glass in a pot is dependent on raw material composition and coloring additives in a charge batch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S06",
+      "quote": "(b) Melting In an open pot furnace, the charge is melted into glass in open pots placed within the furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S06",
+      "quote": "The pots filled with raw material are heated to the required temperature of 1250- 1280°C. The total time required for melting is about 16- 18 hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S05",
+      "quote": "A typical pot furnace has 10 to 12 pots, with each pot holding a charge of about 300-500 kg. The pots are filled with charge material, and the glass melted overnight. The melt is drawn the following day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S06",
+      "quote": "The number of pots in a furnace varies between 10 and 12.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S08",
+      "quote": "A pot furnace is a cylindrical structure, which accommodates between 10 to 12 of such pots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S05",
+      "quote": "There are two kinds of pot furnaces: open-pot and closed-pot. The closed pots (also called Japanese pots) protect the glass within the pots from",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S05",
+      "quote": "contamination by the dust and particulate matter in the furnace. Closed pots are used to melt relatively small batches of glass of special quality and composition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S05",
+      "quote": "Open pots are used to make glass entirely for bangles, where the quality of glass is comparatively less important.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "Tank furnaces are large: each has a capacity to make around 15-30 tonnes of glass daily. Glass from tank furnaces is used to make a wide range of items such as jars, tumblers, signal lamp covers, lamp shades, headlight covers for automobiles, thermos flasks and their refills, and laboratory ware.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "furnace operates on a 'downdraft' principle, that is, the hot gases from the burning fuel flow up to the roof or crown of the furnace, and then sweep downwards on to the pots (heating them in the process) before escaping through the chimney via a flue gas channel laid beneath ground level",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S05",
+      "quote": "Tank furnaces are fitted with heat recovery devices called 'regenerators', which are primarily large brick structures. These devices recover heat from flue gases and use it to preheat combustion air.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S05",
+      "quote": "pot furnaces did not have any such mechanisms at all for heat recovery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "Yet, in the traditional coal-fired pot furnaces, firemen did not have ther mocouples or any other temperaturemeasuring devices to help them measure furnace temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "Instead, they observed the colour of the furnace interior, used that as the basis to judge its temperature",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "The chart below gives a rough guide on how temperature can be judged by the 'colour of heat'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "Colour of furnace interior Temperature (°C) Initial red 500-550 Dark red 650-750 Cherry red 790-800 Bright red 850-950 Yellow 1050-1150 Initial white 1300 Full white 1500",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "Firozabad's glass melting furnaces were built by mistrys who derived their knowledge and skills from tradition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "the mistrys used refractory materials with very poor heat insulation properties in fabricating the furnaces",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "typically, a traditional pot furnace lasted barely a year.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S06",
+      "quote": "The furnaces are manufactured by \"Mistry\" who have derived their knowledge from traditional methods of manufacturing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "During visits it was informed that pots had an average life of around 20 days before they cracked or failed which meant wastage of fuel and hundreds of Kgs of charge.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S08",
+      "quote": "Pot Furnace No. 2 is always used to produce Red Glass, which has Selenium as an additional ingredient. This is known to attack the pot material by eating it (dissolving) faster.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S08",
+      "quote": "In Pot Furnace No. 2, the life of any pot has not gone beyond 52 days, whereas in case of Pot Furnace No. 1 the pots have lived up to a maximum of 75 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S08",
+      "quote": "From the chemical analysis report, it was observed that the major component of the raw material was Silica (SiO2), standing at 67.28%.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S08",
+      "quote": "It was realised that Silica is also the raw material for making glass, and that the pot itself contained a major portion of Silica, hence it was natural for the borax power to eat in to the pot material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S08",
+      "quote": "Having realised the fact that the raw material of the pot itself was the cause of the failure",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S08",
+      "quote": "The pot manufacturer was not in a position to provide any details about the composition of the raw material used for the pots, except that he was bringing the raw material from a place named Katni in Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S06",
+      "quote": "(c) Drawing The quality of melt glass is inspected visually to confirm whether it is ready for bangle making or not. This is done by dipping MS rod inside the pot through the charging door.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S06",
+      "quote": "MS Mild Steel MSME Micro, Small and Medium Enterprises",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S05",
+      "quote": "First, a worker (known as the gulliwalla) uses a long iron pole to scoop out a glob of molten glass from the pot furnace at a temperature of around 1300 °C.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S06",
+      "quote": "(d) Shaping The operator (loom maker) provides the required shape (cuboidal) to glass ball using a mason's patter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S06",
+      "quote": "The rod is taken to coloring workplace where molten color is applied on the shaped glass ball. Normally, the color is applied to the three sides.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S06",
+      "quote": "After application of color, the rod is taken back to pot furnace and dipped in the pot containing same colored glass. This composite glass ball is called loom.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S05",
+      "quote": "He races with the glob to a worker who gives it an appropriate shape (somewhat resembling an ice-cream bar!).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S05",
+      "quote": "If necessary, he coats the glass",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S05",
+      "quote": "with a small quantity of coloured block glass that is melted separately in a small refractory container called tali.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S03",
+      "quote": "For making a gulli first ghundi is made from a loam (Melted glass taken on an edge of a stick from the furnace).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S03",
+      "quote": "The final shaped Melted glass put on an edge of a stick is called Gulli",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "A colour layer (Batti) is sandwiched between two transparent glass layers at the time of making Gulli.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "The colour layer may be sandwiched between two transparent glass layers or may be put at bottom or top. The placing of colour gives different impression to the final glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "The colouring of bangles is done by either using coloured glass or applying colours to the top/upper crest of bangle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S03",
+      "quote": "The bangle could be round, flat, oval or spiral on the basis of beating the loam in a particular fashion.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S06",
+      "quote": "(e) Reheating The temperature of the glass, after final shaping of glass loom, drops resulting in inadequate plasticity. It is therefore heated in a reheating furnace to increase the temperature to make it soft and compatible",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S05",
+      "quote": "The shaped glob is then taken to the sekai bhatti-a furnace fired directly by coal. Here, a worker known as the sekaiwalla gives the semi-fused glob of glass a roughly cylindrical shape by rotating the rod.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S05",
+      "quote": "The still-soft cylindrical mass of glass, now cooled down to a temperature of around 500 °C, is then taken to a third coal-fired furnace, the belan bhatti. Here, three workers operate in concert to draw the glass into a spiral shape",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S05",
+      "quote": "The belanwalla rotates a 'belan' machine - essentially a long iron rod - inside the furnace at a constant speed. The tarkash draws a thin filament of glass from the melt and places it steadily on the rotating rod",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S05",
+      "quote": "The muthia uses an abrasive tool to cut off lengths of the spiral at periodic intervals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S06",
+      "quote": "(f) Bangle making Bangle making furnace (belan bhatti) has a rotating shaft with lead screw, which is driven in a manner to have both linear forward movement and rotary motion along the same axis simultaneously. The shaft is rotated with motor in most of the units.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S03",
+      "quote": "A rod full with the rolled glass thread is known as Muttha.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S03",
+      "quote": "At one side the first artisan, known as Tarkash, puts the gulli inside the hole of the furnace",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S06",
+      "quote": "(g) Cutting and bundling The spiral glass is cut in one plane with a diamond tip cutter to get round shaped bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S03",
+      "quote": "the Muttha is cut down into rings with a cut (two open ends at an angular difference) by a diamond cutter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S05",
+      "quote": "The cut bangles are tied with strings into bunches. Each bunch contains approximately 320 bangles, and is called a tora.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S06",
+      "quote": "bangles are counted and are packed by a string to a bunch of 320 pieces, which is also called one \"toda\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S05",
+      "quote": "Sedhai and judai are the crucial first stages in converting raw bangles from tank/pot furnace units into finished products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S05",
+      "quote": "Sedhai means 'straighten'. As the name suggests, in this stage the raw bangle is levelled or straightened by heating it over a small flame - usually from an LPG (liquefied petroleum gas) cylinder - and then pressing the heated bangle against an iron plate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "Both operations are carried out by workers in their homes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "Women and teenaged girls usually do sedhai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S05",
+      "quote": "After straightening, the two open ends of the bangle (now in alignment) are joined together once more by heating over a traditional kerosene lamp. This process is called judai (literally, 'joining').",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S12",
+      "quote": "Using a chimney of kerosene that is connected to an air compressor, known as 'pankha' by the workers, the two ends of the glass spring are joined.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S12",
+      "quote": "The process of joining bangles is termed 'judai'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S03",
+      "quote": "The grooving on the upper crest of the bangles is done by exposing the upper crest of the bangle to the design dye attached to the circumference of the rotator wheel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S03",
+      "quote": "The artisan keeps rotating the bangle to get grooves on the entire bangle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S05",
+      "quote": "After sedhai and judai, the bangles are decorated according to requirements.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S05",
+      "quote": "The bangles are painted in different colours; intricate patterns and designs may be engraved or etched on them; silver and gold polish ( hil)8 applied on their surfaces;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "and finally they are sent to the pakai bhattis for baking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "Finally, the raw bangles are annealed in a furnace known as the pakai bhatti to yield the finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S03",
+      "quote": "The bangle making can be divided into three main parts:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S03",
+      "quote": "i. Bangles manufacturing in which bangles with two angular open ends are manufactured",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S03",
+      "quote": "ii. Aligning (Sidhai) the bangle open angul ar ends, joining (Judai), grooving the designs on the upper side of the bangles and baking the bangles in muffle furnace (Pakki Bhatti) to make them smooth and bright; and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S03",
+      "quote": "iii. Decorating the bangles by jari, ceramic work or silver or golden colouring in the grooves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S03",
+      "quote": "The bangles are then baked into the recuperative furnace (Pakai Bhatti). This smoothens the sharp edges of the grooves carved on the upper crest of the bangles and makes the glass bright.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S05",
+      "quote": "A typical pakai bhatti has three horizontal tiers or 'muffles' made of fireclay (Figure 10). Coal is burnt at the bottom of the furnace, and hot flue gases flow upwards and around the muffles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S05",
+      "quote": "lowest muffle is the hottest, followed by the middle and top muffles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S05",
+      "quote": "The raw bangles to be baked are arranged in trays. Each tray is then placed in turn on the top, middle, and bottom muffles for about two to three minutes at a time to bake the bangles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S05",
+      "quote": "While going through the various stages in their making - particularly grinding - raw bangles lose the natural shine of glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S05",
+      "quote": "Baking the bangles in pakai bhattis restores their shine, and at the same time helps in removing the internal stresses in the glass, thus providing a degree of strength to the bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "gold polish (known as hil) is applied to their surfaces to make the end-products more attractive. The polish is invisible when applied; but its lustre appears when the raw bangles are baked.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "Presently, synthetic chemicals are used in place of gold and silver polish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "The trays are picked up and transferred from muffle to muffle in the furnace by the pakaiya-the most skilled worker in the unit, and therefore the most highly paid.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "Thereafter, the bangles are intertwined and strung together again, wrapped in brown paper, and packed into cardboard boxes, which are transported to godowns all over Firozabad by hand-drawn carts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "Broken bangles are not wasted. The shards are sorted out into separate piles according to colour (a process called chatai), and then the piles of shards are pounded manually into a fine powder for return to the glass melting factory.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S03",
+      "quote": "The glass is produced either by melting the glass itself (which constitutes a major part of the raw material as at least half of the production goes as scrap) or putting raw material Soda Ash and Silica Sand (Silica Oxide) in the Regenerative Furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S03",
+      "quote": "Soda ash and Silica are the main raw materials used for producing glass in which chemicals of known properties are mixed as raw material for achieving certain properties, like hardness, refractive index an d colour, in glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S06",
+      "quote": "Raw Material Used Silica sand, soda ash, calcium carbonate and cullet (recycled glass), colouring pigments etc",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S06",
+      "quote": "Glass manufacturing units at Firozabad procure raw materials such as silica sand, soda ash, calcium carbonate and other chemicals and pigments from local dealers and wholesalers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S06",
+      "quote": "Soda ash is primarily sourced from Gujrat and Silica sand from Rajasthan. Chemicals and pigments are most of the time imported from the overseas market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S06",
+      "quote": "it was observed that only limited firms leverage the waste f or reducing the overall cost of raw material and use them in production. This is primarily due to limited awareness about their production, environmental and cost benefits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S06",
+      "quote": "As cullet require proper washing to ensure complete segregation from other waste products, it is important for firms to have proper washing facilities which is not the case in most of the units in these clusters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S03",
+      "quote": "(a) Soda Lime Silica Glass (Soda Ash 33%, Silica Sand 66% and chemicals 1%) produced at around 1450 degree Celsius;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "(b) Borosilicate Glass (Boron 12%, Silica Sand 82% and Soda Ash 6%) produced at around 1600 degree Celsius; and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S03",
+      "quote": "(c) Lead Glass (Soft Glass) in which around 24% Led (Pb) is mixed as a raw material. Most of the products are manufactured using Soda Lime Glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "The principal constituent of glass is silicon dioxide, or SiO2. Silica sand contains about 96% by weight of SiO 2. However, silica melts at a very high temperature; so in order to reduce the fusion temperature, soda ash and potash are added to the charge as fluxing agents",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "Other chemicals are added as needed to",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "impart different colours to the glass. For instance, oxides of iron are added for a greenish-blue colour, selenium oxide for red, and cobalt for blue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S05",
+      "quote": "To remove air bubbles that may form within the molten glass, certain chemicals such as potassium or sodium nitrate, arsenic oxide, and antimony oxide are added in small quantities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "When a batch of glass is melted, bubbles are formed in the molten material by the volatile compounds released from the batch materials. In particular, the carbonates release large volumes of CO 2 (carbon dioxide).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "If they remain in the melt, small bubbles are called 'seeds' and large bubbles are called 'blisters'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S05",
+      "quote": "I realized that glass melting is best achieved in a reducing atmosphere, that is, in an atmosphere rich in carbon,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S05",
+      "quote": "pot furnace, unburned carbon from the coal creates a reducing atmosphere inside the furnace. But there is hardly any unburned carbon inside the much cleaner and hotter gas-fired furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S05",
+      "quote": "I tried adding small quantities of bitumen to the pots at different stages of melting...and sure enough, I finally succeeded in getting back the desired shade and quality of red glass!",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "These products are then heated and cooled in a controlled manner, in a process known as annealing, to impart hardness to the glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S06",
+      "quote": "Annealing is a heat-treatment process. It is essential to remove strains from glass products so that they are not brittle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S03",
+      "quote": "Melted glass ( loam) is taken from the regenerative furnace at an end of a hollow metal stick/rod. The loam is blown from mouth by raising the loam above face. It is blown keeping the desired size of th e flask in mind.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S03",
+      "quote": "Once the desired size is achieved, it is put inside the dye to give it a shape. The dye provides the outer surface of the flask",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S03",
+      "quote": "a dye is pressed upon the loam placed on the open end of the semi-finished flask. This process makes the inner wall of the flask and the desired double walled flask structure gets ready.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S03",
+      "quote": "Then the flask is put upon the conveyer belt of the temperature chamber (Layer) in which its temperature is gradually brought to the normal temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S03",
+      "quote": "The controlled gradual decrease in glassware temperature inside the temperature control chamber ensures that the warm glassware does not break while cooling down to the normal temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S03",
+      "quote": "Silver Nitrite is pour ed into the flask through the tube earlier added and then the flasks are placed upon the rotating rods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S03",
+      "quote": "This keeps rotating the flask and thus the inner walls (walls facing each-other) get silver coated.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S03",
+      "quote": "Generally glassware like bottles and drinking glass vessel are manufactured by this process. The Melted glass (Loam) taken from the regenerative furnace is pressed and put inside the dye to give it a shape. Then it is placed inside a chamber (Layer) to cool it down to the normal temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S03",
+      "quote": "Melted glass is taken from the Pot Furnace and is spread on a flat sheet. It is curled up to be placed at the mouth of the hollow pipe which is connected to the dye. The glass passes through the dye with compressed air.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S03",
+      "quote": "At the bottom of the dye there is an outlet from which the glass comes out in the shape of a hollow pipe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S03",
+      "quote": "The pieces are then mixed with carbon such that carbon gets filled inside the hollow space (pore) in between the circumference. It is then put into an input chamber which passes the cut pieces to a hollow revolving hot metal pipe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S03",
+      "quote": "This makes the sharp edges of the hollow glass tube pieces smooth and they get round shape by the time of coming out of the pipe. The carbon inside the hollow glass tube pieces helps in remaining the pore open in the process of rounding the sharp edges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S03",
+      "quote": "The standard Glass Bangles come in four sizes with the following specification:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S03",
+      "quote": "S 2.4 2.250 5.7 7.06 M 2.6 2.375 6.0 7.46 L 2.8 2.5 6.5 7.85 XL 33. 10 2.625 6.6 8.24",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S05",
+      "quote": "Interestingly, in Firozabad the word 'dozen' means 24 and not 12...because each one of us has two hands, and the bangle-maker counts 12 bangles per wrist!",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S03",
+      "quote": "The old traditional furnaces are still in use at Sasani near Aligarh (Uttar Pradesh) where joint-free glass bangles are made. These bangles were called Kadechhal Ki Choori. This type of bangles is considered very auspicious in marriage for the bride.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S03",
+      "quote": "GI Journal No. 54 10 November 28, 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S05",
+      "quote": "Over the ages, the bangle has come to be closely associated with the institution of marriage or suhag throughout India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S12",
+      "quote": "These colourful and shiny bangles are a symbol of marriage and prosperity of the women who wear them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "Making a kada has the same process, but here, several bangles are melted together to make a thick bangle that is called a kada. With a thin glass stick, designs are drawn on this kada and sometimes engravings are also done using rotating grinders.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S12",
+      "quote": "This is the part where the bangle is decorated, using ornamental pieces of mirrors, glitter and various other embellishments.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S12",
+      "quote": "Sometimes, a hardener and resin are mixed in equal quantity, making a paste that is then coated on the bangle. After this, the bangles are collectively rolled over Zari powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "It is said that a glass bangles passes through 54 artisans expert hands.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "A bangle as a final product passes thr ough 54 expert hands before becoming a finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S05",
+      "quote": "A popular saying in Firozabad: ' A bangle passes through 50 hands before it finally adorns a lady's wrist!'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S05",
+      "quote": "In 1997, Balkrishna Gupta, head of the Advance Group of Glass Industries, estimated that a bangle passes through 139 hands before it reaches a woman's wrist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S03",
+      "quote": "As per the latest data available till J une 2008, the total turnover of Firozabad glassware is around Rs 800 Crore in whic h exports of Rs 62.2 Crore are included.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S03",
+      "quote": "As per the latest data available till J une 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S03",
+      "quote": "Around one lakh workers are directly engaged in Firozabad glassware manufacturing and around two lakh workers are indirectly involve in glassware manufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S13",
+      "quote": "Firozabad glass industry is India's biggest glass industry cluster with nearly 5-6 lakh people employed directly and plenty more employed indirectly with this sector.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "There are about 130 -140 pot furnace-based units in Firozabad. Bangle is the main product that is manufactured by these units",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "On average, pot furnace-based units have an employee strength ranging from 70-100 workers out of which close to 95% are hired on daily contractual basis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S06",
+      "quote": "Bangle cluster is based on pot furnace and as the name depicts, have bangle as the major product. This cluster contains 115-120 units.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S06",
+      "quote": "The production capacity of each unit is estimated as 5- 7 TPD.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S06",
+      "quote": "TCSP Technology Center System Programme TPD Tones per Day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S13",
+      "quote": "The fuel, though subsidised, costs Rs 6,500 per 1,000 cubic metres",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S13",
+      "quote": "Further, a whopping Rs 23 per cubic metre is charged upon exceeding the fixed quota of gas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "The value chain of Bangle Manufacturing for 1 toda (set of 320 bangles)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "Raw Material 28 22.4 28 Energy (fuel) 30 24 58",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "Total Production Cost 125",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "Profit Margin 10% Selling price 137.5",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "Bangle makers in the household sector are paid piece-rate wages, that is, according to the number of bangles they process in a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S05",
+      "quote": "in mid-2007 workers were paid a mere 9 rupees per tora for both sedhai and judai work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S05",
+      "quote": "In practice, contractors known as thekedars hire the workers. The glass factory owner pays the thekedar a lump-sum amount for each batch of work that has to be completed. The thekedar pays only a portion of the amount he gets to the workers he has engaged.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S05",
+      "quote": "it is routine for thekedars to 'advance' money to bangle-workers at usurious rates of interest, and to deduct the interest dues from the wages payable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "This was a matched cross-sectional study of Spirometry in 100 bangle workers with age range 20 - 60 years, who worked without the benefit of smoke control ventilation or respiratory protective devices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "Significant reduction was observed in the mean values of Forced Vital Capacity (FVC)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "INDIAN JOURNAL OF COMMUNITY HEALTH / VOL 26 / ISSUE NO 01 / JAN - MAR 2014",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "This impairment was increased with the duration of exposure to fumes in bangle industries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "lung function in bangle workers is impaired and stratification of results shows a dose-response effect of years of smoke and flue exposure on lung function.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S09",
+      "quote": "A more detailed study in eight glass bangle units was therefore undertaken to make quantitative estimates of heat stress on exposed workers in the summer season.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S09",
+      "quote": "The thermal data collected confirmed that the heat stress on the workers was severe but measurement of certain physiological indicators revealed relatively low levels of strain amongst the exposed workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S10",
+      "quote": "Thermal stress and physiological strain in the glass bangle industry.Eur J Appl Physiol Occup Physiol. 1987;56(1):58-63.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S09",
+      "quote": "The findings could be attributable to high degrees of acclimatization",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S09",
+      "quote": "further observations in the field supplemented by studies on simulated exposures of volunteers in a climatic chamber seem to be warranted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "A group of 19 male children (mean age 12.1 years SEM 1.6 years) occupationally exposed to an excessively hot environment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "The cardio-respiratory responses showed physiological strain induced by the high ambient temperature and radiant heat prevailing in the glass bangle factory.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "in the glass bangle factory in Firozabad, India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S10",
+      "quote": "Over a work-shift the mean increase in oral temperature was 0.90 degrees C in the exposed children, in comparison with the 0.40 degrees C increase recorded in the control children",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S10",
+      "quote": "The maximum increase in oral temperature was recorded in 'gulliwalas' (0.90 degrees C) and the minimum in 'battiwalas' (0.80 degrees C).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "In 2002/03, with the project's support, Vikas Sansthan completed two baseline studies",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "their cramped living space is used for bangle-making operations as well. As a consequence, the workers, primarily women and children, are exposed to extremely high levels of pollution in their own homes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "This makes them vulnerable to a variety of respiratory diseases,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "including tuberculosis. Added to this, the workers use corrosive acids and other toxic chemicals while doing decorative work on bangles. Burn injuries and cuts are common; eye-related ailments too are widespread.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "In 2002/03, with the project's support, Vikas Sansthan completed two baseline studies",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "The Child Labour Act, passed in 1986, prohibits employment of children below the age of 14 in hazardous industries. Yet, children continue to work in the household bangle-making sector where conditions are no less arduous and hazardous than they are in the factories.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "children may no longer be seen working openly in the glass melting units; but they continue to toil from their own homes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "Also in 2005, the project initiated activities with more than 100 select families in Azad Nagar, Sant Nagar, and Asfabad aimed at sensitizing sedhai and judai workers to issues related to occupational health.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "awareness campaign on the dangers of prolonged exposure to emissions from kerosene lamps, and on postural problems due to long hours at sedhai and judai work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S06",
+      "quote": "Limited usage of safety equipment during job work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S06",
+      "quote": "Direct exposure to high temperatures, flue gasses, and fumes during the manufacturing process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S06",
+      "quote": "Workers who are employed as glass-workers face the threat of Silicosis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S14",
+      "quote": "The dyes used in colouring the glass used for making bangles contain toxic chemicals such as lead, cadmium and mercury. When such toxic chemcials are exposed to temperatures above 1000 degrees celsius, the fumes endanger the health of every worker in the factory.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S03",
+      "quote": "The glassware artisans are known as Shishgar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "The Glass Industry Syndicate is the oldest surviving glassware industry association based in Firozabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "It was established in Ja nuary 1946. It is an association of 70 glass bangles manufacturer members.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "GI Journal No. 54 11 November 28, 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S06",
+      "quote": "In May 1992, Centre for the Development of glass industry (CDGI) was set up as a joint venture project of Government of India, United Nations Development Program (UNDP), United Nations Industrial Development Organization (UNIDO) and Government of Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S05",
+      "quote": "the judai workers use kerosene; and units making decorative items and toys use LPG, kerosene, and even oxygen and acetylene.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S05",
+      "quote": "There were hundreds of pakai bhatti units in Firozabad, and all of them burned coal and/or wood as fuel. Yet, the pakai bhattis did not figure among the 292 units covered by the Supreme Court verdict of 1996!",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S05",
+      "quote": "it remained freely available in the local markets and pakai bhattis continued to use it as fuel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S05",
+      "quote": "According to an estimate by TERI, each day, glass units in Firozabad produce an estimated 2000 tonnes of glass products, including 50 million bangles, and provide direct employment to an estimated 150 000 people",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S05",
+      "quote": "Sethi G and Ghosh A M (eds). 2008 Towards Cleaner Technologies: a process story in the Firozabad glass industry cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "It is estimated that Firozabad has c lose to 4000 -5000 manufacturing and household units that generate employment for more than 5, 00,000",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "3 AIGMF Report 4 AIGMF Report, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "there are close to 198 registered glass products manufacturing firms in the region",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "Apart from these registered manufacturing units, there are close to 4000-5000 household units that are engaged in activities like decoration of glasswork.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S13",
+      "quote": "generating an annual business of more than Rs 2000 crore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "As per the report from AIGMF, Firozabad glass cluster generating an annual business of more than INR 2000",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "3 AIGMF Report 4 AIGMF Report, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S06",
+      "quote": "Nearly 35% of the total glass products produced in Firozabad are exported to other countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S06",
+      "quote": "As per data obtained by DIC Firozabad, in 2017-18, glass products of over INR 278 Cr, have been exported from Firozabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S06",
+      "quote": "Office of DC MSME, Ministry of MSME 31st October, 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S13",
+      "quote": "There is a large agglomeration of small scale units in this town, which are engaged in the manufacture of hollow wares, decorative items, glass beads, etc. Around 50% of the total produce of these units are exported to different countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S13",
+      "quote": "DATE: 27 & 28 August, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S03",
+      "quote": "There are 421 registered glassware manufacturing units in Firozabad of which 47 units are successfully exporting glassware.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S03",
+      "quote": "U.P. Exports Promotion Bureau in a letter certifies the existence of registered 421 glassware units at Firozabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S03",
+      "quote": "GI Journal No. 54 9 November 28, 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "M.C. Mehta vs Union Of India & Ors on 30 December, 1996",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "Pursuant to the above quoted order the U.P. Pollution Control Board (the Board) filed an affidavit dated May 3, 1993.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "(VII) Glass Industries 49 (situated at Firozabad)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "(IX) Bangle Industries 120 (situated at Firozabad)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "we are confining this order only to 292 industries located and operating in Agra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S11",
+      "quote": "the industries in the TTZ other than 292 industries shall be dealt with separately",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S12",
+      "quote": "He explained that in this unit bangles in different sizes and colours are manufactured in pot furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S12",
+      "quote": "Coloured Bangles are manufactured by either preparing coloured molten glass by adding the required colour in the batch itself or by using block glass of the required colour. Another method is to manufacture bangles in flint glass and spray required colours on these bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S12",
+      "quote": "visited Firozabad on April 28, 2011.",
+      "result": "PASS"
+    }
+  ]
+}

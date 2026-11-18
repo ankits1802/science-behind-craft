@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 2,
+  "version": "4fb02056da3464d7ce4ec73a3c44a414942b6d646b7997360426e38b44d1baf7",
+  "summary": {
+    "crafts": 7,
+    "giRegistered": 5,
+    "states": 6,
+    "placed": 5,
+    "families": 2,
+    "kinds": 4
+  },
+  "categories": [
+    {
+      "id": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "slug": "Textiles-Based-Craft-Category",
+      "name": "Textiles based Craft Category",
+      "label": "Textiles",
+      "palette": "indigo",
+      "sortOrder": 1,
+      "readerCount": 4,
+      "subCategories": [
+        {
+          "id": "4e03c202-1156-54e8-a387-a6147ee8f4c4",
+          "slug": "Embroidery",
+          "name": "Embroidery",
+          "label": "Embroidery",
+          "sortOrder": 1,
+          "craftCount": 1,
+          "readerCount": 1
+        },
+        {
+          "id": "c16d67f7-fa8c-500b-b4f0-772bba50caef",
+          "slug": "Hand-Block-Printing",
+          "name": "Hand Block Printing",
+          "label": "Hand block printing",
+          "sortOrder": 2,
+          "craftCount": 4,
+          "readerCount": 3
+        },
+        {
+          "id": "a78dd519-1146-562a-88ff-a9f4f682994b",
+          "slug": "Carpet-Rugs-Durries",
+          "name": "Carpet, Rugs & Durries",
+          "label": "Carpets, rugs and durries",
+          "sortOrder": 3,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "ac7c651d-0fb8-5162-916b-243b58f0eb9b",
+          "slug": "Other-Textiles-Based-Craft",
+          "name": "Other Textiles based Craft",
+          "label": "Textile crafts",
+          "sortOrder": 4,
+          "craftCount": 0,
+          "readerCount": 0
+        }
+      ]
+    },
+    {
+      "id": "82fc10bc-58f3-575b-bcd3-92aa24bb5875",
+      "slug": "Metal-Craft-Category",
+      "name": "Metal Craft Category",
+      "label": "Metal",
+      "palette": "bronze",
+      "sortOrder": 2,
+      "readerCount": 3,
+      "subCategories": [
+        {
+          "id": "fd43248a-6cce-571e-ab01-437669557e2c",
+          "slug": "Silver-Metal",
+          "name": "Silver metal",
+          "label": "Silverwork",
+          "sortOrder": 1,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "889a0390-0d4e-5d30-845d-a91df37ffcdb",
+          "slug": "Gold-Metal",
+          "name": "Gold Metal",
+          "label": "Goldwork",
+          "sortOrder": 2,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "ecd612ed-84f4-5d29-ade8-413ec33652ff",
+          "slug": "Bronze-Metal",
+          "name": "Bronze Metal",
+          "label": "Bronze",
+          "sortOrder": 3,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "47590597-55ce-5a17-91ce-4f270b4be267",
+          "slug": "Brass-Metal",
+          "name": "Brass Metal",
+          "label": "Brass and bell metal",
+          "sortOrder": 4,
+          "craftCount": 2,
+          "readerCount": 2
+        },
+        {
+          "id": "d347c427-2be6-53e1-95d5-8da09d80ffea",
+          "slug": "Iron-Metal",
+          "name": "Iron Metal",
+          "label": "Ironwork",
+          "sortOrder": 5,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "8d61368b-81e1-5721-bc3f-7e34da7b4d0c",
+          "slug": "Copper-Metal",
+          "name": "Copper Metal",
+          "label": "Copperwork",
+          "sortOrder": 6,
+          "craftCount": 0,
+          "readerCount": 0
+        },
+        {
+          "id": "64d69550-84b3-56c0-b3e1-ac5c7e1bfefb",
+          "slug": "Other-Metal-Crafts",
+          "name": "Other Metal Crafts",
+          "label": "Metal crafts",
+          "sortOrder": 7,
+          "craftCount": 1,
+          "readerCount": 1
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "key": "indigo",
+      "label": "Indigo",
+      "names": [
+        "neel"
+      ],
+      "craftSlugs": [
+        "Bagru-Hand-Block-Print",
+        "Kutch-Ajrakh",
+        "Sanganeri-Hand-Block-Printing"
+      ]
+    },
+    {
+      "key": "potassium-alum",
+      "label": "Potassium alum",
+      "names": [
+        "fitkari"
+      ],
+      "craftSlugs": [
+        "Bagru-Hand-Block-Print",
+        "Kutch-Ajrakh"
+      ]
+    },
+    {
+      "key": "beeswax",
+      "label": "Beeswax",
+      "names": [],
+      "craftSlugs": [
+        "Bastar-Dhokra"
+      ]
+    },
+    {
+      "key": "harda",
+      "label": "Harda",
+      "names": [
+        "myrobalan"
+      ],
+      "craftSlugs": [
+        "Bagru-Hand-Block-Print"
+      ]
+    },
+    {
+      "key": "lost-wax-casting",
+      "label": "Lost-wax casting",
+      "names": [
+        "cire perdue"
+      ],
+      "craftSlugs": [
+        "Bastar-Dhokra"
+      ]
+    },
+    {
+      "key": "myrobalan",
+      "label": "Myrobalan",
+      "names": [
+        "harda"
+      ],
+      "craftSlugs": [
+        "Kutch-Ajrakh"
+      ]
+    },
+    {
+      "key": "printing-the-mordants",
+      "label": "Printing the mordants",
+      "names": [],
+      "craftSlugs": [
+        "Sanganeri-Hand-Block-Printing"
+      ]
+    }
+  ],
+  "crafts": [
+    {
+      "id": "54bc2214-3546-55a7-bc3a-5ba957142d90",
+      "slug": "Phulkari",
+      "name": "Phulkari",
+      "displayName": "Phulkari",
+      "localName": "ਫੁਲਕਾਰੀ",
+      "categoryId": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "subCategoryId": "4e03c202-1156-54e8-a387-a6147ee8f4c4",
+      "familyLabel": "Textiles",
+      "kindLabel": "Embroidery",
+      "palette": "indigo",
+      "sourceSerial": 11,
+      "stateOfOrigin": [
+        "Punjab",
+        "Haryana",
+        "Rajasthan"
+      ],
+      "stateOfPractice": [
+        "Punjab",
+        "Haryana",
+        "Jammu and Kashmir",
+        "Rajasthan"
+      ],
+      "giStatus": "GI",
+      "giYear": null,
+      "isCatchAll": false,
+      "craftCode": "phulkari",
+      "aliases": [
+        "phul kari",
+        "phulakari",
+        "phulakri",
+        "phulkari embroidery",
+        "pulkari",
+        "پھلکاری",
+        "फुलकारी",
+        "ফুলকারি",
+        "ফুলকাৰী",
+        "ਫੁਲਕਾਰੀ",
+        "ଫୁଲକରି",
+        "பூல்காரி",
+        "ఫుల్ కారీ",
+        "ఫుల్కారీ",
+        "ഫുൽകാരി"
+      ],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 0,
+        "stages": 0,
+        "pictures": 0,
+        "places": 0
+      }
+    },
+    {
+      "id": "a8bd1d3f-a250-58e6-be0b-9435e61c2dba",
+      "slug": "Sanganeri-Hand-Block-Printing",
+      "name": "Sanganeri Hand Block Printing",
+      "displayName": "Sanganeri Hand Block Printing",
+      "localName": null,
+      "categoryId": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "subCategoryId": "c16d67f7-fa8c-500b-b4f0-772bba50caef",
+      "familyLabel": "Textiles",
+      "kindLabel": "Hand block printing",
+      "palette": "indigo",
+      "sourceSerial": 40,
+      "stateOfOrigin": [
+        "Rajasthan"
+      ],
+      "stateOfPractice": [
+        "Rajasthan"
+      ],
+      "giStatus": "GI",
+      "giYear": null,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [
+        "sanganer print",
+        "sanganeri print",
+        "syahi begar"
+      ],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 48,
+        "stages": 9,
+        "pictures": 0,
+        "places": 0
+      }
+    },
+    {
+      "id": "059d2412-6a30-5d9f-941b-39a6d3dbf500",
+      "slug": "Bagru-Hand-Block-Print",
+      "name": "Bagru Hand Block Print",
+      "displayName": "Bagru Hand Block Print",
+      "localName": null,
+      "categoryId": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "subCategoryId": "c16d67f7-fa8c-500b-b4f0-772bba50caef",
+      "familyLabel": "Textiles",
+      "kindLabel": "Hand block printing",
+      "palette": "indigo",
+      "sourceSerial": 41,
+      "stateOfOrigin": [
+        "Rajasthan"
+      ],
+      "stateOfPractice": [
+        "Rajasthan"
+      ],
+      "giStatus": "GI",
+      "giYear": 2011,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [
+        "bagaru print",
+        "bagru hand block printing",
+        "bagru print",
+        "syahi begar",
+        "বাগৰু প্ৰিণ্ট"
+      ],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 0,
+        "stages": 0,
+        "pictures": 0,
+        "places": 0
+      }
+    },
+    {
+      "id": "54081f83-8396-5a46-a3bc-a467984eebc2",
+      "slug": "Kutch-Ajrakh",
+      "name": "Kutch Ajrakh",
+      "displayName": "Kutch Ajrakh",
+      "localName": null,
+      "categoryId": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "subCategoryId": "c16d67f7-fa8c-500b-b4f0-772bba50caef",
+      "familyLabel": "Textiles",
+      "kindLabel": "Hand block printing",
+      "palette": "indigo",
+      "sourceSerial": 46,
+      "stateOfOrigin": [
+        "Gujarat"
+      ],
+      "stateOfPractice": [
+        "Gujarat"
+      ],
+      "giStatus": "GI",
+      "giYear": 2024,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [
+        "ajrak",
+        "ajrakh",
+        "ajrakh block printing",
+        "ajrakh hand block printing",
+        "ajrakh printing",
+        "ajrakh resist block printing kutch ajrakh",
+        "ajrakh resist printing",
+        "kutch ajrakh gi",
+        "kutch ajrakh print of gujarat",
+        "sindhi ajrak"
+      ],
+      "hero": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Ajrak_Craft_artisan.jpeg",
+        "width": null,
+        "height": null,
+        "alt": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+        "author": "Visdaviva",
+        "licence": "CC BY-SA 3.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "site": "commons.wikimedia.org",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Ajrak_Craft_artisan.jpeg"
+      },
+      "depth": {
+        "coverage": "FULL",
+        "claims": 132,
+        "stages": 14,
+        "pictures": 4,
+        "places": 12
+      }
+    },
+    {
+      "id": "d322dff6-b8de-5208-9684-c8ffddb04c55",
+      "slug": "Other-Hand-Block-Print",
+      "name": "Other Hand Block Print",
+      "displayName": "Other hand block printing",
+      "localName": null,
+      "categoryId": "5a4ee689-9ae3-5520-97ea-154139dad7f4",
+      "subCategoryId": "c16d67f7-fa8c-500b-b4f0-772bba50caef",
+      "familyLabel": "Textiles",
+      "kindLabel": "Hand block printing",
+      "palette": "indigo",
+      "sourceSerial": 53,
+      "stateOfOrigin": [],
+      "stateOfPractice": [
+        "All India"
+      ],
+      "giStatus": "NON_GI",
+      "giYear": null,
+      "isCatchAll": true,
+      "craftCode": null,
+      "aliases": [],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 0,
+        "stages": 0,
+        "pictures": 0,
+        "places": 0
+      }
+    },
+    {
+      "id": "359d4ee9-e704-5047-87cb-b39528aecdc5",
+      "slug": "Bastar-Dhokra",
+      "name": "Bastar Dhokra",
+      "displayName": "Bastar Dhokra",
+      "localName": null,
+      "categoryId": "82fc10bc-58f3-575b-bcd3-92aa24bb5875",
+      "subCategoryId": "47590597-55ce-5a17-91ce-4f270b4be267",
+      "familyLabel": "Metal",
+      "kindLabel": "Brass and bell metal",
+      "palette": "bronze",
+      "sourceSerial": 110,
+      "stateOfOrigin": [
+        "Chhattisgarh"
+      ],
+      "stateOfPractice": [
+        "Chhattisgarh"
+      ],
+      "giStatus": "GI",
+      "giYear": 2008,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [],
+      "hero": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/AT_WORKSHOP.jpg/500px-AT_WORKSHOP.jpg",
+        "width": 500,
+        "height": 375,
+        "alt": "Working on a figure at a workshop in Kondagaon, Bastar (2006)",
+        "author": "Sushilsakhuja",
+        "licence": "CC BY-SA 3.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "site": "commons.wikimedia.org",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:AT_WORKSHOP.jpg"
+      },
+      "depth": {
+        "coverage": "FULL",
+        "claims": 140,
+        "stages": 13,
+        "pictures": 3,
+        "places": 7
+      }
+    },
+    {
+      "id": "fa440c3d-d339-5546-919a-adca51e5b505",
+      "slug": "Brass-And-Bell-Metal-Craft",
+      "name": "Brass and Bell Metal craft",
+      "displayName": "Brass and Bell Metal Craft",
+      "localName": null,
+      "categoryId": "82fc10bc-58f3-575b-bcd3-92aa24bb5875",
+      "subCategoryId": "47590597-55ce-5a17-91ce-4f270b4be267",
+      "familyLabel": "Metal",
+      "kindLabel": "Brass and bell metal",
+      "palette": "bronze",
+      "sourceSerial": 116,
+      "stateOfOrigin": [],
+      "stateOfPractice": [
+        "All India"
+      ],
+      "giStatus": "NON_GI",
+      "giYear": null,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [
+        "asamr kamh silp",
+        "asanr kanh silp",
+        "asmar kamh silp",
+        "asmar kanh silp",
+        "bell and brass metal crafts of assam",
+        "kamrupi crafts",
+        "অসমৰ কাঁহ শিল্প"
+      ],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 0,
+        "stages": 0,
+        "pictures": 0,
+        "places": 0
+      }
+    },
+    {
+      "id": "52593fbe-a6be-517c-a85c-569c33d17993",
+      "slug": "Metal-Embosing",
+      "name": "Metal Embosing",
+      "displayName": "Metal Embossing",
+      "localName": null,
+      "categoryId": "82fc10bc-58f3-575b-bcd3-92aa24bb5875",
+      "subCategoryId": "64d69550-84b3-56c0-b3e1-ac5c7e1bfefb",
+      "familyLabel": "Metal",
+      "kindLabel": "Metal crafts",
+      "palette": "bronze",
+      "sourceSerial": 143,
+      "stateOfOrigin": [],
+      "stateOfPractice": [
+        "All India"
+      ],
+      "giStatus": "NON_GI",
+      "giYear": null,
+      "isCatchAll": false,
+      "craftCode": null,
+      "aliases": [],
+      "hero": null,
+      "depth": {
+        "coverage": null,
+        "claims": 0,
+        "stages": 0,
+        "pictures": 0,
+        "places": 0
+      }
+    }
+  ]
+}

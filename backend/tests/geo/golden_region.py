@@ -34,8 +34,26 @@ GI_JOURNAL_TITLE = (
 )
 WORLDCOVER_READ = "40 m (overview read, factor 4, nearest)"
 
+CROPLAND = (
+    "ESA_WORLDCOVER_2021_V200",
+    "landcover_cropland",
+    "2021",
+    "SHARE",
+    0.236,
+    "fraction",
+    WORLDCOVER_READ,
+)
+TEMPERATURE_NORMAL = (
+    "GHCN_CAMS_T2M",
+    "annual_mean_temperature",
+    "1981-2025",
+    "NORMAL",
+    27.07,
+    "degC",
+    "0.5 degree",
+)
 KACHCHH_ROWS = (
-    ("ESA_WORLDCOVER_2021_V200", "landcover_cropland", "2021", "SHARE", 0.236, "fraction", WORLDCOVER_READ),
+    CROPLAND,
     ("SOILGRIDS_2_0", "phh2o", "0-5cm", "DISTRICT_MEAN", 8.1, "pH", None),
     ("USGS_MRDS", "mineral_occurrences", "", "COUNT", 41.0, "sites", None),
     ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "NORMAL", 372.4, "mm/year", None),
@@ -54,6 +72,7 @@ KACHCHH_ROWS = (
 )
 SOIL_PH = {438: 7.8, 441: 7.6, 444: 6.4, 447: 7.9, 449: 8.1, 455: 8.0, 459: 7.2, 460: 8.3, 462: 6.9}
 LISTED = (("soil-ph-0-5cm", "pH"), ("annual-mean-temperature", "degC"), ("cropland-share", "fraction"))
+LISTED_ROWS = (TEMPERATURE_NORMAL, CROPLAND)
 
 
 def dataset_record(row: dict[str, Any]) -> DatasetRecord:

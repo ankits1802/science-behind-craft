@@ -5,11 +5,12 @@ import { BLOCK_RENDERERS } from "@/components/answer/blockRenderers";
 import { ClimateRiskView } from "@/components/answer/insight/ClimateRiskView";
 import { MarketGiView } from "@/components/answer/insight/MarketGiView";
 import { MeasureView } from "@/components/answer/insight/MeasureView";
-import { groundwaterReading, niceCeiling, pText, TREND_SIGNIFICANCE, trendBar, trendGroups } from "@/lib/climateView";
+import { groundwaterReading, niceCeiling, TREND_SIGNIFICANCE, trendBar, trendGroups } from "@/lib/climateView";
 import { BLOCK_SHAPES } from "@/lib/explainerContract";
 import type { ClimateRiskBlock, MarketGiBlock, MeasureBlock } from "@/lib/explainerInsight";
 import { blockCitations, blockSentences } from "@/lib/explainerView";
 import { factorText, giFacts, metricText, partialDateText, priceMeta } from "@/lib/insightView";
+import { pText } from "@/lib/measure";
 import { parseShape } from "@/lib/shape";
 
 import { attribute, FIXED_WIDE_WIDTH, gridTracks, shownText, SHRINKABLE_TRACK, withReading } from "./explainerRender";

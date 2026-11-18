@@ -10,10 +10,10 @@ from app.research.quotes import quote_occurs
 
 from .dossier import Dossier
 from .entities import Place, Reaction
+from .figures import figure_gaps
 from .matching import stated_in
 from .problems import Problem
 from .records import GiRecord
-from .sentences import figure_gaps
 from .vocabulary import GI_RECORD_SOURCE_KINDS, INDIA, INDIAN_DISTRICT_PLACE_KINDS
 
 __all__ = [

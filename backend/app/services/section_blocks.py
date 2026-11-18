@@ -8,7 +8,8 @@ from typing import Any
 
 from app.core.errors import InvalidInput
 from app.research.blocks import ExplainerSentence, ProseBlock
-from app.research.composition import ComposedAnswer
+from app.research.blocks_lede import LEDE_BLOCK_ID, LedeBlock
+from app.research.composition import LEDE_SENTENCES_MAX, LEDE_SENTENCES_MIN, ComposedAnswer
 from app.research.planning import OPEN_QUESTION_LEVEL
 from app.research.quotes import unsupported_figures
 from app.research.vocabulary import FACT_LEVELS, weakest_level
@@ -24,6 +25,7 @@ __all__ = [
     "SectionSentences",
     "cited_sentence",
     "kept_sentences",
+    "lede_block",
     "prose_block",
     "prose_problems",
     "section_sentences",
@@ -123,6 +125,32 @@ def prose_block(block_id: str, sentences: Sequence[KeptSentence], cited: CitedCl
             )
             for n, sentence in enumerate(sentences, start=1)
         ],
+    )
+
+
+def lede_block(question: str, sentences: Sequence[KeptSentence], cited: CitedClaims) -> LedeBlock:
+    kept: list[KeptSentence] = []
+    for sentence in sentences:
+        problems = prose_problems([sentence], cited)
+        if problems:
+            logger.warning("dropped a lede sentence: %s", "; ".join(problems))
+        else:
+            kept.append(sentence)
+    if len(kept) < LEDE_SENTENCES_MIN:
+        raise BlockRefused(LEDE_BLOCK_ID, [f"{len(kept)} sentence(s) pass, not {LEDE_SENTENCES_MIN} or more"])
+    return LedeBlock(
+        id=LEDE_BLOCK_ID,
+        kind="lede",
+        version=1,
+        reuse=None,
+        headline=question,
+        sentences=[
+            ExplainerSentence.model_validate(
+                cited_sentence(f"{LEDE_BLOCK_ID}.{n}", sentence, cited) | {"terms": []}
+            )
+            for n, sentence in enumerate(kept[:LEDE_SENTENCES_MAX], start=1)
+        ],
+        figure=None,
     )
 
 

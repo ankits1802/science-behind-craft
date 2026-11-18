@@ -8,7 +8,6 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import rivers
 from app.core.db import get_session
-from app.core.deps import get_current_user
 from app.core.errors import ExternalFailure, InvalidInput
 from app.main import create_app
 from app.models import User
@@ -18,6 +17,7 @@ from app.services.river_store import BasinFile
 from app.services.river_topology import TopologyCache, basin_topology
 
 from ..contracts.golden import golden_json
+from ..readers import sign_in_as
 
 OUTLET = 41071234
 TOPOLOGY = json.dumps(
@@ -82,13 +82,9 @@ def reader_app(bucket: FakeBucket | None, monkeypatch: pytest.MonkeyPatch) -> Te
     monkeypatch.setattr(rivers, "media_bucket", lambda: bucket)
     app = create_app()
     reader = User(id=uuid.UUID(int=7), name="Asha", email="asha@example.com", role="STUDENT")
-    app.dependency_overrides[get_current_user] = lambda: reader
+    sign_in_as(app, lambda: reader)
     app.dependency_overrides[get_session] = no_session
     return TestClient(app)
-
-
-def test_a_river_needs_a_signed_in_reader() -> None:
-    assert TestClient(create_app()).get(PATH).status_code == 401
 
 
 def test_the_basin_topology_is_served_with_its_hash_as_etag(basins, monkeypatch) -> None:

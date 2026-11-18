@@ -100,15 +100,18 @@ def prose(section_id: str, views: Sequence[ClaimView], claims: CitedClaims) -> A
     return prose_block(f"{section_id}.b1", sentences, claims)
 
 
+SHOWN = (SEVENTH_CENTURY, DHAMADKA)
+
+
 def build_ask(
     seats: Sequence[str],
     *,
     discipline: str = "HISTORY",
     depth: str = "DETAILED",
     views: Sequence[ClaimView] = VIEWS,
+    shown: Sequence[ClaimView] = SHOWN,
 ) -> BuildAsk:
     claims = cited(views)
-    shown = [view for view in views if view.level != "HYPOTHESIS"]
     request = PlanRequest(question=QUESTION, mode="HYBRID", craft=AJRAKH, depth=depth, seats=tuple(seats))
     spec = SectionSpec(id="s5", discipline=discipline, title="History", order=5)
     return BuildAsk(uuid.uuid4(), spec, request, (prose("s5", shown, claims),), claims)

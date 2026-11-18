@@ -69,6 +69,7 @@ PLACE_ROLES = (
     "MIGRATED_TO",
 )
 COVERAGE_CLASSES = ("FULL", "THIN")
+ENVIRONMENT_FACTORS = ("WATER", "SOIL", "CLIMATE", "LANDFORM", "VEGETATION", "OTHER")
 BOUNDARY_SOURCES = ("SOI_1M", "KAGGLE_INDICATIVE")
 EVIDENCE_LEVELS = ("VERIFIED", "REVIEWED", "PROVISIONAL", "HYPOTHESIS")
 ENV_STATS = (
@@ -244,6 +245,10 @@ BLOCK_KINDS = (
     "measure",
     "market_gi",
     "climate_risk",
+    "indigo_vat",
+    "mordant_bath",
+    "lost_wax",
+    "firing",
 )
 NOTIFICATION_KINDS = ("ANSWER_IMPROVED",)
 DISCIPLINES = (

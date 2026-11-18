@@ -173,7 +173,7 @@ async def test_region_stories_are_looked_up_for_the_geography_facet_only(
         asked_for.append(list(region_facets))
         return []
 
-    async def states(session: Any, pieces: Any) -> tuple[dict, CitedClaims]:
+    async def states(session: Any, pieces: Any, **_kwargs: Any) -> tuple[dict, CitedClaims]:
         return {}, CitedClaims()
 
     async def simulations(session: Any, claim_ids: Any, simulation_facets: Any) -> list[KnowledgePiece]:

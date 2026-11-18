@@ -55,6 +55,8 @@ updates rows instead of duplicating them.
 
 `schemaVersion`, `craftSlug` (must exist in the craft register), `version` (increments on each
 re-curation), `curatedAt`, `curator` ("claude-code"), `coverage` (`FULL` or `THIN`, see 3.15),
+`scope` (`CRAFT`, `FAMILY` or `CATEGORY`, see 3.16; a category names `categorySlug` instead of
+`craftSlug`),
 `searched` (the queries and sites tried, kept so a thin dossier shows what was looked for).
 
 ### 3.2 Sources
@@ -78,9 +80,12 @@ Reliability rubric (one home: the checker's table):
   handicraft boards), academic books.
 - **B** theses, conference papers, edited encyclopedias, established craft institutions with named
   authors (for example Khamir, Craft Revival Trust).
-- **C** reputable press features and artisan organisations' own pages with a named author.
-- **D** other web pages and retailers. A D source may support a fact only alongside an A to C
-  source, except a price, which may cite a dated retailer page as a price on that date.
+- **C** reputable press features, artisan organisations' own pages with a named author, and a
+  page a named organisation publishes about its own work (for example Khamir about its own
+  programmes, a cooperative about its members).
+- **D** other web pages, and shop, sales and retail pages. A D source may support a fact only
+  alongside an A to C source, except a price, which may cite a dated retailer page as a price on
+  that date.
 
 Never used: shadow libraries (owner rule), AI-generated content farms, social media posts,
 unattributed blog spam, and anything behind a login.
@@ -198,17 +203,32 @@ Written by the curator from the dossier's own claims, never from memory:
 
 ### 3.15 Coverage targets
 
-| Target | FULL dossier | THIN dossier |
-|---|---|---|
-| Sources | 8 or more, at least 3 rated A or B | whatever exists, all listed |
-| Claims | 40 to 150 atomic facts | at least 5 |
-| Disciplines with three or more claims | OVERVIEW, HISTORY, PROCESS, MATERIALS and two more | no minimum |
-| Places | district level for every centre named | as found |
-| Process | every stage a source names | as found |
-| Overview | lede, key facts, three or more sections | lede and key facts |
+| Target | FULL craft or family | FULL category (3.16) | THIN dossier |
+|---|---|---|---|
+| Sources | 8 or more, at least 3 rated A or B | 12 or more, at least 5 rated A or B | whatever exists, all listed |
+| Claims | 40 to 150 atomic facts | 60 to 250 | at least 5, at most the scope's cap |
+| Disciplines with three or more claims | OVERVIEW, HISTORY, PROCESS, MATERIALS and two more | OVERVIEW, HISTORY, MATERIALS and two more | no minimum |
+| Places | district level for every centre named (a family: state or region where the source says so) | centres at the level each source gives | as found |
+| Process | every stage a source names | no minimum | as found |
+| Overview | lede, key facts, three or more sections | lede, key facts, three or more sections, every sub-category covered | lede and key facts |
 
 A craft with little published material gets a THIN dossier that says what was searched. It is
 never padded.
+
+### 3.16 Families and categories
+
+One `scope` field, checked against the master list and the portal craft register
+(`backend/app/data/portal_craft_register.json`, crafts the portals added under their own slugs):
+
+- `CRAFT`: one named craft, from the master list or the register.
+- `FAMILY`: a catch-all row or a craft practised across "All India" (Other Stone Carving, Cane &
+  Bamboo Craft; 81 crafts). Centres may be states or regions as sources name them; no GI record.
+- `CATEGORY`: one master document per craft category (the nine `categorySlug` values), in
+  `backend/app/data/curation/categories/`, curated and verified like a craft and shown later as
+  a category page. Its overview covers every sub-category of the category with a cited sentence,
+  or an open question saying no source was found; member crafts are linked by slug, never copied;
+  no GI record; up to 250 claims. Category dossiers are imported on deploy with the craft
+  dossiers and served as public category pages (`docs/contracts/category-page.md`, decision 0078).
 
 ## 4. Sourcing order for a curator
 

@@ -8,6 +8,7 @@ from app.research.explainer import BLOCK_MODELS, BUILT_BLOCK_KINDS, Block
 from ..contracts.phase_b_golden import phase_b_blocks
 from ..contracts.phase_c_golden import phase_c_blocks
 from ..contracts.phase_d_golden import phase_d_blocks
+from .signature_fixtures import SIGNATURE_DECLARED
 
 CLAIM = "826c1d72-9373-59f0-85c3-6bb38aa89320"
 SOURCE = "d0f53ee9-4b97-5df7-a367-686957bdb7c8"
@@ -93,6 +94,7 @@ DECLARED |= {
     for block in [*phase_b_blocks().values(), *phase_c_blocks().values(), *phase_d_blocks().values()]
     if block["kind"] not in BUILT_BLOCK_KINDS
 }
+DECLARED |= SIGNATURE_DECLARED
 BLOCK = TypeAdapter(Block)
 
 

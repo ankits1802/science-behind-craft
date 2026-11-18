@@ -5,15 +5,18 @@ import hmac
 import json
 import logging
 import secrets
+from collections.abc import Mapping
 from typing import Any
 
 import httpx
 
 from app.core.config import Settings
 from app.core.errors import ExternalFailure, NotConfigured, Refused
+from app.core.retry_after import parse_headers
 from app.services.portal_craft_feed import DESIGNER, FIELD_REPOSITORY, PortalCraftFeed, parse_feed
 
 __all__ = [
+    "CRAFT_FEED_LABEL",
     "CRAFT_FEED_PATH",
     "FEED_MAX_BYTES",
     "FEED_TIMEOUT_SECONDS",
@@ -32,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 PEER_PREFIX = "/cross-portal/peer"
 CRAFT_FEED_PATH = "/crafts"
+CRAFT_FEED_LABEL = "craft feed"
 SIGNATURE_HEADER = "X-Cross-Portal-Signature"
 NONCE_HEADER = "X-Cross-Portal-Nonce"
 REQUESTED_BY_HEADER = "X-Cross-Portal-Requested-By"
@@ -68,53 +72,70 @@ class PortalPeer:
         self._transport = transport
 
     async def craft_feed(self) -> PortalCraftFeed:
-        path = f"{PEER_PREFIX}{CRAFT_FEED_PATH}"
+        payload = await self.signed_json(CRAFT_FEED_PATH, what=CRAFT_FEED_LABEL, requested_by=REQUESTED_BY)
+        return parse_feed(payload, portal=self.portal)
+
+    async def signed_json(
+        self,
+        route: str,
+        *,
+        what: str,
+        requested_by: str,
+        params: Mapping[str, str] | None = None,
+    ) -> Any:
+        path = f"{PEER_PREFIX}{route}"
         nonce = secrets.token_hex(16)
-        response = await self._get(path, nonce)
-        self._refuse_failure(response)
+        headers = self._headers(nonce, requested_by)
+        response = await self._get(path, headers, params or {}, what)
+        self._refuse_failure(response, what)
         body = response.content
         if len(body) > FEED_MAX_BYTES:
             raise ExternalFailure(
-                f"{self.portal} craft feed is {len(body)} bytes, over {FEED_MAX_BYTES}", service=self.portal
+                f"{self.portal} {what} is {len(body)} bytes, over {FEED_MAX_BYTES}", service=self.portal
             )
         signature = response.headers.get(SIGNATURE_HEADER) or ""
         expected = peer_signature(self._token, body, method="GET", path=path, nonce=nonce)
         if not hmac.compare_digest(expected, signature):
             raise Refused(
-                "unsigned_answer", f"{self.portal} craft feed is not signed with the cross-portal token"
+                "unsigned_answer", f"{self.portal} {what} is not signed with the cross-portal token"
             )
-        return parse_feed(_json(body, self.portal), portal=self.portal)
+        return _json(body, self.portal, what)
 
-    async def _get(self, path: str, nonce: str) -> httpx.Response:
-        headers = {
+    def _headers(self, nonce: str, requested_by: str) -> dict[str, str]:
+        return {
             "Authorization": f"Bearer {self._token}",
             "Accept": "application/json",
             NONCE_HEADER: nonce,
-            REQUESTED_BY_HEADER: REQUESTED_BY,
+            REQUESTED_BY_HEADER: requested_by,
         }
+
+    async def _get(
+        self, path: str, headers: dict[str, str], params: Mapping[str, str], what: str
+    ) -> httpx.Response:
         try:
             async with httpx.AsyncClient(timeout=FEED_TIMEOUT_SECONDS, transport=self._transport) as client:
-                return await client.get(f"{self._base_url}{path}", headers=headers)
+                return await client.get(f"{self._base_url}{path}", headers=headers, params=dict(params))
         except httpx.HTTPError as error:
-            logger.warning("%s craft feed could not be reached: %s", self.portal, type(error).__name__)
+            logger.warning("%s %s could not be reached: %s", self.portal, what, type(error).__name__)
             raise ExternalFailure(
-                f"{self.portal} craft feed could not be reached ({type(error).__name__})",
+                f"{self.portal} {what} could not be reached ({type(error).__name__})",
                 kind="unavailable",
                 retryable=True,
                 service=self.portal,
             ) from None
 
-    def _refuse_failure(self, response: httpx.Response) -> None:
+    def _refuse_failure(self, response: httpx.Response, what: str) -> None:
         if response.is_success:
             return
         kind = FAILURE_BY_STATUS.get(
             response.status_code, "unavailable" if response.status_code >= 500 else "error"
         )
         raise ExternalFailure(
-            f"{self.portal} craft feed answered {response.status_code}",
+            f"{self.portal} {what} answered {response.status_code}",
             kind=kind,
             retryable=kind in ("rate_limit", "unavailable"),
             status=response.status_code,
+            retry_after=parse_headers(response.headers),
             service=self.portal,
         )
 
@@ -134,8 +155,8 @@ def peer_for(
     return PortalPeer(portal=portal, base_url=base_url, token=token, transport=transport)
 
 
-def _json(body: bytes, portal: str) -> Any:
+def _json(body: bytes, portal: str, what: str) -> Any:
     try:
         return json.loads(body.decode("utf-8"))
     except ValueError:
-        raise ExternalFailure(f"{portal} craft feed is not UTF-8 JSON", service=portal) from None
+        raise ExternalFailure(f"{portal} {what} is not UTF-8 JSON", service=portal) from None

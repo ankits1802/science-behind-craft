@@ -3,28 +3,43 @@ import type { BoundaryNote } from "@/lib/regionContract";
 
 export const SURVEY_OF_INDIA_CAPTION = "External boundaries of India as depicted by Survey of India.";
 export const DISTRICTS_INDICATIVE = "District boundaries are indicative.";
-export const BOUNDARY_ATTRIBUTION = "Boundary data: DataMeet, © OpenStreetMap contributors.";
+export const OSM_CREDIT = "© OpenStreetMap contributors";
+export const OSM_COPYRIGHT_URL = "https://www.openstreetmap.org/copyright";
+export const BOUNDARY_ATTRIBUTION = "Boundary data: DataMeet.";
+export const MAP_CREDITS_LABEL = "Map credits";
+
+const LINK = "underline-offset-2 hover:text-purple-700 hover:underline dark:hover:text-purple-300";
 
 export function MapAttribution({ districtsIndicative = true, boundary = null }: { districtsIndicative?: boolean; boundary?: BoundaryNote | null }) {
   const caption = boundary ? boundary.caption : `${SURVEY_OF_INDIA_CAPTION}${districtsIndicative ? ` ${DISTRICTS_INDICATIVE}` : ""}`;
-  const shapesHref = boundary ? safeOutboundUrl(boundary.dataset.url) : null;
+  const shapes = boundary?.dataset ?? null;
+  const shapesHref = shapes ? safeOutboundUrl(shapes.url) : null;
   return (
-    <figcaption className="mt-3 grid gap-0.5 text-[11px] leading-4 text-ink-500" data-testid="map-attribution">
-      <span>{caption}</span>
-      <span>{BOUNDARY_ATTRIBUTION}</span>
-      {boundary ? (
-        <span>
-          District shapes:{" "}
-          {shapesHref ? (
-            <a href={shapesHref} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-purple-700 hover:underline">
-              {boundary.dataset.publisher ?? boundary.dataset.title}
-            </a>
-          ) : (
-            (boundary.dataset.publisher ?? boundary.dataset.title)
-          )}
-          {` · ${boundary.dataset.period}`}
+    <figcaption className="mt-3 grid gap-1 text-[11px] leading-4 text-ink-500" data-testid="map-attribution">
+      <span>
+        {caption}{" "}
+        <a href={OSM_COPYRIGHT_URL} target="_blank" rel="noopener noreferrer" className={LINK}>
+          {OSM_CREDIT}
+        </a>
+      </span>
+      <details className="w-fit max-w-full" data-testid="map-credits">
+        <summary className={`w-fit cursor-pointer rounded-sm font-medium text-ink-700 pointer-coarse:py-2 ${LINK}`}>{MAP_CREDITS_LABEL}</summary>
+        <span className="mt-1 grid gap-0.5">
+          <span>{BOUNDARY_ATTRIBUTION}</span>
+          {shapes ? (
+            <span>
+              {shapesHref ? (
+                <a href={shapesHref} target="_blank" rel="noopener noreferrer" className={LINK}>
+                  {shapes.title}
+                </a>
+              ) : (
+                shapes.title
+              )}
+              {shapes.publisher ? ` · ${shapes.publisher}` : null}
+            </span>
+          ) : null}
         </span>
-      ) : null}
+      </details>
     </figcaption>
   );
 }

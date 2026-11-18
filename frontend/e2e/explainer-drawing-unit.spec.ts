@@ -47,10 +47,10 @@ function attributes(html: string, name: string): string[] {
   return [...html.matchAll(new RegExp(`${name}="([^"]*)"`, "g"))].map((found) => found[1]);
 }
 
-test("a streamed images block is drawn as a credited inline picture and a credited link card", () => {
+test("a streamed images block is drawn as one credited inline picture", () => {
   const images: ImagesBlock = blockOf(researched(), "images");
   const html = renderToStaticMarkup(createElement(ImageStrip, { block: images }));
-  expect(attributes(html, "data-display")).toEqual(["INLINE", "LINK_CARD"]);
+  expect(attributes(html, "data-display")).toEqual(["INLINE"]);
   expect(html.match(/referrerpolicy="no-referrer"/gi)?.length).toBe(images.items.length);
   expect(html).not.toMatch(/referrerpolicy="(?!no-referrer")/i);
   for (const item of images.items) {
@@ -59,8 +59,17 @@ test("a streamed images block is drawn as a credited inline picture and a credit
   }
   expect(html).toContain("A. Dyer");
   expect(html).toContain("CC BY-SA 4.0");
-  expect(html).toContain("Crafts Museum");
-  expect(html).toContain("Red alizarin lake after many washes");
+});
+
+test("a stored images block draws a credited link card beside its inline picture", () => {
+  const document = JSON.parse(read("shared", "explainer.document.golden.json")) as { sections: { blocks: ExplainerBlock[] }[] };
+  const images = document.sections[0].blocks[1] as ImagesBlock;
+  const html = renderToStaticMarkup(createElement(ImageStrip, { block: images }));
+  expect(attributes(html, "data-display")).toEqual(["INLINE", "LINK_CARD"]);
+  expect(html.match(/referrerpolicy="no-referrer"/gi)?.length).toBe(images.items.length);
+  expect(html).toContain("SMarndi");
+  expect(html).toContain("Victoria and Albert Museum, London");
+  expect(html).toContain("Ajrakh process sample");
 });
 
 test("a streamed sentence underlines its server-marked terms as buttons that open the term sheet", () => {

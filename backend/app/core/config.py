@@ -1,14 +1,27 @@
+import re
 from functools import lru_cache
 from ipaddress import ip_address
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
-from pydantic import AliasChoices, EmailStr, Field, ValidationError, field_validator, model_validator
+from pydantic import (
+    AliasChoices,
+    EmailStr,
+    Field,
+    ValidationError,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _BACKEND_ROOT = Path(__file__).resolve().parents[2]
 
 _ALLOWED_JWT_ALGORITHMS = frozenset({"HS256", "HS384", "HS512"})
+
+_VERCEL_SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+VERCEL_PREVIEW_ID = r"[a-z0-9]{9}"
 
 _LOCAL_DB_HOSTNAMES = frozenset({"localhost", "host.docker.internal", "postgres", "db"})
 
@@ -44,6 +57,13 @@ def with_explicit_sslmode(url: str, require: bool | None) -> str:
     return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
 
 
+def _vercel_slug(value: str) -> str:
+    slug = value.strip()
+    if not _VERCEL_SLUG.fullmatch(slug):
+        raise ValueError("must be a Vercel slug: lowercase letters and digits joined by single hyphens")
+    return slug
+
+
 class Settings(BaseSettings):
     database_url: str = Field(alias="DATABASE_URL")
     database_pool_size: int = Field(
@@ -73,6 +93,10 @@ class Settings(BaseSettings):
     public_web_url: str = Field(default="http://localhost:3000", alias="PUBLIC_WEB_URL")
     public_api_url: str | None = Field(default=None, alias="PUBLIC_API_URL")
     backend_cors_origins: str = Field(default="http://localhost:3000", alias="BACKEND_CORS_ORIGINS")
+    cors_preview_project: str | None = Field(default=None, alias="BACKEND_CORS_PREVIEW_PROJECT")
+    cors_preview_scope: str | None = Field(
+        default=None, alias="BACKEND_CORS_PREVIEW_SCOPE", validate_default=True
+    )
     forwarded_client_hops: int = Field(default=2, ge=1, le=5, alias="FORWARDED_CLIENT_HOPS")
     web_proxy_secret: str | None = Field(default=None, alias="WEB_PROXY_SECRET")
     backend_expose_docs: bool = Field(default=False, alias="BACKEND_EXPOSE_DOCS")
@@ -132,6 +156,8 @@ class Settings(BaseSettings):
     cross_portal_token: str | None = Field(default=None, alias="CROSS_PORTAL_TOKEN")
     designer_portal_api_url: str | None = Field(default=None, alias="DESIGNER_PORTAL_API_URL")
     field_repository_api_url: str | None = Field(default=None, alias="FIELD_REPOSITORY_API_URL")
+    field_voices_enabled: bool = Field(default=False, alias="FIELD_VOICES_ENABLED")
+    field_voices_image_hosts: str | None = Field(default=None, alias="FIELD_VOICES_IMAGE_HOSTS")
 
     sign_in_attempts_per_ip: int = Field(default=20, ge=1, alias="SIGN_IN_ATTEMPTS_PER_IP")
     sign_in_attempts_per_account: int = Field(default=10, ge=1, alias="SIGN_IN_ATTEMPTS_PER_ACCOUNT")
@@ -154,6 +180,20 @@ class Settings(BaseSettings):
             raise ValueError(f"JWT_ALGORITHM must be one of {sorted(_ALLOWED_JWT_ALGORITHMS)}")
         return algorithm
 
+    @field_validator("cors_preview_project")
+    @classmethod
+    def _check_preview_project(cls, value: str | None) -> str | None:
+        return None if value is None else _vercel_slug(value)
+
+    @field_validator("cors_preview_scope")
+    @classmethod
+    def _check_preview_scope(cls, value: str | None, info: ValidationInfo) -> str | None:
+        if (value is None) != (info.data.get("cors_preview_project") is None):
+            raise ValueError(
+                "BACKEND_CORS_PREVIEW_PROJECT and BACKEND_CORS_PREVIEW_SCOPE are set together or not at all"
+            )
+        return None if value is None else _vercel_slug(value)
+
     @model_validator(mode="after")
     def _harden_database_url(self) -> Settings:
         self.database_url = with_explicit_sslmode(self.database_url, self.database_require_ssl)
@@ -174,6 +214,14 @@ class Settings(BaseSettings):
             seen.add(origin)
             origins.append(origin)
         return origins
+
+    @property
+    def cors_origin_regex(self) -> str | None:
+        if self.cors_preview_project is None or self.cors_preview_scope is None:
+            return None
+        project = re.escape(self.cors_preview_project)
+        scope = re.escape(self.cors_preview_scope)
+        return rf"https://{project}-{VERCEL_PREVIEW_ID}-{scope}\.vercel\.app"
 
     @property
     def cors_allow_credentials(self) -> bool:

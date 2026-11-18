@@ -70,6 +70,50 @@ class CuratedClaim(Base):
     )
 
 
+class CuratedCategory(Base):
+    __tablename__ = "CuratedCategory"
+
+    categoryId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("CraftCategory.id", ondelete="CASCADE"), primary_key=True
+    )
+    version: Mapped[int] = mapped_column(Integer, nullable=False)
+    curatedAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    coverage: Mapped[str] = mapped_column(String(8), nullable=False)
+    digest: Mapped[str] = mapped_column(String(DIGEST_COLUMN_CHARS), nullable=False)
+    page: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    importedAt: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=text("now()")
+    )
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        CheckConstraint('"version" >= 1', name="version"),
+        CheckConstraint(one_of("coverage", COVERAGE_CLASSES), name="coverage"),
+        CheckConstraint("\"digest\" ~ '^[0-9a-f]{64}$'", name="digest"),
+    )
+
+
+class CuratedCategoryClaim(Base):
+    __tablename__ = "CuratedCategoryClaim"
+
+    claimId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("Claim.id", ondelete="CASCADE"), primary_key=True
+    )
+    categoryId: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("CraftCategory.id", ondelete="CASCADE"), nullable=False
+    )
+    key: Mapped[str] = mapped_column(String(CURATED_KEY_COLUMN_CHARS), nullable=False)
+    discipline: Mapped[str] = mapped_column(String(16), nullable=False)
+    createdAt: Mapped[datetime] = created_at()
+    updatedAt: Mapped[datetime] = updated_at()
+
+    __table_args__ = (
+        CheckConstraint(one_of("discipline", DISCIPLINES), name="discipline"),
+        UniqueConstraint("categoryId", "key"),
+    )
+
+
 class CraftGiRecord(Base):
     __tablename__ = "CraftGiRecord"
 

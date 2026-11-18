@@ -70,7 +70,7 @@ def stored(monkeypatch: pytest.MonkeyPatch) -> dict[str, Any]:
     async def resolve(session: Any, slug: str) -> Any:
         return object()
 
-    async def records(session: Any, craft: Any) -> Any:
+    async def records(session: Any, craft: Any, **_kwargs: Any) -> Any:
         return found["records"]
 
     async def districts(session: Any, craft: Any) -> tuple[int, ...]:

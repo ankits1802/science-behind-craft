@@ -7,7 +7,7 @@ from collections.abc import Awaitable, Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Self
 
-from app.research.blocks import ImagesBlock
+from app.research.blocks import BlockBase, ImagesBlock
 from app.research.crafts import CraftRef
 from app.research.explainer import Block, with_payload_sentences
 from app.research.sections import block_id
@@ -61,7 +61,7 @@ class Enrichment:
     tools: EnrichmentTools
     craft_name: str | None
 
-    def marked(self, block: Block) -> Block:
+    def marked[Marked: BlockBase](self, block: Marked) -> Marked:
         payload = block.model_dump(mode="json", by_alias=True, exclude_unset=True)
         return type(block).model_validate(with_payload_sentences(payload, self._marked_sentence))
 
@@ -123,5 +123,5 @@ class PictureSearches:
             return None
         if ordinal is not None:
             block = block.model_copy(update={"id": block_id(section_id, ordinal)})
-        await stream.blocks(section_id, [block], {})
-        return block
+        shown = await stream.blocks(section_id, [block], {})
+        return shown[0] if shown else None

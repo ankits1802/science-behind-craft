@@ -20,7 +20,7 @@ from app.research.datasets import BOUNDARY_DATASET_CODE
 from app.research.explainer import Block, with_payload_sentences
 from app.research.knowledge_pieces import KnowledgePiece, ReuseAsk, placed_block, reuse_refusal
 from app.research.piece_reuse import ClaimState, visible_as_cited
-from app.research.retrieval import RESTRICTED_SENSITIVITY
+from app.research.retrieval import OPEN_CHUNK_ACLS, RESTRICTED_SENSITIVITY
 from app.research.subject_keys import SUBJECT_JOINER, subject_slug
 from app.research.vocabulary import CANONICAL_LANGUAGE
 
@@ -47,7 +47,9 @@ class _Located:
     sources: Mapping[str, dict[str, Any]]
 
 
-async def district_records(session: AsyncSession, district_lgd: int) -> DistrictRecords | None:
+async def district_records(
+    session: AsyncSession, district_lgd: int, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> DistrictRecords | None:
     district = (await district_refs(session, [district_lgd])).get(district_lgd)
     boundary = (await dataset_records(session, {BOUNDARY_DATASET_CODE})).get(BOUNDARY_DATASET_CODE)
     if district is None or boundary is None:
@@ -56,7 +58,7 @@ async def district_records(session: AsyncSession, district_lgd: int) -> District
     values = await district_values(session, [district_lgd])
     stories = await district_story_pieces(session, district_lgd)
     prose = await _craft_prose(session, district, located.craft_names)
-    states, cited = await claim_states(session, [*stories, *prose])
+    states, cited = await claim_states(session, [*stories, *prose], acls=acls)
     usable = [piece for piece in [*stories, *prose] if _reusable(piece, states, cited.sources)]
     shown = _land_order(usable, located.craft_names)
     sources = {**located.sources, **cited.sources}

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from collections import Counter
 from collections.abc import Iterable
-from typing import Literal
+from typing import Any, Literal
 from urllib.parse import urlsplit
 
 from pydantic import AwareDatetime, Field
@@ -14,11 +14,12 @@ from app.research.base import ContractModel
 from .dossier import Dossier
 from .files import DossierResult
 from .parts import Claim
-from .vocabulary import CoverageClass
+from .vocabulary import CoverageClass, Scope
 
 __all__ = [
     "CHECK_STATUSES",
     "INDEX_SCHEMA_VERSION",
+    "CategoryIndexEntry",
     "CurationIndex",
     "IndexCheck",
     "IndexEntry",
@@ -28,7 +29,7 @@ __all__ = [
     "part_counts",
 ]
 
-INDEX_SCHEMA_VERSION = 1
+INDEX_SCHEMA_VERSION = 2
 CHECK_STATUSES = ("PASS", "FAIL")
 CORROBORATING_PUBLISHERS_MIN = 2
 
@@ -41,6 +42,19 @@ class IndexCheck(ContractModel):
 
 class IndexEntry(ContractModel):
     craft_slug: str
+    scope: Scope | None = None
+    file: str
+    version: int | None = None
+    coverage: CoverageClass | None = None
+    curated_at: AwareDatetime | None = None
+    counts: dict[str, int] = Field(default_factory=dict)
+    claims_by_discipline: dict[str, int] = Field(default_factory=dict)
+    sources_by_reliability: dict[str, int] = Field(default_factory=dict)
+    check: IndexCheck
+
+
+class CategoryIndexEntry(ContractModel):
+    category_slug: str
     file: str
     version: int | None = None
     coverage: CoverageClass | None = None
@@ -52,13 +66,22 @@ class IndexEntry(ContractModel):
 
 
 class CurationIndex(ContractModel):
-    schema_version: Literal[1] = INDEX_SCHEMA_VERSION
+    schema_version: Literal[2] = INDEX_SCHEMA_VERSION
     crafts: list[IndexEntry]
+    categories: list[CategoryIndexEntry] = Field(default_factory=list)
 
 
-def curation_index(results: Iterable[DossierResult]) -> CurationIndex:
-    entries = [_entry(result) for result in results]
-    return CurationIndex(crafts=sorted(entries, key=lambda entry: (entry.craft_slug, entry.file)))
+def curation_index(
+    results: Iterable[DossierResult], categories: Iterable[DossierResult] = ()
+) -> CurationIndex:
+    crafts = [
+        IndexEntry(craft_slug=_slug(result), scope=_scope(result), **_stats(result)) for result in results
+    ]
+    grouped = [CategoryIndexEntry(category_slug=_slug(result), **_stats(result)) for result in categories]
+    return CurationIndex(
+        crafts=sorted(crafts, key=lambda entry: (entry.craft_slug, entry.file)),
+        categories=sorted(grouped, key=lambda entry: (entry.category_slug, entry.file)),
+    )
 
 
 def index_text(index: CurationIndex) -> str:
@@ -92,29 +115,35 @@ def part_counts(dossier: Dossier) -> dict[str, int]:
     }
 
 
-def _entry(result: DossierResult) -> IndexEntry:
-    status = "FAIL" if result.problems else "PASS"
+def _slug(result: DossierResult) -> str:
+    return result.path.stem if result.dossier is None else result.dossier.slug
+
+
+def _scope(result: DossierResult) -> Scope | None:
+    return None if result.dossier is None else result.dossier.scope
+
+
+def _stats(result: DossierResult) -> dict[str, Any]:
     check = IndexCheck(
-        status=status,
+        status="FAIL" if result.problems else "PASS",
         problems=len(result.problems),
         verified_at=result.check.checked_at if result.check is not None else None,
     )
     dossier = result.dossier
     if dossier is None:
-        return IndexEntry(craft_slug=result.path.stem, file=result.path.name, check=check)
+        return {"file": result.path.name, "check": check}
     disciplines = Counter(claim.discipline for claim in dossier.claims)
     reliabilities = Counter(source.reliability for source in dossier.sources)
-    return IndexEntry(
-        craft_slug=dossier.craft_slug,
-        file=result.path.name,
-        version=dossier.version,
-        coverage=dossier.coverage,
-        curated_at=dossier.curated_at,
-        counts=part_counts(dossier),
-        claims_by_discipline={name: disciplines[name] for name in DISCIPLINES if disciplines[name]},
-        sources_by_reliability={tier: reliabilities[tier] for tier in RELIABILITIES},
-        check=check,
-    )
+    return {
+        "file": result.path.name,
+        "version": dossier.version,
+        "coverage": dossier.coverage,
+        "curated_at": dossier.curated_at,
+        "counts": part_counts(dossier),
+        "claims_by_discipline": {name: disciplines[name] for name in DISCIPLINES if disciplines[name]},
+        "sources_by_reliability": {tier: reliabilities[tier] for tier in RELIABILITIES},
+        "check": check,
+    }
 
 
 def _publisher(dossier: Dossier, source_id: str) -> str:

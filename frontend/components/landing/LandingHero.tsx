@@ -11,13 +11,19 @@ import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { useGsapHeadline } from "@/components/guide/useGsapHeadline";
 import { ActionGroup } from "@/components/ui/ActionGroup";
 
-const POINTS = [
-  { icon: BookOpen, title: "455 crafts", body: "The IIT master list, searchable by name, region and family." },
-  { icon: FlaskConical, title: "The science", body: "Materials, stages and reactions, each claim with its evidence." },
-  { icon: MapPinned, title: "The place", body: "Where each craft is practised, on the map of India." }
-];
+function landingPoints(craftCount: number | null) {
+  return [
+    {
+      icon: BookOpen,
+      title: craftCount === null ? "The crafts" : `${craftCount} ${craftCount === 1 ? "craft" : "crafts"}`,
+      body: "The IIT master list, searchable by name, region and family."
+    },
+    { icon: FlaskConical, title: "The science", body: "Materials, stages and reactions, each claim with its evidence." },
+    { icon: MapPinned, title: "The place", body: "Where each craft is practised, on the map of India." }
+  ];
+}
 
-export function LandingHero() {
+export function LandingHero({ craftCount }: { craftCount: number | null }) {
   const { user } = useAuth();
   const reduce = useAppReducedMotion();
   const headline = useGsapHeadline<HTMLHeadingElement>(reduce);
@@ -69,7 +75,7 @@ export function LandingHero() {
           viewport={{ once: true, amount: 0.3 }}
           className="mt-10 grid gap-4 md:grid-cols-3"
         >
-          {POINTS.map((point) => (
+          {landingPoints(craftCount).map((point) => (
             <motion.li key={point.title} variants={riseItem(reduce)} className="panel p-5">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-field-200 text-field-600 dark:text-purple-300">
                 <point.icon className="h-5 w-5" aria-hidden />

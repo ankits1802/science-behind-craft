@@ -9,13 +9,13 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import crafts, map_layers
 from app.core.db import get_session
-from app.core.deps import get_current_user
 from app.main import create_app
 from app.models import User
 from app.services import knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
 
 from ..contracts.golden import golden_text
+from ..readers import sign_in_as
 from .golden_region import (
     GOLDEN_CRAFT,
     GOLDEN_LAYER,
@@ -53,16 +53,9 @@ def signed_in(monkeypatch: pytest.MonkeyPatch) -> TestClient:
     monkeypatch.setattr(map_layers, "layer_values", values)
     app = create_app()
     student = User(id=uuid.UUID(int=7), name="Asha", email="asha@example.com", role="STUDENT")
-    app.dependency_overrides[get_current_user] = lambda: student
+    sign_in_as(app, lambda: student)
     app.dependency_overrides[get_session] = no_session
     return TestClient(app)
-
-
-@pytest.mark.parametrize(
-    "path", ["/api/crafts/Kutch-Ajrakh/region", "/api/map/layers", "/api/map/layers/elevation"]
-)
-def test_the_region_routes_need_a_session(path: str) -> None:
-    assert TestClient(create_app()).get(path).status_code == 401
 
 
 def test_the_region_route_answers_the_golden_region(signed_in: TestClient) -> None:

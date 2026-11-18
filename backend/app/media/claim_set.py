@@ -3,7 +3,6 @@ from __future__ import annotations
 from collections.abc import Collection, Iterable
 from typing import Any
 
-from app.core.roles import Capability, can
 from app.research.retrieval import HIDDEN_CLAIM_STATUSES, VISIBLE_SENSITIVITY
 from app.research.vocabulary import LEVEL_ORDER
 from app.schemas.media import MEDIA_MAX_CLAIMS, MEDIA_MIN_CLAIMS, names_a_group
@@ -14,7 +13,6 @@ __all__ = [
     "PASSING_QUOTE",
     "QUOTED_LEVELS",
     "REVIEWED_LEVELS",
-    "acls_for",
     "claim_set",
     "enough_claims",
 ]
@@ -22,14 +20,6 @@ __all__ = [
 REVIEWED_LEVELS = frozenset({"VERIFIED", "REVIEWED"})
 QUOTED_LEVELS = frozenset({"PROVISIONAL"})
 PASSING_QUOTE = "PASS"
-PUBLIC_ACL = "PUBLIC"
-RESEARCHER_ACL = "RESEARCHER"
-
-
-def acls_for(user: Any) -> tuple[str, ...]:
-    if can(user, Capability.READ_RESEARCHER_QUOTES):
-        return (PUBLIC_ACL, RESEARCHER_ACL)
-    return (PUBLIC_ACL,)
 
 
 def claim_set(claims: Iterable[ClaimFacts], *, acls: Collection[str]) -> tuple[ClaimFacts, ...]:

@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "counts": {
+    "crafts": 420,
+    "giRegistered": 209,
+    "states": 33,
+    "placed": 401,
+    "families": 9,
+    "kinds": 36
+  },
+  "featured": [
+    {
+      "craft": {
+        "slug": "Kutch-Ajrakh",
+        "name": "Kutch Ajrakh",
+        "path": "/crafts/Kutch-Ajrakh"
+      },
+      "localName": null,
+      "hero": {
+        "media": {
+          "id": "378496a9-deb2-5769-bff9-67a0413deac0",
+          "display": "INLINE",
+          "provider": "curation",
+          "pageUrl": "https://commons.wikimedia.org/wiki/File:Ajrak_Craft_artisan.jpeg",
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/Ajrak_Craft_artisan.jpeg",
+          "width": null,
+          "height": null,
+          "title": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+          "alt": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+          "author": "Visdaviva",
+          "site": "commons.wikimedia.org",
+          "credit": null,
+          "licence": "CC BY-SA 3.0",
+          "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "sourceId": null,
+          "retrievedAt": "2026-11-17T18:17:00Z"
+        },
+        "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders"
+      },
+      "lede": {
+        "id": "pa1.1",
+        "text": "Kutch Ajrakh is an elaborate resist block-printing technique built on a series of direct and resist printing and dyeing steps.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "d95fb36f-b4b8-5a4b-a962-66b5b40e4470",
+            "claimId": "93e225b2-f978-57ec-9a46-acae777b9d40",
+            "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+            "quote": "Kutch Ajrakh is an elaborate resist block printing technique that involves series of direct and resist printing and dyeing to create unique effects.",
+            "locator": "Application 1050, specification and description, p. 6",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "0568cd1a-aa6b-5a32-ab2e-29a8e9284c56",
+            "claimId": "93e225b2-f978-57ec-9a46-acae777b9d40",
+            "sourceId": "def6894b-e67b-552b-bd8c-bfc980cf3bb0",
+            "quote": "Ajrakh is a unique combination of hand block printing and resist dyeing.",
+            "locator": "Introduction",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false
+      }
+    },
+    {
+      "craft": {
+        "slug": "Bastar-Dhokra",
+        "name": "Bastar Dhokra",
+        "path": "/crafts/Bastar-Dhokra"
+      },
+      "localName": "Ghadwa kala",
+      "hero": {
+        "media": {
+          "id": "ef3cc437-9250-5102-b347-14968769385d",
+          "display": "INLINE",
+          "provider": "curation",
+          "pageUrl": "https://commons.wikimedia.org/wiki/File:AT_WORKSHOP.jpg",
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/AT_WORKSHOP.jpg",
+          "width": null,
+          "height": null,
+          "title": "Working on a figure at a workshop in Kondagaon, Bastar (2006)",
+          "alt": "Working on a figure at a workshop in Kondagaon, Bastar (2006)",
+          "author": "Sushilsakhuja",
+          "site": "commons.wikimedia.org",
+          "credit": null,
+          "licence": "CC BY-SA 3.0",
+          "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "sourceId": null,
+          "retrievedAt": "2026-11-17T18:17:00Z"
+        },
+        "caption": "Working on a figure at a workshop in Kondagaon, Bastar (2006)"
+      },
+      "lede": {
+        "id": "pd1.1",
+        "text": "Bastar Dhokra is bell metal cast by the lost wax process and finished with bell metal wire work, made in Bastar by the Ghadwa community.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "adbcc67d-435a-5163-a281-ca947d447e97",
+            "claimId": "bd9934a7-396e-5131-84c0-3937360d44db",
+            "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+            "quote": "Dhokra products are cast in bell metal by lost wax process and display an intriguing finish having bell metal wire work",
+            "locator": "lines 1114-1116",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "8ea0e507-bce9-5ad2-8836-fbec1186d1da",
+            "claimId": "1fd519d4-5ae6-5baf-b8bc-c500a9eec5c5",
+            "sourceId": "dfd0ec29-630e-5684-97c9-827a73c32b9a",
+            "quote": "Dhokra shilp is widely practiced by the Ghadwa community of Bastar.",
+            "locator": "lines 28-29",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false
+      }
+    },
+    {
+      "craft": {
+        "slug": "Tikuli-Painting",
+        "name": "Tikuli Painting",
+        "path": "/crafts/Tikuli-Painting"
+      },
+      "localName": "Tikuli",
+      "hero": null,
+      "lede": {
+        "id": "pt1.1",
+        "text": "Tikuli is the local word in Bihar for the bindi, and tikuli painting is now made with glossy enamel paints on hardboard or MDF board.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "3c460ecf-117c-5252-afba-592891a27ff2",
+            "claimId": "a42839e7-c2a6-5e60-a739-f9366a60bb3d",
+            "sourceId": "12ff9062-ee9a-5e36-9979-f6506a832ca4",
+            "quote": "The word 'tikuli' is the local term for 'bindi', which is usually a bright, colorful dot that women wear between their brows.",
+            "locator": "p. 5",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "912423ab-be9d-5fc4-8f4c-745afbe0f2f5",
+            "claimId": "cd53be66-cb88-5f2c-947f-c70c96081da6",
+            "sourceId": "44b8bf79-a233-5e5d-ba0d-b2c5da2d2ba0",
+            "quote": "Modern Tikuli practice shifts from glass to hardboard or medium-density fibreboard and uses enamel paints that produce a glossy, durable surface.",
+            "locator": "para 2",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false
+      }
+    }
+  ],
+  "specimen": {
+    "craft": {
+      "slug": "Kutch-Ajrakh",
+      "name": "Kutch Ajrakh",
+      "path": "/crafts/Kutch-Ajrakh"
+    },
+    "sentence": {
+      "id": "pa2.1",
+      "text": "In 2001 an earthquake almost destroyed Dhamadka, and its block printers moved 40 km away, in search of good quality groundwater, to a new village named Ajrakhpur.",
+      "level": "PROVISIONAL",
+      "citations": [
+        {
+          "id": "d49de9b6-ebd0-5de8-a63e-203240ccb3c9",
+          "claimId": "a4755d0b-96a5-5b78-884e-87e8171ddc08",
+          "sourceId": "6adb6cbb-4fdb-5704-b90f-128dec6da755",
+          "quote": "In 2001, an earthquake which caused severe damage in Kutch almost destroyed the village of Dhamadka.",
+          "locator": "paragraph 13",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "5ab9664c-0f2e-5e45-8321-c3f7ceb85157",
+          "claimId": "5b0a469f-e20c-57e2-a805-eecbbea5edd7",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "After a massive earthquake in Kutch in 2001, the block printers were forced to relocate. They settled in Ajrakhpur village.",
+          "locator": "Application 1050, geographical area of production, p. 8",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "887fd501-1bb3-5679-910f-2a550c641753",
+          "claimId": "5b0a469f-e20c-57e2-a805-eecbbea5edd7",
+          "sourceId": "08bb36fb-ebac-59ee-90da-997a6e769e33",
+          "quote": "moved from their earlier settlement in Dhamadka to their present location, 40 km away, in search of good quality groundwater",
+          "locator": "section 'History repeats itself'",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ],
+      "translated": false
+    }
+  },
+  "sources": [
+    {
+      "id": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188: Kutch Ajrakh, G.I. Application No. 1050",
+      "authors": [],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "def6894b-e67b-552b-bd8c-bfc980cf3bb0",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh: Rhythm of Blues",
+      "authors": [
+        "Ruchira Ghose",
+        "Mushtak Khan",
+        "Kritika Narula"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://artsandculture.google.com/story/WAWhhiXYIwIA8A",
+      "publisher": "Crafts Museum, New Delhi, on Google Arts & Culture",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 24",
+      "authors": [],
+      "year": 2008,
+      "doi": null,
+      "url": "https://ipindia.nic.in/girindia/journal/24.pdf",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "dfd0ec29-630e-5684-97c9-827a73c32b9a",
+      "kind": "WEB_PAGE",
+      "title": "Dhokra Shilp: The Bell Metal Craft of Bastar",
+      "authors": [
+        "Palash Vaswani"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://dsource.in/resource/dhokra-shilp",
+      "publisher": "D'source, Industrial Design Centre, IIT Bombay",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "12ff9062-ee9a-5e36-9979-f6506a832ca4",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Design and Technology Development Workshop for Tikuli Art at Tikuli Cluster Danapur",
+      "authors": [
+        "Hema Vishwakarma"
+      ],
+      "year": 2022,
+      "doi": null,
+      "url": "https://umsas.org.in/wp-content/uploads/2022/01/03-DTDW-Report-Tikuli-Art-Hema-Vishwakarma.pdf",
+      "publisher": "Upendra Maharathi Shilp Anusandhan Sansthan",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "44b8bf79-a233-5e5d-ba0d-b2c5da2d2ba0",
+      "kind": "OTHER",
+      "title": "Tikuli Painting in Bihar: History, Technique and the Revival",
+      "authors": [
+        "Athmaja Biju"
+      ],
+      "year": 2025,
+      "doi": null,
+      "url": "https://www.abirpothi.com/tikuli-painting-in-bihar-history-technique-and-the-revival/",
+      "publisher": "Abirpothi",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C"
+    },
+    {
+      "id": "6adb6cbb-4fdb-5704-b90f-128dec6da755",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh: An Introduction",
+      "authors": [
+        "Mushtak Khan"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.sahapedia.org/ajrakh-introduction-0",
+      "publisher": "Sahapedia",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "08bb36fb-ebac-59ee-90da-997a6e769e33",
+      "kind": "OTHER",
+      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+      "authors": [
+        "Azera Parveen Rahman"
+      ],
+      "year": 2019,
+      "doi": null,
+      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "publisher": "Mongabay India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C"
+    }
+  ],
+  "points": [
+    {
+      "key": "state-10",
+      "name": "Bihar",
+      "latitude": 25.6,
+      "longitude": 85.1,
+      "total": 2,
+      "curated": [
+        {
+          "slug": "Tikuli-Painting",
+          "name": "Tikuli Painting",
+          "path": "/crafts/Tikuli-Painting"
+        }
+      ]
+    },
+    {
+      "key": "state-22",
+      "name": "Chhattisgarh",
+      "latitude": 21.3,
+      "longitude": 81.9,
+      "total": 1,
+      "curated": [
+        {
+          "slug": "Bastar-Dhokra",
+          "name": "Bastar Dhokra",
+          "path": "/crafts/Bastar-Dhokra"
+        }
+      ]
+    },
+    {
+      "key": "state-24",
+      "name": "Gujarat",
+      "latitude": 22.7,
+      "longitude": 71.6,
+      "total": 2,
+      "curated": [
+        {
+          "slug": "Kutch-Ajrakh",
+          "name": "Kutch Ajrakh",
+          "path": "/crafts/Kutch-Ajrakh"
+        }
+      ]
+    },
+    {
+      "key": "district-449",
+      "name": "Kachchh",
+      "latitude": 23.7,
+      "longitude": 69.8,
+      "total": 1,
+      "curated": [
+        {
+          "slug": "Kutch-Ajrakh",
+          "name": "Kutch Ajrakh",
+          "path": "/crafts/Kutch-Ajrakh"
+        }
+      ]
+    }
+  ]
+}

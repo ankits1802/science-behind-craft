@@ -1,0 +1,1965 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Stone-Others",
+  "dossierVersion": 1,
+  "dossierDigest": "3b2b206ff76625cdf8f97dca9433c870c435d9c2a6155c001b06a7d23b28ff29",
+  "checkedAt": "2026-11-18T10:44:01.372004Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2025%5CJournal_No._207-1%5CJournal+No.+207+-Part+1.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2025%5CJournal_No._207-1%5CJournal+No.+207+-Part+1.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2025%5CJournal_No._207-1%5CJournal+No.+207+-Part+1.pdf",
+      "fetchedAt": "2026-11-18T10:43:10.641952Z",
+      "contentType": "application/pdf",
+      "textSha256": "415bb87371717f299500871e0573695bc41a066b1d76d700a1ad468c97af76e4",
+      "characters": 400299,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/880",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/880",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/880",
+      "fetchedAt": "2026-11-18T10:43:37.327908Z",
+      "contentType": "text/html",
+      "textSha256": "8f38497bd68e240b704c8c84ce56fb8e80dbb3c888d3084de649dc1f09e5b06f",
+      "characters": 1268,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://journals.ed.ac.uk/lithicstudies/article/download/5390/9274",
+      "route": "LIVE",
+      "readUrl": "https://journals.ed.ac.uk/lithicstudies/article/download/5390/9274",
+      "finalUrl": "https://journals.ed.ac.uk/lithicstudies/article/download/5390/9274",
+      "fetchedAt": "2026-11-18T10:43:08.450104Z",
+      "contentType": "application/pdf",
+      "textSha256": "1e880b9e4059de635cf70dbd27995ba3c43ff0eec371ea4af7b863f82731e342",
+      "characters": 39436,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "route": "LIVE",
+      "readUrl": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "finalUrl": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "fetchedAt": "2026-11-18T10:43:19.872667Z",
+      "contentType": "application/pdf",
+      "textSha256": "dfca571873460eb527451af1712e86617bfb77ad0e89ff48cb25eb2a47c7e77b",
+      "characters": 60411,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://cris.huji.ac.il/en/publications/breaking-it-down-ethnographic-studies-on-the-manufacture-of-basal-2/",
+      "route": "LIVE",
+      "readUrl": "https://cris.huji.ac.il/en/publications/breaking-it-down-ethnographic-studies-on-the-manufacture-of-basal-2/",
+      "finalUrl": "https://cris.huji.ac.il/en/publications/breaking-it-down-ethnographic-studies-on-the-manufacture-of-basal-2/",
+      "fetchedAt": "2026-11-18T10:43:02.588740Z",
+      "contentType": "text/html",
+      "textSha256": "84a6fcfccb33d6ed4ec85f7db34228a39596b4ef938d37d86613e60234a2b095",
+      "characters": 1516,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://cris.huji.ac.il/en/publications/grinding-stones-from-the-neolithic-ashmound-site-of-budihal-india/",
+      "route": "LIVE",
+      "readUrl": "https://cris.huji.ac.il/en/publications/grinding-stones-from-the-neolithic-ashmound-site-of-budihal-india/",
+      "finalUrl": "https://cris.huji.ac.il/en/publications/grinding-stones-from-the-neolithic-ashmound-site-of-budihal-india/",
+      "fetchedAt": "2026-11-18T10:43:04.599748Z",
+      "contentType": "text/html",
+      "textSha256": "58880f1fea606b2f9bfc48e5d4c62d6e806eb2d4490d399a797953c92b9e4b7c",
+      "characters": 2296,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://artsandculture.google.com/story/cAUhxrXva9A6Jw",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/cAUhxrXva9A6Jw",
+      "finalUrl": "https://artsandculture.google.com/story/cAUhxrXva9A6Jw",
+      "fetchedAt": "2026-11-18T10:43:05.711607Z",
+      "contentType": "text/html",
+      "textSha256": "e9c3a945401dac9455a6aa3563777a5bc2ea440324bbcac173b02122a342a4dd",
+      "characters": 4420,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://encyclocraftsapr.com/kalchatti-traditional-cookware-of-tamil-nadu/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/kalchatti-traditional-cookware-of-tamil-nadu/",
+      "finalUrl": "https://encyclocraftsapr.com/kalchatti-traditional-cookware-of-tamil-nadu/",
+      "fetchedAt": "2026-11-18T10:43:08.039990Z",
+      "contentType": "text/html",
+      "textSha256": "0d90d270fd3de3446191f615cc8ba63371387f86e1085eb219c594255fd70feb",
+      "characters": 1323,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.globalinch.org/craft/soap-stonekalchatty-utensils-of-tamil-nadu/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/soap-stonekalchatty-utensils-of-tamil-nadu/",
+      "finalUrl": "https://www.globalinch.org/craft/soap-stonekalchatty-utensils-of-tamil-nadu/",
+      "fetchedAt": "2026-11-18T10:43:08.808417Z",
+      "contentType": "text/html",
+      "textSha256": "43f3de4924934df4c647fb3f8693f3004a55bd9e08e76b8c0cb9b127dcc4ce90",
+      "characters": 565,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.globalinch.org/craft/stone-utensils-of-keonjar-odisha/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-utensils-of-keonjar-odisha/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-utensils-of-keonjar-odisha/",
+      "fetchedAt": "2026-11-18T10:43:15.494870Z",
+      "contentType": "text/html",
+      "textSha256": "d37bbc0be6ab8cb245c7ceb6f4840ed5e1c8ec20ad911f6d98e937a0dc9bfe1c",
+      "characters": 326,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.globalinch.org/craft/stone-carving-of-madhya-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-carving-of-madhya-pradesh/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-carving-of-madhya-pradesh/",
+      "fetchedAt": "2026-11-18T10:43:18.922156Z",
+      "contentType": "text/html",
+      "textSha256": "ef2cd897eed796028e3445f476062064c9335a07968e81bc56ff252f40669adc",
+      "characters": 1284,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.globalinch.org/craft/stone-carving-of-himachal-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-carving-of-himachal-pradesh/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-carving-of-himachal-pradesh/",
+      "fetchedAt": "2026-11-18T10:43:31.352988Z",
+      "contentType": "text/html",
+      "textSha256": "79dcce7ea123f3f032283bbd87ae175da5ec78f2515577c82d2d51f57c164c31",
+      "characters": 1155,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-carving-of-uttar-pradesh/",
+      "fetchedAt": "2026-11-18T10:43:35.864523Z",
+      "contentType": "text/html",
+      "textSha256": "13ce01cff20b3fa3a430be431a56274a1307e0c6eae16a016438eea5b84e02fc",
+      "characters": 2146,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.globalinch.org/craft/stone-carving-of-bihar/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-carving-of-bihar/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-carving-of-bihar/",
+      "fetchedAt": "2026-11-18T10:43:43.121148Z",
+      "contentType": "text/html",
+      "textSha256": "f479818e71469542236be12756480be1256c56df072f8f525a696e67f04ced3c",
+      "characters": 1047,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://www.downtoearth.org.in/environment/a-tradition-that-is-now-rare",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/environment/a-tradition-that-is-now-rare",
+      "finalUrl": "https://www.downtoearth.org.in/environment/a-tradition-that-is-now-rare",
+      "fetchedAt": "2026-11-18T10:43:14.051199Z",
+      "contentType": "text/html",
+      "textSha256": "5b4388c7c94beec94be09e7004a4ecc8013ba621daca845e8f708894e8fd0747",
+      "characters": 621,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.newsclick.in/UP-shilpkars-jhansi-struggle-ends-meet",
+      "route": "LIVE",
+      "readUrl": "https://www.newsclick.in/UP-shilpkars-jhansi-struggle-ends-meet",
+      "finalUrl": "https://www.newsclick.in/UP-shilpkars-jhansi-struggle-ends-meet",
+      "fetchedAt": "2026-11-18T10:43:19.803419Z",
+      "contentType": "text/html",
+      "textSha256": "6ee9dea76319468011f2bdcb4430737c3fd89e0951416100dc00663d9326b435",
+      "characters": 6494,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.lokmattimes.com/national/tn-despite-gi-tag-for-soapstone-craft-raw-material-crisis-threaten-namakkals-artisans",
+      "route": "LIVE",
+      "readUrl": "https://www.lokmattimes.com/national/tn-despite-gi-tag-for-soapstone-craft-raw-material-crisis-threaten-namakkals-artisans",
+      "finalUrl": "https://www.lokmattimes.com/national/tn-despite-gi-tag-for-soapstone-craft-raw-material-crisis-threaten-namakkals-artisans",
+      "fetchedAt": "2026-11-18T10:43:29.710231Z",
+      "contentType": "text/html",
+      "textSha256": "13af6cdb25674ea435c9a4ceda798c8f7e1c58828042d17cb1b6166422cc68e1",
+      "characters": 3242,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.dtnext.in/news/tamilnadu/gi-tag-sought-for-namakkal-kalchatti",
+      "route": "LIVE",
+      "readUrl": "https://www.dtnext.in/news/tamilnadu/gi-tag-sought-for-namakkal-kalchatti",
+      "finalUrl": "https://www.dtnext.in/news/tamilnadu/gi-tag-sought-for-namakkal-kalchatti",
+      "fetchedAt": "2026-11-18T10:43:33.305879Z",
+      "contentType": "text/html",
+      "textSha256": "49e62d7e3b79607f29600eb16ce9deefb319340bf1d7a0eba03b6c83503489e0",
+      "characters": 2341,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://socarchsci.blogspot.com/2024/02/sas-research-support-awardee-sutonuka.html",
+      "route": "LIVE",
+      "readUrl": "https://socarchsci.blogspot.com/2024/02/sas-research-support-awardee-sutonuka.html",
+      "finalUrl": "https://socarchsci.blogspot.com/2024/02/sas-research-support-awardee-sutonuka.html",
+      "fetchedAt": "2026-11-18T10:43:35.140155Z",
+      "contentType": "text/html",
+      "textSha256": "93966936d1e78fd83880d06e5031a805046cde6f6bf56c852f2ad2165ded65b3",
+      "characters": 3287,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.inkl.com/news/fresh-application-filed-seeking-gi-tag-for-namakkal-makkal-pattirangal",
+      "route": "LIVE",
+      "readUrl": "https://www.inkl.com/news/fresh-application-filed-seeking-gi-tag-for-namakkal-makkal-pattirangal",
+      "finalUrl": "https://www.inkl.com/news/fresh-application-filed-seeking-gi-tag-for-namakkal-makkal-pattirangal",
+      "fetchedAt": "2026-11-18T10:43:37.804825Z",
+      "contentType": "text/html",
+      "textSha256": "296eeb2390f3270ef72ada65e4726a691048c306401a957e7c2fa00f6898efa7",
+      "characters": 1485,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://researchonline.lse.ac.uk/id/eprint/133819/1/U615785.pdf",
+      "route": "LIVE",
+      "readUrl": "https://researchonline.lse.ac.uk/id/eprint/133819/1/U615785.pdf",
+      "finalUrl": "https://researchonline.lse.ac.uk/id/eprint/133819/1/U615785.pdf",
+      "fetchedAt": "2026-11-18T10:43:38.784661Z",
+      "contentType": "application/pdf",
+      "textSha256": "392702ef0bcff893a6c6c20492a38bb7a54e3bb4325d9fe9e061af4f655380a9",
+      "characters": 574300,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Namaakkal Maakkal Pattirangal refers to a traditional category of stone utensils, domestic wares, ritual objects, toys, and carved articles produced from the distinctive soapstone deposits native to the Namaakkal district of Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Locally known as \"Maakkal,\" these stone vessels and artefacts are carved from a soft yet durable variety of soapstone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S09",
+      "quote": "Utilitarian stoneware of the highest excellence is made in Salem district and in the region between Pondicherry and Cudallore in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S09",
+      "quote": "Utensils made of soapstone, which is a soft light gray colour with a cool smooth texture, are perfectly suited to store buttermilk, milk and curds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S09",
+      "quote": "It is also the preferred vessel for cooking food that uses tamarind and lime.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S08",
+      "quote": "the kalchatti is considered the best cookware for the fiery local curries spiced with tamarind and lime that need a slow long cook to release flavors",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "Their slow, even heat distribution makes them especially suited for preparing tamarind- and lime-based gravies such as puli kozhambu, moru kulambu, and various regional buttermilk dishes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S18",
+      "quote": "are an excellent medium for cooking tamarind based dishes and are ideal to store pickles, milk and curd",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "The culinary utensils produced under Namaakkal Maakkal Pattirangal include Kalchattis (stone cooking pots), dosa pans, kuzhi paniyaram moulds, storage jars with lids, curd and buttermilk pots, pickle jars, rolling pins, and serving vessels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S08",
+      "quote": "Differently sized kalchattis form mortars and pestles for grinding lentils, grains and spices, storage containers to food moulds, cooking utensils, serving dishes, and pans for the local bread (dosa) are crafted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S09",
+      "quote": "The items made are vessels for storage, serving dishes, mortar and pestle, bowls and ornamented single-wick lamps.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S09",
+      "quote": "Utilitarian stoneware of the highest excellence is made in Salem district and in the region between Pondicherry and Cudallore in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S18",
+      "quote": "Apart from cookwares like dosa pan, vessel, 'kuzhipaniyaram' plates, the artisans from this region also chisel out lamps, idols, incense stands, candle stands, paperweights, toys and miniature figurines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S01",
+      "quote": "the artisans produce a variety of ritual and aesthetic objects including idols, sirpangal (sculptures), incense stands, candle stands, Natchatra Vilakku (star-shaped lamps), Kondai Vilakku, paperweights, miniature figurines",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "Namaakkal is especially renowned for its soapstone dolls and toys, locally known as choppu, which are popular across Tamil Nadu and India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "These miniature representations of household items and cultural motifs are often used in traditional children's play sets and festival displays, particularly during Golu celebrations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "Namaakkal stone works are crafted from high-quality soapstone, a naturally soft, dense, and easily workable metamorphic rock formed through the alteration of pre- existing rocks under intense heat, pressure, and the activity of chemically reactive fluids in tectonic plate zones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "This slow geological transformation enriches the stone with talc and other minerals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S17",
+      "quote": "For generations, families in and around Namakkal have carved kalchattis and other cookware from a distinctive magnesium-rich, velvet-smooth soapstone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "The soapstone used for Namaakkal Maakkal Pattirangal is naturally resistant to the corrosive effects of acids, alkalis, salts, and citrus compounds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S18",
+      "quote": "the stone is unsusceptible to corrosion by acids and alkalis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "the stone is a strong thermal insulator capable of distributing heat evenly and retaining warmth long after being removed from the stove.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S18",
+      "quote": "The benefit of cooking in soapstone utensils is that they are good insulators and can retain heat for longer as compared to other metals and clay utensils.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S08",
+      "quote": "The soapstone, known for its hot and cold insulative properties",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "The stone exhibits inherently low water absorption capacity, ensuring that it does not retain moisture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S18",
+      "quote": "possess low water absorption ability",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "New vessels appear light grey, but with repeated use, oil absorption and heat exposure gradually transform them into a darker, smoother, and visually richer surface",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "A signature characteristic of Namaakkal Maakkal Pattirangal is their rough, porous, and naturally textured surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "Unlike polished and lathe-finished soapstone utensils produced in regions like Keonjhar, Odisha, the Namaakkal utensils retain a rough, porous, naturally textured surface",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S18",
+      "quote": "They have a rough and porous surface and texture, which is a unique feature of the Namakkal makkal stone work as against the usual polished surfaces of other soapstone products",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "Each utensil, lamp, idol, or toy is carved from a single block of stone using traditional tools such as uli, olaiuli, yetrauli, and thawttuuli.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "Artisans do not use templates, measurements, or mechanical aids; instead, they depend solely on their visual judgment and ancestral skills passed down across generations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S08",
+      "quote": "In the small village of Thandankoundanpalayam, in Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S08",
+      "quote": "Hand-carved out of blocks of soapstone and shaped on a lathe, the craftspeople use basic cutting, smoothing and carving tools for the shaping.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S09",
+      "quote": "Utilitarian stoneware of the highest excellence is made in Salem district and in the region between Pondicherry and Cudallore in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S09",
+      "quote": "These items are made with the use of hammer and chisel and are turned on the lathe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "The production process involves several meticulously executed stages, including raw material selection, primary cutting, shaping, hollowing, detailing, smoothening, colour uniforming, finishing, seasoning (for cookware), and final inspection.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "Artisans inspect the stone visually and by tapping it gently to assess internal stability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "Free from cracks or fractures",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "Uniform in density and grain",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "Suitable stones are cut into blocks using the kotla along with metal wedges. Each block is then trimmed to the approximate size required for the intended utensil or artefact.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "Kotla (Hand Saw/Cutter) - for cutting large stone blocks into workable sizes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S01",
+      "quote": "Uli (Chisels) - for primary carving, shaping, and rough cutting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "Thawttuuli - for surface levelling and removing uneven stone layers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "Primary Carving (Udal Eduppu): The initial shaping begins with coarse carving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "Unwanted stone portions are chipped away using uli chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "For cookware such as kalchattis and pans, the exterior shape is carved first.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "If small fragments break during carving, artisans traditionally repair them using araldite, a long-established practice in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "the interior is hollowed gradually using the yetrauli tool. The artisan checks wall thickness frequently to ensure evenness and prevent cracks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "Yetrauli - a hollowing tool used to carve interiors of pots, lamps, moulds, and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S01",
+      "quote": "Olaiuli is used to form thin ridges, decorative lines, and curves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S01",
+      "quote": "Ganali - a fine-tipped chisel for delicate detailing and final finishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "Coarse sandpaper is used first to remove tool marks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "Fine sandpaper is applied to smoothen the surface uniformly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "A blowpipe and brush are used to remove residual dust.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "A defining characteristic of Namaakkal stonework is its silky grey-blue tone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "A mixture of stone powder and neelam (liquid blue) is rubbed onto the carved object.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "apply a traditional paste made of stone powder and neelam (liquid blue) to attain a uniform grey - blue tone, resulting in the signature silky yet matte finish",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Final Washing and Drying After colour finishing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "The object is rinsed in clean water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "It is sun-dried slowly to avoid thermal shock.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "Artisans advise filling the vessel repeatedly with warm kanji (rice starch water), allowing the pores of the stone to gradually expand and strengthen. This prevents cracking during initial exposure to direct heat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S18",
+      "quote": "a 'kalchatti' has to be seasoned by pouring warm starch water before use to make them stronger",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "The vessel is filled with warm kanji (rice starch water).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "It is allowed to soak for several hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "The process is repeated over several days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S08",
+      "quote": "The finished kalchatti is seasoned with starch water over a stretch of 6-10 days. This process reduces the surface porosity and makes the cookware ready for use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "The raw stone used by these artisans is largely sourced from quarries near Semmarapatti, which continue to supply most of the district's requirements.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "The production process begins with sourcing high- quality soapstone blocks from the Semmarapatti region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S17",
+      "quote": "The stone is traditionally sourced from Namakkal district and neighbouring areas such as Mangalapuram, Periyasoragai, Aranganur, and select locations in Salem district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S18",
+      "quote": "The soapstone used for making the cookware is sourced from across the district as well as from the adjoining areas of 'Periasoragai', 'Aranganur', 'Tholasampatty', 'Marakottai' and 'Kongupatty' of Omalur Taluk in Salem district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S01",
+      "quote": "Namakkal Maakkal Paattirangal are traditionally produced in the villages of T.G. Palayam and Mangalapuram, located in Rasipuram Taluk of Namakkal District, Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S01",
+      "quote": "Contemporarily, the craft remains preserved among families in the stone- working clusters of Namaakkal district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S01",
+      "quote": "Artisans rely on inherited knowledge, manual precision, and traditional methods that have been handed down through generations in villages such as Thangankoundanpalayam, Mangalapuram, and Rasipuram Taluk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S01",
+      "quote": "Almost every family in the village has historically been involved in producing kalachatty",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S01",
+      "quote": "with the village of Thankankoundanpalayam standing as a prominent centre of this heritage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S08",
+      "quote": "In the small village of Thandankoundanpalayam, in Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S08",
+      "quote": "Almost every family in the village is involved in the craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S08",
+      "quote": "In the small village of Thandankoundanpalayam, in Tamil Nadu, the locally available pale grey soapstone cookware, the kalchatti, is crafted in shapes that suit the traditional food preparations of the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "Evidence suggests that soapstone utensils were used for religious rituals in temples well before the 3rd century BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "By the 18th century, communities had begun creating not only sculptures but also household articles and kitchenware from this versatile stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "The Tamil lexicon also records specific food items, such as \"Kuli -p-paniyaram,\" that were traditionally prepared in soapstone moulds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "including references in the Tamil lexicon, highlight the utensil known as \"maakkal,\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "Excavations have revealed the existence of a soapstone jewellery -making facility in Erode district, located just 50 kilometres from present-day Namaakkal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 207 dated July 31, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Register of Namakkal Maakkal Paattirangal under Application No. 880 in respect of stone sculptures, carved decorative articles, utilitarian objects, and ornamental pieces , stone household utensils",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | Namakkal Makkal Pattirangal | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 22-04-2022 | | Class | 19 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S02",
+      "quote": "880 - Certificate of Registration - 01-12-2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "Application is made by Tamil Nadu Handicrafts Development Corporation Limited [Poompuhar] at",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "| Application Number | 880 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "| Applicant Name | 1. Namakkal stone Products Manufacturers Association, Namakkal and 2. MSME - Technology Development Centre (PPDC) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S18",
+      "quote": "He had filed an application for Geographical Indications (GI) on behalf of Namakkal Stone Products Manufacturers Association, Namakkal and MSME Technology Development Centre (Process and Product Development Centre)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S17",
+      "quote": "By IANS | Updated: December 13, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S17",
+      "quote": "The traditional soapstone artisans of Tamil Nadu's Namakkal region are facing an uncertain future",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S17",
+      "quote": "artisans say it has done little to address their most pressing challenge -- the steady depletion of high-quality soapstone, which is essential for their livelihood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "By IANS | Updated: December 13, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "The traditional soapstone artisans of Tamil Nadu's Namakkal region are facing an uncertain future",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "However, artisans say easily accessible deposits have largely been exhausted. Most remaining reserves are now found deep underground or lie within restricted zones, including forest areas where quarrying is prohibited.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S17",
+      "quote": "By IANS | Updated: December 13, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S17",
+      "quote": "Forest officials maintain that extraction permissions are governed strictly by existing laws.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S17",
+      "quote": "quarrying within reserved forest zones remains prohibited",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S17",
+      "quote": "By IANS | Updated: December 13, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S17",
+      "quote": "The traditional soapstone artisans of Tamil Nadu's Namakkal region are facing an uncertain future",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S17",
+      "quote": "The craft itself remains confined to small, family-run units operating out of modest workshops in rural pockets close to quarrying zones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S17",
+      "quote": "largely because the specialised skills are passed down within families",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S17",
+      "quote": "By IANS | Updated: December 13, 2025",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S17",
+      "quote": "Government agencies have begun promoting soapstone cookware through exhibitions and workshops, and demand from large retail outlets has risen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S08",
+      "quote": "Once a common sight in every South Indian kitchen, these long lasting vessels are now being replaced by non-stick cookware.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S09",
+      "quote": "Utilitarian stoneware of the highest excellence is made in Salem district and in the region between Pondicherry and Cudallore in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S10",
+      "quote": "These stone utensils are mainly found in the centres of Lulung and Bolgariah of Keonjhar district. They are made by using a hand-turned lathe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S10",
+      "quote": "The design and shape of these utensils is very unique. These utensils are valued for religious purposes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S04",
+      "quote": "There are two different soapstone craft forms exist in Dhakotha, i.e., ପତ୍ଥର କୁଣ୍ଡ or Pather Kundo Craft and Soapstone Craving Craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S04",
+      "quote": "In Patthar Kundo craft, different forms of utensils are being crafted, while in soapstone carving craft, highly detailed soapstone statue crafting takes place.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S04",
+      "quote": "Dhakotha is a village as well as a gram panchayatiii, under the political subdivision of Anandapur in Kendujhar district of Odisha.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S04",
+      "quote": "Dhakotha soapstone craft cluster is surrounded by beautiful nature and situated on the bank of Baitarini River.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S04",
+      "quote": "Kendujhar is also known as Keonjhar in different documents- but, both indicate the same geographical district area, within Odisha state of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S04",
+      "quote": "There is a total number of approximately 450 natural soapstone craftsmen are active in crafts practices in and around Dhakotha village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S04",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S04",
+      "quote": "This craft study is based over different field visits of Dhakotha Soapstone Craft Cluster, made by this researcher during the calendar year of 2010-2011. All basic information, compiled in this paper, is based over primary data collection",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "Out of approximately 500 soapstone craftsmen, around 400 craftsmen are involved in stone carving or statue making craft; while another pool of approximately 50 craftsmen are involved in traditional Pather Kundo or stone turning craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "This craft study is based over different field visits of Dhakotha Soapstone Craft Cluster, made by this researcher during the calendar year of 2010-2011. All basic information, compiled in this paper, is based over primary data collection",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S04",
+      "quote": "the Patthar Kundo craft is under practice since unknown history with more than thousands of years- as claimed by the craft community",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S04",
+      "quote": "In Dhakotha area, this craft is under existence since last around 55-60 years. So, this craft form may be treated as a respectively newer craft form, with respect of traditional Patthar Kundo craft form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S04",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S04",
+      "quote": "Majority of these craftsmen are belonging to different ancient tribes. Most of them are carrying soapstone turning craft, as their ancestral craft profession, since decades",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S04",
+      "quote": "However, these communities are residing in close geographical areas, but usually less interactive at professional level, with each other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S04",
+      "quote": "The wooden, handmade wooden lathe system is developed by the craft community members themselves and being used for craftsmanship purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S04",
+      "quote": "In local language, this integrated mechanism is called as- 'Patthar Kundo'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S04",
+      "quote": "This turning process requires a set of two craftsmen to perform craftsmanship. The first craftsman holds the pulling rope in his both hands and perform axis rolling in clockwise and in anticlockwise direction",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S04",
+      "quote": "while the another craftsman preforms stone carving process, with the help of different carving tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S04",
+      "quote": "A pair of two differently notched and grooved hard wood blocks. These blocks are getting fixed into sand base of clay floor.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S04",
+      "quote": "A hard wood, cylindrical bar with a head and round iron tail. This tool is used to fix raw stone block over its head component, using melted Kulsum glue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S04",
+      "quote": "A \"Y\" shaped wooden structure. Helps turner to make 'balance of tool', during turning process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S04",
+      "quote": "A turning tool, made up of sharptip iron, with rounded wooden handle. Carve the soapstone block, during turning process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S04",
+      "quote": "The 'Leg Stopper', supports ropepulling craftsperson to maintain equal axis rolling speed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S04",
+      "quote": "The most appealing and unique feature, noticed by this researcher in Patthar Kundo system is, 'zero raw material requirement for head griping purposes'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S04",
+      "quote": "Usually today's contemporary turning process machines require a countable amount of pre-sized head-jaw grips to perform its turning process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S04",
+      "quote": "However, these systems are faster, accurate, and precise with advanced technology, but still the traditional mechanism of Patthar Kundo proves its precedence over them, in terms of less raw material wastages",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "Among other unique features of Patthar Kundo system- comparatively lower installation cost, portability, simplicity in operational mechanism, re-installable and component wise repairable wooden structure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "they cut and shape the required cubical block of soapstone, by keeping some extra margin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "to reduce the rate of any unexpected edge chippings and subjected object's damages during craftsmanship",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "The trimming process of extra edges, takes place now, through careful chiseling.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "this researcher divided the entire process into 18 visual phases",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "These 18 stages cover a sequence, which starts from the initial phase of raw soapstone procurement from nearby mines, to the final product",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S04",
+      "quote": "Stage-E: Heating water cleaned, shaped-stone, before Kulsum glue application.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S04",
+      "quote": "Stage-G: The Kulsum glue application over turning-bar head.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S04",
+      "quote": "Stage-H: Pre-turning heating, to achieve stronger glue bounding, between soapstone and turning-bar's head end.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Stage-J: Turning of outer side of Kulsum glued soapstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Stage-K: Turning of inner side of Kulsum glued soapstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Stage-L: Post-turning heating process, to un-glue the turned form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Stage-N: A post-turned soapstone form, forwarded for hand-cutting and finishing stage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S04",
+      "quote": "This glue is collected from locally available Kulsum or Kusum",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S04",
+      "quote": "Botanical name of this tree is- Schleichera Oleosa, and belongs to the family of Sapindaceae.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S04",
+      "quote": "These trees are available in Dhkotha's surrounding nature in abundance.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S04",
+      "quote": "In Dhakotha craft clustersxiv, blackish grey, pink, orange, light green and dark green colored soapstone are used for craftsmanship purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "Harder than soapstone. Not suitable for carving, but Ideal for Patthar Kundo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "However to fulfill specific requirements placed by clients, some other quality of stones are also being procured from other parts of country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "the raw Soft Granite is being procured from Chennaixvi of Tamil Nadu state",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S04",
+      "quote": "there are several soapstone mines available around Dhakotha area, which is situated in Kendujhar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S04",
+      "quote": "this feature makes Dhakotha craft cluster, selfdependent regarding continuous raw material availability",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S04",
+      "quote": "soapstone is a- nonporous, nonabsorbent, low conductor of electricity, heat resistant, higher specific heat capacity, resistant to acid and alkaline substances.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "Utensils of different dimensions and different utility specifications are being crafted by the Patthar Kundo craftspeople in Dhakotha soapstone cluster.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "These product ranges are primarily targeted to the dining space of an end-user's household.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "The range of Oil lamps are being produced through Patthar Kundo craft. This is a product with religious importance",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S03",
+      "quote": "Ran -thok (rotary quern) and Ling-chhom (nutting stone) used by the Shertukpens for grinding and nutting of cereal grains, fruits, rhizomes, and other food products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S03",
+      "quote": "Ran-thok (a type of Chakki used by the Shertukpens)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S03",
+      "quote": "The Shertukpens are an Indigenous tribal group inhabiting the western and southern parts of Arunachal Pradesh, Northeast India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S03",
+      "quote": "They are also good at wood carving and stone sculpting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S03",
+      "quote": "The Shertukpen tribe consists of small communities residing towards the far western corner of the state in the West Kameng district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S03",
+      "quote": "they have a long tradition of making stone tools to grind cereals like wheat, maize, millet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S03",
+      "quote": "The availability of raw materials such as stone and wood in the surroundings has encouraged the Shertukpen artisans to become skilled experts in making st one tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S03",
+      "quote": "According to villagers, the use of these tools is not specific to them, as the neighboring tribes also used similar tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S03",
+      "quote": "The grinding stones are manufactured by specific professionals known as Zyopo (Figure 2) in the Shertukpen dialect.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S03",
+      "quote": "These tools are made for their own use and also sold to other members of the village on requisition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S03",
+      "quote": "the three surviving craftspeople have been interviewed to understand the entire process of manufacturing grinding stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S03",
+      "quote": "field observations that occurred during June and July 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S03",
+      "quote": "They collect ling-say (gneiss rock) from the surroundings as the preferential material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S03",
+      "quote": "Such suitable stones are generally available in the area but sometimes they also excavate or break it from the rocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S03",
+      "quote": "the Shertukpens were found to use gneiss rocks in manufacturing grinding stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S03",
+      "quote": "The manufacturing process involves the collection of raw materials, processing and finishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S03",
+      "quote": "The majority of the time is spent in the processing of the materials as they use Indigenous tools like hammer, hoe, chisel, etc. for shaping, polishing and finishing the grinding stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S03",
+      "quote": "ranged between one month if two to four men are involved and two month s if the manufacturer work single -handedly every day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S03",
+      "quote": "the manufacturing of Ling-chhom is easier and less time-consuming i.e., about 10 to 15 days of daily work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "These tools are m ade of iron with wooden and plastic handles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "Name of some of the common tools in their dialect are Chapzee Achandu (Figure 3a), Chanzee (Figure 3b), Nzongbee (Figure 3c), and Thung (Figure 3d).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S03",
+      "quote": "The rounded base or lower stone, diameter 40cm, thickness 10cm, and known as the uukhu, is stationary",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S03",
+      "quote": "Above the lower stone is the getheng (upper stone), diameter 40cm, thickness 15cm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S03",
+      "quote": "The mean size of the finished product slightly varies in diffe rent villages due to wear and tear during the manufacturing process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S03",
+      "quote": "Table 1. Types of grinding tools, average size and raw materials used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "The upper stone spins above the stationary lower stone creating the grinding action of the stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "It is generally slightly concave, while the lower stone is slightly convex. This helps to channel the flour that comes out of grinding to the outer edges of the stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S03",
+      "quote": "The base consists of wooden planks (made of Castanopsis sp.), 115cm x 75cm, which form a bent structure known as bleng",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S03",
+      "quote": "The bleng stabilizes the stones while also collecting the flour that comes out of grinding.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "A wooden handle known as the enyi is fixed on a corner of the runner stone for turning it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "A small hole is made on the upper stone where the grains are poured to be slowly ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "The nutting stone is oval in shape with a length, width, and height dimensions of 60cm, 30cm, and 45cm, respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "The grains are put into the hole and pounded by a wooden pestle (made of Pinus roxburghii) known as chang-khey - about 150cm in length.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "The mean size of the finished product slightly varies in diffe rent villages due to wear and tear during the manufacturing process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "Table 1. Types of grinding tools, average size and raw materials used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S03",
+      "quote": "the wooden mortar and pestle are made from Pinus roxburghhi (pine tree) or Castanopsis sp. (oak tree), depending on the availability in the vicinity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S03",
+      "quote": "Ran -thok is mostly operated by the women either singly or in pairs in sitting gestures",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S03",
+      "quote": "Generally, women either singly or in pairs pound corn grains or crack nuts (walnut) in Ling- chhom in a standing gesture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S03",
+      "quote": "During the survey, the grinding stones especially Ran -thok was observed in the majority of the households.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S03",
+      "quote": "field observations that occurred during June and July 2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S03",
+      "quote": "A total sample of 120 households - 10 each from 12 Shertukpen inhabited villages - was randomly selected to carry out the survey.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S03",
+      "quote": "They further reported that the usage and importance of these grinding stones in recent years has declined due to convenient access to commercially produced flour and mechanical mills.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S03",
+      "quote": "Consequently, changing food habits ha ve limited the use of these tools to remote and inaccessible villages only.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S03",
+      "quote": "also reported that grinding and pounding activities provide opportunities for social interactions such as merrymaking, and performing folk songs with fellow friends",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S03",
+      "quote": "The accurate gap between the stones is an important consideration because too big a gap or unbalanced stones result in coarse or poorly ground flour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S03",
+      "quote": "the traditional grinding stones are increasingly lacking in proper sculpting and maintenance of the gap between the stones as the tools are very old and handed over from one generation to another",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S03",
+      "quote": "but the manufacturing and operating monetary costs are zero, in terms of cash outlay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S03",
+      "quote": "The terms Chakki (rotary quern or millstone in Hindi)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S03",
+      "quote": "In India, Chakki is used to grind grains and spices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S03",
+      "quote": "or wheat flour which is obtained by grinding wheat in Chakki",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S03",
+      "quote": "Hindi English atta wheat flour chakki mill stone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S03",
+      "quote": "Chakki is an attrition mill consisting of two circular stones mounted on a vertical axis which consists of a stationary stone cylinder upon which a smaller stone cylinder rotates",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S03",
+      "quote": "The smaller ones, for household use, are operated by two people and the larger ones for community or commercial purposes use livestock to rotate the upper cylinder",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S03",
+      "quote": "In Central Asia including India, the introduction of rotary quer ns has been determined by the Soviet scholars as 3 rd and 4th Century CE",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S03",
+      "quote": "the considerable heat generated due to friction in stone milling was found to damage the starch, protein, and unsaturated fatty acids which have impacted shelf -life and product quality",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "Traditional Chakki-milled flour is preferred over mechanical -milled by the consumers of the Indian sub-continent for its taste and texture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "However, despite the taste people tend to consume more flour from mechanical mills as it is cheaper and easily available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S05",
+      "quote": "We examine decision-making processes related to knapping strategies beginning with the sourcing of basalt, the quarrying of appropriate blocks, and varied stages of knapping using indirect percussion with specialized iron chisels and hammers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S05",
+      "quote": "We compare this with ethnographic and archaeological data from Neolithic-Chalcolithic archaeological sites in India and globally where basalt grinding stones are noted",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S06",
+      "quote": "Grinding stones are one of the most ubiquitous artefacts within Southern Neolithic sites in peninsular India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S06",
+      "quote": "sandstone grinding stones from the Neolithic site of Budihal (∼2480-1580 BCE), located in the Shorapur Doab of Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S06",
+      "quote": "Findings reveal consistent technological strategies rooted in the selection of locally available sandstone slabs, minimal initial shaping, and extensive use of flaking and pecking for surface preparation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S19",
+      "quote": "the continuation of grinding stone use in contemporary Indian traditions among different communities-sedentary farmers, pastoral nomads, and urban dwellers-provides an ideal setting for ethnographic work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S15",
+      "quote": "These wandering artisans in Delhi and the National Capital Region are perhaps the practitioners of a dying tradition. They make traditional sil battas (grinding stones) by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S15",
+      "quote": "These workers carve granite or black stone into a sil (flat stone base) and batta (cylindrical roller).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S15",
+      "quote": "These wandering artisans in Delhi and the National Capital Region are perhaps the practitioners of a dying tradition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S15",
+      "quote": "this art too is becoming rarer by the days",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S15",
+      "quote": "Once made, these traditional grinding stones can help slow-ground chutneys and masalas that release essential oils, unlike electric mixers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S16",
+      "quote": "UP: Shilpkars of Jhansi Struggle to Make Ends Meet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S16",
+      "quote": "shilpkars living in Shilpkar Basti, near Sipri Bazar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S16",
+      "quote": "all of them are engaged in making sculptures of god, nameplates, atta chaki (manual wheat grinder made of stone), and the traditional sil batta",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S16",
+      "quote": "UP: Shilpkars of Jhansi Struggle to Make Ends Meet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S16",
+      "quote": "In most of the families, men do the work of carving the stone and making patterns using electric cutters, while women break the bigger stones into smaller ones using hammer and chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S16",
+      "quote": "The stones used by the shilpkars include Jhansi red granite, marble, and Sajjar stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S16",
+      "quote": "UP: Shilpkars of Jhansi Struggle to Make Ends Meet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S16",
+      "quote": "Although, with modernisation, many artisans use electric tools like stone cutters for carving the designs on stone, most of the work of shaping the stone is still done using hammers and chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S16",
+      "quote": "she continued to work in her one-room house in Jhansi in Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S16",
+      "quote": "spend almost seven to eight hours a day shaping and designing one sil batta (grinding stone) by hand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S16",
+      "quote": "she continued to work in her one-room house in Jhansi in Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S16",
+      "quote": "But now, there are fancy items like mixer-grinders. So, the sales have dropped a lot",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S16",
+      "quote": "UP: Shilpkars of Jhansi Struggle to Make Ends Meet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S16",
+      "quote": "We don't receive any government aid under schemes meant for handicraft artistes because the schemes don't cover stone carving as a profession.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S16",
+      "quote": "who claimed that his family has been making stone utensils since the era of Rani Laxmibai or Jhansi Ki Rani",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S16",
+      "quote": "she continued to work in her one-room house in Jhansi in Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S16",
+      "quote": "she packs three or four of them in a jute bag, each weighing one to two kilos, and visits nearby localities to sell them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S13",
+      "quote": "A dark-brown stone with yellow spots called sange-rathek is found in Jhansi and its surrounding areas from which lamp-shades, incense-stick stands, and small medicine-grinders are made.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S11",
+      "quote": "In Madhya Pradesh, domestic implements like the mortar and pestle, the silbatta, chabbi, kundi khoral, handi, and chakla are made by the tribals. These products are lightly carved with designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S11",
+      "quote": "Chakkis occupy an important position in Indian traditions as they are believed to keep away evil spirits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S12",
+      "quote": "Domestic products like stoves, angithis, flour-mill stones, kundis, pestle and mortar sets, dauri danda, mill stones, and chakkis are still made all over the state.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S12",
+      "quote": "Good quality lime stone is available in Kangra, Mandi, Bilaspur, and Kulu and is used mainly for utilitarian objects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S12",
+      "quote": "The stone craftspersons of Himachal Pradesh belong to the batada or the bataihra community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S14",
+      "quote": "Stone carvers are mainly concentrated in Patharkatti in Gaya district and in Chandil and Karaikalla in Singhbhum district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S14",
+      "quote": "as well as a variety of products for everyday use. The include thalis or large plates, bowls, grinding containers, and glasses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S07",
+      "quote": "Jaisalmer Stone: Stoneware products",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S07",
+      "quote": "In addition to the elaborately carved architectural elements, artisans also use electric lathes to make a host of simple functional and decorative products. These handy articles are popular with both locals and tourists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S07",
+      "quote": "For this, slabs of stone are first made into smaller pillar like pieces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S07",
+      "quote": "These pillars are affixed to an electric lathe, and made to the size specifications required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S07",
+      "quote": "A pillar is shaped by turning it. Different attachments are used on the turning machine for various functions and effects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S07",
+      "quote": "The final stage on the lathe is that of making the surface even.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S07",
+      "quote": "The completed product is then smoothened and finished with the use of sandpaper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S07",
+      "quote": "The famous yellow sandstone of Jaisalmer is found in areas surrounding the city. It comes from mines like Jethwai, Cipla and Moolsagar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S01",
+      "quote": "Levelling and Initial Marking: Once the stone block is prepared, the artisan:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S01",
+      "quote": "levels its sides on a flat surface, • removes irregular or unstable sections, and • marks basic outlines using a pencil, depending on the complexity of the item.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S01",
+      "quote": "Final Inspection and Classification Artisans classify finished products based on: • accuracy of form, • thickness uniformity, • smoothness and finish, • structural integrity, • heat-retention suitability (for cookware), • absence of cracks or weak planes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S20",
+      "quote": "This the second time an application for this product has been filed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S20",
+      "quote": "In 2013, an application for the Namakkal Makkal Pattirangal was filed by the Tamil Nadu Handicrafts Ltd (Poompuhar), Government of Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S20",
+      "quote": "And in November 2019, the application was withdrawn by the applicant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S21",
+      "quote": "Smedley, Roger Graham (1995) Auctioning the dreams: Economy, community and philanthropy in a north Indian city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S21",
+      "quote": "Jaipur is the leading centre in India for the cutting and polishing of coloured gemstones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S21",
+      "quote": "Smedley, Roger Graham (1995) Auctioning the dreams: Economy, community and philanthropy in a north Indian city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S21",
+      "quote": "Jaipur is the leading centre in India for the cutting and polishing of coloured gemstones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S21",
+      "quote": "The cutting and polishing equipment is almost entirely a solid wheel made of carborundum (silicon carbide), which can be interchanged with other wheels of various hardness and smoothness depending on the faceting and degree of polishing required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S21",
+      "quote": "Traditionally, the wheel was operated manually by a bow-shaped saw, and a majority of the operators - particularly the home-based workers -still use this equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S21",
+      "quote": "The rest use a more recently introduced electrically-operated grinding-wheel",
+      "result": "PASS"
+    }
+  ]
+}

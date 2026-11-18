@@ -1,5 +1,5 @@
 import uuid
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -22,9 +22,21 @@ from app.models import (
     ProcessStage,
     Source,
 )
-from app.research.retrieval import HIDDEN_CLAIM_STATUSES, RESTRICTED_SENSITIVITY, VISIBLE_SENSITIVITY
+from app.research.retrieval import (
+    HIDDEN_CLAIM_STATUSES,
+    OPEN_CHUNK_ACLS,
+    RESTRICTED_SENSITIVITY,
+    VISIBLE_SENSITIVITY,
+)
 from app.research.vocabulary import LEVEL_ORDER
-from app.retrieval.statements import CraftScope, claim_conditions, lexical_rank, scope_concepts, text_query
+from app.retrieval.statements import (
+    CraftScope,
+    claim_conditions,
+    lexical_rank,
+    readable_citations,
+    scope_concepts,
+    text_query,
+)
 from app.retrieval.text import or_tsquery
 
 PROFILE_MODE = "HYBRID"
@@ -152,7 +164,12 @@ async def craft_concepts(session: AsyncSession, craft: Craft) -> list[Concept]:
 
 
 async def claims_for(
-    session: AsyncSession, craft: Craft, *, mode: str, question: str | None = None
+    session: AsyncSession,
+    craft: Craft,
+    *,
+    mode: str,
+    question: str | None = None,
+    acls: Sequence[str] = OPEN_CHUNK_ACLS,
 ) -> tuple[list[ClaimView], dict[uuid.UUID, Source]]:
     tsquery = or_tsquery(question or "")
     rank_column: Any = lexical_rank(Claim.tsv, text_query(tsquery)) if tsquery else text("0")
@@ -166,7 +183,7 @@ async def claims_for(
             return edge_concept.get(claim.subjectId), EDGE_SECTION
         return claim.subjectId, concepts[claim.subjectId].type
 
-    return await _cited_views(session, rows, placed)
+    return await _cited_views(session, rows, placed, acls=acls)
 
 
 async def _edge_concepts(
@@ -180,7 +197,7 @@ async def _edge_concepts(
 
 
 async def claims_by_id(
-    session: AsyncSession, claim_ids: Iterable[uuid.UUID]
+    session: AsyncSession, claim_ids: Iterable[uuid.UUID], *, acls: Sequence[str] = OPEN_CHUNK_ACLS
 ) -> tuple[dict[uuid.UUID, ClaimView], dict[uuid.UUID, Source]]:
     wanted = list(dict.fromkeys(claim_ids))
     if not wanted:
@@ -190,7 +207,7 @@ async def claims_by_id(
     def placed(claim: Claim) -> tuple[uuid.UUID | None, str]:
         return (claim.subjectId if claim.subjectType == "CONCEPT" else None), ""
 
-    views, sources = await _cited_views(session, rows, placed)
+    views, sources = await _cited_views(session, rows, placed, acls=acls)
     return {view.id: view for view in views}, sources
 
 
@@ -204,14 +221,16 @@ async def _visible_claims(session: AsyncSession, condition: Any, rank_column: An
 
 
 async def _cited_views(
-    session: AsyncSession, rows: list[Any], placed: Callable[[Claim], tuple[uuid.UUID | None, str]]
+    session: AsyncSession,
+    rows: list[Any],
+    placed: Callable[[Claim], tuple[uuid.UUID | None, str]],
+    *,
+    acls: Sequence[str],
 ) -> tuple[list[ClaimView], dict[uuid.UUID, Source]]:
     if not rows:
         return [], {}
     claim_ids = [claim.id for claim, _ in rows]
-    cites = (
-        (await session.execute(select(ClaimSource).where(ClaimSource.claimId.in_(claim_ids)))).scalars().all()
-    )
+    cites = (await session.execute(readable_citations(claim_ids, acls=acls))).scalars().all()
     source_ids = {cite.sourceId for cite in cites}
     sources = {
         source.id: source
@@ -321,7 +340,9 @@ async def craft_locations(session: AsyncSession, craft: Craft) -> list[dict[str,
     return out
 
 
-async def craft_profile(session: AsyncSession, craft: Craft) -> dict[str, Any]:
+async def craft_profile(
+    session: AsyncSession, craft: Craft, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> dict[str, Any]:
     names = (
         await session.execute(
             select(CraftSubCategory.name, CraftCategory.name)
@@ -330,7 +351,7 @@ async def craft_profile(session: AsyncSession, craft: Craft) -> dict[str, Any]:
         )
     ).first()
     concepts = await craft_concepts(session, craft)
-    claims, sources = await claims_for(session, craft, mode=PROFILE_MODE)
+    claims, sources = await claims_for(session, craft, mode=PROFILE_MODE, acls=acls)
     stage_rows = (
         (
             await session.execute(

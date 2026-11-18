@@ -1,10 +1,11 @@
 import uuid
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request, Response, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.public_deps import READER_VARY, cached_read, public_reader, reader_cache, reading_acls
 from app.core.db import get_session
 from app.core.deps import get_current_user
 from app.core.http_cache import PRIVATE_NO_CACHE
@@ -36,37 +37,41 @@ SectionIds = Annotated[list[str] | None, Query()]
 @router.get("/crafts/{slug}/shared-science")
 async def get_craft_shared_science(
     slug: str,
+    request: Request,
     response: Response,
-    _: User = Depends(get_current_user),
+    reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
-    body = await craft_shared_science(session, await _known_craft(session, slug))
-    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
-    return body.model_dump(mode="json", by_alias=True)
+    craft = await _known_craft(session, slug)
+    body = await craft_shared_science(session, craft, acls=reading_acls(reader))
+    return cached_read(request, response, reader, body.model_dump(mode="json", by_alias=True))
 
 
 @router.get("/shared-science/{term_key}")
 async def get_shared_concept(
+    request: Request,
     response: Response,
     term_key: str = Path(max_length=TERM_KEY_MAX_CHARS, pattern=TERM_KEY.pattern),
     craft: str | None = Query(default=None, min_length=1, max_length=SLUG_MAX_CHARS),
-    _: User = Depends(get_current_user),
+    *,
+    reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
     focus = await _known_craft(session, craft) if craft is not None else None
-    body = await shared_concept_of(session, term_key, focus)
+    body = await shared_concept_of(session, term_key, focus, acls=reading_acls(reader))
     if body is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
-    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
-    return body.model_dump(mode="json", by_alias=True)
+    return cached_read(request, response, reader, body.model_dump(mode="json", by_alias=True))
 
 
 @router.get("/compare")
 async def get_comparison(
+    request: Request,
     response: Response,
     crafts: Slugs,
     facets: Facets = None,
-    _: User = Depends(get_current_user),
+    *,
+    reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
     if not COMPARE_CRAFTS_MIN <= len(crafts) <= COMPARE_CRAFTS_MAX or any(
@@ -76,11 +81,14 @@ async def get_comparison(
     rows = [await _known_craft(session, slug) for slug in crafts]
     if len({row.id for row in rows}) != len(rows):
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, CRAFTS_DETAIL)
-    body = await craft_comparison(session, rows, list(dict.fromkeys(facets or DISCIPLINES)))
+    chosen = list(dict.fromkeys(facets or DISCIPLINES))
+    body = await craft_comparison(session, rows, chosen, acls=reading_acls(reader))
     if body is None:
-        return Response(status_code=status.HTTP_204_NO_CONTENT, headers={"Cache-Control": PRIVATE_NO_CACHE})
-    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
-    return body.model_dump(mode="json", by_alias=True)
+        return Response(
+            status_code=status.HTTP_204_NO_CONTENT,
+            headers={"Cache-Control": reader_cache(reader), "Vary": READER_VARY},
+        )
+    return cached_read(request, response, reader, body.model_dump(mode="json", by_alias=True))
 
 
 @router.get("/answers/{answer_id}/quiz")

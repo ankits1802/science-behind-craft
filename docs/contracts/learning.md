@@ -280,18 +280,21 @@ fpdf2, uharfbuzz, citeproc-py and Pillow load on the first file a process makes,
 
 ## Shared-science explorer (decision 0064 builds it)
 
-`GET /api/crafts/{slug}/shared-science` (signed in) answers `SharedScience {schemaVersion 1, craft,
+`GET /api/crafts/{slug}/shared-science` (public, decision 0079) answers `SharedScience {schemaVersion 1, craft,
 nodes[ConceptNode] (0-24), sources}`: the glossary terms the craft shares with at least one other
 craft (`TermCraft`), each a `ConceptNode` (explainer contract, concept graph) listing every craft
 that shares it with its concept ids (`TermConcept`, that craft's `Concept` rows) and one cited
 fact-level claim of that craft about one of them that names the term; a craft whose claims name it
 nowhere is left out, a term left with fewer than two crafts is dropped. Nodes by label; the
 craft's own entry first in each node, the others by name. 404 for an
-unknown slug; a `MERGED` slug answers for its target. `GET /api/shared-science/{termKey}` (signed
-in) answers `SharedConcept {schemaVersion 1, node, sources}` for one term across every craft,
+unknown slug; a `MERGED` slug answers for its target. `GET /api/shared-science/{termKey}`
+(public) answers `SharedConcept {schemaVersion 1, node, sources}` for one term across every craft,
 the crafts by name, or with `?craft=<slug>` that craft first (404 when it does not share the
 term); 404 for an unknown term or one fewer than two crafts share. Sentence ids are
-`<termKey>.<n>`. `Cache-Control: private, no-cache`. Fixture:
+`<termKey>.<n>`. Both routes quote only chunks the reader may read (decision 0079) and answer
+`Cache-Control: private, no-cache` with a token and `public, max-age=300` without, with
+`Vary: Authorization` and an `ETag` of the body that a matching `If-None-Match` turns into a 304.
+Fixture:
 `shared/learning.shared-science.golden.json` (`craft` for Kutch Ajrakh, `concept` for alum seen
 from Kutch Ajrakh), the nodes of the phase D concept graph.
 
@@ -339,13 +342,15 @@ Fixture: `shared/learning.quiz.golden.json`, the nine questions of the document 
 
 ## Compare crafts (decision 0064)
 
-`GET /api/compare?crafts=<slug>&crafts=<slug>[&facets=<DISCIPLINE>...]` (signed in) answers
+`GET /api/compare?crafts=<slug>&crafts=<slug>[&facets=<DISCIPLINE>...]` (public, decision 0079) answers
 `CraftComparison {schemaVersion 1, comparison: CompareBlock (id `compare`), sources (1+)}`: two to
 four crafts side by side, in the order asked, by field (every field in `DISCIPLINES` order unless
 `facets` names some), read on one session with no model call. 422 for fewer than two or more than
 four crafts, or two slugs of one craft; 404 `No craft has that address.` for an unknown slug; 204
-with no body when no field has claims on two sides (decision 0070). `Cache-Control: private,
-no-cache`.
+with no body when no field has claims on two sides (decision 0070). Quotes are those the reader
+may read (decision 0079). `Cache-Control: private, no-cache` with a token and
+`public, max-age=300` without, with `Vary: Authorization`; a body also carries an `ETag` of
+itself that a matching `If-None-Match` turns into a 304.
 
 - **The rows** (`research/craft_compare.compare_block`, the same rows the `compare` builder adds
   to a comparison answer's sections): per field, up to `COMPARE_TERM_ROWS_MAX` (3) term rows for
@@ -364,7 +369,7 @@ its own screen.
 
 ## Ask the map (decision 0065 builds it)
 
-`GET /api/map/districts/{districtLgd}` (signed in) answers `DistrictCrafts {schemaVersion 1,
+`GET /api/map/districts/{districtLgd}` (public, decision 0079) answers `DistrictCrafts {schemaVersion 1,
 district: DistrictRef, crafts[DistrictCraft], land: LandStory | null, sources, datasets,
 boundaryCaption}`, read with no model call:
 
@@ -384,7 +389,10 @@ boundaryCaption}`, read with no model call:
   order. `datasets`: `DR_DISTRICT_SHAPES`, then each value's dataset row once, by code.
   `boundaryCaption` is `BOUNDARY_CAPTION`; the client draws the district from the shapes it has.
 - 404 for an LGD code the register does not hold or while no `DR_DISTRICT_SHAPES` row is stored;
-  422 below 1. `Cache-Control: private, no-cache`.
+  422 below 1. A piece quoting a chunk the reader may not read fails the reuse rule for that
+  reader (decision 0079). `Cache-Control: private, no-cache` with a token and
+  `public, max-age=300` without, with `Vary: Authorization` and an `ETag` of the body that a
+  matching `If-None-Match` turns into a 304.
 
 Fixture: `shared/map.district-crafts.golden.json`: Kachchh (449), Kutch Ajrakh placed by the GI
 journal, the phase B region story placed from its basin piece, and the region golden's soil,

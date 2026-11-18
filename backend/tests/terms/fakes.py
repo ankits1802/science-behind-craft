@@ -47,7 +47,8 @@ def golden_claims() -> StoredClaims:
         concept_id=KUT_CONCEPT,
         citations=sentence["citations"],
     )
-    return StoredClaims(views=[view], sources={source["id"]: source for source in golden["sources"]})
+    sources = {source["id"]: source for source in golden["sources"]}
+    return StoredClaims(views=[view], sources=sources, changed_at=CHECKED_AT)
 
 
 @dataclass

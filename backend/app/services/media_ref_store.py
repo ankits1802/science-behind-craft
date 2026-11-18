@@ -17,6 +17,7 @@ from app.models import MediaRef as MediaRefRow, MediaRefClaim, Source
 from app.research.image_relevance import ChosenImage, ClaimText
 from app.research.images import ImageCandidate, media_ref_of
 from app.research.media_refs import MediaRef
+from app.research.retrieval import EVERY_CHUNK_ACLS
 
 from . import knowledge_view
 
@@ -29,6 +30,7 @@ __all__ = [
     "media_ref_values",
     "media_url_key",
     "stored_media_ref",
+    "stored_media_refs",
     "stored_pictures",
 ]
 
@@ -101,7 +103,7 @@ class SqlMediaStore:
 
     async def claim_texts(self, claim_ids: Sequence[uuid.UUID]) -> list[ClaimText]:
         async with self._sessions() as session:
-            views, _ = await knowledge_view.claims_by_id(session, claim_ids)
+            views, _ = await knowledge_view.claims_by_id(session, claim_ids, acls=EVERY_CHUNK_ACLS)
         return [
             ClaimText(claim_id=claim_id, text=views[claim_id].text)
             for claim_id in claim_ids
@@ -164,3 +166,12 @@ def media_ref_values(ref: MediaRef, url_key: str) -> dict[str, object]:
         "sourceId": uuid.UUID(ref.source_id) if ref.source_id else None,
         "retrievedAt": ref.retrieved_at,
     }
+
+
+async def stored_media_refs(
+    session: AsyncSession, media_ids: Sequence[uuid.UUID]
+) -> dict[uuid.UUID, MediaRef]:
+    if not media_ids:
+        return {}
+    rows = await session.scalars(select(MediaRefRow).where(MediaRefRow.id.in_(list(media_ids))))
+    return {row.id: stored_media_ref(row) for row in rows}

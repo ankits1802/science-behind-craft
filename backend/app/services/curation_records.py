@@ -26,7 +26,8 @@ __all__ = [
     "media_rows",
     "picture_media_id",
     "price_rows",
-    "term_link_rows",
+    "term_concept_rows",
+    "term_craft_rows",
     "term_names",
     "term_rows",
     "workforce_rows",
@@ -72,7 +73,7 @@ def _media_ref(picture: Picture, media_id: uuid.UUID, dossier: Dossier) -> Media
 
 
 def media_claim_rows(dossier: Dossier) -> list[dict[str, Any]]:
-    slug = dossier.craft_slug
+    slug = dossier.slug
     links = {
         (picture_media_id(picture), curated_id(slug, claim_id))
         for picture in dossier.pictures
@@ -121,17 +122,18 @@ def term_rows(dossier: Dossier) -> list[dict[str, Any]]:
     return list(rows.values())
 
 
-def term_link_rows(
-    dossier: Dossier, craft: CraftTarget, concepts: ConceptPlan
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    keyed = [(term, glossary_key(term)) for term in dossier.glossary]
-    crafts = {term_id(key): {"termId": term_id(key), "craftId": craft.id} for _term, key in keyed if key}
-    concept_links = {
+def term_craft_rows(dossier: Dossier, craft: CraftTarget) -> list[dict[str, Any]]:
+    keys = dict.fromkeys(key for key in map(glossary_key, dossier.glossary) if key)
+    return [{"termId": term_id(key), "craftId": craft.id} for key in keys]
+
+
+def term_concept_rows(dossier: Dossier, concepts: ConceptPlan) -> list[dict[str, Any]]:
+    links = {
         (term_id(key), concepts.ids[term.id]): {"termId": term_id(key), "conceptId": concepts.ids[term.id]}
-        for term, key in keyed
+        for term, key in ((term, glossary_key(term)) for term in dossier.glossary)
         if key
     }
-    return list(crafts.values()), list(concept_links.values())
+    return list(links.values())
 
 
 def gi_row(dossier: Dossier, craft: CraftTarget) -> dict[str, Any] | None:

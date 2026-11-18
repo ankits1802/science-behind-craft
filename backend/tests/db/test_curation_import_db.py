@@ -42,17 +42,21 @@ from app.services.curation_keys import CURATED_PROCESS_VARIANT, curated_id
 from app.services.place_offers import mapped_districts, region_offer
 
 from ..contracts.golden import golden_json
-from ..curation.import_support import AJRAKH, AJRAKH_GOLDEN, checked
+from ..curation.import_support import AJRAKH, AJRAKH_GOLDEN, checked, raw
 from .test_place_db import HYDRORIVERS, store_datasets, store_rivers
 
 pytestmark = pytest.mark.db
 
 KACHCHH = 449
+UNCURATED_BLOCK_PRINT = "Farrukhabad-Prints"
 SEED_EDGE_SENTENCES = 557
 EDGE_FILLER = "Sequential order in the GI method of production."
 CURATED_PARTS = (
     "curation",
     "overview",
+    "gi_card",
+    "events",
+    "environment",
     "sources_differ",
     "places",
     "communities",
@@ -299,3 +303,47 @@ async def test_imported_places_reach_the_region_builder(session: AsyncSession) -
     offer = await region_offer(session, AJRAKH)
     assert offer is not None and KACHCHH in offer.craft_districts
     assert offer.rivers and all(KACHCHH in river.trace.district_lgds for river in offer.rivers)
+
+
+async def test_the_family_shows_curated_relatives_first_with_their_hero_and_lede(
+    session: AsyncSession,
+) -> None:
+    imported(await import_curation(session), AJRAKH)
+    craft = await knowledge_view.resolve_craft(session, UNCURATED_BLOCK_PRINT)
+    assert craft is not None
+    page = craft_page(await craft_page_records(session, craft))
+    bases = [relative.basis for relative in page.same_family]
+    assert "CURATED" in bases and bases == sorted(bases, key=lambda basis: basis != "CURATED")
+    assert len(page.same_family) <= 6 and UNCURATED_BLOCK_PRINT not in {
+        r.craft.slug for r in page.same_family
+    }
+    for relative in page.same_family:
+        if relative.basis != "CURATED":
+            assert (relative.hero, relative.lede) == (None, None)
+            continue
+        dossier = raw(relative.craft.slug)
+        assert relative.lede is not None and relative.lede.text == dossier["overview"]["lede"][0]["text"]
+        assert relative.hero is None or relative.hero.media.image_url in {
+            p["url"] for p in dossier["pictures"]
+        }
+        own = await knowledge_view.resolve_craft(session, relative.craft.slug)
+        assert own is not None
+        own_page = craft_page(await craft_page_records(session, own))
+        lead = next((p.media.id for p in own_page.pictures if p.role == "HERO"), None)
+        assert (relative.hero.media.id if relative.hero else None) == lead
+
+
+async def test_the_served_page_offers_its_tabs_and_gi_card(session: AsyncSession) -> None:
+    imported(await import_curation(session), AJRAKH)
+    craft = await knowledge_view.resolve_craft(session, AJRAKH)
+    assert craft is not None
+    page = craft_page(await craft_page_records(session, craft))
+    assert (page.tabs.process, page.tabs.region, page.tabs.sources, page.tabs.evidence) == (
+        True,
+        True,
+        True,
+        True,
+    )
+    assert (page.depth.basis, page.depth.coverage) == ("CURATED", "FULL")
+    assert page.gi_card.application_number == raw(AJRAKH)["market"]["gi"]["applicationNumber"]
+    assert page.craft.kind_label == "Hand block printing"

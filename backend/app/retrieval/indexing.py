@@ -15,7 +15,12 @@ from app.models import Chunk, Claim, KnowledgePiece, Source
 from app.research.embedding import TextEmbedder, checked_vectors
 from app.research.explainer import Block
 from app.research.knowledge_pieces import piece_text
-from app.research.retrieval import HIDDEN_CLAIM_STATUSES, RESTRICTED_SENSITIVITY, VISIBLE_SENSITIVITY
+from app.research.retrieval import (
+    HIDDEN_CLAIM_STATUSES,
+    PUBLIC_CHUNK_ACL,
+    RESTRICTED_SENSITIVITY,
+    VISIBLE_SENSITIVITY,
+)
 
 from .chunking import TextChunk, chunk_text
 from .text import document_text
@@ -30,7 +35,6 @@ __all__ = [
 ]
 
 EMBED_BATCH = 50
-DEFAULT_CHUNK_ACL = "PUBLIC"
 BLOCKS = TypeAdapter(Block)
 
 
@@ -48,7 +52,7 @@ class _Pending:
 
 
 async def replace_source_chunks(
-    session: AsyncSession, source_id: uuid.UUID, text: str, *, lang: str = "en", acl: str = DEFAULT_CHUNK_ACL
+    session: AsyncSession, source_id: uuid.UUID, text: str, *, lang: str = "en", acl: str = PUBLIC_CHUNK_ACL
 ) -> int:
     source = await session.get(Source, source_id)
     if source is None:

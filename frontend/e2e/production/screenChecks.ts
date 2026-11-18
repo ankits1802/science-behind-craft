@@ -14,6 +14,7 @@ const ANSWER_TIMEOUT_MS = 5_000;
 const STEADY_GAP_MS = 500;
 const CALL_LOG_LINES = 6;
 const CRAFT_PAGE_TIMEOUT_MS = 30_000;
+const COMPARE_TIMEOUT_MS = 30_000;
 
 function wideNav(page: Page): boolean {
   return (page.viewportSize()?.width ?? 0) >= DESKTOP_NAV_MIN_WIDTH;
@@ -80,6 +81,14 @@ export async function overviewOutcome(page: Page, served: Promise<Response | nul
     keyFacts: await page.getByTestId("craft-key-facts").getByTestId("craft-fact").count()
   };
   return { problems: curatedOverviewProblems(summary, shown), note: overviewNote(summary) };
+}
+
+export async function comparisonProblems(page: Page): Promise<string[]> {
+  const table = page.getByTestId("comparison");
+  const outcome = table.or(page.getByTestId("compare-empty")).or(page.getByTestId("compare-unknown")).or(page.getByRole("alert"));
+  await expect(outcome.first()).toBeVisible({ timeout: COMPARE_TIMEOUT_MS });
+  if (await table.isVisible()) return [];
+  return [`the pair shows no comparison: "${clip(await outcome.first().innerText())}"`];
 }
 
 export async function openCraftTab(page: Page, label: string, panel: string, content: string): Promise<string[] | null> {

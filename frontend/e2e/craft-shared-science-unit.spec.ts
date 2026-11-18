@@ -21,7 +21,7 @@ test("the craft page offers Shared science after Region only when the route name
 });
 
 test("the Shared science tab draws the craft's concepts with every sharing craft and its numbered sources", () => {
-  const html = withApp(createElement(CraftSharedScience, { science: SCIENCE }));
+  const html = withApp(createElement(CraftSharedScience, { science: SCIENCE, numbered: new Map() }));
   expect(SCIENCE.nodes.map((node) => node.termKey)).toEqual(["alum", "indigo"]);
   expect(attribute(html, "concept-graph", "data-concept")).toEqual(["alum"]);
   const alum = SCIENCE.nodes[0];
@@ -31,4 +31,16 @@ test("the Shared science tab draws the craft's concepts with every sharing craft
   expect(listed).toEqual(SCIENCE.sources.map((_, index) => index + 1));
   expect(shownText(html)).toContain(alum.label);
   expect(html).toContain("min-w-0");
+});
+
+test("the Shared science tab keeps the craft page's source numbers and numbers its other sources after them", () => {
+  const [first, ...rest] = SCIENCE.sources;
+  const numbered = new Map([
+    ["page-source-a", 1],
+    [first.id, 2],
+    ["page-source-b", 3]
+  ]);
+  const html = withApp(createElement(CraftSharedScience, { science: SCIENCE, numbered }));
+  const listed = [...html.matchAll(/id="shared-science-source-(\d+)"/g)].map((match) => Number(match[1]));
+  expect(listed).toEqual([2, ...rest.map((_, index) => index + 4)]);
 });

@@ -560,7 +560,6 @@
             "pattern": "^C\\d{3,4}$",
             "type": "string"
           },
-          "minItems": 1,
           "title": "Claimids",
           "type": "array"
         },
@@ -577,12 +576,20 @@
           ],
           "default": null,
           "title": "Settledby"
+        },
+        "subCategories": {
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Subcategories",
+          "type": "array"
         }
       },
       "required": [
         "id",
-        "question",
-        "claimIds"
+        "question"
       ],
       "title": "OpenQuestion",
       "type": "object"
@@ -679,6 +686,24 @@
           },
           "minItems": 1,
           "title": "Claimids",
+          "type": "array"
+        },
+        "subCategories": {
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Subcategories",
+          "type": "array"
+        },
+        "crafts": {
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Crafts",
           "type": "array"
         }
       },
@@ -1544,9 +1569,41 @@
       "type": "integer"
     },
     "craftSlug": {
-      "maxLength": 200,
-      "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
-      "title": "Craftslug",
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Craftslug"
+    },
+    "categorySlug": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Categoryslug"
+    },
+    "scope": {
+      "default": "CRAFT",
+      "enum": [
+        "CRAFT",
+        "FAMILY",
+        "CATEGORY"
+      ],
+      "title": "Scope",
       "type": "string"
     },
     "version": {
@@ -1683,7 +1740,6 @@
     }
   },
   "required": [
-    "craftSlug",
     "version",
     "curatedAt",
     "coverage",

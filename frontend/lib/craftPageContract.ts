@@ -1,5 +1,29 @@
 import { apiFetch } from "@/lib/api";
 import { citationShape, CRAFT_PATH, INSTANT, sourceRefShape, storedLevelShape, UUID, type CraftLink, type StoredLevel } from "@/lib/answerShapes";
+import {
+  checkDepth,
+  checkEvents,
+  checkRelatives,
+  COVERAGE_CLASSES,
+  CRAFT_GI_STATUSES,
+  DIFFER_WEIGHTS,
+  environmentStepShape,
+  localNameShape,
+  pageDepthShape,
+  pageEventShape,
+  pageGiShape,
+  pageRelativeShape,
+  pageTabsShape,
+  PICTURE_ROLES,
+  type EnvironmentStep,
+  type LocalName,
+  type PageDepth,
+  type PageEvent,
+  type PageGi,
+  type PageRelative,
+  type PageTabs,
+  type PictureRole
+} from "@/lib/craftPageContext";
 import { mediaRefShape, termSpanShape, TERM_KEY, WIKIDATA_ID, type MediaRef, type TermSpan } from "@/lib/explainerBlockBase";
 import { PLACE_ROLES } from "@/lib/districtCraftsContract";
 import { DISCIPLINES, type Discipline } from "@/lib/explainerContract";
@@ -14,8 +38,8 @@ export const SECTION_BASES = ["CURATED", "STORED_CLAIMS"] as const;
 export const SUBJECT_KINDS = ["CRAFT", "STAGE", "MATERIAL", "TOOL", "PLACE", "COMMUNITY", "TERM", "CONCEPT"] as const;
 export const TIMING_KINDS = ["DURATION", "SEASON"] as const;
 export const SPECIES_ROLES = ["REACTANT", "PRODUCT"] as const;
-export const CRAFT_GI_STATUSES = ["GI", "NON_GI"] as const;
-export const COVERAGE_CLASSES = ["FULL", "THIN"] as const;
+export { COVERAGE_CLASSES, CRAFT_GI_STATUSES };
+export const CRAFT_PAGE_SCHEMA_VERSION = 2;
 export const PLACE_KINDS = ["VILLAGE", "TOWN", "DISTRICT", "STATE", "COUNTRY", "REGION", "RIVER"] as const;
 export const GROUP_KINDS = ["COMMUNITY", "PERSON", "ORGANISATION"] as const;
 
@@ -27,9 +51,13 @@ export type GroupKind = (typeof GROUP_KINDS)[number];
 
 export type PageCraft = CraftLink & {
   id: string;
+  displayName: string;
   localName: string | null;
+  localNames: LocalName[];
   categoryName: string | null;
   subCategoryName: string | null;
+  familyLabel: string | null;
+  kindLabel: string | null;
   giStatus: (typeof CRAFT_GI_STATUSES)[number] | null;
   stateOfPractice: string[];
   stateOfOrigin: string[];
@@ -51,7 +79,7 @@ export type PageSentence = { id: string; text: string; level: StoredLevel; claim
 export type KeyFact = { label: string; value: string; claimIds: string[] };
 export type OverviewSection = { discipline: Discipline; title: string; basis: (typeof SECTION_BASES)[number]; sentences: PageSentence[] };
 export type PageOverview = { lede: PageSentence[]; keyFacts: KeyFact[]; sections: OverviewSection[] };
-export type DifferRow = { about: string; claimIds: string[] };
+export type DifferRow = { key: string; about: string; weight: number; claimIds: string[] };
 export type PageArea = { lgd: number | null; name: string };
 export type PagePlace = {
   key: string;
@@ -64,13 +92,15 @@ export type PagePlace = {
   wikidataId: string | null;
   claimIds: string[];
 };
-export type PageCommunity = { key: string; kind: GroupKind; name: string; localNames: string[]; honours: string[]; place: string | null; claimIds: string[] };
+export type PageCommunity = { key: string; kind: GroupKind; name: string; localNames: string[]; honours: string[]; place: string | null; placeKey: string | null; claimIds: string[] };
 export type StageItem = {
   id: string;
   name: string;
   kind: (typeof MATERIAL_KINDS)[number];
   role: (typeof MATERIAL_ROLES)[number];
   localNames: string[];
+  botanicalName: string | null;
+  pubchemCid: number | null;
   claimIds: string[];
 };
 export type StageTiming = { kind: (typeof TIMING_KINDS)[number]; text: string; claimId: string };
@@ -95,21 +125,28 @@ export type PageStage = {
   tools: StageItem[];
   timing: StageTiming[];
   reactions: PageReaction[];
+  differ: string[];
 };
 export type PageProcess = { processId: string | null; stages: PageStage[]; reactions: PageReaction[] };
 export type PageTerm = { key: string | null; label: string; names: string[]; meaning: string | null; language: string | null; script: string | null; claimIds: string[] };
-export type PagePicture = { media: MediaRef; caption: string; stageId: string | null; claimIds: string[] };
+export type PagePicture = { media: MediaRef; caption: string; role: PictureRole; stageId: string | null; claimIds: string[] };
 export type PageQuestion = { key: string | null; question: string; settledBy: string | null; claimIds: string[] };
 export type EvidenceEntry = { claimId: string; foldedIds: string[] };
 export type EvidenceSubject = { subject: SubjectRef; entries: EvidenceEntry[] };
 export type EvidenceGroup = { discipline: Discipline; title: string; subjects: EvidenceSubject[] };
 export type PageEvidence = { groups: EvidenceGroup[]; hypotheses: EvidenceEntry[] };
 export type CraftPage = {
-  schemaVersion: 1;
+  schemaVersion: typeof CRAFT_PAGE_SCHEMA_VERSION;
   craft: PageCraft;
   curated: boolean;
   curation: CurationHeader | null;
+  tabs: PageTabs;
+  depth: PageDepth;
+  suggestedQuestions: string[];
   overview: PageOverview;
+  giCard: PageGi;
+  events: PageEvent[];
+  environment: EnvironmentStep[];
   sourcesDiffer: DifferRow[];
   places: PagePlace[];
   communities: PageCommunity[];
@@ -117,6 +154,7 @@ export type CraftPage = {
   glossary: PageTerm[];
   pictures: PagePicture[];
   openQuestions: PageQuestion[];
+  sameFamily: PageRelative[];
   evidence: PageEvidence | null;
   claims: PageClaim[];
   sources: SourceRef[];
@@ -143,6 +181,8 @@ const stageItemShape: Shape<StageItem> = object<StageItem>({
   kind: oneOf(MATERIAL_KINDS),
   role: oneOf(MATERIAL_ROLES),
   localNames: list(text),
+  botanicalName: nullable(text),
+  pubchemCid: nullable(POSITIVE),
   claimIds: CLAIM_IDS
 });
 
@@ -166,7 +206,8 @@ const stageShape: Shape<PageStage> = object<PageStage>({
   materials: list(stageItemShape),
   tools: list(stageItemShape),
   timing: list(object<StageTiming>({ kind: oneOf(TIMING_KINDS), text, claimId: UUID })),
-  reactions: list(reactionShape)
+  reactions: list(reactionShape),
+  differ: list(text)
 });
 
 const overviewShape: Shape<PageOverview> = object<PageOverview>({
@@ -194,6 +235,7 @@ const communityShape: Shape<PageCommunity> = object<PageCommunity>({
   localNames: list(text),
   honours: list(text),
   place: nullable(text),
+  placeKey: nullable(text),
   claimIds: CLAIM_IDS
 });
 
@@ -209,15 +251,19 @@ const claimShape: Shape<PageClaim> = object<PageClaim>({
 });
 
 export const craftPageShape: Shape<CraftPage> = object<CraftPage>({
-  schemaVersion: oneOf([1] as const),
+  schemaVersion: oneOf([CRAFT_PAGE_SCHEMA_VERSION] as const),
   craft: object<PageCraft>({
     slug: text,
     name: text,
     path: CRAFT_PATH,
     id: UUID,
+    displayName: text,
     localName: nullable(text),
+    localNames: list(localNameShape),
     categoryName: nullable(text),
     subCategoryName: nullable(text),
+    familyLabel: nullable(text),
+    kindLabel: nullable(text),
     giStatus: nullable(oneOf(CRAFT_GI_STATUSES)),
     stateOfPractice: list(text),
     stateOfOrigin: list(text)
@@ -231,16 +277,23 @@ export const craftPageShape: Shape<CraftPage> = object<CraftPage>({
       searched: list(object<SearchedFor>({ query: text, site: text }))
     })
   ),
+  tabs: pageTabsShape,
+  depth: pageDepthShape,
+  suggestedQuestions: list(text, 1),
   overview: overviewShape,
-  sourcesDiffer: list(object<DifferRow>({ about: text, claimIds: list(UUID, 2) })),
+  giCard: pageGiShape,
+  events: list(pageEventShape),
+  environment: list(environmentStepShape),
+  sourcesDiffer: list(object<DifferRow>({ key: text, about: text, weight: oneOf(DIFFER_WEIGHTS), claimIds: list(UUID, 2) })),
   places: list(placeShape),
   communities: list(communityShape),
   process: object<PageProcess>({ processId: nullable(UUID), stages: list(stageShape), reactions: list(reactionShape) }),
   glossary: list(
     object<PageTerm>({ key: nullable(TERM_KEY), label: text, names: list(text), meaning: nullable(text), language: nullable(text), script: nullable(text), claimIds: list(UUID) })
   ),
-  pictures: list(object<PagePicture>({ media: mediaRefShape, caption: text, stageId: nullable(UUID), claimIds: list(UUID) })),
+  pictures: list(object<PagePicture>({ media: mediaRefShape, caption: text, role: oneOf(PICTURE_ROLES), stageId: nullable(UUID), claimIds: list(UUID) })),
   openQuestions: list(object<PageQuestion>({ key: nullable(text), question: text, settledBy: nullable(text), claimIds: CLAIM_IDS })),
+  sameFamily: list(pageRelativeShape),
   evidence: nullable(
     object<PageEvidence>({
       groups: list(object<EvidenceGroup>({ discipline: oneOf(DISCIPLINES), title: text, subjects: list(object<EvidenceSubject>({ subject: subjectShape, entries: list(entryShape, 1) }), 1) })),
@@ -258,7 +311,8 @@ export async function fetchCraftPage(slug: string): Promise<CraftPage> {
 export function referencedClaimIds(page: CraftPage): string[] {
   const { overview, process } = page;
   const sentences = [...overview.lede, ...overview.sections.flatMap((section) => section.sentences)];
-  const rows = [...overview.keyFacts, ...page.sourcesDiffer, ...page.places, ...page.communities, ...page.glossary, ...page.pictures, ...page.openQuestions];
+  const context = [...page.craft.localNames, page.giCard, ...page.events, ...page.environment];
+  const rows = [...context, ...overview.keyFacts, ...page.sourcesDiffer, ...page.places, ...page.communities, ...page.glossary, ...page.pictures, ...page.openQuestions];
   const reactions = [...process.reactions, ...process.stages.flatMap((stage) => stage.reactions)];
   const items = process.stages.flatMap((stage) => [...stage.materials, ...stage.tools]);
   return [
@@ -307,5 +361,22 @@ export function checkedCraftPage(page: CraftPage): CraftPage {
   }
   if (page.evidence === null) checkCitedOnly(page, levels);
   else checkEvidence(page.evidence, levels);
+  checkParts(page);
   return page;
+}
+
+function checkParts(page: CraftPage): void {
+  if (page.pictures.filter((picture) => picture.role === "HERO").length > 1) throw new ShapeError("pictures", "one hero picture at most");
+  const keys = page.sourcesDiffer.map((row) => row.key);
+  if (new Set(keys).size !== keys.length) throw new ShapeError("sourcesDiffer", "each row with its own key");
+  for (const stage of page.process.stages) {
+    for (const key of stage.differ) if (!keys.includes(key)) throw new ShapeError(`stage ${stage.id}`, `a sources-differ row the page lists, not ${key}`);
+  }
+  if (page.tabs.evidence && page.evidence === null) throw new ShapeError("tabs.evidence", "the All evidence tab only with the evidence");
+  const placed = new Set(page.places.map((place) => place.key));
+  const pointed = [...page.communities.map((group) => group.placeKey), ...page.environment.map((step) => step.place?.key ?? null)];
+  for (const key of pointed) if (key !== null && !placed.has(key)) throw new ShapeError("places", `a place the page lists, not ${key}`);
+  checkDepth(page.depth, "depth");
+  checkEvents(page.events);
+  checkRelatives(page.craft.slug, page.sameFamily);
 }

@@ -31,7 +31,7 @@ from .curation_records import glossary_key, picture_media_id, term_names
 from .curation_rows import ConceptPlan
 from .curation_structure import place_codes
 
-__all__ = ["curated_page_index"]
+__all__ = ["curated_page_index", "index_conflicts", "index_glossary", "index_key_facts", "index_pictures"]
 
 
 def curated_page_index(
@@ -46,8 +46,8 @@ def curated_page_index(
         searched=[IndexSearch(query=item.query, site=item.site) for item in dossier.searched],
         process_id=curated_id(slug, "process") if dossier.stages else None,
         craft_concepts=dict(concepts.craft_concepts),
-        overview=IndexOverview(key_facts=_key_facts(dossier)),
-        conflicts=_conflicts(dossier),
+        overview=IndexOverview(key_facts=index_key_facts(dossier)),
+        conflicts=index_conflicts(dossier),
         open_questions=_questions(dossier),
         places=_places(dossier, concepts, codes, location_ids),
         communities=_communities(dossier, concepts),
@@ -55,8 +55,8 @@ def curated_page_index(
         materials=_materials(dossier, concepts),
         tools=_tools(dossier, concepts),
         reactions=_reactions(dossier),
-        glossary=_glossary(dossier, concepts),
-        pictures=_pictures(dossier),
+        glossary=index_glossary(dossier, concepts),
+        pictures=index_pictures(dossier),
         environment=_environment(dossier),
     )
 
@@ -65,8 +65,8 @@ def _ids(slug: str, claim_ids: Sequence[str]) -> list[uuid.UUID]:
     return [curated_id(slug, claim_id) for claim_id in claim_ids]
 
 
-def _conflicts(dossier: Dossier) -> list[IndexConflict]:
-    slug = dossier.craft_slug
+def index_conflicts(dossier: Dossier) -> list[IndexConflict]:
+    slug = dossier.slug
     return [
         IndexConflict(about=item.about, claim_ids=_ids(slug, item.claim_ids)) for item in dossier.conflicts
     ]
@@ -93,9 +93,9 @@ def _environment(dossier: Dossier) -> list[IndexEnvironment]:
     ]
 
 
-def _key_facts(dossier: Dossier) -> list[IndexFact]:
+def index_key_facts(dossier: Dossier) -> list[IndexFact]:
     return [
-        IndexFact(label=fact.label, value=fact.value, claim_ids=_ids(dossier.craft_slug, fact.claim_ids))
+        IndexFact(label=fact.label, value=fact.value, claim_ids=_ids(dossier.slug, fact.claim_ids))
         for fact in dossier.overview.key_facts
     ]
 
@@ -218,7 +218,7 @@ def _reactions(dossier: Dossier) -> list[IndexReaction]:
     ]
 
 
-def _glossary(dossier: Dossier, concepts: ConceptPlan) -> list[IndexTerm]:
+def index_glossary(dossier: Dossier, concepts: ConceptPlan) -> list[IndexTerm]:
     return [
         IndexTerm(
             key=term.id,
@@ -229,20 +229,20 @@ def _glossary(dossier: Dossier, concepts: ConceptPlan) -> list[IndexTerm]:
             language=term.language,
             script=term.script,
             concept_id=concepts.ids[term.id],
-            claim_ids=_ids(dossier.craft_slug, term.claim_ids),
+            claim_ids=_ids(dossier.slug, term.claim_ids),
         )
         for term in dossier.glossary
     ]
 
 
-def _pictures(dossier: Dossier) -> list[IndexPicture]:
+def index_pictures(dossier: Dossier) -> list[IndexPicture]:
     return [
         IndexPicture(
             key=picture.id,
             media_ref_id=picture_media_id(picture),
             caption=picture.caption,
             stage_key=picture.stage_id,
-            claim_ids=_ids(dossier.craft_slug, picture.claim_ids),
+            claim_ids=_ids(dossier.slug, picture.claim_ids),
         )
         for picture in dossier.pictures
     ]

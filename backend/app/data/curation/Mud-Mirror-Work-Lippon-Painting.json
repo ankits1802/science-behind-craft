@@ -1,0 +1,2479 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Mud-Mirror-Work-Lippon-Painting",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:56:44+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Lippan kaam mud mirror work Kutch clay dung Rabari Mutwa bhunga",
+      "site": "web search"
+    },
+    {
+      "query": "lippan work Kutch journal article pdf mud relief mirror",
+      "site": "web search"
+    },
+    {
+      "query": "lippan Kachchh mud mirror work Development Commissioner Handicrafts",
+      "site": "web search; no DC (Handicrafts) page on lippan found"
+    },
+    {
+      "query": "World Housing Encyclopedia bhonga Kutch report",
+      "site": "web search; world-housing.net record_72.pdf refused (HTTP 403), wh100080.pdf read from the Wayback Machine; not cited: it covers the bhonga's structure, not mud and mirror work"
+    },
+    {
+      "query": "Khamir Kutch mud work lippan Banni Meghwal Mutwa",
+      "site": "web search; no Khamir page on lippan found"
+    },
+    {
+      "query": "dsource lippan kaam mud mirror work Kutch",
+      "site": "web search; no D'source page found"
+    },
+    {
+      "query": "sahapedia mud relief work Kutch bhunga lippan",
+      "site": "web search; no Sahapedia article on lippan found"
+    },
+    {
+      "query": "Marwada Meghwal Ramdevnagar lippan mud work paper",
+      "site": "web search"
+    },
+    {
+      "query": "lippan art Chhattisgarh OR Telangana OR Kerala OR Madhya Pradesh mud mirror work artisans",
+      "site": "web search; only a Bhopal-based artist (The Hans India) was found outside Gujarat"
+    },
+    {
+      "query": "indianculture.gov.in lippan art Kutch",
+      "site": "web search; no Indian Culture portal page found"
+    },
+    {
+      "query": "Gujarat Tourism lippan art Kutch mud mirror official",
+      "site": "web search; gujarattourism.com mud-work page read, not cited: promotional text with no fact beyond the cited sources, and its hand-painted clay utensils are pottery"
+    },
+    {
+      "query": "Kutch Lippan (Mud Mirror) Craft of Gujarat, GI application 1768",
+      "site": "search.ipindia.gov.in GIRPublicSearch; Statement of Case, Form GI-1 and annexures are form-only (POST) downloads and could not be read; GIRPublic/Application/Details/1768 returned HTTP 404"
+    },
+    {
+      "query": "bhunga Kutch Indian Journal of Traditional Knowledge OR shodhganga lipan mud plaster decoration",
+      "site": "web search; no IJTK paper or Shodhganga thesis found"
+    },
+    {
+      "query": "sahapedia lippan OR lipan Kutch",
+      "site": "web search"
+    },
+    {
+      "query": "lippan kutch; lipan kaam; mud mirror work kutch; bhunga kutch; bhunga banni",
+      "site": "OpenAlex works search"
+    },
+    {
+      "query": "Lippan Kaam in Transition (doi 10.15157/tultechbook.2.c6)",
+      "site": "book.tultech.eu; only the chapter abstract is open, the full chapter is sold"
+    },
+    {
+      "query": "Reviving Mud Craft: surface finishes in tribal dwellings of Gujarat (E3S Web of Conferences 2024)",
+      "site": "read; it concerns Dhodia, Rathwa and Kokani mud plastering, not Kutch mud and mirror work, so it was not cited"
+    },
+    {
+      "query": "Contemporary Embroideries of Rabaris of Kutch (TSA 2002); Initiating Additive Manufacturing of Mud Houses in India (CAADRIA 2023)",
+      "site": "digitalcommons.unl.edu and papers.cumincad.org serve only http links, so neither could be cited"
+    },
+    {
+      "query": "vernacularfurnitureofindia.com and artsandculture.google.com Lipan kaam Kutch",
+      "site": "web search; two DICRC and SADACC kothi records read"
+    },
+    {
+      "query": "The Hindu lippan mud mirror Kutch artisans feature",
+      "site": "web search; PIB blog feature and Outlook Traveller news found"
+    },
+    {
+      "query": "lippan art Kerala artist mud mirror workshop Kochi OR Thiruvananthapuram",
+      "site": "web search; nothing on lippan in Kerala found"
+    },
+    {
+      "query": "lippan art Chhattisgarh Raipur artist mud mirror; लिप्पन आर्ट छत्तीसगढ़ कलाकार मिट्टी शीशा",
+      "site": "web search; nothing on lippan in Chhattisgarh found"
+    },
+    {
+      "query": "lippan art Hyderabad Telangana artist mud mirror news",
+      "site": "web search; only workshop listings in Hyderabad and an empty Telangana Today tag page, not cited"
+    },
+    {
+      "query": "Mud_mirror_art",
+      "site": "en.wikipedia.org; read, not cited (its own sources are a magazine and self-published books)"
+    },
+    {
+      "query": "Mud and Mirror Painting, Kutch; Indigenous Lippan Art Form of Kutch Region (gyansanchay.csjmu.ac.in)",
+      "site": "esamskriti.com and gyansanchay.csjmu.ac.in; read, not cited: unattributed compilations that repeat other pages"
+    },
+    {
+      "query": "Category:Mud_mirror_art; Category:Khavda,_Kutch",
+      "site": "commons.wikimedia.org"
+    },
+    {
+      "query": "thisday.app Of Mud and Mirror; apitesting.nvli.in kutch mud work; banni.in bhungas",
+      "site": "the first two could not be read; banni.in was read but has no named publisher and was not cited"
+    },
+    {
+      "query": "Trivedi, R.K. (1961), Village Survey Monographs, Census of India 1961, Volume V Part VI No. 3 and 4 (cited by S05); Bhirandiara 1961 village survey",
+      "site": "censusindia.gov.in NADA catalogue via web search: Trivedi's 1961 Gujarat monographs are listed, none for Part VI No. 3-4 or Bhirandiara; 23183_1961_BIR.pdf read: Bir, Himachal"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 1768: Kutch Lippan (Mud Mirror) Craft of Gujarat",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1768",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "PAPER",
+      "title": "Towards Reviving Vernacular Architecture in India: Insights into the Indigenous Building Traditions",
+      "authors": [
+        "Nandini Halder",
+        "Deepak Kumar"
+      ],
+      "publisher": "International Society for the Study of Vernacular Settlements (ISVS e-journal, Vol. 12, Issue 5)",
+      "year": 2025,
+      "url": "https://isvshome.com/pdf/ISVS_12-05/ISVSej_12.05.03.pdf",
+      "doi": "10.61275/isvsej-2025-12-05-03",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "BOOK_CHAPTER",
+      "title": "Lippan Kaam in Transition: Documenting, Preserving, and Innovating the Mud Mirror Craft of Kutch (abstract)",
+      "authors": [
+        "Sonu Chauhan"
+      ],
+      "publisher": "TULTECH House of Books (Empowering Traditional Crafts, Vol. 1)",
+      "year": 2026,
+      "url": "https://book.tultech.eu/index.php/TULTECH/catalog/download/2/11/15?inline=1",
+      "doi": "10.15157/tultechbook.2.c6",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "BOOK_CHAPTER",
+      "title": "Stitching Identity: The Cultural Significance of Embroidery in Marwada Meghwal Community of Kutch",
+      "authors": [
+        "Himali Gor",
+        "Nishita Kedia",
+        "Radhika Gupta"
+      ],
+      "publisher": "Cinius Yayınları (Advancing Heritage Innovations in India, ICCAUA 2024)",
+      "year": 2024,
+      "url": "https://iccaua.com/PDFs/ICCAUA2024/Book_Chapter_India2024/N12ICCAUA2024IN0439_Himali_Gor.pdf",
+      "doi": "10.38027/N12ICCAUA2024IN0439",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "BOOK_CHAPTER",
+      "title": "Anthropology of a Virgin Village Kutch's Banni Grasslands: Zararhwadi",
+      "authors": [
+        "Tithi Soladhara",
+        "Nishant Kansagra",
+        "Prachi Patel"
+      ],
+      "publisher": "Cinius Yayınları (Resilient Heritage & Adaptive Urbanism, ICCAUA 2025)",
+      "year": 2025,
+      "url": "https://www.iccaua.com/PDFs/ICCAUA2025/Bookchapter_Heritage/N3_ICCAUA2025EN0319.pdf",
+      "doi": "10.38027/N3ICCAUA2025EN0319",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Kothi (Granary), Gandhi Nu Gam, Kutch",
+      "authors": [
+        "Mitraja Bais",
+        "Jay Thakkar",
+        "Samrudha Dixit",
+        "Ben Cartwright",
+        "Mansi S Rao"
+      ],
+      "publisher": "Design Innovation and Craft Resource Centre, CEPT University and SADACC Trust, on Google Arts & Culture",
+      "url": "https://artsandculture.google.com/asset/gwGmhFX8VqTYFg",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Kothi (Granary), Bhujodi, Kutch",
+      "authors": [
+        "Mitraja Bais",
+        "Jay Thakkar",
+        "Samrudha Dixit",
+        "Ben Cartwright",
+        "Mansi S Rao"
+      ],
+      "publisher": "Design Innovation and Craft Resource Centre, CEPT University and SADACC Trust, on Google Arts & Culture",
+      "url": "https://artsandculture.google.com/asset/ywEF_6bnEPT4rg",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "WEB_PAGE",
+      "title": "PIB blog feature on Majikhan Ilamkhan Mutva's lippan kaam at the G20 Crafts Bazaar",
+      "publisher": "Press Information Bureau, Government of India",
+      "year": 2023,
+      "url": "https://blogs.pib.gov.in/blogsdescr.aspx?feaaid=62",
+      "archivedUrl": "https://web.archive.org/web/20250502143601id_/https://blogs.pib.gov.in/blogsdescr.aspx?feaaid=62",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Mudwall Painting of Gujarat",
+      "publisher": "Asia InCH, Encyclopedia of Intangible Cultural Heritage",
+      "url": "https://asiainch.org/craft/mudwall-painting-of-gujarat/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Clay Relief Work of Kutch, Gujarat",
+      "publisher": "Asia InCH, Encyclopedia of Intangible Cultural Heritage",
+      "url": "https://asiainch.org/craft/clay-relief-work-of-kutch-gujarat/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "The Art of mud mirrors: A timeless tradition",
+      "authors": [
+        "Rashmi Bhumi Reddy"
+      ],
+      "publisher": "The Hans India",
+      "year": 2023,
+      "url": "https://www.thehansindia.com/life-style/the-art-of-mud-mirrors-a-timeless-tradition-805272",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Clay, Mirrors & Culture: Reviving Gujarat's Traditional Artform Of Lippan Kaam",
+      "authors": [
+        "Meghna Mathew"
+      ],
+      "publisher": "Homegrown",
+      "year": 2022,
+      "url": "https://homegrown.co.in/homegrown-explore/clay-mirrors-culture-reviving-gujarats-traditional-artform-of-lippan-kaam",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Workshop On Kutchi Mud Artwork And Wood Crafts",
+      "authors": [
+        "Uttara Gangopadhyay"
+      ],
+      "publisher": "Outlook Traveller",
+      "year": 2021,
+      "url": "https://www.outlooktraveller.com/News/workshop-on-kutchi-mud-artwork-and-wood-crafts",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "WEB_PAGE",
+      "title": "Craft Name: Lippan Art (Craft Katha pop-up)",
+      "publisher": "All India Artisans and Craftworkers Welfare Association (AIACA)",
+      "url": "https://www.aiacaonline.org/craftkatha-pop-up/lippan-art/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "WEB_PAGE",
+      "title": "Mirrors, mirrors on the Wall: Mud Relief",
+      "authors": [
+        "Kantilal Doobal"
+      ],
+      "publisher": "Gaatha",
+      "url": "https://gaatha.com/mirrors-mirrors-on-the-wall/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "WEB_PAGE",
+      "title": "Lippan Kaam: The Glittering Craft of the Kutch",
+      "publisher": "Live History India (Peepul Tree)",
+      "url": "https://www.livehistoryindia.com/story/living-history/lippan-kaam",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "PAPER",
+      "title": "Imbibing Cultural Ethos in Interiors Residential Spaces in Ahmedabad",
+      "authors": [
+        "B. M. Jasani"
+      ],
+      "publisher": "ShodhKosh: Journal of Visual and Performing Arts",
+      "year": 2023,
+      "url": "https://www.granthaalayahpublication.org/Arts-Journal/ShodhKosh/article/download/654/692",
+      "doi": "10.29121/shodhkosh.v4.i2.2023.654",
+      "archivedUrl": "https://web.archive.org/web/20260413192341id_/https://www.granthaalayahpublication.org/Arts-Journal/ShodhKosh/article/download/654/692",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan kaam, or mud and mirror work, is a traditional mural craft of Kutch that is also called Chittar Kaam.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "entry text",
+          "quote": "Mud and mirror work is known as Lipan Kaam. It is a traditional mural craft of Kutch. It is also called as Chittar Kaam."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 1",
+          "quote": "The traditional mud mirror art which is also known as Lippan Kaam or Chittar Kaam is one of the overlooked marvellous arts that India offers."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The mud mirror work of Kutch, Gujarat, locally known as Lippan Kaam, is renowned for its intricate motifs and aesthetic appeal.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "abstract, p. 73",
+          "quote": "the mud mirror work of Kutch, Gujarat - locally known as Lippan Kaam - is renowned for its intricate motifs and aesthetic appeal."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan is used to embellish the interior and exterior walls of the circular adobes, locally known as bhungas, in which its communities live.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 2",
+          "quote": "It is used to embellish the interior and exterior walls of the circular adobes i.e. locally Known as \"Bhungas\" that these communities live in."
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan is practised mainly by the Rabari, Kumbhar, Marwada Harijan and Mutwa communities.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 3",
+          "quote": "Lippan is practiced mainly by the Rabari, Kumbhar, Marwada Harijan and Mutwa communities"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 3",
+          "quote": "Apart from the Kumbhars, the Rabari, Mutwa, and Marwada communities also partake in lippan."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "A Craft Rooted in the Sands of Time",
+          "quote": "The craft is primarily practiced by the once nomadic Rabari, Kumbhar, Marwada Harijan, and Mutwa communities, each of whom has shaped its evolution."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "A Press Information Bureau feature of September 2023 says most lippan artisans trace their origins to the Kumbhar community.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 3",
+          "quote": "but most Lippan artisans today trace their origins to the Kumbhar community."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "dateline and paragraph 1",
+          "quote": "10 Sep, 2023 G20 is a significant event which is altering the way the world looks at India."
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "In local Gujarati the word lippan means clay or dung, and kaam means work.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 2",
+          "quote": "The word \"Lippan' means 'clay' or 'dung' in local Gujarati, and the word 'kaam' denotes 'work'."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "lippan translates to 'dung' or 'clay' in the local dialect"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The origins of lippan kaam are unknown, and the distinct styles of the different Kutch communities make its roots even harder to trace.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "entry text",
+          "quote": "The origins of Lipan Kaam are unknown. Various communities in Kutch do mud-relief work and have their own distinct style of lipan kaam. This makes it even harder to trace the roots of Lipan Kaam."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "A Craft Rooted in the Sands of Time",
+          "quote": "The origins of Lippan Art remain elusive, buried in the oral traditions of Kutch's desert communities."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The art form is believed to come from the Kumbhar potters of Sindh, who moved it from pots to the inner and outer walls of homes.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 3",
+          "quote": "The art form seems to have come to be because of the Kumbhar community who were earthen pot-makers from Sindh. From pots, they moved the art form to larger canvases such as interior and exterior walls of homes."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "A Craft Rooted in the Sands of Time",
+          "quote": "The Kumbhar community, originally potters from Sindh, is believed to have adapted their skills to architectural surfaces, decorating walls with sculpted mud motifs."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mud and mirror work has been in practice for centuries.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 4",
+          "quote": "For centuries, this captivating craft adorned the interior walls of homes, not only for its aesthetic appeal but also for its ability to keep interiors cool during the scorching summer months."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 2",
+          "quote": "This three dimensional mirror inlaid mud work, which has been in practice for centuries, is now on the verge of being lost"
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Outlook Traveller reported the mirror-inlaid mud work on the verge of being lost because modern families tend to plaster their homes with cement.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 2",
+          "quote": "This three dimensional mirror inlaid mud work, which has been in practice for centuries, is now on the verge of being lost because modern families tend to plaster their homes with cement."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Homegrown reports that lippan was in decline until 2005, when the launch of the Rann Utsav brought the art and its artists recognition.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 6",
+          "quote": "The art was on a journey of decline until 2005, when the Rann Utsav was launched. Here, the art and the artists gained much-deserved recognition and appreciation."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "Lippan Art in Contemporary Spaces",
+          "quote": "In 2005, the launch of the Rann Utsav, a festival celebrating the crafts of Kutch, further propelled Lippan Art into the mainstream."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Hans India reports that the art regained its significance because artisans showed their work to people through social media platforms.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 2",
+          "quote": "However, currently, the art has regained its significance due to artisans who unveiled their ethnic works to the people through social media platforms."
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Around 2021-22 lippan became quite popular, and artists started experimenting with readily available clay and mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "The growing popularity of Lippan Kaam",
+          "quote": "Around 2021-22, this art has become quite popular and artists have started experimenting with the readily available clay & mirrors."
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Before pre-cut mirrors were available, a large mirror was shattered with stones and the pieces were collected for use in lippan.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 4",
+          "quote": "Earlier, with the unavailability of pre-cut mirrors, a large mirror would be shattered using stones, and the pieces would then be collected to use in the lippan."
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G05"
+      },
+      "text": "A 2024 study, citing Trivedi (1961), says the Meghwal Marwada community of Ramdevnagar migrated from the Sindh region 200 years ago and resettled in parts of Rajasthan and Gujarat.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "The Meghwal Marwada community of Ramdevnagar, primarily located in the village of Bhirandiara in Gujarat's Kutch region, is well-known for its unique cultural practices."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "This community migrated from the Sindh region 200 years ago and resettled in parts of Rajasthan and Gujarat (Trivedi, 1961, 1-3)"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "How to Cite This Chapter",
+          "quote": "Gor, H., Kedia, N., & Gupta, R. (2024). Stitching Identity"
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan begins with a dough of dung and clay; a border called kaam or kaamtane is made, the dough is laid onto the pattern and mirrors are added.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 4",
+          "quote": "The process begins with making a dough-like mixture of dung and clay which can be laid onto a flat surface such as walls."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 4",
+          "quote": "After a border, called kaam or kaamtane, is made, this dough is rolled out as desired and laid onto the pattern. Then, the addition of mirrors takes place."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The paste is rolled into long cylindrical shapes, moulded by hand and attached to the walls in geometric shapes, which are then inlaid with tiny mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 2",
+          "quote": "is then rolled into long cylindrical shapes, moulded by hand and attached to the walls into geometric shapes. The patterns are then inlaid with tiny mirrors."
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "After it is decorated with mirrors, lippan work takes days to dry before it is coloured.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Mud Mirror art process",
+          "quote": "Finally, it is decorated with mirrors to provide the contrasting texture of the clay and produce intricate designs that are coloured later. It takes days to dry before they are coloured."
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "According to AIACA, a lippan art piece takes 2-7 days to make and involves 1-2 artisans.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "How much time does it take",
+          "quote": "A Lippan Art piece takes 2-7 days, involving 1-2 artisans in the process"
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "Clay relief work in Kutch is carried out using brushes made from branches of the baval tree.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "the process is carried out using brushes made from branches of the baval tree."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "Lippan is also the traditional technique of applying a fine clay paste, finer than that of the walls, over bhunga floors of silt, cattle dung and water.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Decoding Bhungas, p. 19",
+          "quote": "The floor of the Bhunga is constructed using the same materials as the walls: silt, cattle dung, and water, layered one over the other. This traditional technique is known as Lippan, where a fine paste of clay, finer than that used in the walls, is applied."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "The Lippan floor plaster is applied with a semicircular motion of the hands, repeated twice to three times a year depending on wear and tear.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Decoding Bhungas, p. 19",
+          "quote": "The process involves a semicircular motion of the hands to apply the plaster, which is repeated twice to three times a year, depending on wear and tear."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "Repeated Lippan plastering helps insulate the house and disinfect surfaces after the monsoon, and raises the structure a few centimetres each cycle against dusty winds.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Decoding Bhungas, p. 19",
+          "quote": "This repeated plaster application helps insulate the house and disinfect the surfaces following the monsoon season. Additionally, the re-plastering process incrementally elevates the structure by a few centimetres with each cycle, protecting from the dusty winds prevalent in the settlement."
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "AIACA lists lippan's raw materials as local clay or mud, animal dung blended with the clay, and small polished mirrors or glass pieces.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "Raw material",
+          "quote": "RAW MATERIAL - Local Clay or mud - Animal Dung blended with the clay - Small polished mirrors or glass pieces"
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "In Ramdevnagar, the intricate geometric patterns of the lippan art in bhunga interiors are crafted from a mixture of mud, camel dung and natural dyes.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "Case Study of Ramdevnagar, Bhirandiara"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Traditional Architecture and Living, p. 128",
+          "quote": "while the interiors are adorned with lippan art. The intricate geometric patterns are crafted using a mixture of mud, camel dung, and natural dyes."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "The natives used camel or wild ass dung to prepare the dough mixed with clay, and the dung acts as the dough's binding agent.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Mud Mirror art process",
+          "quote": "The natives used camel dung or wild ass dung for preparing dough that is mixed with clay. It acts as the binding agent of dough."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "A lippan artist told The Hans India that the local mud is mixed with donkey dung and applied to the wall.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Origin, artist's account",
+          "quote": "The local mud is mixed with donkey dung which is applied to the wall."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Outlook Traveller reports that women of certain communities combine local clay with fibrous horse manure to form the paste.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 2",
+          "quote": "Practised by women of certain communities living in the Rann of Kutch"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 2",
+          "quote": "They combine local clay with fibrous horse manure to form a paste"
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Millet is sometimes used as an alternative in the dough, to prevent the attraction of termites.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Mud Mirror art process",
+          "quote": "Sometimes millets are used as an alternative to prohibit the attraction of termites."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "AIACA lists coarse sand and fine straw or fibre as added to lippan clay to reduce shrinkage.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "Raw material",
+          "quote": "Coarse sand, fine straw or fibre added to reduce shrinkage"
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "Natural pigments are used in lippan, with lime or gypsum for white highlights.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "Raw material",
+          "quote": "Natural pigments or lime/gypsum for white highlights"
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The lippan dough has evolved: many artisans use clay, chalk powder, sawdust and glue instead of dung and clay, to make the art longer-lasting and odour-free.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 5",
+          "quote": "The lippan dough has seen an evolution. Now, instead of using dung and clay, artists use clay, chalk powder, sawdust, and glue."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 5",
+          "quote": "Rather, it comes from a place of making the art longer-lasting, odour-free, and maintenance-free."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "Mud Mirror art process",
+          "quote": "Recently, the dough has seen an evolution as many artisans are using clay, sawdust, glue and chalk powder which makes the art long-lasting and odour and maintenance-free."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "Kutch bhungas are built of clay or bamboo chips plastered with lipan, a mixture of clay and dung, under wooden-based thatched roofs.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "Clay relief work of Kutch can be seen in the meticulous execution of circular huts or bhunga in the region. Composed of clay or bamboo chips plastered with a mixture of clay and dung called lipan, these huts have wooden based thatched roofs."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "Bhunga walls of adobe or soft stone in mud mortar are finished with lime plaster mixed with cow dung for durability and termite resistance.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "Material and Structural Analysis",
+          "quote": "In Kutch, Bhunga walls are constructed either of adobe blocks or of locally quarried soft stone set in mud mortar, finished with lime plaster mixed with cow dung for durability and termite resistance."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "Bhungas are typically mud houses of cattle dung, soil and water, with a skeleton of babul sticks woven into the centre of the thick mud wall.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Decoding Bhungas, p. 18",
+          "quote": "Typically, Bhungas are mud houses constructed with dominant materials like cattle dung, soil, and water as required, with humidity for solidification."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Decoding Bhungas, p. 18",
+          "quote": "a typical wall section has a skeleton of locally available wood from babul shrubs that weaves horizontal and vertical sticks in the centre of a thick mud wall."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The most popular lippan designs in Kutch are geometric shapes and forms, peacocks, camels, mango trees, symbolic temples and daily activities of life.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Mud Mirror art process",
+          "quote": "The most popular designs used in this art, especially in Kutch, are geometric shapes and forms, peacocks, camels, mango trees, symbolic temples, daily activities of life and many more."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "AIACA lists lippan motifs as repeating geometric shapes, stylised suns or flowers, peacocks, fishes and simple human or animal forms.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "Motifs",
+          "quote": "MOTIFS - Repeasting geometric shapes - Stylized suns/flowers - Peacock - Fishes - Simple human/animal forms"
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "AIACA gives lippan colours as ochres, whites and browns, while contemporary pieces used bright turquoise, red and green pigments with black outlines.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "Colours",
+          "quote": "COLOURS Ochres, whites, browns. Contemporary pieces used bright pigments of turquoise, red, green, black outlines"
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A lippan artist told The Hans India that the communities whose walls it adorns have similar designs and motifs in their embroideries, and Gaatha says most Marwada Harijan motifs derive from their own embroidery.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Origin, artist's account",
+          "quote": "The beautiful work adorning the walls of the natives reflects their love for embellishments. They also have similar designs and motifs in their embroideries."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "Harijan Mud Relief Work",
+          "quote": "Harijan Mud Relief Work: Marvada Harijan of Banni area in the Great Rann of Kutch had played a vital role to popularize this art"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "Harijan Mud Relief Work",
+          "quote": "Most of the designs and motifs are derived from their own embroidery and stitching designs, geometrical forms, pheasants"
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In Ramdevnagar, bhunga exteriors are painted with embroidery-inspired motifs and patterns, while the interiors are adorned with lippan art.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "Case Study of Ramdevnagar, Bhirandiara"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Traditional Architecture and Living, p. 128",
+          "quote": "The exterior walls of these bhunga houses are painted with embroideryinspired motifs and patterns, while the interiors are adorned with lippan art."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "In Kutch, bhunga interiors are adorned with mirror inlay and mural art, turning domestic walls into canvases of clan identity and local mythology.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "Socio-Cultural Embeddedness and Contemporary Relevance",
+          "quote": "In Kutch, the interiors of Bhungas are adorned with mirror inlay and mural art, transforming domestic walls into canvases of clan identity and local mythology."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Clay relief decoration in Kutch is seen on walls, alcoves, plinths, shelves and windows.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "Clay relief work of Kutch can be seen in the meticulous execution of circular huts or bhunga in the region."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "Decoration elements can be seen on walls, alcoves, plinths, shelves and windows etc."
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Kutch clay relief work also constructs kotholo granaries, sanjiro stores, kothi grain stores, dhadablo baby seats, utroni stands, chula hearths, paniyara platforms and pedlo platforms for storage bins.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "Clay relief work of Kutch can be seen in the meticulous execution of circular huts or bhunga in the region."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "Other structures such as large storage granaries called Kotholo, large storage for valuables and clothes called Sanjiro, cylindrical grain storage called Kothi, seat for babies called dhadablo"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "entry text",
+          "quote": "clay stand called utroni, portable hearth called chula, clay platforms called paniyara, platforms on which the storage bins are placed called pedlo etc are constructed."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L05"
+      },
+      "text": "In Kutch, mud granaries are made by women, who meticulously decorate them with mud-relief and mirror work, as on a kothi at Gandhi Nu Gam.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "description",
+          "quote": "In Kutch, mud granaries are made by women, who meticulously decorate them with mud-relief and mirror work."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "Details",
+          "quote": "Location: Gandhi Nu Gam, Kutch, Gujarat"
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Lime-plastered granaries with mud-relief and mirror work are a feature of Kutch dwellings, and a kothi at Bhujodi has motifs resembling the women's mirror-work embroidery.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "description",
+          "quote": "Lime plastered granaries, embellished with mud-relief and mirror work, are a feature of the vernacular dwellings of Kutch. The motifs on this kothi resemble the mirror work embroidery practiced by the women of this region."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "Details",
+          "quote": "Location: Bhujodi, Kutch, Gujarat"
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A lippan artist told The Hans India that the communities believed mirrors ward off evil, and Gaatha says the Rabaris believe mirrors repel the evil eye and so use them in mud relief and embroidery.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Origin, artist's account",
+          "quote": "The natives believed that mirrors will ward off evil and are an integral part of their embroideries and their walls."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "Kachchhi Rabari Mud Relief Work",
+          "quote": "The Rabaris believe that mirrors repel the negative effects of the evil eye and so they use them in mud relief work and embroidery."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan adorned the interior walls of homes not only for its aesthetic appeal but also for its ability to keep interiors cool in the scorching summer months.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 4",
+          "quote": "For centuries, this captivating craft adorned the interior walls of homes, not only for its aesthetic appeal but also for its ability to keep interiors cool during the scorching summer months."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "Origin, artist's account",
+          "quote": "Lippan kaam is the traditional folk craft of Kutch (Gujrat) which is done directly on the wall to make the temperature of (houses in Kutch) Bunga huts cooler."
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In Ramdevnagar, natural materials maintain cool interiors, vital for survival in Kutch's scorching heat.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "Case Study of Ramdevnagar, Bhirandiara"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Traditional Architecture and Living, p. 128",
+          "quote": "while natural materials maintain cool interiors, vital for survival in Kutch's scorching heat."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In Ramdevnagar, despite limited access to electricity, the reflective property of lippan mirrorwork ensures adequate lighting.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "Case Study of Ramdevnagar, Bhirandiara"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Traditional Architecture and Living, p. 128",
+          "quote": "Despite limited access to electricity, the reflective property of lippan art's mirrorwork ensures adequate lighting"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "In Hodko village, Kutch, master artisan Bharmabehn's home preserves a splendid display of Kutchi mud work, Outlook Traveller reported.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 1",
+          "quote": "Spending it with a community living in the distant Hodko village in Gujarat"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 4",
+          "quote": "conducted by one of the master artisans, Bharmabehn, whose home still preserves a splendid display of this artwork."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "paragraph 3",
+          "quote": "is holding a workshop for those interested in learning about the Kutchi mud work."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "Figure 4 caption",
+          "quote": "Figure 4. Plan and Section of Zararwadi in Hodko, Kutch"
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In the Ramdevnagar cluster of Bhirandiara village in Kutch, women practise lippan art alongside embroidery, jewellery making, beadwork and toy making.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Case Study of Ramdevnagar, Bhirandiara, p. 128",
+          "quote": "The Meghwal Marwada community of Ramdevnagar, primarily located in the village of Bhirandiara in Gujarat's Kutch region, is well-known for its unique cultural practices."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Gender Roles and Daily Life, p. 129",
+          "quote": "The crafts practised in the Ramdevnagar cluster include leather making, primarily done by men, while women handle embroidery, lippan art, jewellery making, beadwork, and toy making."
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L06"
+      },
+      "text": "A lippan artist from Bhopal who began in 2010 has conducted workshops on mud and mirror art, both offline and online.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Origin",
+          "quote": "a Lippan artist from Bhopal who began her journey in the year 2010"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "artist's account",
+          "quote": "I have conducted various workshops on Mud and Mirror art to share the knowledge and techniques of the art to the people in an authentic way both offline and online."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "A lippan artist told The Hans India that the craft is mainly done by the women of the Rabari community and the men of the Mutva community.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "Origin, artist's account",
+          "quote": "It is mainly done by the women of the Rabari community & the men of the Mutva community."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "Mutwa Mud-Relief-Work",
+          "quote": "Mutwa Mud-Relief-Work: Being Islamic by religion Mutwa community's mud-work has the essence of their recurring motifs. Women of this community are well known for their tiny embroidery stitches. But mud-relief-work is done by men only."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "The Press Information Bureau describes the Mutva community as one of the oldest custodians of lippan kaam.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "paragraph 5",
+          "quote": "Hailing from the Mutva community, one of the oldest custodians of this art form"
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Kutch Art Trust, Samtra filed Geographical Indication application 1768 for Kutch Lippan (Mud Mirror) Craft of Gujarat on 31 December 2025.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "application details",
+          "quote": "Application Number | 1768 | | Geographical Indications | Kutch Lippan (Mud Mirror) Craft of Gujarat"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "application details",
+          "quote": "Applicant Name | Kutch Art Trust, Samtra"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "application details",
+          "quote": "Date of Filing | 31-12-2025"
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registry lists application 1768 at pre-examination, after a formality check report dated 5 February 2026 and the applicant's reply of 9 March 2026.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "application details",
+          "quote": "Status | Pre Examination | | Applicant Name | Kutch Art Trust, Samtra"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "document 2",
+          "quote": "1768 - Formality Check Report - 05-02-2026 | 05-02-2026"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "document 1",
+          "quote": "1768 - Reply to FCR by Applicant - 09-03-2026 | 09-03-2026"
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "AIACA's Craft Katha page states that lippan art received a GI tag in 2023.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "What makes it unique",
+          "quote": "WHAT MAKES IT UNIQUE: Received a GI tag in 2023"
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sonu Chauhan's study describes lippan kaam as traditionally practised to decorate homes and as facing the challenge of survival in a globalised market.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "abstract, p. 73",
+          "quote": "Traditionally practised to decorate homes, the craft now faces the challenge of survival in a globalised market."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In Kutch, family compounds serve as places of craft production, particularly embroidery and mud relief work, linking architecture with women's livelihoods.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "Socio-Cultural Embeddedness and Contemporary Relevance",
+          "quote": "In Kutch, the interiors of Bhungas are adorned with mirror inlay and mural art"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "Socio-Cultural Embeddedness and Contemporary Relevance",
+          "quote": "Family compounds serve as loci of craft production, particularly embroidery and mud relief work, linking architecture with women's livelihoods."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lippan has found a new place in interior design as wall decor for modern workplaces and homes, and the artworks are made in frames or on wooden panels.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "The growing popularity of Lippan Kaam",
+          "quote": "Nowadays, it finds a new place in interior designs in the form of wall decor and is used in modern workplaces and homes. The artworks are also available in frames or wooden panels."
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Many educational institutions, NGOs and others started lippan workshops for people to take part in, especially children.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "The growing popularity of Lippan Kaam",
+          "quote": "Many educational institutions, NGOs and others initiated workshops on Lippan arts for people to engage, especially children."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A 2023 study of Ahmedabad homes found Lippan wall frames and a Lippan background of clay and cow dung used in culturally inspired interiors.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "citation",
+          "quote": "Jasani, B. M. (2023). Imbibing Cultural Ethos in Interiors Residential Spaces in Ahmedabad."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "Case Study 7",
+          "quote": "The carved wooden door, traditional furniture, and Lippan wall frames create a welcoming and culturally inspired entry area."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "Case study, Figure 61",
+          "quote": "The Lippan background, made of clay and cow dung, contrasts with the modern- looking table"
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "A 2024 study describes the communities of the Marwada Harijan wada of 1961 as Marwada Meghwal, and finds significant resemblances between it and present-day Ramdevnagar in Bhirandiara.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Table 2 & 3 caption, p. 131",
+          "quote": "A comparative analysis between the Marwada Meghwal communities of the Marwada Harijan wada of 1961 to the Ramdevnagar craft village in 2023"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "The Past and the Present, p. 130",
+          "quote": "A comparative analysis between the Marwada Harijan wada of 1961 and the present-day Ramdevnagar settlement in Bhirandiara reveals significant resemblances between the Marwada Meghwal settlements."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "How to Cite This Chapter",
+          "quote": "Gor, H., Kedia, N., & Gupta, R. (2024). Stitching Identity"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Kachchh",
+      "kind": "DISTRICT",
+      "district": "Kachchh",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C001",
+        "C002",
+        "C007"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Hodko",
+      "kind": "VILLAGE",
+      "district": "Kachchh",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C060"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Bhirandiara (Ramdevnagar)",
+      "kind": "VILLAGE",
+      "district": "Kachchh",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C061",
+        "C043"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Bhujodi",
+      "kind": "VILLAGE",
+      "district": "Kachchh",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C048"
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Gandhi Nu Gam",
+      "kind": "VILLAGE",
+      "district": "Kachchh",
+      "state": "Gujarat",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C047"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Bhopal",
+      "kind": "TOWN",
+      "district": "Bhopal",
+      "state": "Madhya Pradesh",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C062"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Rabari",
+      "claimIds": [
+        "C004",
+        "C064"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "COMMUNITY",
+      "name": "Kumbhar",
+      "claimIds": [
+        "C004",
+        "C005"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "COMMUNITY",
+      "name": "Marwada Harijan",
+      "claimIds": [
+        "C004",
+        "C076"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "COMMUNITY",
+      "name": "Mutwa",
+      "localNames": [
+        "Mutva"
+      ],
+      "claimIds": [
+        "C004",
+        "C064",
+        "C065"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "COMMUNITY",
+      "name": "Marwada Meghwal",
+      "claimIds": [
+        "C061",
+        "C015",
+        "C076"
+      ]
+    },
+    {
+      "id": "G06",
+      "kind": "PERSON",
+      "name": "Bharmabehn",
+      "placeId": "L02",
+      "claimIds": [
+        "C060"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Preparing the dough of dung and clay",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C018",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C018"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C018"
+        }
+      ],
+      "claimIds": [
+        "C018",
+        "C028",
+        "C031"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Making the border",
+      "localName": "kaam, kaamtane",
+      "stageType": "SHAPE",
+      "order": 2,
+      "orderClaimId": "C018",
+      "claimIds": [
+        "C018"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Rolling the dough and laying it onto the pattern",
+      "stageType": "SHAPE",
+      "order": 3,
+      "orderClaimId": "C018",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C018"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C018"
+        }
+      ],
+      "claimIds": [
+        "C018",
+        "C019"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Adding the mirrors",
+      "stageType": "FINISH",
+      "order": 4,
+      "orderClaimId": "C018",
+      "materials": [
+        {
+          "materialId": "M03",
+          "claimId": "C019"
+        }
+      ],
+      "claimIds": [
+        "C018",
+        "C019"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Drying",
+      "stageType": "DRY",
+      "order": 5,
+      "orderClaimId": "C020",
+      "duration": {
+        "text": "days",
+        "claimId": "C020"
+      },
+      "claimIds": [
+        "C020"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Colouring",
+      "stageType": "FINISH",
+      "order": 6,
+      "orderClaimId": "C020",
+      "materials": [
+        {
+          "materialId": "M05",
+          "claimId": "C033"
+        },
+        {
+          "materialId": "M06",
+          "claimId": "C033"
+        }
+      ],
+      "claimIds": [
+        "C020",
+        "C033"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Clay or mud",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "claimIds": [
+        "C026",
+        "C018"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Animal dung",
+      "kind": "OTHER",
+      "role": "BINDER",
+      "claimIds": [
+        "C026",
+        "C028",
+        "C027",
+        "C029",
+        "C030"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Mirror pieces",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "claimIds": [
+        "C026",
+        "C014",
+        "C019"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Millet",
+      "kind": "OTHER",
+      "role": "BINDER",
+      "claimIds": [
+        "C031"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Natural dyes and pigments",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C027",
+        "C033"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Lime or gypsum",
+      "kind": "MINERAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C033"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Coarse sand",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C032"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Fine straw or fibre",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "claimIds": [
+        "C032"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Chalk powder",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C034"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Sawdust",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C034"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Glue",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "claimIds": [
+        "C034"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Wooden panels and frames",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C072"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Brush made from baval tree branches",
+      "claimIds": [
+        "C022"
+      ]
+    }
+  ],
+  "reactions": [],
+  "environment": [
+    {
+      "factor": "CLIMATE",
+      "placeId": "L01",
+      "claimIds": [
+        "C051"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "placeId": "L03",
+      "claimIds": [
+        "C053",
+        "C054"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "claimIds": [
+        "C025"
+      ]
+    }
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "1768",
+      "filedOn": "2025-12-31",
+      "claimIds": [
+        "C066",
+        "C067"
+      ]
+    },
+    "prices": [],
+    "workforce": []
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "lippan kaam, lipan kaam, chittar kaam",
+      "meaning": "Mud and mirror work, a traditional mural craft of Kutch.",
+      "claimIds": [
+        "C001"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "lippan, lipan",
+      "meaning": "Clay or dung in local Gujarati; in Kutch also the clay and dung plaster of bhungas and the fine clay paste applied to their floors.",
+      "language": "gu",
+      "claimIds": [
+        "C006",
+        "C036",
+        "C023"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "kaamtane",
+      "meaning": "A border, also called kaam, made before the lippan dough is laid onto the pattern.",
+      "claimIds": [
+        "C018"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "bhunga, bhonga",
+      "meaning": "The circular adobe house of Kutch whose walls lippan decorates.",
+      "claimIds": [
+        "C003",
+        "C036",
+        "C044"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "kotholo",
+      "meaning": "A large storage granary built in clay relief work.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "sanjiro",
+      "meaning": "A large clay store for valuables and clothes.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "kothi",
+      "meaning": "In Kutch clay relief work, a cylindrical clay grain store.",
+      "claimIds": [
+        "C046",
+        "C048"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "dhadablo",
+      "meaning": "A clay seat for babies.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W09",
+      "term": "utroni",
+      "meaning": "A clay stand.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W10",
+      "term": "chula",
+      "meaning": "In Kutch clay relief work, a portable clay hearth.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W11",
+      "term": "paniyara",
+      "meaning": "Clay platforms.",
+      "claimIds": [
+        "C046"
+      ]
+    },
+    {
+      "id": "W12",
+      "term": "pedlo",
+      "meaning": "A platform on which storage bins are placed.",
+      "claimIds": [
+        "C046"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C027",
+        "C028",
+        "C029",
+        "C030"
+      ],
+      "about": "Which animal's dung is mixed with the clay: camel, camel or wild ass, donkey, or horse manure"
+    },
+    {
+      "claimIds": [
+        "C068",
+        "C067"
+      ],
+      "about": "Whether lippan art holds a GI tag: AIACA says it received one in 2023, while the registry lists application 1768, filed on 31 December 2025, at pre-examination"
+    },
+    {
+      "claimIds": [
+        "C011",
+        "C010"
+      ],
+      "about": "Whether the craft is still declining: Homegrown says recognition followed the launch of the Rann Utsav in 2005, while Outlook Traveller describes the mirror-inlaid mud work as on the verge of being lost"
+    },
+    {
+      "claimIds": [
+        "C036",
+        "C037"
+      ],
+      "about": "How bhunga walls are finished: plastered with lipan, a mixture of clay and dung, or with lime plaster mixed with cow dung"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "How did lippan kaam begin, and did it start with the Kumbhar potters of Sindh?",
+      "claimIds": [
+        "C007",
+        "C008"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/13/2018-07-18_kutch_mud_work.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:2018-07-18_kutch_mud_work.jpg",
+      "author": "b sarangi",
+      "licence": "CC0 1.0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "caption": "A circular Kutch mud work panel set with mirror and coloured glass pieces, photographed at the bhunga that houses the Khavda post office",
+      "claimIds": [
+        "C001",
+        "C026"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/2018-07-18_Khavda_Post_Office_in_a_Bhunga.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:2018-07-18_Khavda_Post_Office_in_a_Bhunga.jpg",
+      "author": "b sarangi",
+      "licence": "CC0 1.0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "caption": "The Khavda post office in Kutch, housed in a circular bhunga with a thatched roof",
+      "claimIds": [
+        "C003",
+        "C036"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Lippan kaam, or mud and mirror work, is a traditional mural craft of Kutch, also called Chittar Kaam, renowned for its intricate motifs.",
+        "claimIds": [
+          "C001",
+          "C002"
+        ]
+      },
+      {
+        "text": "It embellishes the interior and exterior walls of the circular adobes known as bhungas, and is practised mainly by the Rabari, Kumbhar, Marwada Harijan and Mutwa communities.",
+        "claimIds": [
+          "C003",
+          "C004"
+        ]
+      },
+      {
+        "text": "A dough of dung and clay is laid onto a pattern and mirrors are added, and the work takes days to dry before it is coloured.",
+        "claimIds": [
+          "C018",
+          "C020"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Also called",
+        "value": "Lipan kaam, Chittar Kaam, mud and mirror work",
+        "claimIds": [
+          "C001"
+        ]
+      },
+      {
+        "label": "Centre",
+        "value": "Kutch, Gujarat: Hodko and Bhirandiara (Ramdevnagar); decorated granaries recorded at Bhujodi and Gandhi Nu Gam",
+        "claimIds": [
+          "C001",
+          "C060",
+          "C061",
+          "C048",
+          "C047"
+        ]
+      },
+      {
+        "label": "Communities",
+        "value": "Mainly Rabari, Kumbhar, Marwada Harijan and Mutwa",
+        "claimIds": [
+          "C004"
+        ]
+      },
+      {
+        "label": "Materials",
+        "value": "Local clay or mud, animal dung, small polished mirrors or glass pieces",
+        "claimIds": [
+          "C026"
+        ]
+      },
+      {
+        "label": "Surface",
+        "value": "Interior and exterior walls of bhungas; walls, alcoves, plinths, shelves and windows; mud granaries",
+        "claimIds": [
+          "C003",
+          "C045",
+          "C047",
+          "C048"
+        ]
+      },
+      {
+        "label": "GI status",
+        "value": "Sources differ: application 1768, filed on 31 December 2025, is at pre-examination, while AIACA says a GI tag was received in 2023",
+        "claimIds": [
+          "C066",
+          "C067",
+          "C068"
+        ]
+      },
+      {
+        "label": "Time per piece",
+        "value": "2-7 days with 1-2 artisans, according to AIACA",
+        "claimIds": [
+          "C021"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "The origins of lippan kaam are unknown, and the distinct styles of different Kutch communities make its roots even harder to trace.",
+            "claimIds": [
+              "C007"
+            ]
+          },
+          {
+            "text": "Mud and mirror work has been in practice for centuries.",
+            "claimIds": [
+              "C009"
+            ]
+          },
+          {
+            "text": "The Press Information Bureau describes the Mutva community as one of the oldest custodians of lippan kaam.",
+            "claimIds": [
+              "C065"
+            ]
+          },
+          {
+            "text": "Before pre-cut mirrors were available, a large mirror was shattered with stones and the pieces collected for lippan.",
+            "claimIds": [
+              "C014"
+            ]
+          },
+          {
+            "text": "Sources differ on whether the craft is still declining: Homegrown reports that the art was in decline until 2005, when the launch of the Rann Utsav brought it recognition, while Outlook Traveller reported the mirror-inlaid mud work on the verge of being lost because modern families tend to plaster their homes with cement.",
+            "claimIds": [
+              "C011",
+              "C010"
+            ]
+          },
+          {
+            "text": "The Hans India reports that the art regained its significance because artisans showed their work through social media platforms, and that around 2021-22 lippan became quite popular.",
+            "claimIds": [
+              "C012",
+              "C013"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "The process begins with a dough of dung and clay, after which a border called kaam or kaamtane is made and the dough is laid onto the pattern.",
+            "claimIds": [
+              "C018"
+            ]
+          },
+          {
+            "text": "The paste is rolled into long cylindrical shapes, moulded by hand and attached to the walls in geometric shapes, which are then inlaid with tiny mirrors.",
+            "claimIds": [
+              "C019"
+            ]
+          },
+          {
+            "text": "After it is decorated with mirrors, the work takes days to dry before it is coloured.",
+            "claimIds": [
+              "C020"
+            ]
+          },
+          {
+            "text": "According to AIACA, a piece takes 2-7 days and involves 1-2 artisans.",
+            "claimIds": [
+              "C021"
+            ]
+          },
+          {
+            "text": "Lippan also names a fine clay paste applied to bhunga floors with a semicircular motion of the hands, twice to three times a year, depending on wear and tear.",
+            "claimIds": [
+              "C023",
+              "C024"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "AIACA lists the raw materials as local clay or mud, animal dung blended with the clay, and small polished mirrors or glass pieces.",
+            "claimIds": [
+              "C026"
+            ]
+          },
+          {
+            "text": "Sources differ on the dung: camel dung in Ramdevnagar, camel or wild ass dung as the binding agent, donkey dung in one artist's account, and fibrous horse manure in Outlook Traveller's report.",
+            "claimIds": [
+              "C027",
+              "C028",
+              "C029",
+              "C030"
+            ]
+          },
+          {
+            "text": "Millet is sometimes used as an alternative, to prevent the attraction of termites.",
+            "claimIds": [
+              "C031"
+            ]
+          },
+          {
+            "text": "AIACA lists coarse sand and fine straw or fibre as added to reduce shrinkage, and natural pigments with lime or gypsum for white highlights.",
+            "claimIds": [
+              "C032",
+              "C033"
+            ]
+          },
+          {
+            "text": "The lippan dough has evolved: many artisans use clay, chalk powder, sawdust and glue instead of dung and clay, to make the art longer-lasting and odour-free.",
+            "claimIds": [
+              "C034"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "The most popular designs in Kutch are geometric shapes and forms, peacocks, camels, mango trees, symbolic temples and daily activities of life.",
+            "claimIds": [
+              "C039"
+            ]
+          },
+          {
+            "text": "A lippan artist told The Hans India that the communities whose walls it adorns have similar designs and motifs in their embroideries.",
+            "claimIds": [
+              "C042"
+            ]
+          },
+          {
+            "text": "AIACA gives the colours as ochres, whites and browns, while contemporary pieces used bright turquoise, red and green with black outlines.",
+            "claimIds": [
+              "C041"
+            ]
+          },
+          {
+            "text": "Clay relief work in Kutch also constructs kotholo granaries, sanjiro stores, kothi grain stores, dhadablo baby seats, chula hearths and paniyara platforms.",
+            "claimIds": [
+              "C046"
+            ]
+          },
+          {
+            "text": "In Kutch, mud granaries are made by women, who decorate them with mud-relief and mirror work.",
+            "claimIds": [
+              "C047"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "CLIMATE",
+        "sentences": [
+          {
+            "text": "Lippan adorned the interior walls of homes not only for its aesthetic appeal but also for its ability to keep interiors cool in the scorching summer months.",
+            "claimIds": [
+              "C051"
+            ]
+          },
+          {
+            "text": "Repeated Lippan plastering of the floors helps insulate the house and disinfect surfaces after the monsoon.",
+            "claimIds": [
+              "C025"
+            ]
+          },
+          {
+            "text": "In Ramdevnagar, natural materials maintain cool interiors, vital for survival in Kutch's scorching heat.",
+            "claimIds": [
+              "C053"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "In Hodko village, Kutch, master artisan Bharmabehn's home preserves a splendid display of Kutchi mud work, Outlook Traveller reported.",
+            "claimIds": [
+              "C060"
+            ]
+          },
+          {
+            "text": "In the Ramdevnagar cluster of Bhirandiara village in Kutch, women practise lippan art alongside embroidery, jewellery making, beadwork and toy making.",
+            "claimIds": [
+              "C061"
+            ]
+          },
+          {
+            "text": "Kothi granaries decorated with mud-relief and mirror work are recorded at Bhujodi and at Gandhi Nu Gam in Kutch.",
+            "claimIds": [
+              "C048",
+              "C047"
+            ]
+          },
+          {
+            "text": "A lippan artist from Bhopal who began in 2010 has conducted workshops on mud and mirror art, both offline and online.",
+            "claimIds": [
+              "C062"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Kutch Art Trust, Samtra filed Geographical Indication application 1768 for Kutch Lippan (Mud Mirror) Craft of Gujarat on 31 December 2025.",
+            "claimIds": [
+              "C066"
+            ]
+          },
+          {
+            "text": "The registry lists it at pre-examination, while AIACA's page states that lippan art received a GI tag in 2023.",
+            "claimIds": [
+              "C067",
+              "C068"
+            ]
+          },
+          {
+            "text": "Lippan has found a new place in interior design as wall decor, made in frames or on wooden panels.",
+            "claimIds": [
+              "C072"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

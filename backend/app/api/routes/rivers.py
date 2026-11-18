@@ -5,10 +5,9 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.public_deps import public_reader, read_headers, unchanged_read
 from app.core.db import get_session, release_connection
-from app.core.deps import get_current_user
 from app.core.errors import AppError
-from app.core.http_cache import not_modified, revalidation_headers
 from app.models import User
 from app.services.object_store import media_bucket
 from app.services.river_store import basin_file
@@ -32,7 +31,7 @@ async def river_basin(
     request: Request,
     main_riv: int = Path(ge=1, le=REACH_ID_MAX),
     *,
-    _: User = Depends(get_current_user),
+    reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
     cache: TopologyCache = Depends(river_topologies),
 ) -> Response:
@@ -40,7 +39,7 @@ async def river_basin(
     await release_connection(session)
     if basin is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NO_RIVER_DETAIL)
-    answered = not_modified(request, basin.sha256)
+    answered = unchanged_read(request, reader, basin.sha256)
     if answered is not None:
         return answered
     objects = media_bucket()
@@ -53,4 +52,4 @@ async def river_basin(
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, UNAVAILABLE_DETAIL) from None
     if found is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NO_RIVER_DETAIL)
-    return Response(found.body, media_type=TOPOLOGY_TYPE, headers=revalidation_headers(found.sha256))
+    return Response(found.body, media_type=TOPOLOGY_TYPE, headers=read_headers(reader, found.sha256))

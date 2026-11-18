@@ -41,6 +41,7 @@ from app.research.piece_reuse import (
     with_simulation,
 )
 from app.research.piece_topics import facet_topics
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.retrieval.indexing import embed_pieces
 from app.retrieval.text import query_text
 from app.science.ladder import ladder_problems
@@ -129,9 +130,9 @@ class SqlPieceStore:
             )
             rested_on = {claim for piece in pieces for claim in piece.claim_ids}
             simulations = await simulation_pieces(session, rested_on, set(topics) & SIMULATION_FACETS)
-            states, cited = await claim_states(session, [*pieces, *regions])
+            states, cited = await claim_states(session, [*pieces, *regions], acls=EVERY_CHUNK_ACLS)
             checked = any(isinstance(piece.payload, PROCESS_BLOCKS) for piece in pieces)
-            records = await process_records(session, craft) if checked else None
+            records = await process_records(session, craft, acls=EVERY_CHUNK_ACLS) if checked else None
         reused: dict[str, ReusedSection] = {}
         for facet, topic in topics.items():
             reuse = ReuseAsk(craft_id=craft.id, facet=facet, topic_key=topic, depth=ask.depth)

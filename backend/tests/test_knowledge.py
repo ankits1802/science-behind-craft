@@ -43,7 +43,6 @@ def test_privacy_notice_is_public_and_fills_the_contact() -> None:
 def test_protected_knowledge_routes_need_a_session() -> None:
     client = TestClient(create_app())
     assert client.get("/api/crafts/kutch-ajrakh/profile").status_code == 401
-    assert client.get("/api/map/crafts").status_code == 401
     assert client.get("/api/answers/config").status_code == 401
     assert client.post("/api/answers/stream", json={"question": "why indigo"}).status_code == 401
 

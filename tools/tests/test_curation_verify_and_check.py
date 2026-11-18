@@ -4,12 +4,13 @@ import json
 import shutil
 from pathlib import Path
 
+import pytest
 from app.curation.check_file import VERIFY_TOOL, verified_digest
 from app.curation.checks import default_context
 from app.curation.dossier import parse_dossier
 from curation_support import FAILING, NOW, PASSING, recorded_reader
 
-from curation.checking import check_run, stale_index_lines, write_index
+from curation.checking import check_run, main, stale_index_lines, write_index
 from curation.verifying import failure_lines, verify_dossier, verify_file
 
 
@@ -114,8 +115,64 @@ def test_stray_files_missing_targets_and_a_stale_index_are_reported(tmp_path: Pa
     assert check_run([missing], directory, default_context()).lines == [f"{missing}: file: does not exist"]
     outcome = check_run([], directory, default_context())
     assert stale_index_lines(directory, outcome.index) == [
-        f"{directory / 'index.json'}: index: is not current; run python tools/curation/check.py and keep the file "
-        "it writes"
+        f"{directory / 'index.json'}: index: is not current; run python tools/curation/check.py --write-index and "
+        "keep the file it writes"
     ]
     write_index(directory, outcome.index)
     assert stale_index_lines(directory, outcome.index) == []
+
+
+def test_check_writes_the_index_only_when_asked(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    directory = curation_dir(tmp_path)
+    verify_file(directory / "Kutch-Ajrakh.json", recorded_reader())
+    index = directory / "index.json"
+    assert main(["--dir", str(directory)]) == 0
+    assert not index.exists()
+    assert main(["--dir", str(directory), "--check-index"]) == 1
+    assert not index.exists()
+    assert main(["--dir", str(directory), "--write-index"]) == 0
+    assert index.read_text(encoding="utf-8") == check_run([], directory, default_context()).index
+    assert main(["--dir", str(directory), "--check-index"]) == 0
+    capsys.readouterr()
+    with pytest.raises(SystemExit):
+        main(["--dir", str(directory), "--check-index", "--write-index"])
+
+
+def write_category(directory: Path) -> Path:
+    plain = json.loads(PASSING.read_text(encoding="utf-8"))
+    del plain["craftSlug"]
+    plain.update(scope="CATEGORY", categorySlug="Textiles-Based-Craft-Category")
+    plain["openQuestions"] = [
+        {
+            "id": "O01",
+            "question": "No source was found on these textile crafts yet.",
+            "subCategories": [
+                "Embroidery",
+                "Hand-Block-Printing",
+                "Carpet-Rugs-Durries",
+                "Other-Textiles-Based-Craft",
+            ],
+        }
+    ]
+    path = directory / "categories" / "Textiles-Based-Craft-Category.json"
+    path.parent.mkdir()
+    path.write_text(json.dumps(plain, indent=2) + "\n", encoding="utf-8", newline="\n")
+    return path
+
+
+def test_category_dossiers_are_verified_checked_and_indexed_apart(tmp_path: Path) -> None:
+    directory = curation_dir(tmp_path)
+    verify_file(directory / "Kutch-Ajrakh.json", recorded_reader())
+    category = write_category(directory)
+    lines, check = verify_file(category, recorded_reader())
+    assert lines == []
+    assert check is not None and check.slug == "Textiles-Based-Craft-Category"
+    assert (category.parent / "Textiles-Based-Craft-Category.check.json").is_file()
+    outcome = check_run([], directory, default_context())
+    assert outcome.lines == []
+    index = json.loads(outcome.index)
+    assert [entry["craftSlug"] for entry in index["crafts"]] == ["Kutch-Ajrakh"]
+    assert [(entry["categorySlug"], entry["check"]["status"]) for entry in index["categories"]] == [
+        ("Textiles-Based-Craft-Category", "PASS")
+    ]
+    assert check_run([category], directory, default_context()).lines == []

@@ -3,11 +3,13 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
+import { DEPTH_BASES, ENVIRONMENT_FACTORS, EVENT_KINDS, PICTURE_ROLES } from "@/lib/craftPageContext";
 import { COVERAGE_CLASSES, CRAFT_GI_STATUSES, GROUP_KINDS, PLACE_KINDS, PROVENANCES, SECTION_BASES, SPECIES_ROLES, SUBJECT_KINDS, TIMING_KINDS } from "@/lib/craftPageContract";
 import { PLACE_ROLES } from "@/lib/districtCraftsContract";
 import { IMAGE_RELEVANCE, MEDIA_DISPLAYS } from "@/lib/explainerBlockBase";
 import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
 import { EXPERT_SEATS } from "@/lib/explainerExperts";
+import { FIRING_ATMOSPHERES, INDIGO_FORMS, LOST_WAX_STEPS, SIGNATURE_KINDS, VAT_KINDS } from "@/lib/explainerSignature";
 import { CONVERSION_BASES, CURRENCIES, GI_STATUSES, METRIC_UNITS, PRICE_SCALES, TREND_VARIABLES } from "@/lib/explainerInsight";
 import { SEASONS } from "@/lib/explainerPlace";
 import { ZOOM_LEVELS } from "@/lib/explainerPlay";
@@ -53,8 +55,13 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["research/explainer.py", "BUILT_BLOCK_KINDS", BUILT_BLOCK_KINDS],
   ["research/explainer.py", "WORKING_SECTION_STATES", WORKING_SECTION_STATES],
   ["research/explainer.py", "FINAL_SECTION_STATES", FINAL_SECTION_STATES],
-  ["research/explainer.py", "TRAIL_STAGES", TRAIL_STAGES],
-  ["research/explainer.py", "TRAIL_GROUPS", TRAIL_GROUPS],
+  ["research/trail.py", "TRAIL_STAGES", TRAIL_STAGES],
+  ["research/trail.py", "TRAIL_GROUPS", TRAIL_GROUPS],
+  ["research/blocks_signature.py", "SIGNATURE_KINDS", SIGNATURE_KINDS],
+  ["research/blocks_signature.py", "VAT_KINDS", VAT_KINDS],
+  ["research/blocks_signature.py", "INDIGO_FORMS", INDIGO_FORMS],
+  ["research/blocks_signature.py", "LOST_WAX_STEPS", LOST_WAX_STEPS],
+  ["research/blocks_signature.py", "FIRING_ATMOSPHERES", FIRING_ATMOSPHERES],
   ["models/enums.py", "MEDIA_DISPLAYS", MEDIA_DISPLAYS],
   ["models/enums.py", "IMAGE_RELEVANCE", IMAGE_RELEVANCE],
   ["models/enums.py", "TERM_BASES", TERM_BASES],
@@ -76,7 +83,11 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["research/craft_page.py", "PROVENANCES", PROVENANCES],
   ["research/craft_page.py", "SECTION_BASES", SECTION_BASES],
   ["research/craft_page.py", "SUBJECT_KINDS", SUBJECT_KINDS],
-  ["research/craft_page.py", "TIMING_KINDS", TIMING_KINDS],
+  ["research/craft_page_process.py", "TIMING_KINDS", TIMING_KINDS],
+  ["research/craft_page_context.py", "DEPTH_BASES", DEPTH_BASES],
+  ["research/craft_page_context.py", "EVENT_KINDS", EVENT_KINDS],
+  ["research/craft_page_context.py", "PICTURE_ROLES", PICTURE_ROLES],
+  ["models/enums.py", "ENVIRONMENT_FACTORS", ENVIRONMENT_FACTORS],
   ["research/reactions.py", "SPECIES_ROLES", SPECIES_ROLES],
   ["models/enums.py", "GI_STATUSES", CRAFT_GI_STATUSES],
   ["models/enums.py", "COVERAGE_CLASSES", COVERAGE_CLASSES],

@@ -15,11 +15,11 @@ from .fields import (
     ID_PATTERNS,
     SUBJECT_KINDS,
     ClaimId,
-    ClaimIds,
     NameList,
     NameText,
     QuestionId,
     SentenceText,
+    SlugList,
     SourceId,
     distinct,
 )
@@ -109,5 +109,14 @@ class Conflict(ContractModel):
 class OpenQuestion(ContractModel):
     id: QuestionId
     question: SentenceText
-    claim_ids: ClaimIds
+    claim_ids: Annotated[list[ClaimId], AfterValidator(distinct)] = Field(default_factory=list)
     settled_by: SentenceText | None = None
+    sub_categories: SlugList = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _rests_on_claims_or_names_a_sub_category(self) -> Self:
+        if not self.claim_ids and not self.sub_categories:
+            raise ValueError(
+                "an open question cites claims, or names the sub-categories no source was found for"
+            )
+        return self

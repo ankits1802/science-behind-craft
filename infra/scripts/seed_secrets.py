@@ -243,6 +243,7 @@ def main():
     ap.add_argument("--skip-github", action="store_true")
     ap.add_argument("--skip-vercel", action="store_true")
     ap.add_argument("--skip-box", action="store_true")
+    ap.add_argument("--preview-cors", action="store_true")
     a = ap.parse_args()
 
     tf = tf_outputs(a.terraform)
@@ -274,6 +275,9 @@ def main():
             "MAIL_FROM_NAME": "KalaVigyan",
         }
     )
+    if a.preview_cors:
+        wanted["BACKEND_CORS_PREVIEW_PROJECT"] = VERCEL_PROJECT
+        wanted["BACKEND_CORS_PREVIEW_SCOPE"] = VERCEL_TEAM
     if current.get("BRAVE_API_KEY") and not current.get("BRAVE_SEARCH_API_KEY"):
         wanted["BRAVE_SEARCH_API_KEY"] = current["BRAVE_API_KEY"]
     missing = [k for k in COPYABLE if not current.get(k)]

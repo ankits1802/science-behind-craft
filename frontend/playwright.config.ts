@@ -1,5 +1,8 @@
 import { defineConfig, devices, type Project } from "@playwright/test";
 
+import { IPHONE, QUESTIONS_SCHEME, QUESTIONS_WIDTH, SCHEMES, SCREEN_WIDTHS, contextOptions, projectName, runLabel, type Scheme, type Width } from "./e2e/production/matrix";
+import { isPreview, siteRefusal } from "./e2e/production/preview";
+
 const BASE_URL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(BASE_URL);
 const SMOKE = process.env.E2E_SMOKE === "1";
@@ -8,41 +11,37 @@ const PRODUCTION = process.env.E2E_PRODUCTION === "1";
 const PRODUCTION_SPECS = /[\\/]e2e[\\/]production[\\/]/;
 const SCREENS_SPEC = /[\\/]e2e[\\/]production[\\/]screens\.spec\.ts$/;
 const QUESTIONS_SPEC = /[\\/]e2e[\\/]production[\\/]questions\.spec\.ts$/;
+const ROLES_SPEC = /[\\/]e2e[\\/]production[\\/]roles\.spec\.ts$/;
 
 if (PRODUCTION && !process.env.E2E_BASE_URL) throw new Error("E2E_PRODUCTION=1 needs E2E_BASE_URL");
+const REFUSED_SITE = PRODUCTION ? siteRefusal(BASE_URL) : null;
+if (REFUSED_SITE) throw new Error(REFUSED_SITE);
 
-const PRODUCTION_USE = {
+const RUN_USE = {
   baseURL: BASE_URL,
-  locale: "en-IN",
-  timezoneId: "Asia/Kolkata",
   screenshot: "off",
   trace: "off",
   video: "off",
   actionTimeout: 30_000
 } as const;
 
+function productionProject(width: Width, scheme: Scheme, specs: RegExp[]): Project {
+  return {
+    name: projectName(width, scheme),
+    testMatch: specs,
+    retries: 0,
+    metadata: { label: runLabel(width, scheme), scheme },
+    use: { ...devices[width.device], ...contextOptions(width, scheme), ...RUN_USE }
+  };
+}
+
+function specsFor(width: Width, scheme: Scheme): RegExp[] {
+  return width === QUESTIONS_WIDTH && scheme === QUESTIONS_SCHEME ? [SCREENS_SPEC, QUESTIONS_SPEC, ROLES_SPEC] : [SCREENS_SPEC];
+}
+
 const PRODUCTION_PROJECTS: Project[] = [
-  {
-    name: "production-desktop",
-    testMatch: [SCREENS_SPEC, QUESTIONS_SPEC],
-    retries: 0,
-    metadata: { width: "Desktop" },
-    use: { ...devices["Desktop Chrome"], ...PRODUCTION_USE, viewport: { width: 1440, height: 900 }, screen: { width: 1440, height: 900 } }
-  },
-  {
-    name: "production-tablet",
-    testMatch: SCREENS_SPEC,
-    retries: 0,
-    metadata: { width: "Tablet" },
-    use: { ...devices["Galaxy Tab S9"], ...PRODUCTION_USE, viewport: { width: 834, height: 1194 }, screen: { width: 834, height: 1194 } }
-  },
-  {
-    name: "production-phone",
-    testMatch: SCREENS_SPEC,
-    retries: 0,
-    metadata: { width: "Phone" },
-    use: { ...devices["Pixel 7"], ...PRODUCTION_USE, viewport: { width: 390, height: 844 }, screen: { width: 390, height: 844 } }
-  }
+  ...SCREEN_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => productionProject(width, scheme, specsFor(width, scheme)))),
+  ...(isPreview(BASE_URL) ? [productionProject(IPHONE, "light", [SCREENS_SPEC])] : [])
 ];
 
 export default defineConfig({

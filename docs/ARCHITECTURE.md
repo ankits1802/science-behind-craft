@@ -111,24 +111,36 @@ follows the same pattern: `services/region_records` and `services/map_layer_stor
 into `geo/records`, and the routes hand them to `geo/region_view` and `geo/layers` (decision
 0016).
 `services/` imports `curation/` so the dossier import reads the checker's own model and rules
-(decision 0053); the craft page's response models live in `research/craft_page.py` so
-`services/craft_page` can build them.
+(decision 0053); the craft page's response models live in `research/craft_page.py`,
+`craft_page_process.py` and `craft_page_context.py` so `services/craft_page` can build them, and
+the editorial family labels and kind questions are vendored data (`data/craft_families.json`,
+decision 0081).
 
 ## API surface
 
 All routes are under `/api` except `/health` and `/health/ready`. Route groups (`api/routes/`):
-`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `film` (film mode's music and sound score, decision 0058), `knowledge`, `lessons` (lesson packs and their files, decision 0067), `explainer_exports` (an explainer version's PDF and citations, decision 0067), `listen` (an explainer read aloud, decision 0035), `map_districts` (ask the map, decision 0065), `map_layers`, `media`, `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
+`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `film` (film mode's music and sound score, decision 0058), `knowledge`, `lessons` (lesson packs and their files, decision 0067), `explainer_exports` (an explainer version's PDF and citations, decision 0067), `listen` (an explainer read aloud, decision 0035), `map_districts` (ask the map, decision 0065), `map_layers`, `media`, `public` (the landing's summary, decision 0079), `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
 `settings`, `terms` (a glossary term's cited summary, decision 0034), `usage`, `voice` (404 throughout while `VOICE_CALL_ENABLED` is off, decision 0035). Shapes, headers and error forms are in `docs/contracts/backend.md`; the web client's
 side is `docs/contracts/frontend.md`. `GET /api/crafts/{slug}/page` (in `crafts`) answers the whole craft page from stored rows: the
 curated overview and facts and All evidence (`docs/contracts/craft-page.md`, decision 0053);
-`GET /api/crafts/{slug}/process` (in `crafts`) answers a craft's
+`GET /api/categories` and `/api/categories/{slug}` (in `categories`, public reading) answer the
+nine categories and a category's curated master page (`docs/contracts/category-page.md`, decision
+0078); `GET /api/crafts/{slug}/process` (in `crafts`) answers a craft's
 stages, materials, conditions and reactions (`docs/contracts/science.md`);
 `GET /api/crafts/{slug}/region` its places and their environment, and `GET /api/map/layers` and
 `/api/map/layers/{layer}` (in `map_layers`) the district choropleths, all from the stored
 district statistics (`docs/contracts/region.md`). `GET /api/map/districts/{districtLgd}` (in
 `map_districts`, ask the map, decision 0065) answers a tapped district's located crafts, its
 stored region story and place prose pieces and its land values, with no model call
-(`docs/contracts/learning.md`).
+(`docs/contracts/learning.md`). `GET /api/public/summary` (in `public`) answers the landing's live
+counts, featured curated crafts, specimen sentence and map points, cached a day.
+
+Public reading (decision 0079): the craft, category, map and science reads and the public summary
+take `api/public_deps.public_reader` (built on `core/deps.get_optional_user`) instead of the
+signed-in dependency. Without a session the reader is read as the lowest role, counted against a
+per-address limit and answered `public, max-age=300`; a session still gets its role-scoped answer,
+`private, no-cache`; every read varies on `Authorization` and carries an ETag. Every other route
+needs a session, which `tests/public/test_public_routes.py` checks route by route.
 
 ## How a question is answered today
 
@@ -151,15 +163,24 @@ stored region story and place prose pieces and its land values, with no model ca
    the choice to the model's reply (decision 0038). `understood` is the first event; past the degrade mark Expert runs as Detailed for every role but Master Admin.
 3. When that call is refused for spend, the chosen craft's verified and reviewed claims are
    sent as explainer sections, one `prose` block per concept heading (`knowledge_view.claims_for`,
-   `services/stored_explainer`); no model is called for a Latin-script question.
+   `services/stored_explainer`; a heading that is a field's label takes the field's fallback
+   heading, decision 0077); no model is called for a Latin-script question.
 4. Otherwise the answer is an explainer of sections, one per field the question touches (at most
-   the depth's number). First the stored knowledge pieces (decision 0033, `services/piece_store`):
+   the depth's number), read in the order the question needs: the fields its words ask about
+   first, the full process last unless it asks how the craft is made (`sections.question_order`,
+   decision 0077). It opens with a lede (`services/answer_lede`): the question as its headline and
+   two or three cited sentences that answer it, composed from the craft's stored claims ranked for
+   the question while the sections research, held to the prose checks, and sent before any block;
+   the same call heads the reused sections and names what the answer leaves open. Each section
+   starts under a fallback heading that names the craft and takes the heading its reply writes
+   once it is checked (`section_heading`). First the stored knowledge pieces (decision 0033, `services/piece_store`):
    for each field whose topic (`research/piece_topics`: the glossary terms the question names, else
    the craft's districts for place fields, else the craft) holds a set of pieces that is deep
    enough, not stale or superseded, and whose claims are all still visible as cited (and whose
    ladder still matches the process rows), that section streams first, marked "From earlier
    research" with its date, and is not researched; `fresh` (Research again) and any-craft answers
-   reuse nothing. The other sections run in parallel (`services/answer_sections`, decision 0032). Each section
+   reuse nothing. The other sections are started at once and run in parallel while the lede is
+   written (`services/answer_sections`, decisions 0032 and 0077). Each section
    researches its own field within its share of the depth's budget (Basic and Detailed `HYBRID`,
    Expert `DEEP`): the planner (decision 0009) plans facets and queries for that field and its
    experts (each seat speaking to the field is named with the kinds of source it reads, and those
@@ -180,7 +201,9 @@ stored region story and place prose pieces and its land values, with no model ca
    sentence stays English), copies the citations, and caches claim translations in
    `ClaimTranslation`. The planner adds native-language Wikipedia and Wikidata queries and
    searches stored claims with an English rendering of the question.
-6. Nothing cited: each section says what it searched and `not_enough_evidence` sums it up; any
+6. Follow-ups are the questions the lede and the sections say the sources leave open, then one
+   per field the question touched that the answer did not show (`follow_ups.left_open`).
+   Nothing cited: each section says what it searched and `not_enough_evidence` sums it up; any
    failure of the whole answer is one `error`; `done` always ends the stream. The explainer
    document is kept in `Answer.payload.explainer` and the plans in `Answer.plan`.
 7. A follow-up (`buildsOn`, decision 0063) is the same flow with a layout
@@ -401,11 +424,16 @@ environment data come from open datasets (`docs/contracts/geo.md`, `docs/DATA_SO
 Seeds (`app/scripts/seed_crafts`, `seed_claims`, `seed_districts`) run on every deploy and are
 idempotent; right after them `app/scripts/import_curation` imports every checked dossier of
 `backend/app/data/curation/` into the same tables, withdraws the seed's edge sentences and
-supersedes claims a new dossier version drops (decision 0053). `seed_claims` also runs the science seed (`app/data/science_seed.json`: constants,
+supersedes claims a new dossier version drops (decision 0053), then every checked category
+dossier of `curation/categories/`, keyed to its category (decision 0078). `seed_claims` also runs the science seed (`app/data/science_seed.json`: constants,
 materials, compounds, reactions, readings; decision 0015); `app/scripts/link_compounds` looks
 the seeded compounds up in PubChem, nightly in the Coverage enrichment run (decision 0045). After them, `app/scripts/sync_portal_crafts` adds every craft the two portals hold
 beyond the master list, with their aliases, spellings and merge redirects, through the signed
 peer route of `docs/contracts/portal-craft-feed.md`; it also runs daily (decision 0003).
+Consented artisan quotes and process photographs will come the same way, through the
+documentation portal's field voices routes (`docs/contracts/field-voices.md`, decision 0072);
+the reader (`services/field_voices_reader.py`) is built behind `FIELD_VOICES_ENABLED` and
+stores nothing yet.
 Then `app/scripts/embed_craft_descriptors` fills missing craft name-and-alias vectors for the
 resolver; the daily Coverage enrichment run fills them first too (decision 0016). The region
 routes read the geo ETL's per-district statistics and compute state aggregates in Postgres per

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from types import MappingProxyType
+from typing import Any
 
 from app.models.enums import DISCIPLINES
 from app.research.blocks import ProseBlock
@@ -23,7 +24,15 @@ from app.research.knowledge_pieces import KnowledgePiece
 from app.research.sections import DISCIPLINE_TITLES
 from app.research.vocabulary import LEVEL_ORDER, weakest_level
 
+from .craft_page_context import (
+    page_depth,
+    page_environment,
+    page_events,
+    page_gi,
+    page_tabs,
+)
 from .craft_page_evidence import page_evidence, stored_overview_sections
+from .craft_page_family import family_place, suggested_questions
 from .craft_page_parts import (
     Visible,
     page_communities,
@@ -86,25 +95,47 @@ def craft_page(records: CraftPageRecords) -> CraftPage:
     visible = Visible(
         levels={claim.id: claim.level for claim in claims},
         order={claim.id: index for index, claim in enumerate(claims)},
+        disciplines={claim.id: claim.discipline for claim in claims},
     )
     curated = records.curated
+    craft = records.craft
+    parts = _parts(records, claims, visible)
+    process, pictures = parts["process"], parts["pictures"]
+    sources = _sources(claims, records.sources)
+    place = family_place(craft.category_name, craft.sub_category_name)
     return CraftPage(
         schema_version=CRAFT_PAGE_SCHEMA_VERSION,
-        craft=records.craft,
+        craft=craft,
         curated=curated is not None,
         curation=_header(curated),
-        overview=_overview(records, claims, visible),
-        sources_differ=page_differ(curated, visible),
-        places=page_places(curated, visible),
-        communities=page_communities(curated, visible),
-        process=page_process(records, visible),
-        glossary=page_glossary(records, visible),
-        pictures=page_pictures(records, visible),
-        open_questions=page_questions(curated, visible),
+        tabs=page_tabs(process, records.offers, sources=bool(sources), evidence=bool(claims)),
+        depth=page_depth(curated, claims, (len(sources), len(process.stages), len(pictures))),
+        suggested_questions=suggested_questions(place, craft.display_name, catch_all=records.catch_all),
+        same_family=list(records.relatives),
         evidence=page_evidence(claims),
         claims=claims,
-        sources=_sources(claims, records.sources),
+        sources=_numbered(_reading_order(craft.local_names, parts, claims), claims, sources),
+        **parts,
     )
+
+
+def _parts(records: CraftPageRecords, claims: Sequence[PageClaim], visible: Visible) -> dict[str, Any]:
+    curated = records.curated
+    differ = page_differ(curated, visible)
+    places = page_places(curated, visible)
+    return {
+        "overview": _overview(records, claims, visible),
+        "gi_card": page_gi(records.craft.gi_status, records.market.gi, visible),
+        "events": page_events(records.market, claims, visible, curated=curated is not None),
+        "environment": page_environment(curated, visible, places),
+        "sources_differ": differ,
+        "places": places,
+        "communities": page_communities(curated, visible, places),
+        "process": page_process(records, visible, differ),
+        "glossary": page_glossary(records, visible),
+        "pictures": page_pictures(records, visible),
+        "open_questions": page_questions(curated, visible),
+    }
 
 
 def page_claims(records: CraftPageRecords) -> list[PageClaim]:
@@ -192,3 +223,38 @@ def _piece_sentences(piece: KnowledgePiece | None, visible: Visible) -> list[Pag
 def _sources(claims: Sequence[PageClaim], known: Mapping[str, SourceRef]) -> list[SourceRef]:
     ordered = dict.fromkeys(citation.source_id for claim in claims for citation in claim.citations)
     return [known[source_id] for source_id in ordered if source_id in known]
+
+
+def _reading_order(
+    names: Iterable[Any], parts: Mapping[str, Any], claims: Sequence[PageClaim]
+) -> list[uuid.UUID]:
+    overview: PageOverview = parts["overview"]
+    rows = [
+        *overview.lede,
+        *overview.key_facts,
+        *parts["pictures"],
+        *names,
+        *(sentence for section in overview.sections for sentence in section.sentences),
+        parts["gi_card"],
+        *parts["events"],
+        *parts["environment"],
+        *parts["sources_differ"],
+        *parts["open_questions"],
+        *parts["glossary"],
+    ]
+    later = [*parts["places"], *parts["communities"]]
+    return [
+        *(claim_id for row in rows for claim_id in row.claim_ids),
+        *parts["process"].cited_claim_ids(),
+        *(claim_id for row in later for claim_id in row.claim_ids),
+        *(claim.id for claim in claims),
+    ]
+
+
+def _numbered(
+    order: Sequence[uuid.UUID], claims: Sequence[PageClaim], sources: Sequence[SourceRef]
+) -> list[SourceRef]:
+    cited = {claim.id: claim.citations for claim in claims}
+    first = dict.fromkeys(citation.source_id for claim_id in order for citation in cited[claim_id])
+    listed = {source.id: source for source in sources}
+    return [listed[source_id] for source_id in first if source_id in listed]

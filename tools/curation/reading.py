@@ -13,6 +13,7 @@ from app.research.quotes import normalise_quote_lines
 from app.research.untrusted import clean_untrusted_text
 
 from .polite import Fetched, FetchFailed, PoliteHttp
+from .tables import with_table_rows
 from .wayback import SNAPSHOT, latest_snapshot, latest_snapshot_query, raw_snapshot_url
 
 __all__ = [
@@ -70,6 +71,8 @@ def source_text(fetched: Fetched) -> tuple[str, str, bool]:
     else:
         page = extract(fetched.final_url, content_type, fetched.body, fetched.charset)
         raw, truncated = page.text, page.truncated
+        if content_type == HTML_TYPE:
+            raw, truncated = with_table_rows(fetched.body, raw, truncated)
     return content_type, "\n".join(normalise_quote_lines(clean_untrusted_text(raw))), truncated
 
 

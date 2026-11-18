@@ -8,7 +8,7 @@ from pydantic import Field, model_validator
 from app.research.base import ContractModel
 from app.research.vocabulary import Discipline
 
-from .fields import ClaimIds, SentenceText
+from .fields import ClaimIds, SentenceText, SlugList
 from .limits import (
     KEY_FACTS_MAX,
     LEDE_SENTENCES_MAX,
@@ -23,6 +23,8 @@ __all__ = ["KeyFact", "Overview", "OverviewSection", "OverviewSentence"]
 class OverviewSentence(ContractModel):
     text: SentenceText
     claim_ids: ClaimIds
+    sub_categories: SlugList = Field(default_factory=list)
+    crafts: SlugList = Field(default_factory=list)
 
 
 class KeyFact(ContractModel):

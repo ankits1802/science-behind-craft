@@ -1,0 +1,2028 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Agra-Marble-Inlay",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:55:08+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {"query": "Agra marble inlay pietra dura craft documentation", "site": "web search"},
+    {"query": "Agra parchin kari marble inlay geographical indication application", "site": "web search"},
+    {"query": "Makrana marble geology global heritage stone resource paper", "site": "web search"},
+    {"query": "Taj Mahal pietra dura inlay stones lapis lazuli carnelian jasper malachite paper", "site": "web search"},
+    {"query": "GI application 661 Agra Stone Inlay Craft and application 216 Agra Marble Inlay Work", "site": "search.ipindia.gov.in (GI registry)"},
+    {"query": "Geographical Indications Journal No. 196 (Agra Stone Inlay Work)", "site": "search.ipindia.gov.in (IPOJournal, GIR listing)"},
+    {"query": "GI application 405 Makrana Marble and Geographical Indications Journal No. 64", "site": "search.ipindia.gov.in (GI registry and IPOJournal)"},
+    {"query": "Agra Marble Inlay craft page (Development Commissioner Handicrafts); the live page timed out and the Wayback Machine holds no snapshot, so it was not used", "site": "handicrafts.nic.in"},
+    {"query": "Gill and Bhatnagar, stone inlay of the I'timad-ud-Daulah tomb, Archaeological and Anthropological Sciences; the article and PDF pages need a script-running browser, so no text could be read", "site": "link.springer.com"},
+    {"query": "Garg et al. 2019, Makrana Marble: a Popular Heritage Stone Resource from NW India (Geoheritage 11(3)); not opened, cited only through the sources that report it", "site": "web search"},
+    {"query": "The Notion of Hierarchy: the Parchin Kari Programme at the Taj Mahal (Archnet-IJAR vol. 1 no. 1); the Wayback snapshot of the archnet.org page refused the connection", "site": "web.archive.org (archnet.org)"},
+    {"query": "Bejeweled buildings (GIA 4Cs blog); the live page timed out", "site": "4cs.gia.edu"},
+    {"query": "The marble inlay artisans of Agra; HTTP 403", "site": "fodors.com"},
+    {"query": "The stones that make the Taj; HTTP 403, and a personal blog", "site": "madhulikaliddle.com"},
+    {"query": "Taj Mahal's history of repair and restoration; HTTP 403 and no readable snapshot", "site": "dnaindia.com"},
+    {"query": "Taj Mahal restoration, 400 stones replaced; read, but about the red sandstone floor, not the inlay", "site": "indiatoday.in"},
+    {"query": "Craftkatha marble inlay (Pachchikari / Parchinkari); read, an unauthored page about the craft in general, not used", "site": "aiacaonline.org"},
+    {"query": "Marble inlay (Pietra Dura) of Agra; read, an unauthored sales catalogue, not used", "site": "lokpriya.com"},
+    {"query": "Makrana marble is now a global heritage stone resource; read, only a photo caption extracted, not used", "site": "deccanherald.com"},
+    {"query": "References of the Wikipedia articles Makrana marble, Pietra dura and Taj Mahal followed to the GSI, GI journal and press pages they cite", "site": "en.wikipedia.org"},
+    {"query": "Openly licensed pictures of parchin kari at the Taj Mahal, Itimad-ud-Daulah and in Agra workshops", "site": "commons.wikimedia.org"},
+    {"query": "Where pietra dura began, Rome or Florence: the V&A record of table top 449-1869 read and used; the Met's 2008 exhibition page Art of the Royal Court read but not used", "site": "collections.vam.ac.uk and metmuseum.org"},
+    {"query": "Opificio delle Pietre Dure museum history; the live page timed out and the Wayback Machine holds no snapshot", "site": "opificiodellepietredure.cultura.gov.it"},
+    {"query": "Tomb of Itimad-ud-Daulah construction dates; the Archnet site record read and used", "site": "archnet.org"},
+    {"query": "Itimad-ud-Daulah monument page of the Agra Development Authority; read, unauthored and giving only the year of the father's death, not used", "site": "adaagra.org.in"},
+    {"query": "World Monuments Fund conservation of I'timad-ud-Daulah; HTTP 404 and no snapshot", "site": "wmf.org"},
+    {"query": "Taj Mahal 28 types of precious and semi-precious stones; Outlook Traveller's Up Close And Personal page read and used, a Brooklyn College geology page read but not used", "site": "web search"},
+    {"query": "Dated museum records of 19th-century Agra inlay: V&A table top 1104-1874 read and used; V&A chess table top 02199(IS) read but not used", "site": "collections.vam.ac.uk"},
+    {"query": "आगरा पच्चीकारी कारीगर संगमरमर; an Amar Ujala photo story read, but its count of about 50 thousand people in crisis carries no date, so not used", "site": "web search (Hindi press)"},
+    {"query": "Makrana tehsil in Didwana-Kuchaman district after Rajasthan's 2023 reorganisation; the district website could not be read and only encyclopedia pages were found, so Makrana stays under Nagaur as its sources state", "site": "didwana-kuchaman.rajasthan.gov.in"},
+    {"query": "HEA Agra GI felicitation press release (pr379.pdf); read, but it reports only a members' meet, dropped as filler", "site": "epch.in"}
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 196: Agra Stone Inlay Work, G.I. Application No. 661",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2024,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2024%5CJournal_No._196%5CJournal+196.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 661 (Agra Stone Inlay Craft)",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/661",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 216 (Agra Marble Inlay Work)",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/216",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 64: Makrana Marble, GI Application No. 405",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2014,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/IPOJournal/1_70_1/gi-journal-64.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 405 (Makrana Marble)",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/405",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Geological and Environmental Status of Makrana Marble Mining Area, Nagaur District, Rajasthan and Strategy for Sustainable Development",
+      "authors": ["J. V. Natani"],
+      "publisher": "Geological Survey of India",
+      "url": "https://www.portal.gsi.gov.in/gsiDoc/pub/cs_makrana_marble.pdf",
+      "archivedUrl": "https://web.archive.org/web/20160214172707id_/http://www.portal.gsi.gov.in/gsiDoc/pub/cs_makrana_marble.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "PAPER",
+      "title": "Gemstones in the Era of the Taj Mahal and the Mughals",
+      "authors": ["Dona Mary Dirlam", "Chris L. Rogers", "Robert Weldon"],
+      "publisher": "Gems & Gemology, Gemological Institute of America",
+      "year": 2019,
+      "url": "https://www.gia.edu/gems-gemology/fall-2019-era-of-the-taj-mahal-and-mughals",
+      "doi": "10.5741/GEMS.55.3.294",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "WEB_PAGE",
+      "title": "Taj Mahal (World Heritage List 252)",
+      "publisher": "UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/252/",
+      "language": "en",
+      "licence": "CC-BY-SA IGO 3.0",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "WEB_PAGE",
+      "title": "Fatehpur Sikri (World Heritage List 255)",
+      "publisher": "UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/255/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "OTHER",
+      "title": "Inlaid natural stones in Makrana Marble Taj Mausoleum of India (EGU General Assembly 2020 presentation EGU2020-12693)",
+      "authors": ["Gurmeet Kaur"],
+      "publisher": "European Geosciences Union, Copernicus",
+      "year": 2020,
+      "url": "https://presentations.copernicus.org/EGU2020/EGU2020-12693_presentation.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Pietra dura",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Pietra_dura",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Taj Mahal",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Taj_Mahal",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Makrana marble",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Makrana_marble",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Tomb of I'timad-ud-Daulah",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Tomb_of_I%27tim%C4%81d-ud-Daulah",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "WEB_PAGE",
+      "title": "In Perpetual Bloom: Pietra Dura Ornamentation at the Taj Mahal",
+      "authors": ["Arundhati Chauhan"],
+      "publisher": "Impart Perspectives",
+      "year": 2023,
+      "url": "https://imp-art.org/perspectives/dispatches/in-perpetual-bloom-pietra-dura-ornamentation-at-the-taj-mahal/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "WEB_PAGE",
+      "title": "Parchin Kari: Mughals' Gem-studded Legacy in Agra",
+      "publisher": "Outlook Traveller",
+      "url": "https://www.outlooktraveller.com/explore/culture/parchin-kari-mughals-gem-studded-legacy-in-agra",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "WEB_PAGE",
+      "title": "Parchin Kari: A Legacy Carved in Stone, Studded with Gems",
+      "publisher": "Live History India",
+      "url": "https://www.livehistoryindia.com/story/living-culture/marble-inlay",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "WEB_PAGE",
+      "title": "Ancient Crafts: The Stone Inlays of the Taj Mahal",
+      "publisher": "Core77",
+      "url": "https://www.core77.com/posts/25995/Ancient-Crafts-The-Stone-Inlays-of-the-Taj-Mahal",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Marble used for Taj Mahal is now 'Global Heritage Stone Resource'",
+      "publisher": "Hindustan Times",
+      "url": "https://www.hindustantimes.com/punjab/marble-used-for-taj-mahal-is-now-global-heritage-stone-resource/story-t67WWKE5kj05JL9o3qEdlO.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S20",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "There is magic in the Makrana marble",
+      "publisher": "The Hindu",
+      "year": 2012,
+      "url": "https://www.thehindu.com/todays-paper/tp-features/tp-propertyplus/there-is-magic-in-the-makrana-marble/article2859017.ece",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S21",
+      "kind": "WEB_PAGE",
+      "title": "The Story of India gallery: Taj Mahal",
+      "publisher": "PBS",
+      "url": "https://www.pbs.org/thestoryofindia/gallery/photos/20.html",
+      "archivedUrl": "https://web.archive.org/web/20250114112600id_/https://www.pbs.org/thestoryofindia/gallery/photos/20.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S23",
+      "kind": "WEB_PAGE",
+      "title": "Pacchikari, Stone Inlay of Agra, Uttar Pradesh",
+      "publisher": "Global InCH",
+      "url": "https://www.globalinch.org/craft/pacchikari-stone-inlay-of-agra-uttar-pradesh/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S24",
+      "kind": "WEB_PAGE",
+      "title": "Pacchikari: Stone Inlay from Agra",
+      "publisher": "Direct Create",
+      "url": "https://medium.com/direct-create/pacchikari-stone-inlay-from-agra-7dafb8765358",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S25",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Table top (accession number 449-1869)",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://collections.vam.ac.uk/item/O61542/table-top-unknown/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S26",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Table top (accession number 1104-1874)",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://collections.vam.ac.uk/item/O456617/table-top/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S27",
+      "kind": "WEB_PAGE",
+      "title": "Mausoleum of I'timad al-Daula",
+      "publisher": "Archnet",
+      "url": "https://www.archnet.org/sites/4001",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S28",
+      "kind": "WEB_PAGE",
+      "title": "Up Close And Personal The Designs On The Taj Mahal",
+      "publisher": "Outlook Traveller",
+      "year": 2022,
+      "url": "https://www.outlooktraveller.com/explore/culture/up-close-and-personal-the-designs-on-the-taj-mahal",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "Agra marble inlay combines a marble base with semi-precious stones, and its technique dates back to the Mughal era.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 6", "quote": "Agra Marble Inlay is a fine example of craftsmanship, combining the beauty of marble with the allure of semi-precious stones."},
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 6", "quote": "Agra Marble Inlay technique is a time-honored art form that dates back to the Mughal era, with a rich tradition of craftsmanship centered around Agra, India."}
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "TERM", "ref": "W01"},
+      "text": "Parchin kari, also called pachhikari or parchinkari, is the art of inlaying coloured or semi-precious stones into a stone base, often in geometric or flower patterns.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraphs 2-3", "quote": "One of them is Parchin Kari or Pachhikari. Parchin Kari is the art of inlaying coloured or semi-precious stones into a stone base, often in geometric or flower patterns."},
+        {"sourceId": "S11", "locator": "lead paragraph", "quote": "called parchin kari or parchinkari (Persian: پرچین کاری) in the Indian subcontinent, is a term for the inlay technique of using cut and fitted, highly polished colored stones to create images."}
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "TERM", "ref": "W01"},
+      "text": "In Mughal India pietra dura, adapted into the local Mughal style, came to be known as parchin kari, literally meaning 'driven in'.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "History, last paragraph", "quote": "In Mughal India, pietra dura was known as parchin kari, literally 'inlay' or 'driven-in' work."},
+        {"sourceId": "S15", "locator": "paragraph 4", "quote": "which had been adapted into the local Mughal style and came to be known as parchin kari, literally meaning 'driven in'."}
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "Pietra dura, Italian for 'hard stone', is a technique of cutting, polishing and inlaying precious and semi-precious stones, generally into hard stone such as marble, to represent an image.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 3", "quote": "pietra dura, meaning \"hard stone\" in Italian, is a technique wherein precious and semi-precious stones are cut, polished and inlaid - generally on hard stone, such as marble - to represent an image."},
+        {"sourceId": "S07", "locator": "Introduction, paragraph 2", "quote": "This stonework is generally referred to as pietra dura (\"hard stone\" in Italian) and known as parchin kari in India."}
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application describes stone inlay, also known as parchin kari, as the most attractive and popular art form of Agra.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, description, p. 8", "quote": "Stone Inlay is also known as Parchin kari which is known as the most attractive and popular forms of Art in Agra."}
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "Agra stone inlay work combines carving, inlaying, engraving and sculpture, and the GI application calls Indian marble one of the hardest materials to work.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, description, p. 8", "quote": "As the Indian marble is one of the hardest materials to work, it is not an easy process. This work on stone is a combination of carving, inlaying, engraving and sculpture."}
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application states that parchin kari, the inlay of agate, turquoise, cornelian, jasper, bloodstone, mother of pearl, malachite and lapis lazuli in marble, is unique to Agra.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "Parchin kari or the stone of semi-precious stones - agate, turquoise, cornelian, jasper, bloodstone, mother of pearl, malachite and lapis lazuli in marble is unique to Agra."}
+      ]
+    },
+    {
+      "id": "C145",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application says the stone inlay work of Agra reflects the pietra dura mosaic work used in the Taj Mahal and at Fatehpur Sikri.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "The famous stone Inlay work of Agra reflects the mosaic work (Pietra Dura) used in Taj Mahal and Fatehpur Sikri."}
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Agra marble inlay, a tradition of craftsmanship centred around Agra, flourished and reached its peak under the Mughals, especially after the Taj Mahal was built.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, proof of origin, p. 9", "quote": "The craft flourished and reached its peak during the era of the Mughals in medieval India and especially after the construction of Taj Mahal."},
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 6", "quote": "a rich tradition of craftsmanship centered around Agra, India"},
+        {"sourceId": "S23", "locator": "paragraph 3", "quote": "Since the time of Shah Jahan, Agra in Uttar Pradesh has remained a thriving centre for marble work, including inlay."},
+        {"sourceId": "S26", "locator": "summary", "quote": "It was made by craftsmen in Agra, a renowned centre for the inlaying of marble with semi-precious stones from the reign of Shah Jahan (r. 1628-1658)."}
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application says the sequence of processes was perfected by the artisans in the 17th century and has remained largely unchanged for over 400 years.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "The sequence of processes that culminates in the realization of a masterpiece of marble stone was perfected by the artisans in the 17th century, and has remained largely unchanged for over 400 years."}
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Construction of the Taj Mahal started in 1632; the mausoleum was completed in 1648 and the whole complex in 1653.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "Brief synthesis, paragraph 1", "quote": "It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD."},
+        {"sourceId": "S07", "locator": "Introduction, paragraph 3", "quote": "Begun in 1632, the entire complex was not completed until 1653"},
+        {"sourceId": "S17", "locator": "The Taj Mahal: Pinnacle of Perfection", "quote": "The Taj Mahal, built by Shah Jahan in 1632, is the ultimate testament to the brilliance of parchin kari."}
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "UNESCO's short description says the Taj Mahal was built in Agra between 1631 and 1648 by order of Shah Jahan.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "short description", "quote": "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor Shah Jahan in memory of his favourite wife"}
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "A design magazine's account of Agra inlay dates the beginning of the Taj Mahal's 17-year construction to 1633.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 2", "quote": "they used to be done in 1633, when the 17-year construction of the Taj Mahal began-except that the craft is applied to souvenirs rather than mausoleums these days."}
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Archnet's record of the tomb of Itimad-ud-Daulah dates the beginning of the Taj Mahal's construction to 1630.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "description, paragraph 2", "quote": "Many of the design elements foreshadow the Taj Mahal, the construction of which began in 1630."}
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "More than 20,000 craftsmen and workers are believed to have been employed in building the Taj Mahal.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "Construction", "quote": "It is believed that more than 20,000 artisans, labourers, painters and others were involved in the construction of the building."},
+        {"sourceId": "S21", "locator": "Taj Mahal", "quote": "is believed to have employed 20,000 laborers"},
+        {"sourceId": "S07", "locator": "Introduction, paragraph 3", "quote": "It eventually took more than 1,000 elephants and 20,000 craftsmen from all over Asia to build (Nath, 1985)."}
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Inlayers, stone-cutters, carvers and calligraphers for the Taj Mahal were requisitioned from across the empire and from Central Asia and Iran.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "Brief synthesis, paragraph 1", "quote": "For its construction, masons, stone-cutters, inlayers, carvers, painters, calligraphers, dome builders and other artisans were requisitioned from the whole of the empire and also from the Central Asia and Iran."},
+        {"sourceId": "S18", "locator": "paragraph 3", "quote": "the most skilled architects, inlay craftsmen, calligraphers, stone-carvers and masons were called from all across India and lands as distant as Persia and Turkey."}
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Gems & Gemology, citing Havell, says records indicate the parchin kari craftsmen were mostly from Kannauj and were Hindus, not Muslims.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "History of the Families that Performed the Inlay", "quote": "Records indicate that the parchin kari craftsmen were mostly from Kannauj and were not Muslim but Hindus (Havell, 2003)."}
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Gems & Gemology says that when the Taj Mahal was built parchin kari was used only in the tombs of the emperor's family, and one of the complex's four tombs has a cenotaph so decorated.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Architecture and Gem Materials of the Taj Mahal", "quote": "Two additional tomb buildings, called Saheli Burj, lie along the south end of the complex."},
+        {"sourceId": "S07", "locator": "Architecture and Gem Materials of the Taj Mahal", "quote": "One of the four tombs contains a marble cenotaph embellished with parchin kari (this technique was only used in the tombs of the emperor's family at the time the Taj Mahal was built), but vandals have stolen many of the more valuable inlaid stones."}
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Humayun, the second Mughal emperor, is credited with introducing inlay as a significant feature of Mughal architecture.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "From Rome to the Mughal Courts", "quote": "Humayun, the second Mughal emperor, is credited with introducing inlay as a significant feature of Mughal architecture."}
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The Qila-i-Kuhna Mosque in Delhi's Purana Qila, of 1540 CE, shows one of the earliest examples of inlay work in India, its mihrab adorned with gold and semi-precious stones.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "From Rome to the Mughal Courts", "quote": "The Qila-i-Kuhna Mosque in Delhi's Purana Qila (1540 CE) showcases one of the earliest examples of inlay work in India, with its mihrab adorned with gold and semi-precious stones."}
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "The tomb of Itimad-ud-Daulah in Agra is considered the first Mughal structure in India built entirely of white marble.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "Architecture", "quote": "The tomb itself is considered the first Mughal structure in India built entirely of white marble."},
+        {"sourceId": "S17", "locator": "The Jewel Box of Mughal India", "quote": "It was the first Mughal structure built entirely of white marble, setting the stage for the architectural marvels to come."},
+        {"sourceId": "S27", "locator": "description, paragraph 2", "quote": "The I'timad al-Daula was the first Mughal structure to be completely encased in marble and extensively use pietra dura, the marble inlay work that is associated with the Taj Mahal."}
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Empress Nur Jahan commissioned the tomb of Itimad-ud-Daulah in Agra for her father, and it features geometric designs, flowers and decorated vases in pietra dura.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 6", "quote": "The Tomb of Itimad-Ud-Daula, commissioned by Empress Nur Jahan for her father, for instance, features polychromatic geometric designs, flowers and decorated vases using the technique."},
+        {"sourceId": "S17", "locator": "The Jewel Box of Mughal India", "quote": "Before the Taj Mahal, the tomb of Itmad-ud-Daula in Agra (1621-1627 CE) marked a turning point in Mughal architecture."},
+        {"sourceId": "S14", "locator": "Decoration", "quote": "Floral and stylized arabesques, geometrical designs, opus sectile mosaic and pietra dura inlay are used throughout the exterior."}
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The tomb of Itimad-ud-Daulah marks a transitional phase in Mughal architecture, from the red sandstone architecture of Akbar towards the style of Shah Jahan's reign.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "description, paragraph 2", "quote": "The mausoleum is like a jewel box: built entirely of pure marble, it marks the transitional phase from the grand and massive red sandstone architecture of Akbar to the softer and sensual architectural style that marked the reign of Shah Jahan."},
+        {"sourceId": "S17", "locator": "The Jewel Box of Mughal India", "quote": "Before the Taj Mahal, the tomb of Itmad-ud-Daula in Agra (1621-1627 CE) marked a turning point in Mughal architecture."},
+        {"sourceId": "S14", "locator": "Architecture", "quote": "It marks a transitional phase in Mughal architecture from the red sandstone and marble decoration of the monuments of Akbar's era, such as Humayun's Tomb and Akbar's tomb, to the white marble and pietra dura inlay exemplified by the Taj Mahal of Shah Jahan."}
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Live History India dates the tomb of Itimad-ud-Daulah in Agra to 1621-1627 CE.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The Jewel Box of Mughal India", "quote": "Before the Taj Mahal, the tomb of Itmad-ud-Daula in Agra (1621-1627 CE) marked a turning point in Mughal architecture."}
+      ]
+    },
+    {
+      "id": "C147",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Archnet and Wikipedia date the tomb of Itimad-ud-Daulah to 1622-1628, Archnet saying Nur Jahan commissioned it on her father's death in 1622.",
+      "quotes": [
+        {"sourceId": "S27", "locator": "Events", "quote": "Events 1622-1628/1035-37 AH"},
+        {"sourceId": "S27", "locator": "description, paragraph 1", "quote": "His daughter, Nur Jahan, later married the Emperor and commissioned the mausoleum to honor the memory of her father upon his death in 1622."},
+        {"sourceId": "S14", "locator": "lead paragraph", "quote": "Built between 1622 and 1628, it was commissioned by the Mughal empress Nur Jahan for her father"}
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "Pietra dura first appeared in Rome in the 16th century, where the V&A says the ancient Roman technique of inlaying coloured stones was revived in the 1550s.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "lead paragraph", "quote": "It first appeared in Rome in the 16th century, reaching its full maturity in Florence."},
+        {"sourceId": "S25", "locator": "summary", "quote": "The technique of creating inlays from coloured stones was practised by the ancient Romans and revived in the 1550s in Rome, where recent archaeological excavations meant that there were abundant supplies of antique marbles to be found."}
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "Gems & Gemology says most historians credit the Italians with creating pietra dura in Florence, where it was called commesso di pietre dure, 'composition of hard stones'.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "Most historians credit the Italians with creating this technique in Florence, where it was called commesso di pietre dure (\"composition of hard stones\") and often abbreviated to pietra dura"},
+        {"sourceId": "S15", "locator": "paragraph 3", "quote": "Said to have been originally developed and perfected by Florentine artists in sixteenth-century Italy"}
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "The Mughals had received gifts of decorative objects with inlay from Italy and had acquired an appreciation for the art.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "The Mughals had received gifts from Italy of decorative objects with inlay and had acquired an appreciation for the art."}
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Gems & Gemology states that European artists brought the pietra dura technique with them to India to work on the Taj Mahal.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "European artists brought the technique with them to India to work on the Taj Mahal."}
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Gems & Gemology also states that parchin kari developed independently in India and entered the monuments of the Mughal empire during the sixteenth century.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "History of the Families that Performed the Inlay", "quote": "The tradition of fine stone inlay, or parchin kari, developed independently in India and began to be incorporated into the monuments of the Mughal empire during the sixteenth century."}
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Outlook Traveller reports that Shah Jahan brought pietra dura to India in the 17th century, with experts from Persia, when he commissioned the Taj Mahal.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 4", "quote": "The art of Pietra Dura, as it was called in Italy, was brought to India in the 17th century by the Mughal emperor Shah Jahan when he commissioned the Taj Mahal and brought experts from Persia"},
+        {"sourceId": "S24", "locator": "paragraph 2", "quote": "The art was brought to India in the 17th century from Persia when Shah Jahan chose to build the Taj Mahal."}
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Live History India says the craft of marble inlay journeyed to India in the 16th century and was transformed under Mughal patronage into parchin kari.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "From Rome to the Mughal Courts", "quote": "In the 16th century, this craft journeyed to India, where it underwent a remarkable transformation under Mughal patronage, becoming the uniquely Indian art of parchin kari."}
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The western pietra dura technique adapted for the Taj Mahal's inlaid flowers is believed to have been imported to the Mughal court during Jahangir's reign.",
+      "quotes": [
+        {"sourceId": "S21", "locator": "Pishtaq", "quote": "These decorative patterns, found throughout the tomb, were created by adapting the western pietra dura technique, believed to have been imported to the court during the reign of the emperor Jahangir."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Some scholars believe Italian artisans taught local artisans in Mughal workshops, while others think local artisans skilled in softer-stone inlay might have learnt it themselves.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 4", "quote": "Some scholars believe that Italian artisans taught local artisans at Mughal workshops, while others think that local artisans might have learnt it themselves since they were already skilled in inlay techniques that employed softer stones."},
+        {"sourceId": "S15", "locator": "paragraph 5", "quote": "While we still do not know which of these versions is true"}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "For a time before Lord Curzon's restoration of the Taj Mahal was completed in 1908, security was not stringent and some stones of its pietra dura were stolen.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "The Taj Mahal Today and Its Conservation", "quote": "For a time up until the restoration by British Viceroy Lord Curzon was completed in 1908, security was not stringent, so some of the stones in the pietra dura as well as other decor were stolen"}
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "As Mughal power declined in the 18th century and royal patronage waned, parchin kari artisans began making tabletops and jewellery boxes for European buyers.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The Decline of a Glorious Craft", "quote": "The decline of Mughal power in the 18th century marked a turning point for parchin kari. As royal patronage waned, artisans began creating decorative items like tabletops and jewelry boxes for European buyers, who were enchanted by the intricate craftsmanship."}
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "The parchinkari craftsmen of Agra are believed to be descendants of the craftsmen who built the Taj Mahal.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 4", "quote": "The Parchinkari craftsmen of Agra are believed to be descendants of the same craftsmen who built the Taj Mahal."},
+        {"sourceId": "S24", "locator": "paragraph 5", "quote": "The craftsmen who are predominantly Muslim, are said to be descendants of those same craftsmen."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "A design magazine reports that the Taj Mahal's inlay artisans passed their skills to later generations, but only to the men and only within the family.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 4", "quote": "Fortunately, the artisans were still able to pass on their skills to future generations (although only to the men and only within the family)"}
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "It is said that the most skilled workers on the Taj Mahal had one hand cut off after it was finished so they could never repeat the work.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 3", "quote": "It is said that the most skilled individuals who had worked on the Taj Mahal had one hand cut off after it was finished so they could never duplicate this work again."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W02"},
+      "text": "An Italian or Italian-inspired pietra dura tablet of Orpheus, dated 1648, is set into the back wall of Shah Jahan's throne at the Diwan-i-Aam of the Red Fort in Delhi, with 318 other inlay panels.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 5", "quote": "an Italian or Italian-inspired pietra dura panel appearing in a Mughal context is that of a tablet, dating to 1648, depicting the Greek mythological figure, Orpheus, set into the back wall of Shah Jahan's throne at the Diwan-i-Aam in the Red Fort in Delhi, along with 318 other panels of inlay."}
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The Hindu calls Makrana the oldest among Indian cities with marble quarries.",
+      "quotes": [
+        {"sourceId": "S20", "locator": "The history", "quote": "Makrana is the oldest among cities in India with marble quarries."}
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P01"},
+      "text": "A master artist plans each design, dividing the marble panel into systematic sections with traditional geometric tools and making a final sketch at 1:1 scale.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, method of production, p. 9", "quote": "The master artist who is a thoroughly knowledgeable person plans the each design. Marble panel is divided in systematic sections using traditional geometric tools and making final sketch of the selected design on 1:1 Scale."}
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P01"},
+      "text": "The whole drawing is traced on a brass sheet, which a specialist cuts out accurately to make templates of every component of the design.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, method of production, p. 9", "quote": "The entire drawing is traced on a brass sheet, which is cut out accurately by a specialist to make templates of every component of the design."},
+        {"sourceId": "S24", "locator": "paragraph 3", "quote": "The craftsman matches the shapes to a brass template."}
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P01"},
+      "text": "Choosing the design involves setting its colour scheme and tonality and choosing different stones by their shades.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, stages of production, p. 11", "quote": "Which involves choosing a design, setting a colour scheme and tonality of the design and choosing different types of stones based on their shades to be used in the product."}
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "Base stones and inlay stones are sourced to suit the design, and the base stone may be white or black marble or soapstone.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw material sourcing, p. 11", "quote": "Based on the design, base stones and inlay stones are sourced. The base stone may be white or black marble or soapstone."}
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P03"},
+      "text": "Gems & Gemology says that in advanced inlays a bow saw coated with abrasives was used to fashion the slivers of gem material.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "In advanced inlays, slivers of different gem materials were artfully placed in the space with a view toward creating colors and shapes of the desired geometric patterns or floral designs. A bow saw coated with abrasives was used to fashion the slivers (figure 19)."}
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "The inlay stones are cut and shaped to the design on an emery wheel, and because each part is shaped individually the work is time consuming.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, stone cutting, p. 11", "quote": "The stone to be inlayed are cut and given the desired shape as per the design using a special instrument called emery wheel. Since each part of the design is shaped individually, it is time consuming."},
+        {"sourceId": "S24", "locator": "paragraph 2", "quote": "Stone slivers are carefully shaped into minute petals, leaves, and stems on a manually operated emery wheel."},
+        {"sourceId": "S18", "locator": "paragraph 6", "quote": "Each shape is ground individually and must fit precisely without any gaps."}
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T01"},
+      "text": "Lapidaries shape the gemstones on a hand-driven tool called Saan & Kamaani, holding tiny pieces in their fingertips against an emery wheel turned by a cane rod with a leather band.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "This begins with lapidary artists who shape the selected gem stones on a hand driven tool known as \"Saan & Kamaani\"."},
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "tiny pieces of gemstones are held in the fingertips and touched with emery wheel, which is rotated by hand with great precision using a cane rod attached with a leather band."}
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "A design magazine reports that, at the cooperative its writer visited in India, the artisan makes delicate shapes, some only a few millimetres in size, from thin stone sheets using only a human-powered grindstone.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 2", "quote": "On a recent trip to India, I had the chance to learn how these stone inlays are made."},
+        {"sourceId": "S18", "locator": "paragraph 4", "quote": "The artisans work together as a cooperative, meaning each of them remains an individual artist with complete creative freedom, but all profits are shared equally."},
+        {"sourceId": "S18", "locator": "paragraph 5", "quote": "The starting point are thin sheets of various (semiprecious) stone, from which the artisan creates delicate shapes, some only a few millimetres in size"},
+        {"sourceId": "S18", "locator": "paragraph 5", "quote": "Only a (human-powered) grindstone is used"}
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "The design magazine reports that each individually ground stone shape must fit precisely, without any gaps.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 6", "quote": "Each shape is ground individually and must fit precisely without any gaps."}
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P05"},
+      "text": "In the method Gems & Gemology describes, a master artist known as the parchinkar would first draw the pattern in henna dye on the marble's surface.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "A master artist known as the parchinkar would first draw the pattern in henna dye on the marble's surface."}
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P05"},
+      "text": "In the design magazine's account, once the pieces fit, the marble plate is covered with henna paint, the pieces are laid on it and their outlines scratched in, and the orange colour guides the carving of the grooves.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 6", "quote": "Once a perfect fit has been achieved, the marble plate, into which the ornamental pattern will be integrated, is covered with a layer of henna paint."},
+        {"sourceId": "S18", "locator": "paragraph 7", "quote": "The single pieces that make the inlay pattern are laid out on the marble plate and their outlines scratched into the surface. The orange color serves as an orientation when carving out the individual grooves, into which the semiprecious stone pieces will be glued."}
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P05"},
+      "text": "In the GI application's method, craftsmen trace the design onto the base stone using a sharp tool.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, tracing, p. 11", "quote": "Craftsmen trace the design onto the base stone using a sharp tool."}
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P06"},
+      "text": "Grooves are cut into the base stone with a chisel so that the shaped stones fit them perfectly.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, grooving, p. 11", "quote": "Grooves are cut into the design in the base stone using a chisel such that the shaped stone can perfectly fit in them."},
+        {"sourceId": "S17", "locator": "The Craft Behind the Art", "quote": "Artisans, known as parachinkars, carve intricate grooves into marble, into which semi-precious stones are carefully inlaid."}
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P06"},
+      "text": "For a marble inlay artefact the marble is chiselled with a diamond-tipped chisel, while the stones are cut and shaped with a hand-operated machine.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 5", "quote": "To make a marble inlay artefact, the stones are cut and shaped with a hand-operated machine while the marble is chiselled with a diamond-tipped chisel."}
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P07"},
+      "text": "The GI application says the stones are inlaid into the grooves with glue, by traditional methods using charcoal or modern ones using araldite.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, inlay of stones, p. 11", "quote": "Once the grooves are cut, the stones are inlayed into the base stone using glue. Traditional methods like charcoal or modern methods like araldite are being used."},
+        {"sourceId": "S23", "locator": "paragraph 4", "quote": "The stone is then pressed into place and fixed with a burning charcoal."}
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M15"},
+      "text": "A design magazine reports that the glue still in use is a paste made from sugar cane, beeswax, honey, lemon juice, marble dust and lentils.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 8", "quote": "the glue in use is still a paste made from sugar cane, bees wax, honey, lemon juice, marble dust and lentils."}
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P07"},
+      "text": "The carved space is filled with thin polished pieces of gem material fixed with organic glue, grooved to fit together so that the joins are almost invisible.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "Then the artist would carve out a space in the marble and fill it with thin polished pieces of gem materials, affixing them with organic glue."},
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "The stones were grooved so they would fit together, making the contact between them almost invisible. The technique is still used to this day"}
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "PROCESS",
+      "subject": {"type": "MATERIAL", "ref": "M15"},
+      "text": "Outlook Traveller found the exact recipe of the adhesive that holds the stones hard to figure out, and the artisans claim it is a trade secret.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 5", "quote": "held in place using an adhesive (the exact recipe for which is hard to figure out. It&rsquos a trade secret, the artisans claim)"}
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P08"},
+      "text": "Once inlaid, the stones are left for some time to dry so that they are properly pasted.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, drying, p. 11", "quote": "Once inlayed, the stones need to be left for some time for drying so that they are properly pasted."}
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P09"},
+      "text": "The piece is hand polished with a traditional polishing powder on a soft moist muslin cloth, and the final polishing is done with zinc powder.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, finishing and polishing, p. 12", "quote": "Hand polishing of the base article is done using a traditional polishing powder which is applied on the surface with a soft moist muslin cloth."},
+        {"sourceId": "S01", "locator": "Application 661, finishing and polishing, p. 12", "quote": "The final polishing is done using zink powder."},
+        {"sourceId": "S23", "locator": "paragraph 4", "quote": "The final polishing is done with zinc power."}
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P09"},
+      "text": "Grinding and polishing is a multi-stage process using graded grits of hard stone, followed by continuous rubbing with pigments and wax.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, machine and tools, p. 10", "quote": "Grinding and polishing is a multi stage process, using graded grit of hard stone, followed by continuous rubbing with pigments and wax."}
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P09"},
+      "text": "After the inlays are inserted, a grindstone shard smooths the surface and removes the henna, and the piece gets a final finish with a layer of wax.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 8", "quote": "A grind stone shard is used to smoothen the surface after the inlays have been inserted."},
+        {"sourceId": "S18", "locator": "paragraph 9", "quote": "The henna paint is also removed during this smoothening process. The inlay piece is now properly integrated into the marble plate, and gets a final finish with a layer of wax."}
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "Agra stone inlay has two categories of artisans: Sadakars do basic cutting and carving aided by machines, and Pachikars do the exclusive inlay work.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, machine and tools, p. 10", "quote": "There are two categories of artisans- Sadakars and Pachikars."},
+        {"sourceId": "S01", "locator": "Application 661, machine and tools, p. 10", "quote": "While basic cutting and carving aided by machines is done by skilled Sadakars, exclusive inlay work, requiring the expertise similar to cutting and polishing of jewelry stones using chisels and grinding stones is done by experienced Pachikars."}
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "Agra artisans use country-made machines for cutting, grinding, buffing and polishing stone, yet curvilinear designs still need skilful handling of chisel and hammer.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, machine and tools, p. 10", "quote": "Artisans operating with country-made machines for cutting, grinding, buffing and polishing of stone. In spite of the use of these simple machines, it requires a very skillful manipulation of chisel and hammer to bring out curvilinear patterns and designs."}
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T11"},
+      "text": "The GI application reports that water jet cutting is used for intricate work and that some experts produce marble inlay to CAD drawings.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, modern tools, p. 11", "quote": "Latest water jet cutting technology is used to get intricate and detailed work. There are experts who can produce marble inlay work to CAD or Printing Drawings."}
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T03"},
+      "text": "The flat chisel, chheeni, carves fine details on the marble surface, and the cold chisel, tanki, cuts the raw slab to the product's basic shape.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 10", "quote": "Flat Chisel (chheeni): It is used to carve out the fine details on the surface of the marble."},
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 10", "quote": "Cold Chisel (tanki): It helps to cut through the raw marble slab to get the basic shape of the desired product"}
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T05"},
+      "text": "The hammer, hatora, is used to drive the chisel through raw marble for both sculpting and carving.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 10", "quote": "Hammer (hatora): This tool is used to drive the chisel through the raw marble for both sculpting and carving."}
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T06"},
+      "text": "The pen drill, barma, makes rough outlines of patterns on the marble and carves designs, while the divider, prakaar, draws concentric circles for geometric patterns.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 11", "quote": "Pen Drill (barma): It is used to make rough outlines of the patterns on the surface of the marble"},
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 11", "quote": "This tool is also used for carving the designs."},
+        {"sourceId": "S01", "locator": "Application 661, traditional tools, p. 11", "quote": "Divider (prakaar): To draw outlines in the form of concentric circles for geometric patterns."}
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M03"},
+      "text": "The GI application describes lapis lazuli as a vivid blue stone prized for its intense colour and historically used in royal palaces and tombs.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 7", "quote": "Lapis Lazuli (Blue) A vivid blue stone prized for its intense color. It was historically used in royal palaces and tombs."}
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M05"},
+      "text": "Carnelian, known for its bright reddish-orange colour, is often used in the floral patterns.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 7", "quote": "Carnelian (Red-Orange) Known for its bright reddish-orange color, carnelian is often used in floral patterns."}
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M04"},
+      "text": "Malachite is a striking green stone, often used for its deep, swirling patterns.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 7", "quote": "Malachite (Green) A striking green stone often used for its deep, swirling patterns."}
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M12"},
+      "text": "Coral, a vibrant red or pink organic material, is often used for accenting inlay designs.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 7", "quote": "Coral (Red or Pink) A vibrant red or pink organic material often used for accenting inlay designs."}
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M06"},
+      "text": "Jasper comes in red, yellow, green and brown and is often used for the more earthy tones of the inlay work.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 7", "quote": "Jasper (Varied Colors) Jasper stones come in various colors such as red, yellow, green, and brown and are often used in more earthy tones in the inlay work."}
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "Agate, turquoise, cornelian, jasper, mother of pearl, malachite, lapis lazuli and black marble are used in marble inlay in Agra.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, semi-precious stones, p. 10", "quote": "Agate (green, blue, purple, Yellow), Turquoise (Sky Blue), Cornelian (orange and red), Jasper (Red and yellow), Mother of pearl (shell), Malachite (green) and Lapis lazuli (Blue), and Black marble are used in marble inlay in Agra."},
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 8", "quote": "The Inlay work is done by using Semi-precious stones i.e. Agate, Turquoise, Cornelian, Jasper, Mother of pearl (shell), Malachite and Lapis lazuli etc."},
+        {"sourceId": "S16", "locator": "paragraph 5", "quote": "Semi-precious stones, such as lapis lazuli, turquoise, malachite, onyx, mother-of-pearl, cornelian, jasper, etc., are inlaid on a marble surface"}
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The base marbles of Agra inlay include Indian white marble, black marble and Indian green marble (Boroda green), from Rajasthan and Agra.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, materials, p. 7", "quote": "Types: Indian White Marble, Black Marble, Indian Green Marble (Boroda Green), etc. Origin: India, particularly from Rajasthan and Agra."}
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M13"},
+      "text": "Agra stone handicrafts are made from soapstones such as selam, from alabaster, gorara and palewa, and from Makrana marble.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 8", "quote": "The beautiful handicraft items of stone are made from soapstone like Selam, Alabaster (Italian Marble), Gorara, Palewa and Marble (Makrana)."}
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M21"},
+      "text": "Gold or silver foil is sometimes applied to give inlaid items a luxurious finish, accentuating edges, borders or highlights.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, materials, p. 7", "quote": "Used For: Accentuating edges, creating borders, or adding highlights to designs. Gold or silver foil is sometimes applied to give a luxurious finish to inlaid items."}
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The GI application says white marble quarried at Makrana in Rajasthan served as a royal stone for the Mughals, and calls the stone hard, durable and white.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "White Marbles are quarried from the Makrana and Ambuja in Rajasthan and served as a royal stone for the Mughals."},
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "Stone is hard, durable and white."}
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The Taj Mahal's white marble veneer was brought from the Makrana quarries in Rajasthan, nearly 400 km from Agra.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Source of the Building Stones and Construction Materials", "quote": "The buildings are brick overlaid with a veneer of marble that was brought in from the Makrana quarries in Rajasthan in western India, nearly 400 km from Agra."},
+        {"sourceId": "S12", "locator": "Construction", "quote": "The white marble came from Makrana in Rajasthan, while the red sandstone was quarried from Fatehpur Sikri in Uttar Pradesh."},
+        {"sourceId": "S21", "locator": "Tomb of Mumtaz Mahal", "quote": "It is made of fine white marble quarried at Makrana in Rajasthan"},
+        {"sourceId": "S04", "locator": "proof of origin, p. 9", "quote": "The marble used in its construction is Makrana Marble."}
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "Over 40 different gem materials used for the inlay of the Taj Mahal's parchin kari have been referenced in the literature.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Types of Gem Materials", "quote": "Voysey (1825) offered the first detailed description of the inlaid stones used in the parchin kari of the Taj Mahal. Over 40 different gem materials used for inlay have been referenced in the literature."}
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "In all, 28 types of precious and semi-precious stone were inlaid into the Taj Mahal's white marble.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "Construction", "quote": "In all, 28 types of precious and semi-precious stone were inlaid into the white marble."},
+        {"sourceId": "S28", "locator": "paragraph 2", "quote": "Ornamented with 28 precious and semi-precious stones from India, Sri Lanka, Afghanistan, China, Tibet, and Arabia, artisans chose every piece with the utmost deliberation."}
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The Taj Mahal's inlaid stones were brought from distant places, among them China, Tibet, Afghanistan and Sri Lanka (Ceylon).",
+      "quotes": [
+        {"sourceId": "S12", "locator": "Construction", "quote": "Many precious and semi-precious stones, used for decoration, were imported from across the world, including jade and crystal from China, turquoise from Tibet, Lapis lazuli from Afghanistan, sapphire from Sri Lanka and carnelian from Arabia."},
+        {"sourceId": "S10", "locator": "slide: conclusions", "quote": "The inlaid natural stones of Taj Mausoleum were procured from far off places such as Ceylon, Afghansistan, China, Turkey, Tibet, Russia during the Mughal rule in India"}
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "Besides semi-precious stones such as lapis lazuli, agate, carnelian and jade, the Taj Mahal's inlay uses yellow limestone, slate and marble.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "slide: conclusions", "quote": "The natural stones adorning the various components of the marble edifice include Yellow Jaisalmer Limestone, black slate, carnelian, agate, Khatu Rainbow Sandstone, onyx, lapis lazuli, malachite, jade, mother pearl, coral etc."},
+        {"sourceId": "S15", "locator": "paragraph 7", "quote": "Semi-precious stones such as lapis-lazuli, agate, bloodstone, carnelian, jade and quartz are used alongside clay-slate, variegated yellow limestone and marble in the designs."}
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M10"},
+      "text": "The Koranic inscriptions of the Taj Mahal, including those on both cenotaphs, are inlaid in black onyx.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Symbolic Significance of the Designs", "quote": "Both cenotaphs feature inscriptions of black onyx inlay."},
+        {"sourceId": "S07", "locator": "Islamic Inscriptions", "quote": "Words from the Koran are similarly inlaid throughout the complex using black onyx."},
+        {"sourceId": "S18", "locator": "paragraph 12", "quote": "The stone used for the black arabic script is onyx."},
+        {"sourceId": "S17", "locator": "The Taj Mahal: Pinnacle of Perfection", "quote": "Quranic verses, inlaid with black onyx, flow seamlessly across the monument's surface"}
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "PBS describes the Taj Mahal's Koranic calligraphy as black marble, its portal frames being inlaid in black marble with Koranic verse.",
+      "quotes": [
+        {"sourceId": "S21", "locator": "Taj Mahal", "quote": "it is profusely decorated with colorful floral motifs and black marble calligraphy of inscriptions from the Koran."},
+        {"sourceId": "S21", "locator": "Pishtaq", "quote": "is bordered by a rectangular frame that is inlaid in black marble with inscriptions of Koranic verse."}
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M05"},
+      "text": "Of the many gems used in the Taj Mahal's parchin kari, carnelian is the most significant in Islamic culture.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Significance of the Gems Used", "quote": "Of the many different types of gems used in the parchin kari of the Taj Mahal, the most significant in Islamic culture is carnelian (figure 16)."}
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M11"},
+      "text": "Jade and chlorite were likely used at the Taj Mahal because green was the Prophet Muhammad's favourite colour.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Significance of the Gems Used", "quote": "Jade and chlorite were likely used because green was the Prophet Muhammad's favorite color (Brill, 1993)."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C085",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "Green plasma jasper, yellow and variegated limestone, yellow and striped marble and clay slate might have been chosen for the Taj Mahal for purely aesthetic reasons.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Significance of the Gems Used", "quote": "Other materials used that might have been chosen for purely aesthetic reasons include green plasma jasper, yellow limestone, variegated limestone, yellow marble, striped marble, and clay slate (Koch, 2006)."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C086",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The tomb of Itimad-ud-Daulah is decorated with floral motifs inlaid with mother-of-pearl and semi-precious stones such as jasper and carnelian.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The Jewel Box of Mughal India", "quote": "is adorned with Persian floral motifs inlaid with mother-of-pearl, jasper, and carnelian."},
+        {"sourceId": "S14", "locator": "Decoration", "quote": "decorated with semi-precious stones including carnelian, jasper, lapis lazuli, onyx and topaz."}
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble is excavated by digging and blasting from quarries 20 to 75 metres deep and is cut to size with steel saws.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "method of production, p. 9", "quote": "The marble is excavated by digging and blasting and is then cut into required sizes by means of steel saws."},
+        {"sourceId": "S04", "locator": "method of production, p. 9", "quote": "Makrana Marble is quarried from the quarries in the said region whose depth vary from 20 to 75 mtr."}
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble is used in buildings, monuments, sculpture and handicrafts and finds a market in Agra among many other Indian cities.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "uniqueness, p. 11", "quote": "Makrana Marble is used in buildings, monuments, sculpture work and for handicrafts, and finds a welcome market in Jaipur, Delhi, Agra, Kolkata, Ajmer, Banaras, Gaya, Allahabad and Haridwar and many other cities in India."}
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble is a calcitic marble from the Makrana and Parbatsar tehsils of Nagaur District in Rajasthan.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 6", "quote": "Makrana Marble is calcitic marble from the Makrana and Parbatsar Tehsils (Makrana Region) of Nagaur District of Rajasthan"},
+        {"sourceId": "S06", "locator": "Introduction", "quote": "Makrana marble is calcitic marble. It is known for the best quality monumental marble, comparable to world famous marbles of Carrara, Italy and Pentelinkar, Greece."}
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble and Sirohi marble are the only calcitic marbles of India, where all other marbles are dolomitic.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 6", "quote": "Of this only Makrana Marble from Nagaur District and Sirohi Marble from Sirohi District are the calcitic marbles. All other marbles in India are dolomitic marble."}
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "CHEMISTRY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble holds more than 98% calcium carbonate, and its impurities such as magnesium oxide, iron oxide and silica are less than 2%.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 6", "quote": "the calcium carbonate content in it is more than 98% and the presence of impurities/ other constituents such as magnesium oxide, iron oxide, silica, aluminia, sulpher etc are less than 2%."}
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "CHEMISTRY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble's calcium oxide content is 50-56 %, high compared with other marbles of Rajasthan.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 7", "quote": "That apart, the Calcium Oxide content upon combustion is 50- 56 which is the highest among marbles."},
+        {"sourceId": "S06", "locator": "Introduction", "quote": "The Makrana marble has made a perceptible dent in marble industry because of its blockability, whiteness, high CaO 50-56 %, low MgO 0.90-1.77 %, as compared to other marbles of Rajasthan"}
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "CHEMISTRY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The Makrana Marble GI application says that, with negligible magnesium and iron, the marble keeps its white colour for hundreds of years, while other marbles turn grey, black or yellow as their magnesium and iron oxidise.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "uniqueness, p. 10", "quote": "While magnesium and iron content is negligent."},
+        {"sourceId": "S04", "locator": "uniqueness, p. 10", "quote": "Because of which it retains its white color (original color) for hundreds of years, while other marble stone change color from white to grey, black or yellow shade due to the oxidization of Magnesium and iron respectively over the years to their respective oxides."}
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana marble varies from pure white to white with grey or pink shades, depending on its impurities.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 6", "quote": "According to the presence of impurities / other constituents the shade / colour of Makrana Marble varies from pure shades of white to white with grey / pink shades across."}
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The close interlocking of Makrana marble's grains gives it strength, hardness and translucency.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "specification, p. 6", "quote": "This interlocking of grains also give it strength, hardness and translucency."}
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The Makrana Marble GI application gives the marble's water absorption as 0.04%, the lowest among all calcitic marbles.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "quality and other characteristics, p. 11", "quote": "The water absorption of Makrana Marble is 0.04%, which is again the lowest among all calcitic marbles."}
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The Makrana Marble GI application says the marble is harder and more resistant to abrasion than marbles imported from Greece and Italy, yet easy to work because it has no free silica.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "description, hardness, p. 8", "quote": "Makrana Marble is on the whole harder than marbles imported from Greece and Italy and is consequently more resistant to abrasion."},
+        {"sourceId": "S04", "locator": "description, hardness, p. 8", "quote": "It is also very easy to work with as it has no free silica which may be hard on tools or interfere with polishing."}
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Makrana's marble deposits belong to the Ajmer Formation of the Kumbhalgarh Group of the Delhi Supergroup.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "Makrana marble deposits belong to the Ajmer Formation of the Kumbhalgarh Group of the Delhi Supergroup"},
+        {"sourceId": "S13", "locator": "paragraph 2", "quote": "They form part of the Ajmer Formation of the Delhi Supergroup, which is a sequence of sedimentary rocks that was deposited in the Delhi Basin during the Proterozoic."}
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The different marble bands of Makrana formed through tight isoclinal folding.",
+      "quotes": [
+        {"sourceId": "S13", "locator": "paragraph 2", "quote": "About 1450 Ma (million years ago) these rocks were affected by the Delhi Orogeny, causing the metamorphism that transformed the original limestones to marble and the folding that caused the steep dip and the current outcrop pattern."},
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "The different marble bands have formed due to tight isoclinal folding"}
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Five prominent marble bands have been delineated in the Makrana area.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "Five prominent marble bands have been delineated in the area from geocoded satellite imagery of February 1998."}
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The Makrana Marble GI journal entry describes six different marble bands extending over 20 kilometres.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "method of production, p. 9", "quote": "There are six different b ands extending over 20 Km."}
+      ]
+    },
+    {
+      "id": "C102",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Gems & Gemology describes the Makrana quarries that supplied the Taj Mahal as open-pit mines stretching more than 22 km.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Source of the Building Stones and Construction Materials", "quote": "These quarries are famous for their milky white marble. Stretching more than 22 km, they were open-pit mines using traditional labor-intensive methods of excavation."},
+        {"sourceId": "S07", "locator": "Source of the Building Stones and Construction Materials", "quote": "brought in from the Makrana quarries in Rajasthan in western India"}
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "During its 1997-98 study the Geological Survey of India reported a cluster of 800 mines and quarry licences extending about 13 km along the strike, from Matabhar to Bilu-Mored.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "During the study period (1997-98) cluster of 800 mines/quarry licenses were reported in the area (Verbal communication DMG, Makrana) extending from Matabhar in the north to Bilu-Mored in the south (approximately 13 km) along the strike"}
+      ]
+    },
+    {
+      "id": "C104",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "Makrana lies at the eastern margin of the Thar Desert and has an ancient history of marble mining.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Introduction", "quote": "is situated at the eastern margin of the Thar Desert and has an ancient marble mining history."}
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "In the Geological Survey of India's 1997-98 study, quarrying at Makrana was by the conventional rope and bucket method, with quarries running along the strike and dip of the marble bands.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Mining related activities", "quote": "Quarrying is by conventional rope and bucket method and the quarries run along the strike and dip of marble bands."},
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "During the study period (1997-98) cluster of 800 mines/quarry licenses were reported in the area"}
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The 2014 Makrana Marble GI journal entry gives the reserves of the existing mining area and explored areas, estimated by the state government, as 55 million tonnes.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "method of production, p. 9", "quote": "The total marble reserves in the existing mining area and those areas which have been explored by the state Government have been estimated to be 55 million tones."},
+        {"sourceId": "S04", "locator": "page footer, p. 10", "quote": "GI Journal No. 64 10 November 28, 2014"}
+      ]
+    },
+    {
+      "id": "C148",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Elsewhere the same 2014 GI journal entry says there are about more than 5.5 million tons of deposit presently available.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "uniqueness, p. 11", "quote": "There are about more than 5.5 million tons of deposit presently available."},
+        {"sourceId": "S04", "locator": "page header, p. 11", "quote": "GI Journal No. 64 11 November 28, 2014"}
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The 2014 Makrana Marble GI journal entry gives the present production of the Makrana region as about 6.5 million tonnes per annum.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "method of production, p. 9", "quote": "Present rate of production of marble from the Makrana region is about 6.5 million tones per annum."},
+        {"sourceId": "S04", "locator": "page footer, p. 10", "quote": "GI Journal No. 64 10 November 28, 2014"}
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Elsewhere the same 2014 GI journal entry gives the annual production of Makrana marble as about 6.5 lakh tons.",
+      "quotes": [
+        {"sourceId": "S04", "locator": "uniqueness, p. 11", "quote": "The annual production is about 6.5 lakh tons."},
+        {"sourceId": "S04", "locator": "page footer, p. 11", "quote": "GI Journal No. 64 11 November 28, 2014"}
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The International Union of Geological Sciences lists Makrana marble as a Global Heritage Stone Resource, the first from India and Asia.",
+      "quotes": [
+        {"sourceId": "S19", "locator": "standfirst", "quote": "Makrana marble is the first stone resource from India and Asia to get the GHSR status."},
+        {"sourceId": "S13", "locator": "paragraph 1", "quote": "The Makrana Marble is listed as a GHSR (Global Heritage Stone Resource) by International Union of Geological Sciences"},
+        {"sourceId": "S10", "locator": "slide: Taj Mahal", "quote": "Makrana marble is the first GHSR from India and in fact the first from the whole of Asia"}
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Makrana Marble is itself a registered geographical indication, application 405, filed on 9 April 2013, with certificate 233 dated 30 March 2015.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "application details", "quote": "| Application Number | 405 | | Geographical Indications | Makrana Marble | | Status | Registered |"},
+        {"sourceId": "S05", "locator": "application details", "quote": "| Date of Filing | 09-04-2013 |"},
+        {"sourceId": "S05", "locator": "application details", "quote": "| Certificate Number | 233 | | Certificate Date | 30-03-2015 |"}
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "ECOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "In its 1997-98 study the Geological Survey of India scored the total environmental impact of Makrana's mining, without mitigative measures, at -3875, a major injurious impact on the environment.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Conclusion, item 13", "quote": "Total environmental impact score of mining for the area is (-3875) indicating major injurious impact on environment."},
+        {"sourceId": "S06", "locator": "Table-4", "quote": "Table-4: Environmental impact Matrix of Makrana mining area, Nagaur district, Rajasthan (without mitigative measures)"},
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "During the study period (1997-98) cluster of 800 mines/quarry licenses were reported in the area"}
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "ECOLOGY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The Geological Survey of India's 1997-98 study found washouts from Makrana's waste and slurry dumps contaminating soil and groundwater in the immediate vicinity of the dumps.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Conclusion, item 7", "quote": "Washouts from waste dumps and slurry dumps are contaminating soil and ground water resources in the immediate vicinity of waste dumps"},
+        {"sourceId": "S06", "locator": "Geomorphological and geological set-up", "quote": "During the study period (1997-98) cluster of 800 mines/quarry licenses were reported in the area"}
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Nai Ki Mandi, Taj Ganj and the areas around the Taj Mahal are the main areas of Agra known for inlay work on stone items.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, geographical area of production, p. 9", "quote": "Nai Ki Mandi and Taj Ganj and areas around Taj mahal in Agra are the main areas known for inlay work on Stone items."}
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Live History India and Outlook Traveller report marble inlay practised in Agra and around Fatehpur Sikri.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The Decline of a Glorious Craft", "quote": "Today, marble inlay is still practiced in Agra, particularly in the areas around the Taj Mahal and Fatehpur Sikri."},
+        {"sourceId": "S16", "locator": "paragraph 3", "quote": "inspiring a generation of craftsmen that continue to practice the art in the bylanes of Agra and Fatehpur Sikri."}
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Taj Mahal stands on the right bank of the Yamuna River in the Agra District of Uttar Pradesh.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "Brief synthesis, paragraph 1", "quote": "The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh."}
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "Fatehpur Sikri, which the Mughal emperor Akbar made his capital, is located in Agra District in the State of Uttar Pradesh.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "Brief synthesis", "quote": "Fatehpur Sikri is located in Agra District in the State of Uttar Pradesh in northern India."},
+        {"sourceId": "S09", "locator": "Brief synthesis", "quote": "it was made capital by the Mughal emperor Akbar (r. 1556-1605 CE) and constructed between 1571 and 1573."}
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The cut stones are inlaid into the marble base to create floral, geometric and nature-inspired patterns.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, specification, p. 8", "quote": "The stones mentioned above are cut and shaped into delicate pieces before being carefully inlaid into the marble base, creating floral, geometric, and nature-inspired patterns."}
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application says over 2000 designs are visible in Agra stone inlay work.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "Over 2000 designs are visible in Agra stone Inlay work."}
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Agra craftsmen make tiny replicas of the Taj Mahal, but the GI application places their real skill in carving intricate floral and geometrical lattices.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "The craftsman crafts tiny replicas of the Taj Mahal. But their real skill lies in carving intricate floral and geometrical lattices."}
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Inlay is made into table tops, plates, chess boards, coasters, flower vases, decorative elephants and replicas of the Taj Mahal.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, description, p. 8", "quote": "other products are Taj Replica, Pen Stand, Flower Vase, Inlay Plate, Coaster Set, Decorative Elephant, Pen Holder, Votive Holder, Chess Board, Animal Gifts"},
+        {"sourceId": "S16", "locator": "paragraph 8", "quote": "Parchinkari today has found its way into our homes in the form of table tops, coasters, chess boards and cabinets."},
+        {"sourceId": "S07", "locator": "History of the Families that Performed the Inlay", "quote": "Parchin kari is still used in India today on tables, plaques, tiles, and other decorative items (figure 20)."}
+      ]
+    },
+    {
+      "id": "C121",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Ebba Koch says flowers were central to the Taj Mahal's decoration because they symbolised the flora of the Paradise that Mumtaz Mahal would find after her death.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 2", "quote": "Flowers, scholar Ebba Koch says, were central to the decorative scheme of the Taj Mahal, because they symbolised the verdant flora of the Paradise that Mumtaz Mahal - for whom the structure was built as a mausoleum - would find herself after her death."}
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Some of the Taj Mahal's inlaid flowers are the craftsmen's inventions, while others depict real flowers such as lilies, tulips, poppy blossoms, buds and calyxes.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Symbolic Significance of the Designs", "quote": "Although some of the flowers of the Taj Mahal are creations sprung from the minds of the craftsmen, others are depictions of real flowers such as lilies (similar to martagon lilies), tulips, poppy blossoms, buds, and calyxes (Koch, 2006)"}
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The spandrels of the Taj Mahal's pishtaq portals and of the alcoves beside them are decorated with flowers inlaid in precious stones.",
+      "quotes": [
+        {"sourceId": "S21", "locator": "Pishtaq", "quote": "The spandrels of the pishtaq (the triangular spaces on either side of the point of the arch) are decorated with carved arabesque and floral motifs inlaid with precious stones."},
+        {"sourceId": "S21", "locator": "Pishtaq", "quote": "On each side of the pishtaq is a two-story alcove, which is replicated at the tomb's corners, and the spandrels of its arches feature delicately inlaid flowers."},
+        {"sourceId": "S12", "locator": "Exterior decoration", "quote": "the frames and archway spandrels are decorated with pietra dura inlays of stylised geometric pattern of vines, flowers and fruits."}
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The marble screen covering the cenotaphs of Mumtaz Mahal and Shah Jahan in the Taj Mahal is decorated with detailed inlay work in semi-precious stones.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 6", "quote": "On the marble screen that covers the cenotaphs of Mumtaz Mahal and Shah Jahan, detailed inlay work with semi-precious stones pays homage to the simplistic opulence that marked the Mughal era."},
+        {"sourceId": "S12", "locator": "Interior decoration", "quote": "Perforated marble jalis (mahjar-i mushabbak) border the cenotaphs and are made from eight marble panels carved through with intricate pierce work inlaid in delicate detail with semi-precious stones."}
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Koch judges that the complexity, subtlety and elegance of the work of Shah Jahan's lapidaries far surpasses that of the Italian artists.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "Expertise of the Craftsmen", "quote": "The technique was mastered by Shah Jahan's lapidaries, and one art historian notes that the \"complexity, subtlety and elegance of their work far surpasses that of the Italian artists\" (Koch, 2006)."}
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "A single motif, such as a flower or a leaf, is often made of different pieces of stone put together.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 5", "quote": "Often, even a single motif, such as a flower or a leaf, is made of different pieces of stones put together."},
+        {"sourceId": "S24", "locator": "paragraph 3", "quote": "Often, a single flower is composed of as many as 40 pieces that may take a whole week to painstakingly shape and inlay."}
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Outlook Traveller says the mark of a fine piece of inlay work is that the precious stone seems to have grown out of the marble.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 5", "quote": "The mark of a fine piece of inlay work is that it will make it seem like the precious stone grew out of marble."},
+        {"sourceId": "S24", "locator": "paragraph 1", "quote": "The inlay is so fine that the inlaid patterns seem to have grown out of the marble."}
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "UNESCO notes that the hues and shades of the stones inlaid on the borders of the Taj Mahal's frames make the leaves and flowers appear almost real.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "Brief synthesis, paragraph 3", "quote": "The borders of the frames are inlaid with precious stones representing flowers executed with wonderful perfection. The hues and the shades of the stones used to make the leaves and the flowers appear almost real."}
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Application 661 for the geographical indication Agra Stone Inlay Work was filed on 30 September 2019 by the Handicrafts Exporter's Association.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, p. 6", "quote": "G.I. APPLICATION NUMBER - 661 Application Date: 30-09-2019"},
+        {"sourceId": "S01", "locator": "Application 661, p. 6", "quote": "A) Name of the Applicant : Handicrafts Exporter's Association"},
+        {"sourceId": "S02", "locator": "application details", "quote": "| Applicant Name | Handicrafts Exporter's Association |"},
+        {"sourceId": "S02", "locator": "application details", "quote": "| Date of Filing | 30-09-2019 |"}
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Application 661, for handicraft stone inlay work in classes 19 and 21, was advertised as accepted in Geographical Indications Journal 196, dated 26 November 2024.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, p. 6", "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 196 dated November 26, 2024"},
+        {"sourceId": "S01", "locator": "Application 661, p. 6", "quote": "Agra Stone Inlay Work under Application No. 661 in respect of Handicraft - Stone Inlay Work falling in Class - 19 & 21 is hereby advertised as accepted"},
+        {"sourceId": "S02", "locator": "document list", "quote": "661 - GI - Journal Copy - 26-11-2024"}
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The Textiles Committee of the Ministry of Textiles, Government of India, facilitated the Agra Stone Inlay Work GI application.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, p. 6", "quote": "Facilitated By: Textiles Committee, Ministry of Textiles, Government of India"}
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI registry lists Agra Stone Inlay Craft, application 661, as registered, with certificate 659 dated 27 March 2025 and registration valid up to 29 September 2029.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "application details", "quote": "| Geographical Indications | Agra Stone Inlay Craft | | Status | Registered |"},
+        {"sourceId": "S02", "locator": "application details", "quote": "| Certificate Number | 659 | | Certificate Date | 27-03-2025 | | Registration Valid Upto | 29-09-2029 |"},
+        {"sourceId": "S02", "locator": "document list", "quote": "661 - Certificate of Registration - 27-03-2025"}
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "An earlier application, number 216 for Agra Marble Inlay Work, was filed on 2 September 2010 by the Marble Udyog Hastha Silp Vikas Samithi and later withdrawn.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "application details", "quote": "| Geographical Indications | Agra Marble Inlay Work | | Status | Withdrawn |"},
+        {"sourceId": "S03", "locator": "application details", "quote": "| Applicant Name | Marble Udyog Hastha Silp Vikas Samithi |"},
+        {"sourceId": "S03", "locator": "application details", "quote": "| Date of Filing | 02-09-2010 |"},
+        {"sourceId": "S03", "locator": "document list", "quote": "216 - GI - Withdrawal Letter - 01-02-2019"}
+      ]
+    },
+    {
+      "id": "C135",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application reports a lot of demand for marble inlay products at home and in western countries, and says the products cater to an international clientele and the tourist industry.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 13", "quote": "There is a lot of demand for the marble inlay products in domestic as well as in western countries."},
+        {"sourceId": "S01", "locator": "Application 661, uniqueness, p. 12", "quote": "The products cater to an international clientele and the flourishing the tourist industry."}
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Taj Mahal's floral ornamentation has inspired an entire industry of marble souvenirs and stone-inlaid objects, synonymous with the crafts of Agra.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "History, last paragraph", "quote": "Due to the Taj Mahal being one of the major tourist attractions, there is a flourishing industry of pietra dura artifacts in Agra."},
+        {"sourceId": "S15", "locator": "paragraph 8", "quote": "the floral ornamentation at the Taj Mahal has now inspired an entire industry of marble souvenirs and objects inlaid with stones that have become synonymous with the crafts of Agra."}
+      ]
+    },
+    {
+      "id": "C137",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "After the British conquest of Agra, travellers wanted memorabilia of the city, inlay souvenirs found willing buyers, and a whole industry came to life in Agra.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "paragraph 8", "quote": "It was later, after the British conquest of Agra, that travellers made a beeline to the city and expressed a desire to acquire memorabilia that reminded them of the history of the city. Inlay souvenirs found willing buyers, and a whole industry came to life in Agra."}
+      ]
+    },
+    {
+      "id": "C151",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The V&A records that around 1860-70 Agra craftsmen made small portable artefacts for the many tourists visiting the Taj Mahal, and also inlaid table tops and chess boards.",
+      "quotes": [
+        {"sourceId": "S26", "locator": "brief description", "quote": "Furniture, white marble, inlaid with coloured semi-precious stones, Agra, India, c. 1860-70"},
+        {"sourceId": "S26", "locator": "summary", "quote": "The highly skilled craftsmen of Agra made small portable artefacts to sell to the many tourists who came to see the the Taj Mahal, and at this period also made table tops and chess boards with Mughal-inspired inlaid decoration in semi-precious stones."}
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Live History India reports that the labour-intensive nature of parchin kari and a lack of lucrative opportunities have led many young artisans to abandon the trade.",
+      "quotes": [
+        {"sourceId": "S17", "locator": "The Decline of a Glorious Craft", "quote": "The labor-intensive nature of parchin kari and the lack of lucrative opportunities have led many young artisans to abandon the trade."}
+      ]
+    },
+    {
+      "id": "C139",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The inlay artisans a design magazine writer met on a trip to India work as a cooperative, each remaining an individual artist, with all profits shared equally.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 4", "quote": "The artisans work together as a cooperative, meaning each of them remains an individual artist with complete creative freedom, but all profits are shared equally."},
+        {"sourceId": "S18", "locator": "paragraph 2", "quote": "On a recent trip to India, I had the chance to learn how these stone inlays are made."}
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "HEALTH",
+      "subject": {"type": "MATERIAL", "ref": "M14"},
+      "text": "Alabaster, called Italian marble, is popular for its whiteness, softness and smoothness, but the GI application calls it hot and harmful for artisans' health.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "Alabaster (Italian Marble): The stone is very popular due to its whiteness, softness, smoothness as Gypsum type."},
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "However, the stone is hot and harmful for Artisans' health."}
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "HEALTH",
+      "subject": {"type": "MATERIAL", "ref": "M13"},
+      "text": "The GI application describes selam stone as white, soft, cold and not harmful for the artisan, its softness limiting items to 10-12 inches.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "Selam Stone: This stone is white, soft, cold and not harmful for the Artisan. Due to softness of the stone the items made are up to 10-12 inches."}
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "HEALTH",
+      "subject": {"type": "MATERIAL", "ref": "M13"},
+      "text": "Gorahari or gorara stone, harder than selam and alabaster, polishes to shades from grey to bright pink and green to black but is called harmful for the artisan.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "Gorahari Stone: The stone is Soft, however harder than Selam and Alabaster, Hot and Harmful for Artisan."},
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "On polishing, mottled gorara brings out a hue of shades varying from gray to bright pink, green to black."}
+      ]
+    },
+    {
+      "id": "C143",
+      "discipline": "HEALTH",
+      "subject": {"type": "MATERIAL", "ref": "M13"},
+      "text": "The GI application describes palawa, a black stone hard compared with other soapstones, as giving off heavy and harmful dust.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "Application 661, raw materials, p. 10", "quote": "Palawa Stone (Black Stone): The stone is hard as compared to other soap stones, with heavy and harmful dust."}
+      ]
+    },
+    {
+      "id": "C144",
+      "discipline": "HEALTH",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "A design magazine reports that a craftsman shaping stones on the human-powered grindstone inevitably also abrades the skin on his fingers.",
+      "quotes": [
+        {"sourceId": "S18", "locator": "paragraph 5", "quote": "Only a (human-powered) grindstone is used, and the craftsman will inevitably also abrade the skin on his fingers during this process."}
+      ]
+    }
+  ],
+  "places": [
+    {"id": "L01", "name": "Agra", "kind": "TOWN", "district": "Agra", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C113", "C114", "C115"]},
+    {"id": "L02", "name": "Fatehpur Sikri", "kind": "TOWN", "district": "Agra", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C114", "C116"]},
+    {"id": "L03", "name": "Makrana", "kind": "TOWN", "district": "Nagaur", "state": "Rajasthan", "country": "India", "role": "MATERIAL_SOURCE", "claimIds": ["C075", "C076", "C089", "C104"]},
+    {"id": "L04", "name": "Agra", "kind": "TOWN", "district": "Agra", "state": "Uttar Pradesh", "country": "India", "role": "HISTORIC_CENTRE", "claimIds": ["C008", "C019", "C020", "C115", "C151"]},
+    {"id": "L05", "name": "Nai Ki Mandi", "kind": "REGION", "district": "Agra", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C113", "C115"]},
+    {"id": "L06", "name": "Taj Ganj", "kind": "REGION", "district": "Agra", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C113", "C115"]}
+  ],
+  "communities": [
+    {"id": "G01", "kind": "COMMUNITY", "name": "Pachikar", "localNames": ["Pachikars", "parachinkars", "parchinkar"], "placeId": "L01", "claimIds": ["C060", "C050", "C047"]},
+    {"id": "G02", "kind": "COMMUNITY", "name": "Sadakar", "localNames": ["Sadakars"], "placeId": "L01", "claimIds": ["C060"]},
+    {"id": "G03", "kind": "ORGANISATION", "name": "Handicrafts Exporter's Association, Agra", "placeId": "L01", "claimIds": ["C129"]},
+    {"id": "G04", "kind": "ORGANISATION", "name": "Marble Udyog Hastha Silp Vikas Samithi", "claimIds": ["C133"]}
+  ],
+  "stages": [
+    {"id": "P01", "name": "Design, sketch and brass templates", "stageType": "PREP", "order": 1, "orderClaimId": "C040", "tools": [{"toolId": "T08", "claimId": "C039"}], "claimIds": ["C038", "C039", "C040"]},
+    {"id": "P02", "name": "Sourcing the base and inlay stones", "stageType": "PREP", "order": 2, "orderClaimId": "C041", "materials": [{"materialId": "M02", "claimId": "C041"}, {"materialId": "M13", "claimId": "C041"}, {"materialId": "M22", "claimId": "C041"}], "claimIds": ["C041"]},
+    {"id": "P03", "name": "Slicing the stone into slivers", "stageType": "SHAPE", "materials": [{"materialId": "M03", "claimId": "C042"}, {"materialId": "M04", "claimId": "C042"}, {"materialId": "M05", "claimId": "C042"}, {"materialId": "M06", "claimId": "C042"}, {"materialId": "M07", "claimId": "C042"}, {"materialId": "M08", "claimId": "C042"}, {"materialId": "M09", "claimId": "C042"}], "tools": [{"toolId": "T02", "claimId": "C042"}], "claimIds": ["C042"]},
+    {"id": "P04", "name": "Shaping the inlay pieces", "stageType": "SHAPE", "order": 4, "orderClaimId": "C043", "materials": [{"materialId": "M03", "claimId": "C071"}, {"materialId": "M04", "claimId": "C071"}, {"materialId": "M05", "claimId": "C071"}, {"materialId": "M06", "claimId": "C071"}, {"materialId": "M07", "claimId": "C071"}, {"materialId": "M08", "claimId": "C071"}, {"materialId": "M09", "claimId": "C071"}], "tools": [{"toolId": "T01", "claimId": "C043"}, {"toolId": "T10", "claimId": "C045"}], "claimIds": ["C043", "C044", "C045", "C046", "C144"]},
+    {"id": "P05", "name": "Marking and tracing the pattern", "stageType": "PREP", "order": 3, "orderClaimId": "C049", "materials": [{"materialId": "M19", "claimId": "C047"}], "claimIds": ["C047", "C048", "C049"]},
+    {"id": "P06", "name": "Carving the grooves", "stageType": "CARVE", "order": 5, "orderClaimId": "C050", "materials": [{"materialId": "M22", "claimId": "C041"}, {"materialId": "M02", "claimId": "C041"}, {"materialId": "M13", "claimId": "C041"}], "tools": [{"toolId": "T09", "claimId": "C051"}], "claimIds": ["C050", "C051"]},
+    {"id": "P07", "name": "Inlaying and fixing the stones", "stageType": "OTHER", "order": 6, "orderClaimId": "C052", "materials": [{"materialId": "M03", "claimId": "C071"}, {"materialId": "M04", "claimId": "C071"}, {"materialId": "M05", "claimId": "C071"}, {"materialId": "M06", "claimId": "C071"}, {"materialId": "M07", "claimId": "C071"}, {"materialId": "M08", "claimId": "C071"}, {"materialId": "M09", "claimId": "C071"}, {"materialId": "M10", "claimId": "C081"}, {"materialId": "M11", "claimId": "C080"}, {"materialId": "M12", "claimId": "C069"}, {"materialId": "M16", "claimId": "C052"}, {"materialId": "M17", "claimId": "C052"}, {"materialId": "M15", "claimId": "C053"}], "claimIds": ["C052", "C053", "C054", "C055"]},
+    {"id": "P08", "name": "Drying", "stageType": "DRY", "order": 7, "orderClaimId": "C056", "claimIds": ["C056"]},
+    {"id": "P09", "name": "Finishing and polishing", "stageType": "FINISH", "order": 8, "orderClaimId": "C057", "materials": [{"materialId": "M18", "claimId": "C057"}, {"materialId": "M20", "claimId": "C059"}], "tools": [{"toolId": "T12", "claimId": "C057"}, {"toolId": "T10", "claimId": "C059"}], "claimIds": ["C057", "C058", "C059"]}
+  ],
+  "materials": [
+    {"id": "M01", "name": "Makrana marble", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C075", "C076", "C087", "C089", "C090", "C091", "C092", "C093", "C094", "C095", "C096", "C097", "C106", "C109", "C110"]},
+    {"id": "M02", "name": "Black marble", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C041", "C071", "C072"]},
+    {"id": "M03", "name": "Lapis lazuli", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C066", "C071"]},
+    {"id": "M04", "name": "Malachite", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C068", "C071"]},
+    {"id": "M05", "name": "Carnelian", "kind": "MINERAL", "role": "INPUT", "localNames": ["cornelian"], "claimIds": ["C067", "C071", "C083"]},
+    {"id": "M06", "name": "Jasper", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C070", "C071"]},
+    {"id": "M07", "name": "Agate", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C071"]},
+    {"id": "M08", "name": "Turquoise", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C071"]},
+    {"id": "M09", "name": "Mother of pearl", "kind": "OTHER", "role": "INPUT", "claimIds": ["C071"]},
+    {"id": "M10", "name": "Onyx", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C081"]},
+    {"id": "M11", "name": "Jade", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C080"]},
+    {"id": "M12", "name": "Coral", "kind": "OTHER", "role": "INPUT", "claimIds": ["C069"]},
+    {"id": "M13", "name": "Soapstone", "kind": "MINERAL", "role": "INPUT", "localNames": ["Selam", "Gorara", "Palewa"], "claimIds": ["C041", "C073", "C141", "C142", "C143"]},
+    {"id": "M14", "name": "Alabaster", "kind": "MINERAL", "role": "INPUT", "localNames": ["Italian marble"], "claimIds": ["C073", "C140"]},
+    {"id": "M15", "name": "Inlay glue paste", "kind": "OTHER", "role": "BINDER", "claimIds": ["C053", "C055"]},
+    {"id": "M16", "name": "Araldite", "kind": "RESIN", "role": "BINDER", "claimIds": ["C052"]},
+    {"id": "M17", "name": "Charcoal", "kind": "FUEL", "role": "OTHER", "claimIds": ["C052"]},
+    {"id": "M18", "name": "Zinc powder", "kind": "METAL", "role": "OTHER", "claimIds": ["C057"]},
+    {"id": "M19", "name": "Henna", "kind": "DYE", "role": "OTHER", "claimIds": ["C047", "C048", "C059"]},
+    {"id": "M20", "name": "Wax", "kind": "OTHER", "role": "OTHER", "claimIds": ["C058", "C059"]},
+    {"id": "M21", "name": "Gold and silver foil", "kind": "METAL", "role": "OTHER", "claimIds": ["C074"]},
+    {"id": "M22", "name": "White marble", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C041", "C072"]}
+  ],
+  "tools": [
+    {"id": "T01", "name": "Emery wheel", "localNames": ["Saan & Kamaani"], "claimIds": ["C043", "C044"]},
+    {"id": "T02", "name": "Bow saw", "claimIds": ["C042"]},
+    {"id": "T03", "name": "Flat chisel", "localNames": ["chheeni"], "claimIds": ["C063"]},
+    {"id": "T04", "name": "Cold chisel", "localNames": ["tanki"], "claimIds": ["C063"]},
+    {"id": "T05", "name": "Hammer", "localNames": ["hatora"], "claimIds": ["C064", "C061"]},
+    {"id": "T06", "name": "Pen drill", "localNames": ["barma"], "claimIds": ["C065"]},
+    {"id": "T07", "name": "Divider", "localNames": ["prakaar"], "claimIds": ["C065"]},
+    {"id": "T08", "name": "Brass template", "claimIds": ["C039"]},
+    {"id": "T09", "name": "Diamond-tipped chisel", "claimIds": ["C051"]},
+    {"id": "T10", "name": "Grindstone", "claimIds": ["C045", "C059", "C144"]},
+    {"id": "T11", "name": "Water jet cutter", "claimIds": ["C062"]},
+    {"id": "T12", "name": "Muslin cloth", "claimIds": ["C057"]}
+  ],
+  "reactions": [],
+  "environment": [
+    {"factor": "LANDFORM", "placeId": "L03", "claimIds": ["C104", "C098", "C099"]},
+    {"factor": "WATER", "placeId": "L03", "claimIds": ["C112"]},
+    {"factor": "OTHER", "placeId": "L03", "claimIds": ["C111"]}
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "661",
+      "certificateNumber": "659",
+      "filedOn": "2019-09-30",
+      "registeredOn": "2025-03-27",
+      "journalIssue": "196",
+      "proprietors": ["Handicrafts Exporter's Association"],
+      "claimIds": ["C129", "C130", "C132"]
+    },
+    "prices": [],
+    "workforce": []
+  },
+  "glossary": [
+    {"id": "W01", "term": "parchin kari, parchinkari, pachhikari", "meaning": "The art of inlaying coloured or semi-precious stones into a stone base, often in geometric or flower patterns; in Mughal India the name of pietra dura, literally 'driven in'.", "claimIds": ["C002", "C003"]},
+    {"id": "W02", "term": "pietra dura", "meaning": "Italian for 'hard stone': a technique in which precious and semi-precious stones are cut, polished and inlaid, generally on hard stone such as marble, to represent an image.", "language": "it", "claimIds": ["C004"]},
+    {"id": "W03", "term": "pachikar, parachinkar, parchinkar", "meaning": "The inlay artisan: the experienced craftsman who does the exclusive inlay work and carves the grooves into which the stones are inlaid.", "claimIds": ["C060", "C050", "C047"]},
+    {"id": "W04", "term": "sadakar", "meaning": "An artisan who does the basic cutting and carving of the stone, aided by machines.", "claimIds": ["C060"]},
+    {"id": "W05", "term": "Saan & Kamaani", "meaning": "The hand-driven tool on which lapidaries shape the gemstones against an emery wheel turned by a cane rod with a leather band.", "claimIds": ["C044"]},
+    {"id": "W06", "term": "chheeni", "meaning": "Flat chisel, used to carve out the fine details on the surface of the marble.", "claimIds": ["C063"]},
+    {"id": "W07", "term": "tanki", "meaning": "Cold chisel, used to cut through the raw marble slab to the basic shape of the product.", "claimIds": ["C063"]},
+    {"id": "W08", "term": "hatora", "meaning": "Hammer, used to drive the chisel through the raw marble for sculpting and carving.", "claimIds": ["C064"]},
+    {"id": "W09", "term": "barma", "meaning": "Pen drill, used to make rough outlines of the patterns on the marble and to carve the designs.", "claimIds": ["C065"]},
+    {"id": "W10", "term": "prakaar", "meaning": "Divider, used to draw outlines as concentric circles for geometric patterns.", "claimIds": ["C065"]},
+    {"id": "W11", "term": "commesso di pietre dure", "meaning": "'Composition of hard stones', the Florentine name for the technique, often abbreviated to pietra dura.", "language": "it", "claimIds": ["C149"]}
+  ],
+  "conflicts": [
+    {"claimIds": ["C010", "C011", "C012", "C150"], "about": "The year construction of the Taj Mahal began: 1630, 1631, 1632 or 1633"},
+    {"claimIds": ["C077", "C078"], "about": "How many stone materials are inlaid in the Taj Mahal: over 40 or 28"},
+    {"claimIds": ["C081", "C082"], "about": "Whether the Taj Mahal's Koranic inscriptions are inlaid in black onyx or black marble"},
+    {"claimIds": ["C024", "C025", "C026", "C027"], "about": "How and when the pietra dura or parchin kari technique reached Mughal India"},
+    {"claimIds": ["C100", "C101"], "about": "Whether the Makrana marble occurs in five or six bands"},
+    {"claimIds": ["C101", "C102", "C103"], "about": "The extent of the Makrana marble workings, measured differently: bands over 20 km, the quarries that supplied the Taj Mahal more than 22 km, the 1997-98 mine cluster about 13 km"},
+    {"claimIds": ["C107", "C108"], "about": "Makrana marble's annual production in the same GI journal entry: about 6.5 million tonnes or about 6.5 lakh tons"},
+    {"claimIds": ["C052", "C053"], "about": "What fixes the inlaid stones: glue by charcoal or araldite, or a paste of sugar cane, beeswax, honey, lemon juice, marble dust and lentils"},
+    {"claimIds": ["C146", "C147"], "about": "When the tomb of Itimad-ud-Daulah was built: 1621-1627 CE or 1622-1628"},
+    {"claimIds": ["C106", "C148"], "about": "Makrana marble reserves in the same GI journal entry: 55 million tonnes, or about more than 5.5 million tons presently available"},
+    {"claimIds": ["C022", "C149"], "about": "Where pietra dura began: in Rome in the 16th century, or in Florence"},
+    {"claimIds": ["C045", "C061", "C062"], "about": "Whether the inlay stones are shaped by hand or on machines: only a human-powered grindstone (a design magazine) or country-made machines and water jet cutting (GI application)"},
+    {"claimIds": ["C048", "C049"], "about": "The order of the work: the design traced on the base stone before the inlay pieces are cut (GI application), or the shaped pieces laid on the marble and their outlines scratched in (a design magazine)"},
+    {"claimIds": ["C006", "C097"], "about": "How hard the base marble is to work: one of the hardest materials (Agra GI application, of Indian marble) or very easy to work with (Makrana Marble GI application)"}
+  ],
+  "openQuestions": [
+    {"id": "O01", "question": "How did the pietra dura technique reach the Mughal court, and did Italian artisans teach it or did local inlayers learn it themselves?", "claimIds": ["C028", "C029", "C024", "C025", "C026", "C027"]},
+    {"id": "O02", "question": "Are the parchinkari craftsmen of Agra descended from the craftsmen who built the Taj Mahal?", "claimIds": ["C032"]},
+    {"id": "O03", "question": "Were the most skilled craftsmen of the Taj Mahal maimed so the work could never be repeated?", "claimIds": ["C034"]},
+    {"id": "O04", "question": "Why were particular stones chosen for the Taj Mahal's inlay?", "claimIds": ["C084", "C085", "C083"]}
+  ],
+  "pictures": [
+    {"id": "I01", "url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Detail_of_plant_motifs_on_Taj_Mahal_wall.jpg", "pageUrl": "https://commons.wikimedia.org/wiki/File:Detail_of_plant_motifs_on_Taj_Mahal_wall.jpg", "author": "Matthew T Rader", "licence": "CC BY-SA 4.0", "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/", "caption": "Carved marble plants on a Taj Mahal wall, framed above and below by inlaid borders of stone vines and flowers", "claimIds": ["C128"]},
+    {"id": "I02", "url": "https://upload.wikimedia.org/wikipedia/commons/6/64/TajJaliInlay.jpg", "pageUrl": "https://commons.wikimedia.org/wiki/File:TajJaliInlay.jpg", "author": "Nemonoman", "licence": "Public domain", "caption": "Floral parchin kari of precious and semi-precious stones in the Taj Mahal", "claimIds": ["C122"]},
+    {"id": "I03", "url": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Itmad-Ud-Daulah-Tomb.jpg", "pageUrl": "https://commons.wikimedia.org/wiki/File:Itmad-Ud-Daulah-Tomb.jpg", "author": "Pratheepps", "licence": "CC BY-SA 3.0", "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/", "caption": "The tomb of Itimad-ud-Daulah in Agra, decorated with arabesques and geometric patterns", "claimIds": ["C020"]},
+    {"id": "I04", "url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Parchinkari_white_marble_coaster_set_from_Agra_India.jpg", "pageUrl": "https://commons.wikimedia.org/wiki/File:Parchinkari_white_marble_coaster_set_from_Agra_India.jpg", "author": "William Tunstall-Pedoe", "licence": "CC BY-SA 4.0", "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/", "caption": "A contemporary parchinkari coaster set from Agra, semi-precious stones inlaid in white marble", "claimIds": ["C120"]}
+  ],
+  "overview": {
+    "lede": [
+      {"text": "Agra marble inlay, also called parchin kari or pachhikari, is the art of inlaying semi-precious stones into a marble base, a technique that dates back to the Mughal era.", "claimIds": ["C001", "C002"]},
+      {"text": "The GI application names Nai Ki Mandi, Taj Ganj and the areas around the Taj Mahal in Agra as its main areas, and Live History India and Outlook Traveller report it around Fatehpur Sikri too.", "claimIds": ["C113", "C114"]},
+      {"text": "Pachikars do the inlay work, with stones such as agate, turquoise, cornelian, jasper, mother of pearl, malachite and lapis lazuli, and stone items are made from Makrana marble among other stones.", "claimIds": ["C060", "C071", "C073"]},
+      {"text": "The craft reached its peak under the Mughals, especially after the Taj Mahal was built, and Agra Stone Inlay Craft is a registered geographical indication with a certificate dated 27 March 2025.", "claimIds": ["C008", "C132"]}
+    ],
+    "keyFacts": [
+      {"label": "GI status", "value": "Registered: application 661, certificate 659 dated 27 March 2025", "claimIds": ["C129", "C132"]},
+      {"label": "Centres", "value": "Nai Ki Mandi, Taj Ganj and around the Taj Mahal in Agra (GI application); Fatehpur Sikri, press reports say", "claimIds": ["C113", "C114"]},
+      {"label": "Artisans", "value": "Pachikars do the inlay; Sadakars do machine-aided cutting and carving", "claimIds": ["C060"]},
+      {"label": "Base stones", "value": "White or black marble or soapstone; white marble from Makrana, a calcitic marble of Nagaur District, Rajasthan", "claimIds": ["C041", "C075", "C089"]},
+      {"label": "Inlay stones", "value": "Agate, turquoise, cornelian, jasper, mother of pearl, malachite, lapis lazuli, black marble, coral", "claimIds": ["C071", "C069"]},
+      {"label": "Fixing", "value": "Sources differ: glue by charcoal or araldite (GI application), or a paste of sugar cane, beeswax, honey, lemon juice, marble dust and lentils (a design magazine)", "claimIds": ["C052", "C053"]},
+      {"label": "Designs", "value": "Floral, geometric and nature-inspired; over 2000 designs, the GI application says", "claimIds": ["C117", "C118"]}
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {"text": "Humayun is credited with introducing inlay as a significant feature of Mughal architecture, and the Qila-i-Kuhna Mosque of 1540 CE in Delhi's Purana Qila shows one of the earliest examples of inlay work in India.", "claimIds": ["C017", "C018"]},
+          {"text": "Sources differ on where pietra dura began: in Rome, where the V&A dates the revival of the ancient Roman stone inlay to the 1550s, or in Florence, where Gems & Gemology says most historians credit its creation.", "claimIds": ["C022", "C149"]},
+          {"text": "The tomb of Itimad-ud-Daulah in Agra, commissioned by Nur Jahan for her father and dated by sources to 1621-1627 CE or 1622-1628, is considered the first Mughal structure built entirely of white marble and marks a transitional phase in Mughal architecture.", "claimIds": ["C019", "C020", "C021", "C146", "C147"]},
+          {"text": "Sources differ on how the technique reached India: Gems & Gemology states both that European artists brought it and that parchin kari developed independently in India, Outlook Traveller credits Shah Jahan and experts from Persia in the 17th century, and Live History India dates its arrival to the 16th century.", "claimIds": ["C024", "C025", "C026", "C027"]},
+          {"text": "Sources also differ on when building of the Taj Mahal began, in 1630, 1631, 1632 or 1633, and the mausoleum was completed in 1648 and the whole complex in 1653.", "claimIds": ["C010", "C011", "C012", "C150"]},
+          {"text": "Inlayers, stone-cutters and calligraphers were requisitioned from across the empire and from Central Asia and Iran, and more than 20,000 craftsmen and workers are believed to have been employed.", "claimIds": ["C014", "C013"]},
+          {"text": "As royal patronage waned in the 18th century, artisans began making tabletops and jewellery boxes for European buyers, and after the British conquest of Agra inlay souvenirs found willing buyers and a whole industry came to life.", "claimIds": ["C031", "C137"]},
+          {"text": "The GI application says the sequence of processes was perfected in the 17th century and has remained largely unchanged for over 400 years.", "claimIds": ["C009"]}
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {"text": "A master artist plans each design, makes a final sketch at 1:1 scale and traces it on a brass sheet that a specialist cuts into templates of every component.", "claimIds": ["C038", "C039"]},
+          {"text": "Gems & Gemology says a bow saw coated with abrasives was used to fashion the slivers of gem material, and the GI application has each part of the design shaped individually on an emery wheel.", "claimIds": ["C042", "C043"]},
+          {"text": "On the hand-driven Saan & Kamaani, lapidaries hold tiny pieces in their fingertips against an emery wheel turned by a cane rod with a leather band.", "claimIds": ["C044"]},
+          {"text": "In Gems & Gemology's account the parchinkar would first draw the pattern in henna dye on the marble, the GI application has the design traced onto the base stone with a sharp tool, and grooves are cut with a chisel so that the shaped stones fit them perfectly.", "claimIds": ["C047", "C049", "C050"]},
+          {"text": "Sources differ on the fixing: the GI application names glue by charcoal or araldite, while a design magazine reports a paste of sugar cane, beeswax, honey, lemon juice, marble dust and lentils.", "claimIds": ["C052", "C053"]},
+          {"text": "Once inlaid, the stones are left to dry, the piece is hand polished with a traditional powder on a moist muslin cloth, and the final polishing is done with zinc powder.", "claimIds": ["C056", "C057"]},
+          {"text": "Sadakars do the basic cutting and carving aided by machines, and Pachikars do the exclusive inlay work.", "claimIds": ["C060"]}
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {"text": "Agate, turquoise, cornelian, jasper, mother of pearl, malachite, lapis lazuli and black marble are used in marble inlay in Agra.", "claimIds": ["C071"]},
+          {"text": "The GI application describes lapis lazuli as a vivid blue stone prized for its intense colour, carnelian as a bright reddish-orange stone often used in floral patterns, malachite as a striking green stone with swirling patterns, and coral as used for accenting designs.", "claimIds": ["C066", "C067", "C068", "C069"]},
+          {"text": "Agra stone handicrafts are also made from soapstones such as selam, gorara and palewa and from alabaster, and gold or silver foil sometimes gives inlaid items a luxurious finish.", "claimIds": ["C073", "C074"]},
+          {"text": "The Taj Mahal's white marble was brought from the Makrana quarries in Rajasthan, nearly 400 km from Agra.", "claimIds": ["C076"]},
+          {"text": "Sources differ on how many stone materials the Taj Mahal holds, 28 or over 40, brought from places including China, Tibet, Afghanistan and Sri Lanka.", "claimIds": ["C077", "C078", "C079"]},
+          {"text": "Gems & Gemology describes its Koranic inscriptions as black onyx inlay, while PBS describes them as black marble.", "claimIds": ["C081", "C082"]}
+        ]
+      },
+      {
+        "discipline": "GEOLOGY",
+        "sentences": [
+          {"text": "Makrana marble is a calcitic marble from the Makrana and Parbatsar tehsils of Nagaur District, and with Sirohi marble the only calcitic marble of India.", "claimIds": ["C089", "C090"]},
+          {"text": "Its deposits belong to the Ajmer Formation of the Kumbhalgarh Group of the Delhi Supergroup, and its marble bands formed through tight isoclinal folding.", "claimIds": ["C098", "C099"]},
+          {"text": "The Makrana Marble GI application says the close interlocking of its grains gives it strength, hardness and translucency, and gives its water absorption as 0.04%, the lowest among calcitic marbles.", "claimIds": ["C095", "C096"]},
+          {"text": "Sources differ on whether the marble occurs in five or six bands, which the GI journal says extend over 20 kilometres, while the quarries that supplied the Taj Mahal stretched more than 22 km and the 1997-98 mine cluster about 13 km.", "claimIds": ["C100", "C101", "C102", "C103"]},
+          {"text": "The International Union of Geological Sciences lists Makrana marble as a Global Heritage Stone Resource, the first from India and Asia.", "claimIds": ["C109"]}
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {"text": "The cut stones are inlaid into the marble base to create floral, geometric and nature-inspired patterns, and a single flower or leaf is often made of different pieces of stone.", "claimIds": ["C117", "C126"]},
+          {"text": "The GI application says over 2000 designs are visible in Agra stone inlay work.", "claimIds": ["C118"]},
+          {"text": "Outlook Traveller says the mark of a fine piece of inlay work is that the precious stone seems to have grown out of the marble.", "claimIds": ["C127"]},
+          {"text": "Ebba Koch says flowers were central to the Taj Mahal's decoration because they symbolised the flora of Paradise, and some depict real lilies, tulips and poppy blossoms.", "claimIds": ["C121", "C122"]},
+          {"text": "Koch judges that the complexity, subtlety and elegance of the work of Shah Jahan's lapidaries far surpasses that of the Italian artists.", "claimIds": ["C125"]}
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {"text": "Application 661 for Agra Stone Inlay Work was filed by the Handicrafts Exporter's Association on 30 September 2019 and registered with certificate 659 dated 27 March 2025.", "claimIds": ["C129", "C132"]},
+          {"text": "An earlier application, 216 for Agra Marble Inlay Work, filed on 2 September 2010, was withdrawn.", "claimIds": ["C133"]},
+          {"text": "The GI application reports a lot of demand for marble inlay products at home and in western countries, and the Taj Mahal's floral ornamentation has inspired an entire industry of marble souvenirs and stone-inlaid objects in Agra.", "claimIds": ["C135", "C136"]},
+          {"text": "The V&A records that around 1860-70 Agra craftsmen made small portable artefacts for the many tourists visiting the Taj Mahal, and also inlaid table tops and chess boards.", "claimIds": ["C151"]},
+          {"text": "Live History India reports that the labour-intensive work and a lack of lucrative opportunities have led many young artisans to abandon the trade.", "claimIds": ["C138"]}
+        ]
+      },
+      {
+        "discipline": "HEALTH",
+        "sentences": [
+          {"text": "The GI application calls alabaster and gorahari stone hot and harmful for the artisan, while selam stone is not harmful.", "claimIds": ["C140", "C141", "C142"]},
+          {"text": "The GI application says palawa stone gives off heavy and harmful dust.", "claimIds": ["C143"]},
+          {"text": "A design magazine reports that a craftsman shaping stones on a human-powered grindstone inevitably also abrades the skin on his fingers.", "claimIds": ["C144"]}
+        ]
+      }
+    ]
+  }
+}

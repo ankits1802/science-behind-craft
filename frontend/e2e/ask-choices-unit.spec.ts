@@ -9,7 +9,7 @@ import { askDepthsOf, normaliseAskConfig } from "@/lib/askConfig";
 import { ANY_CRAFT, ANY_CRAFT_VALUE, craftOffer, craftOptions, craftPickOf, craftValue, DETECT_CRAFT, namesLine, pickForQuestion, samePick, type CraftPick } from "@/lib/askCraft";
 import { askedDepth, depthParam } from "@/lib/askDepth";
 import { askable, askRequestOf, askSearch, plannedAsk, QUESTION_MAX, reasksOnChange, type AskSettings } from "@/lib/askRequest";
-import type { CraftCatalogue } from "@/lib/craftCatalogue";
+import type { CatalogueCraft } from "@/lib/craftCatalogueContract";
 import type { Depth, Understood } from "@/lib/explainerContract";
 import { askingExplainer, reduceExplainer, type ExplainerState } from "@/lib/explainerState";
 import { explainerEventOf, type ExplainerEvent } from "@/lib/explainerStream";
@@ -161,11 +161,30 @@ test("an understood event off the contract is refused loudly and changes nothing
 });
 
 test("the picker lists the catalogue's crafts with their states, never a merged one, and keeps a picked craft it lacks", () => {
-  const craft = (slug: string, name: string, states: string[], status?: "MERGED") =>
-    ({ id: slug, slug, name, localName: null, categoryId: null, subCategoryId: null, sourceSerial: null, stateOfOrigin: [], stateOfPractice: states, giStatus: null, isCatchAll: false, craftCode: null, aliases: [], status }) as CraftCatalogue["crafts"][number];
-  const catalogue: CraftCatalogue = {
-    version: "1",
-    categories: [],
+  const craft = (slug: string, name: string, states: string[], status?: "MERGED"): CatalogueCraft => ({
+    id: slug,
+    slug,
+    name,
+    displayName: name,
+    localName: null,
+    categoryId: null,
+    subCategoryId: null,
+    familyLabel: null,
+    kindLabel: null,
+    palette: null,
+    sourceSerial: null,
+    stateOfOrigin: [],
+    stateOfPractice: states,
+    giStatus: null,
+    giYear: null,
+    isCatchAll: false,
+    craftCode: null,
+    aliases: [],
+    hero: null,
+    depth: { coverage: null, claims: 0, stages: 0, pictures: 0, places: 0 },
+    status
+  });
+  const catalogue = {
     crafts: [craft("Kutch-Ajrakh", "Kutch Ajrakh", ["Gujarat"]), craft("Old-Ajrakh", "Old Ajrakh", [], "MERGED"), craft("Bagh-Print", "Bagh Print", [])]
   };
   expect(craftOptions(catalogue, DETECT_CRAFT, null)).toEqual([

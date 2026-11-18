@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 2,
+  "craft": {
+    "slug": "Farrukhabad-Prints",
+    "name": "Farrukhabad Prints",
+    "path": "/crafts/Farrukhabad-Prints",
+    "id": "ef3c7c76-af91-5aa9-874e-3afd610ad7c1",
+    "displayName": "Farrukhabad Prints",
+    "localName": null,
+    "localNames": [],
+    "categoryName": "Textiles based Craft Category",
+    "subCategoryName": "Hand Block Printing",
+    "familyLabel": "Textiles",
+    "kindLabel": "Hand block printing",
+    "giStatus": "GI",
+    "stateOfPractice": [
+      "Uttar Pradesh"
+    ],
+    "stateOfOrigin": [
+      "Uttar Pradesh"
+    ]
+  },
+  "curated": false,
+  "curation": null,
+  "tabs": {
+    "process": false,
+    "region": true,
+    "sharedScience": false,
+    "sources": false,
+    "evidence": false
+  },
+  "depth": {
+    "basis": "REGISTER",
+    "coverage": null,
+    "claims": 0,
+    "sources": 0,
+    "stages": 0,
+    "pictures": 0
+  },
+  "suggestedQuestions": [
+    "How do mordants and dyes fix the colours of Farrukhabad Prints in the cloth?",
+    "What are the stages of Farrukhabad Prints, from plain cloth to finished print?",
+    "What do local water and climate give to the colours of Farrukhabad Prints?"
+  ],
+  "overview": {
+    "lede": [],
+    "keyFacts": [],
+    "sections": []
+  },
+  "giCard": {
+    "status": "GI",
+    "applicationNumber": null,
+    "certificateNumber": null,
+    "filedOn": null,
+    "registeredOn": null,
+    "journalIssue": null,
+    "proprietors": [],
+    "authorisedUserCount": null,
+    "claimIds": []
+  },
+  "events": [],
+  "environment": [],
+  "sourcesDiffer": [],
+  "places": [],
+  "communities": [],
+  "process": {
+    "processId": null,
+    "stages": [],
+    "reactions": []
+  },
+  "glossary": [],
+  "pictures": [],
+  "openQuestions": [],
+  "sameFamily": [
+    {
+      "craft": {
+        "slug": "Kutch-Ajrakh",
+        "name": "Kutch Ajrakh",
+        "path": "/crafts/Kutch-Ajrakh"
+      },
+      "displayName": "Kutch Ajrakh",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Gujarat"
+      ],
+      "basis": "CURATED",
+      "coverage": "FULL",
+      "claims": 132,
+      "hero": {
+        "media": {
+          "id": "1d579165-1305-5a47-a8a5-e11121aceb2b",
+          "display": "INLINE",
+          "provider": "curation",
+          "pageUrl": "https://commons.wikimedia.org/wiki/File:Ajrak_Craft_artisan.jpeg",
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Ajrak_Craft_artisan.jpeg",
+          "width": null,
+          "height": null,
+          "title": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+          "alt": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+          "author": "Visdaviva",
+          "site": "commons.wikimedia.org",
+          "credit": null,
+          "licence": "CC BY-SA 3.0",
+          "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "sourceId": null,
+          "retrievedAt": "2026-11-17T18:17:00Z"
+        },
+        "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders"
+      },
+      "lede": {
+        "text": "Kutch Ajrakh is an elaborate resist block-printing technique of direct and resist printing and dyeing, made by Khatri artisans as a double-sided textile.",
+        "citations": [
+          {
+            "id": "50abcdf3-fa91-5851-afe0-9d52e1de70f5",
+            "claimId": "93e225b2-f978-57ec-9a46-acae777b9d40",
+            "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+            "quote": "Kutch Ajrakh is an elaborate resist block printing technique that involves series of direct and resist printing and dyeing to create unique effects.",
+            "locator": "Application 1050, specification and description, p. 6",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "8632cddd-61c9-5f44-a165-0d44fdd0d49d",
+            "claimId": "93e225b2-f978-57ec-9a46-acae777b9d40",
+            "sourceId": "def6894b-e67b-552b-bd8c-bfc980cf3bb0",
+            "quote": "Ajrakh is a unique combination of hand block printing and resist dyeing.",
+            "locator": "Introduction",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "f6a46254-0bb7-5bd9-9e8d-331a58b3957a",
+            "claimId": "dc7ece8f-6a47-510c-a1d4-14c68eb26406",
+            "sourceId": "29ff4c54-3b6b-55b3-94d8-4bf24abb1190",
+            "quote": "Ajrakh is a double-sided, block-printed textile worn as caste dress by cattle herders in the desert regions of Kachchh and Thar in north-west India and Sindh in Pakistan, where it is made by Khatri artisans.",
+            "locator": "abstract, p. 146",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "sources": [
+          {
+            "id": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+            "kind": "GI_JOURNAL",
+            "title": "Geographical Indications Journal No. 188: Kutch Ajrakh, G.I. Application No. 1050",
+            "authors": [],
+            "year": 2023,
+            "doi": null,
+            "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_188%5CJournal+188.pdf",
+            "publisher": "Geographical Indications Registry, Government of India",
+            "licence": null,
+            "attribution": null,
+            "reliability": "A"
+          },
+          {
+            "id": "def6894b-e67b-552b-bd8c-bfc980cf3bb0",
+            "kind": "WEB_PAGE",
+            "title": "Ajrakh: Rhythm of Blues",
+            "authors": [
+              "Ruchira Ghose",
+              "Mushtak Khan",
+              "Kritika Narula"
+            ],
+            "year": null,
+            "doi": null,
+            "url": "https://artsandculture.google.com/story/WAWhhiXYIwIA8A",
+            "publisher": "Crafts Museum, New Delhi, on Google Arts & Culture",
+            "licence": null,
+            "attribution": null,
+            "reliability": "B"
+          },
+          {
+            "id": "29ff4c54-3b6b-55b3-94d8-4bf24abb1190",
+            "kind": "PAPER",
+            "title": "Ajrakh: From Caste Dress to Catwalk",
+            "authors": [
+              "Eiluned Mair Edwards"
+            ],
+            "year": 2016,
+            "doi": "10.1080/00404969.2016.1211436",
+            "url": "https://irep.ntu.ac.uk/id/eprint/29181/1/PubSub6671_Edwards.pdf",
+            "publisher": "Textile History, Pasold Research Fund",
+            "licence": null,
+            "attribution": null,
+            "reliability": "A"
+          }
+        ]
+      }
+    },
+    {
+      "craft": {
+        "slug": "Ahmedabad-Sodagari-Block-Print",
+        "name": "Ahmedabad Sodagari Block Print",
+        "path": "/crafts/Ahmedabad-Sodagari-Block-Print"
+      },
+      "displayName": "Ahmedabad Sodagari Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Gujarat"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Bagh-Prints-Of-Madhya-Pradesh",
+        "name": "Bagh Prints of Madhya Pradesh",
+        "path": "/crafts/Bagh-Prints-Of-Madhya-Pradesh"
+      },
+      "displayName": "Bagh Prints of Madhya Pradesh",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Madhya Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Bagru-Hand-Block-Print",
+        "name": "Bagru Hand Block Print",
+        "path": "/crafts/Bagru-Hand-Block-Print"
+      },
+      "displayName": "Bagru Hand Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Rajasthan"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Banaras-Hand-Block-Print",
+        "name": "Banaras Hand Block Print",
+        "path": "/crafts/Banaras-Hand-Block-Print"
+      },
+      "displayName": "Banaras Hand Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Uttar Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Pilkhua-Hand-Block-Print-Textiles",
+        "name": "Pilkhua Hand Block Print Textiles",
+        "path": "/crafts/Pilkhua-Hand-Block-Print-Textiles"
+      },
+      "displayName": "Pilkhua Hand Block Print Textiles",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Uttar Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    }
+  ],
+  "evidence": {
+    "groups": [],
+    "hypotheses": []
+  },
+  "claims": [],
+  "sources": []
+}

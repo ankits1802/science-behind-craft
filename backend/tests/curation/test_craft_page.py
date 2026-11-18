@@ -123,9 +123,13 @@ def uncurated_craft() -> tuple[CraftRef, PageCraft]:
     craft = PageCraft(
         **ref.model_dump(),
         id=uuid.UUID(int=900),
+        display_name=ref.name,
         local_name=None,
+        local_names=[],
         category_name=None,
         sub_category_name=None,
+        family_label=None,
+        kind_label=None,
         gi_status=None,
         state_of_practice=["Rajasthan"],
         state_of_origin=[],
@@ -188,8 +192,19 @@ def test_a_page_refusing_an_unlisted_claim() -> None:
         CraftPage.model_validate(plain)
 
 
-STUDENT_CLAIMS = 119
-STUDENT_SOURCES = 18
+STUDENT_CLAIMS = 128
+STUDENT_SOURCES = 20
+SHOWN_ELSEWHERE = ("evidence", "claims", "sources", "sameFamily")
+
+
+def claim_ids_in(value: Any) -> set[str]:
+    if isinstance(value, dict):
+        found = {str(item) for key in ("claimIds", "foldedIds") for item in value.get(key, [])}
+        found |= {str(value["claimId"])} if "claimId" in value else set()
+        return found.union(*(claim_ids_in(item) for item in value.values()))
+    if isinstance(value, list):
+        return set().union(*(claim_ids_in(item) for item in value))
+    return set()
 
 
 def golden_page() -> CraftPage:
@@ -202,10 +217,16 @@ def test_a_reader_without_all_evidence_gets_only_the_claims_the_page_cites() -> 
     assert student.evidence is None
     assert (len(student.claims), len(student.sources)) == (STUDENT_CLAIMS, STUDENT_SOURCES)
     assert {claim.id for claim in student.claims} == set(full.referenced_claim_ids())
+    shown = {key: value for key, value in golden_json(AJRAKH_GOLDEN).items() if key not in SHOWN_ELSEWHERE}
+    assert {str(claim.id) for claim in student.claims} == claim_ids_in(shown)
+    assert [source.id for source in student.sources] == [source.id for source in full.sources][
+        : len(student.sources)
+    ]
     cited = {citation.source_id for claim in student.claims for citation in claim.citations}
     assert {source.id for source in student.sources} == cited
-    kept = student.model_dump(exclude={"evidence", "claims", "sources"})
-    assert kept == full.model_dump(exclude={"evidence", "claims", "sources"})
+    kept = student.model_dump(exclude={"evidence", "claims", "sources", "tabs"})
+    assert kept == full.model_dump(exclude={"evidence", "claims", "sources", "tabs"})
+    assert (full.tabs.evidence, student.tabs) == (True, full.tabs.model_copy(update={"evidence": False}))
 
 
 def test_the_researcher_view_is_the_whole_golden() -> None:

@@ -254,7 +254,7 @@ not tracked (`.gitignore`).
 | `docs/PLAN.md` | the product plan; section 0 is the owner's direction and overrides the rest |
 | `docs/ARCHITECTURE.md` | layers, module map, import direction, how a question flows |
 | `docs/CORE_API.md` | the catalogue of shared components |
-| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed, process science, region, voice, media, curated dossiers, learning (follow-ups, alerts, lessons, exports, the map) |
+| `docs/contracts/*.md` | interfaces between lanes: API routes, craft data, geo, frontend, infra, research and answering, the explainer, the portals' craft feed and field voices, process science, region, voice, media, curated dossiers, learning (follow-ups, alerts, lessons, exports, the map) |
 | `docs/decisions/` | decision log: one short file per decision, numbered |
 | `docs/TECH_DEBT.md` | debt register |
 | `docs/PROGRESS.md` | where work stands and what comes next |

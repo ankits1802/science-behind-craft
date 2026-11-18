@@ -57,6 +57,7 @@ from app.research.stream import SourceRef
 from app.services.knowledge_view import craft_ref, source_ref
 
 __all__ = [
+    "craft_places",
     "dataset_records",
     "district_places",
     "district_values",
@@ -66,9 +67,13 @@ __all__ = [
 ]
 
 
-async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
+async def craft_places(session: AsyncSession, craft: Craft) -> tuple[PlaceRecord, ...]:
     known = {name.casefold(): StateRecord(lgd, name) for lgd, name in await _states(session)}
-    places = region_places(await _locations(session, craft), practice_states(craft.stateOfPractice, known))
+    return region_places(await _locations(session, craft), practice_states(craft.stateOfPractice, known))
+
+
+async def region_records(session: AsyncSession, craft: Craft) -> RegionRecords:
+    places = await craft_places(session, craft)
     own = [place for place in places if place.values_from == "DISTRICT"]
     districts = sorted({place.district_lgd for place in own if place.district_lgd is not None})
     states = sorted({place.state.lgd for place in places if place.values_from == "STATE"})

@@ -11,6 +11,7 @@ from app.core.roles import PROFESSOR, Capability, can, daily_allowance, has_rank
 from app.providers.media_router import MediaAsk
 from app.providers.quota import remaining_today, seconds_until_next_day
 from app.providers.router import RouterError
+from app.research.retrieval import chunk_acls_for
 from app.schemas.media import (
     MAX_ACTIVE_JOBS_PER_USER,
     MediaJobRequest,
@@ -22,7 +23,7 @@ from app.schemas.media import (
 from app.services.ai_providers import AiTask
 
 from .bundle import sealed_bundle
-from .claim_set import acls_for, claim_set, enough_claims
+from .claim_set import claim_set, enough_claims
 from .ledger import unit_entry
 from .prompt import alt_text, build_prompt, media_ask
 from .records import (
@@ -105,7 +106,7 @@ async def media_options(deps: MediaDeps, user: Any, craft_slug: str) -> MediaOpt
     kinds = await _offered_kinds(deps, user) if deps.bundle_key and deps.links else []
     offered = [option.kind for option in kinds]
     claims = await deps.store.stage_claims([stage.id for stage in stages]) if offered else {}
-    acls = acls_for(user)
+    acls = chunk_acls_for(user)
     return MediaOptions(
         craft=craft.ref,
         kinds=kinds,
@@ -175,7 +176,7 @@ async def _visible_stage(deps: MediaDeps, user: Any, stage_id: uuid.UUID) -> Sta
 
 async def _stage_claim_set(deps: MediaDeps, user: Any, stage: StageFacts) -> tuple[ClaimFacts, ...]:
     found = await deps.store.stage_claims([stage.id])
-    claims = claim_set(found.get(stage.id, []), acls=acls_for(user))
+    claims = claim_set(found.get(stage.id, []), acls=chunk_acls_for(user))
     if not enough_claims(claims):
         raise MediaRefused("too_few_claims")
     return claims

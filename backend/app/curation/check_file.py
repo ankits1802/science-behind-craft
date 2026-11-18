@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Literal
+from typing import Literal, Self
 
-from pydantic import AwareDatetime, Field
+from pydantic import AwareDatetime, Field, model_validator
 
 from app.research.base import ContractModel, HttpsUrl
 
@@ -26,8 +26,9 @@ __all__ = [
 ]
 
 CHECK_FILE_SCHEMA_VERSION = 1
-VERIFY_TOOL = "kalavigyan-curation-verify/1"
+VERIFY_TOOL = "kalavigyan-curation-verify/2"
 SHA256_PATTERN = r"^[0-9a-f]{64}$"
+SLUG_KEYS = ("craftSlug", "categorySlug")
 
 
 class SourceCheck(ContractModel):
@@ -57,7 +58,8 @@ class QuoteCheckEntry(ContractModel):
 
 class CheckFile(ContractModel):
     schema_version: Literal[1] = CHECK_FILE_SCHEMA_VERSION
-    craft_slug: str = Field(pattern=CRAFT_SLUG_PATTERN)
+    craft_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN)
+    category_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN)
     dossier_version: int = Field(ge=1)
     dossier_digest: str = Field(pattern=SHA256_PATTERN)
     checked_at: AwareDatetime
@@ -65,14 +67,28 @@ class CheckFile(ContractModel):
     sources: list[SourceCheck]
     quotes: list[QuoteCheckEntry]
 
+    @model_validator(mode="after")
+    def _one_slug(self) -> Self:
+        if (self.craft_slug is None) == (self.category_slug is None):
+            raise ValueError("a check file names a craftSlug or a categorySlug, not both")
+        return self
+
+    @property
+    def slug(self) -> str:
+        return self.category_slug or self.craft_slug or ""
+
 
 def check_file_text(check: CheckFile) -> str:
-    return json.dumps(check.model_dump(mode="json", by_alias=True), indent=2, ensure_ascii=False) + "\n"
+    plain = check.model_dump(mode="json", by_alias=True)
+    for key in SLUG_KEYS:
+        if plain[key] is None:
+            del plain[key]
+    return json.dumps(plain, indent=2, ensure_ascii=False) + "\n"
 
 
 def verified_digest(dossier: Dossier) -> str:
     material = {
-        "craftSlug": dossier.craft_slug,
+        SLUG_KEYS[dossier.category_slug is not None]: dossier.slug,
         "sources": [[source.id, source.url, source.archived_url] for source in dossier.sources],
         "quotes": [
             [claim.id, quote.source_id, quote.quote] for claim in dossier.claims for quote in claim.quotes
@@ -84,7 +100,7 @@ def verified_digest(dossier: Dossier) -> str:
 
 def check_file_problems(dossier: Dossier, check: CheckFile | None) -> list[Problem]:
     if check is None:
-        return [Problem("check file", f"{dossier.craft_slug}.check.json is missing; run verify")]
+        return [Problem("check file", f"{dossier.slug}.check.json is missing; run verify")]
     stale = _staleness(dossier, check)
     if stale:
         return [Problem("check file", f"{stale}; run verify again")]
@@ -112,8 +128,8 @@ def check_file_problems(dossier: Dossier, check: CheckFile | None) -> list[Probl
 
 
 def _staleness(dossier: Dossier, check: CheckFile) -> str | None:
-    if check.craft_slug != dossier.craft_slug:
-        return f"the check file is for {check.craft_slug}"
+    if (check.craft_slug, check.category_slug) != (dossier.craft_slug, dossier.category_slug):
+        return f"the check file is for {check.slug}"
     if check.tool != VERIFY_TOOL:
         return f"the check file was made by {check.tool}, not {VERIFY_TOOL}"
     if check.dossier_digest != verified_digest(dossier):

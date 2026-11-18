@@ -27,6 +27,7 @@ __all__ = [
     "claim_lexical_ranking",
     "claim_vector_ranking",
     "lexical_rank",
+    "readable_citations",
     "scope_claims",
     "scope_concepts",
     "text_query",
@@ -87,6 +88,18 @@ def claim_conditions(
         Claim.sensitivity == VISIBLE_SENSITIVITY,
         cited,
     ]
+
+
+def readable_citations(claim_ids: Sequence[uuid.UUID], *, acls: Sequence[str]) -> Select[tuple[ClaimSource]]:
+    readable = or_(
+        ClaimSource.chunkId.is_(None),
+        and_(Chunk.acl.in_(list(acls)), Chunk.sensitivity != RESTRICTED_SENSITIVITY),
+    )
+    return (
+        select(ClaimSource)
+        .outerjoin(Chunk, Chunk.id == ClaimSource.chunkId)
+        .where(ClaimSource.claimId.in_(list(claim_ids)), readable)
+    )
 
 
 def chunk_conditions(

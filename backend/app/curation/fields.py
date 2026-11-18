@@ -24,6 +24,7 @@ __all__ = [
     "QuestionId",
     "ReactionId",
     "SentenceText",
+    "SlugList",
     "SourceId",
     "StageId",
     "TermId",
@@ -86,3 +87,6 @@ ClaimIds = Annotated[list[ClaimId], Field(min_length=1), AfterValidator(distinct
 NameText = Annotated[str, Field(min_length=1, max_length=300)]
 NameList = Annotated[list[NameText], AfterValidator(distinct)]
 SentenceText = Annotated[str, Field(min_length=1, max_length=SENTENCE_MAX_CHARS)]
+SlugList = Annotated[
+    list[Annotated[str, Field(pattern=CRAFT_SLUG_PATTERN, max_length=200)]], AfterValidator(distinct)
+]

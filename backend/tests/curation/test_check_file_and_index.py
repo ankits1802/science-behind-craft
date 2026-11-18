@@ -65,9 +65,9 @@ def test_a_check_file_older_than_the_dossier_is_stale() -> None:
 
 def test_a_check_file_from_another_verifier_is_stale() -> None:
     dossier = passing_dossier()
-    check = check_for(dossier).model_copy(update={"tool": "kalavigyan-curation-verify/0"})
-    assert messages(check_file_problems(dossier, check))[0][1].startswith(
-        "the check file was made by kalavigyan-curation-verify/0"
+    check = check_for(dossier).model_copy(update={"tool": "kalavigyan-curation-verify/1"})
+    assert messages(check_file_problems(dossier, check))[0][1] == (
+        "the check file was made by kalavigyan-curation-verify/1, not kalavigyan-curation-verify/2; run verify again"
     )
 
 
@@ -146,6 +146,7 @@ def test_the_index_counts_each_part_of_a_dossier() -> None:
     entry = json.loads(index_text(curation_index([result])))["crafts"][0]
     assert entry == {
         "craftSlug": "Kutch-Ajrakh",
+        "scope": "CRAFT",
         "file": "Kutch-Ajrakh.json",
         "version": 1,
         "coverage": "THIN",

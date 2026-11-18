@@ -1,0 +1,5097 @@
+{
+ "schemaVersion": 1,
+ "scope": "CRAFT",
+ "craftSlug": "Orissa-Pattachitra",
+ "version": 1,
+ "curatedAt": "2026-11-18T10:10:15+00:00",
+ "curator": "claude-code",
+ "coverage": "FULL",
+ "searched": [
+  {
+   "query": "Orissa Pattachitra geographical indication application number GI registry",
+   "site": "web search"
+  },
+  {
+   "query": "GI application 88 and 386 record pages",
+   "site": "search.ipindia.gov.in/GIRPublicSearch (88 is Orissa Pattachitra; 386 its logo); the GIRPublic path returned HTTP 404"
+  },
+  {
+   "query": "Geographical Indications Journal 2008 Orissa Pattachitra application 88 statement of case",
+   "site": "web search, and the web.archive.org CDX index of ipindia.nic.in/girindia/journal (Supplementary_Journal_1.pdf holds application 88)"
+  },
+  {
+   "query": "Orissa Pattachitra certificate of registration, statement of case, proof of origin and list of artisans",
+   "site": "search.ipindia.gov.in: documents download only through a form post; the record's table rows are quoted instead"
+  },
+  {
+   "query": "Orissa Pattachitra craft page",
+   "site": "handicrafts.nic.in (Development Commissioner (Handicrafts)); timed out, and the Wayback CDX lookup timed out"
+  },
+  {
+   "query": "Pattachitra Raghurajpur chitrakara pigments conch shell hingula haritala research paper pdf",
+   "site": "web search"
+  },
+  {
+   "query": "Odisha Review Pattachitra chitrakar Raghurajpur article pdf",
+   "site": "web search and magazines.odisha.gov.in (expired certificate; read through the Wayback Machine)"
+  },
+  {
+   "query": "Indian Journal of Traditional Knowledge patachitra Odisha natural colours tamarind seed",
+   "site": "web search (no IJTK article found)"
+  },
+  {
+   "query": "Raghurajpur heritage crafts village INTACH Puri district patachitra",
+   "site": "web search"
+  },
+  {
+   "query": "indianculture.gov.in Pattachitra Odisha Raghurajpur",
+   "site": "web search (no indianculture.gov.in page found)"
+  },
+  {
+   "query": "pattachitra Odisha pigments XRF Raman analysis cinnabar orpiment conch shell",
+   "site": "web search (no analytical study of Odisha pattachitra pigments found)"
+  },
+  {
+   "query": "Shodhganga thesis pattachitra Raghurajpur chitrakara Puri",
+   "site": "web search (no Shodhganga thesis found; ora.ox.ac.uk JASO paper used)"
+  },
+  {
+   "query": "Orissa Review or Odisha Review Raghurajpur heritage village chitrakaras",
+   "site": "web search"
+  },
+  {
+   "query": "Victoria and Albert Museum or British Museum painting Puri Orissa Jagannath cloth",
+   "site": "collections.vam.ac.uk (IS.64-1985 and IS.575-1952 used; IS.577-1952, IS.579-1952 and IS.33-1978 read, not used)"
+  },
+  {
+   "query": "Jagannatha temple paintings from Puri in other museums",
+   "site": "metmuseum.org (2019.185 and 2026.236 hold no description); collections.lacma.org (no extractable text)"
+  },
+  {
+   "query": "puri.nic.in Raghurajpur pattachitra tourist place",
+   "site": "web search (no Puri district page found)"
+  },
+  {
+   "query": "Creativity Studies article on Raghurajpur",
+   "site": "jau.vgtu.lt (connection refused, no Wayback copy)"
+  },
+  {
+   "query": "Pattachitra artisans study, Taylor and Francis 10.1080/17510694.2020.1775029",
+   "site": "tandfonline.com (HTTP 403, no Wayback copy)"
+  },
+  {
+   "query": "Socio-economic conditions of pattachitra artisans in Puri district",
+   "site": "i-scholar.in (host did not resolve, no Wayback copy)"
+  },
+  {
+   "query": "Raghurajpur press features",
+   "site": "theweek.in (access denied), deccanherald.com (no article text), livehistoryindia.com (promotes a sales platform; not used), webjosh and travel blogs (not used)"
+  },
+  {
+   "query": "Pattachitra and Raghurajpur pictures",
+   "site": "commons.wikimedia.org (Category:Pattachitra, Category:Culture of Raghurajpur)"
+  },
+  {
+   "query": "cinnabar and orpiment substance records",
+   "site": "pubchem.ncbi.nlm.nih.gov (cinnabar CID 62402, HgS; the orpiment record lists As2H6S3, so no CID is given)"
+  },
+  {
+   "query": "further web searches",
+   "site": "the session's shared web search budget ran out; later sources were read only from links already found"
+  },
+  {
+   "query": "Census of India 2011 District Census Handbook, Puri: village directory and village-wise primary census abstract, for a dated household count of Raghurajpur",
+   "site": "censusindia.gov.in (2011census/dchb/2117_PART_B_DCHB_PURI.pdf returned HTTP 404 with no Wayback copy; NADA catalog 28247 is the 1961 handbook) and web search (no Raghurajpur village entry found)"
+  },
+  {
+   "query": "Raghurajpur house and household counts on D-rated pages",
+   "site": "gipe.ac.in student blog ('more than 120 houses') and fundamatics.net ('around hundred eighty households', visit of February 2017): D-rated pages cannot carry a claim alone"
+  },
+  {
+   "query": "Number of authorised users of GI application 88",
+   "site": "search.ipindia.gov.in record: serial numbers run to 26, but 8 entries show no status and only 18 show Registered, and the page states no dated count, so no authorised-user count is recorded"
+  },
+  {
+   "query": "Districts of the Chitrakara centres Sonepur, Parlakhemundi, Cuttack, Athagarh and Chikiti named by Tripathy",
+   "site": "no source read gives their districts, so they are named in a claim but not listed as places"
+  },
+  {
+   "query": "Order of the painting stages (tipana to jausala) in Kiran Pradeep's article",
+   "site": "the list carries the article's footnote 2, taken from rabindraart.com, a commercial site; not claimed"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S01",
+   "kind": "GI_JOURNAL",
+   "title": "Geographical Indications Journal (Supplementary - 1), 24 March 2008: Orissa Pattachitra, G.I. Application No. 88",
+   "publisher": "Geographical Indications Registry, Government of India",
+   "year": 2008,
+   "url": "https://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+   "archivedUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S02",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "GI Registry public record of Application 88 (Orissa Pattachitra)",
+   "publisher": "Geographical Indications Registry, IP India",
+   "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/88",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S03",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "GI Registry public record of Application 386 (Orissa Pattachitra (Logo))",
+   "publisher": "Geographical Indications Registry, IP India",
+   "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/386",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S04",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Registration details of Geographical Indications",
+   "publisher": "IP India",
+   "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S05",
+   "kind": "PAPER",
+   "title": "Folk Art at the Crossroads of Tradition and Modernity: A Study of Patta Painting in Orissa",
+   "authors": [
+    "Mamata Tripathy"
+   ],
+   "publisher": "Journal of the Anthropological Society of Oxford (JASO), vol. 29, no. 3",
+   "year": 1998,
+   "url": "https://ora.ox.ac.uk/objects/uuid:28d39d2a-34ab-4ced-8577-217a17316525/files/r2227mq793",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S06",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "View of the Jagannatha Temple, Puri (IS.64-1985)",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O24809/view-of-the-jagannatha-temple-painting-unknown",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S07",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "The Jagannath triad (IS.575-1952)",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O82773/the-jagannath-triad-painting-unknown",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S09",
+   "kind": "OTHER",
+   "title": "Pattachitra - An Indigenous Technique",
+   "authors": [
+    "Tanmaya Mohapatra"
+   ],
+   "publisher": "Orissa Review, Government of Orissa",
+   "year": 2005,
+   "url": "https://magazines.odisha.gov.in/orissareview/nov2005/engpdf/Pattachitra_An_Indigenous_Technique.pdf",
+   "archivedUrl": "https://web.archive.org/web/20251206164053id_/https://magazines.odisha.gov.in/orissareview/nov2005/engpdf/Pattachitra_An_Indigenous_Technique.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S10",
+   "kind": "WEB_PAGE",
+   "title": "Patta Chitra",
+   "publisher": "Government of Odisha",
+   "url": "https://www.odisha.gov.in/en/node/3793",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S11",
+   "kind": "ENCYCLOPEDIA",
+   "title": "Patachitra",
+   "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+   "year": 2022,
+   "url": "https://imp-art.org/articles/patachitra/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S12",
+   "kind": "WEB_PAGE",
+   "title": "Raghurajpur",
+   "publisher": "Incredible India, Ministry of Tourism, Government of India",
+   "url": "https://www.incredibleindia.gov.in/en/rural-tourism/raghurajpur",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S13",
+   "kind": "PAPER",
+   "title": "Pattchiran Of Orisha",
+   "authors": [
+    "Kiran Pradeep"
+   ],
+   "publisher": "Artistic Narration, vol. XIII, no. 2",
+   "year": 2022,
+   "url": "https://anubooks.com/uploads/session_pdf/16733507819.%20Dr.%20Kiran%20Pradeep%2059-64.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S14",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "A village where every home is an artist's studio",
+   "authors": [
+    "Nilima Pathak"
+   ],
+   "publisher": "Gulf News",
+   "year": 2017,
+   "url": "https://gulfnews.com/entertainment/arts-culture/a-village-where-every-home-is-an-artists-studio-1.2147764",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S15",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "The Art And Life Of Chitrakaras Who Paint In Service Of Puri Jagannath",
+   "authors": [
+    "Prateek Pattanaik"
+   ],
+   "publisher": "Swarajya",
+   "year": 2018,
+   "url": "https://swarajyamag.com/magazine/fine-pigment-of-a-sacred-depiction",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S16",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "World Heritage Week: Visit The Art Village Of Raghurajpur, Odisha",
+   "publisher": "Outlook Traveller",
+   "year": 2023,
+   "url": "https://www.outlooktraveller.com/experiences/heritage/raghurajpur-the-heritage-crafts-village-of-odisha",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S17",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "Odisha village continues to keep traditional art alive",
+   "authors": [
+    "Jael Silliman"
+   ],
+   "publisher": "The Better India",
+   "url": "https://thebetterindia.com/107336/odisha-village-continues-keep-traditional-art-alive/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S18",
+   "kind": "WEB_PAGE",
+   "title": "Raghurajpur: The Cradle of Pattachitra Painters",
+   "authors": [
+    "Reneeka Chatterjee"
+   ],
+   "publisher": "Gokhale Institute of Politics and Economics (Artha Vijnana student blog)",
+   "url": "https://gipe.ac.in/raghurajpur-the-cradle-of-pattachitra-painters/",
+   "archivedUrl": "https://web.archive.org/web/20260515193309id_/https://gipe.ac.in/raghurajpur-the-cradle-of-pattachitra-painters/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "D",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S19",
+   "kind": "WEB_PAGE",
+   "title": "A Village of Chitrakaras",
+   "publisher": "Fundamatics",
+   "url": "https://fundamatics.net/a-village-of-chitrakaras-2/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "D",
+   "retrievedAt": "2026-11-18"
+  }
+ ],
+ "claims": [
+  {
+   "id": "C001",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "The word pattachitra comes from the Sanskrit patta, a painted piece of cloth or a plate, and chitra, meaning paintings or picture.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (G) description of goods",
+     "quote": "The word Pattachitra is derived from the Sanskrit word \"patta\", which means a painted piece of cloth,or a plate;chitra means paintings or picture"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 34",
+     "quote": "Pata has been derived from the Sanskrit word 'Patta'"
+    },
+    {
+     "sourceId": "S17",
+     "locator": "paragraph 3",
+     "quote": "Derived from the Sanskrit word patta (canvas) and chitra (painting)"
+    }
+   ]
+  },
+  {
+   "id": "C002",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Patta painting, or patta chitra, is one of the typical regional arts of the coastal state of Orissa in eastern India.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "or patta chitra, is one of the typical regional arts of the coastal state of Orissa in eastern India"
+    }
+   ]
+  },
+  {
+   "id": "C003",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Patta painting in Orissa focuses on the Hindu epics, the Mahabharata and the Ramayana, and on the Jagannath cult in particular.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "the Hindu epics in general, the Mahabharata and the Ramayana, and the Jagannath cult in particular"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "So far patta painting of Orissa have adhered to only religious sentiments and mostly depict topics related to Krishnalila and Jagannath."
+    }
+   ]
+  },
+  {
+   "id": "C004",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Traditionally patta painting was practised only by the Chitrakara caste as their caste occupation.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "Traditionally it was prac tised only by the Chitrakara caste as their caste occupation."
+    }
+   ]
+  },
+  {
+   "id": "C005",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Pattachitra paintings were traditionally drawn by the Mahapatra or Maharanas, described as the original artiste caste in Odisha.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 4",
+     "quote": "Pattachitra paintings were traditionally drawn by the Mahapatra or maharanas, the original artiste caste in Odisha."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 60",
+     "quote": "Artisans of 'Pattchitra' belong to the 'Mahapatra' or 'Maharanas' caste and live across the various cities of Orisha."
+    }
+   ]
+  },
+  {
+   "id": "C006",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "The GI application calls the canvas, the patta astra, the most important feature of pattachitra, without which the art's significance is incomplete.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (K) uniqueness",
+     "quote": "The most important feature of pattachitra is the canvas on which the painting is done, without this base, called patta astra the significance of the art is incomplete."
+    }
+   ]
+  },
+  {
+   "id": "C007",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Patta painting is a family or household craft whose procedures are carried out by different members of the same household.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "patta painting is a family or household craft. All of the procedures involved in patta painting are carried out by different members of the same household."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) method of production",
+     "quote": "The artists and his family together perform these steps"
+    }
+   ]
+  },
+  {
+   "id": "C008",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Brightly coloured pattachitra works were produced at Puri as souvenirs for the pilgrims of the Jagannath temple.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (G) description of goods",
+     "quote": "The brillinantly colored patachitra works were pr oduced at puri or souveriers for the pilgrims of the Jaganath temple."
+    },
+    {
+     "sourceId": "S06",
+     "locator": "summary",
+     "quote": "Workshops producing devotional paintings for pilgrims prospered around the temple in Puri."
+    }
+   ]
+  },
+  {
+   "id": "C009",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application argues that pattachitra's primitive style and its role in temple services, contemporary with the 12th-century building of the Jagannath temple, suggest an early date for its origin.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "The proof of origin of the \"Pattachitra\" art can be traced from their primitive style and the important role it plays in temple services which are contemporary with the building of the Jagannath temple (12th century)"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "All this suggests an early date for its origin."
+    }
+   ]
+  },
+  {
+   "id": "C010",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "According to the GI application, pata paintings flourished in Orissa in the early 15th and 16th centuries.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "These paintings flourished in Orissa in early 15 th 16th centuries."
+    }
+   ]
+  },
+  {
+   "id": "C011",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application says the cult of Jagannath used pata paintings to spread the faith throughout Orissa and beyond, through the patronage of the Jagannath temple.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "The cult of Jagannath used Pata paintings to spread the faith throughout Orissa and also outside b ecause of the patronage by the temple of Jagannath"
+    }
+   ]
+  },
+  {
+   "id": "C012",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "According to the GI application, Chitrakaras painted Jagannath patas in large numbers, and these slowly outnumbered paintings on other themes in Orissa.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "Chitrakaras (the painters) painted Jagannath Patas in large number and slowly these Patas outnumbered other thematic ones in Orissa"
+    }
+   ]
+  },
+  {
+   "id": "C013",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Every year on Jyeshtha purnima the ritual bathing discolours the painted wooden images of Jagannath, Balabhadra and Subhadra, which are repainted over 15 days while absent from the inner sanctuary.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "Every year on Jyeshtha purnima, the painted wooden images of Jaganath, Balabhadra and their sister Subhadra are ritually deansed with holy waters."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "This bathing discolors the icons and they are removed from the temple for 15 days so that they can be repainted."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "so that the images are kept in the anasara ghara for repainting for fifteen days"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "when the images are ab sent from the ratna singhasana (the inner sanctuary)"
+    }
+   ]
+  },
+  {
+   "id": "C014",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W06"
+   },
+   "text": "While the images are away, three patta paintings of the trinity are kept in the main shrine as their proxies; these are called anasara patti.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "During this time, the three\"Patachitra paintings\" depicting the divine trio are substituted for the images by the temple painter."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "three large patta paintings of the trinity are kept inside the main shrine, as proxies of them"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "These paintings are called anasara patti."
+    },
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 1",
+     "quote": "Initially, patachitra was called anasar patti in reference to the fifteen-day ritual period known as anasara or anavasra"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 1",
+     "quote": "In this period known as 'anasara', they are substituted by majestic paintings that represent them."
+    }
+   ]
+  },
+  {
+   "id": "C015",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Other patta paintings worshipped in the Jagannath temple include the krishna patti, bamana patti and kandarpa patti, so patta painting is needed for rituals throughout the year.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "other patta paintings worshipped in the temple on various occasions include the krishna patti"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "the bamana patti, a painting of Bamana"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "and the kandarpa patti, paintings of Kandarpa worshipped on the twelfth and thirteen days"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "patta painting is an im portant part of the Jagannath cult and is required in one fonn or other for temple rituals throughout the year"
+    }
+   ]
+  },
+  {
+   "id": "C016",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "According to the Jagannath temple chronicle, Chitrakaras were first brought to Puri by Anangabhima Deva II to do the temple's painting, and given tax-free lands.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "According to the Jagannath temple chronicle, they were first brought to Puri by the emperor Anangabhima Deva II to carry out all the painting required for the temple, which gave Chitrakara families tax-free lands."
+    }
+   ]
+  },
+  {
+   "id": "C017",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "The image of Jagannath is carved of margosa wood and painted by Chitrakaras, who were brought to Puri from various places as servants of Jagannath.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 198",
+     "quote": "The image of Jagannath is carved out of mar gosa wood and painted by members of the Chitrakara caste, who were brought to Puri from various places as the servants of Jagannath."
+    }
+   ]
+  },
+  {
+   "id": "C018",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W17"
+   },
+   "text": "Chitrakara society is divided into three badas named after the trinity, which supply the anasara pattis and colour the images and their cars for the Car festival.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "Chitrakara society is subdivided into three groups or badas named after the deities of the trinity"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "supplying the respective anasara pattis, colouring the images and their cars on the occasion of the Car festival"
+    }
+   ]
+  },
+  {
+   "id": "C019",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In the remote past primed paper was the base of the painting, and in course of time the Chitrakaras used primed cloth as the base.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "In the remote past, primed paper was used as the base of the painting."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "In course of time, the Chitrakaras used primed cloth as the base or canvas for the painting work."
+    }
+   ]
+  },
+  {
+   "id": "C020",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W07"
+   },
+   "text": "Jatripattis, paintings meant exclusively for pilgrims, were taken home as souvenirs of the pilgrimage and worshipped there as representatives of the trinity.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 205",
+     "quote": "Jatripatti (painting meant exclusively for pilgrims)"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "who used to take these paintings back with them as souvenirs of the pilgrimage. They also used to worship these at home as representatives of the trinity."
+    }
+   ]
+  },
+  {
+   "id": "C021",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A V&A painting on cloth of the Jagannatha temple in the Orissan style, dated 1670, was most probably executed at Puri and sent to Nepal.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "summary",
+     "quote": "This painting on cloth (pata), done in the Orissan style, depicts the famous Jagannatha Temple in Puri, Orissa."
+    },
+    {
+     "sourceId": "S06",
+     "locator": "summary",
+     "quote": "although it was most probably executed at Puri, it was sent to Nepal to mark a festival ritual performed by the ruler of Bhaktapur"
+    },
+    {
+     "sourceId": "S06",
+     "locator": "summary",
+     "quote": "in the year Samvat 790 (= 1670)"
+    }
+   ]
+  },
+  {
+   "id": "C022",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The same V&A record's brief description says this 1670 Jagannatha temple painting was painted in Bhaktapur, Nepal, in gouache on cotton.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "brief description",
+     "quote": "Painting, Jagannatha temple at Puri, painted in Bhaktapur, Nepal, gouache on cotton, 1670"
+    }
+   ]
+  },
+  {
+   "id": "C023",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "After a two-year INTACH research project from 1998 to 2000, Raghurajpur was selected as the first heritage village of Odisha.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "After two years of Research Projects from 1998 to 2000 by INTACH, the village has selected as the first heritage village of Odisha"
+    },
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 6",
+     "quote": "In 2000, the Indian National Trust for Art and Cultural Heritage (INTACH) declared Raghurajpur a 'heritage village,'"
+    },
+    {
+     "sourceId": "S17",
+     "locator": "paragraph 11",
+     "quote": "Raghurajpur was recognized as a Heritage Village in 2000."
+    },
+    {
+     "sourceId": "S18",
+     "locator": "paragraph 9",
+     "quote": "In 2000, after a two-year research and documentation project by INTACH, starting in 1998, the village of Raghurajpur was chosen to be developed as Odisha's first village of cultural significance."
+    }
+   ]
+  },
+  {
+   "id": "C024",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G04"
+   },
+   "text": "Outlook Traveller writes that Raghurajpur was once known as keeper of Odisha's pattachitra largely due to the late Jagannath Mohapatra, winner of the President of India's award in 1965, who lived there.",
+   "quotes": [
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 2",
+     "quote": "Once known as the keepers of Odisha's ancient pattachitra art, largely due to the late Jagannath Mohapatra (winner of the President of India's award in 1965) who lived here"
+    }
+   ]
+  },
+  {
+   "id": "C025",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Mythologically the Chitrakaras are believed to be the descendants of Biswakarma, the celestial architect of the Hindus.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "Mythologically the Chitrakaras are believed to be the descendants of Biswakarma, the celestial architect of the Hindus"
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C026",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Scholars cited by Gulf News suggest pattachitra dates back to the 2nd century BCE, to mural art in the Khandagiri and Udayagiri caves of Bhubaneswar.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 11",
+     "quote": "Scholars suggest that pattachitra dates back to the 2nd century BCE to the mural art found inside Khandagiri and Udayagiri caves of Bhubaneshwar"
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C027",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "It is said that pattachitra in its modern form dates back to the construction of the Jagannath temple in the 12th century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 11",
+     "quote": "It is said that the modern day version of pattachitra dates back to the time of construction of Lord Jagannath Temple in 12th century AD"
+    },
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 4",
+     "quote": "It is said that the pattachitra of Odisha dates back to the 12th century"
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C028",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "TERM",
+    "ref": "W01"
+   },
+   "text": "The artists themselves say the name comes from the remote past, when painting was done with a brush of locally available screw-pine wood called patta.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 198",
+     "quote": "According to the artists themselves, in the remote past paint ing was done with a brush prepared from locally available screw-pine wood called patta."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C029",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application gives four steps in order: preparation of patta, preparation of pigments, motif selection and layout, and finally painting.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) method of production",
+     "quote": "which are preparation of patta, preparation of pigments, motif selection and layout, and finally painting"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) method of production",
+     "quote": "The steps are: 1 Preparation of patta , 2 Preparation of Pigments, 3 Motif selection , 4 Painting"
+    }
+   ]
+  },
+  {
+   "id": "C030",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "The canvas is made by pasting layers of old, used cotton cloth, such as saris or dhotis, together with tamarind glue.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "In Orissa, the canvas is prepared by pasting layers of old and used cloth with the help of tamarind glue."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "To prepare a patti on handmade canvas, the artists use, old and used cotton cloth and tamarind seed gum."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "This canvas was prepared by applying tamarind glue (prepared from tamarind seeds) and chalk solution on clean cotton saris or dhotis in two or three layers."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Artisans take a few old well-washed saris to prepare a canvas."
+    }
+   ]
+  },
+  {
+   "id": "C031",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "The first layer of cloth is spread on the floor or on a hensa mat, and the glue is applied over it in the manner of smearing cow dung.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "The first layer of cloth is spread on the cemented floor or on a mat (Hensa), over which gum is applied on the manner of smearing cowdung"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "The glue is applied over it in the manner of smearing cow dung on the floor of a house."
+    }
+   ]
+  },
+  {
+   "id": "C032",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "A second layer of cloth is pasted over the first, the bubbles and patches of glue between the layers are removed, and a third and fourth layer are added if needed.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "The second layer of cloth is spread over it and pasted together. The bubbles and patches of glue in between the layers are removed."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "If need arises a third and fourth layer are also used."
+    }
+   ]
+  },
+  {
+   "id": "C033",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "The pasted canvas is left to dry in the sun, taken off the floor, rolled and preserved, and canvases are prepared in large numbers especially in winter and summer or spring.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "Now this is left in the sun to dry. When it is dried, it is taken of the floor, rolled and preserved for painting."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "Especially during winter and summer or spring, these canvases are prepared in large numbers and are stored."
+    }
+   ]
+  },
+  {
+   "id": "C034",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "For the glue, tamarind seeds are crushed on a sila stone, soaked in water in an earthen pot for half a day, ground to a thick paste and cooked.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "The tamarind seeds are crushed on a sila and then soaked in water in an earthen pot for half a day. Then they are grounded and made into thick liquid. This liquid is cooked to obtain the glue."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "Seeds are crushed on a flat stone bed (sila), then soaked in water in an earthen pot for half a day. Then they are ground and made into thick paste, which is cooked with required water to obtain the gum."
+    }
+   ]
+  },
+  {
+   "id": "C035",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "Tripathy describes insect-free tamarind seeds soaked overnight, ground to pulp, mixed 1:2 with water and heated for 30-45 minutes until sticky and semi-solid.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "insect-free, good-quality seeds are soaked in water overnight and are then made into pulp by grinding"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "The pulp is then mixed with water in a 1:2 ratio and is kept on the hearth for 30-45 minutes until it be comes sticky and semi-solid."
+    }
+   ]
+  },
+  {
+   "id": "C036",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "Kiran Pradeep writes that the tamarind seeds are crushed and soaked for 4-5 days until soft, then boiled in water to make the glue.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "tamarind seeds are crushed and soaked for 4-5 days to become soft. After they become soft they are boiled in water and made into glue."
+    }
+   ]
+  },
+  {
+   "id": "C037",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "In the GI application's account the housewives carry out the entire process of making the gum and preparing the patta.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "The housewives execute the entire process of making the gum and preparing the patta."
+    }
+   ]
+  },
+  {
+   "id": "C038",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "Tripathy found women usually making the tamarind glue and chalk solution and smoothing the surface, while men applied the glue and chalk solution to the cloth.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "Preparation of the tamarind glue and the chalk-powder solution, as well as smooth ing the surface, are usually done by the women"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "while the preparation of the can vas itself, that is, the application of tamarind glue and chalk-powder solution to the cotton cloth, is carried out by the men"
+    }
+   ]
+  },
+  {
+   "id": "C039",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "The khadi coating is made by mixing tamarind glue with chalk, generally in equal proportions of fifty percent each.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "b. Application of Khadi (Khadi Lagi) The coating is obtained by mixing tamarind glue with chalk in the proper proportions. Generally the proportion of chalk and glue is fifty percent each."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "The coating is obtained by mixing tamarind gum with chalk in proportion of 50 - 50"
+    }
+   ]
+  },
+  {
+   "id": "C040",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "Tripathy describes khadi pathara chalk ground fine and mixed 1:2 with water, then made sticky with 400 gm of tamarind glue per kg of chalk powder.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "a white chalk locally called khadi pathara is ground to a fine powder and mixed well with water in a 1:2 ratio. To make it sticky 400 gm of tamarind glue is mixed together with I kg of chalk powder."
+    }
+   ]
+  },
+  {
+   "id": "C041",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "Two or three coats of chalk solution are applied to both sides of the patti, drying between coats, which also reduces the colour used in painting.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "a solution of chalk powder is applied on both the sides with a piece of cloth and left to dry. Two or three such coatings of chalk solution are ap plied, with an interval for drying each time"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "to make the canvas more perfect and thus reduce the amount of colour consumed in painting"
+    }
+   ]
+  },
+  {
+   "id": "C042",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The GI application says that when the first coat is a bit dry it is rubbed with round soft stones called barada or jhuna barada, the first phase of rubbing with jhuna barada.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "When the first coat becomes a bit dry, it is rubbed with round soft stones called barada or jhuna barada."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "The first phase of rubbing is done with jhuna barada and the subsequent smoothing is done with chikana barada."
+    }
+   ]
+  },
+  {
+   "id": "C043",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The Orissa Review describes the barada used to rub the khadi coat, once it is a bit dry, as an agate stone.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "When Khadi becomes a bit dry, it is rubbed with agate stone called 'barada'."
+    }
+   ]
+  },
+  {
+   "id": "C044",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T01"
+   },
+   "text": "Two types of barada are used, a rough khadada barada and a fine chikana barada, and the Orissa Review and Tripathy have the rough stone do the first rubbing.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "Two types of baradas are used. The rough one is called khadada barada"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "Two types of barada is used - Khadada barada (rough) chikana barada (fine). The first phase of rubbing is done withkhadada barada and the subsequent smoothing is done with chikana barada."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "first with a rough surfaced stone called bagada barada, and then with a comparatively smooth and polished stone called chikkana barada"
+    }
+   ]
+  },
+  {
+   "id": "C045",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The rubbing, locally called pattighasa, is done systematically with horizontal and vertical movements on both sides of the pati, which otherwise becomes shaky and twisted, until the surface is completely polished and fit to be painted.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "Rubbing is done systematically by horizontal and vertical movements."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "Rubbing and polishing are done on the both sides of pati otherwise it becomes shaky and twisted."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "that is, smoothing the canvas, which is 10cally called a pattighasa"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 202",
+     "quote": "till the surface of the canvas becomes completely polished and fit to be painted"
+    }
+   ]
+  },
+  {
+   "id": "C047",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P09"
+   },
+   "text": "After coating and polishing, the patis are trimmed and cut to size with scissors, called kainchi, and patis for ganjapa with a ssama, a round iron rim with a sharp edge attached to a log.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) sizing",
+     "quote": "c. Sizing (Sama-Nakariva) After the coats are applied and polished the patis are trimmed on the sides and are cut into required sizes with the help of scissors."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Kainchi - scissors is used to cut the patis into required sizes."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) sizing",
+     "quote": "Patis for ganjapa are cut by the help of ssama (a round iron rim with a sharp edge attached to a log)"
+    }
+   ]
+  },
+  {
+   "id": "C049",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P11"
+   },
+   "text": "For tussar silk paintings, the silk is pasted onto a board of the required size and dried before painting.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparing tussar silk",
+     "quote": "Required size of ply wood board is taken on which silk fabric is pasted with the help of Fevicol and then it is allowed to dry."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 206",
+     "quote": "The cloth is first fixed tightly and evenly on a wooden slate or slab with the help of glue around its border, after which it is painted."
+    }
+   ]
+  },
+  {
+   "id": "C050",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "For white, a paste of crushed conch shell is kept with water in an earthen pot, the rough portion that settles is thrown away, and the rest is filtered.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "The conch shells are crushed and ground and made into a paste. This is kept in an earthen pot, mixed with water."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "After a few hours of storing the sedemented water comes up and khadada (rough) portion goes down the pot and is thrown away. Now the whole substance is filtered"
+    }
+   ]
+  },
+  {
+   "id": "C051",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "In Tripathy's account the conch shells are ground into tiny pieces and soaked, and the pulp is boiled twice or more to obtain the white.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "White is prepared from conch shells, which are ground into very tiny pieces and soaked with water. This pulp is then boiled twice or more to obtain the white colour."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 2",
+     "quote": "White is prepared from crushed, boiled, and filtered shells."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "First of all, Artisans grind it and make powder. Then boil it by adding water as required. In the next process, they strain and filter the paste."
+    }
+   ]
+  },
+  {
+   "id": "C052",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Crude cinnabar is levigated in a mortar with sugar water or lime juice and the yellowish water drained off, fifteen times or more for the purest, then mixed with gum, formed into tablets and dried.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "The crude cinnabar is thoroughly levigated in a mortar with the help of sugar water or limejuice, which is a better substitute. Then the cinnabar is allowed to settle and the yellowish water is carefully drained off."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "The process is repeated fifteen times or even more to obtain the purest cinnabar. It is again levigated with sugared water or limejuice and gum and after being thoroughly mixed it is formed into tablets and dried."
+    }
+   ]
+  },
+  {
+   "id": "C054",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Red clay or gairika is pulverised on stone for one whole day, and the colour is then obtained by washing it in pure water.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "Red clay or gairika is pulverized on stone for one whole day and thereafter the color is obtained by washing it in pure water."
+    }
+   ]
+  },
+  {
+   "id": "C055",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Black is oil wick lamp black, collected from inside an earthen pot put over the oil lamp, where the black from the wick sticks.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "It is obtained from oil wick lamp black. An earthen pot is put over the oil lamp. The black from the wick gets stuck inside the pot."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 2",
+     "quote": "Black is made out of lampblack"
+    }
+   ]
+  },
+  {
+   "id": "C056",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Tripathy records black prepared by mixing the soot of a kerosene lamp with locally available polanga or coconut oil.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "Black is prepared by mixing the soot of a kerosene lamp with locally available polanga or coconut oil."
+    }
+   ]
+  },
+  {
+   "id": "C057",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Cinnabar, yellow and ochre are ground from minerals to fine powder and mixed with water and a little elephant-apple extract until even and uniform.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "Cinnabar, yellow, and ochre are prepared from different minerals, which are ground to fine powder before water is added, along with a little extract from the elephant-apple tree in different proportions for the different colours, the whole being mixed well until it becomes even and uniform."
+    }
+   ]
+  },
+  {
+   "id": "C058",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "In the Puri-area method painting starts by marking the border, a narrow space in from the edge of the pati, with a scale and ruler.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "we are going to discuss the popular method followed by thechitrakaras of Puri area."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "It starts with the demarcation of the border leaving a narrow space around from the last edge of the pati, with the help of scale and ruler."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 1",
+     "quote": "It is a tradition to complete the borders of the painting first."
+    }
+   ]
+  },
+  {
+   "id": "C059",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "The painter makes the rough sketch directly with the brush in light red and yellow, without pencil or charcoal for the preliminary drawing.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 1",
+     "quote": "The artist does not use a pencil or charcoal for the preliminary drawings."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 1",
+     "quote": "The painter then starts making a rough sketch directly with the brush using light red and yellow."
+    }
+   ]
+  },
+  {
+   "id": "C060",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "One artist told Gulf News that the painter sketches the bare outlines with charcoal or limestone, usually from memory.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 13",
+     "quote": "The painter sketches the bare outlines of the painting with charcoal or limestone. This is usually done from memory"
+    }
+   ]
+  },
+  {
+   "id": "C061",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "The sketch, done without details such as eyes, nose and fingers, is generally drawn by the master craftsman at the head of the family.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "After this sketching is done without going into details like, eye, nose, lips, fingers etc."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "Generally the master craftsman on the head of the family draws it."
+    }
+   ]
+  },
+  {
+   "id": "C062",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TERM",
+    "ref": "W10"
+   },
+   "text": "Swarajya describes the master painter outlining the anasara pati figure with a thin brush dipped in red hingula, a base sketch known as the tipana.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 7",
+     "quote": "With a thin brush dipped in red hingula, he deftly outlines the figure of Jagannath in all detail. This is the base sketch, or what is known as the tipana."
+    }
+   ]
+  },
+  {
+   "id": "C063",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "After sketching, the background is coloured first; red backgrounds are the most common in Orissa pattachitra, and traditionally cinnabar was the usual background colour.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "Sketching is followed by colouring, and here comes the background first."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "the red background in pattachitra of Orissa is the most common"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 204",
+     "quote": "Traditionally cinnabar was the usual colour for the background."
+    }
+   ]
+  },
+  {
+   "id": "C064",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "Colours are then applied to the figures one after another, the body colours of the deities following their Dhyanamantra.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Colours are applied to the figures in the next step. Consequently one colour follows the other"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "The body colours of different deities are painted as per their 'Dhyanamantra'."
+    }
+   ]
+  },
+  {
+   "id": "C065",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "Ornamentation follows, colouring ornaments, head-dresses, sari borders, weapons and attributes, and white or safeda is painted to bring out their details.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "ornamentation is done after this. It includes colouring the ornaments, head-dresses, border of soris, weapons and attributes."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Safeda or white is painted to accentuate the intricate beauty of the ornaments and bring out the details of carving."
+    }
+   ]
+  },
+  {
+   "id": "C066",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TERM",
+    "ref": "W11"
+   },
+   "text": "Rangalekha, red lining over the ornaments, is done to stabilise the effects produced by the white ornamentation.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Rangalekha or redliness is done over ornaments to stabilise the effects produced by the white ornamentation."
+    }
+   ]
+  },
+  {
+   "id": "C067",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "Thick black lines are given to hair and garment borders, and the fine black finishing lines are drawn afterwards by the master craftsman.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Thick black line are given to those portions like hair, borders of the garment etc. fine balck line or finishing is done thereafter. This is done by the master craftsman."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 1",
+     "quote": "The painter then finishes the painting with fine stokes of black brush lines, giving the effect of pen work."
+    },
+    {
+     "sourceId": "S19",
+     "locator": "paragraph 13",
+     "quote": "Experienced painters and senior members of the family draw the fine lines on the paintings (called Sarukala in their parlance)."
+    }
+   ]
+  },
+  {
+   "id": "C068",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TERM",
+    "ref": "W12"
+   },
+   "text": "Before lacquering, defects noticed in the painting are touched up, a step called bageiba.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Before lacquering, if some defects are noticed in the course of the painting, touching up is done, which is called Bageiba"
+    },
+    {
+     "sourceId": "S19",
+     "locator": "paragraph 13",
+     "quote": "the senior artist or the guru rectifies the mistakes, if any, in the Patta (a stage called bageiba in Odia)"
+    }
+   ]
+  },
+  {
+   "id": "C069",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P10"
+   },
+   "text": "The finished painting is held over a charcoal fire and lacquer beaten onto it with a wooden stick and evened with a cloth bundle, kanamunda or dasi, making it water resistant and durable with a shining finish.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 1",
+     "quote": "When the painting is completed it is held over a charcoal fire and lacquer is applied to the surface. This makes the painting water resistant and durable, besides giving it a shining finish."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "finally lacquering is done to give a glow to the painting and to protect the painting from water and moisture"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Lacquer is applied to the painting with a wooden stick. This is done in the manner of beating on the surface of the painting. Then a bundle of cloth called 'kanamunda' or 'dasi' is rubbed over the surface to make the melting lac even and smooth."
+    }
+   ]
+  },
+  {
+   "id": "C071",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T06"
+   },
+   "text": "Tuli brushes are made from tufts of hair tied with thread to the ends of bamboo, with liquid lac applied over the knot to bind it firmly.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Brushes of various sizes are made by tufts of hair tied together to the ends of bamboo twins with the help of thread or Kanadhadi. Over the knot liquid lac is applied to bind it firmly."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "The tools used in the process of painting like brush (tuli)"
+    }
+   ]
+  },
+  {
+   "id": "C072",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T06"
+   },
+   "text": "Coarse brushes are made of buffalo hair and fine ones of rat, squirrel or mongoose hair; Tripathy counts 30-40 hairs for a thick brush, 8-10 for a thin one and five or six for the thinnest.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Brushes of fine quality are prepared out of rat and squirrel hair and brushes of coarse quality are made out of buffalo-hair."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 204",
+     "quote": "The body hairs of the buffalo are used for thick brushes, while those of the mongoose and farm rat are used for thin brushes."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 62",
+     "quote": "Fine brushes are made out of mongoose or squirrel hair but course quality is made out of buffalo hair"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 204",
+     "quote": "the required quantity, i.e. 30-40 for thick brushes and 8-10 for thin brushes, are tied with thread at one end"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 204",
+     "quote": "The thinnest brush, made of five or six hairs of the farm rat, is used for the final black thin lining."
+    }
+   ]
+  },
+  {
+   "id": "C074",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T08"
+   },
+   "text": "Colours are held in coconut-shell containers called sadhei, preferred to earthenware sanas because those break more easily.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "Coconut shell (Sadhei) are generally used as container for colour."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "'Sanas' - earthenware are also used, but these are more easily breakable and so Sadheis are popular."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 62",
+     "quote": "Coconut shell, called 'Sadhei' is used for mixing these natural pigments"
+    }
+   ]
+  },
+  {
+   "id": "C075",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M01"
+   },
+   "text": "The GI application describes the patta as a double-thickness coarse cotton cloth pasted together, usually of GSM 565.71 and 4.07 mm thick.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "It is a double thickness coarse cotton cloth pasted together. This Patta is usually of GSM 565.71 and thickness of 4.07 mm."
+    }
+   ]
+  },
+  {
+   "id": "C076",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application specifies that all colours used in pattachitra are vegetable and mineral colours, and the Odisha government's page and Kiran Pradeep also name natural sources for them.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "All the colors used in Pattachitra are vegetable and mineral colors."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 2",
+     "quote": "The materials used in the paint are from vegetable, earth, and mineral sources."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Colors are not ready-made but are prepared by artists and obtained from natural sources such as lamp soot and powdered conch shells."
+    }
+   ]
+  },
+  {
+   "id": "C077",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy counts six basic colours used for the triad: white sankha, black kola, cinnabar hengula, yellow haritala, ochre geru and green pacha.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "are six in the tradition of patta painting, which are directly used for the supreme triad. These are (i) white (sankha), (ii) black (kola), (Hi) cinnabar (hengula), (iv) yellow (haritala), (v) ochre (geru), and (vi) green (pacha)."
+    }
+   ]
+  },
+  {
+   "id": "C078",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Elsewhere Tripathy lists the main colours, the same as those for painting the trinity, as sankha, hengula, neli blue, pocha green, haritala, kala and geru.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 199",
+     "quote": "The main colours used in patta painting are same as those used for painting the trinity, namely sankha (white), hengula (red), neli (blue), pocha (green), haritala (yellow), kala (black), and geru (ochre)."
+    }
+   ]
+  },
+  {
+   "id": "C079",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Kiran Pradeep writes of five main colours, known as Pancha-Tatva, which have relevance to the prominent characters.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "five main colors, known as Pancha-Tatva have relevance to prominent characters."
+    }
+   ]
+  },
+  {
+   "id": "C080",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy writes that the canvas, colours and brushes were traditionally prepared within the Chitrakara family, the colours at home from conch shells, leaves or mineral stones.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "All the major prerequisites for the painting, like the canvas, colour, brushes etc., were traditionally prepared within the Chitrakara fami1y."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "These colours are all prepared at home from natural resources, like conch shells, leaves, or mineral stones, following processing."
+    }
+   ]
+  },
+  {
+   "id": "C081",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M04"
+   },
+   "text": "White, prepared from conch shells easily available on the seacoasts of Orissa, is the basic colour of the pata painters, from which the values of all other colours are determined.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "In Orissa, the white used in the pata paintings is prepared from conch shells, which are easily available on the seacoasts of Orissa."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "white - sankh (conch shell)"
+    },
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "white is derived from the powder of conch-shell"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "It is the basic color of the pata painters in the sense that the total values of all other colors are determined from the white"
+    }
+   ]
+  },
+  {
+   "id": "C083",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M05"
+   },
+   "text": "The vermilion red of pattachitra is hingula, or cinnabar, and the brick red is geru, or red ochre.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "vermillion red - hingula (cinnabar)"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "brick red - geru (red ochre)"
+    },
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "red from the red oxide stone (geru) and red sulphide of mercury (hingula)"
+    }
+   ]
+  },
+  {
+   "id": "C084",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M06"
+   },
+   "text": "According to the GI application, red ochre, called gairika or geru, is used in place of vermilion red in most cases.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "Red Ochre (gairika or geru) It is also used in place of vermillion red in most of the cases."
+    }
+   ]
+  },
+  {
+   "id": "C085",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M07"
+   },
+   "text": "Yellow comes from the stone haritala or hartala, which the GI application identifies as orpiment.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "yellow - hartala (orpiment)"
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 2",
+     "quote": "yellow from haritala stone"
+    }
+   ]
+  },
+  {
+   "id": "C086",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "Blue for pattachitra is obtained from indigo, according to MAP Academy and Gulf News.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "blue from indigo and green from leaves"
+    },
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 14",
+     "quote": "yellow from harital stone, blue from indigo and green from leaves"
+    }
+   ]
+  },
+  {
+   "id": "C087",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M10"
+   },
+   "text": "Kiran Pradeep writes that blue is prepared from a stone called khandaneela.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "as well as blue from the stone 'Khandaneela'"
+    }
+   ]
+  },
+  {
+   "id": "C088",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M11"
+   },
+   "text": "The GI application says green is obtained by mixing yellow with blue or yellow with black.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "It is obtained by mixing yellow with blue or yellow with black."
+    }
+   ]
+  },
+  {
+   "id": "C089",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M11"
+   },
+   "text": "Other sources say green is prepared from leaves or from a green stone.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "blue from indigo and green from leaves"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Green is prepared either from green stone or green plant"
+    }
+   ]
+  },
+  {
+   "id": "C090",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "For the anasara patis only naturally obtained pigments are used, never mixed, and industrial oil-based paints are considered unclean, Swarajya reports.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 6",
+     "quote": "Only 'traditional' (which implies naturally obtained) pigments are used. Industrial oil-based paints are considered unclean."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 6",
+     "quote": "Moreover, the pigments are never mixed and are only used as they are, in their 'pure' forms."
+    }
+   ]
+  },
+  {
+   "id": "C091",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy found colours no longer prepared at home, since the traditional methods are very time-consuming, artists preferring modern enamels or watercolours.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 206",
+     "quote": "Colours are no longer prepared at home, since the traditional methods of pre paring colours are very time-consuming. Artists now prefer to use the large variety"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "of modem colours (enamels or watercolours), which have also increased the range of colour schemes used in patta painting"
+    }
+   ]
+  },
+  {
+   "id": "C092",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M16"
+   },
+   "text": "Tassar cloth is one of the most popular alternatives to primed cloth, and tassar paintings are lighter and take less space than traditional patta paintings.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 206",
+     "quote": "This is one of the most popular alternatives for traditional primed cloth"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 206",
+     "quote": "Tassar paintings are lighter and occupy comparatively less space than traditional patta paintings on primed cloth"
+    }
+   ]
+  },
+  {
+   "id": "C093",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Pattachitra artists also paint their themes on wooden boxes, bowls, tussar silk, coconut shells and wooden doors.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 3",
+     "quote": "The Pattachitra artists also paint their themes on wooden boxes, on bowls, on tussar silk, on outer shells of the coconut, and on wooden doors."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "Other forms of 'Pattchitran' art include paintings on a coconut shell and betel nut, toys, wall hangings, paper Mache masks, bottles etc."
+    }
+   ]
+  },
+  {
+   "id": "C094",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M05"
+   },
+   "text": "Hingula is a red sulphide of mercury, also known as cinnabar.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Hingula is a red sulfide of mercury also known as cinnabar"
+    },
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "red sulphide of mercury (hingula)"
+    }
+   ]
+  },
+  {
+   "id": "C095",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M07"
+   },
+   "text": "The GI application describes orpiment as a sulphide arsenic acid found in nature as stone, a light, vivid yellow, more often slightly inclined towards orange, with a mica-like sparkle recalling metallic gold.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "Oripment is a sulphide arsenic acid found in nature as stone."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) preparation of pigments",
+     "quote": "Its color is light, vivid yellow, but more often slightly inclined towards orange. In its natural state oripmment has a mica-like sparkle that recalls the lusture of metallic gold."
+    }
+   ]
+  },
+  {
+   "id": "C097",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M12"
+   },
+   "text": "Gum is used in all the colours to make them sticky and permanent, and lacquering is treated as a further binding medium applied after finishing.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) binding media",
+     "quote": "Gum is used in all the colors to make them sticky and permanent."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) binding media",
+     "quote": "Lacquering is considered as another binding medium, generally applied to the painting after it is finished."
+    }
+   ]
+  },
+  {
+   "id": "C098",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M05"
+   },
+   "text": "Kiran Pradeep writes that the hingula stone from which artisans prepare red is found in hills in Odisha.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Artisans prepared red color from 'Hingula' stone which is found in hills in Odisha."
+    }
+   ]
+  },
+  {
+   "id": "C099",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M07"
+   },
+   "text": "Kiran Pradeep writes that haritala, used to prepare yellow, is an indigenous stone found in Orissa.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Haritala, an indigenous stone, found in Orisha, is used to prepare yellow"
+    }
+   ]
+  },
+  {
+   "id": "C101",
+   "discipline": "BOTANY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M12"
+   },
+   "text": "Gum of the kaitha or kapitha, the elephant apple or wood apple, is mixed with the colours to bind them.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "The gum of the fruit kaitha is used to mix and bind the colours together."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (E) specification",
+     "quote": "gum resin (limonia acidissimia)- kaintha plant"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) binding media",
+     "quote": "The gum obtained from neem tree and kapitha (elephant apple) are mostly mixed with colors."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "with the help of 'kaitha'[wood apple] gum which works as a fixative"
+    },
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 14",
+     "quote": "To ensure fastness of colours, natural gum of a fruit called kaitha is mixed with the colours along with water in coconut shells while painting."
+    }
+   ]
+  },
+  {
+   "id": "C102",
+   "discipline": "BOTANY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M13"
+   },
+   "text": "The GI application names neem-tree gum among the gums mixed with the colours, taken directly from the trees and made liquid by adding water.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) binding media",
+     "quote": "The gum obtained from neem tree and kapitha (elephant apple) are mostly mixed with colors. The gum is obtained directly from the trees and is made into liquid by adding water."
+    }
+   ]
+  },
+  {
+   "id": "C103",
+   "discipline": "CLIMATE",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "According to the GI application, in the rainy season the proportion of gum in the khadi coating is increased by 5% because of dampness in the atmosphere, to avoid nasama, a wet effect.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) application of khadi",
+     "quote": "But in the rainy seasons due to dampness in the atmosphere the proportion of gum is increased by 5% to avoid the nasama (wet effect)."
+    }
+   ]
+  },
+  {
+   "id": "C104",
+   "discipline": "ECOLOGY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Traditionally the Chitrakara artists collected raw materials in nearby forests in groups, for protection and for mutual support.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "Traditionally tIle artists used to coHect raw materials in nearby forests in groups, for protection as well as for mutual support in doing the work."
+    }
+   ]
+  },
+  {
+   "id": "C105",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L02"
+   },
+   "text": "The GI application states that originally the only centre of pattachitra was in Puri district, where the artists lived in Raghurajpur and Dhandasahi on opposite banks of the Bhargavi river.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "Originally the only centre of patachitra paintings was in the district of puri where the artists lived in the villages of Raghurajpur and Dhandasahi opposite banks of the Bhargavi River."
+    }
+   ]
+  },
+  {
+   "id": "C106",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "The GI application adds that later, when Jagannath temples were created in other provinces, some of the painters moved to those centres.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (I) proof of origin",
+     "quote": "Later, when Jaganath temples were created in other provinces, some of the painters move to these centers."
+    }
+   ]
+  },
+  {
+   "id": "C107",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Being closely tied to the Jagannath cult, Chitrakaras are found all over the 24 feudatory states of Orissa wherever there is a Jagannath temple.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "Being closely associated with the Jagannath cult, the Chitrakara popula tion is found all over the 24 Godjats (feudatory states) of Oris sa, wherever there is a Jagannath temple."
+    }
+   ]
+  },
+  {
+   "id": "C108",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Apart from Sonepur, Cuttack, Athagarh, Chikiti and Parlakhemundi, the highest concentrations of Chitrakaras are at Raghurajpur and Puri, where one street consists only of chitrakara families.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "Apart from Sonepur, Cuttack, Athagarh, Chikiti, and Parlak hemundi, the highest concentrations of Chitrakaras are at Raghurajpur and PurL"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 2",
+     "quote": "A number of traditional painter families live in Puri and the surrounding villages."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 2",
+     "quote": "in Puri, there is an entire street consisting of only chitrakara families"
+    }
+   ]
+  },
+  {
+   "id": "C109",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur is the main centre of Odisha pattachitra, where, MAP Academy wrote in 2022, the tradition is concentrated and continued by the artist community.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 4",
+     "quote": "The tradition is presently concentrated in and continued by the artist community of the village Raghurajpur in Odisha."
+    },
+    {
+     "sourceId": "S11",
+     "locator": "publication date",
+     "quote": "First published: 21 April 2022"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "The main center of Pattchitra of Odisha is Raghurajpur, a heritage craft village,"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "paragraph 2",
+     "quote": "The village serves as a central location for Pattachitra, an ancient style of scroll painting."
+    }
+   ]
+  },
+  {
+   "id": "C110",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur lies in Malatipatpur gram panchayat of Puri Sadar tehsil in Puri district.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "This hamlet, in Malatipatpur gram panchayat of Puri Sadar tehsil in the district of Puri"
+    }
+   ]
+  },
+  {
+   "id": "C111",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur is situated on the southern bank of the river Bhargavi.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 4",
+     "quote": "Raghurajpur is situated on the southern bank of River Bhargavi"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "a heritage craft village, on the bank of river Bhargavi"
+    }
+   ]
+  },
+  {
+   "id": "C112",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Outlook Traveller puts Raghurajpur about 10 km from Puri in one passage and 10 km by road in another, and Fundamatics ten kilometres before Puri.",
+   "quotes": [
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 1",
+     "quote": "Raghurajpur village, about 10 km from Puri"
+    },
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 21",
+     "quote": "Raghurajpur is only 10km by road from Puri, yet not on the popular tourist circuit."
+    },
+    {
+     "sourceId": "S19",
+     "locator": "paragraph 1",
+     "quote": "The village is just ten kilometres prior to the temple town of Puri"
+    }
+   ]
+  },
+  {
+   "id": "C113",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur is about 12 km from the pilgrimage centre of Jagannath Puri, according to Kiran Pradeep.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "about 12 km from the pilgrimage center of Jagannath Puri"
+    }
+   ]
+  },
+  {
+   "id": "C114",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Tripathy places Raghurajpur 46 km from the state capital, Bhubaneswar.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "46 km from the state capital, Bhubaneswar"
+    }
+   ]
+  },
+  {
+   "id": "C115",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Kiran Pradeep places Raghurajpur 52 km away from the capital, Bhubaneswar.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "52 km away from the capital Bhubaneshwar"
+    }
+   ]
+  },
+  {
+   "id": "C117",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G02"
+   },
+   "text": "The Orissa State Cooperative Handicrafts Corporation filed GI application 88 for Orissa Pattachitra on 9 April 2007, as handicraft goods in classes 24 and 16 from Odisha.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Application Number | 88 | | Geographical Indications | Orissa Pattachitra |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Date of Filing | 09-04-2007 | | Class | 24 & 16 | | Goods | Handicraft | | Geographical Area | Odisha |"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, p. 67",
+     "quote": "Application is made by The Orissa State Cooperative Handicrafts Corporation Limited"
+    }
+   ]
+  },
+  {
+   "id": "C118",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Application 88, for wall hangings made of textile and paintings, was advertised as accepted in the Supplementary Journal 1 dated and made public on 24 March 2008.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, p. 67",
+     "quote": "of ORISS A PATTACHIT RA under Application No. 88 in respect of wall hangings made of textile and paintings falling in Class 24,and 16 respectively is hereby advertised as accepted"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "official notices, p. 2",
+     "quote": "the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008 / Chaitra- 4 Saka 1930 has been made available to the public from 24th March 2008"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Journal Number | Supp1 | | Availability Date | 24-03-2008 |"
+    }
+   ]
+  },
+  {
+   "id": "C119",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The journal's own index lists application 88 as Puri Pattachitra in class 27, for carpets, mats and non-textile wall hangings.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "index of applications",
+     "quote": "88 Puri Pattachitra 27 Carpets, Rugs, Mats and Mattings, Linoleum and other materials for covering, existing floors; Wall hanging (Non Textile)"
+    }
+   ]
+  },
+  {
+   "id": "C120",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI Registry issued certificate of registration number 70 for Orissa Pattachitra on 10 July 2008, among the registrations of April 2008 to March 2009.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Certificate Number | 70 | | Certificate Date | 10-07-2008 |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "document list",
+     "quote": "| 3 | 88 - Certificate of Registration - 10-07-2008 | 10-07-2008 | |"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "registrations from April 2008 to March 2009",
+     "quote": "FROM APRIL 2008 - MARCH 2009"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "registrations from April 2008 to March 2009",
+     "quote": "70 88 Orissa Pattachit ra Handicraft Odisha"
+    }
+   ]
+  },
+  {
+   "id": "C121",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The registry lists the registration as valid up to 8 April 2027 and holds a renewal notice dated 30 January 2017 and Form GI-4 dated 30 March 2017.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "application details",
+     "quote": "| Registration Valid Upto | 08-04-2027 |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "document list",
+     "quote": "| 1 | 88 - GI - Form GI - 4 - 30-03-2017 | 30-03-2017 | |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "document list",
+     "quote": "| 2 | 88 - GI - Renewal Notice - 30-01-2017 | 30-01-2017 | |"
+    }
+   ]
+  },
+  {
+   "id": "C122",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The registry's list of authorised users of Orissa Pattachitra runs to serial number 26.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "authorised users",
+     "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "authorised users",
+     "quote": "| 26 | AU/73212/GI/88/26 |"
+    }
+   ]
+  },
+  {
+   "id": "C123",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G02"
+   },
+   "text": "The Orissa State Co-operative Handicrafts Corporation filed GI application 386, for an Orissa Pattachitra logo, on 5 October 2012; the registry lists journal number 51 and certificate 196 of 3 February 2014.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "application details",
+     "quote": "| Application Number | 386 | | Geographical Indications | Orissa Pattachitra (Logo) |"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "application details",
+     "quote": "| Applicant Name | Orissa State Co-operative Handicrafts Corporation Limited |"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "application details",
+     "quote": "| Date of Filing | 05-10-2012 |"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "application details",
+     "quote": "| Journal Number | 51 | | Availability Date | 30-09-2013 | | Certificate Number | 196 | | Certificate Date | 03-02-2014 |"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "registrations from April 2013 to March 2014",
+     "quote": "196 386 Orissa Pattachitra (Logo) Handicraft Odisha"
+    }
+   ]
+  },
+  {
+   "id": "C124",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur, Tripathy's study area in a 1998 paper, had 106 Chitrakaras, 21.41% of the local population.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197, title",
+     "quote": "JASO 29/3 (1998): 197-211 FOLK ART AT THE CROSSROADS OF TRADITION AND MODERNITY"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 197",
+     "quote": "has 106 Chitrakaras, that is, 21.41 % of the local population"
+    }
+   ]
+  },
+  {
+   "id": "C125",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "With demand exceeding supply, members of other castes entered the craft, and Tripathy's 1998 study found non-Chitrakaras living by it more than twice as many as Chitrakaras.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 197, title",
+     "quote": "JASO 29/3 (1998): 197-211 FOLK ART AT THE CROSSROADS OF TRADITION AND MODERNITY"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 210",
+     "quote": "which opened the door for members of other castes to enter the field of production to bridge the gap"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 210",
+     "quote": "In fact the number of non Chitrakara practising the craft as a source of livelihood is more than twice the number of Chitrakara."
+    }
+   ]
+  },
+  {
+   "id": "C126",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Swarajya writes that Raghurajpur has been declared a heritage village because the entire settlement consists of only chitrakaras.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 2",
+     "quote": "The nearby village of Raghurajpur has been declared a 'heritage village' because the entire settlement consists of only chitrakaras."
+    }
+   ]
+  },
+  {
+   "id": "C127",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Kiran Pradeep wrote in 2022 that approximately 130 families lived in Raghurajpur, at least one member of each family being engaged in the art.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 59, running head",
+     "quote": "Artistic Narration Vol. XIII No. 2 July-Dec. 2022"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "Approximately 130 families lived here in artistic houses with a studio and Art gallery in their houses."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "Raghurajpur revolves around crafts with at least one member engaged in this art in each family."
+    }
+   ]
+  },
+  {
+   "id": "C128",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Chitrakara families also earn their livelihood by selling patta paintings of the trinity of different sizes to devotees and tourists visiting Puri.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "they also earn their livelihood by selling patta paintings of different sizes depicting the trinity of Ja gannath, Balabhadra, and Subhadra to devotees and tourists visiting Puri"
+    }
+   ]
+  },
+  {
+   "id": "C129",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Customers shifted from lower and lower-middle income pilgrims to upper-middle or upper income tourists, who are generally willing to pay a higher price.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "the range of customers for patta painting has changed from lower and lower-middle income groups (pilgrims) to upper-middle or upper in come groups (tourists)"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "are also generally willing to pay a higher price for them, which increases artists' incomes"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "Nowadays, however, the number of tourists exceeds that of pilgrims."
+    }
+   ]
+  },
+  {
+   "id": "C130",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "As production came to exceed demand, competition developed between artisans and middlemen became involved, often to the artisans' disadvantage.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 210",
+     "quote": "Gradually production has come to exceed demand."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 210",
+     "quote": "middlemen have become involved, often to the disadvantage of the artisans"
+    }
+   ]
+  },
+  {
+   "id": "C131",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Tripathy found that Chitrakaras no longer go far to collect raw materials but buy colours and brushes individually from nearby markets.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 210",
+     "quote": "They no longer need to go far for the collection of raw materials: instead they buy colours and brushes from nearby markets individually"
+    }
+   ]
+  },
+  {
+   "id": "C132",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "No longer restricted to ritual use, the paintings have a commercial market in India and abroad and are made on materials from synthetic cloth to paper.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 4",
+     "quote": "No longer restricted to ritual use, these paintings enjoy a commercial market within India and internationally and are now rendered over a wide range of materials from synthetic cloth to paper, and in varying sizes."
+    }
+   ]
+  },
+  {
+   "id": "C133",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Themes range from Krishna's life and the avatars of Vishnu to the epics Ramayana and Mahabharata, with Krishna Leela and Lord Jagannath as important motifs.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (G) description of goods",
+     "quote": "Themes for these paintings range from incidents in Krishna life and the avatars of Vishnu to the epic tales of Ramayana and Mahabharata."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 2",
+     "quote": "Krishna Leela and Lord Jagannath are important motifs."
+    }
+   ]
+  },
+  {
+   "id": "C134",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "The GI application classifies the themes into Vaishnava, Bhagavata, Ramayana, Jagannatha, Sakta and Savia paintings, legends, composite figures, ragachitras, bandhachitras and yama pati, with Vaishnava episodes the major theme.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, selection of motifs",
+     "quote": "Vaishnava episodes form the major theme of the patta paintings. Stories from the Bhagvata (Krishnalla portion), Ramayana and the Jaganatha paintings are generally included in the vaishnava themes."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, selection of motifs",
+     "quote": "The themes may be classified into the following categories: Vaishnava paintings ,Bhagavata (Krishnalila) paintings, Ramayana paintings ,Jaganatha paintings, Sakta paintings, Savia paintings, Paintings on legends, Other themes, Composite figures, Ragachitras, Bandhachitras, Yama pati"
+    }
+   ]
+  },
+  {
+   "id": "C136",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy found Krishna, in his different postures and episodes from his life, the most popular motif of patta painting.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 200",
+     "quote": "However, the most popular motif found in patta painting is Krishna in his different postures and in different activi ties and episodes from his life"
+    }
+   ]
+  },
+  {
+   "id": "C137",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Generally all goddesses are painted yellow and the gods white, while a single deity is coloured as the Hindu scriptures describe.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "Generally, all goddesses are painted yellow, while the gods are painted white."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "he or she is coloured according to the de scriptions given by the Hindu scriptures"
+    }
+   ]
+  },
+  {
+   "id": "C138",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In Tripathy's account Krishna is always painted blue, Ramachandra white or light blue, Ganesha white or off-white, and Saraswati white.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "For example, Krishna is always painted blue, Ramachandra white or light blue, Ganesha white or off-white, and the god dess Saraswati white."
+    }
+   ]
+  },
+  {
+   "id": "C139",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "An artist quoted by Kiran Pradeep says black and blue fill the figures of Krishna and green is used for Rama, colours no one can change.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 61",
+     "quote": "Black & Blue colors are used to fill the figures of Krishna and green color for Rama. These colors are fixed, No one can change them."
+    }
+   ]
+  },
+  {
+   "id": "C140",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy writes that Balabhadra, Jagannath, Devi Subhadra and the goddesses Lakshmi and Sabitri are always painted white.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 203",
+     "quote": "Balabhadra, Jagannath, Devi Subhadra, and the goddesses Lakshmi and Sabitri are always painted white"
+    }
+   ]
+  },
+  {
+   "id": "C141",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In the anasara patis Swarajya describes, Jagannath's body is black with white detailing, Balabhadra's body bright white and Subhadra painted in dazzling yellow.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 8",
+     "quote": "First, they fill the red background, then the black body of Jagannath."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 8",
+     "quote": "Since Jagannath is black, all detailing is done in white."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 9",
+     "quote": "The elder brother is also the one for whom more work has to be done in the pigments department, because filling the entire body in bright white requires grinding a lot of conch shells."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 11",
+     "quote": "Subhadra is painted in dazzling yellow."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "Balabhadra or Badathakura (meaning 'eldest deity')"
+    }
+   ]
+  },
+  {
+   "id": "C142",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Figures are drawn mostly in front pose with legs sideways and faces in profile, the elongated eyes drawn frontally, the nose long and beak-like, the chin round.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "p. 62",
+     "quote": "These human figures are drawn mostly in the front pose but legs are shown sidewise. Figures bear side faces while the elongated eyes are drawn from the front side. The long beak-like nose is sharp and the chins are round."
+    },
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 3",
+     "quote": "One of the most distinguishable features of patachitra is its typical style of portraying faces such as long noses, prominent chins and elongated eyes."
+    }
+   ]
+  },
+  {
+   "id": "C143",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W13"
+   },
+   "text": "Background trees and foliage are painted over the red ground in yellow and white, white foliage being called saru-sankhapata and yellow foliage haladi pata.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "The treatment of the background is done with trees and foliage over red background with yellow and white colour. White foliage is called saru-sankhapata."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "p. 36",
+     "quote": "when the foliage is painted in yellow, it is termed haladi pata."
+    }
+   ]
+  },
+  {
+   "id": "C144",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Tripathy found light blue, pink, light green and blue backgrounds used instead of the traditional cinnabar to satisfy tourists' demands.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "Nowadays colours like light blue, pink, light green, and blue etc. are used as back ground instead of the traditional cinnabar"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "started sat isfYing tourists' demands, which influence, among other things, the use of colour"
+    }
+   ]
+  },
+  {
+   "id": "C145",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In a V&A painting of the Jagannath triad made at Puri about 1910, the stylised forms of the deities represent their simple wooden images as housed in the Jagannath temple.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "physical description",
+     "quote": "Their curious stylised form represents the simple wooden images of the deities as they are housed in the Jagannath temple at Puri, Orissa."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "brief description",
+     "quote": "Painting, Jagannath triad, painted in tempera on cloth, Puri, ca. 1910"
+    }
+   ]
+  },
+  {
+   "id": "C146",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W09"
+   },
+   "text": "Ganjapa are circular paintings 1.2-2 cm in diameter that were used as playing cards in earlier times.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 205",
+     "quote": "Ganjapa These are circular paintings 1.2-2 cm in diameter, used as playing cards in earlier times."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "paragraph 3",
+     "quote": "The artists have also traditionally painted playing cards or Ganjifa."
+    }
+   ]
+  },
+  {
+   "id": "C147",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W18"
+   },
+   "text": "Patachitra rendered on palm leaves, engraved with intricate designs and motifs, is known as talapatachitra or tala patra chitra.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "paragraph 2",
+     "quote": "When rendered over palm-leaf manuscripts, patachitra is known as talapatachitra."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "paragraph 3",
+     "quote": "In Tala Patra Chitra, the artisans in this region skilfully utilise palm leaves as their canvas, meticulously engraving intricate designs and motifs onto them."
+    }
+   ]
+  },
+  {
+   "id": "C148",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Raghurajpur's villagers have painted the outer walls of their houses in varied hues, with murals of scenes from the Ramayana and the Mahabharata.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 5",
+     "quote": "the skilled villagers have decorated the outer walls of their modest houses by painting them in varied hues"
+    },
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 5",
+     "quote": "These are decorated with murals of mythological scenes from the Hindu scriptures - the Ramayana and the Mahabharata."
+    }
+   ]
+  },
+  {
+   "id": "C149",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W02"
+   },
+   "text": "Canvases are called patis because they are rolled like mats, pati being Oriya for mats, and in the Puri area they are known as pataastra.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "Application 88, (J) canvas making",
+     "quote": "Since these are rolled like mats (pati in Oriya for mats) these are known as patis. In Puri area these are known as pataastra."
+    }
+   ]
+  },
+  {
+   "id": "C150",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Gulf News reports artists using chemical-based dyes and paints for mass production, and Kiran Pradeep wrote in 2022 that various folk artisans are using ready-made colours from the market.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 15",
+     "quote": "For mass production though, artists now use chemical-based dyes and paints."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 63",
+     "quote": "while in my latest meeting with folk artisans, I realized that various folk artisans are using ready-made colors easily available in the market"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "p. 59, running head",
+     "quote": "Artistic Narration Vol. XIII No. 2 July-Dec. 2022"
+    }
+   ]
+  },
+  {
+   "id": "C151",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Gulf News counts more than 500 members of Raghurajpur's 145 families engaged in one craft or another.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 3",
+     "quote": "More than 500 members of the total 145 families are engaged in one craft or the other."
+    }
+   ]
+  },
+  {
+   "id": "C152",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The Better India describes Raghurajpur as home to over 300 artisans, with a family of artists in each of the 100 or so painted households.",
+   "quotes": [
+    {
+     "sourceId": "S17",
+     "locator": "paragraph 2",
+     "quote": "Welcome to Raghurajpur in Puri district, home to over 300 artisans who have learned and still practice various traditional art forms handed down over the generations."
+    },
+    {
+     "sourceId": "S17",
+     "locator": "paragraph 2",
+     "quote": "A family of artists lives in each of the 100 or so painted, yet modest households, which face one another."
+    }
+   ]
+  },
+  {
+   "id": "C153",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Outlook Traveller elsewhere puts Puri 14 kilometres from Raghurajpur, and a GIPE student blog puts it approximately 14 kilometres away.",
+   "quotes": [
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 15",
+     "quote": "Puri, located just 14 kilometres from Raghurajpur, is a major pilgrimage site for Hindus"
+    },
+    {
+     "sourceId": "S18",
+     "locator": "paragraph 7",
+     "quote": "the Rath Yatra Festival that takes place in Puri (approximately 14 kilometres away)"
+    }
+   ]
+  },
+  {
+   "id": "C154",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Gulf News puts Raghurajpur about 50 km from Bhubaneswar, and Fundamatics within 50 kilometres of the state capital.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 4",
+     "quote": "About 50 km away from Bhubaneswar, Raghurajpur is situated on the southern bank of River Bhargavi, on National Highway 203."
+    },
+    {
+     "sourceId": "S19",
+     "locator": "paragraph 1",
+     "quote": "Within 50 kilometres from Odisha's capital, Bhubaneswar, there is the picturesque village of Raghurajpur."
+    }
+   ]
+  },
+  {
+   "id": "C155",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "Outlook Traveller puts Bhubaneswar, the capital city of Odisha, about 60 kilometres from Raghurajpur.",
+   "quotes": [
+    {
+     "sourceId": "S16",
+     "locator": "paragraph 18",
+     "quote": "The capital city of Odisha, Bhubaneswar, is about 60 kilometres from Raghurajpur."
+    }
+   ]
+  },
+  {
+   "id": "C156",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "Gulf News and The Better India report that women historically prepared the canvas while men painted, and Gulf News adds that both later became all-rounders.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "paragraph 24",
+     "quote": "Earlier, women prepared the canvas, boiled the gum and powdered the stones and men worked on the paintings. But as times changed, both men and women became all-rounders"
+    },
+    {
+     "sourceId": "S17",
+     "locator": "paragraph 5",
+     "quote": "Men and young boys portray dramatic mythic themes and flamboyant processions. Historically, women painstakingly prepared the canvases."
+    }
+   ]
+  },
+  {
+   "id": "C157",
+   "discipline": "CLIMATE",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "The Orissa Review says that sometimes in the rainy season, because of dampness, the proportion of gum in the coating is increased to 5%.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "p. 35",
+     "quote": "But sometime in rainy season due to dampness, the proportion of gum is increased to 5%"
+    }
+   ]
+  },
+  {
+   "id": "C158",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T08"
+   },
+   "text": "Tripathy found in 1998 that the traditional polished coconut shell had practically disappeared as a colour container, as paints were bought commercially in tins.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 207",
+     "quote": "The traditional polished coconut shell has also practically disap peared as a colour container, no longer being needed, as paints are now produced commercially, and bought, in tins."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "p. 197, title",
+     "quote": "JASO 29/3 (1998): 197-211 FOLK ART AT THE CROSSROADS OF TRADITION AND MODERNITY"
+    }
+   ]
+  },
+  {
+   "id": "C159",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "Swarajya writes that the Gajapati Raja would select three families for the three deities, and that only two families are in this service, one for Jagannath and one for Balabhadra and Subhadra.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 3",
+     "quote": "The Gajapati Raja would select three families for the three deities - Balabhadra, Subhadra and Jagannath."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "paragraph 4",
+     "quote": "As of now, only two families are in this service - one for Jagannath and one for both Balabhadra and Subhadra."
+    }
+   ]
+  },
+  {
+   "id": "C160",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "Tripathy gives four stages of canvas preparation in order: tamarind-seed glue, chalk powder solution, applying the glue and chalk powder to the cloth, and polishing with a stone.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "p. 201",
+     "quote": "The process has the following four stages: (1) preparation of glue from tama rind seed; (2) preparation of chalk power solution; (3) application of glue and chalk powder over the cloth; and (4) polishing the surface of the primed cloth by rubbing it with a stone"
+    }
+   ]
+  }
+ ],
+ "places": [
+  {
+   "id": "L01",
+   "name": "Raghurajpur",
+   "kind": "VILLAGE",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C109",
+    "C108",
+    "C110",
+    "C023"
+   ]
+  },
+  {
+   "id": "L02",
+   "name": "Raghurajpur",
+   "kind": "VILLAGE",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C105"
+   ]
+  },
+  {
+   "id": "L03",
+   "name": "Dhandasahi",
+   "kind": "VILLAGE",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C105"
+   ]
+  },
+  {
+   "id": "L04",
+   "name": "Puri",
+   "kind": "TOWN",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C108",
+    "C128"
+   ]
+  },
+  {
+   "id": "L05",
+   "name": "Puri",
+   "kind": "DISTRICT",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C105"
+   ]
+  },
+  {
+   "id": "L06",
+   "name": "Puri",
+   "kind": "TOWN",
+   "district": "Puri",
+   "state": "Odisha",
+   "country": "India",
+   "role": "MARKET",
+   "claimIds": [
+    "C008",
+    "C128"
+   ]
+  },
+  {
+   "id": "L07",
+   "name": "Seacoasts of Orissa",
+   "kind": "REGION",
+   "state": "Odisha",
+   "country": "India",
+   "role": "MATERIAL_SOURCE",
+   "claimIds": [
+    "C081"
+   ]
+  },
+  {
+   "id": "L08",
+   "name": "Odisha",
+   "kind": "STATE",
+   "state": "Odisha",
+   "country": "India",
+   "role": "MATERIAL_SOURCE",
+   "claimIds": [
+    "C098",
+    "C099"
+   ]
+  }
+ ],
+ "communities": [
+  {
+   "id": "G01",
+   "kind": "COMMUNITY",
+   "name": "Chitrakara",
+   "localNames": [
+    "Mahapatra",
+    "Maharanas"
+   ],
+   "claimIds": [
+    "C004",
+    "C005",
+    "C007",
+    "C016",
+    "C017",
+    "C107",
+    "C108",
+    "C125",
+    "C159"
+   ]
+  },
+  {
+   "id": "G02",
+   "kind": "ORGANISATION",
+   "name": "Orissa State Cooperative Handicrafts Corporation Limited",
+   "claimIds": [
+    "C117",
+    "C123"
+   ]
+  },
+  {
+   "id": "G03",
+   "kind": "ORGANISATION",
+   "name": "Indian National Trust for Art and Cultural Heritage (INTACH)",
+   "localNames": [
+    "INTACH"
+   ],
+   "claimIds": [
+    "C023"
+   ]
+  },
+  {
+   "id": "G04",
+   "kind": "PERSON",
+   "name": "Jagannath Mohapatra",
+   "honours": [
+    "President of India's award, 1965"
+   ],
+   "placeId": "L01",
+   "claimIds": [
+    "C024"
+   ]
+  }
+ ],
+ "stages": [
+  {
+   "id": "P01",
+   "name": "Preparation of patta",
+   "localName": "patta astra",
+   "stageType": "PREP",
+   "order": 1,
+   "orderClaimId": "C029",
+   "materials": [
+    {
+     "materialId": "M01",
+     "claimId": "C030"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C030"
+    }
+   ],
+   "claimIds": [
+    "C029",
+    "C006",
+    "C037",
+    "C038",
+    "C156",
+    "C160"
+   ]
+  },
+  {
+   "id": "P02",
+   "name": "Preparation of pigments",
+   "stageType": "PREP",
+   "order": 2,
+   "orderClaimId": "C029",
+   "materials": [
+    {
+     "materialId": "M04",
+     "claimId": "C050"
+    },
+    {
+     "materialId": "M05",
+     "claimId": "C052"
+    },
+    {
+     "materialId": "M14",
+     "claimId": "C052"
+    },
+    {
+     "materialId": "M06",
+     "claimId": "C054"
+    },
+    {
+     "materialId": "M08",
+     "claimId": "C055"
+    },
+    {
+     "materialId": "M12",
+     "claimId": "C057"
+    },
+    {
+     "materialId": "M07",
+     "claimId": "C057"
+    }
+   ],
+   "claimIds": [
+    "C029",
+    "C050",
+    "C051",
+    "C052",
+    "C054",
+    "C055",
+    "C056",
+    "C057"
+   ]
+  },
+  {
+   "id": "P03",
+   "name": "Motif selection and layout",
+   "stageType": "OTHER",
+   "order": 3,
+   "orderClaimId": "C029",
+   "claimIds": [
+    "C029",
+    "C134"
+   ]
+  },
+  {
+   "id": "P04",
+   "name": "Painting",
+   "stageType": "OTHER",
+   "order": 4,
+   "orderClaimId": "C029",
+   "materials": [
+    {
+     "materialId": "M05",
+     "claimId": "C063"
+    },
+    {
+     "materialId": "M12",
+     "claimId": "C101"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T06",
+     "claimId": "C071"
+    },
+    {
+     "toolId": "T08",
+     "claimId": "C074"
+    }
+   ],
+   "claimIds": [
+    "C029",
+    "C058",
+    "C059",
+    "C060",
+    "C061",
+    "C063",
+    "C064",
+    "C065",
+    "C067",
+    "C101"
+   ]
+  },
+  {
+   "id": "P05",
+   "name": "Making the tamarind seed glue",
+   "stageType": "PREP",
+   "materials": [
+    {
+     "materialId": "M02",
+     "claimId": "C034"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T03",
+     "claimId": "C034"
+    }
+   ],
+   "claimIds": [
+    "C034",
+    "C035",
+    "C036",
+    "C160"
+   ]
+  },
+  {
+   "id": "P06",
+   "name": "Pasting the cloth layers",
+   "stageType": "PREP",
+   "season": {
+    "text": "winter and summer or spring",
+    "claimId": "C033"
+   },
+   "materials": [
+    {
+     "materialId": "M01",
+     "claimId": "C030"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C030"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T12",
+     "claimId": "C031"
+    }
+   ],
+   "claimIds": [
+    "C030",
+    "C031",
+    "C032",
+    "C033",
+    "C160"
+   ]
+  },
+  {
+   "id": "P07",
+   "name": "Applying the khadi coating",
+   "localName": "Khadi Lagi",
+   "stageType": "PREP",
+   "materials": [
+    {
+     "materialId": "M03",
+     "claimId": "C039"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C039"
+    }
+   ],
+   "claimIds": [
+    "C039",
+    "C040",
+    "C041",
+    "C103",
+    "C157",
+    "C160"
+   ]
+  },
+  {
+   "id": "P08",
+   "name": "Polishing the coated canvas",
+   "localName": "pattighasa",
+   "stageType": "FINISH",
+   "tools": [
+    {
+     "toolId": "T01",
+     "claimId": "C044"
+    }
+   ],
+   "claimIds": [
+    "C042",
+    "C043",
+    "C044",
+    "C045",
+    "C160"
+   ]
+  },
+  {
+   "id": "P09",
+   "name": "Trimming and sizing the patis",
+   "localName": "Sama-Nakariva",
+   "stageType": "SHAPE",
+   "tools": [
+    {
+     "toolId": "T05",
+     "claimId": "C047"
+    },
+    {
+     "toolId": "T04",
+     "claimId": "C047"
+    }
+   ],
+   "claimIds": [
+    "C047"
+   ]
+  },
+  {
+   "id": "P10",
+   "name": "Lacquering",
+   "stageType": "FINISH",
+   "materials": [
+    {
+     "materialId": "M15",
+     "claimId": "C069"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T11",
+     "claimId": "C069"
+    }
+   ],
+   "claimIds": [
+    "C069",
+    "C068"
+   ]
+  },
+  {
+   "id": "P11",
+   "name": "Preparing tussar silk for painting",
+   "stageType": "PREP",
+   "materials": [
+    {
+     "materialId": "M16",
+     "claimId": "C049"
+    }
+   ],
+   "claimIds": [
+    "C049"
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "id": "M01",
+   "name": "Cotton cloth",
+   "kind": "FIBRE",
+   "role": "INPUT",
+   "claimIds": [
+    "C030",
+    "C075"
+   ]
+  },
+  {
+   "id": "M02",
+   "name": "Tamarind seed glue",
+   "kind": "OTHER",
+   "role": "BINDER",
+   "claimIds": [
+    "C034",
+    "C035",
+    "C036",
+    "C030"
+   ]
+  },
+  {
+   "id": "M03",
+   "name": "Chalk",
+   "kind": "MINERAL",
+   "role": "INPUT",
+   "localNames": [
+    "khadi pathara"
+   ],
+   "claimIds": [
+    "C039",
+    "C040"
+   ]
+  },
+  {
+   "id": "M04",
+   "name": "Conch shell",
+   "kind": "OTHER",
+   "role": "DYE",
+   "localNames": [
+    "sankh",
+    "sankha"
+   ],
+   "claimIds": [
+    "C081",
+    "C050",
+    "C051"
+   ]
+  },
+  {
+   "id": "M05",
+   "name": "Cinnabar",
+   "kind": "MINERAL",
+   "role": "DYE",
+   "localNames": [
+    "hingula",
+    "hengula"
+   ],
+   "pubchemCid": 62402,
+   "claimIds": [
+    "C083",
+    "C094",
+    "C052",
+    "C098",
+    "C063"
+   ]
+  },
+  {
+   "id": "M06",
+   "name": "Red ochre",
+   "kind": "MINERAL",
+   "role": "DYE",
+   "localNames": [
+    "geru",
+    "gairika"
+   ],
+   "claimIds": [
+    "C083",
+    "C084",
+    "C054"
+   ]
+  },
+  {
+   "id": "M07",
+   "name": "Orpiment",
+   "kind": "MINERAL",
+   "role": "DYE",
+   "localNames": [
+    "haritala",
+    "hartala"
+   ],
+   "claimIds": [
+    "C085",
+    "C095",
+    "C099",
+    "C057"
+   ]
+  },
+  {
+   "id": "M08",
+   "name": "Lamp black",
+   "kind": "OTHER",
+   "role": "DYE",
+   "localNames": [
+    "kala",
+    "kola"
+   ],
+   "claimIds": [
+    "C055",
+    "C056"
+   ]
+  },
+  {
+   "id": "M09",
+   "name": "Indigo",
+   "kind": "DYE",
+   "role": "DYE",
+   "claimIds": [
+    "C086"
+   ]
+  },
+  {
+   "id": "M10",
+   "name": "Khandaneela stone",
+   "kind": "MINERAL",
+   "role": "DYE",
+   "localNames": [
+    "Khandaneela"
+   ],
+   "claimIds": [
+    "C087"
+   ]
+  },
+  {
+   "id": "M11",
+   "name": "Green colour from leaves or stone",
+   "kind": "OTHER",
+   "role": "DYE",
+   "localNames": [
+    "pacha",
+    "pocha"
+   ],
+   "claimIds": [
+    "C089",
+    "C088",
+    "C077"
+   ]
+  },
+  {
+   "id": "M12",
+   "name": "Kaitha gum (elephant apple)",
+   "kind": "RESIN",
+   "role": "BINDER",
+   "localNames": [
+    "kaitha",
+    "kapitha",
+    "kaintha"
+   ],
+   "botanicalName": "Limonia acidissima",
+   "claimIds": [
+    "C101",
+    "C097"
+   ]
+  },
+  {
+   "id": "M13",
+   "name": "Neem gum",
+   "kind": "RESIN",
+   "role": "BINDER",
+   "claimIds": [
+    "C102"
+   ]
+  },
+  {
+   "id": "M14",
+   "name": "Sugar water or lime juice",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "claimIds": [
+    "C052"
+   ]
+  },
+  {
+   "id": "M15",
+   "name": "Lac",
+   "kind": "RESIN",
+   "role": "OTHER",
+   "claimIds": [
+    "C069"
+   ]
+  },
+  {
+   "id": "M16",
+   "name": "Tussar silk",
+   "kind": "FIBRE",
+   "role": "INPUT",
+   "localNames": [
+    "tassar"
+   ],
+   "claimIds": [
+    "C049",
+    "C092"
+   ]
+  },
+  {
+   "id": "M17",
+   "name": "Animal hair for brushes",
+   "kind": "OTHER",
+   "role": "INPUT",
+   "claimIds": [
+    "C072"
+   ]
+  }
+ ],
+ "tools": [
+  {
+   "id": "T01",
+   "name": "Polishing stones",
+   "localNames": [
+    "barada",
+    "jhuna barada",
+    "khadada barada",
+    "chikana barada",
+    "bagada barada",
+    "chikkana barada"
+   ],
+   "claimIds": [
+    "C042",
+    "C043",
+    "C044"
+   ]
+  },
+  {
+   "id": "T03",
+   "name": "Flat stone for crushing seeds",
+   "localNames": [
+    "sila"
+   ],
+   "claimIds": [
+    "C034"
+   ]
+  },
+  {
+   "id": "T04",
+   "name": "Iron cutting rim",
+   "localNames": [
+    "ssama"
+   ],
+   "claimIds": [
+    "C047"
+   ]
+  },
+  {
+   "id": "T05",
+   "name": "Scissors",
+   "localNames": [
+    "Kainchi"
+   ],
+   "claimIds": [
+    "C047"
+   ]
+  },
+  {
+   "id": "T06",
+   "name": "Brush",
+   "localNames": [
+    "tuli"
+   ],
+   "claimIds": [
+    "C071",
+    "C072"
+   ]
+  },
+  {
+   "id": "T08",
+   "name": "Coconut-shell colour container",
+   "localNames": [
+    "Sadhei"
+   ],
+   "claimIds": [
+    "C074",
+    "C158"
+   ]
+  },
+  {
+   "id": "T11",
+   "name": "Cloth bundle for lacquer",
+   "localNames": [
+    "kanamunda",
+    "dasi"
+   ],
+   "claimIds": [
+    "C069"
+   ]
+  },
+  {
+   "id": "T12",
+   "name": "Mat for pasting the canvas",
+   "localNames": [
+    "hensa"
+   ],
+   "claimIds": [
+    "C031"
+   ]
+  }
+ ],
+ "reactions": [],
+ "environment": [
+  {
+   "factor": "CLIMATE",
+   "claimIds": [
+    "C103",
+    "C033",
+    "C157"
+   ]
+  },
+  {
+   "factor": "LANDFORM",
+   "placeId": "L07",
+   "claimIds": [
+    "C081"
+   ]
+  },
+  {
+   "factor": "LANDFORM",
+   "placeId": "L08",
+   "claimIds": [
+    "C098",
+    "C099"
+   ]
+  },
+  {
+   "factor": "VEGETATION",
+   "claimIds": [
+    "C104"
+   ]
+  }
+ ],
+ "market": {
+  "gi": {
+   "applicationNumber": "88",
+   "certificateNumber": "70",
+   "filedOn": "2007-04-09",
+   "registeredOn": "2008-07-10",
+   "journalIssue": "Supplementary 1",
+   "proprietors": [
+    "Orissa State Cooperative Handicrafts Corporation Limited"
+   ],
+   "claimIds": [
+    "C117",
+    "C118",
+    "C120",
+    "C122"
+   ]
+  },
+  "workforce": [
+   {
+    "claimId": "C124",
+    "year": 1998
+   },
+   {
+    "claimId": "C125",
+    "year": 1998
+   },
+   {
+    "claimId": "C127",
+    "year": 2022
+   }
+  ]
+ },
+ "glossary": [
+  {
+   "id": "W01",
+   "term": "patta, pata",
+   "meaning": "Sanskrit for a painted piece of cloth or a plate; in Orissa the cloth used as the ground for painting.",
+   "claimIds": [
+    "C001"
+   ]
+  },
+  {
+   "id": "W02",
+   "term": "pati, pataastra",
+   "meaning": "The prepared canvas, called pati because it is rolled like a mat (pati in Oriya); known as pataastra around Puri.",
+   "language": "or",
+   "claimIds": [
+    "C149"
+   ]
+  },
+  {
+   "id": "W03",
+   "term": "khadi lagi",
+   "meaning": "Application of khadi, the coating of tamarind glue mixed with chalk on the canvas.",
+   "claimIds": [
+    "C039",
+    "C040"
+   ]
+  },
+  {
+   "id": "W04",
+   "term": "nasama",
+   "meaning": "The wet effect that a higher proportion of gum in the coating avoids in the rainy season.",
+   "claimIds": [
+    "C103"
+   ]
+  },
+  {
+   "id": "W05",
+   "term": "pattighasa",
+   "meaning": "The smoothing of the coated canvas by rubbing it with stones.",
+   "claimIds": [
+    "C045"
+   ]
+  },
+  {
+   "id": "W06",
+   "term": "anasara patti",
+   "meaning": "The paintings of the trinity kept in the main shrine of the Jagannath temple as proxies while the images are away after their bath.",
+   "claimIds": [
+    "C014"
+   ]
+  },
+  {
+   "id": "W07",
+   "term": "jatripatti",
+   "meaning": "A painting meant exclusively for pilgrims, taken home as a souvenir and worshipped.",
+   "claimIds": [
+    "C020"
+   ]
+  },
+  {
+   "id": "W09",
+   "term": "ganjapa, ganjifa",
+   "meaning": "Circular painted playing cards.",
+   "claimIds": [
+    "C146"
+   ]
+  },
+  {
+   "id": "W10",
+   "term": "tipana",
+   "meaning": "The base sketch outlined in red hingula.",
+   "claimIds": [
+    "C062"
+   ]
+  },
+  {
+   "id": "W11",
+   "term": "rangalekha",
+   "meaning": "Red lining over ornaments that stabilises the effect of the white ornamentation.",
+   "claimIds": [
+    "C066"
+   ]
+  },
+  {
+   "id": "W12",
+   "term": "bageiba",
+   "meaning": "Touching up defects in a painting before lacquering.",
+   "claimIds": [
+    "C068"
+   ]
+  },
+  {
+   "id": "W13",
+   "term": "saru-sankhapata, haladi pata",
+   "meaning": "Foliage painted in white (saru-sankhapata) or in yellow (haladi pata) over the red background.",
+   "claimIds": [
+    "C143"
+   ]
+  },
+  {
+   "id": "W17",
+   "term": "bada",
+   "meaning": "Each of the three groups of Chitrakara society, named after the deities of the trinity.",
+   "claimIds": [
+    "C018"
+   ]
+  },
+  {
+   "id": "W18",
+   "term": "talapatachitra, tala patra chitra",
+   "meaning": "Patachitra rendered on palm leaves.",
+   "claimIds": [
+    "C147"
+   ]
+  },
+  {
+   "id": "W19",
+   "term": "neli",
+   "meaning": "Blue, one of the main colours of patta painting.",
+   "language": "or",
+   "claimIds": [
+    "C078"
+   ]
+  },
+  {
+   "id": "W20",
+   "term": "sarukala",
+   "meaning": "The fine lines drawn on the paintings by experienced painters and senior members of the family.",
+   "claimIds": [
+    "C067"
+   ]
+  }
+ ],
+ "conflicts": [
+  {
+   "claimIds": [
+    "C034",
+    "C035",
+    "C036"
+   ],
+   "about": "How long the tamarind seeds are soaked for the glue"
+  },
+  {
+   "claimIds": [
+    "C039",
+    "C040"
+   ],
+   "about": "The proportion of tamarind glue to chalk in the khadi coating"
+  },
+  {
+   "claimIds": [
+    "C037",
+    "C038",
+    "C156"
+   ],
+   "about": "Who prepares the canvas, women or men"
+  },
+  {
+   "claimIds": [
+    "C042",
+    "C043"
+   ],
+   "about": "What kind of stone the barada polishing stone is"
+  },
+  {
+   "claimIds": [
+    "C059",
+    "C060"
+   ],
+   "about": "Whether the first sketch is drawn with the brush or with charcoal"
+  },
+  {
+   "claimIds": [
+    "C140",
+    "C141"
+   ],
+   "about": "The colours in which Jagannath, Balabhadra and Subhadra are painted"
+  },
+  {
+   "claimIds": [
+    "C138",
+    "C139"
+   ],
+   "about": "The colours in which Krishna and Rama are painted"
+  },
+  {
+   "claimIds": [
+    "C086",
+    "C087"
+   ],
+   "about": "The source of the blue colour"
+  },
+  {
+   "claimIds": [
+    "C088",
+    "C089"
+   ],
+   "about": "How the green colour is made"
+  },
+  {
+   "claimIds": [
+    "C077",
+    "C078",
+    "C079"
+   ],
+   "about": "How many basic colours patta painting has"
+  },
+  {
+   "claimIds": [
+    "C012",
+    "C136"
+   ],
+   "about": "Whether Jagannath or Krishna is the commonest subject"
+  },
+  {
+   "claimIds": [
+    "C124",
+    "C125",
+    "C126"
+   ],
+   "about": "Whether Raghurajpur's population is entirely chitrakara"
+  },
+  {
+   "claimIds": [
+    "C112",
+    "C113",
+    "C153"
+   ],
+   "about": "The distance from Raghurajpur to Puri"
+  },
+  {
+   "claimIds": [
+    "C114",
+    "C115",
+    "C154",
+    "C155"
+   ],
+   "about": "The distance from Raghurajpur to Bhubaneswar"
+  },
+  {
+   "claimIds": [
+    "C117",
+    "C119"
+   ],
+   "about": "The class of goods under which application 88 was filed"
+  },
+  {
+   "claimIds": [
+    "C021",
+    "C022"
+   ],
+   "about": "Where the V&A's 1670 painting of the Jagannatha temple was painted"
+  },
+  {
+   "claimIds": [
+    "C042",
+    "C044"
+   ],
+   "about": "Which barada stone does the first rubbing"
+  },
+  {
+   "claimIds": [
+    "C076",
+    "C091",
+    "C150"
+   ],
+   "about": "Whether natural colours are still used"
+  },
+  {
+   "claimIds": [
+    "C127",
+    "C151",
+    "C152"
+   ],
+   "about": "The number of families or households in Raghurajpur"
+  },
+  {
+   "claimIds": [
+    "C103",
+    "C157"
+   ],
+   "about": "How much the gum in the khadi coating is raised in the rainy season"
+  },
+  {
+   "claimIds": [
+    "C074",
+    "C158"
+   ],
+   "about": "Whether coconut shells are still used as colour containers"
+  },
+  {
+   "claimIds": [
+    "C018",
+    "C159"
+   ],
+   "about": "How many Chitrakara groups or families paint for the three deities"
+  }
+ ],
+ "openQuestions": [
+  {
+   "id": "O01",
+   "question": "How old is the pattachitra tradition of Odisha?",
+   "claimIds": [
+    "C009",
+    "C010",
+    "C026",
+    "C027"
+   ]
+  },
+  {
+   "id": "O02",
+   "question": "Where does the word patta in pattachitra come from?",
+   "claimIds": [
+    "C001",
+    "C028"
+   ]
+  },
+  {
+   "id": "O03",
+   "question": "How did the Chitrakaras and Raghurajpur's painting tradition begin?",
+   "claimIds": [
+    "C016",
+    "C025"
+   ]
+  }
+ ],
+ "pictures": [
+  {
+   "id": "I01",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Pattachitra_03.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Pattachitra_03.jpg",
+   "author": "Gayatree Tripathy",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "A pattachitra canvas being rubbed with a smooth stone to make it shine",
+   "claimIds": [
+    "C042",
+    "C045"
+   ],
+   "stageId": "P08"
+  },
+  {
+   "id": "I02",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Pattachitra_05.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Pattachitra_05.jpg",
+   "author": "Gayatree Tripathy",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "Colours used in making pattachitra",
+   "claimIds": [
+    "C076"
+   ],
+   "stageId": "P02"
+  },
+  {
+   "id": "I03",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Pattachitra_08.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Pattachitra_08.jpg",
+   "author": "Gayatree Tripathy",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "Black outlines being drawn on a pattachitra during its detailing",
+   "claimIds": [
+    "C067"
+   ],
+   "stageId": "P04"
+  },
+  {
+   "id": "I04",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Raghurajpur_Artist.JPG",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Raghurajpur_Artist.JPG",
+   "author": "Sumit Surai",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "An artist working on a pattachitra in Raghurajpur",
+   "claimIds": [
+    "C109"
+   ]
+  },
+  {
+   "id": "I05",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Painting_on_a_wall_at_Raghurajpur.JPG",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Painting_on_a_wall_at_Raghurajpur.JPG",
+   "author": "Sitikantha K",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "A painting on a house wall in Raghurajpur",
+   "claimIds": [
+    "C148"
+   ]
+  },
+  {
+   "id": "I06",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Talapata_Chitra.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Talapata_Chitra.jpg",
+   "author": "Shakti",
+   "licence": "CC BY-SA 3.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "caption": "A talapata chitra, a painting on palm leaves",
+   "claimIds": [
+    "C147"
+   ]
+  }
+ ],
+ "overview": {
+  "lede": [
+   {
+    "text": "Orissa Pattachitra is patta painting, one of the typical regional arts of the coastal state of Orissa, painted on a canvas of old cotton cloth pasted in layers with tamarind glue.",
+    "claimIds": [
+     "C002",
+     "C030"
+    ]
+   },
+   {
+    "text": "It was traditionally practised only by the Chitrakara caste and focuses on the Hindu epics and the Jagannath cult; while the temple images are away, three of its paintings of the trinity are kept in the main shrine as their proxies.",
+    "claimIds": [
+     "C004",
+     "C003",
+     "C014"
+    ]
+   },
+   {
+    "text": "MAP Academy wrote in 2022 that the tradition is concentrated in Raghurajpur, and the GI application places the original centre in Puri district, in Raghurajpur and Dhandasahi on opposite banks of the Bhargavi river.",
+    "claimIds": [
+     "C109",
+     "C105"
+    ]
+   },
+   {
+    "text": "The GI application specifies vegetable and mineral colours, among them conch-shell white, lamp black, hingula or cinnabar red and haritala yellow, but sources differ on whether natural colours are still used.",
+    "claimIds": [
+     "C076",
+     "C081",
+     "C055",
+     "C083",
+     "C085",
+     "C091",
+     "C150"
+    ]
+   }
+  ],
+  "keyFacts": [
+   {
+    "label": "GI status",
+    "value": "Registered geographical indication, application 88, certificate 70 dated 10 July 2008",
+    "claimIds": [
+     "C117",
+     "C120"
+    ]
+   },
+   {
+    "label": "Centres",
+    "value": "Raghurajpur and Puri, in Puri district; originally Raghurajpur and Dhandasahi, per the GI application",
+    "claimIds": [
+     "C108",
+     "C110",
+     "C105"
+    ]
+   },
+   {
+    "label": "Painters",
+    "value": "The Chitrakara caste, traditionally Mahapatra or Maharanas",
+    "claimIds": [
+     "C004",
+     "C005"
+    ]
+   },
+   {
+    "label": "Canvas",
+    "value": "Old cotton cloth pasted with tamarind glue, coated with chalk and gum, rubbed smooth with stones",
+    "claimIds": [
+     "C030",
+     "C039",
+     "C042"
+    ]
+   },
+   {
+    "label": "Colours",
+    "value": "Conch-shell white, lamp black, hingula (cinnabar) red, geru (red ochre), haritala (orpiment) yellow",
+    "claimIds": [
+     "C081",
+     "C055",
+     "C083",
+     "C085"
+    ]
+   },
+   {
+    "label": "Binder and finish",
+    "value": "Kaitha gum in the colours; lacquer over a charcoal fire",
+    "claimIds": [
+     "C101",
+     "C069"
+    ]
+   },
+   {
+    "label": "Steps in the GI application",
+    "value": "Preparation of patta, preparation of pigments, motif selection, painting",
+    "claimIds": [
+     "C029"
+    ]
+   },
+   {
+    "label": "Ritual use",
+    "value": "Paintings of the trinity stand in for the images in the main shrine for 15 days each year",
+    "claimIds": [
+     "C013",
+     "C014"
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "discipline": "HISTORY",
+    "sentences": [
+     {
+      "text": "The GI application argues that the art's primitive style and its role in temple services, contemporary with the 12th-century building of the Jagannath temple, suggest an early date, and says pata paintings flourished in Orissa in the early 15th and 16th centuries.",
+      "claimIds": [
+       "C009",
+       "C010"
+      ]
+     },
+     {
+      "text": "According to the Jagannath temple chronicle, Anangabhima Deva II first brought the Chitrakaras to Puri to do the temple's painting and gave them tax-free lands.",
+      "claimIds": [
+       "C016"
+      ]
+     },
+     {
+      "text": "Every year on Jyeshtha purnima the bath discolours the wooden images of Jagannath, Balabhadra and Subhadra, which are repainted over 15 days away from the inner sanctuary while three paintings of the trinity called anasara patti take their place.",
+      "claimIds": [
+       "C013",
+       "C014"
+      ]
+     },
+     {
+      "text": "Chitrakara society is divided into three badas named after the trinity, which supply the anasara pattis and colour the images and their cars, though Swarajya reports only two families in that service, one for Jagannath and one for Balabhadra and Subhadra.",
+      "claimIds": [
+       "C018",
+       "C159"
+      ]
+     },
+     {
+      "text": "In the remote past the paintings were made on primed paper for pilgrims, who took these jatripattis home as souvenirs, and in course of time the Chitrakaras used primed cloth.",
+      "claimIds": [
+       "C019",
+       "C020"
+      ]
+     },
+     {
+      "text": "A V&A painting of the Jagannatha temple in the Orissan style, dated 1670, was most probably executed at Puri, though the same record also says it was painted in Bhaktapur, Nepal.",
+      "claimIds": [
+       "C021",
+       "C022"
+      ]
+     },
+     {
+      "text": "After a two-year INTACH project from 1998 to 2000, Raghurajpur was selected as the first heritage village of Odisha.",
+      "claimIds": [
+       "C023"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "PROCESS",
+    "sentences": [
+     {
+      "text": "The GI application gives four steps in order: preparation of patta, preparation of pigments, motif selection and layout, and finally painting.",
+      "claimIds": [
+       "C029"
+      ]
+     },
+     {
+      "text": "Layers of old, used cotton cloth are pasted together with tamarind glue, smeared on in the manner of cow dung, then dried in the sun, rolled and kept.",
+      "claimIds": [
+       "C030",
+       "C031",
+       "C033"
+      ]
+     },
+     {
+      "text": "Sources differ on how long the tamarind seeds are soaked for the glue: half a day, overnight, or 4-5 days.",
+      "claimIds": [
+       "C034",
+       "C035",
+       "C036"
+      ]
+     },
+     {
+      "text": "The canvas is coated with khadi, tamarind glue mixed with chalk, in equal parts in the GI application but 400 gm of glue per kg of chalk in Tripathy's account.",
+      "claimIds": [
+       "C039",
+       "C040"
+      ]
+     },
+     {
+      "text": "When the coat is a bit dry it is rubbed with barada stones, jhuna barada first in the GI application but a rough khadada barada first in other sources, then a fine chikana barada, on both sides of the pati until the surface is completely polished.",
+      "claimIds": [
+       "C042",
+       "C044",
+       "C045"
+      ]
+     },
+     {
+      "text": "In the Puri-area method the border is marked first, the sketch is made, the background is coloured, usually red, and colours are applied to the figures.",
+      "claimIds": [
+       "C058",
+       "C063",
+       "C064"
+      ]
+     },
+     {
+      "text": "Ornaments are coloured and highlighted with white, thick black lines are given to hair and garment borders, and the master craftsman draws the fine black lines.",
+      "claimIds": [
+       "C065",
+       "C067"
+      ]
+     },
+     {
+      "text": "The finished painting is held over a charcoal fire and lacquered, which makes it water resistant and durable with a shining finish.",
+      "claimIds": [
+       "C069"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "MATERIALS",
+    "sentences": [
+     {
+      "text": "The GI application specifies vegetable and mineral colours, and Tripathy writes that the colours were traditionally prepared at home within the Chitrakara family.",
+      "claimIds": [
+       "C076",
+       "C080"
+      ]
+     },
+     {
+      "text": "Sources differ on present-day use: Tripathy found artists preferring enamels or watercolours, and Gulf News reports chemical-based dyes and paints for mass production.",
+      "claimIds": [
+       "C076",
+       "C091",
+       "C150"
+      ]
+     },
+     {
+      "text": "White is prepared from conch shells, easily available on the seacoasts of Orissa, and is the basic colour from which the values of the others are determined.",
+      "claimIds": [
+       "C081"
+      ]
+     },
+     {
+      "text": "The vermilion red is hingula or cinnabar and the brick red is geru or red ochre, and yellow comes from the stone haritala, identified as orpiment.",
+      "claimIds": [
+       "C083",
+       "C085"
+      ]
+     },
+     {
+      "text": "Sources differ on blue, obtained from indigo according to MAP Academy and from a stone called khandaneela according to Kiran Pradeep.",
+      "claimIds": [
+       "C086",
+       "C087"
+      ]
+     },
+     {
+      "text": "Tripathy counts six basic colours for the triad, while Kiran Pradeep writes of five main colours known as Pancha-Tatva.",
+      "claimIds": [
+       "C077",
+       "C079"
+      ]
+     },
+     {
+      "text": "Tassar cloth is one of the most popular alternatives to primed cloth, and tassar paintings are lighter and take less space.",
+      "claimIds": [
+       "C092"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "CHEMISTRY",
+    "sentences": [
+     {
+      "text": "Hingula is a red sulphide of mercury, also known as cinnabar.",
+      "claimIds": [
+       "C094"
+      ]
+     },
+     {
+      "text": "Crude cinnabar is levigated in a mortar with sugar water or lime juice and the yellowish water drained off, the process being repeated fifteen times or more for the purest cinnabar.",
+      "claimIds": [
+       "C052"
+      ]
+     },
+     {
+      "text": "The GI application describes orpiment as a sulphide arsenic acid found in nature as stone, a light, vivid yellow, more often slightly inclined towards orange, with a mica-like sparkle.",
+      "claimIds": [
+       "C095"
+      ]
+     },
+     {
+      "text": "Gum is used in all the colours to make them sticky and permanent, and lacquering is treated as a further binding medium.",
+      "claimIds": [
+       "C097"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "GEOGRAPHY",
+    "sentences": [
+     {
+      "text": "Chitrakaras are found all over the 24 feudatory states of Orissa wherever there is a Jagannath temple, and apart from Sonepur, Cuttack, Athagarh, Chikiti and Parlakhemundi their highest concentrations are at Raghurajpur and Puri.",
+      "claimIds": [
+       "C107",
+       "C108"
+      ]
+     },
+     {
+      "text": "Raghurajpur lies in Malatipatpur gram panchayat of Puri Sadar tehsil in Puri district, on the southern bank of the river Bhargavi.",
+      "claimIds": [
+       "C110",
+       "C111"
+      ]
+     },
+     {
+      "text": "Sources put Raghurajpur 10 to 14 km from Puri and 46 to 60 km from Bhubaneswar.",
+      "claimIds": [
+       "C112",
+       "C113",
+       "C153",
+       "C114",
+       "C115",
+       "C154",
+       "C155"
+      ]
+     },
+     {
+      "text": "The GI application says that when Jagannath temples were created in other provinces, some of the painters moved to those centres.",
+      "claimIds": [
+       "C106"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "ECONOMICS",
+    "sentences": [
+     {
+      "text": "The Orissa State Cooperative Handicrafts Corporation filed GI application 88 on 9 April 2007, and the registry issued certificate 70 on 10 July 2008.",
+      "claimIds": [
+       "C117",
+       "C120"
+      ]
+     },
+     {
+      "text": "The registry lists the registration as valid up to 8 April 2027, and its list of authorised users runs to serial number 26.",
+      "claimIds": [
+       "C121",
+       "C122"
+      ]
+     },
+     {
+      "text": "In Tripathy's 1998 study Raghurajpur had 106 Chitrakaras, 21.41% of the local population.",
+      "claimIds": [
+       "C124"
+      ]
+     },
+     {
+      "text": "Tripathy also found the non-Chitrakaras practising the craft as a source of livelihood more than twice as many as the Chitrakaras.",
+      "claimIds": [
+       "C125"
+      ]
+     },
+     {
+      "text": "Counts of Raghurajpur's families differ: approximately 130 in Kiran Pradeep's 2022 article, 145 in Gulf News and 100 or so households in The Better India.",
+      "claimIds": [
+       "C127",
+       "C151",
+       "C152"
+      ]
+     },
+     {
+      "text": "Customers shifted from lower and lower-middle income pilgrims to upper-middle or upper income tourists, who are generally willing to pay a higher price.",
+      "claimIds": [
+       "C129"
+      ]
+     },
+     {
+      "text": "As production came to exceed demand, competition developed between artisans and middlemen became involved, often to the artisans' disadvantage.",
+      "claimIds": [
+       "C130"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "DESIGN",
+    "sentences": [
+     {
+      "text": "Themes range from Krishna's life and the avatars of Vishnu to the Ramayana and Mahabharata, and Vaishnava episodes form the major theme.",
+      "claimIds": [
+       "C133",
+       "C134"
+      ]
+     },
+     {
+      "text": "Generally all goddesses are painted yellow and the gods white; Tripathy has Krishna always painted blue, while an artist quoted by Kiran Pradeep says black and blue fill Krishna's figures.",
+      "claimIds": [
+       "C137",
+       "C138",
+       "C139"
+      ]
+     },
+     {
+      "text": "Figures are drawn mostly in front pose with faces in profile, the elongated eyes drawn frontally, the nose long and beak-like and the chin round.",
+      "claimIds": [
+       "C142"
+      ]
+     },
+     {
+      "text": "Background trees and foliage are painted over the red ground in yellow and white.",
+      "claimIds": [
+       "C143"
+      ]
+     },
+     {
+      "text": "Ganjapa are circular paintings 1.2-2 cm in diameter that were used as playing cards in earlier times.",
+      "claimIds": [
+       "C146"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

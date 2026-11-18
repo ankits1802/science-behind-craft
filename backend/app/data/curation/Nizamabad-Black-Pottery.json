@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Nizamabad-Black-Pottery",
+  "version": 1,
+  "curatedAt": "2026-11-18T09:00:00+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {"query": "Nizamabad Black Pottery geographical indication application number GI journal", "site": "web search"},
+    {"query": "GI application details pages 425 to 530, to find Nizamabad Black Clay Pottery (application 459)", "site": "search.ipindia.gov.in (GI registry)"},
+    {"query": "Geographical Indications Journal No. 68", "site": "search.ipindia.gov.in/IPOJournal (GIR journal list); ipindia.nic.in/girindia/journal/68.pdf no longer resolves and has no Wayback copy"},
+    {"query": "Statement of Case, Form GI-1 and annexures of application 459", "site": "search.ipindia.gov.in (the document downloads are form posts and were not read)"},
+    {"query": "Registration details of geographical indications", "site": "ipindia.gov.in"},
+    {"query": "Form GI-1C Nizamabad Black Clay Pottery", "site": "origin-gi.com"},
+    {"query": "Nizamabad black clay pottery", "site": "en.wikipedia.org (used only as a pointer to its references)"},
+    {"query": "Azamgarh black clay pottery in race to get GI tag; Now GI tag for black clay pottery of Nizamabad", "site": "timesofindia.indiatimes.com"},
+    {"query": "NGO working to preserve culture in poor villages", "site": "sunday-guardian.com via web.archive.org (read; only a passing mention of the pottery, not used)"},
+    {"query": "Etched Black Pottery from Azamgarh, Nizamabad, India (Ceramics Technical, 2014)", "site": "thefreelibrary.com (live page refuses automated reading; read from web.archive.org)"},
+    {"query": "How Nizamabad's 500-year-old black pottery is regaining lost glory", "site": "30stades.com"},
+    {"query": "All about the GI-tagged Nizamabad black pottery", "site": "outlooktraveller.com"},
+    {"query": "Nizamabad Black Clay Pottery GI product page", "site": "nabard.org (a near-verbatim rewrite of the Outlook Traveller text, so not used as independent support)"},
+    {"query": "Azamgarh pottery Craftkatha pop-up", "site": "aiacaonline.org (a shop page, rated D; not used)"},
+    {"query": "Black pottery of Nizamabad-Azamgarh, Uttar Pradesh", "site": "folkartopedia.com"},
+    {"query": "Nizamabad black pottery", "site": "azamgarh.nic.in (District Administration Azamgarh)"},
+    {"query": "Azamgarh one district one product black pottery", "site": "odopup.in (the page renders only with scripts; no text to quote)"},
+    {"query": "One District One Product black pottery", "site": "india.gov.in (a seller listing; not used)"},
+    {"query": "District Export Action Plan Azamgarh", "site": "exporthubs.gov.in (connection timed out; no Wayback copy)"},
+    {"query": "Physico-chemical characterisation of some common clays of Nizamabad, UP", "site": "cgcri.csircentral.net (abstract); tandfonline.com refused (HTTP 403); Crossref and Semantic Scholar hold no abstract"},
+    {"query": "EDX/EDS and SEM of black slipped ware and the kabiz slip of Nizamabad black ware (Current Science, 2018)", "site": "i-scholar.in (the PDF could not be parsed) and currentscience.ac.in (script challenge)"},
+    {"query": "Composite slip for North Indian reduction fired vessels, Nizamabad, museum number 9-16478", "site": "portal.hearstmuseum.berkeley.edu (the page gives automated readers no text)"},
+    {"query": "Black pottery of Azamgarh, Uttar Pradesh", "site": "globalinch.org (no author and no sources; not used)"},
+    {"query": "Nizamabad black pottery", "site": "mapacademy.io, imp-art.org, indianculture.gov.in, sahapedia.org, dsource.in, gaatha.org (no readable page found)"},
+    {"query": "Nizamabad Azamgarh black pottery study pdf journal ceramic", "site": "web search"},
+    {"query": "Nizamabad black pottery kabiz mango bark adhatoda slip potters Azamgarh", "site": "web search"},
+    {"query": "Nizamabad black clay pottery", "site": "commons.wikimedia.org (file listing)"},
+    {"query": "Dated counts of potters and exports: about 200 families and over 1,000 members with 90% of products exported (Times of India), about 200 artisans (Outlook Traveller), about 250 families (30 Stades), about 500 artisans (Folkartopedia)", "site": "the four pages' texts carry no quotable date, so these counts and the export share are not used"},
+    {"query": "Nizamabad black pottery", "site": "handicrafts.nic.in (the Development Commissioner (Handicrafts) craft page was found by search, but the live page timed out and the Wayback Machine has no snapshot)"},
+    {"query": "District Census Handbook Azamgarh; Census of India 1961 Handicrafts Survey Monograph No. 2, pottery industry in Uttar Pradesh", "site": "censusindia.gov.in (catalog 30947 serves the leather footwear monograph; that 1961 survey's special pottery studies were Khurja and Chunar, not Nizamabad)"},
+    {"query": "The river Tons and the clay villages Dhuripur, Bhairopur and Nasirpur", "site": "the application form and the 1998 abstract (no quote gives the river a role or the villages a district, so neither is listed as a place)"},
+    {"query": "Authorship of File:Nizamabad black clay pottery.png", "site": "commons.wikimedia.org (the uploader account Hirok Raja was renamed Aishik Rehman on 2022-01-26, so the own-work author matches)"}
+  ],
+  "sources": [
+    {"id": "S01", "kind": "GOVERNMENT_REPORT", "title": "Application Details: Nizamabad Black Clay Pottery, Application Number 459", "publisher": "Geographical Indications Registry, Intellectual Property India", "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/459", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S02", "kind": "GI_JOURNAL", "title": "Geographical Indications Journal No. 68: Nizamabad Black Pottery, G.I. Application No. 459", "publisher": "Geographical Indications Registry, Government of India", "year": 2015, "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%2FIPOJournal%2F1_74_1%2Fgi-journal-68.pdf", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S03", "kind": "GOVERNMENT_REPORT", "title": "Registration Details of Geographical Indications", "publisher": "IP India", "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S04", "kind": "OTHER", "title": "Form GI-1C: Nizamabad Black Clay Pottery, application for registration of a geographical indication", "publisher": "Yuva Jagriti Pottery Shilp Samiti, Jan Kalyan Evam Gramin Utthan Sansthan and Human Welfare Association (copy hosted by oriGIn)", "year": 2013, "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/208-nizamabad-black-pottery.pdf", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S05", "kind": "OTHER", "subKind": "NEWS", "title": "Azamgarh black clay pottery in race to get GI tag", "authors": ["Binay Singh"], "publisher": "The Times of India", "year": 2015, "url": "https://timesofindia.indiatimes.com/city/varanasi/Azamgarh-black-clay-pottery-in-race-to-get-GI-tag/articleshow/46883106.cms", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S06", "kind": "OTHER", "subKind": "NEWS", "title": "Now GI tag for black clay pottery of Nizamabad", "authors": ["Manish Raj"], "publisher": "The Times of India", "year": 2015, "url": "https://timesofindia.indiatimes.com/city/chennai/Now-GI-tag-for-black-clay-pottery-of-Nizamabad/articleshow/50003436.cms", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S07", "kind": "OTHER", "subKind": "NEWS", "title": "All About The GI-Tagged Nizamabad Black Pottery", "publisher": "Outlook Traveller", "year": 2023, "url": "https://www.outlooktraveller.com/experiences/heritage/all-about-the-gi-tagged-nizamabad-black-pottery", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S08", "kind": "OTHER", "subKind": "NEWS", "title": "How Nizamabad's 500-year-old black pottery is regaining lost glory", "authors": ["Rashmi Pratap"], "publisher": "30 Stades", "year": 2020, "url": "https://30stades.com/2020/08/03/how-nizamabads-500-year-old-black-pottery-is-regaining-lost-glory-craft-uttar-pradesh/", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S09", "kind": "WEB_PAGE", "title": "Black Pottery of Nizamabad-Azamgarh, Uttar Pradesh", "authors": ["Yashaswini Singh"], "publisher": "Folkartopedia", "year": 2021, "url": "https://www.folkartopedia.com/archive/black-pottery-of-nizamabad-azamgarh-uttar-pradesh/", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S10", "kind": "WEB_PAGE", "title": "Nizamabad Black Pottery", "publisher": "District Administration Azamgarh, Government of Uttar Pradesh", "url": "https://azamgarh.nic.in/tourist-place/nizamabad-black-pottery/", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S11", "kind": "PAPER", "title": "Physico-chemical characterisation of some common clays of Nizamabad, UP and their utilization in the production of black pottery", "authors": ["C S Prasad", "Kedar Nath Maiti"], "publisher": "Transactions of the Indian Ceramic Society (record in the CSIR-CGCRI repository)", "year": 1998, "url": "https://cgcri.csircentral.net/1586/", "doi": "10.1080/0371750X.1998.10804855", "language": "en", "access": "ABSTRACT_ONLY", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S12", "kind": "OTHER", "subKind": "NEWS", "title": "Etched Black Pottery from Azamgarh, Nizamabad, India: Chitra Balasubramaniam explores the pottery traditions of Bidri work", "authors": ["Chitra Balasubramaniam"], "publisher": "Ceramics Technical (on The Free Library)", "year": 2014, "url": "https://www.thefreelibrary.com/Etched+Black+Pottery+from+Azamgarh,+Nizamabad,+India%3A+Chitra...-a0372884209", "archivedUrl": "https://web.archive.org/web/20260107074146id_/https://www.thefreelibrary.com/Etched+Black+Pottery+from+Azamgarh,+Nizamabad,+India:+Chitra...-a0372884209", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"}
+  ],
+  "claims": [
+    {"id": "C001", "discipline": "OVERVIEW", "subject": {"type": "CRAFT"}, "text": "Nizamabad black pottery is a special kind of clay ware with a dark lustrous body.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 7, D) Specification, line 130", "quote": "Nizamabad Black pottery is a sp ecial kind of clay ware with a dark lustrous body."}]},
+    {"id": "C002", "discipline": "OVERVIEW", "subject": {"type": "CRAFT"}, "text": "The pottery features a shiny black surface with engraved silver patterns.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, line 173", "quote": "This particular variety features a shiny black surface with engraved silver patterns."}]},
+    {"id": "C003", "discipline": "OVERVIEW", "subject": {"type": "CRAFT"}, "text": "Folkartopedia notes that the black tint comes not from artificial colours or paint but from a number of steps the potter takes.", "quotes": [
+      {"sourceId": "S09", "locator": "line 1", "quote": "Not by artificial colours or paint but this black tint is obtained by a number of steps that the potter takes to finally produce this distinct naturally made black colour."}]},
+    {"id": "C004", "discipline": "OVERVIEW", "subject": {"type": "CRAFT"}, "text": "Nizamabad black pottery is a registered geographical indication, which received its GI tag in 2015.", "quotes": [
+      {"sourceId": "S01", "locator": "lines 55-56", "quote": "| Geographical Indications | Nizamabad Black Clay Pottery | | Status | Registered |"},
+      {"sourceId": "S07", "locator": "line 1", "quote": "it was granted the Geographical Indicator (GI) tag in 2015"},
+      {"sourceId": "S03", "locator": "line 268", "quote": "FROM APRIL 2015 - MARCH 2016"},
+      {"sourceId": "S03", "locator": "line 270", "quote": "237 459 Nizamabad Black Pottery Handicrafts Uttar Pradesh"}]},
+    {"id": "C005", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L01"}, "text": "Nizamabad, in Azamgarh district of Uttar Pradesh, is renowned for its black pottery.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, line 172", "quote": "Nizamabad, in Azamgarh District of Uttar Pradesh, is renowned for its black pottery."},
+      {"sourceId": "S12", "locator": "paragraph 1, line 2", "quote": "One such different form that combines utility with a unique tradition of decoration is the Black Pottery from Nizamabad, Azamgarh District, Uttar Pradesh."}]},
+    {"id": "C006", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L01"}, "text": "Nizamabad is a small town situated about 100 km (62 miles) north of Varanasi.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, G) Geographical Area, lines 166-167", "quote": "Nizamabad is a small town situated about 100km (62 miles) north of Varanasi"}]},
+    {"id": "C007", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L01"}, "text": "Rashmi Pratap describes Nizamabad as a village in Azamgarh, about 80 km from Varanasi.", "quotes": [
+      {"sourceId": "S08", "locator": "line 1", "quote": "Nizamabad, a village in Uttar Pradesh's Azamgarh, about 80 km from Varanasi"}]},
+    {"id": "C008", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L01"}, "text": "The 2013 application form says Nizamabad lies on the river Tons, which feeds several lakes on the outskirts of the town.", "quotes": [
+      {"sourceId": "S04", "locator": "Geographical area of production, lines 40-42", "quote": "Nizamabad is a small town situated about 100km (62 miles) north of Varanasi on the river Tons. which feeds several lakes on the outskirts ofthe town"},
+      {"sourceId": "S04", "locator": "line 155", "quote": "Dated thls 23d Day of october, 2013"}]},
+    {"id": "C009", "discipline": "GEOGRAPHY", "subject": {"type": "CRAFT"}, "text": "The registry gives Uttar Pradesh as the geographical area of the Nizamabad Black Clay Pottery indication.", "quotes": [
+      {"sourceId": "S01", "locator": "lines 61-62", "quote": "| Goods | Handicraft | | Geographical Area | Uttar Pradesh |"}]},
+    {"id": "C010", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L02"}, "text": "The GI journal says the Nizamabad black pottery cluster is scattered generally across all parts of Azamgarh district.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, G) Geographical Area, lines 167-168", "quote": "Nizamabad Black pottery cluster is scattered generally a ll parts of Azamgarh district."}]},
+    {"id": "C011", "discipline": "GEOGRAPHY", "subject": {"type": "PLACE", "ref": "L03"}, "text": "The October 2013 application form named the whole of Azamgarh and Mau districts as the product's geographical area.", "quotes": [
+      {"sourceId": "S04", "locator": "Geographical area of production, lines 43-44", "quote": "Whole Azamgarh and Mau districts of Uttar pradesh is the geographical area of this product."},
+      {"sourceId": "S04", "locator": "line 155", "quote": "Dated thls 23d Day of october, 2013"}]},
+    {"id": "C012", "discipline": "HISTORY", "subject": {"type": "PLACE", "ref": "L04"}, "text": "The GI application states that this kind of pottery originated in the Kutch region of Gujarat.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, line 147", "quote": "The art of making this kind of pottery originated in the Kutch region of Gujarat."}]},
+    {"id": "C013", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "It is believed that the craft was brought to Nizamabad during the reign of the Mughals.", "hypothesis": true, "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 147-148", "quote": "It is believed to have been brought to Nizamabad during the reign of the Mughals."}]},
+    {"id": "C014", "discipline": "HISTORY", "subject": {"type": "PLACE", "ref": "L01"}, "text": "The GI application says Muslim invaders attacked the town, originally called Hanumantgarh, in the mid-17th century and renamed it Nizamabad.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, lines 176-177", "quote": "In the mid-17th century Muslim invaders a ttacked this town, which was originally called Hanumantgarh (Hindu), changing the name to Nizamabad."},
+      {"sourceId": "S09", "locator": "line 3", "quote": "The town was called Hanumantgarh that was renamed by the invaders as Nizamabad."}]},
+    {"id": "C015", "discipline": "HISTORY", "subject": {"type": "PLACE", "ref": "L05"}, "text": "The GI application says that early in the 19th century a feudal ruler of the town invited potters from Gujarat to live there in exchange for land.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, lines 177-179", "quote": "Early in the 19th century one of its feudal rulers invited potters from Gujarat to come and live here in exchange for land."}]},
+    {"id": "C016", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "The GI application says the potters were asked to provide pots for pouring and holding water, and the shapes of the pots gradually became influenced by Muslim forms.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, lines 180-182", "quote": "The potters were asked to provide pots for pouring and holding wate r, and gradually the shapes of the pots became influenced by Muslim forms."}]},
+    {"id": "C017", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "The GI application says the decorative silver inlay developed through the influence of bidri metalwork brought by Muslims from Hyderabad.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, H) Proof of Origin, lines 182-184", "quote": "The hi ghly decorative silver inlay incorporated into the pottery here has developed through the influence of bidri metalwork brought in by the Muslims from Hyderabad."}]},
+    {"id": "C018", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "Handmade in India, as quoted in Ceramics Technical, says the potters' ancestors came from Gujarat with Abdul Farah Nizamabadi in Emperor Alamgarh's reign, 400 years ago.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 5, line 6", "quote": "According to historical accounts the art of black pottery came from Gujarat. The ancestors of the potters had accompanied Abdul Farah Nizamabadi to the village during the reign of Emperor Alamgarh, 400 years ago."}]},
+    {"id": "C019", "discipline": "HISTORY", "subject": {"type": "PLACE", "ref": "L06"}, "text": "Sohit Kumar Prajapati said that over 300 years ago, under the Mughal emperor Aurangzeb, some clay potters from Kutch migrated and settled at Nizamabad.", "quotes": [
+      {"sourceId": "S05", "locator": "line 4", "quote": "Over 300 years ago during the reign of Mughal Emperor Aurangzeb, some clay potters from Kutch (Gujarat) had migrated to Azamgarh and settled at Nizamabad to earn living."}]},
+    {"id": "C020", "discipline": "HISTORY", "subject": {"type": "PLACE", "ref": "L05"}, "text": "A Nizamabad potter told Rashmi Pratap that his ancestors came from Gujarat about 500 years ago.", "quotes": [
+      {"sourceId": "S08", "locator": "line 2", "quote": "Surendra's ancestors came from Gujarat, he says, about 500 years back and settled in what is now Uttar Pradesh."}]},
+    {"id": "C021", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical notes that, as with other crafts, no records are available of the origins of Nizamabad black pottery.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 5, line 6", "quote": "Like all crafts, there are no available records as to its origins."}]},
+    {"id": "C022", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "It is usually said that the craft is more than 500 years old.", "hypothesis": true, "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 5, line 6", "quote": "It is usually said that the craft is more than 500 years old."}]},
+    {"id": "C023", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "It is believed that a qazi brought the craft of black pottery from Kutch to Nizamabad during the rule of the Mughal emperor Aurangzeb.", "hypothesis": true, "quotes": [
+      {"sourceId": "S07", "locator": "line 3", "quote": "It is believed that black pottery took root in Nizamabad due to a qazi's efforts during the rule of the Mughal emperor Aurangzeb. The qazi brought the art and craft of black pottery from Kutch, Gujarat, where it was first developed."}]},
+    {"id": "C024", "discipline": "HISTORY", "subject": {"type": "COMMUNITY", "ref": "G01"}, "text": "A Nizamabad potter recounts the elders' story that a kaji sahib in the Mughal administration, impressed by Prajapati black pottery in Gujarat, brought some artisans to Uttar Pradesh and gave them land.", "hypothesis": true, "quotes": [
+      {"sourceId": "S08", "locator": "line 4", "quote": "We have been hearing from our elders that once a kaji sahib (judge) in the Mughal administration saw black pottery by the Prajapati community in Gujarat. He was so impressed by the work that he brought some artisans to Uttar Pradesh, gave them land for housing and agriculture"}]},
+    {"id": "C025", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "According to mythological beliefs, feudal rulers influenced by the Persian style called artisans to live in the town and make utensils.", "hypothesis": true, "quotes": [
+      {"sourceId": "S10", "locator": "line 2", "quote": "According to mythological beliefs, the feudal rulers, influenced by the Persian style, had called artisans to live in this city to make utensils, fruits."}]},
+    {"id": "C026", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "The Azamgarh district page says that later, talented artisans discovered the technique of adding black colour through ash and smoke.", "hypothesis": true, "quotes": [
+      {"sourceId": "S10", "locator": "line 2", "quote": "Later, talented artisans discovered the technique of adding black color through ash and smoke, which brought fame to this craft."}]},
+    {"id": "C027", "discipline": "HISTORY", "subject": {"type": "CRAFT"}, "text": "Ram Jatan Ram Prajapati says the British gave a certificate for good work in 1905 to an Azamgarh product made with the naqqashi technique.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 5, line 6", "quote": "In 1905, there is a certificate for good work given by the British for a product made from Azamgarh using the Naqqashi technique."}]},
+    {"id": "C028", "discipline": "HISTORY", "subject": {"type": "COMMUNITY", "ref": "G01"}, "text": "Traditionally only Prajapatis were potters, and the skill was passed on from one generation to another.", "quotes": [
+      {"sourceId": "S08", "locator": "line 22", "quote": "Traditionally, only Prajapatis were potters and the skill was passed on from one generation to another."}]},
+    {"id": "C029", "discipline": "HISTORY", "subject": {"type": "COMMUNITY", "ref": "G01"}, "text": "Local people say the Prajapati community has been making this pottery since the beginning.", "quotes": [
+      {"sourceId": "S10", "locator": "line 3", "quote": "According to the local people, the Prajapati community has been making this pottery since the beginning."}]},
+    {"id": "C030", "discipline": "HISTORY", "subject": {"type": "COMMUNITY", "ref": "G05"}, "text": "Azamgarh potter Ram Jatan Ram Prajapati received the National Award for Master Craftsman from the Government of India in 2004.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 4, line 5", "quote": "Ram Jatan Ram Prajapati received the National Award for Master Craftsman from the Government of India in 2004."},
+      {"sourceId": "S12", "locator": "Process of making, line 9", "quote": "The method of making as Ram Jatan rattles off with veritable ease saying, \"come to Azamgarh and you can view it first hand.\" I am not so sure, but try to follow the process. I have seen the pots being made locally by another Azamgarh potter in Delhi."}]},
+    {"id": "C031", "discipline": "HISTORY", "subject": {"type": "COMMUNITY", "ref": "G04"}, "text": "Sohit Kumar Prajapati is a state awardee of the Nizamabad black pottery craft.", "quotes": [
+      {"sourceId": "S05", "locator": "line 3", "quote": "said Sohit Kumar Prajapati, a state awardee of the craft"},
+      {"sourceId": "S12", "locator": "paragraph 4, line 5", "quote": "Present were craftsmen who were awardees Ram Jatan Ram Prajapati, Mrs Pushpa Devi and Sohit Kumar Prajapati."}]},
+    {"id": "C032", "discipline": "PROCESS", "subject": {"type": "CRAFT"}, "text": "The GI journal's method of production lists the first steps in order: clay procured from local ponds, beaten to a fine powder and wedged, then formed into objects.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 189", "quote": "The clay is procured from local ponds."},
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 190", "quote": "The dry lumps of clay are beaten to a fine powder, water is added and the clay is wedged by foot"},
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 193", "quote": "The Objects are then formed."}]},
+    {"id": "C033", "discipline": "PROCESS", "subject": {"type": "CRAFT"}, "text": "The GI journal's description of the goods lists the later steps in order: baking, a vegetable wash, oil burnishing, twig decoration, smoke firing, oiling and baking again, filling the grooves, then washing and polishing.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 153-155", "quote": "After the clay moul d is given a desired shape, the items are baked in fire and then are washed with powered vegetable matter. The surface is then burnished with mustard oil after which a sh arp twig is used fo r decoration."},
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 156-159", "quote": "After following these procedures, the clay wares are then set to smoke firing which gives them the black luster. After creating the objects, the items are rubbed with oil and then baked once again. The grooves of the design are then fill ed in by hand with a fine silvery powder."},
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 160-161", "quote": "When the silvery powder is washed with wa ter and polished, the clay wares exude a silvery hue against the black background of the terracotta."}]},
+    {"id": "C034", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P01"}, "text": "Potters dig clay from ponds in summer, during the dry months of April and May, and store it at home for use through the year.", "quotes": [
+      {"sourceId": "S08", "locator": "line 10", "quote": "In Nizamabad, potters dig out clay from ponds during the dry months of April and May and store it inside their houses for use throughout the year."},
+      {"sourceId": "S07", "locator": "line 5", "quote": "The potters procure the clay during the summer months and store it in their homes for use throughout the year."},
+      {"sourceId": "S12", "locator": "Process of making, line 9", "quote": "The mud for the pots is brought from ponds."}]},
+    {"id": "C035", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P02"}, "text": "Dry lumps of clay are beaten to a fine powder, water is added, and the clay is wedged by foot and then by hand to remove stones and coarse material.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 190-191", "quote": "The dry lumps of clay are beaten to a fine powder, water is added and the clay is wedged by foot and then by hand whilst re moving any stones and coarse material."}]},
+    {"id": "C036", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P02"}, "text": "In the potters' units the clay is filtered into small pits, mixed with water and left for some days until it thickens, then kneaded lump-free.", "quotes": [
+      {"sourceId": "S08", "locator": "line 10", "quote": "Their units have small pits into which the clay is filtered, mixed with water and left for some days. When it thickens, the clay is kneaded by feet or using machines to make it lump-free."}]},
+    {"id": "C037", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P02"}, "text": "One potter kneads the soaked clay with his feet, then after about 15 minutes kneads it further by hand to improve its elasticity.", "quotes": [
+      {"sourceId": "S08", "locator": "line 1", "quote": "The clay has been soaking in water in the pit for some days and is now thick enough to be kneaded using feet"},
+      {"sourceId": "S08", "locator": "line 1", "quote": "After about 15 minutes of kneading, a portion of the clay is lifted to a plain surface and further kneaded with hands to improve elasticity."}]},
+    {"id": "C038", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P02"}, "text": "Ceramics Technical describes the mud being soaked, turned fine in a chakki or stone grinder, sieved several times and kneaded with about 40 percent water.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 10", "quote": "The mud is soaked in water and in a chakki or a stone grinder turned to make it fine."},
+      {"sourceId": "S12", "locator": "Process of making, line 10", "quote": "The dry mud is powdered. It is sieved several times"},
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "The mud is then kneaded with water. Approximately 40 percent of water is added to the mix."}]},
+    {"id": "C039", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P03"}, "text": "The articles are shaped on potter's wheels; most wheels are turned by hand, though electric wheels are also used.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 195-196", "quote": "The craftsmen make articles out of clay which has a very fine texture and shapes very well to different forms on potter's wheels."},
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "Most potters work with wheels that turn by the hand. Electric wheels are also used."}]},
+    {"id": "C040", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P03"}, "text": "The shaped object is removed from the wheel with a piece of thread and dried in the sun.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "The object is shaped on the wheel and removed using a piece of thread. It is now dried in the sun."}]},
+    {"id": "C041", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P12"}, "text": "The pottery is partly dried in the sun to keep some moisture, then goes back on the wheel for kharat, peeling off uneven surfaces.", "quotes": [
+      {"sourceId": "S08", "locator": "line 11", "quote": "the handmade pottery is partially dried in the sun to retain some moisture. It goes back on the wheel for 'kharat' or peeling off uneven surfaces."},
+      {"sourceId": "S07", "locator": "line 6", "quote": "A second round on the potter's wheel ensures removal, via scraping, of any anomalies in the shape"},
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "It is again turned on the wheel, smoothed using a cutter, burnished stone and a few other implements."}]},
+    {"id": "C042", "discipline": "PROCESS", "subject": {"type": "TOOL", "ref": "T04"}, "text": "Handmade in India, as quoted in Ceramics Technical, says thrown pots are dried and smoothed with ghont, a quartz river stone.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "Thrown pots are dried and smoothed with ghont, a quartz river stone."}]},
+    {"id": "C043", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P12"}, "text": "The dried piece is smoothed with a cutter and a burnished stone, then rubbed with an old piece of pure cotton cloth until it feels almost silken.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "It is again turned on the wheel, smoothed using a cutter, burnished stone and a few other implements."},
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "Now an old piece of pure cotton cloth is taken out and the piece is rubbed with it. It now gets a sheen and looks and feels almost silken."}]},
+    {"id": "C044", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P04"}, "text": "After shaping, the items are baked in fire; unfired clay is called kachcha, uncooked, and fired clay becomes pakka, cooked.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 197-199", "quote": "After the clay mould is given a desired shape, the items are baked in fire (clay in its unfired state is considered kachcha: uncooked; once fired it becomes pakka: cooked"}]},
+    {"id": "C045", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P05"}, "text": "After the first baking, the items are washed with powdered vegetable matter.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 153-154", "quote": "After the clay moul d is given a desired shape, the items are baked in fire and then are washed with powered vegetable matter."}]},
+    {"id": "C046", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P06"}, "text": "The washed surface of the pottery is then burnished with mustard oil.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 200", "quote": "The surface is then burnished with mustard oil"}]},
+    {"id": "C047", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P07"}, "text": "Floral and geometric designs are then incised on the oiled surface with a sharp twig for decoration.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 200-201", "quote": "The surface is then burnished with mustard oil after which a sharp twig is used for decoration. Various beautiful floral and geometric designs are then itched to it."},
+      {"sourceId": "S09", "locator": "line 5", "quote": "intricate carvings are made through sharpened wooden sticks"}]},
+    {"id": "C048", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P07"}, "text": "The intricate geometric and floral patterns are drawn on the pottery with a fine iron needle.", "quotes": [
+      {"sourceId": "S08", "locator": "line 12", "quote": "A fine iron needle is then used to draw intricate geometrical and floral patterns on the pottery."},
+      {"sourceId": "S07", "locator": "line 6", "quote": "using a fine needle, carve the patterns on the dried clay"}]},
+    {"id": "C049", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P07"}, "text": "The patterns are usually carved by the women of the household, though men are also experts at this work.", "quotes": [
+      {"sourceId": "S08", "locator": "line 12", "quote": "Women usually do this fine work though men also are experts in the art."},
+      {"sourceId": "S07", "locator": "line 6", "quote": "Then, the women of the household get together and, using a fine needle, carve the patterns on the dried clay"},
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "Engraving is done freehand by the women with a paste of mercury, lead and zinc."}]},
+    {"id": "C050", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P13"}, "text": "To get the glowing black effect, the pottery is dipped into a slip of clay mixed with vegetable matter.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 228-230", "quote": "To get the glowing black glazed effect, the pottery is dipped into a slip made of clay, mixed with vegetable matter."},
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 202-203", "quote": "A pot is dipped in a thin liquid matter of clay mixed with a particular vegetable material."},
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "The sheen is obtained by dipping it into a solution of clay, vegetable matter, dried, then rubbed with a vegetable oil and fired."}]},
+    {"id": "C051", "discipline": "PROCESS", "subject": {"type": "TERM", "ref": "W06"}, "text": "In one potter's account, kavis, a colour made of clay and water, is applied and the pottery is then left to dry.", "quotes": [
+      {"sourceId": "S08", "locator": "line 11", "quote": "Kavis, a colour made using clay and water, is applied and the pottery is then left to dry."}]},
+    {"id": "C052", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M10"}, "text": "In the account given to Ceramics Technical, the dipping solution is a local yellow mud, peeli mithi, with mango bark, natural leaves and caustic soda.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "The solution is made using a local peeli mithi or yellow mud which is similar to fueller's earth. To the solution apart from the peeli mithi, proportions of mango bark, natural leaves and caustic soda are added."}]},
+    {"id": "C053", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Cow dung fuels the firing, and in one account the oven, or bhatti, is fully covered with cow dung cakes.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 194", "quote": "Designs are etched or painted, and the objects fired in ovens fuelled with cow dung."},
+      {"sourceId": "S08", "locator": "line 12", "quote": "The pottery then goes inside the bhatti (oven), which is then fully covered with cow dung cakes."}]},
+    {"id": "C054", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "The articles are fired with rice husks in an enclosed kiln.", "quotes": [
+      {"sourceId": "S05", "locator": "line 9", "quote": "the articles are fired in enclosed kiln with rice husks"}]},
+    {"id": "C055", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Ceramics Technical describes the pieces stacked in an earthen pot packed with wood, cow dung and saw dust, sealed, and lowered into a wood-fired kiln.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "The pieces to be baked are stacked in an earthen pot and filled with wooden pieces, cow dung and saw dust in the empty spaces. The mouth of the pot is then sealed. This is then lowered into the woodfired kiln and allowed to bake."}]},
+    {"id": "C056", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Handmade in India describes firing in an open kiln, with dung cakes placed between the wares and the heap covered with straw and mud.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "Firing is done in an open kiln by placing dung cakes between the wares and covering the heap with straw and mud."}]},
+    {"id": "C057", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Ceramics Technical gives the baking as 750 degrees Celsius for six to eight hours.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "It is baked at 750[degrees]C for six to eight hours time."}]},
+    {"id": "C058", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "In one potter's account the oven cools down after 10 to 12 hours, and then the pottery is removed.", "quotes": [
+      {"sourceId": "S08", "locator": "line 13", "quote": "The oven cools down after 10 to 12 hours and then pottery is removed."}]},
+    {"id": "C059", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Outlook Traveller describes a fuel-intensive firing of about 15 days in the kiln, locally called aawan, that produces about 300 pieces.", "quotes": [
+      {"sourceId": "S07", "locator": "line 7", "quote": "A fuel-intensive method, which involves baking the clay pieces for about 15 days in the furnace or kiln or, aawan, as it is locally called, produces about 300 pieces."}]},
+    {"id": "C060", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P09"}, "text": "After the smoke firing, the items are rubbed with oil and baked once again.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 156-158", "quote": "After following these procedures, the clay wares are then set to smoke firing which gives them the black luster. After creating the objects, the items are rubbed with oil and then baked once again."}]},
+    {"id": "C061", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P10"}, "text": "The grooves of the design are then filled in by hand with a fine silvery powder.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, line 159", "quote": "The grooves of the design are then fill ed in by hand with a fine silvery powder."}]},
+    {"id": "C062", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P11"}, "text": "The filled designs are washed with water and polished so the silvery powder sticks and shows a silvery hue against the black background.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 160-161", "quote": "When the silvery powder is washed with wa ter and polished, the clay wares exude a silvery hue against the black background of the terracotta."},
+      {"sourceId": "S08", "locator": "line 13", "quote": "Water is then applied, rubbed and applied again to ensure that the silvery powder sticks permanently on the carved design"}]},
+    {"id": "C063", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P14"}, "text": "Some vessels are coated with lacquer while still hot from the kiln, which gives them a glossy look and enhances their lustre.", "quotes": [
+      {"sourceId": "S05", "locator": "line 9", "quote": "To lend a glossy look to the products, some vessels are coated with lacquer when still hot."},
+      {"sourceId": "S07", "locator": "line 7", "quote": "The lacquer application enhances the black pottery's lustre while it is still hot from the kiln."}]},
+    {"id": "C064", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Dishes and tea sets meant for use as crockery are double fired, in an open kiln and in a closed kiln.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "Double firing in an open kiln and a closed kiln is done for dishes and tea sets used as crockery."}]},
+    {"id": "C065", "discipline": "PROCESS", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical states that making an object takes three to five days, whatever the number of pieces being made.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "The making of an object takes three to five days, irrespective of the number of pieces to be made."}]},
+    {"id": "C066", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M01"}, "text": "The craftsmen work a clay of very fine texture that shapes very well to different forms.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 150-151", "quote": "The craftsmen make articles out of the clay which has a very fine texture and shapes very well to different forms."}]},
+    {"id": "C067", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M01"}, "text": "The clay from the local ponds of Nizamabad is rich in mica.", "quotes": [
+      {"sourceId": "S07", "locator": "line 1", "quote": "The mica-rich clay from the local ponds of Nizamabad is ideal for the pottery practised here"},
+      {"sourceId": "S08", "locator": "line 6", "quote": "This area's clay has high mica content and has a very fine texture, giving a good finish to the products"}]},
+    {"id": "C068", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M01"}, "text": "A 1998 study of Nizamabad clays names Dhuripur, Bhairopur and Nasirpur pond clays among the existing plastic clays used to produce black pottery.", "quotes": [
+      {"sourceId": "S11", "locator": "citation, line 1", "quote": "Prasad, C S and Maiti, Kedar Nath (1998) Physico-chemical characterisation of some common clays of Nizamabad, UP and their utilization in the production of black pottery."},
+      {"sourceId": "S11", "locator": "abstract, line 4", "quote": "the existing plastic clays like Dhuripur, Bhairopur and Nasirpur pond clays for the production of black pottery"}]},
+    {"id": "C069", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M24"}, "text": "The study found that Nasirpur field clay could be used up to 100% as a complete replacement for those pond clays.", "quotes": [
+      {"sourceId": "S11", "locator": "abstract, line 4", "quote": "the alternative raw material, namely, Nasirpur field clay could be used even up to 100% in complete replacement of the existing plastic clays"}]},
+    {"id": "C070", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M02"}, "text": "The clay is mixed with goat excreta, a widely available local product.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, line 192", "quote": "and mixed with widely available local product goat excreta."}]},
+    {"id": "C071", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M03"}, "text": "Folkartopedia says goat's milk is sometimes added and the mud sieved for days to obtain clay free of the slightest impurities.", "quotes": [
+      {"sourceId": "S09", "locator": "line 10", "quote": "Sometimes, goat's milk is added and the mud is sieved for days to obtain the perfect clay without even the slightest of impurities."}]},
+    {"id": "C072", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M04"}, "text": "The slip contains mango bark and bamboo leaves, with aarush or adhatoda leaves by the district's account, or adusath leaves in Handmade in India.", "quotes": [
+      {"sourceId": "S10", "locator": "line 3", "quote": "The utensils are washed with a mud slip made of Kabeez or mango bark, bamboo leaves and aarush or adhatoda leaves"},
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "The kabiz (clay slip) contains, among other things, mango bark, bamboo leaves and adusath leaves, all of which carbonise in the firing."}]},
+    {"id": "C073", "discipline": "MATERIALS", "subject": {"type": "TERM", "ref": "W07"}, "text": "Handmade in India, as quoted in Ceramics Technical, calls the clay slip kabiz.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "The kabiz (clay slip) contains, among other things, mango bark, bamboo leaves and adusath leaves"}]},
+    {"id": "C074", "discipline": "MATERIALS", "subject": {"type": "TERM", "ref": "W07"}, "text": "The Azamgarh district page names Kabeez or mango bark among the ingredients of the mud slip.", "quotes": [
+      {"sourceId": "S10", "locator": "line 3", "quote": "washed with a mud slip made of Kabeez or mango bark"}]},
+    {"id": "C075", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M12"}, "text": "Mustard oil is rubbed on the pottery before firing to make it shinier and smoother and to protect its surface from scratches.", "quotes": [
+      {"sourceId": "S08", "locator": "line 11", "quote": "Mustard oil is then rubbed on it to make it shinier."},
+      {"sourceId": "S10", "locator": "line 3", "quote": "rubbed with mustard oil before firing, after which it gives a shiny and smooth finishing to the utensils and Also protects the surface from scratches"}]},
+    {"id": "C076", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M13"}, "text": "Potters keep the mud stored at home for a year, as they do the kanda, or cow dung, used for baking.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 10", "quote": "The mud is literally stored in the home for a year as is the kanda or cow dung used for baking."}]},
+    {"id": "C077", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M17"}, "text": "The GI journal says tin is rubbed into the incised sections of the design to create silvery patterns.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, I) Method of Production, lines 207-208", "quote": "It is then incised and tin is rubbed into the incised sections of design, creative silvery patterns."},
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 232-233", "quote": "It is then incised and tin is rubbed into the incised sections, creative silvery patterns."}]},
+    {"id": "C078", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M18"}, "text": "The Times of India reports that the etched designs are filled with a silver paint made from zinc and mercury.", "quotes": [
+      {"sourceId": "S05", "locator": "line 9", "quote": "Designs are etched on the dry surface, which is then filled with silver paint that is made from zinc and mercury."}]},
+    {"id": "C079", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M20"}, "text": "Several accounts fill the grooves with a mix of lead, zinc and mercury, which one account gives in equal proportion.", "quotes": [
+      {"sourceId": "S08", "locator": "line 13", "quote": "A powdered mix of lead, mercury and zinc in equal proportion is now filled into the carved design, giving it a silver finish."},
+      {"sourceId": "S07", "locator": "line 7", "quote": "silvery paint made of crushed lead, zinc, and mercury is used to fill in the grooves of the patterns"},
+      {"sourceId": "S09", "locator": "line 5", "quote": "The grooves made by the sticks are filled with a mixture of zinc, lead and mercury"},
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "Engraving is done freehand by the women with a paste of mercury, lead and zinc."}]},
+    {"id": "C080", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M21"}, "text": "In the account given to Ceramics Technical, the inlay is a mixture of glass, zinc and mercury, filled by hand and rubbed in with the nail.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "A mixture of glass, zinc and mercury (used by goldsmiths) is taken and mixed. This is filled by hand and rubbed with the nail into the etchings made earlier."}]},
+    {"id": "C081", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M19"}, "text": "Kamaladevi Chattopadyay's Handicrafts of India, as quoted in Ceramics Technical, describes incising the pattern after baking and rubbing in mercury and tin.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "scintillating silvery ornamentation is done by incising the pattern on the surface after baking and rubbing in mercury and tin"}]},
+    {"id": "C082", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M18"}, "text": "In the account given to Ceramics Technical, the zinc settles in the thin openings and the etchings do not lose their shine with time.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "The zinc settles in the thin openings. The etchings are permanent and it does not lose shine with the passing away of time."}]},
+    {"id": "C083", "discipline": "MATERIALS", "subject": {"type": "MATERIAL", "ref": "M01"}, "text": "Ceramics Technical reported in 2014 that the availability of good-quality mud was a problem and that it came from villages deeper inside.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 9", "quote": "The availability of good quality mud is again a problem. Now it is obtained from villages that are deeper inside."},
+      {"sourceId": "S12", "locator": "article details, lines 26-28", "quote": "| Publication: | Ceramics Technical | | Geographic Code: | 9INDI | | Date: | May 1, 2014 |"}]},
+    {"id": "C084", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical reported in 2014 that engraved Nizamabad pottery was made only to order, as the engraving's raw materials had become prohibitively expensive.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "The coveted Nizamabad engraved pottery today is made exclusively on orders."},
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "The reason for not doing it is the raw materials used for the engraving or etching has become prohibitively expensive."},
+      {"sourceId": "S12", "locator": "article details, lines 26-28", "quote": "| Publication: | Ceramics Technical | | Geographic Code: | 9INDI | | Date: | May 1, 2014 |"}]},
+    {"id": "C085", "discipline": "CHEMISTRY", "subject": {"type": "MATERIAL", "ref": "M04"}, "text": "Handmade in India, as quoted in Ceramics Technical, says the mango bark, bamboo leaves and adusath leaves of the slip all carbonise in the firing.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "mango bark, bamboo leaves and adusath leaves, all of which carbonise in the firing"}]},
+    {"id": "C086", "discipline": "CHEMISTRY", "subject": {"type": "MATERIAL", "ref": "M23"}, "text": "The GI journal says the dried pottery, polished with vegetable matter, creates a black oxide when fired, which gives its glowing black surface.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 231-232", "quote": "After this the dried pottery is polished with a vegetable matter, when fired, creates a black oxide, which gives the glowing black polished surface."}]},
+    {"id": "C087", "discipline": "CHEMISTRY", "subject": {"type": "CRAFT"}, "text": "Handmade in India, as quoted in Ceramics Technical, attributes the black colour of the pottery to a clay slip and reduction firing.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "The black colour of the pottery is the outcome of a clay slip and reduction firing."}]},
+    {"id": "C088", "discipline": "CHEMISTRY", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Potters keep oxygen out of the kiln during firing, because oxygen would turn the pottery red instead of black.", "quotes": [
+      {"sourceId": "S07", "locator": "line 7", "quote": "The pottery's colour is primarily due to the purposefully created oxygen-free conditions of the kiln. Oxygen will turn the clay red; therefore, the potters ensure that the kilns are air-tight to achieve the desired results."},
+      {"sourceId": "S08", "locator": "line 12", "quote": "When the pottery is inside the oven, it is important to ensure that there is no scope for oxygen to enter and the heat level remains high. The presence of oxygen can turn the pottery red and it won't get the black colour"}]},
+    {"id": "C089", "discipline": "CHEMISTRY", "subject": {"type": "STAGE", "ref": "P08"}, "text": "Smoke given off by the fuel and trapped during the firing imparts the black colour to the pottery.", "quotes": [
+      {"sourceId": "S05", "locator": "line 9", "quote": "The smoke that is generated in the process imparts the black colour."},
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "When the baking starts, the combustibles give out smoke which is trapped inside the earthen pot in which it is baked. This smoke imparts a jet black colour to the objects inside."}]},
+    {"id": "C090", "discipline": "PHYSICS", "subject": {"type": "CRAFT"}, "text": "In the 1998 study, the black pottery products it developed reached a highest fired strength of about 400 kg.cm-2 at a firing temperature of about 850°C.", "quotes": [
+      {"sourceId": "S11", "locator": "citation, line 1", "quote": "Prasad, C S and Maiti, Kedar Nath (1998) Physico-chemical characterisation of some common clays of Nizamabad, UP and their utilization in the production of black pottery."},
+      {"sourceId": "S11", "locator": "abstract, line 4", "quote": "The products developed also possessed the highest fired strength of about 400 kg.cm-2 at the firing temperature of about 850°C."}]},
+    {"id": "C091", "discipline": "PHYSICS", "subject": {"type": "CRAFT"}, "text": "Kamaladevi Chattopadyay wrote that the clay is fired at a low temperature, so the ware becomes brittle and cannot hold any liquid.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "The use of this type of wares is however limited, for as the clay is fired at low temperature, it becomes brittle and cannot hold any liquid."}]},
+    {"id": "C092", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "The GI journal says the craftsmen make vases, cups and saucers or tea sets, dinner sets, water jugs, plates, jars, flower pots, tableware and other items.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 7, D) Specification, lines 136-138", "quote": "The craftsmen of Nizamabad Black pottery in Azamgarh district create an array of black pottery items that include Vases, Cups and Saucers (tea set), dinner set, Water Jugs, Plates, Jars, Flower Pots, tableware and other items."}]},
+    {"id": "C093", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Potters also make lamps, incense holders, tea-pots and sugar-bowls, and statues of gods and goddesses such as Ganesh, Laxmi, Shiva, Durga and Saraswati.", "quotes": [
+      {"sourceId": "S06", "locator": "line 4", "quote": "The artisans make a wide variety of decorative and household pottery items like lamps, containers, vases, flower pots, plates, incense holders and statues of Hindu gods and goddesses."},
+      {"sourceId": "S05", "locator": "line 8", "quote": "The potters make tea-pots, sugar-bowls and other decorative articles. The earthen wares and statues of Gods and Goddesses particularly of Ganesh, Laxmi, Shiva, Durga and Saraswati are also made."}]},
+    {"id": "C094", "discipline": "DESIGN", "subject": {"type": "TERM", "ref": "W03"}, "text": "The GI journal's statement of uniqueness says surahis, a special kind of water pot, are among the well admired pots of Nizamabad.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 225-226", "quote": "A special kind of water pots, which is called surahis in colloquial language, are one of the well admired pots of Nizamabad."}]},
+    {"id": "C095", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "The pottery stands out with striking designs of flowing lines and floral patterns, and floral and geometric designs are etched on it.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 7, D) Specification, lines 134-135", "quote": "They stand out with their striking designs of flowing lines and floral patterns on the surface."},
+      {"sourceId": "S02", "locator": "p. 8, F) Description of the Goods, lines 163-164", "quote": "having various beautiful floral and geometric designs itched to it"}]},
+    {"id": "C096", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "The GI journal's statement of uniqueness says the craftsmen create a special pitcher-like form designed with thick slip into a light relief.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 223-224", "quote": "The craftsmen create a special pitcher-like form which is designed with thick slip into a light relief."}]},
+    {"id": "C097", "discipline": "DESIGN", "subject": {"type": "TERM", "ref": "W04"}, "text": "The engraving on the pot is called naqqashi, and its designs are mostly drawn freehand without any tracing.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 13", "quote": "A sharp tool is commonly used for engraving on the pot. This is commonly referred to as naqqashi. The designs used vary but mostly are done freehand sans any tracing."}]},
+    {"id": "C098", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical counts more than 50 naqqashi designs, among them jhoomar, bel, paurani, laung and papal.", "quotes": [
+      {"sourceId": "S12", "locator": "Designs galore, line 17", "quote": "The naqqashi done on the pottery is known by different names. There are more than 50 designs and many more are made. There are jhoomar, bel, paurani, laung, papal and more."}]},
+    {"id": "C099", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Handmade in India, as quoted in Ceramics Technical, says the engraved motifs are derived from nature.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 15", "quote": "The motifs are derived from nature."}]},
+    {"id": "C100", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Parts such as the spout or the handle are cast separately and then attached to the body.", "quotes": [
+      {"sourceId": "S09", "locator": "line 1", "quote": "However, certain portions such as the spout or the handle are left out as they are cast separately and then attached to the body."}]},
+    {"id": "C101", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Folkartopedia reports a wedding custom in the area in which a newly married couple decorates its rooftop with black terracotta elephants and horses.", "quotes": [
+      {"sourceId": "S09", "locator": "line 7", "quote": "Some of the products are used customarily during weddings in the area (with the custom being that a newly married couple should decorate their rooftop with elephants and horses made of black terracotta)."}]},
+    {"id": "C102", "discipline": "DESIGN", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical says the pottery is colloquially known as Bidri work, its technique drawing inspiration from the Bidri craft.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 2, line 3", "quote": "It is also colloquially known as Bidri Work."},
+      {"sourceId": "S12", "locator": "paragraph 2, line 3", "quote": "This technique draws inspiration from Bidri craft."}]},
+    {"id": "C103", "discipline": "ECONOMICS", "subject": {"type": "COMMUNITY", "ref": "G02"}, "text": "The Yuva Jagriti Pottery Shilp Samiti filed GI application 459 for Nizamabad Black Clay Pottery on 31 October 2013.", "quotes": [
+      {"sourceId": "S01", "locator": "lines 54-57", "quote": "| Application Number | 459 | | Geographical Indications | Nizamabad Black Clay Pottery | | Status | Registered | | Applicant Name | Yuva Jagriti Pottery Shilp Samiti |"},
+      {"sourceId": "S01", "locator": "line 59", "quote": "| Date of Filing | 31-10-2013 |"},
+      {"sourceId": "S02", "locator": "p. 7, lines 113-114", "quote": "G.I. APPLICATION NUMBER - 459 Application Date - 31-10-2013"}]},
+    {"id": "C104", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The application was advertised as accepted in Geographical Indications Journal 68, dated 15 July 2015.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 7, lines 111-112", "quote": "in the Geographical Indications Journal 68 dated 15th July, 2015"},
+      {"sourceId": "S02", "locator": "p. 7, lines 119-120", "quote": "is hereby advertised as accepted under Sub-section (1) of Section 13"},
+      {"sourceId": "S01", "locator": "lines 64-65", "quote": "| Journal Number | 68 | | Availability Date | 15-07-2015 |"}]},
+    {"id": "C105", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The registry issued certificate number 237 for the indication on 16 November 2015.", "quotes": [
+      {"sourceId": "S01", "locator": "lines 66-67", "quote": "| Certificate Number | 237 | | Certificate Date | 16-11-2015 |"}]},
+    {"id": "C106", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The registration of Nizamabad Black Clay Pottery as a geographical indication is valid up to 30 October 2033.", "quotes": [
+      {"sourceId": "S01", "locator": "line 68", "quote": "| Registration Valid Upto | 30-10-2033 |"}]},
+    {"id": "C107", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The registry's file for application 459 holds a GI renewal letter of 28 September 2022 and renewal details of 3 June 2024.", "quotes": [
+      {"sourceId": "S01", "locator": "line 70", "quote": "| 1 | 459 - GI - Renewal Details - 03-06-2024 | 03-06-2024 | |"},
+      {"sourceId": "S01", "locator": "line 71", "quote": "| 2 | 459 - GI - Renewal Letter - 28-09-2022 | 28-09-2022 | |"}]},
+    {"id": "C108", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The registry classes the goods as handicraft in class 27, black pottery.", "quotes": [
+      {"sourceId": "S01", "locator": "lines 60-61", "quote": "| Class | 27 | | Goods | Handicraft |"},
+      {"sourceId": "S02", "locator": "p. 7, line 128", "quote": "Types of Goods : Class 27 -Black Pottery"}]},
+    {"id": "C109", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The GI registry's authorised-user list for application 459 runs to 53 entries.", "quotes": [
+      {"sourceId": "S01", "locator": "line 94", "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"},
+      {"sourceId": "S01", "locator": "line 53", "quote": "| 53 | AU/37336/GI/459/53 |"}]},
+    {"id": "C110", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The GI journal proposes an inspection committee including the Uttar Pradesh Department of Industries, the Development Commissioner (Handicrafts) office at Varanasi and a national or state award winner.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 10, J) Inspection Body, lines 239-240", "quote": "To regulate the use of GI in the territory, it is proposed that the Inspection Committee shall consist the following members"},
+      {"sourceId": "S02", "locator": "p. 10, line 241", "quote": "The Department of Industries, Government of Uttar Pradesh"},
+      {"sourceId": "S02", "locator": "p. 10, lines 242-243", "quote": "O/o Development Commissioner (Handicraf t), Govt. of India having office at Varanasi"},
+      {"sourceId": "S02", "locator": "p. 10, line 245", "quote": "One National/State Award winner - Nizamabad Black pottery"}]},
+    {"id": "C111", "discipline": "ECONOMICS", "subject": {"type": "COMMUNITY", "ref": "G03"}, "text": "Sohit Kumar Prajapati said the potters applied for GI certification in October 2013 with support from NABARD, Lucknow and the Varanasi NGO Human Welfare Association.", "quotes": [
+      {"sourceId": "S05", "locator": "line 3", "quote": "We have applied for GI certification for our artifacts in October 2013 with the support of National Bank for Agriculture and Rural Development (NABARD), Lucknow and a Varanasi-based NGO Human Welfare Association"}]},
+    {"id": "C112", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The October 2013 GI application form described Nizamabad black clay pottery as a 100% export oriented product.", "quotes": [
+      {"sourceId": "S04", "locator": "Uniqueness, line 92", "quote": "100% export oriented product."},
+      {"sourceId": "S04", "locator": "line 155", "quote": "Dated thls 23d Day of october, 2013"}]},
+    {"id": "C113", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "The pottery is covered by Uttar Pradesh's One District One Product initiative, which the state government rolled out in 2018.", "quotes": [
+      {"sourceId": "S08", "locator": "line 17", "quote": "This change has been brought about by the Uttar Pradesh government's One District One Product (ODOP) initiative, rolled out in 2018"},
+      {"sourceId": "S07", "locator": "line 1", "quote": "It is also covered by the government's One District, One Product (ODOP) initiative."}]},
+    {"id": "C114", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Ram Jatan Ram Prajapati told Ceramics Technical in 2014 that around 80 homes made pottery, about eight to 10 did fancy work and only three made naqqashi pottery.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "today there are around 80 homes which are involved in pottery, of which about eight to 10 do fancy work or that for [pottery] decorative purposes. Only three homes are doing the much coveted Naqqashi pottery"},
+      {"sourceId": "S12", "locator": "article details, lines 26-28", "quote": "| Publication: | Ceramics Technical | | Geographic Code: | 9INDI | | Date: | May 1, 2014 |"}]},
+    {"id": "C115", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Ram Jatan said in 2014 that potters once supplied government emporiums, which then stocked only on consignment, leaving potters to their own marketing or orders.", "quotes": [
+      {"sourceId": "S12", "locator": "Designs galore, line 18", "quote": "earlier we used to give it to Government run emporiums. Now they only stock on a consignment basis which leaves the potters no other option but to either rely on their own marketing or on orders."},
+      {"sourceId": "S12", "locator": "article details, lines 26-28", "quote": "| Publication: | Ceramics Technical | | Geographic Code: | 9INDI | | Date: | May 1, 2014 |"}]},
+    {"id": "C116", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Folkartopedia reports that artisans suffer losses through breakage and during storage because the terracotta products are fragile.", "quotes": [
+      {"sourceId": "S09", "locator": "line 7", "quote": "Due to the fragile nature of the terracotta products, the artisans suffer losses in breakage and during the storage."},
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "Also breakability is another aspect that needs to be taken care of."}]},
+    {"id": "C117", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Rashmi Pratap reported that, with state government support, people from other castes, among them Gaur, Kahar, Musahar and Yadav, were also making black pottery.", "quotes": [
+      {"sourceId": "S08", "locator": "line 22", "quote": "But now, with support from the state government, people from other castes are also learning and making black pottery."},
+      {"sourceId": "S08", "locator": "line 22", "quote": "Gaur, Kahar (traditionally palanquin bearers), Musahar (marginalised landless labourers), Yadavs and others are also making black pottery now"}]},
+    {"id": "C118", "discipline": "HEALTH", "subject": {"type": "CRAFT"}, "text": "Ram Prajapati said potters stopped making everyday wares such as dinner and tea sets after people said the mercury and zinc in the naqqashi was poisonous.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "Earlier we used to make dinner sets, tea sets all of which were coveted and sold immediately."},
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "Then, people began to tell us that the mercury and zinc used in the decorative naqqashi was poisonous and so we stopped making products that could be put to day to day use."},
+      {"sourceId": "S12", "locator": "Process of making, line 11", "quote": "So only decorative pieces are made"}]},
+    {"id": "C119", "discipline": "CLIMATE", "subject": {"type": "MATERIAL", "ref": "M01"}, "text": "Folkartopedia writes that fine clay was once easily available locally, but with frequent drought in the region potters now process the clay several times.", "quotes": [
+      {"sourceId": "S09", "locator": "line 5", "quote": "Earlier fine textured clay was locally available easily but due to the course of time and frequent draughts in the region now the artists have to process the clay multiple times to finally reach to the wheel."}]},
+    {"id": "C120", "discipline": "PROCESS", "subject": {"type": "STAGE", "ref": "P07"}, "text": "The GI journal also says the silver ornamentation is done on the baked surface, and that the pottery is incised after the firing that creates its black oxide.", "quotes": [
+      {"sourceId": "S02", "locator": "p. 7, D) Specification, lines 133-134", "quote": "Silver ornamentation is done on the baked surface which features a shiny black surface with engraved silver patterns."},
+      {"sourceId": "S02", "locator": "p. 9, J) Uniqueness, lines 231-233", "quote": "After this the dried pottery is polished with a vegetable matter, when fired, creates a black oxide, which gives the glowing black polished surface. It is then incised and tin is rubbed into the incised sections, creative silvery patterns."}]},
+    {"id": "C121", "discipline": "DESIGN", "subject": {"type": "TERM", "ref": "W03"}, "text": "The 2013 application form describes surahis as well admired water pots of Uttar Pradesh with green-blue glazes, plain surfaces and a base of red clay.", "quotes": [
+      {"sourceId": "S04", "locator": "Uniqueness, lines 85-89", "quote": "A special kind of water pots, which is called surahis in colloquial language, are one of the well admired pots of Uttar Pradesh, stand uniform for green-blue glazes with plain surfaces. The base of this pot is made ofred clay."},
+      {"sourceId": "S04", "locator": "line 155", "quote": "Dated thls 23d Day of october, 2013"}]},
+    {"id": "C122", "discipline": "ECONOMICS", "subject": {"type": "CRAFT"}, "text": "Ceramics Technical reported in 2014 that, for Nizamabad's engraved pottery, para or mercury cost $200 USD a kilogram and ranga or zinc $100 USD a kilogram.", "quotes": [
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "The coveted Nizamabad engraved pottery today is made exclusively on orders."},
+      {"sourceId": "S12", "locator": "paragraph 6, line 7", "quote": "Para or mercury is $200 USD a kilogram while ranga or zinc is $100 USD a kilogram."},
+      {"sourceId": "S12", "locator": "article details, lines 26-28", "quote": "| Publication: | Ceramics Technical | | Geographic Code: | 9INDI | | Date: | May 1, 2014 |"}]},
+    {"id": "C123", "discipline": "PROCESS", "subject": {"type": "CRAFT"}, "text": "In Ram Jatan's account to Ceramics Technical, the pots are dipped in the solution, dried, rubbed with mustard seed oil and engraved before they are baked in the kiln.", "quotes": [
+      {"sourceId": "S12", "locator": "Process of making, line 12", "quote": "The pots are dipped into this solution and again dried in the sun. Once dried, the piece is again rubbed with a cotton cloth and then with application of mustard seed oil."},
+      {"sourceId": "S12", "locator": "Process of making, line 13", "quote": "After this starts the process of etching or engraving images on it."},
+      {"sourceId": "S12", "locator": "Process of making, line 14", "quote": "The pot is now ready to be baked in the kiln."}]}
+  ],
+  "places": [
+    {"id": "L01", "name": "Nizamabad", "kind": "TOWN", "district": "Azamgarh", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C005", "C006"]},
+    {"id": "L02", "name": "Azamgarh", "kind": "DISTRICT", "district": "Azamgarh", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C010"]},
+    {"id": "L03", "name": "Mau", "kind": "DISTRICT", "district": "Mau", "state": "Uttar Pradesh", "country": "India", "role": "PRACTISED", "claimIds": ["C011"]},
+    {"id": "L04", "name": "Kutch", "kind": "REGION", "district": "Kachchh", "state": "Gujarat", "country": "India", "role": "ORIGIN", "claimIds": ["C012"]},
+    {"id": "L05", "name": "Gujarat", "kind": "STATE", "state": "Gujarat", "country": "India", "role": "MIGRATED_FROM", "claimIds": ["C015", "C018", "C020"]},
+    {"id": "L06", "name": "Kutch", "kind": "REGION", "district": "Kachchh", "state": "Gujarat", "country": "India", "role": "MIGRATED_FROM", "claimIds": ["C019"]},
+    {"id": "L07", "name": "Nizamabad", "kind": "TOWN", "district": "Azamgarh", "state": "Uttar Pradesh", "country": "India", "role": "MIGRATED_TO", "claimIds": ["C015", "C019"]},
+    {"id": "L08", "name": "Nizamabad", "kind": "TOWN", "district": "Azamgarh", "state": "Uttar Pradesh", "country": "India", "role": "MATERIAL_SOURCE", "claimIds": ["C067"]}
+  ],
+  "communities": [
+    {"id": "G01", "kind": "COMMUNITY", "name": "Prajapati", "claimIds": ["C028", "C029"]},
+    {"id": "G02", "kind": "ORGANISATION", "name": "Yuva Jagriti Pottery Shilp Samiti", "claimIds": ["C103"]},
+    {"id": "G03", "kind": "ORGANISATION", "name": "Human Welfare Association", "claimIds": ["C111"]},
+    {"id": "G04", "kind": "PERSON", "name": "Sohit Kumar Prajapati", "honours": ["State Award"], "placeId": "L01", "claimIds": ["C031", "C111"]},
+    {"id": "G05", "kind": "PERSON", "name": "Ram Jatan Ram Prajapati", "honours": ["National Award for Master Craftsman (2004)"], "placeId": "L02", "claimIds": ["C030"]}
+  ],
+  "stages": [
+    {"id": "P01", "name": "Digging and storing the clay", "stageType": "PREP", "order": 1, "orderClaimId": "C032", "season": {"text": "the dry months of April and May", "claimId": "C034"}, "materials": [{"materialId": "M01", "claimId": "C034"}], "claimIds": ["C034"]},
+    {"id": "P02", "name": "Preparing the clay", "stageType": "PREP", "order": 2, "orderClaimId": "C032", "materials": [{"materialId": "M01", "claimId": "C035"}, {"materialId": "M02", "claimId": "C070"}, {"materialId": "M03", "claimId": "C071"}, {"materialId": "M26", "claimId": "C035"}], "tools": [{"toolId": "T05", "claimId": "C038"}], "claimIds": ["C035", "C036", "C037", "C038", "C070", "C071"]},
+    {"id": "P03", "name": "Throwing on the wheel", "stageType": "SHAPE", "order": 3, "orderClaimId": "C032", "tools": [{"toolId": "T01", "claimId": "C039"}], "claimIds": ["C039", "C040"]},
+    {"id": "P04", "name": "First baking", "stageType": "FIRE", "order": 4, "orderClaimId": "C033", "claimIds": ["C044"]},
+    {"id": "P05", "name": "Washing with vegetable matter", "stageType": "OTHER", "order": 5, "orderClaimId": "C033", "materials": [{"materialId": "M23", "claimId": "C045"}], "claimIds": ["C045"]},
+    {"id": "P06", "name": "Burnishing with mustard oil", "stageType": "FINISH", "order": 6, "orderClaimId": "C033", "materials": [{"materialId": "M12", "claimId": "C046"}], "claimIds": ["C046", "C075"]},
+    {"id": "P07", "name": "Incising the designs", "localName": "naqqashi", "stageType": "CARVE", "order": 7, "orderClaimId": "C033", "tools": [{"toolId": "T02", "claimId": "C047"}, {"toolId": "T03", "claimId": "C048"}], "claimIds": ["C047", "C048", "C049", "C097", "C120"]},
+    {"id": "P08", "name": "Smoke firing", "stageType": "FIRE", "order": 8, "orderClaimId": "C033", "materials": [{"materialId": "M13", "claimId": "C053"}, {"materialId": "M14", "claimId": "C054"}, {"materialId": "M15", "claimId": "C055"}, {"materialId": "M16", "claimId": "C055"}], "tools": [{"toolId": "T06", "claimId": "C053"}], "claimIds": ["C053", "C054", "C055", "C056", "C057", "C058", "C059", "C064", "C088", "C089"]},
+    {"id": "P09", "name": "Oiling and baking again", "stageType": "FIRE", "order": 9, "orderClaimId": "C033", "materials": [{"materialId": "M25", "claimId": "C060"}], "claimIds": ["C060"]},
+    {"id": "P10", "name": "Filling the grooves", "stageType": "FINISH", "order": 10, "orderClaimId": "C033", "materials": [{"materialId": "M17", "claimId": "C077"}, {"materialId": "M18", "claimId": "C078"}, {"materialId": "M19", "claimId": "C078"}, {"materialId": "M20", "claimId": "C079"}, {"materialId": "M21", "claimId": "C080"}], "claimIds": ["C061", "C077", "C078", "C079", "C080", "C081", "C082"]},
+    {"id": "P11", "name": "Washing and polishing", "stageType": "FINISH", "order": 11, "orderClaimId": "C033", "materials": [{"materialId": "M26", "claimId": "C062"}], "claimIds": ["C062"]},
+    {"id": "P12", "name": "Drying and trimming on the wheel", "localName": "kharat", "stageType": "SHAPE", "materials": [{"materialId": "M27", "claimId": "C043"}], "tools": [{"toolId": "T01", "claimId": "C041"}, {"toolId": "T04", "claimId": "C042"}, {"toolId": "T07", "claimId": "C043"}, {"toolId": "T08", "claimId": "C043"}], "claimIds": ["C041", "C042", "C043"]},
+    {"id": "P13", "name": "Dipping in the slip", "stageType": "OTHER", "materials": [{"materialId": "M04", "claimId": "C050"}, {"materialId": "M05", "claimId": "C051"}, {"materialId": "M10", "claimId": "C052"}, {"materialId": "M11", "claimId": "C052"}, {"materialId": "M06", "claimId": "C072"}, {"materialId": "M07", "claimId": "C072"}, {"materialId": "M08", "claimId": "C072"}, {"materialId": "M09", "claimId": "C072"}], "claimIds": ["C050", "C051", "C052", "C072", "C085"]},
+    {"id": "P14", "name": "Coating with lacquer", "stageType": "FINISH", "materials": [{"materialId": "M22", "claimId": "C063"}], "claimIds": ["C063"]}
+  ],
+  "materials": [
+    {"id": "M01", "name": "Pond clay", "kind": "CLAY", "role": "INPUT", "claimIds": ["C034", "C066", "C067", "C068"]},
+    {"id": "M02", "name": "Goat excreta", "kind": "OTHER", "role": "INPUT", "claimIds": ["C070"]},
+    {"id": "M03", "name": "Goat's milk", "kind": "OTHER", "role": "INPUT", "claimIds": ["C071"]},
+    {"id": "M04", "name": "Clay slip", "kind": "CLAY", "role": "OTHER", "localNames": ["kabiz"], "claimIds": ["C050", "C073", "C072"]},
+    {"id": "M05", "name": "Kavis", "kind": "CLAY", "role": "OTHER", "localNames": ["kavis"], "claimIds": ["C051"]},
+    {"id": "M06", "name": "Mango bark", "kind": "OTHER", "role": "OTHER", "claimIds": ["C072", "C052"]},
+    {"id": "M07", "name": "Bamboo leaves", "kind": "OTHER", "role": "OTHER", "claimIds": ["C072"]},
+    {"id": "M08", "name": "Adhatoda leaves", "kind": "OTHER", "role": "OTHER", "localNames": ["aarush"], "claimIds": ["C072"]},
+    {"id": "M09", "name": "Adusath leaves", "kind": "OTHER", "role": "OTHER", "claimIds": ["C072"]},
+    {"id": "M10", "name": "Yellow mud", "kind": "CLAY", "role": "OTHER", "localNames": ["peeli mithi"], "claimIds": ["C052"]},
+    {"id": "M11", "name": "Caustic soda", "kind": "OTHER", "role": "OTHER", "claimIds": ["C052"]},
+    {"id": "M12", "name": "Mustard oil", "kind": "OTHER", "role": "OTHER", "claimIds": ["C046", "C075"]},
+    {"id": "M13", "name": "Cow dung", "kind": "FUEL", "role": "FUEL", "localNames": ["kanda"], "claimIds": ["C053", "C076"]},
+    {"id": "M14", "name": "Rice husk", "kind": "FUEL", "role": "FUEL", "claimIds": ["C054"]},
+    {"id": "M15", "name": "Wood", "kind": "WOOD", "role": "FUEL", "claimIds": ["C055"]},
+    {"id": "M16", "name": "Saw dust", "kind": "WOOD", "role": "FUEL", "claimIds": ["C055"]},
+    {"id": "M17", "name": "Tin", "kind": "METAL", "role": "OTHER", "claimIds": ["C077", "C081"]},
+    {"id": "M18", "name": "Zinc", "kind": "METAL", "role": "OTHER", "localNames": ["ranga"], "claimIds": ["C078", "C079", "C080", "C082", "C122"]},
+    {"id": "M19", "name": "Mercury", "kind": "METAL", "role": "OTHER", "localNames": ["para"], "claimIds": ["C078", "C079", "C080", "C081", "C122"]},
+    {"id": "M20", "name": "Lead", "kind": "METAL", "role": "OTHER", "claimIds": ["C079"]},
+    {"id": "M21", "name": "Glass", "kind": "OTHER", "role": "OTHER", "claimIds": ["C080"]},
+    {"id": "M22", "name": "Lacquer", "kind": "RESIN", "role": "OTHER", "claimIds": ["C063"]},
+    {"id": "M23", "name": "Vegetable matter", "kind": "OTHER", "role": "OTHER", "claimIds": ["C045", "C050", "C086"]},
+    {"id": "M24", "name": "Nasirpur field clay", "kind": "CLAY", "role": "INPUT", "claimIds": ["C069"]},
+    {"id": "M25", "name": "Oil", "kind": "OTHER", "role": "OTHER", "claimIds": ["C060"]},
+    {"id": "M26", "name": "Water", "kind": "WATER", "role": "INPUT", "claimIds": ["C035", "C062"]},
+    {"id": "M27", "name": "Cotton cloth", "kind": "FIBRE", "role": "OTHER", "claimIds": ["C043"]}
+  ],
+  "tools": [
+    {"id": "T01", "name": "Potter's wheel", "claimIds": ["C039", "C041"]},
+    {"id": "T02", "name": "Sharp twig", "claimIds": ["C047"]},
+    {"id": "T03", "name": "Fine iron needle", "claimIds": ["C048"]},
+    {"id": "T04", "name": "Quartz river stone", "localNames": ["ghont"], "claimIds": ["C042"]},
+    {"id": "T05", "name": "Stone grinder", "localNames": ["chakki"], "claimIds": ["C038"]},
+    {"id": "T06", "name": "Kiln or oven", "localNames": ["bhatti", "aawan"], "claimIds": ["C053", "C059"]},
+    {"id": "T07", "name": "Cutter", "claimIds": ["C043"]},
+    {"id": "T08", "name": "Burnished stone", "claimIds": ["C043"]}
+  ],
+  "environment": [
+    {"factor": "WATER", "placeId": "L01", "claimIds": ["C034", "C008"]},
+    {"factor": "SOIL", "placeId": "L08", "claimIds": ["C067", "C066"]},
+    {"factor": "CLIMATE", "claimIds": ["C034", "C119"]}
+  ],
+  "market": {
+    "gi": {"applicationNumber": "459", "certificateNumber": "237", "filedOn": "2013-10-31", "registeredOn": "2015-11-16", "journalIssue": "68", "proprietors": ["Yuva Jagriti Pottery Shilp Samiti"], "claimIds": ["C103", "C104", "C105", "C106", "C109"]},
+    "prices": [{"claimId": "C122", "date": "2014-05", "placeId": "L01"}],
+    "workforce": [{"claimId": "C114", "year": 2014}]
+  },
+  "glossary": [
+    {"id": "W01", "term": "kachcha", "meaning": "Clay in its unfired state, considered uncooked.", "claimIds": ["C044"]},
+    {"id": "W02", "term": "pakka", "meaning": "Clay once fired, considered cooked.", "claimIds": ["C044"]},
+    {"id": "W03", "term": "surahi", "meaning": "A special kind of water pot, as it is called in colloquial language.", "claimIds": ["C094", "C121"]},
+    {"id": "W04", "term": "naqqashi", "meaning": "The engraving done on the pot.", "claimIds": ["C097"]},
+    {"id": "W05", "term": "kharat", "meaning": "Putting the partly dried pottery back on the wheel to peel off uneven surfaces.", "claimIds": ["C041"]},
+    {"id": "W06", "term": "kavis", "meaning": "A colour made using clay and water, applied to the pottery before it is left to dry.", "claimIds": ["C051"]},
+    {"id": "W07", "term": "kabiz, kabeez", "meaning": "The clay slip, in Handmade in India; the Azamgarh district page uses it for mango bark.", "claimIds": ["C073", "C074"]},
+    {"id": "W08", "term": "bhatti", "meaning": "Oven.", "claimIds": ["C053"]},
+    {"id": "W09", "term": "aawan", "meaning": "The furnace or kiln, as it is locally called.", "claimIds": ["C059"]},
+    {"id": "W10", "term": "ghont", "meaning": "A quartz river stone used to smooth thrown pots.", "claimIds": ["C042"]},
+    {"id": "W11", "term": "chakki", "meaning": "A stone grinder in which the soaked mud is turned to make it fine.", "claimIds": ["C038"]},
+    {"id": "W12", "term": "kanda", "meaning": "Cow dung, used for baking.", "claimIds": ["C076"]},
+    {"id": "W13", "term": "peeli mithi", "meaning": "A local yellow mud similar to fuller's earth.", "claimIds": ["C052"]},
+    {"id": "W14", "term": "aarush", "meaning": "Adhatoda, whose leaves go into the mud slip.", "claimIds": ["C072"]},
+    {"id": "W15", "term": "para", "meaning": "Mercury.", "claimIds": ["C122"]},
+    {"id": "W16", "term": "ranga", "meaning": "Zinc.", "claimIds": ["C122"]}
+  ],
+  "conflicts": [
+    {"claimIds": ["C015", "C018", "C019", "C020"], "about": "When the potters came to Nizamabad"},
+    {"claimIds": ["C009", "C010", "C011"], "about": "The geographical area of the indication"},
+    {"claimIds": ["C006", "C007"], "about": "How far Nizamabad is from Varanasi, and whether it is a town or a village"},
+    {"claimIds": ["C073", "C074"], "about": "Whether kabiz names the clay slip itself or is paired with mango bark"},
+    {"claimIds": ["C077", "C078", "C079", "C080", "C081"], "about": "What the silvery inlay is made of"},
+    {"claimIds": ["C094", "C091"], "about": "Whether the black ware can serve as water pots"},
+    {"claimIds": ["C047", "C048"], "about": "Which tool incises the designs"},
+    {"claimIds": ["C057", "C058", "C059", "C065"], "about": "How long the firing, and the making of a piece, take"},
+    {"claimIds": ["C054", "C055", "C056"], "about": "Whether the pottery is fired in an enclosed kiln, an open kiln or a sealed pot"},
+    {"claimIds": ["C033", "C047", "C048", "C123", "C081", "C120"], "about": "Whether the designs are incised before or after the firing that turns the ware black"},
+    {"claimIds": ["C033", "C044", "C045", "C050", "C075", "C123"], "about": "Whether the ware is baked once before the vegetable wash or slip and the oiling, or fired only after them"},
+    {"claimIds": ["C092", "C064", "C118"], "about": "Whether everyday tableware such as dinner and tea sets is still made"},
+    {"claimIds": ["C094", "C121"], "about": "Whether the admired surahis are Nizamabad black ware or glazed red-clay pots of Uttar Pradesh"}
+  ],
+  "openQuestions": [
+    {"id": "O01", "question": "How and when did black pottery come to Nizamabad?", "claimIds": ["C021", "C013", "C022", "C023", "C024", "C025", "C012", "C015", "C018", "C019", "C020"]},
+    {"id": "O02", "question": "Are the mercury and zinc used in the naqqashi inlay poisonous?", "claimIds": ["C118"]},
+    {"id": "O03", "question": "How did the potters come to blacken the ware with ash and smoke? The Azamgarh district page tells this within its account of mythological beliefs.", "claimIds": ["C026"]}
+  ],
+  "pictures": [
+    {"id": "I01", "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Nizamabad_black_clay_pottery.png", "pageUrl": "https://commons.wikimedia.org/wiki/File:Nizamabad_black_clay_pottery.png", "author": "Aishik Rehman", "licence": "CC BY 4.0", "licenceUrl": "https://creativecommons.org/licenses/by/4.0/", "caption": "A lidded jar and covered bowls of Nizamabad black pottery, glossy black with engraved floral patterns in silvery lines", "claimIds": ["C002"]}
+  ],
+  "overview": {
+    "lede": [
+      {"text": "Nizamabad black pottery is a clay ware with a dark lustrous body and a shiny black surface engraved with silver patterns, made at Nizamabad in Azamgarh district of Uttar Pradesh.", "claimIds": ["C001", "C002", "C005"]},
+      {"text": "Folkartopedia notes that its black is not paint, Handmade in India credits a clay slip and reduction firing, and other sources describe smoke trapped during the firing and oxygen kept out of the kiln.", "claimIds": ["C003", "C087", "C089", "C088"]},
+      {"text": "The incised designs are filled with a silvery powder that sources describe as tin, as mercury and tin, as zinc and mercury, as lead, zinc and mercury, or as glass, zinc and mercury.", "claimIds": ["C061", "C077", "C081", "C078", "C079", "C080"]},
+      {"text": "Traditionally made by Prajapati potters, it is a registered geographical indication that received its GI tag in 2015.", "claimIds": ["C028", "C004"]}
+    ],
+    "keyFacts": [
+      {"label": "GI status", "value": "Registered geographical indication, application 459, certificate 237 dated 16 November 2015", "claimIds": ["C103", "C105"]},
+      {"label": "Centre", "value": "Nizamabad, Azamgarh district, Uttar Pradesh", "claimIds": ["C005"]},
+      {"label": "Potters", "value": "Traditionally the Prajapati community", "claimIds": ["C028", "C029"]},
+      {"label": "Clay", "value": "Mica-rich clay from local ponds", "claimIds": ["C067"]},
+      {"label": "Black colour", "value": "A clay slip and reduction firing in Handmade in India; trapped smoke and an oxygen-free kiln in other accounts", "claimIds": ["C087", "C089", "C088"]},
+      {"label": "Silvery inlay", "value": "Sources differ: tin; mercury and tin; zinc and mercury; lead, zinc and mercury; or glass, zinc and mercury", "claimIds": ["C077", "C081", "C078", "C079", "C080"]},
+      {"label": "Firing", "value": "Six to eight hours at 750 degrees Celsius; the oven cools after 10 to 12 hours; or about 15 days, as sources differ", "claimIds": ["C057", "C058", "C059"]}
+    ],
+    "sections": [
+      {"discipline": "HISTORY", "sentences": [
+        {"text": "The GI application states that this kind of pottery originated in the Kutch region of Gujarat, and that early in the 19th century a feudal ruler of the town invited potters from Gujarat in exchange for land.", "claimIds": ["C012", "C015"]},
+        {"text": "Other accounts date the potters' arrival differently: Handmade in India to 400 years ago, a state awardee to over 300 years ago under Aurangzeb, and a potter to about 500 years ago.", "claimIds": ["C018", "C019", "C020"]},
+        {"text": "Ceramics Technical notes that no records are available of the origins of Nizamabad black pottery.", "claimIds": ["C021"]},
+        {"text": "The GI application links the silver inlay to bidri metalwork brought by Muslims from Hyderabad, and says the shapes of the pots gradually became influenced by Muslim forms.", "claimIds": ["C017", "C016"]},
+        {"text": "Traditionally only Prajapatis were potters, and the skill was passed on from one generation to another.", "claimIds": ["C028"]},
+        {"text": "Ram Jatan Ram Prajapati received the National Award for Master Craftsman in 2004, and Sohit Kumar Prajapati is a state awardee of the craft.", "claimIds": ["C030", "C031"]},
+        {"text": "Ram Jatan says the British gave a certificate for good work in 1905 to an Azamgarh product made with the naqqashi technique.", "claimIds": ["C027"]}
+      ]},
+      {"discipline": "GEOGRAPHY", "sentences": [
+        {"text": "Nizamabad, in Azamgarh district of Uttar Pradesh, is renowned for its black pottery.", "claimIds": ["C005"]},
+        {"text": "The GI journal places the small town about 100 km north of Varanasi, while another account calls Nizamabad a village about 80 km from Varanasi.", "claimIds": ["C006", "C007"]},
+        {"text": "The GI journal says the black pottery cluster is scattered generally across all parts of Azamgarh district.", "claimIds": ["C010"]},
+        {"text": "The registry gives the geographical area as Uttar Pradesh, while the 2013 application form named the whole of Azamgarh and Mau districts.", "claimIds": ["C009", "C011"]}
+      ]},
+      {"discipline": "PROCESS", "sentences": [
+        {"text": "Potters dig clay from ponds in the dry months of April and May and store it at home for use through the year.", "claimIds": ["C034"]},
+        {"text": "The dry clay is beaten to a fine powder, mixed with water and goat excreta, wedged by foot and by hand, and shaped on potter's wheels.", "claimIds": ["C035", "C070", "C039"]},
+        {"text": "The GI journal's description of the goods has the shaped items baked, washed with vegetable matter, burnished with mustard oil and decorated with floral and geometric designs before smoke firing, then rubbed with oil and baked again.", "claimIds": ["C033", "C044", "C045", "C046", "C047", "C060"]},
+        {"text": "The grooves of the design are then filled by hand with a fine silvery powder, washed with water and polished.", "claimIds": ["C061", "C062"]},
+        {"text": "Sources differ on this order: the same journal elsewhere, and Kamaladevi Chattopadyay, have the pattern incised after the firing, while other accounts describe the ware dipped in a slip, dried and rubbed with oil before it is fired.", "claimIds": ["C120", "C081", "C050", "C075", "C123"]},
+        {"text": "Accounts of the firing differ: an enclosed kiln with rice husks, an open kiln with dung cakes between the wares, or a sealed earthen pot inside a wood-fired kiln.", "claimIds": ["C054", "C056", "C055"]},
+        {"text": "They also differ on its length, from six to eight hours at 750 degrees Celsius, to the oven cooling after 10 to 12 hours, to about 15 days.", "claimIds": ["C057", "C058", "C059"]},
+        {"text": "Some vessels are coated with lacquer while still hot from the kiln, which gives them a glossy look.", "claimIds": ["C063"]}
+      ]},
+      {"discipline": "MATERIALS", "sentences": [
+        {"text": "The clay from the local ponds of Nizamabad is rich in mica and has a very fine texture that shapes very well to different forms.", "claimIds": ["C067", "C066"]},
+        {"text": "A 1998 study names Dhuripur, Bhairopur and Nasirpur pond clays among the existing plastic clays and found that Nasirpur field clay could replace them completely.", "claimIds": ["C068", "C069"]},
+        {"text": "The slip contains mango bark and bamboo leaves, with aarush or adhatoda leaves by the district's account, or adusath leaves in Handmade in India.", "claimIds": ["C072"]},
+        {"text": "Mustard oil is rubbed on the pottery before firing to make it shinier and smoother.", "claimIds": ["C075"]},
+        {"text": "For the silvery inlay the GI journal names tin, Kamaladevi Chattopadyay mercury and tin, the Times of India zinc and mercury, and other accounts lead, zinc and mercury, or glass, zinc and mercury.", "claimIds": ["C077", "C081", "C078", "C079", "C080"]},
+        {"text": "Ceramics Technical reported in 2014 that the availability of good-quality mud was a problem and that it came from villages deeper inside.", "claimIds": ["C083"]}
+      ]},
+      {"discipline": "CHEMISTRY", "sentences": [
+        {"text": "Handmade in India attributes the black colour to a clay slip and reduction firing, in which the bark and leaves of the slip carbonise.", "claimIds": ["C087", "C085"]},
+        {"text": "The GI journal says the dried pottery, polished with vegetable matter, creates a black oxide when fired, which gives its glowing black surface.", "claimIds": ["C086"]},
+        {"text": "Smoke given off by the fuel and trapped during the firing imparts the black colour.", "claimIds": ["C089"]},
+        {"text": "Potters keep oxygen out of the kiln, because oxygen would turn the pottery red instead of black.", "claimIds": ["C088"]}
+      ]},
+      {"discipline": "DESIGN", "sentences": [
+        {"text": "The GI journal lists vases, cups and saucers, dinner sets, water jugs, plates, jars and flower pots among the items made, but Ram Prajapati said potters had stopped making dinner sets and tea sets, so sources differ on whether such tableware is still made.", "claimIds": ["C092", "C118"]},
+        {"text": "Potters also make lamps, incense holders and statues of gods and goddesses such as Ganesh, Laxmi, Shiva, Durga and Saraswati.", "claimIds": ["C093"]},
+        {"text": "The GI journal's statement of uniqueness counts surahis among the well admired pots of Nizamabad, but the 2013 application form describes them as glazed pots of Uttar Pradesh with a red-clay base, and Kamaladevi Chattopadyay wrote that the ware cannot hold any liquid.", "claimIds": ["C094", "C121", "C091"]},
+        {"text": "The designs of flowing lines and floral and geometric patterns are mostly drawn freehand, usually by the women of the household.", "claimIds": ["C095", "C097", "C049"]},
+        {"text": "This engraving is called naqqashi, and Ceramics Technical counts more than 50 designs, among them jhoomar, bel, paurani, laung and papal.", "claimIds": ["C097", "C098"]},
+        {"text": "Parts such as the spout or the handle are cast separately and then attached to the body.", "claimIds": ["C100"]}
+      ]},
+      {"discipline": "ECONOMICS", "sentences": [
+        {"text": "The Yuva Jagriti Pottery Shilp Samiti filed GI application 459 on 31 October 2013, and a state awardee said the potters had the support of NABARD and the Human Welfare Association.", "claimIds": ["C103", "C111"]},
+        {"text": "The application was advertised in Geographical Indications Journal 68 on 15 July 2015 and received certificate 237 on 16 November 2015, valid up to 30 October 2033.", "claimIds": ["C104", "C105", "C106"]},
+        {"text": "The registry's authorised-user list for the indication runs to 53 entries.", "claimIds": ["C109"]},
+        {"text": "In 2014 Ram Jatan Ram Prajapati said around 80 homes made pottery but only three made naqqashi pottery.", "claimIds": ["C114"]},
+        {"text": "Ceramics Technical reported in 2014 that the engraved pottery was made only to order, as the raw materials for the engraving had become prohibitively expensive.", "claimIds": ["C084"]},
+        {"text": "The same report gave para, or mercury, at $200 USD a kilogram and ranga, or zinc, at $100 USD a kilogram.", "claimIds": ["C122"]},
+        {"text": "The pottery is covered by Uttar Pradesh's One District One Product initiative, rolled out in 2018.", "claimIds": ["C113"]}
+      ]}
+    ]
+  }
+}

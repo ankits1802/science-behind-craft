@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.research.craft_page import (
     DifferRow,
@@ -10,24 +10,28 @@ from app.research.craft_page import (
     PageCommunity,
     PagePicture,
     PagePlace,
-    PageProcess,
     PageQuestion,
+    PageTerm,
+)
+from app.research.craft_page_process import (
+    PageProcess,
     PageReaction,
     PageSpecies,
     PageStage,
-    PageTerm,
     StageItem,
     StageTiming,
 )
 from app.research.reactions import ReactionSpecies, mhchem_equation
 from app.science.records import ProcessRecords, ReactionRecord, StageRecord
 
+from .craft_page_family import ShownPicture, hero_index, shown_pictures
 from .craft_page_records import CraftPageRecords
 from .curated_index import CuratedPage, IndexReaction, IndexStage, IndexTiming
 from .curation_keys import TOOL_ROLE
 from .curation_structure import species_label
 
 __all__ = [
+    "ItemNames",
     "Visible",
     "page_communities",
     "page_differ",
@@ -39,12 +43,19 @@ __all__ = [
 ]
 
 DURATION = "DURATION"
+CENTRAL_DISCIPLINES = frozenset({"CHEMISTRY", "PHYSICS"})
+SCIENCE_DISCIPLINES = frozenset({"PROCESS", "MATERIALS", "GEOLOGY", "CLIMATE", "ECOLOGY", "BOTANY", "HEALTH"})
+CENTRAL_WEIGHT, SCIENCE_WEIGHT, OTHER_WEIGHT = 3, 2, 1
+DIFFER_KEY = "differ-{number}"
+
+ItemNames = tuple[list[str], str | None, int | None]
 
 
 @dataclass(frozen=True)
 class Visible:
     levels: Mapping[uuid.UUID, str]
     order: Mapping[uuid.UUID, int]
+    disciplines: Mapping[uuid.UUID, str] = field(default_factory=dict)
 
     def keep(self, claim_ids: Iterable[uuid.UUID]) -> list[uuid.UUID]:
         return [claim_id for claim_id in dict.fromkeys(claim_ids) if claim_id in self.levels]
@@ -57,8 +68,28 @@ class Visible:
 
 
 def page_differ(curated: CuratedPage | None, visible: Visible) -> list[DifferRow]:
-    rows = [(item.about, visible.keep(item.claim_ids)) for item in curated.conflicts] if curated else []
-    return [DifferRow(about=about, claim_ids=ids) for about, ids in rows if len(ids) >= 2]
+    if curated is None:
+        return []
+    staged = {
+        claim_id
+        for stage in curated.stages
+        for claim_id in [*stage.claim_ids, *(t.claim_id for t in (stage.duration, stage.season) if t)]
+    }
+    rows = []
+    for number, item in enumerate(curated.conflicts, start=1):
+        ids = visible.keep(item.claim_ids)
+        if len(ids) >= 2:
+            weight = _differ_weight(ids, staged, visible)
+            key = DIFFER_KEY.format(number=number)
+            rows.append(DifferRow(key=key, about=item.about, weight=weight, claim_ids=ids))
+    return sorted(rows, key=lambda row: -row.weight)
+
+
+def _differ_weight(claim_ids: Sequence[uuid.UUID], staged: set[uuid.UUID], visible: Visible) -> int:
+    disciplines = {visible.disciplines.get(claim_id) for claim_id in claim_ids}
+    if staged.intersection(claim_ids) or disciplines & CENTRAL_DISCIPLINES:
+        return CENTRAL_WEIGHT
+    return SCIENCE_WEIGHT if disciplines & SCIENCE_DISCIPLINES else OTHER_WEIGHT
 
 
 def page_places(curated: CuratedPage | None, visible: Visible) -> list[PagePlace]:
@@ -84,10 +115,12 @@ def page_places(curated: CuratedPage | None, visible: Visible) -> list[PagePlace
     return places
 
 
-def page_communities(curated: CuratedPage | None, visible: Visible) -> list[PageCommunity]:
+def page_communities(
+    curated: CuratedPage | None, visible: Visible, places: Sequence[PagePlace]
+) -> list[PageCommunity]:
     if curated is None:
         return []
-    names = {place.key: place.name for place in curated.places}
+    names = {place.key: place.name for place in places}
     found = [(group, visible.keep(group.claim_ids)) for group in curated.communities]
     return [
         PageCommunity(
@@ -97,6 +130,7 @@ def page_communities(curated: CuratedPage | None, visible: Visible) -> list[Page
             local_names=group.local_names,
             honours=group.honours,
             place=names.get(group.place_key) if group.place_key else None,
+            place_key=group.place_key if group.place_key in names else None,
             claim_ids=claims,
         )
         for group, claims in found
@@ -142,32 +176,33 @@ def page_glossary(records: CraftPageRecords, visible: Visible) -> list[PageTerm]
 
 
 def page_pictures(records: CraftPageRecords, visible: Visible) -> list[PagePicture]:
-    curated = records.curated
-    if curated is None:
-        return [
-            PagePicture(
-                media=item.media,
-                caption=item.media.title,
-                stage_id=None,
-                claim_ids=visible.keep(item.claim_ids),
-            )
-            for item in records.pictures
-        ]
-    stages = {stage.key: stage.stage_id for stage in curated.stages}
-    shown = []
-    for picture in curated.pictures:
-        media = records.media.get(picture.media_ref_id)
-        claims = visible.keep(picture.claim_ids)
-        stage = stages.get(picture.stage_key) if picture.stage_key else None
-        if media is not None and (claims or stage):
-            shown.append(PagePicture(media=media, caption=picture.caption, stage_id=stage, claim_ids=claims))
-    return shown
+    if records.curated is not None:
+        return _with_roles(shown_pictures(records.curated, records.media, visible.levels))
+    found = [
+        ShownPicture(item.media, item.media.title, None, visible.keep(item.claim_ids))
+        for item in records.pictures
+    ]
+    return _with_roles(found)
 
 
-def page_process(records: CraftPageRecords, visible: Visible) -> PageProcess:
+def _with_roles(found: Sequence[ShownPicture]) -> list[PagePicture]:
+    hero = hero_index([(picture.media, picture.stage_id) for picture in found])
+    return [
+        PagePicture(
+            media=picture.media,
+            caption=picture.caption,
+            role="HERO" if index == hero else "STAGE" if picture.stage_id else "OVERVIEW",
+            stage_id=picture.stage_id,
+            claim_ids=picture.claim_ids,
+        )
+        for index, picture in enumerate(found)
+    ]
+
+
+def page_process(records: CraftPageRecords, visible: Visible, differ: Sequence[DifferRow]) -> PageProcess:
     curated = records.curated
     if curated is not None:
-        return _curated_process(curated, records.process, visible)
+        return _curated_process(curated, records.process, (visible, differ))
     counts = {
         p.id: sum(1 for stage in records.process.stages if stage.process_id == p.id)
         for p in records.process.processes
@@ -176,11 +211,14 @@ def page_process(records: CraftPageRecords, visible: Visible) -> PageProcess:
     if chosen is None:
         return PageProcess(process_id=None, stages=[], reactions=[])
     stages = sorted((s for s in records.process.stages if s.process_id == chosen.id), key=lambda s: s.ordinal)
-    shown = [_stored_stage(stage, records.process, visible) for stage in stages]
+    shown = [_stored_stage(stage, records.process, (visible, differ)) for stage in stages]
     return PageProcess(process_id=chosen.id, stages=[stage for stage in shown if stage], reactions=[])
 
 
-def _stored_stage(stage: StageRecord, records: ProcessRecords, visible: Visible) -> PageStage | None:
+def _stored_stage(
+    stage: StageRecord, records: ProcessRecords, shown: tuple[Visible, Sequence[DifferRow]]
+) -> PageStage | None:
+    visible, differ = shown
     claims = visible.ranked(stage.claim_ids)
     if not claims:
         return None
@@ -203,20 +241,30 @@ def _stored_stage(stage: StageRecord, records: ProcessRecords, visible: Visible)
         tools=tools,
         timing=timing,
         reactions=_reactions(records, stage.id, visible),
+        differ=_stage_differ([*claims, *(t.claim_id for t in timing)], differ),
     )
 
 
-def _curated_process(curated: CuratedPage, records: ProcessRecords, visible: Visible) -> PageProcess:
+def _curated_process(
+    curated: CuratedPage, records: ProcessRecords, shown: tuple[Visible, Sequence[DifferRow]]
+) -> PageProcess:
+    visible, differ = shown
     rows = {stage.id: stage for stage in records.stages if stage.process_id == curated.process_id}
-    names = {item.material_id: item.local_names for item in [*curated.materials, *curated.tools]}
+    names: dict[uuid.UUID, ItemNames] = {
+        item.material_id: (item.local_names, item.botanical_name, item.pubchem_cid)
+        for item in curated.materials
+    }
+    names.update((item.material_id, (item.local_names, None, None)) for item in curated.tools)
     entries = sorted(
         (entry for entry in curated.stages if entry.stage_id in rows), key=lambda e: rows[e.stage_id].ordinal
     )
-    shown = [_curated_stage(entry, rows[entry.stage_id], records, (visible, names)) for entry in entries]
+    stages = [
+        _curated_stage(entry, rows[entry.stage_id], records, (visible, names, differ)) for entry in entries
+    ]
     unstaged = [_index_reaction(item, visible) for item in curated.reactions if item.reaction_id is None]
     return PageProcess(
         process_id=curated.process_id,
-        stages=[stage for stage in shown if stage],
+        stages=[stage for stage in stages if stage],
         reactions=[reaction for reaction in unstaged if reaction],
     )
 
@@ -225,9 +273,9 @@ def _curated_stage(
     entry: IndexStage,
     stage: StageRecord,
     records: ProcessRecords,
-    shown: tuple[Visible, Mapping[uuid.UUID, list[str]]],
+    shown: tuple[Visible, Mapping[uuid.UUID, ItemNames], Sequence[DifferRow]],
 ) -> PageStage | None:
-    visible, names = shown
+    visible, names, differ = shown
     claims = visible.keep(entry.claim_ids)
     if not claims:
         return None
@@ -248,11 +296,17 @@ def _curated_stage(
         tools=tools,
         timing=timing,
         reactions=_reactions(records, stage.id, visible),
+        differ=_stage_differ([*claims, *(t.claim_id for t in timing)], differ),
     )
 
 
+def _stage_differ(claim_ids: Sequence[uuid.UUID], differ: Sequence[DifferRow]) -> list[str]:
+    own = set(claim_ids)
+    return [row.key for row in differ if own.intersection(row.claim_ids)]
+
+
 def _items(
-    records: ProcessRecords, stage_id: uuid.UUID, visible: Visible, names: Mapping[uuid.UUID, list[str]]
+    records: ProcessRecords, stage_id: uuid.UUID, visible: Visible, names: Mapping[uuid.UUID, ItemNames]
 ) -> tuple[list[StageItem], list[StageItem]]:
     materials: list[StageItem] = []
     tools: list[StageItem] = []
@@ -260,12 +314,16 @@ def _items(
         claims = visible.ranked(material.claim_ids)
         if material.stage_id != stage_id or material.material_id is None or not claims:
             continue
+        compound = material.compound.pubchem_cid if material.compound else None
+        local, botanical, cid = names.get(material.material_id, ([], None, compound))
         item = StageItem(
             id=material.material_id,
             name=material.name,
             kind=material.kind,
             role=material.role,
-            local_names=names.get(material.material_id, []),
+            local_names=local,
+            botanical_name=botanical,
+            pubchem_cid=cid,
             claim_ids=claims,
         )
         (tools if material.role == TOOL_ROLE else materials).append(item)

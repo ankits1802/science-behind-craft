@@ -7,9 +7,10 @@ from app.research.quotes import QUOTE_OVERLAP_MIN, quote_overlap
 
 from .dossier import Dossier
 from .entity_rules import claim_quotes
+from .figures import figure_gaps
 from .limits import DISCIPLINE_CLAIMS_MIN
 from .problems import Problem
-from .sentences import figure_gaps, single_sentence
+from .sentences import single_sentence
 
 __all__ = ["overview_problems"]
 

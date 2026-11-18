@@ -18,6 +18,7 @@ import {
   stageGroups,
   termAliases
 } from "@/lib/craftPageView";
+import { citationsBySource } from "@/lib/citations";
 import { placeDistricts, placeRows } from "@/lib/craftPlaces";
 import { canReadAllEvidence } from "@/lib/permissions";
 import { parseShape, ShapeError } from "@/lib/shape";
@@ -92,6 +93,24 @@ test("sources are numbered in reading order, every page source numbered once, re
   expect(pageSourcesById(page, [extra]).get(OUTSIDE)?.title).toBe("District register");
 });
 
+test("every sentence of the page shows each source once, numbers ascending, with every quote behind its number", () => {
+  const page = curatedPage();
+  const index = claimIndex(page);
+  const numbers = pageSourceNumbers(page, []);
+  const sentences = [...page.overview.lede, ...page.overview.sections.flatMap((section) => section.sentences)];
+  expect(sentences.length).toBeGreaterThan(0);
+  for (const sentence of sentences) {
+    const citations = shownSentence(index, sentence).citations;
+    const cited = [...new Set(citations.map((citation) => numbers.get(citation.sourceId)))].sort((a, b) => (a ?? 0) - (b ?? 0));
+    const groups = citationsBySource(citations, numbers);
+    expect(groups.map((group) => group.number)).toEqual(cited);
+    for (const citation of citations) {
+      const group = groups.find((found) => found.sourceId === citation.sourceId);
+      expect(group?.citations.some((kept) => kept.quote === citation.quote && kept.locator === citation.locator)).toBe(true);
+    }
+  }
+});
+
 test("stages are numbered only where the response orders them; unordered stages stand apart", () => {
   const { numbered, unnumbered } = stageGroups(curatedPage().process.stages);
   expect(numbered.map((stage) => stage.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
@@ -136,8 +155,7 @@ test("sources group by reliability A to D, each source in its own grade once", (
   expect(groups.map((group) => [group.label, group.sources.length])).toEqual([
     ["A · peer-reviewed or official", 9],
     ["B · reputable reference", 7],
-    ["C · general web", 1],
-    ["D · unknown", 3]
+    ["C · general web", 4]
   ]);
   for (const group of groups) for (const source of group.sources) expect(source.reliability).toBe(group.reliability);
   const unrated = sourceGroups([{ ...page.sources[0], reliability: null }], new Map());
@@ -171,7 +189,7 @@ test("canReadAllEvidence mirrors the backend capability READ_ALL_EVIDENCE", () =
 test("a Student's page, as the server sends it, carries no evidence and only the claims its parts cite", () => {
   const student = studentPage();
   expect(student.evidence).toBeNull();
-  expect([student.claims.length, student.sources.length]).toEqual([119, 18]);
+  expect([student.claims.length, student.sources.length]).toEqual([128, 20]);
   expect(new Set(student.claims.map((claim) => claim.id))).toEqual(new Set(referencedClaimIds(student)));
   expect(craftTabs(student, { sources: true, evidence: true, science: false })).toEqual(["overview", "process", "region", "sources"]);
   expect(shownTab("evidence", craftTabs(student, { sources: true, evidence: true, science: false }))).toBe("overview");

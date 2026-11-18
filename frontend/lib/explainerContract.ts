@@ -59,6 +59,18 @@ import {
   type ZoomStoryBlock
 } from "@/lib/explainerPlay";
 import { MATERIAL_KINDS, MATERIAL_ROLES, STAGE_TYPES } from "@/lib/scienceContract";
+import {
+  firingBlockShape,
+  indigoVatBlockShape,
+  lostWaxBlockShape,
+  mordantBathBlockShape,
+  SIGNATURE_KINDS,
+  type FiringBlock,
+  type IndigoVatBlock,
+  type LostWaxBlock,
+  type MordantBathBlock,
+  type SignatureBlock
+} from "@/lib/explainerSignature";
 import { integer, list, matching, nullable, object, oneOf, optional, tagged, text, type Shape } from "@/lib/shape";
 import type { AnswerSentence, Citation, EvidenceLevel, SourceRef } from "@/lib/types";
 
@@ -89,7 +101,11 @@ export const BLOCK_KINDS = [
   "concept_graph",
   "measure",
   "market_gi",
-  "climate_risk"
+  "climate_risk",
+  "indigo_vat",
+  "mordant_bath",
+  "lost_wax",
+  "firing"
 ] as const;
 export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d", "compare", "concept_graph", "climate_risk", "measure", "market_gi", "simulation", "what_if", "zoom_story", "timeline_map"] as const;
 export const WORKING_SECTION_STATES = ["RESEARCHING", "WRITING", "CHECKING"] as const;
@@ -146,6 +162,10 @@ export type BlockByKind = {
   measure: MeasureBlock;
   market_gi: MarketGiBlock;
   climate_risk: ClimateRiskBlock;
+  indigo_vat: IndigoVatBlock;
+  mordant_bath: MordantBathBlock;
+  lost_wax: LostWaxBlock;
+  firing: FiringBlock;
 };
 export type TypedBlockKind = keyof BlockByKind;
 export type BuiltBlockKind = (typeof BUILT_BLOCK_KINDS)[number];
@@ -161,11 +181,13 @@ export type ExplainerSection = {
   searched: string | null;
 };
 export type Understood = { crafts: CraftLink[]; candidates: CraftLink[]; depth: Depth; language: string };
+export type LedeBlock = BlockEnvelope<"lede"> & { headline: string; sentences: ExplainerSentence[]; figure: SignatureBlock | null };
 export type Explainer = {
   schemaVersion: 1;
   answerId: string;
   question: string;
   understood: Understood;
+  lede?: LedeBlock;
   sections: ExplainerSection[];
   sources: SourceRef[];
   followUps: string[];
@@ -225,13 +247,31 @@ export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K
   concept_graph: conceptGraphBlockShape,
   measure: measureBlockShape,
   market_gi: marketGiBlockShape,
-  climate_risk: climateRiskBlockShape
+  climate_risk: climateRiskBlockShape,
+  indigo_vat: indigoVatBlockShape,
+  mordant_bath: mordantBathBlockShape,
+  lost_wax: lostWaxBlockShape,
+  firing: firingBlockShape
 };
 
 export const explainerBlockShape: Shape<ExplainerBlock> = tagged<ExplainerBlock>(
   "kind",
   Object.fromEntries(BUILT_BLOCK_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<BuiltBlockKind, Shape<ExplainerBlock>>
 );
+
+const BUILT_SIGNATURE_KINDS = SIGNATURE_KINDS.filter((kind) => (BUILT_BLOCK_KINDS as readonly string[]).includes(kind));
+
+export const signatureFigureShape: Shape<SignatureBlock> = tagged<SignatureBlock>(
+  "kind",
+  Object.fromEntries(BUILT_SIGNATURE_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<string, Shape<SignatureBlock>>
+);
+
+export const ledeBlockShape: Shape<LedeBlock> = object<LedeBlock>({
+  ...envelope("lede"),
+  headline: text,
+  sentences: list(explainerSentenceShape, 2),
+  figure: nullable(signatureFigureShape)
+});
 
 export const understoodShape: Shape<Understood> = object<Understood>({
   crafts: list(craftLinkShape),
@@ -256,6 +296,7 @@ export const explainerShape: Shape<Explainer> = object<Explainer>({
   answerId: UUID,
   question: text,
   understood: understoodShape,
+  lede: optional(ledeBlockShape),
   sections: list(explainerSectionShape, 1),
   sources: list(sourceRefShape),
   followUps: list(text),

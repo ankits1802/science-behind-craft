@@ -1,4 +1,4 @@
-import { FINAL_SECTION_STATES, type ExplainerBlock, type FinalSectionState, type Understood, type WorkingSectionState } from "@/lib/explainerContract";
+import { FINAL_SECTION_STATES, type ExplainerBlock, type FinalSectionState, type LedeBlock, type Understood, type WorkingSectionState } from "@/lib/explainerContract";
 import { TRAIL_STAGES, type ExplainerEvent, type SectionStarted, type TrailEntry } from "@/lib/explainerStream";
 import type { VersionMark } from "@/lib/learningContract";
 import type { AnswerReaction, AnswerSection, AnswerSentence, AnswerStatus, SourceRef } from "@/lib/types";
@@ -17,6 +17,7 @@ export type ExplainerState = {
   language: string;
   answerId: string | null;
   understood: Understood | null;
+  lede: LedeBlock | null;
   status: AnswerStatus | null;
   trail: TrailEntry[];
   sections: SectionView[];
@@ -40,6 +41,7 @@ export function emptyExplainer(question = "", language = "en"): ExplainerState {
     language,
     answerId: null,
     understood: null,
+    lede: null,
     status: null,
     trail: [],
     sections: [],
@@ -120,6 +122,10 @@ function reduceSectionEvent(state: ExplainerState, event: ExplainerEvent): Expla
       const { sectionId, state: final, searched } = event.data;
       return { ...state, sections: updateSection(state.sections, sectionId, (section) => ({ ...section, state: final, searched })) };
     }
+    case "section_heading": {
+      const { sectionId, title, original } = event.data;
+      return { ...state, sections: updateSection(state.sections, sectionId, (section) => ({ ...section, title, original })) };
+    }
     default:
       return state;
   }
@@ -154,10 +160,13 @@ export function reduceExplainer(state: ExplainerState, event: ExplainerEvent): E
       return { ...state, reactions: withoutDuplicate(state.reactions, event.data) };
     case "follow_ups":
       return { ...state, followUps: event.data.items };
+    case "lede":
+      return { ...state, phase: streaming(state), lede: event.data.block };
     case "section_started":
     case "section_state":
     case "block":
     case "section_done":
+    case "section_heading":
       return reduceSectionEvent(state, event);
     default:
       return reduceSettling(state, event);

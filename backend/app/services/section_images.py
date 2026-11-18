@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import uuid
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -17,6 +17,7 @@ from app.research.media_refs import MediaRef
 
 from .live_sources import LiveSourcesStore
 from .media_ref_store import TEXT_RELEVANCE, SqlMediaStore
+from .picture_sites import blocked_picture
 
 __all__ = [
     "CANDIDATES_PER_SOURCE",
@@ -27,6 +28,7 @@ __all__ = [
     "image_search_text",
     "searched_images",
     "section_images",
+    "shown_candidates",
 ]
 
 logger = logging.getLogger(__name__)
@@ -61,7 +63,7 @@ class SectionImages:
         named = ask.craft_name or ""
         searched = image_search_text(named, claims)
         found = await asyncio.gather(*(self._candidates(source, searched, named) for source in self.sources))
-        chosen = choose_images([c for batch in found for c in batch], claims, leave_out=named)
+        chosen = choose_images(shown_candidates(c for batch in found for c in batch), claims, leave_out=named)
         if not chosen:
             return None
         kept = await self.store.keep(chosen)
@@ -94,6 +96,16 @@ async def _searched(source: ImageSource, texts: Sequence[str]) -> list[ImageCand
         if found:
             return found
     return []
+
+
+def shown_candidates(candidates: Iterable[ImageCandidate]) -> list[ImageCandidate]:
+    kept = []
+    for candidate in candidates:
+        if blocked_picture(page_url=candidate.page_url, image_url=candidate.image_url, title=candidate.title):
+            logger.info("a picture from %s is left out: shops and social sites are not shown", candidate.site)
+            continue
+        kept.append(candidate)
+    return kept
 
 
 def image_search_text(craft_name: str, claims: Sequence[ClaimText]) -> str:

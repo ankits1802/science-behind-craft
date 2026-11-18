@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 
 from app.core.errors import InvalidInput
+from app.research.blocks import BlockBase
 from app.research.citations import SourceRef
 from app.research.explainer import EXPLAINER_SCHEMA_VERSION, Explainer, ExplainerSection
 from app.research.explainer_versions import (
@@ -27,13 +28,18 @@ def merged_version(base: ExplainerVersionDocument, follow_up: Explainer) -> Expl
     kept = [_deepened(section, offered.get(section.id)) for section in explainer.sections]
     added = [section for section in follow_up.sections if section.id not in known and section.blocks]
     sections = [*kept, *(_placed(section, len(kept) + n) for n, section in enumerate(added, 1))]
+    shown = [
+        *([follow_up.lede] if follow_up.lede else []),
+        *(b for section in sections for b in section.blocks),
+    ]
     merged = Explainer(
         schema_version=EXPLAINER_SCHEMA_VERSION,
         answer_id=follow_up.answer_id,
         question=follow_up.question,
         understood=explainer.understood,
+        lede=follow_up.lede,
         sections=sections,
-        sources=_cited_sources(sections, [*follow_up.sources, *explainer.sources]),
+        sources=_cited_sources(shown, [*follow_up.sources, *explainer.sources]),
         follow_ups=list(follow_up.follow_ups or explainer.follow_ups),
         created_at=follow_up.created_at,
     )
@@ -69,14 +75,9 @@ def _placed(section: ExplainerSection, order: int) -> ExplainerSection:
     return ExplainerSection(**{**dict(section), "order": order})
 
 
-def _cited_sources(sections: Sequence[ExplainerSection], known: Sequence[SourceRef]) -> list[SourceRef]:
+def _cited_sources(blocks: Sequence[BlockBase], known: Sequence[SourceRef]) -> list[SourceRef]:
     by_id = {source.id: source for source in known}
-    cited = dict.fromkeys(
-        source_id
-        for section in sections
-        for block in section.blocks
-        for source_id in block.cited_source_ids()
-    )
+    cited = dict.fromkeys(source_id for block in blocks for source_id in block.cited_source_ids())
     unknown = [source_id for source_id in cited if source_id not in by_id]
     if unknown:
         raise InvalidInput(f"a follow-up cites sources neither version lists: {', '.join(unknown)}")

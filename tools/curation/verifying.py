@@ -60,6 +60,7 @@ def verify_dossier(
     ]
     return CheckFile(
         craft_slug=dossier.craft_slug,
+        category_slug=dossier.category_slug,
         dossier_version=dossier.version,
         dossier_digest=verified_digest(dossier),
         checked_at=now(),
@@ -104,7 +105,7 @@ def verify_file(path: Path, read: Reader) -> tuple[list[str], CheckFile | None]:
     except ValidationError as error:
         return [problem.line(label) for problem in schema_problems(error)], None
     check = verify_dossier(dossier, read)
-    write_text_atomically(check_path(path, dossier.craft_slug), check_file_text(check))
+    write_text_atomically(check_path(path, dossier.slug), check_file_text(check))
     return failure_lines(label, check), check
 
 
@@ -167,5 +168,5 @@ def _summary(label: str, check: CheckFile) -> str:
     passed = sum(1 for entry in check.quotes if entry.result == "PASS")
     return (
         f"{label}: {read} of {len(check.sources)} sources read, {passed} of {len(check.quotes)} quotes passed; "
-        f"wrote {check.craft_slug}.check.json"
+        f"wrote {check.slug}.check.json"
     )

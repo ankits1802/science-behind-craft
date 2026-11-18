@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.api.routes import (
     access,
     auth,
+    categories,
     crafts,
     explainer_exports,
     explainers,
@@ -18,6 +19,7 @@ from app.api.routes import (
     molecules,
     notifications,
     password_change,
+    public,
     rivers,
     saved_explainers,
     secrets,
@@ -37,6 +39,7 @@ api_router.include_router(me.router)
 api_router.include_router(two_factor.router)
 api_router.include_router(access.router)
 api_router.include_router(users.router)
+api_router.include_router(categories.router)
 api_router.include_router(crafts.router)
 api_router.include_router(explainers.router)
 api_router.include_router(explainer_exports.router)
@@ -50,6 +53,7 @@ api_router.include_router(map_layers.router)
 api_router.include_router(media.router)
 api_router.include_router(molecules.router)
 api_router.include_router(notifications.router)
+api_router.include_router(public.router)
 api_router.include_router(rivers.router)
 api_router.include_router(saved_explainers.router)
 api_router.include_router(secrets.router)

@@ -2,15 +2,27 @@ from __future__ import annotations
 
 import uuid
 from collections.abc import Sequence
+from dataclasses import replace
+from datetime import datetime
 
 from sqlalchemy import Select, func, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import InvalidInput
-from app.models import Claim, Concept, Craft, Term as TermRow, TermConcept, TermCraft, TermSummary
+from app.models import (
+    Claim,
+    ClaimSource,
+    Concept,
+    Craft,
+    Term as TermRow,
+    TermConcept,
+    TermCraft,
+    TermSummary,
+)
 from app.research.composition import ComposedSentence
 from app.research.evidence import Quote, SourceDocument
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.terms import Term
 from app.research.write_back import ClaimWriteBack, WriteBackCitation, WriteBackSubject
 
@@ -18,7 +30,7 @@ from . import knowledge_view
 from .claim_writer import SqlClaimWriter
 from .live_source_store import keep_document
 from .term_research import GlossaryTerm, ResearchedSummary, TermConceptRef
-from .term_summaries import StoredClaims
+from .term_summaries import StoredClaims, cites_only_shown
 from .write_back_plan import QUOTED_REASON, WRITE_BACK_PREDICATE
 
 __all__ = ["CONCEPT_SUBJECT_TYPE", "SqlTermStore", "claim_for_sentence", "write_back_subject"]
@@ -29,8 +41,11 @@ FOUND_BY = "BACKGROUND"
 
 
 class SqlTermStore:
-    def __init__(self, sessions: async_sessionmaker[AsyncSession]) -> None:
+    def __init__(
+        self, sessions: async_sessionmaker[AsyncSession], *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+    ) -> None:
         self._sessions = sessions
+        self._acls = acls
 
     async def term(self, key: str) -> GlossaryTerm | None:
         async with self._sessions() as session:
@@ -59,10 +74,11 @@ class SqlTermStore:
             )
             if row is None:
                 return None
-            visible, _ = await knowledge_view.claims_by_id(session, row.claimIds)
+            visible, _ = await knowledge_view.claims_by_id(session, row.claimIds, acls=self._acls)
         if set(row.claimIds) - set(visible):
             return None
-        return Term.model_validate(row.payload)
+        summary = Term.model_validate(row.payload)
+        return summary if cites_only_shown(summary, visible) else None
 
     async def defining_claims(self, term: GlossaryTerm) -> StoredClaims:
         described = {c.concept_id: _folded(c.description) for c in term.concepts if c.description}
@@ -80,8 +96,10 @@ class SqlTermStore:
                 row.subjectId: row.id for row in rows if _folded(row.text) == described[row.subjectId]
             }
             ordered = [defining[c.concept_id] for c in term.concepts if c.concept_id in defining]
-            views, sources = await knowledge_view.claims_by_id(session, ordered)
-        return _stored(ordered, views, sources)
+            views, sources = await knowledge_view.claims_by_id(session, ordered, acls=self._acls)
+            stored = _stored(ordered, views, sources)
+            changed = await _changed_at(session, stored.views)
+        return replace(stored, changed_at=changed)
 
     async def write_back(self, term: GlossaryTerm, researched: ResearchedSummary) -> list[uuid.UUID]:
         craft_slug, subject = write_back_subject(term)
@@ -99,7 +117,7 @@ class SqlTermStore:
 
     async def cited(self, claim_ids: Sequence[uuid.UUID]) -> StoredClaims:
         async with self._sessions() as session:
-            views, sources = await knowledge_view.claims_by_id(session, claim_ids)
+            views, sources = await knowledge_view.claims_by_id(session, claim_ids, acls=self._acls)
         return _stored(claim_ids, views, sources)
 
     async def remember(self, term_id: uuid.UUID, summary: Term) -> None:
@@ -186,6 +204,19 @@ def _concepts_of(term_id: uuid.UUID) -> Select:
         .where(TermConcept.termId == term_id)
         .order_by(Craft.slug, Concept.type, Concept.name)
     )
+
+
+async def _changed_at(session: AsyncSession, views: Sequence[knowledge_view.ClaimView]) -> datetime | None:
+    if not views:
+        return None
+    citation_ids = [uuid.UUID(citation["id"]) for view in views for citation in view.citations]
+    claims = await session.scalar(
+        select(func.max(Claim.updatedAt)).where(Claim.id.in_([v.id for v in views]))
+    )
+    citations = await session.scalar(
+        select(func.max(ClaimSource.updatedAt)).where(ClaimSource.id.in_(citation_ids))
+    )
+    return max(stamp for stamp in (claims, citations) if stamp is not None)
 
 
 def _stored(order: Sequence[uuid.UUID], views: dict, sources: dict) -> StoredClaims:

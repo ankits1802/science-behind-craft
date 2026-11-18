@@ -5,18 +5,22 @@ import pytest
 from pydantic import ValidationError
 
 from app.core.errors import InvalidInput
+from app.geo.climate import climate_trends
 from app.geo.places import region_places
 from app.geo.records import Coverage, SeriesTotals, ValueRecord
 from app.geo.region_view import craft_region
+from app.research.blocks_place import DistrictRef
 from app.schemas.region import CraftRegion
 
 from ..contracts.golden import dumped, golden_text
+from ..contracts.phase_b_golden import catalog_dataset
 from .golden_region import (
     GOLDEN_CRAFT,
     GUJARAT,
     KACHCHH,
     VAV_THARAD,
     WORLDCOVER_READ,
+    dataset_record,
     golden_region_records,
     location,
 )
@@ -195,6 +199,108 @@ def test_a_located_place_brings_its_source_and_a_state_of_practice_brings_none()
         dataclasses.replace(golden_region_records(), places=region_places([], [GUJARAT]))
     )
     assert state_only.sources == []
+
+
+ClimateRow = tuple[str, str, str, str, float, str]
+
+
+def climate_records(*rows: ClimateRow):
+    records = golden_region_records()
+    values = tuple(
+        ValueRecord(KACHCHH, code, variable, period, stat, value, None, unit, None, None)
+        for code, variable, period, stat, value, unit in rows
+    )
+    datasets = {
+        **records.datasets,
+        "CHIRPS_3_0": dataset_record(catalog_dataset("CHIRPS_3_0") | {"period": "1981-2025"}),
+        "GHCN_CAMS_T2M": dataset_record(catalog_dataset("GHCN_CAMS_T2M") | {"period": "1981-2025"}),
+    }
+    return dataclasses.replace(records, district_values=values, datasets=datasets)
+
+
+def shown_climate(region: CraftRegion) -> set[tuple[str, str, str, str]]:
+    return {
+        (value.dataset_code, value.variable, value.period, value.stat)
+        for facet in region.places[0].facets
+        for value in facet.values
+    }
+
+
+def test_a_place_shows_the_rainfall_and_temperature_normals_of_their_trend_datasets() -> None:
+    records = climate_records(
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "NORMAL", 434.14, "mm/year"),
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "DISTRICT_P10", 341.4, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "NORMAL", 449.36, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981", "DISTRICT_MEAN", 518.45, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "TREND_PER_DECADE", 70.76, "mm/year per decade"),
+        ("CHELSA_2_1_1981_2010", "precipitation", "1981-2010-07", "NORMAL", 170.2, "mm/month"),
+        ("CHIRPS_3_0", "monthly_precipitation", "1981-2025-07", "NORMAL", 181.46, "mm/month"),
+        ("CHELSA_2_1_1981_2010", "precipitation", "1981-2010-08", "NORMAL", 101.0, "mm/month"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "NORMAL", 27.2, "degC"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "DISTRICT_P90", 28.1, "degC"),
+        ("CHELSA_2_1_1981_2010", "max_temperature_warmest_month", "1981-2010", "NORMAL", 40.3, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "NORMAL", 27.07, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981", "DISTRICT_MEAN", 26.66, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "TREND_P_VALUE", 0.0004, "p-value"),
+    )
+    assert shown_climate(craft_region(records)) == {
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "NORMAL"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981", "DISTRICT_MEAN"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "TREND_PER_DECADE"),
+        ("CHIRPS_3_0", "monthly_precipitation", "1981-2025-07", "NORMAL"),
+        ("CHELSA_2_1_1981_2010", "precipitation", "1981-2010-08", "NORMAL"),
+        ("CHELSA_2_1_1981_2010", "max_temperature_warmest_month", "1981-2010", "NORMAL"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "NORMAL"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981", "DISTRICT_MEAN"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "TREND_P_VALUE"),
+    }
+
+
+def test_a_normal_stays_when_the_trend_dataset_has_none_for_the_place() -> None:
+    records = climate_records(
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "NORMAL", 434.14, "mm/year"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "NORMAL", 27.2, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981", "DISTRICT_MEAN", 26.66, "degC"),
+    )
+    assert shown_climate(craft_region(records)) == {
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "NORMAL"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "NORMAL"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981", "DISTRICT_MEAN"),
+    }
+
+
+def test_the_region_card_states_the_same_normal_as_the_answer_s_climate_card() -> None:
+    records = climate_records(
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", "NORMAL", 434.14, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "NORMAL", 449.36, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "TREND_PER_DECADE", 70.76, "mm/year per decade"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", "TREND_P_VALUE", 0.02, "p-value"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "NORMAL", 27.2, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "NORMAL", 27.07, "degC"),
+        (
+            "GHCN_CAMS_T2M",
+            "annual_mean_temperature",
+            "1981-2025",
+            "TREND_PER_DECADE",
+            0.21,
+            "degC per decade",
+        ),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", "TREND_P_VALUE", 0.0004, "p-value"),
+    )
+    district = DistrictRef(district_lgd=KACHCHH, name="Kachchh", state_name="Gujarat")
+    trends = climate_trends([district], records.district_values, records.datasets).trends
+    card = {(t.dataset_code, t.variable): (t.period, t.mean) for t in trends}
+    region = {
+        (value.dataset_code, value.variable): (value.period, value.value)
+        for facet in craft_region(records).places[0].facets
+        for value in facet.values
+        if value.stat == "NORMAL"
+    }
+    trend_normals = {
+        ("CHIRPS_3_0", "annual_precipitation"): ("1981-2025", 449.36),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature"): ("1981-2025", 27.07),
+    }
+    assert card == region == trend_normals
 
 
 def test_a_place_source_that_was_not_loaded_fails_loudly() -> None:

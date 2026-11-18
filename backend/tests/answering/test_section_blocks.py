@@ -106,16 +106,18 @@ async def test_translating_a_ladder_changes_its_sentences_only_and_keeps_their_c
     ]
 
 
-def test_sections_follow_the_fields_most_important_first_within_the_depth() -> None:
+def test_sections_keep_the_most_important_fields_and_put_the_full_process_last() -> None:
     fields = ["PROCESS", "CHEMISTRY", "PROCESS", "HISTORY", "CLIMATE", "ECOLOGY", "DESIGN"]
-    basic = section_specs(fields, "BASIC")
+    basic = section_specs(fields, "BASIC", craft_name="Kutch Ajrakh")
     assert [(s.id, s.discipline, s.title, s.order) for s in basic] == [
-        ("s1", "PROCESS", "How it is made", 1),
-        ("s2", "CHEMISTRY", "The chemistry", 2),
-        ("s3", "HISTORY", "History", 3),
-        ("s4", "CLIMATE", "Climate", 4),
+        ("s1", "CHEMISTRY", "The chemistry behind Kutch Ajrakh", 1),
+        ("s2", "HISTORY", "Where Kutch Ajrakh comes from", 2),
+        ("s3", "CLIMATE", "The weather Kutch Ajrakh works with", 3),
+        ("s4", "PROCESS", "How Kutch Ajrakh is made", 4),
     ]
-    assert [(s.discipline, s.title) for s in section_specs([], "EXPERT")] == [("OVERVIEW", "What it is")]
+    assert [(s.discipline, s.title) for s in section_specs([], "EXPERT")] == [
+        ("OVERVIEW", "What the craft is")
+    ]
 
 
 def test_a_research_budget_splits_with_the_remainder_to_the_first_sections() -> None:

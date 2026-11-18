@@ -7,12 +7,14 @@ from app.models.knowledge import QUOTE_MAX_CHARS
 
 from .dossier import Dossier
 from .duplicates import near_duplicates
+from .figures import figure_gaps
+from .hedges import dropped_hedges, unsourced_hedges
 from .limits import CLAIM_WORDS_MAX, CLAIM_WORDS_MIN, CURATED_QUOTE_MIN_CHARS
 from .matching import quote_chars
 from .parts import Claim
 from .problems import Problem
 from .references import references
-from .sentences import figure_gaps, relationship_sentence, single_sentence, unsourced_hedges, word_count
+from .sentences import relationship_sentence, single_sentence, word_count
 
 __all__ = [
     "PRICE_PATTERN",
@@ -107,6 +109,12 @@ def _text_messages(claim: Claim) -> list[str]:
         f"hedging word {hedge!r} appears in none of its quotes"
         for hedge in unsourced_hedges(claim.text, quotes)
     ]
+    dropped = dropped_hedges(claim.text, quotes)
+    if dropped:
+        messages.append(
+            f"every quote hedges ({', '.join(dropped)}) and the text does not; keep the hedge "
+            "(probably, believed, about, ...) or cite words that state it plainly"
+        )
     return messages
 
 

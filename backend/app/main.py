@@ -29,8 +29,10 @@ from app.core.logging import (
 from app.core.security import verify_jwt_configuration
 from app.core.shielded import ShieldedWork
 from app.services import two_factor
+from app.services.craft_catalogue import new_catalogue_cache
 from app.services.craft_resolver import CraftIndexStore
 from app.services.live_sources import LiveSourcesStore
+from app.services.public_summary import SummaryCache
 from app.services.river_topology import TopologyCache
 from app.voice.runtime import VoiceRuntime
 from app.voice.sessions import VOICE_CONSENT_HEADER
@@ -100,6 +102,8 @@ def create_app() -> FastAPI:
     app.state.shielded_work = ShieldedWork()
     app.state.voice_runtime = VoiceRuntime()
     app.state.river_topologies = TopologyCache()
+    app.state.public_summary = SummaryCache()
+    app.state.craft_catalogue = new_catalogue_cache()
 
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception) -> JSONResponse:
@@ -112,6 +116,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
+        allow_origin_regex=settings.cors_origin_regex,
         allow_credentials=settings.cors_allow_credentials,
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=[

@@ -18,10 +18,12 @@ Last reviewed: 2026-11-17 (decision 0042).
 
 | Method | Path | Auth | Answer |
 |---|---|---|---|
-| GET | `/api/crafts/{slug}/process` | signed in | `CraftProcess`; 404 `{detail}` for an unknown slug (`NOT_FOUND_DETAIL`); a `MERGED` slug answers with its target's process, as the profile does |
+| GET | `/api/crafts/{slug}/process` | public (decision 0079) | `CraftProcess`; 404 `{detail}` for an unknown slug (`NOT_FOUND_DETAIL`); a `MERGED` slug answers with its target's process, as the profile does |
 
-`Cache-Control: private, no-cache`. The body is built only from stored rows; no model is
-called while answering it.
+`Cache-Control: private, no-cache` with a token and `public, max-age=300` without, with
+`Vary: Authorization` and an `ETag` of the body that a matching `If-None-Match` turns into a 304
+(decision 0079). The body is built only from stored rows, quoting only chunks the reader may
+read; no model is called while answering it.
 
 ## Shape
 

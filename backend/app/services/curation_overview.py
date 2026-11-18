@@ -13,10 +13,9 @@ from app.research.subject_keys import topic_key
 from app.research.term_marking import GlossaryEntry, TermMarker
 
 from .answer_events import CitedClaims
-from .curated_index import CuratedPage, IndexOverview, IndexSection
+from .curated_index import CuratedPage, IndexFact, IndexOverview, IndexSection
 from .curation_keys import CURATED_DEPTH, curated_id
 from .curation_records import glossary_key, term_names
-from .curation_rows import CraftTarget
 from .section_blocks import KeptSentence, prose_block, prose_problems
 
 __all__ = [
@@ -27,6 +26,7 @@ __all__ = [
     "indexed_overview",
     "overview_pieces",
     "piece_topic",
+    "placed_overview",
 ]
 
 LEDE_PART = "lede"
@@ -38,6 +38,7 @@ class OverviewPieces:
     pieces: tuple[KnowledgePiece, ...]
     parts: Mapping[str, uuid.UUID]
     dropped: tuple[str, ...]
+    sentences: Mapping[str, OverviewSentence]
 
 
 def curated_glossary(dossier: Dossier) -> list[GlossaryEntry]:
@@ -49,33 +50,39 @@ def curated_glossary(dossier: Dossier) -> list[GlossaryEntry]:
     return list(entries.values())
 
 
-def piece_topic(facet: str, craft: CraftTarget, districts: Sequence[str]) -> str:
-    found = facet_topic(facet, TopicSubjects(craft_slug=craft.slug, districts=tuple(districts)))
-    return found or topic_key(FACET_NAMESPACES[facet], craft.slug)
+def piece_topic(facet: str, slug: str, districts: Sequence[str]) -> str:
+    found = facet_topic(facet, TopicSubjects(craft_slug=slug, districts=tuple(districts)))
+    return found or topic_key(FACET_NAMESPACES[facet], slug)
 
 
 def overview_pieces(
-    dossier: Dossier, craft: CraftTarget, cited: CitedClaims, districts: Sequence[str]
+    dossier: Dossier, cited: CitedClaims, *, craft_id: uuid.UUID | None, districts: Sequence[str]
 ) -> OverviewPieces:
     marker = TermMarker(curated_glossary(dossier))
     pieces: list[KnowledgePiece] = []
     parts: dict[str, uuid.UUID] = {}
     dropped: list[str] = []
+    placed: dict[str, OverviewSentence] = {}
     for part, facet, sentences in _parts(dossier):
-        kept = []
+        kept: list[tuple[KeptSentence, OverviewSentence]] = []
         for index, sentence in enumerate(sentences):
-            candidate = _candidate(craft.slug, sentence)
+            candidate = _candidate(dossier.slug, sentence)
             problems = prose_problems([candidate], cited)
             if problems:
                 dropped.append(f"overview.{part}.{index}: {'; '.join(problems)}")
             else:
-                kept.append(candidate)
+                kept.append((candidate, sentence))
         if kept:
-            block = _marked(prose_block(f"curation.{part.lower()}", kept, cited), marker)
-            piece = _piece(dossier, craft, (part, facet), block, piece_topic(facet, craft, districts))
+            block = prose_block(f"curation.{part.lower()}", [candidate for candidate, _ in kept], cited)
+            block = _marked(block, marker)
+            topic = piece_topic(facet, dossier.slug, districts)
+            piece = _piece(dossier, (craft_id, part, facet), block, topic)
             pieces.append(piece)
             parts[part] = piece.id
-    return OverviewPieces(pieces=tuple(pieces), parts=parts, dropped=tuple(dropped))
+            placed.update(
+                zip((s.id for s in piece.payload.cited_sentences()), (s for _, s in kept), strict=True)
+            )
+    return OverviewPieces(pieces=tuple(pieces), parts=parts, dropped=tuple(dropped), sentences=placed)
 
 
 def _parts(dossier: Dossier) -> Iterator[tuple[str, str, Sequence[OverviewSentence]]]:
@@ -99,21 +106,24 @@ def _marked(block: ProseBlock, marker: TermMarker) -> ProseBlock:
 
 
 def _piece(
-    dossier: Dossier, craft: CraftTarget, part: tuple[str, str], block: ProseBlock, topic: str
+    dossier: Dossier, part: tuple[uuid.UUID | None, str, str], block: ProseBlock, topic: str
 ) -> KnowledgePiece:
-    name, facet = part
-    piece_id = curated_id(craft.slug, "piece", name, topic, piece_content_hash(block))
-    slot = PieceSlot(craft.id, facet, topic, CURATED_DEPTH)
+    craft_id, name, facet = part
+    piece_id = curated_id(dossier.slug, "piece", name, topic, piece_content_hash(block))
+    slot = PieceSlot(craft_id, facet, topic, CURATED_DEPTH)
     return knowledge_piece(block, slot, piece_id=piece_id, answer_id=None, created_at=dossier.curated_at)
 
 
-def indexed_overview(index: CuratedPage, overview: OverviewPieces) -> CuratedPage:
+def placed_overview(key_facts: Sequence[IndexFact], overview: OverviewPieces) -> IndexOverview:
     sections = [
         IndexSection(discipline=part, piece_id=piece_id)
         for part, piece_id in overview.parts.items()
         if part != LEDE_PART
     ]
-    placed = IndexOverview(
-        lede_piece_id=overview.parts.get(LEDE_PART), sections=sections, key_facts=index.overview.key_facts
+    return IndexOverview(
+        lede_piece_id=overview.parts.get(LEDE_PART), sections=sections, key_facts=list(key_facts)
     )
-    return index.model_copy(update={"overview": placed})
+
+
+def indexed_overview(index: CuratedPage, overview: OverviewPieces) -> CuratedPage:
+    return index.model_copy(update={"overview": placed_overview(index.overview.key_facts, overview)})

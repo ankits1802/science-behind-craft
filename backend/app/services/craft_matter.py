@@ -12,6 +12,7 @@ from app.models import Compound, Source, Term, TermConcept
 from app.research.blocks import ExplainerSentence, named_in
 from app.research.crafts import CraftRef
 from app.research.explainer import Block
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.science.records import CompoundRecord, MaterialRecord, ProcessRecords
 
 from .craft_process import process_records
@@ -58,7 +59,8 @@ class MaterialRows:
         return self.uses[0].compound
 
     def surfaces(self) -> tuple[str, ...]:
-        return (self.name, *(surface for term in self.terms for surface in term.surfaces()))
+        names = dict.fromkeys(use.name for use in self.uses)
+        return (*names, *(surface for term in self.terms for surface in term.surfaces()))
 
 
 @dataclass(frozen=True)
@@ -74,7 +76,7 @@ async def craft_matter(sessions: async_sessionmaker[AsyncSession], craft: CraftR
         found = await resolve_craft(session, craft.slug)
         if found is None:
             return None
-        records = await process_records(session, found)
+        records = await process_records(session, found, acls=EVERY_CHUNK_ACLS)
         terms = await _concept_terms(session, [m.concept_id for m in records.materials if m.concept_id])
         compounds = await _compounds(session, records)
         sources = await _record_sources(session, [c.source_id for c in compounds.values() if c.source_id])

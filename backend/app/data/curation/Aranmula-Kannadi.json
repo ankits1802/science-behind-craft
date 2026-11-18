@@ -1,0 +1,4690 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Aranmula-Kannadi",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:30:00+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Aranmula Kannadi geographical indication application number GI journal",
+      "site": "web search"
+    },
+    {
+      "query": "Aranmula Kannadi application 3 (filing, journal, certificate, validity, documents)",
+      "site": "search.ipindia.gov.in GIRPublicSearch (record read)"
+    },
+    {
+      "query": "Aranmula Kannadi application 3 Statement of Case, Form GI-1, Ancient Metal-Mirror Making in South India",
+      "site": "search.ipindia.gov.in (listed, but downloadable only through the registry viewer; not read)"
+    },
+    {
+      "query": "Aranmula Kannadi application 3 authorised users",
+      "site": "search.ipindia.gov.in (the count cannot be quoted without a user's name or address, so it is left out)"
+    },
+    {
+      "query": "Geographical Indications Journal No. 3 (November 2004)",
+      "site": "ipindia.nic.in/girindia/journal/3.pdf (host no longer resolves) and its web.archive.org copy (a scanned PDF with no text layer, so not read)"
+    },
+    {
+      "query": "Registration details of Geographical Indications",
+      "site": "ipindia.gov.in (registration list PDF read)"
+    },
+    {
+      "query": "Aranmula metal mirror copper tin alloy composition speculum casting study",
+      "site": "web search"
+    },
+    {
+      "query": "Aranmula Kannadi metal mirror journal article pdf high tin bronze",
+      "site": "web search"
+    },
+    {
+      "query": "Srinivasan Glover Skilled mirror craft of intermetallic delta high-tin bronze Current Science 2007",
+      "site": "currentscience.ac.in (the 2007 article PDF has no text layer; the Downloads link answers 404), eprints.iisc.ac.in (HTTP 502), eprints.nias.res.in (certificate fails): not read"
+    },
+    {
+      "query": "Wrought and quenched, and cast high-tin bronzes in Kerala State, India (Historical Metallurgy 29/2, 1995)",
+      "site": "hmsjournal.org (article PDF read)"
+    },
+    {
+      "query": "Thermographical Analysis of Continuing Tradition of Mirror Casting in Kerala (ISIJ International 54/5, 2014)",
+      "site": "jstage.jst.go.jp (PDF read)"
+    },
+    {
+      "query": "Archaeometallurgical implications of high tin delta bronze mirrors Kerala (MRS Proceedings 462)",
+      "site": "cambridge.org (abstract read; full text restricted)"
+    },
+    {
+      "query": "Microstructural characterization of high tin bronze mirror, Aranmula, Kerala",
+      "site": "books.aijr.org (chapter PDF refused with HTTP 403; the synopsis was read from its Wayback Machine copy)"
+    },
+    {
+      "query": "Indian Journal of History of Science 2016 articles on Indian high-tin bronze mirrors",
+      "site": "cahc.jainuniversity.ac.in (HTTP 404, no archive): not read"
+    },
+    {
+      "query": "Metal Mirror Marvel of Aranmula",
+      "site": "sahapedia.org (read)"
+    },
+    {
+      "query": "Aranmula kannadi",
+      "site": "en.wikipedia.org (read only as a pointer to the GI record, the 1995 paper and The Hindu; not cited)"
+    },
+    {
+      "query": "Aranmula Kannadi culture and heritage, tourist places",
+      "site": "pathanamthitta.nic.in (culture and heritage page read)"
+    },
+    {
+      "query": "Aranmula Kannadi heritage village",
+      "site": "keralatourism.org (pages render only with scripts or answer 'page unavailable'; not read)"
+    },
+    {
+      "query": "Aranmula metal mirror British Museum collection object",
+      "site": "web search (no British Museum catalogue record found; the museum's mirror is cited from press and INTACH)"
+    },
+    {
+      "query": "Aranmula Kannadi GI method of production or statement of case, Viswabrahmana",
+      "site": "web search; search.ipindia.gov.in application 927 (Kannadippaya bamboo mat, unrelated)"
+    },
+    {
+      "query": "Lok Sabha starred question 151 of 30.11.2009 on geographical indications",
+      "site": "eparlib.nic.in (read; lists the GI only, not cited)"
+    },
+    {
+      "query": "geographical indications of Kerala thesis and GI presentation",
+      "site": "dyuthi.cusat.ac.in and indiawaterportal.org (connection timed out; not read)"
+    },
+    {
+      "query": "Aranmula mirror Kerala speculum bronze museum collection record",
+      "site": "web search; bodyarts.prm.ox.ac.uk Pitt Rivers Museum mirror page (host did not resolve, no archive)"
+    },
+    {
+      "query": "Aranmula Kannadi",
+      "site": "icharchive.intach.org, dtpcpathanamthitta.com, openthemagazine.com, atlasobscura.com, tribuneindia.com, thehindu.com (Wayback copy), outlooktraveller.com, organiser.org (read)"
+    },
+    {
+      "query": "Geographical Indication challenges, a study in context of Aranmula Kannadi",
+      "site": "legalserviceindia.com (read; an unattributed student article that repeats Wikipedia's wording, so not cited)"
+    },
+    {
+      "query": "aranmulakannadi.org",
+      "site": "a mirror seller's site (read; sales copy only, not cited)"
+    },
+    {
+      "query": "Category:Aranmula kannadi",
+      "site": "commons.wikimedia.org (file pages and the Commons API read for author and licence)"
+    },
+    {
+      "query": "Pathanamthitta district history and formation of the district",
+      "site": "pathanamthitta.nic.in/en/history/ (read)"
+    },
+    {
+      "query": "Aranmula Kannadi craft page of the Office of the Development Commissioner (Handicrafts)",
+      "site": "handicrafts.gov.in (connection timed out and the Wayback Machine has no copy): not read"
+    },
+    {
+      "query": "Aranmula mirror Kairali Handicrafts Development Corporation of Kerala",
+      "site": "web search (no page of the corporation about the mirrors found, only sellers' sites; The Hindu's 2012 report of the Kairali showroom exhibition is cited)"
+    },
+    {
+      "query": "Srinivasan 2008, Mirrors: Metal mirrors from India (Encyclopaedia of the History of Science, Technology and Medicine in Non-Western Cultures)",
+      "site": "perspectivecreations.com, linked from Wikipedia (a full copy of the Springer encyclopedia whose right to host it could not be confirmed): not read"
+    },
+    {
+      "query": "rice bran and marotti oil polishing paste in Geographical Indications Journal No. 3",
+      "site": "en.wikipedia.org cites the journal for it; the journal is a scanned PDF with no text layer (above), so the paste is not cited"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Application Details: Aranmula Kannadi (Aranmula Metal Mirror), Application Number 3",
+      "publisher": "Geographical Indications Registry, Intellectual Property India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/3",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Registration details of Geographical Indications",
+      "publisher": "IP India",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "PAPER",
+      "title": "Wrought and quenched, and cast high-tin bronzes in Kerala State, India",
+      "authors": [
+        "Sharada Srinivasan",
+        "Ian Glover"
+      ],
+      "publisher": "Journal of the Historical Metallurgy Society",
+      "year": 1995,
+      "url": "https://hmsjournal.org/index.php/home/article/download/441/423/423",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "PAPER",
+      "title": "Thermographical Analysis of Continuing Tradition of Mirror Casting in Kerala",
+      "authors": [
+        "Takekazu Nagae",
+        "Sharada Srinivasan",
+        "Srinivasa Ranganathan",
+        "R. M. Pillai",
+        "Yasuji Shimizu",
+        "Haruhisa Mifune"
+      ],
+      "publisher": "ISIJ International, The Iron and Steel Institute of Japan",
+      "year": 2014,
+      "url": "https://www.jstage.jst.go.jp/article/isijinternational/54/5/54_1172/_pdf",
+      "doi": "10.2355/isijinternational.54.1172",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "PAPER",
+      "title": "The Archaeometallurgical Implications of New Findings of Traditional Crafts of Making High Tin 'Delta' Bronze Mirrors and 'Beta' Bronze Vessels in Kerala State of South India",
+      "authors": [
+        "Sharada Srinivasan"
+      ],
+      "publisher": "Cambridge University Press (MRS Online Proceedings Library, volume 462)",
+      "url": "https://www.cambridge.org/core/journals/mrs-online-proceedings-library-archive/article/abs/archaeometallurgical-implications-of-new-findings-of-traditional-crafts-of-making-high-tin-delta-bronze-mirrors-and-beta-bronze-vessels-in-kerala-state-of-south-india/46A6CE210E1A91D3D678BF43C36B9B5C",
+      "doi": "10.1557/PROC-462-81",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "PAPER",
+      "title": "Microstructural Characterization of High Tin Bronze Mirror, Arnamula, Kerala",
+      "authors": [
+        "Preeti Verma",
+        "Bindu Pv",
+        "Manager Singh"
+      ],
+      "publisher": "AIJR Publisher (AIJR Abstracts)",
+      "year": 2021,
+      "url": "https://books.aijr.org/index.php/press/catalog/book/108/chapter/856",
+      "archivedUrl": "https://web.archive.org/web/20251014013738id_/https://books.aijr.org/index.php/press/catalog/book/108/chapter/856",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Metal Mirror Marvel of Aranmula",
+      "authors": [
+        "Sharada Srinivasan"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/metal-mirror-marvel-aranmula",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "WEB_PAGE",
+      "title": "Aranmula Kannadi (INTACH Archive: My Heritage)",
+      "authors": [
+        "Athira Raj"
+      ],
+      "publisher": "Indian National Trust for Art and Cultural Heritage (INTACH), Intangible Cultural Heritage archive",
+      "url": "https://icharchive.intach.org/Myheritagedetail/Index?id=113",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "WEB_PAGE",
+      "title": "Culture & Heritage",
+      "publisher": "District Administration Pathanamthitta, Government of Kerala",
+      "url": "https://pathanamthitta.nic.in/en/culture-heritage/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "WEB_PAGE",
+      "title": "Aranmula Kannadi",
+      "publisher": "District Tourism Promotion Council, Pathanamthitta",
+      "url": "https://www.dtpcpathanamthitta.com/culture/aranmula-kannadi",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "The Ultimate Souvenir",
+      "authors": [
+        "Charmy Harikrishnan"
+      ],
+      "publisher": "Open magazine",
+      "year": 2015,
+      "url": "https://openthemagazine.com/voices/the-ultimate-souvenir",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "See Yourself As You Truly Are in This Mysterious Metal Mirror",
+      "authors": [
+        "Savera John",
+        "Susan Paul"
+      ],
+      "publisher": "Atlas Obscura",
+      "year": 2018,
+      "url": "https://www.atlasobscura.com/articles/metal-mirror-kerala-aranmula-kannadi",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Majestic mirrors",
+      "authors": [
+        "Sadanand Menon"
+      ],
+      "publisher": "The Tribune (Spectrum)",
+      "year": 2009,
+      "url": "https://www.tribuneindia.com/2009/20090517/spectrum/main2.htm",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Mirrors priced between Rs.1,200 and Rs.37,500",
+      "publisher": "The Hindu",
+      "year": 2012,
+      "url": "https://www.thehindu.com/todays-paper/tp-national/tp-kerala/article3634151.ece",
+      "archivedUrl": "https://web.archive.org/web/20120725024056id_/http://www.thehindu.com:80/todays-paper/tp-national/tp-kerala/article3634151.ece",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Inside Aranmula, The Kerala Village Where Mirrors Take Shape In Metal",
+      "authors": [
+        "Vaishnavi Dixit"
+      ],
+      "publisher": "Outlook Traveller",
+      "year": 2026,
+      "url": "https://www.outlooktraveller.com/responsible-tourism/inside-aranmula-the-kerala-village-where-mirrors-take-shape-in-metal",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Treasure Trove Column: Metal Mirror, Our Global Heritage",
+      "authors": [
+        "Prashant Pole"
+      ],
+      "publisher": "Organiser",
+      "year": 2018,
+      "url": "https://organiser.org/2018/03/19/120205/bharat/treasure-trove-column-metal-mirror-our-global-heritage/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "WEB_PAGE",
+      "title": "History",
+      "publisher": "District Administration Pathanamthitta, Government of Kerala",
+      "url": "https://pathanamthitta.nic.in/en/history/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Aranmula Kannadi is a metal mirror, not made of glass, created from an alloy of copper and tin.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "Aranmula Kannadi is a metallic mirror, created from an alloy of copper and tin."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "line 4",
+          "quote": "They are metal mirrors, created from an alloy of copper and tin, with an interesting history."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 18",
+          "quote": "Unlike conventional mirrors, it uses a polished metal alloy rather than glass with a reflective backing."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The tradition of making the Aranmula bronze mirror has survived in the village of Aranmula in Kerala, where craftsmen still make it by the traditional method.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 12-13",
+          "quote": "This investigation is concerned with the bronze mirror from India where the tradition has survived in the village Aranmula in Kerala."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "It is important to mention that craftsmen of Aranmula are still making the mirror by traditional method."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan writes that metal mirror making seems to have died out elsewhere in the world, while a craft survival, which was zealously guarded by hereditary families, is still prevalent in Kerala.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 1",
+          "quote": "Whereas metal mirror-making practices seem to have died out elsewhere in the world, a remarkable crafts survival, which was zealously guarded by hereditary families, is still prevalent in Kerala in southern India."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "line 2",
+          "quote": "which is an exceptional example of a surviving craft practice of metal mirror-making in the world"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W02"
+      },
+      "text": "Aranmula is home to a traditional craft of handcrafted, handheld metal mirrors known as val kannadi, or valkannadi, the handled mirror.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 1",
+          "quote": "The verdant village of Aranmula is home to an exotic traditional craft of making handcrafted, handheld metal mirrors known as val kannadi."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 5",
+          "quote": "Traditionally known as the Valkannadi, or handled mirror, it is included in the Ashtamangalyam"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 6",
+          "quote": "The artisans then created a vaal kannadi (hand-held mirror) using a similar composition"
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Kannadi means mirror, and Srinivasan notes that kannadi is the Tamil word for mirror as well.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 1",
+          "quote": "Known as the Aranmula Kannadi (Aranmula Mirror)"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "line 7",
+          "quote": "The Malayalam word Kannadi means mirror! Thus, it means Aranmula Mirror."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "with kannadi being the Tamil word for mirror as well"
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "The mirror is one of the eight auspicious items, the ashtamangalyam, that make up a Kerala bride's wedding trousseau.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 4",
+          "quote": "They are also considered one among the eight auspicious items or \"ashtamangalyam\" that make up a Kerala bride's trousseau."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "They form a part of the eight items or ashtamangalyam considered to be auspicious items of a bride's wedding trousseau in Kerala."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 5",
+          "quote": "it is included in the Ashtamangalyam, a collection of eight auspicious objects displayed during important ceremonies, including weddings."
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Keeping or owning an Aranmula mirror is believed to bring prosperity and good luck to the owner.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 3",
+          "quote": "It is believed that keeping an Aranmula kannadi in the house brings prosperity and luck to the owner."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "it is believed that the mirrors bring good luck to the owners"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "line 6",
+          "quote": "Many believe that owning an Aranmula mirror will bring luck."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Because it is believed to bring prosperity and luck, the mirror is given as a gift at weddings and housewarming ceremonies.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 3",
+          "quote": "It is believed that keeping an Aranmula kannadi in the house brings prosperity and luck to the owner. For this reason, it is given as a gift during weddings and housewarming ceremonies."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The technique of making the mirror, above all the alloy's composition and proportions, is a closely guarded secret handed down within a few artisan families.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "line 4",
+          "quote": "The technique of production of this mirror is a closely guarded secret handed over from generation to generation of craftsmen."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 1",
+          "quote": "The technique for crafting this mirror, rather the mix required to create the reflective surface, is a closely guarded secret among the few artisan families living in the village of Aranmula."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 8",
+          "quote": "However, the precise composition and proportions remain closely guarded knowledge within the artisan families."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "line 4",
+          "quote": "The manufacture of this mirror is still a closely guarded secret shared by only a few artisans."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Outlook Traveller writes that the mirror's copper-tin alloy is often described as a form of speculum metal.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 8",
+          "quote": "The mirror is generally understood to be made from a copper-tin alloy, often described as a form of speculum metal."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Aranmula, where the mirror is made, is a village in Kerala's Pathanamthitta district.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "Made in Aranmula village (Pathanamthitta district) in Kerala, the frame consists of pure brass."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 18",
+          "quote": "Aranmula Kannadi is a traditional handcrafted metal mirror made in Aranmula village in Kerala's Pathanamthitta district."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Open magazine described the mirror being smelted, moulded and burnished in units in the villages of Aranmula and Mallapuzhacherry in Pathanamthitta.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "smelted and moulded and burnished in any of only 19 units in the villages of Aranmula and Mallapuzhacherry in Pathanamthitta"
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Srinivasan and Glover, citing Mukherjee (1978), place Aranmula in Alleppey District.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 306-307",
+          "quote": "Mukherjee (1978) briefly discusses metal mirror making in Aranmula, Alleppey District, Kerala"
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Aranmula, where metal-casting artisans craft the mirrors in hot and dusty workshops, lies on the banks of the Pampa River in Kerala.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 1",
+          "quote": "In Aranmula, Kerala, a heritage village on the banks of the Pamba river, a group of skilled, metal-casting artisans spend their days in hot and dusty workshops, crafting metal mirrors"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 2",
+          "quote": "Aranmula, located by the meandering Pampa River"
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Kerala's department of tourism has declared Aranmula a heritage village.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 2",
+          "quote": "The department of tourism in Kerala has declared Aranmula a heritage village."
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "In 1992 Glover met mirror maker M S Janardhanan Achary of Malakkara village, Pathanamthitta District, demonstrating Aranmula mirror making at a New Delhi museum.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 427-430",
+          "quote": "After visiting Srinivasan in S India early in 1992, and hearing of her study of mirror making, Glover visited the excellent National Handicrafts and Handlooms Museum in New Delhi"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 431-435",
+          "quote": "meet Mr M S J anardhanan Achary from Malakkara village, Pathanamthita District of Kerala who, together with members of his family (Fig 15) bad been demonstrating the manufacture and very special properties of the Aranmula valkannadi bronze mirrors"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "line 2",
+          "quote": "equipment acquired by Glover in March 1992 from another group of mirror makers from Pathanamthita at an exhibition held at Crafts Museum, Delhi"
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The origin of the Aranmula mirror is linked to the Aranmula Parthasarathy Temple.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 5",
+          "quote": "The origin of this mirror is linked to the Aranmula Parthasarahty Temple."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "The origin of the mirror is linked with the Parthasarathy temple of Aranmula."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 3",
+          "quote": "The origins of the Aranmula Kannadi are closely connected to the village's most important religious landmark, the Aranmula Parthasarathy Temple."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 3",
+          "quote": "the origins of this craft are connected to the Aranmula Parthasarathy Temple"
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Atlas Obscura reports that the Vishwakarma craftsmen worked at the Parthasarathy Temple, first known for bronze idols, and made the mirror around 500 years ago.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 2",
+          "quote": "For centuries, the craftsmen, who belong to the Vishwakarma community, have been working in the Aranmula Parthasarathy Temple."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 2",
+          "quote": "Originally, these artisans were known for creating exquisite bronze idols of deities. But around 500 years ago, they handcrafted a special mirror known as the Aranmula kannadi, which surpassed the idols as their most famous product."
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Mirror maker Gopalakrishnan told Srinivasan that his trade had a history of at least five hundred years, passed down through generations.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 308-312",
+          "quote": "Srinivasan visited Aranmula and met Mr Gopalakrishnan, one of the few artisans who still carries on this trade. He said that his trade had a history of at least five hundred years passed down through generations"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Tribune describes Aranmula mirror making as a 600-year-old art.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "you would expect that the secrets of a 600-year-old art would be easily deciphered"
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Open magazine says the folklore places the mirror's origin in the 18th century, with no records to back the story.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "There is the enigmatic folklore of its origin in the 18th century and a secret formula of metallurgy passed down generations."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 16",
+          "quote": "There are no records to back this story which seems to exist in the twilight zone between reality and a marketable myth."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Pathanamthitta tourism council states that the craft has its origins in the Indus Valley civilization.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 1",
+          "quote": "This craft has its origins in the Indus Valley civilization"
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Gopalakrishnan said the acharis had migrated to Kerala from Sankarakoil in Thiruvallur, Tamil Nadu, about 700 years ago.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 310-315",
+          "quote": "He said that his trade had a history of at least five hundred years passed down through generations, practised only by acharis who had the status of Brahmins, and that they had migrated from Sankarakoil in Thiruvallur, Tamil Nadu, to Kerala about 700 years ago."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In a story told to Glover, the Raja of Aranmula brought bronze craftsmen from Tamil Nadu in the 16th century to make ornaments and musical instruments for the temple.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1099-1102",
+          "quote": "In the 16th century the Raja of Aranmula brought to the village some bronze craftsmen from Tamil Nadu in order to make ornaments. and musical instruments for the temple."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One Aranmula craftsman claims King Marthanda Varma of Travancore brought artisan families from Sankarankovil in Tirunelveli to make bronze vessels at the temple.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 16",
+          "quote": "a craftsman of Aranmula mirror, claims King Marthanda Varma of Travancore brought a few families of artisans from Sankarankovil in Tirunelveli, Tamil Nadu, to make bronze vessels at the Parthasarathy temple"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 16",
+          "quote": "There are no records to back this story which seems to exist in the twilight zone between reality and a marketable myth."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "By accounts preserved by the artisan community, the bronze-smith families came to Aranmula at the invitation of the King of Pandalam to help build and embellish the temple.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 3",
+          "quote": "According to accounts preserved by the artisan community, bronze-smith families migrated to Aranmula from the region around Sankaran Koil in present-day Tamil Nadu, at the invitation of the King of Pandalam. They were brought in to assist with the construction and embellishment of the temple."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 4",
+          "quote": "While these accounts are part of the craft's oral history rather than independently established historical facts"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Legend has it that a local king brought eight families of bronze smiths from Tamil Nadu centuries ago to renovate the Parthasarathy temple.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "Legend has it that the local king had brought eight families of bronze smiths from Tamil Nadu in connection with the renovation work of the Parthasarathy temple centuries ago."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "line 16",
+          "quote": "It is said that the King of Aranmula had invited eight families, expert in iconography, for the renovation of Parthsarathi (Sri Krishna) Temple there a few centuries ago."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 1",
+          "quote": "folklore mentioning eight craftsmen and their families who came to work at the Parthasarathy temple"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Local legend and the artisans' oral history say the craftspeople migrated to Aranmula from Sankarankoil, or the region around it, in Tamil Nadu.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "Of the local legends associated with the Aranmula mirror, one version reported by the author was that the craftspeople migrated from Sankarankoil in Tamil Nadu"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 3",
+          "quote": "bronze-smith families migrated to Aranmula from the region around Sankaran Koil in present-day Tamil Nadu"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In legend, a widow, Parvati Ammal, is said to have learned in a dream how to combine copper and tin in the right proportions for a shining metal.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "A widow, Parvati Ammal, is said to have dreamt up the shining alloy, which pleased the Raja of Aranmula."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1250-1253",
+          "quote": "a widow Smt Parvaty Ammal had a dream in which Lord Parthasarathy revealed to her the secret of combining copper and tin in the right proportions"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the main legend, a new crown made for the deity shone bright and, when polished, reflected like a mirror; it was called the kannadi bhimbom.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 5",
+          "quote": "According to the main legend, centuries ago, the high priest of the temple noticed a crack on the crown of the deity. The King ordered the craftsmen to make a new crown in three days."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 5",
+          "quote": "It shone bright, and when polished, showed reflective properties like a mirror. The crown was called the kannadi bhimbom (mirror image)."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the story told to Glover, the Raja relented after receiving a crown of the metal and encouraged its use for valkannadi mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1254-1258",
+          "quote": "They made a crown of this material for the Raja who relented and encouraged them to use the meta! for valkannadi (mirrors) one of the eight articles in the asthamangalayam sets."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan dated a traditional Aranmula delta bronze mirror bearing the seal of Travancore royalty to the seventeenth to eighteenth century by compositional and trace element analysis.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "A traditional Aranmula delta bronze mirror with the seal of Travancore royalty could be technically finger-printed by the author to the seventeenth-eighteenth century through compositional and trace element analysis."
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan writes that further studies are needed to explore the mirror's antiquity, and that analysed copper-alloy mirrors from around the world or the Indian subcontinent have usually had lower tin or added lead.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "Although further studies are needed to explore the antiquity, analysed copper-alloy mirrors from around the world or the Indian subcontinent have usually been of a lower tin content or with lead added."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A mirror Breeks uncovered in the nineteenth century from Nilgiri Iron Age cairns was of 30 per cent tin bronze, though not analysed by more precise contemporary methods.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "a mirror uncovered by Breeks in the nineteenth century from the Nilgiri Iron Age cairns was found to be of 30 per cent tin bronze, not dissimilar to the specular bronze"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 25",
+          "quote": "mentions a bronze mirror with 30 per cent tin. But it has not been analysed by more precise contemporary methods."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "Thurston and Rangachari wrote in 1909 that a metal mirror, valkannadi, was one of the asthamangalayam in the trousseau of Nambuthri and Nair brides.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 323-326",
+          "quote": "Thurston and Rangachari (1909) also mention that a metal mirror or valkannadi was one of the asthamangalayam which formed the wedding trousseau of Nambuthri and Nair brides of Kerala."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan writes that the Aranmula mirror-making tradition thrived for centuries because the mirror was one of the items associated with wedding rituals.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 2",
+          "quote": "Here, a unique mirror-making tradition has thrived for centuries as a result of it being one of the items associated with wedding rituals."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan and Glover, reporting mirror maker Gopalakrishnan's account, write that this type of mirror was traditionally used only by royalty and Brahmins because of its ritual associations and in tantric worship at shrines such as Sabarimalai.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 317-320",
+          "quote": "Traditionally this type of mirror was used only by royalty and brahmins because of its ritual associations, and also in tantric worship in shrines such as Sabarimalai."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 320-322",
+          "quote": "Mr Gopalakrishnan added that metal rnirrors were also one of the asthamangalayam or eight auspicious items"
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "A mirror as part of the ashtamangalayam is depicted as early as the Kushan period, in a Jaina votive tablet of the first to second centuries AD.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 901-904",
+          "quote": "The mirror as part of the ashtamangalayam as described by the achari is depicted as early as the Kushan period in a Jaina votive tablet of the lst-2nd centuries AD."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W06"
+      },
+      "text": "In the medieval Tamil text Arrichantira Puranam, kanjanam describes a shining mirror and is also used for cymbals.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 897-900",
+          "quote": "In the medieval Tamil text Arrichantira Puranam, kanjanam is used to describe shining mirror while it is also used to describe cymbals"
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The mirror held by a thirteenth-century Hoysala madanika sculpture could represent a mirror blank set in a wooden polishing mount.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "such as the thirteenth-century Hoysala sculpture of the madanika (or maiden forming the strut), the mirror she holds could well represent such a mirror blank set in a wooden polishing mount."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C042",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M17"
+      },
+      "text": "Srinivasan and Glover consider it possible that the brass frame is a recent innovation and that polished mirrors were left mounted on the wooden polishing board.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 922-925",
+          "quote": "indeed it is possible that the brass frame is a recent innovation and that polished mirrors were left mounted with resin on the wooden polishing board."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C043",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Gopalakrishnan, met by Srinivasan in early October 1992, and Janardhanan Achary, met by Glover in March 1992, gave the impression theirs was Aranmula's last mirror-making family, though the authors cite another in Thomas (1991).",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1269-1271",
+          "quote": "Both Mr Gopalkrishnan and Mr Janardhanan Achary gave us the impression that they were the last family in Aranmula practising this ancient craft"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 1273-1276",
+          "quote": "Another family from Aranmula making kannadi, also said to be of Tamil descent, is featured in the popular article by Thomas (1991)."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 307-309",
+          "quote": "in early October 1992 Srinivasan visited Aranmula and met Mr Gopalakrishnan"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 137-140",
+          "quote": "when he met some craftsmen from Kerala who made high-tin bronze mirrors, a craft surviving in only a few places in that state, at the National Handicrafts Museum in New Delhi in March 1992."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan and Glover describe the high-tin bronze mirror craft as surviving in only a few places in Kerala when Glover met mirror makers in March 1992.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 137-140",
+          "quote": "when he met some craftsmen from Kerala who made high-tin bronze mirrors, a craft surviving in only a few places in that state, at the National Handicrafts Museum in New Delhi in March 1992."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W05"
+      },
+      "text": "Thurston and Rangachari recorded in 1909 that the kammalar of Kerala took titles of achari as equivalent to Brahmins.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1091-1093",
+          "quote": "Thurston and Rangachari (1909) mention that the kammalar of Kerala took titles of achari as equivalent to brahrnins."
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W05"
+      },
+      "text": "The kammalar are mentioned in the context of braziers or smiths in the Karur Chola inscriptions.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 1089-1090",
+          "quote": "The kammalar are mentioned in the context of braziers or smiths as in the Karur Chola inscriptions"
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Kerala's massive flooding in the fall of 2018 damaged the traditional workshops, destroyed countless mirrors and left debris on the paddy fields where artisans collect mud.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 11",
+          "quote": "The industry suffered another setback in the fall of 2018, when Kerala experienced massive flooding, which damaged the traditional workshops, destroyed countless mirrors, and left debris on the paddy fields where artisans collect the mud used in production."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "The Aranmula mirror tradition has continued for centuries, practised by traditional craftsmen known as achari.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 89-90",
+          "quote": "It continues for centuries practiced by traditional craftsmen known as achari."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Gopalakrishnan said the trade was practised only by acharis who had the status of Brahmins.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 310-313",
+          "quote": "He said that his trade had a history of at least five hundred years passed down through generations, practised only by acharis who had the status of Brahmins"
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The craftsmen who make the Aranmula mirror belong to the Vishwakarma community.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 2",
+          "quote": "For centuries, the craftsmen, who belong to the Vishwakarma community, have been working in the Aranmula Parthasarathy Temple."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 13",
+          "quote": "All the workers in the 19 smithies that make the Aranmula mirror belong to the Vishwakarma caste."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "One Aranmula maker said his caste, having lost its other trades to other castes, wants to keep metal mirror making to itself.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 13",
+          "quote": "We lost our other trade to other castes. We want to keep at least the art of metal mirror-making to ourselves"
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "Atlas Obscura describes the Viswabrahmana Aranmula Metal Mirror Nirman Society as a society of artisans.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 11",
+          "quote": "secretary of the Viswabrahmana Aranmula Metal Mirror Nirman Society, which is a society of artisans"
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "Aranmula Kannadi (Aranmula Metal Mirror) is a registered geographical indication under application number 3, filed by the Viswabrahmana Aranmula Kannadi Nirman Society on 8 December 2003.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 39-42",
+          "quote": "Application Number | 3 | | Geographical Indications | Aranmula Kannadi (Aranmula Metal Mirror) | | Status | Registered | | Applicant Name | Viswabrahmana Aranmula Kannadi Nirman Society |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 44",
+          "quote": "Date of Filing | 08-12-2003 |"
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registry issued certificate number 10 for Aranmula Kannadi on 19 September 2005, after publishing it in Geographical Indications Journal number 3.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 49-52",
+          "quote": "Journal Number | 3 | | Availability Date | 22-11-2004 | | Certificate Number | 10 | | Certificate Date | 19-09-2005 |"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 26",
+          "quote": "Aranmula Kannadi received its Geographical Indication registration on September 19, 2005."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 6",
+          "quote": "The Vishwa Brahmana Aranmula Metal Mirror Nirman Society got a Geographical Indication certificate in 2005."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registry lists renewal details for the Aranmula Kannadi registration dated 10 April 2023, and the registration is valid up to 7 December 2033.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 53",
+          "quote": "Registration Valid Upto | 07-12-2033 |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 1",
+          "quote": "| 1 | 3 - GI - Renewal Details - 10-04-2023 | 10-04-2023 |"
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The geographical area registered for the Aranmula Kannadi indication is Kerala, for goods classed as handicraft in class 20.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 45-47",
+          "quote": "Class | 20 | | Goods | Handicraft | | Geographical Area | Kerala |"
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "IP India's list of registered geographical indications places Aranmula Kannadi, application 3, among the registrations of April 2005 to March 2006.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "line 15",
+          "quote": "FROM APRIL 2005 - MARCH 2006"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "line 21",
+          "quote": "10 3 Aranmula Kannadi Handicraft Kerala"
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "INTACH and the Pathanamthitta tourism council state that the mirrors received a geographical indication tag in 2004-05.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "line 4",
+          "quote": "These one-of-a-kind mirrors also received a Geographical Indication (GI) tag in 2004-05."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 2",
+          "quote": "The Aranmula Kannadi received a geographical indication or GI tag in 2004-05."
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In 2005 there were just seven units making Aranmula mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 6",
+          "quote": "In 2005, there were just seven units making these mirrors."
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Atlas Obscura, in a story first run in 2018 and updated in July 2022, gives a small three-inch mirror a minimum price of Rs. 3,000, rising to Rs. 100,000 with size.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 13",
+          "quote": "A small three-inch mirror costs, at a minimum, Rs. 3,000 (around $50). The price can go up to Rs. 100,000 (around $1,550) depending on the size of the mirror."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 15",
+          "quote": "This story was updated in July 2022 to include current information about the science behind Aranmula kannadis and the state of the industry."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 16",
+          "quote": "This story originally ran in 2018; it has been updated for 2022."
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Atlas Obscura reports cheaper fake Aranmula mirrors made with tin sheets on the market, which buyers find hard to tell from genuine pieces.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 13",
+          "quote": "Since they are expensive, cheaper fakes are flooding the market. These are made with tin sheets, and for a buyer, it can be difficult to discern if it is a genuine piece or a fake."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 6",
+          "quote": "A huge board placed outside warns customers against fake Aranmula mirrors."
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Tribune reported a good market for the mirror among tourists, especially in August when Kerala celebrates the Onam festival.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "the Aranmula mirror finds a good market among tourists, especially in August when the Kerala festival of Onam is celebrated"
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One worker in a mirror smithy, like the five others there, had been a goldsmith; as machines took over their earlier trade, they found work making mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 14",
+          "quote": "He, like the other five workers in Selvaraj's smithy, was a goldsmith."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 14",
+          "quote": "Even as machines took over their earlier trade, they realised that a handmade metal mirror was growing in popularity-and happily found work there."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Making a dozen Aranmula metal mirrors takes not less than 14 days.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "line 4",
+          "quote": "it takes not less than 14 days to make a dozen metal mirrors"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "line 19",
+          "quote": "It takes two weeks to make about a dozen mirrors."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Traditionally the mirror has an oval reflective surface attached to an intricately worked metal handle, though contemporary versions come in different shapes and sizes.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 8",
+          "quote": "Traditionally, the mirror has an oval reflective surface attached to an intricately worked metal handle, although contemporary versions are available in different shapes and sizes."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Aranmula mirrors come in the shapes of conchs, the sun, peacocks and swans, and their brass frames can take the shape of a tapering peepal leaf.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 3",
+          "quote": "The mirrors come in the shape of conchs, sun, peacocks, and swans."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "It is held in a brass frame that is in the shape of a tapering peepal leaf or a sinuous swan or the orb of a sun."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Open magazine describes the mirror disc as usually two to six inches in diameter, sometimes up to 12 or even 18 inches.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "The Aranmula mirror is a disc that varies usually from two inches to six inches in diameter and sometimes more, up to 12 and even 18 inches."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M17"
+      },
+      "text": "The mirror's frame is of brass, and floral motifs, traditional patterns and elaborate brass frames give the pieces their ornamental character.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "the frame consists of pure brass"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 8",
+          "quote": "Floral motifs, traditional patterns and elaborate brass frames lend the pieces their ornamental character."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M17"
+      },
+      "text": "These days the polished blank is mounted within a brass handle with a tang, to be held in the hand.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "These days, however, the blank is mounted within a brass handle with a tang to be held in the hand."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The British Museum in London has a 45 cm Aranmula mirror in its collection.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 5",
+          "quote": "even the British Museum in London has a 45-cm tall Aranmula mirror in its collection"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 2",
+          "quote": "A 45 cm tall Aranmula Kannadi is housed in the British Museum in London."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 3",
+          "quote": "the British Museum in London has an aranmula kannadi in its collection, which is 45 centimeters in length"
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Tribune calls the mirror at the British Museum, with a height of 18 inches, the largest known Aranmula mirror.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "The largest known Aranmula mirror is at the British Museum with a height of 18 inches"
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Atlas Obscura gives the sequence as making the alloy, moulding, casting the mould with the alloy in a furnace, cooling and breaking the moulds, then cutting, filing, polishing and mounting on a brass frame.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 9",
+          "quote": "The process of crafting the mirror starts with the making of the alloy. The next step is molding, then casting the mold with the alloy in the furnace stoked by a fire."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 9",
+          "quote": "The molds are cooled and then broken, to reveal the rudimentary mirror that is formed from the molten alloy. This is then cut, filed, polished, and finally mounted on a brass frame."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Open magazine describes copper bands heated in a cast-iron smelting pot surrounded by burning coal, then chunks of tin added until the metals melt together.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "An oval-shaped smelting pot made of cast-iron is lowered into it. Chunks of burning coal surround the cauldron"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "Selvaraj drops the copper bands into the blazing pot."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "Then chunks of tin are thrown into the smouldering vessel. The metals smelt to form a bubbling liquid fire."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "One Aranmula maker weighs the tin behind closed doors, because the proportion is a carefully guarded secret at the heart of the alloy.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 8",
+          "quote": "He then gets hold of hoary chunks of tin. He weighs them behind closed doors: the proportion is a carefully guarded secret and is at the heart of the alloy."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "In Open magazine's account no instrument measures the temperature; the maker pours a little molten alloy on a brick to estimate its viscosity.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 12",
+          "quote": "No one measures with any instrument what the temperature should be or when this magma-like alloy should be taken off the fire."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 12",
+          "quote": "He dips a long ladle into the cauldron and pours a bit of the fiery liquid on to a brick and watches it hiss and spread on the surface to estimate the viscosity."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "The cooled alloy is the colour of dull silver, and a sprinkle of water breaks it at once, revealing white silvery metal within.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 12",
+          "quote": "When the alloy cools, it is the colour of dull silver. Selvaraj sprinkles a little water on it: a fault line forms and the alloy breaks in an instant, revealing a white silvery metal within."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "In the process Srinivasan and Glover recorded, the mould was made of two oval, pre-fired discs of fine clay from the local Pambiyar river, each about the size of the mirror.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 338-340",
+          "quote": "two oval pre-fired, fine clay disc moulds about the size of the mirror were made of clay from the local Pambiyar river"
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "One face of each mould disc carries a fine slip, so the blank is cast against a smooth flat surface with minimum surface flaws.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 341-342",
+          "quote": "One surface of each mould, against which the mirror blank is tobe cast, has a fine slip."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 344-346",
+          "quote": "The slip ensures that the blank is cast against a smooth flat surface with minimum surface flaws"
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The slip can also adsorb residual gases, which minimises surface porosities and prevents unevenness of the cast blank.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 346-348",
+          "quote": "while it is also able to adsorb any residual gases and thus minimise the formation of surface porosities and prevents unevenness of the blank."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The slip on the mould discs has been fired grey in parts, indicating reducing conditions.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 342-344",
+          "quote": "The slip would have been poured on to flatten it and has been fired grey in parts indicating reducing conditions."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The slipped faces of the two discs were kept about 3mm apart by three small pieces of the mirror alloy, which later melted into the mirror.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 349-351",
+          "quote": "The slipped surfaces of the pre-fired discs were kept about 3mm apart by three small pieces of the mirror alloy which would later melt into the mirror."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "These are separated with fine spacers of the same alloy"
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The discs were then invested with coarse alluvial clay mixed with coir fibres and buffalo dung, and bound with iron wire.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 351-354",
+          "quote": "The discs were then invested with further layers of coarse alluvial clay mixed with coir fibres and buffalo dung and bound with iron wire"
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "A plug of wax kept a channel open from the space between the two discs to a cup-shaped cavity in the mould's neck.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 354-356",
+          "quote": "A plug of wax maintained a channel from the space between the two discs to a cup-shaped cavity in the neck."
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "In Open magazine's account, earth and water are mixed into clay, which with broken tiles is made into rectangular slabs, fired in kilns and bound in pairs with a 3-mm gap.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "Selvaraj first mixes earth and water to make clay."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "He mixes it with broken bits of tiles and water to make rectangular slabs which are then fired in kilns. When two of these slabs are bound together, with a 3-mm gap in between, they act as the mould"
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Outlook Traveller and The Tribune describe the mirror as cast by the lost-wax process, in which a wax model covered with clay melts away to leave a cavity.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 10",
+          "quote": "Artisans employ the lost-wax casting technique, also known as cire perdue, in which a wax model is covered with layers of clay and heated until the wax melts away, leaving a cavity for the molten metal."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "The method is the age-old lost-wax process in traditional style after melting the metals in a furnace fitted with a manual blower."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Alloy fragments enough for one mirror are placed in the cup-shaped neck and sealed with clay, making a closed crucible-cum-mould.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 358-361",
+          "quote": "Fragments of high-tin bronze, sufficient to make the mirror, were placed into the neck cavity and sealed with more clay to form a closed crucible"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "lines 117-118",
+          "quote": "consisting of a hollow cup wherein the metal pieces to be cast are placed and sealed with clay."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 19",
+          "quote": "He fills the cup with fragments of the alloy and seals the entire thing with clay."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The crucible-mould was heated neck down over a shallow pit of glowing charcoal embers kept hot by a small electric blower.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 361-365",
+          "quote": "The whole crucible-mould was then put over a shallow pit filled with glowing embers of charcoal which were heated continuously with a small electric blower; it was kept vertical with the neck facing downwards"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "lines 119-120",
+          "quote": "This closed clay crucible- cum-mould is heated in a hearth, facing neck down."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The achari judged from its colour when the metal in the neck had melted, then quickly inverted the crucible so the alloy flowed between the discs.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 370-374",
+          "quote": "the achari judged when the metal in the neck cavity of the crucible was malten from its colour. Then the crucible was inverted quickly so that the malten alloy would flow from the neck cavity into the space between the two discs."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "Once the metal in the cup melts, it is tipped over so that it flows into the gap left for the mirror blank."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The molten metal flows into the narrow gap of the oval two-piece mould and solidifies into a thin oval blank 3 mm thick.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 121-124",
+          "quote": "then the jug-shaped crucible-cum-mould is tipped over so that the molten metal flows into the narrow gap between the oval two-piece mould so that it solidifies into a thin 3 mm oval metal blank."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Srinivasan's Sahapedia account gives the cast blank as no more than a couple of millimetres thick.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "a very thin blank was cast, of no more than a couple of millimetres"
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "One artisan told The Tribune that often three mirrors must be cast before one free of defects and fit for polishing is obtained.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "According to one of the artisans, often they have to make three mirrors, before one that is suitable for polishing and without defects is obtained."
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The delta bronze alloy melts at a temperature of around 750 °C, over a narrow temperature range.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 96-97",
+          "quote": "such an alloy melts at a temperature of around 750 °C."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "lines 152-153",
+          "quote": "The melting occurs over a narrow temperature range around at least 750°C."
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Nagae and colleagues used thermographic analysis to follow the solidification sequence of the mirror alloy by its thermal profile.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 17",
+          "quote": "thermographic analysis has been employed to follow the solidification sequence by looking at the thermal profile."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Thermography showed a temperature differential of at least 300° C between the cup where the metal melts and the portion holding the blank.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 144-145",
+          "quote": "A marked temperature differential is seen between the portion where the blank is and the portion where the metal is melted in the cup of the cruciblecum-mould of at least 300° C."
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Because of the cooling rate, the mirror alloy solidifies with a mild departure from the equilibrium phase diagram.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 18",
+          "quote": "due to the cooling rate the alloy solidifies with a mild departure from the equilibrium phase diagram."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "After cooling, the mould is carefully broken to obtain the cast mirror blank, a thin silvery-grey disc.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 374-376",
+          "quote": "After cooling the mould was carefully broken to obtain the cast mirror blank in the form of a thin silvery-grey disc."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "The as-cast blank is then retrieved by breaking open the crucible-cum-mould."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 126",
+          "quote": "After breaking the mould, the cast blank is retrieved"
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "In Open magazine's account the cast alloy cools for a day, and the broken mould reveals a 3-mm thick piece that looks like opaque slate.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 19",
+          "quote": "This alloy has to cool for a day. When Selvaraj breaks the mould, he will find a 3-mm thick material that looks like opaque slate."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "In Open magazine's account the slate-like slab is broken to the desired circular size and attached to a wooden slab with a handle for buffing.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 21",
+          "quote": "The slate-like slab is broken into desired circular sizes and then attached to a wooden slab with a handle to be gripped when it is buffed-up."
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The blank is mounted with dammar resin on a thick wooden polishing block; the resin, very hard when cool, gives the brittle alloy a firm base.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 393-394",
+          "quote": "The mirror blank was then mounted with dammar resin onto a thick rectangular wooden polishing block"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 396-397",
+          "quote": "The resin is very hard when cool providing a firm base for the brittle alloy"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "The silvery oval blank is then pressed onto a wooden mount with heated resin"
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The blank was polished against a hessian cloth on a wooden board, first in one direction and then at right angles to it.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 395-396",
+          "quote": "carefully polished against a hessian cloth placed on a wooden board"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 401-403",
+          "quote": "Polishing was first in one direction and then at right angles to this, the process taking several days."
+        }
+      ]
+    },
+    {
+      "id": "C102",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Polishing the mirror blank to a brilliant reflective surface takes several days, with hessian and velvet cloth.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 127-128",
+          "quote": "mounted onto a wooden handle and polished over several days with hessian and velvet cloth to get a mirror finish"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 6",
+          "quote": "then polished over several days to get the brilliant reflective surface"
+        }
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The first polishing powder was said to be finely crushed fragments of the fired crucible mixed with powdered mirror alloy and oil.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 398-400",
+          "quote": "The first polishing powder was said to comprise finely crushed fragments of the fired crucible mixed with powdered mirror alloy and oil"
+        }
+      ]
+    },
+    {
+      "id": "C104",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The final polishing of the Aranmula mirror was done with powdered mirror alloy.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 403-404",
+          "quote": "The final polishing was done with powdered mirror alloy"
+        }
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Polishing with powdered mirror alloy might have smeared the same alloy into surface defects in a cold fusion process, giving a more flawless surface.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 403-406",
+          "quote": "The final polishing was done with powdered mirror alloy which might have served to smear the same alloy into the defects in a cold fusion process, to obtain a more flawless surface."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C106",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M14"
+      },
+      "text": "Final lapping was with finely crushed iron oxide, or rouge, which is also used to clean the mirror face from time to time when it tarnishes.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 406-409",
+          "quote": "Final lapping was with finely crushed iron oxide (rouge) which is also used to clean the mirror face from time to time when it tarnishes."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "In Open magazine's account the disc is rubbed on water paper, then polished with oil on velvet over glass, and finally on white cotton T-shirts.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 21",
+          "quote": "first it is rubbed on water paper of varying thickness to remove blemishes."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 22",
+          "quote": "The disc, coated with oil, is eventually polished on velvet spread on a sheet of glass kept on a gunny sack, and then the velvet is replaced by something as mundane as white cotton T-shirts."
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The Tribune describes the disc mounted on a wooden plank and polished with burnt clay powder and castor oil on jute cloth for two to three days.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "The moulded metal disc is mounted on a wooden plank to polish it, using well-ground burnt clay powder and castor oil on a jute cloth. The polishing process can go on for two to three days."
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "The polished mirror was freed from the wooden mount by melting the resin and fitted into a handled brass frame over a layer of resin.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 409-411",
+          "quote": "The oval mirror was then removed from the wooden mount by melting the resin and fitted into a handled brass frame (Fig 8) over a layer of resin"
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The mirrors are made of an unleaded, binary copper-tin alloy of around 33% tin, which Srinivasan and Glover call a delta bronze.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 290-292",
+          "quote": "In Kerala an unleaded high-tin bronze of around 33% tin, which may best be described as a delta bronze, is used to make mirrors."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "lines 91-92",
+          "quote": "A cast unleaded high-tin bronze mirror of about 33% tin"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "line 2",
+          "quote": "Finished and unfinished mirror from two workshops were of a binary, copper-tin alloy of 33% tin which is close to the composition of pure delta phase"
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Srinivasan gives the tin content as 32-33 per cent, the narrow range in which the delta phase of 32.6 per cent tin predominantly forms.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "a binary copper-tin alloy (of 32-33 per cent tin alloyed to copper), optimising the presence of the delta intermetallic compound phase of bronze of 32.6 per cent tin that forms predominantly within this narrow composition range."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 9",
+          "quote": "My research findings show that the mirror is uniquely made of bronze of a high tin content-around 32-33 per cent."
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "A finished mirror, an as-cast alloy fragment and a cast blank analysed at around 32-34% tin bronze, with a high microhardness of around 500.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 806-809",
+          "quote": "Analyses of a finished cast mirror (Fig 8), an as-cast mirror alloy fragment and a cast mirror blank (Fig 14) indicate that their composition is around 32-34% tin bronze, with a high microhardness of around 500."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "Aranmula mirrors were made of a binary copper-tin alloy with 32-34 per cent tin"
+        }
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "A finished mirror from Aranmula analysed at 64.73% copper and 32.47% tin by weight.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "line 238",
+          "quote": "4 Finished mirror Aranmula, Kerala 64.73 32.47 97.20"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "line 243",
+          "quote": "Table 1: Analyses of modern high-tin bronze bowls and mirrorsfrom South India (wt %)"
+        }
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "An as-cast mirror alloy from Malakkara analysed at 66.91% copper and 33.39% tin by weight.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "line 238",
+          "quote": "5 As-cast mirror alloy Malakk:ara, Kerala 66.91 33.39 100.29"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "line 243",
+          "quote": "Table 1: Analyses of modern high-tin bronze bowls and mirrorsfrom South India (wt %)"
+        }
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Gopalakrishnan told Srinivasan the alloy was pure copper with a high percentage of tin, which he indicated could be close to 50% tin.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 327-330",
+          "quote": "Mr Gopalkrishnan told Srinivasan that the alloy used for the mirror was of pure copper with a high percentage of tin, the exact composition of which he would not say but he indicated it could be close to 50% tin."
+        }
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Analyses of mirror samples brought back to London showed a very brittle binary copper-tin alloy of not more than 35% tin.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 332-335",
+          "quote": "The analyses of mirror samples brought back to London show that it was a very brittle binary copper-tin alloy of not more than 35% tin"
+        }
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The Tribune writes that some undisclosed metals, as known to the seven artisan families of Aranmula, are alloyed with copper and tin to cast the mirror in clay moulds.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "Some undisclosed metals (as known to the seven artisan"
+        },
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "are alloyed with copper and tin to cast the mirror in typical clay moulds"
+        }
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Micro-XRF analysis of three samples from different Aranmula workshops found copper and tin and no lead, whereas Chinese mirrors were reported with significant lead.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "chemical composition analysis and microstructural examination was carried out for three different samples collected from the different mirror workshop located in the Aranmula, Kerala."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "Elemental composition analysis was conducted using the micro-XRF and results indicate the presence of copper and tin and no lead was detected, however significant percentage of lead was reported in the Chinese mirror."
+        }
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Srinivasan notes that Chinese mirror bronze has 25 per cent tin with lead, which would have given a less reflective surface than Aranmula's delta bronze.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 25",
+          "quote": "China is especially famous for its metal mirrors, but their bronze contains 25 per cent tin along with several percentages of lead."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 25",
+          "quote": "but lead, being an opaque material, would have resulted in a less reflective surface than the delta bronze used in the Aranmula mirror."
+        }
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "The delta phase is a very hard, silvery, bright intermetallic compound of copper and tin, Cu31Sn8, nominally fixed at 32.6% tin.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 812-814",
+          "quote": "Delta is a very hard, silvery, bright intermetallic compound of a composition nominally fixed at 32.6% (Meeks 1986)."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 14",
+          "quote": "delta phase, which is an intermetallic compound (Cu 31Sn8) of composition 32.6% tin"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 14",
+          "quote": "Skilled mirror craft of intermetallic delta high-tin bronze (Cu31Sn8, 32.6% tin) from Aranmula, Kerala."
+        }
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W04"
+      },
+      "text": "Verma and colleagues report that X-ray diffraction of Aranmula mirror samples showed the delta phase (Cu41Sn11).",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "XRD analysis showed the presence of the delta phase (Cu41Sn11)."
+        }
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Srinivasan and Glover write that the structures and composition of the kannadi mirrors seem to suggest that the makers aimed empirically for a pure delta alloy.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 819-821",
+          "quote": "Thus the structures and composition observed in the kannadi mirrors seem to suggest that such a pure ö alloy was being aimed for empirically"
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "An as-cast mirror fragment shows essentially large grains of delta bronze, with a two-phase region between the grains in which the eutectoid is minor.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 148-150",
+          "quote": "Essentially large grains of delta bronze are seen. The region between the grains shows a two phase region with minor prevalence of the eutectoid."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "Microstructure consist of delta and eutectoid (alpha+eutectoid) phase."
+        }
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "A dendritic structure in the samples shows that the mirrors were made by casting and given no heat treatment.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "The presence of dendritic structure revealed that mirrors were manufactured by the casting route and no heat treatment was given."
+        }
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The edge of the as-cast mirror showed a slight enrichment of about 2% tin over the matrix of the alloy.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 836-839",
+          "quote": "The edge ofthe as-cast mirror, about 10μ thick, was brighter in the backscattered image due to atomic number contrast (Fig 27) and showed slight enrichment of tin of about 2% over the matrix"
+        }
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M19"
+      },
+      "text": "The achari explained that rubbing the mirror with red oxide or vermilion prevents tarnishing, while solidified coconut oil cleans off grease.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 414-418",
+          "quote": "The achari explained that to prevent tamishing the mirror should be rubbed with red oxide or vermilion from time to time, while grease was to be cleaned off by rubbing the surface with solidified coconut oil."
+        }
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Open magazine writes that the mirror stains and tarnishes easily and must be cleaned and polished at regular intervals.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 27",
+          "quote": "The mirror will stain and tarnish easily, and needs to be handled with great care. It has to be cleaned and polished at regular intervals, and tucked away in a plastic cover."
+        }
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Verma and colleagues write that the delta phase, being a stable compound, did not corrode or tarnish easily.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "Delta phase being a stable compound did not corrode or tarnish easily."
+        }
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Srinivasan found the delta bronze alloy very hard, even harder than steel, so it takes a high polish without distortion.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "The delta bronze alloy, on the other hand, is very hard, even harder than steel as found by the author, and hence it can take a high polish without distortion, giving a good mirror image."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 9",
+          "quote": "It is harder than steel and hence it can take a very high degree of polishing to get the best possible mirror surface."
+        }
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Delta bronze makes a better mirror metal than silver, which reflects well but is very soft and dents easily, giving a distorted image.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "It also makes for a better metal for a mirror than silver, which though it has high reflectance is very soft and dents easily, thus giving a distorted image."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 9",
+          "quote": "Silver too has a high reflectance, but it is very soft and bends and scratches easily, resulting in distorted images."
+        }
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Its silvery-white colour and high hardness make the delta phase alloy ideal to be polished into a mirror.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 14-15",
+          "quote": "This is an ideal alloy to be polished into a mirror due to the silvery white color and high hardness."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "lines 815-817",
+          "quote": "The ideal properties for a mirror-making metal would be high hardness to ensure a high degree of polish which could be retained free of distortion or scratching"
+        }
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The as-cast delta bronze is very brittle; Srinivasan says it breaks as easily as glass.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "However, the as-cast alloy of delta bronze (as the author has described this alloy of 32-33% tin-bronze) is very breakable."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 8",
+          "quote": "The challenge is that the alloy is brittle and breaks as easily as glass"
+        }
+      ]
+    },
+    {
+      "id": "C134",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The alloy's brittleness is overcome by casting a very thin mirror blank in a closed crucible-cum-mould rather than by adding lead.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "This brittleness, however, is overcome in clever ways. For one, a very thin blank was cast, of no more than a couple of millimetres, in a specially devised closed crucible-cum-mould."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "line 3",
+          "quote": "this brittleness in the Aranmula was not offset by adding the lead but by casting a thin mirror"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 20",
+          "quote": "devise a process of casting in a closed crucible, which minimised the brittleness of the alloy by creating a very thin mirror blank"
+        }
+      ]
+    },
+    {
+      "id": "C135",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Srinivasan and Glover reason that casting a blank no more than 3mm thick cooled the brittle alloy rapidly, improving its toughness through a finer-grained, homogeneous structure.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 823-826",
+          "quote": "the casting of a very thin blank no more than 3mm thick, would have lead to rapid cooling of the alloy, thereby improving toughness by giving a finer grained and homogenous structure."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 20",
+          "quote": "It cooled faster, thus minimising inhomogeneities and reducing brittleness."
+        }
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Srinivasan writes that the alluvial clays from the banks of the Pampa provided the moulding materials for the traditional crafts for centuries.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "line 7",
+          "quote": "The alluvial clays from the banks of the Pampa provided the moulding materials for the traditional crafts for centuries."
+        }
+      ]
+    },
+    {
+      "id": "C137",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The mould clay is traditionally taken from the paddy fields around Aranmula, where artisans collect the mud used in production.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 10",
+          "quote": "It begins with the preparation of a mould, traditionally using clay sourced from local paddy fields."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 11",
+          "quote": "the paddy fields where artisans collect the mud used in production"
+        }
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "One maker takes his mould earth from a nearby hillock across the paddy fields, flaking it off and carrying it to the workshop in gunny sacks.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 11",
+          "quote": "He gets the earth from a nearby hillock across the paddy fields, painstakingly flaking it off and then carrying it in gunny sacks to the workshop."
+        }
+      ]
+    },
+    {
+      "id": "C139",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Srinivasan and Glover reported that the Indian bronze industry, including Kerala's achari craftsmen, imported virtually all its tin from Southeast Asia.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 932-934",
+          "quote": "Today the Indian bronze industry, including the achari craftsmen of Kerala, imports virtually all its tin from SE Asia"
+        }
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "India is rather poor in tin reserves when compared with Southeast Asia, which has by far the world's largest deposits.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 930-931",
+          "quote": "India is rather poor in tin reserves when compared with SE Asia, which has by far the world's largest deposits."
+        }
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Hindu and INTACH state that, not being made of glass, the mirrors do not crack if they fall.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "line 4",
+          "quote": "These mirrors, which are not made of glass, do not crack if they fall."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 2",
+          "quote": "Since these mirrors are not made of glass, they do not crack if they fall."
+        }
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Atlas Obscura says a genuine Aranmula mirror does break when dropped, and that dropping it is how a non-expert can tell it from a counterfeit tin version.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 14",
+          "quote": "But like a plane glass mirror, this metal mirror does break."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 14",
+          "quote": "So for a non-expert, the only way of knowing if their mirror is genuine, and not a counterfeit tin version, is to drop it. If it breaks, well, it was a genuine mirror."
+        }
+      ]
+    },
+    {
+      "id": "C143",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Aranmula Kannadi is a front-surface mirror: light reflects from the polished metal itself, not from a coating behind glass.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 7",
+          "quote": "The uniqueness of the Aranmula kannadi is that it is front reflecting, unlike plane glass mirrors where reflection takes place on the back surface of the glass, where the reflective coating is applied."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "line 7",
+          "quote": "An Aranmula Kannadi, by contrast, is a front-surface mirror. Its reflective surface is the polished metal itself."
+        }
+      ]
+    },
+    {
+      "id": "C144",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Reflecting from its front surface, the mirror avoids the secondary reflections and distortion that light passing through glass and back can cause.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 7",
+          "quote": "This gives the mirror its characteristic clarity and eliminates the secondary reflection associated with conventional glass mirrors."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 7",
+          "quote": "In plane mirrors, light travels through the glass and back, so it gets refracted and changes direction. This can cause aberration or distortion of the image"
+        }
+      ]
+    },
+    {
+      "id": "C145",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "With no refraction through glass, the mirror gives a point image: a pen or finger placed on it shows no gap from its reflection.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 421-423",
+          "quote": "The metal mirrors, unlike modern coated glass mirrors, have the property of 'point image' due to absence of refraction through glass and specular reflection"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 3",
+          "quote": "if one were to place the point of a pen against the Aranmula mirror, it would give a perfect point image, and with brilliant true colours as well."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "In genuine Aranmula mirror, there will not be any gap between your finger and the reflected image, but in all other mirrors there will be a gap."
+        }
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The very slight convexity of the planar metal mirror gives a somewhat reduced image.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 423-425",
+          "quote": "the very slight convexity of the planar mirror gives a somewhat reduced image."
+        }
+      ]
+    },
+    {
+      "id": "C147",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Polished, the silvery-white delta phase reflects highly and uniformly across the spectrum, which is responsible for the mirror effect and compares very well with modern mirrors.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "lines 292-297",
+          "quote": "a predominantly ö intermetallic phase is formed which is very hard, brittle and silvery, and this is polished to give a reflecting surface with uniform reflectance across the spectrum, which compares very well with modern mirrors"
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 5",
+          "quote": "This silvery-white phase, due to its high reflectivity across the spectrum, is responsible for the mirror effect."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 9",
+          "quote": "The Aranmula mirror has a very high and excellent reflectance [effectiveness in reflecting radiant energy] across the spectrum, brilliantly reflecting colours."
+        }
+      ]
+    },
+    {
+      "id": "C148",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Atlas Obscura calls mirror making a relatively green process, with local materials, little waste, mould bits ground again and alloy pieces re-melted.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 10",
+          "quote": "Creating the mirror is a relatively green process. The material used is eco-friendly and obtained locally. There is minimum waste and most of the material is recycled, as the mold bits can be ground again, and the alloy pieces re-melted."
+        }
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "One maker said that if the proposed Aranmula airport came up, he would lose the earth he has always used to make his moulds.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 28",
+          "quote": "If the airport comes up, I will lose the earth I have always used to make my moulds."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 28",
+          "quote": "It is the site for the proposed Aranmula airport, which is met with stiff opposition from environmentalists."
+        }
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Pathanamthitta District was formed with effect from 1 November 1982, carved out of the erstwhile Alleppey, Quilon and Idukki Districts.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "line 1",
+          "quote": "It was formed with effect from the 1st November, 1982"
+        },
+        {
+          "sourceId": "S17",
+          "locator": "line 1",
+          "quote": "This District, when carved out of erstwhile Alleppey, Quilon and Idukki Districts"
+        }
+      ]
+    },
+    {
+      "id": "C151",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "The Tribune writes that the polished metal discs are then mounted on bronze frames with exquisite carvings.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 3",
+          "quote": "The polished metal discs are then mounted on bronze frames with exquisite carvings."
+        }
+      ]
+    },
+    {
+      "id": "C152",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Open magazine describes a worker polishing copper rings in which the mirrors will be placed.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 14",
+          "quote": "Kannan L polishes copper rings in which the mirrors will be placed."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Aranmula",
+      "kind": "VILLAGE",
+      "district": "Pathanamthitta",
+      "state": "Kerala",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C002",
+        "C011",
+        "C012"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Mallapuzhacherry",
+      "kind": "VILLAGE",
+      "district": "Pathanamthitta",
+      "state": "Kerala",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C012"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Malakkara",
+      "kind": "VILLAGE",
+      "district": "Pathanamthitta",
+      "state": "Kerala",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C016",
+        "C114"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Pampa River",
+      "kind": "RIVER",
+      "country": "India",
+      "state": "Kerala",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C136"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Achari",
+      "claimIds": [
+        "C048",
+        "C049",
+        "C045"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "COMMUNITY",
+      "name": "Vishwakarma",
+      "claimIds": [
+        "C050",
+        "C019",
+        "C051"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Viswabrahmana Aranmula Kannadi Nirman Society",
+      "localNames": [
+        "Viswabrahmana Aranmula Metal Mirror Nirman Society",
+        "Vishwa Brahmana Aranmula Metal Mirror Nirman Society"
+      ],
+      "claimIds": [
+        "C053",
+        "C052",
+        "C054"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "PERSON",
+      "name": "Gopalakrishnan",
+      "placeId": "L01",
+      "claimIds": [
+        "C020",
+        "C024",
+        "C115",
+        "C043",
+        "C038"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "PERSON",
+      "name": "M S Janardhanan Achary",
+      "placeId": "L03",
+      "claimIds": [
+        "C016",
+        "C043"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Making the alloy",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C073",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C074"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C074"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T04",
+          "claimId": "C074"
+        }
+      ],
+      "claimIds": [
+        "C074",
+        "C075",
+        "C076",
+        "C077"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Making the clay mould",
+      "stageType": "PREP",
+      "order": 2,
+      "orderClaimId": "C073",
+      "materials": [
+        {
+          "materialId": "M04",
+          "claimId": "C078"
+        },
+        {
+          "materialId": "M05",
+          "claimId": "C083"
+        },
+        {
+          "materialId": "M06",
+          "claimId": "C083"
+        },
+        {
+          "materialId": "M07",
+          "claimId": "C083"
+        },
+        {
+          "materialId": "M08",
+          "claimId": "C084"
+        },
+        {
+          "materialId": "M18",
+          "claimId": "C085"
+        }
+      ],
+      "claimIds": [
+        "C078",
+        "C079",
+        "C080",
+        "C081",
+        "C082",
+        "C083",
+        "C084",
+        "C085"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Casting the mirror blank",
+      "stageType": "CAST",
+      "order": 3,
+      "orderClaimId": "C073",
+      "materials": [
+        {
+          "materialId": "M03",
+          "claimId": "C087"
+        },
+        {
+          "materialId": "M09",
+          "claimId": "C088"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C087"
+        },
+        {
+          "toolId": "T02",
+          "claimId": "C088"
+        }
+      ],
+      "claimIds": [
+        "C087",
+        "C088",
+        "C089",
+        "C090",
+        "C091",
+        "C095",
+        "C094",
+        "C092"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Cooling and breaking the mould",
+      "stageType": "OTHER",
+      "order": 4,
+      "orderClaimId": "C073",
+      "duration": {
+        "text": "a day",
+        "claimId": "C098"
+      },
+      "claimIds": [
+        "C097",
+        "C098"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Cutting and filing",
+      "stageType": "SHAPE",
+      "order": 5,
+      "orderClaimId": "C073",
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C099"
+        }
+      ],
+      "claimIds": [
+        "C099"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Polishing",
+      "stageType": "FINISH",
+      "order": 6,
+      "orderClaimId": "C073",
+      "duration": {
+        "text": "several days",
+        "claimId": "C102"
+      },
+      "materials": [
+        {
+          "materialId": "M10",
+          "claimId": "C100"
+        },
+        {
+          "materialId": "M11",
+          "claimId": "C103"
+        },
+        {
+          "materialId": "M12",
+          "claimId": "C104"
+        },
+        {
+          "materialId": "M21",
+          "claimId": "C103"
+        },
+        {
+          "materialId": "M13",
+          "claimId": "C108"
+        },
+        {
+          "materialId": "M14",
+          "claimId": "C106"
+        },
+        {
+          "materialId": "M15",
+          "claimId": "C101"
+        },
+        {
+          "materialId": "M16",
+          "claimId": "C102"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C100"
+        }
+      ],
+      "claimIds": [
+        "C100",
+        "C101",
+        "C102",
+        "C103",
+        "C104",
+        "C106",
+        "C107",
+        "C108"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Fitting the frame",
+      "stageType": "FINISH",
+      "order": 7,
+      "orderClaimId": "C073",
+      "materials": [
+        {
+          "materialId": "M17",
+          "claimId": "C109"
+        },
+        {
+          "materialId": "M10",
+          "claimId": "C109"
+        }
+      ],
+      "claimIds": [
+        "C109",
+        "C151",
+        "C152"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Copper",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C001",
+        "C074",
+        "C113"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Tin",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C074",
+        "C075",
+        "C139"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Delta bronze (high-tin copper-tin mirror alloy)",
+      "kind": "METAL",
+      "role": "PRODUCT",
+      "claimIds": [
+        "C110",
+        "C111",
+        "C130",
+        "C133",
+        "C132"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Mould clay",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "claimIds": [
+        "C078",
+        "C136",
+        "C137",
+        "C138"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Coir fibre",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Buffalo dung",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Iron wire",
+      "kind": "METAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C083"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Wax",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C084"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Charcoal",
+      "kind": "FUEL",
+      "role": "FUEL",
+      "claimIds": [
+        "C088"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Dammar resin",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "claimIds": [
+        "C100",
+        "C109"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Crushed fired clay (crucible) powder",
+      "kind": "CLAY",
+      "role": "OTHER",
+      "claimIds": [
+        "C103",
+        "C108"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Powdered mirror alloy",
+      "kind": "METAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C103",
+        "C104"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Castor oil",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Iron oxide (rouge)",
+      "kind": "MINERAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C106"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Hessian (jute) cloth",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C101",
+        "C102",
+        "C108"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Velvet cloth",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C102",
+        "C107"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Brass",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C068",
+        "C109",
+        "C069"
+      ]
+    },
+    {
+      "id": "M18",
+      "name": "Broken tiles",
+      "kind": "CLAY",
+      "role": "OTHER",
+      "claimIds": [
+        "C085"
+      ]
+    },
+    {
+      "id": "M19",
+      "name": "Red oxide or vermilion",
+      "kind": "MINERAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C127"
+      ]
+    },
+    {
+      "id": "M20",
+      "name": "Coconut oil",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C127"
+      ]
+    },
+    {
+      "id": "M21",
+      "name": "Oil",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C103",
+        "C107"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Crucible-cum-mould",
+      "claimIds": [
+        "C087",
+        "C088",
+        "C090"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Blower",
+      "claimIds": [
+        "C088",
+        "C086"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Wooden polishing block",
+      "claimIds": [
+        "C100",
+        "C099"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Cast-iron smelting pot",
+      "claimIds": [
+        "C074"
+      ]
+    }
+  ],
+  "reactions": [],
+  "environment": [
+    {
+      "factor": "SOIL",
+      "placeId": "L04",
+      "claimIds": [
+        "C136"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "claimIds": [
+        "C078"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "placeId": "L01",
+      "claimIds": [
+        "C137",
+        "C138",
+        "C149"
+      ]
+    },
+    {
+      "factor": "WATER",
+      "placeId": "L01",
+      "claimIds": [
+        "C047"
+      ]
+    }
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "3",
+      "certificateNumber": "10",
+      "filedOn": "2003-12-08",
+      "registeredOn": "2005-09-19",
+      "journalIssue": "3",
+      "proprietors": [
+        "Viswabrahmana Aranmula Kannadi Nirman Society"
+      ],
+      "claimIds": [
+        "C053",
+        "C054",
+        "C055",
+        "C056",
+        "C057"
+      ]
+    },
+    "prices": [],
+    "workforce": [
+      {
+        "claimId": "C059",
+        "year": 2005
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "kannadi",
+      "meaning": "Mirror; Srinivasan notes that kannadi is the Tamil word for mirror as well.",
+      "language": "ml",
+      "claimIds": [
+        "C005"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "val kannadi, valkannadi, vaal kannadi",
+      "meaning": "The handheld or handled metal mirror of Aranmula.",
+      "language": "ml",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "ashtamangalyam, asthamangalayam, ashtamangalayam",
+      "meaning": "The set of eight auspicious items of a Kerala bride's wedding trousseau, of which the metal mirror is one.",
+      "language": "ml",
+      "claimIds": [
+        "C006",
+        "C036"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "delta bronze",
+      "meaning": "An unleaded high-tin bronze of around 33% tin, formed predominantly of the delta intermetallic phase of copper and tin.",
+      "language": "en",
+      "claimIds": [
+        "C110",
+        "C120"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "kammalar",
+      "meaning": "A community mentioned in Chola inscriptions in the context of braziers or smiths; in Kerala they took titles of achari as equivalent to Brahmins.",
+      "language": "ta",
+      "claimIds": [
+        "C046",
+        "C045"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "kanjanam",
+      "meaning": "In the medieval Tamil text Arrichantira Puranam, a word for a shining mirror, also used for cymbals.",
+      "language": "ta",
+      "claimIds": [
+        "C040"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C054",
+        "C057",
+        "C058"
+      ],
+      "about": "When the Aranmula Kannadi geographical indication was registered"
+    },
+    {
+      "claimIds": [
+        "C110",
+        "C116",
+        "C115"
+      ],
+      "about": "How much tin the mirror alloy contains"
+    },
+    {
+      "claimIds": [
+        "C117",
+        "C118",
+        "C116"
+      ],
+      "about": "Whether the alloy holds metals other than copper and tin"
+    },
+    {
+      "claimIds": [
+        "C120",
+        "C122"
+      ],
+      "about": "The formula given for the delta phase"
+    },
+    {
+      "claimIds": [
+        "C086",
+        "C078",
+        "C087"
+      ],
+      "about": "Whether the blank is cast by the lost-wax process or in a closed crucible-cum-mould of pre-fired clay discs"
+    },
+    {
+      "claimIds": [
+        "C078",
+        "C090",
+        "C085"
+      ],
+      "about": "Whether the mould is made of oval clay discs or rectangular clay slabs"
+    },
+    {
+      "claimIds": [
+        "C136",
+        "C137",
+        "C138"
+      ],
+      "about": "Where the mould clay is taken from"
+    },
+    {
+      "claimIds": [
+        "C128",
+        "C129"
+      ],
+      "about": "Whether the mirror tarnishes easily"
+    },
+    {
+      "claimIds": [
+        "C090",
+        "C135",
+        "C091"
+      ],
+      "about": "How thick the cast mirror blank is"
+    },
+    {
+      "claimIds": [
+        "C141",
+        "C142"
+      ],
+      "about": "Whether the mirror breaks if it falls"
+    },
+    {
+      "claimIds": [
+        "C020",
+        "C019",
+        "C021",
+        "C022",
+        "C023"
+      ],
+      "about": "How old the craft is"
+    },
+    {
+      "claimIds": [
+        "C024",
+        "C025",
+        "C026",
+        "C027",
+        "C028"
+      ],
+      "about": "Who brought the mirror makers to Aranmula, and when"
+    },
+    {
+      "claimIds": [
+        "C024",
+        "C026",
+        "C029"
+      ],
+      "about": "Which place in Tamil Nadu the mirror makers came from"
+    },
+    {
+      "claimIds": [
+        "C011",
+        "C013",
+        "C150"
+      ],
+      "about": "The district in which Aranmula is placed"
+    },
+    {
+      "claimIds": [
+        "C068",
+        "C109",
+        "C151",
+        "C152"
+      ],
+      "about": "What metal the mirror's frame is made of"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Who brought the mirror makers to Aranmula, from where, and when?",
+      "claimIds": [
+        "C025",
+        "C026",
+        "C027",
+        "C028",
+        "C029",
+        "C024"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "How, in the craft's legends, was the mirror alloy discovered?",
+      "claimIds": [
+        "C030",
+        "C031",
+        "C032"
+      ]
+    },
+    {
+      "id": "O03",
+      "question": "How old is the Aranmula mirror craft?",
+      "claimIds": [
+        "C022",
+        "C020",
+        "C021",
+        "C034",
+        "C033"
+      ],
+      "settledBy": "Further studies of the craft's antiquity, which Srinivasan writes are needed."
+    },
+    {
+      "id": "O04",
+      "question": "Is the brass frame a recent addition, and were older mirrors kept on their wooden polishing mounts?",
+      "claimIds": [
+        "C042",
+        "C041"
+      ]
+    },
+    {
+      "id": "O05",
+      "question": "What does the final polish with powdered mirror alloy do to the surface?",
+      "claimIds": [
+        "C105",
+        "C104"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Aranmula_kannadi.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Aranmula_kannadi.jpg",
+      "author": "Rajesh Nair",
+      "licence": "CC BY 2.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "caption": "An Aranmula kannadi, a special type of mirror produced at Aranmula, a village in Kerala",
+      "claimIds": [
+        "C001"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Structure%40Vaalkannady.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Structure%40Vaalkannady.jpg",
+      "author": "Captain",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "A clay mould structure in a vaal kannadi workshop",
+      "stageId": "P02"
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Heatingup%40vaalkannady.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Heatingup%40vaalkannady.jpg",
+      "author": "Captain",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Heating the clay mould blocks in a vaal kannadi workshop",
+      "stageId": "P03"
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/ToastedMud%40Vaalkannady.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:ToastedMud%40Vaalkannady.jpg",
+      "author": "Captain",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "A fired clay mould block left to cool in a vaal kannadi workshop",
+      "stageId": "P04"
+    },
+    {
+      "id": "I05",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Finished_Metal_Mirror.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Finished_Metal_Mirror.jpg",
+      "author": "Captain",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "A raw metal mirror awaiting its final polish, in a metal mirror workshop in Aranmula",
+      "stageId": "P06"
+    },
+    {
+      "id": "I06",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Frames%40vaalkannady.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Frames%40vaalkannady.jpg",
+      "author": "Captain",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Frames for Aranmula vaal kannadi metal mirrors",
+      "stageId": "P07"
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "The Aranmula Kannadi is a handheld metal mirror, the val kannadi, made from an alloy of copper and tin rather than glass in the village of Aranmula in Kerala.",
+        "claimIds": [
+          "C001",
+          "C004",
+          "C002"
+        ]
+      },
+      {
+        "text": "Craftsmen known as achari make it by a closely guarded traditional method, casting a high-tin bronze and polishing it over several days, and Atlas Obscura and Open magazine say the makers belong to the Vishwakarma community.",
+        "claimIds": [
+          "C048",
+          "C009",
+          "C002",
+          "C110",
+          "C102",
+          "C050"
+        ]
+      },
+      {
+        "text": "It is a front-surface mirror: light reflects from the polished metal itself, so a pen point or finger placed on it shows no gap from its reflection.",
+        "claimIds": [
+          "C143",
+          "C145"
+        ]
+      },
+      {
+        "text": "The mirror is one of the eight auspicious items of a Kerala bride's wedding trousseau, and its origin is linked to the Aranmula Parthasarathy Temple.",
+        "claimIds": [
+          "C006",
+          "C017"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "GI status",
+        "value": "Registered geographical indication: application 3 filed on 8 December 2003, certificate 10 dated 19 September 2005; INTACH and the district tourism council give 2004-05",
+        "claimIds": [
+          "C053",
+          "C054",
+          "C058"
+        ]
+      },
+      {
+        "label": "Centres",
+        "value": "Aranmula, Mallapuzhacherry and Malakkara villages in Pathanamthitta district, Kerala",
+        "claimIds": [
+          "C011",
+          "C012",
+          "C016"
+        ]
+      },
+      {
+        "label": "Makers",
+        "value": "Craftsmen known as achari; press accounts place the makers in the Vishwakarma community; the Viswabrahmana Aranmula Kannadi Nirman Society is the GI applicant",
+        "claimIds": [
+          "C048",
+          "C050",
+          "C053"
+        ]
+      },
+      {
+        "label": "Alloy",
+        "value": "Unleaded delta bronze of around 33% tin; analyses give 32-34%, while one maker indicated close to 50%",
+        "claimIds": [
+          "C110",
+          "C112",
+          "C115"
+        ]
+      },
+      {
+        "label": "Optics",
+        "value": "Front-surface metal mirror that gives a point image",
+        "claimIds": [
+          "C143",
+          "C145"
+        ]
+      },
+      {
+        "label": "Stages",
+        "value": "Making the alloy, moulding, casting, breaking the mould, cutting and filing, polishing over several days, and mounting in a frame",
+        "claimIds": [
+          "C073",
+          "C102"
+        ]
+      },
+      {
+        "label": "Ritual role",
+        "value": "One of the eight auspicious items, the ashtamangalyam, of a Kerala bride's trousseau",
+        "claimIds": [
+          "C006"
+        ]
+      },
+      {
+        "label": "Age",
+        "value": "At least five hundred years by one maker's account, around 500 years by Atlas Obscura and 600 years by The Tribune",
+        "claimIds": [
+          "C020",
+          "C019",
+          "C021"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "The origin of the mirror is linked to the Aranmula Parthasarathy Temple.",
+            "claimIds": [
+              "C017"
+            ]
+          },
+          {
+            "text": "Sources differ on the craft's age: one mirror maker spoke of at least five hundred years, Atlas Obscura of around 500 years, and The Tribune of a 600-year-old art.",
+            "claimIds": [
+              "C020",
+              "C019",
+              "C021"
+            ]
+          },
+          {
+            "text": "One maker told Srinivasan that the acharis had migrated to Kerala from Sankarakoil in Thiruvallur, Tamil Nadu, about 700 years ago, though sources differ on where the makers came from and who brought them.",
+            "claimIds": [
+              "C024"
+            ]
+          },
+          {
+            "text": "Thurston and Rangachari recorded in 1909 that a metal mirror, valkannadi, was one of the asthamangalayam in the trousseau of Nambuthri and Nair brides, and Srinivasan writes that the tradition thrived for centuries because the mirror was one of the items associated with wedding rituals.",
+            "claimIds": [
+              "C036",
+              "C037"
+            ]
+          },
+          {
+            "text": "Srinivasan and Glover, reporting mirror maker Gopalakrishnan's account, write that this type of mirror was traditionally used only by royalty and Brahmins because of its ritual associations, and also in tantric worship at shrines such as Sabarimalai.",
+            "claimIds": [
+              "C038"
+            ]
+          },
+          {
+            "text": "Srinivasan dated a traditional Aranmula mirror bearing the seal of Travancore royalty to the seventeenth to eighteenth century, and writes that further studies are needed to explore the antiquity.",
+            "claimIds": [
+              "C033",
+              "C034"
+            ]
+          },
+          {
+            "text": "The two mirror makers Srinivasan and Glover met in 1992 each gave the impression that theirs was the last family in Aranmula practising the craft, though the authors cite another such family in an article by Thomas (1991).",
+            "claimIds": [
+              "C043"
+            ]
+          },
+          {
+            "text": "Kerala's flooding in the fall of 2018 damaged the traditional workshops, destroyed countless mirrors and left debris on the paddy fields where artisans collect mud.",
+            "claimIds": [
+              "C047"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "Atlas Obscura gives the sequence as making the alloy, moulding, casting the mould with the alloy in a furnace, cooling and breaking the moulds, then cutting, filing, polishing and mounting on a brass frame.",
+            "claimIds": [
+              "C073"
+            ]
+          },
+          {
+            "text": "In one workshop copper bands are heated in a cast-iron smelting pot over burning coal before chunks of tin are added, and the tin is weighed behind closed doors because the proportion is a carefully guarded secret.",
+            "claimIds": [
+              "C074",
+              "C075"
+            ]
+          },
+          {
+            "text": "In the process Srinivasan and Glover recorded, the mould was made of two oval, pre-fired discs of fine clay from the Pambiyar river, each with a fine slip on one face, kept about 3mm apart by three small pieces of the mirror alloy.",
+            "claimIds": [
+              "C078",
+              "C079",
+              "C082"
+            ]
+          },
+          {
+            "text": "The discs were invested with coarse alluvial clay mixed with coir fibres and buffalo dung and bound with iron wire, while a plug of wax kept a channel to a cup-shaped cavity in the neck.",
+            "claimIds": [
+              "C083",
+              "C084"
+            ]
+          },
+          {
+            "text": "Alloy fragments sealed in that cup were heated neck down over glowing charcoal, and when the achari judged from its colour that the metal had melted, the crucible was quickly inverted so the alloy flowed between the discs.",
+            "claimIds": [
+              "C087",
+              "C088",
+              "C089"
+            ]
+          },
+          {
+            "text": "Outlook Traveller and The Tribune instead describe the lost-wax process, and Open magazine describes rectangular clay slabs bound with a 3-mm gap, so sources differ on how the blank is cast.",
+            "claimIds": [
+              "C086",
+              "C087",
+              "C085",
+              "C078"
+            ]
+          },
+          {
+            "text": "The mould is broken to free a thin silvery-grey blank, which is mounted with dammar resin on a wooden polishing block and polished over several days; in the workshop Srinivasan observed, polishing on hessian went first in one direction and then at right angles.",
+            "claimIds": [
+              "C097",
+              "C100",
+              "C101",
+              "C102"
+            ]
+          },
+          {
+            "text": "The first polishing powder was said to be crushed fired crucible mixed with powdered mirror alloy and oil, final lapping was with rouge, and the mirror was then fitted over a layer of resin into a handled brass frame.",
+            "claimIds": [
+              "C103",
+              "C106",
+              "C109"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "CHEMISTRY",
+        "sentences": [
+          {
+            "text": "The mirrors are made of an unleaded, binary copper-tin alloy of around 33% tin, which Srinivasan and Glover call a delta bronze.",
+            "claimIds": [
+              "C110"
+            ]
+          },
+          {
+            "text": "Srinivasan gives 32-33 per cent tin, the narrow range in which the delta phase of 32.6 per cent tin predominantly forms, and analyses of a finished mirror, an as-cast fragment and a cast blank gave around 32-34% tin.",
+            "claimIds": [
+              "C111",
+              "C112"
+            ]
+          },
+          {
+            "text": "A finished mirror from Aranmula analysed at 64.73% copper and 32.47% tin by weight.",
+            "claimIds": [
+              "C113"
+            ]
+          },
+          {
+            "text": "Sources differ on the composition: one maker indicated close to 50% tin, analyses found not more than 35% tin, and The Tribune says undisclosed metals are alloyed with copper and tin.",
+            "claimIds": [
+              "C115",
+              "C116",
+              "C117"
+            ]
+          },
+          {
+            "text": "Micro-XRF of three samples from different Aranmula workshops found copper and tin and no lead, whereas Chinese mirror bronze, Srinivasan notes, has 25 per cent tin with lead.",
+            "claimIds": [
+              "C118",
+              "C119"
+            ]
+          },
+          {
+            "text": "The delta phase is a very hard, silvery, bright intermetallic compound of 32.6% tin, written Cu31Sn8 by Srinivasan and colleagues, while Verma and colleagues report the delta phase (Cu41Sn11).",
+            "claimIds": [
+              "C120",
+              "C122"
+            ]
+          },
+          {
+            "text": "An as-cast fragment shows large grains of delta bronze with a two-phase region between them in which the eutectoid is minor, and a dendritic structure shows that the mirrors were cast and given no heat treatment.",
+            "claimIds": [
+              "C124",
+              "C125"
+            ]
+          },
+          {
+            "text": "Sources differ on tarnishing: Open magazine says the mirror stains and tarnishes easily, while Verma and colleagues write that the stable delta phase did not corrode or tarnish easily.",
+            "claimIds": [
+              "C128",
+              "C129"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PHYSICS",
+        "sentences": [
+          {
+            "text": "The Aranmula Kannadi is a front-surface mirror that reflects from the polished metal rather than from a coating behind glass, which avoids the secondary reflection of glass mirrors.",
+            "claimIds": [
+              "C143",
+              "C144"
+            ]
+          },
+          {
+            "text": "With no refraction through glass it gives a point image, so a pen or finger placed on it shows no gap from its reflection.",
+            "claimIds": [
+              "C145"
+            ]
+          },
+          {
+            "text": "The polished silvery-white delta phase reflects highly and uniformly across the spectrum, which is responsible for the mirror effect, and the very slight convexity of the planar mirror gives a somewhat reduced image.",
+            "claimIds": [
+              "C147",
+              "C146"
+            ]
+          },
+          {
+            "text": "The alloy melts at around 750 °C over a narrow temperature range, and thermography showed a temperature differential of at least 300° C between the cup where the metal melts and the blank.",
+            "claimIds": [
+              "C093",
+              "C095"
+            ]
+          },
+          {
+            "text": "Because of the cooling rate, the alloy solidifies with a mild departure from the equilibrium phase diagram.",
+            "claimIds": [
+              "C096"
+            ]
+          },
+          {
+            "text": "The fine slip on the mould discs can adsorb residual gases, which minimises surface porosities in the cast blank.",
+            "claimIds": [
+              "C080"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Srinivasan found delta bronze very hard, even harder than steel, so it takes a high polish without distortion, whereas silver is very soft and dents easily.",
+            "claimIds": [
+              "C130",
+              "C131"
+            ]
+          },
+          {
+            "text": "Its silvery-white colour and high hardness make the alloy ideal to polish into a mirror, but the as-cast delta bronze is very brittle.",
+            "claimIds": [
+              "C132",
+              "C133"
+            ]
+          },
+          {
+            "text": "The brittleness is overcome by casting a very thin blank in a closed crucible-cum-mould rather than by adding lead, and Srinivasan and Glover reason that a blank no more than 3mm thick cooled rapidly, improving toughness, though Sahapedia gives no more than a couple of millimetres.",
+            "claimIds": [
+              "C134",
+              "C135",
+              "C091"
+            ]
+          },
+          {
+            "text": "Sources differ on where the mould clay comes from: the banks of the Pampa, the paddy fields around Aranmula, or, for one maker, a hillock across the paddy fields.",
+            "claimIds": [
+              "C136",
+              "C137",
+              "C138"
+            ]
+          },
+          {
+            "text": "They also differ on whether the mirror breaks when dropped: The Hindu and INTACH say it does not crack if it falls, while Atlas Obscura says a genuine mirror does break.",
+            "claimIds": [
+              "C141",
+              "C142"
+            ]
+          },
+          {
+            "text": "Srinivasan and Glover reported that the Indian bronze industry, including Kerala's achari craftsmen, imported virtually all its tin from Southeast Asia.",
+            "claimIds": [
+              "C139"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "Aranmula, where the mirror is made, is a village in Kerala's Pathanamthitta district by the Pampa River, and Kerala's department of tourism has declared it a heritage village.",
+            "claimIds": [
+              "C011",
+              "C014",
+              "C015"
+            ]
+          },
+          {
+            "text": "Open magazine described the mirror being smelted, moulded and burnished in units in the villages of Aranmula and Mallapuzhacherry in Pathanamthitta.",
+            "claimIds": [
+              "C012"
+            ]
+          },
+          {
+            "text": "In 1992 Glover met mirror maker M S Janardhanan Achary of Malakkara village in Pathanamthitta District, and an as-cast mirror alloy from Malakkara was analysed.",
+            "claimIds": [
+              "C016",
+              "C114"
+            ]
+          },
+          {
+            "text": "Srinivasan and Glover, citing Mukherjee (1978), place Aranmula in Alleppey District, while the district administration states that Pathanamthitta District, where other sources place it, was formed with effect from 1 November 1982, carved out of the erstwhile Alleppey, Quilon and Idukki Districts.",
+            "claimIds": [
+              "C013",
+              "C150",
+              "C011"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "The Viswabrahmana Aranmula Kannadi Nirman Society filed for the geographical indication on 8 December 2003 under application number 3, and the registry issued certificate number 10 on 19 September 2005.",
+            "claimIds": [
+              "C053",
+              "C054"
+            ]
+          },
+          {
+            "text": "IP India lists the registration among those of April 2005 to March 2006, while INTACH and the Pathanamthitta tourism council give 2004-05, so sources differ on the year.",
+            "claimIds": [
+              "C057",
+              "C058"
+            ]
+          },
+          {
+            "text": "The registered geographical area is Kerala, and the registration is valid up to 7 December 2033.",
+            "claimIds": [
+              "C056",
+              "C055"
+            ]
+          },
+          {
+            "text": "In 2005 there were just seven units making Aranmula mirrors.",
+            "claimIds": [
+              "C059"
+            ]
+          },
+          {
+            "text": "Atlas Obscura, in a story first run in 2018 and updated in July 2022, gives a small three-inch mirror a minimum price of Rs. 3,000, rising to Rs. 100,000 with size, and reports cheaper fakes made with tin sheets.",
+            "claimIds": [
+              "C060",
+              "C061"
+            ]
+          },
+          {
+            "text": "The Tribune reported a good market for the mirror among tourists, especially in August when Kerala celebrates Onam.",
+            "claimIds": [
+              "C062"
+            ]
+          },
+          {
+            "text": "One worker in a mirror smithy, like the five others there, had been a goldsmith, and one maker said his caste wants to keep metal mirror making to itself.",
+            "claimIds": [
+              "C063",
+              "C051"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Traditionally the mirror has an oval reflective surface attached to an intricately worked metal handle, though contemporary versions come in different shapes and sizes.",
+            "claimIds": [
+              "C065"
+            ]
+          },
+          {
+            "text": "The mirrors come in the shapes of conchs, the sun, peacocks and swans, their brass frames can take the shape of a tapering peepal leaf, and floral motifs and traditional patterns give the pieces their ornamental character.",
+            "claimIds": [
+              "C068",
+              "C066"
+            ]
+          },
+          {
+            "text": "Open magazine describes the disc as usually two to six inches in diameter, sometimes up to 12 or even 18 inches.",
+            "claimIds": [
+              "C067"
+            ]
+          },
+          {
+            "text": "These days the polished blank is mounted within a brass handle with a tang, to be held in the hand.",
+            "claimIds": [
+              "C069"
+            ]
+          },
+          {
+            "text": "Sources differ on the frame's metal: INTACH, Outlook Traveller and Srinivasan and Glover give brass, The Tribune bronze frames, and Open magazine copper rings in which the mirrors are placed.",
+            "claimIds": [
+              "C068",
+              "C109",
+              "C151",
+              "C152"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

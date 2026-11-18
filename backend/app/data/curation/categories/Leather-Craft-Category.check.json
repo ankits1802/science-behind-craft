@@ -1,0 +1,2097 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Leather-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "2b24e3a91b2b200b28c8a959757094224aa6368869af41ff639b4c3c9dadd100",
+  "checkedAt": "2026-11-18T10:20:32.981762Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "fetchedAt": "2026-11-18T10:19:23.028260Z",
+      "contentType": "application/pdf",
+      "textSha256": "0dbe670b2522e9ef30645a61d92f38c9e2c9452d93e0fc3021e9ed017ea207db",
+      "characters": 43875,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/169",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/169",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/169",
+      "fetchedAt": "2026-11-18T10:19:20.097923Z",
+      "contentType": "text/html",
+      "textSha256": "9c656822a510234a87ec91f67c4be0e2497bdf9a08fb8cd72ed1e9d9f61c2718",
+      "characters": 16903,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "fetchedAt": "2026-11-18T10:19:22.190077Z",
+      "contentType": "text/html",
+      "textSha256": "71e77cb957fab94cd6272fd63ac9aed6a57a0bc94e8b40cc854b42ceb2c9d52a",
+      "characters": 3706,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/160",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/160",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/160",
+      "fetchedAt": "2026-11-18T10:19:42.537126Z",
+      "contentType": "text/html",
+      "textSha256": "54dd300cda823f8554fcc3b65199b9af3b7621e7bbb16061806b3bebf7e6fe71",
+      "characters": 4646,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "route": "LIVE",
+      "readUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "finalUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "fetchedAt": "2026-11-18T10:19:21.934359Z",
+      "contentType": "application/pdf",
+      "textSha256": "ff0ad53755ff7fab75f8c49dedc11d047b93eead1001473a6601550a827cef5d",
+      "characters": 127520,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "route": "LIVE",
+      "readUrl": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "finalUrl": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "fetchedAt": "2026-11-18T10:19:20.294093Z",
+      "contentType": "text/html",
+      "textSha256": "9df530fae8fc1ed4940aef2a670aa8177e4aff5e3fb7c395a1ab31e70d69ed1c",
+      "characters": 29238,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20OVERSIGHT%20COMMITTEE%20IN%20OA%20NO.%20985%20of%202019%20(In%20Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20OA%20No.%20986%20of%202019.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20OVERSIGHT%20COMMITTEE%20IN%20OA%20NO.%20985%20of%202019%20(In%20Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20OA%20No.%20986%20of%202019.pdf",
+      "finalUrl": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20OVERSIGHT%20COMMITTEE%20IN%20OA%20NO.%20985%20of%202019%20(In%20Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20OA%20No.%20986%20of%202019.pdf",
+      "fetchedAt": "2026-11-18T10:19:43.404810Z",
+      "contentType": "application/pdf",
+      "textSha256": "cbc2d528d5a5ed393e1ee8513e8d917c0f4b499da043820e5a9e8b4a30f72279",
+      "characters": 106347,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20CPCB%20IN%20OA%20NO.%20985%20of%202019%20(Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20986%20of%202019).pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20CPCB%20IN%20OA%20NO.%20985%20of%202019%20(Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20986%20of%202019).pdf",
+      "finalUrl": "https://www.greentribunal.gov.in/sites/default/files/news_updates/REPORT%20BY%20CPCB%20IN%20OA%20NO.%20985%20of%202019%20(Re%20Water%20Pollution%20by%20Tanneries%20at%20Jajmau,%20Kanpur,%20Uttar%20Pradesh)%20with%20986%20of%202019).pdf",
+      "fetchedAt": "2026-11-18T10:19:56.926611Z",
+      "contentType": "application/pdf",
+      "textSha256": "5be18f58d0bf5a655b9cff5a869813024ca9a7d88fff36d88220440351f12ec1",
+      "characters": 69108,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "route": "LIVE",
+      "readUrl": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "finalUrl": "https://irf.fhnw.ch/server/api/core/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/content",
+      "fetchedAt": "2026-11-18T10:19:45.883407Z",
+      "contentType": "application/pdf",
+      "textSha256": "c57a252a5f9448a21b59dc753e3abffe70c34a074f18a68522208bfd6387817c",
+      "characters": 61783,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.britannica.com/topic/leather",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260926210707id_/https://www.britannica.com/topic/leather",
+      "finalUrl": "https://web.archive.org/web/20260926210707id_/https://www.britannica.com/topic/leather",
+      "fetchedAt": "2026-11-18T10:19:48.035270Z",
+      "contentType": "text/html",
+      "textSha256": "74b83205bb2ba97ba2a7ffd00dcc5f00381d02e54b41506b60816955df870a49",
+      "characters": 12425,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.britannica.com/topic/Chamar",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260817222631id_/https://www.britannica.com/topic/Chamar",
+      "finalUrl": "https://web.archive.org/web/20260817222631id_/https://www.britannica.com/topic/Chamar",
+      "fetchedAt": "2026-11-18T10:20:00.224669Z",
+      "contentType": "text/html",
+      "textSha256": "56f8a66c133cdd1a26d31e702b22493335da786064fa9f9942b0968a487470bf",
+      "characters": 1637,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Leather",
+      "route": "LIVE",
+      "readUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Leather",
+      "finalUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Leather",
+      "fetchedAt": "2026-11-18T10:19:51.841961Z",
+      "contentType": "text/html",
+      "textSha256": "49efc02137dd643f6b710bdb3d679b59d1356458a606c5a2582451d26d1e7c0f",
+      "characters": 140001,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cawnpore",
+      "route": "LIVE",
+      "readUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cawnpore",
+      "finalUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cawnpore",
+      "fetchedAt": "2026-11-18T10:19:56.642340Z",
+      "contentType": "text/html",
+      "textSha256": "073af45e584b47adf949a72d96a0ea92aa0fe7b1d09839cab1424988948e1d3b",
+      "characters": 3690,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chamars",
+      "route": "LIVE",
+      "readUrl": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chamars",
+      "finalUrl": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chamars",
+      "fetchedAt": "2026-11-18T10:19:57.957925Z",
+      "contentType": "text/html",
+      "textSha256": "3992bf94742b7790bb34668941afc1c1b15e312ac24480a5aaa94fc5f8a0fe86",
+      "characters": 28215,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "route": "LIVE",
+      "readUrl": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "finalUrl": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "fetchedAt": "2026-11-18T10:20:02.034664Z",
+      "contentType": "text/html",
+      "textSha256": "73321640a83e9f9a2dac027ff3efdf4802b37ebb100c83f99da9b02b88499768",
+      "characters": 4343,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "finalUrl": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "fetchedAt": "2026-11-18T10:20:01.293207Z",
+      "contentType": "text/html",
+      "textSha256": "c232fcd5533c7c30c96de9524fc877b57120d6f9d1f71eda12d8cb11b542447a",
+      "characters": 30432,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "route": "LIVE",
+      "readUrl": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "finalUrl": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "fetchedAt": "2026-11-18T10:20:02.104981Z",
+      "contentType": "text/html",
+      "textSha256": "f29c0c0f769c7a263772be0854d9f8e01fdedac643ee0f6243c7ef2378547e98",
+      "characters": 9235,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.bbc.co.uk/news/articles/cly801q2pw7o",
+      "route": "LIVE",
+      "readUrl": "https://www.bbc.co.uk/news/articles/cly801q2pw7o",
+      "finalUrl": "https://www.bbc.co.uk/news/articles/cly801q2pw7o",
+      "fetchedAt": "2026-11-18T10:20:02.346703Z",
+      "contentType": "text/html",
+      "textSha256": "78cb91ed97eee5d6277f9f1f9293a3478af68ab9fef1a2cc071425effc533d77",
+      "characters": 6999,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.indiawaterportal.org/water-quality-and-pollution/pollution/kanpurs-tanneries-and-the-ganga-why-consistent-pollution-control-matters",
+      "route": "LIVE",
+      "readUrl": "https://www.indiawaterportal.org/water-quality-and-pollution/pollution/kanpurs-tanneries-and-the-ganga-why-consistent-pollution-control-matters",
+      "finalUrl": "https://www.indiawaterportal.org/water-quality-and-pollution/pollution/kanpurs-tanneries-and-the-ganga-why-consistent-pollution-control-matters",
+      "fetchedAt": "2026-11-18T10:20:03.109391Z",
+      "contentType": "text/html",
+      "textSha256": "46462b527f8f08fe250bc74e182f47ef889ba33af24e623783911a5f3a37184b",
+      "characters": 5705,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "fetchedAt": "2026-11-18T10:20:02.654085Z",
+      "contentType": "text/html",
+      "textSha256": "cdf5993f8a09086b9aac0f6f59dd6a4dcd698af795dcff4ea5aa7aa56c67251f",
+      "characters": 1996,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "fetchedAt": "2026-11-18T10:20:06.654607Z",
+      "contentType": "text/html",
+      "textSha256": "f6b4f987fad4970887689362bb6c5495a59befbedb592df5a04575859c9ec9ce",
+      "characters": 1198,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://leatherindia.org/indian-leather-industry/",
+      "route": "LIVE",
+      "readUrl": "https://leatherindia.org/indian-leather-industry/",
+      "finalUrl": "https://leatherindia.org/indian-leather-industry/",
+      "fetchedAt": "2026-11-18T10:20:04.478685Z",
+      "contentType": "text/html",
+      "textSha256": "6aec79982689dde4383867e926e10a16b4da31e25a15eb6a93f324e22d48b65c",
+      "characters": 9027,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "route": "LIVE",
+      "readUrl": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "finalUrl": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "fetchedAt": "2026-11-18T10:20:04.180718Z",
+      "contentType": "text/html",
+      "textSha256": "bdc9544895840cba20ca2a7a2ab2acc3eb985c7614ebe9208d1d7387d88c4aba",
+      "characters": 6669,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/104",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/104",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/104",
+      "fetchedAt": "2026-11-18T10:19:54.135450Z",
+      "contentType": "text/html",
+      "textSha256": "2b263f7eec9c22929af40de5636e38a9f8c03e7e3b8a36655dc5b3ee723efccd",
+      "characters": 2424,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/107",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/107",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/107",
+      "fetchedAt": "2026-11-18T10:19:55.766610Z",
+      "contentType": "text/html",
+      "textSha256": "129a59731e6a279193d1d3726aec5fcde86d2f4a8ef79c74a321bad47e55ab64",
+      "characters": 2373,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/159",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/159",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/159",
+      "fetchedAt": "2026-11-18T10:19:57.725462Z",
+      "contentType": "text/html",
+      "textSha256": "46544f095906428a92456c146d121f968103907e1e110a13dabfc5f38577a5ea",
+      "characters": 25753,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20140802143551id_/http://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "finalUrl": "https://web.archive.org/web/20140802143551id_/http://ipindia.nic.in/girindia/journal/Journal_54.pdf",
+      "fetchedAt": "2026-11-18T10:20:08.319813Z",
+      "contentType": "application/pdf",
+      "textSha256": "4c7524198ca402123f18b37f3c5d2aa4c00aee9dcb632347df669c8b851af588",
+      "characters": 233395,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://ipindia.nic.in/girindia/journal/Journal_38.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20130810001220id_/http://ipindia.nic.in/girindia/journal/Journal_38.pdf",
+      "finalUrl": "https://web.archive.org/web/20130810001220id_/http://ipindia.nic.in/girindia/journal/Journal_38.pdf",
+      "fetchedAt": "2026-11-18T10:20:23.662964Z",
+      "contentType": "application/pdf",
+      "textSha256": "fcd56135d328802cf589623a408e07e8fe833602489dd36b3c52f3121b31e035",
+      "characters": 199241,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/78-andhra-pradesh-leather-puppetry.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/78-andhra-pradesh-leather-puppetry.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/78-andhra-pradesh-leather-puppetry.pdf",
+      "fetchedAt": "2026-11-18T10:19:38.440812Z",
+      "contentType": "application/pdf",
+      "textSha256": "47c2eb99108e9e7b8df9e98b8a90089e3428f0fa872af57e1c72acc82e061c96",
+      "characters": 7232,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://www.ediindia.org/DSR/Diagnostic%20Study%20Report%20for%20Leather%20Goods%20Cluster,%20Santiniketan%20-%20Part.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20160216174742id_/http://www.ediindia.org/DSR/Diagnostic%20Study%20Report%20for%20Leather%20Goods%20Cluster,%20Santiniketan%20-%20Part.pdf",
+      "finalUrl": "https://web.archive.org/web/20160216174742id_/http://www.ediindia.org/DSR/Diagnostic%20Study%20Report%20for%20Leather%20Goods%20Cluster,%20Santiniketan%20-%20Part.pdf",
+      "fetchedAt": "2026-11-18T10:20:13.418462Z",
+      "contentType": "application/pdf",
+      "textSha256": "1f112c918e1382cffb8a8960f0fb6459a4a19bfa632f7dad3b7af18c16a20c24",
+      "characters": 60008,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://ccrtindia.gov.in/puppetforms.htm",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20130515224842id_/http://ccrtindia.gov.in/puppetforms.htm",
+      "finalUrl": "https://web.archive.org/web/20130515224842id_/http://ccrtindia.gov.in/puppetforms.htm",
+      "fetchedAt": "2026-11-18T10:20:10.204564Z",
+      "contentType": "text/html",
+      "textSha256": "a0f55647052d06351272e14ae447f27babf657c5e161ab886f7851b7af98a2a8",
+      "characters": 12973,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://www.tribuneindia.com/news/himachal/chamba-chappal-gets-gi-tag-336242",
+      "route": "LIVE",
+      "readUrl": "https://www.tribuneindia.com/news/himachal/chamba-chappal-gets-gi-tag-336242",
+      "finalUrl": "https://www.tribuneindia.com/news/himachal/chamba-chappal-gets-gi-tag-336242",
+      "fetchedAt": "2026-11-18T10:20:12.526486Z",
+      "contentType": "text/html",
+      "textSha256": "5d1e77927cc862515f1266b190db992737545edeb278615147187b46bd2a4967",
+      "characters": 2528,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://punjabnewsline.com/content/punjabi-jutti-most-popular-holy-city-amritsar",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20101128133501id_/http://punjabnewsline.com/content/punjabi-jutti-most-popular-holy-city-amritsar",
+      "finalUrl": "https://web.archive.org/web/20101128133501id_/http://punjabnewsline.com/content/punjabi-jutti-most-popular-holy-city-amritsar",
+      "fetchedAt": "2026-11-18T10:20:18.614623Z",
+      "contentType": "text/html",
+      "textSha256": "4879f1d8f9b7635fcbee3f2f8a110a41cef73c7f90b2e51d67cafdb935ec5682",
+      "characters": 2843,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S10",
+      "quote": "animalskins and hides that have been treated with chemicals to preserve them and make them suitable for use as clothing, footwear, handbags, furniture, tools, and sports equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S10",
+      "quote": "The term hide is used to designate the skin of larger animals (e.g., cowhide or horsehide), whereas refers to that of smaller animals (e.g., calfskin or kidskin).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S10",
+      "quote": "The preservation process employed is a chemical treatment called tanning, which converts the otherwise perishable skin to a stable and nondecaying material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S05",
+      "quote": "the tanning process is the most important chemical process that converts animal skins into leather",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S10",
+      "quote": "Tanning agents include vegetable tannins (from sources such as tree bark), mineral salts (such as chromiumsulfate), and fish or animal oils.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S05",
+      "quote": "Traditionally, leathers are processed by the three types of tanning methods including vegetable tanning, chrome tanning and syntan tanning but recently the tanning processes are quite improved with the development of various sustainable tanning methods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "Kolhapuri Chappal are handmade open Indian footwear made of tanned vegetable leather produced using traditional technique and tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "The Kolhapuri chappal is completely and exclusively made from bag tanned vegetable leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S16",
+      "quote": "literally means the dance (attam, ata) of the leather (tholu) puppets (bommalu)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S16",
+      "quote": "Tholu bommalata is the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S15",
+      "quote": "Traditional shadow theatre from Karnataka in south-west India. Togalu signifies \"leather\" and gombeyata \"figure, doll, dance and performance\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S20",
+      "quote": "Santiniketan leather goods are a byproduct of Rabindranath Tagore's Rural Reconstruction initiative at the Visva Bharati University.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S30",
+      "quote": "The products are named Santiniketan Leather Goods as they were originated in this cluster under rural development program of VisvaBharati university of Santiniketan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S21",
+      "quote": "High-quality leather, obtained from local tanneries, is crafted meticulously to create saddles, harnesses and other equestrian equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S27",
+      "quote": "existence of manufacturers, craftsmen and raw material, i.e. leather, at the same place.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S10",
+      "quote": "The leather is then ready to be fashioned into any of a multitude of products. These include shoes and boots, outer apparel, belts, upholstery materials, suede products, saddles, gloves, luggage and purses, and recreational equipment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S11",
+      "quote": "widespreadcaste in northern India whose hereditary occupation is tanning leather; the name is derived from the Sanskrit word charmakara (\"skin worker\").",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S18",
+      "quote": "Chamar is a pejorative caste term used to describe Dalits (formerly known as untouchables) who work with animal hides.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S14",
+      "quote": "Cham?rs include groups that skin and dispose of animal carcasses, tanners, and makers of shoes and other leather goods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S16",
+      "quote": "Animal leather and its manufacturers are considered impure in India as are the low caste puppeteers handling it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S10",
+      "quote": "Leather making is an ancient art that has been practiced for more than 7,000 years. Fresh skins were dried in the sun, softened by pounding in animal fats and brains, and preserved by salting and smoking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S05",
+      "quote": "The primitive preservation process involved drying the raw hides/skins in the sun and vegetable extracts were used to convert the raw hides/skins to leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S05",
+      "quote": "Vegetable tanning is the oldest tanning method, developed to produce leather from hides/skins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S10",
+      "quote": "Vegetable tanning, which is the oldest of tanning methods, is still important.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S12",
+      "quote": "The first chrome tanning process was described by Professor Knapp in 1858 in a paper on \"Die Natur und Wesen der Gerberie,\" but was first brought into commercial prominence by Dr Heinzerling about 1878",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S12",
+      "quote": "Now chrome tanning is almost the most important method of light leather dressing, and has also taken a prominent place in the heavy department",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S14",
+      "quote": "There are numerous references in the Vedic literature to leather goods (e.g., leather bags, clothing, bowstrings, reins, leather shields, etc.), and even instructions for the preparing of skins for manufacture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S14",
+      "quote": "Tanners and leatherworkers were clearly an important occupational group in early Aryan society.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S14",
+      "quote": "But even at this time, it is likely that they were of inferior social standing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Bag tanning was also practiced extensively in Punjab (Jalandhar), West Bengal (Kolkatta) and U.P. (Kanpur) in the past.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "The origin of Kolhapuri Chappal can be tr aced back to 12th Century rule of King Bijjal of Bidar district and his Prime Minister Viswaguru Basavanna (Basaveswara)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "sought an appointment for lunch with a chamar by name Haralayya. Traditionally Haralayya and his family involved in footwear ma nufacturing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "Hence, the 12th century was the beginning of footwear made by the Chamars using bag tanned leather and it looked like Kolhapuri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S13",
+      "quote": "CAWNPORE, or Kanpur, a city and district of British India in the Allahabad division of the United Provinces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S13",
+      "quote": "Now it is chiefly known as the junction of four railways, the East Indian, Oudh & Rohilkand, Rajputana and Indian Midland, and as a great emporium for harness, shoes and other leather-work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S18",
+      "quote": "The earliest records of Kolhapur sandals date back to the 12th Century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S20",
+      "quote": "The Santiniketan leather goods has a fascinating origin, with Rabindranath Tagore introducing and promoting this craftwork in 1932.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S20",
+      "quote": "Ever since 1932, the skill of producing these elegant leather pieces has been carried on by generations of artisan families in the surrounding rural regions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S30",
+      "quote": "Training was imparted by originators of these products to the rural folks around Visva-Bharati. That skill transcended from generation to generation of these rural families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S16",
+      "quote": "Shadow puppetry in South India has a very long history-it was indeed already popular under Satavahana and Chalukya dynasties (4th - 6th centuries AD).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S16",
+      "quote": "It is probably during this period that shadow theatre from South India spread to South East Asia and beyond, and local styles developed in Indonesia, Burma, Thailand, Malaysia, Japan and China.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S16",
+      "quote": "Neelakantha Panditha (a 12th century commentator of the Mahabharata) reports that at that time in South India, shadow plays with leather puppets were popular",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S16",
+      "quote": "According to historical sources, in the 17th century, groups of performers from Maharashtra moved to the southern regions of the Indian subcontinent",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S16",
+      "quote": "Whilst preserving the Aare dialect for homely environments, these puppeteers chose to perform in Telugu, embracing the centuries old puppetry tradition they found in the Andhra region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S15",
+      "quote": "The puppeteers are from the Killikyeta tribal group that came from Maharashtra at least two centuries ago and settled in different regions of Southern India, particularly in Karnataka, Andhra Pradesh and Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S15",
+      "quote": "They still speak Aare (Aré) Marathi, a dialect based on archaic Marathi, which is not understood by the population of the southern states.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "Cowhide is mostly used in manufacturing leather goods. Buffalo, goat and sheep hides are also used but their use is relatively low.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S10",
+      "quote": "the more common leathers come from seven main groups: cattle, including calves and oxen; sheep and lambs; goats and kids; equine animals, including horses, mules, and zebras; buffalo; pigs and hogs; and such aquatic animals as seals, walrus, whales, and alligators.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "Leather is made from animal hides/skins, which are a by-product of the meat industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S10",
+      "quote": "The hides of mammals are composed of three layers: epidermis, a thin outer layer; corium, or dermis, the thick central layer; and a subcutaneous fatty layer. The corium is used to make leather after the two sandwiching layers have been removed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "Buffalo hides - Green/wet salted/ weighing about 25-30 kg. each. Cow hides, calf skins of buff and cow are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "Vegetable tanning material: Babulbark (Acacia Arabica) and myrobalan nuts (Terminalia Chebula).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S01",
+      "quote": "Bag tanned leather, using babulbark and myrobalan fruits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S17",
+      "quote": "filled with hot water infused with myrobalan nuts (hirda) and pieces of babul bark.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S12",
+      "quote": "Myrobalans are the fruit of an Indian tree.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S12",
+      "quote": "They are a very light-coloured material, containing from 27 % to 38 % of tannin; they deposit much \"bloom,\" ferment fairly rapidly, supplying acidity, and yield a mellow leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S12",
+      "quote": "Great quantities of \"Persian\" (East India tanned) sheep and goat are now dressed as moroccos and for innumerable other purposes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S12",
+      "quote": "The goods are tanned with turwar bark and cassia bark, besides being impregnated with sesame oil, even to the extent of 30%.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S12",
+      "quote": "East Indian hides are known as kips, and are supposed to be, and should be, the hides of yearling cattle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S12",
+      "quote": "They come from a small breed of ox, and have an extremely tight grain",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S16",
+      "quote": "Puppeteers-who are also the manufacturers-mostly use the hide of goats, and occasionally buffalo or deer skin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S15",
+      "quote": "In the past, figures used to be carved from doe skin but now goat skin is used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S20",
+      "quote": "Such vegetable-tanned leather pieces retain embossed imprints permanently, making them an ideal raw material for this craft. The leather pieces come from sheep and goat skins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S23",
+      "quote": "trays, and domestic objects-made from vegetable-tanned goat and sheepskin and decorated through embossing, stencil work, and batik techniques",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S30",
+      "quote": "Vegetable tanned leathers have a unique property of retaining embossed imprint permanently",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S30",
+      "quote": "Vegetable tanned sheep or goat skins are the main raw material of the products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S20",
+      "quote": "It uses other raw materials such as paper board, PU adhesives, natural dyes and spirits, rubber solutions, grinders like thread, rubber foam interlining, accessories (press button, zipper, lock, etc.), and lining cloth (cotton, silk, velvet) etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S30",
+      "quote": "Other raw materials for the products are 1) Paper Board of different thickness, 2) Lining Cloth of different types like cotton, velvet, silk etc., 3) Rubber Foam interlining, 4) Natural Dyes and Spirit (as medium for the dye), 5) Rubber Solution and PU adhesive",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S16",
+      "quote": "Tholu bommalata shadow puppets are made of leather that undergoes specific treatments in order to look like translucent stiff parchment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S05",
+      "quote": "The production of vegetable-tanned leather takes a long time, and the strength, stability, and durability of the leather is inferior to that of chrome-tanned leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S05",
+      "quote": "Leather is made of collagen protein polymer, which is used in the manufacture of a variety of products including footwear, automotive upholstery, garments, and sports equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S05",
+      "quote": "Leather is a skin-derived fibrillar type I collagen material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S05",
+      "quote": "Raw animal skin is composed of 60-65% water, 30-33% protein (mostly collagen), 2-6% fat and 0.5-1.0% minerals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S10",
+      "quote": "Fresh hides contain between 60 and 70 percent water by weight and 30 to 35 percent protein. About 85 percent of the protein is collagen, a fibrous protein held together by chemical bonds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S05",
+      "quote": "The purpose of tanning is to preserve the hide/skin, enhance its strength and make it durable by limiting degradation, especially when the leather is wet by compacting collagen fibres in the leather, making it imputrescible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S10",
+      "quote": "Basically, leather making is the science of using acids, bases, salts, enzymes, and tannins to dissolvefats and nonfibrous proteins and strengthen the bonds between the collagen fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S10",
+      "quote": "The tanning process derives its name from tannin (tannic acid), the agent that displaces water from the interstices of the hide's protein fibres and cements these fibres together.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "In the vegetable tanning process, tannin extracted from barks, nuts, leaves, fruits, and wood is used. Tannin is a polyphenolic agent known to bind to protein.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "The weakly anionic phenolic groups form ionic bonding with the amino groups and hydrogen bonding with the carboxyl groups of collagens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "Natural polyphenols (e.g., tara and mimosa tannins) have plenty of phenolic groups that make them weakly anionic, and tanning is carried out at pH 3 to 4 as they are attracted to the cationic amino groups of collagens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "The molecular weight of tannin is a few hundred to a few thousand, allowing absorption into collagen fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S12",
+      "quote": "There are two distinctive classes of tannins, viz. catechol and pyrogallol tannins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S12",
+      "quote": "pyrogallol tannins, however, yield an excellent leather; but the finest results are obtained by blending the two.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S12",
+      "quote": "Pyrogallol tannins give a blue-black coloration or precipitate with ferric salts, and catechol tannins a green-black",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S12",
+      "quote": "Pyrogallols. | Catechols. | | Myrobalans (Terminalia Chebula). | Gambier (Uncaria Gambir).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S05",
+      "quote": "In the chrome tanning method, the delimed and dehaired hide/skin is soaked in a Cr(III) salt solution, preferably basic chromium sulphate (BCS) with a chemical formula of Cr4(SO4)5(OH)2, which is less toxic than the highly toxic hexavalent form of chromium.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S05",
+      "quote": "For example, cationic Cr binds to carboxylic groups of amino acids of collagen, and the nitrogen of amino groups of collagen forms ligands with Cr, combinedly forming a metal complex with amino acids of collagen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S05",
+      "quote": "Cr tanning is carried out at a quite low pH (2 to 3) to minimise the size of the polychromium complex",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S05",
+      "quote": "After the tanning process, sodium carbonate is added to the tanning bath to raise the pH to 3.8 to 4.0, the pH increase is accompanied by an increase in heating up to 40 °C, forming a strong bond with the collagen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "The processed leather is called wet blue leather, and has 4% to 5% Cr.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "The key advantages of this method include quick and cheap tanning, as the tanning can be carried out within a day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "90% of hides/skins are chrome tanned, the rest are vegetable tanned.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S12",
+      "quote": "The leather produced is much stronger than any other leather, and will also stand boiling water, whereas vegetable-tanned leather is completely destroyed at 70° C. and alum leather at 50° C.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "Tanning with vegetable and syntan tanning agents alone does not provide an acceptable level of thermal stability and mechanical properties.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S05",
+      "quote": "The vegetable tannins are usually used in combination with other tanning agents, e.g., tannin + metals salts, syntan + metal salts, or tannin + syntan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S05",
+      "quote": "In the traditional dehairing method, the flesh side of the hide/skin is covered with a paste of lime and sodium sulphide. The hair root, made of cysteine-rich keratin, is hydrolysed by the action of the sodium sulphide and lime, allowing easy removal of hair from the grain side of the skin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "However, the chrome-tanning process produces effluent containing elevated levels of Cr(III), some of which convert to Cr(VI).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "Therefore Cr-tanning is restricted in the developed world",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S05",
+      "quote": "Syntans are sulphonated condensation products of aromatic and phenolic compounds with formaldehyde or other aldehydes that can react with amine groups of collagens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S12",
+      "quote": "The theory of chrome tanning is not perfectly understood, but in general terms it consists of a partial chemical combination between the hide fibre and the chrome salts, and a partial mechanical deposition of chromium oxide in and on the fibre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "The \"two bath process\" consists of treating the skins with a bichromate in which the chromium is in the acidic state, and afterwards reducing it to the basic state by some reducing agent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "This consists of a 14% solution of plain \"hypo,\" or hyposulphite of soda",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S12",
+      "quote": "The \"single-bath process\" consists of paddling, drumming, or otherwise introducing into the skins a solution of a chrome salt, usually chrome alum, which is already in the basic condition, and therefore does not require reducing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S05",
+      "quote": "The isoelectric point of collagen is 4.7 to 4.8 [60], below which the surface of the leather is cationic and above which the surface is anionic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S05",
+      "quote": "Metallic ions are very small, allowing them good penetration into collagen fibres which provides high tanning performance and excellent durability to washing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S07",
+      "quote": "One such plant is installed in the premises of tanneries in Tamil Nadu, India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S07",
+      "quote": "These tanneries segregate the chrome liquor and collect it in a tank for precipitation of the chrome by adding magnesium oxide solution. The precipitated chrome slurry is added with sulfuric acid to regenerate chrome and filled in carboys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S05",
+      "quote": "Raw hides or skins shrink very easily at temperatures of about 55 °C (depending on the type of animal), while chrome-tanned leather exhibits shrinkage temperatures higher than 100 °C.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S05",
+      "quote": "Bovine skin shows higher thermal shrinkage temperature (54.8 °C) when compared to goatskin (40.1 °C) and sheepskin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S05",
+      "quote": "Goatskin leather tanned with pala indigo plant tannin at 8% ows increased the shrinkage temperature to only 70 °C",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S05",
+      "quote": "All leathers show a considerable decrease in water content (as low as 10%-15%) after the tanning process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S05",
+      "quote": "The corium and the grain are composed of a larger diameter fibre (100 μm) and a smaller diameter fibre (1 μm) [13] respectively, allowing interweaving of the smaller fibre in the grain layer to create a smooth surface, while the larger fibre in the corium is constructed more loosely",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S15",
+      "quote": "The lighting source - in olden days an oil lamp, later a hurricane lamp and nowadays a neon - is placed between the puppeteer and the leather figures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S10",
+      "quote": "The modern commercial leather-making process involves three basic phases: preparation for tanning, tanning, and processing tanned leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S10",
+      "quote": "A hide will begin to decompose within hours of an animal's death; to prevent this from happening, the hide is cured by a dehydrating process that involves either air-drying, wet or dry salting, or pickling with acids and salts before being shipped to a tannery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "Hair is loosened usually by a process called liming, accomplished by immersing the hides in a mixture of lime and water; the hair and extraneous flesh and tissue are removed by machine. The hide is then washed, delimed, bated",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "At the tannery the hide is soaked to remove all water-soluble materials and restore it to its original shape and softness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S10",
+      "quote": "The extracted material is processed into tanning liquors, and the hides are soaked in vats or drums of increasingly strong liquor until they are sufficiently tanned. The various vegetable tanning procedures can take weeks or months to complete. The end result is a firm water-resistant leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S05",
+      "quote": "the delimed and dehaired hides are soaked in a tannin solution for several weeks to months",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S10",
+      "quote": "Use of this method can shorten the tanning period to days or even hours. Chromiumsalt is the most widely used mineral agent, but salts from aluminum and zirconium are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S10",
+      "quote": "The tanned pelt is first thoroughly dried and then dyed to give it the appropriate colour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S10",
+      "quote": "Blended oils and greases are then incorporated into the leather to lubricate it and to enhance its softness, strength, and ability to shed water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S15",
+      "quote": "Certain rituals dedicated to the fabrication of the figures focus on the cutting and perforation of the leather as well as on the colouring process based on vegetable and mineral ingredients, now replaced by chemical preparations. The figures are tinted, not painted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S10",
+      "quote": "The leather is then dried to about 14 percent moisture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S10",
+      "quote": "The dried leather is finished by reconditioning with damp sawdust to a uniform moisture content of 20 percent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S01",
+      "quote": "Kolhapuri Chappals are renowned for aesthetically pleasing look and known for decorative woven pattern fixed over upper bands of these Chappals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S15",
+      "quote": "Chikka theatre uses the smaller figures (between 20 to 30 centimetres high) and dodda theatre uses the larger-sized figures (between 30 to 120 centimetres in height).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S20",
+      "quote": "These leather goods are uniquely identifiable because of their smooth, glossy, shiny visual appeal and vibrant hues. Santiniketan leather goods have traditional motifs embedded",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S30",
+      "quote": "turn its grain surface glossy if rubbed with smooth surface like glass or cotton pad",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S01",
+      "quote": "The Area of production of Kolhapuri Chappal in Maharashtra comprises of Sholapur, Sangli, Kolhapur and Satara districts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S01",
+      "quote": "The Area of production of Kolhapuri Chappal in Karnataka comprises of Dharwad, Belgaum, Bagalkot and Bijapur districts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S22",
+      "quote": "The major production centers for footwear, leather and leather products in India are located in the States of Tamil Nadu - Chennai, Ambur, Ranipet, Vaniyambadi, Vellore, Pernambut, Trichy, Dindigul and Erode; West Bengal - Kolkata; Uttar Pradesh - Kanpur, Agra, Noida, Saharanpur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S22",
+      "quote": "Maharashtra - Mumbai; Punjab - Jalandhar; Karnataka - Bengaluru; Telengana Hyderabad; Haryana - Ambala, Gurgaon, Panchkula, Karnal and Faridabad; Delhi; Madhya Pradesh - Dewas; Kerala - Kozhikode and Ernakulam / Cochin; Rajasthan; Jaipur; Jammu & Kashmir; Srinagar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S22",
+      "quote": "The major production centers for footwear, leather and leather products in India are located in the States of Tamil Nadu - Chennai, Ambur, Ranipet, Vaniyambadi, Vellore, Pernambut, Trichy, Dindigul and Erode; West Bengal - Kolkata; Uttar Pradesh - Kanpur, Agra, Noida, Saharanpur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S22",
+      "quote": "Maharashtra - Mumbai; Punjab - Jalandhar; Karnataka - Bengaluru",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S07",
+      "quote": "Jajmau is the major cluster of tanneries in the north-eastern Kanpur, which are perceived to be the primary source of industrial pollution in the river Ganga.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S19",
+      "quote": "Kanpur is a major centre of the leather industry, with hundreds of tanneries, particularly in the Jajmau area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S09",
+      "quote": "There are approximately 3,000 tanneries located along the Ganga River (Dwivedi et al. 2018). A cluster of around 400 tanneries can be found in Jajmau, Kanpur, and they discharge around 26 million liters per day (MLD) (26,000 m3/d) of industrial wastewater (Bassi et al. 2019).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S09",
+      "quote": "Published online: 29 Oct 2025.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S06",
+      "quote": "While the records of Central Leather Research Institute, India showed only 170 tanneries at Kanpur, a study conducted in 2000 found twice this number in just one tanning cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S06",
+      "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S15",
+      "quote": "Performances are held during religious and secular celebrations in the Mysore, Mandya and Bellary regions and a few other villages of Karnataka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S16",
+      "quote": "The geographic distribution of tholu bommalata encompasses the Telugu-speaking area, and cannot be exactly defined by state borders.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S17",
+      "quote": "The Mahar-Maangs are one of three Scheduled Caste communities traditionally involved in the process of making Kolhapuri chappals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S17",
+      "quote": "The Dhors, to which Vathkar belongs, run the tanneries, and the Chambhars make the chappals by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S17",
+      "quote": "The Dhors, to which Vathkar belongs, run the tanneries, and the Chambhars make the chappals by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S17",
+      "quote": "Published - July 08, 2017 04:30 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S14",
+      "quote": "In Andhra Pradesh, the leather workers, equivalent of Cham?rs elsewhere, belong to the Madiga caste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S14",
+      "quote": "Mochis are a subgroup of Cham?rs found in Madhya Pradesh, Orissa, and West Bengal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S14",
+      "quote": "Cham?rs in Rajasthan are called Regar. Bhambi is a name used in Maharashtra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S14",
+      "quote": "In the past, Cham?rs carried out their occupation as tanners and leatherworkers in the context of the traditional Hindu economic system, the jajm?n? system.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S14",
+      "quote": "They provided their services to the jajm?n and in return received a portion of the landowners harvest.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S11",
+      "quote": "Members of the caste are included in the officially designated Scheduled Castes (also called Dalits); because their hereditary work obliged them to handle dead animals, the Chamars were among those formerly called \"untouchables.\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S22",
+      "quote": "INDIA'S EXPORT OF LEATHER & LEATHER PRODUCTS 2019-20 vis-a-vis 2020-21 Value in US$ Mn",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S22",
+      "quote": "| TOTAL | 5083.76 | 3681.58 | -27.58% | 100.00% |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S22",
+      "quote": "INDIA'S EXPORT OF LEATHER & LEATHER PRODUCTS 2019-20 vis-a-vis 2020-21 Value in US$ Mn",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S22",
+      "quote": "| SADDLERY AND HARNESS | 151.44 | 186.18 | 22.94% | 5.06% |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S22",
+      "quote": "Footwear Sector - India is Second largest footwear producer after China, with Annual Production of 2.58 billion pairs (2018).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S02",
+      "quote": "| Application Number | 169 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | Kolhapuri Chappal |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S02",
+      "quote": "| Certificate Number | 329 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S02",
+      "quote": "| Certificate Date | 11-12-2018 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S18",
+      "quote": "In 2019, the Indian government had awarded Kolhapuri sandals the Geographical Indication (GI)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Application Number | 614 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Geographical Indications | Chamba Chappal |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Date of Filing | 25-05-2018 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Geographical Area | Himachal Pradesh |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Certificate Number | 403 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Certificate Date | 14-09-2021 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S01",
+      "quote": "614 Chamba Chappal 25 Handicraft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S03",
+      "quote": "| Applicant Name | Ambedkar Mission Society Chamba |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Application Number | 159 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Geographical Indications | Kanpur Saddlery | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Applicant Name | Harness and Saddlery Exporters Association |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Date of Filing | 09-02-2009 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Certificate Number | 204 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Certificate Date | 31-03-2014 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S26",
+      "quote": "| Registration Valid Upto | 08-02-2029 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S19",
+      "quote": "It cites the National Green Tribunal's action in 2019 against 22 tanneries, which were fined Rs. 280 crore for dumping chromium laden wastewater into the Ganga.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S19",
+      "quote": "Tanneries are required to treat their wastewater before it reaches the Common Effluent Treatment Plant (CETP) at Jajmau. With a reported capacity of 36 million litres a day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S08",
+      "quote": "channel of 36 MLD CETP, Jajmau, Kanpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S08",
+      "quote": "The CETP was operating without valid consent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S08",
+      "quote": "Treated effluent at outlet of CETP was found non-complying w.r.t. treated effluent",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S08",
+      "quote": "dated 08th February, 2021 in the matter of O.A. No. 985/2019 with 986/2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S08",
+      "quote": "Raw tannery effluent received at the tannery channel inlet was not meeting the standards for CETP prescribed by UPPCB for TSS (7701 mg/l against norms of 600 mg/l) and total Chromium (132 mg/l against 10 mg/l).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S08",
+      "quote": "dated 08th February, 2021 in the matter of O.A. No. 985/2019 with 986/2019",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S08",
+      "quote": "Only 117 tanneries are member of CCRP",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S08",
+      "quote": "Only 1.5-7.5 MLD exhausted chrome liquor was collected from member tannery units during June 1-15, 2021 (as per logbook)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S07",
+      "quote": "Chromium dumps at Rania, Kanpur Dehat and Rakhi Mandi, Kanpur Nagar which have been in existence since 1976 and have interalia resulted in contamination of groundwater, depriving the inhabitants of access to a proper quality drinking water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S07",
+      "quote": "Occupational exposure to chromium is common to the tannery workers, and it is the leading cause of health problems which they experience.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S07",
+      "quote": "A study conducted by Rastogi et al. (2008) entitled, \"Occupational health risks among the workers employed in leather tanneries at Kanpur\", reported significant levels of chromium in urine and blood samples collected from the exposed groups",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S06",
+      "quote": "Residents from communities with known Cr (VI) contamination had more self-reports of digestive and dermatological disorders and hematological abnormalities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S06",
+      "quote": "were compared to residents with similar social and demographic features living in communities having no elevated Cr (VI) levels",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S06",
+      "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S06",
+      "quote": "We found Cr (VI) levels upto 390 fold (20 ppm approx.) higher than the permissible limit in these areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S06",
+      "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S06",
+      "quote": "Annually, these tanneries alone discharge more than 1500 metric tons of chromium sulphate as waste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S06",
+      "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S06",
+      "quote": "In 1997, Central Pollution Control Board, India reported Cr (VI) concentration upto 250 times higher than the WHO permissible limit (0.05 ppm) in areas at Kanpur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S09",
+      "quote": "sludge contained high total Cr (8,672 to 17,525 mg/kgDM)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S09",
+      "quote": "Published online: 29 Oct 2025.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S09",
+      "quote": "The effluent from Jajmau STP is combined with the effluent of the CETP and discharged into a concrete irrigation channel that supplies irrigation water to 2,500 ha of farmland in nearby villages (JNNURM 2006).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C250",
+      "sourceId": "S05",
+      "quote": "The effluent produced by vegetable tanning is less toxic than that produced by the popular chrome tanning process. Vegetable-tanned leather is eco-friendly, has a natural smell, and has a low environmental impact as only natural tannins are used in the tanning process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C252",
+      "sourceId": "S05",
+      "quote": "Dehairing is the major and most heavily polluting process in the tanning operation, during which the hair, epidermis layer of skin, globular proteins, fats, and other cementing materials are removed from the skin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S05",
+      "quote": "The application of sodium sulphide makes the dehairing process highly polluting, as it is a hazardous chemical which decomposes to produce toxic hydrogen sulphide gas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C260",
+      "sourceId": "S05",
+      "quote": "To improve the environmental credentials of leather, hexavalent chromium or Cr(VI) was replaced with trivalent chromium or Cr(III) for leather tanning, as Cr(III) is not a carcinogen like Cr(VI), although it is still highly toxic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S05",
+      "quote": "Cr tanned leather has become an important source of Cr allergy, which affects around 1% of the general population",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C270",
+      "sourceId": "S11",
+      "quote": "While many still practice their traditional craft, many more are part of the broader agricultural and urban labour force.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C270",
+      "sourceId": "S14",
+      "quote": "although some Cham?r castes follow their traditional occupation as tanners, leatherworkers, and shoemakers, many Cham?rs in rural areas live as landless agricultural laborers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S27",
+      "quote": "in the Geographical Indications Journal 54 dated 28th November 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S27",
+      "quote": "Saddlery are merged together to proceed as a single application",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S28",
+      "quote": "159 Kanpur Saddlery (Word Mark) 18 Handicraft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S28",
+      "quote": "160 Kanpur Saddlery (Logo Mark) 18 Handicraft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C271",
+      "sourceId": "S04",
+      "quote": "| Geographical Indications | Kanpur Saddlery Merged With Application No.159) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C272",
+      "sourceId": "S32",
+      "quote": "Intricately embroidered leather 'chappal' of Chamba have been registered under the Geographical Indications (GI)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C272",
+      "sourceId": "S32",
+      "quote": "Adorned with golden and coloured embroidery, the Chamba 'chappals' are hand made by craftsmen in Chamba town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S30",
+      "quote": "Pally Samgathan Vibhaga (Rural Development Department) of Visva-Bharati was a part of this process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S30",
+      "quote": "Rathindranath Tagore, the worthy son of the great poet and his wife Protima Devi led this rural development process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S30",
+      "quote": "As a result of this experiment, a special type of handicraft leather product was originated about eighty years ago. They became popular as Santiniketan Leather Goods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C273",
+      "sourceId": "S23",
+      "quote": "Within this programme, leatherwork was developed through the initiative of Rathindranath Tagore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C274",
+      "sourceId": "S30",
+      "quote": "The products are colorful with embossed designs or batik designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C274",
+      "sourceId": "S30",
+      "quote": "The cut components are then moistened and imprinted with graphic designs by pressing zinc block on their grain side with Ball Press. The embossed components are then colored with spirit based natural dyes by manual touch dyeing and by mouth spray.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C274",
+      "sourceId": "S30",
+      "quote": "The Batik dyed products are not block printed. They are applied with a solution of Gum Arabic on the portions that are not to be given a particular color and then dried.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C275",
+      "sourceId": "S30",
+      "quote": "The main raw material of the Cluster is a type of vegetable tanned goat or sheep skins, known as E. I. Tanned leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C275",
+      "sourceId": "S30",
+      "quote": "The E. I. Tanned leather is manufactured only in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C276",
+      "sourceId": "S33",
+      "quote": "Satinder Bains Tuesday, 15 May 2007",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C276",
+      "sourceId": "S33",
+      "quote": "there is one of the Asia's biggest market around the holiest Sikh shrine Golden Temple where the Punjabi Jutti being manufactured in large scale",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C276",
+      "sourceId": "S33",
+      "quote": "Punjabi Jutti was known for its immaculate embroidery and varied hues",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C277",
+      "sourceId": "S33",
+      "quote": "The graceful style of Punjabi jutti made with soft leather consisting artistic work on it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C277",
+      "sourceId": "S33",
+      "quote": "The traditional teela, zeri wali and Sundi embroidery with Golden Thread",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C278",
+      "sourceId": "S31",
+      "quote": "India has the richest variety of types and styles of shadow puppets. Shadow puppets are flat figures. They are cut out of leather, which has been treated to make it translucent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C278",
+      "sourceId": "S31",
+      "quote": "This tradition of shadow puppets survives in Orissa. Kerala, Andhra Pradesh, Karnataka, Maharashtra and Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C279",
+      "sourceId": "S16",
+      "quote": "Tholu bommalata puppets measure 120 to 180 centimetres in height, in some cases reaching two meters as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C279",
+      "sourceId": "S31",
+      "quote": "The puppets are large in size and have jointed waist, shoulders, elbows and knees. They are coloured on both sides. Hence, these puppets throw coloured shadows on the screen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C280",
+      "sourceId": "S31",
+      "quote": "The puppets are in one piece and have no joints. They are not coloured, hence throw opaque shadows on the screen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C280",
+      "sourceId": "S31",
+      "quote": "The puppets are made of deer skin and are conceived in bold dramatic poses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C280",
+      "sourceId": "S31",
+      "quote": "Ravanachhaya puppets are smaller in size-the largest not more than two feet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C281",
+      "sourceId": "S29",
+      "quote": "Today, the leather puppet makers are being forced to diversify their ware into utility items, such as beautiful and colourful lampshades for instance, and toys for another",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C281",
+      "sourceId": "S29",
+      "quote": "Presently Lampshades, wall hangings, Partitions, Door Pelmets, Wall lamps and leather puPpets are being made.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C281",
+      "sourceId": "S16",
+      "quote": "puppeteers try to keep the tradition alive by adapting their skills to the production of everyday objects such as lamps and home decorations. Furthermore, the last decades have seen the development of the production of puppets as tourist craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C282",
+      "sourceId": "S29",
+      "quote": "The geographical area of production comprises of Nimmalakunta in Anantpur District and Narsaraopet of Guntur District, both Districts located in the State of Andhra Pradesh in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C283",
+      "sourceId": "S27",
+      "quote": "in the Geographical Indications Journal 54 dated 28th November 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C283",
+      "sourceId": "S27",
+      "quote": "Tirthankar Roy in his book Traditional Industry in the Economy of Colonial India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C283",
+      "sourceId": "S27",
+      "quote": "Kanpur was chosen as the site for a government harness and saddler factory in 1867",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C284",
+      "sourceId": "S27",
+      "quote": "Tirthankar Roy in his book Traditional Industry in the Economy of Colonial India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C284",
+      "sourceId": "S27",
+      "quote": "In 1880, a north Indian managing agency started Cooper Allen, shortly to become the source fo r the entire Indian army's boots, shoes and saddlery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C285",
+      "sourceId": "S30",
+      "quote": "The cluster is located in and around the town Santiniketan, Bolpur, Dist. Birbhum, W.B.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C285",
+      "sourceId": "S30",
+      "quote": "The artisan families are scattered in few villages around Santiniketan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C286",
+      "sourceId": "S27",
+      "quote": "Tirthankar Roy in his book Traditional Industry in the Economy of Colonial India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C286",
+      "sourceId": "S27",
+      "quote": "In the 1870s, the Mochis used imported leather in the northern towns to manufacture shoes and saddlery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C287",
+      "sourceId": "S27",
+      "quote": "in the Geographical Indications Journal 54 dated 28th November 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C287",
+      "sourceId": "S27",
+      "quote": "It was during th e early 1970s a few local entrepreneurs engaged in leathe r industry, decided to utilize th e skills of local craftsmen for reviving the saddlery industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C287",
+      "sourceId": "S27",
+      "quote": "By the 1990s it made a mark at the international level and blossomed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C288",
+      "sourceId": "S27",
+      "quote": "in the Geographical Indications Journal 54 dated 28th November 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C288",
+      "sourceId": "S27",
+      "quote": "highl y labour-intensive and 100% export oriented. The local market for saddler is negligible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C289",
+      "sourceId": "S27",
+      "quote": "Vegetable tanned Buffalo leather is used in Kanpur made harness & saddler items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C289",
+      "sourceId": "S27",
+      "quote": "The vegetable tanned buffalo leather used in manufactur ing harness & saddlery products is also manufactured in Kanpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C290",
+      "sourceId": "S18",
+      "quote": "thousands of local artisans who hand-craft traditional leather footwear are mounting a collective attack on luxury fashion label Prada for plagiarising their designs without credit",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C290",
+      "sourceId": "S18",
+      "quote": "a mark of authenticity which protects its name and design within India, preventing unauthorised use by outsiders",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C290",
+      "sourceId": "S18",
+      "quote": "Globally, however, there is no binding law that stops other countries or brands from aesthetic imitation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C291",
+      "sourceId": "S28",
+      "quote": "As per the requirement of Rule 41(1) it is informed that the issue of Journal 38",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C291",
+      "sourceId": "S28",
+      "quote": "95 E. I. Leather 18 Manufactured",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C291",
+      "sourceId": "S28",
+      "quote": "97 Leather Toys of Indore 18 Handicraft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C291",
+      "sourceId": "S27",
+      "quote": "Type of Goods : Class - 18 - Leather and imitation of leather",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Application Number | 104 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Geographical Indications | Santiniketan Leather Goods | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Applicant Name | Santiniketani Artistic Leather Goods Manufacturer's Welfare Association |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Date of Filing | 12-07-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Certificate Number | 90 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C292",
+      "sourceId": "S24",
+      "quote": "| Certificate Date | 09-09-2008 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Application Number | 107 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Geographical Indications | Andhra Pradesh Leather Puppetry | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Applicant Name | Andhra Pradesh Handicrafts Development Corporation Ltd. |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Date of Filing | 01-08-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Certificate Number | 93 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C293",
+      "sourceId": "S25",
+      "quote": "| Certificate Date | 09-09-2008 |",
+      "result": "PASS"
+    }
+  ]
+}

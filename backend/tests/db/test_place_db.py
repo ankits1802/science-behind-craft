@@ -28,7 +28,7 @@ from app.services.place_offers import region_offer, section_map_layer
 from app.services.region_story import region_story_block, story_statements
 
 from ..contracts.phase_b_golden import phase_b_blocks
-from ..geo.golden_region import GI_JOURNAL, KACHCHH, golden_datasets
+from ..geo.golden_region import GI_JOURNAL, KACHCHH, TEMPERATURE_NORMAL, golden_datasets
 from .test_knowledge_pieces_db import AJRAKH, QUESTION, WATER_CLAIMS, answer_row, prose_of, store_for
 
 pytestmark = pytest.mark.db
@@ -38,7 +38,7 @@ SHA = "b" * 64
 HYDRORIVERS = "HYDRORIVERS_1_0"
 VALUES = (
     ("SOILGRIDS_2_0", "phh2o", "0-5cm", "DISTRICT_MEAN", 8.1, "pH"),
-    ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", "NORMAL", 26.6, "degC"),
+    TEMPERATURE_NORMAL[:6],
     (HYDRORIVERS, "river_density", "", "DENSITY", 0.21, "km/km2"),
     ("ESA_WORLDCOVER_2021_V200", "landcover_cropland", "2021", "SHARE", 0.236, "fraction"),
 )

@@ -4,6 +4,7 @@ from typing import Literal
 
 from app.models.enums import (
     COVERAGE_CLASSES,
+    ENVIRONMENT_FACTORS,
     MATERIAL_ROLES,
     PLACE_ROLES,
     QUOTE_CHECKS,
@@ -19,6 +20,7 @@ __all__ = [
     "CURATOR",
     "DOSSIER_SCHEMA_VERSION",
     "ENVIRONMENT_FACTORS",
+    "FAMILY_CENTRE_KINDS",
     "GI_RECORD_SOURCE_KINDS",
     "GROUP_KINDS",
     "INDIA",
@@ -27,6 +29,7 @@ __all__ = [
     "PLACE_ROLES",
     "QUOTE_RESULTS",
     "READ_ROUTES",
+    "SCOPES",
     "SOURCE_ACCESS",
     "SOURCE_SUB_KINDS",
     "SUBJECT_TYPES",
@@ -39,6 +42,7 @@ __all__ = [
     "PlaceRole",
     "QuoteResult",
     "ReadRoute",
+    "Scope",
     "Sensitivity",
     "SourceAccess",
     "SourceSubKind",
@@ -54,13 +58,14 @@ SUBJECT_TYPES = ("CRAFT", "STAGE", "MATERIAL", "PLACE", "TOOL", "COMMUNITY", "TE
 PLACE_KINDS = ("VILLAGE", "TOWN", "DISTRICT", "STATE", "COUNTRY", "REGION", "RIVER")
 INDIAN_DISTRICT_PLACE_KINDS = ("VILLAGE", "TOWN", "DISTRICT")
 CENTRE_ROLES = ("PRACTISED", "HISTORIC_CENTRE")
+FAMILY_CENTRE_KINDS = ("STATE", "REGION")
 GROUP_KINDS = ("COMMUNITY", "PERSON", "ORGANISATION")
 CURATED_MATERIAL_ROLES = tuple(role for role in MATERIAL_ROLES if role != "TOOL")
-ENVIRONMENT_FACTORS = ("WATER", "SOIL", "CLIMATE", "LANDFORM", "VEGETATION", "OTHER")
 GI_RECORD_SOURCE_KINDS = ("GI_JOURNAL", "GOVERNMENT_REPORT")
 QUOTE_RESULTS = tuple(check for check in QUOTE_CHECKS if check != "NA")
 READ_ROUTES = ("LIVE", "ARCHIVE")
 INDIA = "India"
+SCOPES = ("CRAFT", "FAMILY", "CATEGORY")
 
 CoverageClass = Literal[*COVERAGE_CLASSES]
 CuratedSourceKind = Literal[*CURATED_SOURCE_KINDS]
@@ -73,5 +78,6 @@ GroupKind = Literal[*GROUP_KINDS]
 CuratedMaterialRole = Literal[*CURATED_MATERIAL_ROLES]
 EnvironmentFactor = Literal[*ENVIRONMENT_FACTORS]
 QuoteResult = Literal[*QUOTE_RESULTS]
+Scope = Literal[*SCOPES]
 ReadRoute = Literal[*READ_ROUTES]
 Sensitivity = Literal[*SENSITIVITIES]

@@ -4,12 +4,14 @@ import {
   DISCIPLINES,
   explainerBlockShape,
   FINAL_SECTION_STATES,
+  ledeBlockShape,
   SECTION_ID,
   understoodShape,
   WORKING_SECTION_STATES,
   type Discipline,
   type ExplainerBlock,
   type FinalSectionState,
+  type LedeBlock,
   type Understood,
   type WorkingSectionState
 } from "@/lib/explainerContract";
@@ -24,6 +26,8 @@ export type SectionStarted = { id: string; discipline: Discipline; title: string
 export type SectionStateChange = { sectionId: string; state: WorkingSectionState };
 export type BlockArrived = { sectionId: string; block: ExplainerBlock };
 export type SectionDone = { sectionId: string; state: FinalSectionState; searched: string | null };
+export type SectionHeading = { sectionId: string; title: string; original?: string };
+export type LedeArrived = { block: LedeBlock };
 export type TrailEntry = {
   key: string;
   stage: (typeof TRAIL_STAGES)[number];
@@ -44,6 +48,8 @@ export type ExplainerEvent =
   | { type: "section_state"; data: SectionStateChange }
   | { type: "block"; data: BlockArrived }
   | { type: "section_done"; data: SectionDone }
+  | { type: "section_heading"; data: SectionHeading }
+  | { type: "lede"; data: LedeArrived }
   | { type: "trail"; data: TrailEntry }
   | { type: "status"; data: AnswerStatus }
   | { type: "source"; data: SourceRef }
@@ -69,6 +75,8 @@ const EVENTS: { [K in ExplainerEvent["type"]]: Shape<Extract<ExplainerEvent, { t
   section_state: object<SectionStateChange>({ sectionId: SECTION_ID, state: oneOf(WORKING_SECTION_STATES) }),
   block: object<BlockArrived>({ sectionId: SECTION_ID, block: explainerBlockShape }),
   section_done: object<SectionDone>({ sectionId: SECTION_ID, state: oneOf(FINAL_SECTION_STATES), searched: nullable(text) }),
+  section_heading: object<SectionHeading>({ sectionId: SECTION_ID, title: text, original: optional(text) }),
+  lede: object<LedeArrived>({ block: ledeBlockShape }),
   trail: object<TrailEntry>({
     key: matching(/^[a-z][a-z0-9_]{1,39}:\S+$/, "a trail key"),
     stage: oneOf(TRAIL_STAGES),

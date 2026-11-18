@@ -9,6 +9,7 @@ from types import MappingProxyType
 from typing import Any
 
 from app.core.errors import InvalidInput
+from app.geo.climate import MEAN_STAT, TREND_DATASETS
 from app.geo.datasets import region_dataset, value_grid
 from app.geo.records import DatasetRecord, LayerListing, LayerSpec, LayerValues, StoredLayer
 from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE
@@ -48,7 +49,11 @@ def _cover(id_: str, title: str, variable: str) -> LayerSpec:
 
 
 def _chelsa(id_: str, title: str, variable: str) -> LayerSpec:
-    return LayerSpec(id_, title, "CHELSA_2_1_1981_2010", variable, "1981-2010", "NORMAL")
+    return LayerSpec(id_, title, "CHELSA_2_1_1981_2010", variable, "1981-2010", MEAN_STAT)
+
+
+def _trend_normal(id_: str, title: str, variable: str) -> LayerSpec:
+    return LayerSpec(id_, title, TREND_DATASETS[variable], variable, None, MEAN_STAT)
 
 
 MAP_LAYERS: tuple[LayerSpec, ...] = (
@@ -57,10 +62,10 @@ MAP_LAYERS: tuple[LayerSpec, ...] = (
     _soil("clay-0-5cm", "Clay, 0-5 cm", "clay"),
     _soil("sand-0-5cm", "Sand, 0-5 cm", "sand"),
     _soil("cation-exchange-0-5cm", "Cation exchange capacity, 0-5 cm", "cec"),
-    _chelsa("annual-mean-temperature", "Annual mean temperature", "annual_mean_temperature"),
+    _trend_normal("annual-mean-temperature", "Annual mean temperature", "annual_mean_temperature"),
     _chelsa("warmest-month-maximum", "Warmest-month maximum temperature", "max_temperature_warmest_month"),
     _chelsa("coldest-month-minimum", "Coldest-month minimum temperature", "min_temperature_coldest_month"),
-    _chelsa("annual-precipitation", "Annual precipitation", "annual_precipitation"),
+    _trend_normal("annual-precipitation", "Annual precipitation", "annual_precipitation"),
     LayerSpec(
         "monsoon-share", "Monsoon share of rainfall", "CHIRPS_3_0", "monsoon_share_jjas", None, "NORMAL"
     ),

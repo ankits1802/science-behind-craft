@@ -191,7 +191,8 @@ test("the district level zooms into the register's polygon under the boundary ca
   expect(moving).toMatch(new RegExp(`data-testid="district-outlines"[\\s\\S]*data-lgd="${KACHCHH}"`));
   expect(moving).toContain(">Kachchh</text>");
   expect(shownText(moving)).toContain(BOUNDARY_CAPTION);
-  expect(moving).toContain("Kaggle adityaradha007/indian-districts-geojson");
+  expect(moving).toContain("Indian district boundaries, matched to LGD codes");
+  expect(moving).not.toContain("Designer Portal");
   const still = drawn(createElement(ZoomDistrictMap, { shapes: shapes(), district, boundary, moving: false }));
   expect(attribute(still, "zoom-district", "data-scale")).toEqual(["1"]);
   const unknown = drawn(createElement(ZoomDistrictMap, { shapes: shapes(), district: { ...district, districtLgd: 999999 }, boundary, moving: true }));

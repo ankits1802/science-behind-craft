@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from itertools import batched
 from typing import Any
 
-from sqlalchemy import func, select, update
+from sqlalchemy import Select, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,6 +27,7 @@ __all__ = [
     "ClaimWrites",
     "StoredClaim",
     "claim_writes",
+    "craft_curated_claims",
     "review_event",
     "stored_curated_claims",
     "superseded_claims",
@@ -158,28 +159,30 @@ def superseded_claims(
     )
 
 
-async def stored_curated_claims(session: AsyncSession, craft_id: uuid.UUID) -> dict[uuid.UUID, StoredClaim]:
-    statement = (
-        select(
-            Claim.id,
-            Claim.subjectId,
-            Claim.text,
-            Claim.evidenceLevel,
-            Claim.levelReason,
-            Claim.status,
-            Claim.sensitivity,
-            Claim.sourcesDiffer,
-        )
-        .join(CuratedClaim, CuratedClaim.claimId == Claim.id)
-        .where(CuratedClaim.craftId == craft_id)
-    )
+def craft_curated_claims(craft_id: uuid.UUID) -> Select[tuple[uuid.UUID]]:
+    return select(CuratedClaim.claimId).where(CuratedClaim.craftId == craft_id)
+
+
+async def stored_curated_claims(
+    session: AsyncSession, marked: Select[tuple[uuid.UUID]]
+) -> dict[uuid.UUID, StoredClaim]:
+    statement = select(
+        Claim.id,
+        Claim.subjectId,
+        Claim.text,
+        Claim.evidenceLevel,
+        Claim.levelReason,
+        Claim.status,
+        Claim.sensitivity,
+        Claim.sourcesDiffer,
+    ).where(Claim.id.in_(marked))
     return {row[0]: StoredClaim(*row) for row in (await session.execute(statement)).tuples()}
 
 
 async def write_claims(
-    session: AsyncSession, craft_id: uuid.UUID, planned: Sequence[dict[str, Any]], note: str
+    session: AsyncSession, marked: Select[tuple[uuid.UUID]], planned: Sequence[dict[str, Any]], note: str
 ) -> int:
-    stored = await stored_curated_claims(session, craft_id)
+    stored = await stored_curated_claims(session, marked)
     planned_ids = {row["id"] for row in planned}
     stored.update(await _stored_by_id(session, planned_ids - set(stored)))
     written = claim_writes(planned, stored, note)

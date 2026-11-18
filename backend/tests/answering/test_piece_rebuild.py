@@ -1,7 +1,9 @@
+import dataclasses
 from decimal import Decimal
 
 from app.core.errors import ExternalFailure
 from app.providers.router import RouterError
+from app.services.answer_lede import LedeTools
 from app.services.piece_rebuild import StaleGroup, rebuild_group, run_piece_rebuild
 
 from ..composer.fixtures import QUESTION
@@ -51,6 +53,19 @@ async def test_a_stale_group_is_researched_afresh_for_its_facet_and_depth() -> N
     assert pieces.asked[-1].fresh is True
     (kept,) = pieces.current()
     assert (kept.facet, kept.depth) == ("CHEMISTRY", "EXPERT")
+
+
+async def test_a_rebuild_has_no_reader_so_it_writes_no_lede() -> None:
+    asked: list[object] = []
+
+    async def lede(request: object) -> object:
+        asked.append(request)
+        raise AssertionError("a rebuild writes no lede")
+
+    pieces = MemoryPieces(views=list(VIEWS), sources=dict(SOURCES))
+    built = dataclasses.replace(pipeline(replies=[REPLY], pieces=pieces), lede=LedeTools(compose=lede))
+    assert await rebuild_group(group(), built) == "REBUILT"
+    assert asked == []
 
 
 async def test_a_rebuild_that_shows_nothing_is_reported_empty() -> None:

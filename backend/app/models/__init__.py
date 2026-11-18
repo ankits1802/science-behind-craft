@@ -38,7 +38,15 @@ from app.models.crafts import (
     EnvDataset,
     GiRegistration,
 )
-from app.models.curation import CraftGiRecord, CraftPrice, CraftWorkforce, CuratedClaim, CuratedCraft
+from app.models.curation import (
+    CraftGiRecord,
+    CraftPrice,
+    CraftWorkforce,
+    CuratedCategory,
+    CuratedCategoryClaim,
+    CuratedClaim,
+    CuratedCraft,
+)
 from app.models.evaluation import EvalCase, EvalResult, EvalRun
 from app.models.glossary import Term, TermConcept, TermCraft, TermSummary
 from app.models.identity import (
@@ -120,6 +128,8 @@ __all__ = [
     "CraftSpelling",
     "CraftSubCategory",
     "CraftWorkforce",
+    "CuratedCategory",
+    "CuratedCategoryClaim",
     "CuratedClaim",
     "CuratedCraft",
     "CxaCraftMap",

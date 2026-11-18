@@ -1,0 +1,3224 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Miscellaneous",
+  "dossierVersion": 1,
+  "dossierDigest": "890b98f21504f3361ba5ee4879606f4f919174d5adaeac9b500918f8204eee07",
+  "checkedAt": "2026-11-18T10:52:17.154938Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.nature.com/articles/s40494-025-01729-4",
+      "route": "LIVE",
+      "readUrl": "https://www.nature.com/articles/s40494-025-01729-4",
+      "finalUrl": "https://www.nature.com/articles/s40494-025-01729-4",
+      "fetchedAt": "2026-11-18T10:50:16.725352Z",
+      "contentType": "text/html",
+      "textSha256": "32b5b17c16b5063f232269840c022622fae3dee3b5cc34343e2737f6fe62298f",
+      "characters": 71583,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://imp-art.org/articles/warli-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/warli-painting/",
+      "finalUrl": "https://imp-art.org/articles/warli-painting/",
+      "fetchedAt": "2026-11-18T10:50:13.904580Z",
+      "contentType": "text/html",
+      "textSha256": "2699d758a05c485f0ffdac8dd50a146d7ca07cfe5f492e8dfdcd6a2f4340c0e1",
+      "characters": 5046,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://imp-art.org/articles/pithora-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/pithora-painting/",
+      "finalUrl": "https://imp-art.org/articles/pithora-painting/",
+      "fetchedAt": "2026-11-18T10:50:15.896434Z",
+      "contentType": "text/html",
+      "textSha256": "f5d6ef5a00e4ad86f2e5070a18e32a99f39dce2d592df0742b2340484e384fe6",
+      "characters": 9749,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://imp-art.org/articles/sohrai-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/sohrai-painting/",
+      "finalUrl": "https://imp-art.org/articles/sohrai-painting/",
+      "fetchedAt": "2026-11-18T10:50:17.898376Z",
+      "contentType": "text/html",
+      "textSha256": "82239db2794b558581056af430206ca8ea92b088c555426dfa73cff743f737bb",
+      "characters": 7870,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://imp-art.org/articles/patachitra/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/patachitra/",
+      "finalUrl": "https://imp-art.org/articles/patachitra/",
+      "fetchedAt": "2026-11-18T10:50:20.817227Z",
+      "contentType": "text/html",
+      "textSha256": "80aa7d5d09dbc57f71bd1e05bd6c3c968a2cc7e1b75aea8dc60320471f964afb",
+      "characters": 5099,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://imp-art.org/articles/tanjore-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/tanjore-painting/",
+      "finalUrl": "https://imp-art.org/articles/tanjore-painting/",
+      "fetchedAt": "2026-11-18T10:50:23.111058Z",
+      "contentType": "text/html",
+      "textSha256": "bba0005bb7179c3fd812216b09c0573b9e818153a039704a6480ce810ebf41a0",
+      "characters": 7634,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://imp-art.org/articles/mysore-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/mysore-painting/",
+      "finalUrl": "https://imp-art.org/articles/mysore-painting/",
+      "fetchedAt": "2026-11-18T10:50:26.915170Z",
+      "contentType": "text/html",
+      "textSha256": "191977c95d1319e49dd75d7c95ad7000f82d294154566d6fb09681ee16165d63",
+      "characters": 19936,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://imp-art.org/articles/gond-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/gond-painting/",
+      "finalUrl": "https://imp-art.org/articles/gond-painting/",
+      "fetchedAt": "2026-11-18T10:50:28.825898Z",
+      "contentType": "text/html",
+      "textSha256": "afdabedaebdf709d89bcd4ed98dfa871e887eb339058c078fd4a2053bdac357d",
+      "characters": 3505,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://imp-art.org/articles/cheriyal-scroll-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/cheriyal-scroll-painting/",
+      "finalUrl": "https://imp-art.org/articles/cheriyal-scroll-painting/",
+      "fetchedAt": "2026-11-18T10:50:30.765412Z",
+      "contentType": "text/html",
+      "textSha256": "001ada42433c560f38509959414fc72b72bd3c56378c1a8fb875944e2da810e6",
+      "characters": 5428,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/articles/rogan/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/rogan/",
+      "finalUrl": "https://imp-art.org/articles/rogan/",
+      "fetchedAt": "2026-11-18T10:50:32.935848Z",
+      "contentType": "text/html",
+      "textSha256": "3859273f679c15d15e23bc1a9bb04a67cdd619e66eb06e1e88314af78e5cbf84",
+      "characters": 6228,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://imp-art.org/articles/ganjifa/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/ganjifa/",
+      "finalUrl": "https://imp-art.org/articles/ganjifa/",
+      "fetchedAt": "2026-11-18T10:50:34.889280Z",
+      "contentType": "text/html",
+      "textSha256": "e9fe2bf39143579bd513eca00d9bb311e1736537753c2f79ed2ced33a78aff29",
+      "characters": 7755,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://imp-art.org/articles/pichhwai/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/pichhwai/",
+      "finalUrl": "https://imp-art.org/articles/pichhwai/",
+      "fetchedAt": "2026-11-18T10:50:36.990505Z",
+      "contentType": "text/html",
+      "textSha256": "db13451ccef8ad25f9374728e9e82d40fceb06a93d96585a4e0fbd7087979e06",
+      "characters": 6341,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://imp-art.org/articles/meenakari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/meenakari/",
+      "finalUrl": "https://imp-art.org/articles/meenakari/",
+      "fetchedAt": "2026-11-18T10:50:45.625522Z",
+      "contentType": "text/html",
+      "textSha256": "93b00f7e92b6c60c24d17d4dc103cc16915ac69a54a66c0d812817c32ea4fe00",
+      "characters": 3675,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/kundan-jadau/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kundan-jadau/",
+      "finalUrl": "https://imp-art.org/articles/kundan-jadau/",
+      "fetchedAt": "2026-11-18T10:51:03.015426Z",
+      "contentType": "text/html",
+      "textSha256": "56e572df6ba3d070483401cd0c99326c0d051f7f287c0d1a22296161319f1dcd",
+      "characters": 3409,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.sahapedia.org/crafting-conches-sankhari-community-bagbazar-and-barrackpore",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/crafting-conches-sankhari-community-bagbazar-and-barrackpore",
+      "finalUrl": "https://www.sahapedia.org/crafting-conches-sankhari-community-bagbazar-and-barrackpore",
+      "fetchedAt": "2026-11-18T10:50:13.369079Z",
+      "contentType": "text/html",
+      "textSha256": "5c463547d287741c60fec833f269251e3a6d82ea2d3141da025ed633c5755dec",
+      "characters": 9706,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://archive.org/download/madrasfisheriesb07madr/madrasfisheriesb07madr_djvu.txt",
+      "route": "LIVE",
+      "readUrl": "https://archive.org/download/madrasfisheriesb07madr/madrasfisheriesb07madr_djvu.txt",
+      "finalUrl": "https://ia601603.us.archive.org/14/items/madrasfisheriesb07madr/madrasfisheriesb07madr_djvu.txt",
+      "fetchedAt": "2026-11-18T10:50:18.059405Z",
+      "contentType": "text/plain",
+      "textSha256": "31f80dc9cb9ec21a3f4c08a4005074fb182d396a6dffbd08f5678d2245f09405",
+      "characters": 198547,
+      "truncated": true,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T10:50:14.227980Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://indianentomology.org/index.php/ije/article/download/913/676/2991",
+      "route": "LIVE",
+      "readUrl": "https://indianentomology.org/index.php/ije/article/download/913/676/2991",
+      "finalUrl": "https://indianentomology.org/index.php/ije/article/download/913/676/2991",
+      "fetchedAt": "2026-11-18T10:50:17.947895Z",
+      "contentType": "application/pdf",
+      "textSha256": "f4e1e9603bb6e9a7d215891c7a4e766794834e5d953ef629986fd5d2185c1bb5",
+      "characters": 45084,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://imp-art.org/articles/lac-dye/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/lac-dye/",
+      "finalUrl": "https://imp-art.org/articles/lac-dye/",
+      "fetchedAt": "2026-11-18T10:51:15.143799Z",
+      "contentType": "text/html",
+      "textSha256": "900d75360e027e1ad0d133d130388bb5b3e39ba2fa135fc8245e051ca43d66b3",
+      "characters": 3453,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://dsource.in/resource/lac-bangles-hyderabad/making-process",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/lac-bangles-hyderabad/making-process",
+      "finalUrl": "https://dsource.in/resource/lac-bangles-hyderabad/making-process",
+      "fetchedAt": "2026-11-18T10:50:17.591535Z",
+      "contentType": "text/html",
+      "textSha256": "ff1f447e48dcfabe4ee481cfeb335559f1abe5c23dbe8566bf5672e070c3fa56",
+      "characters": 1894,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "finalUrl": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "fetchedAt": "2026-11-18T10:50:19.339082Z",
+      "contentType": "text/html",
+      "textSha256": "2c31b68a091ecd18c4d21766d6c795ecc74eeabeeb576df3f30a36cbfe1c32a7",
+      "characters": 51814,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://www.fao.org/4/i3364e/i3364e08.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/4/i3364e/i3364e08.pdf",
+      "finalUrl": "https://www.fao.org/4/i3364e/i3364e08.pdf",
+      "fetchedAt": "2026-11-18T10:50:22.873439Z",
+      "contentType": "application/pdf",
+      "textSha256": "ccbd2c308d08a8a9780b924ed635527635b93263a4a1cfff9259e266b2d2e2c9",
+      "characters": 14901,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://dsource.in/resource/wooden-toys-varanasi/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/wooden-toys-varanasi/introduction",
+      "finalUrl": "https://dsource.in/resource/wooden-toys-varanasi/introduction",
+      "fetchedAt": "2026-11-18T10:50:20.598021Z",
+      "contentType": "text/html",
+      "textSha256": "39a5a57e5a713ee88c8ffb934cc54441180d14d4d983dacdab948a3df596bfde",
+      "characters": 4737,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://dsource.in/resource/wooden-toys-varanasi/making-process",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/wooden-toys-varanasi/making-process",
+      "finalUrl": "https://dsource.in/resource/wooden-toys-varanasi/making-process",
+      "fetchedAt": "2026-11-18T10:50:23.227225Z",
+      "contentType": "text/html",
+      "textSha256": "789131e1761d5550688775eb2de61266ca86ebd4b8112ca8e1b20bec6a78e0b7",
+      "characters": 3751,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://imp-art.org/articles/kathputli/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kathputli/",
+      "finalUrl": "https://imp-art.org/articles/kathputli/",
+      "fetchedAt": "2026-11-18T10:51:25.878182Z",
+      "contentType": "text/html",
+      "textSha256": "8e69232804909f15f102d005be4596d54b1da31076d3299ab97fc5c63ac2bc13",
+      "characters": 7148,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://dsource.in/resource/kathputli/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/kathputli/introduction",
+      "finalUrl": "https://dsource.in/resource/kathputli/introduction",
+      "fetchedAt": "2026-11-18T10:50:26.985406Z",
+      "contentType": "text/html",
+      "textSha256": "5de020dd853ed04ba7d6814d5c4e183a06c3433bff3b687f5a49a16ee2a436b3",
+      "characters": 1513,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://dsource.in/resource/kathputli/tools-and-raw-materials",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/kathputli/tools-and-raw-materials",
+      "finalUrl": "https://dsource.in/resource/kathputli/tools-and-raw-materials",
+      "fetchedAt": "2026-11-18T10:50:28.786797Z",
+      "contentType": "text/html",
+      "textSha256": "5976245672e83af2533a7fe96393451f2e0268fcb399109f16f1c8ac75949028",
+      "characters": 3604,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://www.ias.ac.in/article/fulltext/seca/001/03/0179-0188",
+      "route": "LIVE",
+      "readUrl": "https://www.ias.ac.in/article/fulltext/seca/001/03/0179-0188",
+      "finalUrl": "https://www.ias.ac.in/article/fulltext/seca/001/03/0179-0188",
+      "fetchedAt": "2026-11-18T10:50:20.578712Z",
+      "contentType": "application/pdf",
+      "textSha256": "028fe46188878d92eda1c877db519c513f7f9179d62c021ff61b5ab765267b32",
+      "characters": 23235,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://arxiv.org/pdf/2307.09425",
+      "route": "LIVE",
+      "readUrl": "https://arxiv.org/pdf/2307.09425",
+      "finalUrl": "https://arxiv.org/pdf/2307.09425",
+      "fetchedAt": "2026-11-18T10:50:22.369973Z",
+      "contentType": "application/pdf",
+      "textSha256": "638f8658c55bf81e04854e4a821b0dd354355b101d0f651a8d9af609f065e93f",
+      "characters": 86672,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://www.nios.ac.in/media/documents/Carnatic_Music_243/carnaticmusicbook1/ch6.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.nios.ac.in/media/documents/Carnatic_Music_243/carnaticmusicbook1/ch6.pdf",
+      "finalUrl": "https://www.nios.ac.in/media/documents/Carnatic_Music_243/carnaticmusicbook1/ch6.pdf",
+      "fetchedAt": "2026-11-18T10:50:25.551700Z",
+      "contentType": "application/pdf",
+      "textSha256": "7a476e30ba1ba9a60713acf3c03ff2ac6cb56514079e942a65cf2c1af1da2ed6",
+      "characters": 24395,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://ruralindiaonline.org/en/articles/the-sweet-music-of-jack-wood/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250120040236id_/https://www.ruralindiaonline.org/en/articles/the-sweet-music-of-jack-wood/",
+      "finalUrl": "https://web.archive.org/web/20250120040236id_/https://www.ruralindiaonline.org/en/articles/the-sweet-music-of-jack-wood/",
+      "fetchedAt": "2026-11-18T10:50:30.767584Z",
+      "contentType": "text/html",
+      "textSha256": "944df77aef8d4a737fe42a55c1a406f905f5a01af03f2f0e19b989460b3896c8",
+      "characters": 22218,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://dsource.in/resource/veena-making/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/veena-making/introduction",
+      "finalUrl": "https://dsource.in/resource/veena-making/introduction",
+      "fetchedAt": "2026-11-18T10:50:30.555605Z",
+      "contentType": "text/html",
+      "textSha256": "fa210496bf39b833844b9fa805bcbcbfc0aec44ad7fef96b838ca1583ae3f09c",
+      "characters": 1765,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://downloads.unido.org/ot/48/06/4806038/20001-_21000.pdf",
+      "route": "LIVE",
+      "readUrl": "https://downloads.unido.org/ot/48/06/4806038/20001-_21000.pdf",
+      "finalUrl": "https://downloads.unido.org/ot/48/06/4806038/20001-_21000.pdf",
+      "fetchedAt": "2026-11-18T10:50:37.391255Z",
+      "contentType": "application/pdf",
+      "textSha256": "d9ea88da0510304a33bf69f6ce0d6d21dd51d7985569ed9780601f9c93322e89",
+      "characters": 391144,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://www.teriin.org/sites/default/files/2021-08/Glass_Report.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.teriin.org/sites/default/files/2021-08/Glass_Report.pdf",
+      "finalUrl": "https://www.teriin.org/sites/default/files/2021-08/Glass_Report.pdf",
+      "fetchedAt": "2026-11-18T10:50:49.810606Z",
+      "contentType": "application/pdf",
+      "textSha256": "738e3a5dab323994a6362f053f5407936877f8353f13266d0a0e5928e240f41a",
+      "characters": 87485,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://dsource.in/resource/glass-bangles-firozabad/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/glass-bangles-firozabad/introduction",
+      "finalUrl": "https://dsource.in/resource/glass-bangles-firozabad/introduction",
+      "fetchedAt": "2026-11-18T10:50:33.726337Z",
+      "contentType": "text/html",
+      "textSha256": "32c8572bbb3972fd17c9b01b64fe11b16a8c5d312567af239224439a44452d79",
+      "characters": 2835,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://dsource.in/resource/glass-bangles-firozabad/tools-and-raw-materials",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/glass-bangles-firozabad/tools-and-raw-materials",
+      "finalUrl": "https://dsource.in/resource/glass-bangles-firozabad/tools-and-raw-materials",
+      "fetchedAt": "2026-11-18T10:50:37.134640Z",
+      "contentType": "text/html",
+      "textSha256": "3e6e480c6a31c1001cd1bb4d5c97b2bc8216f2495db2faef60c134191bc6f58c",
+      "characters": 695,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S40",
+      "url": "https://dsource.in/resource/glass-bangles-firozabad/making-process",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/glass-bangles-firozabad/making-process",
+      "finalUrl": "https://dsource.in/resource/glass-bangles-firozabad/making-process",
+      "fetchedAt": "2026-11-18T10:51:07.372135Z",
+      "contentType": "text/html",
+      "textSha256": "243b30a375ff06f2157b32425864bf2868b05378b76fc3c7c143036fb7b47a71",
+      "characters": 2295,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S41",
+      "url": "https://dsource.in/resource/glass-beads-varanasi/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/glass-beads-varanasi/introduction",
+      "finalUrl": "https://dsource.in/resource/glass-beads-varanasi/introduction",
+      "fetchedAt": "2026-11-18T10:51:35.973544Z",
+      "contentType": "text/html",
+      "textSha256": "4549e95c4107ad223dc574bbf58c2a4668b418ac16ab98de6ea2d8b63327715f",
+      "characters": 4966,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S42",
+      "url": "https://dsource.in/resource/glass-beads-varanasi/making-process",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/glass-beads-varanasi/making-process",
+      "finalUrl": "https://dsource.in/resource/glass-beads-varanasi/making-process",
+      "fetchedAt": "2026-11-18T10:51:51.520297Z",
+      "contentType": "text/html",
+      "textSha256": "70abc8e3b348606a3be501586fb8cc088cce94868586375709d901572718cad7",
+      "characters": 3946,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S43",
+      "url": "https://imp-art.org/articles/chhau-masks/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/chhau-masks/",
+      "finalUrl": "https://imp-art.org/articles/chhau-masks/",
+      "fetchedAt": "2026-11-18T10:51:37.535654Z",
+      "contentType": "text/html",
+      "textSha256": "6171869c3bcd5573bf50d491c5673c515de1c8a663c3dbb0697830d3331562df",
+      "characters": 4898,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S44",
+      "url": "https://dsource.in/resource/lac-bangles-hyderabad/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/lac-bangles-hyderabad/introduction",
+      "finalUrl": "https://dsource.in/resource/lac-bangles-hyderabad/introduction",
+      "fetchedAt": "2026-11-18T10:52:01.308944Z",
+      "contentType": "text/html",
+      "textSha256": "7e251f00e6ba2e0e1709a73b19f5716ee171ae32fa47213ef400a42e2a3bc72f",
+      "characters": 665,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S45",
+      "url": "https://www.dcmsme.gov.in/old/publications/pmryprof/chem/ch30.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20240612222430id_/https://www.dcmsme.gov.in/old/publications/pmryprof/chem/ch30.pdf",
+      "finalUrl": "https://web.archive.org/web/20240612222430id_/https://www.dcmsme.gov.in/old/publications/pmryprof/chem/ch30.pdf",
+      "fetchedAt": "2026-11-18T10:51:02.673894Z",
+      "contentType": "application/pdf",
+      "textSha256": "c29c69d384dac0414f5970240ad57ae5825082b7e9df35afbf0d506b3167ce7a",
+      "characters": 3979,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S46",
+      "url": "https://www.nabard.org/GI/sambhal-horn-craft.aspx",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/sambhal-horn-craft.aspx",
+      "finalUrl": "https://www.nabard.org/GI/sambhal-horn-craft.aspx",
+      "fetchedAt": "2026-11-18T10:51:05.473786Z",
+      "contentType": "text/html",
+      "textSha256": "b2496b6fc39ab8ca31c9ff8ee9f809ca5b0d1fba89b44ef00dd86ed5def51360",
+      "characters": 953,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S47",
+      "url": "https://gjepc.org/solitaire/nagercoils-temple-jewellery-a-divine-craft/",
+      "route": "LIVE",
+      "readUrl": "https://gjepc.org/solitaire/nagercoils-temple-jewellery-a-divine-craft/",
+      "finalUrl": "https://gjepc.org/solitaire/nagercoils-temple-jewellery-a-divine-craft/",
+      "fetchedAt": "2026-11-18T10:51:11.910453Z",
+      "contentType": "text/html",
+      "textSha256": "3724b4c3c811a90a0cb4a9a5590cf6f2afead47390803d5588605d7d4950c1e9",
+      "characters": 2933,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "A traditional form of mural art, Warli painting is practised by people of the Warli community in Maharashtra and parts of Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "these murals were traditionally painted on the walls of mud homes during the harvest and the wedding season in these states",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S06",
+      "quote": "The tradition of iconographic painting practised in West Bengal and Odisha on scrolls made out of cloth, patachitra tradition is among the many art forms to emerge from the Jagannath Temple, Puri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S14",
+      "quote": "A form of enamel painting, primarily used in fine jewellery, meenakari, or minakari, is popular in Rajasthan, Uttar Pradesh and Delhi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S15",
+      "quote": "kundan is a form of jewellery making involving a gem set with a gold foil between the stones. This technique of setting gold around the stones in kundan is called jadau",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S16",
+      "quote": "Sankharis either work directly on the intact conch surface or cut multiple bangles from a single conch. The bangles are then polished and engraved, and the finished bangles are worn predominantly by Hindu Bengali women",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S19",
+      "quote": "Lac is the only natural resin of animal origin secreted by a specialized group of insects called lac insects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S24",
+      "quote": "Traditional wooden-toy making is conducted mainly at the cottage-industry scale, and most artisans are \"unorganized\", meaning that they operate independently",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S33",
+      "quote": "In general, musical instruments were classified into four heads from very ancient times, such as \"Tatam, Avanadham, Sushiram, and Ghanam\". Musicologists like Bharata, Matanga Narada, Saranga Deva and others upholds this classification",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S43",
+      "quote": "Large, colourful masks of clay and wood, chhau masks are used for chhau performances in the states of West Bengal, Jharkhand and Odisha.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S28",
+      "quote": "A form of string puppetry practised in the north Indian state of Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S28",
+      "quote": "it is one of the most commonly recognisable forms of puppetry in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S37",
+      "quote": "Firozabad, a small town about 40 kilometres from Agra is one of the leading glass clusters in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S37",
+      "quote": "the bangles in India are almost exclusively produced in this cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "A collection of forty-two pigments and artists' materials from the workshop of traditional Indian miniature artist, Mr. Babulal Marotia, are analyzed scientifically.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "A combination of microscopic, spectroscopic, and crystallographic techniques is used to comprehensively characterize the materials",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "the MCH project visited the workshop of Mr. Babulal Marotia, a traditional miniature painter from Jaipur, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "Most of the collected pigments were sourced from local 'pansari' shops",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "in minimally processed forms, and prepared by 'ghutai', the traditional process of comminuting pigments into a fine particle size",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "The process of 'ghutai' involves breaking down the pigment and mixing it with gum Arabic to form a sticky mixture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "the MCH project visited the workshop of Mr. Babulal Marotia, a traditional miniature painter from Jaipur, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "he mentioned that khariya is his most frequently used pigment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Analyses through Raman and M-FTIR spectroscopy revealed that khariya was in fact the clay mineral kaolinite",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "The first red pigment was referred to as hinglu by the artist (MCH.01), a red mineral sourced from an unspecified mine in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "Raman spectroscopy identified this pigment as the naturally occurring mineral cinnabar (HgS).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "The fourth yellow pigment was referred to as harital by the artist (MCH.06), a yellow mineral that was sourced from an unspecified mine in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "Raman spectroscopy confirmed that harital was composed of orpiment (As2S3).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "He is, however, aware that the pigments may be harmful to his health, and mentions washing his hand thoroughly after every painting session.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "the MCH project visited the workshop of Mr. Babulal Marotia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "arsenolite and other mineral arsenicals are also known to have been used in traditional Ayurvedic medicinal preparations17,18, further detailing why arsenolite may have been readily available for purchase as a household material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "Examples of historically used pigments included harital (orpiment), hinglu (cinnabar), khariya (kaolinite), dana farang (malachite), dhabdi ka sindoor (red lead), neel (indigo), and kajal (lampblack)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "which have been identified in Indian manuscripts dating back to the 16th century from the Harvard Art Museums' collection",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "forty-two Indian pigments from the workshop of the traditional Jaipuri miniature artist, Mr. Babulal Marotia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "referred to as sone ka varak by the artist, which translates to gold foil",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "It is produced by beating pieces of gold foil to thin them in a process referred to as kutai",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "the MCH project visited the workshop of Mr. Babulal Marotia, a traditional miniature painter from Jaipur, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "The first step in the creation of a Warli painting involves levelling and smoothing the surface of the mud wall.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "On the smoothened surface, a paste of cow dung and geru is applied to form the background of the painting. The primary pigment is white, and is derived from a paste of rice flour, while a bamboo stick, crushed at one end to form bristles, is used as a brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "The act of painting is called lihane, which is also the Warli word for writing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S02",
+      "quote": "Lines, triangles, squares and circles are used to depict humans, animals and plants in a two-dimensional space.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S02",
+      "quote": "During the 1970s, Warli painting caught the attention of a wider audience. This was largely due to the works of Warli artist Jivya Soma Mashe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S02",
+      "quote": "In 2014, it received a Geographical Indications (GI) tag from the Indian government.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S02",
+      "quote": "While the history of the Warli community and the origins of its artistic traditions are not clearly established",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S02",
+      "quote": "some historians - noting similarities between Warli painting and the murals at the Bhimbetka rock caves - believe that Warli painting may have its roots as far back as the tenth century BCE",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S02",
+      "quote": "Traditionally, Warli painting has been done primarily by women. Further among these women are artists called sahavasini, who specialise in painting the chawk",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S04",
+      "quote": "The lakhara traditionally use brushes made of tender bamboo shoots or twigs of the Bawal tree or the Palash tree, while pigments are derived from dried plants and minerals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S04",
+      "quote": "The powdered pigments are mixed with cow or goat's milk and distilled mahudo, a drink made from fermented flowers of the Mahua tree that functions as a binder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S04",
+      "quote": "The central wall is first prepared with a coat of white clay, traditionally applied by the unmarried women of the household. The border, called heem, is drawn out first",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S04",
+      "quote": "In Gujarat, Pithora painting is practised by the Rathwa community residing in the districts of Panchmahal and Chhota Udaipur in the eastern part of the state.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S04",
+      "quote": "Within Madhya Pradesh, it is practised by the Bhil and Bhilala communities in the districts of Dhar and Jhabua",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "All the pigments are obtained from local soils",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "Black is derived from manganese-rich clay, sourced from fields bordering forests. Red is derived from red ochre, locally known as gerua, or from haematite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "Yellow comes from yellow earth ochre, which is locally known as nagri or pila maati, and white is derived from kaolin, locally known as charak maati.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "Water is used to dilute the soils, but the artists do not use any binders.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S05",
+      "quote": "In the second method, also known as the comb-cutting technique, a base layer of black clay is covered with white clay and, while the upper layer is still wet, patterns are drawn on it using a broken comb, fingers or nails.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "mud houses, on which these paintings are made, must be repaired and re-plastered following the monsoon, and the murals help provide another layer of protection to the structure",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "The discovery of painted shelters at Isko and close to the Satpahar Range near Hazaribagh in the 1990s provided historians with a link between rock art dating back to the meso-chalcolithic period (approximately 7000-4000 BCE) and existing artistic traditions in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "Studies have found similarities between the motifs used in the painted shelters and those of the Sohrai and Khovar traditions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "Sohrai is one of two historical mural painting traditions of the Hazaribagh region of the eastern Indian state of Jharkhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "Sohrai painting is practised by the women of several Indigenous communities",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "The paintings are done by women, with the techniques and designs passed down from mother to daughter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S06",
+      "quote": "The first base involves a coat of soft, white stone powder made out of chalk and glue derived from tamarind seeds. This strengthens the surface, making it smooth and semi-absorbent enough to absorb paint.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S07",
+      "quote": "Contemporary Tanjore paintings are large, framed objects",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S07",
+      "quote": "The wood of the jackfruit tree is usually preferred for this purpose. A sheet of cardboard is pasted onto the panel using gum sometimes made from tamarind seeds. This is covered with one or two layers of cloth, which is coated with lime and smoothed down using a stone or shell.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S07",
+      "quote": "Contemporary Tanjore paintings are large, framed objects",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S07",
+      "quote": "These spots are marked with unboiled limestone that is ground and mixed with glue, and gems or stones are directly embedded here, followed by the application of gold leaf or paper. Embossing is achieved by pressing the foil down with the pointed end of a paintbrush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S07",
+      "quote": "A style of painting developed in and around the area of Thanjavur (formerly Tanjore) in present-day Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S07",
+      "quote": "Tanjore painting emerged in the early seventeenth century under the patronage of the Nayaka rulers of the region",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S08",
+      "quote": "This typically involved the application of a paste of powdered white lead and gum arabic on the surface - with the addition of ganji or rice gruel for cloth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S08",
+      "quote": "When the application was dry, the surface was burnished to a smooth finish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S08",
+      "quote": "Mysore paintings were created using watercolours on a variety of surfaces",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S08",
+      "quote": "This subtle use of gesso with selective gilding is one of the distinguishing features of Mysore painting when compared with the contemporaneous South Indian school of Tanjore painting, which also used gesso and gilding but with high relief and abundant gold-work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S08",
+      "quote": "In the second half of the nineteenth century, European paintings, prints and photography influenced courtly painting across the Indian subcontinent, and factory-made pigments replaced plant and mineral-derived colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S09",
+      "quote": "As mural art, Gond painting uses natural pigments and materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S09",
+      "quote": "The walls and floor are cleaned and covered in a white clay called chhui, which is also used as a white pigment for painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S09",
+      "quote": "As mural art, Gond painting uses natural pigments and materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S09",
+      "quote": "Red and orange pigments are made with geru soil found in central and southern India, black is made with coal, green with cow dung and yellow with an ochre clay called ramraj or pili mitti.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S09",
+      "quote": "As mural art, Gond painting uses natural pigments and materials.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S09",
+      "quote": "The brushes, called koochi, are made with fibre obtained from tree bark, and sharpened twigs are used to paint the thinnest lines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S10",
+      "quote": "Cheriyal scroll painting has been practised in the town of Cheriyal in Siddipet district, Telangana since the seventeenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S10",
+      "quote": "Cheriyal scroll paintings are made by artists known as Nakashis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S10",
+      "quote": "Cheriyal scroll paintings are made by artists known as Nakashis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S10",
+      "quote": "Traditionally, the base material was khadi cloth treated with a mixture of rice starch, tamarind paste and chalk powder, applied in two or three layers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S10",
+      "quote": "Cheriyal scroll paintings are made by artists known as Nakashis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S10",
+      "quote": "Dyes were derived from natural sources, such as white from crushed sea shells, blue from indigo, black from soot and yellow from turmeric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S10",
+      "quote": "Cheriyal scroll paintings are made by artists known as Nakashis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S10",
+      "quote": "The longer scrolls reached up to twenty metres in length and contained as many as fifty panels, each of which was unfolded as the performance progressed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S11",
+      "quote": "The seeds of the castor plant are the basic raw materials that are pounded by hand and boiled for over twelve hours to release its oil and thicken it. When thrown into cold water, it gains a gelatinous paste-like consistency which creates the rogan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S11",
+      "quote": "Rogan painting follows a long and arduous process to make the paste with which the painting is done.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S11",
+      "quote": "It is then coloured with various dyes, usually using trisulphide of arsenic for yellow, red lead oxide for red, white lead or barium sulphate for white and indigo for blue, although now, increasingly, synthetic dyes are used",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S11",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S11",
+      "quote": "in the cities of Peshawar and Lahore where the craft came to be practised by the region's Pathan population",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S11",
+      "quote": "The technique, developed in these cities using linseed oil, was replaced with castor oil in Kutch, which was easier to cultivate in its arid climate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S11",
+      "quote": "A textile painting tradition from Kutch, Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S11",
+      "quote": "In India, the craft's practice is now limited to two families in Nirona, Kutch and three families in Viramgam, Wadhwan and Ahmedabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S11",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S12",
+      "quote": "A Persian card game that has been popular in the Indian subcontinent since the sixteenth century, ganjifa is notable for its hand-painted playing cards.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S12",
+      "quote": "The game likely made its way to India through the Mughals and is referenced in a journal entry by Babur dating back to 1527 CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S12",
+      "quote": "While packs used by the Mughal court were made with precious materials such as ivory and tortoiseshell, the cards used by the general public were made with starched cloth, papier mache or palm leaf, sometimes with a lacquered face.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S12",
+      "quote": "There are ninety-six cards in a pack, divided into eight suits of twelve cards each.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S12",
+      "quote": "Unlike the rectangular West Asian cards, Indian ganjifa cards are typically circular in shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S12",
+      "quote": "ganjapa, which is played in Odisha today and closely follows Mughal ganjifa; the ten-suited dashavatara ganjifa, made according to the ten incarnations of Vishnu; Mysore chad ganjifa; naqsh ganjifa; sawantwadi ganjifa from Maharashtra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S13",
+      "quote": "Painted pichhwais used mineral pigments such as metallic shades from pure gold and silver, and organic shades derived naturally such as red lac from trees and deep yellow from a formula of cow urine called goguli.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S13",
+      "quote": "A devotional tradition where the cloth was painted with images for veneration and hung behind the deity",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S13",
+      "quote": "The tradition emerged from the temple town of Nathdwara, near Udaipur, Rajasthan where the shrine of Nathdwara was built in the seventeenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S14",
+      "quote": "Originally a Persian artform, meenakari was brought to India in the sixteenth century and popularised in Rajasthan, which has become an important centre for the craft, by Raja Man Singh of Amber.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S14",
+      "quote": "A metal sheet is the basic raw material for meenakari art",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S14",
+      "quote": "The enamel for the craft is done by crushing glass using a mortar and pestle and then mixing the powder with a liquid made of pomegranate seeds and water to give the solution shine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S14",
+      "quote": "The enamelled object is heated - on an electric kiln or on coils of a domestic heater - to fuse the enamel and the base metal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S14",
+      "quote": "the piece is filled to enhance the metal outline and finished by boiling it with a mild acid for lustre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S14",
+      "quote": "The most popular colour combinations are red, green, blue and white and when combined with gold as the base metal, these designs are known as panchranga; gold can hold most colours while silver can only hold pink, green and blue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S14",
+      "quote": "Gold enamelling is found primarily in Delhi. In Lucknow, meenakari is done with green and blue enamel on silver while in Varanasi, pink enamel is used to create gulabi mina designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S15",
+      "quote": "This craft is closely linked to another jewellery making craft known as meenakari, where pieces of kundan jewellery carry meenakari work on their reverse side.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S14",
+      "quote": "apart from being used on the reverse side of kundan jewellery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S15",
+      "quote": "When crafted in 22-karat gold, kundan jadau jewellery does not have meenakari work on its reverse side",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S15",
+      "quote": "The process of making kundan jewellery begins with ghadayi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S15",
+      "quote": "This is commonly made of 22-karat gold.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S15",
+      "quote": "An additional gleam is provided by placing a silver foil under the stones, and 24-karat gold foil is hammered and set into the sides of the gemstones as a grip.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S15",
+      "quote": "The process of making kundan jewellery begins with ghadayi, the process of making the framework of the jewellery piece known as the ghat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S15",
+      "quote": "This is followed by khudayi, the process of engraving the pattern on the front or back (or both) of the jewellery piece.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S15",
+      "quote": "The final process is jadai, where gemstones are set by inserting a gold foil between the stones and their mount.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S15",
+      "quote": "Originating in the courts of Rajasthan and Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S15",
+      "quote": "kundan found great patronage amongst the Mughals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S15",
+      "quote": "Jaipur remains an important centre for kundan jadau jewellery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S15",
+      "quote": "Now, the commercialisation of the craft has led to its wide availability but also to reduced craftsmanship in order to accommodate the demands of the market; at times a single person does the work of three.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S15",
+      "quote": "chiterias were responsible for creating the design, the ghariyas were involved in the engraving and finally the goldsmith who worked on the gold framing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S15",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S18",
+      "quote": "39 65 Temple Jewellery of Nagercoil Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S18",
+      "quote": "225 397 Banaras Gulabi Meenakari Craft Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S18",
+      "quote": "728 875 Kolkatti Jewellery Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S18",
+      "quote": "664 858 Axomiya Gohona (Assamese Jewellery) Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S18",
+      "quote": "766 1075 Kinnauri Jewellery Handicraft Himachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S16",
+      "quote": "Raw conch shells are produced by a species of sea snails, Turbinella pyrum, which are found in the Gulf of Mannar and the Indian Ocean coastline.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S16",
+      "quote": "Rameswaram, Tuticorin and Tirunelveli in Tamil Nadu are three districts which supply the bulk of raw conches.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S16",
+      "quote": "A community of Tamil Muslims live in Barrackpore, in the suburbs of Kolkata, and they act as the principal suppliers of raw conches to workshops in North 24 Parganas district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S16",
+      "quote": "On the discovery of Harappan sites from the 1920s, archaeologists found ample evidence of conch shell craft in the Indus Valley Civilisation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S16",
+      "quote": "the hard material is ideal for carving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S16",
+      "quote": "Famous English zoologist and ethnographer James Hornell (1865-1949) did extensive research",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S16",
+      "quote": "He came to the conclusion that conch craft existed in Tamil Nadu from the first century CE and artisans from Southern India settled in Dhaka during the fourteenth century (or probably earlier).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S17",
+      "quote": "the general use of bangles made from sections sawn from the shell of the sacred Indian chank or conch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S17",
+      "quote": "is confined to the people of Bengal and of certain of the adjacent provinces",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S17",
+      "quote": "Dacca is the chief centre of the manufacturing trade, Calcutta the emporium where the raw material is gathered from the different chank fisheries in the south of India and in Ceylon",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "in his travels through India in the seventeenth century noted the existence of an extensive trade",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "in cuttino- bracelets and charms from",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "According to G. V. Ball's translation of this work (London, 1899), Dacca and Patna were then",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "centres of this industry, Tavernier stating that it gave employment to more than 2,000 persons in these towns",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "No industry of this nature exists at Patna",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S17",
+      "quote": "of the name of the less well-known town of Pabna",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S17",
+      "quote": "The followinof notes are intended to show that in ancient days the custom of wearing these peculiar ornaments was widely spread throughout the greater part of India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S17",
+      "quote": "bangle-workshops, equally widely scattered, stretched from Tinnevelly in the extreme south to Kathiawar and Gujarat in the north-west",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S17",
+      "quote": "A most important find was made by Mr. Bruce Foote in 1888, on the left bank of the Hindri, opposite the village of Bastipad",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S17",
+      "quote": "The striations made by the slicing saw are still clearly to be discerned and their regularity and the straightness of the cut are the same as those produced by the big semilunar fine-toothed saw now in use in Dacca factories",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S17",
+      "quote": "and Bastipad in Kurnul) pieces of iron slag were found in association",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S16",
+      "quote": "The Sankhari communities which arrived as refugees in newly created West Bengal were settled in Kolkata.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S16",
+      "quote": "In 1956, the refugee rehabilitation department tried to establish a colony again, this time in Barrackpore, a suburb around 20 kilometres from Kolkata. This time they were successful",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S16",
+      "quote": "Since then, Barrackpore has developed as a hub of conch craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S16",
+      "quote": "'A big blow to the trade came in 2001, when a ban was imposed by Maneka Gandhi under the Indian Wildlife Protection Act. This was followed by the 2004 tsunami,' says Tarak Nath Dutta, one of the biggest bangle producers in the Bag Bazar neighbourhood in North Kolkata.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S16",
+      "quote": "This was followed by the 2004 tsunami",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S16",
+      "quote": "The molluscs inhabit waters having a delicate balance of right temperature, salinity levels and depth of the sea floor, all of which were disturbed by the tsunami. In the aftermath, harvesting of Turbinella pyrum declined, and the cost of raw conches increased.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S16",
+      "quote": "traders and craftsmen are diversifying their product range by making rings, hair clips, brooches, earrings, necklaces, pendants, paperweights, small boxes, agarbatti stands, buttons",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S16",
+      "quote": "conch bangles are combined with intricate gold filigree work, and these fetch a higher price",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S16",
+      "quote": "The value of conch depends on its white colour-a symbol of purity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S18",
+      "quote": "478 674 Sambhal Horn Craft Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S18",
+      "quote": "597 930 Sambhal Bone Craft Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S18",
+      "quote": "73 57 Brass Broidered Coconut Shell Crafts of Kerala Handicraft Kerala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S18",
+      "quote": "740 1017 Bankura Conch Shell Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S19",
+      "quote": "Indian lac insect, Kerria lacca (Kerr) is the most important lac insect utilized for cultivation of lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S19",
+      "quote": "Kusum (Schleichera oleosa (Lour.) Oken.), Palas ( Butea monosperma (La.) Taub), Ber (Zizyphus mauritiana Lam.) and Ficus spp. account for about 90% of total lac production in the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S19",
+      "quote": "Indian Journal of Entomology 84 (Spl. Issue): 40-51 (2022)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S19",
+      "quote": "Kusmi and rangeeni are two strains of Kerria lacca (Kerr)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S19",
+      "quote": "It is major host plant for kusmi lac cultivation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S19",
+      "quote": "It is major host plant for rangeeni lac cultivation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S19",
+      "quote": "India is the world leader in production and export of lac. India produces more than 20,000 tons of lac per annum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S19",
+      "quote": "Indian Journal of Entomology 84 (Spl. Issue): 40-51 (2022)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S19",
+      "quote": "Lac production is confined presently to Eastern India i.e. Jharkhand (54.6%), Chhattisgarh (18.4%), Madhya Pradesh (13.8%) and West Bengal (5.6%)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S19",
+      "quote": "Indian Journal of Entomology 84 (Spl. Issue): 40-51 (2022)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S19",
+      "quote": "Lac culture acts like an insurance crop particularly during drought years and is a good source of livelihood especially tribal farmers inhabiting forests and subhilly tracts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S20",
+      "quote": "Lac was known in the subcontinent from at least the first millennium BCE. It is mentioned in three texts from the period: the Atharvaveda, the Astadhyayi of Panini, and the Mahabharata",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S20",
+      "quote": "The word \"lac\" derives from the Sanskrit laksha, meaning \"100,000\", referring to the large number of insects typically needed for making the resin, dye and their byproducts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S20",
+      "quote": "The resin secreted by the insects can be processed into shellac. This can be shaped into jewellery or used to finish wooden surfaces, which is why lacquer was originally made with lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S20",
+      "quote": "Lac dye gets its red colour from the laccaic acid present in the hemolymph or body fluid of the lac insect. It is obtained by separating the insects from the branch and the resin, crushing them and dissolving the result in an alkaline solution. This solution is then acidified and treated with chalk",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S20",
+      "quote": "which reforms the dissolved dye as a sediment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S20",
+      "quote": "Until the invention of synthetic aniline-based dyes in the late nineteenth century, lac dye was the primary product of lac cultivation in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S21",
+      "quote": "Normal lac is stuck/pasted thickly on a wooden rod and rolled over a flat surface to make it into a cylindrical shape. This lac is then heated slowly over the coal burner. The heated lac is continuously pressed and rolled over the flat iron plate with the help of wooden tool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S21",
+      "quote": "The colored lac is heated simultaneously and then applied evenly by rubbing it on the lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S44",
+      "quote": "Lac bangles of Hyderabad are very popular.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S21",
+      "quote": "Brass or steel is used as base for the lac.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S21",
+      "quote": "For a thin lac bangle 3 thin brass bangles are kept together and on that lac coil is rolled",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S44",
+      "quote": "Lac bangles of Hyderabad are very popular.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S21",
+      "quote": "For applying the stones, they are heated over a tin plate kept on a small burner. The base of the stones gets heated and easily melts the lac surface on which they are placed and stick there after cooling.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S44",
+      "quote": "Lac bangles of Hyderabad are very popular.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S21",
+      "quote": "The bangles are normally embellished with pearls, semi-precious stones, mirrors, beads etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S21",
+      "quote": "The women members of the artisan's family do the embellishments.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S44",
+      "quote": "Lac bangles of Hyderabad are very popular.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S23",
+      "quote": "Three different varieties of lac are used in the lac-turnery process. The highest quality lac is referred to as button lac. It is light and golden coloured",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S23",
+      "quote": "The third, poorest quality lac is dark black",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S24",
+      "quote": "Export traders often bypass women during procurement processes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S24",
+      "quote": "This bias may be partly because women mostly use hand lathes and exporters prefer articles made on power lathes (which men are more likely to use than women",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S23",
+      "quote": "A great number of the artisans engaged in lacquerware production are located around Channapatna town",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S23",
+      "quote": "Markets for lacquerware products are changing dramatically. Many old markets are collapsing with the proliferation of cheap plastic substitutes for children's toys and educational materials",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S24",
+      "quote": "Channapatna, in Karnataka, is home to more than 5 000 skilled craftsmen whose livelihoods are based on wooden-toy making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S24",
+      "quote": "Unasylva 240, Vol. 64, 2013/1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S24",
+      "quote": "People have been making wooden toys on the Indian subcontinent since the civilizations of Mohenjodaro and Harappa",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S26",
+      "quote": "Historically Indian toys date back to 5000 years. The excavated toys and dolls found in Harappa and Mohenjo-Daro included small carts, dancing woman, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S24",
+      "quote": "Traditional toys depict, in different ways, the country's rich history, mythologies, legends, folklore and plant and animal life",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S24",
+      "quote": "Indian wooden toys have a tradition of linking play and amusement with religion, history, art and education.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S24",
+      "quote": "The wood favoured by artisans is soft to moderately hard, has a fine texture and is easy to carve into desired shapes, although ultimately the choice of wood depends on availability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S24",
+      "quote": "The materials used in traditional wooden-toy making fall into two categories",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S24",
+      "quote": "mogali (kewada) leaves from Pandanus fascicularis, sawdust, ochre (derived from clay containing mineral oxides), orpiment (an arsenic sulphide mineral compound), chalk powder, gums and pastes, gurjan oils (from Dipterocarpus turbinatus)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S24",
+      "quote": "the artisans of Nirmal and Kondapalli, in the state of Andhra Pradesh, depend on Givotia rottleriformis for various types of toys",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S24",
+      "quote": "The artisans of Ettikoppaka in Andhra Pradesh depend on the wood of a small deciduous tree, Wrightia tinctoria.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S24",
+      "quote": "Unasylva 240, Vol. 64, 2013/1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S24",
+      "quote": "Givotia rottleriformis is becoming scarce because of the overexploitation and degradation of the forest in which it grows.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S24",
+      "quote": "The artisans of Ettikoppaka in Andhra Pradesh depend on the wood of a small deciduous tree, Wrightia tinctoria.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S24",
+      "quote": "There is an urgent need for these artisans to shift to alternative species, especially plantation species, because Wrightia is becoming scarce.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S24",
+      "quote": "In Nirmal, the annual requirement for wood of this species is",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S24",
+      "quote": "50-60 families derive their livelihoods by using this species for making toys (Rao et al. , 2001)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S24",
+      "quote": "The required size and shape of wood is cut, seasoned, attached to a lathe operated either manually or by motor, and turned in order to smooth it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S24",
+      "quote": "used to shape the revolving piece of wood, and flaws are sandpapered. The surface is lacquered by rubbing lac sticks into the revolving wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S27",
+      "quote": "First, the toy is dipped in distemper. When it dries, it is neatly painted with duco white paint. Two such coats are applied followed by the last coat of lacquer to bring shine to the surface of the toys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S27",
+      "quote": "There are colonies of craftsmen in Kashmiri Ganj and Khojwa, Varanasi, who have been practicing this craft generation after generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S27",
+      "quote": "Each wooden piece that is cut to make an item is subjected to a process of slow heating to draw out all moisture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S27",
+      "quote": "There are colonies of craftsmen in Kashmiri Ganj and Khojwa, Varanasi, who have been practicing this craft generation after generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S27",
+      "quote": "There are colonies of craftsmen in Kashmiri Ganj and Khojwa, Varanasi, who have been practicing this craft generation after generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S28",
+      "quote": "Traditionally, Kathputli puppets are between 1.5 ft to 2 feet in height.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S28",
+      "quote": "The head and trunk of a puppet is carved from a single piece of wood",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S28",
+      "quote": "The torso, arms and hands are made by stuffing rags into the costume. These puppets do not have legs and feet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S30",
+      "quote": "Artisans use seasoned Aardu wood or mango wood. Aardu wood is soft, light and low cost which makes it more preferred over mango wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S28",
+      "quote": "A distinguishing feature of a kathputli performance is the use of the boli.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S28",
+      "quote": "A voice modulator made by stretching a thin rubber tape between two sticks of bamboo, the boli is held between a puppeteer's lips and is used to produce a whistle-like sound that denotes the speech of a puppet.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S28",
+      "quote": "Traditionally, Kathputli puppets are between 1.5 ft to 2 feet in height.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S28",
+      "quote": "A puppeteer may use between one to three strings to manipulate the puppet. The exception in this case is the puppet called rasdhari, a dancer who can have up to nine strings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S28",
+      "quote": "While the origins of Kathputli have not been clearly established, historical references suggest that the form has been practised since the seventeenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S28",
+      "quote": "Kathputli derives its name from katha meaning \"story\" and putli, which means doll",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S29",
+      "quote": "In Rajasthan the puppet tradition is called Kathputli, where Kaath means wood and Putli means Puppet. Kathputli means a puppet made out of wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "22 23 Channapatna Toys & Dolls Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "165 213 Kinhal Toys Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "30 44 Kondapalli Bommallu Handicraft Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "299 482 Etikoppaka Toys Handicrafts Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "89 96 Thanjavur Doll Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S31",
+      "quote": "the musical drums which are used as accompaniments to vocal or instrumental music and are extremely popular in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S31",
+      "quote": "My investigations showed clearly that these instruments contained the solution in a practical form of the acoustical problem of transforming a circular drum-head giving inharmonic overtones into a harmonic",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S31",
+      "quote": "In its classical form, the instrument is known as the Mridanga",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S31",
+      "quote": "A modern variant of the Mridanga is known as the Thabla",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S31",
+      "quote": "The latter is then loaded symmetrically with a firmly adherent composition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S31",
+      "quote": "The paper gives a detailed description of the results obtained by the author in the year 1919",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S31",
+      "quote": "have a circular drum-head which is loaded and damped in such a manner that all the overtones above the ninth are suppressed and these nine are grouped in such a manner as to give a succession of five tones in harmonic sequence",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S31",
+      "quote": "The most striking feature which distinguishes the Mridanga and the Thabla from other forms of drum is the sustained character of the tones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S31",
+      "quote": "the heavy wooden shell on which the drum-head is stretched and the symmetrical loading of the latter by a firmly adherent composition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S31",
+      "quote": "It is empirically observed that the width of the marginal ring of leather superposed on the drum-head has a notable influence on the duration of tone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S31",
+      "quote": "The ring in fact acts as a kind of damper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S31",
+      "quote": "With a broad ring, we obtain a muffled tone of short duration in which few overtones are present",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S31",
+      "quote": "the tone is prolonged and is also brighter, containing more overtones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S31",
+      "quote": "drum-head played with the right hand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S31",
+      "quote": "loaded symmetrically with a firmly adherent composition which is said to consist of finally divided iron-oxide mixed with charcoal, starch and gum",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S31",
+      "quote": "Actually, the composition is put on layer by layer and pressed down by rubbing with a smooth piece of stone or metal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S32",
+      "quote": "The black patch itself is made of a powder of ferric oxide and is applied on the kottuthattu in sequential layers to create a density gradient that is important to create harmonic modes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S32",
+      "quote": "The black patch is then applied to the exposed region of the kottuthattu layer-by-layer, after cooked rice is applied as an adhesive to the membrane.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S33",
+      "quote": "On the right head of Mridangam, a black paste made of",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S33",
+      "quote": "manganese dust, boiled rice and tamarind juice is applied",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S31",
+      "quote": "The thickness of the layer is greatest in the centre and shades down",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S31",
+      "quote": "are determined by testing the tone of the drum continuously as the work proceeds",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S31",
+      "quote": "A long band of leather repeatedly passes through both the hoops and to and fro over the full length of the drum, in all exactly sixteen times at equal intervals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S31",
+      "quote": "laid stress on having exactly the right number of tension equalisers, namely, sixteen",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S31",
+      "quote": "is also pictured in the paintings on the walls of the Ajanta caves. It is thus clearly a very ancient invention",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S31",
+      "quote": "A modern variant of the Mridanga is known as the Thabla. This really consists of two drums",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S31",
+      "quote": "has a firmly adherent composition which is, however, unsymmetrically placed on the membrane",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S32",
+      "quote": "whose openings are covered by a multi-layered assembly of parchments made from goat, cow and buffalo skin. The process of making a mridangam starts from the trunk of a jackfruit tree",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S32",
+      "quote": "the authors are able to conclude that jackfruit wood is the favorable choice among the different types of wood studied, due to its high SRC and similar Impedance in different directions",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S32",
+      "quote": "The comparatively low density of this wood also reduces the total weight of the instrument.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S32",
+      "quote": "traditional makers have favoured jackfruit wood for the construction of the mridangam barrel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S32",
+      "quote": "It is noted that skin from the back region of the goat might be more suitable for producing resonances due to the better compaction of fibre bundles in that region",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S32",
+      "quote": "hence it is used for the kottuthattu of the right membrane of the mridangam which contains the black patch and is used to create the treble notes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S32",
+      "quote": "the skin from the belly region, having lesser compaction of fibre bundles, is more suitable for the left membrane which is used to produce bass tones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S33",
+      "quote": "Different kinds of materials are used in the manufacture of Instruments; like Wood, Animal skin, Metals, Clay etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S33",
+      "quote": "Jack wood, Black wood, Rose wood, Khadira wood, Himalayan pine, Tamukku are the trees supplying woods; in spite of Bamboo and other soft materials. Metals like gold, Silver, Bronze, Copper, and Iron from the metal Kingdom and skins of Sheep, Calf, Buffalo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S33",
+      "quote": "the bowl of Tanpura, Veena and Sitar are made off a vegetable called bottle gourd, from which the flush is scooped out and seasoned to make it hard and resonant as well",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S35",
+      "quote": "Among string instruments, the Thanjavur veena and Tambura",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S35",
+      "quote": "Both the instruments are made of wood from the jack fruit tree. The different parts of instruments are carved and joined together with tamarind seed paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S34",
+      "quote": "This instrument is always made with jack wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S33",
+      "quote": "South Indian Tambura is made completely of wood; while in the North Indian Tambura the bowl is made out of bottle gourd",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S33",
+      "quote": "The woods, bamboo, and reeds used in the manufacturing of musical instruments are treated to an elaborate process of seasoning.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S33",
+      "quote": "special care is taken to obtain wood from the same tree for different parts like bowl, stem, and head piece, to ensure the quality of sound and resonance",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S33",
+      "quote": "Some thin threads are used to keep these strings vibrate without touching the metal part of the bridge, which gives good resonance to the instrument. This is called as \"Jeeva\" or \"Javaari\" in north.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S33",
+      "quote": "In Sushira Vaadya or wind instruments the sound is produced by the vibration of a column of air in a tube.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S33",
+      "quote": "Those in which the air is blown in through the hole on the wall of the instruments, as in the Flute.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S33",
+      "quote": "Those wherein the wind is blown in through vibrating reeds or mouth pieces, as in the Nagaswaram, Shehnai",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S33",
+      "quote": "Wax is used for fixing the frets in Veena.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S34",
+      "quote": "Like many other percussion instruments - mridangam, kanjira, tavil, udukkai - the veenai too begins its journey in the groves near Panruti, the small town in Cuddalore district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S34",
+      "quote": "grows in groves in the villages around Panruti, in Cuddalore district of Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S34",
+      "quote": "Panruti jack wood is \"the best\", says Kuppusami",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S34",
+      "quote": "And he attributes the tonal qualities to the red soil in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S34",
+      "quote": "In August 2023, he invited me to visit again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S34",
+      "quote": "Narayanan estimates that there are 10 full time veenai makers in Thanjavur and many more who work on it part time. Together they make about 30 veenais a month.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S34",
+      "quote": "for the Thanjavur Veena - which it received in 2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S34",
+      "quote": "tracing it back to the Sangam period (about 2,000 years ago), when the version of the veenai that existed was called the ' y ā zh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S18",
+      "quote": "479 670 Amroha Dholak Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S18",
+      "quote": "586 822 Banaras Tabla Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S18",
+      "quote": "588 824 Pilibhit Bansuri Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S18",
+      "quote": "596 924 Banaras Shehnai Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "610 965 Bodo Thorkha Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "612 972 Bodo Kham Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "613 973 Bodo Serja Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "614 974 Bodo Sifung Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "616 977 Bodo Gongona Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "617 978 Bodo Jotha Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S18",
+      "quote": "624 1002 Assam Bihu Dhol Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "163 203 Bobbili Veena Handicraft Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "188 209 Thanjavur Veenai Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "582 793 Miraj Sitar Handicraft Maharashtra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "65 59 Maddalam of Palakkad Handicraft Kerala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "420 467 Narasinghapettai Nagaswaram Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S18",
+      "quote": "580 791 Miraj Tanpura Handicraft Maharashtra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S36",
+      "quote": "period and accounts for more than 70 per cent of all glass items produced in the small scale sector",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S36",
+      "quote": "of glass making right from the Mughal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S36",
+      "quote": "The glass former is silica or silicon dioxide.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S36",
+      "quote": "Quartz or silica sand is the largest constituent of batch and has a high melting point of 1710°C.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S36",
+      "quote": "The compositions vary from source to source and the units generally procure from Rajasthan or U.P.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S36",
+      "quote": "the units in Firozabad mostly use silica sand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S36",
+      "quote": "dense soda ash from various manufacturers in Gujarat is used as flux to manufacture glass",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S36",
+      "quote": "is used as flux to manufacture glass",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S36",
+      "quote": "Being the second largest constituent of batch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S36",
+      "quote": "First, the fluxes e.g. soda ash and cullets present in the mixture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S36",
+      "quote": "forms low melting alkali silicates with sand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S36",
+      "quote": "These silicates react with the high melting constituents to form the glass melt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S36",
+      "quote": "The carbon-dioxide of the carbonates is expeiled during the melting process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S36",
+      "quote": "Limestone is a stabilizer and is added to make the glass insoluble in water which results in soda lime glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S36",
+      "quote": "Refining agents are used in the batch for removal of air inclusions called bubbles and seeds from the molten glass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S36",
+      "quote": "Mostly Arsenic Trioxide along with nitrates of soda & potash make the standard refining mix.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S36",
+      "quote": "For obtaining the desired colours of the glass. required quantities of metallic oxides e.g. Iron oxide. Cobalt oxide. Copper oxide. Charcoal. Manganese dioxide etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S36",
+      "quote": "greenish colour from iron oxide can be camouflaged by introduction of complementary colours of the spectrum in the glass. This is done with red and blue colours, introduced through selenium and cobalt oxide.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S36",
+      "quote": "Opal glass termed as Block or China Glass in Firozabad is made by introducing either singly or in combination phosphorous oxide, flourine etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S36",
+      "quote": "It is the waste glass, rejects and recycled glass products. Cullet speeds melting, since it has been previously melted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S36",
+      "quote": "A large parison of moiten glass is gathered at the end of an iron rod and worked into a conical shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S36",
+      "quote": "A glass thread is pulled out and spiral is wound on an iron mandrel called 'belan'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S36",
+      "quote": "The spirals are then given a longitudinal cut",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S39",
+      "quote": "Belan/Spindle: Long steel rod that is rotated to draw glass melt into spirals, which are then cut to make raw bangles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S36",
+      "quote": "colour bangles are to be made, colour designs are imparted by means of block glass",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S36",
+      "quote": "parisons of different colours are joined together and re-heated in an auxiliary furnace called 'Sikai Bhatti' where the colour gets fixed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S40",
+      "quote": "The separated bangles which are open ended and not complete are then taken to join them over a candle or a kerosene lamp which is called (Judai) which literally means joining. They melt the bangle slightly to join the ends which are usually done by women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S40",
+      "quote": "The bangles are then finally baked in a furnace called pakai bhatti which smoothens the sharp edges and makes the bangles bright and attractive.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S38",
+      "quote": "In Firozabad entire community is engaged in glass manufacture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S38",
+      "quote": "with the mixing of materials like sand, ash, lime and melting in a furnace with temperatures around 1350 °C",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S38",
+      "quote": "The Glass industries in Firozabad is been able to provide indigenous need as well as international demand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S36",
+      "quote": "In Firozabad and adjoining areas, mostly coal is used as fuel for glass melting and other operations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S37",
+      "quote": "The major forms of energy used in the cluster are piped natural gas (NG) supplied by Gas Authority of India Limited (GAIL).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S37",
+      "quote": "T E R I. 2012 Widening the coverage of PAT Scheme",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S37",
+      "quote": "The Indian glass market was worth about USD 2.7 billion during 2011-12.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S37",
+      "quote": "the flat glass market was 4500 tpd (tonnes per day)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S37",
+      "quote": "The market for other glass products such as lighting, bangle, beads, etc is about 1500 tpd.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S36",
+      "quote": "mostly employing women, the working atmosphere is highly polluted with dust and kerosene vapour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S36",
+      "quote": "The small scale and cottage industries are faced with multitude of problems",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S36",
+      "quote": "These units continue to work on the outdated technology which is seriously affecting the health of the workers and polluting the surrounding environment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S36",
+      "quote": "FIROZABAD GLASS INDUSTRY FEBRUARY 1995",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S36",
+      "quote": "For beads manufacture, forming process involves drawing the desired quantity of melted glass by mean of tubes and elongating with torigs and mouth blowing the same in the brass moulds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S41",
+      "quote": "The technique that is seen at Varanasi is called lamp winding",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S41",
+      "quote": "They are melted at a small source of heat generally a hand torch or bench burner that looks similar to a lamp hence the name lamp winding. The glass is wound onto the mandrel and is shaped when it is still hot, the beads are decorated with the help of glass sticks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S42",
+      "quote": "There is a mold with dye color, after rolling the melted glass onto a steel wire it is rolled in mold with dye color this shapes the bead to a round shape and also the bead gets colored.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S42",
+      "quote": "On top of the round beads, dots are placed they are pressed with a flat tool to flatten the bubble",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S41",
+      "quote": "The technique that is seen at Varanasi is called lamp winding",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S41",
+      "quote": "Emery powder (Aluminium oxide), Sulphuric acid and nitric acid are used while polishing and washing beads.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S41",
+      "quote": "One of the interesting places where talks of glass bead making and transporting in particular witnessed are Arikamedu, Puducherry, where the presence of Roman and Tamilnadu trade relation is observed. The presence of beads dates back to Roman times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S18",
+      "quote": "202 155 Firozabad Glass Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S18",
+      "quote": "276 177 Varanasi Glass beads Handicrafts Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S43",
+      "quote": "Seraikela and Purulia chhau masks are made with similar construction methods. Clay is layered onto a base of cane or wood to create a mould. When it dries, it is detached from the base and covered with papier mache, followed by another layer of clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S43",
+      "quote": "Seraikela and Purulia chhau masks are made with similar construction methods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S43",
+      "quote": "Cotton fabric strips are used to reinforce the structure. As it dries over the course of three days, jute and acrylic wool are used to add details such as facial hair.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S43",
+      "quote": "They are usually made from the dark clay found in and near the Kharkhai river, which flows through the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S43",
+      "quote": "Seraikella Chhau: A masked dance of Jharkhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S43",
+      "quote": "Purulia chhau masks cover the entire face, reaching over the top of the head until the base of the skull. Halos of wire, decorated with colored beads and sequins to signify deities, demons, or forest animals, are added around the top.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S43",
+      "quote": "There are three major styles of chhau: Mayurbhanj, Seraikela, and Purulia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S43",
+      "quote": "Mayurbhanj chhau used masks till as late as the nineteenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S43",
+      "quote": "masks are an essential feature of Purulia and Seraikela chhau",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S18",
+      "quote": "318 565 Purulia Chau Mask Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S18",
+      "quote": "319 566 Wooden Mask of Kushmandi Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S18",
+      "quote": "571 939 Majuli Mask of Assam Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S18",
+      "quote": "529 918 Chamoli Wooden Ramman Mask Handicraft Uttarakhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S18",
+      "quote": "570 917 Hyderabad Lac Bangles Handicraft Telangana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S18",
+      "quote": "729 876 Lac of Purulia Natural West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S08",
+      "quote": "By the late nineteenth century, Mysore painting expanded its palette to include synthetic vermilion, ultramarine and emerald green, and crimson.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S28",
+      "quote": "The puppets used today are also often greater in height and feature legs, limiting their articulation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S28",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S28",
+      "quote": "The puppeteers belong to the Nat Bhatt community and are from the districts of Nagaur, Churu and Sikar in north-eastern Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S28",
+      "quote": "Over time, some took up puppetry as their main profession and groups of puppeteers moved to cities such as Delhi, Mumbai, Ahmedabad, Hyderabad and Bhopal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S24",
+      "quote": "There is an urgent need to conserve existing forests and bring them under sustainable management and reforestation programmes, and to encourage the use of alternative plantation-grown species.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S24",
+      "quote": "So far, the conservation of the genetic sources of the main Indian tree species used in the wooden-toy industry has not received due attention.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S24",
+      "quote": "Unasylva 240, Vol. 64, 2013/1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S24",
+      "quote": "Channapatna, in Karnataka, is home to more than 5 000 skilled craftsmen whose livelihoods are based on wooden-toy making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S24",
+      "quote": "Some years back, their industry was threatened by a flood of low-cost, plastic \"made in China\" toys on the market",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S24",
+      "quote": "The industry survived, however, thanks partly to the efforts of the state government and some non-governmental organizations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S24",
+      "quote": "Unasylva 240, Vol. 64, 2013/1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "31 37 Madhubani Paintings Handicraft Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "32 47 Thanjavur Paintings Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "26 32 Mysore Traditional Paintings Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "214 381 & 413 Kangra Paintings Handicraft Himachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "142 190 Cheriyal Paintings Handicraft Telangana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S18",
+      "quote": "92 106 Nirmal Paintings Handicraft Telangana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S18",
+      "quote": "370 658 Sohrai - Khovar Painting Handicraft Jharkhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S18",
+      "quote": "439 701 Gond Painting of Madhya Pradesh Handicraft Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S18",
+      "quote": "470 755 Basohli Painting Handicraft Jammu & Kashmir (UT)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S18",
+      "quote": "547 871 Painting of Lanjia Saura (IDITAL), Odisha Handicraft Odisha",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S18",
+      "quote": "627 1033 Banaras Mural Painting Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "317 564 Bengal Patachitra Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "488 748 Nathdwara Pichhwai Painting Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "566 718 Kutch Rogan Craft Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "386 656 Manjusha Art Handicraft Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "389 648 Uttarakhand Aipan Handicraft Uttarakhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "572 940 Assam Majuli Manuscript Painting Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "50 60 Ganjifa Cards of Mysore Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S18",
+      "quote": "548 812 Sawantwadi Ganjifa Cards Handicraft Maharashtra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S18",
+      "quote": "76 68 Kathputlis of Rajasthan Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S18",
+      "quote": "64 91 Nirmal Toys and Craft Handicraft Telangana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S18",
+      "quote": "77 97 Leather Toys of Indore Handicraft Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S18",
+      "quote": "234 457 Varanasi Wooden Handicraft Uttar Pradesh 9 Lacquerware & Toys",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S18",
+      "quote": "601 949 Pen Ganesh Idol Handicraft Maharashtra",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S18",
+      "quote": "662 754 Vilachery Clay Toys Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S18",
+      "quote": "725 795 Clay Doll of Krishnanagar Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S18",
+      "quote": "726 846 Natungram Wooden Doll Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S33",
+      "quote": "Places famous for the instruments making are Tanjore, Trivandrum, Manamadurai, Chennai, Banglore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S24",
+      "quote": "The main centres of wooden-toy making are Meerut, Moradabad, Sharanpur, Nagina and Srinagar in northern India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S24",
+      "quote": "Bhopal and Jabalpur in central India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S24",
+      "quote": "Unasylva 240, Vol. 64, 2013/1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S45",
+      "quote": "The main raw material for the candles is paraffin wax and is a controlled item and the Directorate of Industries of the state makes its allocation to the user.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S45",
+      "quote": "Free wick is to be winded in required moulds in the given grews",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S45",
+      "quote": "melt the wax and add colour mix it well. Pour the melted wax into the ready moulds, keep the moulds for cooling",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S45",
+      "quote": "unscrew the plates of the moulds and take out the candles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S45",
+      "quote": "Candles are mass consumption items and are widely used for lighting and illumination in household, churches and other religious places, hotels and restaurants etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S46",
+      "quote": "the horn craft of Sambhal (Uttar Pradesh) is a centuries-old craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S46",
+      "quote": "The garbage that local slaughterhouses throw is what feeds the industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S46",
+      "quote": "The horns are divided into hollow and solid sections, with the extended skull bones removed. These bones and horns naturally shed their smell after being cleaned and sun-dried",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S47",
+      "quote": "Nestled in Kanyakumari district at India's southernmost tip, Nagercoil is synonymous with temple",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S47",
+      "quote": "Silver is carefully shaped into desired forms, while thin sheets of gold are overlaid on the base metal and embellished with traditional red and green kemp stones (kuchu kal) set in arakku (lac).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S18",
+      "quote": "486 698 Jaderi Namakatti Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S18",
+      "quote": "603 952 Kavdi Maal of Tuljapur Handicraft Maharashtra",
+      "result": "PASS"
+    }
+  ]
+}

@@ -131,7 +131,7 @@ def test_an_overview_sentence_the_prose_validator_refuses_is_dropped() -> None:
         }
     )
     cited = CitedClaims(views={view.id: view for view in records.views}, sources={})
-    pieces = overview_pieces(changed, plan.craft, cited, [])
+    pieces = overview_pieces(changed, cited, craft_id=plan.craft.id, districts=[])
     assert any(line.startswith("overview.lede.0") and "1634" in line for line in pieces.dropped)
     lede = next(piece for piece in pieces.pieces if piece.facet == "OVERVIEW")
     assert all("1634" not in sentence.text for sentence in lede.payload.cited_sentences())

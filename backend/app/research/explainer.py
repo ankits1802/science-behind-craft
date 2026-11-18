@@ -7,19 +7,21 @@ from typing import Annotated, Any, Literal, Self
 
 from pydantic import AwareDatetime, Field, TypeAdapter, model_validator
 
-from .base import ContractModel, HttpsUrl, absent
+from .base import ContractModel, absent
 from .blocks import (
     BlockBase,
     ImagesBlock,
     ProcessLadderBlock,
     ProseBlock,
     SentenceChange,
+    SentenceSpec,
     sentences_in_payload,
     with_sentences_in_payload,
 )
 from .blocks_insight import ClimateRiskBlock, MarketGiBlock, MeasureBlock
 from .blocks_journey import TimelineMapBlock, ZoomStoryBlock
 from .blocks_learning import CompareBlock, ConceptGraphBlock, QuizBlock
+from .blocks_lede import LEDE_KIND, LedeBlock
 from .blocks_matter import MaterialCardBlock, Molecule3dBlock, ReactionPlayerBlock
 from .blocks_people import (
     ArtisanVoiceBlock,
@@ -31,10 +33,11 @@ from .blocks_people import (
 )
 from .blocks_place import MapLayerBlock, RegionStoryBlock, SeasonsBlock, SupplyMapBlock
 from .blocks_play import SimulationBlock, WhatIfBlock
+from .blocks_signature import FiringBlock, IndigoVatBlock, LostWaxBlock, MordantBathBlock
 from .citations import SourceRef
 from .composition import FOLLOW_UPS_MAX, HEADING_MAX_CHARS
 from .crafts import MAX_CANDIDATES, QUESTION_MAX_CHARS, CraftRef
-from .evidence import EVIDENCE_ID_MAX_CHARS
+from .trail import TrailEvent
 from .vocabulary import AnswerLanguage, Depth, Discipline
 
 __all__ = [
@@ -44,27 +47,20 @@ __all__ = [
     "EXPLAINER_EVENTS",
     "EXPLAINER_SCHEMA_VERSION",
     "FINAL_SECTION_STATES",
-    "PIECE_PREFIX",
     "SEARCHED_MAX_CHARS",
     "SECTION_ID_PATTERN",
     "SECTION_STATES",
-    "STORED_SOURCE_PREFIX",
-    "STORED_TRAIL_PREFIXES",
-    "TRAIL_GROUPS",
-    "TRAIL_GROUP_OF_SOURCE",
-    "TRAIL_KEY_PATTERN",
-    "TRAIL_PUBLISHER_MAX_CHARS",
-    "TRAIL_STAGES",
-    "TRAIL_TITLE_MAX_CHARS",
+    "SIGNATURE_PHASE",
     "WORKING_SECTION_STATES",
     "Block",
     "BlockEvent",
     "Explainer",
     "ExplainerSection",
+    "LedeEvent",
     "SectionDoneEvent",
+    "SectionHeadingEvent",
     "SectionStartedEvent",
     "SectionStateEvent",
-    "TrailEvent",
     "Understood",
     "explainer_blocks",
     "payload_sentences",
@@ -77,34 +73,10 @@ SEARCHED_MAX_CHARS = 2000
 WORKING_SECTION_STATES = ("RESEARCHING", "WRITING", "CHECKING")
 FINAL_SECTION_STATES = ("READY", "EMPTY")
 SECTION_STATES = (*WORKING_SECTION_STATES, *FINAL_SECTION_STATES)
-TRAIL_STAGES = ("FOUND", "READ", "QUOTED")
-TRAIL_GROUPS = ("PAPERS", "ENCYCLOPAEDIA", "DATASETS", "WEB", "STORED")
-TRAIL_KEY_PATTERN = r"^[a-z][a-z0-9_]{1,39}:\S+$"
-STORED_SOURCE_PREFIX = "source"
-PIECE_PREFIX = "piece"
-STORED_TRAIL_PREFIXES = (STORED_SOURCE_PREFIX, PIECE_PREFIX)
-TRAIL_TITLE_MAX_CHARS = 1000
-TRAIL_PUBLISHER_MAX_CHARS = 300
-TRAIL_GROUP_OF_SOURCE: Mapping[str, str] = MappingProxyType(
-    {
-        "PAPER": "PAPERS",
-        "BOOK": "PAPERS",
-        "BOOK_CHAPTER": "PAPERS",
-        "GI_JOURNAL": "PAPERS",
-        "GOVERNMENT_REPORT": "PAPERS",
-        "FIELD_TESTIMONY": "PAPERS",
-        "ENCYCLOPEDIA": "ENCYCLOPAEDIA",
-        "DATASET": "DATASETS",
-        "COMPOUND_RECORD": "DATASETS",
-        "WEB_PAGE": "WEB",
-        "OTHER": "WEB",
-    }
-)
+SIGNATURE_PHASE = "SIGNATURE"
 
 WorkingState = Literal[*WORKING_SECTION_STATES]
 FinalState = Literal[*FINAL_SECTION_STATES]
-TrailStage = Literal[*TRAIL_STAGES]
-TrailGroup = Literal[*TRAIL_GROUPS]
 SectionId = Annotated[str, Field(pattern=SECTION_ID_PATTERN)]
 
 BLOCK_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType(
@@ -134,6 +106,10 @@ BLOCK_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType(
         "measure": MeasureBlock,
         "market_gi": MarketGiBlock,
         "climate_risk": ClimateRiskBlock,
+        "indigo_vat": IndigoVatBlock,
+        "mordant_bath": MordantBathBlock,
+        "lost_wax": LostWaxBlock,
+        "firing": FiringBlock,
     }
 )
 BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
@@ -163,8 +139,13 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "climate_risk": "D",
         "artisan_voice": "E",
         "designs": "DEFERRED",
+        "indigo_vat": SIGNATURE_PHASE,
+        "mordant_bath": SIGNATURE_PHASE,
+        "lost_wax": SIGNATURE_PHASE,
+        "firing": SIGNATURE_PHASE,
     }
 )
+SENTENCE_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType({**BLOCK_MODELS, LEDE_KIND: LedeBlock})
 BUILT_BLOCK_KINDS = (
     "prose",
     "process_ladder",
@@ -213,7 +194,11 @@ Block = Annotated[
     | ConceptGraphBlock
     | MeasureBlock
     | MarketGiBlock
-    | ClimateRiskBlock,
+    | ClimateRiskBlock
+    | IndigoVatBlock
+    | MordantBathBlock
+    | LostWaxBlock
+    | FiringBlock,
     Field(discriminator="kind"),
 ]
 
@@ -267,31 +252,18 @@ class SectionDoneEvent(ContractModel):
         return self
 
 
-class TrailEvent(ContractModel):
-    key: str = Field(min_length=3, max_length=EVIDENCE_ID_MAX_CHARS, pattern=TRAIL_KEY_PATTERN)
-    stage: TrailStage
-    group: TrailGroup
-    title: str = Field(min_length=1, max_length=TRAIL_TITLE_MAX_CHARS)
-    url: HttpsUrl | None
-    publisher: str | None = Field(max_length=TRAIL_PUBLISHER_MAX_CHARS)
-    year: int | None
-    source_id: str | None
-    stored_at: AwareDatetime | None
+class SectionHeadingEvent(ContractModel):
+    section_id: SectionId
+    title: str = Field(min_length=1, max_length=HEADING_MAX_CHARS)
+    original: str | None = Field(default=None, min_length=1, exclude_if=absent)
+
+
+class LedeEvent(ContractModel):
+    block: LedeBlock
 
     @model_validator(mode="after")
-    def _stored_knowledge_is_marked_as_such(self) -> Self:
-        prefix, _, rest = self.key.partition(":")
-        stored = prefix in STORED_TRAIL_PREFIXES
-        if stored != (self.group == "STORED"):
-            raise ValueError(f"trail {self.key} is STORED exactly when it is a stored source or piece")
-        if stored and self.stage == "READ":
-            raise ValueError(f"trail {self.key} is stored knowledge, found or quoted, never read again")
-        if (prefix == PIECE_PREFIX) != (self.stored_at is not None):
-            raise ValueError(
-                f"trail {self.key} carries the date of earlier research exactly when it is a piece"
-            )
-        if prefix == "source" and self.source_id != rest:
-            raise ValueError(f"trail {self.key} names its stored source")
+    def _a_figure_the_reader_can_see(self) -> Self:
+        _require_built_figure(self.block)
         return self
 
 
@@ -326,6 +298,7 @@ class Explainer(ContractModel):
     answer_id: uuid.UUID
     question: str = Field(min_length=1, max_length=QUESTION_MAX_CHARS)
     understood: Understood
+    lede: LedeBlock | None = Field(default=None, exclude_if=absent)
     sections: list[ExplainerSection] = Field(min_length=1)
     sources: list[SourceRef]
     follow_ups: list[str] = Field(max_length=FOLLOW_UPS_MAX)
@@ -333,6 +306,8 @@ class Explainer(ContractModel):
 
     @model_validator(mode="after")
     def _sections_in_order_and_sources_as_cited(self) -> Self:
+        if self.lede is not None:
+            _require_lede(self.lede, self.question)
         if [section.order for section in self.sections] != list(range(1, len(self.sections) + 1)):
             raise ValueError("sections are listed by order, 1 to n")
         if len({section.id for section in self.sections}) != len(self.sections):
@@ -349,6 +324,8 @@ class Explainer(ContractModel):
 
 
 def explainer_blocks(explainer: Explainer) -> Iterator[BlockBase]:
+    if explainer.lede is not None:
+        yield explainer.lede
     for section in explainer.sections:
         yield from section.blocks
 
@@ -361,14 +338,29 @@ def with_payload_sentences(payload: Mapping[str, Any], change: SentenceChange) -
     return with_sentences_in_payload(payload, _sentence_spec(payload), change)
 
 
-def _sentence_spec(payload: Mapping[str, Any]) -> tuple[tuple[str, Any], ...]:
-    model = BLOCK_MODELS.get(str(payload.get("kind")))
-    return model.SENTENCES if model is not None else ()
+def _sentence_spec(payload: Mapping[str, Any]) -> SentenceSpec:
+    model = SENTENCE_MODELS.get(str(payload.get("kind")))
+    if model is None:
+        return ()
+    figure = payload.get("figure")
+    shown = SENTENCE_MODELS.get(str(figure.get("kind"))) if isinstance(figure, Mapping) else None
+    return model.SENTENCES if shown is None else (*model.SENTENCES, ("figure", shown.SENTENCES))
 
 
 def _require_built(block: BlockBase) -> None:
     if block.kind not in BUILT_BLOCK_KINDS:
         raise ValueError(f"block {block.id} is a {block.kind} block, which is not built yet")
+
+
+def _require_built_figure(lede: LedeBlock) -> None:
+    if lede.figure is not None:
+        _require_built(lede.figure)
+
+
+def _require_lede(lede: LedeBlock, question: str) -> None:
+    if lede.headline != question:
+        raise ValueError("the lede's headline is the question as asked")
+    _require_built_figure(lede)
 
 
 def _require_searched(section_id: str, state: str, searched: str | None) -> None:
@@ -383,6 +375,8 @@ EXPLAINER_EVENTS: Mapping[str, TypeAdapter[Any]] = MappingProxyType(
         "section_state": TypeAdapter(SectionStateEvent),
         "block": TypeAdapter(BlockEvent),
         "section_done": TypeAdapter(SectionDoneEvent),
+        "section_heading": TypeAdapter(SectionHeadingEvent),
+        "lede": TypeAdapter(LedeEvent),
         "trail": TypeAdapter(TrailEvent),
     }
 )

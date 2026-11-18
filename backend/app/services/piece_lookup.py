@@ -14,6 +14,7 @@ from app.research.crafts import CraftRef
 from app.research.knowledge_pieces import PIECE_SCHEMA_VERSION, KnowledgePiece
 from app.research.piece_reuse import ClaimState
 from app.research.piece_topics import TopicSubjects
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.term_marking import TermMarker
 from app.research.vocabulary import CANONICAL_LANGUAGE
 
@@ -30,6 +31,7 @@ __all__ = [
     "claim_states",
     "craft_districts",
     "stored_piece",
+    "stored_pieces",
     "topic_subjects",
     "view_states",
 ]
@@ -100,10 +102,10 @@ async def candidate_pieces(
 
 
 async def claim_states(
-    session: AsyncSession, pieces: Sequence[KnowledgePiece]
+    session: AsyncSession, pieces: Sequence[KnowledgePiece], *, acls: Sequence[str] = OPEN_CHUNK_ACLS
 ) -> tuple[dict[uuid.UUID, ClaimState], CitedClaims]:
     wanted = dict.fromkeys(claim for piece in pieces for claim in piece.claim_ids)
-    views, sources = await knowledge_view.claims_by_id(session, wanted)
+    views, sources = await knowledge_view.claims_by_id(session, wanted, acls=acls)
     return view_states(views.values()), cited_claims(list(views.values()), sources)
 
 
@@ -140,3 +142,13 @@ def stored_piece(row: PieceRow) -> KnowledgePiece | None:
     except ValidationError as refused:
         logger.warning("stored piece %s no longer meets the piece contract: %s", row.id, refused)
         return None
+
+
+async def stored_pieces(
+    session: AsyncSession, piece_ids: Sequence[uuid.UUID]
+) -> dict[uuid.UUID, KnowledgePiece]:
+    if not piece_ids:
+        return {}
+    rows = await session.scalars(select(PieceRow).where(PieceRow.id.in_(list(piece_ids))))
+    pieces = (stored_piece(row) for row in rows)
+    return {piece.id: piece for piece in pieces if piece is not None}

@@ -1,6 +1,6 @@
 import pytest
 
-from app.research.timeline import states_movement, years_named
+from app.research.timeline import states_movement, years_named, years_offered
 
 
 @pytest.mark.parametrize(
@@ -14,6 +14,14 @@ from app.research.timeline import states_movement, years_named
         ("15th-century fragments", {(1401, 1500)}),
         ("dated back to the fifteenth century", {(1401, 1500)}),
         ("cotton fragments from the 11th-14th century AD", {(1001, 1400)}),
+        ("Indian cotton fragments of the 11th to 14th century", {(1001, 1400)}),
+        ("main source of revenue during the 18th and 19th centuries", {(1701, 1900)}),
+        ("a port of the Pallava dynasty from the sixth to ninth century CE", {(501, 900)}),
+        ("surviving pieces date from the late 16th or early 17th century", {(1501, 1700)}),
+        ("flourished from the early 18th to the mid-20th century", {(1701, 2000)}),
+        ("held sway till about the mid-18th century", {(1701, 1800)}),
+        ("rotary querns reached India in the 3rd and 4th centuries CE", {(201, 400)}),
+        ("the 3rd and 2nd centuries BCE", set()),
         ("During the 7th century, the Khatris", {(601, 700)}),
         ("by the early 1950s synthetic dyes", {(1950, 1959)}),
         ("in the twenty-first century", {(2001, 2100)}),
@@ -36,6 +44,22 @@ def test_years_are_read_from_every_text_and_typographic_dashes() -> None:
         (1586, 1586),
         (1631, 1631),
     }
+
+
+@pytest.mark.parametrize(
+    ("text", "spans"),
+    [
+        ("In 1930 hundreds of Indian cotton fragments were found at Al Fustat", {(1930, 1930)}),
+        ("pots heated to 1250-1280°C, and melting takes about 16-18 hours", set()),
+        ("raises the fire to about 1000-1200 degrees Celsius", set()),
+        ("a glob of molten glass at around 1300 °C", set()),
+        ("About 1450 million years ago the Delhi Orogeny metamorphosed the limestones", set()),
+        ("a 2019 study put the cluster's annual business at more than Rs 2000 crore", {(2019, 2019)}),
+        ("In 1975 a metre cost Rs. 1500 at Barmer", {(1975, 1975)}),
+    ],
+)
+def test_measures_and_sums_are_not_offered_as_years(text: str, spans: set[tuple[int, int]]) -> None:
+    assert years_offered([text]) == spans
 
 
 QUOTE = (

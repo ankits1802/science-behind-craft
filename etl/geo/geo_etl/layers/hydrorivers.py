@@ -14,7 +14,12 @@ from geo_etl.rows import Rows
 URL = HYDRORIVERS.url
 ARCHIVE = "HydroRIVERS_v10_as_shp.zip"
 MAJOR_ORD_FLOW = 4
+MAJOR_DISCHARGE_M3S = 100
 COLUMNS = ["HYRIV_ID", "ORD_STRA", "ORD_FLOW", "DIS_AV_CMS", "LENGTH_KM", "UPLAND_SKM"]
+METHOD = (
+    "River reaches measured inside each district; a major river carries at least "
+    f"{MAJOR_DISCHARGE_M3S} m³/s on average; distance from the district's centre to the nearest major river"
+)
 
 
 def cached_archive(cache: Path) -> Path:
@@ -78,11 +83,7 @@ def to_lcc(districts: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
 
 
 def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
-    rows = Rows(
-        HYDRORIVERS,
-        f"reach lines clipped to district polygons in {INDIA_LCC} (WGS 84 / India NSF LCC); major river = ORD_FLOW <= "
-        f"{MAJOR_ORD_FLOW} (long-term discharge >= 100 m3/s); distance from the Designer Portal district centroid",
-    )
+    rows = Rows(HYDRORIVERS, METHOD)
     failures: list[dict] = []
     try:
         archive = cached_archive(options.cache)

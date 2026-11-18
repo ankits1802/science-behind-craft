@@ -3,8 +3,9 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import type { CraftPage } from "@/lib/craftPageContract";
+import type { CraftPage, PagePlace } from "@/lib/craftPageContract";
 import { pageSourceNumbers, pageSourcesById, sourceGroups } from "@/lib/craftPageView";
+import { placesInDistrict } from "@/lib/craftPlaces";
 import { chosenLayerId } from "@/lib/mapLayers";
 import { craftRegionShape, mapLayerListShape, mapLayerShape, type CraftRegion, type MapLayer, type RegionPlace } from "@/lib/regionContract";
 import {
@@ -19,6 +20,7 @@ import {
   layerFills,
   layerOptions,
   layerSummary,
+  periodText,
   placeSubtitle,
   regionHighlight,
   shownFacets,
@@ -29,6 +31,8 @@ import {
   valueReading
 } from "@/lib/regionView";
 import { parseShape, ShapeError } from "@/lib/shape";
+
+import { registerPage } from "./craftPageFixture";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 
@@ -89,7 +93,8 @@ test("every value names its statistic, dataset, grid and period", () => {
 test("a district place names its district and is highlighted alone", () => {
   const body = region();
   const place = body.places[0];
-  expect(placeSubtitle(place)).toBe("Kachchh district · Gujarat");
+  expect(place.placeLabel).toBe("Kachchh");
+  expect(placeSubtitle(place, [])).toBe("District, Gujarat");
   expect(inheritedNote(place)).toBeNull();
   expect(shownFacets(place).map((facet) => facet.facet)).toEqual(["SOIL", "CLIMATE", "LAND_COVER", "TERRAIN", "GEOLOGY"]);
   const highlight = regionHighlight(body);
@@ -126,10 +131,59 @@ test("a state of practice reads as practised across the state", () => {
     };
   });
   const place = body.places[0];
-  expect(placeSubtitle(place)).toBe("Practised across the state");
+  expect(placeSubtitle(place, [])).toBe("Practised across the state");
   expect(inheritedNote(place)).toBeNull();
   expect(shownFacets(place)).toEqual([]);
   expect([...regionHighlight(body).states]).toEqual([24]);
+});
+
+function pagePlace(name: string, kind: PagePlace["kind"], role: PagePlace["role"], district: PagePlace["district"]): PagePlace {
+  return { key: `${name}-${role}`, name, kind, role, district, state: { lgd: 24, name: "Gujarat" }, country: "India", wikidataId: null, claimIds: [] };
+}
+
+test("a district card names the craft's making places inside it, once each, and no place outside it", () => {
+  const kachchh = { lgd: 449, name: "Kachchh" };
+  const places = [
+    pagePlace("Ajrakhpur", "VILLAGE", "PRACTISED", kachchh),
+    pagePlace("Ajrakhpur", "VILLAGE", "MIGRATED_TO", kachchh),
+    pagePlace("Dhamadka", "VILLAGE", "HISTORIC_CENTRE", kachchh),
+    pagePlace("Khavda", "VILLAGE", "PRACTISED", kachchh),
+    pagePlace("Dhamadka River (Suran)", "RIVER", "MATERIAL_SOURCE", kachchh),
+    pagePlace("Kachchh", "DISTRICT", "PRACTISED", kachchh),
+    pagePlace("Pethapur", "VILLAGE", "MATERIAL_SOURCE", { lgd: 441, name: "Gandhinagar" }),
+    pagePlace("Barmer", "DISTRICT", "PRACTISED", { lgd: 99, name: "Barmer" })
+  ];
+  const named = placesInDistrict(places, 449);
+  expect(named).toEqual(["Ajrakhpur", "Dhamadka", "Khavda"]);
+  expect(placeSubtitle(region().places[0], named)).toBe("District, Gujarat · includes Ajrakhpur, Dhamadka and Khavda");
+  expect(placesInDistrict(places, 99)).toEqual([]);
+});
+
+test("raw codes, units and periods read in words", () => {
+  const [first] = region().places[0].facets[0].values;
+  const bulk = { ...first, variable: "bdod", depth: "0-5cm", unit: "kg/dm3", value: 1.45 };
+  expect([valueLabel(bulk), valueReading(bulk)]).toEqual(["Bulk density, 0–5 cm", "1.45 g/cm³"]);
+  const january = { ...first, datasetCode: "CHELSA_2_1_1981_2010", variable: "mean_temperature", depth: null, period: "1981-2010-01", stat: "NORMAL" as const, unit: "degC", value: 19.56, resolution: "30 arc-seconds (about 1 km)" };
+  expect(valueLabel(january)).toBe("Mean temperature, January");
+  expect(periodText(january.period)).toBe("1981–2010");
+  expect(periodText("2001-2025")).toBe("2001–2025");
+  expect(periodText("modelled, 2020 release")).toBe("modelled, 2020 release");
+  const significance = { ...first, variable: "annual_precipitation", depth: null, period: "1981-2025", stat: "TREND_P_VALUE" as const, unit: "p-value", value: 0.0000123 };
+  expect([valueLabel(significance), valueReading(significance)]).toEqual(["Annual precipitation", "p < 0.001"]);
+  const canopy = { ...first, variable: "forest_loss_canopy30_share", depth: null, period: "2001-2025", stat: "SHARE" as const, unit: "fraction of 2000 forest", value: 0.0259 };
+  expect([valueLabel(canopy), valueReading(canopy), statCaption(canopy)]).toEqual(["Share of the 2000 forest lost", "2.59% of 2000 forest", "Share of the 2000 forest"]);
+  const cover = { ...canopy, variable: "forest_canopy30", period: "2000", unit: "fraction of land", value: 0.012 };
+  expect([valueLabel(cover), valueReading(cover), statCaption(cover)]).toEqual(["Forest cover, canopy of 30% or more", "1.2% of land", "Share of district land"]);
+  const lost = layer((body) => (body.layer = { ...body.layer, stat: "SHARE", unit: "fraction of 2000 forest" }));
+  expect(layerCaption(lost).split(" · ")[0]).toBe("Share of the 2000 forest");
+  const order = { ...first, datasetCode: "HYDRORIVERS_1_0", variable: "max_strahler_order", depth: null, period: "static", stat: "DISTRICT_MAX" as const, unit: "Strahler order", value: 6 };
+  expect([valueLabel(order), valueReading(order)]).toEqual(["Largest river order (Strahler)", "6"]);
+  const slope = { ...first, datasetCode: "COPERNICUS_DEM_GLO90", variable: "slope", depth: null, period: "2011-2015 acquisitions", stat: "DISTRICT_MEAN" as const, unit: "degree", value: 0.74 };
+  expect(valueReading(slope)).toBe("0.74°");
+  const seasonality = { ...first, datasetCode: "CHELSA_2_1_1981_2010", variable: "precipitation_seasonality", depth: null, period: "1981-2010", stat: "NORMAL" as const, unit: "coefficient of variation %", value: 150.11 };
+  expect(valueReading(seasonality)).toBe("150.11%");
+  const index = datasetIndex(region().datasets);
+  expect(valueProvenance(january, datasetOf(index, january.datasetCode))).toBe("Climate normal · CHELSA V2.1 climatologies 1981-2010 · 30 arc-seconds (about 1 km) · 1981–2010");
 });
 
 test("a craft with no places has nothing to highlight", () => {
@@ -156,23 +210,8 @@ test("each dataset lists its distinct methods once", () => {
 test("a location's source is numbered and linked even when no claim cites it", () => {
   const body = region();
   const [place] = body.places;
-  const page: CraftPage = {
-    schemaVersion: 1,
-    craft: { slug: "Kutch-Ajrakh", name: "Kutch Ajrakh", path: "/crafts/Kutch-Ajrakh", id: "c", localName: null, categoryName: null, subCategoryName: null, giStatus: "GI", stateOfPractice: [], stateOfOrigin: [] },
-    curated: false,
-    curation: null,
-    overview: { lede: [], keyFacts: [], sections: [] },
-    sourcesDiffer: [],
-    places: [],
-    communities: [],
-    process: { processId: null, stages: [], reactions: [] },
-    glossary: [],
-    pictures: [],
-    openQuestions: [],
-    evidence: { groups: [], hypotheses: [] },
-    claims: [],
-    sources: []
-  };
+  const page: CraftPage = registerPage();
+  expect([page.claims.length, page.sources.length]).toEqual([0, 0]);
   const numbers = pageSourceNumbers(page, body.sources);
   const byId = pageSourcesById(page, body.sources);
   expect(place.basis.kind).toBe("CRAFT_LOCATION");
@@ -220,7 +259,7 @@ test("layers are offered by facet and a requested id must be listed", () => {
   const list = parseShape(mapLayerListShape, golden("region.layers.golden.json"));
   expect(layerOptions(list).map((option) => [option.group, option.value, option.hint])).toEqual([
     ["Soil", "soil-ph-0-5cm", "modelled, 2020 release"],
-    ["Climate", "annual-mean-temperature", "1981-2010"],
+    ["Climate", "annual-mean-temperature", "1981–2025"],
     ["Land cover", "cropland-share", "2021"]
   ]);
   expect(chosenLayerId(list, "cropland-share")).toBe("cropland-share");

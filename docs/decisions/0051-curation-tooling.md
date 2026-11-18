@@ -79,3 +79,58 @@ or keyed API may be called; Claude Code is the only model.
 - The importer, the critic's brief and the pilot dossiers are next (plan sections 7, 8 and 10).
 - `services/district_seed.py` still reads `lgd_register.json` itself for the seed;
   `data/district_register.py` is the name lookup the checker uses (`docs/TECH_DEBT.md`).
+
+## Wave 1 changes
+
+Date: 2026-11-18. After the wave 0 pilot (its critics raised 80 problems, 41 must-fix) and before
+wave 1:
+
+1. **Numbers** (`curation/figures.py`): a leading zero no longer separates two numbers
+   (`5 May 2008` matches `05-05-2008`; a dotted date part by part; a decimal keeps its zeros), and
+   a letter-spaced run in a quote (`2 0 1 8` on a report's title page) counts with its digits
+   closed up, while a table row's pipes keep its numbers apart. The answer engine's
+   `research/quotes.unsupported_figures` is unchanged.
+2. **Hedges in Hindi, and in both directions** (`curation/hedges.py`): Hindi words of doubt and
+   approximation (शायद, संभवतः, कहा/माना जाता है कि, लगभग, करीब before a number, ...) are recognised;
+   a Hindi word of doubt in a quote sources an English hedge in the claim, and, new for both
+   languages, a claim whose every quote hedges must hedge too. In a quote, may, might and could
+   do not count (as often a month, a permission or an ability), nor `कहा जाता है` without `कि`
+   ("is called"), nor करीब without a number ("near"); a capital `May` inside a sentence is the
+   month. Calibrated on the pilots, where it flags nothing once those readings are excluded.
+3. **Tables** (`tools/curation/tables.py`): each row of a page's data tables that trafilatura
+   dropped is added after the text as one line, ` | ` between cells, so the GI registry's
+   applicant, status and dates can be quoted; a page without a data table reads exactly as before
+   (tested against the previous pipeline). The verifier became `kalavigyan-curation-verify/2`,
+   which made the pilot check files stale; re-verified, all 64 sources were read and all 707
+   quotes passed.
+4. **The index is written on request**, superseding item 10's "every run": `check.py` writes
+   nothing by default, `--write-index` regenerates `index.json` (the lead, once per batch), and
+   CI's `--check-index` is unchanged, so parallel curators no longer write one shared file.
+5. **Rubric**: a page a named organisation publishes about its own work (Khamir about its
+   programmes, a cooperative about its members) is C, author named or not; shop and sales pages
+   stay D. The rating stays the curator's; the checker reads it and infers nothing.
+6. **A curator checklist** in `docs/contracts/curation.md` turns the must-fix problems into rules
+   a first draft meets before the checker and the critic see it.
+7. **Crafts the portals added** (`backend/app/data/portal_craft_register.json`): seven crafts the
+   portal sync stores under their own slugs with no master serial (Dabu Hand Block Printing,
+   Ghurni Clay Doll Craft, Krishnanagar Terracotta, Meghalaya and Mysuru Stone Carving, Bishnupur
+   Terracotta Craft, and Cane and Bamboo, which is merged into Cane & Bamboo Craft). The checker
+   accepts an active one like a master craft and refuses a merged one with the craft to curate
+   instead. The import finds a craft by slug in the database; a register craft the database does
+   not hold yet (a fresh CI database, before the portal sync) is reported `WAITING`, not refused,
+   and the preview builds it with the id the sync gives it (`seed_uuid("c", slug)`).
+8. **One scope field for crafts, families and categories** (`curation/scope_rules.py`,
+   `data/curation_scopes.py`): `CRAFT`, `FAMILY` (catch-all rows and crafts practised across All
+   India, 81 crafts) and `CATEGORY` (one dossier per master category in `categories/`). The scope
+   is declared in the dossier and checked against the master list and the register, so a curator
+   cannot pick the looser rules: a family or category may name centres by state or region and has
+   no GI record; a category covers every sub-category with a cited sentence or an open question
+   saying no source was found, links member crafts by slug, has a section per discipline its
+   sources support, holds up to 250 claims and has its own coverage targets. One slug field per
+   scope (`craftSlug` or `categorySlug`) runs through the dossier, the check file (a craft check
+   file is written exactly as before) and the index, which became schema 2 with the scope of each
+   craft and a separate `categories` list. The craft importer reads only the top folder, so
+   categories are curated now and imported when the category page is built (`docs/TECH_DEBT.md`).
+9. **The pilots under the new rules**: re-verified, then checked with no problem. Kutch Ajrakh's
+   three Khamir exhibition pages, rated D by the pilot critic for want of an author, are C under
+   the new rubric (Khamir's own annual exhibition, no shop links); the craft page golden follows.

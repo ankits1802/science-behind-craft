@@ -1,0 +1,1522 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Dabu-Hand-Block-Printing",
+  "dossierVersion": 1,
+  "dossierDigest": "2d8508085054d673846154c7be6fbe24aeba7cad9a3fc3c46d3e34cce7a1eb66",
+  "checkedAt": "2026-11-18T11:05:07.439070Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_37.pdf",
+      "fetchedAt": "2026-11-18T11:05:03.106302Z",
+      "contentType": "application/pdf",
+      "textSha256": "2fb18e523b59656860f2d239c161e7ab118b4788cc9a18a23a1ee94b40c2b5ea",
+      "characters": 69142,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://koreascience.or.kr/article/JAKO201016637927166.pdf",
+      "route": "LIVE",
+      "readUrl": "https://koreascience.or.kr/article/JAKO201016637927166.pdf",
+      "finalUrl": "https://koreascience.or.kr/article/JAKO201016637927166.pdf",
+      "fetchedAt": "2026-11-18T11:04:56.466279Z",
+      "contentType": "application/pdf",
+      "textSha256": "bb9546ad7fcfdd1fcdb130bfaf90c05b1f3056a8901dc65baf504110d7fb6009",
+      "characters": 15094,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.ulm.edu/employee/joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ulm.edu/employee/joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "finalUrl": "https://www.ulm.edu/employee/joydeep/Files/Vegetable%20dyes_pg-118.pdf",
+      "fetchedAt": "2026-11-18T11:04:58.239116Z",
+      "contentType": "application/pdf",
+      "textSha256": "e1fa6ef2ff52e3336b2246cb93c40988d31acc40b4b3ebe905f759f3083f328d",
+      "characters": 431497,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://imp-art.org/articles/dabu/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/dabu/",
+      "finalUrl": "https://imp-art.org/articles/dabu/",
+      "fetchedAt": "2026-11-18T11:04:56.715030Z",
+      "contentType": "text/html",
+      "textSha256": "80bfe74910ce19370dbb12734f146fbecd4ff78d6c3e5a15b3a78c0aea7e1694",
+      "characters": 3228,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://imp-art.org/articles/balotra-printing/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/balotra-printing/",
+      "finalUrl": "https://imp-art.org/articles/balotra-printing/",
+      "fetchedAt": "2026-11-18T11:04:59.284708Z",
+      "contentType": "text/html",
+      "textSha256": "5286ce73064ce4dc1caa797a38411e1f7de1452b7e07ebad5f21efcfa05adb79",
+      "characters": 5979,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.asiainch.org/craft/hand-block-printing-of-akola-rajasthan/",
+      "route": "LIVE",
+      "readUrl": "https://www.asiainch.org/craft/hand-block-printing-of-akola-rajasthan/",
+      "finalUrl": "https://www.asiainch.org/craft/hand-block-printing-of-akola-rajasthan/",
+      "fetchedAt": "2026-11-18T11:05:01.131021Z",
+      "contentType": "text/html",
+      "textSha256": "80c3232c1446d0be8086f427bdd98bf63a728077604d91e49a9a1fffd1bf4f8c",
+      "characters": 1060,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://globalinch.org/craft/hand-block-resistdabu-printing-of-kala-dera-rajasthan/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/hand-block-resistdabu-printing-of-kala-dera-rajasthan/",
+      "finalUrl": "https://globalinch.org/craft/hand-block-resistdabu-printing-of-kala-dera-rajasthan/",
+      "fetchedAt": "2026-11-18T11:05:03.005028Z",
+      "contentType": "text/html",
+      "textSha256": "62838e91ea4fda2957fc011ccc6d41b5a825f9a63abac33f98c36f755c47aed6",
+      "characters": 594,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "route": "LIVE",
+      "readUrl": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "finalUrl": "https://www.vam.ac.uk/blog/fabric-of-india/location-scout-part-ii-resist-block-printing",
+      "fetchedAt": "2026-11-18T11:05:03.738344Z",
+      "contentType": "text/html",
+      "textSha256": "fe6b77d5c771d173572065ec0f28beccaad16dd56a3a4fdb321b32ba35ffbbc4",
+      "characters": 2904,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "route": "LIVE",
+      "readUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "finalUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "fetchedAt": "2026-11-18T11:05:02.967138Z",
+      "contentType": "text/html",
+      "textSha256": "bbcc3729a83a487f9367d9017f6f406978d82438ec644338dad2bc7fa57b0cf4",
+      "characters": 8069,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "route": "LIVE",
+      "readUrl": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "finalUrl": "https://www.morungexpress.com/life-dedicated-rajasthans-traditional-dabu-print",
+      "fetchedAt": "2026-11-18T11:05:03.698387Z",
+      "contentType": "text/html",
+      "textSha256": "4b799f2401030cc59dbf019bea987a40f15fb3463ba6b338645812d36b682304",
+      "characters": 3999,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.business-standard.com/article/news-ians/customers-still-need-to-understand-true-meaning-of-handloom-lifestyle-feature-118090800148_1.html",
+      "route": "LIVE",
+      "readUrl": "https://www.business-standard.com/article/news-ians/customers-still-need-to-understand-true-meaning-of-handloom-lifestyle-feature-118090800148_1.html",
+      "finalUrl": "https://www.business-standard.com/article/news-ians/customers-still-need-to-understand-true-meaning-of-handloom-lifestyle-feature-118090800148_1.html",
+      "fetchedAt": "2026-11-18T11:05:03.426103Z",
+      "contentType": "text/html",
+      "textSha256": "ef70d70d884eac383d66c64320cd948ed3eaec6de1fb4da8680dabb9faa25f64",
+      "characters": 3744,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.bindugopalrao.com/dabu-printing/",
+      "route": "LIVE",
+      "readUrl": "https://www.bindugopalrao.com/dabu-printing/",
+      "finalUrl": "https://www.bindugopalrao.com/dabu-printing/",
+      "fetchedAt": "2026-11-18T11:05:04.484629Z",
+      "contentType": "text/html",
+      "textSha256": "89e888f533f302258f0738d1145c9f8dc605ec01fab4c3baa2a96dc35c01ff56",
+      "characters": 7957,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://gaatha.org/Craft-of-India/akola-dabu-printing-process-history/",
+      "route": "LIVE",
+      "readUrl": "https://gaatha.org/Craft-of-India/akola-dabu-printing-process-history/",
+      "finalUrl": "https://gaatha.org/Craft-of-India/akola-dabu-printing-process-history/",
+      "fetchedAt": "2026-11-18T11:05:04.358306Z",
+      "contentType": "text/html",
+      "textSha256": "f99d997bd800fe3fd1efe2c7134805f7b3e8e8c490d6714162952b4096d7d44d",
+      "characters": 14702,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://en.wikipedia.org/wiki/Akola,_Chittorgarh",
+      "route": "LIVE",
+      "readUrl": "https://en.wikipedia.org/wiki/Akola,_Chittorgarh",
+      "finalUrl": "https://en.wikipedia.org/wiki/Akola,_Chittorgarh",
+      "fetchedAt": "2026-11-18T11:05:04.309551Z",
+      "contentType": "text/html",
+      "textSha256": "045b00abfe50950492b1556cff9b60fbc7b4ee8640648e91291ec710555b7deb",
+      "characters": 1178,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.business-standard.com/elections/rajasthan-elections/rajasthan-cabinet-approves-creation-of-19-new-districts-three-divisions-123080700318_1.html",
+      "route": "LIVE",
+      "readUrl": "https://www.business-standard.com/elections/rajasthan-elections/rajasthan-cabinet-approves-creation-of-19-new-districts-three-divisions-123080700318_1.html",
+      "finalUrl": "https://www.business-standard.com/elections/rajasthan-elections/rajasthan-cabinet-approves-creation-of-19-new-districts-three-divisions-123080700318_1.html",
+      "fetchedAt": "2026-11-18T11:05:05.006864Z",
+      "contentType": "text/html",
+      "textSha256": "6ac09ec26835dcadb17e385544bb05f23d090c3070412958fca60a3a6e93c591",
+      "characters": 2954,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://scroll.in/latest/1077338/rajasthans-bjp-government-scraps-12-new-districts-and-3-divisions",
+      "route": "LIVE",
+      "readUrl": "https://scroll.in/latest/1077338/rajasthans-bjp-government-scraps-12-new-districts-and-3-divisions",
+      "finalUrl": "https://scroll.in/latest/1077338/rajasthans-bjp-government-scraps-12-new-districts-and-3-divisions",
+      "fetchedAt": "2026-11-18T11:05:05.293086Z",
+      "contentType": "text/html",
+      "textSha256": "1b3dcee3b4a4f4464916a2feccde162c93e93614e043eb583625187a88f1939c",
+      "characters": 2889,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S04",
+      "quote": "Dabu is a resist print technique, which implies covering or impregnating of certain portions of the cloth, intended to be kept in the background colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S04",
+      "quote": "This covering is done with wax, clay, Gum, Resin or other resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "Dhabu acts as mechanical resist and prevents the penetration of dye during dyeing on areas covered with 'dhabu'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S02",
+      "quote": "dabu mud-resist, which is unique to Rajasthan, can achieve patterning as the clay-rich mud prevents cold dyes from penetrating the material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S04",
+      "quote": "It is one of the oldest printing techniques in India. And is the most popular and favoured printing of Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S05",
+      "quote": "A mud-resist printing technique practised in Rajasthan and Gujarat, dabu gets its name from the Hindi word dabana which means \"to press\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "dabu mud-resist, which is unique to Rajasthan, can achieve patterning as the clay-rich mud prevents cold dyes from penetrating the material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S05",
+      "quote": "A mud-resist printing technique practised in Rajasthan and Gujarat, dabu gets its name from the Hindi word dabana which means \"to press\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S13",
+      "quote": "Dabu, the word derived from Hindi word 'Dabana', means 'To Press'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S04",
+      "quote": "Its essence lies in printing with specially prepared Dabu paste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S04",
+      "quote": "applying thick black mud paste onto the fa bric and then dyeing the fabrics",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "The special resist paste (clay-lime-gum-insect eaten wheat mixture) technique, a specialty of traditional printing of Rajasthan, is commonly known as 'dhabu'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S13",
+      "quote": "Dabu, the word derived from Hindi word 'Dabana', means 'To Press' and is an ancient mud-resist hand block printing technique originated from the tribal regions of Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S13",
+      "quote": "This story first appeared in Apparel Magazine's April 2019 issue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S04",
+      "quote": "In Bagru near Jaipur, Barmer and kaladera near Udaipur, Jodhpur, Akola n ear Chittorgarh etc. this technique is practiced with few changes and modification in the material, ingredients, colour scheme and motifs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S05",
+      "quote": "The origins of dabu have been traced as far back as to the eighth century as indicated by a fabric specimen found in Central Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S04",
+      "quote": "Dabu was developed centuries before the mughals invaded India2 and is originally an Indian printing technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S04",
+      "quote": "Although we don't get much phys ical proof, as the cl othes did not last due to adverse atmospheric condition in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S11",
+      "quote": "The print Dabu or Daboo, believed to have originated in China, is practiced by a major artisan cluster in Bagru",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S04",
+      "quote": "An 8th century sample of Dabu found in Central Asia is believed to be printed in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S04",
+      "quote": "The art of printing was patronized by the Royals in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S04",
+      "quote": "Still there were many centers deprived of Royal patronage. These centers practiced the folk form of printing commonly known as \"DABU\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S04",
+      "quote": "literatures of medieval age have words like, \"Uchcho\" 3 (print industry) and \"Champai\" 4 (chippa or printer) in them",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S04",
+      "quote": "Like many other traditional arts, Dabu almost lost its relevance in the new era of modern printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S04",
+      "quote": "It became a time consumi ng process with less profit.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S04",
+      "quote": "Many Chippas opted to the easy practice of new trend in art & craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S04",
+      "quote": "But some of the traditional Chippas tried to keep this art alive by making few changes accordi ng to the demand of modern time buyers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S04",
+      "quote": "The Government of Rajasthan also promoted and su pported them in this cause.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "Since last few years some new experiments are being done with Dabu printing, designs and dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "Printers are using different minerals and vegetable colours to enhance the Dabu print.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "These efforts are giving result now and Dabu is regaining its lost Gl ory.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "But still it is a long journey for this beautiful art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S05",
+      "quote": "the colours - indigo, yellow and red - were naturally derived but have given way to synthetic chemical products such as Naphthol for red colour and tar instead of the mud-resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S05",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S14",
+      "quote": "Naphthol: Alizarin was traditionally used in the process but is now replaced with Naphthol.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S05",
+      "quote": "the colours - indigo, yellow and red - were naturally derived but have given way to synthetic chemical products such as Naphthol for red colour and tar instead of the mud-resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S14",
+      "quote": "Earlier, printing with a mud paste helped resist the required designs and patterns, but this slowly shifted to the use of tar in a quest for obtaining more refined designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S07",
+      "quote": "The Akola region is renowned for hand block printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S07",
+      "quote": "The dabu or mud resist printing of this region is of two specific types namely phetia and nangna. These are exclusive to this area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S07",
+      "quote": "The former is worn primarily by the women of the Jat and Chaudhury castes especially after childbirth or during marriages while the latter were worn by the Gujjar women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S07",
+      "quote": "The resist is made by a local gum/ bedja and oil and the previously used resist by boiling for several hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S07",
+      "quote": "The napthol / alizarinedyed cloth is stamped with the metal blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S07",
+      "quote": "The ash dust is rubbed on the surface to avoid hot resist to stick when folded.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S14",
+      "quote": "Ash is then sprinkled on the fabric as it helps in quick drying of the printed fabric along with avoiding the sticking of the cloth together.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S07",
+      "quote": "Three types of mud resist are used; chuna/lime or kirana is the weakest resist which is used for fine outlines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S07",
+      "quote": "Mitti/mud is used when the cloth needs to be immersed in indigo a few times and rait/sand, the strongest of resist is used for most absorbent colours like pomegranate and ferrous dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S04",
+      "quote": "Kirana or chuna (lime) is weakest resist and is used for fine outline. Mitti (clay) is used when the cloths needs to be immersed in indigo for few times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S04",
+      "quote": "Rait (sand), the storages of the mud resi st is used for extremely absorbent pomegranate and ferrous dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S07",
+      "quote": "A range of products like ghaghra fabric, odhani-veil cloth, yardage and dupatta-stole.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S04",
+      "quote": "Jodhpur, Akola n ear Chittorgarh etc. are centers where the technique is practiced",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S13",
+      "quote": "I met Chippa an artist from Akola, Chittorgarh in Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S14",
+      "quote": "Akola is a village in Bhopalsagar Tehsil in Chittorgarh District of Rajasthan state in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S15",
+      "quote": "is a village in Bhupalsagar tehsil of Chittorgarh district in the Indian state of Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S07",
+      "quote": "Akola is a craft cluster in the Udaipur district of Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S14",
+      "quote": "Akola is a mud-resist block-printing craft cluster in the Udaipur district of Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S05",
+      "quote": "Its roots in India have been traced to the village Akora, Rajasthan, where it is still actively practised and the block-printers are known as chippas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S09",
+      "quote": "I visited Kaladera in Rajasthan, looking particularly for Indigo dyeing workshops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S09",
+      "quote": "The workshops I visited however specialise in layering up block printing, resist block printing and indigo dyeing processes to create designs that have a generally darker, indigo ground, with lighter and even white areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S09",
+      "quote": "A resist paste is then mixed from lime, gum and a type of sticky clay naturally occurring in the bottom of ponds and river beds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S09",
+      "quote": "The first stage is to block-print the outline of flowers using ink:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S09",
+      "quote": "This mix is then printed onto top of the design using a separate block which applies the resist mix only to the areas that are to remain white.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S09",
+      "quote": "The fabric is then dusted with the chaff from wheat to prevent the areas with resist mix sticking to one another if the fabric is crumpled or folded.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S09",
+      "quote": "It will be dyed again to intensify the blue. However before that happens, another layer of resist is applied to areas where the existing shade of blue is desired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S04",
+      "quote": "After each dip and airing more dabu pattern can be applied giving a full range of blue shades.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S09",
+      "quote": "Finally the fabric is washed clean of excess dye and the resist and wheat chaff, folded and baled up for collection.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "Geographical Area Bagru Kaladera Jahota Jairampura Name of Tehsil/ Panchayat Sanganer Chomu Amber Amber District & State Jaipur, Rajasthan Jaipur, Rajasthan Jaipur, Rajasthan Jaipur, Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S06",
+      "quote": "This block printing technique for textiles derives its name Balotra from the city in the Barmer district of Rajasthan where it is primarily produced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S06",
+      "quote": "Once dry, the designs are transferred to the fabric with wooden blocks in multiple stages: first using direct printing - in which dye is applied to the blocks and pressed onto the fabric - and then using dabu (or dye-resist) printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S06",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S06",
+      "quote": "The dabu paste is first made by combining clay, beden, lime and natural gum and fermented for several days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S06",
+      "quote": "This mixture is then printed onto cloth using wooden blocks, after which it is usually sprinkled with beden to keep up from smudging and to help it dry quickly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S06",
+      "quote": "A single fabric may be subjected to multiple rounds of dabu printing and dyeing, depending on what the design demands.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S06",
+      "quote": "The waters of the seasonal Luni river and Rajasthan's hot and dry climate made Balotra well suited to the traditional methods of dyeing and printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S06",
+      "quote": "Since the 1990s, traditional Balotra printing has seen a steady decline as local printers have turned to other professions and as the appeal of less-expensive chemical dyes, polyester fabric and screen-printing methods have simultaneously increased.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S12",
+      "quote": "are two artisans from a small village called Piparcity",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S12",
+      "quote": "told IANS during a visit to the manufacturing location in Jodhpur, where they make the decade-old Indigo Collection for Fabindia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S12",
+      "quote": "The Indigo Collection is completely naturally dyed using block printing techniques such as Dabu, Bagru and Ajrakh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S12",
+      "quote": "First Published: Sep 08 2018 | 10:14 AM IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "Blocks carved with designs bearing motifs such as peacocks, mangoes, leaves, corn stalks, sunflowers and geometric elements such as lines, dots and chevrons are used to make patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S05",
+      "quote": "The traditionally employed patterns are handed down over generations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S05",
+      "quote": "The print was widely known for its popular usage on ghagras (skirts) for women. It was also used on the local outfits for women such as fetiya (a local term for skirts) and bandhej lugda (long fabric draped on the head).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S05",
+      "quote": "Modern designs such as geometric waves, graphic elements and shapes have been integrated into the motifs and more colour combinations using red, green and black are used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S05",
+      "quote": "It was used in more expensive textiles such as the Maheshwari cotton and is now used on fabrics like silk, crepe and georgette.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S05",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S13",
+      "quote": "fabrics like silk, crepe and georgette have become very popular amongst Dabu artisans because they hold the print designs and colours very well",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S05",
+      "quote": "Apart from garments, it is frequently used in accessories, furnishings and home decoration, signifying that over years, it has garnered popularity that has broadened its consumer base and therefore its range of production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S04",
+      "quote": "Tor datai: Here dabu is used on the rekh (outline) printed with syahi in the bhant (design).Through this we obtain coloured design, while the cloth surface remains as it is.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "Podh Datai (chappai) is done by Dabu on different parts of design, such as leaves or stem and then couloured with neel or some other vegetable colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "Thr ough this we obtain coloured background, while the colour of design remains as it is.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S04",
+      "quote": "Rata datai: Here Dabu printing is done on some de signs after co louring with syahi or beggar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S04",
+      "quote": "Traditionally, Dabu is used to keep the printed or background portion white.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S04",
+      "quote": "Although all the motifs are derived from vegetable and floral forms, each bears a unique association with a specific community, thus serving as a mean of identifying the community of the wearer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S04",
+      "quote": "We see that chhippa community of traditional printers of dabu use the mud resist technique with vegetable dyes to create densely patterned and rich coloured textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S04",
+      "quote": "functional and sartorial requirement of many local communities, such as the Patel, Meghwal, Sindhi, Muslims, Mali, Raika, Rabari, Jat, Bishnois etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S04",
+      "quote": "National Workshop and Seminar on \"Vegetable dye and its application on textiles\", SilpaSadana, VisvaBharati, 2nd - 4th December, 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S02",
+      "quote": "The Chhipas, in conjunction with the Rangrez (dyer) community, apply pat tern to pre-woven cotton cloth using hand carved wood blocks",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S02",
+      "quote": "in association with specialist indigo dyers (Nilgar}, block carvers, and cloth washers (Dhobi)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S11",
+      "quote": "With the coming in of corporations like Fabindia and Aavaran, the Dabu print industry has gained more visibility and has definitely diversified its buyer base.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S11",
+      "quote": "As powerloom also enters the market, replication and stealing of print designs have become easier and the skills of Dabu artisans are under the sword, lifted high.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S11",
+      "quote": "Designing and carving hand blocks, preparing the handloom cloth for multiple layers of dyeing, and finally, putting it out into the sun, makes the Dabu printing work one of the most labour-intensive.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S11",
+      "quote": "Naturally, it causes prices to go up.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S13",
+      "quote": "This printing is purely a labour intensive process that involves several steps and stages of printing and dyeing done by expert artisans and craftsmen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S13",
+      "quote": "there are only a few artists that can do justice with this painstaking and meticulous job of hand printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S13",
+      "quote": "Further adding to this the natural dyes and vegetable pastes involved in the process are costly and tough-to-find.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S13",
+      "quote": "This story first appeared in Apparel Magazine's April 2019 issue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "Five kg of kali mitti (clay) is kept in around half a litre of water for a night.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "Next day this water soaked mud is kept on a plain surface ston e or floor.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "Nearly half kg of finally stained chuna (Calcium hydroxide) and one kg of beedan (moth-eaten wheat flour) is added to this mud.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "Then this whole material is mixed with trading of feet.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S04",
+      "quote": "Gond (gum) solution is periodically added to it to make this mixtur e adhesively strong.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "This whole process ends in thirty minutes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S04",
+      "quote": "This final solution is kept in a mud pot popularly known as 'Mardia'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S04",
+      "quote": "The mud resist is freshly prepared before every printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "All these are mashed well into a thick paste and left overnight. It is then strained into liquid paste which is used for printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Thus obtained mixture is again ke pt for a night.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S04",
+      "quote": "Next day it is stained with fine muslin cloth to discard rough particles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S04",
+      "quote": "In general Dabu is made by mixing: (a) Lime dissolved in water, (b) Natural gum 'Bedhan' or the wheat flour spoiled by worms, and (c) Locally available black clay",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "Dabu paste is prepared by mixing \"Kali Mitti\" (clay soil), lime (Bidhan) wheat flour and gum. These are mixed in specific ratios depending upon type of Dabu paste needed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "\"Dabu\" (Resist) paste used at Bagru is made out of locally available black clay soil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S04",
+      "quote": "While the chuna or lime is used to thicken solution. The mitti or clay holds the ingredients together; gond or gum helps in washing away the resist paste after the final dyeing is done",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S13",
+      "quote": "Acacia or babul seeds have been used to make gum which works like a binder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S05",
+      "quote": "a paste prepared with chuna (calcium hydroxide), beedan (pounded wheat chaff), locally-sourced mud from local riverbed and gond (gum) is sieved until it becomes fine",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S13",
+      "quote": "The dug-out mud from the dry pond is soaked in water in separate tank overnight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "Kalidar Dabu, dolidar dabu and gwar wali dabu are the most popular Dabu in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "There are 3 types of Dabu depending on the final result and the colour required",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "(a) Kaligar Dabu that is processed only once",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "(b) Dolidar Dabu that has little more of gum thus better adhesive strength and can withstand about two trips to the dye vats",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S04",
+      "quote": "(c) Gawarbali Dabu has oil and gawar seed powder added to the paste which gives strength to cloth to go through repeated dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "An appropriate amount of gond, chuna and multani mitti is mixed separately in water and kept separately in vessels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "Next morning the solution of gond and chuna are mixed properly and then required amount of multani mitti is added in it to make this mixture thicker.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "This solution too is kept in a \"mardia\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S04",
+      "quote": "The 2kg of gwar (a bean vegetable) is roasted till they get brown.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S04",
+      "quote": "Then they are ground to fine powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S04",
+      "quote": "An amount of chuna is boiled and then stained fine to mix it with gwar powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S04",
+      "quote": "This mixture is dried and then again ground to make it fine. This is finally mixed with a solution of gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S04",
+      "quote": "another technique called \" mein ki dabu \" - wax resist was also popular in Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S04",
+      "quote": "were used to give out a smell of perfume",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S04",
+      "quote": "nearly two a nd a half kg of honeybee wax, 10kg of chir (pine) solution and an amount of Tilli oil mixed with small quantity of pure ghee was heated on a certain temperature",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S04",
+      "quote": "The impression of cracks is equal and clear in this dabu in comparison with mitti dabu, where the cracks are arbitrary and not in control.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S04",
+      "quote": "The process of taking off this dabu from the fabric is known as Ukala. The process is done by adding 5% of soda ash in hot water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S08",
+      "quote": "The Resist/Dabu technique used here involves using wax or gum clay mixed with resin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S08",
+      "quote": "This is applied with a brush or block, or by hand to portions of the cloth and the colour is applied subsequently.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S08",
+      "quote": "The wax is then washed off in hot or flowing water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S08",
+      "quote": "The design gets a broken appearance like batik due to the leakage of colour once the resist is washed off.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S04",
+      "quote": "Wooden blocks are the main printing tools of Rajasthani printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S04",
+      "quote": "They are prepared by the local carpenters, locally called 'batkare' or one who can give shape to things.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S04",
+      "quote": "These blocks are generally half an inch deep and usually made of gurjan, shisham, teakwood or rohira wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S04",
+      "quote": "There are three types of blocks, named - gad, rekh and data.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S04",
+      "quote": "Dabu is applied on the cloth using a datta block mostly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S04",
+      "quote": "The dabu blocks should be of the same precision as that of the main butis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S04",
+      "quote": "The dabu printing is done on a single table while sitting or on a running table.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S04",
+      "quote": "This depends on the availability of space and comfort of the printer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S04",
+      "quote": "Instead of printing the fabric with block, the dabu is spread with a brush, when original background colour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S04",
+      "quote": "Dabu process is sequencing of different stages of dyeing & printing, which vary depending on the desired final pattern.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "The process of dabu printing begins with washing and desizing the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "Now the fa bric is treated with harda powder; the mordant, and then dried again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S04",
+      "quote": "It is then printed with the syahi and begar paste in two distinct steps.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S05",
+      "quote": "The designs from blocks are hand-printed over the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "It is applied with wooden block on the fabric and saw dust is sprinkled ove r it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "After printing, the fabric is left outside in the sun for drying before dipping in indigo tanks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S05",
+      "quote": "The fabric is dried in the sun, then dipped into dye, and dried again. It is washed so as to get excess paste and dye off so that the print is visible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S04",
+      "quote": "Dying with alizarin develops a rich re d colour in areas printed with begar paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S04",
+      "quote": "Syahi means 'black ink'.The syahi printing past is prepared by kaccha loha (raw iron), Gur (jagarry) and water.The syahi is mostly used for rekh outline.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S04",
+      "quote": "Beggar, a mordant used for 'red colour'.It is prepared out fitkari (alum), garu (iron oxide) and local tree gum with water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "Saw dust has two major functions at this stage-first to absorb water from the Dhabu paste and give additional layers of resist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S04",
+      "quote": "The saw dust also acts as a binder which pr events color penetration while dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "Saw dust has two major functions at this stage-first to absorb water from the Dhabu paste and give additional layers of resist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S04",
+      "quote": "Saw dust is sprinkled over the surface, following the application of dabu to facilitate quick drying of the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S04",
+      "quote": "sprinkled over the cloth before the prints dries completely to avoid sticking with each other",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S04",
+      "quote": "Before executing another work of dabu, the cloth must be dried properly first; otherwise the colours will spill over on a wet ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S04",
+      "quote": "It is therefore, that dabu work is not done during the rainy season.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "Dabu was popular in all those centers of Rajasthan, where th ere was abundance of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S04",
+      "quote": "For blue dye, the cloth is soaked in a nine feet deep maat (pitcher) for 15 to 20 minutes and then taken out.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S04",
+      "quote": "by two people holding the cloth lengthwise and blowing it in the wind",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S04",
+      "quote": "Then it is soaked once mo re.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S04",
+      "quote": "This process is repeated half a dozen times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S04",
+      "quote": "The cloth is spread out in the sun after it has been immersed in Indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S04",
+      "quote": "It is extracted from the neel plant (indigofera tinctoria).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "Indigo blue (nil) is a blue colouring matter extracted from Neel plants (Indigofera tinctoria).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S10",
+      "quote": "Then, when the fabric is exposed to air, the dye oxidizes to the insoluble blue form, adhering to the fibers permanently.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "atmospheric oxygen and turn the reduced indigo into oxidized indigo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "An experienced dyer always unfold the pleats neatly and gently to avoid cracking of 'Dhabu'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "'dhabu' does not get broken or cracked",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "Indigo has poor affinity to the fabric in the presence of water, so the first 'dip' gives a pale sky blue shade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "fabric is again dipped in the tank, pulled out and oxidized",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "once the vat is ready for use, it is kept 'alive' by constant addition of indigo lime and jiggery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S04",
+      "quote": "Before drying, the fabric is rinsed in flowing water to wash the Dabu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "the fabric is left in big tanks for at lest 3 to 4 hours till the resist paste becomes smooth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "The fabric is then beaten over a flat stone slab to remove the resist paste and excess dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S04",
+      "quote": "application of mud resist onto the fabric is followed by dyei ng the fabric in a cauldron of dye",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S04",
+      "quote": "The process may be repeated for double Dabu and triple Dabu and hence forth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S04",
+      "quote": "so as to remove the mud application",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "For turning the fabric green it is taken for further process of yellow dyeing but before this it is printed with dhabu to retain some blue areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "The dye extracted from turmeric and pomegranate peals is very fugitive and in order to make it fast, post mordanting is done with alum (fitkari).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "After leaving it for a few minutes (long period of time will cause the dhabu to come off) it is taken out",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S04",
+      "quote": "Bagru is known for its green shade that is acquired through two traditional methods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S04",
+      "quote": "Quan tity of alum varies according to the strength of the dabu. A fabric not treated with alum solution produces prints blurred and shabby.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "Since the resist paste 'dhabu' is thick and sticky no sharp definitions are achieve d",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "This technique is used only for creating patterns with indigo blue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S04",
+      "quote": "Bagru is known for its mastery in the second t ype, a special printing technique of Resist style called 'Dabu' printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S04",
+      "quote": "Although, women have tr aditionally done the dabu printi ng, men are also involving themselves in it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "every family has its own recipe to make the paste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S04",
+      "quote": "Each family follows its own secret of making Dabu paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "According to Dr. Asha Bhagat , the great researcher a nd art writer, Bagru near Jaipur was an important Dying and Pr inting Centre where Dabu printing was dominant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S04",
+      "quote": "Bagru is known for its mastery in the second t ype, a special printing technique of Resist style called 'Dabu' printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S13",
+      "quote": "Apart from the absorbent and resilient cotton fabrics being the most commonly used for this technique",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S13",
+      "quote": "In the earlier days, Dabu printing was used exclusively used in cotton saris.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S10",
+      "quote": "The most common resist used for indigo today is a mud paste called Dabu, which often displays the characteristic \"crack\" lines where the dye penetrated the cracks in the resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S13",
+      "quote": "The final result creates beautiful and uneven cracks on the fabric",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S06",
+      "quote": "As with block printing traditions in other parts of Rajasthan, such as - Bagru and Sanganer - the karigars in Balotra belong to the Chhipa community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "Additionally, organisation Aavaran in Udaipur has also contributed towards the revival and promotion of dabu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "Resist Printing or mud clay printing locally called \"Dhabu Datai\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S17",
+      "quote": "New districts include Apoongarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Kekri, Kotputli-Behror, Khairthal-Tijara, Neem ka Thana, Phalodi, Slumber, Sanchore, and Shahpura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S17",
+      "quote": "First Published: Aug 07 2023 | 2:08 PM IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S18",
+      "quote": "The government, however, retained eight districts that had been formed during the Congress' tenure last year.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S18",
+      "quote": "It, however, decided to retain Balotra, Beawar, Deeg, Didwana-Kuchaman, Kotputli-Behror, Khairthal-Tijara, Phalodi and Salumbhar.",
+      "result": "PASS"
+    }
+  ]
+}

@@ -7,7 +7,8 @@ from typing import Any
 
 from app.research.evidence import EvidenceItem, SourceDocument
 from app.research.evidence_pack import PackedEvidence
-from app.research.explainer import (
+from app.research.stream import Emit
+from app.research.trail import (
     PIECE_PREFIX,
     STORED_SOURCE_PREFIX,
     TRAIL_GROUP_OF_SOURCE,
@@ -15,7 +16,6 @@ from app.research.explainer import (
     TRAIL_STAGES,
     TRAIL_TITLE_MAX_CHARS,
 )
-from app.research.stream import Emit
 
 __all__ = ["TrailLog", "piece_key", "stored_key"]
 

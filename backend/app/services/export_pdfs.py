@@ -60,6 +60,8 @@ def explainer_pdf(
         ),
         META,
     )
+    if explainer.lede is not None:
+        _block(writer, explainer.lede, refs)
     for section in explainer.sections:
         if section.state != "READY":
             continue

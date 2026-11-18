@@ -1,0 +1,2040 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Machilipatnam-Kalamkari",
+  "dossierVersion": 1,
+  "dossierDigest": "c8aeea2ec8f20628dfed3ad9d7b955f99ad3faad19e988d248b32ffb93309c2a",
+  "checkedAt": "2026-11-18T09:50:35.337689Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "finalUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "fetchedAt": "2026-11-18T09:49:44.263187Z",
+      "contentType": "application/pdf",
+      "textSha256": "af2dd07e3a196f181d706eda2b1c968a6adc93d72fea371d8093b41eec0c6153",
+      "characters": 384102,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/90",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/90",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/90",
+      "fetchedAt": "2026-11-18T09:49:36.797275Z",
+      "contentType": "text/html",
+      "textSha256": "ea88baca4f8722a3a05cceb520d72a221a83fbd84d3b1c3c98b07c2eb6c05c3f",
+      "characters": 4950,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://censusindia.gov.in/nada/index.php/catalog/31725/download/34906/22311_1961_SEL.pdf",
+      "route": "LIVE",
+      "readUrl": "https://censusindia.gov.in/nada/index.php/catalog/31725/download/34906/22311_1961_SEL.pdf",
+      "finalUrl": "https://censusindia.gov.in/nada/index.php/catalog/31725/download/34906/22311_1961_SEL.pdf",
+      "fetchedAt": "2026-11-18T09:49:41.911158Z",
+      "contentType": "application/pdf",
+      "textSha256": "05b0375c5c906f69b45e7e25a155231e0772aadff5e475c48d752bbb7052f450",
+      "characters": 395811,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://krishna.ap.gov.in/one-district-one-product/",
+      "route": "LIVE",
+      "readUrl": "https://krishna.ap.gov.in/one-district-one-product/",
+      "finalUrl": "https://krishna.ap.gov.in/one-district-one-product/",
+      "fetchedAt": "2026-11-18T09:49:36.802306Z",
+      "contentType": "text/html",
+      "textSha256": "87388cbd86ae5cab5e9962faff52357b587d30b8830b9e9a2058ae6427849999",
+      "characters": 9584,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://collections.vam.ac.uk/item/O164855/textile-unknown/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O164855/textile-unknown/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O164855/textile-unknown/",
+      "fetchedAt": "2026-11-18T09:49:37.639262Z",
+      "contentType": "text/html",
+      "textSha256": "6cd6d6d0528eebf1e45f4eae45e049997873936ffbdd4d73182027d43b4e892d",
+      "characters": 3423,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://collections.vam.ac.uk/item/O152293",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O152293",
+      "finalUrl": "https://collections.vam.ac.uk/item/O152293",
+      "fetchedAt": "2026-11-18T09:49:39.356316Z",
+      "contentType": "text/html",
+      "textSha256": "09e319cd724a9141dd8ada579af2cdd0ecc01527d0413c7f9146c67e5302f71d",
+      "characters": 3649,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://collections.vam.ac.uk/item/O454245/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O454245/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O454245/",
+      "fetchedAt": "2026-11-18T09:49:41.132359Z",
+      "contentType": "text/html",
+      "textSha256": "278fa7d6107c25ccd25b7ac033e4ce1bc466c1ffaebaf83d40b2e01f2cc2840e",
+      "characters": 1794,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://collections.vam.ac.uk/item/O78277/bed-curtain-unknown",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O78277/bed-curtain-unknown",
+      "finalUrl": "https://collections.vam.ac.uk/item/O78277/bed-curtain-unknown",
+      "fetchedAt": "2026-11-18T09:49:42.872347Z",
+      "contentType": "text/html",
+      "textSha256": "d1f9614b15b9ff0a1f3eeb9f84b9bcf83f03df2bcfee2f694a1d2ce7e9efc016",
+      "characters": 5571,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://collections.vam.ac.uk/item/O438526/chintz-hanging-unknown/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O438526/chintz-hanging-unknown/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O438526/chintz-hanging-unknown/",
+      "fetchedAt": "2026-11-18T09:49:51.592505Z",
+      "contentType": "text/html",
+      "textSha256": "fa4aeb24215a41f4e2755f2a0a4aa742c643e4d53d459d08a0b64c1b6388bf45",
+      "characters": 5069,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://epubs.icar.org.in/index.php/TJRA/article/download/168274/60715",
+      "route": "LIVE",
+      "readUrl": "https://epubs.icar.org.in/index.php/TJRA/article/download/168274/60715",
+      "finalUrl": "https://epubs.icar.org.in/index.php/TJRA/article/download/168274/60715",
+      "fetchedAt": "2026-11-18T09:49:38.156236Z",
+      "contentType": "application/pdf",
+      "textSha256": "e6babaf68ec5fe12694ec23784bd85407447f034d4125bbbe5bb6d863fff8c7f",
+      "characters": 20166,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://nopr.niscpr.res.in/bitstream/123456789/64273/1/IJTK%20Vol.23(7)%20702-709.pdf",
+      "route": "LIVE",
+      "readUrl": "https://nopr.niscpr.res.in/bitstream/123456789/64273/1/IJTK%20Vol.23(7)%20702-709.pdf",
+      "finalUrl": "https://nopr.niscpr.res.in/bitstream/123456789/64273/1/IJTK%20Vol.23(7)%20702-709.pdf",
+      "fetchedAt": "2026-11-18T09:49:40.780076Z",
+      "contentType": "application/pdf",
+      "textSha256": "08f2fb022964a8a852f34a9cf1fcc50a6cf60724acc55c3fb14310d7562e4ba3",
+      "characters": 23775,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://chitrolekha.com/ns/v2n2/v2n201.pdf",
+      "route": "LIVE",
+      "readUrl": "https://chitrolekha.com/ns/v2n2/v2n201.pdf",
+      "finalUrl": "https://chitrolekha.com/ns/v2n2/v2n201.pdf",
+      "fetchedAt": "2026-11-18T09:50:04.920287Z",
+      "contentType": "application/pdf",
+      "textSha256": "1825519a462dd16f494387e80529dfa57e327f1db33f3d3d6671abdcc36e37b9",
+      "characters": 40497,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.sahapedia.org/kalamkari-introduction",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/kalamkari-introduction",
+      "finalUrl": "https://www.sahapedia.org/kalamkari-introduction",
+      "fetchedAt": "2026-11-18T09:50:00.372358Z",
+      "contentType": "text/html",
+      "textSha256": "94416f0a085ac1b2a3032bf4b6d4569c71ffbafbdb2e14f2c218bf35c078a740",
+      "characters": 17224,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.sahapedia.org/kalamkari-woodblock-makers",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/kalamkari-woodblock-makers",
+      "finalUrl": "https://www.sahapedia.org/kalamkari-woodblock-makers",
+      "fetchedAt": "2026-11-18T09:50:12.552048Z",
+      "contentType": "text/html",
+      "textSha256": "3e719f2c3614c6f35e81888d9eac6ee76dd3250ed407232851e459883ba307c4",
+      "characters": 4486,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/machilipatnam-block-prints/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/machilipatnam-block-prints/",
+      "finalUrl": "https://imp-art.org/articles/machilipatnam-block-prints/",
+      "fetchedAt": "2026-11-18T09:50:09.808226Z",
+      "contentType": "text/html",
+      "textSha256": "59befe01227c8feb5b75acdf696bef2779748527f28dfd21efc6e227f8c1d408",
+      "characters": 5425,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://asiainch.org/craft/hand-block-printing-kalamkari-of-andhra-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/hand-block-printing-kalamkari-of-andhra-pradesh/",
+      "finalUrl": "https://asiainch.org/craft/hand-block-printing-kalamkari-of-andhra-pradesh/",
+      "fetchedAt": "2026-11-18T09:50:10.912439Z",
+      "contentType": "text/html",
+      "textSha256": "f816b1f160cce38d5ce27f89da1248f90743177d69c19ad0301914ef79fc45ef",
+      "characters": 5000,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.thenewsminute.com/article/fake-kalamkari-takes-over-market-original-struggles-andhra-s-pedana-85338",
+      "route": "LIVE",
+      "readUrl": "https://www.thenewsminute.com/article/fake-kalamkari-takes-over-market-original-struggles-andhra-s-pedana-85338",
+      "finalUrl": "https://www.thenewsminute.com/article/fake-kalamkari-takes-over-market-original-struggles-andhra-s-pedana-85338",
+      "fetchedAt": "2026-11-18T09:50:13.054726Z",
+      "contentType": "text/html",
+      "textSha256": "2af6a52385c8b21964702c2ae049a9e7b217c0a2f1c9987551b438886ec1485d",
+      "characters": 13830,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.thehindu.com/society/history-and-culture/pitchuka-srinivas-the-lone-crusader/article29469634.ece",
+      "route": "LIVE",
+      "readUrl": "https://www.thehindu.com/society/history-and-culture/pitchuka-srinivas-the-lone-crusader/article29469634.ece",
+      "finalUrl": "https://www.thehindu.com/society/history-and-culture/pitchuka-srinivas-the-lone-crusader/article29469634.ece",
+      "fetchedAt": "2026-11-18T09:50:14.609869Z",
+      "contentType": "text/html",
+      "textSha256": "7730283307697fc1143bbff0439c2a6a4cd0bb058a213638015e8ebb4475fa4c",
+      "characters": 4573,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.hindustantimes.com/art-and-culture/kalamkari-the-ancient-block-printing-art-threatened-by-digital-techniques/story-AhWpKDwakSy8k8z1heBjoI.html",
+      "route": "LIVE",
+      "readUrl": "https://www.hindustantimes.com/art-and-culture/kalamkari-the-ancient-block-printing-art-threatened-by-digital-techniques/story-AhWpKDwakSy8k8z1heBjoI.html",
+      "finalUrl": "https://www.hindustantimes.com/art-and-culture/kalamkari-the-ancient-block-printing-art-threatened-by-digital-techniques/story-AhWpKDwakSy8k8z1heBjoI.html",
+      "fetchedAt": "2026-11-18T09:50:17.388902Z",
+      "contentType": "text/html",
+      "textSha256": "fc07393013450a04ece23a5883ff6fc450a364e142d609d4c0ee8d49924f9769",
+      "characters": 5299,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.craftmark.org/cms/public/uploads/1595674547.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.craftmark.org/cms/public/uploads/1595674547.pdf",
+      "finalUrl": "https://www.craftmark.org/cms/public/uploads/1595674547.pdf",
+      "fetchedAt": "2026-11-18T09:50:18.053770Z",
+      "contentType": "application/pdf",
+      "textSha256": "84e52215aa8fec16301ab413202ab73382724a65e816a5e17106004789087567",
+      "characters": 14804,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.ijsr.net/archive/v9i7/SR20713172207.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ijsr.net/archive/v9i7/SR20713172207.pdf",
+      "finalUrl": "https://www.ijsr.net/archive/v9i7/SR20713172207.pdf",
+      "fetchedAt": "2026-11-18T09:50:18.848966Z",
+      "contentType": "application/pdf",
+      "textSha256": "2ff20b3d2bc1ece76db4fd586cb5243f82722d6eda9275c757501b7fff355d9f",
+      "characters": 24049,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://dergipark.org.tr/en/download/article-file/4246551",
+      "route": "LIVE",
+      "readUrl": "https://dergipark.org.tr/en/download/article-file/4246551",
+      "finalUrl": "https://dergipark.org.tr/en/download/article-file/4246551",
+      "fetchedAt": "2026-11-18T09:50:23.686223Z",
+      "contentType": "application/pdf",
+      "textSha256": "bdb43402d92af9d9366ab2158b6b829f30e0a49d8e9e7e1919c1f55c74628482",
+      "characters": 40108,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://bapatla.ap.gov.in/revenue-divisions/",
+      "route": "LIVE",
+      "readUrl": "https://bapatla.ap.gov.in/revenue-divisions/",
+      "finalUrl": "https://bapatla.ap.gov.in/revenue-divisions/",
+      "fetchedAt": "2026-11-18T09:50:21.581209Z",
+      "contentType": "text/html",
+      "textSha256": "ebf5762f775e9b97e8177d951bc8d6498dbd2aba23328afffe003a1a6fc33e76",
+      "characters": 172,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://bapatla.ap.gov.in/about-district/",
+      "route": "LIVE",
+      "readUrl": "https://bapatla.ap.gov.in/about-district/",
+      "finalUrl": "https://bapatla.ap.gov.in/about-district/",
+      "fetchedAt": "2026-11-18T09:50:27.565068Z",
+      "contentType": "text/html",
+      "textSha256": "136f7c013262687c7f31e8d501e5443cb1a9a6299bb13656f5304a94c28126d3",
+      "characters": 3243,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "\"Machilipatnam Kalamkari \" visually identified by the all over floral twine / Persian designs which are block printed and produced in traditional laborious methods using natural vegetable dyes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S04",
+      "quote": "The Machilipatnam style of Kalamkari or Pedana style of Kalamkari is one of the two styles of Kalamkari works present in India, with the other being, Srikalahasti style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S11",
+      "quote": "There are two main types of kalamkari practised from the olden days - Srikalahasti and Machilipatnam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S17",
+      "quote": "While Pedana and Machilipatnam are the hub for hand block-printed Kalamkari, Srikalahasti in Chittoor district of Andhra Pradesh is known for the pen-drawn format.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S13",
+      "quote": "While in Srikalahasti, the textiles are literally painted with pens made out of bamboo and cotton, in Machilipatnam, the line drawing done with a pen is transferred onto wooden blocks which are carved and then used to print fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S03",
+      "quote": "the designs on the Masulipatnam specimens are firstly block printed and then the colours are painted with a kalam, whereas in the case of the Kalahasti product the entire work is Kalamkari",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S04",
+      "quote": "Production of Machilipatnam Kalamkari is geographically limited to Pedana town and its neighboring Villages of Machilipatnam, Polavaram and Kappaladoddi in Guduru mandal of Krishna district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "Apart from M achilipatnam and Pedana the major pr oduction centers of Kalamkari, parts of Polavaram and Kappaldoddi villages of Gudur Mandal of Krishna District and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "Chirala (located at 15:49:18 N l at it ud e a nd 80 :21 :21 E ast lon git ud e) of Prakasham District also produces M achilipatnam Kalamkari Pr oducts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S04",
+      "quote": "Pedana is a small town just 13 km from Machilipatnam, the head quarter of Krishna district in coastal Andhra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "Pedana town is situated in M achlipatnam-Gudivada highway road and it is also situated on the Machlipatnam -Vijayawada broad-gauge railway line at a distance of 10kms from Machlipatnam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S17",
+      "quote": "Pedana, a small town near the coastal town of Machilipatnam is the largest hub in the country for hand block printed Kalamkari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S18",
+      "quote": "Pedana is the famous home of the handmade block-printed kalamkari fabric, and almost the entire supply of it across the country comes from here.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "1 Upholstery (Custom printed wall decoratives, sofa and chair covers, durries, floor mats etc.)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "2 Furnishings / Made-ups (Custom printed bed covers, table covers, cushion covers, pillow covers, bolster covers, quilts and quilt covers, etc.)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "3 Fabrics (Printed Yardage fabrics for, tailored curtains, men's and women's wear garments, accessories like bags, sarongs, stoles and scarves etc.)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S01",
+      "quote": "a. Made of natural fibre for e.g. cotton or silk or a mixture of both. b. Dyed / Printed with Natural (vegetable) colors obtained from different parts of Plants. c. Use of Natural Mordants d. Hand-block printed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S04",
+      "quote": "The word Kalamkari comes from the Persian word \"kalam\", which is known as pen, and Kari, which indicates craftsmanship.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S11",
+      "quote": "Kalam means 'pen' and Kari means 'craftsmanship'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S02",
+      "quote": "| Application Number | 90 | | Geographical Indications | Machilipatnam Kalamkari |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S02",
+      "quote": "| Applicant Name | Vegetable Hand-block Kalamkari Printers Association |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 16-04-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "Applicant : Vegetable Hand-Block Kalamkari Printers Association",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S01",
+      "quote": "Pedana Mandal Krishna District, Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "it is informed that the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008 / Chaitra- 4 Saka 1930 has been made available to the public from 24th March 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "is hereby advertised as accepted under sub-section (1) of section 13 of Geographical Indications of Goods (Registration and Protection) Act, 1999",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S02",
+      "quote": "| Journal Number | Supplementary 1 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S02",
+      "quote": "| Geographical Indications | Machilipatnam Kalamkari | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S02",
+      "quote": "| Certificate Number | 71 | | Certificate Date | 10-07-2008 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "| 1 | 90 - GI - Form GI-4 Renewal - 20-02-2017 | 20-02-2017 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 15-04-2027 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "Class : 24, 25 and 27 Goods :Textiles and Textile goods, not included in other classes; bed and table covers; Clothing, foot wear, head gear; Carpets, rugs, mats and matting, linoleum and other materials for covering existing floors, wall hangings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S15",
+      "quote": "Pedana kalamkari received a Geographical Indications (GI) tag in 2013.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S12",
+      "quote": "The Machilipatnam style of art was registered in the Geographical Indications Registry (GIR) of the Government of India under the Geographical Identification of Goods (Registration and Protection) Act, 1999, in 2013.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S19",
+      "quote": "In 2013, Pedana town and its neighbouring villages of Machilipatnam, Polavaram and Kappaladoddi in the Krishna district of Andhra Pradesh won the geographical indication (GI) tag",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S17",
+      "quote": "Pedana Kalamkari also has the Geographical Indications (GI) tag. It was included in the Geographical Indications Registry (GIR) in 2012 under the GI of Goods (Registration and Protection) Act of 1999.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S03",
+      "quote": "There is evidence of the extensive trade in the dyed sheets of Masulipatnam as early as the close of the first century of the present era.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S03",
+      "quote": "It is believed that the hand printed cloth of Masulipatnam was popular with the ancient Greeks even before Christ.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S03",
+      "quote": "It is believed that the indus try existed in this part of India even in the pre-Christian era. It is said that in the ancient days the Buddhist Chaitya Viharas were decorated with Kalamkari cloth and even the Greeks under Alexander are said to have acquired this cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S03",
+      "quote": "In Masulipatnam and elsewhere in Southern India, admirable chintzes have for many centuries been turned out, which are really hand printed textiles, so perfectly coloured that it is some times difficult to distinguish them from the finest emb roidery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S03",
+      "quote": "1 The Imperial Gazetteer of India (Clarendon Press, Oxford, 1908) The Indian Empire-Vo). III-Economic-Page 177.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S03",
+      "quote": "Thus the calico printing and dyeing industry of Masulipatnam held an undaunted sway till about the middle of the 18th century. The Industrial Revolution of th~ West and the banning of calicos into England in 1721 gave a death-blow to this industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S03",
+      "quote": "By the middle of the present century it became almost im possible to locate anyone who practised this craft in Masulipatnam.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "Most of the households of Kapu com munity practised the Kalamkari Industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S03",
+      "quote": "Telagas who form the lower middle class inhabited Masulipatnam town in good numbers and they had taken up to thi') industry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S03",
+      "quote": "Undtr the Golconda rulers the industry received a further fillip with the contact of the Persians. Masulipatnam was an important commercial sea port of the Golconda Kingdom.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S12",
+      "quote": "The rulers at Golconda patronised Kalamkari of Masulipatnam (Now called Machilipatnam), during the 16th and 17th centuries. The textiles were made for the Sultanate of Golconda and Persia/Iran.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "Some enterprising Persian merchants settled down in M asulipatnam with their families intr oduced new designs and with the help of local skilled workmen, produced large quantities for export.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S06",
+      "quote": "Original catalogue information says it was printed by Iranian craftsmen in Masulipatam, Madras, India for the Iranian market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S06",
+      "quote": "Resist dyed and block printed plain weave cotton, padded, backed with undecorated plain weave cotton, faced with bias-cut dark blue silk and quilted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S06",
+      "quote": "| Brief description | printed cotton, 1800s, Indian |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "later owing to the levy duties on exported cloth, and the competition of machine made cloth dyed with artificial chemical dyes, the profits in the trade dwindled and the Persians closed down their business.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S03",
+      "quote": "the stoppage of imports of these products into Persia in the year 1930 badly affec ted the industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S03",
+      "quote": "But, after about 1930, the industry had a great downfall and very soon it had become almost a forgotten industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S12",
+      "quote": "Kalamkari from Masulipatnam was being exported to Persia since 17th century onwards and Kalahasti was an important centre after the second half of the 19th century. however in 1924, the link with Persia/Iran was broken.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "At the London Wembly Exhibition in 1924 it is understood that the excellence of Kalamkari products was recognised by the award of medals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "Plate 19 shows the medals proudly preserved by their awardee Shri Venkataswamy Naidu himself.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S03",
+      "quote": "In 1952 the Kalamkari workers tried to sell their goods through a few Madras firms. The industry still languished.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S12",
+      "quote": "the All India Handicrafts Board under Kamaladevi Chattopadhyay revived the craft in 1952.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S21",
+      "quote": "In 1952 Kalamkari was revived at Masulipatnam at the instigation of some local textile lovers and with the help of the All India Handicrafts board",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S03",
+      "quote": "In 1954 the Balyalagudem co-operative Cottage Industries Production and Sale Society Limited No. 1727 was registered, mainly made up of the ex-Kalamkari workers, who were made to manufacture cot tape and plate leaves, in order to give them a livelihood",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S03",
+      "quote": "The Society consisted of 319 members with a paid share capital of Rs.935/-",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "formation of Balyalagudem Cooperative Society especially for Kalamkari workers headed by Mr. Vinnakota Venkataswamy Naidu in 1939 as President.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "The Society functioned well till 1990's and later started declining.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S03",
+      "quote": "One group, headed by Shri Vinnakota Venkataswamy Naidu wants to follow only the traditional method of Kalam kari production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S03",
+      "quote": "The second group headed by the enterprising Shri Rekapalli Parthasaradhy has taken to the cheaper method of production using chemical dyes and does not resort to the wax processing at all.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "During the same period around 1968, many families belonging to the professional weaver's community started migrating to the Kalamkari craft and got trained under Anumakonda Venkata Rangaih Naidu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "They are found to be the existing pillars of the craft today, which is spread over Pedana, Polavaram and M achilipatnam.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Gangadhar, Block maker and few others are now the master craftsmen practicing Exclusive",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Block Printing in the revised method (which uses no wax process and painting method)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "it is informed that the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008 / Chaitra- 4 Saka 1930 has been made available to the public from 24th March 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S17",
+      "quote": "He first started it in early 1970s in Polavaram with his partners. But the partnership fell through very soon and he came back to his hometown Pedana and started the first Kalamkari firm in 1972, that made and sold hand block-printed Kalamkari commercially.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S12",
+      "quote": "Nelly H. Sethana, textile designer transformed the static designs of Machilipatnam in the 1970s. She brought out old block designs and rearranged many motifs to create new patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S12",
+      "quote": "Nelly H. Sethna revitalised the designs in th 1970s.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S12",
+      "quote": "She also stopped the bleaching of the cloth in the final stage leading to an off-white background which lent a pleasing and warm effect overall.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S16",
+      "quote": "Hand block printing evolves from the dye painted fabrics of Coromandel Coast referred to as Machilipatnam paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S16",
+      "quote": "These paintings were renowned trade items of seventeenth century mainly to European countries and Iran.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S15",
+      "quote": "As a trade textile it was known by several names: chintz by the English, sitz by the Dutch and pintado by the Portuguese.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S12",
+      "quote": "The English called it chintz, the Dutch called it sitz, the Portugese pintado.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S16",
+      "quote": "Eventually the kalam's were replaced by blocks in the nineteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "Originally chintz textiles were Indian cotton cloth with a pattern applied with a bamboo pen or kalam and by dyeing with mordants and resists. Later, block printing took over.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S12",
+      "quote": "Slowly the shift from 'kalam' to the block happened as the designs were repetitive.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "This cotton was probably made for export to Iran. A printed inscription in Persian names the trader (Sayyid Muhammad Mahdi), gives the date and labels the piece a'la numuneh ('superior example').",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "It also calls the textile Qalamkar, as it is a printed imitation of the region's traditional hand-drawn kalamkari decoration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "Textile, animal design, kalamkari (pen work) and block printing on cotton, Machilipatnam, dated AH 1297/1879 AD",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "Mohammedan prayer mat (Janamaz) in hand-printed calico, Machilipatnam, 1908.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S07",
+      "quote": "Mohammedan prayer mat (Janamaz) in hand-printed calico in four colours black, red, yellow and blue. Taken from well-worn wood-blocks of an earlier period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "3.2 Process of Kalamkari Block Printing: a) Grey Cloth Cutting: Batches of 100 meters or above are purchased from textile mills in bulk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "The grey cloth purchased is then cut into pieces of length varying from 10 -15 meters as per the working unit capacity and customer demand/ end use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "b) Bleaching Cora Cloth: bleaching process is carried out using buffalo dung solution without using bleaching powder and facilitated by sunshine. It takes 4-5 days for getting the cloth white.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S03",
+      "quote": "The kora long cloth which is cut to the required sizes is soaked in a goat or buffalo dung solution in a big pot.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S03",
+      "quote": "The cloth is kept soaked throughout the night and the next morning it is",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S03",
+      "quote": "cleaned in the flowing water of a river or canal and then dried on the water weeds. This bleaching process is repeated for four or five days",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S03",
+      "quote": "No chemical bleaching powder should be uscd in this process. It is believed that the usage of bleaching powder will adversely affect the strength of the cloth as also will have a deleterious effect on the dyes applied",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S04",
+      "quote": "In order to make fibre more absorbent to obtain more even shades, penetration of the dye stuff the natural impurities have to be removed by boiling the cloth in hot alkaline solution like soda ash and caustic soda or detergent for 2-3 hrs at boiling temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "c) Application of Myrobalam: the white cloth is soaked in myrobalam juice in suach a way that it is equally distributed all over the cloth. It is then dried in sunlight. Myrobalam acts as a mordant for block printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S03",
+      "quote": "It is said that the milk prevents the spreading of the dye on application.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S17",
+      "quote": "The next step involves treating the cloth with Myrobalan seeds and buffalo milk to prevent smudging of dyes when painted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S10",
+      "quote": "4 Dried Mordant Karakkaya/ Terminalia KR 300 (approx.) unripe Myrobalam/ Chebula fruit Haritaki/ harad",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S10",
+      "quote": "Table 1. Selected plant sources used in Kalamkari production",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S01",
+      "quote": "d) Block Printing: It is the actual printing of designs/ motifs on the fabric by the use of wooden blocks and is done manually. The dyestuff/mordant of the desired color is applied to the fabric using blocks (outline, background and filling).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S03",
+      "quote": "These outlines are printed either in black or in red or a combi nation of both.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S03",
+      "quote": "The printing blocks are engraved on teak wood",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S03",
+      "quote": "The block printing is attended to generally by men workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S13",
+      "quote": "For polychromatic printing, the black and red portions of the design are printed first and then the cloth is washed and boiled.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S15",
+      "quote": "If the design is supposed to be polychromatic, the red and black portions are printed first, after which the fabric is rinsed and dried to be prepared for a second round of printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "One block is needed for each colour of the motif to be printed on fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S13",
+      "quote": "The textiles produced here can be monochromatic or polychromatic and for each colour, separate blocks are used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S04",
+      "quote": "The gum mixed black colour is taken in colour trays. The dried myrobalan cloth is spread tightly on the printing table. The black colour is taken by a wooden block from the colour tray and printing usually outlines of the design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S04",
+      "quote": "The Alum red tinted printing paste is taken in colour tray. This alum solution is taken by the blocks from the trays and printed where ever red colour is necessary.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "wooden trays made of deodar or teak wood, 18* long, 12* wide and 2# deep are prepared.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "Usually there will be about 21 bamboo separa tors fitted into a tray of this size.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "Over these, flannel, felt orcotton cloth padding is spread",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S03",
+      "quote": "For convenience of block printing, a dyeing table made up of neem or teak wood about 63\" long, 27\" broad and 18\" high is used, over which acloth, gunny bag etc., are spread so that the surface is soft and facilitates the block printing and renders it uniform.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S01",
+      "quote": "e) Washing: After block printing the clothes are kept for 2-3 days to ensure drying of the colors after which the printed fabric is washed in the flowing water in a pond with fresh water to remove the excess gum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S03",
+      "quote": "It is necessary that it should be dried in sun for at least One day. It is then taken and cleaned in running water of a canal and is then dried on water weeds. Washing should be done preferably before sunrise.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S13",
+      "quote": "In Machilipatnam, the washing of the cotton fabrics is done at the Kalia Canal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S13",
+      "quote": "whereas in Machilipatnam, the canal emptying into the Bay of Bengal acts as the source of water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S13",
+      "quote": "Today, two of the most prominent centres of kalamkari production are Srikalahasti (Chittoor District) and Machilipatnam (Krishna District) in Andhra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S18",
+      "quote": "At the next stage, the cloth is washed in flowing water, usually in one of Pedana's many canals, before being boiled in copper vessels in water to which flowers and roots are added for more colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S18",
+      "quote": "Published - September 21, 2019 04:26 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S19",
+      "quote": "The process of kalamkari involves several steps, one of which is to wash the fabric in the Krishna River to ensure that the colour lasts longer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S19",
+      "quote": "According to Varun, the water in the river has the correct mineral composition required to help the colours develop and set.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S01",
+      "quote": "f) Boiling: The fabric after washing and drying is boiled in a mixture of water, jajji leaves, root barks, dry flowers etc. for two hours over furn ace. Rice husk, commonly known as chaff is used as a fuel in the furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "The dye material used in boiling depends on the color or shade required, as for example, pomegranate rind and madder are added to the boiling solution for yellow and red colors respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S03",
+      "quote": "This process is intended to give permanent red colour to the outlines printed in karam. It also helps to remove the gum apd myrobal an juice from the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S03",
+      "quote": "with 40 yards of cloth, a big copper vessel of 60 gallons capacity is taken and filled with water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S03",
+      "quote": "The red dye is obtained by boiling together a root called chiriveru, jasmine leaves and chir anji bark",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S03",
+      "quote": "Kg.) of chiranjitbark withjaji *leaves andchiriveru pow der is added and heated. Eighteen tolas(209grams)of alija rint is also added",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S03",
+      "quote": "The boiling is contin ued till almost the entire solution in the vessel is absor bed by the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S03",
+      "quote": "from about 1918 alijarin, referred to as 'peepa colour' since it is supplied in drums, which is a red dye imported from Germany, has started to be used very commonly by the Kaldmkari workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S03",
+      "quote": "As chiranji is not available now-a-days manjista or majith or madder is used along with alijarin to obtain red dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "A gum solution is prepared by mixing the babul tree gum in water and filtered so that it is rendered clear. A decoction of alum is prepared by boiling alum in water. The gum solution and the alum decoction are then mixed, which forms the karam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "They acquire firm red colour after boiling in a solution of Maddar along with Alizarin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S03",
+      "quote": "The red colour for block printing is called karam by the Kalamkari worker",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S13",
+      "quote": "Unlike the process at Srikalahasti, alum solution is not used here for the red colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S15",
+      "quote": "The colour red, a distinct presence in kalamkari, is made from a solution of alum and tamarind seed powder",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S15",
+      "quote": "the colour black comes from iron ore; violet is derived from indigo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "First of all iron pieces are heated with cow dung pieces and then scrubbed with bricks for the complete removal of rust. Then 5kgs of these iron pieces are mixed with 2.5 kgs of jaggery and 25 litres of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "The above prepared mixture is kept in closed earthen pots and left for three weeks. stirring is done once in a week.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "After the fermentation process is over 5 litres of this fermented black solution is mixed with 2.5 kgs of gum Arabic crystals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "It is then stirred, filtered and is ready for use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "Jaggery + iron pieces for black color (kasim), Indigo leaves for blue color (neelam)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S03",
+      "quote": "These iron pieces are then kept inside a pot filled with salt water. To this is added some slightly fermented jaggery. The pot is then closed air tight and allowed to stand undisturbed for about three weeks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S03",
+      "quote": "When this solution is applied on a cloth soaked in myrobalan solution, a permanent black colour results. If this is applied on plain cloth without the myrobalan base, the black colouring does not take effect.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S03",
+      "quote": "The resultant liquid is called kasam.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S03",
+      "quote": "The above process is almost similar to the one adopted by the Kalamkari cloth printing industry at Masulipatnam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S22",
+      "quote": "This ancient natural dye, called Kasim, produces a grey-black to charcoal-black color when applied to fabric pre-treated with a tannin-based mordant, usually myrobalan nut powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "Alum: Improves brightness and fastness of red and pink color and Myrobalam: improves the absorption and fixation of dye on the fabric especially black colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S01",
+      "quote": "i) Alum Treatment: Before the treatment of alum, all the colors on the fabric are temporary. Alum acts as a mordant which helps to fix these color on the fabric i.e. all the colors get \"pucca\" on alum water treatment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S01",
+      "quote": "The final printed cloth is then dried up in sunlight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S03",
+      "quote": "Alum solution is indispensable for fixing the dyes on the cloth. This also imparts a lustre to the var ious colours on the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S08",
+      "quote": "The areas to be red in the finished piece are painted with an alum mordant, and the black areas with an iron mordant. These then react with the dyes to give fast colours and the unmordanted areas can be rinsed clean of excess dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S08",
+      "quote": "As the indigo dye does not require mordanting, it is necessary to protect (resist) those areas that are not to become blue. The entire cloth is then immersed in the dye vat, and the resist material (usually wax) can then be removed from the non-blue areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S09",
+      "quote": "These techniques are particularly associated with coastal south-east India (the so-called 'Coromandel Coast') because of the particularly favourable combination of chemicals in the local soil, water and dye- plants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S03",
+      "quote": "The reason apparently why this industry developed around Masulipatnam was that the materials needed for the dyes were available adequately in the neighbourhood. There was clean flowing water of the Krishna river running through the canal nearby.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S03",
+      "quote": "As also the saline soils which are all needed for the various processes of Kalamkari manufacture were also readily available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "11. Peculiar richness in the water of M achilipatnam which is said to acc ount for the brilliance of colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S03",
+      "quote": "The original red was first produced by dyers of Malabar and Coramandel, but there is some uncertainty as to whether the dye used was extracted from the madder root or from a closely related plant called 'Oldenlandia Umbellata'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "g) Starch Application: After the completion of the sixth stage, the cloth is dipped in the starch solution which is prepared by mixing boiled rice water with milk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "The starched cloth is then dried up to stiffen it for application of next color. It also avoids spreading of second color paint.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S17",
+      "quote": "Post this, starch is applied on the cloth for stiffness required for the second layer of colouring. Starching also avoids spreading of the second layer of colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "h) Painting: After starch application, the printing is done for secondary colors like yellow, brown, pink, green, blue, etc. and also to resist few dyed portions by wax before treating in",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "But these days the use of kalam is l imited to mend the defects caused by broken blocks",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "100 grams of myrobalam flowers are boiled in 1 litre of water t ill they become soft. The decoction is then cooled and filtered. About 10 grams of alum power is added to it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Chocolate color is made by mixing red and black in the ratio of 3:1",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Pink is made by increasing the water content in the red color",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Green by printing yellow on blue, etc",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S03",
+      "quote": "The yellow myro balan colour is applied on these portions which are already dyed blue so that a green colour is evolved at the required places.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "6 Kgs of crushed Atta / Annetto seeds (\"Tandipa ginjalu\") are added to the water filled tank.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "A paste of 700 grams indigo blue dye cakes and water is added to the tank. The contents are stirred and kept for a day. Lime is added next and stirred and the color is ready for use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "of 'cassia allata' (locally called tandi pa ginjaiu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "which is 2j3rds filled with hard water. A little lime water is also added.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "It is said that it would take about a fortnight to prepare the indigo vat of the correct dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S03",
+      "quote": "When once the blue dye is carefully prepared in the vat, it is supposed to keep its quality for 15 days and can be used during this period and not longer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "Indigo Blue (Neelam) - Used for second colour printing Raw Materials: Indigo blue dye cakes, Containers, Caustic soda, Hydrosulphate",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "Blue dye is obtained from the indigo plant which is grown quite commonly in Krishna Dist rict",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S03",
+      "quote": "process which distinguishes the Kalamkari printing of Masulipatnam from other common dyeing industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S03",
+      "quote": "If the wax processing and indigo dyeing are given up, it is as well that Masulipatnam Kalamkari work itself is given a go by.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "This kalam consists of an iron loop attached to one end of a bamboo stick. The loop is completely covered by a thick pad of human hair which is secured over the loop by a string.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "The hearth is prepared with the help of three bricks with paddy husk placed in the middle and lit. The husk is not allowed to burn into a flame",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S03",
+      "quote": "The earthen pot basin is put on this husk with bee wax in it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "apply it to the cloth over all the required areas leaving aside those por tions of the cloth which have to be dyed blue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "The cloth covered by the molten wax is put in the SlIn for a little while till the wax film shows signs of melting",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S03",
+      "quote": "This is considered necessary so that any gaps not effectively covered by the kalam may be got auto matically filled by this spreading of the wax film when it melts under the sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S03",
+      "quote": "the wax covered cloth which is neatly folded is then dipped in the dye solution and kept in it for a few minutes and then taken out and hung on a bamboo pole",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S03",
+      "quote": "It may require two days for 40 yards cloth to be dy~d blu~ under this process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S03",
+      "quote": "the cloth is put in a big copper vessel and boiled. The molten wax comes out of the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S03",
+      "quote": "It can be scooped out with a spoon made out of cocoanut shell. All the wax thus recovered can once again be utilised for wax processing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "j) Washing with soap: This is last and final process. After the completion of all the processes the cloth will be placed in soap water and thoroughly washed and thus all the dust will be removed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "The cloth is then dried up in the sun and the fabric thus obtained is folded, pressed and is ready for sale.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S03",
+      "quote": "It is said that it would take about two months for a piece of cloth to undergo all these pro cesses and come out as a finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S18",
+      "quote": "Finally, the cloth is treated with alum water and washed with soap. The process takes a minimum of 15 days depending on the weather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S18",
+      "quote": "Published - September 21, 2019 04:26 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S16",
+      "quote": "Running water is used for washing and the process takes several days, weeks, or months depending on the length of the cotton cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S18",
+      "quote": "It was nearly dusk and I had given up my mission of meeting any traditional artisans in this tiny Andhra Pradesh town near Machilipatnam; I had not known that they don't do much work during the monsoon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S18",
+      "quote": "Published - September 21, 2019 04:26 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S01",
+      "quote": "The art of Block engraving involves cutting a design in relief upon blocks of wood, so that the raised parts, when charged with the colour, will transfer the design to the fabric on which such an engraved block is stamped.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S01",
+      "quote": "Very fine chisels of different shapes and sizes are used to cut relief on the block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S13",
+      "quote": "Blocks are carved using the relief process, where the positive area, which has the design that will be transferred onto the cloth, rises above the sunken negative area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "Teak wood is preferred b ecause of the fine grains and strength.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S13",
+      "quote": "For making the blocks, a cross section of teakwood is generally used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S14",
+      "quote": "For the temple wood carvings, the longitudinal section of the wood is used. But, for the blocks, the cross section of the wood is needed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S18",
+      "quote": "Traditionally, the wooden blocks were made from solid teak wood and the intricate design was chiselled on to the surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S18",
+      "quote": "Today, the blocks are made from lighter wood and come with standard designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S18",
+      "quote": "Published - September 21, 2019 04:26 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "the block is prepared using titanium dioxide paste mixed with adhesive to get a white base. The purpose of doing it is to ensure that design is clearly visible when traced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "After the application of paste, the blocks are dried in sunlight for 1 hour. This process is also called as \"CHEO\" locally.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "designs originally made by the master designer are traced onto the block using Tipni and Tapi and sometimes cycle wire.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "This process is known as \"TIPAI\" and \"GUIYAN\" (when using compass) locally.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "Tipni: Used for tracing design on block. Tapi: Used as a hammer for tracing designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "This is the maximum time consuming step in block making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S01",
+      "quote": "Total time taken for blocks is: 2-3 days for outline block (Masa), 1-2 days for filling blocks (Tapki) and 1-2 days for backgr ound block (Kappu)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "In this process, blocks are soaked in ground nut oil for 5-6 days. This is done to ensure that block acquires proper strength so as to handle beating. This process also improves the water repellency and increases the shelf life of the blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "Randa: Used to smoothen the surface of teak w ood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "Panna: Used for smoothening edges of block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "these are carved using different types and shapes of chisels (Kalams) depending upon the intricacy of the design",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S13",
+      "quote": "The first sub-unit is the block maker's workshop where the artisans are mostly from the carpenter's community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "They belonged to Rangaraju community and lived in Malla volu village on the outskirts of Masulipatnam town. They attended to only block making and were not Kalamkari workers themselves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "Mallavolu was the centre of block making and printing specialists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "It is the headquarters of Krishna District",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "the brothers K. Gangadhar and K. Narsaiah who are makers of woodblocks for printing in Pedana, near Machilipatnam, Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "I started in 1976, my uncle K. Narasimha Rao (father's brother) taught me the various techniques involved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "I won the National Award for my work in 2002.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S14",
+      "quote": "The printing technique is very old and was first introduced by the rangrez (dyers) community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S13",
+      "quote": "In Machilipatnam, the production is carried out in karkhanas (commercial workshops), where the block makers, washers and printers work under the same roof.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S15",
+      "quote": "Textiles were mass-produced in the karkhanas for trade, leading to a prioritisation of decorative function over the narrative function as was done in Srikalahasti kalamkari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S03",
+      "quote": "The Masuli patnam variety can, to a certain extent, be mass-produc ed and can cater to different needs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "The designs and the varieties of the Kalam kari printed fabrics of Masulipatnam had been evolved originally to meet three types of demands, (1) for export to Persia and other Middle-Eastern countries",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S03",
+      "quote": "(2) for export to Western countries,and(3)formeeting domestic consumption as also for export to the Far-Eastern coun tries like Ceylon, Singapore, Penang etc",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S03",
+      "quote": "The products exported to the Middle-Eastern countries consisted of bed sheets, curtains (Plate 16), shamiana covers, prayer cloths etc., for which typical Persian designs are adopted for printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S03",
+      "quote": "names of Persian or Arabic derivation: Gulabadami, Guleheli, Cherangmorkmath, Gulebachadar Bagal, Jai namaz (Plate 17).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S03",
+      "quote": "The products intended for export to the Western countries like the U.K., the U.S.A., France and Germany consisted of palangposh or bed sheets, door curtains, table cloths and serviettes. For this variety floral and animal designs are generally adopted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S03",
+      "quote": "There is a great variety of border designs. A few popular designs are muthyala pandiri which means a pandal studded with gems, the four leaves, hills and sour eyes, gandabherunda or double bird design",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "Kalamkari leit motifs comprise different forms of the lotus flower, the cartwheel, parrots, an interlacing pattern of leaves and flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "Liberal application of stylized flora and fauna motifs with zig-zag outlines and pointed edges leading to thick and thin areas in design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S01",
+      "quote": "6. Major Adoption of the colours Black, Red, Blue, Yellow and Green and other colours out of combinations of the same.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S03",
+      "quote": "the colours adopted in Kalmllkari printing work are (1) black, (2) red, (3) blue, (4) yellow, (5) green and other colours obtained by a combination of individual colours",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S11",
+      "quote": "a hand-block printed style made of wood which usually contains Persian motifs like creepers, lotus, twines, etc due to the influence of Mughal rule and trade proximity with Persia and Iran1-5",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S16",
+      "quote": "The motifs used were floral and animal designs. The Persian influence on the designs is visible: ornamental birds, flowers, creepers, and mehrabs or archways found chiefly in Mughal architecture are common.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S13",
+      "quote": "The motifs from Machilipatnam are often cross-cultural and combine local motifs with those derived from Persia and Europe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S13",
+      "quote": "they displayed varied imagery starting from stylized plants, creepers, geometric designs to animals and human figures",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S15",
+      "quote": "Due to the textile trade and varying influences of Persian, Arab and European traders, the motifs and designs of Machilipatnam block printed fabric were cross-cultural.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S15",
+      "quote": "One of the few remaining craftspeople, Pitchuka Srinivas has established a small kalamkari museum for the tradition in the town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S12",
+      "quote": "Pedana has a Kalmakari Museum which showcases the craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S18",
+      "quote": "Today, a large majority of the kalamkari is screen-printed with chemical colours as opposed to the conventional method of using wooden blocks and vegetable dyes and printing by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S18",
+      "quote": "Published - September 21, 2019 04:26 pm IST",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S19",
+      "quote": "However, to keep up with growing demands and reduce production costs and time, many villagers have started using chemical dyes and the screen printing method to produce the famed textile style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S19",
+      "quote": "The modern technique involves digitally creating designs and then making large stencils, which are used instead of blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S17",
+      "quote": "Washing of screen-printed Kalamkari in the ponds is polluting the water. The chemicals used in the colours let out toxic effluents, which is contaminating the water table.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S17",
+      "quote": "In the past too, the Krishna District Collector sent out a few notices to those using chemical colours, warning them of action.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S10",
+      "quote": "A craft diagnostic survey conducted in 2023 at the Machilipatnam Kalamkari cluster in Andhra Pradesh revealed improper disposal of organic waste from production processes, posing environmental and health risks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S10",
+      "quote": "a survey revealed improper disposal of production waste, including plant-based mordants and dyes, into garbage bins or local canals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "Copper vessels: These are used as containers in which boiling process takes place.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S10",
+      "quote": "This study focuses on biomass collected from copper dyeing vessels, where fabrics dyed with T. chebula and fermented iron acetate mordants are treated with vegetable dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S10",
+      "quote": "Note: T. c (Terminalia chebula), P.g (Punicagranatum), B. m (Butea monosperma), L. m (Lagerstroemia microcarpa) and R. c (Rubiacardifolia).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S17",
+      "quote": "Once washed and dried, the cloth is boiled in copper vessels using leaves, roots, barks, dry flowers etc to give colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S13",
+      "quote": "These ovens are, till today, fuelled with rice husk and wood powder. Big semi-circular vessels made of iron are placed over these ovens for boiling the fabrics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S20",
+      "quote": "In Andhra the price of Kalamkari per meter being sold in retail outlets ranges from Rs. 100 to 200 (as per August 2004).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S03",
+      "quote": "A block printer who is generally a man is paid a wage of Rs. 3.50 per day and a Kalam kari wax or yellow colour painter, who is a woman, may earn about Rs. 1.25 to 1.50 ,a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S03",
+      "quote": "At present, the Kalamkari printers of Masuli patnam Town are divided into two broad groups",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S03",
+      "quote": "At present there are 11 families of Telagas and ex-tappers who can attend to dyeing and printing. The wax processing i.e., only the covering of certain portions of the cloth by molten wax is attended to mostly by women in about 16 families",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S03",
+      "quote": "The washing and bleaching is attended to by four washerman families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "The base on which Kalamkari printing and dyeing is carried on is kora (unbleached) long cloth of 40 or 60 counts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "Experiments were tried on khadi cloth which proved unsuccessful. Therefore, the mill-made kora long cloth is used as the basic material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S03",
+      "quote": "CENSUS OF INDIA 1961 VOLUME n ANDHRA PRADESH",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S15",
+      "quote": "Locally, it is also known as addakam (dyeing) and Pedana kalamkari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S17",
+      "quote": "Back then it was called 'Addakam', which meant printed cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S10",
+      "quote": "5 Leaves Dying Chennangiaaku/ Lagerstroemia JJ 600 (approx.) auxiliary Kasaundhi/Jajaku microcarpa",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S10",
+      "quote": "Note: T. c (Terminalia chebula), P.g (Punicagranatum), B. m (Butea monosperma), L. m (Lagerstroemia microcarpa) and R. c (Rubiacardifolia).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S10",
+      "quote": "2 Flowers Dye ModugaPuvvu Butea MP 100 (approx.) /Palash monosperma",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S10",
+      "quote": "Note: T. c (Terminalia chebula), P.g (Punicagranatum), B. m (Butea monosperma), L. m (Lagerstroemia microcarpa) and R. c (Rubiacardifolia).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S12",
+      "quote": "The word 'Kalamkari' evolved when the Golconda Sultans called the craftsmen as 'kalamkars'. The pen or brush was the 'kalam'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S17",
+      "quote": "Around the 11th century, when the Persians travelled to the port of Maesolia (Now Machilipatnam) to make money, they discovered that there was fabric available in India, which was hand printed using blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S17",
+      "quote": "would use pens made from tamarind, dip them in natural dyes and colour in them. That work, done with these pens, gave the art form the name of 'Kalamkari'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S03",
+      "quote": "Shri Vcnkataswamy Naidu, a veteran Kalam kari worker relates that one of the officers of the Per sian Emperor Naushervan camped at Masulipatnam at the bidding of his master to acquire Kalamkari cloth for his tents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S03",
+      "quote": "This particular spot came to be called Inugudur in commemoration of this and it con tinues to bear the same name till today.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S03",
+      "quote": "This would suggest that perhaps the Kalam kari printers of Masulipatnam, who had specialised in Kalamkari printing for centuries, might have passed on their knowledge to the Kalahasti workmen",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S23",
+      "quote": "Bapatla District is divided into 2 Revenue divisions. - Bapatla - Chirala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S24",
+      "quote": "As per Gazette No. 939, Dated.26th January 2022 the Guntur District was divided into Three Districts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S24",
+      "quote": "13 Mandals from Prakasam District merged into Bapatla District",
+      "result": "PASS"
+    }
+  ]
+}

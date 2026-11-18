@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
+import { openedSource, SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
 import { SourcesList } from "@/components/answer/SourcesList";
 import { useRevealRow } from "@/components/hooks/useRevealRow";
 import { orbLabel, statusWord } from "@/components/voice/voiceWords";
@@ -31,7 +31,7 @@ export function VoiceCallBody({ call, state, language, host }: { call: VoiceCall
   );
   const showSources = useCallback((answerId: string) => setRevealed((previous) => ({ answerId, nonce: (previous?.nonce ?? 0) + 1 })), []);
   const onOpen = useCallback(
-    (cited: Citation) => setCitation({ citation: cited, source: sourcesById.get(cited.sourceId) ?? null, number: numbers.get(cited.sourceId) ?? null }),
+    (cited: readonly Citation[]) => setCitation(openedSource(cited, numbers, sourcesById)),
     [numbers, sourcesById]
   );
   const level = useCallback(() => call.level(), [call]);

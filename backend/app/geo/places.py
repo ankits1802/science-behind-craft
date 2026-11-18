@@ -71,13 +71,14 @@ def _strongest_first(location: LocationRecord) -> tuple[int, str]:
 
 def _cited_place(location: LocationRecord, state: StateRecord, *, scope: str) -> PlaceRecord:
     district = scope == "DISTRICT"
+    label = location.district_name if district else location.place_label
     return PlaceRecord(
         scope=scope,
         state=state,
         district_lgd=location.district_lgd if district else None,
         district_name=location.district_name if district else None,
         has_polygon=location.has_polygon if district else False,
-        place_label=location.place_label or (location.district_name if district else None) or state.name,
+        place_label=label or state.name,
         basis_kind="CRAFT_LOCATION",
         source_id=location.source_id,
         basis_label=str(location.source_title),

@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from collections.abc import Mapping
 from dataclasses import dataclass, replace
-from typing import Any
+from typing import Any, Protocol
 
 from app.curation.check_file import CheckFile
 from app.curation.dossier import Dossier
@@ -16,7 +16,8 @@ from .curation_records import (
     media_claim_rows,
     media_rows,
     price_rows,
-    term_link_rows,
+    term_concept_rows,
+    term_craft_rows,
     term_rows,
     workforce_rows,
 )
@@ -39,7 +40,15 @@ from .curation_structure import (
     stage_rows,
 )
 
-__all__ = ["PLAN_PARTS", "SOURCE_REFERENCES", "CurationPlan", "curation_plan"]
+__all__ = [
+    "PLAN_PARTS",
+    "SOURCE_REFERENCES",
+    "CurationPlan",
+    "PlanParts",
+    "Rows",
+    "aliased_sources",
+    "curation_plan",
+]
 
 PLAN_PARTS = (
     "sources",
@@ -68,6 +77,21 @@ SOURCE_REFERENCES = (("claimSources", "sourceId"), ("locations", "sourceId"))
 Rows = tuple[dict[str, Any], ...]
 
 
+class PlanParts(Protocol):
+    def part(self, name: str) -> Rows: ...
+
+
+def aliased_sources(rows: Mapping[str, Rows], aliases: Mapping[uuid.UUID, uuid.UUID]) -> dict[str, Rows]:
+    aliased = dict(rows)
+    aliased["sources"] = tuple(row for row in rows["sources"] if row["id"] not in aliases)
+    for part, column in SOURCE_REFERENCES:
+        if part in aliased:
+            aliased[part] = tuple(
+                {**row, column: aliases.get(row[column], row[column])} for row in aliased[part]
+            )
+    return aliased
+
+
 @dataclass(frozen=True)
 class CurationPlan:
     craft: CraftTarget
@@ -85,26 +109,21 @@ class CurationPlan:
     def with_sources(self, aliases: Mapping[uuid.UUID, uuid.UUID]) -> CurationPlan:
         if not aliases:
             return self
-        rows = dict(self.rows)
-        rows["sources"] = tuple(row for row in rows["sources"] if row["id"] not in aliases)
-        for part, column in SOURCE_REFERENCES:
-            rows[part] = tuple({**row, column: aliases.get(row[column], row[column])} for row in rows[part])
-        return replace(self, rows=rows)
+        return replace(self, rows=aliased_sources(self.rows, aliases))
 
 
 def curation_plan(
     dossier: Dossier, check: CheckFile, craft: CraftTarget, codes: DistrictCodes
 ) -> CurationPlan:
-    concepts = concept_plan(dossier, craft)
+    concepts = concept_plan(dossier, craft_id=craft.id, name=craft.name)
     locations = location_rows(dossier, craft, codes)
-    terms_to_crafts, terms_to_concepts = term_link_rows(dossier, craft, concepts)
     process = process_row(dossier, craft)
     gi = gi_row(dossier, craft)
     found: dict[str, list[dict[str, Any]]] = {
         "sources": source_rows(dossier, check),
         "concepts": list(concepts.rows),
         "claims": claim_rows(dossier, check, concepts),
-        "curatedClaims": curated_claim_rows(dossier, craft),
+        "curatedClaims": curated_claim_rows(dossier, "craftId", craft.id),
         "claimSources": claim_source_rows(dossier, check),
         "locations": locations,
         "processes": [process] if process else [],
@@ -116,8 +135,8 @@ def curation_plan(
         "media": media_rows(dossier),
         "mediaClaims": media_claim_rows(dossier),
         "terms": term_rows(dossier),
-        "termCrafts": terms_to_crafts,
-        "termConcepts": terms_to_concepts,
+        "termCrafts": term_craft_rows(dossier, craft),
+        "termConcepts": term_concept_rows(dossier, concepts),
         "giRecords": [gi] if gi else [],
         "prices": price_rows(dossier, craft, codes),
         "workforce": workforce_rows(dossier, craft),

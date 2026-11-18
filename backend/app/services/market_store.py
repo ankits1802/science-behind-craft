@@ -11,6 +11,7 @@ from app.models import Claim, ClaimSource, Concept, Craft, CraftGiRecord, CraftP
 from app.research.citations import SourceRef
 from app.research.crafts import CraftRef
 from app.research.gi_registry import MARKET_PREFILTER_WORDS, REGISTRY_SOURCE_KINDS, GiFields
+from app.research.retrieval import EVERY_CHUNK_ACLS
 
 from . import knowledge_view
 from .knowledge_view import ClaimView
@@ -66,7 +67,7 @@ async def _craft_offers(session: AsyncSession, craft: Craft) -> MarketOffers:
     prices = await _prices(session, craft.id)
     candidates = await _registry_claims(session, craft.id)
     wanted = [*(record.claim_ids if record else ()), *(price.claim_id for price in prices), *candidates]
-    views, sources = await knowledge_view.claims_by_id(session, wanted)
+    views, sources = await knowledge_view.claims_by_id(session, wanted, acls=EVERY_CHUNK_ACLS)
     return MarketOffers(
         craft=CraftRef.model_validate(knowledge_view.craft_ref(craft)),
         record=record,

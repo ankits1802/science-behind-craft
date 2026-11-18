@@ -17,11 +17,14 @@ __all__ = [
     "FeedCategory",
     "FeedCode",
     "FeedCraft",
+    "FeedModel",
     "FeedSpelling",
     "FeedSubCategory",
     "Portal",
     "PortalCraftFeed",
+    "first_problem",
     "parse_feed",
+    "refuse_duplicates",
 ]
 
 FEED_SCHEMA_VERSION = 1
@@ -100,13 +103,13 @@ class PortalCraftFeed(FeedModel):
 
     @model_validator(mode="after")
     def _references_resolve(self) -> PortalCraftFeed:
-        _refuse_duplicates("category slug", [c.slug for c in self.categories])
+        refuse_duplicates("category slug", [c.slug for c in self.categories])
         subs = [s for c in self.categories for s in c.sub_categories]
-        _refuse_duplicates("sub-category id", [s.id for s in subs])
-        _refuse_duplicates("sub-category slug", [s.slug for s in subs])
-        _refuse_duplicates("craft id", [c.id for c in self.crafts])
-        _refuse_duplicates("craft slug", [c.slug for c in self.crafts])
-        _refuse_duplicates("code", [c.code for c in self.codes])
+        refuse_duplicates("sub-category id", [s.id for s in subs])
+        refuse_duplicates("sub-category slug", [s.slug for s in subs])
+        refuse_duplicates("craft id", [c.id for c in self.crafts])
+        refuse_duplicates("craft slug", [c.slug for c in self.crafts])
+        refuse_duplicates("code", [c.code for c in self.codes])
         sub_ids = {s.id for s in subs}
         craft_ids = {c.id for c in self.crafts}
         codes = {c.code for c in self.codes}
@@ -132,13 +135,13 @@ def parse_feed(payload: Any, *, portal: str) -> PortalCraftFeed:
     try:
         feed = PortalCraftFeed.model_validate(payload)
     except ValidationError as error:
-        raise InvalidInput(f"{portal} craft feed breaks the contract: {_first_problem(error)}") from None
+        raise InvalidInput(f"{portal} craft feed breaks the contract: {first_problem(error)}") from None
     if feed.portal != portal:
         raise InvalidInput(f"the {portal} address answered with a feed from {feed.portal}")
     return feed
 
 
-def _refuse_duplicates(what: str, values: list[str]) -> None:
+def refuse_duplicates(what: str, values: list[str]) -> None:
     seen: set[str] = set()
     for value in values:
         if value in seen:
@@ -146,12 +149,12 @@ def _refuse_duplicates(what: str, values: list[str]) -> None:
         seen.add(value)
 
 
-def _refuse_dangling(owner: str, field: str, value: str | None, known: set[str]) -> None:
-    if value is not None and value not in known:
-        raise ValueError(f"{owner}: {field} {value!r} is not in the feed")
-
-
-def _first_problem(error: ValidationError) -> str:
+def first_problem(error: ValidationError) -> str:
     problem = error.errors()[0]
     where = ".".join(str(part) for part in problem.get("loc", ()))
     return f"{where} {problem.get('msg', '')}".strip()
+
+
+def _refuse_dangling(owner: str, field: str, value: str | None, known: set[str]) -> None:
+    if value is not None and value not in known:
+        raise ValueError(f"{owner}: {field} {value!r} is not in the feed")

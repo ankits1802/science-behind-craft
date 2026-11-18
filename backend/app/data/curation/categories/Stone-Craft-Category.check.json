@@ -1,0 +1,2557 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Stone-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "a9d6a17edceabf3b9cb051d8b3e5cee0e9ac0be7d5979a92857edbc73be052de",
+  "checkedAt": "2026-11-18T10:47:08.984846Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.jstage.jst.go.jp/article/joh/55/4/55_12-0167-OA/_html/-char/en",
+      "route": "LIVE",
+      "readUrl": "https://www.jstage.jst.go.jp/article/joh/55/4/55_12-0167-OA/_html/-char/en",
+      "finalUrl": "https://www.jstage.jst.go.jp/article/joh/55/4/55_12-0167-OA/_html/-char/en",
+      "fetchedAt": "2026-11-18T10:45:56.658579Z",
+      "contentType": "text/html",
+      "textSha256": "1d3ac080e03d62d7de48c74952b635a6456900fed5431ca3ce26b18448aa85e8",
+      "characters": 17892,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3276038/fullTextXML",
+      "route": "LIVE",
+      "readUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3276038/fullTextXML",
+      "finalUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3276038/fullTextXML",
+      "fetchedAt": "2026-11-18T10:46:01.475308Z",
+      "contentType": "text/html",
+      "textSha256": "b91f0e08d83892b83b5909d7262484bbeefe318d85e3623702e6ff612095960d",
+      "characters": 16489,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "route": "LIVE",
+      "readUrl": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "finalUrl": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "fetchedAt": "2026-11-18T10:45:56.300999Z",
+      "contentType": "text/html",
+      "textSha256": "85f6d6fe47c266ddc4b67c697b2192643fabcb4ff5b87cbb7ede31e07c7f4cb0",
+      "characters": 14214,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "finalUrl": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "fetchedAt": "2026-11-18T10:45:55.886498Z",
+      "contentType": "text/html",
+      "textSha256": "c180bc64c29501d8a06c5d4121029eacdbcd54a9698032535544909a49ba01f2",
+      "characters": 963,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://erepo.uef.fi/bitstream/123456789/18926/1/urn_isbn_978-952-61-2621-0.pdf",
+      "route": "LIVE",
+      "readUrl": "https://erepo.uef.fi/bitstream/123456789/18926/1/urn_isbn_978-952-61-2621-0.pdf",
+      "finalUrl": "https://erepo.uef.fi/server/api/core/bitstreams/154220db-3c23-4b61-bdf6-6e9ff391344f/content",
+      "fetchedAt": "2026-11-18T10:46:01.905096Z",
+      "contentType": "application/pdf",
+      "textSha256": "a848e96143deb0393d2e4836921639e6794e5e94aaa3396d97db37084c528ca1",
+      "characters": 922246,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "route": "LIVE",
+      "readUrl": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "finalUrl": "https://chitrolekha.com/ns/v1n1/v1n103.pdf",
+      "fetchedAt": "2026-11-18T10:46:15.260294Z",
+      "contentType": "application/pdf",
+      "textSha256": "dfca571873460eb527451af1712e86617bfb77ad0e89ff48cb25eb2a47c7e77b",
+      "characters": 60411,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://cehesh.in/contents/GeochroniclePanorama2023/1.%20Mohapatra_Konark%20Temple_pp.1-11.pdf",
+      "route": "LIVE",
+      "readUrl": "https://cehesh.in/contents/GeochroniclePanorama2023/1.%20Mohapatra_Konark%20Temple_pp.1-11.pdf",
+      "finalUrl": "https://cehesh.in/contents/GeochroniclePanorama2023/1.%20Mohapatra_Konark%20Temple_pp.1-11.pdf",
+      "fetchedAt": "2026-11-18T10:45:57.429851Z",
+      "contentType": "application/pdf",
+      "textSha256": "42913649d0b5adf6e1ebeb29c1f3719d16df4f7f1887f8325c69f3a090b40d6e",
+      "characters": 20003,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://whc.unesco.org/en/list/249/",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/249/",
+      "finalUrl": "https://whc.unesco.org/en/list/249/",
+      "fetchedAt": "2026-11-18T10:45:58.874731Z",
+      "contentType": "text/html",
+      "textSha256": "867e1b93f50a718684e26f9d6569f63ce1d06a7dce37c59cb67fcf6559f36332",
+      "characters": 8718,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://whc.unesco.org/en/list/246/",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/246/",
+      "finalUrl": "https://whc.unesco.org/en/list/246/",
+      "fetchedAt": "2026-11-18T10:46:01.047146Z",
+      "contentType": "text/html",
+      "textSha256": "14b8f1a2b9a5b71cc0d3f4893de6eeb60e37936538e0761324156203dcde162a",
+      "characters": 10650,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://whc.unesco.org/en/list/252/",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/252/",
+      "finalUrl": "https://whc.unesco.org/en/list/252/",
+      "fetchedAt": "2026-11-18T10:46:03.162540Z",
+      "contentType": "text/html",
+      "textSha256": "d2301b27a2324e196fb618efb06d1e1682ca77c4e9c30cfe16d2ae73aa9a071a",
+      "characters": 10692,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://whc.unesco.org/en/list/240/",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/240/",
+      "finalUrl": "https://whc.unesco.org/en/list/240/",
+      "fetchedAt": "2026-11-18T10:46:10.803177Z",
+      "contentType": "text/html",
+      "textSha256": "bdb57e10971bcd8df1448d21df073591adb64c69e7f1dcdc2f11c8b3f8c40fdd",
+      "characters": 9500,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://whc.unesco.org/en/list/1670/",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/1670/",
+      "finalUrl": "https://whc.unesco.org/en/list/1670/",
+      "fetchedAt": "2026-11-18T10:46:27.999601Z",
+      "contentType": "text/html",
+      "textSha256": "9ed226c64009d4c5da7f5b9cd99751e3c5b02e96ad2f7752317eff54c9b1f736",
+      "characters": 8880,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://artandculture.tn.gov.in/node/80",
+      "route": "LIVE",
+      "readUrl": "https://artandculture.tn.gov.in/node/80",
+      "finalUrl": "https://artandculture.tn.gov.in/node/80",
+      "fetchedAt": "2026-11-18T10:46:34.513373Z",
+      "contentType": "text/html",
+      "textSha256": "132c565ba250aad07a675b50907ff097b148cbf1075d01c50b376b4f8492125d",
+      "characters": 5766,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://imp-art.org/perspectives/dispatches/in-perpetual-bloom-pietra-dura-ornamentation-at-the-taj-mahal/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/perspectives/dispatches/in-perpetual-bloom-pietra-dura-ornamentation-at-the-taj-mahal/",
+      "finalUrl": "https://imp-art.org/perspectives/dispatches/in-perpetual-bloom-pietra-dura-ornamentation-at-the-taj-mahal/",
+      "fetchedAt": "2026-11-18T10:46:34.622931Z",
+      "contentType": "text/html",
+      "textSha256": "e838cc7049c1ac84074733179ea1e3daa1cb2a5e56330696dd68c9ffc2711056",
+      "characters": 4191,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/shilpa-shastras/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/shilpa-shastras/",
+      "finalUrl": "https://imp-art.org/articles/shilpa-shastras/",
+      "fetchedAt": "2026-11-18T10:46:37.895011Z",
+      "contentType": "text/html",
+      "textSha256": "de7c3232442220efbd50444436b1f82feb22d5f518c370748df87105a3b9e27a",
+      "characters": 5811,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://artsandculture.google.com/story/zwWx4MIvdnpkJA",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/zwWx4MIvdnpkJA",
+      "finalUrl": "https://artsandculture.google.com/story/zwWx4MIvdnpkJA",
+      "fetchedAt": "2026-11-18T10:46:37.961084Z",
+      "contentType": "text/html",
+      "textSha256": "48760bac96e611b6e952910145bff6b6e69d11df50500e94193a8ae0460d52b6",
+      "characters": 3605,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://presentations.copernicus.org/EGU2020/EGU2020-12693_presentation.pdf",
+      "route": "LIVE",
+      "readUrl": "https://presentations.copernicus.org/EGU2020/EGU2020-12693_presentation.pdf",
+      "finalUrl": "https://presentations.copernicus.org/EGU2020/EGU2020-12693_presentation.pdf",
+      "fetchedAt": "2026-11-18T10:46:43.093003Z",
+      "contentType": "application/pdf",
+      "textSha256": "8b735b635c09065b71fa27cd6fc26f7df228afa0f743f0e0f1f74e9081f51ad7",
+      "characters": 3285,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://stonenews.eu/marble-used-taj-mahal-now-global-heritage-stone-resource/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20211020013143id_/https://stonenews.eu/marble-used-taj-mahal-now-global-heritage-stone-resource/",
+      "finalUrl": "https://web.archive.org/web/20211020013143id_/https://stonenews.eu/marble-used-taj-mahal-now-global-heritage-stone-resource/",
+      "fetchedAt": "2026-11-18T10:46:47.230203Z",
+      "contentType": "text/html",
+      "textSha256": "34ab7133e13728389ebae6385c905381b358cdd6061dbc7f6f44e28a260ed275",
+      "characters": 3554,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://epch.in/sites/default/files/project/proj009.pdf",
+      "route": "LIVE",
+      "readUrl": "https://epch.in/sites/default/files/project/proj009.pdf",
+      "finalUrl": "https://epch.in/sites/default/files/project/proj009.pdf",
+      "fetchedAt": "2026-11-18T10:46:44.310138Z",
+      "contentType": "application/pdf",
+      "textSha256": "9af2f70b5dcd3c518de56345842bd4c7807ae3b22e9d06c411a23d395f7e46ba",
+      "characters": 50037,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.globalinch.org/craft/stone-icon-carving-of-karnataka/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/craft/stone-icon-carving-of-karnataka/",
+      "finalUrl": "https://www.globalinch.org/craft/stone-icon-carving-of-karnataka/",
+      "fetchedAt": "2026-11-18T10:46:49.231236Z",
+      "contentType": "text/html",
+      "textSha256": "d487d9eb0cd6e95fb450de7ac0e320194a4f566613f9e468dcd579fee414d2f2",
+      "characters": 836,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://msme1connect.up.gov.in/Home/BusinessDetails?Id=168",
+      "route": "LIVE",
+      "readUrl": "https://msme1connect.up.gov.in/Home/BusinessDetails?Id=168",
+      "finalUrl": "https://msme1connect.up.gov.in/Home/BusinessDetails?Id=168",
+      "fetchedAt": "2026-11-18T10:46:49.010454Z",
+      "contentType": "text/html",
+      "textSha256": "f8a62452acce833b9f42ab05955e7f913c2da94463984b75342fc3ba0eb3814a",
+      "characters": 2954,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2022/02/556-varanasi-soft-stone-jali-work.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/556-varanasi-soft-stone-jali-work.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/556-varanasi-soft-stone-jali-work.pdf",
+      "fetchedAt": "2026-11-18T10:46:51.281629Z",
+      "contentType": "application/pdf",
+      "textSha256": "e5db6b2071d54f7fcc3afb6d2e97675d8ed7ef18e2e29025dd29f6f4c7581c24",
+      "characters": 13799,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://banda.nic.in/odop/",
+      "route": "LIVE",
+      "readUrl": "https://banda.nic.in/odop/",
+      "finalUrl": "https://banda.nic.in/odop/",
+      "fetchedAt": "2026-11-18T10:46:49.554355Z",
+      "contentType": "text/html",
+      "textSha256": "95c3c6105976915db2462e68a11ed732828d9757db4c04343e3af46c38c55775",
+      "characters": 1370,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://www.outlooktraveller.com/explore/culture/parchin-kari-mughals-gem-studded-legacy-in-agra",
+      "route": "LIVE",
+      "readUrl": "https://www.outlooktraveller.com/explore/culture/parchin-kari-mughals-gem-studded-legacy-in-agra",
+      "finalUrl": "https://www.outlooktraveller.com/explore/culture/parchin-kari-mughals-gem-studded-legacy-in-agra",
+      "fetchedAt": "2026-11-18T10:46:50.190924Z",
+      "contentType": "text/html",
+      "textSha256": "a8e31fa0bb5b6648be2a13975493f2dd542d6ce7b62593823abbed4d4586c805",
+      "characters": 4434,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://www.livehistoryindia.com/story/living-culture/marble-inlay",
+      "route": "LIVE",
+      "readUrl": "https://www.livehistoryindia.com/story/living-culture/marble-inlay",
+      "finalUrl": "https://www.livehistoryindia.com/story/living-culture/marble-inlay",
+      "fetchedAt": "2026-11-18T10:46:50.013572Z",
+      "contentType": "text/html",
+      "textSha256": "74c7c5796badcc47e6b8aea40ceb09e028732a14edcd73cbc5d71df0b1f44f66",
+      "characters": 4571,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/61-konark-stone-carving.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/61-konark-stone-carving.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/61-konark-stone-carving.pdf",
+      "fetchedAt": "2026-11-18T10:46:53.930003Z",
+      "contentType": "application/pdf",
+      "textSha256": "51c0ad984421ccf39efc651cf3fe9682c8b7cafe991e9e7b38b862d9651a9bef",
+      "characters": 9431,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250430001712id_/https://ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "finalUrl": "https://web.archive.org/web/20250430001712id_/https://ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "fetchedAt": "2026-11-18T10:46:55.589153Z",
+      "contentType": "application/pdf",
+      "textSha256": "52373082769b12e31bfb188fa81a8398cb10b9730c72d15bfc603be4ca48eac4",
+      "characters": 58110,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=47",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=47",
+      "finalUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=47",
+      "fetchedAt": "2026-11-18T10:46:50.357367Z",
+      "contentType": "text/html",
+      "textSha256": "0a7dd01f0c322d90ab13eed9f8b94035458c8b3f011f59038f7ec09f71b4b773",
+      "characters": 834,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10337186/fullTextXML",
+      "route": "LIVE",
+      "readUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10337186/fullTextXML",
+      "finalUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10337186/fullTextXML",
+      "fetchedAt": "2026-11-18T10:46:20.520332Z",
+      "contentType": "text/html",
+      "textSha256": "6bcf7a2596697d0fd37ab3b78f57f83156285df371c7f7c175d6fc267adb9dcc",
+      "characters": 40820,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=39",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=39",
+      "finalUrl": "https://www.nabard.org/GI/GIProductDetails.aspx?Id=39",
+      "fetchedAt": "2026-11-18T10:46:52.397405Z",
+      "contentType": "text/html",
+      "textSha256": "8f24c8385d31dc5fad20768f8ab724a53431ca908a2521616f279ab6a9bffbac",
+      "characters": 750,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://www.epch.in/sites/default/files/studies&reports/v3_Final_Handicrafts_EPCH_12%2011%202024_Final.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.epch.in/sites/default/files/studies&reports/v3_Final_Handicrafts_EPCH_12%2011%202024_Final.pdf",
+      "finalUrl": "https://www.epch.in/sites/default/files/studies&reports/v3_Final_Handicrafts_EPCH_12%2011%202024_Final.pdf",
+      "fetchedAt": "2026-11-18T10:46:51.187823Z",
+      "contentType": "application/pdf",
+      "textSha256": "a8c2a7da6aea25af3ccca416a37a87ff6b50fddf67ea21c0d6ea96ef12dcb5cc",
+      "characters": 128294,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S21",
+      "quote": "Stone handicrafts are traditional and decorative products crafted by artisans using natural stones such as marble, sandstone, soapstone, and granite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S22",
+      "quote": "Different types of stones like, marble, soapstone and sand stone are used by craftsmen in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S21",
+      "quote": "These items often include sculptures, idols, vases, lamps, tabletops, jali panels, trays, wall hangings, and home décor elements.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S05",
+      "quote": "Stone carving is practised all over India but the types of stones used for carving reflect the regional variation in the availability of different stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S22",
+      "quote": "Of late stone working is not only restricted to ornate carvings on temples or sculptures ofdeities, but also used in making items like carved panels, tiles, paper weights, pen stands, models of historical buildings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S21",
+      "quote": "Some regions are famous for specific styles, like Rajasthan for marble carving or Odisha for soapstone idols.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S05",
+      "quote": "The town of Mamallapuram is one of the stone carving centres of India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S05",
+      "quote": "Hundreds of carvers produce mainly sculptures of different Hindu gods and goddesses and their work is based on Hindu stone carving tradition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S04",
+      "quote": "At present the city of Khambhat (Cambay) is one of the largest stone bead working centres of the world, and it has been an important centre for over 3000 years of documented history.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S03",
+      "quote": "This name is an English corruption of Khambhat. It is a center for lapidary craftsmanship, its products reaching a market on four continents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S16",
+      "quote": "The rich architectural heritage of Agra is enriched by two craft traditions, those of stone carving and inlay. Stone carving has ancient origins, and in fact is found in various centres of north India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S06",
+      "quote": "under the political subdivision of Anandapur in Kendujhar district of Odisha",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S06",
+      "quote": "There are two different soapstone craft forms exist in Dhakotha, i.e., ପତ୍ଥର କୁଣ୍ଡ or Pather Kundo Craft and Soapstone Craving Craft; and there is a number of approximately 450 soapstone craftsmen are active.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S06",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S06",
+      "quote": "Out of approximately 500 soapstone craftsmen, around 400 craftsmen are involved in stone carving or statue making craft; while another pool of approximately 50 craftsmen are involved in traditional Pather Kundo or stone turning craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S06",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S19",
+      "quote": "Stone Carvings of Odisha reflects a glorious cultural past and rich heritage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S19",
+      "quote": "The stone carvers from Puri, Bhubaneswar, Lalitagiri & Khiching are engaged in making beautiful stone statues include Krishna and Radha, Laxmi, Vishnu, Durga, Buddha and Ganesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S19",
+      "quote": "Surasundaris heavenly beauties playing on different musical instruments at Konark temple, the Konark wheel, horse, elephant, lion etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "The craft seems to have started here as early as the third millennium B.C. with the founding of the Harappan settlement at Lothal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "Cambay is a small city, population about 50,000, on the coast of Gujarat state in western India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "This ancient town, which dates to ca. 2400-1700 B.C., had a large scale bead manufacturing operation taking a variety of raw materials -chalcedony and other agates, jasper, rock crystal and the like-and turning them into beads",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S03",
+      "quote": "turning them into beads that were used by the Harappans themselves and shipped to places as distant as Mesopotamia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S04",
+      "quote": "With the aid of archaeological research, the stone bead industry in Pakistan and western India can be traced back even earlier to the cities and villages of the Harappan phase of the Indus tradition, dated to around 2500 BC.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S03",
+      "quote": "The first step involved a two-phase chipping process which formed the beads to their rough shape. The bead was then ground to a smooth outline. The perforation of the bead was done next.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S03",
+      "quote": "It is quite certain that the stone drills used in penetrating Harappan beads were propelled by a bow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S03",
+      "quote": "It is of considerable interest that this sequence of steps and the same basic technology are still used today in Cambay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S03",
+      "quote": "Prior to the use of electricity and more elaborate mechanical contrivances, the polishing was done by hand. That is, beads and slurry were sewn into a skin bag and this was 'rolled' across a floor between two men.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S08",
+      "quote": "This group of sanctuaries, founded by the Pallava kings, was carved out of rock along the Coromandel coast in the 7th and 8th centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S08",
+      "quote": "Mahabalipuram (or Mamallapuram), located along southeastern India's Coromandel Coast, was a celebrated port city of the Pallavas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S08",
+      "quote": "These majestic edifices mark the high quality of craftsmanship in the region during 6th century CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S08",
+      "quote": "The Pallava dynasty, which ruled this area between 6th and 9th centuries CE, created these majestic edifices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S08",
+      "quote": "The monolithic temples are locally called \"ratha\" (chariot), as they resemble the processional chariots of a temple. These five monolithic temples are each hewn out of a huge boulder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S08",
+      "quote": "The influence of the sculptures of Mahabalipuram, characterized by the softness and suppleness of their modelling, spread afar to places such as Cambodia, Annam and Java.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S09",
+      "quote": "the temple at Konarak is a monumental representation of the sun god Surya's chariot",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S09",
+      "quote": "Built in the 13th century, it is one of India's most famous Brahman sanctuaries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S09",
+      "quote": "Konârak is an outstanding testimony to the 13th-century kingdom of Orissa.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S09",
+      "quote": "On the north and south sides are 24 carved wheels, each about 3 m in diameter, as well as symbolic motifs referring to the cycle of the seasons and the months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S09",
+      "quote": "its 24 wheels are decorated with symbolic designs and it is led by a team of six horses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S09",
+      "quote": "the temple represents a chariot of the Sun God, with twelve pairs of wheels drawn by seven horses evoking its movement across the heavens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S09",
+      "quote": "the temple has raised up those lovely legends which are affiliated everywhere with absolute works of art: its construction caused the mobilization of 1,200 workers for 12 years. The architect, Bisu Moharana, having left his birthplace",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S09",
+      "quote": "The Sun Temple is the culmination of Kalingan temple architecture, with all its defining elements in complete and perfect form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S11",
+      "quote": "The temples at Khajuraho were built during the Chandella dynasty, which reached its apogee between 950 and 1050.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S11",
+      "quote": "Built in sandstone, each temple is elevated from its environs by a highly ornate terraced platform",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S11",
+      "quote": "The land abutting the monuments is managed jointly by the Revenue official (i.e., District Collector, State government of Madhya Pradesh) and the Archaeological Survey of India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S11",
+      "quote": "All surfaces are profusely carved with anthropomorphic and non-anthropomorphic motifs depicting sacred and secular themes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S12",
+      "quote": "The three component parts are built with chloritic schist and reflect the features such as stellate plans, horizontal friezes of the adhisthana, artists' signatures, sculptural panels and carvings that became the hallmark of this period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S12",
+      "quote": "such as the loss of religious activities at the Hoysalesvara Temple in Halebidu and Keshava Temple in Somanathapura",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S12",
+      "quote": "A continuity of worship, rituals and festivals is to be noticed at Channakeshava Temple (Belur), since its inception in 1117 CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S12",
+      "quote": "a thematically arranged sculptural gallery of religious, epic, and other stories along the circumambulatory platform, extensive sculptures and stone carvings that cover the entire exterior surface",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S10",
+      "quote": "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor Shah Jahan in memory of his favourite wife",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S10",
+      "quote": "It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S10",
+      "quote": "For its construction, masons, stone-cutters, inlayers, carvers, painters, calligraphers, dome builders and other artisans were requisitioned from the whole of the empire and also from the Central Asia and Iran.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S10",
+      "quote": "The building material used is brick-in-lime mortar veneered with red sandstone and marble and inlay work of precious/semi precious stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S10",
+      "quote": "The relief work in marble and inlay with precious and semi precious stones make it a monument apart.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S10",
+      "quote": "The exquisite octagonal marble lattice screen encircling both cenotaphs is a piece of superb workmanship. It is highly polished and richly decorated with inlay work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S10",
+      "quote": "The borders of the frames are inlaid with precious stones representing flowers executed with wonderful perfection.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S17",
+      "quote": "Taj Mahal, the iconic mausoleum, known for finest quality white Makrana Marble from Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S17",
+      "quote": "Makrana marble is the first GHSR from India and in fact the first from the whole of Asia to join the list of 22 designated GHSR's from around the globe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S18",
+      "quote": "marble from Makrana in Rajasthan is now Asia's first Global Heritage Stone Resource (GHSR), as confirmed on July 19 by the International Union of Geological Sciences (IUGS)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S17",
+      "quote": "The Taj mausoleum is part of the Taj Mahal complex which has numerous edifices built in marble and red sandstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S17",
+      "quote": "The Main Mausoleum (all made in Makrana Marble)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S18",
+      "quote": "Iconic sites where it has been used include Humayun's Tomb in New Delhi, Akbar's Tomb in Sikandra, Agra; Dukhnivaran Sahib Gurdwara, Ludhiana; Sheikh Zayed Mosque in Abu Dhabi and Moti Masjid in Lahore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S18",
+      "quote": "Renowned worldwide for its fine quality that can be credited for the Taj Mahal's incredible beauty and the Victoria Memorial's grandeur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S18",
+      "quote": "With the wide-scale mining of these stones because of their usage in heritage buildings, preserves are threatened, says Kaur, calling for the practice to be stopped.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S18",
+      "quote": "the secretary general of heritage stone subcommission Dolores Pereira says the GHSR status means that some quarries of these heritage stones need to be conserved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S14",
+      "quote": "Semi-precious stones such as lapis-lazuli, agate, bloodstone, carnelian, jade and quartz are used alongside clay-slate, variegated yellow limestone and marble in the designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "The natural stones adorning the various components of the marble edifice include Yellow Jaisalmer Limestone, black slate, carnelian, agate, Khatu Rainbow Sandstone, onyx, lapis lazuli, malachite, jade, mother pearl, coral etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S17",
+      "quote": "The inlaid natural stones of Taj Mausoleum were procured from far off places such as Ceylon, Afghansistan, China, Turkey, Tibet, Russia during the Mughal rule in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S14",
+      "quote": "Intricate designs on architectural structures built in the seventeenth century often featured geometric and floral decorations created using the parchin kari technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S14",
+      "quote": "The Tomb of Itimad-Ud-Daula, commissioned by Empress Nur Jahan for her father, for instance, features polychromatic geometric designs, flowers and decorated vases using the technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S14",
+      "quote": "a fascinating example of an Italian or Italian-inspired pietra dura panel appearing in a Mughal context is that of a tablet, dating to 1648, depicting the Greek mythological figure, Orpheus",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S14",
+      "quote": "set into the back wall of Shah Jahan's throne at the Diwan-i-Aam in the Red Fort in Delhi, along with 318 other panels of inlay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S14",
+      "quote": "Said to have been originally developed and perfected by Florentine artists in sixteenth-century Italy, pietra dura, meaning \"hard stone\" in Italian",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S14",
+      "quote": "Some scholars believe that Italian artisans taught local artisans at Mughal workshops",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S14",
+      "quote": "while others think that local artisans might have learnt it themselves since they were already skilled in inlay techniques that employed softer stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S14",
+      "quote": "While we still do not know which of these versions is true",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S16",
+      "quote": "Inlay work with semi-precious stone in marble, on the other hand, was introduced by the Mughal emperor Shah Jahan in the 17th century, and is unique to Agra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S24",
+      "quote": "The art of Pietra Dura, as it was called in Italy, was brought to India in the 17th century by the Mughal emperor Shah Jahan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S16",
+      "quote": "He brought skilled Persian artisans to train local craftsmen, who were then put to work on his inspired projects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S24",
+      "quote": "when he commissioned the Taj Mahal and brought experts from Persia, introducing the art of inlay carving and use of semi-precious stone in marble for the first time",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S14",
+      "quote": "pietra dura, meaning \"hard stone\" in Italian, is a technique wherein precious and semi-precious stones are cut, polished and inlaid - generally on hard stone, such as marble - to represent an image.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S14",
+      "quote": "The Mughal emperor Shah Jahan was a strong proponent of the technique, which had been adapted into the local Mughal style and came to be known as parchin kari, literally meaning 'driven in'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "the floral ornamentation at the Taj Mahal has now inspired an entire industry of marble souvenirs and objects inlaid with stones that have become synonymous with the crafts of Agra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "First published: May 7, 2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S16",
+      "quote": "Marble inlay table tops as large as 6 x 4 feet are sold in the major metros of India, and find their way also to the export market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S16",
+      "quote": "Locally known as jaali work, hand carved fret-work requires a mastery of the medium and technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S16",
+      "quote": "The artisans have mastered the art of carving within a carved object, a technique known locally as 'undercut'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S16",
+      "quote": "Mostly staying within the geometric and floral design vocabulary of their forebears, the stone craftsmen of Agra have taken the tradition to a much more delicate and intricate level.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S16",
+      "quote": "Detail of a marble inlay table top with design made with lapis lazuli and mother of pearl.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S16",
+      "quote": "Decorative plate with inlay of onyx, malachite, lapis and turquoise.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S14",
+      "quote": "Flowers, scholar Ebba Koch says, were central to the decorative scheme of the Taj Mahal, because they symbolised the verdant flora of the Paradise",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S05",
+      "quote": "Shilpa Sastras are a collection of ancient texts of Indian Hindu aesthetic theory and art manuals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S05",
+      "quote": "For stone carvers Shilpa Shastras explain the principles of Hindu sculpture-making. They state the standards and rules of sculptures such as correct proportions, postures and iconography",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S15",
+      "quote": "Dealing with sculpture, painting, carpentry, jewellery and design, Shilpa Shastras are a collective body of texts that are primarily occupied with the practice of art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S15",
+      "quote": "texts forming Shilpa Shastra canon are dated individually and not collectively. However, the texts generally date to the early centuries of the second millennium CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S15",
+      "quote": "Scholars have identified some early texts written on art and sculpture that were authored in the fourth and fifth centuries CE. Belonging to this category are texts such as the Vishnudharmottara Purana, Chitralakshana and Brihat Samhita.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S15",
+      "quote": "While most Shilpa texts were written in Sanskrit, some are written in regional and, rarely, even modern languages such as Hindi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S15",
+      "quote": "The system proposed by the Vishnudharmottara Purana suggests three units of measurement based on the human body - angulas, referring to the distance between the first and second joints of a bent forefinger; talas, referring to twelve angulas; and mukhas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S15",
+      "quote": "mukhas, spanning from the face's hairline to the chin",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S15",
+      "quote": "The height of each figure measured nine mukhas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S15",
+      "quote": "Broadly, the texts put forth three requirements that every sculpted image is meant to meet - beauty, auspiciousness and verisimilitude.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S15",
+      "quote": "Broken or imperfect images are treated as unfavourable, often attracting malevolent spirits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S05",
+      "quote": "Shilpa Shastras state that a sculptor should pay respect to both the stone and his tools before commencing his work. Equally, he should meditate on the divine nature of the god or goddess he wishes to portray",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S15",
+      "quote": "Each stage of production is meant to be accompanied by rituals that aid the act of creation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S15",
+      "quote": "scholars have questioned the extent to which their prescriptions were incorporated in works of art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S05",
+      "quote": "these texts illustrate the aspirational ideals but not the daily practise of image-making in which discrepansies are the norm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S05",
+      "quote": "He has also discovered that architects and sculptors who were considered masters in their work had never even read any written version of Shilpa Shastras in Sanskrit or in their local South Indian language",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S05",
+      "quote": "According to Shilpa Shastras, those carvings of deities aimed for temple worship are left with their eyes unfinished or \"closed\", and they are only carved in the actual eye-opening ceremony",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S05",
+      "quote": "This is a task that only a master craftsman is allowed to perform and is made with a chisel known as a \"golden needle'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "There are four classes of stone carvers. The master carver and design architect is called sthapati. Second to him is the surveyor sutragrahim, followed by the sculptor or the carver, known as takshaka in the third class.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "Builders, plasterers and painters constitute the fourth class vardhakin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "These occupational categories primarily reflect temple construction procedures that also include making deity sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S05",
+      "quote": "The stone carvers in India are also known by the Sanskrit name shilpi that refers to an artist and a craftsman.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S05",
+      "quote": "Viswakarma is a general name for a pan-Indian caste group that includes several sub-castes or communities with different names and social statuses",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S05",
+      "quote": "There are also other common names that imply Viswakarma status such as achari and kammalar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S05",
+      "quote": "Many artist and craftsmen in India even today belong to the Viswakarma caste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S05",
+      "quote": "the Viswakarma caste group that is characterised by hereditary art and craft occupations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S05",
+      "quote": "Legend states that the god Viswakarma, the god of arts and crafts, had five sons: a blacksmith, a carpenter, a metal worker, a stone carver and a goldsmith.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S05",
+      "quote": "Granite is particularly highly valued and used in the state of Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S05",
+      "quote": "Depending on the sound of the stones when hit with a piece of metal, they can be defined as masculine, feminine or neutral.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S20",
+      "quote": "In Karnataka, a Hoysala stone sculptor draws his creative technique from the wisdom of centuries. He is taught to identify stones on the basis of the sound they emit when beaten",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "Masculine granite, called ansila, makes a clear, bell-like sound and it is considered to be the best quality of stone with the fewest cracks. Ansila is suitable for making statues of male deities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S05",
+      "quote": "Pensila is the female granite stone for female deities, next in quality, and the sound is quieter. The worst in quality is the neutral stone nabunsagar that is most prone to cracking and makes a drum-like sound.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S05",
+      "quote": "Neutral stones can be used for less important architectural parts but they are not suitable for making statues for religious worship.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S20",
+      "quote": "'male stones' are used for sculpting gods, 'female stones' for goddesses, and 'neutral stones' for objects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S13",
+      "quote": "The Government College of Architecture and Sculpture is located in Mamallapuram, Chengalpattu District, Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S13",
+      "quote": "It was started in 1957 as the Sculpture Training Centre under the guidance of Department of Industries and Commerce with a sole objective of reviving and extending the frontiers of age-old tradition of Sculpture and Architecture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S05",
+      "quote": "The Government College of Traditional Architecture and Sculpture was founded in 1957 and was affiliated to Madras University in Chennai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S13",
+      "quote": "its curriculum comprises Shilpa, Agama, Vastu Sastras, Iconometrical and Iconographical sketches of Sculptures, Aesthetics, Philosophy along with Sanskrit, English and Tamil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S05",
+      "quote": "the teaching of stone carving follows the guidance based on Shipa Shastras and students learn to design and make sculptures based on traditional guidelines of correct forms, measurements and iconography.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S05",
+      "quote": "During first-year studies, students learn drawing for stone, and work with soft stones making ornamentations such as flowers and animals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S05",
+      "quote": "During the final fourth year, students work with granite",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "Although many international travel guides give the impression that there has been a consistent, elaborate stone carving tradition in Mamallapuram from the Pallava era to the present day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "in reality the stone carving industry has developed to its present state as a result of the establishment of the Government College of Sculpture and Traditional Architecture in Mamallapuram in 1957, and much in connection with the growth of Mamallapuram as a popular tourist destination",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "There were no official record of the exact number of stone carving units or stone carvers working in Mamallapuram, but according to some estimates there were over 200 workshops in the town and thousands of stone carvers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "In September 2010 I counted 162 stone carving units in the main areas of the town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S05",
+      "quote": "Deity sculptures are made for Hindu temples and shrines around the world but also to be sold as souvenirs for international tourists visiting Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "Whereas Indian people were the main buyers of granite carvings for temples, shrines and for decoration, soft stone statues were also bought by foreign tourists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "On average people working in the granite carving units on a fixed salary earned 300 rupees per day in 2010. They worked on average eight hours a day, six days per week",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "There are many health hazards that the stone carvers become exposed to, such as stone dust, noise, and accidents from handling the stones and electric tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "People used very little protective equipment in the workshops. The dust was the biggest problem and many carvers suffered from eye and respiratory problems.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "Most carvers from Mamallapuram were registered as stone carvers, labelled as \"artisans\", in the Board of Handicrafts in Chennai. They received an identity card as well as a health insurance card",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S05",
+      "quote": "Granite belongs to the group of igneous rocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S05",
+      "quote": "Granite is still used for temple architecture and it continues to be the main material for religious Hindu carvings in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S05",
+      "quote": "In South India, including Tamil Nadu, granite deposits are found in abundance in the ground and as a result of this many of the temples and sculptures have been made in granite throughout the centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S05",
+      "quote": "the stone mostly used in Mamallapuram granite sculpture and usually referred to as black granite was actually a slightly softer version of granite that was called blue metal. Blue metal is 25 per cent basalt stone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S05",
+      "quote": "The carvers valued its qualities since it holds the details better than the high density granite and can also be carved by hand if necessary.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S05",
+      "quote": "In Mamallapuram, pure granite and blue metal were both used for temple construction, religious sculptures as well as for making monumental statues only for decoration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S05",
+      "quote": "Whereas real granite would cost around 40,000 rupees per cubic metre (about 580 euro in 2010), blue metal costs 10,000 rupees (about 150 euro).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S05",
+      "quote": "Soft stones are often called soap stones as some of them contain talc that can produce a soapy feeling in hands when touched.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S05",
+      "quote": "There are different varieties of soft stones that vary in their degree of hardness. Some soft stones can take on a very high level of detail",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S05",
+      "quote": "Some very soft stones produce a risk when carved as they can break very easily.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "Gadapa stone used to be the most popular soft stone in Mamallapuram tourist carving units and it was quarried in the state of Andra Pradesh. Another name for it is durgi stone",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "However, it was the cheapest and softest stone variety, is easy to carve and was typically used for the Mamallapuram tourist market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "The colour of gadapa stone is very plain grey without shade variations, even when polished",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "The soft stone mainly used in Mamallapuram carving units that produce carvings for the tourist market were gadapa stone and a so-called green stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "In 2010 the price for gadapa stone was around 150-250 rupees per square foot (around 3-4 euro).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "Green stone came from Bangalore (now Bengaluru) in the state of Karnataka, and it cost around 250-300 rupees per square foot in 2010",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S05",
+      "quote": "In Mamallapuram red and yellow marble were the most commonly used types.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S05",
+      "quote": "Marble came from North India, from the state of Rajasthan and near the city of Agra in the state of Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S05",
+      "quote": "During my fieldwork marble was the most popular stone for the souvenir sculptures to use and had replaced gadapa stone in recent years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S05",
+      "quote": "The main hand tools of a stone carver were a hand saw, a pen, hammers, a variety of different type of chisels, polishing stones and emery paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "Mechanical aids such as electric saws, drills and grinders were introduced to the business in the 1990s and were used for granite and big soft stone sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "granite carvings were made mainly with electric tools since it saves time and labour, but detailing was still done by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S05",
+      "quote": "Soft stone carvings were produced primarily by hand unless electric aids were needed for cutting the stone or the stone happened to be very hard. However, many soft stones are unsuitable for machinery since they break easily.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S05",
+      "quote": "Stone carvings in Mamallapuram were produced by using both hand and electric tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "The procedure referred as rough cutting consisted of cutting a stone into the size that is desired for the carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "After this the carver drew an image of the statue on the surface of the block of stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "any further extra pieces of stone around the image were cut off with the help of a electric or hand saw and hammer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "The process of stone carving started with the basic dressing of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "Stone carvings in Mamallapuram were produced by using both hand and electric tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S05",
+      "quote": "Throughout the whole process of basic dressing, the stone laid flat on the ground. Most of the carving was also done by keeping the stone in this position as it prevented accidents and possible breakage of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S05",
+      "quote": "By manipulating the angle of the chisel and the force used in hammering, he could control the outcome of the carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S05",
+      "quote": "Stone carvings in Mamallapuram were produced by using both hand and electric tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S05",
+      "quote": "Usually the whole statue was worked on layer by layer so that the carving proceeded as a whole from the sketching of the image to the rough shape and then to the final finishing touches.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S05",
+      "quote": "Stone carvings in Mamallapuram were produced by using both hand and electric tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S03",
+      "quote": "the beads manufactured in Gujarat have been made, for the most part, from stone found in the agate beds along the banks of the Narmada River",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S03",
+      "quote": "The erstwhile Princely State of Rajpipla has been particularly prominent in the production of this raw material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S03",
+      "quote": "The agates are associated with the Deccan Trap of central and western India, a series of Mesozoic lava flows which cover an immense area of the subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S03",
+      "quote": "Over the millennia the high silica content stones have been eroded from the interstices of the basalt trap rock, from where they have entered the riverine system.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S03",
+      "quote": "There are extensive strata of these agates which have been concentrated by fluvial processes into workable beds of stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S03",
+      "quote": "The extraction of the nodules is done with picks and shovels. In the community I visited the work force was made up of teams of three to five men and women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S03",
+      "quote": "After the pans were dumped near the opening of the access hole, women sorted the valuable agates from the undesirable material",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S03",
+      "quote": "The people who mine the stones, in this locality at least, are of African descent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S03",
+      "quote": "Such people are actually more common than one might suspect in western India and Pakistan, especially the coastal areas, where they are called Siddis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S03",
+      "quote": "The Narmada River agate mines are owned by the Government of India and the Siddis have to purchase a lease to dig for the stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S03",
+      "quote": "The first step in the process is to heat the material in small pots filled with smoldering sawdust (Fig. 4). This causes a physical change in the stone which makes the next step, chipping, an easier one.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S03",
+      "quote": "the technique involves the use of a hammer and spike, or anvil, driven into the ground. The rough chipping hammer is made of water buffalo horn on a thin flexible bamboo handle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S03",
+      "quote": "It was made clear to me that the horn must be buffalo and that the horn of cows was completely unsuitable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S03",
+      "quote": "all of the chipping is done by males",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S03",
+      "quote": "The work force here, however, is composed of both males and females",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S03",
+      "quote": "The abrasive wheels against which the beads are ground are commercially made today and powered by electric motors. This is one of the few applications of a mechanical contrivance in the Cambay bead industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S03",
+      "quote": "Perforation is accomplished with a diamond-tipped bit set in a wooden shank and propelled by a bow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "The small clay pots seen in the photographs hold water and the grit from past drillings. This acts as a lubricant for the cutting operation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S03",
+      "quote": "The grit, which steadily accumulates in this water, is seemingly also an important commodity since its presence in the cutting hole would produce some abrasion and hence further the penetration of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S03",
+      "quote": "No matter how small the bead, the drilling is always started from one end and completed by drilling a second hole from the opposite side.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S03",
+      "quote": "I interpret this procedure as a safer course of action than drilling straight through the bead, which might cause breakage and shatter around the exit hole.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S03",
+      "quote": "The beads are placed in a drum with an abrasive slurry (Fig. 12), and continuously turned until their surfaces have been smoothed and polished. This takes approximately a week.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S03",
+      "quote": "The Cambay process involves a first turning in slurry with a coarse abrasive, and a second session with a finer powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S03",
+      "quote": "The modern Cambay lapidary industry makes use of stone from most, if not all, of the regions of India and adjacent countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S03",
+      "quote": "Lapis lazuli from the Badakshan region of Afghanistan is as much used as is rose quartz from Tamil Nadu. There are also fuchsite from Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "Agate workers (locally known as \"Akik\" workers) in the Khambhat region of the Anand district of Gujarat state in India are at potential risk of exposure to high amount of silica dust due to grinding of agate stones in their occupation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "Agate stone grinding is done on grinding wheels (emery) at a speed of 2,000-3,000 rpm, which generates a large amount of dust.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "The dust contains fine dust particles of 2-5 micron in size which when inhaled reach the alveoli",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S01",
+      "quote": "A study revealed that the respirable dust concentration in household units is about 15-fold higher (2.35-2.74 mg/m3) than the permissible level (0.16 mg/m3)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "Inhalation of silica dust (SiO2) is known to induce silicosis among exposed workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "Long-term exposure leads to development of silicosis and increased susceptibility to tuberculosis5) and to a higher risk of developing lung cancer6).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "The interviews were conducted among 82 agate workers out of about 215 agate workers in three villages, Metpur, Sakarpur, and Timba in the Khambhat region of Gujarat state in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "The interviews were conducted from June 2010 to July 2011.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "knew about simple preventive methods to avoid silica dust exposure (80%), but only a minority of the workers (22%) were actually using the simple and available dust-preventive methods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "knew about the simple and easily available preventive methods of wet grinding or use of a mask (covering of face with layers of cloths) to reduce silica dust exposure",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S01",
+      "quote": "The most common cited reasons for not using a preventive method were feeling uncomfortable and inconvenient to use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "28% of the workers with 5 years or more of schooling were using the preventive methods, 24% of the workers with less than five years of schooling were using preventive methods, and only 9% of the uneducated (no schooling) workers were using preventive methods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "There were slightly more female workers (57%) than male workers (43%). Being a household industry, more women might prefer to work in the agate industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "The interviews were conducted from June 2010 to July 2011.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S01",
+      "quote": "Still, most of the agate units have no exhaust systems, and most of the workers do not use any dust-preventive methods and remain at risk of significant silica-dust",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S01",
+      "quote": "Agate workers are usually involved in various processes, including stone cutting, stone grinding, and polishing work on agate stones for ornamental and jewellery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S02",
+      "quote": "In Agate stone polishing industries of India, about 38% of workers develop silicosis in their lifetime.[2]",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S02",
+      "quote": "their families and other nonoccupational groups that also reside within the area develop silicosis (6.8 - 11.8 %), Silico-tuberculosis (2.8 - 6.3%), and tuberculosis (TB) (19.7 - 20.1%).[3]",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S02",
+      "quote": "Studies reveal that the concentration of respirable dust in these household industries is very high and contains more than 60% free silica in it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S02",
+      "quote": "Spirometry for lung function, chest X-ray, anthropometry, body fat % measurement, record of tuberculosis status and ILO classification of pneumoconiosis were done among 53 chest symptomatic patients above 15 years of age who were followed for 30 months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S02",
+      "quote": "who attended a specially arranged health clinic for the agate workers at Shakarpur on invitation, from June to December 2007 and were followed up till March 2010",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S02",
+      "quote": "Thirteen participants died in less than 3 years of follow up.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S02",
+      "quote": "The age at death of the participants ranges from 28 years to 60 years, with both mean and median at 40 years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S02",
+      "quote": "On regression analysis, TB and nutritional status were found to have strong influence on mortality.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S02",
+      "quote": "more than half of the male workers were underweight (BMI<18.5 kg/m2) at enrollment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "In Shakarpur of Khambhat subdivision of Gujarat, India, unorganized laborers have been making ornaments and other decorative and showcase items from agate and other stones since several decades.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S06",
+      "quote": "Chemical composition of soapstone includes talk, mica, chlorite, carbonate, amphibole and other natural minerals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S06",
+      "quote": "Among physical qualities, soapstone is a- nonporous, nonabsorbent, low conductor of electricity, heat resistant, higher specific heat capacity, resistant to acid and alkaline substances.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S06",
+      "quote": "Due to higher amount of talk, as its basic composition, soapstone displays, soft and craft-friendly",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S06",
+      "quote": "As, there are several soapstone mines available around Dhakotha area, which is situated in Kendujhar districtxv, so, this feature makes Dhakotha craft cluster, selfdependent regarding continuous raw material availability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S06",
+      "quote": "blackish grey, pink, orange, light green and dark green colored soapstone are used for craftsmanship purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S06",
+      "quote": "06. Soft Granite Visually dark grey with blackish tone in color composition. Grain marks are difficult to identify. Harder than soapstone. Not suitable for carving, but Ideal for Patthar Kundo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S06",
+      "quote": "Table-1: Raw soapstone used by craftsmen in Dhakotha",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "The wooden, handmade wooden lathe system is developed by the craft community members themselves and being used for craftsmanship purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "The first craftsman holds the pulling rope in his both hands and perform axis rolling in clockwise and in anticlockwise direction; while the another craftsman preforms stone carving process, with the help of different carving tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "This glue is collected from locally available Kulsum or Kusum",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "Botanical name of this tree is- Schleichera Oleosa, and belongs to the family of Sapindaceae.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "Stage-H: Pre-turning heating, to achieve stronger glue bounding, between soapstone and turning-bar's head end.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S06",
+      "quote": "Stage-L: Post-turning heating process, to un-glue the turned form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S06",
+      "quote": "Soapstone carving is respectively a newer soapstone craft in Dhakotha area with around 55-60 year's existence in this area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S06",
+      "quote": "This craft study cum design intervention initiative was conducted during 2010-2011 by this author.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S06",
+      "quote": "Among tools- chisel, hammer, mallet, Lakdi Pidha, Jute Chatti etc. are commonly used by craftsmen for carving soapstone statues and other carved products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S06",
+      "quote": "Provides angular support and cushioning to the under process stone products and prevent their sharp edges from unexpected chippings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S06",
+      "quote": "As the HB pencil marks might erase during the soapstone chiseling process, so, craftsmen convert, final pencil drawn line marks, into the surface-etched line marks, with the help of a fine tipped chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S06",
+      "quote": "Application of sand paper over a chiseled surface, to achieve final finishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S20",
+      "quote": "The final image is then smoothened with sandpaper and rubbed with coconut oil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S06",
+      "quote": "Mostly, statues of different Hindu gods, goddesses for religious purposes; architectural decorative and household daily-utility based soapstone products are being crafted by the carving craft community members.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S06",
+      "quote": "In Patthar Kundo craft, different forms of utensils are being crafted, while in soapstone carving craft, highly detailed soapstone statue crafting takes place.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S07",
+      "quote": "a. Khondalite, \"Kanda pathar\" in Oriya for the main temple Jaga Mohan, and Natya Mandir, endowed with engraved sculptors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S07",
+      "quote": "with its sculptural embellishment carved in khondalitic rock.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S07",
+      "quote": "The khondalite term, derived from the Kond (also called Khond) tribe of Odisha, was first coined by T. L. Walker (1902) for the rocks having mineralogy such as quartz, felspar, garnet, and sillimanite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S07",
+      "quote": "The choice of khondalite is due to its availability in the vicinity and preference over laterite for ease of sculpting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S07",
+      "quote": "However, the exact source of the rocks used and their mode of transport from the source to the construction site is yet to be deciphered.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S07",
+      "quote": "Narsingpur and Tapanga are possible sources of khondalite. If it is Narsinghpur, the transport is only through the waterways of Mahanadi and its distributary system",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S07",
+      "quote": "Out of the three types of rocks, laterite is used for foundations and side walls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S07",
+      "quote": "The ultrabasic rocks commonly known as chlorite (locally 'muguni') are used for simhasan, cult icons, and occasionally for door frames, and the main deity \"Surya\" (Behera, 2005).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S07",
+      "quote": "These are invariably green in colour and fine-grained",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S07",
+      "quote": "The Upper Gondwana sandstones of Odisha (Athgarh Sandstone) that occur in and around Bhubaneswar have been extensively used in the construction of all the temples of Bhubaneswar since the 7th century AD",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S07",
+      "quote": "Textural observations indicated that the main weathering reaction was the alteration of feldspars and red garnet (almandine) to kaolinite and goethite (Raymahashay and Sharma, 1993).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S07",
+      "quote": "Mostly alteration of minerals of feldspars and garnets has given rise to the disfiguring of the sculptors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S09",
+      "quote": "erosion of metal cramps supporting the structure due to salt air has in the past resulted in some damage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S07",
+      "quote": "its nearness to the sea could be a reason for the disfigurement of the artistic sculptors due to airborne saline water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S19",
+      "quote": "are enough to carve the ultra soft white soapstone, or Khadipathara, harder greenish chlorite or Kochilapathara and pinkish Khandolite or Sahanapathara or Baulapathara and the hardest of all black granite or Mugunipathara.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S19",
+      "quote": "Only a few simple tools like hammers and chisels of various shapes and sizes better known as 'Muna', 'Patili', 'Martual', ;Thuk-Thuki' and 'Nihana' in local parlance",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S19",
+      "quote": "The stone work of odisha is very different from other places.Instead of hard marble,carving is done on a soft stone called pink stone - a stone brought from the barbil areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S19",
+      "quote": "Due to its softness,only small pieces of pink stone are available,thereby,limiting the size of its end products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S19",
+      "quote": "Hand polishing of the base article is done using a traditional polishing powder which is applied on the surface with a soft, moist muslin cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S19",
+      "quote": "The final polishing is done using zinc powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S19",
+      "quote": "It was evolved over centuries by craftsmen who are descendants of the great builders of the famous temples of Lingaraj, Jaganntha, Konark, Rajarani and other temples",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S19",
+      "quote": "Craftsmen in Pathuriasahi at Puri use soft pinkstone and hard kochila to carve replicas of temple sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S20",
+      "quote": "After the raw stone is selected and sized, a sketch of the proposed image is drawn on to it. This is realised roughly with the help of steel rods and mallets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S20",
+      "quote": "The sculpture is brought to its final form with chisels of varied sizes and its roughness is polished away with files of increasing sharpness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S21",
+      "quote": "Shazar, uniquely crafted in Banda, India, features a traditional design using a wooden bow and a delicate steel wire known as 'Kaman.' Stones are mounted on a wooden stand called 'khunta' and cut with silicon carbide powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S23",
+      "quote": "ODOP known as Shajar, Fungus Augite, or Tree Augite. This stone is found exclusively in the Ken River and has fossils of fungus inside it that resemble patterns of leaves or trees",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S23",
+      "quote": "Banda, a district in the Bundelkhand region of Uttar Pradesh having a rich historical tradition going back to the remote antiquity. It prominently known for ODOP Shajar stone, which is used for making jewellery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S23",
+      "quote": "Shajar stone is primarily used for making exquisite jewelry and has gained popularity across the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S21",
+      "quote": "They are often handmade, though modern workshops may use tools like CNC machines or laser cutters to complement manual craftsmanship.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S22",
+      "quote": "Soft Stone is the most appealing of the kinds of lime stones found in the country. It is a \"Metamorphic Rock\" and also known as 'PYROPHYLLITE\", its scientific name.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S22",
+      "quote": "While Marble is the hardest form of limestone, Soap Stone is the softest and is easy to work on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S22",
+      "quote": "there is no homogeneity of colour, tint and texture in soft stone. Two pieces taken out, even from the same block of soft stone, are never alike.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S22",
+      "quote": "The base material of stone craft in Uttar Pradesh is marble, gorara soapstone and occasionally cuddapah.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S22",
+      "quote": "Water is sprinkled repeatedly to avoid heat generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S22",
+      "quote": "The craftsmen, sprinkle water on the stone during the course oftheir work because ofthe friction generated due to the constant chiseling away ofthe unwanted material results in the tools heating up.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S22",
+      "quote": "Before carving the stone is kept in boiling water overnight and treated chemically. This smoothens and whitens the surface ofthe stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S22",
+      "quote": "Polishing is done for the final finishing with sand or carborundum pieces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S22",
+      "quote": "Finishing is accomplished in a variety of ways from sand-papering, polishing with multani-mitti or clay, oil and cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S22",
+      "quote": "while for the harder stones this is done by chiseling out the extra material, with softer stones. This is done by scraping out the same with a sharp flat-edged iron tool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S22",
+      "quote": "The base material of stone craft in Uttar Pradesh is marble, gorara soapstone and occasionally cuddapah. Ramnagar (a part of Varanasi district), Luxa, Mishir Pokhra, Lahartara and Samath is important geographical area for the soft stone under cutwork",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S22",
+      "quote": "Soft Stones are excavated from open mines, Large sized boulders are carried to the workshops where they are given desired shapes and sizes by skilled and seasoned craftsmen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S05",
+      "quote": "in most places the local varieties are mostly used due to lower transport costs, which affect the price of the raw material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S03",
+      "quote": "In fact almost anything that one might think of has probably been tried at least once, including ashtrays, paper weights, plaques, cigarette holders, dishes, bowls, spoons and figurines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S05",
+      "quote": "Soft stones are easier to carve than granite and are easy to carve by hand. Granite and blue metal, on the other hand, require more force and different tools since the material is much harder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S05",
+      "quote": "Marble is also a metamorphic rock but a hard stone. There are many different varieties of marble that vary in colour and hardness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S05",
+      "quote": "Shilpa Shastras are contained principally in two texts, the Citralakshana and the Citrasutra that is a section of Vishnudharmottara-purana.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S05",
+      "quote": "Their exact dating is not clear but Citrasutra is a supplement to Vishnupurana that is currently believed to date to the 5th century CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S05",
+      "quote": "Depending on the sound of the stones when hit with a piece of metal, they can be defined as masculine, feminine or neutral.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S05",
+      "quote": "Although these factors presented above are considered to be general characteristics of Indian Hindu arts and stone carving, they mainly show the ideals behind the work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S12",
+      "quote": "the Hassan District Committee for Channakeshava Temple and Hoysalesvara Temple; and the Mysuru District Committee for Keshava Temple",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S12",
+      "quote": "such as the loss of religious activities at the Hoysalesvara Temple in Halebidu and Keshava Temple in Somanathapura",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S12",
+      "quote": "A continuity of worship, rituals and festivals is to be noticed at Channakeshava Temple (Belur), since its inception in 1117 CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S07",
+      "quote": "The banding of segregated minerals is common with color contrast in used khondalite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S07",
+      "quote": "Felspathic bandings are conspicuously altered by kaolinitisation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S07",
+      "quote": "Garnet crystals are dislodged due to margin alteration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S07",
+      "quote": "Laterite, a typical derivative of in situ alteration from variable original parent rocks under tropical climatic conditions, is a porous, pitted, and clay-like rock with a hard, limonitic protective crust containing a substantial quantity of iron oxide and some aluminum oxide.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S07",
+      "quote": "The structures made up of chloritized or serpentinised mafic are better preserved and not prone to weathering or grain decay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S07",
+      "quote": "Ganguly (1912) opined that the rock is not chlorite; the dark green rock is serpentinous or hornblendic, possibly brought from Nilagiri hills near the villages of Santragodia and Goojadeeha.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S25",
+      "quote": "Humayun, the second Mughal emperor, is credited with introducing inlay as a significant feature of Mughal architecture. The Qila-i-Kuhna Mosque in Delhi's Purana Qila (1540 CE) showcases one of the earliest examples of inlay work in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S24",
+      "quote": "To make a marble inlay artefact, the stones are cut and shaped with a hand-operated machine while the marble is chiselled with a diamond-tipped chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S24",
+      "quote": "then set piece by piece into the carved out marble, and held in place using an adhesive",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S24",
+      "quote": "a trade secret, the artisans claim",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S24",
+      "quote": "After the inlay is complete, the marble is buffed out and polished.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S25",
+      "quote": "Once the stones are set using a special adhesive, the surface is scrubbed and polished to perfection.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S25",
+      "quote": "Artisans, known as parachinkars, carve intricate grooves into marble, into which semi-precious stones are carefully inlaid.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S27",
+      "quote": "The techniques used in these historic pieces of art are still practised by the present sculptors of Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S27",
+      "quote": "The sculpture is made out of pure granite using the methods inscribed by the Pallavas which seems to be evidently used in their art and architecture as well: a. Athama rules b. Shilpa Shastras c. Vastu Shastras",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S27",
+      "quote": "The Mahabalipuram Stone Sculpture is characterised by a wide forehead, sharp nose, long eyes, hanging ears and the oval shaped face, usually with double chins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S26",
+      "quote": "Soft green stone (Serpentine): lnitially it is looks like solid gray in color but when artisan work on it or wash the stone it become translucent green.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S26",
+      "quote": "lt is very good in look. lt is got from the kenthumundi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S26",
+      "quote": "Granite: lt is used for heavy work. lt is dark and heaw stone got from the Moyurbanj.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S26",
+      "quote": "Sand stone(Saan patar): it is used for rough big cheap sculpture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S26",
+      "quote": "Soft red stone (Naali stone): lt is very good at work. lt has fine lines and no translucency.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S26",
+      "quote": "Compared to other dark rocks, serpentine is soft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S26",
+      "quote": "it is also often rich in other metal ores, including chromium, manganese, cobalt and nickel",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S26",
+      "quote": "The most important feature of Konark stone carving is the raw material. Konark stone carving utilizes serpentine stone, which is not employed by other craftsmen. The stone is called serpentine because of its color and markings resembling the skin of snakes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S26",
+      "quote": "Car patch (Adhesive): lt is very much used in stone carving because of it's quick bond behavior (lt will fix and dry Wth in 15 min.).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S26",
+      "quote": "Araldite (adhesive): lt is also used for joining the stone but it is takes long time to join (12 to 24 ours).Araldite is used because of its strong bonding.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S26",
+      "quote": "The block of stone is broken down in to main planes or areas, following form of the desired shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S26",
+      "quote": "Surface is drilled to various desired depths and unwanted material removed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S26",
+      "quote": "Main rough body outline is made. lntricate work is then made. Tool marks are removed with flat chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S26",
+      "quote": "Finally, all surfaces are meticulously finished.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S26",
+      "quote": "The work is confined to people of Pathurias caste with surnames of Das, Mistri, Nayak, Maharana, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S26",
+      "quote": "The main geographical areas of peroduction of konark stone carving are Konark ( district Puri , Orissa, India) and near-by areas and Bhubaneswar (Orissa, India) and its outskirts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S26",
+      "quote": "known by special local names given in Oriya areTagi (chisel) Gunati(double sided chisel) Thuk thuka (wooden hammer) Mugura (heaw wooden hammer)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S26",
+      "quote": "The art dates back to the late 6h century or early 7th century AD",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S28",
+      "quote": "Mahoba's excellent Gaura stone artistry is well-known throughout the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S28",
+      "quote": "The brilliant white stone used in Gaura stonecraft is primarily found in this area. Owing to the soft texture of Gaura stone, it is divided into many parts, which are subsequently utilized to create a variety of decorative crafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S28",
+      "quote": "Found only in the Gaurahari village, Gaura pathar is a bright natural stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S28",
+      "quote": "Using hammers and a chisel, the stone is meticulously shaped. It is then chemically treated and left in boiling water for a whole night before being carved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S28",
+      "quote": "Sand or particles of carborundum are used for polishing as the last finishing touch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S29",
+      "quote": "The introduction of the pneumoconiosis policy in 2019 in Rajasthan led to the diagnosis of 23,436 cases of silicosis out of 192,143 persons screened, indicating a prevalence of 12% among stone carving and stone mining workers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S29",
+      "quote": "The investigators emphasized that their studies in Rajasthan revealed a higher prevalence of silicosis among stone carving workers compared to stone mining workers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S29",
+      "quote": "Around 50,000 workers are working in the agate industry in Khambhat, Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S29",
+      "quote": "Received 2023 Feb 24; Accepted 2023 Jul 5; Collection date 2023.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S30",
+      "quote": "Fine stone crafts produced from soft marble stones found on the banks of the Narmada are well-known from Bhedaghat in Jabalpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S30",
+      "quote": "gives the impression that the deft artists have given these deity idols life.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Crafting success: a Strategic Roadmap to Tripling Rajasthan's Handicraft Exports 2024",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Jaipur Hand block printing, Miniature painting, Stone Carving (Marble, Red & White Stone)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Alwar Stone Carving (Marble, Red & White Stone), Carpet, Leather Craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Ajmer Miniature Painting, Stone Carving (Marble, Red & White Stone)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Karoli Stone Carving (Marble, Red & White Stone), Terracotta.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Dhaulpur Stone Carving (Marble, Red & White Stone), Zari Zardosi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S31",
+      "quote": "Jaisalmer Terracotta, Yellow Stone Carving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S31",
+      "quote": "The recent notification No.77/2023-CUSTOMS (N.T.), made effective from 30th October 2023 by the Department of Revenue regarding changes in the rates of duty drawback for certain handicraft items",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S31",
+      "quote": "A new rate of 2.2% has been established for stone artware/handicrafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S31",
+      "quote": "Crafting success: a Strategic Roadmap to Tripling Rajasthan's Handicraft Exports 2024",
+      "result": "PASS"
+    }
+  ]
+}

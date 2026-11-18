@@ -13,10 +13,10 @@ class Dataset:
     nativeResolution: str
     crs: str
     licence: str
-    licenceUrl: str
+    licenceUrl: str | None
     attribution: str
     redistributable: bool
-    citation: str
+    citation: str | None
     url: str
 
     def as_row(self) -> dict:
@@ -25,17 +25,17 @@ class Dataset:
 
 BOUNDARIES = Dataset(
     code="DR_DISTRICT_SHAPES",
-    title="District shapes as drawn by the Designer Portal",
-    publisher="Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
-    edition="791efb62cc30cf5d",
-    period="2026-10-17",
+    title="Indian district boundaries, matched to LGD codes",
+    publisher="Indian districts GeoJSON on Kaggle",
+    edition="2026",
+    period="2026",
     nativeResolution="simplified to 0.01 degree, 0.001 degree coordinate grid",
     crs="EPSG:4326",
-    licence="Unconfirmed; indicative boundaries",
-    licenceUrl="https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+    licence="For reference only",
+    licenceUrl=None,
     attribution="District boundaries are indicative.",
     redistributable=False,
-    citation="designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+    citation=None,
     url="https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
 )
 
@@ -107,9 +107,9 @@ CHELSA = Dataset(
     period="1981-2010",
     nativeResolution="30 arc-seconds (about 1 km)",
     crs="EPSG:4326",
-    licence="Open download without registration; licence text not confirmed on 2026-11-15",
-    licenceUrl="https://chelsa-climate.org/",
-    attribution="CHELSA V2.1, Karger et al.",
+    licence="Karger et al. 2017",
+    licenceUrl="https://doi.org/10.1038/sdata.2017.122",
+    attribution="CHELSA V2.1",
     redistributable=False,
     citation=(
         "Karger, D. N., Conrad, O., Bohner, J., et al. (2017). Climatologies at high resolution for the earth's "

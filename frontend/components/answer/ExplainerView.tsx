@@ -9,7 +9,7 @@ import { ExplainerHeader, ORIGINAL_TEXT } from "@/components/answer/ExplainerHea
 import { ExplainerReadingProvider, type ExplainerReading } from "@/components/answer/ExplainerReading";
 import { lazyBlock } from "@/components/answer/lazyBlock";
 import { ListenDock } from "@/components/answer/ListenDock";
-import { SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
+import { openedSource, SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
 import { TermSheet } from "@/components/answer/TermSheet";
 import type { UnderstoodChange } from "@/components/answer/UnderstoodLine";
 import { useListen } from "@/components/answer/useListen";
@@ -44,7 +44,7 @@ function useCitationLookup(state: ExplainerState, onOpen: (open: OpenCitation) =
     () => ({
       numbers,
       sourcesById,
-      onOpen: (citation) => onOpen({ citation, source: sourcesById.get(citation.sourceId) ?? null, number: numbers.get(citation.sourceId) ?? null })
+      onOpen: (citations) => onOpen(openedSource(citations, numbers, sourcesById))
     }),
     [numbers, sourcesById, onOpen]
   );

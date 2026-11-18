@@ -8,7 +8,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.models import Claim, ConceptEdge
-from app.research.retrieval import CLAIM_SUBJECT_TYPES
+from app.research.retrieval import CLAIM_SUBJECT_TYPES, EVERY_CHUNK_ACLS
 from app.research.stream import SourceRef
 
 from .knowledge_view import ClaimView, claims_by_id, source_ref
@@ -65,7 +65,7 @@ async def what_if_evidence(
         concept_claims = await _concept_claims(session, wanted)
         claim_ids = [found.claim_id for found in relationships]
         claim_ids += [claim_id for claims in concept_claims.values() for claim_id in claims]
-        views, sources = await claims_by_id(session, claim_ids)
+        views, sources = await claims_by_id(session, claim_ids, acls=EVERY_CHUNK_ACLS)
     return WhatIfEvidence(
         relationships=tuple(relationships),
         concept_claims=concept_claims,

@@ -1,0 +1,1711 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Mahabalipuram-Stone-Sculpture",
+  "dossierVersion": 1,
+  "dossierDigest": "1dbb6c491ef47e7f94ca5f5d82088450c37164face62ca383fd527355eb4eeee",
+  "checkedAt": "2026-11-18T10:50:20.395933Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/GIRPublic/Application/Details/426",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250502031147id_/https://search.ipindia.gov.in/GIRPublic/Application/Details/426",
+      "finalUrl": "https://web.archive.org/web/20250502031147id_/https://search.ipindia.gov.in/GIRPublic/Application/Details/426",
+      "fetchedAt": "2026-11-18T10:49:54.548641Z",
+      "contentType": "text/html",
+      "textSha256": "4dbbc8ba829283ba6f9ab6a54a361d2fd5a550e7a396a696072cc7d132addedb",
+      "characters": 2275,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://www.ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20250424231956id_/https://www.ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "finalUrl": "https://web.archive.org/web/20250424231956id_/https://www.ipindia.gov.in/writereaddata/Portal/IPOJournal/1_1532_1/Journal_99.pdf",
+      "fetchedAt": "2026-11-18T10:49:51.890503Z",
+      "contentType": "application/pdf",
+      "textSha256": "52373082769b12e31bfb188fa81a8398cb10b9730c72d15bfc603be4ca48eac4",
+      "characters": 58110,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://whc.unesco.org/en/list/249",
+      "route": "LIVE",
+      "readUrl": "https://whc.unesco.org/en/list/249",
+      "finalUrl": "https://whc.unesco.org/en/list/249",
+      "fetchedAt": "2026-11-18T10:49:46.986266Z",
+      "contentType": "text/html",
+      "textSha256": "867e1b93f50a718684e26f9d6569f63ce1d06a7dce37c59cb67fcf6559f36332",
+      "characters": 8718,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://web.archive.org/web/20180517230724id_/http://asi.nic.in/asi_monu_whs_mahabalipuram.asp",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20180517230724id_/http://asi.nic.in/asi_monu_whs_mahabalipuram.asp",
+      "finalUrl": "https://web.archive.org/web/20180517230724id_/http://asi.nic.in/asi_monu_whs_mahabalipuram.asp",
+      "fetchedAt": "2026-11-18T10:49:47.545094Z",
+      "contentType": "text/html",
+      "textSha256": "e3abcd14d1ab782e52a8abc5e9a0f29e81be5da49e56730a8a41bb91a37d5bdf",
+      "characters": 3627,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://artsandculture.google.com/story/mahabalipuram-sculpture-by-the-sea-archaeological-survey-of-india/_wXB5vhuL90aJA",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/mahabalipuram-sculpture-by-the-sea-archaeological-survey-of-india/_wXB5vhuL90aJA",
+      "finalUrl": "https://artsandculture.google.com/story/mahabalipuram-sculpture-by-the-sea-archaeological-survey-of-india/_wXB5vhuL90aJA",
+      "fetchedAt": "2026-11-18T10:49:48.221803Z",
+      "contentType": "text/html",
+      "textSha256": "21f257b80bf89ce6cdebbb841fc0ce7714c2a2ac89c0b03cdddc7b6cc61d1840",
+      "characters": 23651,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "finalUrl": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "fetchedAt": "2026-11-18T10:49:49.209551Z",
+      "contentType": "text/html",
+      "textSha256": "2b86522ef09cdbe887cb6411a87ffe63231f5f3b6b8560c798834df0ff88a45f",
+      "characters": 7456,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://dsource.in/sites/default/files/resource/stone-carving-mahabalipuram/downloads/file/Resource-stone-carving-mahabalipuram-Final.pdf",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/sites/default/files/resource/stone-carving-mahabalipuram/downloads/file/Resource-stone-carving-mahabalipuram-Final.pdf",
+      "finalUrl": "https://dsource.in/sites/default/files/resource/stone-carving-mahabalipuram/downloads/file/Resource-stone-carving-mahabalipuram-Final.pdf",
+      "fetchedAt": "2026-11-18T10:49:53.854284Z",
+      "contentType": "application/pdf",
+      "textSha256": "8d557649df0b755b159bfb8dc20b3491019f1ff92a71c544527f279894730db5",
+      "characters": 16124,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://artandculture.tn.gov.in/government-college-architecture-and-sculpture",
+      "route": "LIVE",
+      "readUrl": "https://artandculture.tn.gov.in/government-college-architecture-and-sculpture",
+      "finalUrl": "https://artandculture.tn.gov.in/government-college-architecture-and-sculpture",
+      "fetchedAt": "2026-11-18T10:49:50.406951Z",
+      "contentType": "text/html",
+      "textSha256": "132c565ba250aad07a675b50907ff097b148cbf1075d01c50b376b4f8492125d",
+      "characters": 5766,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://chengalpattu.nic.in/tourist-place/mamallapuram/",
+      "route": "LIVE",
+      "readUrl": "https://chengalpattu.nic.in/tourist-place/mamallapuram/",
+      "finalUrl": "https://chengalpattu.nic.in/tourist-place/mamallapuram/",
+      "fetchedAt": "2026-11-18T10:49:54.318570Z",
+      "contentType": "text/html",
+      "textSha256": "d9f3167140c34191187313e67887d962dd73e56c4b914e5b63905e4d7b6a2dc4",
+      "characters": 2826,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://chengalpattu.nic.in/history/",
+      "route": "LIVE",
+      "readUrl": "https://chengalpattu.nic.in/history/",
+      "finalUrl": "https://chengalpattu.nic.in/history/",
+      "fetchedAt": "2026-11-18T10:49:55.906314Z",
+      "contentType": "text/html",
+      "textSha256": "2ea57225a8133980377b418dd3a3cbd6e7420da6e9d56675f4a7e4368fdeaef5",
+      "characters": 3956,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://tnhdc.poompuhar.com/welcome/schemes/",
+      "route": "LIVE",
+      "readUrl": "https://tnhdc.poompuhar.com/welcome/schemes/",
+      "finalUrl": "https://tnhdc.poompuhar.com/welcome/schemes/",
+      "fetchedAt": "2026-11-18T10:49:54.829111Z",
+      "contentType": "text/html",
+      "textSha256": "b38af8c573953aebe69e1453249215de869c24054fb725f3fb4a77cd3055dbe6",
+      "characters": 7050,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.deccanchronicle.com/nation/in-other-news/151117/mahabalipuram-stone-sculpture-gets-gi-tag.html",
+      "route": "LIVE",
+      "readUrl": "https://www.deccanchronicle.com/nation/in-other-news/151117/mahabalipuram-stone-sculpture-gets-gi-tag.html",
+      "finalUrl": "https://www.deccanchronicle.com/nation/in-other-news/151117/mahabalipuram-stone-sculpture-gets-gi-tag.html",
+      "fetchedAt": "2026-11-18T10:49:55.303708Z",
+      "contentType": "text/html",
+      "textSha256": "299f16a51a3d5076322ae729dfeb18175f5e1dc01e11a9f005322b05fc6f08f6",
+      "characters": 2116,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.deccanchronicle.com/nation/in-other-news/151117/gi-tag-will-elevate-mahabs-sculptures-to-new-heights.html",
+      "route": "LIVE",
+      "readUrl": "https://www.deccanchronicle.com/nation/in-other-news/151117/gi-tag-will-elevate-mahabs-sculptures-to-new-heights.html",
+      "finalUrl": "https://www.deccanchronicle.com/nation/in-other-news/151117/gi-tag-will-elevate-mahabs-sculptures-to-new-heights.html",
+      "fetchedAt": "2026-11-18T10:49:56.881041Z",
+      "contentType": "text/html",
+      "textSha256": "aae7546fa823a1ff818d68bb534f6c79358ab91ec3c20c690a4e1cd6e8b6390d",
+      "characters": 2321,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.dtnext.in/city/2017/11/20/set-in-stone",
+      "route": "LIVE",
+      "readUrl": "https://www.dtnext.in/city/2017/11/20/set-in-stone",
+      "finalUrl": "https://www.dtnext.in/city/2017/11/20/set-in-stone",
+      "fetchedAt": "2026-11-18T10:49:56.327361Z",
+      "contentType": "text/html",
+      "textSha256": "18db2806309f467dacccbaf89e6de7b036c6e545af890cd99bac2e6ac29cff65",
+      "characters": 2581,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://www.dtnext.in/news/chennai/pallava-style-sculptures-a-rarity-these-days",
+      "route": "LIVE",
+      "readUrl": "https://www.dtnext.in/news/chennai/pallava-style-sculptures-a-rarity-these-days",
+      "finalUrl": "https://www.dtnext.in/news/chennai/pallava-style-sculptures-a-rarity-these-days",
+      "fetchedAt": "2026-11-18T10:49:58.898835Z",
+      "contentType": "text/html",
+      "textSha256": "986a6364a137ef145ae240a02c0ab9413e6f7cf451ed80487f333a8b20b07c46",
+      "characters": 2887,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://erepo.uef.fi/bitstream/123456789/18926/1/urn_isbn_978-952-61-2621-0.pdf",
+      "route": "LIVE",
+      "readUrl": "https://erepo.uef.fi/bitstream/123456789/18926/1/urn_isbn_978-952-61-2621-0.pdf",
+      "finalUrl": "https://erepo.uef.fi/server/api/core/bitstreams/154220db-3c23-4b61-bdf6-6e9ff391344f/content",
+      "fetchedAt": "2026-11-18T10:50:01.951157Z",
+      "contentType": "application/pdf",
+      "textSha256": "a848e96143deb0393d2e4836921639e6794e5e94aaa3396d97db37084c528ca1",
+      "characters": 922246,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.wccinternational.org/_files/ugd/2f9924_618d7e96fb604195894670a3be2c1052.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.wccinternational.org/_files/ugd/2f9924_618d7e96fb604195894670a3be2c1052.pdf",
+      "finalUrl": "https://www.wccinternational.org/_files/ugd/2f9924_618d7e96fb604195894670a3be2c1052.pdf",
+      "fetchedAt": "2026-11-18T10:49:57.946238Z",
+      "contentType": "application/pdf",
+      "textSha256": "61709ad681975c927d2ab47a1d80fdf4b59b5935d48d5803ed6f8f29c8e382f2",
+      "characters": 5600,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.stationeryprinting.tn.gov.in/extraordinary/2024/89_Ex_III_1a_2024.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.stationeryprinting.tn.gov.in/extraordinary/2024/89_Ex_III_1a_2024.pdf",
+      "finalUrl": "https://www.stationeryprinting.tn.gov.in/extraordinary/2024/89_Ex_III_1a_2024.pdf",
+      "fetchedAt": "2026-11-18T10:49:58.478541Z",
+      "contentType": "application/pdf",
+      "textSha256": "9071e921b611492c7029fdb1eb833ddd69f8ef81bc10c80dc3d627ae9bc1ccaf",
+      "characters": 32860,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.stationeryprinting.tn.gov.in/extraordinary/2025/600_Ex_VI_1_2025.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.stationeryprinting.tn.gov.in/extraordinary/2025/600_Ex_VI_1_2025.pdf",
+      "finalUrl": "https://www.stationeryprinting.tn.gov.in/extraordinary/2025/600_Ex_VI_1_2025.pdf",
+      "fetchedAt": "2026-11-18T10:50:00.406711Z",
+      "contentType": "application/pdf",
+      "textSha256": "0be5477eab8c17a28d7b3c94e117dc0f417dfce38096869c03ed414de399ee22",
+      "characters": 33781,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "in respect of Hand crafted - Stone carving products, including but not limited to Statues of god & goddess, human form, animals and nature, utilitarian products, gift, interior pieces & decorative items",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S02",
+      "quote": "A typical sculpture from Mamallapuram/Mahabalipuram is known to be carved in stone with characteristics of intricate designing chiselled finely there unto.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S02",
+      "quote": "Keeping with the spirit of the surrounding Pallava art and architecture, the popular stone sculptures made today in Mamallapuram are idols from mythologies or deities depicting divinity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S02",
+      "quote": "The techniques used in these historic pieces of art are still practised by the present sculptors of Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "It is very famous as the marketing and manufacturing centre of stone sculpture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S05",
+      "quote": "The ancient tradition of stone carving is still alive in the region, and rhythmic sounds of hammer and chisel on stone afford a glimpse of how these monuments, rock-cut caves and sculptures came into being, almost fifteen hundred years ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S07",
+      "quote": "Mahabalipuram located 60 Km away from Chennai, is the main center for ancient stone carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S07",
+      "quote": "The Craftsmen belong to Viswakarma community which practices the craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S03",
+      "quote": "This group of sanctuaries, founded by the Pallava kings, was carved out of rock along the Coromandel coast in the 7th and 8th centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S02",
+      "quote": "The exquisite rock-sculpting techniques exhibited in the Mahabalipuram/ Mamallapuram can be dated back to the early 7 th century; to distinctively characterizing the art and architecture that flourished in glorious period of the Pallavas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S02",
+      "quote": "Now known as the 'Rockcut Architecture, it was the Pallava king Mahendravarman, who is the originator of this art with the construction of the completely rock- cut Lakshitayana in Mandagapattu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S02",
+      "quote": "The Pallavas were the ones to duplicate brick - mortar-wood structure in stone and not merely any stone, but on an unrelenting surface like granite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S03",
+      "quote": "The Pallava dynasty, which ruled this area between 6th and 9th centuries CE, created these majestic edifices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S06",
+      "quote": "Mamallapuram - now known as Mahabalipuram - was a major port city of the Pallava Dynasty from the sixth to ninth century CE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "Mahabalipuram (or Mamallapuram), located along southeastern India's Coromandel Coast, was a celebrated port city of the Pallavas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S04",
+      "quote": "Mamallapuram, the city of Mamalla, is after the title of great Pallava ruler Narasimhavarman-I (AD 630-68).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S06",
+      "quote": "The city was named after emperor Narasimhavarman I, also known as Mamalla",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S05",
+      "quote": "The Pallavas: Narasimhavarman I (630 - 668 CE)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S05",
+      "quote": "Most of the complex was built in the 7th Century C.E., during the reign of Narasimhavarman I of Pallava dynasty",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S05",
+      "quote": "This panel, from the northeastern corner of the Dharmaraja Ratha, shows a statue of Narasimhavarman I. Most of the monuments of Mahabalipuram belong to his reign.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S04",
+      "quote": "the structural architecture was introduced on a grand scale by Pallava Rajasimha (AD 700-28), culminating in erection of the world famous Shore temple.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S02",
+      "quote": "Narasimhavarman II Rajasimha (A.D. 700-728)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S02",
+      "quote": "were contributed by Narasimha II a.k.a. Rajasimha, who built the Shore Temples",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S07",
+      "quote": "The fascinating towers of famous \"Shore temple\" which is one of the \"Seven pagodas\" were constructed by King Narasimha Varman in 18th century during Pallava period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S04",
+      "quote": "Of the nine monolithic temples found in Mahabalipuram, the most important are Five Rathas known after the famous five Pandava brothers of the Mahabharata fame.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S05",
+      "quote": "they are associated - without any historical basis whatsoever - with the five Pandavas of the Mahabharat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S03",
+      "quote": "The monolithic temples are locally called \"ratha\" (chariot), as they resemble the processional chariots of a temple. These five monolithic temples are each hewn out of a huge boulder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S06",
+      "quote": "The structural monoliths, popularly called Pancha Rathas - meaning \"five chariots\" - along with three large animal sculptures of a lion, an elephant and a bull, are carved out of a single outcropping of stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S02",
+      "quote": "There are 13 cave -temples ( known as 'mandapas') , the notable ones being the Varaha Mandapa, Mahishasuramardini Mandapa",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S09",
+      "quote": "There are nine cave temples which are cut in the rocks in Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "The sculptural bas reliefs are another very important class of masterly creations created during Mamalla's reign.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "There are four such reliefs at Mamallapuram, the most noteworthy among them being the Arjuna's Penance and Govardhanadhari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S03",
+      "quote": "Criterion (ii): The influence of the sculptures of Mahabalipuram, characterized by the softness and suppleness of their modelling, spread afar to places such as Cambodia, Annam and Java.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S06",
+      "quote": "Its has also been categorised as a UNESCO World Heritage Site since 1984.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S05",
+      "quote": "Mahabalipuram received World Heritage Site status in 1984, and attracts visitors from across the country and the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S02",
+      "quote": "it was declared as one of the 13 World Heritage Centres by the UNESCO in 1985",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S02",
+      "quote": "Later, in 1991, the Government of India declared it as a Special Tourism Area, in order to boost the tourism industry of the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S02",
+      "quote": "The authenticity of the sculptures of Mamallapuram by the Pallavan artists can be found by the inscr iption of seven labels on the periphery of a rock with a cavity (this rock is called the 'Horse cistern of lame Virappan') in Puncherri, a hamlet of Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S02",
+      "quote": "These names written in the old Tamil/ Granth script reads personal names which undeniably denote artists (for example, the name 'KevadaPerumtaccan', where 'perum-taccan' means 'great sculptor').",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "Many records of the Pallava age go to show that the sculptors hailed from Kanchipuram, the capital city of the Pallava reign.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "These artist-sculptors formed guilds and worked as scribes of the king.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "This can be seen in the writings of a certain court poet named Dandin, of the Pallava era who speaks of an artist named Lalitaya who invited King Rajasimha to visit Mamallapuram to see the mended forearm of Vishnu that had broken from the wrist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "The artistry was so impeccable that the mended joints cannot be seen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S15",
+      "quote": "Mamallapuram finds a mention in the 8th century Sanskrit work, Avanti Sundari Katha, which speaks of the greatness of a particular sculptor in repairing the broken image of Vishnu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S02",
+      "quote": "This can be seen in the writings of a certain court poet named Dandin, of the Pallava era who speaks of an artist named Lalitaya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S02",
+      "quote": "This is one ofthe earliest records of scientific sculptural conservation in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S02",
+      "quote": "It was in the 16th century that the name 'Mahabalipuram' was coined.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S02",
+      "quote": "The name 'mamallai' means 'great port' in Tamil, as noted by the Vaishnavite saint of the time, Bhuttatalvar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S05",
+      "quote": "The present popular name of 'Seven Pagodas' is due to the early Europeans in India and was originally applied to the Shore temple and the other temples a little inland, the spires of which could be seen from the sea.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S05",
+      "quote": "They were excavated during the reign of Narasimhavarman I and are the earliest monuments of their kind in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S05",
+      "quote": "A little away to the south of Arjuna's Penance, in front of the lighthouse, is another boulder on which there is an unfinished representation of a similar scene. The sculptor of the finished work might have experimented here before undertaking his main task.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S06",
+      "quote": "Stylistically, these early rock reliefs of Mamallapuram are rougher and more rigid than those of caves in western India and the Deccan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S06",
+      "quote": "This is partly due to the lack of specialised craftsmen for rock-cut sculpture in the region at the time, and partly a result of the difficulty in carving the hard granite native to Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S06",
+      "quote": "This is partly due to the lack of specialised craftsmen for rock-cut sculpture in the region at the time, and partly a result of the difficulty in carving the hard granite native to Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S06",
+      "quote": "The existing sculptures show the influence of early Buddhist traditions of Satavahanas and Iksvaku from regions in and around Andhra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S08",
+      "quote": "It was started in 1957 as the Sculpture Training Centre under the guidance of Department of Industries and Commerce with a sole objective of reviving and extending the frontiers of age-old tradition of Sculpture and Architecture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S08",
+      "quote": "During 1975-76, the Directorate of Technical Education introduced Diploma Courses and renamed the institution as Tamil Nadu Training Centre of Architecture and Sculpture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S08",
+      "quote": "Later in 1984, a B.Sc. Degree in Sculpture with four electives namely Stone Sculpture, Sudhai Sculpture, Wood Sculpture and Metal Sculpture was started.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S08",
+      "quote": "its curriculum comprises Shilpa, Agama, Vastu Sastras, Iconometrical and Iconographical sketches of Sculptures, Aesthetics, Philosophy along with Sanskrit, English and Tamil.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S08",
+      "quote": "It offers undergraduate degree courses like, B.Tech in Traditional Architecture, B.F.A in Traditional Sculpture (Stone Sculpture, Sudhai Sculpture, Wood Sculpture and Metal Sculpture) and B.F.A in Traditional Drawing and Painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S08",
+      "quote": "This college is affiliated to Tamil Nadu Dr.J.Jayalalithaa Music and Fine Arts University.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "The presence of the Government College of Sculpture and Architecture that has been established in the town of Mamallapuram has caused the rise in the number of sculptors who can effortlessly reproduce the finest work on stone, worthy of being called a Pallavan work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S02",
+      "quote": "It is a source of livelihood for a large segment of society of Mamallapuram who had been in stone carving business for centuries which has been passed down to generation traditionally",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S02",
+      "quote": "as well as the students of sculpture at the Government College of Sculpture and Architecture who have opened the workshops and are producing these stone sculptures in Mamallapuram itself",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S15",
+      "quote": "At the Mamallapuram College of Sculpture. we were taught the various styles. We learnt how every inch of a sculpture should be a specific measurement, which is followed judiciously by all of us",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S15",
+      "quote": "We do all styles of sculptures - from the Chola and Pallava period. But we found that the Chola styles are more popular than the Pallava sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S15",
+      "quote": "Gopu Rangaratnam, historian and member, Tamil Heritage Trust, said that one cannot find a Pallava-style sculpture done by artisans today anywhere in Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S15",
+      "quote": "I have visited Mamallapuram 30 around times or so, but have not seen even one Pallava style sculpture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S02",
+      "quote": "They only make the traditional sculpture reminiscent of the Pallava period relying on the Athama, Shilpa Shastras and Vastu shastras.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S14",
+      "quote": "En route to the famous Pancha Rathas, a fine example of monolithic architecture from the Pallava dynasty, visitors are greeted by the sight of numerous shops displaying exquisite stone sculptures, dotting the roadside.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S14",
+      "quote": "Large-scale Ganesha idols sit next to stone figures of the Buddha and other deities, in all shapes, catering to all budgets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S14",
+      "quote": "Santhosh Babu, Chairman and Managing Director of Tamil Nadu Handicrafts Development Corporation (TNHDC), which applied for the GI tag, said",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S14",
+      "quote": "The GI tag extends to stone sculptures made in Mamallapuram, including those which are replicas of the Pallava style stone sculptures, which Mamallapuram is famous for.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S14",
+      "quote": "The GI tag will create a huge market for the artisans, but it will also attract counterfeiters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S14",
+      "quote": "perhaps a standard or hallmark which exists for buying gold,\" said the CMD",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "The post-GI measures, which so far have been sluggish, are being implemented.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "This includes registering artisans into our network and promoting the product actively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S14",
+      "quote": "We are doing this by starting with a twoday workshop organised for officials and artisans registered with us, conducted by Textiles Committee, Government of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S13",
+      "quote": "The idols made here range from one-and-a-half feet to about 15 feet in height.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S13",
+      "quote": "asserts R. Natesan, retired modeller, ASI",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S13",
+      "quote": "We strictly adhere to the Agama Sastras while carving the images,\" he added",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S13",
+      "quote": "Next to tourism, stone sculpting is the major activity in this town and many of our idols grace the temples or are part of a connoisseurs' exquisite collection,\" says a sthapathi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S12",
+      "quote": "issued the coveted certificate to Tamil Nadu Handicrafts Development Corporation Limited (Poompuhar), Tamil Nadu Government, on Tuesday for Mahabalipuram Stone Sculpture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S12",
+      "quote": "Chennai: The Geographical Indications Registry, Chennai, has accorded the Geographical Indications certificate to Tamil Nadu Government for 'Mahabalipuram Stone Sculpture'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "| Application Number | 426 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "| Status | Registered | | Applicant Name | Tamil Nadu Handicrafts Development Corporation Limited (Poompuhar) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "| Date of Filing | 31/05/2013 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S02",
+      "quote": "Application Date: 31-05-2013",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "| Certificate Number | 302 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "| Certificate Date | 15/11/2017 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "| Registration Valid Upto | 30/05/2033 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S02",
+      "quote": "G.I. APPLICATION NUMBER - 426",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S02",
+      "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 99 dated14thJuly, 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S02",
+      "quote": "falling in Class 19 is hereby advertised as accepted under Sub-section (1) of Section 13",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S01",
+      "quote": "| Availability Date | 14/07/2017 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S02",
+      "quote": "C) Types of Goods : Class 19 - Hand crafted - Stone carving products",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "| 2 | 426 - GI - Renewal Letter - 28-09-2022 | 28/09/2022 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "| 1 | 426 - GI - Renewal Details - 13-09-2023 | 13/09/2023 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S02",
+      "quote": "An Inspection Body of the following Members is proposed for ensuring the standards, quality and specification of the Mahabalipuram Stone Sculpture",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S02",
+      "quote": "v. Principal, Government College of Architecture and Sculpture, Mahabalipuram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S02",
+      "quote": "vi. Two artisans Mahabalipuram Stone Sculpture;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S02",
+      "quote": "The quality of the Mahabalipuram Stone Sculpture is inspected by artisans themselves, as they are the best judge for the crafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S02",
+      "quote": "The artisans ensure that the quality is maintained from the stage of stone selection and at each of the stages till the finished product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S02",
+      "quote": "These sculptures are so exquisite that they are exported to foreign nations like the United State of America, Srilanka, Burma, Maldives, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S11",
+      "quote": "Urban Haats are permanent marketing infrastructure located in tourist towns and metropolitan cities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S11",
+      "quote": "They provide direct marketing facilities for handicrafts and handloom products created by artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S11",
+      "quote": "Poompuhar has established Urban Haats in Kanyakumari 80 and Mamallapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S11",
+      "quote": "The Craft Tourism Village project aims to create awareness among tourists about Mamallapuram and promote its crafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S11",
+      "quote": "The renovation and development of artisan work sheds and display centres at Five Rathas street have been completed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S11",
+      "quote": "In Karanai village, 26 artisan houses have been beautified by constructing walls and painting them with attractive colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S17",
+      "quote": "No. CITY / COUNTRY / YEAR TITLE",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S17",
+      "quote": "4. Mamallapuram, India (2015) WCC-World Craft City for Stone Carving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S11",
+      "quote": "Mamallapuram, also known as Mahabalipuram, has been recognized as a \"World Stone Carving City\" by the World Crafts Council (WCC).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S11",
+      "quote": "The Crafts Council of India (CCI) and Poompuhar have played significant roles in facilitating this recognition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S02",
+      "quote": "Mahabalipuram Stone Sculpture is done at Mahabalipuram/ Mamallapuram and surrounding area of Mahabali puram (such as Devaneri, Pooncheri, Pattipulam, Kaaranai, Kokkalamedu, Ambal Nagar, Kuzhipanthandalam, Echur, Thirukazhukundram,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S02",
+      "quote": "Venpushpam, Kovalam, Nemmeli, Thiruvidanthai, Kadumpadi, Manamai, Kunnathur, Muttukadu, Uthandi, Kanaathur, Paiyanur, Chavadi, Kannapattu, Nandhima Nagar, Perumaleri, Puliyur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S02",
+      "quote": "in Kancheepuram District in the State of Tamil Nadu in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S06",
+      "quote": "A historical site in Chengalpattu district, Tamil Nadu on the Coromandel coast comprising monuments, caves, sculptures and temples",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S09",
+      "quote": "Mamalapuram (Mahabalipuram) is one of the important place to visit in Chengalpattu District.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S08",
+      "quote": "The Government College of Architecture and Sculpture is located in Mamallapuram, Chengalpattu District, Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S10",
+      "quote": "Chengalpattu district came into existence on 29.11.2019, when it was carved out of the erstwhile Kancheepuram district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S07",
+      "quote": "Mahabalipuram is a small town in Kanchipuram district of Tamilnadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S13",
+      "quote": "Chennai: The heritage town of Mamallapuram, located about 56 km from here",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S07",
+      "quote": "Mahabalipuram is a small town in Kanchipuram district of Tamilnadu. It is located 60 Km away from Chennai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S02",
+      "quote": "The geographical location of Mamallapuram is one of the fundamental reasons for fostering the development of stone sculpting industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "It was a sea-port during the time of Periplus (1st century AD) and Ptolemy (AD 140) and many Indian colonists sailed to South-East Asia through this port town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S02",
+      "quote": "The source of the black, white and green granite, as well as the sandstone, lies in the Mahabalipuram region and neighbouring areas such as P attimalai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S07",
+      "quote": "Red and black, white granites are available locally in Mahabalipuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S07",
+      "quote": "These stones are locally called as karuppu kal (black), Vellali kal (white).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S07",
+      "quote": "Stones available in Mahabalipuram: 1. Black granite. 2. Red granite. 3. White Granite. 4. Soapstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S07",
+      "quote": "But for soft texture soapstone is easily carved by scooping.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S02",
+      "quote": "The stone used is pure granite extracted from the Kanchipuram district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S02",
+      "quote": "The sculptors use the densest of granite and carve these exquisite pieces into them in order to ensure the sculptures' long life.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S02",
+      "quote": "This stage not only involves talent, but also his extreme finesse for the stone if once broken, cannot be fixed owing to its density.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S03",
+      "quote": "The natural landscape was utilized in carving out these structures, thereby making the ability of the Pallava craftsmen universally known.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S02",
+      "quote": "Through the structural -model temples of Mukundanayanar Shrine, Okkaleshwar Temple and the Shore Temples made of reddish- granite, g reyishwhite granite and black granite respectively",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S02",
+      "quote": "Evidence of sculpted structures made from stones like sandstone, basalt, black granite and even granite (found in the city of Mamallapuram), is a true testament to the skill and creativity of the Pallavan sculptors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S02",
+      "quote": "The primary raw materials used in this art form are granite and sandstone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S02",
+      "quote": "The sculptors are known to use sandstone on rare occasions as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S02",
+      "quote": "The stone is chosen according to the size of the idol and the size is estimated with regard to the availability of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S07",
+      "quote": "Oil: It is applied to the stone as it gives characteristic black color and smoother surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S07",
+      "quote": "The idol is washed and coated with oil to get glossy look.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S07",
+      "quote": "Sometimes oil is also applied to obtain the typical dark color for selected products according to the requirement.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S07",
+      "quote": "Boiling water and chemical: These are used to treat the stone as it whitens outer texture of granite stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S07",
+      "quote": "The carved stone is then treated with water and chemical. This is done to smoothen and whiten the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S07",
+      "quote": "Red oxide solution: The stencils are drawn on the surface of the stone using red oxide solution, before carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S07",
+      "quote": "Then the dimensions of the figure are marked with red oxide solution on the slab.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S07",
+      "quote": "Water is sprinkled frequently to avoid heat generation during carving process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S07",
+      "quote": "Water: Water is sprinkled continuously to avoid heat generation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S07",
+      "quote": "Once the product is ready, the surface of the stone is polished by rubbing it with sandpaper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S07",
+      "quote": "Sand stone is rubbed on the surface of idol to obtain smooth surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S07",
+      "quote": "Different types of sharp edged disk blades used to carve sophisticated designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S07",
+      "quote": "Sometimes, the automated electric drills are used while making large sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S07",
+      "quote": "Cutting Machine: Different types of automated cutting machines are used to cut the bigger stone blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S07",
+      "quote": "Automated cutting tool used to cut the granite stone evenly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S07",
+      "quote": "Chisels: Wide edged and point edged chisels- 'Uli' are used to carve the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S07",
+      "quote": "A stone of desired shape is taken and leveled with a chisel called 'Palamunai uli' locally. Then the dimensions of the figure are marked with red oxide solution on the slab.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S07",
+      "quote": "Palamunai uli: Chisel used to level the surface of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S07",
+      "quote": "Rough granite stone is carved with heavy chisels, hammers and with automated tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S07",
+      "quote": "The carving technique varies as per the texture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S07",
+      "quote": "The artisan first decides the required design to be carved from the stone. The block of the stone is first cut into appropriate size.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S07",
+      "quote": "The unwanted edges are removed by chiseling with chisel and hammer. Rough carving is made based on the rough sketches on the surface of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S07",
+      "quote": "After rough carving, the detailing and minor carvings are made using sharp edged and pointed chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S07",
+      "quote": "Once the product is ready, the surface of the stone is polished by rubbing it with sandpaper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S02",
+      "quote": "A typical stone sculpture of Mammalapuram is done is six stages.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S02",
+      "quote": "Each and every step of carving and sculpting is guided by the Shilpa Sastra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S02",
+      "quote": "A drawing of the desired idol is drawn on a piece of paper and the parts are marked. The whole idol is made according to this sketch which is divided into 124 parts, normally.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S02",
+      "quote": "there are only 5 divisions for the sculpting of Lord Ganesha, but 120 divisions for some other female sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S02",
+      "quote": "Stage 1: The sketch of the original drawing on paper is traced onto the stone using charcoal. After this, a red liquid called 'kaavi' is used so that the sketch cannot be removed by any means from the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S02",
+      "quote": "The measuring is done with a scale, using a technique called 'navatalam', where the sculptor draws the sketch ofthe sculpture by dividing into 9 parts- by division into two 4 and a half parts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S02",
+      "quote": "Stage 2: The unnecessary parts of the stone which are vestigial in the structure of the idol are removed. This process involves a machine. The stone now becomes the crude shape of the idol to be formed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S02",
+      "quote": "Stage 3:The sculptor now sculpts the basic outline, the ornaments, limbs, shape of the body and divisions in the idol so that it resembles a figurine. Holes are drilled into the parts of stone, so that it provides space for the idol to possess a distinct bodily shape and posture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S02",
+      "quote": "Now, the sculptor turns over the stone and removes the unnecessary stone from the back and gives a resultant round shape to the sculpture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S02",
+      "quote": "This stage utilizes both, machines like the drilling machine as well as the hammer and chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S02",
+      "quote": "Stage 4:The stone is smoothened and polished; resulting in a curvaceous body. The sculptor concentrates on smoothening the stone and removing the minor deformities in the shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S02",
+      "quote": "Stage 5: In this stage, the polishing of the idol is done using an emery stone/ grinding stone. As it is done by hand and not by machine, it is extremely gruelling and involves a lot of patience in order to keep the structure of the idol intact.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S02",
+      "quote": "Stage 6:After the previous stage which brings out the inherent colour of the granite, the skill of the sculptors is put into use. The ornamentation, details of the face and figurine are carved by the sculptor using the basic tools such as the hammer and chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S02",
+      "quote": "The sculptors of Mamallapuram still use the hammer and chisel technique to carve into the hard stone of granite. These tools are very time consuming but the art is such that the exquisite carving and delicate features of the idol will not surface unless the hammer and chisel are used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S02",
+      "quote": "The Mahabalipuram Stone Sculpture is characterised by a wide forehead, sharp nose, long eyes, hanging ears and the oval shaped face, usually with double chins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S02",
+      "quote": "The sculptures carry the stamp ofan oval face for a female and a long face for a male. The faces possess the typical protruding forehead, sharp nose, hanging ears, long eyes and enigmatic smile.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S02",
+      "quote": "The sculptures are usually in a reclining, sleeping, standing or sitting position. They characteristically look animated and lifelike des pite the stone as the medium of sculpting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S02",
+      "quote": "The sculptors only use the poses which are only prescribed in the Shilpa Shastras and they have the characteristics of:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S02",
+      "quote": "a. Sathva Guna (Serene characteristic)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S02",
+      "quote": "Thamasa Gun a (Introspective characteristic)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S02",
+      "quote": "c. Rajasha Guna (Warrior-like/ Royal characteristic)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S02",
+      "quote": "The additional look of the idol depends on the above attributes a character and accordingly, a head dress/ crown not exceeding the size of the idol's face by one and a half or tresses with circular pattern is carved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S02",
+      "quote": "The ornamentation includes weaponry in hand, ornaments on the chest, the traditional sacred thread (for the male) that characteristically traverses over the right arm, the intricately designed drape- like clothing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S02",
+      "quote": "The main Pallavan pieces of architecture that can be found in Mamallapuram are:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S02",
+      "quote": "1) Cave Architecture (Kuzhai Kovil)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S02",
+      "quote": "2) Rock Architecture [Vettithali ( Ouarikal) Rathangal]",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S02",
+      "quote": "3) Structural Temples (Kattimana Kovil)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S02",
+      "quote": "a) Round sculptures (which provides a view from all the sides)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S02",
+      "quote": "b) Relief sculptures (which are in the open and are projected towards the sky)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S02",
+      "quote": "c) Painting/ Portrait sculptures (which are portrayed like a painting, in a single view and are usually found inscribed in the walls of the rathas and mandapams).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S02",
+      "quote": "a) Open sculptures (Chitram- Mttzhu Uruvam),",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S02",
+      "quote": "b) Relief sculptures (Arthachitram Podaipu Shilpangal), and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S02",
+      "quote": "c) Painting/ Portrait sculptures (Chitra Basam).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S02",
+      "quote": "The sculptors of Mamallapuram recreate these products as statues presently in the form of: a. Gods and Goddesses b. Characters and scenes from Tamil literature c. Animals",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "The traditional craftsmen continue to carve masterpieces of mythological figures, Human figures, images of gods and goddess, Idols for worship, figures of animals, scenes of Hindu epics, different poses of lord Vinayaka, mounts for deities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S07",
+      "quote": "Essential kitchen implements like wet grinder, grinding stones, statues of leaders, letter stones, Icon of Buddha are also produced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S07",
+      "quote": "Few art pieces and lamp shades are interestingly made of stone with Jaali work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S02",
+      "quote": "The style of keeping the ornaments to a minimum and keeping the drapes heavy was followed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S02",
+      "quote": "The dress consisted of unstitched cloth draped over the body where one can see either of the two types of lower garments - a skirt -like garment (katchcha) or a tight garment (kaupina).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S02",
+      "quote": "These are secured by a waist -band (sometimes accompanied by a waist-girdle) along with a flat cummerbund.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S02",
+      "quote": "The portrait sculptures are basically of two kinds and the common features they possess as the objects of worship are marked by a static pose with the right hand denoting the abhaya mudra (which represents dispelling of fear) and the left hand on the hip.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S06",
+      "quote": "It is also a prime example of an approach called samdhanakavya, or simultaneous narrative, which is presented in such a way as to be interpreted as a depiction of more than one story.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "The Pallavas: Mahendravarman (600-630 CE)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "Mahendravarman was Narasimhavarman I's father, and a pioneer of south Indian temple architecture and painting, and also renowned as a poet, dramatist and musician.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S04",
+      "quote": "the period of Mahendravarman-I (AD 600-30), the father of Mamalla",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S02",
+      "quote": "Mahendravarman (AD 580 -630), his son Narasimhavarman I Mamalla (AD 630-668)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S03",
+      "quote": "It is known especially for its rathas (temples in the form of chariots), mandapas (cave sanctuaries), giant open-air reliefs such as the famous 'Descent of the Ganges', and the temple of Rivage, with thousands of sculptures to the glory of Shiva.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "There are also rampant lions at intervals dividing the carved panels of the outer walls of the temple, of which many are almost obliterated by the destructive agency of the continuous spray of sea-water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "Status | | 1 | AU/5527/GI/426/1 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "| 2 | AU/38927/GI/426/2 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S03",
+      "quote": "a well from Pallava King Narasimhavarman Rajasimha's reign (638-660 CE), all of which are carved in the live bedrock",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S13",
+      "quote": "The town is home of hundreds of traditional sculptures or sthapathis and has been steadily chiseling attractive images of the gods and goddesses in granite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S16",
+      "quote": "There were no official record of the exact number of stone carving units or stone carvers working in Mamallapuram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S16",
+      "quote": "In September 2010 I counted 162 stone carving units in the main areas of the town.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "Although many international travel guides give the impression that there has been a consistent, elaborate stone carving tradition in Mamallapuram from the Pallava era to the present day,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "in reality the stone carving industry has developed to its present state as a result of the establishment of the Government College of Sculpture and Traditional Architecture in Mamallapuram in 1957",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "and much in connection with the growth of Mamallapuram as a popular tourist destination",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S16",
+      "quote": "Traditionally the stone carvers have been members of the Viswakarma caste communities but nowadays stone carving as an occupation is not tied to any particular caste groups.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S16",
+      "quote": "Most stone carvers interviewed belonged to the official SC category, meaning low caste status.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S16",
+      "quote": "Mechanical aids such as electric saws, drills and grinders were introduced to the business in the 1990s and were used for granite and big soft stone sculptures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S16",
+      "quote": "granite carvings were made mainly with electric tools since it saves time and labour, but detailing was still done by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S16",
+      "quote": "Black granite was the mostly used variety in Mamallapuram and usually it came from Chennai and the town of Thiruvannamalai in Tamil Nadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S16",
+      "quote": "Those statues made especially as souvenirs for the foreign tourist market were made from different soft stones or varieties of marble.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S16",
+      "quote": "Gadapa stone used to be the most popular soft stone in Mamallapuram tourist carving units and it was quarried in the state of Andra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S16",
+      "quote": "Green stone came from Bangalore (now Bengaluru) in the state of Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S16",
+      "quote": "During my fieldwork marble was the most popular stone for the souvenir sculptures to use and had replaced gadapa stone in recent years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S16",
+      "quote": "The dust was the biggest problem and many carvers suffered from eye and respiratory problems.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S16",
+      "quote": "People used very little protective equipment in the workshops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S16",
+      "quote": "On average people working in the granite carving units on a fixed salary earned 300 rupees per day in 2010.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S16",
+      "quote": "They worked on average eight hours a day, six days per week",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S16",
+      "quote": "However, the stone mostly used in Mamallapuram granite sculpture and usually referred to as black granite was actually a slightly softer version of granite that was called blue metal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S16",
+      "quote": "The carvers valued its qualities since it holds the details better than the high density granite and can also be carved by hand if necessary.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S16",
+      "quote": "The stone carvers in India are also known by the Sanskrit name shilpi that refers to an artist and a craftsman. There are four classes of stone carvers. The master carver and design architect is called sthapati.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S18",
+      "quote": "S.No Name of the District Name of the Block Name of the Peri-Urban Village Panchayat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S18",
+      "quote": "43 Chengalpattu Thiruporur Kovalam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S18",
+      "quote": "44 Chengalpattu Thiruporur Muthukadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S19",
+      "quote": "Chengalpattu District, Thirukazhukundram Taluk, No.51 Perumaleri Village.",
+      "result": "PASS"
+    }
+  ]
+}

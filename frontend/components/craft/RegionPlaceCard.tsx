@@ -18,14 +18,14 @@ const FACET_ICON: Record<RegionFacetName, LucideIcon> = {
   GEOLOGY: Gem
 };
 
-export function RegionPlaceCard({ place, datasets }: { place: RegionPlace; datasets: Map<string, RegionDataset> }) {
+export function RegionPlaceCard({ place, named, datasets }: { place: RegionPlace; named: readonly string[]; datasets: Map<string, RegionDataset> }) {
   const note = inheritedNote(place);
   const facets = shownFacets(place);
   return (
     <article className="panel p-4 md:p-5" data-testid="region-place" data-values-from={place.valuesFrom}>
       <header className="grid gap-1">
         <h3 className="font-display text-base font-bold text-ink-900">{place.placeLabel}</h3>
-        <p className="text-xs font-medium text-ink-500">{placeSubtitle(place)}</p>
+        <p className="text-xs font-medium text-ink-500">{placeSubtitle(place, named)}</p>
         <BasisLine basis={place.basis} />
       </header>
       {note ? <p className="mt-3 rounded-md bg-surface-50 px-3 py-2 text-xs leading-5 text-ink-700 ring-1 ring-line-200">{note}</p> : null}

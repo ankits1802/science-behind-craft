@@ -1,0 +1,1963 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Bagh-Prints-Of-Madhya-Pradesh",
+  "dossierVersion": 1,
+  "dossierDigest": "f4049e8995f16c435e72190d941f7c18712165fb3ce2c36fadd8f5938cdbb8c2",
+  "checkedAt": "2026-11-18T09:38:44.222429Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://ipindia.nic.in/girindia/journal/Journal_75.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20160204105330id_/http://ipindia.nic.in/girindia/journal/Journal_75.pdf",
+      "finalUrl": "https://web.archive.org/web/20160204105330id_/http://ipindia.nic.in/girindia/journal/Journal_75.pdf",
+      "fetchedAt": "2026-11-18T09:38:10.072662Z",
+      "contentType": "application/pdf",
+      "textSha256": "d3165c0262bf59273ee79aec33cbc1cf9215aa77a6c6f1d94acff0a92d62433e",
+      "characters": 186491,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/98",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/98",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/98",
+      "fetchedAt": "2026-11-18T09:38:06.776348Z",
+      "contentType": "text/html",
+      "textSha256": "87f4ec64318abd94cf0feb14c8b27f85c6892e3abdfc2738f16d4daa27208f3e",
+      "characters": 18533,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/505",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/505",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/505",
+      "fetchedAt": "2026-11-18T09:38:08.634872Z",
+      "contentType": "text/html",
+      "textSha256": "321c17ed1a1e6595f8de9b1658179276ca9bb2a04c6ca92be55598ed9c09fdf9",
+      "characters": 1273,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://asiainch.org/craft/hand-block-printing-of-bagh-madhya-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/hand-block-printing-of-bagh-madhya-pradesh/",
+      "finalUrl": "https://asiainch.org/craft/hand-block-printing-of-bagh-madhya-pradesh/",
+      "fetchedAt": "2026-11-18T09:38:06.832550Z",
+      "contentType": "text/html",
+      "textSha256": "47680d606e7d390fc0914c864dc59ea8d2e7f960e65175a47d2f88d513b0d185",
+      "characters": 38240,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://mapacademy.io/article/bagh-print/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260118041814id_/https://mapacademy.io/article/bagh-print/",
+      "finalUrl": "https://web.archive.org/web/20260118041814id_/https://mapacademy.io/article/bagh-print/",
+      "fetchedAt": "2026-11-18T09:38:12.602509Z",
+      "contentType": "text/html",
+      "textSha256": "986e02630e7bc576f3e34ff649f8883ce577d3f0680ace3835ab1ad6c7092228",
+      "characters": 2840,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://artsandculture.google.com/story/AAUBckxcEI9kIQ",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/AAUBckxcEI9kIQ",
+      "finalUrl": "https://artsandculture.google.com/story/AAUBckxcEI9kIQ",
+      "fetchedAt": "2026-11-18T09:38:09.008035Z",
+      "contentType": "text/html",
+      "textSha256": "59e0d14713c39fc1b7ee9a1d6151568c62b2e5021ebca8f5f286f47c3506076d",
+      "characters": 6522,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://artsandculture.google.com/story/SQUhVZQEeaNZLg",
+      "route": "LIVE",
+      "readUrl": "https://artsandculture.google.com/story/SQUhVZQEeaNZLg",
+      "finalUrl": "https://artsandculture.google.com/story/SQUhVZQEeaNZLg",
+      "fetchedAt": "2026-11-18T09:38:11.852543Z",
+      "contentType": "text/html",
+      "textSha256": "11322512ce2081c23d9831cb5e087c6acd62a067dea6583c325db7c1ef9d169c",
+      "characters": 4793,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://encyclocraftsapr.com/hand-block-printing-in-bagh-madhya-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://encyclocraftsapr.com/hand-block-printing-in-bagh-madhya-pradesh/",
+      "finalUrl": "https://encyclocraftsapr.com/hand-block-printing-in-bagh-madhya-pradesh/",
+      "fetchedAt": "2026-11-18T09:38:11.819823Z",
+      "contentType": "text/html",
+      "textSha256": "d2308d8fb69b8f443ab54e9177cbce4c90b7f98729d16d663e41454eaabce565",
+      "characters": 2130,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.socialresearchfoundation.com/upoadreserchpapers/6/339/2004210531181%20smita%20jain.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.socialresearchfoundation.com/upoadreserchpapers/6/339/2004210531181%20smita%20jain.pdf",
+      "finalUrl": "https://www.socialresearchfoundation.com/upoadreserchpapers/6/339/2004210531181%20smita%20jain.pdf",
+      "fetchedAt": "2026-11-18T09:38:14.515152Z",
+      "contentType": "application/pdf",
+      "textSha256": "ee4d28dcfd6f7a133d979ededad9280eb04db69e1d13f8932fb87df0e06cf2ff",
+      "characters": 13884,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=34622747&rettype=abstract&retmode=text",
+      "route": "LIVE",
+      "readUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=34622747&rettype=abstract&retmode=text",
+      "finalUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=34622747&rettype=abstract&retmode=text",
+      "fetchedAt": "2026-11-18T09:38:16.886599Z",
+      "contentType": "text/plain",
+      "textSha256": "c61397ba3ca7a1d96dcddfad481560a237af7b66c52fc4a6931b2c6a5c8af65a",
+      "characters": 1863,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=35713151&rettype=abstract&retmode=text",
+      "route": "LIVE",
+      "readUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=35713151&rettype=abstract&retmode=text",
+      "finalUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=35713151&rettype=abstract&retmode=text",
+      "fetchedAt": "2026-11-18T09:38:19.594619Z",
+      "contentType": "text/plain",
+      "textSha256": "72310cf975922787ab33fbe51398addcfaa30725b40320f7fff5632e32c24d6c",
+      "characters": 1630,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.outlookindia.com/traveller/mp/inspire-me/culture/bagh-prints-lasting-imprint",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20191210125827id_/https://www.outlookindia.com/traveller/mp/inspire-me/culture/bagh-prints-lasting-imprint/",
+      "finalUrl": "https://web.archive.org/web/20191210125827id_/https://www.outlookindia.com/traveller/mp/inspire-me/culture/bagh-prints-lasting-imprint/",
+      "fetchedAt": "2026-11-18T09:38:17.875212Z",
+      "contentType": "text/html",
+      "textSha256": "23e8831f2b534d805d7169c0f975a6e27528a8a7c07e0717fe0d89a1cbc58a49",
+      "characters": 6743,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.downtoearth.org.in/environment/bagh-and-its-legacy-in-print-44771",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/environment/bagh-and-its-legacy-in-print-44771",
+      "finalUrl": "https://www.downtoearth.org.in/environment/bagh-and-its-legacy-in-print-44771",
+      "fetchedAt": "2026-11-18T09:38:17.132357Z",
+      "contentType": "text/html",
+      "textSha256": "1237b42b667a5f622b2eb3868f5b1d62db621e7a2041cdac5ef53dc6a7923e54",
+      "characters": 7617,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://30stades.com/2020/07/01/how-khatris-are-training-tribals-to-keep-alive-500-year-old-hand-block-bagh-printing-technique-in-madhya-pradesh",
+      "route": "LIVE",
+      "readUrl": "https://30stades.com/2020/07/01/how-khatris-are-training-tribals-to-keep-alive-500-year-old-hand-block-bagh-printing-technique-in-madhya-pradesh",
+      "finalUrl": "https://30stades.com/2020/07/01/how-khatris-are-training-tribals-to-keep-alive-500-year-old-hand-block-bagh-printing-technique-in-madhya-pradesh",
+      "fetchedAt": "2026-11-18T09:38:17.232006Z",
+      "contentType": "text/html",
+      "textSha256": "3c37564852c1f9df2327de302b43b206b63dce2936f8b268b4af048b60890e39",
+      "characters": 5944,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://www.thehitavada.com/Encyc/2022/11/29/Craftsmen-of-MP-honoured-with-Shilp-Guru-and-National-Award.html",
+      "route": "LIVE",
+      "readUrl": "https://www.thehitavada.com/Encyc/2022/11/29/Craftsmen-of-MP-honoured-with-Shilp-Guru-and-National-Award.html",
+      "finalUrl": "https://www.thehitavada.com/Encyc/2022/11/29/Craftsmen-of-MP-honoured-with-Shilp-Guru-and-National-Award.html",
+      "fetchedAt": "2026-11-18T09:38:18.004792Z",
+      "contentType": "text/html",
+      "textSha256": "88b0f22ea81bfdf89fd2974dec6651456fc3f78bf02e53e25ed215959a7eece4",
+      "characters": 1291,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://spentamultimedia.com/flipbooks/paramparik-karigar-2017/files/assets/basic-html/page38.html",
+      "route": "LIVE",
+      "readUrl": "https://spentamultimedia.com/flipbooks/paramparik-karigar-2017/files/assets/basic-html/page38.html",
+      "finalUrl": "https://spentamultimedia.com/flipbooks/paramparik-karigar-2017/files/assets/basic-html/page38.html",
+      "fetchedAt": "2026-11-18T09:38:17.952122Z",
+      "contentType": "text/html",
+      "textSha256": "5074a998901889dde9edf8966acff219c6a7f22a768c58996c581f153b54e484",
+      "characters": 1605,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://paramparikkarigar.com/paramparik-karigar/khatri-mohammed-yusuf/",
+      "route": "LIVE",
+      "readUrl": "https://paramparikkarigar.com/paramparik-karigar/khatri-mohammed-yusuf/",
+      "finalUrl": "https://paramparikkarigar.com/paramparik-karigar/khatri-mohammed-yusuf/",
+      "fetchedAt": "2026-11-18T09:38:20.704012Z",
+      "contentType": "text/html",
+      "textSha256": "79a30374c00fce3a3ca0e77e6ddeeaeff9a7b1964691f2814a013ce3d8687ca3",
+      "characters": 1987,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.incredibleindia.gov.in/en/madhya-pradesh/bagh-prints-of-madhya-pradesh",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/madhya-pradesh/bagh-prints-of-madhya-pradesh",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/madhya-pradesh/bagh-prints-of-madhya-pradesh",
+      "fetchedAt": "2026-11-18T09:38:18.388693Z",
+      "contentType": "text/html",
+      "textSha256": "9c440d5286c53d208f6fd58d08861b6427feaee9dda468a52e538f4bf798f120",
+      "characters": 1742,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://gaatha.com/bagh-block-printing/",
+      "route": "LIVE",
+      "readUrl": "https://gaatha.com/bagh-block-printing/",
+      "finalUrl": "https://gaatha.com/bagh-block-printing/",
+      "fetchedAt": "2026-11-18T09:38:20.720652Z",
+      "contentType": "text/html",
+      "textSha256": "52419588f6fbc05de3b2a7573298903d8a795176829f24555aaf350fbc20b320",
+      "characters": 7617,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://nift.ac.in/gandhinagar/sites/gandhinagar/files/2024-01/GI%20BOOK.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20241125073651id_/https://nift.ac.in/gandhinagar/sites/gandhinagar/files/2024-01/GI%20BOOK.pdf",
+      "finalUrl": "https://web.archive.org/web/20241125073651id_/https://nift.ac.in/gandhinagar/sites/gandhinagar/files/2024-01/GI%20BOOK.pdf",
+      "fetchedAt": "2026-11-18T09:38:28.728287Z",
+      "contentType": "application/pdf",
+      "textSha256": "76b211b6407da6af017e8288e72277c0165ecb411c0e3476fed3b57cac56fd65",
+      "characters": 488325,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.freepressjournal.in/indore/bagh-world-famous-bagh-print-artisan-seek-governemnt-recognition",
+      "route": "LIVE",
+      "readUrl": "https://www.freepressjournal.in/indore/bagh-world-famous-bagh-print-artisan-seek-governemnt-recognition",
+      "finalUrl": "https://www.freepressjournal.in/indore/bagh-world-famous-bagh-print-artisan-seek-governemnt-recognition",
+      "fetchedAt": "2026-11-18T09:38:22.295439Z",
+      "contentType": "text/html",
+      "textSha256": "84941a04ee053de5e0aa4ceffb79cacc38a110cdec7bd075a514e7656372a1d1",
+      "characters": 1920,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://www.globalinch.org/article/handblock-prints-of-bagh/",
+      "route": "LIVE",
+      "readUrl": "https://www.globalinch.org/article/handblock-prints-of-bagh/",
+      "finalUrl": "https://www.globalinch.org/article/handblock-prints-of-bagh/",
+      "fetchedAt": "2026-11-18T09:38:22.515708Z",
+      "contentType": "text/html",
+      "textSha256": "ef100c9aab87da301768d8a07bb2d252a64eeb957e99cfdade938e65fda75082",
+      "characters": 1778,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://thebetterindia.com/art/bagh-print-natural-dye-craft-baghini-river-madhya-pradesh-artisans-history-10828867",
+      "route": "LIVE",
+      "readUrl": "https://thebetterindia.com/art/bagh-print-natural-dye-craft-baghini-river-madhya-pradesh-artisans-history-10828867",
+      "finalUrl": "https://thebetterindia.com/art/bagh-print-natural-dye-craft-baghini-river-madhya-pradesh-artisans-history-10828867",
+      "fetchedAt": "2026-11-18T09:38:22.943558Z",
+      "contentType": "text/html",
+      "textSha256": "8e5955376f36e78604803bab231e55d446b4b9eb2a157c1ed6ec6633b6a1802b",
+      "characters": 1777,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://dhar.nic.in/en/tehsil/",
+      "route": "LIVE",
+      "readUrl": "https://dhar.nic.in/en/tehsil/",
+      "finalUrl": "https://dhar.nic.in/en/tehsil/",
+      "fetchedAt": "2026-11-18T09:38:23.183084Z",
+      "contentType": "text/html",
+      "textSha256": "c1243c7999b2755c4125d91b9e43c0ba10ea8fca1e9576b1fcd8455e60a3e285",
+      "characters": 522,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://collections.vam.ac.uk/item/O455451/textile-unknown/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O455451/textile-unknown/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O455451/textile-unknown/",
+      "fetchedAt": "2026-11-18T09:38:23.594060Z",
+      "contentType": "text/html",
+      "textSha256": "399500b2cfd0a51d818a18149557a73d3097bbbba7d676aa5f8560ee65d3d69d",
+      "characters": 2223,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Bagh prints are known for their fine quality printing and bright vegetables colours and may be recognised by their geometric repetitive patterns in different variations and colors that are mainly red and black block printed predominantly on white base.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "It is done totally in black and red on white surface using natural colours (vegitable colours).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "Bagh prints derive its name from a small tribal town in Dhar district of Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "Bagh, which lends its name to the Bagh prints is a small tribal town in Dhar district of Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S09",
+      "quote": "All the traditional printers of Bagh belong to the 'Khatri Biradari' which has been associated with this craft since time immemorial.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S12",
+      "quote": "Bagh's unique craft of thappa chappai or block printing with natural colours",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S12",
+      "quote": "Bagh printing, previously known as alizarin printing, is manual and laborious",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S19",
+      "quote": "Also called 'Thappa Chappai' (Thappa means Blocks, Chappai means printing) or 'Alizarine print' since 'Alizarine' gives it its characteristic red color",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S04",
+      "quote": "Every single process in Bagh hand-block printing is manual. Even the cotton saris are hand-printed. Each sari takes a minimum of three weeks to complete after the design is printed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "At present, the main production centre of production of this product is Bagh and Kukshi area in Dhar district of Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "The process of pre -printing, printing and post printing at Bagh, itself is unique and imparts quality of color and print to the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "The khatri community which comprises the chhipas or printers are believed to have come to Bagh - about 400 years ago - from Larkana is Sindh, which is famous for its Ajrak prints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S16",
+      "quote": "As per local belief, the Khatri community of traditional block printers migrated from Larkana in Sindh in present-day Pakistan to Bagh about 400 years ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "What motivated these families to cross the capricious Indus and settle in the interiors of India, far away from their ancestral homes, is not known for sure but what is certain is that they carried with them a strong tradition of hand block printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S12",
+      "quote": "The Khatris were essentially printers who migrated to Gujarat and Rajasthan four centuries ago from the Larkana district of Sindh (now Pakistan), famed for ajrakh prints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S12",
+      "quote": "Besides settling in Pali and the Thar Desert in Rajasthan, they settled at Manawar in Madhya Pradesh, and continued their traditional occupation of printing and selling fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S17",
+      "quote": "originally from Sindh (now in Pakistan ), and had migrated to Marwad in Rajasthan and then to Manawar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S01",
+      "quote": "According to Ismail Khatri, an eminent printer and national awardee, his ancestors moved out from Sind due to the terrors of a Brahmin raja there. They settled down in Pali (near Jodhpur, Rajasthan).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S17",
+      "quote": "Bagh Print in its started in 1962 when a group of Muslim Khatri artisan, originally from Sindh (now in Pakistan ), and had migrated to Marwad in Rajasthan and then to Manawar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S23",
+      "quote": "In 1962, a group of nomadic Baghi karigars travelling from Sind to Rajasthan and Manawar stopped in this tiny village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S19",
+      "quote": "From Larkana in Sind (today's Pakistan) to Pali, to the Marwadi Thar, to Manawar in Madhya Pradesh, their journey came to a stop and they settled down in Bagh in 1962",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S12",
+      "quote": "Unlike other relatives who went back to Pakistan at Partition, Mohammed Yusuf's father, master craftsman Ismail Suleimanji Khatri settled in Bagh in 1962.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S01",
+      "quote": "It is believed that, the hand block prints from Bagh are approximately one thousand years old traditional craft, carried from one generation to another within the family.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Exact date of the origin may be difficult to point out but some claim that the craft have migrated from Jawad in Mansor district of Madhya Pradesh or Rajasthan at some point of time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S01",
+      "quote": "Earlier the artisans used to make different prints and even different clothes for different communities and castes like Brahmin, Khatris, Harijan, Bhil, Bhilalas, Jats, Bharur, Mahajan etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S16",
+      "quote": "Members of different castes and families traditionally wore distinct block printed attire which helped identify them instantly on being seen.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S09",
+      "quote": "These prints were originally the adornment of the tribal inhabitants of the surrounding villages.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S08",
+      "quote": "Till the 1980s, the Khatris catered to the textile needs of the Bhil and Bhilal tribes. Their print directory and colour palette is rooted in the material culture of their patrons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S04",
+      "quote": "Traditionally, the colours, designs, and products of Bagh printing were integrally linked with the needs of the local nomadic bhil and bhilala tribals in the area",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S22",
+      "quote": "Catering to the textile needs of the regions tribal populace of Bhil and Bhilals the Khatris printed and dyed the lugada saris, ghagra full length gathered skirts, angocha shoulder cloth and odhni head mantles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S22",
+      "quote": "This customary wear was worn for occasions like weddings and celebrations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S08",
+      "quote": "In the late 1980s, the patriarch of Bagh printers, the late Hajji Ishmael Khatri, explored new avenues to stay relevant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S08",
+      "quote": "Ishmael researched and collected disused blocks from other printers and single handed collated the vanishing Bagh motif directory",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S12",
+      "quote": "He received a national award in 1984 for a masterpiece with 1230 geometric patterns that he created for the Festival of India in France.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S20",
+      "quote": "Bagh Hand Block Print Late Shri Ismail Suleman Ji Khatri Shilp Guru 2010",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S20",
+      "quote": "Vegetable Hand Block Printing Hajjani Jetun Bee,W/o Sh.Ismile Khatri National Award 2007",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S20",
+      "quote": "Hand Block Printing on Bamboo Mat Smt. Hajjani Jetun Bee W/o Sh. Ismile Khatri National Merit Certificate 2006",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S06",
+      "quote": "Ismail Suleiman's wife Jetun Bi has also received a National Award for her work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S05",
+      "quote": "An award-winning duo, the late Ismail Suleiman Khatri, and his wife Hajjani Jetun Bi, are master karigars who have been credited with keeping the printing tradition alive in Bagh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S15",
+      "quote": "Mohammad Yusuf Khatri of Dhar district of Madhya Pradesh has been awarded the Shilp Guru Award for the year 2017 for the conservation of the legacy of Bagh Print handicraft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S15",
+      "quote": "Mohammad Bilal Khatri of Dhar district has been awarded the National Award for the year 2018 for bamboo mat hand-block print.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S05",
+      "quote": "Mohammed Yusuf Khatri is prominent for his role in preserving the craft and improving the local economy by training the local non-Khatri artisans in Bagh block-carving and printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S14",
+      "quote": "Earlier, this block printing was done only by the Khatri community. But my father began training the locals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S05",
+      "quote": "Threatened to the point of extinction by the advent of synthetics and rapidly changing lifestyles, Bagh printing was kept alive and subsequently contemporised by the efforts of a few prominent Khatri families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S06",
+      "quote": "With changing lifestyles and the advent of synthetic fabrics, the printing industry took a big blow with several printing centres gradually closing down.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S04",
+      "quote": "Legend has it that the village of Bagh, the Bagh river, and the nearby Bagh caves (3rd & 5th century AD, with rich carvings and paintings dedicated to both Hindu as well as Buddhist deities) got their name from the baghs or tigers that inhabited the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S02",
+      "quote": "Application Number | 98 | | Geographical Indications | Bagh Prints of Madhya Pradesh | | Status | Registered | | Applicant Name | Development Commissioner (Handicrafts) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 13-06-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S02",
+      "quote": "Journal Number | Supp 1 | | Availability Date | 24-03-2008 | | Certificate Number | 78 | | Certificate Date | 10-07-2008 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 12-06-2027 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "| 1 | 98 - GI - GI Renewal Form GI - 4 - 19-05-2017 | 19-05-2017 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "Authorized User Details | Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "| 156 | AU/21083/GI/98/156 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S02",
+      "quote": "| Class | 24 | | Goods | Handicraft | | Geographical Area | Madhya Pradesh |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "Application Number | 505 | | Geographical Indications | Bagh Prints of Madhya Pradesh (Logo) | | Status | Registered | | Applicant Name | Development Commissioner (Handicrafts) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "| Date of Filing | 08-01-2015 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S01",
+      "quote": "G.I. APPLICATION NUMBER - 505 Application Date: 08-01-2015",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S03",
+      "quote": "Journal Number | 75 | | Availability Date | 26-11-2015 | | Certificate Number | 239 | | Certificate Date | 31-03-2016 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S03",
+      "quote": "| Registration Valid Upto | 07-01-2025 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S03",
+      "quote": "| 1 | 505 - GI - Renewal Notice - 26-11-2024 | 26-11-2024 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S01",
+      "quote": "in the Geographical Indications Journal 75 dated 26th November 2015",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S21",
+      "quote": "The central government has selected Bagh print under the one-district one product scheme (ODOP).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S13",
+      "quote": "spectacular form of fabric prints called Bagh that provides for primary source of livelihood to people in this region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S22",
+      "quote": "celebrations and ppurchased by tribal communities either with cash or bartered with forest produce during the lunar month of Kartik, around Diwali and at Phagun, the harvest period",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S04",
+      "quote": "Bagh textiles have had to adapt to meet contemporary urban demands, especially as the traditional markets no longer exist - the tribals have switched over to mill printed polyester blends that are cheaper and more durable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S13",
+      "quote": "Owing to its time inefficiency, artists and small entrepreneurs have forayed into synthetic colours, which are more diverse and cater to urban demands.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S13",
+      "quote": "the Bagh print industry usually sees participation from men of the Khatri community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S13",
+      "quote": "lack of participation from women in this highly creative art form highlights the gender skewed nature of this occupation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S13",
+      "quote": "Since the printing process is so elaborate and depends heavily on water in all its stages- there is very little work in this industry during the monsoon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S13",
+      "quote": "For most part during the monsoon, therefore, cultivation of kharif crops like maize is the main occupation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S10",
+      "quote": "Hand block printing is a highly repetitive and precision job involving tasks such as hitting the wooden hand block with the hands as a hammer, causing chronic mechanical trauma to the ulnar side of the palm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S10",
+      "quote": "Symptoms like pain, weakness, numbness and tingling were highly prevalent among the artisans",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S10",
+      "quote": "those with experience <3 years were more likely to report pain during working hours",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S10",
+      "quote": "those with experience >13 years were more likely to report numbness (p < 0.001) and tingling",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S11",
+      "quote": "The hand block printing technique practiced in Dhar District of Madhya Pradesh involves highly repetitive tasks with awkward posture, which contribute to the development of musculoskeletal disorders (MSDs) among the artisans",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S11",
+      "quote": "Occupational ergonomic assessment of MSDs among the artisans working in the Bagh hand block printing industry in Madhya Pradesh, India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S11",
+      "quote": "An observational study and a self-reported questionnaire study were conducted with a sample of 70 artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S11",
+      "quote": "MSDs in the neck, shoulders, elbows, wrist/forearm, lower back and hips/thighs were found to be highly prevalent among artisans of age greater than 31 years and experience greater than 11 years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S11",
+      "quote": "Most complaints were reported in the wrist, neck and lower back region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S09",
+      "quote": "Bagh is a quaint little village in Kukshi tehsil of Dhar district in Madhya Pradesh situated near the bank of the river Baghni, a tributary to river Narmada",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S04",
+      "quote": "Bagh, which lends its name to the Bagh prints, is a small tribal village/ town in the Kukshi tehsil of Dhar district of Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "Bagh's proximity to the river was an important reason for the chippas selecting it, as flowing river water is vital to the process of printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S13",
+      "quote": "Since any fabric treatment is a water-intensive process, Bagh town was chosen by the Khatri community for this pursuit owing to the proximity of the town to the Baghini river.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S12",
+      "quote": "One reason he chose to settle in Bagh was because of its location on the banks of the Baghini River, a lifeline for the art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S16",
+      "quote": "Bagh, a small tribal town, is located by the Bagh River that has nurtured our craft as flowing water is crucial for block-printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "since the river Bagh that flows through Bagh is dry several times during the year, the material to be washed has now to be taken to the Narmada river, about 30 km away.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S04",
+      "quote": "when the Bagh river dries up during the summer and he has to go to Narmada (40 km away) to wash the textiles, he finds that reds and greys do not come out properly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S04",
+      "quote": "Due to its geographical location and climate, bagh printers get many of their colouring material locally.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S04",
+      "quote": "The abundance of things like dhavda ka phool, bakare ki learnti (goat excreta), babul, keshavri, etc. in surrounding jungles makes the print and the printing process, smooth and specific.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S04",
+      "quote": "Some of the materials like dhavda ka phool and the keshavri flower are available in local jungles; the rest have to be obtained from the market in Indore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S12",
+      "quote": "Doesn't all the dye dirty the river?",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S12",
+      "quote": "All their colours are natural, he pointed out. Adding that since they use alum, it cleans the river wherever they work",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "The chemical composition of this river water has proved to be good for the vegetable dyes used for printing at bagh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "This gives luminous tones to the vegetable colors used for printing at bagh, and enhances the red tone and the black tone, making them very different from the other places in MP and Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S04",
+      "quote": "Farooq (s/o of Suleman Khati), who is responsible for river work, says that it is the water of Bagh-river which give particular colour to Bagh print.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S04",
+      "quote": "The scientific reason may be that the Bagh soil has high contents of lime and iron, which act as cleansing and fastening agents",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S18",
+      "quote": "It is believed that the minerals in the river water help enhance the colors of the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S06",
+      "quote": "The water of the rivers here are believed to have the optimal mineral composition to enhance the colours in printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S23",
+      "quote": "Running through Bagh was the Baghini River, holding a secret: naturally high copper content.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S23",
+      "quote": "This one mineral made colours richer, deeper, and more permanent than any chemical dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S19",
+      "quote": "It's copper content was high and that would account for all the beautiful deep colors in the fabrics that would be offered from the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S14",
+      "quote": "Bagh river has high levels of calcium and zinc. This improves the quality of prints and gives brighter colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S14",
+      "quote": "The colours we get here are not found in any other part of the country,\" Bilal adds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "The main raw material for the products is fabric which most commonly of cotton fibre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "Sometimes Maheshwari suit material, kosa silk, bamboo chicks and cotton durries are worked on only on order and Chiffon, crepe, georgette tissue and mulberry silk are worked on occasionally.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "Silk needs much more delicate handling and care; generally a silk cloth takes almost double the time for its completion than does a piece of cotton cloth the same size.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S04",
+      "quote": "The fabric used by the Khatris may be Bangalori silk (bought from Indore), cotton or grey latha (bought from Indore and Bombay) or silk-cotton mix (bought from Maheshwari in Khargoan district).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S19",
+      "quote": "Alternatively, silk-by-cotton fabric is purchased from the towns of 'Maheshwar' and 'Chanderi'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "Generally these blocks are sourced from Pethapur, Gandhinagar and Jaipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "The blocks used for stamping are intricately and deeply carved by block- makers in Pethapur in Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S04",
+      "quote": "The Khatris get their blocks made from Pethapur in Gandhingar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S13",
+      "quote": "The blocks used by artists for printing are obtained from Pethapur in Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S07",
+      "quote": "Teak, being strong and resistant to distortion on exposure to water, is the wood of choice for making blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S14",
+      "quote": "hand printed using blocks made from Indian teak or sagwan wood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "a. solution of 3 kg of sanchara (rock sal t) soaked in 15 litres of water, stirred till it melts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "When it is soft, it is made into a paste by grinding it with a brick on a stone surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "c. 1 kg of arandikatel or unrefined castor oil. The three are mixed to make a dhaul solution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S01",
+      "quote": "b. 10 kg of mengni soaked in 10- 15 litres of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S09",
+      "quote": "This is achieved by applying a mixture of Linseed oil, \"Sanchora\" (a natural salt) and faeces of goat on the fabric and leaving it soaked in this mixture for at least 12 hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S04",
+      "quote": "According to Amar Singh Chauhan: On the day after mengni karna the fabric has to be treated with a solution of harara powder",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S04",
+      "quote": "the alternative, bahera is not used because it gives a blackish tinge to the fabric",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S09",
+      "quote": "Varieties of natural dyes are used in the printing units of Bagh, the most common ones are Harda, Bahera and Anar Chilka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S12",
+      "quote": "The fabric is soaked in a copper vat with a solution of harada powder (terminalia chebula), rinsed, and yellowed under controlled sunshine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S14",
+      "quote": "the cloth is dyed in a paste of 'harad' (terminalia chebula, a component of triphala)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S13",
+      "quote": "and herbs such as harra (Terminalia shebula) and bahera (Terminalia bellirica)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S13",
+      "quote": "dhavdi flowers (Woodfordia fruticosa or the fire flame bush flowers that act as natural dye while preventing the fabric from staining)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S12",
+      "quote": "dhawadi (woodfordia fruticosa), alizarin, made from the root bark of aal (morinda tinctoria or Indian mulberry)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S17",
+      "quote": "put in the bhatti mixed with dhawadi flowers (wood fordia fruticosa)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S12",
+      "quote": "Leaves of the dhawda plant (anogeissus latifolia) and pomegranate skin are used for making khaki.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S01",
+      "quote": "Earlier, the root of the aal tree (aalkajad) was used as a fastening agent; now alizarine has taken its place.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S05",
+      "quote": "Red dyes are made from Aal (Morinda citrifolia), with alum functioning as a mordant",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S12",
+      "quote": "dhawadi (woodfordia fruticosa), alizarin, made from the root bark of aal (morinda tinctoria or Indian mulberry)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S17",
+      "quote": "Alizarin (root of Morinda Tinctoria)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S09",
+      "quote": "The cultivation of madder and the use of its ground root for dyeing by the complicated \"Turkey Red Process\" were known in ancient India, Persia and Egypt",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S09",
+      "quote": "The same method is being used by the artisans/printers of Bagh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "The printing in Bagh is done with vegetable colours, derived from plants, fruits, flowers, and minerals. The only four basic (natural) colours: red, black, khaki, and indigo are being extensively used in this printing haven.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S12",
+      "quote": "There are four basic natural colours-red, black, khaki, and indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S04",
+      "quote": "Ismail Khatri claims that there are only four basic (natural) colours: red, black, khaki, and indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "The black colour is prepared with ferrous sulphate mixed with tamarind seed powder and glue, which is cooked in water and stored for use. The red is similarly produced from alum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "Any material like hirakayisha or alum has to be first made into a paint-like solution with imli ka chiya (seed of the tamarind) to make a paint like solution. Hot water is added according to the required density of the paint/print solution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "Hirakasish or iron sulphate or iron filings are filled in earthen pot where jaggery and water are added to the pot and left aside for 15-20 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S05",
+      "quote": "black dyes are made by combining iron filings and jaggery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S14",
+      "quote": "the black colour is made using raw iron strips, jaggery, lime and a gum, all of which are put together in an earthen pot for about a fortnight.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "Red color printing paste: 80-100gms. Fitkari (alum) is added to 1 liter of water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "According to Amar Singh Chauhan: Iron sulphate (used for making black dye) or alum (used for making red dye) is soaked in a container of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S04",
+      "quote": "The proportions are: 50 grams of alum to 1 litre of water (the quantity of alum can increase to 60 grams in the rainy season); and 50 grams of iron sulphate per litre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S01",
+      "quote": "Pomegranate skins are boiled in water for 10 to 12 hours and strained. The fabric is then dipped in this hot solution. It is then removed and spread on stones for drying; this process is repeated for 3 times for final results.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S01",
+      "quote": "Leaves of Dhavdi are soaked in water and boiled for 10 to 12 hours and strained. The paste thus prepared is used for dying. The dying process is same as the Mustard.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S01",
+      "quote": "An earthen pot is placed in a pit; a mixture of indigo leaves, lime and Sajji is then filled in the pot and left aside for 3 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S01",
+      "quote": "In present times, the indigo paste is prepared differently, Indigo powder / cake / granules are dissolved in water; caustic and hydro are added, to prepare the paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S01",
+      "quote": "Khaki and mustard vegetables colors are used for dyeing the fabric after printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S09",
+      "quote": "The dyeing method used by the artisans/printers is an indirect dyeing method when the mordants applied during the course of printing with the blocks react with the dyeing compound (alizarin in this case) to give the final colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S09",
+      "quote": "The Alizarin powder reacts with the iron rust to give a bright black colour and with the alum solution to give a bright red colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S19",
+      "quote": "The printed dye containing alum reacts with Alizarin to produce red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Alum is colourless - it produces red when boiled with alizarine and dhavdakaphool.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Since alum is colourless, to enable the block- printer to gauge his print during the printing process, a simple colour (chemical) colour is used; however it is only after alum absorbs the colouring solution in which the cloth is dipped that the desired colour becomes apparent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "if a cloth has to be dyed green, grey, khaki, yellow, or any related colour, first block printing is done with alum, which is a mordant, after which the colour is retained by dipping the cloth in the specific solution for about a day.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Alizarine and dhavdakaphool are used as a resist -dye or to make the colour pukka (fast). In fact, alizarine makes red and black fast colours, while dhavdakaphool gives them a shine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S12",
+      "quote": "The concoction acts as a resist dye that enables shine, colour-fixing, and fastening; this is what allows the deep red, black, and stark white to finally emerge.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S09",
+      "quote": "The dhawdi flowers or the pomegranate peels impart yellow colour. Thus, at a time three colours can be printed on the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S13",
+      "quote": "the typical Bagh red colour is extracted by soaking and boiling tamarind seeds and alum in a huge copper vessel. The immediate colour obtained is a rich fuchsia pink.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S13",
+      "quote": "finally boiled in a mixture containing alizarin (the chemical that transforms the fuchsia pink to the delightful red)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S12",
+      "quote": "Alum (fitkari) is boiled and stored in a pot and is used to make red colour, which at first imparts a bright fuchsia pink.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S09",
+      "quote": "The yellowish tinge resulting from the treatment is essential for the brightness of the black as well as the red colours of the Alizarin dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S04",
+      "quote": "In the case of grey, the printing is done with hirakayisha (earlier made of iron rust; now bought from the market) for developing the colour, the cloth is not boiled but is passed through a chalk solution/lime solution (chune ka paani ka dhol).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S09",
+      "quote": "It is important to mention here that the process of indirect dyeing needs a lot of expertise in",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S09",
+      "quote": "ascertaining the correct temperature ranges for a desired particular shade of the colour. Any change in this, results in a too dark or too feeble colour and spoils the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S12",
+      "quote": "In the first process, called khara, the fabric is washed and beaten on river stones to rid it of impurities and starch. It is then sun-dried for hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S23",
+      "quote": "It begins with Khara - washing fabric on river stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S01",
+      "quote": "The cloth is taken to the river where it is thoroughly washed. 100 single sheets are washed at one time - that is, 250 cuts of fabric",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S01",
+      "quote": "The fabric is soaked in water for 2 hours. It is washed by beating it on riverside stones several times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S12",
+      "quote": "The fabric is then dunked in a vat filled with a mixture of castor oil (arandi ka tel), goat droppings (mengni), raw salt (sanchura), and water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "the fabric is soaked in water overnight, dried and then dipped in a mixture of goat droppings, sanchiri, castor oil and water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S17",
+      "quote": "In a cement tub, a paste is made of goats droppings, raw salt or sanchura, castor oil and water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "The fabric is immersed in this water - it is to be kept under water for the whole night. The fabric is then taken to the river and washed in flowing water. Then it is dried. This process has to be repeated three times; each time the fabric has to be kept in the",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "water for 10 to 15 minutes. By this time the material becomes quite soft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "On the day after mengnikarna the fabric has to be treated with a solution of harara powder",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S12",
+      "quote": "Peela or yellowing comes next. The fabric is soaked in a copper vat with a solution of harada powder (terminalia chebula), rinsed, and yellowed under controlled sunshine.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "Treating the cloth with harara gives an off -white or off -yellow background to the cloth and also aids in strengthening the tones of the black and red colours that are printed later.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "The fabric is dyed by keeping it in this mixed solution for 10 minutes, after which it is dried. In processing the second lot, four to five mugs of the harara -water solution is added, the cloth dyed in it for 10 minutes, and then dried.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "Thus the total quantity of the fabric is dyed in about ten lots, repeating the same process each time when dried, the fabric turns yellowish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S12",
+      "quote": "Over-drying or drying in the shadow can lead to an undesirable discoloration of green.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S23",
+      "quote": "Too much sun, and the fabric turns green instead of the perfect absorbent yellow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S19",
+      "quote": "It is necessary to dry it in the shade to prevent the desired yellow color from turning green due to the sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "According to Ismail Khatri, when dried, the fabric turns yellowish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "The fabric is now ready for printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S04",
+      "quote": "At this stage the cloth is meticulously and patiently printed by hand with the help of small design blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "Preparation of the color tray (palya):",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "A wooden tray (earlier mud tray was used) with cement base is used for color tray. A bamboo mesh (kartali) is placed on the tray.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "A woolen mesh/blanket loosely woven is placed on the bamboo mesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S04",
+      "quote": "Palea: Made from sagavan wood, this is the container in which the colour is kept before the printing process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S04",
+      "quote": "Farsi: Made from red sandstone, this is a special table on which the chapai or printing work goes on. Old clothes are kept on it to make it suitable for smooth printing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "The designed wooden block is placed in the tray; this helps to transfer the printing paste on to the block's raised portions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "An impression of this is taken on the fabric with utmost care and precision, one block after the other and the complete fabric thus is printed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S09",
+      "quote": "The fabric is placed on the wooden tables and the printer squats in front of the table for printing. Small trays contain the dyestuff mixture and the block is dipped in it and subsequently stamped on the fabric with a solid thud of the side of the palm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S05",
+      "quote": "laid atop low tables in front of a karigar seated on the floor",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S05",
+      "quote": "The karigar's work begins with printing the outline, followed by filling it in with colours and details. The red and black designs are printed in separate stages, allowing the natural dye to dry before the next layer of the design or colouring is applied.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "The time taken depends on the design and pattern, though, on an average about 5 metres can be printed by an expert worker in two to three hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "After printing, the cloth is allowed to dry fully before being folded. It is then allowed to rest for a fortnight for the colour to set.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "The printed material when dry is rolled into bundles and kept away for eight to fifteen days. This allows the colour to set in properly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "It is kept for a minimum of eight days and a maximum of two weeks for the colour to be absorbed properly by the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S09",
+      "quote": "The printed fabric is left to dry for about seven days so that the dye is fully absorbed by the fabric, making the colour fast and the effect rich.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "The next part of the process - bichalna - involves taking the printed bundles to the river. The printed material is pushed into the water and taken out swiftly so that the extra colour is removed and flows into the river water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S12",
+      "quote": "The next process bichalna (or vichalna) removes extra or residual dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S05",
+      "quote": "the fabric is taken to the river, where it is washed and beaten against rocks to soften it and remove excess dye - a process known as vichaliya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "two people stand in this running water and hold the fabric with their hands firmly, while ensuring that the fabric is under water most of the time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "Each piece needs to be kept under flowing water for at least 20 minutes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "It is then held over the shoulder and beaten against stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "If this process is not followed correctly, stains and smudges can appear on the printed surface. These are permanent and cannot be removed except by pota, which involves painting the whole surface in black or red by stretching the fabric and painting it with a rag tied to a stick.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "After being washed thoroughly, the cloth is taken back to the workshop where it is boiled in a solution of dhavdakaphool (for shining and fixing) and alizarine (to fasten colours).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S12",
+      "quote": "Bhatti is the next stage. This is when the fabric is boiled and tossed around in a heated copper vat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "(The vats are large enough to allow 25 single bed covers to be soaked in them at one time.) The vats are generally made of copper and are fixed on brick and cement furnaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S04",
+      "quote": "it is important that the cloth is shifted and turned constantly, using long wooden sticks. All this while, the heat of the water solution in the vat has to be increased by adding more fire wood in the furnace.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S04",
+      "quote": "It is during this process that the colour of the prints develop - the workers know from experience when to take the fabric out of the vat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S04",
+      "quote": "Rangchalna: Sticks of different used to move/rotate the cloth while heating.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "Around eight people work on a bhatti for six hours and 2 to 3 quintals of wood is required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S13",
+      "quote": "This process is locally called 'bhatti-karna', referring to the elaborate process of boiling around 30-40 fabrics in huge copper vessels containing at least 200 litres of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S13",
+      "quote": "The mixture has to be stirred constantly to avoid smudging of colours. This stage lasts for about three hours before the fabric is finally dried under the sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S05",
+      "quote": "The dye is then fixed and the reds are deepened by boiling the cloth for a couple of hours in a solution of alizarin and local dhawda flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "After drying, the cloth is taken to the stream where it is washed three to four times. This process is also called tarai: after washing the cloth, when it is being dried, it is repeatedly moistened by spraying water on it with the hands. This helps to gradually set the colours permanently.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "During this period, it is washed at least three times and sent to the bhatti/ oven at least twice.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S04",
+      "quote": "During this period it is washed in the river at least seven times and sent to the bhatti at least twice.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "Sometimes, if the colour is not as bright as it should be or it is required that two shades of the same colour show up separately, over -dyeing is done.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "Harara, and 5 kg of alum (if red is required) or 5 kg of iron sulphate (if black is required) are boiled in 10 litres of water. Two or three pieces are then dyed at a time and dried.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S07",
+      "quote": "His chief tool is a hand drill that involves a bow and a variety of chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S19",
+      "quote": "The craftsmen use a hand-drill arrangement that involves a bow called 'Kamthi' and a driller 'Saarardi, to drill out larger portions of the design voids from the block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S04",
+      "quote": "The bilals or blocks are the most critical tool in hand-block printing. For the chippa printers of Bagh, blocks are shoji (money and life).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S14",
+      "quote": "The teak blocks are sturdy and they are soaked in oil to further increase their life.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S14",
+      "quote": "A single piece can be used to print about 5,000 metres of cloth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S19",
+      "quote": "Once prepared, the blocks are immersed in oil for a few days to protect them against warping and insect attacks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S01",
+      "quote": "The block designs that have managed to survive with time are nearly 200 years old and are still being used; some of them are 100 to 50 years old and on printing still find a market for themselves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S12",
+      "quote": "According to Yusuf, some of the wooden blocks he still uses are two- to three-hundred years old.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S01",
+      "quote": "Bagh layouts are dramatic in the use of black and red alternately on a white background.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "The designs are very typical with geometric patterns inter placed such that the total effect of the repeated pattern give a very harmonious appearance and appeal to the fabrics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "Some old blocks and their names that are being still used are (i) Nandana, (ii) Laheriya, (iii) Attha,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "(xii) Makhi, (xiii) Palliwalizanjira, (xiv) Zanjiri, (xv) Jodhpuri, (xvi) Jawareya, (xvii) Molya border, (xviii) Molyabodh, (xix) Khiralakaire, (xx) Mungphali, (xxi) Chaukada, (xxii) Nareyal, (xxiii) Teekoni and (xxiv) Thuddi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S12",
+      "quote": "Each block has a name: chameli (jasmine), maithir (mushroom), leheriya (waves), keri (mango), and jurvaria (small dots).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S17",
+      "quote": "chameli or jasmine, maithri or mushroom, leheriya and jurvaria or small dots on the field.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S12",
+      "quote": "The traditional designs are inspired by nature, the ancient Bagh Cave paintings, and the jali (lattice) work of the Taj Mahal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S06",
+      "quote": "They say some designs are inspired by the Taj Mahal and famous forts of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S18",
+      "quote": "Some of the common motifs used are Genda (marigold flower), and Nariyal Jaal (inspired by the Taj Mahal).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S17",
+      "quote": "These motifs include Nariyal Zaal, Ghevar Zaal (Taj Mahal Paintings Designs)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S06",
+      "quote": "The four primary designs are nariyal (a coconut shape), tikona (a triangle, or many triangles mounted to form a peak), gehwar (a fan-like shape), and lehar (waves).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S06",
+      "quote": "These four designs from the main collection are called a parivar (family).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "A process called DOUBLE DYE has been developed by Khatris, to make their product more competitive in the market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "In this process, 'lal per lal' (red on red), 'lal aur kala' (red and black), and 'lal aur khaki' (red and khaki) prints can be made.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "New additions are done every six months as per market demand and feel. At the same time care is taken to see that this new design is a new variation of the old one.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Cotton bedcovers in two different sizes for single bed and double bed respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Saris are printed in different materials like cotton, silk and chiffon.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Duppattas and stoles in cotton and silk material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Recently, durries printing has also been worked on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Table covers of different sizes and shapes in cotton material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Cushion covers mainly in cotton, in different sizes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "Salwar suit material and yardage dress material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S04",
+      "quote": "traditional saris worn by adivasis had only specific designs like janjuri, juardana, and beel, generally printed in red or black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S08",
+      "quote": "innovative experiments by the next generation of craftspeople include printing on floor-coverings, on jute, on leather and on bamboo blinds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "Umar Faruk has tried out new materials, such as reed and other natural fibres, for making printed mats in Bagh style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S24",
+      "quote": "| S. No. | Tehsil | Revenue Circles | No. of Revenue Halka | No. of Revenue Villages |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S24",
+      "quote": "| 3 | Kukshi | 4 | 120 | 208 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S24",
+      "quote": "| 4 | Manawar | 4 | 125 | 214 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S04",
+      "quote": "As Ismail Khatri points out, it was 40 years ago (1962) when - owing to persuasion from the mahajans of Bagh - the his father (and uncle) decided to settle down in Bagh - the name Bagh print came into existence.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S04",
+      "quote": "According to Ismail Khatri, the fabric is soaked for just over an hour, and then beaten on a stone slab to remove the starch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S01",
+      "quote": "Sometimes, to save time, a bit of bleaching powder is added in a drum of water and the cloth is passed through it. This obviates the need of washing the cloth three to four times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S04",
+      "quote": "The work is done mainly by the male members of the family. They are assisted by male labourers drawn from socio-economically backward communities. Most of the labourers are from bhil tribe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S04",
+      "quote": "The women in the family, through aware of the technology involved in this type of printing, never participate in the printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S04",
+      "quote": "They themselves do not participate in the process of printing - their role is supervisory in nature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S04",
+      "quote": "Ismail Khatri states that if there is no water in the Bagh river, the material has to be taken to the Narmada river, five hours away in Chikalda.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S20",
+      "quote": "Hand Block Bagh Print Sh.Mohammed Bilal Khatri S/o Sh.Mohammed Yusuf Khatri National Merit Certificate 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S14",
+      "quote": "Mohammed Bilal Khatri, who received an excellence award from the United Nations Educational Scientific and Cultural Organisation (UNESCO) in 2016 for reviving Bagh prints",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S25",
+      "quote": "Textile, length of resist-dyed and block printed cotton, Indore, probably made in Bagh (Madhya Pradesh), ca. 1881-1882",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S25",
+      "quote": "Acquired by Caspar Purdon Clarke on his purchasing trip to India in 1881 to 1882.",
+      "result": "PASS"
+    }
+  ]
+}

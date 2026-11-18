@@ -1,3 +1,4 @@
+import hashlib
 import uuid
 from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
@@ -9,11 +10,11 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import molecules
 from app.core.db import get_session
-from app.core.deps import get_current_user
 from app.core.errors import ExternalFailure
 from app.main import create_app
 from app.models import User
 
+from ..readers import sign_in_as
 from ..sources.recorded import recorded
 from ..voice.listen_fakes import MemoryObjects
 
@@ -121,7 +122,7 @@ def route(
     app = create_app()
     app.dependency_overrides[get_session] = recording_session
     if signed_in:
-        app.dependency_overrides[get_current_user] = reader
+        sign_in_as(app, reader)
     return Route(TestClient(app), calls, counting)
 
 
@@ -130,7 +131,8 @@ def test_a_signed_in_reader_gets_the_stored_compound_s_3d_sdf(monkeypatch: pytes
     first, second = found.http.get(PATH), found.http.get(PATH)
     assert first.status_code == second.status_code == 200
     assert first.headers["content-type"].startswith("chemical/x-mdl-sdfile")
-    assert first.headers["cache-control"] == "private, max-age=604800"
+    assert first.headers["cache-control"] == "private, no-cache"
+    assert first.headers["etag"] == f'"{hashlib.sha256(ALIZARIN_SDF.encode("utf-8")).hexdigest()}"'
     assert first.text == second.text == ALIZARIN_SDF
     assert found.source.asked == [6293]
 
@@ -172,8 +174,12 @@ def test_nothing_to_draw_is_404_and_a_failure_503(
         assert response.json()["detail"] == molecules.UNAVAILABLE_DETAIL
 
 
-def test_the_route_needs_a_signed_in_reader_and_a_cid(monkeypatch: pytest.MonkeyPatch) -> None:
-    assert route(monkeypatch, signed_in=False).http.get(PATH).status_code == 401
+def test_an_anonymous_reader_gets_the_structure_and_a_cid_is_required(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    anonymous = route(monkeypatch, signed_in=False).http.get(PATH)
+    assert (anonymous.status_code, anonymous.text) == (200, ALIZARIN_SDF)
+    assert anonymous.headers["cache-control"] == "public, max-age=300"
     found = route(monkeypatch)
     assert found.http.get("/api/molecules/0/conformer").status_code == 422
     assert found.source.asked == []

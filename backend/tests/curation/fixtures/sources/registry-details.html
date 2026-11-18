@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recorded test registry page</title>
+<script>$(document).ready(function () { $('#Documents').dataTable({ "pagingType": "full_numbers" }); });</script>
+</head>
+<body>
+<div id="header"><a href="/">Home</a> <a href="/search">Search</a> <a href="/help">Help</a></div>
+<div id="content" class="innerContent">
+<div class="container">
+<h3><p style="color: #8C4510;">Application Details</p></h3>
+<div class="tableOut">
+<table class="tableData responsiveTable" border="0" summary="Acts" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr class="lastTr">
+<td align="left" valign="top" class="firstTd" style="width: 30%"><strong>Application Number</strong></td>
+<td align="left" valign="top"><span>9001</span></td>
+</tr>
+<tr class="lastTr">
+<td align="left" valign="top" class="firstTd" style="width: 30%"><strong>Geographical Indications </strong></td>
+<td align="left" valign="top"><b style="font-size: medium"><span>Test Resist Print</span></b></td>
+</tr>
+<tr class="lastTr">
+<td align="left" valign="top" class="firstTd" style="width: 30%"><strong>Status </strong></td>
+<td align="left" valign="top"><span><strong style="font-size: medium"><span style="color:#C70039;"> Pre Examination </span></strong></span></td>
+</tr>
+<tr class="lastTr">
+<td align="left" valign="top" class="firstTd" style="width: 30%"><strong>Applicant Name </strong></td>
+<td align="left" valign="top"><span>Test Printers Cooperative Society, Department of Test Crafts</span></td>
+</tr>
+<tr class="lastTr">
+<td align="left" valign="top" class="firstTd" style="width: 30%"><strong>Date of Filing </strong></td>
+<td align="left" valign="top"><span>
+05-05-2025
+</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3><p style="color: #8C4510;">Document Details</p></h3>
+<form action="/documents" method="post">
+<table id="Documents" class="tableData responsiveTable display" border="0" summary="Documents" width="100%" cellspacing="0" cellpadding="0">
+<thead>
+<tr><th>Sl.No.</th><th>Document</th><th>Date</th><th>Download</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>9001 - Reply to Formality Check Report by Applicant - 25-12-2025</td><td>25-12-2025</td><td><a href="/doc/1"><img src="pdf.png" alt=""></a></td></tr>
+<tr><td>2</td><td>9001 - Formality Check Report - 21-10-2025</td><td>21-10-2025</td><td><a href="/doc/2"><img src="pdf.png" alt=""></a></td></tr>
+<tr><td>3</td><td>9001 - Statement of Case of the resist print - 15-10-2025</td><td>15-10-2025</td><td><a href="/doc/3"><img src="pdf.png" alt=""></a></td></tr>
+<tr><td>4</td><td>9001 - Form GI-1 of the resist print - 15-10-2025</td><td>15-10-2025</td><td><a href="/doc/4"><img src="pdf.png" alt=""></a></td></tr>
+</tbody>
+</table>
+</form>
+<table style="display:none">
+<tr><td>Internal Reference</td><td>hidden registry row that a reader never sees</td></tr>
+</table>
+</div>
+</div>
+<div id="footer">Copyright notice of the recorded test registry.</div>
+</body>
+</html>

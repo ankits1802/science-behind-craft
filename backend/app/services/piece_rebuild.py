@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import uuid
 from collections.abc import Awaitable, Callable, Sequence
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Any
@@ -20,6 +20,7 @@ from app.research.planning import withheld_name
 from app.research.understanding import Understanding
 from app.research.vocabulary import CANONICAL_LANGUAGE
 
+from .answer_lede import LedeTools
 from .answering import AnswerAsk, AnswerPipeline, answer_understood
 from .coverage_enrichment import ENRICHMENT_QUESTION_RESERVE_USD, ENRICHMENT_TAG
 
@@ -155,7 +156,7 @@ async def rebuild_group(group: StaleGroup, pipeline: AnswerPipeline) -> str:
         fresh=True,
     )
     with request_id_scope(f"{PIECE_REBUILD_TAG}{uuid.uuid4().hex}"):
-        await answer_understood(ask, rebuild_understanding(group), pipeline, emit)
+        await answer_understood(ask, rebuild_understanding(group), replace(pipeline, lede=LedeTools()), emit)
     return REBUILT if "block" in sent else EMPTY
 
 

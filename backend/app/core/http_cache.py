@@ -1,21 +1,34 @@
 from __future__ import annotations
 
+import hashlib
+import json
+from typing import Any
+
 from fastapi import Request, Response, status
 
 __all__ = [
     "PRIVATE_NO_CACHE",
+    "PUBLIC_READ_CACHE",
+    "PUBLIC_READ_MAX_AGE_SECONDS",
+    "body_version",
     "etag_matches",
     "not_modified",
     "quoted_etag",
-    "revalidated",
     "revalidation_headers",
 ]
 
 PRIVATE_NO_CACHE = "private, no-cache"
+PUBLIC_READ_MAX_AGE_SECONDS = 300
+PUBLIC_READ_CACHE = f"public, max-age={PUBLIC_READ_MAX_AGE_SECONDS}"
 
 
 def quoted_etag(version: str) -> str:
     return f'"{version}"'
+
+
+def body_version(body: Any) -> str:
+    text = json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def etag_matches(if_none_match: str | None, etag: str) -> bool:
@@ -27,19 +40,12 @@ def etag_matches(if_none_match: str | None, etag: str) -> bool:
     return "*" in tags or bare(etag) in tags
 
 
-def revalidation_headers(version: str) -> dict[str, str]:
-    return {"ETag": quoted_etag(version), "Cache-Control": PRIVATE_NO_CACHE}
+def revalidation_headers(version: str, *, cache_control: str = PRIVATE_NO_CACHE) -> dict[str, str]:
+    return {"ETag": quoted_etag(version), "Cache-Control": cache_control}
 
 
-def not_modified(request: Request, version: str) -> Response | None:
-    headers = revalidation_headers(version)
+def not_modified(request: Request, version: str, *, cache_control: str = PRIVATE_NO_CACHE) -> Response | None:
+    headers = revalidation_headers(version, cache_control=cache_control)
     if etag_matches(request.headers.get("if-none-match"), headers["ETag"]):
         return Response(status_code=status.HTTP_304_NOT_MODIFIED, headers=headers)
     return None
-
-
-def revalidated(request: Request, response: Response, version: str) -> Response | None:
-    answer = not_modified(request, version)
-    if answer is None:
-        response.headers.update(revalidation_headers(version))
-    return answer

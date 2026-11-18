@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping, Sequence
 from types import MappingProxyType
 from typing import Annotated, Literal
@@ -13,24 +14,33 @@ from .composition import HEADING_MAX_CHARS
 from .depth import depth_policy
 from .explainer import SECTION_ID_PATTERN
 from .planning import RetrievalPlan
+from .question_cues import QUESTION_CUES
 from .vocabulary import Discipline
 
 __all__ = [
     "ANSWER_PLANS_SCHEMA_VERSION",
+    "ANY_CRAFT_NAME",
     "DISCIPLINE_FIELDS",
     "DISCIPLINE_TITLES",
+    "FACET_LABELS",
     "FALLBACK_DISCIPLINE",
+    "FALLBACK_HEADINGS",
     "LADDER_DISCIPLINE",
     "AnswerPlans",
     "SectionPlan",
     "SectionSpec",
+    "asked_disciplines",
     "block_id",
+    "fallback_heading",
+    "is_facet_label",
+    "question_order",
     "section_specs",
 ]
 
 ANSWER_PLANS_SCHEMA_VERSION = 1
 FALLBACK_DISCIPLINE = "OVERVIEW"
 LADDER_DISCIPLINE = "PROCESS"
+ANY_CRAFT_NAME = "the craft"
 DISCIPLINE_TITLES: Mapping[str, str] = MappingProxyType(
     {
         "OVERVIEW": "What it is",
@@ -67,6 +77,39 @@ DISCIPLINE_FIELDS: Mapping[str, str] = MappingProxyType(
         "HEALTH": "health, toxicology and safe handling",
     }
 )
+FALLBACK_HEADINGS: Mapping[str, str] = MappingProxyType(
+    {
+        "OVERVIEW": "What {craft} is",
+        "PROCESS": "How {craft} is made",
+        "CHEMISTRY": "The chemistry behind {craft}",
+        "PHYSICS": "The physics behind {craft}",
+        "MATERIALS": "What {craft} is made from",
+        "GEOGRAPHY": "The land and water behind {craft}",
+        "GEOLOGY": "The soil and stone behind {craft}",
+        "CLIMATE": "The weather {craft} works with",
+        "ECOLOGY": "Where {craft} meets its surroundings",
+        "BOTANY": "The plants behind {craft}",
+        "HISTORY": "Where {craft} comes from",
+        "ECONOMICS": "Who makes a living from {craft}",
+        "DESIGN": "The patterns of {craft}",
+        "HEALTH": "Working safely in {craft}",
+    }
+)
+LABEL_WORD = re.compile(r"[^\W_]+")
+FACET_LABELS = frozenset(
+    " ".join(LABEL_WORD.findall(label.casefold()))
+    for label in (
+        *DISCIPLINE_TITLES.values(),
+        *DISCIPLINE_FIELDS.values(),
+        *(discipline.replace("_", " ") for discipline in DISCIPLINES),
+        *(f"the {discipline}" for discipline in DISCIPLINES),
+        "botany",
+        "health",
+        "process",
+        "overview",
+    )
+)
+QUESTION_WORD = re.compile(r"[^\s\"'“”‘’.,;:!?()\[\]{}।॥/\\-]+")
 
 SectionId = Annotated[str, Field(pattern=SECTION_ID_PATTERN)]
 
@@ -89,13 +132,58 @@ class AnswerPlans(ContractModel):
     sections: list[SectionPlan]
 
 
-def section_specs(disciplines: Sequence[str], depth: str) -> list[SectionSpec]:
-    chosen = [d for d in dict.fromkeys(disciplines) if d in DISCIPLINES][: depth_policy(depth).max_sections]
+def section_specs(
+    disciplines: Sequence[str], depth: str, *, question: str = "", craft_name: str | None = None
+) -> list[SectionSpec]:
+    known = [d for d in dict.fromkeys(disciplines) if d in DISCIPLINES]
+    asked = asked_disciplines(known, question, craft_name)
+    kept = [*asked, *(d for d in known if d not in asked)][: depth_policy(depth).max_sections]
+    ordered = question_order([d for d in known if d in kept] or [FALLBACK_DISCIPLINE], question, craft_name)
     return [
-        SectionSpec(id=f"s{order}", discipline=discipline, title=DISCIPLINE_TITLES[discipline], order=order)
-        for order, discipline in enumerate(chosen or [FALLBACK_DISCIPLINE], start=1)
+        SectionSpec(
+            id=f"s{order}", discipline=discipline, title=fallback_heading(discipline, craft_name), order=order
+        )
+        for order, discipline in enumerate(ordered, start=1)
     ]
+
+
+def question_order(disciplines: Sequence[str], question: str, craft_name: str | None = None) -> list[str]:
+    asked = asked_disciplines(disciplines, question, craft_name)
+    ordered = [*asked, *(discipline for discipline in disciplines if discipline not in asked)]
+    if LADDER_DISCIPLINE in asked or LADDER_DISCIPLINE not in ordered:
+        return ordered
+    return [*(discipline for discipline in ordered if discipline != LADDER_DISCIPLINE), LADDER_DISCIPLINE]
+
+
+def asked_disciplines(disciplines: Sequence[str], question: str, craft_name: str | None = None) -> list[str]:
+    words = _words(question) - _words(craft_name or "")
+    return [discipline for discipline in disciplines if _cued(QUESTION_CUES.get(discipline, ()), words)]
+
+
+def fallback_heading(discipline: str, craft_name: str | None) -> str:
+    heading = FALLBACK_HEADINGS[discipline].format(craft=craft_name or ANY_CRAFT_NAME)
+    if len(heading) > HEADING_MAX_CHARS:
+        heading = FALLBACK_HEADINGS[discipline].format(craft=ANY_CRAFT_NAME)
+    return heading[0].upper() + heading[1:]
+
+
+def is_facet_label(heading: str) -> bool:
+    return " ".join(LABEL_WORD.findall(heading.casefold())) in FACET_LABELS
 
 
 def block_id(section_id: str, ordinal: int) -> str:
     return f"{section_id}.b{ordinal}"
+
+
+def _words(text: str) -> set[str]:
+    return set(QUESTION_WORD.findall(text.casefold()))
+
+
+def _cued(cues: Sequence[str], words: set[str]) -> bool:
+    for cue in cues:
+        if cue.endswith("*"):
+            if any(word.startswith(cue[:-1]) for word in words):
+                return True
+        elif cue in words:
+            return True
+    return False

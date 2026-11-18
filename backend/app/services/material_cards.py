@@ -26,6 +26,7 @@ __all__ = [
     "card_offers",
     "material_card",
     "material_term",
+    "merged_materials",
 ]
 
 logger = logging.getLogger(__name__)
@@ -45,7 +46,7 @@ class CardOffer:
         return CardBrief(
             ref=self.ref,
             name=self.material.name,
-            names=_local_names(term),
+            names=_brief_names(self.material, term),
             role=_agreed_role(self.material),
             statements=tuple(CardStatement(ref, claim.text) for ref, claim in self.statements.items()),
         )
@@ -53,8 +54,9 @@ class CardOffer:
 
 def card_offers(matter: CraftMatter, blocks: Sequence[Block], cited: CitedClaims) -> list[CardOffer]:
     sentences = section_sentences(blocks)
+    shown = {claim for block in blocks for claim in block.cited_claim_ids()}
     named: list[tuple[int, MaterialRows]] = []
-    for material in matter.materials:
+    for material in merged_materials(matter.materials):
         position = first_naming(sentences, material.surfaces(), (term.key for term in material.terms))
         if position is not None:
             named.append((position, material))
@@ -62,7 +64,7 @@ def card_offers(matter: CraftMatter, blocks: Sequence[Block], cited: CitedClaims
     offers = []
     for material in (material for _, material in named):
         ref = f"m{len(offers) + 1}"
-        claims = _offered_claims(material, matter, cited)
+        claims = _offered_claims(material, matter, cited, shown=shown)
         if claims:
             offers.append(CardOffer(ref, material, {f"{ref}.c{n}": c for n, c in enumerate(claims, 1)}))
         if len(offers) == MATERIAL_CARDS_MAX:
@@ -109,7 +111,43 @@ def material_term(material: MaterialRows) -> GlossaryTerm | None:
     return max(named, key=lambda term: (len(term.label), term.key), default=None)
 
 
-def _offered_claims(material: MaterialRows, matter: CraftMatter, cited: CitedClaims) -> list[KnownClaim]:
+def merged_materials(materials: Sequence[MaterialRows]) -> list[MaterialRows]:
+    groups: dict[tuple[str, object], list[MaterialRows]] = {}
+    for material in materials:
+        groups.setdefault(_compound_key(material), []).append(material)
+    return [_merged(group) for group in groups.values()]
+
+
+def _compound_key(material: MaterialRows) -> tuple[str, object]:
+    compound = material.compound
+    if compound is None:
+        return ("material", material.material_id)
+    if compound.pubchem_cid is not None:
+        return ("cid", compound.pubchem_cid)
+    return ("compound", compound.id)
+
+
+def _merged(group: Sequence[MaterialRows]) -> MaterialRows:
+    if len(group) == 1:
+        return group[0]
+    first = _named_for_its_compound(group)
+    rest = [material for material in group if material is not first]
+    terms = {term.key: term for material in (first, *rest) for term in material.terms}
+    uses = (*first.uses, *(use for material in rest for use in material.uses))
+    return MaterialRows(first.material_id, uses, tuple(terms.values()))
+
+
+def _named_for_its_compound(group: Sequence[MaterialRows]) -> MaterialRows:
+    for material in group:
+        compound = material.compound
+        if compound is not None and material.name.casefold() == compound.name.casefold():
+            return material
+    return min(group, key=lambda material: (len(material.name), material.name))
+
+
+def _offered_claims(
+    material: MaterialRows, matter: CraftMatter, cited: CitedClaims, *, shown: set[str]
+) -> list[KnownClaim]:
     own = [matter.records.claims.get(claim_id) for use in material.uses for claim_id in use.claim_ids]
     mentioning = [
         _known(view.id, view.text, view.level, view.citations)
@@ -118,7 +156,7 @@ def _offered_claims(material: MaterialRows, matter: CraftMatter, cited: CitedCla
     ]
     found: dict[uuid.UUID, KnownClaim] = {}
     for claim in [*own, *mentioning]:
-        if claim is not None and claim.level in FACT_LEVELS:
+        if claim is not None and claim.level in FACT_LEVELS and str(claim.id) not in shown:
             found.setdefault(claim.id, claim)
     return list(found.values())[:CARD_STATEMENTS_MAX]
 
@@ -152,6 +190,13 @@ def _known(
 def _agreed_role(material: MaterialRows) -> str | None:
     roles = {use.role for use in material.uses}
     return roles.pop() if len(roles) == 1 else None
+
+
+def _brief_names(material: MaterialRows, term: GlossaryTerm | None) -> tuple[str, ...]:
+    kept = {material.name.casefold(): material.name}
+    for name in (*_local_names(term), *(use.name.strip() for use in material.uses)):
+        kept.setdefault(name.casefold(), name)
+    return tuple(kept.values())[1:]
 
 
 def _local_names(term: GlossaryTerm | None) -> tuple[str, ...]:

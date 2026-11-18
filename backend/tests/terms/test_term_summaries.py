@@ -1,13 +1,23 @@
 import json
 import uuid
+from dataclasses import replace
+from datetime import UTC, datetime
 
 import pytest
 
-from app.core.errors import Refused
+from app.core.errors import InvalidInput, Refused
 from app.research.composition import ComposedSentence, QuotedSpan
+from app.research.terms import Term
 from app.services.knowledge_view import ClaimView
 from app.services.term_research import ResearchedSummary
-from app.services.term_summaries import NO_SUMMARY_REASON, UNKNOWN_TERM_REASON, StoredClaims, TermLookup
+from app.services.term_summaries import (
+    NO_SUMMARY_REASON,
+    UNKNOWN_TERM_REASON,
+    StoredClaims,
+    StoredTermLookup,
+    TermLookup,
+    cites_only_shown,
+)
 
 from ..answering.fakes import translation
 from ..planner.fakes import FakeModel
@@ -156,8 +166,34 @@ async def test_stored_hypotheses_are_never_a_summary() -> None:
                 )
             ],
             claims.sources,
+            CHECKED_AT,
         ),
     )
     with pytest.raises(Refused) as refused:
         await lookup(store).summary("kut", "en")
     assert refused.value.reason == NO_SUMMARY_REASON
+
+
+async def test_a_stored_summary_is_dated_by_its_claims_not_by_the_clock() -> None:
+    changed = datetime(2026, 10, 2, 8, 15, tzinfo=UTC)
+    store = FakeTermStore({"kut": kut_term()}, stored=replace(golden_claims(), changed_at=changed))
+    signed_in = await lookup(store).summary("kut", "en")
+    anonymous = await StoredTermLookup(FakeTermStore({"kut": kut_term()}, stored=store.stored)).summary(
+        "kut", "en"
+    )
+    assert signed_in.checked_at == anonymous.checked_at == changed
+    assert signed_in == anonymous
+
+
+async def test_a_store_that_dates_no_defining_claim_is_refused_loudly() -> None:
+    store = FakeTermStore({"kut": kut_term()}, stored=replace(golden_claims(), changed_at=None))
+    with pytest.raises(InvalidInput, match="kut"):
+        await StoredTermLookup(store).summary("kut", "en")
+
+
+def test_a_kept_summary_is_shown_only_while_every_citation_it_quotes_is_still_shown() -> None:
+    kept = Term.model_validate(golden_term())
+    (view,) = golden_claims().views
+    assert cites_only_shown(kept, {view.id: view})
+    assert not cites_only_shown(kept, {})
+    assert not cites_only_shown(kept, {view.id: replace(view, citations=[])})

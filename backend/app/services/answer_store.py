@@ -25,6 +25,7 @@ from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Explainer
 from app.research.explainer_versions import VersionMark
 from app.research.planning import PlanRequest
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.research.sections import AnswerPlans
 from app.research.stream import ResearchProgress
 from app.research.structured import StructuredModel
@@ -35,6 +36,7 @@ from app.science.records import ProcessRecords
 
 from . import knowledge_view
 from .answer_events import CitedClaims, cited_claims
+from .answer_lede import LedeTools
 from .answer_sections import ClaimsOf
 from .answer_translation import AnswerTranslation
 from .answering import AnswerAsk, AnswerPipeline
@@ -74,7 +76,9 @@ class SqlAnswerStore:
             craft = await knowledge_view.resolve_craft(session, craft_slug)
             if craft is None:
                 raise InvalidInput(f"No craft has the slug {craft_slug!r}")
-            views, sources = await knowledge_view.claims_for(session, craft, mode=mode, question=question)
+            views, sources = await knowledge_view.claims_for(
+                session, craft, mode=mode, question=question, acls=EVERY_CHUNK_ACLS
+            )
         return cited_claims(views, sources)
 
     async def begin(self, ask: AnswerAsk, understanding: Understanding) -> uuid.UUID:
@@ -98,7 +102,7 @@ class SqlAnswerStore:
     async def process(self, craft_slug: str) -> ProcessRecords | None:
         async with self._sessions() as session:
             craft = await knowledge_view.resolve_craft(session, craft_slug)
-            return await process_records(session, craft) if craft is not None else None
+            return await process_records(session, craft, acls=EVERY_CHUNK_ACLS) if craft is not None else None
 
     async def _begun(self, ask: AnswerAsk, understanding: Understanding) -> uuid.UUID:
         answer_id = uuid.uuid4()
@@ -158,7 +162,7 @@ class SqlAnswerStore:
 
     async def cited(self, claim_ids: Iterable[uuid.UUID]) -> CitedClaims:
         async with self._sessions() as session:
-            views, sources = await knowledge_view.claims_by_id(session, claim_ids)
+            views, sources = await knowledge_view.claims_by_id(session, claim_ids, acls=EVERY_CHUNK_ACLS)
         return cited_claims(list(views.values()), sources)
 
 
@@ -204,15 +208,17 @@ def build_answer_pipeline(
         return await planner.research(request, progress=progress, trail=trail)
 
     tools = BuilderTools(sessions, live, builder_plan_model, builder_compose_model)
+    composer = ModelComposer(model=compose_model)
     return AnswerPipeline(
         understand=ModelUnderstander(model=plan_model, resolve=resolve).understand,
         research=research,
-        compose=ModelComposer(model=compose_model).compose,
+        compose=composer.compose,
         store=SqlAnswerStore(sessions, embed=embed, shield=shield),
         translation=build_answer_translation(sessions, model=translate_model),
         pieces=SqlPieceStore(sessions, embed=embed, shield=shield),
         enrichment=build_answer_enrichment(sessions, live),
         builders=BlockBuilders.from_registry(tools),
+        lede=LedeTools(compose=composer.lede),
     )
 
 

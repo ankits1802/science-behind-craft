@@ -6,11 +6,9 @@ from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from app.composer.candidates import research_summary
 from app.core.errors import AppError, spend_refusal
 from app.planner.policy import request_limits
 from app.research.composition import (
-    FOLLOW_UPS_MAX,
     ComposedAnswer,
     ComposeRequest,
     ResearchSummary,
@@ -29,6 +27,7 @@ from app.research.vocabulary import CANONICAL_LANGUAGE
 from app.science.records import ProcessRecords
 
 from .answer_events import CitedClaims
+from .answer_lede import AnswerOpening, LedeTools, LedeWriting, Opening, lede_plan
 from .answer_sections import (
     ClaimsOf,
     ResearchLedger,
@@ -48,10 +47,17 @@ from .block_builders import BlockBuilders
 from .explainer_document import explainer_document
 from .explainer_events import ExplainerStream, status_message
 from .explainer_history import STALE_VERSION_DETAIL, StaleVersion
-from .follow_ups import AnswerLayout, FollowUp, answer_layout, understood_for
+from .follow_ups import (
+    AnswerLayout,
+    FollowUp,
+    answer_layout,
+    closed_answer,
+    left_open,
+    understood_for,
+)
 from .piece_lookup import PieceAsk
 from .piece_store import BuiltSection, PieceStore
-from .reused_sections import ReuseBuilds, ReusedShowing, reused_follow_ups, stream_reused
+from .reused_sections import ReuseBuilds, ReusedShowing, stream_reused_beside
 from .section_enrichment import Enrichment, EnrichmentTools
 from .stored_explainer import stream_stored_answer
 
@@ -124,6 +130,7 @@ class AnswerPipeline:
     pieces: PieceStore
     enrichment: EnrichmentTools
     builders: BlockBuilders = field(default_factory=BlockBuilders)
+    lede: LedeTools = field(default_factory=LedeTools)
 
 
 @dataclass(frozen=True)
@@ -230,7 +237,7 @@ async def _researched_answer(
 ) -> uuid.UUID:
     craft = understanding.craft
     await stream.status("PLANNING", craft=craft.name if craft else "")
-    layout = answer_layout(understanding, ask.builds_on)
+    layout = answer_layout(understanding, ask.builds_on, question=ask.question)
     specs = layout.specs
     answer_id = await pipeline.store.begin(ask, understanding)
     titles = {
@@ -240,15 +247,21 @@ async def _researched_answer(
     lookup = await pipeline.pieces.reusable(_piece_ask(ask, understanding, layout.reusable))
     enrichment = await pipeline.enrichment.for_answer(craft)
     run = _Run(ask, understanding, pipeline, stream, answer_id, enrichment, layout)
-    reused = await stream_reused(specs, lookup, _reused_showing(run, titles))
+    writing = LedeWriting(stream, pipeline.translation, enrichment)
+    plan = lede_plan(ask.question, understanding, layout.untitled, lookup)
+    opening = AnswerOpening(plan, pipeline.lede, writing, pipeline.store)
     open_specs = [spec for spec in specs if spec.discipline not in lookup.reused]
-    for spec in open_specs:
-        await stream.section_started(spec, titles=titles, state="RESEARCHING")
-    researched = await _research(open_specs, run)
+    async with opening.started() as first_lede:
+        for spec in open_specs:
+            await stream.section_started(spec, titles=titles, state="RESEARCHING")
+        showing = _reused_showing(run, titles, first_lede)
+        reused, researched = await stream_reused_beside(specs, lookup, showing, _research(open_specs, run))
+        first = await first_lede
     outcomes = sorted([*reused, *researched], key=lambda outcome: outcome.spec.order)
-    english = _english_follow_ups(outcomes) if open_specs else reused_follow_ups(craft, lookup)
-    follow_ups = await _closing(outcomes, english, stream, pipeline.translation)
-    await _finish(run, outcomes, titles=titles, follow_ups=follow_ups)
+    opened = await opening.settled(first, outcomes)
+    offered = left_open(ask.question, understanding, outcomes, opened)
+    follow_ups = await closed_answer(outcomes, offered, stream, pipeline.translation)
+    await _finish(run, outcomes, titles=titles, follow_ups=follow_ups, opened=opened)
     built = [
         BuiltSection(
             outcome.spec.discipline, outcome.built, deepened=not layout.keeps_pieces_of(outcome.spec)
@@ -260,11 +273,11 @@ async def _researched_answer(
     return answer_id
 
 
-def _reused_showing(run: _Run, titles: Mapping[str, str]) -> ReusedShowing:
+def _reused_showing(run: _Run, titles: Mapping[str, str], opening: Awaitable[Opening]) -> ReusedShowing:
     builds = ReuseBuilds(
         run.pipeline.builders.for_reuse(), run.answer_id, _plan_request(run.ask, run.understanding)
     )
-    return ReusedShowing(run.stream, titles, run.pipeline.translation, run.enrichment, builds)
+    return ReusedShowing(run.stream, titles, run.pipeline.translation, run.enrichment, builds, opening)
 
 
 async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutcome]:
@@ -287,17 +300,25 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
 
 
 async def _finish(
-    run: _Run, outcomes: Sequence[SectionOutcome], *, titles: Mapping[str, str], follow_ups: Sequence[str]
+    run: _Run,
+    outcomes: Sequence[SectionOutcome],
+    *,
+    titles: Mapping[str, str],
+    follow_ups: Sequence[str],
+    opened: Opening,
 ) -> None:
     document = explainer_document(
         answer_id=run.answer_id,
         question=run.ask.question,
         understood=run.layout.understood(run.understanding),
         outcomes=outcomes,
-        titles=titles,
+        titles={**titles, **{o.spec.id: o.shown_title for o in outcomes if o.shown_title}},
         follow_ups=follow_ups,
+        lede=opened.lede,
+        lede_sources=opened.sources,
     )
-    stored = run.layout.stored(document, dict.fromkeys(c for outcome in outcomes for c in outcome.claim_ids))
+    led = [uuid.UUID(citation.claim_id) for citation in opened.lede.citations()] if opened.lede else []
+    stored = run.layout.stored(document, dict.fromkeys([*led, *(c for o in outcomes for c in o.claim_ids)]))
     await run.pipeline.store.finish(
         run.answer_id,
         plans=_plans(outcomes),
@@ -317,33 +338,6 @@ def _piece_ask(ask: AnswerAsk, understanding: Understanding, specs: Sequence[Sec
         depth=understanding.depth,
         fresh=ask.fresh,
     )
-
-
-def _english_follow_ups(outcomes: Sequence[SectionOutcome]) -> list[str]:
-    return list(dict.fromkeys(item for outcome in outcomes for item in outcome.follow_ups))
-
-
-async def _closing(
-    outcomes: Sequence[SectionOutcome],
-    offered: Sequence[str],
-    stream: ExplainerStream,
-    translation: AnswerTranslation,
-) -> list[str]:
-    if any(outcome.blocks for outcome in outcomes):
-        english = list(offered)[:FOLLOW_UPS_MAX]
-        found = await _translated(
-            [Segment(f"follow-up:{n}", item) for n, item in enumerate(english)], stream.language, translation
-        )
-        follow_ups = [found.get(f"follow-up:{n}", item) for n, item in enumerate(english)]
-        await stream.emit("follow_ups", {"items": follow_ups})
-        return follow_ups
-    failures = [outcome.failure for outcome in outcomes if outcome.failure is not None]
-    if len(failures) == len(outcomes):
-        raise failures[0]
-    packs = [pack for outcome in outcomes for pack in outcome.packs]
-    message = not_enough_evidence_message(research_summary(*packs))
-    await stream.emit("not_enough_evidence", {"message": message})
-    return []
 
 
 async def _process(

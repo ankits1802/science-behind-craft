@@ -1,0 +1,4918 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Uttarakhand-Ringal-Craft",
+  "version": 1,
+  "curatedAt": "2026-11-18T11:16:00+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Uttarakhand Ringal Craft registration details",
+      "site": "ipindia.gov.in state-wise GI registration list (application 652, certificate 391)"
+    },
+    {
+      "query": "application 652",
+      "site": "search.ipindia.gov.in/GIRPublicSearch (registry record read; authorised users listed by private name and address, so no name is quoted)"
+    },
+    {
+      "query": "Journal 138",
+      "site": "search.ipindia.gov.in/IPOJournal/Journal/GIR (journal list; Journal 138 read)"
+    },
+    {
+      "query": "652 statement of case, Form GI-1, map and examination report",
+      "site": "search.ipindia.gov.in: documents download only through a form post that cannot be cited or re-fetched; not read"
+    },
+    {
+      "query": "Uttarakhand Ringal Craft craft page",
+      "site": "handicrafts.nic.in (Development Commissioner (Handicrafts)): connection timed out, no Wayback copy; the Uttarakhand_Ringal_Craft page found again by web search timed out again on 2026-11-18"
+    },
+    {
+      "query": "ringal craft Uttarakhand Rudiya community baskets Bageshwar",
+      "site": "web search"
+    },
+    {
+      "query": "ringal Drepanostachyum falcatum Thamnocalamus spathiflorus uses Uttarakhand journal article livelihood",
+      "site": "web search"
+    },
+    {
+      "query": "ringal weavers Rudiya OR Ruriya Uttarakhand dwarf bamboo article",
+      "site": "web search"
+    },
+    {
+      "query": "Uttarakhand Ringal craft GI tag 2021 Aipan Tamta Thulma Bhotia Dann news",
+      "site": "web search"
+    },
+    {
+      "query": "ringal bamboo Uttarakhand artisans feature Mongabay OR Down To Earth OR The Hindu OR Village Square",
+      "site": "web search (none of the named outlets found)"
+    },
+    {
+      "query": "ringal bamboo products Kedarnath Wildlife Sanctuary",
+      "site": "link.springer.com (a Discover journal article on ringal use near Kedarnath; page and PDF served only a browser check; not read)"
+    },
+    {
+      "query": "Utilization of Drepanostachyum falcatum in Pithoragarh",
+      "site": "i-scholar.in article 83855 (HTTP 404, no Wayback copy); indianforester.co.in article 84351 read for its abstract"
+    },
+    {
+      "query": "ringal plant record",
+      "site": "ucost.uk.gov.in/plants/350 (TLS refused, no Wayback copy)"
+    },
+    {
+      "query": "Ringal craft open elective",
+      "site": "openelective.nid.edu course abstract (HTTP 404, no Wayback copy)"
+    },
+    {
+      "query": "ringal",
+      "site": "en.wikipedia.org and hi.wikipedia.org (read as pointers only; ringal redirects to Himalayacalamus with no craft content; not cited)"
+    },
+    {
+      "query": "Drepanostachyum falcatum, Himalayacalamus",
+      "site": "efloras.org (Flora of Pakistan read from its Wayback copy; Flora of China pages refused with HTTP 403)"
+    },
+    {
+      "query": "Bageshwar, Pithoragarh, Almora culture and heritage",
+      "site": "bageshwar.nic.in, pithoragarh.nic.in, almora.nic.in (no ringal content; Pithoragarh's page names a basket called doka without its material; not used)"
+    },
+    {
+      "query": "ringal, ringaal",
+      "site": "sahapedia.org and gaatha.org sitemaps (no ringal page found)"
+    },
+    {
+      "query": "ringal basket Uttarakhand",
+      "site": "commons.wikimedia.org (Art of Uttarakhand, Weavers from India and species categories)"
+    },
+    {
+      "query": "Almora gazetteer 1911, Himalayan Gazetteer",
+      "site": "archive.org (no item found by direct identifier; see the advanced search below)"
+    },
+    {
+      "query": "Tribes India GI catalogue ringal",
+      "site": "static.pib.gov.in (a sales catalogue marketed through Tribes India; its ringal text restates the GI application; not used)"
+    },
+    {
+      "query": "Uttarapath Sewa Sanstha ringal project",
+      "site": "nmhs.org.in SG 18 (project brief on bamboo in general; not used)"
+    },
+    {
+      "query": "ringal product listing",
+      "site": "gbm.nabard.org product page and blogs (sales pages and unattributed blogs; not used)"
+    },
+    {
+      "query": "application 652 authorised users: status of each entry",
+      "site": "search.ipindia.gov.in/GIRPublicSearch: the table numbers 120 entries, but only rows 1 to 100 show the status Registered and rows 101 to 120 show none, so no authorised-user count is recorded"
+    },
+    {
+      "query": "Uttarakhand Handloom and Handicraft Development Council ringal",
+      "site": "web search; doiuk.org/mysite/about_uhhdc (UHHDC's page, read from its Wayback copy: describes the council only, no ringal text; not used)"
+    },
+    {
+      "query": "title:(himalayan gazetteer) OR title:(almora gazetteer) OR title:(garhwal gazetteer)",
+      "site": "archive.org advanced search (39 items), then the full texts searched for ringal: Walton's Almora gazetteer of 1911 (dli.csl.2925) read and cited"
+    },
+    {
+      "query": "ringal in Walton's British Garhwal gazetteer of 1910",
+      "site": "archive.org GarhwalGazetteer full text (1989 reprint): names ringal mats and baskets of Lohba, Chandpur and Badhan parganas; not used (no district quoted for them; claim cap reached)"
+    },
+    {
+      "query": "ringal in Atkinson's Himalayan Gazetteer",
+      "site": "archive.org full texts of volumes 1 and 2 (in.ernet.dli.2015.95851, 97345, 95852, 96527): only a forest-duty list naming ringals for hukka pipes; nothing on the craft; not used"
+    },
+    {
+      "query": "Uttarakhand Ringal Craft",
+      "site": "nabard.org/GI/uttarakhand-ringal-craft.aspx (rewords the GI application, changing its warp and weft widths to lengths; not independent, not used)"
+    },
+    {
+      "query": "Home Expo India 2017 Uttarakhand ringaal",
+      "site": "epch.in e-CRAFTCIL issue 35 (lists ringaal products shown at an expo; event listing, not used)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 138: Uttarakhand Ringal Craft, G.I. Application No. 652",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2020,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs/pdf/Journal_138.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public search: Uttarakhand Ringal Craft, application 652",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/652",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "PAPER",
+      "title": "Bamboo Trade and Future Prospects in the Central Himalaya: A case study of the traditional artisans of Uttarakhand, India",
+      "authors": [
+        "Manju Sundriyal",
+        "Rakesh Chandra Sundriyal"
+      ],
+      "publisher": "Ethnobotany Research & Applications",
+      "year": 2011,
+      "url": "https://ethnobotanyjournal.org/index.php/era/article/download/487/364/3092",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Resources: Bamboo, Ringal (Hill Bamboo) and Natural Fiber",
+      "publisher": "Uttarakhand Bamboo & Fiber Development Board",
+      "url": "https://ubfdb.org.in/resources",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "BOOK",
+      "title": "Flora of Pakistan: Arundinaria falcata Nees",
+      "publisher": "eFloras (Missouri Botanical Garden and Harvard University Herbaria)",
+      "url": "https://www.efloras.org/florataxon.aspx?flora_id=5&taxon_id=242420569",
+      "archivedUrl": "https://web.archive.org/web/20231128140446id_/http://efloras.org/florataxon.aspx?flora_id=5&taxon_id=242420569",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "PAPER",
+      "title": "Utilization of Drepansotachyum falcatum (Nees) Keng F. (Hill Bamboo) for Generating Economy by Some Scheduled Caste Families in Homesteads of Pithoragarh District, Uttarakhand",
+      "authors": [
+        "Vijay Arya",
+        "Balwant Kumar",
+        "Bharat Giri Gosain"
+      ],
+      "publisher": "Indian Forester",
+      "year": 2015,
+      "url": "https://indianforester.co.in/index.php/indianforester/article/view/84351",
+      "doi": "10.36808/if/2015/v141i11/84351",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "PAPER",
+      "title": "Cultivation of ringal bamboo boost the rural development and environment in Uttarakhand",
+      "authors": [
+        "S. R. Katiyar"
+      ],
+      "publisher": "Journal of Non-Timber Forest Products (Bishen Singh Mahendra Pal Singh)",
+      "year": 2010,
+      "url": "https://bsmpsbooks.com/journal/2000/article/NVc4Nk1G",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "BOOK_CHAPTER",
+      "title": "Design, Business, Cultural Preservation, and Safety Challenges for Ringaal Craft Artisans in Uttarakhand",
+      "authors": [
+        "Soumitra Bhattacharya",
+        "Naveen Kumar",
+        "Debkumar Chakrabarti"
+      ],
+      "publisher": "Atlantis Press (Proceedings of the ATLAS International Design Conference 2025)",
+      "year": 2026,
+      "url": "https://www.atlantis-press.com/article/126022639.pdf",
+      "doi": "10.2991/978-94-6239-620-3_4",
+      "language": "en",
+      "licence": "CC BY-NC 4.0",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "PAPER",
+      "title": "Bamboo Status and Trade Vulnerability: A Central Himalayan Case Study",
+      "authors": [
+        "Manju Sundriyal",
+        "Kirti Joshi"
+      ],
+      "publisher": "10th World Bamboo Congress, Korea",
+      "year": 2015,
+      "url": "https://www.worldbamboo.net/_files/ugd/9191d7_2f103dfd3d014946ac38c3285c269d26.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "WEB_PAGE",
+      "title": "Hathkandi Basket made from Ringal Bamboo",
+      "authors": [
+        "Harish Benjwal"
+      ],
+      "publisher": "INTACH Intangible Cultural Heritage Archive",
+      "url": "https://icharchive.intach.org/Myheritagedetail/Index?id=79",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "The last ringal weaver of Jaiti",
+      "authors": [
+        "Arpita Chakrabarty"
+      ],
+      "publisher": "People's Archive of Rural India",
+      "year": 2018,
+      "url": "https://ruralindiaonline.org/en/articles/the-last-ringal-weaver-of-jaiti/",
+      "archivedUrl": "https://web.archive.org/web/20240715053455id_/https://ruralindiaonline.org/en/articles/the-last-ringal-weaver-of-jaiti/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Uniqueness of the craft",
+      "authors": [
+        "Sanjeev Chopra"
+      ],
+      "publisher": "Millennium Post",
+      "year": 2022,
+      "url": "https://www.millenniumpost.in/sundaypost/beacon/uniqueness-of-the-craft-470272",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Ringal: A Green Alternative To Plastic",
+      "authors": [
+        "Luxmi Nautiyal"
+      ],
+      "publisher": "Video Volunteers",
+      "year": 2011,
+      "url": "https://www.videovolunteers.org/ringal/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "WEB_PAGE",
+      "title": "Ringaal: Bamboo Weaving Craft",
+      "publisher": "Project FUEL on Google Arts & Culture",
+      "year": 2018,
+      "url": "https://artsandculture.google.com/story/XwVh5nRLhsZKaw",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "OTHER",
+      "subKind": "NGO_REPORT",
+      "title": "Enabling handicraft skills through training on Ringal craft",
+      "publisher": "Development Alternatives",
+      "year": 2020,
+      "url": "https://devalt.org/Pdf/L2_SixThemePdfs/5.%20Enabling%20skills%20through%20training%20on%20Ringal%20handicraft.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "When is any path in life ever straight?",
+      "authors": [
+        "Suresh Kumar"
+      ],
+      "publisher": "Voices of Rural India",
+      "year": 2024,
+      "url": "https://www.voicesofruralindia.org/uttarakhand-ringal-weaving-craft/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "BOOK",
+      "title": "Almora: A Gazetteer, Volume XXXV of the District Gazetteers of the United Provinces of Agra and Oudh",
+      "authors": [
+        "H. G. Walton"
+      ],
+      "publisher": "Government Press, United Provinces",
+      "year": 1911,
+      "url": "https://archive.org/download/dli.csl.2925/2925_djvu.txt",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application describes ringal weaving as an age-old craft of Uttarakhand, in which artisans weave a special species of dwarf ringal that grows in the area.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "Ringal weaving is a nifty art of Uttarakhand. It is an age old craft of Uttarakhand. The artisans use a special species of dwarf Ringal that grows in these areas to weave."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application says ringal is woven into baskets, bins, mats and other utility items that were intricately woven yet sturdy to look at.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "There are different verities of Ringal weaving in the form of baskets, bins, mats and other utility items that were intricately woven, yet sturdy to look at."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringal is the thin, reed-like group of bamboo in Uttarakhand, sometimes called dwarf bamboo, as distinct from the thick bamboos.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 446, study area",
+          "quote": "There are two broad groups of bamboo, thickbamboo and thin reed like bamboo (ringal)."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "Ringal is the small reed-like variety of bamboo (sometimes called dwarf bamboo)"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ringal weavers are locally known as Rudiya or Rudia, while the artisans who make articles from thick bamboo are called Baruree.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "used by the ringal weavers (locally known as Rudiya) for making ringal based crafts and utility items"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "The communities that make articles from bamboo and ringal are called Baruree and Rudia, respectively."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Ringaal weaving sustains many Rudia households in Uttarakhand, and the Rudia community works this mountain dwarf bamboo across Garhwal and Kumaon.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "abstract, p. 36",
+          "quote": "Ringaal bamboo weaving sustains many Rudia households in Uttarakhand."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "The Rudia community works this mountain dwarf bamboo across Garhwal and Kumaon."
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sugandh Uttarapath Kisan Swayat Sahkarita applied on 27 May 2019 to register Uttarakhand Ringal Craft as a geographical indication, under application 652.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "registry record, application details table",
+          "quote": "| Application Number | 652 | | Geographical Indications | Uttarakhand Ringal Craft | | Status | Registered | | Applicant Name | Sugandh Uttarapath Kisan Swayat Sahkarita |"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "registry record, application details table",
+          "quote": "| Date of Filing | 27-05-2019 |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "G.I. APPLICATION NUMBER - 652 Application Date: 27-05-2019 Application is made by Sugandh Uttarapath Kisan Swayat Sahkarita"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The geographical indication application was facilitated by the District Administration of Pithoragarh, Government of Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "Facilitated By: District Administration, Pithoragarh, Government of Uttarakhand."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The application covers ringal products in classes 20 and 21, as handicrafts, and the registered geographical area is Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "of Uttarakhand Ringal Craft under Application No. 652 in respect of Ringal products falling in Class - 20 & 21"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "registry record, application details table",
+          "quote": "| Class | 20 & 21 | | Goods | Handi Crafts | | Geographical Area | Uttarakhand |"
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The application was advertised in Geographical Indications Journal 138, dated 30 June 2020.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "Advertised under Rule 41 (1) of Geographical Indications of Goods (Registration & Protection) Rules, 2002 in the Geographical Indications Journal 138 dated June 30, 2020"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "registry record, application details table",
+          "quote": "| Journal Number | 138 | | Availability Date | 30-06-2020 |"
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry records certificate number 391 for Uttarakhand Ringal Craft, dated 14 September 2021, with the registration valid up to 26 May 2029.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "registry record, application details table",
+          "quote": "| Certificate Number | 391 | | Certificate Date | 14-09-2021 | | Registration Valid Upto | 26-05-2029 |"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "paragraph 3",
+          "quote": "the copper products of Almora, Bhotia Dann, Thulma and Ringal - all of which received GI in September 2021"
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry's table of authorised users of Uttarakhand Ringal Craft numbers its entries up to 120.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "registry record, authorised users table header",
+          "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "registry record, authorised users table, last row",
+          "quote": "| 120 | AU/39917/GI/652/120 |"
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application states that scheduled caste families of the region have retained ancient, traditional knowledge of ringal weaving since time immemorial.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 26",
+          "quote": "Among these forest resources, Ringal is the most beneficial of the livelihood resources particularly for the scheduled caste families of the region. These families have retained ancient as well as traditional knowledge of ringal weaving work since time immemorial."
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Sundriyal and Sundriyal report that the Rudia ringal artisans, mainly marginalised scheduled caste families who lacked land, have depended on the bamboo trade for centuries.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, socio economic status of the artisans",
+          "quote": "Rudias (ringal artisans) in the state was very poor, which mainly comprised highly marginalized scheduled caste families. They lacked land and other productive resources for their livelihood and therefore have been dependent on bamboo trade for centuries."
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "PARI reports that making bamboo products has been a traditional occupation of Bajela men in Jaiti village, Pithoragarh district, but found just one bamboo weaver left among its people.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 1",
+          "quote": "Nain Ram Bajela sits on the roof of his home in Jaiti village of Munsiari tehsil, weaving baskets on a cold winter morning."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 4",
+          "quote": "Life in these mountains of Pithoragarh district of Uttarakhand is tough, and people have limited livelihood options."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 4",
+          "quote": "Making bamboo products has been a traditional occupation of the men of the Bajela caste here - but Nain Ram is the last bamboo weaver left among Jaiti's 580 people."
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L09"
+      },
+      "text": "A Voices of Rural India story says the ringal trade in Namik village has been rooted in the community for approximately 200 to 300 years, spanning 6 to 7 generations.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "Ringal trade is an age-old tradition in Namik, an occupation that has been rooted in the community for approximately 200-300 years, spanning 6-7 generations."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Development Alternatives describes the ringal handicraft industry as the oldest small-scale industry of Uttarakhand and Himachal Pradesh, based on local human and natural resources.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 2",
+          "quote": "Ringal handicraft industry is the oldest small scale industry of Uttarakhand and Himachal Pradesh. It is the only home scale industry which is based on local resources, both in terms of human and natural resources."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "A design study links ringaal work historically with the Rudia or Bedi community, a Scheduled Caste group central to village services yet constrained by limited land.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 39",
+          "quote": "historically linked with the Rudia/Bedi communi ty, a Scheduled Caste group central to village services yet constrained by limited land"
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The Voices of Rural India writer from Namik says his family belongs to the Shilpkar community, a Scheduled Caste whose craft is often seen as lowly work.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section The path ahead",
+          "quote": "The other reason is that we belong to the Shilpkar community (Scheduled Caste), and casteism is still a major problem in our society."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "section The path ahead",
+          "quote": "The craft and trade of the Shilpkar community is often seen as lowly work by society."
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Farmers fetch ringal from the forest in October to November and weave the baskets in winter, when there is not much work in the fields.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "The farmers fetch the ringal Ringal from the forest in October to November and weave the baskets in the winter when there is not much work in fields."
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Ringal is collected throughout the year for a variety of purposes, and only well-formed culms of 2 to 3 cm diameter are preferred for harvesting.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Ringal is collected throughout the year for a variety of purposes. Only well -formed culm of 2-3 cm diameter is preferred for harvesting."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Ringal is harvested with general household tools, and the cut is made up to 10 to 15 cm above the ground to help it re-sprout the next year.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "General household tools are used for harvesting. A cut is made up to 10- 15 cm above the ground, which helps to facilitate re-sprouting next year."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "About 5 to 8 conical ghida baskets can be made from the 30 kg of culms that one person collects in a daylong visit.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "About 5-8 Ghidas can be prepared by 30 kg culms collected in a daylong visit by a person."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "An average of 8- 10 sticks is used for preparing conical baskets (Ghida) of average height."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Sundriyal and Sundriyal found that collecting ringal takes between 6 hours and 2 days, while artisans spend 2 to 6 hours collecting bamboo.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, resource availability and consumption",
+          "quote": "The artisans spend 2 to 6 hours for collection of bamboo, while it takes between 6 hours to 2 days for collection of ringal."
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "In the villages of one design study, women joined forest trips, cleaned culms and prepared strips, while men did most of the weaving.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "gender context, p. 41",
+          "quote": "In these sites, men undertook most weaving. Women joined forest trips, cleaned culms, prepared strips, and assisted with finishing and orders."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Women often join forest trips, carry loads, clean culms, and prepare strips. Men do most weaving."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The GI application lists traditional processing as light peeling of the bark, drying for 3 to 4 days in the sun or a kitchen corner, division into 4 to 12 parts, and weaving.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Traditional processing methods involve exposing the bark (light peeling); drying for 3- 4 days in sun or kitchen corner; division in 4- 12 parts according to the requirements; and weaving or crafting domestic implements."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "A Namik craftsman's account has ringal cut from the van panchayat forest with a darati, cut at once into thin outer strips called putra, and then dried in the sun.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section The craft of Ringal weaving",
+          "quote": "First, the Ringal has to be cut from the forest of our Van Panchayat using a darati. Immediately after, it is skilfully and precisely cut into strips called putra (the thin outer layer of the Ringal). These are then dried in the sun"
+        },
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "how they held the darati (a metal tool used for cutting wood, grass, and Ringal)"
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Project FUEL describes the first step as cutting, cleaning and splitting the ringaal with a sickle, after which a mallet flattens the pieces and they are cleaned again.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Ringaal Bamboo",
+          "quote": "The first step to make a Ringaal product is to cut, clean and split the bamboo using a sickle. After this, the artisan uses a mallet to flatten down the pieces. It is then again cleaned to smoothen the surface."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "The whole ringal is split into small strips to suit the product, its excess fibre is removed, and the ringal is split in different widths for the warp and the weft.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "The whole Ringal is split into small strips as per the product to be made. The excess fibre of Ringal splits are removed before weaving the basket. Artisan makes sure to split the Ringal in different widths for warp and weft."
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "Each culm splits into 4 to 8 longitudinal strips or more, depending on the basket's shape and size and the culm's thickness, and is then scraped to smooth the edges and even the thickness.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Each culm splits into 4 -8 longitudinal strips and sometimes more depending upon the shape and size of the basket and the culm's thickness. This is then scraped to smoothen the edges and for having uniform thickness especially at the nodes."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T04"
+      },
+      "text": "A weaver in Jaiti cuts ringal into thin strips with a curved knife that he calls a baransh in his Pahadi language, PARI reports.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 1",
+          "quote": "He cuts the ringal or pahadi ringal, a Himalayan species of bamboo, into thin strips with a curved knife that he calls a 'baransh' in his Pahadi language."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The GI application lists the khurpi, a knife to cut ringal into strips and peel its outer layer, and a cutter to cut the bamboo to the sizes needed.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Khurpi: Knife to cut into strips and peel the outer layer. Cutter: Used to cut the bamboo into required sizes."
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ringaal basketry is careful and tool-light: makers remove nodes, split culms and weave at floor level, sometimes using their toes for grip.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Ringaal basketry is careful and tool-light. Makers remove nodes, split culms, and weave at floor level, sometimes using toes for grip."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Makers split the culm, thin the strips with a knife, bind a base, lift the sides and fit the rim, pausing to sun-dry parts to reduce warping.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 40",
+          "quote": "split the culm, thin strips with a knife, bind a base, lift the sides, and fit the rim. They pause to sundry parts to reduce warp."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "To weave a basket, thick wide strips are first laid to make the base, thin strips are woven over them, and the side walls are then raised with added strips.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "The thick wide strips are first placed to make the base. Thin strips are weaved by overlapping the base strips. Once the base is formed, the side walls are increased by adding the additional Ringal strips."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Once the weave reaches the required height, the rim is sandwiched between two thick ringal splits that interlock the border.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Once the weave is attained required height, the rim is sandwiched with two thick Ringal splits to interlock the border."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "To prepare the base, twelve splits are laid out in a square open weave, then bent upright and crossed over diagonally to form the wall.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Ringaal Bamboo",
+          "quote": "To prepare the base, twelve bamboo splits are laid out to form a square open weave. The splits are then bent vertically and crossed over to lie diagonally to form the wall."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "For winnows, a long ringal pole is split into wide thin splits; slightly tender splits are used directly, and dried splits are soaked in water to regain moisture.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Lengthy Ringal pole is split into wide thin splits. Slightly tender Ringal splits are directly used for winnow weaving. In case if the Ringal splits are dried, they are soaked in water before weaving to regain moisture."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P10"
+      },
+      "text": "A winnow is woven by arranging ringal strips criss-cross with a small ringal stick, cutting away the extra edges and tying a tender stick on the edge for reinforcement.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Winnow weaving process is done by arranging the Ringal strips in criss-cross manner with the help of small Ringal stick. Once the weaving is completed, the extra edges are cut and removed. A small tender stick is tied on the edge of the winnow to give reinforcement."
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P08"
+      },
+      "text": "After weaving, ringaal baskets are coated and smoke-cured, simple local treatments that deter pests, moisture, insects and fungus.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "After weaving, baskets are coated and smokecured to deter pests and moisture."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 40",
+          "quote": "For protection, they smoke-cure and use simple local coatings against insects and fungus"
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "One maker recalled that making a kandi was quite time-consuming, taking him an entire day for one basket.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "The process of making a kandi was quite time-consuming. It would take me an entire day to make one kandi."
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Artisans in a design study described long, risky harvest trips for ringaal on steep, narrow forest trails, where slips and animal encounters are common.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "abstract, p. 36",
+          "quote": "Findings show long and risky harvest trips, basic tools, and uneven product quality."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Artisans described difficult harvests. Trails are steep and narrow, with night halts in the forest when needed. Slips and animal encounters are common."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Among the artisans studied, cuts, splinters, and back and wrist pain were common, linked to floor-level postures and repetitive splitting and weaving.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Work health and safety concerns were widespread. Cuts, splinters, and back and wrist pain were common, linked to floor-level postures and repetitive splitting and weaving."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "abstract, p. 36",
+          "quote": "Common harms include cuts and musculoskeletal pain from floor-level postures and repetitive splitting and weaving."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In the workshops studied, knife work produced cuts and punctures, cutting and pounding released fine splinters that risked eye injuries, and hammering raised noise.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 47",
+          "quote": "Risks observed in workshops were clear and recurring across sites."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 47",
+          "quote": "Cutting and pounding released fine splinters; bright, even light and safety glasses with side shields reduced eye injuries."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 47",
+          "quote": "Hammering raised noise; earplugs and basic tool maintenance reduced exposure."
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P09"
+      },
+      "text": "Ringaal products are generally green, the natural colour of the bamboo; for decoration the inner splits are blackened with fire, and pink or yellow come from dyeing.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "How Ringaal craft products are made colourful",
+          "quote": "The products are generally green in colour, owing to the natural colour of bamboo. To make the products decorative, the inner splits are blackened using fire. Other colours like pink or yellow are obtained by dying them."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P09"
+      },
+      "text": "To decorate a supa, a Namik craftsman blackens ringal in the smoke of burning bark of the sauda tree, a species of uttis or alder.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section The craft of Ringal weaving",
+          "quote": "The work of decorating a supa is extremely labour-intensive and time-consuming. For this, first, the bark of the sauda tree, a species of the Uttis (Alder) tree, is burned, and the Ringal is blackened with its smoke."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Artisans make patterns of dark and light contrast on a product's outer surface by selecting and inserting darker and lighter shades of ringal splits.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Artisan scholarly weaves the basket and many crafts to obtain dark and lighter contrast on the outer surface of the product by selecting and inserting darker and lighter shades of Ringal"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Finished pieces show patterns that play the inner-outer colour contrast of ringaal"
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application says most ringal products are roughly finished, with sharp edges and non-uniform colour and texture, as natural, eco-friendly products.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 27",
+          "quote": "Most of the products prepared by ringal are roughly finished with sharp edges, non- uniform in colour and texture as a natural and eco-friendly product."
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A design study records changeras as dome-shaped grain stores.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Changeras are dome-shaped grain stores."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Dry ringal sticks serve as cooking fuel, and ringal is also made into decorative items and kalam, ink pens that local astrologers use to write horoscopes.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Dry sticks as fuel wood for cooking purposes; decorative items, and 'Kalam' (ink pen) used by local astrologers for writing horoscope."
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application calls slightly conical ringal baskets solta or ghida, their size and shape varying with use, such as carrying water, food to fields or bulky material.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Slightly conical shaped baskets are called 'Solta' or 'Ghida'. The size and shape of 'Ghida' or 'Solta' varies according to usage requirement such as carriage of water"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "carriage of bulky material, carriage of food to fields and pasture lands, storage purposes and collection of fruits"
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The soulta, a basket for carrying grass, cow-dung cakes and firewood, has a hexagonal weave that makes it sturdy with minimal use of splits.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Soulta - a type of Ringaal basket",
+          "quote": "The artisan here is making soulta, a kind of basket that is used to carry grass, cow dung cakes and firewood. The hexagonal weave of the basket makes it sturdy with minimal use of bamboo splits."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Woven ringal articles include the suppa winnower for grain, the moreta mat laid on earthen floors for sitting and drying grain, and the bhwanu broom.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Various articles such as 'Suppa' (winnower) for winnowing of grains; 'Moreta' (mat) laid down on the earthen floor for sitting purposes and for drying grains and edible items; 'Bhwanu' (broom) for sweeping and cleaning floors."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ringal baskets carry livestock dung, manure, fuel wood, forest produce, fodder, grass, rations and clothes for washing, and vary in shape and capacity with their use.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Weaving of various kinds of baskets and other articles form the major use of ringal among the Himalayan community for carrying livestock dung, manure, fuel wood and other forest produce, fodder, grass, ration, and clothes for washing. These vary in shape and capacity according to the use."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A dense cylindrical basket is called kandi or kanda in Kumaon and ghilda in Garhwal, and women carry farm and forest loads in it.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "In Kumaon a dense cylinder is kandi or kanda; in Garhwal it is ghilda. Women carry farm and forest loads in these."
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Garhwal also has a three-sided ghilda for carrying elders and children to hill temples.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Garhwal also has a three-sided ghilda for carrying elders and children to hill temples."
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The choura or jhuger, a round sleeping basket for a newborn baby, is made from Dendrocalamus somdevae or H. falconeri.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 450, table 2",
+          "quote": "Round sleeping basket Choura (Jhuger) D. somdevae, H. falconeri For sleeping of newly born baby"
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L09"
+      },
+      "text": "In Namik, ringal is made into daliya storage baskets, moshta floor mats, supa winnowers, brooms and dokkas, baskets carried on the back for grass and dung.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "Ringal is used to make daliya (big baskets for storing goods and food), moshta (floor mats), supa (winnowing basket) for cleaning grains like lentils and rice, making brooms, and dokkas (a type of basket carried on the back for carrying grass and dung)."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "Ringal trade is an age-old tradition in Namik"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Newer ringaal lines include flower vases, dustbins, kandi baskets for fruit and vegetables, flower and prasad baskets, decorative bowls, small huts, display cups and kettles, and trays.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Newer lines include flower vases, dustbins, kandi baskets for fruit and vegetables, flower baskets, prasad baskets, decorative bowls, small huts, display cups and kettles, and trays"
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The GI application says dev ringal is used for puja purposes on spiritual yatras to Badrinath, Kedarnath and Nandadevi, and for baskets carrying puja utensils.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "The artisans use a special species of Ringal mximum Dev Ringal for puja purpose in various spiritual yatra in Badrinath, Kedarnath, Nandadevi"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "Prayer purpose, Tissue paper case, Mobile case, carrying Puja utensils in Dev Ringal"
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Video Volunteers reports that the shrine and umbrella devotees carry to temples at major festivals are made from ringal, which is even mentioned in certain prayers.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "During the major festivals, the shrine and umbrella carried by the devotees to the temples is made from ringal, and it is even mentioned in certain prayers and scriptures."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application says women artisans have developed ringal rakhis for the Raksha Bandhan festival, which are in high demand in cities.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "Rakhi A variety of rakhi at the time of Rakshabandhan festival has developed by women artisans A innovative initiative is much appreciated in the city area with high demand as natural and unique product."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L26"
+      },
+      "text": "In Munsiari block, some ringal baskets with handles and lids are used to carry food, particularly when young women leave for their marital homes.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 6",
+          "quote": "Some, with handles and lids, are also used to carry food, particularly when young women leave for their marital homes."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 6",
+          "quote": "Fortunately, there's some demand for his products across Munsiari block"
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI application says ringal is flexible and durable, and that products made from it can last up to 20 years.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Ringal is a flexible, durable Ringal products made from it can last up to 20 years."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI application gives the life of ringal as nearly 20 to 25 years, which makes its products popular for their long durability.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "The life duration of Ringal is nearly 20- 25 years and due to this the product made by Ringal is very popular for their long durability."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A Millennium Post column says ringal products are tough and durable and last for at least 20 to 25 years.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "section Ringal crafts",
+          "quote": "Ringal products are tough, durable and last for at least 20-25 years."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In 2011, Video Volunteers correspondent Luxmi Nautiyal of Garhwal said a ringal basket costs Rs. 50 and lasts six to seven years, while a plastic one costs double.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "byline",
+          "quote": "January 10, 2011 | By: Luxmi Nautiyal"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 2",
+          "quote": "found in abundance in the higher mountain areas of the Garhwal region of Uttarakhand, where Luxmi lives"
+        },
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 3",
+          "quote": "You can buy a ringal basket for Rs.50 and it will last you six to seven years. A plastic one costs double"
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI application says ringal is nearly water resistant compared with bamboo and survives in the snowfall areas of the upper Himalaya.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "The most important characteristic of Ringal is that, it is nearly water resistance in comparison to the Bamboo, and Ringal much survive in the snow fall area in upper Himalayan region"
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Despite plastic and metal substitutes, households keep buying ringaal because it is light, repairable, comfortable to carry and suited to hill work.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 39",
+          "quote": "Despite plastic and metal substitutes, households continue to buy ringaal because it is light, repairable, and suited to hill work"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Yet ringaal endures because it is light, easy to repair, and comfortable to carry"
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "Large ringal baskets are harnessed to the back with rope of dholan (Girardinia diversifolia) and bhang (Cannabis sativa).",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "Large baskets are harnessed to the back with the help of rope of Dholan (Girardinia diversifolia) and Bhang (Cannabis sativa)."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M08"
+      },
+      "text": "Sundriyal and Joshi found that, in the articles they surveyed, the only other material used with bamboo was ghingaroo (Pyracantha) stems, which some artisans used for tying baskets.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.3, diversity of bamboo articles",
+          "quote": "There was no use of other material with bamboo except for use of ghingaroo (Pyracantha sp.) stems for tying basket by some artisans."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringal culms are used for weaving mats and baskets, and the green leaves are used as fodder for animals.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section Ringal (Hill Bamboo)",
+          "quote": "Culms are used for weaving mats and baskets and leaves are used as fodder."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 26",
+          "quote": "Fodder Green leaves Leaves used as fodder for browsing animals"
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringal species serve for roofing and flooring, vegetables, medicines, fuel, fodder in scarcity, stakes for cash crops, handicrafts, walking sticks, fishing rods, hookah pipes and kilta baskets.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "The species have wide variety of uses in the form of roofing, flooring material for houses, vegetables , medicines, fuel , fodder in periods of scarcity, stakes for cash crops, handicrafts, walking sticks, fishing rods, hookah pipes and baskets especially kiltas."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Thamnocalamus spathiflorus was commonly used to cover and weave the roofs of grassy houses, called goth or chhani, and to make hookah pipes and walking sticks.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "The species of Thamnocalamus spathiflorus was commonly used in covering and weaving roof of grassy houses (goth or chhani) and making hooka pipes and walking sticks."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "section Ringal crafts",
+          "quote": "Chimonobambusa jaunsarensis and Thamnocalamus Spathiflorus (Dev Ringal) are valued for their elastic nature, natural yellowish colour and erectness, and are used to make puja thalis, roofs and coverings for their grass houses, hookah pipes and walking sticks."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Ghad ringal, Drepanostachyum falcatum, is used for making baskets, fishing rods and mats, and as animal fodder in the lean period.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Drepanostachyum falcatum (Nees) Keng f. Ghad ringal"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "For making baskets, fishing rods, mats and animal fodder in lean period"
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Flora of Pakistan notes that the stems of Arundinaria falcata are used for making mats, baskets and the stems of pipes.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Arundinaria falcata, notes",
+          "quote": "The stems are used for making mats, baskets and the stems of pipes."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M09"
+      },
+      "text": "One artisan described treating ringaal baskets with cow dung and cow urine as a traditional way to make them last longer and protect them from insects and fungus.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Treating ringaal baskets with cow dung and cow urine is a traditional method to make them last longer. The cow dung and urine help protect the baskets from insects and fungus."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "For marginalised hill-area villages, the GI application names four ringal species of the Poaceae family used for handicraft and agricultural items: Himalayacalamus falconeri, Chimnobambusa jaunsarensis, Drepanostachyum falcatum and Thamnocalamus spathiflorus.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "In the marginalized hill area villages a total of 4 species viz. Himalayacalamus falconeri , Chimnobambusa jaunsarensis , Drepanostachyum falcatum and Thamnocalamus spathiflorus belonging to Poaceae family which were being used for making handicraft and agricultural items."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Four species of Ringal were commonly used on the basis of their characteristic."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Elsewhere the GI application says all five ringal species, Drepanostachyum falcatum, Thamnocalamus pathiflorus, T. jonsarensis, Arundineria falcate and a locally identified bhatputra, are used by villagers or weavers.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 28",
+          "quote": "All five spe cies of ringal Drepanostachyum falcatum, Thamnocalamus pathiflorus, T. jonsarensis, Arundineria falcate and Bhatputra (locally identified) are used by the villagers or weavers."
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Sundriyal list Drepanostachyum falcatum, Himalayacalamus falconeri, Thamnocalamus spathiflorus and Sinarundinaria anceps as the ringal species among the bamboos growing naturally in Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 447, results",
+          "quote": "In Uttarakhand state, eight bamboo species belonging to five genera were recorded that grow"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "Drepanostachyum falcatum (Nees) Keng f., Himalayacalamus falconeri (Munro) Keng f. , Thamnocalamus spathiflorus (Trin.) Munro, and Sinarundinaria anceps (Mitford) C.S. Chao & Renvoize (all ringal species)."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Katiyar found four species of ringal-bans (Arundinaria) in Uttarakhand at altitudes from 1200 to 3600 meters, used mainly for handicraft items.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "abstract",
+          "quote": "The present study showed that the four species of Ringal-bans (Arundinaria sp.) were found in Uttarakhand at the altitudes from 1200 to 3600 meters. These were used mainly for the preparation of handicraft items."
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "In the GI application's table of species, Chimnobambusa jaunsarensis, vernacular ginwas ringal, is described as more flexible and durable.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Botanical Name Vernacular name Special characters"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Chimnobambusa jaunsarensis Syn. Ginwas Ringal More flexible, durable,"
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "The GI application's table names Thamnocalamus falconeri as deo or dev ringal, smooth, flexible, shining and soft in nature.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Thamnocalamus Falconeri (Munro) Keng f. Deo or Dev ringal Smooth, flexible, shining and soft nature"
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The GI application's table of species names Drepanostachyum falcatum as gadh ringal, less flexible and durable, and weak.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Drepanostachyum falcatum (Nees) Keng f. Gadh Ringal Less flexible& durable and weak"
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "The GI application's table of species names Thamnocalamus spathiflorus as tham ringal, described as long durable and hard in nature.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Thamnocalamus spathiflorus (Trin.) Munro. Tham ringal Long durable and hard in nature"
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application also names the hill ringals saura ringal (Sinarundinaria anceps, formerly S. jaunsarensis), gol ringal (Arundinaria falcata), tham ringal (Thamnocalamus spathiflorus) and dev ringal (Thamnocalamus falconeri).",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "Ringal is socio - economically and ecologically important group of hill Ringal in Uttarakhand Kumaun and Garhwal Himalayas represented by four species namely"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "Sinarundinaria anceps (Mitf.) Chao and Renvoize (old name Sinarundinaria jaunsarensis, Gamble) commonly known as Saura Ringal, Arundinaria falcata (Nees) Gol Ringal, Thamnocalamus spathiflorus (Trin.) Munro (Tham Ringal) and Thamnocalamus falconeri (Hook f. ex Munro), Dev Ringal."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Sundriyal and Sundriyal record ghad ringal, Drepanostachyum falcatum, at 1500 to 2100 meters above sea level, as undergrowth in evergreen forests of oak, deodar, chir and rhododendron.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Distribution (meters above sea level)"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Ghad ringal 1500-2100 Found as dense or moderately dense undergrowth in evergreen forests of oak, deodar, chir and rhododendron species"
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Sundriyal and Sundriyal record Sinarundinaria anceps, a synonym of Chimonobambusa jaunsarensis, as jumra ringal, growing in clusters inside the forest at 2100 to 2700 meters and used for a few agricultural implements.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Distribution (meters above sea level)"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Sinarundinaria anceps (Mitford) C.S. Chao & Renvoize (syn. Chimonobambusa jaunsarensis (Gamble) Bahadur & Naithani) Jumra ringal 2100-2700 Grow naturally in clusters inside the forest For a few agricultural implements"
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Sundriyal and Sundriyal record Himalayacalamus falconeri, a synonym of Thamnocalamus falconeri, as dev ringal at 1900 to 2750 meters, used for fans, umbrellas, crowns, baskets and trays for offerings to gods.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Distribution (meters above sea level)"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Himalayacalamus falconeri (Munro) Keng f. (syn. Thamnocalamus falconeri Munro) Dev ringal 1900-2750 Grow naturally on the hills and/or under oak forests For making fans, umbrellas, crowns, baskets, trays for offerings to gods, and other household items"
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Sundriyal and Sundriyal record Thamnocalamus spathiflorus, synonym Thamnocalamus aristatus, as thaam ringal on moist, shady slopes at 2500 to 3500 meters, used for agricultural implements and hookah pipes.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Distribution (meters above sea level)"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, table 1",
+          "quote": "Thamnocalamus spathiflorus (Trin.) Munro (syn. Thamnocalamus aristatus (Gamble) E.G. Camus) Thaam ringal 2500-3500 On moist and shady slopes within and outside forest areas Agricultural implements and pipes for Hookahs"
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Sundriyal and Sundriyal found dev ringal, Himalayacalamus falconeri, the most commonly used ringal species for making different articles.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "ringal species, dev-ringal (H. falconeri) is the most commonly used species for making different articles."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Sundriyal and Sundriyal record Himalayacalamus falconeri at the highest elevations among all the bamboo species of Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "Himalayacalamus falconeri is recorded at highest elevations among all the bamboo species."
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Sundriyal and Joshi record Thamnocalamus spathiflorus at the highest elevation among all the bamboo species of Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.2",
+          "quote": "T. spathiflorus recorded at highest elevation among all."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Flora of Pakistan describes Arundinaria falcata, vernacular nirgal, as a gregarious shrub with annual culms 2 to 3.5 m high and 7 to 15 mm in diameter.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Arundinaria falcata, description",
+          "quote": "Vern.: Nirgal. Gregarious shrub with annual culms from a central rootstock; culms 2-3.5 m high, 7-15 mm in diameter"
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringal culms reach an average height of 12 ft, with a diameter of 10 to 20 mm, internodes about 20 cm apart and walls 3 to 4 mm thick.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section Ringal (Hill Bamboo)",
+          "quote": "The culms attain an average height of 12ft with a diameter of 10-20 mm, with internodes approx. 20 cm apart. The wall thickness varies from 3-4 mm."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Ringaal Bamboo",
+          "quote": "It is small compared to other bamboos, growing only 12 feet in height."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A Voices of Rural India story gives ringal a height of 5 to 8 meters, against 25 to 30 meters for bamboo, which is why it is called dwarf bamboo.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "While bamboo grows to a height of 25-30 meters, Ringal grows to a height of 5-8 meters. For this reason, Ringal is also known as \"Dwarf Bamboo"
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The Uttarakhand Bamboo and Fiber Development Board gives ringal an average flowering cycle of about 30 years.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section Ringal (Hill Bamboo)",
+          "quote": "The average flowering cycle is about 30 years."
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A new crop of ringal begins to emerge around August to September, and from February to March it becomes flexible, strong and ready to use.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section Ringal (Hill Bamboo)",
+          "quote": "The first crop of Ringal begins to emerge around August to September and from February to March it becomes flexible, strong and ready to use."
+        }
+      ]
+    },
+    {
+      "id": "C102",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "PARI reports that ringal usually grows at about 1,000 to 2,000 metres above sea level.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 4",
+          "quote": "Ringal usually grows at about 1,000-2,000 metres above sea level."
+        }
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Sundriyal and Sundriyal found that ringal species grow in the mid and high hills above 2000 m, while bamboo is generally found in the mid and low hills below 2000 m.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "Ringal species grow at mid and high hill areas of the state (> 2000 m) while bamboo is generally found at mid and low hills (<2000 m)."
+        }
+      ]
+    },
+    {
+      "id": "C104",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A Voices of Rural India story says there are around 5 subspecies of ringal, found at 300 to 2,000 meters, mostly in moist gullies and on mountain slopes.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "There are around 5 subspecies of Ringal that are found at altitudes ranging between 300 to 2,000meters above sea level and are mostly found in moist gullies and mountain slopes."
+        }
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "The GI application says weavers mostly used Chimnobambusa jaunsarensis (40%), for its availability, durability and quality, followed by dev ringal, Thamnocalamus falconeri (30%), for its smooth, flexible nature.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 23",
+          "quote": "Among Ringal species Chimnobambusa jaunsarensis was mostly used and preferred by the ringal weavers (Rudiya's) for making articles due to its availability, durability and quality followed by Dev Ringal (Himalayacalamus falconeri) due to its flexible and smooth nature."
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "Chimnobaubusa jaunsarensis was mostly (40%) used by the ringal weavers (locally known as Rudiya) for making ringal based crafts and utility items followed by Thamnocalamus falconeri (30%)"
+        }
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "The GI application says Drepanostachyum falcatum, though abundant in nearby forests, was not preferred by weavers because it is less durable and its bark is rough.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "whereas Drepanostachyum falcatum which was abundantly available in the nearby forest areas of the study villages, was not preferred by the weavers due to its less durable nature and roughness of bark (fiber)."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Elsewhere the GI application says Drepanostachyum falcatum, golu ringal, is used most (87%) at lower altitudes of 1000 to 2000 m because it is easily available.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 29",
+          "quote": "Due to easy availability of Drepanostachyum falcatum (Golu ringal) in lower altitudes (1000- 2000m) it is used maximally (87%)"
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "For high altitudes above 2000 m, the GI application says Thamnocalamus pathiflorus, which it calls dev ringal, is used most (83%).",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 29",
+          "quote": "on high altitudinal regions (above 2000m) Thamnocalamus pathiflorus (Dev ringal) is used maximally (83%)"
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "For high altitudes above 2000 m, the GI application gives use of sararu ringal (Arundineria falcate) at 70% and bhattputra at 61%, while tham ringal (T. jonsarensis), less available, is used least there, at 35%.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 29",
+          "quote": "on high altitudinal regions (above 2000m) Thamnocalamus pathiflorus (Dev ringal) is used maximally (83%)"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 29",
+          "quote": "however Arundineria falcate (Sararu ringal) and Bhattputra (locally identified) are also used 70% and 61%). Due to less availability of T. jonsarensis (Tham ringal) it is used minimum (35%) in high altitudes."
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "A Millennium Post column names Thamnocalamus spathiflorus as dev ringal and says it and Chimonobambusa jaunsarensis are valued for elasticity, natural yellowish colour and erectness.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "section Ringal crafts",
+          "quote": "Chimonobambusa jaunsarensis and Thamnocalamus Spathiflorus (Dev Ringal) are valued for their elastic nature, natural yellowish colour and erectness"
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "In village taxonomy recorded by a design study, gol ringaal grows in humid stands of beech and moru, is much favoured by villagers, and is widely used because of its large cavity.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 37",
+          "quote": "Gol ringaal is associated with humid stands of beech and moru and is widely used because of its large cavity."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "table 1, p. 38",
+          "quote": "It has a notably large central cavity and is much favored by villagers."
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Thaam ringaal grows at the highest sites with moru, kharsu and birch, and its small cavity makes it notably sturdy and suited to hookah pipes.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 37",
+          "quote": "Thaam ringaal occurs at the highest sites with moru, kharsu, and birch; its small cavity makes it notably sturdy and suitable for hookah pipes"
+        }
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Local lore holds that thaam ringaal gets its name from its ability to halt moving water mills.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 37",
+          "quote": "local lore links it to stopping water mills"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "table 1, p. 38",
+          "quote": "It gets its name from its ability to halt moving water mills and is primarily used for hookah pipes."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C114",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Bhatpuntaru, the thickest kind of ringaal, has covered nodes and straight 8 to 10-foot rods that suit mats, winnowing trays, fans and thaithula.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 37",
+          "quote": "Bhatpuntaru, the thickest type, occurs near Bemru; its covered nodes and straight 8-10-foot rods suit mats, winnowing trays, fans, and thaithula."
+        }
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringaal is native to the middle and higher ranges of Garhwal and Kumaon and grows in moist sites, often along streams, rivers and in damp valleys.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "literature review, p. 37",
+          "quote": "Ringaal bamboo is native to the middle and higher ranges of Garhwal and Kumaon. It grows in moist evergreen sites, often along streams"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Ringaal Bamboo",
+          "quote": "It is generally found near water bodies, along the rivers and in damp valleys and forests."
+        }
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ringal grows on steep mountain slopes at 1800 to 2400 m in the Garhwal and Kumaon hills, generally as the understorey of oak and rhododendron forests.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section Ringal (Hill Bamboo)",
+          "quote": "Ringal grows on steep mountain slopes, at an elevation of 1800-2400m in the Garhwal and Kumaon Hills. They generally grow as the under-story of oak and rhododendron forests."
+        }
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "Flora of Pakistan gives Arundinaria falcata's range as the north-west Himalaya from the Ravi to Nepal, at 1200 to 2000 m, rarely 4000 m, in shady forest undergrowth.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Arundinaria falcata, distribution",
+          "quote": "Distribution: Northwest Himalayas from the Ravi to Nepal; 1200-2000 m, rarely up to 4000 m. Arundinaria falcata occurs in the undergrowth in forests of White Oak, firs and mixed trees in more or less shady places usually on northern slopes or in ravines."
+        }
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Katiyar recommends planting Arundinaria falconeri along roadsides and hill slopes in Uttarakhand to help control landslides and soil erosion.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "abstract",
+          "quote": "A. falconeri plantation should be done along the road sides and slopes of the hills in the state of Uttarakhand that will helpful for the control of landslides and soil erosion"
+        }
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A Voices of Rural India story says ringal is effective in preventing landslides because its strong roots help stabilise the land.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "Ringal is effective in preventing landslides because its roots are strong and help stabilize land."
+        }
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L09"
+      },
+      "text": "In Namik village of Pithoragarh district, ringal falls under a protected 186-hectare van panchayat forest established in 1974.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "In Namik, it falls under our protected 186 hectare Van Panchayat which was established in 1974 and covers almost the entire Ramganga Valley."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "section A Chance Encounter",
+          "quote": "Namik village, situated across the eastern Ramganga valley, in the Pithoragarh district of Uttarakhand"
+        }
+      ]
+    },
+    {
+      "id": "C121",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L08"
+      },
+      "text": "PARI reports that cutting forest bamboo without a state permit is prohibited under the Forest Conservation Act of 1980, but a Jaiti weaver needs none for ringal from van panchayat forests.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 7",
+          "quote": "Although cutting forest bamboo without a permit from the state is prohibited (under the Forest Conservation Act of 1980), Nain Ram has not needed a permit for ringal because he visits the van panchayat areas or community forests jointly controlled by the local people and the state."
+        }
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A study published in 2011 found that nearly 93% of ringal artisans and 45% of bamboo artisans collected their raw material directly from forests.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, management of bamboo",
+          "quote": "Nearly 93% of ringal-artisans and 45% of bamboo-artisans directly collect the respective resources from forest areas."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ringal supply was met mainly from van panchayat forests, where villagers at many places collected it free for domestic needs and paid the Forest Department a nominal fee for more.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, resource availability and consumption",
+          "quote": "For ringal, the supply was met mainly from forest areas, viz. van-panchayat forests. At many places the villagers collect the ringal free of cost from van-panchayat areas for their domestic needs. However for additional requirement, a nominal fee was paid to the Forest Department."
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Sundriyal found that where collection of ringal was banned, the raw material was collected illegally.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, resource availability and consumption",
+          "quote": "In areas where collection of ringal was banned, the raw material was collected illegally."
+        }
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Most bamboo and ringal habitats fall under reserve forest, civil soyam or revenue forest, and van panchayat or village forest areas.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, resource availability and consumption",
+          "quote": "Most of the bamboo and ringal habitats fall under reserve forest, civil soyam (revenue forest) and van-panchayat (village forest) areas."
+        }
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Joshi report that most ringal-growing areas have shrunk to far-flung places away from villages, which increased the cost and time of getting raw material.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.3, diversity of bamboo articles",
+          "quote": "Most of the ringal growing areas have shrunken to far-flung areas from villages, which increased cost and time of raw material"
+        }
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application states that Uttarakhand ringal products are practised across the whole of Uttarakhand state.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 26",
+          "quote": "\"Uttarakhand Ringal products\" is practiced in whole of Uttarakhand state."
+        }
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application names Chamoli, Bageshwar, Pithoragarh, Almora and Rudraprayag among the places where ringal weaving gives a livelihood to hill artisans and weavers.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 24",
+          "quote": "The Ringal weaving provides livelihood to the communities of Uttarakhand hilly artisans and weavers mainly in Chamoli, Bageshwar, Khalijhuri, Pithoragarh, Almora Joshimath, Rudraprayag."
+        }
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L10"
+      },
+      "text": "INTACH's heritage archive records a hathkandi basket made from ringal at Khal village in Chamoli district, Garhwal, calling it a very popular Himalayan craft.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "record text",
+          "quote": "Hathkandi basket at Khal village, Chamoli District, Garhwal, Uttarakhand. Made from Ringal (a dwarf bamboo), it is a very popular craft of the Himalayan region"
+        }
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A design study worked with ringaal artisans in four districts, in villages including Bhanaj, Machkandi and Akhodi in Rudraprayag, Pipalkoti, Kiruli and Bedu Mathal in Chamoli, Gajoli and Bharangaon in Uttarkashi, and Supi and Shama in Bageshwar.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "abstract, p. 36",
+          "quote": "We worked with thirty-five artisans across four districts"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "setting and participants, p. 40",
+          "quote": "Villages included Bhanaj, Machkandi, and Akhodi (Rudraprayag); Pipalkoti, Kiruli, and Bedu Mathal (Chamoli); Gajoli and Bharangaon (Uttarkashi); and Supi and Shama (Bageshwar)."
+        }
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Project FUEL's Homespun in Uttarakhand series, featuring seven master artisans, includes ringaal artisan Laxmi Devi of Mansoona village, Rudraprayag, known for her designs.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Laxmi Devi, Ringaal artisan",
+          "quote": "Laxmi Devi, Ringaal artisan (2018/2018)"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Laxmi Devi, Ringaal artisan",
+          "quote": "Laxmi Devi resides in the Mansoona village of Ukimath, Rudraprayag, Uttarakhand. Her Ringaal products are known for their beautiful designs and skilled mastery."
+        },
+        {
+          "sourceId": "S15",
+          "locator": "series note",
+          "quote": "'Homespun in Uttarakhand' is an episodic series that features life lessons of seven master artisans of Uttarakhand"
+        }
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Sundriyal found that Bageshwar, Chamoli, Pithoragarh, Tehri and Uttarkashi districts have ringal species only.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 448, results",
+          "quote": "Bageshwar, Chamoli, Pithoragarh, Tehri and Uttarkashi districts have ringal species only"
+        }
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Joshi report that, of the 13 districts of Uttarakhand, Bageswar, Chamoli and Uttarkashi comprised only ringal species.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.2",
+          "quote": "Of the 13 districts of Uttarakhand, Champawat, Haridwar and US Nagar districts had only (1-3 spp.) bamboo species, while Bageswar, Chamoli and Uttarkashi comprised only ringal species."
+        }
+      ]
+    },
+    {
+      "id": "C134",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L08"
+      },
+      "text": "PARI places Jaiti village about six kilometres from Munsiari town, which stands at 2,200 metres in Pithoragarh district.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 4",
+          "quote": "Munsiari town is located at an altitude of 2,200 metres, and Jaiti village is around six kilometres away"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 4",
+          "quote": "Life in these mountains of Pithoragarh district of Uttarakhand is tough"
+        }
+      ]
+    },
+    {
+      "id": "C135",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "In four Pithoragarh district villages, Kothera, Balakuncha, Guptari and Bhainskot, some scheduled caste families have made big efforts to sustain their livelihood with Drepanostachyum falcatum, locally called ringal.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "abstract",
+          "quote": "Drepanostachyum falcatum (Arundinaria falcata Nees) is a common species of hill bamboo locally called Ringal is abundantly found in the homesteads. Four representative villages i.e., Kothera, Balakuncha, Guptari and Bhainskot of Pithoragarh district were selected for the study."
+        },
+        {
+          "sourceId": "S06",
+          "locator": "abstract",
+          "quote": "Some scheduled caste families of the area have taken big efforts using D. falcatum for the sustenance of their livelihood."
+        }
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application says ringal plays an important role in improving the socio-economic status of scheduled caste families in the marginalised upper areas of Uttarakhand.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application 652, p. 25",
+          "quote": "Ringal species play an important role in improving the socio-economic status of scheduled caste families of the marginalized areas of Uttarakhand in upper region."
+        }
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Reporting its January 2020 training, Development Alternatives said the ringal craft community was facing marginalisation as changing agricultural practices reduced demand for traditional ringal items.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 1",
+          "quote": "handicraft skills from 21 - 25 January 2020"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "paragraph 2",
+          "quote": "The community involved in this craft is faci ng marginalisation due to the changing agricultural patterns and practices, leading to reduced demand for traditional Ringal based items."
+        }
+      ]
+    },
+    {
+      "id": "C139",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L26"
+      },
+      "text": "PARI reports some demand across Munsiari block for durable, lightweight ringal baskets that women use to carry fuel and fodder.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 6",
+          "quote": "Fortunately, there's some demand for his products across Munsiari block, especially for the durable and lightweight baskets that women use to carry fuel and fodder."
+        }
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Sundriyal, publishing in 2011, count as many as 451 bamboo artisan villages in Uttarakhand, with Bageshwar district having the highest number.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 449, traditional bamboo and ringal products",
+          "quote": "The state has as many as 451 bamboo artisan villages and their distribution varies in different districts"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 449, traditional bamboo and ringal products",
+          "quote": "Bageshwar district has the highest number"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Records of the Bamboo and Fibre Development Board from 2005 show over 460 villages in Uttarakhand depending on bamboo and ringal as their major livelihood.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 446, study area",
+          "quote": "There is a rich tradition of using bamboo and ringal for household purposes. The state has over 460 villages that depend on these resources as their major livelihood per the records of the Bamboo & Fibre Development Board (Anonymous 2005a)."
+        }
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A study published in 2011 found artisans in 20 villages of Almora, Nainital, Bageshwar and Uttarkashi districts making 62 bamboo and ringal items, of which only 14 were sold in the villages.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 446, methods",
+          "quote": "Four districts, viz. Almora, Nainital, Bageshwar and Uttarkashi"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 449, traditional bamboo and ringal products",
+          "quote": "An analysis of 20 villages spreading in four districts of the state"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 449, traditional bamboo and ringal products",
+          "quote": "revealed that the artisans make 62 bamboo and ringal items, which comprised a variety of baskets, mats, toys and instruments, and various other utility items"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 449, traditional bamboo and ringal products",
+          "quote": "However, only 14 items were recorded to be sold in the villages, mainly as diverse agricultural utility items"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C143",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "A study published in 2011 found 75% of ringal artisan families below the poverty line and Scheduled Caste, 15% above it, and 10% below it but not Scheduled Caste.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, socio economic status of the artisans",
+          "quote": "In case of ringal, however, 75% of families were BPL (SC) while of the remaining only 15% of families were above the poverty line (APL) and the remaining 10% are below poverty line but not members of scheduled castes."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C144",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "A study published in 2011 found that 20% of ringal artisans earned Rs. 4000 to 6000 a month, 55% earned Rs. 2000 to 4000, and the rest under Rs. 2000.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, management of bamboo",
+          "quote": "This study has found that 65% of artisan families earned an income that ranges from Rs. 2000 to Rs. 4000 per month"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, management of bamboo",
+          "quote": "In case of ringal, 20% of artisans earned between Rs. 4000 to Rs. 6000, 55% earned"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 452, management of bamboo",
+          "quote": "between Rs. 2000 to Rs. 4000 and the remaining percent earned Rs. <2000"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C145",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A study published in 2011 estimated selling prices 10 to 30% higher in towns, but artisans preferred to sell in villages to avoid transport costs, selling time and labour.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 451, traditional bamboo and ringal products",
+          "quote": "It was estimated that the total selling price of items was 10-30% higher in the towns than in the villages. The artisans prefer to sell their items in the villages to avoid costs of transportation, time involved in selling, and labor from village to towns."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 445",
+          "quote": "Published: December 20, 2011"
+        }
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ringaal sales moved through village traders, government emporia, NGO purchases and occasional bulk civic orders, and transport distance and time cut margins in remote sites.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 42",
+          "quote": "Market channels were mixed. Sales moved through village traders, government emporia, NGO purchases, and occasional bulk civic orders. Transport distance and time cut margins in remote sites."
+        }
+      ]
+    },
+    {
+      "id": "C147",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ringaal makers price from material and time and then negotiate by buyer type: traders offer bundled rates, emporia grade by finish, and civic orders fix rates for standard sizes.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 47",
+          "quote": "Pricing practices use a simple base and then adjust. Makers begin with material and time, then negotiate by buyer type. Traders offer bundled rates. Emporia grade by finish. Civic orders fix rates for standard sizes."
+        }
+      ]
+    },
+    {
+      "id": "C148",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Artisans in the design study described youth moving out and less use of traditional ware as plastic and metal spread, so the learner base thinned.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "findings, p. 43",
+          "quote": "Third, culture: youth moving out and less use of traditional ware as plastic and metal, spread; the learner base thinned and routine practice weakened."
+        }
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A Millennium Post column says ringal weaving is on the verge of extinction as many families prefer to migrate to cities for better jobs.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "section Ringal crafts",
+          "quote": "Unfortunately, Ringal weaving is on the verge of extinction as many of the families prefer to migrate to the cities for better job opportunities."
+        }
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In 2011, Video Volunteers reported that more than 10,000 artisans in Uttarakhand made their living from bamboo and ringal products.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "paragraph 4",
+          "quote": "More than 10,000 artisans make their living by making bamboo and ringal products in the state."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "byline",
+          "quote": "January 10, 2011 | By: Luxmi Nautiyal"
+        }
+      ]
+    },
+    {
+      "id": "C151",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Joshi report that villagers collect ringal for their domestic need on nominal charges, and meet additional needs on permit by paying a royalty to the Forest Department.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.2",
+          "quote": "The villagers collect the ringal on nominal charges for their domestic need. However the additional requirement is met on the permit basis by paying a royalty to the Forest department."
+        }
+      ]
+    },
+    {
+      "id": "C152",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A 2015 paper by Sundriyal and Joshi reports craftsmen in 20 surveyed villages making over 65 articles, of which only 14 were widely used and marketed within the villages.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 3.3, diversity of bamboo articles",
+          "quote": "Analysis of 20 villages revealed that the craftsmen make over 65 articles from different bamboo species that are used in local system. However, only 14 articles are widely used at present and also marketed within the villages as diverse agricultural utility items (Table 2)."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "page header",
+          "quote": "10th World Bamboo Congress, Korea 2015"
+        }
+      ]
+    },
+    {
+      "id": "C153",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A design study describes the soulta as a cylinder with a pliable hexagon weave for wood, fodder and water pots.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "introduction, p. 37",
+          "quote": "Soulta is a cylinder with a pliable hexagon weave for wood, fodder, and water pots."
+        }
+      ]
+    },
+    {
+      "id": "C154",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sundriyal and Joshi's 2015 Uttarakhand case study gives bamboo craft market costs of Rs. 40 to 50 for a big kandi, Rs. 160 to 175 for a choura and Rs. 700 to 800 for a moste.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "section 2.2, study design",
+          "quote": "Central Himalayan region i.e. Uttarakhand was taken as a case study for this study."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "table 2",
+          "quote": "Table 2. Selected Bamboo Crafts of used in household in Central Himalaya"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "table 2",
+          "quote": "Items Local name Market cost (Rs) Big basket Tokri (Big) 40-50 Winnowing tray Supa 30.0 Small basket Dalia (small) 30-45 Big basket with handle Kandi (Big) 40-50"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "table 2",
+          "quote": "Round basket for sleeping small baby Choura (Jhuger) 160-175 Carrying basket Doka 125 Carrying basket Solta 100.0 Mat Moste or Bishal 700-800"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "page header",
+          "quote": "10th World Bamboo Congress, Korea 2015"
+        }
+      ]
+    },
+    {
+      "id": "C155",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Walton's 1911 Almora gazetteer names basket and matting making from ringal bamboo, with hemp and wool weaving, as the district's only industries of importance besides tea-making.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "chapter II, manufactures",
+          "quote": "Besides tea-making, the only industries of importance in the district arc the manufacture of baskets and matting from tho ringal bamboo, and hemp and wool weaving."
+        },
+        {
+          "sourceId": "S19",
+          "locator": "title page",
+          "quote": "Superintendent, Government Press, United Provinces, 1911."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Chamoli",
+      "kind": "DISTRICT",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C128",
+        "C129",
+        "C130"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Bageshwar",
+      "kind": "DISTRICT",
+      "district": "Bageshwar",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C128",
+        "C130",
+        "C140",
+        "C142"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Pithoragarh",
+      "kind": "DISTRICT",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C128",
+        "C135",
+        "C016"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Almora",
+      "kind": "DISTRICT",
+      "district": "Almora",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C128",
+        "C142"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Rudraprayag",
+      "kind": "DISTRICT",
+      "district": "Rudraprayag",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C128",
+        "C130",
+        "C131"
+      ]
+    },
+    {
+      "id": "L07",
+      "name": "Uttarkashi",
+      "kind": "DISTRICT",
+      "district": "Uttarkashi",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130",
+        "C142"
+      ]
+    },
+    {
+      "id": "L08",
+      "name": "Jaiti",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C016",
+        "C134"
+      ]
+    },
+    {
+      "id": "L09",
+      "name": "Namik",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C017",
+        "C120",
+        "C059"
+      ]
+    },
+    {
+      "id": "L10",
+      "name": "Khal",
+      "kind": "VILLAGE",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C129"
+      ]
+    },
+    {
+      "id": "L11",
+      "name": "Mansoona",
+      "kind": "VILLAGE",
+      "district": "Rudraprayag",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C131"
+      ]
+    },
+    {
+      "id": "L12",
+      "name": "Bhanaj",
+      "kind": "VILLAGE",
+      "district": "Rudraprayag",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L13",
+      "name": "Machkandi",
+      "kind": "VILLAGE",
+      "district": "Rudraprayag",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L14",
+      "name": "Akhodi",
+      "kind": "VILLAGE",
+      "district": "Rudraprayag",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L15",
+      "name": "Pipalkoti",
+      "kind": "VILLAGE",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L16",
+      "name": "Kiruli",
+      "kind": "VILLAGE",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L17",
+      "name": "Bedu Mathal",
+      "kind": "VILLAGE",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L18",
+      "name": "Gajoli",
+      "kind": "VILLAGE",
+      "district": "Uttarkashi",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L19",
+      "name": "Bharangaon",
+      "kind": "VILLAGE",
+      "district": "Uttarkashi",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L20",
+      "name": "Supi",
+      "kind": "VILLAGE",
+      "district": "Bageshwar",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L21",
+      "name": "Shama",
+      "kind": "VILLAGE",
+      "district": "Bageshwar",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C130"
+      ]
+    },
+    {
+      "id": "L22",
+      "name": "Kothera",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C135"
+      ]
+    },
+    {
+      "id": "L23",
+      "name": "Balakuncha",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C135"
+      ]
+    },
+    {
+      "id": "L24",
+      "name": "Guptari",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C135"
+      ]
+    },
+    {
+      "id": "L25",
+      "name": "Bhainskot",
+      "kind": "VILLAGE",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C135"
+      ]
+    },
+    {
+      "id": "L26",
+      "name": "Munsiari block",
+      "kind": "REGION",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MARKET",
+      "claimIds": [
+        "C139"
+      ]
+    },
+    {
+      "id": "L27",
+      "name": "Garhwal",
+      "kind": "REGION",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C116",
+        "C115"
+      ]
+    },
+    {
+      "id": "L28",
+      "name": "Kumaon",
+      "kind": "REGION",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C116",
+        "C115"
+      ]
+    },
+    {
+      "id": "L29",
+      "name": "Bageshwar",
+      "kind": "DISTRICT",
+      "district": "Bageshwar",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C132",
+        "C133"
+      ]
+    },
+    {
+      "id": "L30",
+      "name": "Chamoli",
+      "kind": "DISTRICT",
+      "district": "Chamoli",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C132",
+        "C133"
+      ]
+    },
+    {
+      "id": "L31",
+      "name": "Pithoragarh",
+      "kind": "DISTRICT",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C132"
+      ]
+    },
+    {
+      "id": "L32",
+      "name": "Tehri",
+      "kind": "DISTRICT",
+      "district": "Tehri Garhwal",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C132"
+      ]
+    },
+    {
+      "id": "L33",
+      "name": "Uttarkashi",
+      "kind": "DISTRICT",
+      "district": "Uttarkashi",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C132",
+        "C133"
+      ]
+    },
+    {
+      "id": "L34",
+      "name": "Uttarakhand",
+      "kind": "STATE",
+      "state": "Uttarakhand",
+      "country": "India",
+      "role": "MARKET",
+      "claimIds": [
+        "C154"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Rudiya",
+      "localNames": [
+        "Rudia",
+        "Bedi"
+      ],
+      "claimIds": [
+        "C004",
+        "C005",
+        "C019",
+        "C015",
+        "C143",
+        "C144"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "COMMUNITY",
+      "name": "Bajela",
+      "placeId": "L08",
+      "claimIds": [
+        "C016"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "COMMUNITY",
+      "name": "Shilpkar",
+      "placeId": "L09",
+      "claimIds": [
+        "C020"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "PERSON",
+      "name": "Laxmi Devi",
+      "placeId": "L11",
+      "claimIds": [
+        "C131"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "ORGANISATION",
+      "name": "Sugandh Uttarapath Kisan Swayat Sahkarita",
+      "claimIds": [
+        "C006"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Harvesting ringal",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C028",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C022"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T03",
+          "claimId": "C028"
+        }
+      ],
+      "claimIds": [
+        "C028",
+        "C021",
+        "C022",
+        "C023",
+        "C024",
+        "C025",
+        "C026",
+        "C043"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Light peeling of the bark",
+      "stageType": "PREP",
+      "order": 2,
+      "orderClaimId": "C027",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C027"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C033"
+        }
+      ],
+      "claimIds": [
+        "C027",
+        "C033"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Drying",
+      "stageType": "DRY",
+      "duration": {
+        "text": "3 to 4 days in the sun or a kitchen corner",
+        "claimId": "C027"
+      },
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C027"
+        }
+      ],
+      "claimIds": [
+        "C027",
+        "C028",
+        "C035"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Splitting into strips",
+      "stageType": "PREP",
+      "order": 3,
+      "orderClaimId": "C027",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C030"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T04",
+          "claimId": "C032"
+        },
+        {
+          "toolId": "T06",
+          "claimId": "C029"
+        },
+        {
+          "toolId": "T01",
+          "claimId": "C033"
+        }
+      ],
+      "claimIds": [
+        "C027",
+        "C030",
+        "C032",
+        "C029",
+        "C034",
+        "C028"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Scraping and flattening the strips",
+      "stageType": "PREP",
+      "order": 4,
+      "orderClaimId": "C031",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C031"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T05",
+          "claimId": "C029"
+        }
+      ],
+      "claimIds": [
+        "C031",
+        "C029"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Weaving the base and walls",
+      "stageType": "SHAPE",
+      "order": 5,
+      "orderClaimId": "C036",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C036"
+        },
+        {
+          "materialId": "M08",
+          "claimId": "C074"
+        }
+      ],
+      "claimIds": [
+        "C036",
+        "C038",
+        "C035",
+        "C048",
+        "C042"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Fitting the rim",
+      "stageType": "FINISH",
+      "order": 6,
+      "orderClaimId": "C037",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C037"
+        }
+      ],
+      "claimIds": [
+        "C037",
+        "C035"
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "Coating and smoke-curing",
+      "stageType": "FINISH",
+      "order": 7,
+      "orderClaimId": "C041",
+      "materials": [
+        {
+          "materialId": "M09",
+          "claimId": "C080"
+        }
+      ],
+      "claimIds": [
+        "C041",
+        "C080"
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "Colouring the strips",
+      "stageType": "DYE",
+      "materials": [
+        {
+          "materialId": "M10",
+          "claimId": "C047"
+        }
+      ],
+      "claimIds": [
+        "C046",
+        "C047"
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "Weaving a winnow",
+      "stageType": "SHAPE",
+      "materials": [
+        {
+          "materialId": "M11",
+          "claimId": "C039"
+        }
+      ],
+      "claimIds": [
+        "C039",
+        "C040"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Ringal (dwarf hill bamboo)",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "localNames": [
+        "ringaal"
+      ],
+      "claimIds": [
+        "C003",
+        "C067",
+        "C068",
+        "C071",
+        "C072",
+        "C075",
+        "C076",
+        "C098",
+        "C100",
+        "C101",
+        "C022"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Chimonobambusa jaunsarensis",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "localNames": [
+        "Ginwas ringal",
+        "Jumra ringal",
+        "Saura ringal"
+      ],
+      "botanicalName": "Chimonobambusa jaunsarensis (syn. Sinarundinaria anceps)",
+      "claimIds": [
+        "C085",
+        "C091",
+        "C105",
+        "C089"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Himalayacalamus falconeri",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "localNames": [
+        "Dev ringal",
+        "Deo ringal"
+      ],
+      "botanicalName": "Himalayacalamus falconeri (syn. Thamnocalamus falconeri)",
+      "claimIds": [
+        "C086",
+        "C092",
+        "C094",
+        "C061",
+        "C118"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Drepanostachyum falcatum",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "localNames": [
+        "Gol ringal",
+        "Golu ringal",
+        "Gadh ringal",
+        "Ghad ringal",
+        "Nirgal"
+      ],
+      "botanicalName": "Drepanostachyum falcatum (syn. Arundinaria falcata)",
+      "claimIds": [
+        "C087",
+        "C090",
+        "C078",
+        "C106",
+        "C107",
+        "C097",
+        "C117",
+        "C079",
+        "C135",
+        "C089"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Thamnocalamus spathiflorus",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "localNames": [
+        "Tham ringal",
+        "Thaam ringal"
+      ],
+      "botanicalName": "Thamnocalamus spathiflorus",
+      "claimIds": [
+        "C088",
+        "C093",
+        "C112",
+        "C077",
+        "C108",
+        "C110"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Dholan rope",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "localNames": [
+        "Dholan"
+      ],
+      "botanicalName": "Girardinia diversifolia",
+      "claimIds": [
+        "C073"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Bhang rope",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "localNames": [
+        "Bhang"
+      ],
+      "botanicalName": "Cannabis sativa",
+      "claimIds": [
+        "C073"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Ghingaroo stems",
+      "kind": "WOOD",
+      "role": "BINDER",
+      "localNames": [
+        "ghingaroo"
+      ],
+      "botanicalName": "Pyracantha sp.",
+      "claimIds": [
+        "C074"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Cow dung and cow urine",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C080"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Sauda bark",
+      "kind": "WOOD",
+      "role": "FUEL",
+      "localNames": [
+        "sauda"
+      ],
+      "claimIds": [
+        "C047"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Water",
+      "kind": "WATER",
+      "role": "OTHER",
+      "claimIds": [
+        "C039"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Khurpi knife",
+      "localNames": [
+        "Khurpi"
+      ],
+      "claimIds": [
+        "C033"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Cutter",
+      "claimIds": [
+        "C033"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Darati cutting tool",
+      "localNames": [
+        "darati"
+      ],
+      "claimIds": [
+        "C028"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Curved knife",
+      "localNames": [
+        "baransh"
+      ],
+      "claimIds": [
+        "C032"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Mallet",
+      "claimIds": [
+        "C029"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Sickle",
+      "claimIds": [
+        "C029"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "VEGETATION",
+      "claimIds": [
+        "C116",
+        "C090",
+        "C117"
+      ]
+    },
+    {
+      "factor": "LANDFORM",
+      "claimIds": [
+        "C116"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "claimIds": [
+        "C071"
+      ]
+    },
+    {
+      "factor": "WATER",
+      "claimIds": [
+        "C115"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "claimIds": [
+        "C119",
+        "C118"
+      ]
+    }
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "652",
+      "certificateNumber": "391",
+      "filedOn": "2019-05-27",
+      "registeredOn": "2021-09-14",
+      "journalIssue": "138",
+      "proprietors": [
+        "Sugandh Uttarapath Kisan Swayat Sahkarita"
+      ],
+      "claimIds": [
+        "C006",
+        "C008",
+        "C009",
+        "C010",
+        "C011"
+      ]
+    },
+    "prices": [
+      {
+        "claimId": "C070",
+        "date": "2011-01-10",
+        "placeId": "L27"
+      },
+      {
+        "claimId": "C154",
+        "date": "2015",
+        "placeId": "L34"
+      }
+    ],
+    "workforce": [
+      {
+        "claimId": "C150",
+        "year": 2011
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "Rudiya, Rudia",
+      "meaning": "The local name for ringal weavers, the community that makes articles from ringal.",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "Baruree",
+      "meaning": "Artisans who make articles from thick bamboo, as distinct from the Rudia ringal weavers.",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "Ringal, ringaal",
+      "meaning": "A thin, reed-like hill bamboo of Uttarakhand, sometimes called dwarf bamboo.",
+      "claimIds": [
+        "C003",
+        "C072"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "Solta, soulta",
+      "meaning": "A ringal carrying basket that the GI application calls slightly conical and a design study describes as a cylinder with a hexagon weave.",
+      "claimIds": [
+        "C052",
+        "C053",
+        "C153"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "Suppa, supa",
+      "meaning": "A winnower for cleaning grain.",
+      "claimIds": [
+        "C054",
+        "C059"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "Moreta",
+      "meaning": "A mat laid on the earthen floor for sitting and for drying grain and edible items.",
+      "claimIds": [
+        "C054"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "Bhwanu",
+      "meaning": "A broom for sweeping and cleaning floors.",
+      "claimIds": [
+        "C054"
+      ]
+    },
+    {
+      "id": "W09",
+      "term": "Kandi, kanda, ghilda",
+      "meaning": "A dense cylindrical basket, called kandi or kanda in Kumaon and ghilda in Garhwal.",
+      "claimIds": [
+        "C056"
+      ]
+    },
+    {
+      "id": "W10",
+      "term": "Kalam",
+      "meaning": "An ink pen of ringal used by local astrologers to write horoscopes.",
+      "claimIds": [
+        "C051"
+      ]
+    },
+    {
+      "id": "W11",
+      "term": "Goth, chhani",
+      "meaning": "Grassy houses.",
+      "claimIds": [
+        "C077"
+      ]
+    },
+    {
+      "id": "W12",
+      "term": "Putra",
+      "meaning": "Strips cut from the thin outer layer of ringal.",
+      "claimIds": [
+        "C028"
+      ]
+    },
+    {
+      "id": "W13",
+      "term": "Darati",
+      "meaning": "A metal tool for cutting wood, grass and ringal.",
+      "claimIds": [
+        "C028"
+      ]
+    },
+    {
+      "id": "W14",
+      "term": "Baransh",
+      "meaning": "A curved knife used to cut ringal into thin strips.",
+      "claimIds": [
+        "C032"
+      ]
+    },
+    {
+      "id": "W15",
+      "term": "Khurpi",
+      "meaning": "A knife to cut ringal into strips and peel its outer layer.",
+      "claimIds": [
+        "C033"
+      ]
+    },
+    {
+      "id": "W16",
+      "term": "Dokka",
+      "meaning": "A basket carried on the back for carrying grass and dung.",
+      "claimIds": [
+        "C059"
+      ]
+    },
+    {
+      "id": "W17",
+      "term": "Moshta",
+      "meaning": "A floor mat of ringal.",
+      "claimIds": [
+        "C059"
+      ]
+    },
+    {
+      "id": "W18",
+      "term": "Choura, jhuger",
+      "meaning": "A round sleeping basket for a newborn baby.",
+      "claimIds": [
+        "C058"
+      ]
+    },
+    {
+      "id": "W19",
+      "term": "Changera",
+      "meaning": "A dome-shaped grain store.",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "W20",
+      "term": "Van panchayat",
+      "meaning": "A village forest, jointly controlled by local people and the state, from which ringal is gathered.",
+      "claimIds": [
+        "C125",
+        "C121"
+      ]
+    },
+    {
+      "id": "W21",
+      "term": "Ghida",
+      "meaning": "A conical ringal basket, which the GI application also calls solta.",
+      "claimIds": [
+        "C052",
+        "C024"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C086",
+        "C092",
+        "C108",
+        "C110"
+      ],
+      "about": "Which species is dev ringal: Himalayacalamus (Thamnocalamus) falconeri or Thamnocalamus spathiflorus"
+    },
+    {
+      "claimIds": [
+        "C088",
+        "C093",
+        "C109"
+      ],
+      "about": "Which species is tham ringal: Thamnocalamus spathiflorus or T. jonsarensis"
+    },
+    {
+      "claimIds": [
+        "C105",
+        "C094",
+        "C107",
+        "C108"
+      ],
+      "about": "Which ringal species weavers use most"
+    },
+    {
+      "claimIds": [
+        "C106",
+        "C107",
+        "C111"
+      ],
+      "about": "Whether weavers favour gol ringal, Drepanostachyum falcatum"
+    },
+    {
+      "claimIds": [
+        "C116",
+        "C102",
+        "C103",
+        "C084",
+        "C104"
+      ],
+      "about": "At what altitude ringal grows"
+    },
+    {
+      "claimIds": [
+        "C067",
+        "C068",
+        "C069",
+        "C070"
+      ],
+      "about": "How long ringal products last"
+    },
+    {
+      "claimIds": [
+        "C081",
+        "C082",
+        "C084",
+        "C104"
+      ],
+      "about": "How many ringal species are used"
+    },
+    {
+      "claimIds": [
+        "C027",
+        "C028"
+      ],
+      "about": "Whether ringal is dried before or after it is split into strips"
+    },
+    {
+      "claimIds": [
+        "C021",
+        "C022",
+        "C101"
+      ],
+      "about": "When ringal is gathered and ready to use"
+    },
+    {
+      "claimIds": [
+        "C140",
+        "C141"
+      ],
+      "about": "How many artisan villages depend on bamboo and ringal in Uttarakhand"
+    },
+    {
+      "claimIds": [
+        "C098",
+        "C099",
+        "C097"
+      ],
+      "about": "How tall ringal grows"
+    },
+    {
+      "claimIds": [
+        "C132",
+        "C133"
+      ],
+      "about": "Which districts of Uttarakhand have only ringal species"
+    },
+    {
+      "claimIds": [
+        "C095",
+        "C096",
+        "C093"
+      ],
+      "about": "Which ringal species grows at the highest elevation"
+    },
+    {
+      "claimIds": [
+        "C123",
+        "C151"
+      ],
+      "about": "Whether villagers collect ringal for domestic needs free of cost or on nominal charges"
+    },
+    {
+      "claimIds": [
+        "C142",
+        "C152"
+      ],
+      "about": "How many bamboo and ringal articles artisans in the 20 surveyed villages make"
+    },
+    {
+      "claimIds": [
+        "C052",
+        "C153"
+      ],
+      "about": "Whether the solta or soulta basket is conical or cylindrical"
+    },
+    {
+      "claimIds": [
+        "C082",
+        "C089",
+        "C109",
+        "C135"
+      ],
+      "about": "Whether Arundinaria falcata is Drepanostachyum falcatum, and whether it is gol or sararu ringal"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Why is thaam ringal so named?",
+      "claimIds": [
+        "C113"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "Which botanical species is dev ringal?",
+      "claimIds": [
+        "C086",
+        "C092",
+        "C108",
+        "C110"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Ringal_Basket_weaver_in_Chamoli_district_01.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Ringal_Basket_weaver_in_Chamoli_district_01.jpg",
+      "author": "Drashokk (dr ashok kolluru)",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A ringal bamboo basket weaver in Chamoli district",
+      "claimIds": [
+        "C128",
+        "C129"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Ringal_Basket_weaver_in_Chamoli_district_02.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Ringal_Basket_weaver_in_Chamoli_district_02.jpg",
+      "author": "Drashokk (dr ashok kolluru)",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A ringal basket weaver at work in Chamoli district",
+      "claimIds": [
+        "C128"
+      ]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Thamnocalamus_spathiflorus_-_Trebah_Garden_-_Cornwall%2C_England_-_DSC01622.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Thamnocalamus_spathiflorus_-_Trebah_Garden_-_Cornwall,_England_-_DSC01622.jpg",
+      "author": "Daderot",
+      "licence": "CC0 1.0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "caption": "Thamnocalamus spathiflorus, named tham ringal in the GI application, grown as a garden plant in Cornwall, England",
+      "claimIds": [
+        "C088",
+        "C093"
+      ]
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Himalayacalamus_falconeri_%27Damarapa%27_-_Trebah_Garden_-_Cornwall%2C_England_-_DSC01429.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Himalayacalamus_falconeri_%27Damarapa%27_-_Trebah_Garden_-_Cornwall,_England_-_DSC01429.jpg",
+      "author": "Daderot",
+      "licence": "CC0 1.0",
+      "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "caption": "Himalayacalamus falconeri 'Damarapa', a garden form of the species Sundriyal and Sundriyal name dev ringal, in Cornwall, England",
+      "claimIds": [
+        "C092"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "The GI application describes ringal weaving as an age-old craft of Uttarakhand, in which a special species of dwarf ringal, a thin reed-like bamboo, is woven into baskets, bins, mats and other utility items.",
+        "claimIds": [
+          "C001",
+          "C002",
+          "C003"
+        ]
+      },
+      {
+        "text": "Its weavers are known as Rudiya or Rudia, whom Sundriyal and Sundriyal describe as mainly marginalised scheduled caste families, and the GI application names Chamoli, Bageshwar, Pithoragarh, Almora and Rudraprayag among the places where ringal weaving gives a livelihood.",
+        "claimIds": [
+          "C004",
+          "C015",
+          "C128"
+        ]
+      },
+      {
+        "text": "The GI application names four ringal species, and elsewhere five, and sources differ on which species is dev ringal and which weavers use most.",
+        "claimIds": [
+          "C081",
+          "C082",
+          "C086",
+          "C108",
+          "C105",
+          "C094"
+        ]
+      },
+      {
+        "text": "Uttarakhand Ringal Craft is registered as a geographical indication under application 652, with certificate number 391 dated 14 September 2021.",
+        "claimIds": [
+          "C006",
+          "C010"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "GI status",
+        "value": "Registered: application 652 filed 27 May 2019, certificate 391 dated 14 September 2021, valid up to 26 May 2029",
+        "claimIds": [
+          "C006",
+          "C010"
+        ]
+      },
+      {
+        "label": "GI applicant",
+        "value": "Sugandh Uttarapath Kisan Swayat Sahkarita",
+        "claimIds": [
+          "C006"
+        ]
+      },
+      {
+        "label": "Centres",
+        "value": "Chamoli, Bageshwar, Pithoragarh, Almora and Rudraprayag; also villages of Uttarkashi",
+        "claimIds": [
+          "C128",
+          "C130"
+        ]
+      },
+      {
+        "label": "Makers",
+        "value": "Rudiya or Rudia ringal weavers, described by Sundriyal and Sundriyal as mainly marginalised scheduled caste families",
+        "claimIds": [
+          "C004",
+          "C015"
+        ]
+      },
+      {
+        "label": "Ringal species",
+        "value": "Dev or deo ringal, tham ringal, gadh or ghad ringal, and ginwas or jumra ringal",
+        "claimIds": [
+          "C086",
+          "C088",
+          "C087",
+          "C085",
+          "C090",
+          "C091"
+        ]
+      },
+      {
+        "label": "Season",
+        "value": "Sources differ: fetched in October to November for winter weaving, collected throughout the year, or ready to use from February to March",
+        "claimIds": [
+          "C021",
+          "C022",
+          "C101"
+        ]
+      },
+      {
+        "label": "Products",
+        "value": "Solta or ghida and kandi baskets, suppa winnowers, moreta mats and bhwanu brooms",
+        "claimIds": [
+          "C052",
+          "C056",
+          "C054"
+        ]
+      },
+      {
+        "label": "Durability",
+        "value": "Sources differ: up to 20 years, at least 20 to 25 years, or six to seven years",
+        "claimIds": [
+          "C067",
+          "C069",
+          "C070"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "The GI application states that scheduled caste families of the region have retained ancient, traditional knowledge of ringal weaving since time immemorial.",
+            "claimIds": [
+              "C013"
+            ]
+          },
+          {
+            "text": "Walton's 1911 Almora gazetteer names basket and matting making from ringal bamboo, with hemp and wool weaving, as the district's only industries of importance besides tea-making.",
+            "claimIds": [
+              "C155"
+            ]
+          },
+          {
+            "text": "Sundriyal and Sundriyal report that the Rudia ringal artisans, who lacked land, have depended on the bamboo trade for centuries, and a design study links the work historically with the Rudia or Bedi community.",
+            "claimIds": [
+              "C015",
+              "C019"
+            ]
+          },
+          {
+            "text": "In Jaiti village of Pithoragarh district, making bamboo products has been a traditional occupation of the men of the Bajela caste, PARI reports, though it found just one bamboo weaver left among the village's people.",
+            "claimIds": [
+              "C016"
+            ]
+          },
+          {
+            "text": "A Voices of Rural India story says the ringal trade in Namik village has been rooted in the community for approximately 200 to 300 years.",
+            "claimIds": [
+              "C017"
+            ]
+          },
+          {
+            "text": "Development Alternatives describes the ringal handicraft industry as the oldest small-scale industry of Uttarakhand and Himachal Pradesh.",
+            "claimIds": [
+              "C018"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "Farmers fetch ringal from the forest in October to November and weave the baskets in winter, when there is not much work in the fields, although ringal is also collected throughout the year.",
+            "claimIds": [
+              "C021",
+              "C022"
+            ]
+          },
+          {
+            "text": "Only well-formed culms of 2 to 3 cm diameter are preferred, and the cut is made up to 10 to 15 cm above the ground to help the plant re-sprout the next year.",
+            "claimIds": [
+              "C022",
+              "C023"
+            ]
+          },
+          {
+            "text": "The GI application lists light peeling of the bark, drying for 3 to 4 days, division into 4 to 12 parts and weaving, while a Namik craftsman's account has the strips cut first and then dried in the sun.",
+            "claimIds": [
+              "C027",
+              "C028"
+            ]
+          },
+          {
+            "text": "Each culm splits into 4 to 8 longitudinal strips or more, which are scraped to even thickness, and separate strips are prepared for the warp and the weft.",
+            "claimIds": [
+              "C031",
+              "C030"
+            ]
+          },
+          {
+            "text": "Thick wide strips are first laid to make the base, the side walls are raised with added strips, and the rim is sandwiched between two thick ringal splits.",
+            "claimIds": [
+              "C036",
+              "C037"
+            ]
+          },
+          {
+            "text": "After weaving, ringaal baskets are coated and smoke-cured to deter pests, moisture, insects and fungus.",
+            "claimIds": [
+              "C041"
+            ]
+          },
+          {
+            "text": "Collecting ringal takes between 6 hours and 2 days, and about 30 kg of culms gathered in a daylong visit makes about 5 to 8 ghida baskets.",
+            "claimIds": [
+              "C025",
+              "C024"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Sources differ on how long ringal products last: up to 20 years or nearly 20 to 25 years in the GI application, at least 20 to 25 years in a Millennium Post column, and six to seven years in a 2011 Video Volunteers account.",
+            "claimIds": [
+              "C067",
+              "C068",
+              "C069",
+              "C070"
+            ]
+          },
+          {
+            "text": "Households keep buying ringaal despite plastic and metal substitutes because it is light, repairable and suited to hill work.",
+            "claimIds": [
+              "C072"
+            ]
+          },
+          {
+            "text": "Large baskets are harnessed to the back with rope of dholan and bhang, and in the articles Sundriyal and Joshi surveyed, some artisans tied baskets with ghingaroo stems.",
+            "claimIds": [
+              "C073",
+              "C074"
+            ]
+          },
+          {
+            "text": "Ringal culms are woven into mats and baskets, and the green leaves are used as fodder for animals.",
+            "claimIds": [
+              "C075"
+            ]
+          },
+          {
+            "text": "Thamnocalamus spathiflorus was commonly used to cover the roofs of grassy houses and to make hookah pipes and walking sticks.",
+            "claimIds": [
+              "C077"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "BOTANY",
+        "sentences": [
+          {
+            "text": "For marginalised hill-area villages, the GI application names four ringal species of the Poaceae family: Himalayacalamus falconeri, Chimnobambusa jaunsarensis, Drepanostachyum falcatum and Thamnocalamus spathiflorus.",
+            "claimIds": [
+              "C081"
+            ]
+          },
+          {
+            "text": "Sundriyal and Sundriyal record ghad ringal at 1500 to 2100 meters, jumra ringal at 2100 to 2700 meters, dev ringal at 1900 to 2750 meters and thaam ringal at 2500 to 3500 meters.",
+            "claimIds": [
+              "C090",
+              "C091",
+              "C092",
+              "C093"
+            ]
+          },
+          {
+            "text": "Sources differ on whether dev ringal is Himalayacalamus or Thamnocalamus falconeri, or Thamnocalamus spathiflorus.",
+            "claimIds": [
+              "C086",
+              "C092",
+              "C108",
+              "C110"
+            ]
+          },
+          {
+            "text": "They also differ on which species weavers use most: Chimnobambusa jaunsarensis in one passage of the GI application, dev ringal in Sundriyal and Sundriyal, and Drepanostachyum falcatum at lower altitudes in another passage.",
+            "claimIds": [
+              "C105",
+              "C094",
+              "C107"
+            ]
+          },
+          {
+            "text": "Sources differ on ringal's height: an average of 12 ft for its culms according to the Uttarakhand Bamboo and Fiber Development Board, 5 to 8 meters in a Voices of Rural India story, and 2 to 3.5 m for Arundinaria falcata in Flora of Pakistan.",
+            "claimIds": [
+              "C098",
+              "C099",
+              "C097"
+            ]
+          },
+          {
+            "text": "The board gives ringal an average flowering cycle of about 30 years, and a new crop emerges around August to September and becomes flexible, strong and ready to use from February to March.",
+            "claimIds": [
+              "C100",
+              "C101"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECOLOGY",
+        "sentences": [
+          {
+            "text": "Ringal grows on steep mountain slopes in the Garhwal and Kumaon hills, generally as the understorey of oak and rhododendron forests, and sources differ on its altitude, from 1800 to 2400 m in one account to 1,000 to 2,000 metres or 1200 to 3600 meters in others.",
+            "claimIds": [
+              "C116",
+              "C102",
+              "C084"
+            ]
+          },
+          {
+            "text": "Most bamboo and ringal habitats fall under reserve forest, civil soyam and van panchayat village forest areas.",
+            "claimIds": [
+              "C125"
+            ]
+          },
+          {
+            "text": "A study published in 2011 found nearly 93% of ringal artisans collecting ringal directly from forests, mainly van panchayat forests, and sources differ on whether villagers collect it free or on nominal charges for domestic needs.",
+            "claimIds": [
+              "C122",
+              "C123",
+              "C151"
+            ]
+          },
+          {
+            "text": "Where collection of ringal was banned, the raw material was collected illegally, and most ringal-growing areas have shrunk to far-flung places away from villages.",
+            "claimIds": [
+              "C124",
+              "C126"
+            ]
+          },
+          {
+            "text": "A Voices of Rural India story says ringal helps prevent landslides, and Katiyar recommends planting Arundinaria falconeri on roadsides and slopes to control landslides and soil erosion.",
+            "claimIds": [
+              "C119",
+              "C118"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "Sugandh Uttarapath Kisan Swayat Sahkarita applied on 27 May 2019 to register Uttarakhand Ringal Craft as a geographical indication, and the registry records certificate number 391 dated 14 September 2021.",
+            "claimIds": [
+              "C006",
+              "C010"
+            ]
+          },
+          {
+            "text": "The application was advertised in Geographical Indications Journal 138, dated 30 June 2020, and the registry's table of authorised users numbers its entries up to 120.",
+            "claimIds": [
+              "C009",
+              "C011"
+            ]
+          },
+          {
+            "text": "A study published in 2011 found 75% of ringal artisan families below the poverty line and Scheduled Caste, and 55% of ringal artisans earning Rs. 2000 to 4000 a month.",
+            "claimIds": [
+              "C143",
+              "C144"
+            ]
+          },
+          {
+            "text": "Sources differ on the number of artisan villages: as many as 451 bamboo artisan villages in a 2011 study, and over 460 villages depending on bamboo and ringal in 2005 board records.",
+            "claimIds": [
+              "C140",
+              "C141"
+            ]
+          },
+          {
+            "text": "The same 2011 study estimated selling prices 10 to 30% higher in towns, but artisans preferred to sell in villages to avoid transport costs.",
+            "claimIds": [
+              "C145"
+            ]
+          },
+          {
+            "text": "Ringaal sales moved through village traders, government emporia, NGO purchases and occasional bulk civic orders, with prices set from material and time and then negotiated by buyer type.",
+            "claimIds": [
+              "C146",
+              "C147"
+            ]
+          },
+          {
+            "text": "Artisans described youth moving out and plastic and metal ware spreading, and a Millennium Post column says ringal weaving is on the verge of extinction.",
+            "claimIds": [
+              "C148",
+              "C149"
+            ]
+          },
+          {
+            "text": "Sundriyal and Joshi's 2015 case study gives market costs from Rs. 40 to 50 for a big kandi to Rs. 700 to 800 for a moste, and a 2011 Video Volunteers account priced a ringal basket at Rs. 50.",
+            "claimIds": [
+              "C154",
+              "C070"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Artisans make patterns of dark and light contrast by selecting and inserting darker and lighter shades of ringal splits.",
+            "claimIds": [
+              "C048"
+            ]
+          },
+          {
+            "text": "Ringaal products are generally green, and for decoration the inner splits are blackened with fire or, in one Namik craftsman's account, with the smoke of burning sauda bark, while pink or yellow come from dyeing.",
+            "claimIds": [
+              "C046",
+              "C047"
+            ]
+          },
+          {
+            "text": "The GI application calls slightly conical baskets solta or ghida, while a design study describes the soulta as a cylinder with a hexagon weave, and a dense cylindrical basket is called kandi or kanda in Kumaon and ghilda in Garhwal.",
+            "claimIds": [
+              "C052",
+              "C153",
+              "C056"
+            ]
+          },
+          {
+            "text": "Woven ringal articles include the suppa winnower, the moreta mat laid on earthen floors and the bhwanu broom.",
+            "claimIds": [
+              "C054"
+            ]
+          },
+          {
+            "text": "The GI application says dev ringal is used for puja purposes on spiritual yatras to Badrinath, Kedarnath and Nandadevi.",
+            "claimIds": [
+              "C061"
+            ]
+          },
+          {
+            "text": "Newer ringaal lines include flower vases, dustbins, prasad baskets, decorative bowls and trays, and women artisans have developed ringal rakhis.",
+            "claimIds": [
+              "C060",
+              "C063"
+            ]
+          },
+          {
+            "text": "The GI application says most ringal products are roughly finished, with sharp edges and non-uniform colour and texture.",
+            "claimIds": [
+              "C049"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "HEALTH",
+        "sentences": [
+          {
+            "text": "Artisans in a design study described long, risky harvest trips for ringaal on steep, narrow forest trails, where slips and animal encounters are common.",
+            "claimIds": [
+              "C043"
+            ]
+          },
+          {
+            "text": "Among the artisans studied, cuts, splinters, and back and wrist pain were common, linked to floor-level postures and repetitive splitting and weaving.",
+            "claimIds": [
+              "C044"
+            ]
+          },
+          {
+            "text": "In the workshops studied, cutting and pounding released fine splinters that risked eye injuries, and hammering raised noise.",
+            "claimIds": [
+              "C045"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

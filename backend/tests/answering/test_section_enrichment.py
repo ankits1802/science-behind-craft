@@ -87,7 +87,7 @@ def prose(text: str) -> ProseBlock:
     )
 
 
-async def test_a_section_with_cited_claims_streams_its_pictures_after_its_prose() -> None:
+async def test_a_section_with_cited_claims_streams_one_picture_after_its_prose() -> None:
     enrichment = enriched()
     store = FakeStore()
     found = events(await streamed(detailed(), pipeline(replies=[REPLY], store=store, enrichment=enrichment)))
@@ -96,7 +96,7 @@ async def test_a_section_with_cited_claims_streams_its_pictures_after_its_prose(
     assert prose_at < images_at < names.index(("section_done", None))
     prose_block, images = block_events(found)
     assert images["id"] == "s1.b2"
-    assert [item["media"]["display"] for item in images["items"]] == ["INLINE", "LINK_CARD"]
+    assert [item["media"]["display"] for item in images["items"]] == ["INLINE"]
     cited = {c["claimId"] for sentence in prose_block["sentences"] for c in sentence["citations"]}
     assert {claim for item in images["items"] for claim in item["claimIds"]} <= cited
     (ask,) = enrichment.asks
@@ -191,7 +191,7 @@ async def test_a_translated_sentence_keeps_only_the_spans_its_text_still_shows()
     ] == ENGLISH_SPANS
 
 
-async def test_a_reused_section_gets_pictures_from_its_claims_and_the_stored_follow_ups() -> None:
+async def test_a_reused_section_gets_pictures_from_its_claims_and_no_templated_follow_ups() -> None:
     pieces = memory()
     await streamed(
         detailed(), pipeline(replies=[REPLY], pieces=pieces, enrichment=FakeEnrichment(entries=GLOSSARY))
@@ -204,7 +204,7 @@ async def test_a_reused_section_gets_pictures_from_its_claims_and_the_stored_fol
     (ask,) = enrichment.asks
     assert ask.claim_ids == (ALUM_CLAIM_ID, WRITTEN_LAKE_ID, WRITTEN_WASH_ID)
     assert dict(found)["section_done"] == {"sectionId": "s1", "state": "READY", "searched": None}
-    assert dict(found)["follow_ups"]["items"][0] == "What happens at each step of Kutch Ajrakh?"
+    assert dict(found)["follow_ups"]["items"] == []
 
 
 async def test_a_glossary_that_cannot_be_read_leaves_sentences_unmarked() -> None:

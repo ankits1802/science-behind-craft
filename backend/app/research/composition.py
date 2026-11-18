@@ -35,15 +35,20 @@ __all__ = [
     "COMPOSE_RETRIES",
     "FOLLOW_UPS_MAX",
     "HEADING_MAX_CHARS",
+    "LEDE_SENTENCES_MAX",
+    "LEDE_SENTENCES_MIN",
     "SENTENCE_MAX_CHARS",
     "VIOLATION_KINDS",
     "ComposeCandidate",
     "ComposeFocus",
     "ComposeRequest",
     "ComposedAnswer",
+    "ComposedLede",
     "ComposedSection",
     "ComposedSentence",
     "Composer",
+    "LedeRequest",
+    "LedeSection",
     "QuotedSpan",
     "ResearchSummary",
     "SearchedQuery",
@@ -59,6 +64,8 @@ COMPOSE_RETRIES = 1
 SENTENCE_MAX_CHARS = 600
 HEADING_MAX_CHARS = 120
 FOLLOW_UPS_MAX = 5
+LEDE_SENTENCES_MIN = 2
+LEDE_SENTENCES_MAX = 3
 CANDIDATE_KINDS = ("CLAIM", "EVIDENCE")
 VIOLATION_KINDS = (
     "UNCITED",
@@ -190,6 +197,7 @@ class ComposedAnswer(ContractModel):
     stage_ids: list[uuid.UUID] = Field(default_factory=list)
     follow_ups: list[str] = Field(default_factory=list, max_length=FOLLOW_UPS_MAX)
     not_enough_evidence: ResearchSummary | None = None
+    heading: str | None = Field(default=None, min_length=1, max_length=HEADING_MAX_CHARS)
 
     @model_validator(mode="after")
     def _answers_or_says_why_not(self) -> Self:
@@ -199,6 +207,40 @@ class ComposedAnswer(ContractModel):
         if len(set(self.stage_ids)) != len(self.stage_ids):
             raise ValueError("an answer chooses each process stage once")
         return self
+
+
+class LedeSection(ContractModel):
+    section_id: str = Field(min_length=1)
+    discipline: Discipline
+    claim_ids: list[str] = Field(min_length=1)
+
+
+class LedeRequest(ContractModel):
+    question: str = Field(min_length=2, max_length=QUESTION_MAX_CHARS)
+    craft: CraftRef | None
+    candidates: list[ComposeCandidate] = Field(default_factory=list)
+    sections: list[LedeSection] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _stored_claims_once_each(self) -> Self:
+        ids = [c.id for c in self.candidates]
+        if len(ids) != len(set(ids)) or any(c.kind != "CLAIM" for c in self.candidates):
+            raise ValueError("the lede composes from stored claims, each offered once")
+        if len({section.section_id for section in self.sections}) != len(self.sections):
+            raise ValueError("each section is offered once for its heading")
+        if any(claim not in ids for section in self.sections for claim in section.claim_ids):
+            raise ValueError("a section to title shows only claims offered as candidates")
+        return self
+
+    @property
+    def allowed(self) -> dict[str, ComposeCandidate]:
+        return {c.id: c for c in self.candidates}
+
+
+class ComposedLede(ContractModel):
+    sentences: list[ComposedSentence] = Field(default_factory=list, max_length=LEDE_SENTENCES_MAX)
+    headings: dict[str, str] = Field(default_factory=dict)
+    follow_ups: list[str] = Field(default_factory=list, max_length=FOLLOW_UPS_MAX)
 
 
 class SentenceViolation(ContractModel):

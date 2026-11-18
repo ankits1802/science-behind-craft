@@ -75,3 +75,13 @@ export function placeDistricts(places: readonly PagePlace[]): PlaceDistricts {
   }
   return { made, named };
 }
+
+export function placesInDistrict(places: readonly PagePlace[], districtLgd: number): string[] {
+  const names: string[] = [];
+  for (const place of places) {
+    const district = place.district;
+    if (!district || district.lgd !== districtLgd || place.kind === "DISTRICT" || !MAKING_ROLES.has(place.role)) continue;
+    if (place.name !== district.name && !names.includes(place.name)) names.push(place.name);
+  }
+  return names;
+}

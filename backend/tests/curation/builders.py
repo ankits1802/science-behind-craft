@@ -65,6 +65,7 @@ def check_for(
     ]
     return CheckFile(
         craft_slug=dossier.craft_slug,
+        category_slug=dossier.category_slug,
         dossier_version=dossier.version,
         dossier_digest=verified_digest(dossier),
         checked_at=CHECKED_AT,

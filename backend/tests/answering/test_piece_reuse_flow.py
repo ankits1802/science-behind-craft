@@ -2,6 +2,7 @@ import uuid
 
 from app.research.crafts import CraftResolution
 from app.services.answering import AnswerAsk
+from app.services.claim_ledger import COVERED_NOTE
 
 from ..composer.fixtures import ALUM_CLAIM_ID, QUESTION, quote, section_reply, sentence
 from .fakes import (
@@ -21,11 +22,7 @@ from .test_answer_flow import LAKE_PAPER, REPLY, events
 
 ANSWER_TEXT = "0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9"
 FIRST_STORED_AT = "2026-11-12T08:16:00Z"
-STORED_FOLLOW_UPS = [
-    "What happens at each step of Kutch Ajrakh?",
-    "What is the chemistry or physics behind Kutch Ajrakh?",
-    "How do local water, soil and climate shape Kutch Ajrakh?",
-]
+CHEMISTRY_HEADING = "The chemistry behind Kutch Ajrakh"
 FACTS = [
     "Alum is the mordant that binds alizarin to cotton.",
     "Mordant baths held 8 g/L alum and were heated to 60 °C.",
@@ -85,7 +82,7 @@ def piece_trail(piece_id: uuid.UUID) -> dict:
         "key": f"piece:{piece_id}",
         "stage": "FOUND",
         "group": "STORED",
-        "title": "The chemistry",
+        "title": CHEMISTRY_HEADING,
         "url": None,
         "publisher": None,
         "year": None,
@@ -120,7 +117,7 @@ async def test_a_second_ask_reuses_the_stored_piece_and_researches_nothing() -> 
     assert found[3][1] == {
         "id": "s1",
         "discipline": "CHEMISTRY",
-        "title": "The chemistry",
+        "title": CHEMISTRY_HEADING,
         "order": 1,
         "state": "WRITING",
     }
@@ -131,7 +128,7 @@ async def test_a_second_ask_reuses_the_stored_piece_and_researches_nothing() -> 
     )
     assert [s["text"] for s in block["sentences"]] == FACTS
     assert found[8][1] == {"sectionId": "s1", "state": "READY", "searched": None}
-    assert found[-2:] == [("follow_ups", {"items": STORED_FOLLOW_UPS}), ("done", {"answerId": ANSWER_TEXT})]
+    assert found[-2:] == [("follow_ups", {"items": []}), ("done", {"answerId": ANSWER_TEXT})]
     assert pieces.kept[-1][2] == ()
 
 
@@ -148,11 +145,13 @@ async def test_research_runs_only_for_the_facet_without_a_reusable_piece() -> No
     assert [request.focus for request in research.requests] == ["HISTORY"]
     assert [call["title"] for call in model.calls] == ["History"]
     started = [(payload["id"], payload["state"]) for name, payload in found if name == "section_started"]
-    assert started == [("s1", "WRITING"), ("s2", "RESEARCHING")]
+    assert started == [("s2", "RESEARCHING"), ("s1", "WRITING")]
     blocks = [
         (payload["sectionId"], payload["block"]["reuse"] is not None) for n, payload in found if n == "block"
     ]
-    assert blocks == [("s1", True), ("s2", False)]
+    assert blocks == [("s1", True)]
+    done = {payload["sectionId"]: payload for name, payload in found if name == "section_done"}
+    assert done["s2"] == {"sectionId": "s2", "state": "EMPTY", "searched": COVERED_NOTE}
     assert {(piece.facet, piece.topic_key) for piece in pieces.current()} == {
         ("CHEMISTRY", "reaction:kutch-ajrakh"),
         ("HISTORY", "history:kutch-ajrakh"),

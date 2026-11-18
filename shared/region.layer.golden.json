@@ -57,20 +57,20 @@
     "460": 8.3,
     "462": 6.9
   },
-  "version": "42329c3ed50736b8e2a8b77623370bf5e482138c3208e675fb9bfd48ae54dce0",
+  "version": "7b36c96bd1605ed33ed7bb4714bff0192188cdb19d9fc1590b201d0f60ee95b8",
   "boundary": {
     "caption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative.",
     "dataset": {
       "code": "DR_DISTRICT_SHAPES",
-      "title": "District shapes as drawn by the Designer Portal",
-      "publisher": "Kaggle adityaradha007/indian-districts-geojson, joined to LGD by the Designer Portal",
-      "edition": "791efb62cc30cf5d",
-      "period": "2026-10-17",
+      "title": "Indian district boundaries, matched to LGD codes",
+      "publisher": "Indian districts GeoJSON on Kaggle",
+      "edition": "2026",
+      "period": "2026",
       "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
-      "licence": "Unconfirmed; indicative boundaries",
-      "licenceUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+      "licence": "For reference only",
+      "licenceUrl": null,
       "attribution": "District boundaries are indicative.",
-      "citation": "designer-portal frontend/public/boundaries/district-shapes.json (shapesVersion 791efb62cc30cf5d)",
+      "citation": null,
       "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
     }
   }

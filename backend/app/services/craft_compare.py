@@ -23,6 +23,7 @@ from app.research.crafts import CraftRef
 from app.research.knowledge_pieces import KnowledgePiece
 from app.research.offered_facts import PIECE_FIRST, OfferedFact, fact_rank, sentence_claim_ids
 from app.research.piece_reuse import visible_as_cited
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.sections import FALLBACK_DISCIPLINE
 from app.research.vocabulary import CANONICAL_LANGUAGE
 
@@ -52,9 +53,13 @@ class CompareOffers:
 
 
 async def craft_comparison(
-    session: AsyncSession, crafts: Sequence[Craft], facets: Sequence[str]
+    session: AsyncSession,
+    crafts: Sequence[Craft],
+    facets: Sequence[str],
+    *,
+    acls: Sequence[str] = OPEN_CHUNK_ACLS,
 ) -> CraftComparison | None:
-    offers = await comparison_offers(session, crafts, facets)
+    offers = await comparison_offers(session, crafts, facets, acls=acls)
     block = compare_block(offers.crafts, offers.terms, facets=facets, block_id=COMPARE_BLOCK_ID)
     if block is None:
         return None
@@ -63,15 +68,19 @@ async def craft_comparison(
 
 
 async def comparison_offers(
-    session: AsyncSession, crafts: Sequence[Craft], facets: Sequence[str]
+    session: AsyncSession,
+    crafts: Sequence[Craft],
+    facets: Sequence[str],
+    *,
+    acls: Sequence[str] = OPEN_CHUNK_ACLS,
 ) -> CompareOffers:
     if len(crafts) < COMPARE_CRAFTS_MIN:
         return CompareOffers()
     sources: dict[str, SourceRef] = {}
-    pieces = await _piece_facts(session, crafts, facets, sources)
+    pieces = await _piece_facts(session, crafts, facets, sources, acls=acls)
     entries = []
     for craft in crafts:
-        claims = await _claim_facts(session, craft, facets, sources)
+        claims = await _claim_facts(session, craft, facets, sources, acls=acls)
         ref = CraftRef.model_validate(knowledge_view.craft_ref(craft))
         entries.append(CraftFacts(craft=ref, facts=(*pieces.get(craft.id, ()), *claims)))
     terms = await _shared_terms(session, [craft.id for craft in crafts])
@@ -79,9 +88,14 @@ async def comparison_offers(
 
 
 async def _claim_facts(
-    session: AsyncSession, craft: Craft, facets: Sequence[str], sources: dict[str, SourceRef]
+    session: AsyncSession,
+    craft: Craft,
+    facets: Sequence[str],
+    sources: dict[str, SourceRef],
+    *,
+    acls: Sequence[str],
 ) -> list[OfferedFact]:
-    views, found = await knowledge_view.claims_for(session, craft, mode=COMPARE_MODE)
+    views, found = await knowledge_view.claims_for(session, craft, mode=COMPARE_MODE, acls=acls)
     refs = source_refs(found)
     sources.update(refs)
     own = set(await session.scalars(select(Concept.id).where(Concept.craftId == craft.id)))
@@ -107,7 +121,12 @@ async def _curated_disciplines(session: AsyncSession, claim_ids: Sequence[uuid.U
 
 
 async def _piece_facts(
-    session: AsyncSession, crafts: Sequence[Craft], facets: Sequence[str], sources: dict[str, SourceRef]
+    session: AsyncSession,
+    crafts: Sequence[Craft],
+    facets: Sequence[str],
+    sources: dict[str, SourceRef],
+    *,
+    acls: Sequence[str],
 ) -> dict[uuid.UUID, list[OfferedFact]]:
     rows = await session.scalars(
         select(PieceRow)
@@ -128,7 +147,7 @@ async def _piece_facts(
             newest.setdefault((piece.craft_id, piece.facet), piece)
     if not newest:
         return {}
-    states, cited = await claim_states(session, list(newest.values()))
+    states, cited = await claim_states(session, list(newest.values()), acls=acls)
     sources.update({sid: SourceRef.model_validate(ref) for sid, ref in cited.sources.items()})
     facts: dict[uuid.UUID, list[OfferedFact]] = {}
     for (craft_id, facet), piece in newest.items():

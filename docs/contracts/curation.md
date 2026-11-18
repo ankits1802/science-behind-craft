@@ -17,10 +17,14 @@ Last reviewed: 2026-11-18.
 |---|---|---|
 | `backend/app/data/curation/<CraftSlug>.json` | one dossier per craft, named by its `craftSlug` | the curator |
 | `backend/app/data/curation/<CraftSlug>.check.json` | the quote verification of that dossier | `tools/curation/verify.py` |
-| `backend/app/data/curation/index.json` | per craft: version, coverage, counts, check status | `tools/curation/check.py` |
+| `backend/app/data/curation/categories/<CategorySlug>.json` | one dossier per craft category (scope `CATEGORY`, below), named by its `categorySlug` | the curator |
+| `backend/app/data/curation/categories/<CategorySlug>.check.json` | its quote verification | `tools/curation/verify.py` |
+| `backend/app/data/curation/index.json` | per craft and per category: version, coverage, counts, check status | `tools/curation/check.py --write-index`, once per batch by the lead |
 
-Nothing else lives in that folder: the checker reports any other file, and a check file whose
-dossier is missing. Files are UTF-8 without a byte-order mark, LF line endings.
+Nothing else lives in those folders: the checker reports any other file, and a check file whose
+dossier is missing. The importer reads craft and family dossiers from the top folder and
+category dossiers from `categories/` (below, and `docs/contracts/category-page.md`). Files are
+UTF-8 without a byte-order mark, LF line endings.
 
 ## Shape conventions
 
@@ -54,7 +58,9 @@ dossier is missing. Files are UTF-8 without a byte-order mark, LF line endings.
 | Field | Rule |
 |---|---|
 | `schemaVersion` | `1` |
-| `craftSlug` | a slug of `backend/app/data/craft_master_list.json`, case as stored (`Kutch-Ajrakh`); the file is `<craftSlug>.json` |
+| `scope` | `CRAFT` (the default), `FAMILY` or `CATEGORY` (below) |
+| `craftSlug` | `CRAFT` and `FAMILY` only: a slug of `backend/app/data/craft_master_list.json` or an `ACTIVE` craft of `backend/app/data/portal_craft_register.json` (below), case as stored (`Kutch-Ajrakh`); the file is `<craftSlug>.json` |
+| `categorySlug` | `CATEGORY` only, instead of `craftSlug`: a `categorySlug` of the master list (`Stone-Craft-Category`); the file is `categories/<categorySlug>.json` |
 | `version` | 1 or more; raised on each re-curation |
 | `curatedAt` | instant with a zone |
 | `curator` | `claude-code` |
@@ -158,8 +164,10 @@ neither: order is set only when a source states the sequence, and no two stages 
 
 - `conflicts[{claimIds (two or more), about}]`: facts sources state differently, shown as
   "Sources differ" with every citation and never resolved by the curator.
-- `openQuestions[{id O.., question, claimIds, settledBy?}]`: what the sources say is unknown or
-  disputed, and every hypothesis claim, with what would settle it when a source says so.
+- `openQuestions[{id O.., question, claimIds, settledBy?, subCategories?}]`: what the sources say
+  is unknown or disputed, and every hypothesis claim, with what would settle it when a source says
+  so. It cites at least one claim, except in a category dossier, where a question with no claim
+  names the `subCategories` no source was found for.
 
 ### Pictures (`pictures`, `I..`, at most 6; `curation/records.Picture`)
 
@@ -174,6 +182,9 @@ it shows (at least one). The licence or licence URL is on the open-licence allow
 - `keyFacts`: 1 to 8 `{label, value, claimIds}`.
 - `sections`: `{discipline, sentences (3 to 8)}`, one per discipline, each discipline with at
   least 3 non-hypothesis claims.
+- A sentence of a category dossier may also carry `subCategories` (the master list's
+  `subCategorySlug` values it speaks of) and `crafts` (the member crafts it names, by slug);
+  other dossiers carry neither.
 
 Every sentence is one sentence, cites claims (never a hypothesis), carries no number, date,
 unit or formula that no quote of its claims holds, and at least half of its content words
@@ -182,17 +193,54 @@ The import runs the answer engine's prose validator and drops a failing sentence
 
 ### Coverage (`curation/coverage.py`)
 
-| Target | FULL | THIN |
-|---|---|---|
-| Sources | 8 or more, 3 or more rated A or B | whatever exists |
-| Claims | 40 to 150 | 5 to 150 |
-| Disciplines with 3 or more claims (hypotheses not counted) | `OVERVIEW`, `HISTORY`, `PROCESS`, `MATERIALS` and 2 more | no minimum |
-| Places | at least one centre (`PRACTISED` or `HISTORIC_CENTRE`), each Indian centre with its district | as found |
-| Process | at least one stage | as found |
-| Overview | lede, key facts, 3 or more sections | lede and key facts |
+| Target | FULL `CRAFT` or `FAMILY` | FULL `CATEGORY` | THIN (any scope) |
+|---|---|---|---|
+| Sources | 8 or more, 3 or more rated A or B | 12 or more, 5 or more rated A or B | whatever exists |
+| Claims | 40 to 150 | 60 to 250 | 5 to the scope's cap (150, or 250 for a category) |
+| Disciplines with 3 or more claims (hypotheses not counted) | `OVERVIEW`, `HISTORY`, `PROCESS`, `MATERIALS` and 2 more | `OVERVIEW`, `HISTORY`, `MATERIALS` and 2 more | no minimum |
+| Places | at least one centre (`PRACTISED` or `HISTORIC_CENTRE`), each Indian centre with its district; a `FAMILY` centre may be a `STATE` or `REGION` | at least one centre, at the level each source gives (`STATE` or `REGION` need no district) | as found |
+| Process | at least one stage | no minimum (stages belong to crafts) | as found |
+| Overview | lede, key facts, 3 or more sections | lede, key facts, 3 or more sections | lede and key facts |
 
-A `FULL` dossier must meet every FULL target. A `THIN` dossier must meet the THIN targets and
-must not meet every FULL target (then it is marked `FULL`). A thin dossier is never padded.
+A `FULL` dossier must meet every FULL target of its scope (`curation/coverage.SCOPE_TARGETS`). A
+`THIN` dossier must meet the THIN targets and must not meet every FULL target (then it is marked
+`FULL`). A thin dossier is never padded.
+
+### Scope: crafts, families and categories (`data/curation_scopes.py`, `curation/scope_rules.py`)
+
+One mechanism: the dossier declares its `scope` and the checker checks it against the master
+list and the portal craft register, so a curator cannot choose the looser rules.
+
+- **`CRAFT`**: one named craft, on the master list (455) or an `ACTIVE` craft of
+  `backend/app/data/portal_craft_register.json`. That register lists the crafts the portals
+  added that the master list does not hold, as the portal craft sync stores them in the `Craft`
+  table (same slug, no `sourceSerial`, id `seed_uuid("c", slug)`): `slug`, `name`,
+  `subCategorySlug`, `stateOfOrigin`, `stateOfPractice`, `giStatus`, `portals`, `status`
+  (`ACTIVE` or `MERGED`) and `mergedInto`. A dossier for a `MERGED` craft is refused with the
+  craft to curate instead (`Cane-And-Bamboo` is merged into `Cane-Bamboo-Craft`). A craft a
+  portal adds is added there; a test pins that no register slug is on the master list, that its
+  states are LGD states and that `mergedInto` is a master craft.
+- **`FAMILY`**: a catch-all row (its master notes say catch-all: `Other-Stone-Carving`,
+  `Stone-Others`) or a craft whose only state of practice is `All India` (`Cane-Bamboo-Craft`,
+  `Tie-Dye`; 81 crafts, all `NON_GI`). Such a craft must be curated as `FAMILY` and no other
+  craft may be. Its centres may be named as the sources name them, by `STATE` or `REGION`
+  without a district (a village, town or district still carries its district); it has no GI
+  record; every other rule is the craft rule.
+- **`CATEGORY`**: one master document per craft category, for the category pages. The slug is a
+  `categorySlug` of the master list (`Textiles-Based-Craft-Category`, `Metal-Craft-Category`,
+  `Stone-Craft-Category`, `Wood-Craft-Category`, `Leather-Craft-Category`,
+  `Natural-Fibre-Grass-Work`, `Mud-Based-Craft-Category`, `Paper-Craft-Category`,
+  `Miscellaneous`), the file lives in `categories/`, and it is curated like a craft (verified
+  quotes, the critic) with these rules:
+  - every sub-category of the category (the master list's `subCategorySlug` values) is named
+    by at least one cited overview sentence's `subCategories`, or by an open question with no
+    claim saying no source was found for it;
+  - the overview has a section for every discipline with 3 or more non-hypothesis claims;
+  - member crafts are referenced by slug in a sentence's `crafts` (master or register crafts
+    of that category, merged ones excluded) and never copied: a member craft's own facts belong
+    in its dossier, and the category states what its own sources say of the category;
+  - places are centres at the level each source gives; no GI record; at most 250 claims
+    (`limits.CATEGORY_CLAIMS_MAX`) and the category targets above.
 
 ## Reliability rubric (the checker's table)
 
@@ -201,13 +249,70 @@ must not meet every FULL target (then it is marked `FULL`). A thin dossier is ne
   (Handicrafts), state handicraft boards), academic books.
 - **B** theses, conference papers, edited encyclopedias, established craft institutions with
   named authors.
-- **C** reputable press features and artisan organisations' own pages with a named author.
-- **D** other web pages and retailers. A claim whose quotes all come from D sources is refused,
+- **C** reputable press features; artisan organisations' own pages with a named author; and a
+  page a named organisation publishes about its own work, author named or not (Khamir about its
+  own programmes, a cooperative about its members).
+- **D** other web pages, and any shop, sales or retail page (a page that sells, or links its
+  visitors to a shop for, the craft). A claim whose quotes all come from D sources is refused,
   except an `ECONOMICS` claim stating a price in a currency (a dated retailer page as a price on
   that date).
 
+The rating is the curator's; the checker reads it, it does not infer it.
+
 Never used: shadow libraries, AI-generated content farms, social media posts, unattributed blog
 spam, anything behind a login.
+
+## Curator checklist
+
+Learned from the wave 0 critics (41 must-fix problems in three pilot dossiers). A first draft
+already meets every item; the checker catches some, the critic the rest.
+
+1. **A claim says no more than its quotes.** Every word that carries meaning (a cause, a
+   comparison, `faster`, `most`, `completely`, a material, a place) is in a quote of that claim;
+   when the supporting sentence sits next to the quoted one, quote it too. Same subject, scope,
+   tense and time as the source (`during British rule`, not `after`; `were`, not `are`).
+2. **Hedges and qualifiers stay**: about, approximately, believed, said to, probably, barely
+   one-third, in the mid 2010s, and their Hindi forms, in the claim, the lede and the key facts.
+   Marking a claim a hypothesis does not replace its hedge.
+3. **One voice stays one voice.** One artisan's account, an author's or organisation's opinion,
+   a GI application's assertion or a judgement of a person is attributed (`one artisan said`,
+   `Mongabay reports`, `the GI application describes`), never stated as the craft's general fact.
+4. **Counts, prices and dates carry their year, quoted.** An undated `today` or `now` is not a
+   date: quote the page's date or drop the present-tense half. Set a source's `year` when it
+   states one. A date is what the record says (`Form GI-1 ... is dated 5 November 2012`), never
+   inferred from a document's title.
+5. **Conflicts are recorded, never settled.** Numbers, dates, names, materials, metals, whether
+   a place still works: each version is its own claim, linked in `conflicts`, including a
+   discrepancy noticed while searching. The overview names both sides or says sources differ.
+6. **One fact, one claim.** A second source is a second quote on the same claim; look for the
+   fact before adding it. Ingredient lists and `X is used to prepare Y` belong in stages,
+   materials and tools.
+7. **General facts stay general.** An encyclopedia definition (bell metal, dammar, beeswax) or a
+   statement about the craft across several states is scoped as such, never hung on this craft's
+   material or centre unless a source says so. No filler: museum listings, plinth descriptions,
+   an event a page only lists.
+8. **Quotes are whole.** A quote is the clause the claim rests on, never a fragment of a
+   neighbouring sentence that changes its scope. A near-verbatim rewrite of another source is not
+   independent support. Every local name in a record appears in a quote.
+9. **Ratings follow the rubric above.** No named author is not B; an organisation's page about
+   its own work is C; a shop or sales page is D.
+10. **Places at district or village level.** Every centre named anywhere (claims, lede, key facts)
+    is a place with its district and state as the LGD register writes them, and the district
+    comes from a cited quote, not from memory or an uncited lookup; when sources disagree, record
+    the conflict. A `FAMILY` or `CATEGORY` dossier may name a state or region where its source
+    does.
+11. **A GI record for every GI craft** (never for a family or a category), from the registry page and journal: application and
+    certificate numbers, filing and registration dates, journal issue, proprietor, authorised-user
+    count, validity and area, each quoted (tables are read, so quote the row:
+    `Date of Filing | 15-10-2025`). Never an authorised user's name, house number or address.
+    What could not be read (a form-only download) goes under `searched`.
+12. **The overview adds nothing.** Each sentence cites every claim whose fact it uses and adds no
+    duration (`have long been`), degree or link between facts; tense as in the claims.
+13. **No dataset values.** Rainfall, forest cover, soil and temperature come from the geo ETL by
+    district.
+14. **Stop drafting at the claim cap** (150, or 250 for a category), with the coverage targets'
+    disciplines filled first.
+15. **Leave `index.json` alone**: run `check.py` on your own dossier; the lead writes the index.
 
 ## Reading and matching (`tools/curation/reading.py`, `curation/matching.py`)
 
@@ -223,6 +328,14 @@ spam, anything behind a login.
 - When the live page refuses (an HTTP error, a failed connection, no extractable text), the
   source's `archivedUrl`, else the latest Wayback Machine capture with status 200 (the CDX
   index), is read in its raw form (`<timestamp>id_`).
+- HTML tables (`tools/curation/tables.py`): trafilatura keeps some tables and drops others (the
+  GI registry's application table on some pages, its document table on others). Every data
+  table on the page, with hidden elements dropped as above, is read row by row: a table with no
+  table inside it, at least two rows with two or more filled cells, and no cell over 1,000
+  characters. Each row the extracted text does not already hold is added after it as one line,
+  cells separated by ` | ` as the extraction writes the tables it keeps (`| Status | Pre
+  Examination |`), within the same 200,000-character cap. A page without such a table reads
+  exactly as before.
 - The text is normalised once (`research/quotes.normalise_quote_lines`): Unicode NFKC, soft
   hyphens removed, hyphenated line breaks joined, curly quotes and dashes folded to ASCII,
   whitespace collapsed inside each line, blank lines dropped. `fetch.py` prints these lines
@@ -235,16 +348,18 @@ spam, anything behind a login.
 ## The check file (`curation/check_file.py`)
 
 ```
-CheckFile {schemaVersion 1, craftSlug, dossierVersion, dossierDigest, checkedAt, tool,
-           sources[SourceCheck], quotes[QuoteCheckEntry]}
+CheckFile {schemaVersion 1, craftSlug | categorySlug, dossierVersion, dossierDigest, checkedAt,
+           tool, sources[SourceCheck], quotes[QuoteCheckEntry]}
 SourceCheck {sourceId, url, route LIVE|ARCHIVE|null, readUrl, finalUrl, fetchedAt, contentType,
              textSha256, characters, truncated, problem}
 QuoteCheckEntry {claimId, sourceId, quote, result PASS|FAIL}
 ```
 
-- `tool` is `VERIFY_TOOL` (`kalavigyan-curation-verify/1`); a check file from another version is
-  stale, so a change to the matching rule bumps it and forces re-verification.
-- `dossierDigest` is the SHA-256 of the craft slug, every source's id, URL and archived URL, and
+- `tool` is `VERIFY_TOOL` (`kalavigyan-curation-verify/2`, raised when tables were read); a check
+  file from another version is stale, so a change to reading or matching bumps it and forces
+  re-verification.
+- A check file names the dossier's `craftSlug`, or its `categorySlug` for a category, never both.
+- `dossierDigest` is the SHA-256 of the craft or category slug, every source's id, URL and archived URL, and
   every quote's claim, source and text (`verified_digest`). Prose, overview and structure edits
   keep it; any change to a source or quote makes the check file stale.
 - `textSha256` is the SHA-256 of the normalised text the quotes were matched against; a source
@@ -266,12 +381,12 @@ One line per problem, `<file>: <where>: <message>`, and a non-zero exit on any:
    places, communities, stages, materials, tools, reactions, environment links, market records,
    glossary terms, pictures, conflicts, open questions and the overview to claims, places,
    stages, materials and tools). Unresolved references stop the remaining rules.
-3. Craft slug on the master list; file named `<craftSlug>.json`; Indian districts and states as
-   the LGD register names them (with the closest names suggested).
-4. Claims: 8 to 40 words, one sentence; every number, date, unit and formula in the text
-   appears in one of its quotes (`research/quotes.unsupported_figures` and the units of
-   `research/translation.protected_tokens`; native digits count); no hedging word (may, might,
-   probably, reportedly, ...) the quotes do not use; no relationship sentence (below).
+3. Scope and slug (above): a craft slug on the master list or an `ACTIVE` portal-added craft,
+   the declared scope `FAMILY` exactly for family crafts, a category slug on the master list;
+   file named `<slug>.json`, a category in `categories/` and no other dossier there; Indian
+   districts and states as the LGD register names them (with the closest names suggested).
+4. Claims: 8 to 40 words, one sentence; the number rule and the hedge rules (below); no
+   relationship sentence (below).
 5. Quotes 25 to 300 characters once normalised, none repeated within a claim.
 6. No two claims with near-identical texts (rapidfuzz `ratio` or `token_sort_ratio` of the
    case-folded, punctuation-free texts at least 90) unless linked in one conflict.
@@ -283,8 +398,35 @@ One line per problem, `<file>: <where>: <message>`, and a non-zero exit on any:
 12. No personal contact details in any text field (`research/evidence.personal_data_in`:
     email addresses, spoken email addresses, phone-like and Aadhaar-like numbers); URL fields
     are not scanned.
-13. Coverage class matches the targets above.
+13. Coverage class matches the targets of the dossier's scope; the scope rules (no GI record for
+    a family or category; a category's sub-categories, member crafts and sections; no
+    `subCategories` or `crafts` outside a category).
 14. The check file is current and every kept quote passed (above).
+
+The number rule (`curation/figures.figure_gaps`, used by claims, the overview, key facts, the GI
+record and workforce years): every number, date, unit and formula in the text appears in a quote
+(`research/quotes.figures_in` and the units of `research/translation.protected_tokens`; native
+digits count). A leading zero does not change a number, so `5 May 2008` matches `05-05-2008` and
+`05` matches `5` either way; a dotted date matches part by part (`22.4.2008`, `22.04.2008`), while
+a decimal keeps its zeros (`1.05` is not `1.5`). A letter-spaced run in a quote (four or more
+single characters separated by single spaces, as on a report's title page) also counts with its
+digits closed up: `2 0 1 8` states 2018 and `1 6 J U L Y` states 16, while `| 1 | 2 |` keeps its
+numbers apart.
+
+The hedge rules (`curation/hedges.py`), in English and Hindi:
+
+- A hedging word in the text (may, might, could, possibly, probably, perhaps, likely, in all
+  likelihood, reportedly, allegedly, apparently, presumably, supposedly, purportedly, seemingly,
+  believed, said to, thought to) appears in a quote, or a quote carries a Hindi word of doubt
+  (शायद, संभवतः or संभवत:, संभव है कि, कहा/माना/बताया जाता है कि, ऐसा माना जाता है, मान्यता है कि,
+  हो सकता है कि, प्रतीत होता है), which the English hedge translates. `May` written with a capital
+  inside a sentence is the month, not a hedge.
+- A hedged quote cannot back a plain claim: when every quote hedges, the text hedges too (one of
+  the words above, or about, approximately, around, nearly, almost, roughly, circa, estimated,
+  some). A quote hedges with an English hedging word other than may, might and could (in a quote
+  they are as often a month, a permission or an ability), a Hindi word of doubt, or a Hindi
+  approximation (लगभग, करीब before a number or doubled, तकरीबन, अनुमानतः, अनुमानित). The
+  passive `कहा जाता है` without `कि` is "is called", not a hedge.
 
 A relationship sentence is graph structure written out as prose, which belongs in stages,
 materials and tools: a demonstrative left without its subject at the end of the sentence
@@ -295,17 +437,21 @@ bare `X uses Y` / `X precedes Y` / `X is part of Y` sentence: one relation phras
 parenthesis, and none of the qualifying words (`because`, `when`, `with`, `instead`, `not`, ...)
 that make it say something a reader learns.
 
-With no file arguments `check.py` checks every dossier in the folder and reports stray files;
-with file arguments it reports those files only. Either way it regenerates `index.json` from
-every dossier in the folder. `--check-index` (CI) writes nothing and reports an index that
-differs from what it would write; `--dir` points at another folder.
+With no file arguments `check.py` checks every dossier in the folder and in `categories/` and
+reports stray files in both;
+with file arguments it reports those files only. It writes nothing by default, so parallel
+curators never touch the index. `--write-index` regenerates `index.json` from every dossier in
+the folder (the lead, once per batch); `--check-index` (CI) writes nothing and reports an index
+that differs from what it would write; the two flags exclude each other. `--dir` points at
+another folder.
 
 ## The index (`curation/index.py`)
 
 ```
-CurationIndex {schemaVersion 1, crafts[IndexEntry]}         crafts by slug
-IndexEntry {craftSlug, file, version, coverage, curatedAt, counts{}, claimsByDiscipline{},
+CurationIndex {schemaVersion 2, crafts[IndexEntry], categories[CategoryIndexEntry]}   each by slug
+IndexEntry {craftSlug, scope, file, version, coverage, curatedAt, counts{}, claimsByDiscipline{},
             sourcesByReliability{A, B, C, D}, check {status PASS|FAIL, problems, verifiedAt}}
+CategoryIndexEntry {categorySlug, file, ...the same fields}
 ```
 
 `counts`: `sources`, `claims`, `hypotheses`, `corroborated`, `places`, `communities`, `stages`,
@@ -323,9 +469,10 @@ Windows, `backend/.venv/bin/python` on Linux):
 | Step | Command |
 |---|---|
 | read a source as the verifier will | `python tools/curation/fetch.py <https url> [--out <file>]` |
-| verify every quote of dossiers | `python tools/curation/verify.py backend/app/data/curation/<CraftSlug>.json ...` |
-| run the offline checks and regenerate the index | `python tools/curation/check.py [backend/app/data/curation/<CraftSlug>.json ...]` |
-| CI form (writes nothing) | `python tools/curation/check.py --check-index` |
+| verify every quote of dossiers | `python tools/curation/verify.py backend/app/data/curation/<CraftSlug>.json ...` (a category: `backend/app/data/curation/categories/<CategorySlug>.json`) |
+| run the offline checks (writes nothing) | `python tools/curation/check.py [backend/app/data/curation/<CraftSlug>.json ...]` |
+| regenerate the index (the lead, once per batch) | `python tools/curation/check.py --write-index` |
+| CI form (writes nothing, fails on a stale index) | `python tools/curation/check.py --check-index` |
 | regenerate the JSON Schema after a model change | `python tools/curation/schema.py` |
 
 `verify.py` and `fetch.py` use the network; `check.py` and the tests never do.
@@ -337,9 +484,11 @@ Runs on every deploy right after `seed_crafts`, `seed_claims` and `seed_district
 the seed's edge sentences (claims with `subjectType` `EDGE` and origin `IMPORT` become `WITHDRAWN`,
 a review event each; their `ConceptEdge` rows stay), then imports every dossier whose checks pass
 (the rules above and a current check file), each whole or not at all. It prints one JSON report
-(`withdrawnEdgeSentences`, `imported`, `refused`, and per dossier its `status`, `changed` row
-counts, `problems` and the overview sentences the prose validator dropped) and exits 2 when a
-dossier is refused. Ids are `uuid5(ID_NAMESPACE, "curation:<slug>:<id>")` for claims and sources and
+(`withdrawnEdgeSentences`, `imported`, `refused`, `waiting`, and per dossier its `status`,
+`changed` row counts, `problems` and the overview sentences the prose validator dropped) and
+exits 2 when a dossier is refused. The craft is found by slug in the database; a portal-added
+craft (above) the database does not hold yet is `WAITING`, not refused, until the portal craft
+sync stores it. Ids are `uuid5(ID_NAMESPACE, "curation:<slug>:<id>")` for claims and sources and
 `curation:<slug>:<kind>:<id>` for the rest; a second run writes nothing. The code is
 `backend/app/services/curation_*.py` (the plan is pure: `curation_plan.curation_plan`).
 
@@ -366,6 +515,22 @@ pieces are superseded, dropped ones marked stale; curated locations, stage struc
 and dropped quotes of kept claims are replaced. Claims written by answers are never touched.
 Imported claims and pieces get their vectors from the nightly `embed_knowledge`. The craft page
 that reads all this is `docs/contracts/craft-page.md`.
+
+### Category dossiers (`services/category_import.py`, decision 0078)
+
+The same script imports every dossier of `categories/` right after the craft dossiers, each whole
+or not at all, under the same checks; its report adds `categories` (`imported`, `refused`, and per
+dossier `file` `categories/<slug>.json`, `status`, `categorySlug`, `version`, `changed`,
+`problems`, `droppedSentences`), and a refused category dossier also exits 2. The category is
+found by `categorySlug` in `CraftCategory` (the seeds hold all nine). Its sources, claims, quotes,
+pictures and glossary are stored as a craft's are, with ids `curation:<categorySlug>:...`; claims
+are marked by `CuratedCategoryClaim {claimId, categoryId, key, discipline}`; subjects are
+`Concept` rows with no craft and no sub-category; the glossary links terms by `TermConcept` only;
+the overview is `prose` knowledge pieces with no craft; and `CuratedCategory {categoryId, version,
+curatedAt, coverage, digest, page, importedAt}` holds the page index
+(`services/curated_category_index.CuratedCategoryPage`). Places, stages, materials, tools, market
+records and environment links stay claims and concepts. Supersession and idempotence are the
+craft rules. The page that reads it is `docs/contracts/category-page.md`.
 
 ## Not built yet
 

@@ -3,8 +3,10 @@ from __future__ import annotations
 import pytest
 
 from app.curation.duplicates import near_duplicates
+from app.curation.figures import figure_gaps, figure_key
+from app.curation.hedges import dropped_hedges, quote_hedges, unsourced_hedges
 from app.curation.matching import match_key, quote_chars, quote_found
-from app.curation.sentences import figure_gaps, relationship_sentence, single_sentence, unsourced_hedges
+from app.curation.sentences import relationship_sentence, single_sentence
 from app.research.evidence import personal_data_in
 from app.research.quotes import normalise_quote_lines
 
@@ -62,6 +64,32 @@ def test_every_figure_and_unit_of_a_claim_is_in_a_quote() -> None:
     ]
 
 
+def test_a_letter_spaced_year_in_a_quote_counts_as_the_year() -> None:
+    title_page = "1 6 J U L Y - 2 0 A U G U S T 2 0 1 8 | 3 5 D A Y S"
+    assert figure_gaps("The cluster survey of 2018 ran for 35 days.", [title_page]) == []
+    assert figure_gaps("The cluster survey began on 16 July 2018.", [title_page]) == []
+    assert figure_gaps("The cluster survey began in 2019.", [title_page]) == ["2019"]
+    assert figure_gaps("The district report is dated 2018.", ["जिला रिपोर्ट २ ० १ ८"]) == []
+    assert figure_gaps("The register lists 123 printers.", ["| 1 | 2 | 3 |"]) == ["123"]
+    assert figure_gaps("The register lists 123 printers.", ["rows 1 2 3 of the register"]) == ["123"]
+
+
+@pytest.mark.parametrize(
+    ("figure", "key"),
+    [("05", "5"), ("0", "0"), ("2008", "2008"), ("0.5", "0.5"), ("1.05", "1.05"), ("05.08.2023", "5.8.2023")],
+)
+def test_a_figure_key_drops_leading_zeros_but_keeps_decimals(figure: str, key: str) -> None:
+    assert figure_key(figure) == key
+
+
+def test_dates_with_and_without_a_leading_zero_match() -> None:
+    assert figure_gaps("The application was filed on 5 May 2008.", ["Date of Filing | 05-05-2008"]) == []
+    assert figure_gaps("The form is dated 05 November 2012.", ["387 - Form - 5-11-2012"]) == []
+    assert figure_gaps("The certificate is dated 22.4.2008.", ["Certificate Date 22.04.2008"]) == []
+    assert figure_gaps("The village has 5 wells.", ["the village has 50 wells"]) == ["5"]
+    assert figure_gaps("The mordant bath holds 1.5 parts of alum.", ["1.05 parts of alum"]) == ["1.5"]
+
+
 def test_a_hedge_needs_the_source_to_hedge() -> None:
     claim = "The craft probably began in Sindh and may have moved east."
     assert unsourced_hedges(claim, ["the craft began in Sindh and moved east"]) == ["probably", "may"]
@@ -69,6 +97,56 @@ def test_a_hedge_needs_the_source_to_hedge() -> None:
     assert (
         unsourced_hedges("Printing stops in May before the monsoon arrives.", ["printing stops in May"]) == []
     )
+    assert unsourced_hedges("The cloth may fade after many washes.", ["the cloth fades by May"]) == ["may"]
+    assert unsourced_hedges("The application was filed on 5 May 2008.", ["Date of Filing | 05-05-2008"]) == []
+
+
+SAID_ABOUT = "कहा जाता है कि टिकुली कला करीब 800 वर्ष पूर्व पटना में शुरू हुई थी"
+PROBABLY = "इस शब्द का प्रचलन संभवतः 1970 के दशक में आरंभ हुआ"
+
+
+@pytest.mark.parametrize(
+    ("quote", "expected"),
+    [
+        (SAID_ABOUT, ["कहा जाता है कि", "करीब"]),
+        (PROBABLY, ["संभवतः"]),
+        ("इस शब्द का प्रचलन संभवत: 1970 के दशक में आरंभ हुआ", ["संभवत:"]),
+        ("शायद यह कला सिंध से आई", ["शायद"]),
+        ("ऐसा माना जाता है कि यह कला सिंध से आई", ["ऐसा माना जाता है"]),
+        ("गाँव में लगभग ६० परिवार अजरख छापते हैं", ["लगभग"]),
+        ("यह कला \u0958रीब ८०० वर्ष पुरानी है", ["\u0915\u093cरीब"]),
+        ("सामान्य कढ़ाई को बस्तर में कुंडरी कहा जाता है।", []),
+        ("इसका बनाना शिल्पी के कौशल की कसौटी मानी जाती थी।", []),
+        ("दीघा पटना के करीब है", []),
+        ("It is believed that this art originated approximately 800 years ago", ["believed"]),
+        ("The cloth may be washed again, and it could be dried in the shade", []),
+    ],
+)
+def test_hedges_are_found_in_english_and_hindi_quotes(quote: str, expected: list[str]) -> None:
+    assert quote_hedges(quote) == expected
+
+
+def test_a_hindi_word_of_doubt_sources_an_english_hedge() -> None:
+    claim = "Use of the term Dhokra probably began in the 1970s and soon entered common speech."
+    assert unsourced_hedges(claim, [PROBABLY]) == []
+    assert unsourced_hedges(claim, ["इस शब्द का प्रचलन 1970 के दशक में आरंभ हुआ"]) == ["probably"]
+    assert unsourced_hedges(claim, ["गाँव में लगभग ६० परिवार अजरख छापते हैं"]) == ["probably"]
+
+
+def test_a_hedged_quote_cannot_back_a_plain_claim() -> None:
+    plain = "Tikuli art originated in Patna 800 years ago."
+    assert dropped_hedges(plain, [SAID_ABOUT]) == ["कहा जाता है कि", "करीब"]
+    assert (
+        dropped_hedges("Tikuli art is believed to have begun in Patna about 800 years ago.", [SAID_ABOUT])
+        == []
+    )
+    assert dropped_hedges(plain, [SAID_ABOUT, "Tikuli art originated in Patna 800 years ago"]) == []
+    assert dropped_hedges(plain, ["It is believed that this art originated approximately 800 years ago"]) == [
+        "believed"
+    ]
+    assert dropped_hedges("The term Dhokra began in the 1970s.", [PROBABLY]) == ["संभवतः"]
+    assert dropped_hedges("The term Dhokra in all likelihood began in the 1970s.", [PROBABLY]) == []
+    assert dropped_hedges("The cloth is washed again in the river.", ["The cloth may be washed again"]) == []
 
 
 @pytest.mark.parametrize(

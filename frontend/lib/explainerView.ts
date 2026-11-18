@@ -1,5 +1,6 @@
 import type { ExplainerSentence, TermSpan } from "@/lib/explainerBlockBase";
-import type { BlockByKind, Discipline, ExplainerBlock, LadderStage, TypedBlockKind, WorkingSectionState } from "@/lib/explainerContract";
+import type { BlockByKind, Discipline, ExplainerBlock, LadderStage, LedeBlock, TypedBlockKind, WorkingSectionState } from "@/lib/explainerContract";
+import { signatureSentences, signatureSourceIds } from "@/lib/explainerSignature";
 import type { SectionState, SectionView } from "@/lib/explainerState";
 import { TRAIL_GROUPS, TRAIL_STAGES, type TrailEntry } from "@/lib/explainerStream";
 import { byCount, formatDate } from "@/lib/format";
@@ -75,20 +76,28 @@ export function blockCitations(block: TypedBlock): Citation[] {
 
 export function blockSourceIds(block: TypedBlock): string[] {
   const cited = blockCitations(block).map((citation) => citation.sourceId);
+  if (block.kind === "indigo_vat") return [...cited, ...signatureSourceIds(block)];
   if (block.kind === "zoom_story") return [...cited, ...block.levels.flatMap((level) => (level.compound ? [level.compound.sourceId] : []))];
   return block.kind === "molecule_3d" ? [...cited, block.sourceId] : cited;
+}
+
+export function ledeSourceIds(lede: LedeBlock): string[] {
+  const own = lede.sentences.flatMap((sentence) => sentence.citations.map((citation) => citation.sourceId));
+  return lede.figure ? [...own, ...blockSourceIds(lede.figure)] : own;
 }
 
 export function explainerSourceNumbers(
   sections: readonly SectionView[],
   openQuestions: readonly AnswerSection[] = [],
-  reactions: readonly AnswerReaction[] = []
+  reactions: readonly AnswerReaction[] = [],
+  lede: LedeBlock | null = null
 ): Map<string, number> {
   const numbers = new Map<string, number>();
   const number = (sourceIds: readonly string[]) => {
     for (const sourceId of sourceIds) if (!numbers.has(sourceId)) numbers.set(sourceId, numbers.size + 1);
   };
   const take = (citations: readonly Citation[]) => number(citations.map((citation) => citation.sourceId));
+  if (lede) number(ledeSourceIds(lede));
   for (const section of sections) for (const block of section.blocks) number(blockSourceIds(block));
   for (const section of openQuestions) for (const sentence of section.sentences) take(sentence.citations);
   for (const reaction of reactions) take(reaction.citations);
@@ -102,9 +111,12 @@ export function trailCounts(trail: readonly TrailEntry[]): TrailCount[] {
   });
 }
 
+export const COVERED_NOTE = "Already covered in this answer.";
+
 export function shownSections(sections: readonly SectionView[], streaming: boolean): SectionView[] {
   return sections.filter((section) => {
-    if (section.blocks.length > 0 || section.state === "EMPTY") return true;
+    if (section.blocks.length > 0) return true;
+    if (section.state === "EMPTY") return section.searched !== COVERED_NOTE;
     return streaming && section.state !== "READY";
   });
 }
@@ -190,6 +202,7 @@ export function blockSentences(block: TypedBlock): ExplainerSentence[] {
   if (block.kind === "what_if") return block.options.flatMap((option) => option.outcomes.map((outcome) => outcome.sentence));
   if (block.kind === "zoom_story") return block.levels.map((level) => level.sentence);
   if (block.kind === "timeline_map") return [...block.points.map((point) => point.sentence), ...block.routes.map((route) => route.sentence)];
+  if (block.kind === "indigo_vat" || block.kind === "mordant_bath" || block.kind === "lost_wax" || block.kind === "firing") return signatureSentences(block);
   return learningSentences(block);
 }
 

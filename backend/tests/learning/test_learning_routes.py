@@ -8,7 +8,6 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import learning_views
 from app.core.db import get_session
-from app.core.deps import get_current_user
 from app.main import create_app
 from app.models import Craft, User
 from app.models.enums import DISCIPLINES
@@ -20,6 +19,7 @@ from app.services import knowledge_view
 
 from ..contracts.explainer_golden import DOCUMENT, golden_json
 from ..contracts.learning_golden import SHARED_SCIENCE, learning
+from ..readers import sign_in_as
 
 READER = User(id=uuid.UUID(int=7), name="Meera Rao", email="meera@example.org", role="STUDENT")
 SOMEONE_ELSE = uuid.UUID(int=8)
@@ -63,21 +63,21 @@ def client(monkeypatch: pytest.MonkeyPatch, stored: Stored | None = None) -> tup
         return CRAFTS.get(slug)
 
     async def visible(
-        session: Any, claim_ids: Sequence[uuid.UUID]
+        session: Any, claim_ids: Sequence[uuid.UUID], **_kwargs: Any
     ) -> tuple[dict[uuid.UUID, None], dict[Any, Any]]:
         return dict.fromkeys(claim_ids), {}
 
     async def comparison(
-        session: Any, crafts: Sequence[Craft], facets: Sequence[str]
+        session: Any, crafts: Sequence[Craft], facets: Sequence[str], **_kwargs: Any
     ) -> CraftComparison | None:
         kept.asked.append(([craft.slug for craft in crafts], list(facets)))
         return None
 
-    async def shared(session: Any, craft: Craft) -> SharedScience:
+    async def shared(session: Any, craft: Craft, **_kwargs: Any) -> SharedScience:
         kept.asked.append(craft.slug)
         return SharedScience.model_validate(learning(SHARED_SCIENCE)["craft"])
 
-    async def concept(session: Any, term_key: str, focus: Craft | None) -> SharedConcept | None:
+    async def concept(session: Any, term_key: str, focus: Craft | None, **_: Any) -> SharedConcept | None:
         kept.asked.append((term_key, focus.slug if focus else None))
         return (
             SharedConcept.model_validate(learning(SHARED_SCIENCE)["concept"]) if term_key == "alum" else None
@@ -90,7 +90,7 @@ def client(monkeypatch: pytest.MonkeyPatch, stored: Stored | None = None) -> tup
     monkeypatch.setattr(learning_views, "shared_concept_of", concept)
     app = create_app()
     app.dependency_overrides[get_session] = session
-    app.dependency_overrides[get_current_user] = lambda: READER
+    sign_in_as(app, lambda: READER)
     return TestClient(app), kept
 
 

@@ -1,6 +1,6 @@
 import json
 import uuid
-from collections.abc import AsyncIterator, Mapping
+from collections.abc import AsyncIterator, Mapping, Sequence
 from datetime import UTC, datetime
 from typing import Any
 
@@ -19,6 +19,7 @@ from app.models import (
     RiverBasin,
 )
 from app.research.planning import PlanRequest
+from app.research.retrieval import EVERY_CHUNK_ACLS, OPEN_CHUNK_ACLS
 from app.research.sections import SectionSpec
 from app.research.structured import StructuredReply
 from app.services import knowledge_view
@@ -33,6 +34,7 @@ from app.services.place_offers import region_offer
 from app.services.region_story import region_story_block, story_statements
 
 from ..geo.golden_region import GI_JOURNAL
+from .closed_quotes import CLOSED_QUOTE, quote_closed, store_closed_sources
 from .test_knowledge_pieces_db import AJRAKH, QUESTION, WATER_CLAIMS, answer_row, prose_of, store_for
 from .test_place_db import KACHCHH, OUTLET, locate_in_kachchh, store_place
 
@@ -138,10 +140,10 @@ async def test_the_climate_builder_pairs_the_trend_with_a_cited_groundwater_clai
     assert block.meaning[0].citations[0].claim_id in {str(claim) for claim in WATER_CLAIMS}
 
 
-async def stored_story(session: AsyncSession) -> uuid.UUID:
+async def stored_story(session: AsyncSession, *, acls: Sequence[str] = OPEN_CHUNK_ACLS) -> uuid.UUID:
     offer = await region_offer(session, AJRAKH.slug)
-    prose = await prose_of(session, WATER_CLAIMS)
-    views, sources = await knowledge_view.claims_by_id(session, WATER_CLAIMS)
+    prose = await prose_of(session, WATER_CLAIMS, acls=acls)
+    views, sources = await knowledge_view.claims_by_id(session, WATER_CLAIMS, acls=acls)
     statements = story_statements([prose], cited_claims(list(views.values()), sources))
     choice = StoryChoice(
         river="r2",
@@ -213,6 +215,26 @@ async def test_a_stale_piece_is_not_shown_on_the_map(session: AsyncSession) -> N
     )
     found = await district_records(session, KACHCHH)
     assert found is not None and [block.kind for block in found.blocks] == ["region_story"]
+
+
+async def test_a_district_story_quoting_a_closed_chunk_is_left_off_for_a_reader_who_may_not_read_it(
+    session: AsyncSession,
+) -> None:
+    await store_place(session)
+    await store_closed_sources(session)
+    await quote_closed(session, WATER_CLAIMS[:1])
+    await stored_story(session, acls=EVERY_CHUNK_ACLS)
+    every = await district_records(session, KACHCHH, acls=EVERY_CHUNK_ACLS)
+    shown = await district_records(session, KACHCHH, acls=OPEN_CHUNK_ACLS)
+    assert every is not None and shown is not None
+    assert [block.kind for block in every.blocks] == ["region_story", "prose"]
+    assert CLOSED_QUOTE in blocks_text(every.blocks)
+    assert CLOSED_QUOTE not in blocks_text(shown.blocks)
+    assert len(shown.blocks) < len(every.blocks)
+
+
+def blocks_text(blocks: Sequence[Any]) -> str:
+    return json.dumps([block.model_dump(mode="json", by_alias=True) for block in blocks])
 
 
 async def test_a_district_is_on_the_map_only_with_its_register_row_and_the_shapes_row(

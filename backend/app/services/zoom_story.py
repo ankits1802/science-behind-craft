@@ -15,6 +15,7 @@ from app.research.blocks import ExplainerSentence, named_in
 from app.research.blocks_journey import ZOOM_LEVELS, ZoomCompound, ZoomLevel, ZoomStoryBlock
 from app.research.blocks_place import DistrictRef
 from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE, DatasetRef
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.science.records import KnownClaim
 
 from .builder_evidence import fact_sentence, known_fact
@@ -159,7 +160,7 @@ async def _district_claims(
     if not districts:
         return (), {}
     question = " ".join(district.name for district in districts)
-    views, sources = await claims_for(session, craft, mode=mode, question=question)
+    views, sources = await claims_for(session, craft, mode=mode, question=question, acls=EVERY_CHUNK_ACLS)
     found: list[KnownClaim] = []
     for view in sorted(views, key=lambda v: (-v.rank, str(v.id))):
         claim = known_fact(view)

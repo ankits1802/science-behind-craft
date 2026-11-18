@@ -1,5 +1,5 @@
 import { TREND_VARIABLES, type ClimateTrend, type GroundwaterValue } from "@/lib/explainerInsight";
-import { formatMeasure, formatNumber } from "@/lib/measure";
+import { formatMeasure, pText } from "@/lib/measure";
 import { variableLabel } from "@/lib/regionView";
 
 export type TrendVariable = (typeof TREND_VARIABLES)[number];
@@ -42,10 +42,6 @@ export function trendBar(slope: number, domain: number): TrendBar {
 export function slopeText(trend: ClimateTrend): string {
   const shown = formatMeasure(trend.slopePerDecade, trend.slopeUnit);
   return trend.slopePerDecade > 0 ? `+${shown}` : shown;
-}
-
-export function pText(pValue: number): string {
-  return pValue < 0.001 ? "p < 0.001" : `p = ${formatNumber(pValue, pValue < 0.1 ? 3 : 2)}`;
 }
 
 export function significanceText(trend: ClimateTrend): string {

@@ -26,7 +26,7 @@ from app.models import (
     StageMaterial,
 )
 from app.research.crafts import CraftRef
-from app.research.retrieval import VISIBLE_SENSITIVITY
+from app.research.retrieval import OPEN_CHUNK_ACLS, VISIBLE_SENSITIVITY
 from app.research.stream import Citation, SourceRef
 from app.science.records import (
     CompoundRecord,
@@ -56,14 +56,16 @@ class _Rows:
     readings: Sequence[Any]
 
 
-async def process_records(session: AsyncSession, craft: Craft) -> ProcessRecords:
+async def process_records(
+    session: AsyncSession, craft: Craft, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> ProcessRecords:
     rows = await _load_rows(session, craft)
     concept_claims = await _concept_claims(session, _concept_ids(rows))
     wanted = [claim_id for ids in concept_claims.values() for claim_id in ids]
     wanted += [link.StageMaterial.claimId for link in rows.materials if link.StageMaterial.claimId]
     wanted += [link.claimId for link in rows.reaction_links]
     wanted += [reading.claimId for reading in rows.readings]
-    claims, sources = await _known_claims(session, wanted)
+    claims, sources = await _known_claims(session, wanted, acls=acls)
     return ProcessRecords(
         craft=CraftRef.model_validate(craft_ref(craft)),
         processes=tuple(ProcessRecord(p.id, p.name, p.variant) for p in rows.processes),
@@ -157,9 +159,9 @@ async def _concept_claims(
 
 
 async def _known_claims(
-    session: AsyncSession, claim_ids: Iterable[uuid.UUID]
+    session: AsyncSession, claim_ids: Iterable[uuid.UUID], *, acls: Sequence[str]
 ) -> tuple[dict[uuid.UUID, KnownClaim], dict[str, SourceRef]]:
-    views, sources = await claims_by_id(session, claim_ids)
+    views, sources = await claims_by_id(session, claim_ids, acls=acls)
     claims = {
         view.id: KnownClaim(
             id=view.id,

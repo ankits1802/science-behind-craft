@@ -1,0 +1,4633 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Channapatna-Toys-Dolls",
+  "version": 1,
+  "curatedAt": "2026-11-18T09:34:40+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Channapatna toys and dolls geographical indication application number journal",
+      "site": "web search"
+    },
+    {
+      "query": "Channapatna Toys & Dolls, application 23",
+      "site": "search.ipindia.gov.in (GI registry record; the document viewer serves form-only downloads, so the statement of case, examination report and journal copy listed there could not be read)"
+    },
+    {
+      "query": "Geographical Indications Journal No. 10 (2005)",
+      "site": "ipindia.gov.in and the Wayback Machine CDX index of ipindia.nic.in/girindia/journal (issues 9 to 11 were never archived; the journal was not read)"
+    },
+    {
+      "query": "Channapatna toys GI statement of case Wrightia tinctoria lacquer",
+      "site": "web search (Form GI-1 copy found on origin-gi.com)"
+    },
+    {
+      "query": "Channapatna Toys & Dolls craft page; wood turning and lacquerware",
+      "site": "handicrafts.nic.in (Development Commissioner (Handicrafts); timed out, no Wayback copy)"
+    },
+    {
+      "query": "Census of India 1961 Mysore handicraft survey monographs, crafts using wood",
+      "site": "web search and ci.nii.ac.jp (catalogue records only; not digitised online)"
+    },
+    {
+      "query": "Karnataka State Gazetteer Bangalore Rural District lacquer ware page 270",
+      "site": "web search (gazetteer not found online; read only as quoted in the GI application)"
+    },
+    {
+      "query": "Mysore gazetteer Rice Channapatna lacquered ware toys",
+      "site": "archive.org (Vol. II read; Vol. I's passages on Channapatna toys and hale wood lie beyond the readable text length and its PDF exceeds 40 MiB, so they are not cited)"
+    },
+    {
+      "query": "Birdwood Industrial Arts of India Channapatna",
+      "site": "commons.wikimedia.org and archive.org"
+    },
+    {
+      "query": "channapatna",
+      "site": "api.openalex.org"
+    },
+    {
+      "query": "Life-cycle assessment of Channapatna toys against PVC toys (Procedia CIRP 2018)",
+      "site": "eprints.iisc.ac.in (abstract read); sciencedirect.com full text not readable"
+    },
+    {
+      "query": "Who Turns the Toys of Channapatna (Making Futures)",
+      "site": "makingfutures-journal.org.uk"
+    },
+    {
+      "query": "museum collection Channapatna lacquered wooden toy",
+      "site": "web search (V&A, National Museum of World Cultures)"
+    },
+    {
+      "query": "dsource Channapatna toys lacquer preparation tools",
+      "site": "web search (no dsource page found)"
+    },
+    {
+      "query": "sahapedia Channapatna toys lacquer Bavas Miyan",
+      "site": "web search and sahapedia.org"
+    },
+    {
+      "query": "FAO lac-turnery Channapatna women forest-based small scale enterprises",
+      "site": "fao.org"
+    },
+    {
+      "query": "Channapatna toys Ramanagara district official website lacquerware",
+      "site": "web search (no district page found)"
+    },
+    {
+      "query": "Lacquer ware crafts complex Channapatna",
+      "site": "cauverycrafts.com (KSHDC; HTTP 404, no archive)"
+    },
+    {
+      "query": "Channapatna toys and dolls (One District One Product)",
+      "site": "india.gov.in (read; not used, a buying page listing artisans' contacts)"
+    },
+    {
+      "query": "A Study of Traditional Toy Making in Channapatna (IJRTE 2021)",
+      "site": "ijrte.org (read; not used, its artisan count is cited through Mongabay)"
+    },
+    {
+      "query": "Channapatna",
+      "site": "commons.wikimedia.org (pictures)"
+    },
+    {
+      "query": "Channapatna Toys & Dolls, application 23: authorised users",
+      "site": "search.ipindia.gov.in (read 2026-11-18: 78 authorised users listed, the last 7 with an empty status cell; names and addresses not recorded)"
+    },
+    {
+      "query": "channapatna",
+      "site": "shodhganga.inflibnet.ac.in (the search page served a bot challenge; no thesis read)"
+    },
+    {
+      "query": "channapatna",
+      "site": "core.ac.uk (the search page refused automated reading, HTTP 403)"
+    },
+    {
+      "query": "channapatna",
+      "site": "api.semanticscholar.org (HTTP 429, rate limited; nothing read)"
+    },
+    {
+      "query": "channapatna",
+      "site": "api.crossref.org (catalogue records only, among them Indian Forester papers of 2023 and 2024 and a 2018 paper on Channapatna lathes and hand tools; none read, the dossier being at its claim cap)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 23 (Channapatna Toys & Dolls)",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/23",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Registration details of Geographical Indications",
+      "publisher": "IP India",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Form GI-1 application and statement of case for Channapatna Toys and Dolls (lacquer ware products)",
+      "authors": [
+        "Karnataka State Handicrafts Development Corporation Ltd."
+      ],
+      "publisher": "Karnataka State Handicrafts Development Corporation Ltd. (scanned copy hosted by oriGIn)",
+      "year": 2005,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/2017-01-12-16-05-23.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "BOOK_CHAPTER",
+      "title": "Women's Role in Dynamic Forest-Based Small Scale Enterprises: Case Studies on Uppage and Lacquerware from India, chapter 3 (lacquerware case study)",
+      "authors": [
+        "Jeffrey Y. Campbell (editor)"
+      ],
+      "publisher": "Food and Agriculture Organization of the United Nations",
+      "year": 1991,
+      "url": "https://www.fao.org/4/x5859e/x5859e04.htm",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "BOOK",
+      "title": "Mysore: A Gazetteer Compiled for Government, revised edition, Vol. II: Mysore, by Districts",
+      "authors": [
+        "B. Lewis Rice"
+      ],
+      "publisher": "Archibald Constable and Company",
+      "year": 1897,
+      "url": "https://archive.org/download/india.history.resource.89057/89057_djvu.txt",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "BOOK",
+      "title": "The Industrial Arts of India, new edition, Part II (South Kensington Museum Art Handbooks)",
+      "authors": [
+        "George C. M. Birdwood"
+      ],
+      "publisher": "Chapman and Hall",
+      "url": "https://archive.org/download/industrialartsof00birduoft/industrialartsof00birduoft_djvu.txt",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Toy tiger, Channapatna, ca. 1865 (accession number 06236 (IS))",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://collections.vam.ac.uk/item/O185605/toy-tiger-unknown/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "PAPER",
+      "title": "A Comprehensive Life-Cycle Assessment of Locally Oriented Small-Scale Toy Industries: A Study of traditional Channapatna Toys as Against low-cost PVC (Poly-Vinyl Chloride) Toys made in China",
+      "authors": [
+        "Jananee Rangaswamy",
+        "Tarun Kumar",
+        "Kriti Bhalla"
+      ],
+      "publisher": "Procedia CIRP, Elsevier (record in ePrints@IISc)",
+      "year": 2018,
+      "url": "https://eprints.iisc.ac.in/60456/",
+      "doi": "10.1016/j.procir.2017.12.164",
+      "archivedUrl": "https://web.archive.org/web/20240425081034id_/https://eprints.iisc.ac.in/60456/",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "PAPER",
+      "title": "Who Turns the Toys of Channapatna? Indian turned wooden lac ware and the role of Fair Trade in the design and commercialisation of the craft",
+      "authors": [
+        "Christine Gent"
+      ],
+      "publisher": "Making Futures Journal",
+      "url": "https://makingfutures-journal.org.uk/index.php/mfj/article/download/147/261",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Channapatna Wooden Toys",
+      "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+      "year": 2023,
+      "url": "https://imp-art.org/articles/channapatna-wooden-toys/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Channapatna Wooden Toys",
+      "authors": [
+        "Manasa Gowda",
+        "Ram Raj D"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/channapatna-wooden-toys",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Channapatna Toys: Non-toxic, Chemical-free and Safe for Children",
+      "authors": [
+        "Manasa Gowda",
+        "Ram Raj D"
+      ],
+      "publisher": "Sahapedia",
+      "url": "https://www.sahapedia.org/channapatna-toys-non-toxic-chemical-free-and-safe-children",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "WEB_PAGE",
+      "title": "Ethnographic objects or design? Taking stock of the Channapatna Toy",
+      "authors": [
+        "Megha Rajguru"
+      ],
+      "publisher": "Research Center for Material Culture",
+      "url": "https://www.materialculture.nl/en/open-space/ethnographic-objects-or-design-taking-stock-channapatna-toy",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "WEB_PAGE",
+      "title": "Channapattana Toys (film record BM0010)",
+      "authors": [
+        "Chandrashekhara Belagere",
+        "Lingadevaru Halemane"
+      ],
+      "publisher": "Central Institute of Indian Languages (Sanchika)",
+      "url": "https://sanchika.ciil.org/items/277d01c0-ecb4-48f6-980d-e418ace4dc46/full",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "WEB_PAGE",
+      "title": "History of Channapattana Toy Industry",
+      "authors": [
+        "H. S. Basave Gowda"
+      ],
+      "publisher": "Karnataka Itihasa Academy",
+      "url": "https://karnatakaitihasaacademy.org/history-of-channapattana-toy-industry/",
+      "language": "en",
+      "access": "ABSTRACT_ONLY",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "WEB_PAGE",
+      "title": "Channapatna toys and dolls",
+      "publisher": "Incredible India, Ministry of Tourism, Government of India",
+      "url": "https://www.incredibleindia.gov.in/en/karnataka/channapatna-toys-and-dolls",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "WEB_PAGE",
+      "title": "Channapatna Toys",
+      "publisher": "Karnataka Tourism",
+      "url": "https://karnatakatourism.org/en/experiences/channapatna-toys/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S18",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Channapatna's traditional artisans toy with modernity",
+      "publisher": "Mongabay India",
+      "url": "https://india.mongabay.com/2024/01/channapatnas-traditional-artisans-toy-with-modernity/",
+      "archivedUrl": "https://web.archive.org/web/20260611131001id_/https://india.mongabay.com/2024/01/channapatnas-traditional-artisans-toy-with-modernity/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S19",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "The Indian story that needs revival",
+      "authors": [
+        "Dhanya Bhaskar",
+        "Samudyatha R"
+      ],
+      "publisher": "Down To Earth",
+      "year": 2019,
+      "url": "https://www.downtoearth.org.in/economy/the-indian-story-that-needs-revival-68019",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S20",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Crafting joy: This Karnataka village has been making wooden toys since Tipu Sultan's time",
+      "authors": [
+        "Chithra Ajith"
+      ],
+      "publisher": "Scroll.in",
+      "year": 2017,
+      "url": "https://scroll.in/article/858249/crafting-joy-this-karnataka-village-has-been-making-wooden-toys-since-tipu-sultans-time",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S21",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Talk of the toy town: the Channapatna artisans are in dire straits",
+      "authors": [
+        "Tamanna Naseer"
+      ],
+      "publisher": "The Hindu",
+      "year": 2020,
+      "url": "https://www.thehindu.com/society/talk-of-the-toy-town-the-channapatna-artisans-are-in-dire-straits/article31533199.ece",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Channapatna lacquerware is a wide variety of lacquered wooden items made by lac-turnery, a traditional handicraft practised in and around the town of Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section 3.3, line 16",
+          "quote": "Lacquerware refers to a wide variety of lacquered wooden items which are prepared through the process of lac-turnery, an indigenous traditional handicraft practiced in and around the town of Channapatna."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The hand-turned wooden toys of Channapatna come off the lathe semi-finished, their bright coloured lac finish having been applied while on the lathe.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 1-3",
+          "quote": "The hand-turned wooden toys of Channapatna, India, fall from the lathe semi-finished - their bright coloured lac finish is applied while on the lathe."
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Channapatna wooden toys are named after the town where the craft tradition originated and where it is still practised.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "paragraph 1, line 7",
+          "quote": "Manufactured using traditional methods, Channapatna wooden toys are named after the town where the craft tradition originated and continues to be practised today."
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Channapatna toys are known for their light-coloured wood and simple designs painted in pigments made from lac and natural dyes, the lac lending a distinctive sheen.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "paragraph 1, line 7",
+          "quote": "These wooden dolls, toys and other lacquerware items are known for their light-coloured wood as well as simple designs painted in pigments made from lac and natural dyes. The use of lac lends the surface a distinctive sheen."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Channapatna is called the 'Land of Toys' or 'Toy Town', and a welcome arch or banner announces the name as one enters the town.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "Fig. 1 caption, line 2",
+          "quote": "Fig. 1: A welcome arch announcing Channapatna as the 'Land of Toys'"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 31-33",
+          "quote": "Channapatna is also called 'Toy Town', with a large banner proclaiming it as you enter the town."
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Channapatna is locally known as Gombegala Ooru, Kannada for city of toys or toy town.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 9",
+          "quote": "Channapatna is locally known as Gombegala Ooru or toy town"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "paragraph 1, line 7",
+          "quote": "Channapatna - also known as Gombegala Ooru, meaning \"city of toys\" in Kannada -is located between Bengaluru and Mysuru in Karnataka."
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Channapatna is a small town in Karnataka between Bengaluru and Mysuru, roughly halfway between the two cities.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "Channapatna - which has earned the sobriquet 'Land of Toys' - is a small town about half way between Bengaluru and what was formerly the princely city of Mysuru."
+        },
+        {
+          "sourceId": "S21",
+          "locator": "line 2",
+          "quote": "She lives in Channapatna in Karnataka's Ramanagara district, roughly halfway between Bengaluru and Mysuru"
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Channapatna lies in Ramanagara district of Karnataka, approximately 60 km southwest of Bengaluru.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 5",
+          "quote": "practices the ancient woodcraft of Pattari in the quaint town of Channapatna in Ramanagara district, approximately 60 km southwest of Bengaluru in Karnataka."
+        },
+        {
+          "sourceId": "S20",
+          "locator": "line 1",
+          "quote": "They provide the livelihood for a majority of people in Channapatna in Karnataka's Ramanagara district."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "This place is a busy commercial hub and a taluk in the Raamnagara district."
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The GI application and an IISc life-cycle study place Channapatna in Bangalore Rural district.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 5, lines 149-151",
+          "quote": "The town of Channapatna, is one ofthe taluk Headquarters of Channapatna taluk of Bangalore Rural District."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "abstract, line 4",
+          "quote": "Channapatna toys are softwood toys locally manufactured in Channapatna town, Bangalore rural-district in India."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The FAO case study located its study site in Channapatna taluka, which it placed in Bangalore district of Karnataka.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section 3.2, line 13",
+          "quote": "The study site is located in the Channapatna Taluka which is in Bangalore district in the southern Indian state of Karnataka."
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Neelasandra is a hamlet about six kilometres from Channapatna town, in Channapatna taluk of Ramanagaram district.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 24",
+          "quote": "a small segment of Channapatna society in Neelasandra, a hamlet about six kilometres from the main township, still makes the toys by hand."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 25",
+          "quote": "According to the 2011 Census, Neelasandra is located in Channapatna taluk, Ramanagaram district, Karnataka."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Neelasandra is known for home workshops where craftspersons still turn toys by hand on hand-turned lathes.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 15",
+          "quote": "The Neelasandra area in Channapatna is known for its home workshops, where craftspersons still use hand-turned lathes."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 1",
+          "quote": "artisans and toymakers in Neelasandra (the home village of these toys and the only place in Karnataka where the toys are still hand-made)"
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry record gives Karnataka as the geographical area of Channapatna Toys & Dolls, registered in class 28 as a handicraft.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 85-87",
+          "quote": "| Class | 28 | | Goods | Handicraft | | Geographical Area | Karnataka |"
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The GI application gives the town of Channapatna, within its municipal limits, as the geographical area of production.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 8, lines 229-230",
+          "quote": "(h) Geographical area of Production and Map:"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 8, lines 240-241",
+          "quote": "Channapatna Town Municipal Limits."
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "Channapatna Toys & Dolls is registered as a geographical indication under application number 23, filed by the Karnataka State Handicrafts Development Corporation on 7 February 2005.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 79-82",
+          "quote": "| Application Number | 23 | | Geographical Indications | Channapatna Toys & Dolls | | Status | Registered | | Applicant Name | Karnataka State Handicrafts Development Corporation Limited |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 84",
+          "quote": "Date of Filing | 07-02-2005 |"
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registry record lists Geographical Indications Journal number 10 for the application and certificate number 22, dated 30 January 2006.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "lines 89-92",
+          "quote": "| Journal Number | 10 | | Availability Date | 21-10-2005 | | Certificate Number | 22 | | Certificate Date | 30-01-2006 |"
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The registration of Channapatna Toys & Dolls as a geographical indication is valid up to 6 February 2035.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 93",
+          "quote": "Registration Valid Upto | 06-02-2035 |"
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry's record of application 23 lists 78 authorised users of the Channapatna Toys & Dolls geographical indication.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "line 118",
+          "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 78",
+          "quote": "| 78 | AU/72906/GI/23/78 |"
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "IP India's list of registered geographical indications places Channapatna Toys & Dolls, application 23, among registrations from April 2005 to March 2006.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "p. 1, line 15",
+          "quote": "FROM APRIL 2005 - MARCH 2006"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "p. 1, line 33",
+          "quote": "22 23 Channapatna Toys & Dolls Handicraft Karnataka"
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mongabay, the MAP Academy and Christine Gent date the craft's geographical indication tag or certificate to 2005.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 17",
+          "quote": "Despite being granted the GI (geographical indication) tag in 2005 to combat duplication, artisans claim it has not significantly benefited them."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 19",
+          "quote": "The craft received a Geographical Indication tag in 2005."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "lines 432-435",
+          "quote": "In 2005 the Geographical Indicators registry granted a GI certificate in recognition of the tie of the locality to the unique skills of and materials of the turned lac ware of Channapatna"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application and India's tourism ministry date the start of lacquerware manufacture to the 20th century, the application saying the wooden toy industry is said to have emerged in its early years.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 6, lines 175-178",
+          "quote": "Lacquer ware products in Karnataka dates back to the beginning of 20n century and is native to Channapatna, a small town near Bangalore."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 8, lines 254-256",
+          "quote": "Wooden toy industry is said to have emerged during the early years of twentieth century."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "History, line 2",
+          "quote": "However, it was in the 20th century, that lacquerware products began to be manufactured."
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The lacquerware industry is also called the toy industry of Channapatna because, early in the 20th century, it made only a few small toys and dolls.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "section 3.3, line 17",
+          "quote": "This industry is also known as the toy industry of Channapatna because, in the beginning of the 20th century the craft was restricted to the production of a few small toys and dolls."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The GI application says the craft was later improved by making lacquer ware on a metal turned lathe.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 7, lines 203-209",
+          "quote": "The improvement of the craft was made later on through a metal tumed lathe for the manufacture of lacquer ware products and tumed out articles with distinctive brightness by subsfituting lithopone for sulphur in manufacture of colour."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "According to the GI application, substituting lithopone for sulphur in making the colours gave Channapatna lacquer ware its distinctive brightness.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 7, lines 203-209",
+          "quote": "The improvement of the craft was made later on through a metal tumed lathe for the manufacture of lacquer ware products and tumed out articles with distinctive brightness by subsfituting lithopone for sulphur in manufacture of colour."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mongabay, India's tourism ministry and Scroll date Channapatna toy making to the 18th century and the time of Tipu Sultan.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 9",
+          "quote": "Channapatna is locally known as Gombegala Ooru or toy town for a traditional form of toy making dating back to the 18th century, practised by local artisans here."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "History, line 2",
+          "quote": "The story of Channapatna toys and dolls begins in the 18th century with Tipu Sultan, the ruler of Mysore."
+        },
+        {
+          "sourceId": "S20",
+          "locator": "line 2",
+          "quote": "The toy making tradition, which has a geographical indication tag, dates back to the times of Tipu Sultan."
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Writers give Channapatna toy making a history of over 200 years, and one historian puts it at 200 to 250 years.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 4",
+          "quote": "Toy making industry has a history of 200-250 years which flourished in the region due to the high availability of soft wood called Haale Mara, (Wrightia tinctoria) which is easily chilsed and polished."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 1",
+          "quote": "rejuvenate interest in their over 200-year-old art form, both in India and abroad"
+        },
+        {
+          "sourceId": "S21",
+          "locator": "line 2",
+          "quote": "lacquered with vibrant, natural dyes, the toys have a 200-year-old history."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "A painted wooden toy tiger made in Channapatna in about 1865 was acquired by the Indian Museum in 1867 and passed in 1879 to the South Kensington Museum, later the V&A.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "summary, line 5",
+          "quote": "This toy tiger was made in the town of Channapatna, in Karnataka, India, in about 1865."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "summary, line 5",
+          "quote": "The tiger was acquired by the Indian Museum in 1867, presumably from the Paris Exposition Universelle of that year, and transferred to the South Kensington Museum (later the V&A) in 1879."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "line 8",
+          "quote": "| Materials and techniques | Wood, painted |"
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Birdwood's Industrial Arts of India lists Channapatna in Mysore among the places making lacquered wooden bracelets, wooden toys and other lacquered turnery.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "pp. 305-306, lines 2700-2703",
+          "quote": "Lacquered wooden bracelets and wooden toys, and other lacquered turnery are made also at Ahmedabad and Surat in the Bombay Presidency, and in the Madras"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "p. 306, lines 2705-2706",
+          "quote": "Presidency at Channapatna in Mysore, and Harpanhalli in the Bellary district."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Lewis Rice's revised Mysore gazetteer describes the pete of Channapatna as celebrated for the manufacture of lacquered ware and toys.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Bangalore District, Channapatna, lines 2892-2895",
+          "quote": "The Péte lies to the north-east of the fort. It is celebrated for the manufacture of lacquered ware and toys, of fine steel wires for strings of musical instruments, and of glass bracelets"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "Bangalore District, industries, lines 1642-1643",
+          "quote": "Lacquered ware and - toys are well-known manufactures of Channapatna."
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "As early as 1892, hereditary artists called Chitragars were engaged in wood-turnery, the basis of lacquerware artistry.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 43",
+          "quote": "As early as 1892, hereditary artists called Chitragars were engaged in wood-turnery which is the basis of lacquerware artistry."
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Historically crafted by the Chitragar community, the craft is now also practised by others, including Hindu Dalit artisans and Muslim artisans.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 7",
+          "quote": "Historically crafted by the Chitragar community, the craft is currently practised by others, including Hindu Dalit artisans and Muslim artisans."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "When the Chitragars were hesitant, admission to Bavasmia's lac-turnery course was opened to other castes and religions, and he convinced Muslims and scheduled caste members to join.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 44",
+          "quote": "Though Bavasmia introduced lac-turnery to encourage the Chitragar, their response was hesitant, so admission was opened to students of other castes and religions."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 44",
+          "quote": "Bavasmia convinced Muslims and scheduled caste members to join the course; even today, the majority of Channapatna craftspeople belong to these communities."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Christine Gent writes that in Channapatna today the Chithragararu, who may be the group the literature calls Chitragars, are the art makers on the products but not necessarily wood turners.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 60-64",
+          "quote": "In Channapatna today, although the Chithragararu are the 'art makers on the products', which may be the group who are being referred to, they are not necessarily wood turners."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 58-60",
+          "quote": "The literature refers to a group called the '\"Chitragars\" who were engaged in wood-turnery'"
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A museum record of Channapatna toys, citing a 1966 Marg issue, notes chitragars making them at the Rural Artisan's Training Institute, which oversaw 750 craftsmen in 1963.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 1",
+          "quote": "The record references a 1966 issue of Mārg Magazine Indian Lacquerware, and notes the manufacture of these toys by chitragars (painters) at the Rural Artisan's Training Institute, which, in 1963, oversaw 750 craftsmen produce this form of lacquerware."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A museum record of Channapatna toys states that the craft was chiefly practised by Harijan and Muslim communities.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 1",
+          "quote": "It states that the craft was chiefly practised by Harijan and Muslim communities"
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Megha Rajguru writes that no one is certain of the style's origins, but common knowledge suggests they lie in 18th-century Persia.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 6",
+          "quote": "No one is certain of the origins of the particular style of lacquerware, but common knowledge suggests that its origins lie in 18th century Persia"
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "By legend, Tipu Sultan is believed to have invited Persian artisans to train his people after receiving a wooden craft piece from Persia as a gift.",
+      "quotes": [
+        {
+          "sourceId": "S21",
+          "locator": "lines 4-5",
+          "quote": "According to legend, Mysore ruler Tipu Sultan, impressed by a lacquer-coated wooden artifact he received as a gift from Persia in the 18th century, invited Persian artisans to India to train the people in his realm."
+        },
+        {
+          "sourceId": "S20",
+          "locator": "line 2",
+          "quote": "During his reign, Tipu received a wooden craft piece as a gift from Persia and he fall in love with it. He is believed to have invited Persian artisans to train his people in the art of wooden toy making."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "It is said that Tipu Sultaan had brought the artisans from Persia to train the Toymakers."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C038",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "India's and Karnataka's tourism sites state that Tipu Sultan invited Persian artisans to train local craftsmen, and Mongabay that he brought artisans from Persia to help boost the craft.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "History, line 2",
+          "quote": "A keen admirer of art, particularly woodwork, Tipu Sultan invited Persian artisans to train local craftsmen in the art of lacquerware."
+        },
+        {
+          "sourceId": "S17",
+          "locator": "line 5",
+          "quote": "This unique craft was once patronized by Tipu Sultan, who invited artisans from Persia to train locals in woodwork."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "line 9",
+          "quote": "The distinct Persian influence of the art can be attributed to the erstwhile ruler of Mysore state, Tipu Sultan who brought artisans from Persia to help boost the craft."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Sahapedia's writers heard differing accounts: some believe Tipu Sultan brought Persian artisans to train Channapatna's artisans, others that he encouraged Persian traders to buy the toys.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 9",
+          "quote": "While some believe that Tipu Sultan brought artisans from Persia to train the Channapatna artisans, others claim that this is not true, and that he had encouraged traders from Persia to buy the toys, thereby creating an export market for them."
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The MAP Academy calls the history of Channapatna's lacquerware industry unclear, though locals and artisan communities claim Tipu Sultan patronised it extensively.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 8",
+          "quote": "The history of the lacquerware industry in Channapatna is unclear, although locals and artisan communities claim that the industry was extensively patronised by Tipu Sultan."
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent's research found no written documents supporting the link between the craft and Tipu Sultan, despite a strong oral history.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 216-218",
+          "quote": "Despite a strong oral history this research did not find written documents supporting the Tipu Sultan link and requires further research."
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "At the time of Tipu Sultan's defeat by the British in 1799, craftsmen are alleged to have dispersed and settled at Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 201-204",
+          "quote": "At the time of his defeat by the British in 1799 the craftsmen were alleged to have dispersed and settled at Channapatna."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C043",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Tipu Sultan, ruler of Mysuru State between 1782 and 1799, is credited with providing the first impetus to make the toys globally popular.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 6",
+          "quote": "Tipu Sultan, the ruler of what was then Mysuru State between 1782 and 1799, is credited with providing the first impetus to make these toys globally popular."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Sahapedia notes that Tipu Sultan and Bawas Miyan cannot be linked historically, since Tipu died on 4 May 1799 and Bawas Miyan lived in the early 20th century.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 18",
+          "quote": "While some people have tried to link Tipu Sultan and Bawas Miyan, establishing such a link historically has proven impossible, as Tipu Sultan died on May 4, 1799, while Bawas Miyan lived in the early 20th century."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Bawas Miyan, a superintendent of the Government Industrial School at Channapatna, travelled to Japan in 1904 and 1909 to learn about lacquer and toy-making.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 18",
+          "quote": "In 1904 and 1909, Bawas Miyan travelled to Japan to learn about lacquer and toy-making processes."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 9",
+          "quote": "In the 1900s, Syed Bawa Saheb Miyan, also known as Bawas Miyan, a superintendent of the Government Industrial School at Channapatna, travelled to Japan to learn more about lacquerware techniques and designs."
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The FAO case study says Bavasmia, known as the originator of the craft in Channapatna, went to study lacquerware in Punjab.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 43",
+          "quote": "Bavasmia, a local artist, is known as the originator of the craft in Channapatna and nearby areas. He went to study lacquerware in the northwestern state of Punjab."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "After experimenting, Bawas Miyan introduced the study of the craft at the Industrial School in Channapatna, helping to popularise it.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 43",
+          "quote": "After a period of experimentation, he introduced study of the craft at the Industrial School in Channapatna."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 9",
+          "quote": "Upon his return, he added the technique to the curriculum of the Industrial School, helping popularise the craft."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Bawas Miyan started a school to train the unemployed youth of his time in handicraft making, and so came to be known as 'Master' Bawas Miyan.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 19",
+          "quote": "Following his return from Japan, Bawas Miyan started a school to train the unemployed youth of his time in handicraft making, because of which he came to be known as 'Master' Bawas Miyan."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "A Karnataka Itihasa Academy summary and a CIIL film record name Bawas Miyan, a local Muslim artist, as the man who introduced toy making at Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 4",
+          "quote": "With available historical sources, the author says that the craft of toy making was introduced in the region by a muslim, Baavas Mia."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "Baba Saheb Miyan Saheb, popularly known as Bawasmiyan, is a local artist known as the originator of the craft in Channapattana nearly areas."
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "A descendant of Bawas Miyan says that after his death in 1914 his son-in-law Syed Yeddulla, a mechanic, took over the school and decided to introduce lathes for making the toys.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 19",
+          "quote": "Following the death of Bawas Miyan in 1914, his son-in-law Syed Yeddulla took over the training school. Syed Yeddulla was a mechanic by profession and decided to introduce lathes for making of the toys."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The Karnataka Itihasa Academy summary says power lathes were introduced by Sayad Nizam, whom the Government of India sent to Japan for training.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 4",
+          "quote": "Use of power lathes were introduced by Sayad Nizam who was sent to Japan by the Goverment of India to receive formal training in Japan traditional toy making industry."
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The FAO case study and a CIIL film record credit Bawas Miyan with mechanising the craft through the power or machine lathe.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 43",
+          "quote": "Bavasmia also mechanized the craft through the power lathe."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "But Bawasmia, who taught this technology to all is the true founder of machine Lathe technology."
+        }
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T02"
+      },
+      "text": "Christine Gent writes that the ruling prince of Mysore sent Bavasmia to Japan in 1904 and that on his return he introduced the hand lathes.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 227-230",
+          "quote": "In 1904 the ruling prince of Mysore sent Mr Makik Iladad Mia Bavasmia to Japan to learn more about the craft, and on his return he introduced the hand lathes (Kalanjia 1996)."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The sustained introduction of electrically run power lathes in the 1940s boosted the production capacities of the artisans.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 16",
+          "quote": "The sustained introduction of electrically run power lathes in the 1940s boosted the production capacities of the artisans."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Artisan Training Centre at Channapatna, established in 1902, introduced lac-turnery in the state, according to the FAO case study.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "lines 69-70",
+          "quote": "The DIC was the progenitor of lacquerware training in Karnataka. The Artisan Training Centre, Channapatna, established in 1902, introduced lac-turnery in the state"
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Karnataka Itihasa Academy summary says an Artisan Training Institute was established in the early 19th century to promote Channapatna toys.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "line 4",
+          "quote": "During early 19th century, Artisan Training Institute (A.T.I) was established to promote Channapatna toys."
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A Lacquerware Training Institute for Women started in 1963, and by the 1960s the town had two training institutes, one training only women.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 74",
+          "quote": "Started in 1963, this center has been training groups of women in lac-turnery each year since."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 73",
+          "quote": "Government of Karnataka - Scheduled Caste/Scheduled Tribe (SC/ST) Department, Lacquerware Training Institute (LWTI) for Women."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 16",
+          "quote": "By the 1960s, the town had two training institutes, one of which exclusively trained women in the craft."
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "After independence the All India Handicrafts Board supported the industry with research on new products and designs, and it opened an advanced training centre at Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 16",
+          "quote": "After India's independence, the industry was supported by the All India Handicrafts Board, which carried out research and applied it towards aiding artisans to develop newer products and designs."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 11, lines 351-354",
+          "quote": "All India Handicrafts Board, New Delhi, has opened an advanced training center for lacquer ware artisans at Channapatna."
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Under the first director of the All India Handicrafts Board centre, Japanese consultants were brought in to teach design and other skills.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 66",
+          "quote": "Japanese consultants were brought to teach design and other skills and the Centre began to procure raw materials and market artisans' products."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 270-274",
+          "quote": "The All India Handicraft Board opened in 1977 and the first director brought in Japanese consultants"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The export market that arrived in the 1970s demanded precision, speed and standardisation, and the power lathe was the technological answer.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 222",
+          "quote": "The advent of the export market in the 1970s led to major changes in the lacquerware industry."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 222",
+          "quote": "The market's higher quality standards, exact specifications and large orders necessitated precision, speed and standardization and created a greater demand for mechanization. The power lathe was the technological answer."
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The Karnataka State Handicrafts Development Corporation was formed by the state government in 1964 and took up development programmes at Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 11, lines 337-343",
+          "quote": "In order to help the artisans, the Karnataka State Handicraft Development Corporation formed in 1964, by the State Government has taken up a number of development programs at Channapatna for the betterment of craft and craftsmen"
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The corporation's production centre at Channapatna, started in 1964, was converted in 1980-81 into a rural marketing service centre for lacquer ware.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 76",
+          "quote": "In 1964, the KHDC started a Production Center at Channapatna where artisans could work on per piece basis."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 76",
+          "quote": "In 1980-81 this was converted to a Rural Marketing Service Center to impart financial and design assistance, supply raw materials and procure finished goods for sale in tourist handicraft showrooms."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 11, lines 355-357",
+          "quote": "In 1980, KSHDC established rural marketing and servicing center at Channapatna for lacquer ware products."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "In 1985-86 the corporation and the Dutch Government built a production centre at Channapatna with 30 power lathes and housing for 126 artisan families.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 76",
+          "quote": "KHDC then collaborated with the Dutch Government to build a production center in 1985-86, with Common Facility Centre which included 30 power lathes and housing for 126 artisan families."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent suggests the first turned wooden figures may have had a sacred or religious role originally.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 219-220",
+          "quote": "The first turned wooden figures may have had a sacred or religious role originally."
+        }
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C065",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The MAP Academy broadly divides the process into six stages: preparing coloured lac sticks, preparing the wood, shaping it, preparing the surface, applying the lac sticks and finishing.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 11",
+          "quote": "The process is broadly divided into six stages: the preparation of coloured lac sticks, the preparation of the wood, the shaping of the wood, the preparation of the surface for lacquering, the application of lac sticks and finishing."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Making an object involves a degree of specialisation, with different craftspersons working on different segments that are assembled at the end.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 11",
+          "quote": "The process of crafting an object comprises a degree of specialisation, with different craftspersons working on different segments, which are assembled in the end."
+        },
+        {
+          "sourceId": "S20",
+          "locator": "line 10",
+          "quote": "One carves the different parts of a toy and the other assembles them."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P07"
+      },
+      "text": "Mongabay and a senior artisan describe the parts being turned and assembled first, and only then coloured with lacquer.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 10",
+          "quote": "the artefacts are manufactured in parts, then assembled and painted using lacquer"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 40",
+          "quote": "We first need to turn each component on the lathe to make the required shape. We then have to precisely assemble the components, chisel them to the required shape, and polish them using dried cactus leaves. We then apply the requisite colours"
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Lacquer preparation begins by sticking lac onto the ends of two wooden sticks and heating it until it becomes plastic and malleable.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 33",
+          "quote": "The preparation of lacquer from lac begins with heating and softening. Lac is stuck on to the ends of two identical wooden sticks which are heated until the lac becomes plastic and malleable."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 126-129",
+          "quote": "The sticks of coloured lac are prepared by heating the seed lac over a small fire and mixing the powdered colour into the lac using two sticks."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "For coloured lac sticks, lac chips are heated over a coal fire, colourant is added as they melt, and the evenly coloured paste is cooled and cut into sticks.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 12",
+          "quote": "To prepare the coloured lac sticks, the lac chips are first heated over a coal fire. As they begin melting, dye or colourants are added to the melting lac."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 12",
+          "quote": "The heated pastelike lac is malleable, and once the colour has taken evenly, it is cooled and cut into stick-shaped chunks to be used later."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 5",
+          "quote": "Once coagulated, natural colours are added and mixed thoroughly; once the colours are thoroughly spread, the coagulated mass is laid into long candle-like sticks till they freeze again into a solid state."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "A specific amount of lithopone is beaten into the softened lac until a white tint appears, and powdered dye mixed with water is then added.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 33",
+          "quote": "A specific amount of lithophone is then added to the softened lac and is beaten continuously until a white tint appears. A small portion of powdered dye is mixed with a bit of water and this is added to the warm white lac."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Each coloured lac stick is 0.5 cm thick and 3 cm wide, cut into 15 to 20 cm lengths, and usable for only one month before hardening.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 33",
+          "quote": "A long thin stick of coloured lacquer 0.5 cm thick and 3 cm wide is shaped and cut into 15-20 cm lengths."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 33",
+          "quote": "These sticks have a shelf life of only one month before they become hard and unfit for lacquering."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Hale wood is seasoned by cutting logs into small billets and storing them away from heat and sunlight, with good air circulation, for ten days to a month depending on moisture content.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 34",
+          "quote": "The preparation of hale wood for lac-turnery begins with seasoning. Logs are cut into small billets and stored away from heat and sunlight in a location with good air circulation for ten days to a month, depending on the moisture content of the wood."
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Before turning, the bark is removed with an adze, and the edges of the seasoned billets are chiselled away until a cylinder is formed.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 35",
+          "quote": "The edges of the seasoned billets are then chiselled and superfluous wood is removed until a cylinder is formed. The wood is now ready to be turned on a lathe."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 152-154",
+          "quote": "As I observed, after drying, the bark of the wood is removed using an adze, or if the timber is square the corners are roughed off."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "On the lathe, cutting tools scrape thin continuous chips from the revolving wood, and skilled turners remove uniform thin layers to create the desired shapes.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 36",
+          "quote": "Cutting tools are applied to the revolving piece of wood so that thin continuous chips are scraped off. Skilled craftspeople are able remove uniform, thin layers of wood to create desired shapes."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Once the shape is formed, the piece is sanded with sandpaper while still turning until its surface is smooth and uniform.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 36",
+          "quote": "Once the desired shape is formed, it is sanded with sandpaper while it is still turning, until the surface is smooth and uniform."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Once the wood has been turned to the desired shape on the lathe, it is buffed using a screwpine leaf.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 13",
+          "quote": "Once the wood is turned on the lathe to achieve the desired shape, it is buffed using the screwpine leaf."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "A lac stick is pressed against the wood revolving on the lathe, and the heat of friction melts the lac so that it spreads evenly over the surface.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 37",
+          "quote": "A lac stick of the chosen colour is pressed to the revolving wood. The friction causes the lac to melt and spread uniformly over the area on which it is applied."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 9, lines 282-287",
+          "quote": "While the wood is rotating on the lathe, lac in the form of sticks in a variety of coloun is held against the turning wood. The heat generated by the friction melts the lac and helps to apply the colours uniformly."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 13",
+          "quote": "The piece is again turned on a lathe, with a lac stick held to the surface, and the heat generated from friction melts the lac and helps the craftsperson apply an even coating of the lac to the surface of the wood."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "PHYSICS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "The turned wooden items are lacquered in a dry state by means of frictional heat, and the painted lac gives them a bright, colourful appearance.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 16",
+          "quote": "The turned wooden items are then lacquered in a dry state by means of frictional heat. Painted lac deposits itself on the turned wood and gives it a bright and colorful appearance."
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Final finishing uses a screw pine leaf on the turning wood to spread the lac and burnish it to a high, translucent polish.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 37",
+          "quote": "Final finishing is done using a screw pine leaf to help spread the lac on the turning wood and polish the object. Buffing lends a translucency to the finished product."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 169-172",
+          "quote": "Finally, for polishing the lac on the lathe, to achieve the hard bright finish the leaf of the screw pine Pandanus odoratissimus is used to burnish the lac to the high polish level."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The GI application and India's tourism ministry describe palm leaves being used to buff the lacquered toys to a glossy shine.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 9, lines 288-289",
+          "quote": "There after palm leaf is used to give a glossy polish."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "line 4",
+          "quote": "After the colourful transformation, the artisans use palm leaves to buff the toys to a beautiful shine."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "A senior artisan says components are polished with dried cactus leaves at every stage and scrubbed again with them after colouring for even absorption.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 8",
+          "quote": "Every aspect of toy making is an intricate process, and at every stage we need to polish the components with dried cactus leaves to ensure that the toys are smooth and even."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 8",
+          "quote": "After the colours are applied to the components or toys, we have to scrub them again with cactus leaves to ensure there is even absorption of colours."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "The lacquered article is then cut free with a cutting or parting tool and removed from the lathe.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 37",
+          "quote": "The lacquered article is separated with a cutting tool and removed from the lathe."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 194-198",
+          "quote": "the burnished lac ware separated from the lathe using a parting tool"
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Some articles are further ornamented with paint, such as delicate hand-painting over the lac for features like the eyes of dolls.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 37",
+          "quote": "At this point, some articles are further ornamented with paint."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 194-198",
+          "quote": "If necessary, delicate hand-painting is applied over the lac to create features such as the eyes of dolls."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P06"
+      },
+      "text": "Designs can be engraved into the finished surface, or lines and grooves cut into the lac to expose the wood underneath.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 13",
+          "quote": "After the lac is applied, the piece is buffed again and, if required, designs are engraved on the surface using a variety of cutting and engraving tools."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 194-198",
+          "quote": "Finally, lines or grooves can be cut into the lac to expose the wood underneath"
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "During fieldwork in January 2012, Christine Gent found production mainly by men standing at mechanical lathes driven by belts from an engine.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 35-38",
+          "quote": "The research draws on participative ethnographic fieldwork in Channapatna and oral testimony interviews along with product analysis, conducted in January 2012."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 156-158",
+          "quote": "Today production is mainly by men standing at a mechanical lathe driven by a series of belts from an engine."
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "On the power lathe production time falls considerably, because both of the turner's hands are free to work the turning tools.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 30",
+          "quote": "The production time decreases considerably on the power lathe as both hands are free to operate turning tools."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T02"
+      },
+      "text": "Lacquerware was traditionally made on simple hand lathes called patris, built by local carpenters and driven by a bow string, with the foot adding pressure.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 29",
+          "quote": "Traditionally all lacquerware was produced using simple hand lathes called patris made by local carpenters. A bow string is used to turn a rotating axle in the center of wooden lathe. The turning tool is held in the free hand and pressure is added with the foot, shaping the spinning wood."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T02"
+      },
+      "text": "Mongabay describes a Neelasandra hand turner working the spindle with a bow of bamboo and silk string that moves back and forth.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 4",
+          "quote": "In her hand, she wields a tool crafted from bamboo and silk string, resembling a bow in a mythological play. The string is attached to the spindle and as it rhythmically moves back and forth, it molds the soft wood into perfect rounds and ovals."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "line 5",
+          "quote": "A resident of Neelasandra village, she is one of the 150 or so artisans dedicated to crafting wood entirely by hand."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T03"
+      },
+      "text": "Turners shape the wood with chisels, gauges and snappers, while hand saws and axes are used to prepare the wood for turning.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 31",
+          "quote": "A variety of cutting tools are used to shape the turning wood including chisels, gauges and snappers. Hand saws and axes are used to prepare the wood to be turned."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Lac-turnery depends on forests for its main raw materials: hale wood (Wrightia tinctoria), lac from a lac insect, and talegiri or screw pine leaves.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 22",
+          "quote": "The industry is therefore totally dependent on forests for the primary raw materials. These forest-based products are the wood of the hale (Wrightia tinctoria) tree, lac produced by the insect Technadria lacca and the leaves of the talegiri (Pandanus odoratissimus)."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 26",
+          "quote": "Talegiri (Pandanus odoratissimus) is also known as screw pine."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Channapatna toys are made mainly from ivory wood (Wrightia tinctoria), known in Kannada as hale mara, aale mara or alae mara.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 10",
+          "quote": "Made from locally available softwood of aale mara or ivory wood (Wrightia tinctoria)"
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 10",
+          "quote": "The toys, dolls and other objects manufactured in Channapatna are made of the wood of the ivorywood tree (Wrightia tinctoria), known as hale mara or alae mara in Kannada."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 3",
+          "quote": "Channapatna toys are largely made out of 'soft' ivory wood (known as alae mara-ಆಲೆ ಮರ in Kannada)"
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ivory wood is described as soft, light, fine grained and white, a wood that absorbs dyes easily and gives the toys vibrant colours.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 2",
+          "quote": "Ivory wood is soft, fine grained, white coloured and it easily absorbs dyes, imparting vibrant colours to the toys."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 9, lines 273-275",
+          "quote": "Lacquer ware is made from light wood which is soft and well suited to the turning machine."
+        },
+        {
+          "sourceId": "S16",
+          "locator": "line 4",
+          "quote": "The eco-friendly toys and dolls of Channapatna are crafted from locally-grown hale wood, known for its softness and lightness, as the base material."
+        }
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The FAO case study and a CIIL film record describe hale wood as close grained and moderately hard, and the FAO study says it turns easily into fine shapes.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 23",
+          "quote": "Hale wood is the basic raw material of lac-turnery. It is extremely close grained, moderately hard and easily turned into fine shapes by hand or machine."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "It constitutes a cheap raw material and it is close-grained and moderately hard."
+        }
+      ]
+    },
+    {
+      "id": "C094",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Hale wood has very low moisture and oil content, and the low oil content helps ensure an excellent finish and translucency after polishing.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 23",
+          "quote": "It has a very low moisture and oil content. The latter helps ensure an excellent finish and translucency after polishing."
+        }
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The GI application says the hale wood used mainly for toys is grown only near Channapatna and Ramanagaram.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 10, lines 312-314",
+          "quote": "(b) The raw material hale wood, used mainly for toys is grown near Cbannapatna and Ramanagaram."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 9, lines 277-279",
+          "quote": "wood which is very soft and light is grown only near Channapatna and Ramanageram"
+        }
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "One toy-unit owner says ivory wood comes from neighbouring regions including Ramanagaram and Magadi, and farmers who grow the trees sell the wood directly.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 21",
+          "quote": "We get a sufficient supply of raw material from neighbouring regions, including Ramanagaram and Magadi. Farmers on whose lands these trees grow approach us directly for selling wood."
+        }
+      ]
+    },
+    {
+      "id": "C097",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Lac is a resinous encrustation produced by the female lac insect on forest trees, particularly kusum (Schleichera oleosa).",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 25",
+          "quote": "Lac is an encrustation produced by the insect Technadria lacca. It is found on a number of forest trees, particularly kusum (Schleichera oleosa)."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 112-115",
+          "quote": "Firstly, the lac, a resinous substance produced by the female lac insect in the Indian forest."
+        }
+      ]
+    },
+    {
+      "id": "C098",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Lac is a distinct substance from the lacquer used in China and Japan, which is a tree resin.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 112-115",
+          "quote": "This is a distinct substance from lacquer used in China and Japan, which is a tree resin."
+        }
+      ]
+    },
+    {
+      "id": "C099",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "Lac was plentiful in Karnataka in the nineteenth century but no longer, and the FAO case study found supplies imported mostly from Madhya Pradesh.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 25",
+          "quote": "In the nineteenth century lac was plentiful in Karnataka. This is no longer the case and supplies are imported mostly from Madhya Pradesh."
+        }
+      ]
+    },
+    {
+      "id": "C100",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M02"
+      },
+      "text": "The MAP Academy reports lac chips, called aargu in Kannada, sourced from West Bengal and Maharashtra, and Sahapedia that most units procure shellac from Bengal while a few toymakers get it from Maharashtra.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 10",
+          "quote": "The other raw materials in the production process include lac chips, known as aargu in Kannada, sourced from West Bengal and Maharashtra"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 7",
+          "quote": "While most units procure shellac from Bengal, a few toymakers report that they get it from Maharashtra."
+        }
+      ]
+    },
+    {
+      "id": "C101",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M12"
+      },
+      "text": "The leaf of talegiri, also known as screw pine (Pandanus odoratissimus), is an important accessory in lacquerware production, used for polishing.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 26",
+          "quote": "Talegiri (Pandanus odoratissimus) is also known as screw pine."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 26",
+          "quote": "The leaf is an important accessory in lacquerware production. Used for polishing, it imparts a translucence to the finish."
+        }
+      ]
+    },
+    {
+      "id": "C102",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M12"
+      },
+      "text": "Screw pine leaves are cut and bought locally, and established clumps of the plant are left to grow so they can be harvested for polishing.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 181-186",
+          "quote": "The screw pine leaf, which adds the shine to the finished toys, is cut and purchased locally (see Figure 8). Where clumps of this sharp-leafed plant have become established it is allowed to continue to grow so that it can be harvested for this purpose."
+        }
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Colours for the craft include natural pigments such as turmeric, indigo and kumkum as well as synthetic poster and enamel colours.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 10",
+          "quote": "natural pigments such as turmeric, indigo and kumkum, synthetic poster and enamel colours and the dried leaves of the screwpine (Pandanus)"
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 27",
+          "quote": "Finally poster colours and enamel paints are used to draw decorations and scenery onto the lac finish."
+        }
+      ]
+    },
+    {
+      "id": "C104",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A CIIL film record says some exporters make colours from turmeric, annatto, kumkum, Rathan Joth leaf and pomegranate skin because the international market demands natural colours.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "abstract, line 9",
+          "quote": "Now, the health-conscious international market demands the use of natural colors. For this reason, some exporters make colors from Turmeric, Rathan Joth leaf, Katta, Annato, Angeria, Kumkum, Alale Kaayi flower, manjiish ta, and skin of the pomegranate fruit."
+        }
+      ]
+    },
+    {
+      "id": "C105",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M03"
+      },
+      "text": "Lithopone, a compound of barium sulphate and zinc sulphide, is a white pigment that makes lac lose its transparency and become opaque.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 27",
+          "quote": "These include lithophone, a compound of barium sulphate and zinc sulphide which is a white pigment that enables lac to lose its transparency and become opaque."
+        }
+      ]
+    },
+    {
+      "id": "C106",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "The FAO case study reports aniline colours such as rhodamine for rose and auromine for yellow being used to prepare the lac sticks.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 27",
+          "quote": "Equally important are aniline colours which are used to prepare lac sticks. The following basic colours are used: rhodamine (rose), auromine (yellow), diamond green, purple, violet and red."
+        }
+      ]
+    },
+    {
+      "id": "C107",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Vegetable dyes were traditionally used, and artisans say they are costly to extract compared with the non-toxic, chemical-free colours now used.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 1",
+          "quote": "Traditionally, vegetable dyes were used, but now, artisans and toymakers in Neelasandra"
+        },
+        {
+          "sourceId": "S12",
+          "locator": "line 5",
+          "quote": "According to local artisans, however, the cost of extracting vegetable or fruit dyes is very high, which makes them expensive compared to the non-toxic, chemical-free colours that are now used."
+        }
+      ]
+    },
+    {
+      "id": "C108",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Scroll reports that continuous logging made ivory wood hard to obtain, so toy makers turned to rubber wood, cedar, pine, teak and rosewood.",
+      "quotes": [
+        {
+          "sourceId": "S20",
+          "locator": "line 5",
+          "quote": "But continuous logging has made availability of ivory wood difficult. So the toy makers have turned to rubber wood, cedar, pine, teak and rosewood."
+        }
+      ]
+    },
+    {
+      "id": "C109",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Hale is the preferred species, but artisans will also work with woods such as yellow teak, silver oak, rosewood, red cedar and pine.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 23",
+          "quote": "Although hale is, without exception, the preferred species for lac-turnery, artisans will work with yellow teak (Adina cordifolia), silver oak (Grevillea robusta), ebony, rakthchandana, red wood (lal agar), blackwood (kale agar) rose wood (Dalbergia latifolia), grey wood, red cedar and pine"
+        }
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Hale is an indigenous tree of forests and village wastelands in Karnataka, found in Channapatna, Ramnagaram, Mysore, Shimoga, Chickmagalur, Hassan and Coorg.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 23",
+          "quote": "Hale is an indigenous tree found in the forests and on village wastelands in Channapatna, Ramnagaram, Mysore, Shimoga, Chickmagalur, Hassan and Coorg in the state of Karnataka."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 131-136",
+          "quote": "Ideal for turning, it is an indigenous tree found in the forests and on village wastelands in Channapatna."
+        }
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ivory wood grows well in dry regions, needs little input and is a common agroforestry species in and around Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 3",
+          "quote": "Ivory wood has been a boon for the toymakers, as it grows well in dry regions, requires little inputs and is locally available as a common agroforestry species in and around Channapatna city."
+        }
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Ivory wood regenerates naturally on farmland by coppicing, with insects pollinating its flowers and wind dispersing its seeds.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 3",
+          "quote": "The tree coppices aid its natural regeneration in farmlands. Insects pollinate the flowers and wind disperses the seeds, both factors bolstering the natural growth of the species."
+        }
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Sahapedia's writers say ivory wood cannot be used for any other purpose, not even as firewood, because it gives off a lot of smoke.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 21",
+          "quote": "The wood of the ivory tree, which grows abundantly in the forests of Karnataka, particularly in the Channapatna area, cannot be used for any other purpose. It cannot even be used as firewood, as it generates a lot of smoke."
+        }
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Down To Earth's writers say ivory wood is used almost only for the craft, though minor uses such as firewood, green manure, mulch and treating skin and stomach ailments are reported.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 3",
+          "quote": "The trees are almost exclusively used for the craft; though other minor uses such as firewood, leaves for green manuring and mulching and bark and leaves for treating skin and stomach ailments are reported."
+        }
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Down To Earth's writers report ivory wood trees being harvested as early as five years instead of the ideal 15 to 20 years.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 4",
+          "quote": "Farmers and local wood collectors harvest the trees as early as five years instead of ideal 15-20 years."
+        }
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The FAO case study gives hale a fairly long rotation period of 20 to 25 years, which made the forest department reluctant to undertake significant planting.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 204",
+          "quote": "Because of the fairly long rotation period of 20-25 years, the forest department is reluctant to expend resources and undertake significant planting efforts."
+        }
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "BOTANY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "One Channapatna toy maker says the ivory tree grows by natural dispersion and takes about 10 years to reach its full size.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 21",
+          "quote": "The tree grows by natural dispersion and takes about 10 years to reach its full size."
+        }
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Christine Gent reports a Channapatna wood merchant's estimate that, the tree being fast growing, he could cut his trees every seven to eight years.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 2, lines 135-136",
+          "quote": "Because it is fastgrowing, the wood merchant estimated that he could cut his trees every seven to eight years."
+        }
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A 2018 life-cycle assessment found locally made Channapatna toys less toxic, lower in energy use and lower in environmental impact than PVC toys.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "line 4",
+          "quote": "This comparative study revealed that locally-made Channapatna toys were less toxic, consumed less energy and had minimum environmental impacts as compared to readily available PVC toys."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "line 1",
+          "quote": "Rangaswamy, Jananee and Kumar, Tarun and Bhalla, Kriti (2018) A Comprehensive Life-Cycle Assessment of Locally Oriented Small-Scale Toy Industries"
+        }
+      ]
+    },
+    {
+      "id": "C120",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Mongabay reports that the 2018 study found Channapatna toy manufacturing six times more energy efficient than PVC toys from China.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 10",
+          "quote": "According to a 2018 study that made a life cycle assessment of both Channapatna wooden toys and mass-produced plastic toys from China found the Channapatna toy manufacturing to be six times more energy efficient than the PVC toys from China."
+        }
+      ]
+    },
+    {
+      "id": "C121",
+      "discipline": "HEALTH",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G05"
+      },
+      "text": "In 2012 Christine Gent observed Shilpa achieving the non-toxic finish international markets require by mixing toxicity-tested paint with the natural lac.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 4, lines 558-561",
+          "quote": "I observed that Shilpa achieved the non-toxic finish on the toys as required by the international market by using paint tested for international standards for toxicity mixed with the natural lac."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 35-38",
+          "quote": "The research draws on participative ethnographic fieldwork in Channapatna and oral testimony interviews along with product analysis, conducted in January 2012."
+        }
+      ]
+    },
+    {
+      "id": "C122",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "According to the GI application, a 1984 corporation survey reported in the Karnataka State Gazetteer counted 922 lacquer ware units in Channapatna taluk employing 1247 male and 350 female artisans.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 7, lines 217-224",
+          "quote": "per survey conducted by the Karnataka Strte Eandicraft s Development Corporation in 1984, and as reported in the Kernataka State Gazetteer there were 922 lacquer ware (wood articles) units in Channapatna taluk providing gainful employment to 1247 male and350 female artisans."
+        }
+      ]
+    },
+    {
+      "id": "C123",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "In its GI application, filed in 2005, the Karnataka State Handicrafts Development Corporation stated that 868 lacquer ware artisans were registered with it at Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 8, lines 234-236",
+          "quote": "At present 868 number of artisans (lacquer ware ) are registered with KSHDC at Channapatna"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "line 84",
+          "quote": "Date of Filing | 07-02-2005 |"
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application names the U.S.A., the U.K., Germany, Italy and the Netherlands as the major export destinations for lacquer ware products.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 10, lines 321-324",
+          "quote": "( e ) The major country destination for export of lacquer ware products are (i) U.S.A., (ii) U.K., (iii) Germany, (iv) Italy, (v) Netherlands"
+        }
+      ]
+    },
+    {
+      "id": "C125",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "According to the 1981 census, Karnataka had 3,000 lacquerware artisans, approximately 2,000 of them in and around Channapatna, though the FAO case study calls information on their exact number sketchy.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 116",
+          "quote": "Information on the exact number of men and women engaged in lac-turnery is sketchy. According to the 1981 census the total number of lacquerware artisans in Karnataka was 3,000 with 60%, or approximately 2,000 concentrated in and around Channapatna."
+        }
+      ]
+    },
+    {
+      "id": "C126",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The FAO case study, researched in 1991, reports the All India Handicrafts Board's figures: of approximately 2000 lacquerware artisans around Channapatna in the 1960s, 50% were women, a share that had dwindled to 5%.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 117",
+          "quote": "The AIHB compares women's participation rates: in the 1960s out of approximately 2000 lacquerware artisans in and around Channapatna, 50% were women. This has dwindled to a mere 5%, suggesting a reduction from 1,000 to 100 women."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 4, lines 481-482",
+          "quote": "In 1991 when Campbell researched the lac ware craft for FAO it was found"
+        }
+      ]
+    },
+    {
+      "id": "C127",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The FAO case study found lac-turnery practised by scheduled caste Hindu women in rural villages and by Muslim women in semi-urban areas.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 11",
+          "quote": "Lac-turnery, the art of turning the wood on the lathe, is practiced by scheduled caste Hindu women in rural villages and Muslim women in semi-urban areas."
+        }
+      ]
+    },
+    {
+      "id": "C128",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "The FAO case study found the spreading electric lathe monopolised by men, and support for women declining with power lathes and larger production units.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 49",
+          "quote": "Mechanization, in the form of the electric lathe, is expanding and is being monopolized by men."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "line 87",
+          "quote": "With the advent of power lathes and larger production units support for women declined."
+        }
+      ]
+    },
+    {
+      "id": "C129",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Down To Earth's writers describe a gender division of labour in which men cut the wood and carve the toys while women polish and paint them.",
+      "quotes": [
+        {
+          "sourceId": "S19",
+          "locator": "line 7",
+          "quote": "The industry has a clear gender allocation of labour. While men cut the wood and carve the toys, women polish and paint the carved wood."
+        }
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A 2021 study cited by Mongabay put Channapatna's artisans at 4000, working from 250 homes and 50 small manufacturing units.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 9",
+          "quote": "A 2021 study puts the number of artisans in Channapatna at 4000. They work out of 250 homes and 50 small manufacturing units which include freelancers and those employed in registered toy making units."
+        }
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The MAP Academy states that as of 2021 around two thousand artisans were engaged in the industry.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 19",
+          "quote": "As of 2021, around two thousand artisans were engaged in the industry."
+        }
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "Around 1983-84 the corporation surveyed 900 artisan families living within a 10 km radius of Channapatna to identify the poorest artisans.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "line 76",
+          "quote": "Around 1983-84, KHDC surveyed 900 artisan families living within a 10 km radius of Channapatna and identified the poorest and most deserving artisans."
+        }
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "In 2023 the MAP Academy reported that the corporation's Lacquerware Crafts Complex in Channapatna provided nearly 370 artisans with work and residential spaces.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 15",
+          "quote": "the Lacquerware Crafts Complex in Channapatna, established by the Karnataka State Handicrafts Development Corporation Ltd. (KSHDCL), provides nearly 370 artisans with work and residential spaces."
+        },
+        {
+          "sourceId": "S10",
+          "locator": "line 20",
+          "quote": "First published: 27 March 2023"
+        }
+      ]
+    },
+    {
+      "id": "C134",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "The Hindu reported in 2020 that 581 of Neelasandra's 675 villagers belonged to Scheduled Caste communities and that each household was involved in the craft.",
+      "quotes": [
+        {
+          "sourceId": "S21",
+          "locator": "line 14",
+          "quote": "In Neelasandra village, 581 of 675 villagers belong to Scheduled Caste communities, and each household is involved in the craft."
+        },
+        {
+          "sourceId": "S21",
+          "locator": "line 22",
+          "quote": "Published - May 08, 2020 03:08 pm IST"
+        }
+      ]
+    },
+    {
+      "id": "C135",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The MAP Academy reports that the opening of a new Bengaluru-Mysuru highway bypassing Channapatna led to a drop in footfall and income for artisans.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 18",
+          "quote": "More recently, the opening of a new highway between Bengaluru and Mysuru, bypassing the town of Channapatna, led to a drop in footfall and income for artisans."
+        }
+      ]
+    },
+    {
+      "id": "C136",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The COVID-19 pandemic forced several artisans, especially those working in home units, to shift to other professions.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 18",
+          "quote": "Over the last few years, the industry has suffered the economic effects of the COVID-19 pandemic, with several artisans, especially those working in home units, being forced to shift to other professions."
+        }
+      ]
+    },
+    {
+      "id": "C137",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Channapatna Crafts Park is a common facility centre giving artisans access to woodworking machines, and it runs training programmes for new artisans.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 45",
+          "quote": "the other is Channapatna Crafts Park, a sophisticated Common Facility Service Centre with state-of-the-art woodworking machines."
+        },
+        {
+          "sourceId": "S18",
+          "locator": "line 20",
+          "quote": "Sponsored by state and central government organisations, the park supports numerous toy-making units, provides artisans access to wood-working machines, and conducts training programmes for emerging talents."
+        }
+      ]
+    },
+    {
+      "id": "C138",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "The MAP Academy describes Channapatna Crafts Park as an initiative by local artisans to give artisans greater access to manufacturing equipment.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 17",
+          "quote": "The Channapatna Crafts Park is an initiative by local artisans aimed at providing artisans greater access to manufacturing equipment."
+        }
+      ]
+    },
+    {
+      "id": "C139",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "According to its own website, quoted by Sahapedia, Channapatna Crafts Park is a registered society with representation from state government bodies and six manufacturer exporters.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "line 45",
+          "quote": "According to the official website, 'Channapatna Crafts Park is a registered society with representation from the Department of Industries & Commerce, Government of Karnataka, Karnataka State Small Industries Development Corporation Limited"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "line 45",
+          "quote": "Visveswaraya Trade Promotion Centre, Karnataka State Handicrafts Development Corporation Limited and six manufacturer exporters"
+        }
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G05"
+      },
+      "text": "Shilpa Trust (Self Help Initiative Linking Progressive Artisans) is a non-profit established in 1988 and registered in 1993 that trains and employs toy makers.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "line 7",
+          "quote": "Shilpa Trust (Self Help Initiative Linking Progressive Artisans) is a non-profit organisation established in 1988 and registered in 1993. It trains and employs men and women in every type of toy making."
+        }
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G06"
+      },
+      "text": "Shilpa Trust and Maya Organic train women in the craft, and Christine Gent notes that both are members of WFTO.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 17",
+          "quote": "SHILPA Trust and Maya Organic provide training in the technique to women."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 373-375",
+          "quote": "both Maya Organic and Shilpa are members of WFTO."
+        }
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI application lists the corporation's Channapatna products as including toys, bead curtains, printed bangles, napkin rings, powder boxes, Christmas decorations, fruit bowls and photo frames.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "p. 4, lines 126-129",
+          "quote": "The range of prroducts manufactured by KSHDC include (D Toys (ii) Bead curtains"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "p. 5, lines 131-136",
+          "quote": "(iii) Printed Bangles (iv) Napkin rings (v) Powder boxes (vi) Christmasdecorations (vii) Fruit Bowls (viii) Photo frames"
+        }
+      ]
+    },
+    {
+      "id": "C143",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Channapatna's toys have included spinning tops, rattles, Kathakali dolls, dolls of Hindu mythological characters, miniature cooking sets, aeroplanes, skipping rope handles and chess sets.",
+      "quotes": [
+        {
+          "sourceId": "S10",
+          "locator": "line 14",
+          "quote": "The toys and play-objects made at Channapatna include Kathakali dolls, miniature cooking sets, aeroplanes, rattles, spinning tops, jump-rope handles and chess and board game sets."
+        },
+        {
+          "sourceId": "S04",
+          "locator": "Table 4, line 40",
+          "quote": "Toys: spinning tops dolls depicting characters from Hindu mythology dolls in costumes of various countries around the world Sports, games and educational aids: skipping rope handles chess sets disc sets counting frames with beads"
+        }
+      ]
+    },
+    {
+      "id": "C144",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Channapatna toys in the National Museum of World Cultures, mostly dated 1963, are stylised, colourful figures built from wooden cones, cylinders and spheres, polished and lacquered.",
+      "quotes": [
+        {
+          "sourceId": "S13",
+          "locator": "line 1",
+          "quote": "The National Museum of World Cultures holds a collection of wooden toys from the Channapatna region in Karnataka, India, most dated 1963. They are stylised and colourful abstracted figures made of wooden cones, cylinders and spheres, and are polished and lacquered."
+        }
+      ]
+    },
+    {
+      "id": "C145",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent reports that traditional lac ware figures of gods are still made and sold in the shops around Channapatna.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 223-226",
+          "quote": "These traditional god figures still retain these long-standing sacred connections and are still made from lac ware today and sold in the shops around Channapatna"
+        }
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent reports that SIPA, after seeing how popular football is in Italy, came back with the idea of football key rings and fridge magnets, and whistles were then developed.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 4, lines 467-471",
+          "quote": "SIPA went to Italy and saw how popular football is there and came back with the idea to make football key rings, fridge magnets, etc."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 4, lines 467-471",
+          "quote": "sat down to develop these whistles after Ramasamy of SIPA came back"
+        }
+      ]
+    },
+    {
+      "id": "C147",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent writes that Nizam Hujrath Masterji travelled to Japan and returned with orders for nesting dolls, and that Japanese influence can still be seen in the dolls.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 270-274",
+          "quote": "Nizam Hujrath Masterji also travelled to Japan and returned with orders for nesting dolls (Khan 2012)."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "p. 3, lines 275-276",
+          "quote": "The influence of the Japanese can still be seen in the dolls today"
+        }
+      ]
+    },
+    {
+      "id": "C148",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Christine Gent observed that newer colours gave the toys a new look, with more translucent colours and more of the wood showing.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 4, lines 562-564",
+          "quote": "With the new colours so a new look has come to the toys - more translucent colours and more of the wood showing."
+        }
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W06"
+      },
+      "text": "In Kannada the lac ware artisan is called Aragubannada Karakushala Kelasagararu.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "p. 1, lines 64-66",
+          "quote": "The name for the lac ware artisan is Aragubannada Karakushala Kelasagararu in Kannada (the local language of Karnataka)."
+        }
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "Mongabay reports that the Channapatna Crafts Park's director dismissed concerns about the expressway, saying it affected only a small number of roadside shopkeepers.",
+      "quotes": [
+        {
+          "sourceId": "S18",
+          "locator": "line 20",
+          "quote": "The park's director, Sreekala Kadidal, dismissed concerns about the expressway, stating it only affected a small number of roadside shopkeepers."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Channapatna",
+      "kind": "TOWN",
+      "district": "Ramanagara",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C008",
+        "C001",
+        "C007",
+        "C005"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Channapatna",
+      "kind": "TOWN",
+      "district": "Ramanagara",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "ORIGIN",
+      "claimIds": [
+        "C003"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Channapatna",
+      "kind": "TOWN",
+      "district": "Ramanagara",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C027",
+        "C028",
+        "C029"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Neelasandra",
+      "kind": "VILLAGE",
+      "district": "Ramanagara",
+      "state": "Karnataka",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C011",
+        "C012",
+        "C134"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Chitragar",
+      "claimIds": [
+        "C030",
+        "C031",
+        "C033",
+        "C032"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "PERSON",
+      "name": "Bawas Miyan",
+      "localNames": [
+        "Bavasmia",
+        "Bawasmiyan"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C045",
+        "C046",
+        "C047",
+        "C048",
+        "C049",
+        "C050",
+        "C052",
+        "C053",
+        "C044",
+        "C032"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Karnataka State Handicrafts Development Corporation",
+      "localNames": [
+        "KSHDC",
+        "KHDC"
+      ],
+      "claimIds": [
+        "C015",
+        "C061",
+        "C062",
+        "C063",
+        "C122",
+        "C123",
+        "C132",
+        "C133"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "ORGANISATION",
+      "name": "Channapatna Crafts Park",
+      "claimIds": [
+        "C137",
+        "C138",
+        "C139",
+        "C150"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "ORGANISATION",
+      "name": "Shilpa Trust",
+      "localNames": [
+        "Self Help Initiative Linking Progressive Artisans"
+      ],
+      "claimIds": [
+        "C140",
+        "C141",
+        "C121"
+      ]
+    },
+    {
+      "id": "G06",
+      "kind": "ORGANISATION",
+      "name": "Maya Organic",
+      "claimIds": [
+        "C141"
+      ]
+    },
+    {
+      "id": "G07",
+      "kind": "COMMUNITY",
+      "name": "Muslim artisans",
+      "claimIds": [
+        "C031",
+        "C032",
+        "C035",
+        "C127"
+      ]
+    },
+    {
+      "id": "G08",
+      "kind": "COMMUNITY",
+      "name": "Scheduled caste (Dalit) artisans",
+      "claimIds": [
+        "C031",
+        "C032",
+        "C035",
+        "C127",
+        "C134"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Preparing coloured lac sticks",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C065",
+      "materials": [
+        {
+          "materialId": "M02",
+          "claimId": "C068"
+        },
+        {
+          "materialId": "M03",
+          "claimId": "C070"
+        },
+        {
+          "materialId": "M05",
+          "claimId": "C106"
+        },
+        {
+          "materialId": "M13",
+          "claimId": "C069"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C068",
+        "C069",
+        "C070",
+        "C071"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Preparing the wood",
+      "stageType": "PREP",
+      "order": 2,
+      "orderClaimId": "C065",
+      "duration": {
+        "text": "ten days to a month",
+        "claimId": "C072"
+      },
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C072"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T04",
+          "claimId": "C073"
+        },
+        {
+          "toolId": "T03",
+          "claimId": "C073"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C072",
+        "C073"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Shaping the wood on the lathe",
+      "stageType": "SHAPE",
+      "order": 3,
+      "orderClaimId": "C065",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C093"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C086"
+        },
+        {
+          "toolId": "T02",
+          "claimId": "C087"
+        },
+        {
+          "toolId": "T03",
+          "claimId": "C074"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C074",
+        "C087",
+        "C086"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Preparing the surface for lacquering",
+      "stageType": "PREP",
+      "order": 4,
+      "orderClaimId": "C065",
+      "materials": [
+        {
+          "materialId": "M14",
+          "claimId": "C075"
+        },
+        {
+          "materialId": "M12",
+          "claimId": "C076"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C075",
+        "C076"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Applying the lac sticks",
+      "stageType": "FINISH",
+      "order": 5,
+      "orderClaimId": "C065",
+      "materials": [
+        {
+          "materialId": "M02",
+          "claimId": "C077"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T06",
+          "claimId": "C077"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C077",
+        "C078"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Finishing",
+      "stageType": "FINISH",
+      "order": 6,
+      "orderClaimId": "C065",
+      "materials": [
+        {
+          "materialId": "M12",
+          "claimId": "C079"
+        },
+        {
+          "materialId": "M15",
+          "claimId": "C080"
+        },
+        {
+          "materialId": "M16",
+          "claimId": "C081"
+        },
+        {
+          "materialId": "M11",
+          "claimId": "C103"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T05",
+          "claimId": "C082"
+        }
+      ],
+      "claimIds": [
+        "C065",
+        "C079",
+        "C080",
+        "C081",
+        "C082",
+        "C083",
+        "C084"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Assembling the parts",
+      "stageType": "OTHER",
+      "claimIds": [
+        "C066",
+        "C067"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Ivory wood (hale)",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "localNames": [
+        "hale",
+        "hale mara",
+        "aale mara",
+        "alae mara",
+        "ಆಲೆ ಮರ"
+      ],
+      "botanicalName": "Wrightia tinctoria",
+      "claimIds": [
+        "C091",
+        "C092",
+        "C093",
+        "C094",
+        "C095",
+        "C110",
+        "C090"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Lac",
+      "kind": "RESIN",
+      "role": "BINDER",
+      "localNames": [
+        "aargu"
+      ],
+      "claimIds": [
+        "C097",
+        "C098",
+        "C099",
+        "C100",
+        "C090"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Lithopone",
+      "kind": "MINERAL",
+      "role": "DYE",
+      "claimIds": [
+        "C105",
+        "C070",
+        "C024"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Aniline colours",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C106"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Turmeric",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C103",
+        "C104"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Indigo",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C103"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Kumkum",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C103",
+        "C104"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Annatto",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C104"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Pomegranate skin",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C104"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Poster colours and enamel paints",
+      "kind": "DYE",
+      "role": "DYE",
+      "claimIds": [
+        "C103"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Screw pine leaf",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "localNames": [
+        "talegiri"
+      ],
+      "botanicalName": "Pandanus odoratissimus",
+      "claimIds": [
+        "C101",
+        "C079",
+        "C076",
+        "C102",
+        "C090"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Coal",
+      "kind": "FUEL",
+      "role": "FUEL",
+      "claimIds": [
+        "C069"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Sandpaper",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C075"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Palm leaf",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C080"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Dried cactus leaves",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C081"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Rubber wood",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "M18",
+      "name": "Teak",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C108"
+      ]
+    },
+    {
+      "id": "M19",
+      "name": "Rosewood",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "botanicalName": "Dalbergia latifolia",
+      "claimIds": [
+        "C108",
+        "C109"
+      ]
+    },
+    {
+      "id": "M20",
+      "name": "Pine",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "claimIds": [
+        "C108",
+        "C109"
+      ]
+    },
+    {
+      "id": "M21",
+      "name": "Silver oak",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "botanicalName": "Grevillea robusta",
+      "claimIds": [
+        "C109"
+      ]
+    },
+    {
+      "id": "M22",
+      "name": "Yellow teak",
+      "kind": "WOOD",
+      "role": "INPUT",
+      "botanicalName": "Adina cordifolia",
+      "claimIds": [
+        "C109"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Power lathe",
+      "claimIds": [
+        "C086",
+        "C054",
+        "C085",
+        "C128",
+        "C051",
+        "C052"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Hand lathe",
+      "localNames": [
+        "patri"
+      ],
+      "claimIds": [
+        "C087",
+        "C088",
+        "C053"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Cutting tools (chisels, gauges and snappers)",
+      "claimIds": [
+        "C089",
+        "C074"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Adze",
+      "claimIds": [
+        "C073"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Parting tool",
+      "claimIds": [
+        "C082"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Lathe",
+      "claimIds": [
+        "C023",
+        "C050",
+        "C077"
+      ]
+    }
+  ],
+  "reactions": [],
+  "environment": [
+    {
+      "factor": "VEGETATION",
+      "placeId": "L01",
+      "claimIds": [
+        "C110",
+        "C095",
+        "C112"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "claimIds": [
+        "C111"
+      ]
+    }
+  ],
+  "market": {
+    "gi": {
+      "applicationNumber": "23",
+      "certificateNumber": "22",
+      "filedOn": "2005-02-07",
+      "registeredOn": "2006-01-30",
+      "journalIssue": "10",
+      "proprietors": [
+        "Karnataka State Handicrafts Development Corporation Limited"
+      ],
+      "authorisedUserCount": 78,
+      "claimIds": [
+        "C015",
+        "C016",
+        "C017",
+        "C018"
+      ]
+    },
+    "workforce": [
+      {
+        "claimId": "C122",
+        "year": 1984
+      },
+      {
+        "claimId": "C123",
+        "year": 2005
+      },
+      {
+        "claimId": "C125",
+        "year": 1981
+      },
+      {
+        "claimId": "C130",
+        "year": 2021
+      },
+      {
+        "claimId": "C131",
+        "year": 2021
+      },
+      {
+        "claimId": "C132",
+        "year": 1983
+      },
+      {
+        "claimId": "C133",
+        "year": 2023
+      },
+      {
+        "claimId": "C034",
+        "year": 1963
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "Gombegala Ooru",
+      "meaning": "City of toys, or toy town: a local name for Channapatna.",
+      "language": "kn",
+      "script": "Latn",
+      "claimIds": [
+        "C006"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "hale mara, aale mara, alae mara",
+      "meaning": "Ivory wood, the wood of Wrightia tinctoria.",
+      "language": "kn",
+      "script": "Latn",
+      "claimIds": [
+        "C091"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "ಆಲೆ ಮರ",
+      "meaning": "Ivory wood (alae mara), the main wood of Channapatna toys.",
+      "language": "kn",
+      "script": "Knda",
+      "claimIds": [
+        "C091"
+      ]
+    },
+    {
+      "id": "W04",
+      "term": "aargu",
+      "meaning": "Lac chips used for the coloured lac sticks.",
+      "language": "kn",
+      "script": "Latn",
+      "claimIds": [
+        "C100"
+      ]
+    },
+    {
+      "id": "W05",
+      "term": "patri",
+      "meaning": "A simple hand lathe made by local carpenters and turned with a bow string.",
+      "script": "Latn",
+      "claimIds": [
+        "C087"
+      ]
+    },
+    {
+      "id": "W06",
+      "term": "Aragubannada Karakushala Kelasagararu",
+      "meaning": "The Kannada name for the lac ware artisan.",
+      "language": "kn",
+      "script": "Latn",
+      "claimIds": [
+        "C149"
+      ]
+    },
+    {
+      "id": "W07",
+      "term": "talegiri",
+      "meaning": "Screw pine (Pandanus odoratissimus), whose leaf is used for polishing.",
+      "script": "Latn",
+      "claimIds": [
+        "C101"
+      ]
+    },
+    {
+      "id": "W08",
+      "term": "lac-turnery",
+      "meaning": "The art of turning the wood on the lathe.",
+      "language": "en",
+      "script": "Latn",
+      "claimIds": [
+        "C127",
+        "C001"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C008",
+        "C009",
+        "C010"
+      ],
+      "about": "Which district Channapatna lies in"
+    },
+    {
+      "claimIds": [
+        "C013",
+        "C014"
+      ],
+      "about": "The geographical area of the GI registration: Karnataka or Channapatna town"
+    },
+    {
+      "claimIds": [
+        "C016",
+        "C020"
+      ],
+      "about": "The year the geographical indication was granted: certificate dated 2006 or tag granted in 2005"
+    },
+    {
+      "claimIds": [
+        "C130",
+        "C131"
+      ],
+      "about": "How many artisans worked in the craft in 2021"
+    },
+    {
+      "claimIds": [
+        "C055",
+        "C056"
+      ],
+      "about": "When the Artisan Training Centre at Channapatna was established"
+    },
+    {
+      "claimIds": [
+        "C025",
+        "C026",
+        "C021",
+        "C027",
+        "C028",
+        "C029"
+      ],
+      "about": "When toy making at Channapatna began: 18th century, 19th-century records, or early 20th century"
+    },
+    {
+      "claimIds": [
+        "C045",
+        "C046"
+      ],
+      "about": "Where Bawas Miyan went to study lacquerware"
+    },
+    {
+      "claimIds": [
+        "C038",
+        "C039",
+        "C049"
+      ],
+      "about": "Whether Persian artisans brought by Tipu Sultan or the local artist Bawas Miyan began the craft"
+    },
+    {
+      "claimIds": [
+        "C050",
+        "C051",
+        "C052",
+        "C053",
+        "C054",
+        "C023"
+      ],
+      "about": "Who introduced lathes and power lathes to Channapatna, and when"
+    },
+    {
+      "claimIds": [
+        "C079",
+        "C080",
+        "C081"
+      ],
+      "about": "Which leaf is used to buff and polish the toys"
+    },
+    {
+      "claimIds": [
+        "C066",
+        "C067"
+      ],
+      "about": "Whether the parts are assembled before or after lacquering"
+    },
+    {
+      "claimIds": [
+        "C113",
+        "C114"
+      ],
+      "about": "Whether ivory wood has any use besides toy making"
+    },
+    {
+      "claimIds": [
+        "C115",
+        "C116",
+        "C117",
+        "C118"
+      ],
+      "about": "How many years an ivory wood tree needs before it is cut"
+    },
+    {
+      "claimIds": [
+        "C099",
+        "C100"
+      ],
+      "about": "Where Channapatna's lac comes from (the sources describe different years)"
+    },
+    {
+      "claimIds": [
+        "C138",
+        "C139"
+      ],
+      "about": "Whether Channapatna Crafts Park is an artisans' initiative or a society with government representation"
+    },
+    {
+      "claimIds": [
+        "C095",
+        "C110"
+      ],
+      "about": "Where hale grows: only near Channapatna and Ramanagaram, or in forests and village wastelands across several Karnataka districts"
+    },
+    {
+      "claimIds": [
+        "C135",
+        "C150"
+      ],
+      "about": "Whether the new Bengaluru-Mysuru highway hurt Channapatna's artisans or only a small number of roadside shopkeepers"
+    },
+    {
+      "claimIds": [
+        "C122",
+        "C132"
+      ],
+      "about": "The corporation's survey of the mid-1980s: 922 lacquer ware units in 1984, or 900 artisan families in 1983-84 (possibly one survey)"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Did Tipu Sultan bring Persian artisans to train Channapatna's toy makers, or only encourage Persian traders to buy the toys?",
+      "claimIds": [
+        "C037",
+        "C038",
+        "C039",
+        "C040",
+        "C041",
+        "C043"
+      ],
+      "settledBy": "Written documents of the Tipu Sultan link, which Christine Gent's research did not find"
+    },
+    {
+      "id": "O02",
+      "question": "Did craftsmen disperse and settle at Channapatna at the time of Tipu Sultan's defeat in 1799?",
+      "claimIds": [
+        "C042"
+      ]
+    },
+    {
+      "id": "O03",
+      "question": "Where did the particular style of Channapatna lacquerware originate?",
+      "claimIds": [
+        "C036"
+      ]
+    },
+    {
+      "id": "O04",
+      "question": "Did the first turned wooden figures have a sacred or religious role?",
+      "claimIds": [
+        "C064"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Channapatna-toys.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Channapatna-toys.jpg",
+      "author": "HPNadig",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Lacquered Channapatna toys and beads in bright, glossy colours",
+      "claimIds": [
+        "C004"
+      ]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Channapatna_artist_making_toy.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Channapatna_artist_making_toy.jpg",
+      "author": "KartikMistry",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A Channapatna artisan shaping wood with a hand-held cutting tool on a power lathe, lacquered beads beside the machine",
+      "claimIds": [
+        "C074"
+      ],
+      "stageId": "P03"
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Channapatna_toys_artists.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Channapatna_toys_artists.jpg",
+      "author": "KartikMistry",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Artisans turning wood at power lathes in a Channapatna workshop",
+      "claimIds": [
+        "C086"
+      ]
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Channapatna_artist_coloring_toy.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Channapatna_artist_coloring_toy.jpg",
+      "author": "KartikMistry",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "An artisan hand-painting details on rows of lacquered spinning tops",
+      "claimIds": [
+        "C083"
+      ],
+      "stageId": "P06"
+    },
+    {
+      "id": "I05",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Channapatna_Bangles_%284784914041%29.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Channapatna_Bangles_(4784914041).jpg",
+      "author": "Hari Prasad Nadig",
+      "licence": "CC BY-SA 2.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "caption": "Lacquered wooden bangles among Channapatna toys",
+      "claimIds": [
+        "C142"
+      ]
+    },
+    {
+      "id": "I06",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Coloured_whistles.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Coloured_whistles.jpg",
+      "author": "Rajesh dangi",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Coloured lacquered whistles from Channapatna",
+      "claimIds": [
+        "C146"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Channapatna lacquerware is a wide variety of lacquered wooden items made by lac-turnery in and around the town of Channapatna, called the 'Land of Toys' or 'Toy Town'.",
+        "claimIds": [
+          "C001",
+          "C005"
+        ]
+      },
+      {
+        "text": "The toys are turned mainly from ivory wood (Wrightia tinctoria), and a lac stick pressed against the revolving wood melts with the heat of friction and spreads evenly over it.",
+        "claimIds": [
+          "C091",
+          "C077"
+        ]
+      },
+      {
+        "text": "Hereditary artists called Chitragars were engaged in wood-turnery as early as 1892, and the craft is now also practised by Hindu Dalit and Muslim artisans.",
+        "claimIds": [
+          "C030",
+          "C031"
+        ]
+      },
+      {
+        "text": "Channapatna Toys & Dolls is registered as a geographical indication under application number 23, filed by the Karnataka State Handicrafts Development Corporation.",
+        "claimIds": [
+          "C015"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "GI status",
+        "value": "Registered geographical indication, application 23; certificate number 22 dated 30 January 2006; valid up to 6 February 2035",
+        "claimIds": [
+          "C015",
+          "C016",
+          "C017"
+        ]
+      },
+      {
+        "label": "Centres",
+        "value": "Channapatna town and Neelasandra village; Mongabay and Scroll name Ramanagara district, the GI application and an IISc study Bangalore Rural, the FAO case study Bangalore district",
+        "claimIds": [
+          "C008",
+          "C009",
+          "C010",
+          "C011"
+        ]
+      },
+      {
+        "label": "Wood",
+        "value": "Ivory wood, Wrightia tinctoria (hale, aale or alae mara)",
+        "claimIds": [
+          "C091"
+        ]
+      },
+      {
+        "label": "Finish",
+        "value": "Lac sticks coloured with dyes or aniline colours, melted onto the turning wood by friction",
+        "claimIds": [
+          "C077",
+          "C069",
+          "C106"
+        ]
+      },
+      {
+        "label": "Process",
+        "value": "Broadly six stages in the MAP Academy's account, from preparing coloured lac sticks to finishing",
+        "claimIds": [
+          "C065"
+        ]
+      },
+      {
+        "label": "Makers",
+        "value": "Historically the Chitragar community; now also Hindu Dalit and Muslim artisans",
+        "claimIds": [
+          "C031"
+        ]
+      },
+      {
+        "label": "Artisans in 2021",
+        "value": "Sources differ: around two thousand, or 4000 in a study cited by Mongabay",
+        "claimIds": [
+          "C131",
+          "C130"
+        ]
+      },
+      {
+        "label": "Age",
+        "value": "Sources differ: from the 18th century, or said to have emerged early in the twentieth century; a toy tiger made in about 1865 passed in 1879 to the South Kensington Museum, later the V&A",
+        "claimIds": [
+          "C025",
+          "C021",
+          "C027"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Sources differ on when the craft began: Mongabay, India's tourism ministry and Scroll date it to the 18th century and Tipu Sultan, while the GI application says the wooden toy industry is said to have emerged early in the twentieth century.",
+            "claimIds": [
+              "C025",
+              "C021"
+            ]
+          },
+          {
+            "text": "A painted wooden toy tiger made in Channapatna in about 1865 was acquired by the Indian Museum in 1867, and Lewis Rice's gazetteer describes the pete of Channapatna as celebrated for lacquered ware and toys.",
+            "claimIds": [
+              "C027",
+              "C029"
+            ]
+          },
+          {
+            "text": "As early as 1892, hereditary artists called Chitragars were engaged in wood-turnery, the basis of lacquerware artistry.",
+            "claimIds": [
+              "C030"
+            ]
+          },
+          {
+            "text": "India's and Karnataka's tourism sites state that Tipu Sultan invited Persian artisans to train local craftsmen, and Mongabay that he brought artisans from Persia to help boost the craft, but the MAP Academy calls the history unclear and Christine Gent found no written documents supporting the Tipu Sultan link.",
+            "claimIds": [
+              "C038",
+              "C040",
+              "C041"
+            ]
+          },
+          {
+            "text": "Bawas Miyan, a superintendent of the Government Industrial School at Channapatna, travelled to Japan in 1904 and 1909 to learn about lacquer and toy-making, though the FAO case study says he went to study lacquerware in Punjab.",
+            "claimIds": [
+              "C045",
+              "C046"
+            ]
+          },
+          {
+            "text": "Sources differ on who introduced lathes and power lathes, naming Bawas Miyan, his son-in-law Syed Yeddulla or Sayad Nizam, while the MAP Academy dates electrically run power lathes to the 1940s.",
+            "claimIds": [
+              "C052",
+              "C050",
+              "C051",
+              "C054"
+            ]
+          },
+          {
+            "text": "The Karnataka State Handicrafts Development Corporation was formed in 1964, and in 1985-86 it built a production centre with the Dutch Government that had 30 power lathes and housing for 126 artisan families.",
+            "claimIds": [
+              "C061",
+              "C063"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "The MAP Academy broadly divides the process into six stages: preparing coloured lac sticks, preparing the wood, shaping it, preparing the surface, applying the lac sticks and finishing.",
+            "claimIds": [
+              "C065"
+            ]
+          },
+          {
+            "text": "Lac is stuck onto the ends of two wooden sticks and heated until it becomes plastic and malleable, and colourant is added before the paste is cooled and cut into sticks.",
+            "claimIds": [
+              "C068",
+              "C069"
+            ]
+          },
+          {
+            "text": "Hale wood is seasoned as small billets for ten days to a month, and the edges of the seasoned billets are chiselled away until a cylinder is formed.",
+            "claimIds": [
+              "C072",
+              "C073"
+            ]
+          },
+          {
+            "text": "On the lathe, cutting tools scrape thin continuous chips from the revolving wood, and the shaped piece is sanded with sandpaper while still turning.",
+            "claimIds": [
+              "C074",
+              "C075"
+            ]
+          },
+          {
+            "text": "Final finishing uses a screw pine leaf to spread the lac and polish it, though other sources name palm leaves or dried cactus leaves for buffing.",
+            "claimIds": [
+              "C079",
+              "C080",
+              "C081"
+            ]
+          },
+          {
+            "text": "The lacquered article is cut free with a cutting or parting tool, and some articles are further ornamented with paint.",
+            "claimIds": [
+              "C082",
+              "C083"
+            ]
+          },
+          {
+            "text": "Lacquerware was traditionally made on simple hand lathes called patris, driven by a bow string, while on the power lathe both of the turner's hands are free.",
+            "claimIds": [
+              "C087",
+              "C086"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Lac-turnery depends on forests for its main raw materials: hale wood (Wrightia tinctoria), lac from a lac insect, and talegiri or screw pine leaves.",
+            "claimIds": [
+              "C090"
+            ]
+          },
+          {
+            "text": "Ivory wood is known in Kannada as hale mara, aale mara or alae mara.",
+            "claimIds": [
+              "C091"
+            ]
+          },
+          {
+            "text": "Ivory wood is described as soft, light, fine grained and white, and the FAO case study and a CIIL film record call hale close grained and moderately hard.",
+            "claimIds": [
+              "C092",
+              "C093"
+            ]
+          },
+          {
+            "text": "Lac was plentiful in Karnataka in the nineteenth century, and the FAO case study found supplies imported mostly from Madhya Pradesh, while the MAP Academy reports lac chips, called aargu in Kannada, sourced from West Bengal and Maharashtra, and Sahapedia says most units procure shellac from Bengal.",
+            "claimIds": [
+              "C099",
+              "C100"
+            ]
+          },
+          {
+            "text": "Colours include natural pigments such as turmeric, indigo and kumkum as well as synthetic poster and enamel colours.",
+            "claimIds": [
+              "C103"
+            ]
+          },
+          {
+            "text": "Scroll reports that continuous logging made ivory wood hard to obtain, so toy makers turned to rubber wood, cedar, pine, teak and rosewood.",
+            "claimIds": [
+              "C108"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "CHEMISTRY",
+        "sentences": [
+          {
+            "text": "Lac is a distinct substance from the lacquer used in China and Japan, which is a tree resin.",
+            "claimIds": [
+              "C098"
+            ]
+          },
+          {
+            "text": "Lithopone, a compound of barium sulphate and zinc sulphide, is a white pigment that makes lac lose its transparency and become opaque.",
+            "claimIds": [
+              "C105"
+            ]
+          },
+          {
+            "text": "A specific amount of lithopone is beaten into the softened lac until a white tint appears, before powdered dye is added.",
+            "claimIds": [
+              "C070"
+            ]
+          },
+          {
+            "text": "According to the GI application, substituting lithopone for sulphur in making the colours gave the lacquer ware its distinctive brightness.",
+            "claimIds": [
+              "C024"
+            ]
+          },
+          {
+            "text": "Hale wood has very low moisture and oil content, and the low oil content helps ensure an excellent finish and translucency after polishing.",
+            "claimIds": [
+              "C094"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECOLOGY",
+        "sentences": [
+          {
+            "text": "Hale is an indigenous tree of forests and village wastelands in Karnataka, and ivory wood grows well in dry regions as a common agroforestry species around Channapatna.",
+            "claimIds": [
+              "C110",
+              "C111"
+            ]
+          },
+          {
+            "text": "Sources differ on the tree's age at cutting: a wood merchant's estimate of seven to eight years, an ideal 15 to 20 years, or a rotation of 20 to 25 years, and one toy maker says it takes about 10 years to reach full size.",
+            "claimIds": [
+              "C118",
+              "C117",
+              "C115",
+              "C116"
+            ]
+          },
+          {
+            "text": "Down To Earth's writers report trees being harvested as early as five years.",
+            "claimIds": [
+              "C115"
+            ]
+          },
+          {
+            "text": "A 2018 life-cycle assessment found locally made Channapatna toys less toxic, lower in energy use and lower in environmental impact than PVC toys.",
+            "claimIds": [
+              "C119"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "A 1984 corporation survey counted 922 lacquer ware units in Channapatna taluk employing 1247 male and 350 female artisans.",
+            "claimIds": [
+              "C122"
+            ]
+          },
+          {
+            "text": "According to the 1981 census, Karnataka had 3,000 lacquerware artisans, approximately 2,000 of them in and around Channapatna, though the FAO case study calls information on their exact number sketchy.",
+            "claimIds": [
+              "C125"
+            ]
+          },
+          {
+            "text": "Sources differ on the number in 2021: around two thousand artisans according to the MAP Academy, or 4000 in a study cited by Mongabay.",
+            "claimIds": [
+              "C131",
+              "C130"
+            ]
+          },
+          {
+            "text": "The FAO case study, researched in 1991, reports the All India Handicrafts Board's figures: of approximately 2000 lacquerware artisans around Channapatna in the 1960s, 50% were women, a share that had dwindled to 5%.",
+            "claimIds": [
+              "C126"
+            ]
+          },
+          {
+            "text": "The GI application names the U.S.A., the U.K., Germany, Italy and the Netherlands as the major export destinations for lacquer ware products.",
+            "claimIds": [
+              "C124"
+            ]
+          },
+          {
+            "text": "The MAP Academy reports that a new Bengaluru-Mysuru highway bypassing Channapatna led to a drop in footfall and income for artisans, though the Crafts Park's director said it affected only a small number of roadside shopkeepers.",
+            "claimIds": [
+              "C135",
+              "C150"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Channapatna's toys have included spinning tops, rattles, Kathakali dolls, miniature cooking sets, aeroplanes, skipping rope handles and chess sets.",
+            "claimIds": [
+              "C143"
+            ]
+          },
+          {
+            "text": "Channapatna toys in the National Museum of World Cultures, mostly dated 1963, are stylised figures built from wooden cones, cylinders and spheres.",
+            "claimIds": [
+              "C144"
+            ]
+          },
+          {
+            "text": "Some articles are ornamented with paint, such as delicate hand-painting over the lac for the eyes of dolls.",
+            "claimIds": [
+              "C083"
+            ]
+          },
+          {
+            "text": "Christine Gent observed that newer colours gave the toys more translucent colours and more of the wood showing.",
+            "claimIds": [
+              "C148"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

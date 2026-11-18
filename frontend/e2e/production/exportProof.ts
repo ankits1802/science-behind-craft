@@ -9,9 +9,9 @@ import { explainerHref } from "@/lib/savedView";
 import type { User } from "@/lib/types";
 
 import type { AnswerRecord, SourceRecord } from "./answers";
+import { settle } from "./capture";
 import { clip } from "./checks";
 import { citationFileProblems, pdfProblems, pptxProblems, type CitedSource } from "./exportFiles";
-import { settle } from "./screenRun";
 
 export const PROOF_LABEL = "English";
 const FILE_WAIT_MS = 120_000;

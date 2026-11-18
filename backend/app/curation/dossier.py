@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Literal
+from typing import Any, Literal, Self
 
-from pydantic import AwareDatetime, Field
+from pydantic import AwareDatetime, Field, model_validator
 
 from app.research.base import ContractModel
 
@@ -13,9 +13,10 @@ from .limits import PICTURES_MAX
 from .overview import Overview
 from .parts import Claim, Conflict, OpenQuestion, Search, Source
 from .records import EnvironmentLink, Market, Picture, Term
-from .vocabulary import CURATOR, DOSSIER_SCHEMA_VERSION, CoverageClass
+from .vocabulary import CURATOR, DOSSIER_SCHEMA_VERSION, CoverageClass, Scope
 
 __all__ = [
+    "CATEGORY_SCOPE",
     "DOSSIER_SCHEMA_TITLE",
     "Dossier",
     "dossier_json_schema",
@@ -24,11 +25,14 @@ __all__ = [
 ]
 
 DOSSIER_SCHEMA_TITLE = "KalaVigyan curated craft dossier"
+CATEGORY_SCOPE = "CATEGORY"
 
 
 class Dossier(ContractModel):
     schema_version: Literal[1] = DOSSIER_SCHEMA_VERSION
-    craft_slug: str = Field(pattern=CRAFT_SLUG_PATTERN, max_length=200)
+    craft_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN, max_length=200)
+    category_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN, max_length=200)
+    scope: Scope = "CRAFT"
     version: int = Field(ge=1)
     curated_at: AwareDatetime
     curator: Literal["claude-code"] = CURATOR
@@ -49,6 +53,20 @@ class Dossier(ContractModel):
     open_questions: list[OpenQuestion] = Field(default_factory=list)
     pictures: list[Picture] = Field(default_factory=list, max_length=PICTURES_MAX)
     overview: Overview
+
+    @model_validator(mode="after")
+    def _one_slug_for_its_scope(self) -> Self:
+        category = self.scope == CATEGORY_SCOPE
+        if category != (self.category_slug is not None) or category != (self.craft_slug is None):
+            raise ValueError(
+                "a CATEGORY dossier names its categorySlug and no craftSlug; "
+                "a CRAFT or FAMILY dossier names its craftSlug and no categorySlug"
+            )
+        return self
+
+    @property
+    def slug(self) -> str:
+        return self.category_slug or self.craft_slug or ""
 
     def claim(self, claim_id: str) -> Claim:
         return next(claim for claim in self.claims if claim.id == claim_id)

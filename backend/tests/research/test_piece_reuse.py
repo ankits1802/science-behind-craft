@@ -36,6 +36,7 @@ LATER = datetime(2026, 11, 14, 9, 30, tzinfo=UTC)
 MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "versions" / "0015_knowledge_pieces.py"
 CURATED_MIGRATION = MIGRATION.with_name("0017_curated_dossiers.py")
 LEARNING_MIGRATION = MIGRATION.with_name("0018_learning_block_kinds.py")
+SIGNATURE_MIGRATION = MIGRATION.with_name("0025_signature_block_kinds.py")
 
 
 def golden_block(block_id: str) -> Any:
@@ -206,8 +207,10 @@ def load_migration(path: Path = MIGRATION) -> Any:
 def test_the_migration_checks_the_same_vocabulary_as_the_models() -> None:
     migration = load_migration()
     learning = load_migration(LEARNING_MIGRATION)
+    signature = load_migration(SIGNATURE_MIGRATION)
     assert migration.BLOCK_KINDS == learning.BLOCK_KINDS_BEFORE
-    assert learning.BLOCK_KINDS == BLOCK_KINDS
+    assert learning.BLOCK_KINDS == signature.BLOCK_KINDS_BEFORE
+    assert signature.BLOCK_KINDS == BLOCK_KINDS
     assert migration.DISCIPLINES == DISCIPLINES
     assert migration.DEPTHS == EXPLAINER_DEPTHS
     assert HIDDEN_CLAIM_STATUSES[: len(migration.HIDDEN_CLAIM_STATUSES)] == migration.HIDDEN_CLAIM_STATUSES

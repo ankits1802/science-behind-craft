@@ -1,8 +1,320 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "crafts": [
     {
+      "craftSlug": "Agates-Of-Cambay",
+      "scope": "CRAFT",
+      "file": "Agates-Of-Cambay.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T11:04:10Z",
+      "counts": {
+        "sources": 17,
+        "claims": 150,
+        "hypotheses": 3,
+        "corroborated": 13,
+        "places": 10,
+        "communities": 5,
+        "stages": 8,
+        "orderedStages": 8,
+        "materials": 18,
+        "tools": 15,
+        "reactions": 1,
+        "environment": 4,
+        "terms": 18,
+        "conflicts": 8,
+        "openQuestions": 3,
+        "pictures": 2,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 4,
+        "PROCESS": 34,
+        "CHEMISTRY": 8,
+        "PHYSICS": 2,
+        "MATERIALS": 13,
+        "GEOGRAPHY": 9,
+        "GEOLOGY": 6,
+        "HISTORY": 43,
+        "ECONOMICS": 21,
+        "DESIGN": 6,
+        "HEALTH": 4
+      },
+      "sourcesByReliability": {
+        "A": 8,
+        "B": 6,
+        "C": 3,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:05:23.127444Z"
+      }
+    },
+    {
+      "craftSlug": "Agra-Marble-Inlay",
+      "scope": "CRAFT",
+      "file": "Agra-Marble-Inlay.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:55:08Z",
+      "counts": {
+        "sources": 27,
+        "claims": 149,
+        "hypotheses": 6,
+        "corroborated": 41,
+        "places": 6,
+        "communities": 4,
+        "stages": 9,
+        "orderedStages": 8,
+        "materials": 22,
+        "tools": 12,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 11,
+        "conflicts": 14,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 27,
+        "CHEMISTRY": 3,
+        "MATERIALS": 23,
+        "GEOGRAPHY": 5,
+        "GEOLOGY": 16,
+        "ECOLOGY": 2,
+        "HISTORY": 33,
+        "ECONOMICS": 15,
+        "DESIGN": 12,
+        "HEALTH": 5
+      },
+      "sourcesByReliability": {
+        "A": 11,
+        "B": 1,
+        "C": 9,
+        "D": 6
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:55:58.960559Z"
+      }
+    },
+    {
+      "craftSlug": "Aranmula-Kannadi",
+      "scope": "CRAFT",
+      "file": "Aranmula-Kannadi.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:30:00Z",
+      "counts": {
+        "sources": 17,
+        "claims": 149,
+        "hypotheses": 12,
+        "corroborated": 49,
+        "places": 4,
+        "communities": 5,
+        "stages": 7,
+        "orderedStages": 7,
+        "materials": 21,
+        "tools": 4,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 6,
+        "conflicts": 15,
+        "openQuestions": 5,
+        "pictures": 6,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 11,
+        "PROCESS": 32,
+        "CHEMISTRY": 21,
+        "PHYSICS": 10,
+        "MATERIALS": 13,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 1,
+        "CLIMATE": 1,
+        "ECOLOGY": 2,
+        "HISTORY": 32,
+        "ECONOMICS": 13,
+        "DESIGN": 6
+      },
+      "sourcesByReliability": {
+        "A": 4,
+        "B": 6,
+        "C": 6,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:42:22.636449Z"
+      }
+    },
+    {
+      "craftSlug": "Bagh-Prints-Of-Madhya-Pradesh",
+      "scope": "CRAFT",
+      "file": "Bagh-Prints-Of-Madhya-Pradesh.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:36:00Z",
+      "counts": {
+        "sources": 25,
+        "claims": 150,
+        "hypotheses": 3,
+        "corroborated": 41,
+        "places": 11,
+        "communities": 7,
+        "stages": 12,
+        "orderedStages": 8,
+        "materials": 26,
+        "tools": 7,
+        "reactions": 2,
+        "environment": 4,
+        "terms": 22,
+        "conflicts": 15,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 39,
+        "CHEMISTRY": 10,
+        "PHYSICS": 1,
+        "MATERIALS": 17,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 6,
+        "CLIMATE": 1,
+        "ECOLOGY": 2,
+        "BOTANY": 3,
+        "HISTORY": 25,
+        "ECONOMICS": 13,
+        "DESIGN": 15,
+        "HEALTH": 4
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 6,
+        "C": 12,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:38:44.222429Z"
+      }
+    },
+    {
+      "craftSlug": "Bagru-Hand-Block-Print",
+      "scope": "CRAFT",
+      "file": "Bagru-Hand-Block-Print.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:37:08Z",
+      "counts": {
+        "sources": 12,
+        "claims": 150,
+        "hypotheses": 5,
+        "corroborated": 16,
+        "places": 12,
+        "communities": 5,
+        "stages": 12,
+        "orderedStages": 11,
+        "materials": 24,
+        "tools": 10,
+        "reactions": 5,
+        "environment": 6,
+        "terms": 37,
+        "conflicts": 8,
+        "openQuestions": 3,
+        "pictures": 2,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 9,
+        "PROCESS": 32,
+        "CHEMISTRY": 12,
+        "PHYSICS": 3,
+        "MATERIALS": 14,
+        "GEOGRAPHY": 12,
+        "GEOLOGY": 2,
+        "CLIMATE": 3,
+        "ECOLOGY": 4,
+        "BOTANY": 3,
+        "HISTORY": 25,
+        "ECONOMICS": 18,
+        "DESIGN": 13
+      },
+      "sourcesByReliability": {
+        "A": 5,
+        "B": 2,
+        "C": 4,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:38:13.624172Z"
+      }
+    },
+    {
+      "craftSlug": "Bareilly-Cane-Bamboo-Craft",
+      "scope": "CRAFT",
+      "file": "Bareilly-Cane-Bamboo-Craft.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T11:00:00Z",
+      "counts": {
+        "sources": 11,
+        "claims": 91,
+        "hypotheses": 2,
+        "corroborated": 8,
+        "places": 5,
+        "communities": 3,
+        "stages": 11,
+        "orderedStages": 8,
+        "materials": 14,
+        "tools": 10,
+        "reactions": 0,
+        "environment": 2,
+        "terms": 12,
+        "conflicts": 5,
+        "openQuestions": 3,
+        "pictures": 0,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 23,
+        "PHYSICS": 4,
+        "MATERIALS": 6,
+        "GEOGRAPHY": 3,
+        "ECOLOGY": 1,
+        "BOTANY": 1,
+        "HISTORY": 18,
+        "ECONOMICS": 19,
+        "DESIGN": 8
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 1,
+        "C": 2,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:03:56.935039Z"
+      }
+    },
+    {
       "craftSlug": "Bastar-Dhokra",
+      "scope": "CRAFT",
       "file": "Bastar-Dhokra.json",
       "version": 1,
       "coverage": "FULL",
@@ -49,11 +361,467 @@
       "check": {
         "status": "PASS",
         "problems": 0,
-        "verifiedAt": "2026-11-17T18:17:55.879059Z"
+        "verifiedAt": "2026-11-18T08:07:51.593169Z"
+      }
+    },
+    {
+      "craftSlug": "Bidriware",
+      "scope": "CRAFT",
+      "file": "Bidriware.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:40:00Z",
+      "counts": {
+        "sources": 17,
+        "claims": 150,
+        "hypotheses": 7,
+        "corroborated": 48,
+        "places": 12,
+        "communities": 10,
+        "stages": 10,
+        "orderedStages": 10,
+        "materials": 19,
+        "tools": 10,
+        "reactions": 0,
+        "environment": 1,
+        "terms": 19,
+        "conflicts": 16,
+        "openQuestions": 3,
+        "pictures": 5,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 6,
+        "PROCESS": 28,
+        "CHEMISTRY": 17,
+        "PHYSICS": 1,
+        "MATERIALS": 11,
+        "GEOGRAPHY": 4,
+        "GEOLOGY": 7,
+        "HISTORY": 37,
+        "ECONOMICS": 17,
+        "DESIGN": 22
+      },
+      "sourcesByReliability": {
+        "A": 10,
+        "B": 5,
+        "C": 2,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:44:19.476097Z"
+      }
+    },
+    {
+      "craftSlug": "Blue-Pottery-Of-Jaipur",
+      "scope": "CRAFT",
+      "file": "Blue-Pottery-Of-Jaipur.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:55:52Z",
+      "counts": {
+        "sources": 22,
+        "claims": 149,
+        "hypotheses": 5,
+        "corroborated": 47,
+        "places": 15,
+        "communities": 9,
+        "stages": 10,
+        "orderedStages": 10,
+        "materials": 25,
+        "tools": 7,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 23,
+        "conflicts": 18,
+        "openQuestions": 4,
+        "pictures": 6,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 37,
+        "CHEMISTRY": 10,
+        "PHYSICS": 6,
+        "MATERIALS": 10,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 4,
+        "CLIMATE": 3,
+        "HISTORY": 36,
+        "ECONOMICS": 16,
+        "DESIGN": 6,
+        "HEALTH": 6
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 5,
+        "C": 7,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:58:19.101626Z"
+      }
+    },
+    {
+      "craftSlug": "Cane-Bamboo-Craft",
+      "scope": "FAMILY",
+      "file": "Cane-Bamboo-Craft.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:00:00Z",
+      "counts": {
+        "sources": 40,
+        "claims": 150,
+        "hypotheses": 1,
+        "corroborated": 10,
+        "places": 39,
+        "communities": 19,
+        "stages": 22,
+        "orderedStages": 4,
+        "materials": 27,
+        "tools": 6,
+        "reactions": 1,
+        "environment": 5,
+        "terms": 16,
+        "conflicts": 9,
+        "openQuestions": 5,
+        "pictures": 2,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 10,
+        "PROCESS": 36,
+        "CHEMISTRY": 10,
+        "PHYSICS": 6,
+        "MATERIALS": 15,
+        "GEOGRAPHY": 10,
+        "ECOLOGY": 11,
+        "BOTANY": 12,
+        "HISTORY": 12,
+        "ECONOMICS": 11,
+        "DESIGN": 14,
+        "HEALTH": 3
+      },
+      "sourcesByReliability": {
+        "A": 17,
+        "B": 0,
+        "C": 23,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:16:44.602581Z"
+      }
+    },
+    {
+      "craftSlug": "Channapatna-Toys-Dolls",
+      "scope": "CRAFT",
+      "file": "Channapatna-Toys-Dolls.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:34:40Z",
+      "counts": {
+        "sources": 21,
+        "claims": 150,
+        "hypotheses": 4,
+        "corroborated": 43,
+        "places": 4,
+        "communities": 8,
+        "stages": 7,
+        "orderedStages": 6,
+        "materials": 21,
+        "tools": 6,
+        "reactions": 0,
+        "environment": 2,
+        "terms": 8,
+        "conflicts": 18,
+        "openQuestions": 4,
+        "pictures": 6,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 20,
+        "CHEMISTRY": 7,
+        "PHYSICS": 2,
+        "MATERIALS": 13,
+        "GEOGRAPHY": 8,
+        "ECOLOGY": 10,
+        "BOTANY": 2,
+        "HISTORY": 43,
+        "ECONOMICS": 28,
+        "DESIGN": 9,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 7,
+        "B": 8,
+        "C": 6,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:35:51.605054Z"
+      }
+    },
+    {
+      "craftSlug": "Dabu-Hand-Block-Printing",
+      "scope": "CRAFT",
+      "file": "Dabu-Hand-Block-Printing.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:00:00Z",
+      "counts": {
+        "sources": 16,
+        "claims": 126,
+        "hypotheses": 2,
+        "corroborated": 18,
+        "places": 8,
+        "communities": 8,
+        "stages": 11,
+        "orderedStages": 8,
+        "materials": 22,
+        "tools": 7,
+        "reactions": 0,
+        "environment": 5,
+        "terms": 27,
+        "conflicts": 9,
+        "openQuestions": 1,
+        "pictures": 1,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 9,
+        "PROCESS": 30,
+        "CHEMISTRY": 9,
+        "PHYSICS": 4,
+        "MATERIALS": 23,
+        "GEOGRAPHY": 11,
+        "CLIMATE": 2,
+        "HISTORY": 17,
+        "ECONOMICS": 8,
+        "DESIGN": 13
+      },
+      "sourcesByReliability": {
+        "A": 2,
+        "B": 3,
+        "C": 9,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:05:07.439070Z"
+      }
+    },
+    {
+      "craftSlug": "Firozabad-Glass",
+      "scope": "CRAFT",
+      "file": "Firozabad-Glass.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:48:21Z",
+      "counts": {
+        "sources": 14,
+        "claims": 150,
+        "hypotheses": 2,
+        "corroborated": 17,
+        "places": 16,
+        "communities": 4,
+        "stages": 19,
+        "orderedStages": 10,
+        "materials": 21,
+        "tools": 15,
+        "reactions": 1,
+        "environment": 3,
+        "terms": 32,
+        "conflicts": 15,
+        "openQuestions": 2,
+        "pictures": 3,
+        "overviewSections": 9
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 5,
+        "PROCESS": 34,
+        "CHEMISTRY": 12,
+        "PHYSICS": 8,
+        "MATERIALS": 9,
+        "GEOGRAPHY": 6,
+        "GEOLOGY": 1,
+        "ECOLOGY": 4,
+        "HISTORY": 19,
+        "ECONOMICS": 29,
+        "DESIGN": 12,
+        "HEALTH": 11
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 2,
+        "C": 3,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:49:18.929249Z"
+      }
+    },
+    {
+      "craftSlug": "Ghurni-Clay-Doll-Craft",
+      "scope": "CRAFT",
+      "file": "Ghurni-Clay-Doll-Craft.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T11:09:59Z",
+      "counts": {
+        "sources": 23,
+        "claims": 103,
+        "hypotheses": 1,
+        "corroborated": 21,
+        "places": 14,
+        "communities": 5,
+        "stages": 7,
+        "orderedStages": 6,
+        "materials": 13,
+        "tools": 4,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 2,
+        "conflicts": 7,
+        "openQuestions": 1,
+        "pictures": 1,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 12,
+        "MATERIALS": 11,
+        "GEOGRAPHY": 6,
+        "CLIMATE": 2,
+        "HISTORY": 26,
+        "ECONOMICS": 29,
+        "DESIGN": 9
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 2,
+        "C": 7,
+        "D": 5
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:11:24.804580Z"
+      }
+    },
+    {
+      "craftSlug": "Konark-Stone-Carving",
+      "scope": "CRAFT",
+      "file": "Konark-Stone-Carving.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:44:41Z",
+      "counts": {
+        "sources": 17,
+        "claims": 110,
+        "hypotheses": 4,
+        "corroborated": 11,
+        "places": 8,
+        "communities": 5,
+        "stages": 4,
+        "orderedStages": 4,
+        "materials": 16,
+        "tools": 13,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 15,
+        "conflicts": 8,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 6,
+        "PROCESS": 15,
+        "CHEMISTRY": 1,
+        "MATERIALS": 19,
+        "GEOGRAPHY": 5,
+        "GEOLOGY": 6,
+        "HISTORY": 28,
+        "ECONOMICS": 14,
+        "DESIGN": 16
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 1,
+        "C": 10,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:47:15.759325Z"
+      }
+    },
+    {
+      "craftSlug": "Krishnanagar-Terracotta",
+      "scope": "CRAFT",
+      "file": "Krishnanagar-Terracotta.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T11:01:16Z",
+      "counts": {
+        "sources": 16,
+        "claims": 88,
+        "hypotheses": 0,
+        "corroborated": 19,
+        "places": 16,
+        "communities": 9,
+        "stages": 5,
+        "orderedStages": 4,
+        "materials": 17,
+        "tools": 15,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 3,
+        "conflicts": 4,
+        "openQuestions": 2,
+        "pictures": 1,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 9,
+        "PROCESS": 15,
+        "MATERIALS": 7,
+        "GEOGRAPHY": 5,
+        "GEOLOGY": 1,
+        "CLIMATE": 1,
+        "ECOLOGY": 2,
+        "HISTORY": 21,
+        "ECONOMICS": 21,
+        "DESIGN": 6
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 4,
+        "C": 4,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:03:59.164448Z"
       }
     },
     {
       "craftSlug": "Kutch-Ajrakh",
+      "scope": "CRAFT",
       "file": "Kutch-Ajrakh.json",
       "version": 1,
       "coverage": "FULL",
@@ -93,17 +861,621 @@
       "sourcesByReliability": {
         "A": 9,
         "B": 7,
-        "C": 1,
-        "D": 3
+        "C": 4,
+        "D": 0
       },
       "check": {
         "status": "PASS",
         "problems": 0,
-        "verifiedAt": "2026-11-17T18:19:11.323744Z"
+        "verifiedAt": "2026-11-18T08:07:16.012195Z"
+      }
+    },
+    {
+      "craftSlug": "Kutch-Bandhani",
+      "scope": "CRAFT",
+      "file": "Kutch-Bandhani.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:45:42Z",
+      "counts": {
+        "sources": 18,
+        "claims": 150,
+        "hypotheses": 6,
+        "corroborated": 21,
+        "places": 14,
+        "communities": 12,
+        "stages": 9,
+        "orderedStages": 7,
+        "materials": 16,
+        "tools": 9,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 20,
+        "conflicts": 8,
+        "openQuestions": 2,
+        "pictures": 5,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 14,
+        "PROCESS": 28,
+        "CHEMISTRY": 10,
+        "PHYSICS": 2,
+        "MATERIALS": 9,
+        "GEOGRAPHY": 9,
+        "ECOLOGY": 1,
+        "HISTORY": 24,
+        "ECONOMICS": 26,
+        "DESIGN": 26,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 4,
+        "C": 5,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:47:37.542346Z"
+      }
+    },
+    {
+      "craftSlug": "Machilipatnam-Kalamkari",
+      "scope": "CRAFT",
+      "file": "Machilipatnam-Kalamkari.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:48:48Z",
+      "counts": {
+        "sources": 24,
+        "claims": 150,
+        "hypotheses": 4,
+        "corroborated": 27,
+        "places": 13,
+        "communities": 13,
+        "stages": 15,
+        "orderedStages": 10,
+        "materials": 28,
+        "tools": 10,
+        "reactions": 2,
+        "environment": 7,
+        "terms": 18,
+        "conflicts": 16,
+        "openQuestions": 5,
+        "pictures": 1,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 38,
+        "CHEMISTRY": 9,
+        "MATERIALS": 14,
+        "GEOGRAPHY": 7,
+        "CLIMATE": 2,
+        "ECOLOGY": 4,
+        "BOTANY": 3,
+        "HISTORY": 36,
+        "ECONOMICS": 14,
+        "DESIGN": 15
+      },
+      "sourcesByReliability": {
+        "A": 11,
+        "B": 4,
+        "C": 8,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:50:35.337689Z"
+      }
+    },
+    {
+      "craftSlug": "Madhubani-Paintings",
+      "scope": "CRAFT",
+      "file": "Madhubani-Paintings.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T08:40:00Z",
+      "counts": {
+        "sources": 17,
+        "claims": 149,
+        "hypotheses": 3,
+        "corroborated": 61,
+        "places": 14,
+        "communities": 14,
+        "stages": 6,
+        "orderedStages": 0,
+        "materials": 22,
+        "tools": 2,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 19,
+        "conflicts": 12,
+        "openQuestions": 3,
+        "pictures": 5,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 12,
+        "MATERIALS": 15,
+        "GEOGRAPHY": 14,
+        "CLIMATE": 1,
+        "BOTANY": 3,
+        "HISTORY": 53,
+        "ECONOMICS": 12,
+        "DESIGN": 32
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 6,
+        "C": 5,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:36:50.093511Z"
+      }
+    },
+    {
+      "craftSlug": "Mahabalipuram-Stone-Sculpture",
+      "scope": "CRAFT",
+      "file": "Mahabalipuram-Stone-Sculpture.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:00:00Z",
+      "counts": {
+        "sources": 19,
+        "claims": 149,
+        "hypotheses": 1,
+        "corroborated": 7,
+        "places": 7,
+        "communities": 4,
+        "stages": 9,
+        "orderedStages": 6,
+        "materials": 11,
+        "tools": 9,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 21,
+        "conflicts": 15,
+        "openQuestions": 2,
+        "pictures": 5,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 12,
+        "PROCESS": 22,
+        "PHYSICS": 2,
+        "MATERIALS": 12,
+        "GEOGRAPHY": 10,
+        "GEOLOGY": 6,
+        "HISTORY": 38,
+        "ECONOMICS": 20,
+        "DESIGN": 26,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 6,
+        "B": 7,
+        "C": 6,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:50:20.395933Z"
+      }
+    },
+    {
+      "craftSlug": "Meghalaya-Stone-Carving",
+      "scope": "CRAFT",
+      "file": "Meghalaya-Stone-Carving.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:30:00Z",
+      "counts": {
+        "sources": 19,
+        "claims": 101,
+        "hypotheses": 2,
+        "corroborated": 2,
+        "places": 3,
+        "communities": 4,
+        "stages": 5,
+        "orderedStages": 0,
+        "materials": 5,
+        "tools": 3,
+        "reactions": 0,
+        "environment": 1,
+        "terms": 17,
+        "conflicts": 10,
+        "openQuestions": 2,
+        "pictures": 5,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 14,
+        "MATERIALS": 6,
+        "GEOGRAPHY": 10,
+        "HISTORY": 24,
+        "ECONOMICS": 4,
+        "DESIGN": 36
+      },
+      "sourcesByReliability": {
+        "A": 13,
+        "B": 0,
+        "C": 6,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:34:21.507796Z"
+      }
+    },
+    {
+      "craftSlug": "Mud-Mirror-Work-Lippon-Painting",
+      "scope": "CRAFT",
+      "file": "Mud-Mirror-Work-Lippon-Painting.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:56:44Z",
+      "counts": {
+        "sources": 17,
+        "claims": 63,
+        "hypotheses": 1,
+        "corroborated": 13,
+        "places": 6,
+        "communities": 6,
+        "stages": 6,
+        "orderedStages": 6,
+        "materials": 12,
+        "tools": 1,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 12,
+        "conflicts": 4,
+        "openQuestions": 1,
+        "pictures": 2,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 7,
+        "PHYSICS": 1,
+        "MATERIALS": 12,
+        "GEOGRAPHY": 3,
+        "CLIMATE": 3,
+        "HISTORY": 11,
+        "ECONOMICS": 8,
+        "DESIGN": 11
+      },
+      "sourcesByReliability": {
+        "A": 4,
+        "B": 4,
+        "C": 7,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:57:15.401158Z"
+      }
+    },
+    {
+      "craftSlug": "Mysuru-Stone-Carving",
+      "scope": "CRAFT",
+      "file": "Mysuru-Stone-Carving.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:58:00Z",
+      "counts": {
+        "sources": 29,
+        "claims": 94,
+        "hypotheses": 3,
+        "corroborated": 14,
+        "places": 5,
+        "communities": 9,
+        "stages": 5,
+        "orderedStages": 3,
+        "materials": 10,
+        "tools": 4,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 5,
+        "conflicts": 8,
+        "openQuestions": 2,
+        "pictures": 4,
+        "overviewSections": 6
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 11,
+        "PHYSICS": 4,
+        "MATERIALS": 13,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 5,
+        "HISTORY": 34,
+        "ECONOMICS": 4,
+        "DESIGN": 9
+      },
+      "sourcesByReliability": {
+        "A": 3,
+        "B": 4,
+        "C": 20,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:02:27.798732Z"
+      }
+    },
+    {
+      "craftSlug": "Nizamabad-Black-Pottery",
+      "scope": "CRAFT",
+      "file": "Nizamabad-Black-Pottery.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:00:00Z",
+      "counts": {
+        "sources": 12,
+        "claims": 123,
+        "hypotheses": 6,
+        "corroborated": 25,
+        "places": 8,
+        "communities": 5,
+        "stages": 14,
+        "orderedStages": 11,
+        "materials": 27,
+        "tools": 8,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 16,
+        "conflicts": 13,
+        "openQuestions": 3,
+        "pictures": 1,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 4,
+        "PROCESS": 35,
+        "CHEMISTRY": 5,
+        "PHYSICS": 2,
+        "MATERIALS": 19,
+        "GEOGRAPHY": 7,
+        "CLIMATE": 1,
+        "HISTORY": 20,
+        "ECONOMICS": 17,
+        "DESIGN": 12,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 4,
+        "B": 0,
+        "C": 8,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:54:49.468200Z"
+      }
+    },
+    {
+      "craftSlug": "Orissa-Pattachitra",
+      "scope": "CRAFT",
+      "file": "Orissa-Pattachitra.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:10:15Z",
+      "counts": {
+        "sources": 18,
+        "claims": 150,
+        "hypotheses": 4,
+        "corroborated": 52,
+        "places": 8,
+        "communities": 4,
+        "stages": 11,
+        "orderedStages": 4,
+        "materials": 17,
+        "tools": 8,
+        "reactions": 0,
+        "environment": 4,
+        "terms": 16,
+        "conflicts": 22,
+        "openQuestions": 3,
+        "pictures": 6,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 7,
+        "PROCESS": 44,
+        "CHEMISTRY": 3,
+        "MATERIALS": 19,
+        "GEOGRAPHY": 14,
+        "GEOLOGY": 2,
+        "CLIMATE": 2,
+        "ECOLOGY": 1,
+        "BOTANY": 2,
+        "HISTORY": 22,
+        "ECONOMICS": 18,
+        "DESIGN": 16
+      },
+      "sourcesByReliability": {
+        "A": 7,
+        "B": 3,
+        "C": 6,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:20:03.628156Z"
+      }
+    },
+    {
+      "craftSlug": "Other-Stone-Carving",
+      "scope": "FAMILY",
+      "file": "Other-Stone-Carving.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:58:36Z",
+      "counts": {
+        "sources": 18,
+        "claims": 131,
+        "hypotheses": 2,
+        "corroborated": 10,
+        "places": 29,
+        "communities": 4,
+        "stages": 11,
+        "orderedStages": 6,
+        "materials": 17,
+        "tools": 12,
+        "reactions": 0,
+        "environment": 2,
+        "terms": 11,
+        "conflicts": 3,
+        "openQuestions": 2,
+        "pictures": 3,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 4,
+        "PROCESS": 27,
+        "CHEMISTRY": 4,
+        "PHYSICS": 10,
+        "MATERIALS": 19,
+        "GEOGRAPHY": 10,
+        "GEOLOGY": 4,
+        "HISTORY": 25,
+        "ECONOMICS": 6,
+        "DESIGN": 11,
+        "HEALTH": 11
+      },
+      "sourcesByReliability": {
+        "A": 3,
+        "B": 4,
+        "C": 11,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:00:09.450833Z"
+      }
+    },
+    {
+      "craftSlug": "Sanganeri-Hand-Block-Printing",
+      "scope": "CRAFT",
+      "file": "Sanganeri-Hand-Block-Printing.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T09:52:22Z",
+      "counts": {
+        "sources": 20,
+        "claims": 150,
+        "hypotheses": 4,
+        "corroborated": 26,
+        "places": 9,
+        "communities": 5,
+        "stages": 13,
+        "orderedStages": 12,
+        "materials": 25,
+        "tools": 6,
+        "reactions": 4,
+        "environment": 4,
+        "terms": 31,
+        "conflicts": 10,
+        "openQuestions": 2,
+        "pictures": 0,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 8,
+        "PROCESS": 27,
+        "CHEMISTRY": 10,
+        "MATERIALS": 14,
+        "GEOGRAPHY": 12,
+        "GEOLOGY": 1,
+        "ECOLOGY": 6,
+        "BOTANY": 1,
+        "HISTORY": 28,
+        "ECONOMICS": 21,
+        "DESIGN": 22
+      },
+      "sourcesByReliability": {
+        "A": 8,
+        "B": 3,
+        "C": 8,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T09:57:03.506811Z"
+      }
+    },
+    {
+      "craftSlug": "Stone-Others",
+      "scope": "FAMILY",
+      "file": "Stone-Others.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:40:00Z",
+      "counts": {
+        "sources": 21,
+        "claims": 149,
+        "hypotheses": 3,
+        "corroborated": 10,
+        "places": 31,
+        "communities": 7,
+        "stages": 19,
+        "orderedStages": 0,
+        "materials": 21,
+        "tools": 17,
+        "reactions": 0,
+        "environment": 5,
+        "terms": 26,
+        "conflicts": 4,
+        "openQuestions": 1,
+        "pictures": 2,
+        "overviewSections": 5
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 18,
+        "PROCESS": 39,
+        "CHEMISTRY": 4,
+        "PHYSICS": 7,
+        "MATERIALS": 9,
+        "GEOGRAPHY": 9,
+        "GEOLOGY": 3,
+        "ECOLOGY": 1,
+        "BOTANY": 2,
+        "HISTORY": 21,
+        "ECONOMICS": 19,
+        "DESIGN": 17
+      },
+      "sourcesByReliability": {
+        "A": 5,
+        "B": 3,
+        "C": 13,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:44:01.372004Z"
       }
     },
     {
       "craftSlug": "Tikuli-Painting",
+      "scope": "CRAFT",
       "file": "Tikuli-Painting.json",
       "version": 1,
       "coverage": "FULL",
@@ -148,7 +1520,568 @@
       "check": {
         "status": "PASS",
         "problems": 0,
-        "verifiedAt": "2026-11-17T18:01:47.491336Z"
+        "verifiedAt": "2026-11-18T08:08:03.043333Z"
+      }
+    },
+    {
+      "craftSlug": "Uttarakhand-Ringal-Craft",
+      "scope": "CRAFT",
+      "file": "Uttarakhand-Ringal-Craft.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T11:16:00Z",
+      "counts": {
+        "sources": 17,
+        "claims": 150,
+        "hypotheses": 1,
+        "corroborated": 8,
+        "places": 33,
+        "communities": 5,
+        "stages": 10,
+        "orderedStages": 7,
+        "materials": 11,
+        "tools": 6,
+        "reactions": 0,
+        "environment": 5,
+        "terms": 20,
+        "conflicts": 17,
+        "openQuestions": 2,
+        "pictures": 4,
+        "overviewSections": 8
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 5,
+        "PROCESS": 22,
+        "MATERIALS": 12,
+        "GEOGRAPHY": 8,
+        "CLIMATE": 1,
+        "ECOLOGY": 13,
+        "BOTANY": 34,
+        "HISTORY": 7,
+        "ECONOMICS": 25,
+        "DESIGN": 20,
+        "HEALTH": 3
+      },
+      "sourcesByReliability": {
+        "A": 8,
+        "B": 2,
+        "C": 7,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:19:01.821995Z"
+      }
+    },
+    {
+      "craftSlug": "Varanasi-Soft-Stone-Jali-Work",
+      "scope": "CRAFT",
+      "file": "Varanasi-Soft-Stone-Jali-Work.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:28:00Z",
+      "counts": {
+        "sources": 12,
+        "claims": 91,
+        "hypotheses": 1,
+        "corroborated": 13,
+        "places": 15,
+        "communities": 4,
+        "stages": 10,
+        "orderedStages": 0,
+        "materials": 15,
+        "tools": 9,
+        "reactions": 0,
+        "environment": 3,
+        "terms": 1,
+        "conflicts": 7,
+        "openQuestions": 4,
+        "pictures": 0,
+        "overviewSections": 7
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 5,
+        "PROCESS": 20,
+        "PHYSICS": 1,
+        "MATERIALS": 5,
+        "GEOGRAPHY": 7,
+        "GEOLOGY": 10,
+        "HISTORY": 15,
+        "ECONOMICS": 18,
+        "DESIGN": 9,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 3,
+        "B": 1,
+        "C": 6,
+        "D": 2
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:29:59.268614Z"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "categorySlug": "Leather-Craft-Category",
+      "file": "Leather-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:05:00Z",
+      "counts": {
+        "sources": 33,
+        "claims": 163,
+        "hypotheses": 1,
+        "corroborated": 18,
+        "places": 49,
+        "communities": 16,
+        "stages": 4,
+        "orderedStages": 0,
+        "materials": 22,
+        "tools": 0,
+        "reactions": 3,
+        "environment": 2,
+        "terms": 12,
+        "conflicts": 4,
+        "openQuestions": 1,
+        "pictures": 5,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 23,
+        "PROCESS": 7,
+        "CHEMISTRY": 31,
+        "PHYSICS": 6,
+        "MATERIALS": 18,
+        "GEOGRAPHY": 11,
+        "ECOLOGY": 14,
+        "HISTORY": 26,
+        "ECONOMICS": 15,
+        "DESIGN": 8,
+        "HEALTH": 4
+      },
+      "sourcesByReliability": {
+        "A": 17,
+        "B": 7,
+        "C": 8,
+        "D": 1
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:20:32.981762Z"
+      }
+    },
+    {
+      "categorySlug": "Metal-Craft-Category",
+      "file": "Metal-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:28:49Z",
+      "counts": {
+        "sources": 20,
+        "claims": 249,
+        "hypotheses": 4,
+        "corroborated": 12,
+        "places": 48,
+        "communities": 18,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 20,
+        "tools": 8,
+        "reactions": 3,
+        "environment": 4,
+        "terms": 25,
+        "conflicts": 16,
+        "openQuestions": 6,
+        "pictures": 5,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 21,
+        "PROCESS": 41,
+        "CHEMISTRY": 13,
+        "PHYSICS": 12,
+        "MATERIALS": 27,
+        "GEOGRAPHY": 14,
+        "GEOLOGY": 8,
+        "HISTORY": 58,
+        "ECONOMICS": 37,
+        "DESIGN": 13,
+        "HEALTH": 5
+      },
+      "sourcesByReliability": {
+        "A": 4,
+        "B": 13,
+        "C": 3,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:33:22.817630Z"
+      }
+    },
+    {
+      "categorySlug": "Miscellaneous",
+      "file": "Miscellaneous.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:49:21Z",
+      "counts": {
+        "sources": 44,
+        "claims": 204,
+        "hypotheses": 1,
+        "corroborated": 3,
+        "places": 85,
+        "communities": 8,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 34,
+        "tools": 5,
+        "reactions": 1,
+        "environment": 7,
+        "terms": 24,
+        "conflicts": 4,
+        "openQuestions": 8,
+        "pictures": 6,
+        "overviewSections": 12
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 11,
+        "PROCESS": 21,
+        "CHEMISTRY": 19,
+        "PHYSICS": 11,
+        "MATERIALS": 36,
+        "GEOGRAPHY": 27,
+        "GEOLOGY": 2,
+        "CLIMATE": 1,
+        "ECOLOGY": 4,
+        "BOTANY": 5,
+        "HISTORY": 31,
+        "ECONOMICS": 15,
+        "DESIGN": 17,
+        "HEALTH": 4
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 31,
+        "C": 4,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:52:17.154938Z"
+      }
+    },
+    {
+      "categorySlug": "Mud-Based-Craft-Category",
+      "file": "Mud-Based-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:37:52Z",
+      "counts": {
+        "sources": 48,
+        "claims": 240,
+        "hypotheses": 7,
+        "corroborated": 24,
+        "places": 38,
+        "communities": 10,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 21,
+        "tools": 4,
+        "reactions": 0,
+        "environment": 10,
+        "terms": 18,
+        "conflicts": 5,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 15,
+        "PROCESS": 26,
+        "CHEMISTRY": 24,
+        "PHYSICS": 16,
+        "MATERIALS": 27,
+        "GEOGRAPHY": 14,
+        "GEOLOGY": 10,
+        "CLIMATE": 4,
+        "ECOLOGY": 1,
+        "HISTORY": 55,
+        "ECONOMICS": 31,
+        "DESIGN": 17
+      },
+      "sourcesByReliability": {
+        "A": 13,
+        "B": 21,
+        "C": 14,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:41:20.724189Z"
+      }
+    },
+    {
+      "categorySlug": "Natural-Fibre-Grass-Work",
+      "file": "Natural-Fibre-Grass-Work.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:05:00Z",
+      "counts": {
+        "sources": 24,
+        "claims": 243,
+        "hypotheses": 6,
+        "corroborated": 9,
+        "places": 50,
+        "communities": 11,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 28,
+        "tools": 6,
+        "reactions": 0,
+        "environment": 9,
+        "terms": 18,
+        "conflicts": 8,
+        "openQuestions": 6,
+        "pictures": 5,
+        "overviewSections": 13
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 11,
+        "PROCESS": 44,
+        "CHEMISTRY": 20,
+        "PHYSICS": 9,
+        "MATERIALS": 19,
+        "GEOGRAPHY": 19,
+        "CLIMATE": 4,
+        "ECOLOGY": 14,
+        "BOTANY": 33,
+        "HISTORY": 27,
+        "ECONOMICS": 26,
+        "DESIGN": 13,
+        "HEALTH": 4
+      },
+      "sourcesByReliability": {
+        "A": 15,
+        "B": 4,
+        "C": 5,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:13:34.603783Z"
+      }
+    },
+    {
+      "categorySlug": "Paper-Craft-Category",
+      "file": "Paper-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:54:42Z",
+      "counts": {
+        "sources": 46,
+        "claims": 242,
+        "hypotheses": 5,
+        "corroborated": 43,
+        "places": 39,
+        "communities": 14,
+        "stages": 9,
+        "orderedStages": 0,
+        "materials": 30,
+        "tools": 13,
+        "reactions": 0,
+        "environment": 9,
+        "terms": 28,
+        "conflicts": 19,
+        "openQuestions": 4,
+        "pictures": 4,
+        "overviewSections": 12
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 13,
+        "PROCESS": 52,
+        "CHEMISTRY": 7,
+        "PHYSICS": 8,
+        "MATERIALS": 26,
+        "GEOGRAPHY": 13,
+        "CLIMATE": 4,
+        "ECOLOGY": 6,
+        "BOTANY": 8,
+        "HISTORY": 67,
+        "ECONOMICS": 22,
+        "DESIGN": 16
+      },
+      "sourcesByReliability": {
+        "A": 12,
+        "B": 11,
+        "C": 23,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T11:00:15.746131Z"
+      }
+    },
+    {
+      "categorySlug": "Stone-Craft-Category",
+      "file": "Stone-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:40:00Z",
+      "counts": {
+        "sources": 31,
+        "claims": 216,
+        "hypotheses": 5,
+        "corroborated": 14,
+        "places": 28,
+        "communities": 3,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 24,
+        "tools": 14,
+        "reactions": 1,
+        "environment": 6,
+        "terms": 29,
+        "conflicts": 11,
+        "openQuestions": 6,
+        "pictures": 6,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 12,
+        "PROCESS": 37,
+        "CHEMISTRY": 6,
+        "PHYSICS": 8,
+        "MATERIALS": 33,
+        "GEOGRAPHY": 9,
+        "GEOLOGY": 10,
+        "CLIMATE": 1,
+        "ECOLOGY": 1,
+        "HISTORY": 47,
+        "ECONOMICS": 17,
+        "DESIGN": 17,
+        "HEALTH": 18
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 11,
+        "C": 11,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:47:08.984846Z"
+      }
+    },
+    {
+      "categorySlug": "Textiles-Based-Craft-Category",
+      "file": "Textiles-Based-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:18:00Z",
+      "counts": {
+        "sources": 54,
+        "claims": 236,
+        "hypotheses": 2,
+        "corroborated": 24,
+        "places": 78,
+        "communities": 8,
+        "stages": 0,
+        "orderedStages": 0,
+        "materials": 22,
+        "tools": 7,
+        "reactions": 4,
+        "environment": 7,
+        "terms": 27,
+        "conflicts": 7,
+        "openQuestions": 8,
+        "pictures": 5,
+        "overviewSections": 9
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 18,
+        "PROCESS": 39,
+        "CHEMISTRY": 27,
+        "MATERIALS": 28,
+        "GEOGRAPHY": 18,
+        "ECOLOGY": 5,
+        "HISTORY": 62,
+        "ECONOMICS": 21,
+        "DESIGN": 17,
+        "HEALTH": 1
+      },
+      "sourcesByReliability": {
+        "A": 9,
+        "B": 40,
+        "C": 5,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:26:48.726117Z"
+      }
+    },
+    {
+      "categorySlug": "Wood-Craft-Category",
+      "file": "Wood-Craft-Category.json",
+      "version": 1,
+      "coverage": "FULL",
+      "curatedAt": "2026-11-18T10:44:04Z",
+      "counts": {
+        "sources": 42,
+        "claims": 236,
+        "hypotheses": 5,
+        "corroborated": 19,
+        "places": 78,
+        "communities": 10,
+        "stages": 7,
+        "orderedStages": 0,
+        "materials": 23,
+        "tools": 4,
+        "reactions": 0,
+        "environment": 5,
+        "terms": 23,
+        "conflicts": 5,
+        "openQuestions": 5,
+        "pictures": 4,
+        "overviewSections": 11
+      },
+      "claimsByDiscipline": {
+        "OVERVIEW": 16,
+        "PROCESS": 37,
+        "CHEMISTRY": 13,
+        "PHYSICS": 11,
+        "MATERIALS": 38,
+        "GEOGRAPHY": 23,
+        "ECOLOGY": 21,
+        "HISTORY": 36,
+        "ECONOMICS": 20,
+        "DESIGN": 18,
+        "HEALTH": 3
+      },
+      "sourcesByReliability": {
+        "A": 21,
+        "B": 10,
+        "C": 11,
+        "D": 0
+      },
+      "check": {
+        "status": "PASS",
+        "problems": 0,
+        "verifiedAt": "2026-11-18T10:53:04.657820Z"
       }
     }
   ]

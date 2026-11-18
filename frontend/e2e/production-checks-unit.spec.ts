@@ -7,9 +7,33 @@ import { splitSseBuffer } from "@/lib/answerStream";
 import { explainerEventOf } from "@/lib/explainerStream";
 
 import { KNOWN_ANSWER_QUESTIONS, answerProblems, answerRecord, knownAnswerOutcome, pageSentenceProblems, parseTappedStream, scriptProblems, type KnownAnswerQuestion } from "./production/answers";
-import { NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
+import { NetworkQuiet, captureScreen, judgeCapture, readyForCapture, sightProblems } from "./production/capture";
+import { CITED_CONTENT, NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
+import {
+  ANSWER_SCOPE,
+  BUSY_PATTERN,
+  FULL_OPACITY,
+  MIN_PICTURE_PX,
+  REGION_MARKER,
+  REGION_PANEL,
+  busyProblems,
+  clusterProblems,
+  emptyPictureProblems,
+  moleculeProblems,
+  opacityProblems,
+  regionProblems,
+  repeatProblems,
+  themeProblems,
+  tileProblems,
+  unpaintedNotes
+} from "./production/gates";
+import { SCHEMES, SCREEN_WIDTHS } from "./production/matrix";
+import { GOOGLE_ORIGIN_REFUSED, PRODUCTION_ORIGIN, googleRefusesPreview, isPreview, siteRefusal } from "./production/preview";
 import type { AnswersReport, ScreensReport } from "./production/report";
 import { runFileName } from "./production/run";
+import { answerRepeats, busyText, citationClusters, emptyPictures, opacityAtCapture, regionRunPx } from "./production/sight";
+import { scanTiles } from "./production/tiles";
+import { base32Bytes, totpCode } from "./production/twoStep";
 import type { TappedChunk, TappedStream } from "./production/streamTap";
 import { summaryMarkdown } from "./production/summaryMarkdown";
 import { FRAME_DOCUMENT_START, NO_CONCEPT_NOTE, type FrameSeen } from "./production/generatedExplainer";
@@ -305,4 +329,198 @@ test("without a generated explainer the indigo question records that the builder
   expect(record.knownAnswerFound).toBe(false);
   expect(answerProblems({ ...record, generatedExplainer: { ...record.generatedExplainer, frames: [] } }, INDIGO)).toEqual([]);
   expect(knownAnswerOutcome(record, INDIGO).notes).toEqual([NO_CONCEPT_NOTE]);
+});
+
+const CHIP = (number: number) => `<button type="button" data-testid="citation-chip"><span>${number}</span></button>`;
+const CITED = (text: string, numbers: number[]) => `<span data-testid="answer-sentence"><span lang="en">${text}</span><span>${numbers.map(CHIP).join(" ")}</span> </span>`;
+const THUMB = (width: number) => `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Ajrakh_cloth.jpg/${width}px-Ajrakh_cloth.jpg`;
+const REGION = { panel: REGION_PANEL, marker: REGION_MARKER };
+
+test("a half-built headline and a faded largest element fail the opacity gate, and a steady page passes", async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 600 });
+  const faded = "A long faded paragraph that fills most of the first screen. ".repeat(6);
+  await page.setContent(
+    `<h1><span>Ask</span> <span>how</span> <span style="opacity:0.4">crafts</span> <span style="opacity:0">work</span></h1><p style="font-size:40px;opacity:0.5">${faded}</p><p>Small.</p>`
+  );
+  const found = await page.evaluate(opacityAtCapture, FULL_OPACITY);
+  expect(found.headline).toEqual([
+    { word: "crafts", opacity: 0.4 },
+    { word: "work", opacity: 0 }
+  ]);
+  expect(found.largest?.opacity).toBe(0.5);
+  expect(found.largest?.name.startsWith('<p> "A long faded paragraph')).toBe(true);
+  expect(opacityProblems(found)).toEqual([
+    'the headline is half drawn at capture: "crafts" at 40%, "work" at 0%',
+    `the largest element on screen is at 50% opacity at capture: ${found.largest?.name}`
+  ]);
+  await page.setContent(
+    '<h1><span>Ask</span> <span>how</span> crafts work</h1><p style="font-size:40px">A steady paragraph.</p><div aria-hidden="true" style="opacity:0.1;font-size:90px">Decoration</div>'
+  );
+  expect(opacityProblems(await page.evaluate(opacityAtCapture, FULL_OPACITY))).toEqual([]);
+});
+
+test("a citation cluster reading 1 4 1 4 fails, and clusters of distinct numbers pass", async ({ page }) => {
+  const unnumbered = '<span data-testid="answer-sentence"><span lang="en">Alum.</span><button data-testid="citation-chip">·</button> <button data-testid="citation-chip">·</button></span>';
+  await page.setContent(`<p>${CITED("Ajrakh is printed in Kachchh.", [1, 4, 1, 4])}${CITED("It is dyed with indigo.", [1, 4])}${CITED("Madder gives the red.", [5, 6])}${unnumbered}</p>`);
+  const clusters = await page.evaluate(citationClusters);
+  expect(clusters).toEqual([{ numbers: ["1", "4", "1", "4"], context: "Ajrakh is printed in Kachchh." }]);
+  expect(clusterProblems(clusters)).toEqual(['a citation cluster repeats a source number (1 4 1 4) after "Ajrakh is printed in Kachchh."']);
+});
+
+test("an answer that repeats a sentence or a picture fails, hidden twins and text outside the answer do not count, and unloaded pictures show as empty frames", async ({ page }) => {
+  await page.route("https://upload.wikimedia.org/**", (route) => route.abort());
+  await page.setContent(
+    `<article data-testid="answer-view"><p>${CITED("Indigo came from Sindh.", [1])}${CITED("Indigo came from Sindh.", [2])}${CITED("Alum fixes the red.", [3])}</p>` +
+      `<p style="display:none">${CITED("Alum fixes the red.", [3])}</p>` +
+      `<img alt="Ajrakh" width="120" height="90" src="${THUMB(320)}"><img alt="Ajrakh again" width="120" height="90" src="${THUMB(640)}"></article>` +
+      `<section>${CITED("Indigo came from Sindh.", [1])}</section>`
+  );
+  const repeats = await page.evaluate(answerRepeats, ANSWER_SCOPE);
+  expect(repeats).toEqual({
+    sentences: [{ what: "Indigo came from Sindh.", count: 2 }],
+    pictures: [{ what: "upload.wikimedia.org/wikipedia/commons/a/ab/Ajrakh_cloth.jpg", count: 2 }]
+  });
+  expect(repeatProblems(repeats)).toEqual([
+    'the answer shows 1 repeated sentences, such as "Indigo came from Sindh." 2 times',
+    "the answer shows 1 repeated pictures: upload.wikimedia.org/wikipedia/commons/a/ab/Ajrakh_cloth.jpg 2 times"
+  ]);
+  expect(emptyPictureProblems(await page.evaluate(emptyPictures, MIN_PICTURE_PX))).toEqual(['2 pictures show an empty frame: "Ajrakh", "Ajrakh again"']);
+});
+
+test("a screen-high tile of one flat colour fails, a tile with anything drawn passes, and a short last tile is not judged", async ({ page }) => {
+  await page.setViewportSize({ width: 400, height: 300 });
+  const band = (body: string) => `<div style="height:300px;overflow:hidden">${body}</div>`;
+  const drawn = band('<p style="margin:0;font-size:24px">Ajrakh</p><div style="width:200px;height:120px;background:#2a4385"></div>');
+  await page.setContent(`<body style="margin:0;background:#f7f6fb">${drawn}${band("")}${drawn}<div style="height:100px"></div></body>`);
+  const ratio = await page.evaluate(() => window.devicePixelRatio);
+  const scan = await scanTiles(await page.screenshot({ fullPage: true }), 300 * ratio);
+  expect({ judged: scan.judged, flat: scan.flat, height: scan.height }).toEqual({ judged: 3, flat: [1], height: 1000 * ratio });
+  expect(tileProblems(scan)).toEqual(["1 of 3 screen-high tiles are one flat colour: 2"]);
+  await page.setContent(`<body style="margin:0;background:#110f19">${drawn}${drawn}</body>`);
+  expect(tileProblems(await scanTiles(await page.screenshot({ fullPage: true }), 300 * ratio))).toEqual([]);
+  await expect(scanTiles(Buffer.from("not a png"), 300)).rejects.toThrow("the screenshot is not a PNG");
+});
+
+test("tiles are judged from what was painted: a tile blank only in the full-page screenshot is a note, a blank band past eight screens keeps its number", async ({ page }) => {
+  await page.setViewportSize({ width: 400, height: 100 });
+  const band = (drawn: boolean) =>
+    `<div style="height:100px;overflow:hidden">${drawn ? '<p style="margin:0;font-size:24px">Ajrakh</p><div style="width:200px;height:40px;background:#2a4385"></div>' : ""}</div>`;
+  const sheet = (blank: (index: number) => boolean) =>
+    `<body style="margin:0;background:#f7f6fb">${Array.from({ length: 20 }, (_, index) => band(!blank(index))).join("")}</body>`;
+  const twoBlank = (index: number) => index === 9 || index === 17;
+  const blankTiles = "2 of 20 screen-high tiles are one flat colour: 10, 18";
+  await page.setContent(sheet(twoBlank));
+  expect(await judgeCapture(page, await page.screenshot({ fullPage: true }))).toEqual({ problems: [blankTiles], notes: [] });
+  await page.setContent(sheet((index) => index >= 2));
+  const unpainted = await page.screenshot({ fullPage: true });
+  await page.setContent(sheet(twoBlank));
+  expect(await judgeCapture(page, unpainted)).toEqual({
+    problems: [blankTiles],
+    notes: ["the full-page screenshot stops painting near 200 px, so 16 of its tiles look blank; each was judged from its own capture"]
+  });
+  await page.setContent(sheet(() => false));
+  expect(await judgeCapture(page, unpainted)).toEqual({
+    problems: [],
+    notes: ["the full-page screenshot stops painting near 200 px, so 18 of its tiles look blank; each was judged from its own capture"]
+  });
+  expect(unpaintedNotes([4, 5], [4, 5], 844)).toEqual([]);
+});
+
+test("Loading, Searching and Checking left on screen fail, and the same words in prose, cited text or hidden text do not", async ({ page }) => {
+  await page.setContent(
+    '<p role="status">Loading…</p><p><span>Searching sources</span></p><p>Checking the vat every morning keeps the indigo alive, as the dyers of Dhamadka and Ajrakhpur say.</p>' +
+      '<span data-level="PROVISIONAL">Loading the cloth</span><p style="display:none">Checking your admin view…</p>'
+  );
+  const busy = await page.evaluate(busyText, { citedSelector: CITED_CONTENT, pattern: BUSY_PATTERN });
+  expect(busy).toEqual(["Loading…", "Searching sources"]);
+  expect(busyProblems(busy)).toEqual(['"Loading…", "Searching sources" is still on screen once the page settled']);
+  expect(busyProblems([])).toEqual([]);
+});
+
+test("the Region tab may run three screens before All measurements, and no further", async ({ page }) => {
+  const panel = (markerAt: number | null) =>
+    `<section data-testid="craft-panel-region"><div style="height:${markerAt ?? 3000}px"></div>${markerAt === null ? "" : `<button>${REGION_MARKER}</button><div style="height:4000px"></div>`}</section>`;
+  await page.setContent(panel(null));
+  const tall = await page.evaluate(regionRunPx, REGION);
+  expect(tall).toBe(3000);
+  expect(regionProblems(tall, 844)).toEqual([`the Region tab runs 3.6 screens before "${REGION_MARKER}"; it must fit in 3`]);
+  await page.setContent(panel(2000));
+  expect(regionProblems(await page.evaluate(regionRunPx, REGION), 844)).toEqual([]);
+  await page.setContent("<main></main>");
+  expect(await page.evaluate(regionRunPx, REGION)).toBeNull();
+});
+
+test("gap admissions on the busiest routes are caught", () => {
+  expect(gapCopyFindings("Not enough cited evidence yet. Research it live.")).toEqual(["Not enough cited evidence yet. Research it live."]);
+  expect(gapCopyFindings("This craft is not curated.")).toHaveLength(1);
+  expect(gapCopyFindings("Its process is yet to be researched.")).toHaveLength(1);
+  expect(gapCopyFindings("Enough cited evidence for every stage.")).toEqual([]);
+});
+
+test("a dark run must draw the dark theme, and molecules must report ready", () => {
+  expect(themeProblems("light", "dark")).toEqual(["the page is drawn light; this run asks for dark"]);
+  expect(themeProblems("dark", "dark")).toEqual([]);
+  expect(themeProblems(null, null)).toEqual([]);
+  expect(moleculeProblems(["ready", "failed", "loading", "waiting", "hidden"])).toEqual(["1 3D molecules did not load", "2 3D molecules never reported ready"]);
+  expect(moleculeProblems(["ready", "hidden"])).toEqual([]);
+});
+
+test("the matrix runs 360, 390, 834, 1440 and 1920 in light and dark", () => {
+  expect(SCREEN_WIDTHS.map((width) => width.viewport.width).sort((a, b) => a - b)).toEqual([360, 390, 834, 1440, 1920]);
+  expect(SCHEMES).toEqual(["light", "dark"]);
+});
+
+test("only production and this project's Vercel previews may be driven", () => {
+  const preview = "https://kalavigyan-ab12cd34e-cxacraftecosystem-8028s-projects.vercel.app";
+  expect(siteRefusal(PRODUCTION_ORIGIN)).toBeNull();
+  expect(siteRefusal(`${PRODUCTION_ORIGIN}/`)).toBeNull();
+  expect(isPreview(preview)).toBe(true);
+  expect(siteRefusal(preview)).toBeNull();
+  const refused = [
+    "https://evil.vercel.app",
+    "https://kalavigyan-ab12cd34e-someone-else.vercel.app",
+    `${preview}.evil.example`,
+    preview.replace("https:", "http:"),
+    `https://user:pass@${new URL(preview).host}`,
+    "https://kalavigyan-git-main-cxacraftecosystem-8028s-projects.vercel.app",
+    "not a url"
+  ];
+  for (const url of refused) {
+    expect(isPreview(url), url).toBe(false);
+    expect(siteRefusal(url), url).not.toBeNull();
+  }
+});
+
+test("Google refusing a preview origin is told apart from every other console error", () => {
+  const forbidden = "Failed to load resource: the server responded with a status of 403 ()";
+  expect(googleRefusesPreview(GOOGLE_ORIGIN_REFUSED, "https://accounts.google.com/gsi/client")).toBe(true);
+  expect(googleRefusesPreview(forbidden, "https://accounts.google.com/gsi/button?theme=outline&client_id=1")).toBe(true);
+  expect(googleRefusesPreview(forbidden, "https://kalavigyan-ab12cd34e-cxacraftecosystem-8028s-projects.vercel.app/api/crafts")).toBe(false);
+  expect(googleRefusesPreview(forbidden, "https://accounts.google.com.evil.example/gsi/button")).toBe(false);
+  expect(googleRefusesPreview("[GSI_LOGGER]: Provided button width is invalid: 1000", "https://accounts.google.com/gsi/client")).toBe(false);
+  expect(googleRefusesPreview("TypeError: x is undefined", "https://accounts.google.com/gsi/client")).toBe(false);
+});
+
+test("two-step codes match the RFC 6238 SHA-1 vectors", () => {
+  const secret = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ";
+  expect(base32Bytes(secret).toString("latin1")).toBe("12345678901234567890");
+  expect(totpCode(secret, 59_000)).toBe("287082");
+  expect(totpCode(secret, 1_111_111_109_000)).toBe("081804");
+  expect(totpCode(secret, 1_234_567_890_000)).toBe("005924");
+  expect(totpCode(secret, 20_000_000_000_000)).toBe("353130");
+  expect(() => base32Bytes("not base32!")).toThrow("the two-step secret is not base32");
+});
+
+test("a page is captured only once it has scrolled to the end, its molecules report ready and it is back at the top", async ({ page }, testInfo) => {
+  const network = new NetworkQuiet(page);
+  await page.setViewportSize({ width: 400, height: 300 });
+  await page.setContent(
+    '<body style="margin:0"><h1>Ajrakh</h1><div style="height:1500px;background:linear-gradient(#f7f6fb,#2a4385)"></div>' +
+      '<figure data-testid="molecule-3d" data-status="waiting" style="height:120px;margin:0;background:#ae2e27">Indigo</figure>' +
+      "<script>new IntersectionObserver((seen) => { if (seen.some((entry) => entry.isIntersecting)) document.querySelector('figure').dataset.status = 'ready'; }).observe(document.querySelector('figure'));</script></body>"
+  );
+  expect(await readyForCapture(page, network)).toEqual([]);
+  expect(await page.evaluate(() => [window.scrollY, document.querySelector("figure")?.getAttribute("data-status")])).toEqual([0, "ready"]);
+  expect(await sightProblems(page, null)).toEqual([]);
+  expect(await captureScreen(page, testInfo.outputPath("captured.png"))).toEqual({ problems: [], notes: [] });
 });

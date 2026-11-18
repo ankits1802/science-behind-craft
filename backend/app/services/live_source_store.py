@@ -14,6 +14,7 @@ from app.models import Chunk, Source
 from app.research.evidence import EvidenceItem, SourceDocument, canonical_url
 from app.research.licences import open_licence
 from app.research.quotes import quote_occurs
+from app.research.retrieval import PUBLIC_CHUNK_ACL, RESEARCHER_CHUNK_ACL
 from app.research.write_back import WRITE_BACK_ORIGIN
 from app.retrieval.indexing import replace_source_chunks
 
@@ -30,8 +31,6 @@ __all__ = [
 
 CONTENT_STORAGE = {"FULL_TEXT": "FULL_TEXT", "ABSTRACT": "EXCERPT", "EXCERPT": "EXCERPT"}
 LINK_ONLY = "LINK_ONLY"
-OPEN_CHUNK_ACL = "PUBLIC"
-CLOSED_CHUNK_ACL = "RESEARCHER"
 SELF_DECLARED_LICENCE_TIERS = ("T4",)
 EVIDENCE_ID_KEY = "evidenceId"
 
@@ -48,11 +47,11 @@ def live_source_id(source_key: str) -> uuid.UUID:
 
 def chunk_acl(document: SourceDocument) -> str:
     if document.content != "FULL_TEXT":
-        return OPEN_CHUNK_ACL
+        return PUBLIC_CHUNK_ACL
     item = document.item
     if item.tier in SELF_DECLARED_LICENCE_TIERS or not open_licence(item.licence):
-        return CLOSED_CHUNK_ACL
-    return OPEN_CHUNK_ACL
+        return RESEARCHER_CHUNK_ACL
+    return PUBLIC_CHUNK_ACL
 
 
 def source_values(item: EvidenceItem, document: SourceDocument | None = None) -> dict[str, Any]:

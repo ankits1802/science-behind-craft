@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from app.models import Answer, ConsentRecord, Conversation, Craft, Process, ProcessStage, User, VoiceSession
 from app.providers.quota import LedgerEntry, record_units, remaining_today, used_today
 from app.research.crafts import CraftRef
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.schemas.voice import MAX_TURNS, TRANSCRIPT_RETENTION_DAYS
 from app.services import knowledge_view
 from app.services.answer_events import cited_claims
@@ -59,7 +60,7 @@ class SqlVoiceStore:
             row = await knowledge_view.resolve_craft(session, craft.slug)
             if row is None:
                 return VoicePack(craft=craft, mode=mode, cited=cited_claims([], {}))
-            views, sources = await knowledge_view.claims_for(session, row, mode=mode)
+            views, sources = await knowledge_view.claims_for(session, row, mode=mode, acls=EVERY_CHUNK_ACLS)
             stages = await session.execute(
                 select(ProcessStage.conceptId, ProcessStage.id)
                 .join(Process, Process.id == ProcessStage.processId)

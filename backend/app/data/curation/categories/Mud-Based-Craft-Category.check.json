@@ -1,0 +1,2874 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Mud-Based-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "eaa6fa5607f50646746d471967916e85a2c4c8dff9c6c0f2a123e1771bee7b2d",
+  "checkedAt": "2026-11-18T10:41:20.724189Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.irsm.cas.cz/materialy/cs_content/2015/Valaskova_CS_2015_0000.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.irsm.cas.cz/materialy/cs_content/2015/Valaskova_CS_2015_0000.pdf",
+      "finalUrl": "https://www.irsm.cas.cz/materialy/cs_content/2015/Valaskova_CS_2015_0000.pdf",
+      "fetchedAt": "2026-11-18T10:40:35.714815Z",
+      "contentType": "application/pdf",
+      "textSha256": "c999f3687eac99ef522180602650d6936659ec6a8a21f0813b23f388253c75ff",
+      "characters": 46546,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://ebooks.inflibnet.ac.in/icp02/chapter/understanding-material-culture-remains-ceramic-technology/",
+      "route": "LIVE",
+      "readUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/understanding-material-culture-remains-ceramic-technology/",
+      "finalUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/understanding-material-culture-remains-ceramic-technology/",
+      "fetchedAt": "2026-11-18T10:40:33.900697Z",
+      "contentType": "text/html",
+      "textSha256": "4b7362d5620ccd4d4a7f1dd7f7323693f813a852272d793519f5ca4cabee70db",
+      "characters": 37267,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://ebooks.inflibnet.ac.in/icp02/chapter/prehistory-of-india-and-pakistan-i-development-of-indus-civilization-ceramic-traditions/",
+      "route": "LIVE",
+      "readUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/prehistory-of-india-and-pakistan-i-development-of-indus-civilization-ceramic-traditions/",
+      "finalUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/prehistory-of-india-and-pakistan-i-development-of-indus-civilization-ceramic-traditions/",
+      "fetchedAt": "2026-11-18T10:40:35.604141Z",
+      "contentType": "text/html",
+      "textSha256": "c4232aac09aa2eb4f4a4e6eed4364af313ea82e61a10490995d3ca49cb280a40",
+      "characters": 45852,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://ebooks.inflibnet.ac.in/icp02/chapter/99/",
+      "route": "LIVE",
+      "readUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/99/",
+      "finalUrl": "https://ebooks.inflibnet.ac.in/icp02/chapter/99/",
+      "fetchedAt": "2026-11-18T10:40:41.853057Z",
+      "contentType": "text/html",
+      "textSha256": "b96377f1a3d4e8f7c58482c410aef095def2afd556cd7294979f6ef607e083b5",
+      "characters": 50022,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://imp-art.org/articles/black-and-red-ware/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/black-and-red-ware/",
+      "finalUrl": "https://imp-art.org/articles/black-and-red-ware/",
+      "fetchedAt": "2026-11-18T10:40:34.886379Z",
+      "contentType": "text/html",
+      "textSha256": "26506022590c014d9266ebd26995bf81cb93be5101525178be6dab0820466575",
+      "characters": 5085,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://imp-art.org/articles/northern-black-polished-ware/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/northern-black-polished-ware/",
+      "finalUrl": "https://imp-art.org/articles/northern-black-polished-ware/",
+      "fetchedAt": "2026-11-18T10:40:37.871048Z",
+      "contentType": "text/html",
+      "textSha256": "f86bf67ddc6ec5850179c9386ebfc8f98a2862906b68636218c471e3012718b7",
+      "characters": 5472,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://imp-art.org/articles/painted-grey-ware-culture/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/painted-grey-ware-culture/",
+      "finalUrl": "https://imp-art.org/articles/painted-grey-ware-culture/",
+      "fetchedAt": "2026-11-18T10:40:42.545503Z",
+      "contentType": "text/html",
+      "textSha256": "20765a3a85f1678efa2501ce2846f50884bea57842f3c98e8ffced97538f7b42",
+      "characters": 5795,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://imp-art.org/articles/ochre-coloured-pottery-culture/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/ochre-coloured-pottery-culture/",
+      "finalUrl": "https://imp-art.org/articles/ochre-coloured-pottery-culture/",
+      "fetchedAt": "2026-11-18T10:40:45.003886Z",
+      "contentType": "text/html",
+      "textSha256": "2c399255d8c09286b4f2a5af931cda171a01c37c6a11d322bbf7c32a68e13f6f",
+      "characters": 5825,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://imp-art.org/articles/chandraketugarh-terracotta-objects/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/chandraketugarh-terracotta-objects/",
+      "finalUrl": "https://imp-art.org/articles/chandraketugarh-terracotta-objects/",
+      "fetchedAt": "2026-11-18T10:40:58.935710Z",
+      "contentType": "text/html",
+      "textSha256": "a5f0d10090265517dcc76758a64b25eb4d1c59cee6a4f8b30ebc836cee4c9299",
+      "characters": 9005,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://imp-art.org/articles/harappa/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/harappa/",
+      "finalUrl": "https://imp-art.org/articles/harappa/",
+      "fetchedAt": "2026-11-18T10:41:01.725239Z",
+      "contentType": "text/html",
+      "textSha256": "f0a41425c45d5872b12dd4968fa3cf71699555a477bbcf85985b87ee3b367752",
+      "characters": 17996,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/articles/indus-valley-terracotta-animal-figurines/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/indus-valley-terracotta-animal-figurines/",
+      "finalUrl": "https://imp-art.org/articles/indus-valley-terracotta-animal-figurines/",
+      "fetchedAt": "2026-11-18T10:41:04.603193Z",
+      "contentType": "text/html",
+      "textSha256": "7f317dfa13aaa57849099a4cc33854ecf86d44a7c29a1dc6f1ccd0a3bd4edef5",
+      "characters": 5145,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://imp-art.org/articles/molela-terracotta/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/molela-terracotta/",
+      "finalUrl": "https://imp-art.org/articles/molela-terracotta/",
+      "fetchedAt": "2026-11-18T10:41:06.797433Z",
+      "contentType": "text/html",
+      "textSha256": "3ae757ea75c7a698e5dec3ac5c3af835444449b4ac7fa1e0dacb390aaf4643e1",
+      "characters": 8958,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "finalUrl": "https://imp-art.org/articles/blue-glaze-pottery/",
+      "fetchedAt": "2026-11-18T10:41:10.019508Z",
+      "contentType": "text/html",
+      "textSha256": "3fb74d7d421c4057bcaddd5e1f1c4f62426a4e93e2e1b3506f75dd92c425ddec",
+      "characters": 5777,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://imp-art.org/articles/longpi-pottery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/longpi-pottery/",
+      "finalUrl": "https://imp-art.org/articles/longpi-pottery/",
+      "fetchedAt": "2026-11-18T10:41:15.648913Z",
+      "contentType": "text/html",
+      "textSha256": "207f658dcfc8a93891e5b281c18e20056cf19ac9c16383eb312c734e64679c90",
+      "characters": 5887,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/rajwar-clay-art/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/rajwar-clay-art/",
+      "finalUrl": "https://imp-art.org/articles/rajwar-clay-art/",
+      "fetchedAt": "2026-11-18T10:41:17.827451Z",
+      "contentType": "text/html",
+      "textSha256": "c0aa6f0319c86a8f2e81d94bc04f946622fd72e10aa17dcfc34c3bde05b773f5",
+      "characters": 3003,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://dsource.in/sites/default/files/resource/terracotta/downloads/file/terracotta.pdf",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/sites/default/files/resource/terracotta/downloads/file/terracotta.pdf",
+      "finalUrl": "https://dsource.in/sites/default/files/resource/terracotta/downloads/file/terracotta.pdf",
+      "fetchedAt": "2026-11-18T10:40:35.942082Z",
+      "contentType": "application/pdf",
+      "textSha256": "dd679a51d48b2585c62f02275bae794ee7eab3ca0a8efe6a2be6fdeb2c08608a",
+      "characters": 12667,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://dsource.in/sites/default/files/resource/molela/downloads/file/molela.pdf",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/sites/default/files/resource/molela/downloads/file/molela.pdf",
+      "finalUrl": "https://dsource.in/sites/default/files/resource/molela/downloads/file/molela.pdf",
+      "fetchedAt": "2026-11-18T10:40:50.057273Z",
+      "contentType": "application/pdf",
+      "textSha256": "b4b4e803066d81076f1b246fcd6e8876ae220146b222c4c281a8b16127094f70",
+      "characters": 33451,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://dsource.in/resource/blue-pottery-jaipur/introduction",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/blue-pottery-jaipur/introduction",
+      "finalUrl": "https://dsource.in/resource/blue-pottery-jaipur/introduction",
+      "fetchedAt": "2026-11-18T10:40:57.235999Z",
+      "contentType": "text/html",
+      "textSha256": "bb00150e1f62a43b4b76f41f20da31f241cda4c6e051ef33a255e14d4c309149",
+      "characters": 1514,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://dsource.in/resource/blue-pottery-jaipur/tools-and-raw-materials",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/blue-pottery-jaipur/tools-and-raw-materials",
+      "finalUrl": "https://dsource.in/resource/blue-pottery-jaipur/tools-and-raw-materials",
+      "fetchedAt": "2026-11-18T10:40:59.224800Z",
+      "contentType": "text/html",
+      "textSha256": "578ac6468a2620b0793b833609b98c1d5e53f920990510387050946e29eda311",
+      "characters": 6267,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://dsource.in/resource/blue-pottery-jaipur/making-process",
+      "route": "LIVE",
+      "readUrl": "https://dsource.in/resource/blue-pottery-jaipur/making-process",
+      "finalUrl": "https://dsource.in/resource/blue-pottery-jaipur/making-process",
+      "fetchedAt": "2026-11-18T10:41:01.235414Z",
+      "contentType": "text/html",
+      "textSha256": "a71bfd828d86c629edb8c05657bee0b49a25e1cbedd3bee04082f5eec9bca75e",
+      "characters": 7336,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.epch.in/sites/default/files/project/proj003.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.epch.in/sites/default/files/project/proj003.pdf",
+      "finalUrl": "https://www.epch.in/sites/default/files/project/proj003.pdf",
+      "fetchedAt": "2026-11-18T10:40:42.813018Z",
+      "contentType": "application/pdf",
+      "textSha256": "9c4de16f384a2c4b11f56e8cfe4a7b91a2f3d75609d81144c0df346e42f5d1f3",
+      "characters": 63627,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://www.incredibleindia.gov.in/en/rajasthan/molela-clay-work",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/rajasthan/molela-clay-work",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/rajasthan/molela-clay-work",
+      "fetchedAt": "2026-11-18T10:40:42.698041Z",
+      "contentType": "text/html",
+      "textSha256": "0581e3204f4d91ebe7ee5eb22a7268c4a5dbb00448fc6777b920c31a89dc6d8a",
+      "characters": 2149,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/khurja-pottery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/khurja-pottery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/khurja-pottery",
+      "fetchedAt": "2026-11-18T10:40:57.645092Z",
+      "contentType": "text/html",
+      "textSha256": "166fb22ac5f356d6fa31172aaec15fc3f974bc12095dcba5cfabf3253ccd1c23",
+      "characters": 2411,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/nizamabad-black-pottery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/nizamabad-black-pottery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/nizamabad-black-pottery",
+      "fetchedAt": "2026-11-18T10:41:00.217901Z",
+      "contentType": "text/html",
+      "textSha256": "bb11c2457ad2221b87ce654f5db3264c9bac11dc07d86e940caea5d2ea45b9b6",
+      "characters": 1885,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/chunar-glaze-pottery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/chunar-glaze-pottery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/chunar-glaze-pottery",
+      "fetchedAt": "2026-11-18T10:41:03.125421Z",
+      "contentType": "text/html",
+      "textSha256": "fd2b8250e350707f77291b46d3469913676efe20a772f4ff3f3d6ff0e6126712",
+      "characters": 1477,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/gorakhpur-terracotta",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/gorakhpur-terracotta",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/gorakhpur-terracotta",
+      "fetchedAt": "2026-11-18T10:41:06.029857Z",
+      "contentType": "text/html",
+      "textSha256": "f46b624b2c55cf7096c0883c3629822356c24cdeb617101daefb218897c12d4b",
+      "characters": 1513,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://www.incredibleindia.gov.in/en/rajasthan/pokhran-pottery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/rajasthan/pokhran-pottery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/rajasthan/pokhran-pottery",
+      "fetchedAt": "2026-11-18T10:41:08.700878Z",
+      "contentType": "text/html",
+      "textSha256": "49d9cf25ce2eac41b87db469bb5c11742e663f63ab94b23ac85d15aa4a60449a",
+      "characters": 1314,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://www.incredibleindia.gov.in/en/puducherry/villianur-terracotta-works",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/puducherry/villianur-terracotta-works",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/puducherry/villianur-terracotta-works",
+      "fetchedAt": "2026-11-18T10:41:14.169919Z",
+      "contentType": "text/html",
+      "textSha256": "eaf96cbdea27a64c394f0c49f30f58cc45891bfc5563632059e29889efacfd07",
+      "characters": 1880,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://bankura.gov.in/?p=2818",
+      "route": "LIVE",
+      "readUrl": "https://bankura.gov.in/?p=2818",
+      "finalUrl": "https://bankura.gov.in/handicrafts/",
+      "fetchedAt": "2026-11-18T10:40:55.126083Z",
+      "contentType": "text/html",
+      "textSha256": "b5119c8fe4ce31ec6bda6c09ef5777515dfc3f80e5f72e36f7fb0c5e7b4e441d",
+      "characters": 3512,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://azamgarh.nic.in/?p=27469",
+      "route": "LIVE",
+      "readUrl": "https://azamgarh.nic.in/?p=27469",
+      "finalUrl": "https://azamgarh.nic.in/tourist-place/nizamabad-black-pottery/",
+      "fetchedAt": "2026-11-18T10:40:58.784797Z",
+      "contentType": "text/html",
+      "textSha256": "5c15ec88d1075300336eb29e9944c02cf1a0ffe8092514d5eeb41681608b5b9b",
+      "characters": 826,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://collections.vam.ac.uk/item/O107377/terracotta-horse-figure-unknown/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O107377/terracotta-horse-figure-unknown/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O107377/terracotta-horse-figure-unknown/",
+      "fetchedAt": "2026-11-18T10:41:00.380594Z",
+      "contentType": "text/html",
+      "textSha256": "d784eb535b86a0889475bf0a50c64c9e4ace114f4a0cac7b5e8b89e0139fd7e3",
+      "characters": 3442,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://collections.vam.ac.uk/item/O107378/terracotta-horse-and-rider-figure-unknown/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O107378/terracotta-horse-and-rider-figure-unknown/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O107378/terracotta-horse-and-rider-figure-unknown/",
+      "fetchedAt": "2026-11-18T10:41:03.886269Z",
+      "contentType": "text/html",
+      "textSha256": "a60ff0c58dd2e85c31664d0e1571e8ff2d0fbabedb718137ff3bf1d2209a43f3",
+      "characters": 2581,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://collections.vam.ac.uk/item/O475034/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O475034/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O475034/",
+      "fetchedAt": "2026-11-18T10:41:05.617072Z",
+      "contentType": "text/html",
+      "textSha256": "10b1fc09378720e625c10de9bb4f33beca937353926c783c8957da320b6a0ab1",
+      "characters": 4237,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://icharchive.intach.org/Myheritagedetail/Index?id=27",
+      "route": "LIVE",
+      "readUrl": "https://icharchive.intach.org/Myheritagedetail/Index?id=27",
+      "finalUrl": "https://icharchive.intach.org/Myheritagedetail/Index?id=27",
+      "fetchedAt": "2026-11-18T10:41:04.599324Z",
+      "contentType": "text/html",
+      "textSha256": "f5c5cb3d0144c935364d8087ff55d245391b636628b8de46a38091cc3550fdb5",
+      "characters": 669,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://www.orfonline.org/research/bankuras-terracotta-can-timely-measures-facilitate-socio-economic-revival-of-potters-community-53289",
+      "route": "LIVE",
+      "readUrl": "https://www.orfonline.org/research/bankuras-terracotta-can-timely-measures-facilitate-socio-economic-revival-of-potters-community-53289",
+      "finalUrl": "https://www.orfonline.org/research/bankuras-terracotta-can-timely-measures-facilitate-socio-economic-revival-of-potters-community-53289",
+      "fetchedAt": "2026-11-18T10:41:06.305752Z",
+      "contentType": "text/html",
+      "textSha256": "4f60f2b6c7a0ab6f7d28c5840186fe75c222570135a6e4660de30f27e5128b66",
+      "characters": 9415,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://www.nid.edu/usttad/files/Black%20Pottery%20Catalogue_USTTAD_NID.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.nid.edu/usttad/files/Black%20Pottery%20Catalogue_USTTAD_NID.pdf",
+      "finalUrl": "https://www.nid.edu/usttad/files/Black%20Pottery%20Catalogue_USTTAD_NID.pdf",
+      "fetchedAt": "2026-11-18T10:41:08.808553Z",
+      "contentType": "application/pdf",
+      "textSha256": "5f93736a0d734d181ccb21f6c732b2273de5d59da68235af9cd90680acc35eec",
+      "characters": 14948,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://pib.gov.in/PressReleasePage.aspx?PRID=1668125",
+      "route": "LIVE",
+      "readUrl": "https://pib.gov.in/PressReleasePage.aspx?PRID=1668125",
+      "finalUrl": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1668125&reg=48&lang=2",
+      "fetchedAt": "2026-11-18T10:41:08.245651Z",
+      "contentType": "text/html",
+      "textSha256": "ec705a18e261376a95e1c0072647311435e4c33ba783d6db4ad2d5567734953c",
+      "characters": 2090,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://www.investindia.gov.in/team-india-blogs/modern-day-craft-and-design-workshop-gi-tagged-molela-clay-work-artisans-under-one",
+      "route": "LIVE",
+      "readUrl": "https://www.investindia.gov.in/team-india-blogs/modern-day-craft-and-design-workshop-gi-tagged-molela-clay-work-artisans-under-one",
+      "finalUrl": "https://www.investindia.gov.in/team-india-blogs/modern-day-craft-and-design-workshop-gi-tagged-molela-clay-work-artisans-under-one",
+      "fetchedAt": "2026-11-18T10:41:09.007083Z",
+      "contentType": "text/html",
+      "textSha256": "557e74d9c5c5fa6f180de710eff27d0c1bc8f34f59167483b0ca412ed8639a59",
+      "characters": 2998,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://www.iimb.ac.in/turn_turn/is-pottery-sustainable-livelihood.php",
+      "route": "LIVE",
+      "readUrl": "https://www.iimb.ac.in/turn_turn/is-pottery-sustainable-livelihood.php",
+      "finalUrl": "https://www.iimb.ac.in/turn_turn/is-pottery-sustainable-livelihood.php",
+      "fetchedAt": "2026-11-18T10:41:09.940978Z",
+      "contentType": "text/html",
+      "textSha256": "58a34a41872569e6429f6958a0dd374b5d3a493e141e1801387bfc4ebd9eaab8",
+      "characters": 6845,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S41",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T10:41:10.743155Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S42",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/561",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/561",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/561",
+      "fetchedAt": "2026-11-18T10:41:14.222139Z",
+      "contentType": "text/html",
+      "textSha256": "2275ba546992f29b726e810ea500eff6acd4b4f2ba442ad0ae64302c2eb1aa1c",
+      "characters": 1760,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S43",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/980",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/980",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/980",
+      "fetchedAt": "2026-11-18T10:41:15.997050Z",
+      "contentType": "text/html",
+      "textSha256": "a177663b9827707947f62eade721f8ea008896019976082c79436159c944840b",
+      "characters": 15895,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S44",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1095",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1095",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1095",
+      "fetchedAt": "2026-11-18T10:41:17.702948Z",
+      "contentType": "text/html",
+      "textSha256": "40799f2c59f0b3bd3eb2389452a2263a6661484fe103821b98c333a67a45f2a0",
+      "characters": 4820,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S45",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/621",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/621",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/621",
+      "fetchedAt": "2026-11-18T10:41:19.645704Z",
+      "contentType": "text/html",
+      "textSha256": "083444478e2013c083dd44e724cb2fd344b4df56f0e4eaa0fecc620975032f04",
+      "characters": 7266,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S46",
+      "url": "https://collections.museumsvictoria.com.au/articles/2794",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260213155349id_/https://collections.museumsvictoria.com.au/articles/2794",
+      "finalUrl": "https://web.archive.org/web/20260213155349id_/https://collections.museumsvictoria.com.au/articles/2794",
+      "fetchedAt": "2026-11-18T10:41:16.967757Z",
+      "contentType": "text/html",
+      "textSha256": "4dde458c7c6dcd49711ed683036fa8fe159d85083f750d1e4fec2c5554379f98",
+      "characters": 3416,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S47",
+      "url": "https://collections.museumsvictoria.com.au/articles/2797",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260315014346id_/https://collections.museumsvictoria.com.au/articles/2797",
+      "finalUrl": "https://web.archive.org/web/20260315014346id_/https://collections.museumsvictoria.com.au/articles/2797",
+      "fetchedAt": "2026-11-18T10:41:19.030622Z",
+      "contentType": "text/html",
+      "textSha256": "2a5157f9fbd644feb26fe9047613296ba4c29791c797a2444174bd7e24195ca6",
+      "characters": 2600,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S48",
+      "url": "https://globalinch.org/craft/clay-terracotta-of-tripura/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/clay-terracotta-of-tripura/",
+      "finalUrl": "https://globalinch.org/craft/clay-terracotta-of-tripura/",
+      "fetchedAt": "2026-11-18T10:41:15.944498Z",
+      "contentType": "text/html",
+      "textSha256": "77fd2159feec89757f351c06302e0e41ea73a980a4f6348c694de02c0d02ac6e",
+      "characters": 853,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S49",
+      "url": "https://globalinch.org/craft/clay-toys-of-lucknow/",
+      "route": "LIVE",
+      "readUrl": "https://globalinch.org/craft/clay-toys-of-lucknow/",
+      "finalUrl": "https://globalinch.org/craft/clay-toys-of-lucknow/",
+      "fetchedAt": "2026-11-18T10:41:17.680922Z",
+      "contentType": "text/html",
+      "textSha256": "d5f900d21db4a987d4d0ee3f232f09057cbcb89020c65791d8b1a6c3bdee230b",
+      "characters": 702,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S29",
+      "quote": "Terracotta means 'baked earth' and it has been used to produce decorative art works as well as construction works since ancient times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S17",
+      "quote": "Terracotta is a ceramic material that has been used for building construction and decorative arts since ancient times in cultures around the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S17",
+      "quote": "Literally translating to 'baked earth', it is made from natural clay, which gives it a characteristic reddish-brown color.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S02",
+      "quote": "While the term ceramic is used to refer to high-fired, glazed, vitrified tableware, art objects and structural clay products; the term pottery is used to refer to low-fired, unvitrified objects and/or cooking and storage vessels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S02",
+      "quote": "The term ceramic is derived from the Greek word keramos which means \"burned material\" or \"earthenware\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "However, recorded usage of clay in potting varies between eight to ten thousand years in different parts of the world. Pottery was the first synthetic material that was created by man.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S02",
+      "quote": "Ceramics are composed of three basic raw materials: (a) clay, a sticky, fine-grained sediment that attains plasticity when wet",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S02",
+      "quote": "(b) non-plastic inclusions, mineral or organic inclusions found naturally in clays or deliberately added to alter the plasticity of the clay as desired",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S02",
+      "quote": "(c) water, added to the clays and inclusions to make them plastic and workable and that is lost during drying and firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S21",
+      "quote": "Although votive terracotta is made by members of the Hindu potter caste, the customer is often a member of the Tribal community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S21",
+      "quote": "Terracotta figures also have a ritualistic aspect associated with it. This becomes evident from the fact that many terracotta figures of deities are used in a number of auspicious occasions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S31",
+      "quote": "The most well-known type of ritual pottery from India is the Bankura clay horse",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S39",
+      "quote": "The Kumhars obtain their name from the Sanskrit word kumbhakar, meaning earthen pot-maker. Some Hindu kumhars fondly call themselves Prajapati, after the lord who created the universe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S12",
+      "quote": "Molela's terracotta artisans belong to the Kumhar ('potter') caste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S17",
+      "quote": "there are about 40 families from the Kumhar caste producing terracotta sculptures",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S16",
+      "quote": "Sadum is a small village located 65km away from Tirupati in Chitoor district in Andhra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S16",
+      "quote": "The craftsmen belong to Kummari community. In Sadum, the men are normally engaged in making the clay objects on potter's wheel, wherein the women folk perform the decoration part.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S14",
+      "quote": "Longpi pottery is an indigenous craft practised in the district of Ukhrul, Manipur in Northeast India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S14",
+      "quote": "the craft is traditionally a domain of the men of the Tangkhul Naga community, although women are not prohibited from practising it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S36",
+      "quote": "it is the men at Longpi that make pots. However, women are not barred completely from making pots and do partake in this activity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S39",
+      "quote": "Many families in the Khowai district depend on and participate in pottery-related activities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S39",
+      "quote": "The MGN Fellow found out that there is one community (Karmakar) involved in pottery activities for generations and use knowledge gained from their ancestors to pursue their craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S15",
+      "quote": "A form of decorative relief clay art, Rajwar clay art originated in the Puhputra village in Chhattisgarh and was popularised by Sonabai Rajwar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S15",
+      "quote": "Created primarily with bamboo and clay, the art form showcases several geometric shapes and motifs inspired by nature and is practised within homes by women who use it to adorn walls and doors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S15",
+      "quote": "Traditionally, Rajwar clay art has three aspects - lepai, jhinjhari kala (jaali work) and pakha lekha (relief work).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S02",
+      "quote": "The earliest ceramics recovered from Period I B of Mehrgarh in Baluchistan are handmade, buff, chaff tempered and soft in texture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S03",
+      "quote": "The first ceramics of Period IB of Mehrgarh were soft, buff, chaff tempered and handmade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S02",
+      "quote": "Pottery from the assemblage associated with Mehrgarh II A show clear signs of forming from slabbing, while those from Period II B indicate that the pottery was wheel turned and formed using paddle and anvil method.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S04",
+      "quote": "The Indus Valley Civilization is characterised by a remarkable sophistication in the production of pottery consisting of red coloured surface often painted with various motifs and designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S10",
+      "quote": "As the first and largest cities of the civilisation to be excavated, Harappa and Mohenjo-daro came to define it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S10",
+      "quote": "The features documented there - a distinctive wheel-made red pottery painted with black motifs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S10",
+      "quote": "became the markers by which sites discovered later across the whole region were identified as IVC settlements",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S03",
+      "quote": "The ceramics of this era, popularly known as \"Classical Harappan Pottery\" is made of very well refined clay. It is well baked, mostly thrown on wheel, gives a metallic sound when struck.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S04",
+      "quote": "The painted pottery of the Indus Civilization constituted <10% while the remaining ones were unpainted and used for most mundane and day to day use.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S03",
+      "quote": "Its colour is mostly reddish pink and buff (which is smaller in quantity).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S03",
+      "quote": "For painting, a contrasting colour preferably black on red and dark brown on buff are often used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S04",
+      "quote": "Some of the pottery specimen like slender jars and large goblets were manufactured using a coiling technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S04",
+      "quote": "The coils of fine clay were prepared and placed one above the other, creating a rough form and shape and then the exterior surface smoothened and finished on a wheel using burnishing tools like leather, smooth pebbles, and also long chert blades.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S04",
+      "quote": "It has been observed through ethnographic parallels that large storage jars were partly wheelmade and finished by hand because of its massive size.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S04",
+      "quote": "While the pottery is in leather hard condition, burnishing and polishing of the surface takes place and then application of a chosen shade of red ochre (iron oxide), a naturally occurring mineral is applied",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S04",
+      "quote": "The slip applied over the pottery during leather hard condition or slightly dried condition turns bright red, the typical characteristic colour of Indus Civilization pottery, upon heating in a kiln.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S04",
+      "quote": "over which a different ochre shade (mixture of dark red-brown iron oxide and black manganese) is used to create the black coloured designs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S10",
+      "quote": "lies Mound E, one of Harappa's oldest mounds, with pottery kilns, workshops for agate, shell and copper goods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S10",
+      "quote": "An archaeological site in the Punjab province of Pakistan, Harappa hosts evidence of one of the largest cities of the Indus Valley Civilisation, which flourished between roughly 2600 and 1900 BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S10",
+      "quote": "As the first Indus site to be excavated, Harappa is considered the archaeological type-site for the civilisation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S04",
+      "quote": "The most common type of kiln found in the Indus Valley sites is the updraft variety. The most elaborate and well preserved one has been recently at Khirsara (Gujarat).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S04",
+      "quote": "The updraft kiln of the Mature Harappan period consist of a circular pit, one end emanating in the form of a huge channel to add fuel into the underground chamber, which is topped by a platform consisting of a series of fire vents, that heated the pottery assemblage stacked over it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S04",
+      "quote": "the heat generated gradually reaches the semi-circular chamber through the vents provided on the platform.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S04",
+      "quote": "The vents on the platform were partly covered by broken potsherds so that heat does not directly reach the pottery, which could have damaged and broken them due to excessive heat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S04",
+      "quote": "The temperature can be guaged by the colour of the fumes coming out of this vent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S04",
+      "quote": "The initial fume coming out of these vent will be smoky, then turns into red, orange, bright orange and once the temperature reaches well above 700 - 8000 C, the colour becomes bluish and transparent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S04",
+      "quote": "In the first process, powdered quartz mixed with flux and colourant is used to produce a faience paste and in the second process, quartz powder is partly melted mixed with a colourant to produce a frit.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S04",
+      "quote": "The earliest recorded faience object is from Harappan datable to 3300 BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S11",
+      "quote": "These figurines are understood to have been handmade using fine fired clay, or terracotta, mixed with sand, shell fragments, mica particles and vegetable material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S11",
+      "quote": "Evidence suggests that some early Indus figurines, that were largely excavated from the Mehrgarh and Nausharo sites in the Balochistan province of present-day Pakistan, date as far back as 7000 BCE, prior to the Early Harappan Phase.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S11",
+      "quote": "Nearly three-quarters of the animal figurines represent cattle, often humped bulls and buffaloes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S04",
+      "quote": "These female figurines are also identified by some scholars as mother goddess and could have been used as a ritualistic symbol.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S04",
+      "quote": "These figurines were manufactured by potters and purchased by individuals for conducting rituals and later discarded to be used by children as toys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S05",
+      "quote": "Black and Red Ware is significant for its chronological span - from the Neolithic Period to the Early Historic Period - as well as its geographical spread across most of the subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S05",
+      "quote": "Black and Red Ware was first excavated and described by Mortimer Wheeler in 1947 and was initially called Satavahana Ware.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S05",
+      "quote": "In Western India, Black and Red Ware pottery is associated with the Harappan culture at sites such as Lothal, Somnath (Prabhas Patan) and Bet Dwarka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S05",
+      "quote": "While both colours may appear on the same surface, most objects typically have a red exterior surface and a black interior surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "The colour of the surfaces may have been achieved using the inverted firing technique, in which the pot is positioned upside-down in a kiln, with the interior filled with vegetal matter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S05",
+      "quote": "When fired, the outer surface is oxidised, resulting in the red colour, while the inner surface is subject to reduction conditions, turning it black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S03",
+      "quote": "the contrasting colour effect on both the surfaces are said to be either the result of inverted firing or by keeping the vessels mouth to mouth while baking, thereby arresting the supply of oxygen to the interiors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "Some scholars have suggested that a double-firing technique may have been used to achieve the same result.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S05",
+      "quote": "The discovery of a similar kind of pottery in ancient Egypt, dated to the fourth millennium BCE, has led to speculation that the technique may have originated there.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "Dated to between 700 BCE and 200 BCE, during the Early Historic Period in the Indian subcontinent, Northern Black Polished Ware is an Iron Age pottery type characterised by glossy surfaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S06",
+      "quote": "Northern Black Polished Ware is made of fine levigated clay turned on a fast wheel, and features a burnished, glossy slip on the exterior and interior surfaces that can range from jet black to grey to steel blue in colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S06",
+      "quote": "How the glossy finish was achieved remains debated and has been ascribed to the use of an iron compound and the firing of pots in reduction conditions, with the application of oil or plant matter immediately after firing or a clay solution made of fine particles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S06",
+      "quote": "The value of this ware can be gauged by the fact that damaged utensils were repaired with copper wire or riveting",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S06",
+      "quote": "Northern Black Polished Ware also comprised only a small percentage of the ceramic assemblage at sites where it was found - in this instance, around 5 percent",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S06",
+      "quote": "This has led to the speculation that Northern Black Polished Ware would have been a luxury item.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S07",
+      "quote": "The size and form of the objects and the relatively small yield have led scholars to suggest that Painted Grey Ware pottery may have been a luxury category of objects likely used by wealthy groups.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S07",
+      "quote": "Largely dated to 1100-400 BCE, with some sites dated to 1400 BCE, the Painted Grey Ware Culture was a post-Harappan material culture found primarily in the Indo-Gangetic plain, named after the finely made painted grey pottery found in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S07",
+      "quote": "The objects were made on a fast wheel and shaped to an egg-shell thickness. Once hard, they were again turned on the wheel to trim and smooth the surface and finished with a thick black slip or painted with black and brown designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S07",
+      "quote": "Although it lends its name to the culture, Painted Grey Ware pottery comprised only 3-10% of the pottery artefacts recovered within its assemblage and was found with other types such as Plain Grey Ware, Black and Red Ware and Black Slip Ware.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S08",
+      "quote": "the Ochre Coloured Pottery Culture (OCP Culture) is a cultural sequence defined by its characteristic ill-fired, wheel-made ceramics with a fine or medium fabric and a thick red slip.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S03",
+      "quote": "Within the Ganga-Yamuna Doab, the Localization Era is characterized by the appearance of Ochre Coloured Pottery. It is illfired, red in colour and heavily weathered with the slip peeling off.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S09",
+      "quote": "Dated to between the third century BCE and the third century CE, the terracotta objects uncovered from Chandraketugarh in North 24 Parganas district, West Bengal form some of the most important archaeological discoveries related to the arts of ancient India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S09",
+      "quote": "These objects constitute the greatest number and variety of specimens from this time period found from any single region in the Indian subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S09",
+      "quote": "Known for their sophistication and unique visual style, the Chandraketugarh terracottas are often highly embellished with a distinctive surface stippling.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S09",
+      "quote": "Stratigraphic dating is not sufficiently reliable here because the deltaic soil of the region, fed by the rivers Ganga and Brahmaputra, has undergone frequent flooding and shifting since ancient times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S35",
+      "quote": "by the end of the 16th century CE, a new Bengali style of temple art became prominent that established itself as an artistic Hindu expression.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S35",
+      "quote": "The terracotta temples in Bankura are mostly Radha-Krishna temples which drew inspiration from Vaishnavism.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S35",
+      "quote": "According to the locals, previously, the process of terracotta production in Bankura included three major classes of workers: the clay collectors and seivers, who would give a fine texture to the clay; the artisans who would add the intricate details, and finally the market traders.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S35",
+      "quote": "There is no specific class of labour anymore for each of these three roles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S31",
+      "quote": "The most well-known type of ritual pottery from India is the Bankura clay horse",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S31",
+      "quote": "which along with other animal forms like elephants and tigers are bought by villagers, as offerings to the forest gods for protection against wild animals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S31",
+      "quote": "and this type of ritual offering is no longer widespread",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S31",
+      "quote": "However, the once dense forests and numerous wild animals of Bankura have practically disappeared, and this type of ritual offering is no longer widespread.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S32",
+      "quote": "Both Bihar and Bankura district have a vivid tradition of making figures of elephant, lion and horses, with or without a rider as ritual figures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S32",
+      "quote": "Horse and horse riders are also offered as votive objects. These were placed at wayside altars and shrines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S34",
+      "quote": "This craft tradition, patronized by the Malla dynasty of Bishnupur, got a Geographical Indication tag for West Bengal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S34",
+      "quote": "This craft is related to the Dharmaraja deity, a form of the sun god.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S35",
+      "quote": "The trademark Bankura horse (uniquely styled terracotta horse made in Bankura) came into existence because people would offer them as a mark of devotion to different deities and even on the tombs of Muslim saints.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S29",
+      "quote": "You will see that the horse comes in seven separated body parts like a hollow long neck, four legs, face, ears, tail etc. You have to assemble those parts to get a horse like structure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S31",
+      "quote": "Painted terracotta horse, Bankura district, India, c.1944",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S31",
+      "quote": "Partially hand-modelled figure of a horse with some incised details, such as the mane. Pellets have been applied for the eyes. The figure is hollow and has openings in the mouth, hooves and rear.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S31",
+      "quote": "Today the clay horse is a popular art object in its own right and has been adopted as the motif for the Central Cottage Industries Emporium, the central marketing body of Indian handicrafts set up by the Government of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S34",
+      "quote": "The Bankura horse is the official crest-motif of the 'All India Handicrafts Board'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S29",
+      "quote": "Enhance the grace of your drawing room with the long-necked Terracotta Horse which is the logo of All India Handicrafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S21",
+      "quote": "For instance the impressive Ayanaar horse from Tamil nadu represents the largest terracotta sculpture ever made and is constructed from coiling and beating, the same techniques used for making vessels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S21",
+      "quote": "In West Bengal, the snake goddess Manasa is worshipped through a terracotta tree shrine constructed from multiple thrown and modelled parts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S21",
+      "quote": "The relief plaques depicting images of Tribal deities are made in Rajasthan and the varied styles of horses and tigers recorded in Gujrat are also made for Tribal clientele.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S21",
+      "quote": "Madhya Pradesh is represented by the highly embellished elephants offered in forest shrines and also by women's wall decoration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S12",
+      "quote": "Historically various communities of Rajasthan, Madhya Pradesh and Gujarat - particularly the Bhil - as well as the Gujjar of northwest India, have purchased Molela plaques as votives.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S17",
+      "quote": "These are mostly bought by the Bhil, Gujjar and Gajirat communities who arrive here accompanied by their priests in order to buy new votive images of their deities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S21",
+      "quote": "Several temples in Southern Rajasthan and also in Madhya Pradesh replace the idols every year, and visit Molela for the beautiful terracotta figurines that are created here.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S12",
+      "quote": "The deities on the plaques range from widely worshipped Hindu deities, such as Chamunda, Kali, Durga, and Ganesha, to more regional cult divinities, such as Nagadeva.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S12",
+      "quote": "folk heroes from local legends also feature prominently, such as Devnarayan, Tejaji, Pabuji, Gora Bhairav, Kala Bhairav, and Panchmukhi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S12",
+      "quote": "Terracotta plaques with hand-moulded, hollow relief imagery have been made by hereditary potters in Molela, a village in Rajasthan in northwestern India, since perhaps the seventeenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S38",
+      "quote": "This Molela Clay-Work artform dates back to over 5000 years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S33",
+      "quote": "It was made by the potter Abdul Majid in Khurja, a historic centre of ceramic production said to have been established in the 14th century and still renowned for its ceramic industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S33",
+      "quote": "The name of the town in present-day Uttar Pradesh means 'waste land'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S23",
+      "quote": "It is believed that potters from Multan came to the town of Khurja and started practicing pottery. In fact, a number of artisans often call themselves 'Multani Kumhars' hinting at the origin of the craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S33",
+      "quote": "According to Sir George Watt in the official catalogue of the Delhi Exhibition of 1902-1903, Indian Art at Delhi, 1903, Khurja had originally produced pottery in a style all of its own",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S33",
+      "quote": "with decoration raised in slight relief by the use of slips in floral patterns picked out in white and blue against a warm orange brown or pale claret coloured field",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S33",
+      "quote": "By the time of the Delhi Exhibition Watt laments that the disctinctive style of Khurja had vanished and that their wares imitated those made at Multan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S24",
+      "quote": "The origin of this art can be traced back to the period of the Mughal emperor Aurangzeb.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S25",
+      "quote": "The origin of this craft can be traced back to the 17th century, when Mughal rulers patronized this artform.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S25",
+      "quote": "For centuries the craft of Chunar Glaze Pottery has formed an integral part of a rich cultural heritage of Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S28",
+      "quote": "The origin of Villianur Terracotta can be traced back to the Chola period (9th to 13th centuries), when the region was under the influence of the Chola dynasty. The art form, however flourished only during the 18th and 19th centuries under the French colonial rule.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S14",
+      "quote": "Historically, the Longpi region formed a meeting place for several villages, including those of neighbouring Nagaland, and the craftspeople traded the pottery in exchange for salt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S36",
+      "quote": "Men carrying ham in traditional baskets supplied the ham to fellow Nagas, who bought it in exchange of salt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S36",
+      "quote": "As Ursula Graham Bower noted in her journal,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S36",
+      "quote": "No wheel was used. The clay was rolled up round a bamboo to bring it to the right shape",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "naturally occurring material composed primarily of fine-grained materials, including crystalline and amorphous oxides and hydroxides of various metals, which are generally plastic at appropriate water contents and will harden when dried or fired",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S02",
+      "quote": "The term clay is usually defined as fine-grained earthy material that becomes plastic or malleable when moistened.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S02",
+      "quote": "Mineralogically, most clay minerals belong to the category of layered silicates or phyllosilicates. The strength of bonds between layers influence the plasticity of the different clay groups.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "Clays are silicates belonging to the phyllosilicate group.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S02",
+      "quote": "The major clay mineral groups are kaolinite, smectite or montmorillonite and illite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S01",
+      "quote": "Their structure consists of octahedral (O) or tetrahedral (T) sheets firmly arranged in structural layers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S01",
+      "quote": "the thickness of the 1:1 (T-O) layer is about 0.7 nm, and the 2:1 (T-O-T) layer is about 1 nm",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S02",
+      "quote": "Kaolinites have a two layered structure and their particle size is large when compared to other mineral types.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S02",
+      "quote": "Kaolinites fire to white or yellow colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S02",
+      "quote": "While the plasticity of sedimentary kaolinites is good, residual kaolinites have low plasticity and their shrinkage is low.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S02",
+      "quote": "Kaolinites occur as primary and secondary clays and are formed because of intense weathering of the parent rock mostly due to acid leaching and are considerably wide-spread.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S02",
+      "quote": "Smectites, formerly known as montmorillonites",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S02",
+      "quote": "The particle size of smectites is very small and they have a three layered structure. Smectites are very plastic and have a high shrinkage rate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S02",
+      "quote": "Smectites, formerly known as montmorillonites are characteristic of arid and alkaline environments and are not heavily weathered.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S02",
+      "quote": "When fired smectites attain cream, red and light brown colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S02",
+      "quote": "On firing, illites attain variable colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S02",
+      "quote": "Illites occur mostly in marine and calcareous sediments and have a three-layered structure. They have considerably good plasticity and small particles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "Bentonite is term for rock whose dominant clay minerals are smectites formed through the weathering of volcanic glass",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "Bentonites are the most plastic common clay. Many clay raw materials are not plastic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "Common clay Sedimentary or by weathering Often illite/smectite mixed-layer minerals General for ceramics excluding porcelain",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "Fuller's earth Sedimentary, residual, or hydrothermal Montmorillonite, sometimes palygorskite, sepiolite",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S19",
+      "quote": "Multani Mitti or Fullers Earth is very fine in nature and is available in form of solid lumps.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "Large amounts of smectite may develop undesirable shrinkage and drying properties.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "Plasticity was defined as a property which permits a material to be deformed under stress without rupturing and to retain the shape produced after the stress is removed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S01",
+      "quote": "For example, ball clays are highly plastic, but undesirable cracks are formed when they are dried. Bentonites have a high affinity for water that it can take a week to dry a specimen. Kaolins can dry in a short time and have little shrinkage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "Non-plastic ceramic raw materials (containing feldspars, quartz, limestone, dolomite, magnesite, calcium phosphate and talc) when mixed with water are not plastic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "A part of the non-plastic ceramic raw materials acts as a filler for reducing of high plasticity or shrinkage of the body when drying or firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S02",
+      "quote": "To improve the workability of the clay and add strength to the walls of the pottery, non -plastic inclusions are added to the clay. These include organic materials like ash, husks of grains, chaff as well as inorganic materials like quartz, lime and grog.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S02",
+      "quote": "The proportion of these non-plastic inclusions greatly varies with the plasticity from 20% to 50% of the total volume",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S02",
+      "quote": "Apart from the non-plastic inclusions potters also combine different clays to improve the plasticity and enhance the workability. Water is then added to the clay in order to make it plastic and then it is kneaded well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S02",
+      "quote": "The kneading or blending of the clay is done to remove the air pockets and also to make the clay homogenous",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S02",
+      "quote": "Impurities are removed from clay either by hand-picking or by drying damp clays and pounding them and passing them through a sieve.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S02",
+      "quote": "A more elaborate technique of levigation where coarse impurities settle in the bottom and the fine clay mixed with water is separated is used in more recent times for very fine clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S02",
+      "quote": "Primary or residual clays are those deposits which remain in the same location as the parent rock from which they have formed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "These deposits are coarse grained and non-plastic as the clay was not transported by water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S02",
+      "quote": "Secondary or transported or sedimentary clays are found in deposits some distance from a probable parent source, transported by streams, rivers, glaciation, erosion and wind.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S02",
+      "quote": "Sedimentary clays are more common than the residual clays and are more homogenous as well as finer in texture, for they are well-sorted and redeposited by external agencies. In comparison with the residual clays they are comparatively higher in organic content.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S02",
+      "quote": "Clays being the products of weathering of silicate rocks, are primarily composed of silica and alumina, the two chemical elements most resistant to weathering.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S01",
+      "quote": "The formation of clay is a chemical process that is assisted by mechanical breakdown and the separation of fine particles from coarse grains",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S02",
+      "quote": "Arnold is of the opinion that potters obtain their raw materials from sources close to home. Clays are procured from 1 to 6 kilometers from the manufacturing site",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S02",
+      "quote": "Tempering materials are often transported from sources farther away because the quantity of temper is much lesser than the clay quantities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S02",
+      "quote": "Glazes comprise of silica, fluxes which reduce the melting point of the glazes and metallic oxides that provide colour to the surface of the pot.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S02",
+      "quote": "Slipping includes applying a uniform coat of liquid clay all over the pot before firing. This not only alters the colour but also reduces the porosity of the pot.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S02",
+      "quote": "These techniques do not involve application of colour and uses a hard tool like a stone or a broken and smoothed potsherd in the process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S02",
+      "quote": "These surface finishing techniques reduce the porosity of the pot by aligning the clay particles on the surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S02",
+      "quote": "Forming of pottery can be done in two ways, hand-building techniques and wheel-thrown techniques. There are various ways pottery can be made employing hand-building techniques and often more than one method is used in pottery making in the Neolithic.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S02",
+      "quote": "The most common of all hand-made techniques is the coiling technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S02",
+      "quote": "The walls of the pots are built by placing the coils successively one on top of the other. The coils moistened by the potter so that they adhere to each other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "The simplest among the hand-building techniques is the pinching method",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "This method can be used only to make small pots and walls of the pottery are randomly uneven.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "Slab building technique is employed on both small and large pots with a non-round shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "Stones, broken pots, baskets and gourds are used as moulds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S02",
+      "quote": "The paddle and anvil method comprises the use of a rounded stone anvil and a wooden mallet shaped paddle. The anvil is held in the interior of the pot while the exterior is beaten by the paddle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S02",
+      "quote": "This method is applied to pots when they are in a leather hard state",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S02",
+      "quote": "This not only increases the diameter of the pot but also makes the wall of the pot thin and compact thus increasing the strength and also decreasing the porosity of the pot",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S02",
+      "quote": "Paddle and anvil technique is mostly used in producing round-based pots, mostly cooking pots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "A mushroom shaped stone-known as Raayi locally which is used to beat the inner surface of objects like pot, vessels etc. where in the Salapa-wooden bat is used to beat the outer surface of the pot.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "Some objects such as pots, bowls, and vessels are beaten with a flat wooden bat and a mushroom shaped stone which is held inside the object. This process is repeated until the required thinness is achieved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S36",
+      "quote": "Like in the rest of the state, the common technique of beaten pottery appears at Longpi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S14",
+      "quote": "the potter then shapes the vessel, keeping one hand on the inside while continuously beating the clay from the outside using a wet hamkapi, a wooden or bamboo paddle with a cylindrical handle and flat head",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S36",
+      "quote": "The village abounds in serpentine rock or lishong lung, a primary material used for making ham.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S36",
+      "quote": "After having powdered the rock it is mixed with clay or ngalung.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S14",
+      "quote": "Longpi pottery is made using a mixture of two materials, leshong lung (black serpentine stone) and leshon or salla nali (weathered reddish-brown rock), which are found in abundance in the area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S36",
+      "quote": "The village sits on this vast geological material with the rock sometimes visible on the surface. The villagers procure the rock from Kaphung Reim, a nearby hill.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S36",
+      "quote": "Between the months of September and March, men at the village, busy themselves in digging the rock and preserving it so that it could be used during the long spell of monsoon months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S14",
+      "quote": "The pot is then air-dried for four to twelve days, usually over the hearth inside the house, before it is fired in an open furnace or a closed kiln",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S17",
+      "quote": "Nada, a coarse black clay with a high sand grog and Alu, a finer gray clay used for throwing. The two clays are mixed together in equal parts with the addition of 20% dried and sifted donkey dung",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S12",
+      "quote": "The clay used for Molela terracotta products is a mix of the coarse black nada clay and the finer grey alu clay",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S17",
+      "quote": "which helps to disperse the heat through the plaque, provides strength and lessons the thermal shock during firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S12",
+      "quote": "The fine sifted clay is then mixed with vegetable gum, wheat or maize chaff, and donkey dung - the latter lends strength and helps disperse heat during the firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S12",
+      "quote": "keeping one hand under to ensure that the forms are hollow. Besides reducing the weight of the piece, this allows for even heat distribution during firing, minimising cracking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S21",
+      "quote": "they are hollow giving rise to lightweight pieces of art. This technique prevents formation of cracks and also uses less amount of clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S12",
+      "quote": "the finer grey alu clay found in the bed of the nearby Banas River and local ponds",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S22",
+      "quote": "Molela is a supple and sticky clay, which is dug out from the banks of the river Banas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S12",
+      "quote": "from where it is typically collected during the monsoon when it is most abundant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S12",
+      "quote": "The moulding is usually done in the monsoon, when the humidity in the air helps reduce cracking in the clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "The norwesters in the potters' village of Panchmura is magnificent in ways more than one.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "The extremely dry atmosphere during the summer months of April-May",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "This period is marked by the holy time of Baisakh when the potter's wheel is stopped as it is believed that during this time Lord Shiva appears from the wheel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S35",
+      "quote": "Many justify it with a scientific reason that the terrible heat exhausts the artisans easily and develop cracks in the pottery items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S26",
+      "quote": "Made with the locally available clay called 'Kabis', found in the ponds only in the months of May and June, the Gorakhpur Terracota pottery has a distinctive natural red colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S16",
+      "quote": "The rich clay found in local ponds is very suitable for making clay idols.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S16",
+      "quote": "Now the raw materials such as isuka-sand, matti-clay are added with water to prepare the dough. The craftsmen mix the clay by stamping and crushing for the better mixing of clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S21",
+      "quote": "In the first phase of making, the clay is strained to rid of the coarse particles & unwanted material. Following which, an appropriate amount of water, & donkey dung powder is mixed, and left for 24 hours. Dough is made by a rigorous kneading of the wet clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S24",
+      "quote": "the making of the pottery requires clay, which is procured during the summer months to be stored in the houses through the year. The clay, which is rich in mica, is meticulously molded on the potter's wheel into a desired shape and then sun dried for several days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S24",
+      "quote": "The unusual black colour of the pottery is achieved by creating an oxygen free environment in the kiln. As oxygen tends to turn clay red, the potters ensure that the kilns are kept air tight during the firing process and thus clay acquires black colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S24",
+      "quote": "silver paint,which is a blend of an equal amount of lead, zinc, and mercury, is used to fill the grooves of the etched patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S24",
+      "quote": "The women folk then etch intricate patterns on the dried clay with a fine needle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S16",
+      "quote": "The objects after firing turn into two different colors such as red and black. The red color is obtained when the smoke comes out through the vents of the kiln. Where in the black color is obtained by covering the vents completely without allowing the smoke to come out.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S02",
+      "quote": "When oxygen is present, an oxidizing atmosphere exists and when there is very little presence of oxygen a reducing atmosphere exists. The firing atmosphere along with the presence of organic matter in the clay paste affects the pot colour, porosity, shrinkage and hardness",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S02",
+      "quote": "In oxidizing conditions, the organic matter in the clay and the fuels is burnt and a light colour is achieved. In reducing conditions, carbon in the clay paste is lost and the carbon from the fuels is also deposited on the surface of the pots resulting in black or dark brown coloured surfaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S02",
+      "quote": "The final appearance of the surface of pottery largely depends on three aspects, the maximum temperature attained during firing, the duration of the firing process and also the firing atmosphere",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S02",
+      "quote": "A minimum of 550°C is needed to produce pottery for considerable hardness and durability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S02",
+      "quote": "Irreversible changes in the clay structure occur at 500° C and above.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S02",
+      "quote": "Clay minerals start to decompose and edges of the grains bond together by ion diffusion which is known as 'sintering'. While kaolinite decomposes and restructures at 585° C, smectite attains the same at relatively high temperature of 678° C",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S02",
+      "quote": "At 900° C clay minerals lose their structure and form new silicate minerals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S01",
+      "quote": "Ceramic processes during sintering occur at temperatures higher than 800°C.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S02",
+      "quote": "When temperature reaches between 500° C and 600° C some of the inclusions in the clay like carbon, sulfides and carbonates and salts are lost. The pots shrink by about 15% or more of their original mass at these temperatures.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S02",
+      "quote": "The pottery is dried before heat is applied to it to prevent the cracking and breakage of pots when the steam from excess moisture in the clay paste is released from the walls of the pot.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S02",
+      "quote": "It is during this stage that the pots shrink and the non-plastic inclusions in the clay fabric reduce the shrinkage. The presence of non-plastic inclusions prevents the pottery from collapsing or warping.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S02",
+      "quote": "The large mineral inclusions in the clay paste increase the thermal shock resistance of the pot and thus can withstand the uneven and short firing episodes of open - fires",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S02",
+      "quote": "Rapid cooling like rapid heating might result in breakage and cracking",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S02",
+      "quote": "Rapid heating and cooling weakens the clay structure and can make the pot less hard.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S02",
+      "quote": "Pots can either be sun-dried or fired in open fires, in small pits or in bonfires, or in closed enclosures like kilns and ovens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S02",
+      "quote": "In open-firing, fuel is first laid out and the pots to be fired are placed directly on the fuel and are also covered with more fuel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S02",
+      "quote": "because the temperature is not uniform in all the places, it results in fireclouds or mottled colours on pottery",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S02",
+      "quote": "The temperatures attained in open-fires are low and range between 600° and 850° C. The degree of temperature attained greatly depends on the fuel that is used. For instance fuels like dung, ash and certain types of wood when used can result in attaining temperatures of over 900° C",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S16",
+      "quote": "The firing is done in the bhatti-traditional open furnace within a circular area. The articles are piled carefully and covered by locally available fuel such as dry coconut leaves, small wooden pieces. The kiln is covered with mud and fired to produce a very high temperature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S16",
+      "quote": "The closed furnace which isbuiltwith bricks is used to burn the finished products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S12",
+      "quote": "The dried plaques are fired in a circular brick wood-fire kiln called awara, often shared by the community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S17",
+      "quote": "a circular open kiln, constructed from brick is one of the most convenient ways to fire the products in-house. The work is loaded into the bhatti on top of cowdung cakes and sealed with few layers of pottery shards.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S17",
+      "quote": "Fire is lit from openings at the bottom of the kiln.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S17",
+      "quote": "The firing temperature achieved is between 600 to 700 degrees centigrade. Firing lasts for 4 to 6 hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S12",
+      "quote": "The plaques are fired at about 900o C for four hours, with the artisans visually estimating the temperature by the height of the flame, and maintaining it with a regular input of firewood and wood shavings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S19",
+      "quote": "The final products are fired in a traditional closed kiln made out of clay and brick.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S19",
+      "quote": "They are closed from above and wood is put from below.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S20",
+      "quote": "The temperature goes up to 800-850 degree Celsius.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S13",
+      "quote": "Once the entire vessel is treated with the solution, the object is baked in a kiln at 800-850° C for six hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S21",
+      "quote": "Left again for drying, now for a week around, then fired in the kiln at around 700-1000 degree centigrade where the iron reacts with the oxygen to give it a natural reddish tone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S28",
+      "quote": "The firing process gives the terracotta its characteristic reddish- brown color and imparts strength.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S18",
+      "quote": "The distinguishing factor which makes the craft of Blue Pottery different from any other pottery techniques being practiced around the world is that it is the only pottery technique that does not use clay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S13",
+      "quote": "Traditionally, the moulding clay is made by passing ground quartz, glass, feldspar, and fuller's earth or kaolin clay through a sieve and adding water to form a fine paste.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S20",
+      "quote": "The dough used in blue pottery lacks plasticity due to which they can't be hard-pressed on wheel to make large products. The products break as the dough is pulled up. Therefore the products are casted in the molds.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S20",
+      "quote": "Artisans develop molds in Plaster of Paris (POP) to caste the desired shape of the blue pottery products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S19",
+      "quote": "Glass is basically a mixture of Boric Oxide and silica which reduces the temperature and also helps in baking the quartz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S19",
+      "quote": "Chaak (Potter's Wheel): The artisans in recent years have started using electrical wheels instead of the traditional hand driven one. The potter's wheel is generally used to make small piece, necks of the vases or base or a product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S25",
+      "quote": "what makes Chunar pottery unique is the application of glaze on a highly unusual red clay to give it a lustrous finish.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S25",
+      "quote": "A glaze is then prepared by mixing powdered glass with clay and applied with the help of a brush. The pottery is further subjected to a second round of firing in a kiln at high temperatures, a critical process as it helps melt the glass and fuse it to the pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S23",
+      "quote": "A particular kind of clay called 'safed mitti' also known as golden clay, is used to prepare these pots. The other ingredients of this clay mix - quartz stone and feldspar- are procured from different states like Gujarat and Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S23",
+      "quote": "The clay is then molded, either by hand or through electric machines, into various shapes like, pots, vases, tiles or items of crockery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S23",
+      "quote": "Each product is then smoothened and hand painted with intricate floral patterns in warm hues of earthy greens, reds, blues and browns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S23",
+      "quote": "The product is then glazed to add luster and ensure longevity and then baked at high temperatures fire to impart strength and highlight the colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S27",
+      "quote": "Pokhran Pottery's light pink color is the result of a laborious process in which hard clay is beaten, ground and filtered through a sieve to get the appropriate fine texture. This clay has different properties than the normal red terracotta used by potters in the rest of the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S28",
+      "quote": "The sculptures are made using a coiled or slab construction method, where the clay is shaped into coils or flattened slabs and then assembled to form the desired shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S28",
+      "quote": "Once firing is complete, the object is embellished or painted using natural dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S15",
+      "quote": "celebrate the post-harvest festival of Chhetra where the women paint homes and other items of daily use such as detha (niches), patani (shelves) and dodki (rice storage jars) with lepai, a mixture of clay and cow dung.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S12",
+      "quote": "More contemporary Molela imagery also includes scenes from rural life, wedding processions, and other secular themes that have broadened the appeal of the craft and provided artisans with more opportunities besides the seasonal demand for ritual plaques.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S27",
+      "quote": "Once dry, the clay products are hand- painted by the artisans. Intricate floral or geometric patterns are often found adorning these earthen pots and vases.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S27",
+      "quote": "After the painting is complete these earthen wares are fired in a kiln at high temperatures in order to harden the clay and set the colors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S26",
+      "quote": "Skilled potters mold the 'Kabis' clay in to various shapes like bells, vases, animal figures, bullock carts and lamps.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S26",
+      "quote": "Terracotta products, especially the famous horse, has caught the fancy of many over the years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S28",
+      "quote": "the Villianur Terracotta Works often depict scenes from Hindu mythology, local folklore and historical events.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S14",
+      "quote": "Recognisable through its characteristic black colour and minimalist design",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S14",
+      "quote": "Longpi pottery traditionally comprised cookware, but now also includes storage and serving vessels for food and beverages.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S37",
+      "quote": "distributed electric potter wheels, through Video Conference, to 100 potter families in Nanded and Parbhani districts of Maharashtra as a major step ptowards empowerment with KumharSashaktikaranYojana of Khadi and Village Industries Commission (KVIC)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S37",
+      "quote": "who have been given 10-day training by KVIC.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S37",
+      "quote": "Shri Gadkari lauded the KumharSashaktikaranYojana of KVIC saying this was the first-of-its-kind initiative taken since independence to strengthen and improve the living of potters in the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S12",
+      "quote": "Besides the seasonal demand for their products, Molela artisans are heavily reliant on exhibitions, fairs and middlemen to sell their products, often resulting in low returns and inconsistent income",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S12",
+      "quote": "the demand has also declined significantly in recent years. In particular, the terracottas face competition from cement and plaster imitations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S12",
+      "quote": "For votive plaques, the artisans were traditionally paid in kind with items such as grains or clothing; they have historically practised agriculture during other times of the year to sustain themselves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S17",
+      "quote": "The craftspeople turn to agriculture to sustain themselves in the lean months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S17",
+      "quote": "the demand for these plaques tends to be seasonal. New vessels and votive murtis are needed at festival and harvest times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S38",
+      "quote": "This 'Craft and Design Workshop' organized by the ODOP Team at Invest India was a first-of-its-kind in which 4 design and packaging experts trained 25 inter-generational Molela Terracotta artisans with new design and packaging ideas on 30th September and 1st October 2021.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S38",
+      "quote": "This 2-day workshop resulted in training Molela Clay-Work artisans with fresh ideas for diversifying products across premium consumer demand product segments such as functional décor, planters, and creeper tiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S21",
+      "quote": "sanctioned Integrated Design and Technical Development Project in Terracotta Craft for the 40 artisans to Export promotion council of Handicrafts, New Delhi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S21",
+      "quote": "During this 5 months workshop at khemli , Udaipur ,from 27th sept. 2015 - 26th Feb.2016, 25 prototypes with new designs were developed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S35",
+      "quote": "Terracotta is still of high interest in the global market where Panchmura, Surul, Chaltaberia and Shetpur-Palpara are the major villages in West Bengal that exports terracotta to international markets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S35",
+      "quote": "the issues of equipment, transportation and other logistical problems; the lack of interaction between the artisans and the urban consumers in Kolkata; the terracotta artisans are mostly dependent on local patronage;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S35",
+      "quote": "the inadequate capital, sluggish marketing and falling demand are causing these marginalized artisans to become extinct",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S35",
+      "quote": "However, the artisans face some key problems that are crippling the market for this kind of artwork",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S35",
+      "quote": "He woefully adds that a large number of youngsters in the area, including his own son, have moved to Kolkata not only because of the money but also their inability to commit to the labour required for this kind of artistry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S39",
+      "quote": "A study was conducted with 12 female potters from the Tuichindrai village in the Teliamura block of Khowai Tripura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S39",
+      "quote": "People in Tuichindrai create various pots and vessels, as also clay idols of Hindu gods and goddesses, decorative items, and ritual artifacts. They make their biggest profits by selling idols.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S39",
+      "quote": "Lack of raw materials, the availability of high-quality goods made by outside potters in the local markets, and low income from wholesalers are some of the main difficulties the pottery community is currently facing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S39",
+      "quote": "A study was conducted with 12 female potters from the Tuichindrai village in the Teliamura block of Khowai Tripura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S39",
+      "quote": "According to a study by Jahanara et al., 2021, it was found that due to low profit, potters changed their line of work. Only 10% of them relied solely on pottery because it could do not provide for their basic needs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S14",
+      "quote": "At present, initiatives like Mathew Sasa Craft, started by Longpi craftsperson Mathew Sasa in Delhi in 2007, and USTTAD (Upgrading the Skills and Training in Traditional Arts/Crafts for Development) started by the Ministry of Minority Affairs in September 2015, are working to preserve the craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S36",
+      "quote": "The project was initiated with a 15-day field visit to Manipur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S36",
+      "quote": "The product category broadly includes planters, furniture, cookware, serveware, and table accessories.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S29",
+      "quote": "These beautiful artworks are mainly concentrated in Bishnupur and Panchmura of Bankura District.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S29",
+      "quote": "Take a tour to Panchmura village which is the home to famous terracotta industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S35",
+      "quote": "Panchmura village near Bishnupur, Bankura District is one of the main hubs of terracotta in West Bengal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S35",
+      "quote": "Terracotta came into existence in Bengal due to the unavailability of stones and large endowments of alluvial soil left by the main rivers in the Bankura district: Damodar, Dwarakeshwar and the Kangsabati.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S35",
+      "quote": "A Panchmura artisan says that a Durga idol made in Bankura is at least thrice as heavy as an idol of the same size made in Kolkata because the soil found in Bankura is much denser and mineral-rich, making the crafting process extremely laborious.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S21",
+      "quote": "The Rajasthani terracotta art boasts of its unique character and style. The art is traditional to the village of Molela in the Rajsamand district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S30",
+      "quote": "Nizamabad-Azamgarh is known for its Black Pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S26",
+      "quote": "The Terracotta pottery work of Gorakhpur is a traditional art form that transcends centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S26",
+      "quote": "It is primarily the families of nearby villages in Aurangabad, Gularia, Bharwalia and Budhadih that practice this craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S18",
+      "quote": "Historically Jaipur city has evolved as the main center for producing the famous Blue pottery articles. Later it spread in small pockets around Jaipur. Kot Jewar became the next big center after Jaipur in producing Blue Pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S13",
+      "quote": "several other workshops producing similar wares have cropped up in regions such as Chinhat near Lucknow in present-day Uttar Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S14",
+      "quote": "Locally called Longpi ham or hampai, it derives its name from the villages of Longpi Khullen and Longpi Kajui, which yield the material used in its making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S36",
+      "quote": "the village of Longpi, located in Ukhrul district at Manipur has been identified as a key cluster where several Christians actively practice the craft of black pottery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S16",
+      "quote": "Sadum is a small village located 65km away from Tirupati in Chitoor district in Andhra Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S16",
+      "quote": "The practice of terracotta craft has been happening for many generations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C245",
+      "sourceId": "S28",
+      "quote": "The Villianur Terrracotta works are handicrafts popular in the Villianur region of Puducherry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S27",
+      "quote": "The Pokhran region, with its abundant clay deposits and skilled artisans, has been a centre for pottery production for a very long time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S22",
+      "quote": "The Molela craft from Rajasthan is one such unique form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C247",
+      "sourceId": "S22",
+      "quote": "Two types of clay- Nada and Alu- are mixed with each other along with sifted cow dung. The clay is then kneaded",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S39",
+      "quote": "A study was conducted with 12 female potters from the Tuichindrai village in the Teliamura block of Khowai Tripura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C248",
+      "sourceId": "S39",
+      "quote": "It was found that pottery is the only livelihood for 91.6 percent of the respondents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2008 - MARCH 2009",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S41",
+      "quote": "74 66 Blue Pottery of Jaipur Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S41",
+      "quote": "75 67 Molela Clay Work Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S13",
+      "quote": "Jaipur's blue glaze pottery received a Geographical Indication (GI) tag in 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C249",
+      "sourceId": "S12",
+      "quote": "Molela terracotta was awarded the Geographical Indication (GI) tag in 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C250",
+      "sourceId": "S28",
+      "quote": "these handmade terracotta works received their Geographical Indication (GI) tag in 2011",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C250",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2011 - MARCH 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C250",
+      "sourceId": "S41",
+      "quote": "154 201 Villianur Terracotta Works Handicraft Pondicherry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2014 - MARCH 2015",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S41",
+      "quote": "219 178 Khurja Pottery Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2015 - MARCH 2016",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C251",
+      "sourceId": "S41",
+      "quote": "237 459 Nizamabad Black Pottery Handicrafts Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C252",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2017 - MARCH 2018",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C252",
+      "sourceId": "S41",
+      "quote": "306 453 Bankura Panchmura Terracotta Craft Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C252",
+      "sourceId": "S41",
+      "quote": "307 519 Pokaran Pottery Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C252",
+      "sourceId": "S34",
+      "quote": "got a Geographical Indication tag for West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2019 - MARCH 2020",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S41",
+      "quote": "365 619 Gorakhpur Terracotta Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2021 - MARCH 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C253",
+      "sourceId": "S41",
+      "quote": "371 621 Chunar Glaze Pottery Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2022 - MARCH 2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S41",
+      "quote": "446 561 Manamadurai Pottery Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2023 - MARCH 2024",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S41",
+      "quote": "619 980 Assam Asharikandi Terracotta Craft Handicraft Assam",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C254",
+      "sourceId": "S41",
+      "quote": "634 1095 Meghalaya Lyrnai Pottery Handicraft Meghalaya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C255",
+      "sourceId": "S41",
+      "quote": "FROM APRIL 2025 - MARCH 2026",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C255",
+      "sourceId": "S41",
+      "quote": "725 795 Clay Doll of Krishnanagar Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C256",
+      "sourceId": "S12",
+      "quote": "Molela terracotta was awarded the Geographical Indication (GI) tag in 2008; however, the benefit to the artisans appears to have been little so far, owing to the prevalent challenges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S42",
+      "quote": "| Geographical Indications | Manamadurai Pottery |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S42",
+      "quote": "| Applicant Name | Manamadurai Pottery Works Cottage Industrial Co-operative Society |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S42",
+      "quote": "Manamadurai, Sivaganga, Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S43",
+      "quote": "| Geographical Indications | Assam Asharikandi Terracotta Craft |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C257",
+      "sourceId": "S43",
+      "quote": "| Applicant Name | Asharikandi Terrakota Doll Making Samabai Samity Limited |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S44",
+      "quote": "| Geographical Indications | Meghalaya Lyrnai Pottery |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S44",
+      "quote": "| Applicant Name | 1.Tyrshang Lurshai Pottery Cooperative Society Limited and 2. Jaintia Hills Development Society |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S44",
+      "quote": "Tyrshang B, P.O. Ummulong, West Jaintia Hills, Meghalaya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C258",
+      "sourceId": "S44",
+      "quote": "Jowai Elaka Jowai, West Jaintia Hills , Meghalaya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S45",
+      "quote": "| Geographical Indications | Chunar Glaze Pottery |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S45",
+      "quote": "| Applicant Name | Chunar Pottery Samiti |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S45",
+      "quote": "| Applicant Address | Post: Gangeshwarnath, Chunar, Mirzapur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C259",
+      "sourceId": "S45",
+      "quote": "| Date of Filing | 10-09-2018 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C260",
+      "sourceId": "S48",
+      "quote": "Melaghar and Palpada village of West Tripura district are known for their special pressed clay work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S48",
+      "quote": "Melaghar and Palpada village of West Tripura district are known for their special pressed clay work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C261",
+      "sourceId": "S48",
+      "quote": "The technique is to use a process of press forming inside moulds made of plaster-of-Paris that are cast over a well crafted original piece.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S48",
+      "quote": "Melaghar and Palpada village of West Tripura district are known for their special pressed clay work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S48",
+      "quote": "Traditionally wheel based pots and utensils and handcrafted by the villagers who have diversified into other objects of skill and dexterity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C262",
+      "sourceId": "S48",
+      "quote": "Potters now also make small items of utility like oil lamp, flower vases, decorative wall tiles and pressed functional roofing tiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C263",
+      "sourceId": "S47",
+      "quote": "Lucknow figures are created by tooling and carving clay in a 'green stage' (a process that references Italian stone carving). The figures are then painted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C264",
+      "sourceId": "S47",
+      "quote": "it was models of fruits and vegetables - said to be so lifelike they defied detection of their artifice unless handled - that Lucknow potters were renowned for, both in India and internationally",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C265",
+      "sourceId": "S47",
+      "quote": "Lucknow figures have a neo-classical, Italian-style fluidity to their dress",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C265",
+      "sourceId": "S47",
+      "quote": "In the early 19th century the likeness of clay figures to Italian terracottas was accentuated by the application of a red ochre coating; this style of decoration declined after the annexation of Awadh in 1856",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C266",
+      "sourceId": "S49",
+      "quote": "Lucknow is famous for its clay toys which are crafted intricately by the Kumbhars who belong to the Prajapati community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C266",
+      "sourceId": "S49",
+      "quote": "Made and sold in sets these are of two kinds- figurines and fruits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C266",
+      "sourceId": "S49",
+      "quote": "The former are made using cast fro the body and hand-rolled clay for hands and legs while the latter are made using only cast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C267",
+      "sourceId": "S46",
+      "quote": "While the manufacture of traditional clay toys and religious idols continued throughout India in the 18th century, the manufacture of naturalistic clay models was centred in three regions: Krishnanagar, Lucknow and Poona",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C268",
+      "sourceId": "S46",
+      "quote": "Clay figure modelling has been widely practiced in India for hundreds of years. Models of humans, animals and scenes from everyday life have been used for worship, as toys, ornamentation and for ethnographic purposes.",
+      "result": "PASS"
+    }
+  ]
+}

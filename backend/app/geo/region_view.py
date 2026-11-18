@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import logging
+import re
 from collections import defaultdict
 from collections.abc import Callable, Iterable, Mapping, Sequence
+from types import MappingProxyType
 
 from app.core.errors import InvalidInput
 from app.geo.aggregation import state_aggregate
+from app.geo.climate import MEAN_STAT, TREND_DATASETS
 from app.geo.datasets import region_dataset, value_grid
 from app.geo.records import Coverage, DatasetRecord, PlaceRecord, RegionRecords, SeriesTotals, ValueRecord
 from app.research.stream import SourceRef
@@ -25,11 +28,43 @@ from app.schemas.region import (
     split_depth_or_period,
 )
 
-__all__ = ["craft_region", "district_value", "region_facets", "value_order"]
+__all__ = [
+    "CLIMATE_QUANTITIES",
+    "NORMAL_SOURCES",
+    "craft_region",
+    "district_value",
+    "one_normal_per_quantity",
+    "region_facets",
+    "value_order",
+]
 
 logger = logging.getLogger(__name__)
 
 GRID_SEPARATOR = "; "
+CHELSA = "CHELSA_2_1_1981_2010"
+RAINFALL_SOURCE = TREND_DATASETS["annual_precipitation"]
+TEMPERATURE_SOURCE = TREND_DATASETS["annual_mean_temperature"]
+CLIMATE_QUANTITIES: Mapping[tuple[str, str], str] = MappingProxyType(
+    {
+        (CHELSA, "annual_precipitation"): "annual rainfall",
+        (RAINFALL_SOURCE, "annual_precipitation"): "annual rainfall",
+        (CHELSA, "precipitation"): "monthly rainfall",
+        (RAINFALL_SOURCE, "monthly_precipitation"): "monthly rainfall",
+        (CHELSA, "annual_mean_temperature"): "annual temperature",
+        (TEMPERATURE_SOURCE, "annual_mean_temperature"): "annual temperature",
+    }
+)
+NORMAL_SOURCES: Mapping[str, str] = MappingProxyType(
+    {
+        "annual rainfall": RAINFALL_SOURCE,
+        "monthly rainfall": RAINFALL_SOURCE,
+        "annual temperature": TEMPERATURE_SOURCE,
+    }
+)
+NORMAL_STATS = (MEAN_STAT, "DISTRICT_P10", "DISTRICT_P90")
+NORMAL_PERIOD = re.compile(r"(\d{4})-(\d{4})(?:-(\d{2}))?")
+
+NormalKey = tuple[str, str | None]
 
 
 def craft_region(records: RegionRecords) -> CraftRegion:
@@ -62,13 +97,40 @@ def craft_region(records: RegionRecords) -> CraftRegion:
 
 def region_facets(values: Iterable[RegionValue]) -> list[RegionFacet]:
     grouped: dict[str, list[RegionValue]] = defaultdict(list)
-    for value in values:
+    for value in one_normal_per_quantity(values):
         grouped[DATASET_FACETS[value.dataset_code]].append(value)
     return [
         RegionFacet(facet=facet, values=sorted(grouped[facet], key=value_order))
         for facet in REGION_FACETS
         if facet in grouped
     ]
+
+
+def one_normal_per_quantity(values: Iterable[RegionValue]) -> list[RegionValue]:
+    listed = list(values)
+    keys = [_normal_key(value) for value in listed]
+    preferred = {
+        key
+        for key, value in zip(keys, listed, strict=True)
+        if key is not None and value.stat == MEAN_STAT and _from_preferred_source(key, value)
+    }
+    return [
+        value
+        for key, value in zip(keys, listed, strict=True)
+        if key not in preferred or _from_preferred_source(key, value)
+    ]
+
+
+def _normal_key(value: RegionValue) -> NormalKey | None:
+    quantity = CLIMATE_QUANTITIES.get((value.dataset_code, value.variable))
+    period = NORMAL_PERIOD.fullmatch(value.period)
+    if quantity is None or period is None or value.stat not in NORMAL_STATS:
+        return None
+    return quantity, period.group(3)
+
+
+def _from_preferred_source(key: NormalKey, value: RegionValue) -> bool:
+    return NORMAL_SOURCES[key[0]] == value.dataset_code
 
 
 def value_order(value: RegionValue) -> tuple[str, str, int, int, str, int, str]:

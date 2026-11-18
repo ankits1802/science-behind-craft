@@ -1,13 +1,17 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "craft": {
     "slug": "Kutch-Ajrakh",
     "name": "Kutch Ajrakh",
     "path": "/crafts/Kutch-Ajrakh",
     "id": "54081f83-8396-5a46-a3bc-a467984eebc2",
+    "displayName": "Kutch Ajrakh",
     "localName": null,
+    "localNames": [],
     "categoryName": "Textiles based Craft Category",
     "subCategoryName": "Hand Block Printing",
+    "familyLabel": "Textiles",
+    "kindLabel": "Hand block printing",
     "giStatus": "GI",
     "stateOfPractice": [
       "Gujarat"
@@ -144,6 +148,26 @@
       }
     ]
   },
+  "tabs": {
+    "process": true,
+    "region": true,
+    "sharedScience": false,
+    "sources": true,
+    "evidence": true
+  },
+  "depth": {
+    "basis": "CURATED",
+    "coverage": "FULL",
+    "claims": 132,
+    "sources": 20,
+    "stages": 14,
+    "pictures": 4
+  },
+  "suggestedQuestions": [
+    "How do mordants and dyes fix the colours of Kutch Ajrakh in the cloth?",
+    "What are the stages of Kutch Ajrakh, from plain cloth to finished print?",
+    "What do local water and climate give to the colours of Kutch Ajrakh?"
+  ],
   "overview": {
     "lede": [
       {
@@ -732,31 +756,398 @@
       }
     ]
   },
-  "sourcesDiffer": [
+  "giCard": {
+    "status": "GI",
+    "applicationNumber": "1050",
+    "certificateNumber": null,
+    "filedOn": "2023-01-31",
+    "registeredOn": "2024-04-22",
+    "journalIssue": "188",
+    "proprietors": [
+      "Ajarakhpur Hastkala Vikas Sangathan"
+    ],
+    "authorisedUserCount": null,
+    "claimIds": [
+      "e4ee0609-98d4-57de-ab17-dbd57caa872b",
+      "5cb3479a-6c65-5d15-8c62-67402240831d",
+      "be537f31-1f71-50f6-ba28-063486cc14f4"
+    ]
+  },
+  "events": [
     {
-      "about": "How many stages the ajrakh process has",
+      "kind": "STATED",
+      "start": 1001,
+      "end": 1400,
+      "date": null,
+      "place": null,
       "claimIds": [
-        "4fa58d34-7f65-5ff0-91c6-df06c4d4afbc",
-        "bd3a7650-0c02-5396-8303-5be039f3b339",
-        "43c95874-db3b-5e1c-bc34-c5d59cd658f1"
+        "7978cb03-8c0f-5590-83b6-9c89301044de"
       ]
     },
     {
+      "kind": "STATED",
+      "start": 1586,
+      "end": 1631,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "4d318823-bf7e-5adc-b7e5-d0e10d2ef14c"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1855,
+      "end": 1879,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "bffdb724-23a1-514d-9d8c-63fc2b3c8e5d"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1868,
+      "end": 1868,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "b7c6f3ad-4d15-57eb-b109-2cb4610c541b"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1950,
+      "end": 1950,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "9fe88ac3-aaa2-5244-be60-832ab4140750"
+      ]
+    },
+    {
+      "kind": "WORKFORCE",
+      "start": 1970,
+      "end": 1970,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "fb49791e-12aa-5abb-8a6d-8c96a5fa0937"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1970,
+      "end": 1979,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "06b6e357-ff92-5720-93b2-28187ea42b5f"
+      ]
+    },
+    {
+      "kind": "PRICE",
+      "start": 1975,
+      "end": 1975,
+      "date": "1975",
+      "place": "Barmer",
+      "claimIds": [
+        "e2371390-0a9e-5240-bb26-90705e3981e5"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1980,
+      "end": 1989,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "d4dd04f1-c588-5333-96ec-ad9f15a5ad1b"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1981,
+      "end": 1981,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "02a06e76-881b-51ec-bb07-a124466d5ad3"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 1989,
+      "end": 1989,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "c9181417-c923-52de-81f9-55a19776b252"
+      ]
+    },
+    {
+      "kind": "WORKFORCE",
+      "start": 1990,
+      "end": 1990,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "6bb5d6ad-62be-56d1-aba5-3778164e2aef"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "9720923b-d389-57fa-9568-c1305a60aa20"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "d86f4d93-4dfe-582b-aacf-d0048bf7b7d1"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "5b0a469f-e20c-57e2-a805-eecbbea5edd7"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "dff7abad-59d7-5d28-ad60-2de08895e899"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "a4755d0b-96a5-5b78-884e-87e8171ddc08"
+      ]
+    },
+    {
+      "kind": "WORKFORCE",
+      "start": 2001,
+      "end": 2001,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "4d3722ce-8500-5fee-a6af-7e63f06e5416"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2006,
+      "end": 2006,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "21be2f7e-72e7-5816-a799-9726d819579c"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2006,
+      "end": 2006,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "9aa50f92-7858-59d4-846c-ccf85cf0d456"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2006,
+      "end": 2006,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "21843e32-7803-5283-833c-8b53386af617"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2007,
+      "end": 2007,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "3e52b12a-ee20-59f4-8dbc-eb2527837279"
+      ]
+    },
+    {
+      "kind": "WORKFORCE",
+      "start": 2011,
+      "end": 2011,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "c5cff9f5-ffd1-5fa8-bed2-c2d24adb6c83"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2014,
+      "end": 2014,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "766edff2-29c3-531e-8530-d4a38668bc5e"
+      ]
+    },
+    {
+      "kind": "STATED",
+      "start": 2022,
+      "end": 2022,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "37e4ded9-a2a0-594e-87d7-9640f35201cd"
+      ]
+    },
+    {
+      "kind": "GI_FILED",
+      "start": 2023,
+      "end": 2023,
+      "date": "2023-01-31",
+      "place": null,
+      "claimIds": [
+        "e4ee0609-98d4-57de-ab17-dbd57caa872b"
+      ]
+    },
+    {
+      "kind": "WORKFORCE",
+      "start": 2023,
+      "end": 2023,
+      "date": null,
+      "place": null,
+      "claimIds": [
+        "bde3b8e2-a4bf-5284-af30-92aedf0f0f38"
+      ]
+    },
+    {
+      "kind": "GI_REGISTERED",
+      "start": 2024,
+      "end": 2024,
+      "date": "2024-04-22",
+      "place": null,
+      "claimIds": [
+        "be537f31-1f71-50f6-ba28-063486cc14f4"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "WATER",
+      "place": {
+        "key": "L14",
+        "name": "Dhamadka River (Suran)"
+      },
+      "claimIds": [
+        "c9181417-c923-52de-81f9-55a19776b252",
+        "d4dd04f1-c588-5333-96ec-ad9f15a5ad1b",
+        "b37731d0-a97b-5364-819a-0eaf957cb48c"
+      ]
+    },
+    {
+      "factor": "WATER",
+      "place": {
+        "key": "L04",
+        "name": "Dhamadka"
+      },
+      "claimIds": [
+        "9720923b-d389-57fa-9568-c1305a60aa20",
+        "70174414-ba14-586e-9473-0d24023dbd77"
+      ]
+    },
+    {
+      "factor": "WATER",
+      "place": {
+        "key": "L01",
+        "name": "Ajrakhpur"
+      },
+      "claimIds": [
+        "e35e2bac-0f31-5854-ac76-4e5db51807db",
+        "f3821ee1-785a-5c65-8fba-b45c65f0d957"
+      ]
+    },
+    {
+      "factor": "WATER",
+      "place": null,
+      "claimIds": [
+        "862da851-8379-5cb3-89f9-5c959435b7df",
+        "f6c7ddb3-483f-5014-bf9f-46c0ccf456d1",
+        "18259828-30cc-5e3e-8812-81cf8bb97bf5"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "place": null,
+      "claimIds": [
+        "7310acd2-7f3f-5bba-b69b-a2d05ecdf4a8",
+        "38564577-3b35-5c78-82ee-6a37666bea8d"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "place": null,
+      "claimIds": [
+        "983f9623-a226-5562-8ca4-c7e6dc6ad738"
+      ]
+    },
+    {
+      "factor": "VEGETATION",
+      "place": {
+        "key": "L04",
+        "name": "Dhamadka"
+      },
+      "claimIds": [
+        "497ba7e3-56b1-558d-9f16-04737f054c45"
+      ]
+    }
+  ],
+  "sourcesDiffer": [
+    {
+      "key": "differ-2",
       "about": "How many times the saaj soaking is repeated",
+      "weight": 3,
       "claimIds": [
         "d669d024-c5bd-53e7-aac4-b893f5e0cc0f",
         "0bd7073c-07ab-5d97-9f45-77445f2a8987"
       ]
     },
     {
+      "key": "differ-3",
       "about": "How long the iron mixture for kut ferments",
+      "weight": 3,
       "claimIds": [
         "294632cc-4f46-543a-8397-442645bc92c1",
         "38564577-3b35-5c78-82ee-6a37666bea8d"
       ]
     },
     {
+      "key": "differ-4",
       "about": "What the iron-black kut paste is made from",
+      "weight": 3,
       "claimIds": [
         "ba5e756e-abc0-593e-9cd0-3852bc0c86b0",
         "294632cc-4f46-543a-8397-442645bc92c1",
@@ -764,21 +1155,91 @@
       ]
     },
     {
+      "key": "differ-8",
+      "about": "How long the red dye bath lasts",
+      "weight": 3,
+      "claimIds": [
+        "6983d685-c315-53a1-ac60-e37d6f30a0a9",
+        "54433ff1-4dd5-5513-89ad-ade97d5f16c4"
+      ]
+    },
+    {
+      "key": "differ-9",
+      "about": "Whether the first red dyeing comes before or after the gach resists and indigo dyeing",
+      "weight": 3,
+      "claimIds": [
+        "6983d685-c315-53a1-ac60-e37d6f30a0a9",
+        "b23e32f3-0c55-5aad-bc8f-312e8733c343"
+      ]
+    },
+    {
+      "key": "differ-10",
+      "about": "How long a natural indigo vat ferments",
+      "weight": 3,
+      "claimIds": [
+        "6b70f138-fea8-5f60-b970-db7107beb21f",
+        "4ef4fac0-91be-5422-9c81-d84347f21a3c"
+      ]
+    },
+    {
+      "key": "differ-12",
+      "about": "Whether castor oil and camel dung are still used in saaj",
+      "weight": 3,
+      "claimIds": [
+        "065d1bdf-069f-5009-bba6-29c048f0e1f1",
+        "5f044f84-98bf-5a7d-b043-42379c351f3e"
+      ]
+    },
+    {
+      "key": "differ-13",
+      "about": "The metal of the red dyeing pot",
+      "weight": 3,
+      "claimIds": [
+        "cccf688c-5ffb-53d8-b5d2-a611f27c4c39",
+        "54433ff1-4dd5-5513-89ad-ade97d5f16c4"
+      ]
+    },
+    {
+      "key": "differ-14",
+      "about": "Whether synthetic alizarin is chemically the same as natural madder",
+      "weight": 3,
+      "claimIds": [
+        "288bf009-cdd0-5e6a-8b68-e3bcf293b12a",
+        "a2695dd4-19b9-58e8-803d-0b40d8cec6de"
+      ]
+    },
+    {
+      "key": "differ-1",
+      "about": "How many stages the ajrakh process has",
+      "weight": 2,
+      "claimIds": [
+        "4fa58d34-7f65-5ff0-91c6-df06c4d4afbc",
+        "bd3a7650-0c02-5396-8303-5be039f3b339",
+        "43c95874-db3b-5e1c-bc34-c5d59cd658f1"
+      ]
+    },
+    {
+      "key": "differ-5",
       "about": "Whether Dhamadka was abandoned after the 2001 earthquake or still makes ajrakh",
+      "weight": 1,
       "claimIds": [
         "c4c11ee0-b1dc-59ed-8d74-a563f17cc217",
         "4d3722ce-8500-5fee-a6af-7e63f06e5416"
       ]
     },
     {
+      "key": "differ-6",
       "about": "How far Dhamadka is from Bhuj",
+      "weight": 1,
       "claimIds": [
         "ac038fb7-aca8-518f-a174-46bab2600058",
         "2470ff5d-8e6e-52eb-8dee-d64073feabac"
       ]
     },
     {
+      "key": "differ-7",
       "about": "How many traditional ajrakh designs there are",
+      "weight": 1,
       "claimIds": [
         "6ca78c3c-3d21-5af0-a7af-5e3c4bb01d8f",
         "1e3ed420-d797-536e-8099-80df771a40e7",
@@ -786,52 +1247,12 @@
       ]
     },
     {
-      "about": "How long the red dye bath lasts",
-      "claimIds": [
-        "6983d685-c315-53a1-ac60-e37d6f30a0a9",
-        "54433ff1-4dd5-5513-89ad-ade97d5f16c4"
-      ]
-    },
-    {
-      "about": "Whether the first red dyeing comes before or after the gach resists and indigo dyeing",
-      "claimIds": [
-        "6983d685-c315-53a1-ac60-e37d6f30a0a9",
-        "b23e32f3-0c55-5aad-bc8f-312e8733c343"
-      ]
-    },
-    {
-      "about": "How long a natural indigo vat ferments",
-      "claimIds": [
-        "6b70f138-fea8-5f60-b970-db7107beb21f",
-        "4ef4fac0-91be-5422-9c81-d84347f21a3c"
-      ]
-    },
-    {
+      "key": "differ-11",
       "about": "What the four ajrakh colours stand for",
+      "weight": 1,
       "claimIds": [
         "e953c2ea-cd0f-5198-9ba3-655b25b7f897",
         "43cd0c1b-cac7-5dee-834e-2a65134cdf04"
-      ]
-    },
-    {
-      "about": "Whether castor oil and camel dung are still used in saaj",
-      "claimIds": [
-        "065d1bdf-069f-5009-bba6-29c048f0e1f1",
-        "5f044f84-98bf-5a7d-b043-42379c351f3e"
-      ]
-    },
-    {
-      "about": "The metal of the red dyeing pot",
-      "claimIds": [
-        "cccf688c-5ffb-53d8-b5d2-a611f27c4c39",
-        "54433ff1-4dd5-5513-89ad-ade97d5f16c4"
-      ]
-    },
-    {
-      "about": "Whether synthetic alizarin is chemically the same as natural madder",
-      "claimIds": [
-        "288bf009-cdd0-5e6a-8b68-e3bcf293b12a",
-        "a2695dd4-19b9-58e8-803d-0b40d8cec6de"
       ]
     }
   ],
@@ -1071,6 +1492,7 @@
       "localNames": [],
       "honours": [],
       "place": null,
+      "placeKey": null,
       "claimIds": [
         "b39de11a-7d32-57da-a971-15b7678c5c0b",
         "d03420a1-6f01-5d4f-b5d8-8964da396b25",
@@ -1084,6 +1506,7 @@
       "localNames": [],
       "honours": [],
       "place": null,
+      "placeKey": null,
       "claimIds": [
         "de8f8d06-5c94-529e-9a06-4ba0c48b1bdc",
         "999c50cf-89ee-5b10-9405-fa16971567da"
@@ -1096,6 +1519,7 @@
       "localNames": [],
       "honours": [],
       "place": "Pethapur",
+      "placeKey": "L12",
       "claimIds": [
         "d8f0a7d6-0e77-521d-a18e-688b2489221a"
       ]
@@ -1109,6 +1533,7 @@
         "Honorary doctorate, De Montfort University"
       ],
       "place": "Ajrakhpur",
+      "placeKey": "L01",
       "claimIds": [
         "f6c72ca1-8f1d-5e17-b56e-2bb1804b3a56",
         "21be2f7e-72e7-5816-a799-9726d819579c"
@@ -1123,6 +1548,7 @@
         "National Award (1981)"
       ],
       "place": "Dhamadka",
+      "placeKey": "L04",
       "claimIds": [
         "02a06e76-881b-51ec-bb07-a124466d5ad3",
         "9fe88ac3-aaa2-5244-be60-832ab4140750"
@@ -1135,6 +1561,7 @@
       "localNames": [],
       "honours": [],
       "place": "Dhamadka",
+      "placeKey": "L04",
       "claimIds": [
         "6ca78c3c-3d21-5af0-a7af-5e3c4bb01d8f",
         "766edff2-29c3-531e-8530-d4a38668bc5e"
@@ -1147,6 +1574,7 @@
       "localNames": [],
       "honours": [],
       "place": "Ajrakhpur",
+      "placeKey": "L01",
       "claimIds": [
         "e4ee0609-98d4-57de-ab17-dbd57caa872b"
       ]
@@ -1158,6 +1586,7 @@
       "localNames": [],
       "honours": [],
       "place": null,
+      "placeKey": null,
       "claimIds": [
         "3e52b12a-ee20-59f4-8dbc-eb2527837279"
       ]
@@ -1187,6 +1616,8 @@
             "localNames": [
               "gissi"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "5f044f84-98bf-5a7d-b043-42379c351f3e"
             ]
@@ -1199,6 +1630,8 @@
             "localNames": [
               "erandi ka tel"
             ],
+            "botanicalName": "Ricinus communis",
+            "pubchemCid": null,
             "claimIds": [
               "5f044f84-98bf-5a7d-b043-42379c351f3e"
             ]
@@ -1209,6 +1642,8 @@
             "kind": "MINERAL",
             "role": "INPUT",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": 10340,
             "claimIds": [
               "5f044f84-98bf-5a7d-b043-42379c351f3e"
             ]
@@ -1216,7 +1651,11 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": [
+          "differ-2",
+          "differ-12"
+        ]
       },
       {
         "id": "a98162af-d142-556a-aa72-c142141a2b73",
@@ -1238,6 +1677,8 @@
               "harda",
               "harde"
             ],
+            "botanicalName": "Terminalia chebula",
+            "pubchemCid": null,
             "claimIds": [
               "df53e051-1cff-5e9f-8946-3953bc553b0d",
               "5feb2829-74ac-5426-9893-8c9f80059de1",
@@ -1247,7 +1688,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "2d2ff502-2751-5444-a7e2-f21e8eaadf9d",
@@ -1269,6 +1711,8 @@
             "localNames": [
               "baval no gund"
             ],
+            "botanicalName": "Acacia nilotica",
+            "pubchemCid": null,
             "claimIds": [
               "efaa0585-7a92-59fe-b6fa-fc7f8969d520"
             ]
@@ -1281,6 +1725,8 @@
             "localNames": [
               "chuna"
             ],
+            "botanicalName": null,
+            "pubchemCid": 6093208,
             "claimIds": [
               "efaa0585-7a92-59fe-b6fa-fc7f8969d520",
               "6fe93417-24b8-5080-beeb-b1db808bd372",
@@ -1297,6 +1743,8 @@
             "localNames": [
               "por"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "efaa0585-7a92-59fe-b6fa-fc7f8969d520",
               "19f73174-c1f2-5bf0-a165-012b275cfb56",
@@ -1306,7 +1754,8 @@
           }
         ],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "8fe60692-4a23-58f7-8c53-440bd5acaa67",
@@ -1320,7 +1769,8 @@
         "materials": [],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "56cb030a-4653-5f47-982c-6c0a9b229225",
@@ -1344,6 +1794,8 @@
               "kachuka no lot",
               "kachika"
             ],
+            "botanicalName": "Tamarindus indica",
+            "pubchemCid": null,
             "claimIds": [
               "ba5e756e-abc0-593e-9cd0-3852bc0c86b0"
             ]
@@ -1354,6 +1806,8 @@
             "kind": "CLAY",
             "role": "INPUT",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "ba5e756e-abc0-593e-9cd0-3852bc0c86b0"
             ]
@@ -1366,6 +1820,8 @@
             "localNames": [
               "besan"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "294632cc-4f46-543a-8397-442645bc92c1"
             ]
@@ -1378,6 +1834,8 @@
             "localNames": [
               "gud"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "ba5e756e-abc0-593e-9cd0-3852bc0c86b0"
             ]
@@ -1388,6 +1846,8 @@
             "kind": "MINERAL",
             "role": "MORDANT",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": 24393,
             "claimIds": [
               "ba5e756e-abc0-593e-9cd0-3852bc0c86b0"
             ]
@@ -1400,6 +1860,8 @@
             "localNames": [
               "lokhand"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "ba5e756e-abc0-593e-9cd0-3852bc0c86b0"
             ]
@@ -1438,6 +1900,10 @@
               "76c28e36-98a9-52a3-b09f-80250bab237c"
             ]
           }
+        ],
+        "differ": [
+          "differ-3",
+          "differ-4"
         ]
       },
       {
@@ -1460,6 +1926,8 @@
               "kachuka no lot",
               "kachika"
             ],
+            "botanicalName": "Tamarindus indica",
+            "pubchemCid": null,
             "claimIds": [
               "f95b9c0d-f8d0-5dfd-9851-422ff6c6e36b"
             ]
@@ -1472,6 +1940,8 @@
             "localNames": [
               "fatakdi"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "f95b9c0d-f8d0-5dfd-9851-422ff6c6e36b"
             ]
@@ -1479,7 +1949,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "1752d37c-73d0-5438-b1b7-e4e8bb591d91",
@@ -1500,6 +1971,8 @@
             "localNames": [
               "baval no gund"
             ],
+            "botanicalName": "Acacia nilotica",
+            "pubchemCid": null,
             "claimIds": [
               "9ba109d9-1d6e-5823-8774-d4cae10113c2"
             ]
@@ -1512,6 +1985,8 @@
             "localNames": [
               "fatakdi"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "9ba109d9-1d6e-5823-8774-d4cae10113c2"
             ]
@@ -1524,6 +1999,8 @@
             "localNames": [
               "mati"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "9ba109d9-1d6e-5823-8774-d4cae10113c2"
             ]
@@ -1536,6 +2013,8 @@
             "localNames": [
               "chuna"
             ],
+            "botanicalName": null,
+            "pubchemCid": 6093208,
             "claimIds": [
               "9ba109d9-1d6e-5823-8774-d4cae10113c2",
               "6fe93417-24b8-5080-beeb-b1db808bd372",
@@ -1548,6 +2027,8 @@
             "kind": "OTHER",
             "role": "RESIST",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "9ba109d9-1d6e-5823-8774-d4cae10113c2"
             ]
@@ -1555,7 +2036,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "9646174f-c5ce-5a22-a705-3bd2ea222dec",
@@ -1576,6 +2058,8 @@
             "kind": "DYE",
             "role": "DYE",
             "localNames": [],
+            "botanicalName": "Indigofera tinctoria",
+            "pubchemCid": 10215,
             "claimIds": [
               "6b70f138-fea8-5f60-b970-db7107beb21f",
               "e0d47fdd-0122-5269-b5f5-e6572b4a29a6",
@@ -1590,6 +2074,8 @@
             "localNames": [
               "kuwadia na beej"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "6b70f138-fea8-5f60-b970-db7107beb21f"
             ]
@@ -1603,6 +2089,8 @@
               "sajikhar",
               "sagikhar"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "4ef4fac0-91be-5422-9c81-d84347f21a3c"
             ]
@@ -1613,6 +2101,8 @@
             "kind": "OTHER",
             "role": "OTHER",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": 14798,
             "claimIds": [
               "94ec92f4-70e4-53be-80e9-ac0128ee0c10"
             ]
@@ -1625,6 +2115,8 @@
             "localNames": [
               "hydros"
             ],
+            "botanicalName": null,
+            "pubchemCid": 24489,
             "claimIds": [
               "94ec92f4-70e4-53be-80e9-ac0128ee0c10"
             ]
@@ -1640,6 +2132,8 @@
               "naand",
               "maat"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "6b70f138-fea8-5f60-b970-db7107beb21f"
             ]
@@ -1683,6 +2177,9 @@
               "8b628467-f530-5780-a7f3-c1661ca25abc"
             ]
           }
+        ],
+        "differ": [
+          "differ-10"
         ]
       },
       {
@@ -1697,7 +2194,8 @@
         "materials": [],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "08258158-fbee-56fd-8fe7-ba82fc13bc84",
@@ -1721,6 +2219,8 @@
             "localNames": [
               "al"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "752db1b3-7757-5ac9-8c83-8dc3b773da68"
             ]
@@ -1731,6 +2231,8 @@
             "kind": "DYE",
             "role": "DYE",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": 6293,
             "claimIds": [
               "54433ff1-4dd5-5513-89ad-ade97d5f16c4",
               "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
@@ -1747,6 +2249,8 @@
               "majith",
               "majeeta"
             ],
+            "botanicalName": "Rubia cordifolia",
+            "pubchemCid": null,
             "claimIds": [
               "6983d685-c315-53a1-ac60-e37d6f30a0a9",
               "a2695dd4-19b9-58e8-803d-0b40d8cec6de",
@@ -1761,6 +2265,8 @@
             "localNames": [
               "dhaori na phool"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "6983d685-c315-53a1-ac60-e37d6f30a0a9"
             ]
@@ -1776,6 +2282,8 @@
               "rangchul",
               "charu"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "6983d685-c315-53a1-ac60-e37d6f30a0a9",
               "cccf688c-5ffb-53d8-b5d2-a611f27c4c39"
@@ -1789,7 +2297,12 @@
             "claimId": "6983d685-c315-53a1-ac60-e37d6f30a0a9"
           }
         ],
-        "reactions": []
+        "reactions": [],
+        "differ": [
+          "differ-8",
+          "differ-9",
+          "differ-13"
+        ]
       },
       {
         "id": "fc82eca2-7641-5b67-845c-4d9ecb71857c",
@@ -1810,6 +2323,8 @@
             "localNames": [
               "fatakdi"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "dd83856a-ca2b-5818-bf23-155ef6a61ff3"
             ]
@@ -1817,7 +2332,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "8b696d90-b3de-56ce-9c57-96dd013a17de",
@@ -1837,6 +2353,8 @@
             "localNames": [
               "gissi"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "983f9623-a226-5562-8ca4-c7e6dc6ad738"
             ]
@@ -1850,7 +2368,8 @@
             "claimId": "983f9623-a226-5562-8ca4-c7e6dc6ad738"
           }
         ],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "76eececa-c790-5661-ae97-18f8de3b4f02",
@@ -1868,6 +2387,8 @@
             "kind": "WATER",
             "role": "INPUT",
             "localNames": [],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "18259828-30cc-5e3e-8812-81cf8bb97bf5",
               "f6c7ddb3-483f-5014-bf9f-46c0ccf456d1",
@@ -1877,7 +2398,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       },
       {
         "id": "a3adbab7-63bd-53fb-93ec-08ae3fd9d108",
@@ -1899,6 +2421,8 @@
             "localNames": [
               "shisham"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "19f73174-c1f2-5bf0-a165-012b275cfb56"
             ]
@@ -1911,6 +2435,8 @@
             "localNames": [
               "sag"
             ],
+            "botanicalName": null,
+            "pubchemCid": null,
             "claimIds": [
               "19f73174-c1f2-5bf0-a165-012b275cfb56"
             ]
@@ -1918,7 +2444,8 @@
         ],
         "tools": [],
         "timing": [],
-        "reactions": []
+        "reactions": [],
+        "differ": []
       }
     ],
     "reactions": []
@@ -2178,6 +2705,7 @@
         "retrievedAt": "2026-11-17T18:17:00Z"
       },
       "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
+      "role": "HERO",
       "stageId": null,
       "claimIds": [
         "3ac4b68d-571a-5db1-a1e9-5c4e85785ba4"
@@ -2203,6 +2731,7 @@
         "retrievedAt": "2026-11-17T18:17:00Z"
       },
       "caption": "An ajrakh made by Kutch artisans, held up to show its repeated field and multiple borders",
+      "role": "OVERVIEW",
       "stageId": null,
       "claimIds": [
         "3ac4b68d-571a-5db1-a1e9-5c4e85785ba4"
@@ -2228,6 +2757,7 @@
         "retrievedAt": "2026-11-17T18:17:00Z"
       },
       "caption": "Natural dye and printing materials, among them alum and lime, laid out on an ajrakh cloth",
+      "role": "OVERVIEW",
       "stageId": null,
       "claimIds": [
         "c29ce3c6-daf9-5d78-8e77-419427fd5860"
@@ -2253,6 +2783,7 @@
         "retrievedAt": "2026-11-17T18:17:00Z"
       },
       "caption": "Detail of an ajrakh print with star-shaped and geometric patterns on an indigo ground",
+      "role": "OVERVIEW",
       "stageId": null,
       "claimIds": [
         "8a362768-5f95-5a33-b05d-8de31d554004"
@@ -2298,6 +2829,110 @@
         "e35e2bac-0f31-5854-ac76-4e5db51807db",
         "f3821ee1-785a-5c65-8fba-b45c65f0d957"
       ]
+    }
+  ],
+  "sameFamily": [
+    {
+      "craft": {
+        "slug": "Ahmedabad-Sodagari-Block-Print",
+        "name": "Ahmedabad Sodagari Block Print",
+        "path": "/crafts/Ahmedabad-Sodagari-Block-Print"
+      },
+      "displayName": "Ahmedabad Sodagari Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Gujarat"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Bagh-Prints-Of-Madhya-Pradesh",
+        "name": "Bagh Prints of Madhya Pradesh",
+        "path": "/crafts/Bagh-Prints-Of-Madhya-Pradesh"
+      },
+      "displayName": "Bagh Prints of Madhya Pradesh",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Madhya Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Bagru-Hand-Block-Print",
+        "name": "Bagru Hand Block Print",
+        "path": "/crafts/Bagru-Hand-Block-Print"
+      },
+      "displayName": "Bagru Hand Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Rajasthan"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Banaras-Hand-Block-Print",
+        "name": "Banaras Hand Block Print",
+        "path": "/crafts/Banaras-Hand-Block-Print"
+      },
+      "displayName": "Banaras Hand Block Print",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Uttar Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Farrukhabad-Prints",
+        "name": "Farrukhabad Prints",
+        "path": "/crafts/Farrukhabad-Prints"
+      },
+      "displayName": "Farrukhabad Prints",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Uttar Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
+    },
+    {
+      "craft": {
+        "slug": "Pilkhua-Hand-Block-Print-Textiles",
+        "name": "Pilkhua Hand Block Print Textiles",
+        "path": "/crafts/Pilkhua-Hand-Block-Print-Textiles"
+      },
+      "displayName": "Pilkhua Hand Block Print Textiles",
+      "giStatus": "GI",
+      "stateOfPractice": [
+        "Uttar Pradesh"
+      ],
+      "basis": "REGISTER",
+      "coverage": null,
+      "claims": 0,
+      "hero": null,
+      "lede": null
     }
   ],
   "evidence": {
@@ -8222,21 +8857,6 @@
   ],
   "sources": [
     {
-      "id": "29ff4c54-3b6b-55b3-94d8-4bf24abb1190",
-      "kind": "PAPER",
-      "title": "Ajrakh: From Caste Dress to Catwalk",
-      "authors": [
-        "Eiluned Mair Edwards"
-      ],
-      "year": 2016,
-      "doi": "10.1080/00404969.2016.1211436",
-      "url": "https://irep.ntu.ac.uk/id/eprint/29181/1/PubSub6671_Edwards.pdf",
-      "publisher": "Textile History, Pasold Research Fund",
-      "licence": null,
-      "attribution": null,
-      "reliability": "A"
-    },
-    {
       "id": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
       "kind": "GI_JOURNAL",
       "title": "Geographical Indications Journal No. 188: Kutch Ajrakh, G.I. Application No. 1050",
@@ -8267,47 +8887,19 @@
       "reliability": "B"
     },
     {
-      "id": "0f972816-673d-5591-a40c-4f569f14049c",
-      "kind": "WEB_PAGE",
-      "title": "Khatris & Community (Ajrakh exhibition)",
-      "authors": [],
-      "year": null,
-      "doi": null,
-      "url": "https://exhibitions-khamir.org/ajrakh/khatris-community",
-      "publisher": "Khamir",
-      "licence": null,
-      "attribution": null,
-      "reliability": "D"
-    },
-    {
-      "id": "6adb6cbb-4fdb-5704-b90f-128dec6da755",
-      "kind": "WEB_PAGE",
-      "title": "Ajrakh: An Introduction",
+      "id": "29ff4c54-3b6b-55b3-94d8-4bf24abb1190",
+      "kind": "PAPER",
+      "title": "Ajrakh: From Caste Dress to Catwalk",
       "authors": [
-        "Mushtak Khan"
+        "Eiluned Mair Edwards"
       ],
-      "year": null,
-      "doi": null,
-      "url": "https://www.sahapedia.org/ajrakh-introduction-0",
-      "publisher": "Sahapedia",
+      "year": 2016,
+      "doi": "10.1080/00404969.2016.1211436",
+      "url": "https://irep.ntu.ac.uk/id/eprint/29181/1/PubSub6671_Edwards.pdf",
+      "publisher": "Textile History, Pasold Research Fund",
       "licence": null,
       "attribution": null,
-      "reliability": "B"
-    },
-    {
-      "id": "84fe6dc5-da8d-5c60-b637-dab7da8c0450",
-      "kind": "BOOK_CHAPTER",
-      "title": "Indigo in Kutch, India: Art and Science, Environment and Economics (Blue Gold: The Art and Science of Indigo)",
-      "authors": [
-        "Judy Frater"
-      ],
-      "year": 2024,
-      "doi": null,
-      "url": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
-      "publisher": "Mingei International Museum",
-      "licence": null,
-      "attribution": null,
-      "reliability": "B"
+      "reliability": "A"
     },
     {
       "id": "7652c68a-621e-5e6b-aa6f-3c30ccece107",
@@ -8320,36 +8912,6 @@
       "doi": null,
       "url": "https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1964&context=tsaconf",
       "publisher": "Textile Society of America Symposium Proceedings",
-      "licence": null,
-      "attribution": null,
-      "reliability": "B"
-    },
-    {
-      "id": "08bb36fb-ebac-59ee-90da-997a6e769e33",
-      "kind": "OTHER",
-      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
-      "authors": [
-        "Azera Parveen Rahman"
-      ],
-      "year": 2019,
-      "doi": null,
-      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
-      "publisher": "Mongabay India",
-      "licence": null,
-      "attribution": null,
-      "reliability": "C"
-    },
-    {
-      "id": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
-      "kind": "OTHER",
-      "title": "An investigation into the development of traditional Indian textile designs for new markets, with specific focus on the ajrakh block printing of Gujarat",
-      "authors": [
-        "Ruth Clifford"
-      ],
-      "year": 2012,
-      "doi": null,
-      "url": "https://e-space.mmu.ac.uk/305091/1/Ruth%20Clifford%20MA%20by%20Research%20May%202012.pdf",
-      "publisher": "Manchester Metropolitan University",
       "licence": null,
       "attribution": null,
       "reliability": "B"
@@ -8371,84 +8933,19 @@
       "reliability": "A"
     },
     {
-      "id": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
-      "kind": "ENCYCLOPEDIA",
-      "title": "Ajrakh",
-      "authors": [],
-      "year": 2022,
-      "doi": null,
-      "url": "https://imp-art.org/articles/ajrakh/",
-      "publisher": "Impart Encyclopedia of Art (MAP Academy)",
-      "licence": null,
-      "attribution": null,
-      "reliability": "B"
-    },
-    {
-      "id": "d550c915-c2d7-5c1b-9ab2-0dd6e1f7d443",
-      "kind": "WEB_PAGE",
-      "title": "Adapting to the present (Ajrakh exhibition)",
-      "authors": [],
-      "year": null,
-      "doi": null,
-      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
-      "publisher": "Khamir",
-      "licence": null,
-      "attribution": null,
-      "reliability": "D"
-    },
-    {
-      "id": "295b4db6-e177-52a5-a03a-363f246dcb5e",
-      "kind": "WEB_PAGE",
-      "title": "Art of Ajrakh (Ajrakh exhibition)",
-      "authors": [],
-      "year": null,
-      "doi": null,
-      "url": "https://exhibitions-khamir.org/ajrakh/art-of-ajrakh",
-      "publisher": "Khamir",
-      "licence": null,
-      "attribution": null,
-      "reliability": "D"
-    },
-    {
-      "id": "1edf27ec-d318-5426-9192-5f9c2578c9f7",
-      "kind": "PAPER",
-      "title": "Ajrak: Cloth from the Soil of Sindh",
+      "id": "84fe6dc5-da8d-5c60-b637-dab7da8c0450",
+      "kind": "BOOK_CHAPTER",
+      "title": "Indigo in Kutch, India: Art and Science, Environment and Economics (Blue Gold: The Art and Science of Indigo)",
       "authors": [
-        "Noorjehan Bilgrami"
+        "Judy Frater"
       ],
-      "year": 2000,
+      "year": 2024,
       "doi": null,
-      "url": "https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1770&context=tsaconf",
-      "publisher": "Textile Society of America Symposium Proceedings",
+      "url": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "publisher": "Mingei International Museum",
       "licence": null,
       "attribution": null,
       "reliability": "B"
-    },
-    {
-      "id": "7a349536-5117-5b00-bac9-193f20cd4c8e",
-      "kind": "OTHER",
-      "title": "Ajrakh process sample, IS.7:1 to 3-2007",
-      "authors": [],
-      "year": null,
-      "doi": null,
-      "url": "https://collections.vam.ac.uk/item/O132500/",
-      "publisher": "Victoria and Albert Museum",
-      "licence": null,
-      "attribution": null,
-      "reliability": "A"
-    },
-    {
-      "id": "9ebae5f4-3338-526d-8ca1-b4ebc754cc0e",
-      "kind": "OTHER",
-      "title": "Textile (ajrakh), Sind, ca. 1855-1879, 5473A/(IS)",
-      "authors": [],
-      "year": null,
-      "doi": null,
-      "url": "https://collections.vam.ac.uk/item/O469296/",
-      "publisher": "Victoria and Albert Museum",
-      "licence": null,
-      "attribution": null,
-      "reliability": "A"
     },
     {
       "id": "bd72b3e6-d30d-59bb-ad79-29d2d600fa8c",
@@ -8477,17 +8974,116 @@
       "reliability": "A"
     },
     {
-      "id": "f58a2475-cfdd-5a10-9f94-106a7833842c",
-      "kind": "OTHER",
-      "title": "Shawl (ajrakh), Gujarat, 2006, IS.5-2007",
+      "id": "6adb6cbb-4fdb-5704-b90f-128dec6da755",
+      "kind": "WEB_PAGE",
+      "title": "Ajrakh: An Introduction",
+      "authors": [
+        "Mushtak Khan"
+      ],
+      "year": null,
+      "doi": null,
+      "url": "https://www.sahapedia.org/ajrakh-introduction-0",
+      "publisher": "Sahapedia",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "0f972816-673d-5591-a40c-4f569f14049c",
+      "kind": "WEB_PAGE",
+      "title": "Khatris & Community (Ajrakh exhibition)",
       "authors": [],
       "year": null,
       "doi": null,
-      "url": "https://collections.vam.ac.uk/item/O132496/",
-      "publisher": "Victoria and Albert Museum",
+      "url": "https://exhibitions-khamir.org/ajrakh/khatris-community",
+      "publisher": "Khamir",
       "licence": null,
       "attribution": null,
-      "reliability": "A"
+      "reliability": "C"
+    },
+    {
+      "id": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Ajrakh",
+      "authors": [],
+      "year": 2022,
+      "doi": null,
+      "url": "https://imp-art.org/articles/ajrakh/",
+      "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+      "kind": "OTHER",
+      "title": "An investigation into the development of traditional Indian textile designs for new markets, with specific focus on the ajrakh block printing of Gujarat",
+      "authors": [
+        "Ruth Clifford"
+      ],
+      "year": 2012,
+      "doi": null,
+      "url": "https://e-space.mmu.ac.uk/305091/1/Ruth%20Clifford%20MA%20by%20Research%20May%202012.pdf",
+      "publisher": "Manchester Metropolitan University",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "08bb36fb-ebac-59ee-90da-997a6e769e33",
+      "kind": "OTHER",
+      "title": "Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again",
+      "authors": [
+        "Azera Parveen Rahman"
+      ],
+      "year": 2019,
+      "doi": null,
+      "url": "https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/",
+      "publisher": "Mongabay India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C"
+    },
+    {
+      "id": "d550c915-c2d7-5c1b-9ab2-0dd6e1f7d443",
+      "kind": "WEB_PAGE",
+      "title": "Adapting to the present (Ajrakh exhibition)",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/adapting",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C"
+    },
+    {
+      "id": "1edf27ec-d318-5426-9192-5f9c2578c9f7",
+      "kind": "PAPER",
+      "title": "Ajrak: Cloth from the Soil of Sindh",
+      "authors": [
+        "Noorjehan Bilgrami"
+      ],
+      "year": 2000,
+      "doi": null,
+      "url": "https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1770&context=tsaconf",
+      "publisher": "Textile Society of America Symposium Proceedings",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "295b4db6-e177-52a5-a03a-363f246dcb5e",
+      "kind": "WEB_PAGE",
+      "title": "Art of Ajrakh (Ajrakh exhibition)",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://exhibitions-khamir.org/ajrakh/art-of-ajrakh",
+      "publisher": "Khamir",
+      "licence": null,
+      "attribution": null,
+      "reliability": "C"
     },
     {
       "id": "51e22abf-b885-58c6-aaef-e4016064e39c",
@@ -8497,6 +9093,45 @@
       "year": null,
       "doi": null,
       "url": "https://collections.vam.ac.uk/item/O132498/",
+      "publisher": "Victoria and Albert Museum",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "9ebae5f4-3338-526d-8ca1-b4ebc754cc0e",
+      "kind": "OTHER",
+      "title": "Textile (ajrakh), Sind, ca. 1855-1879, 5473A/(IS)",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://collections.vam.ac.uk/item/O469296/",
+      "publisher": "Victoria and Albert Museum",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "7a349536-5117-5b00-bac9-193f20cd4c8e",
+      "kind": "OTHER",
+      "title": "Ajrakh process sample, IS.7:1 to 3-2007",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://collections.vam.ac.uk/item/O132500/",
+      "publisher": "Victoria and Albert Museum",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "f58a2475-cfdd-5a10-9f94-106a7833842c",
+      "kind": "OTHER",
+      "title": "Shawl (ajrakh), Gujarat, 2006, IS.5-2007",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://collections.vam.ac.uk/item/O132496/",
       "publisher": "Victoria and Albert Museum",
       "licence": null,
       "attribution": null,

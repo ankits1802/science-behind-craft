@@ -15,7 +15,12 @@ from app.core.config import get_settings
 from app.core.db import sessionmaker
 from app.core.deps import get_current_user
 from app.core.errors import AppError, InvalidInput, Refused
-from app.core.rate_limit import voice_session_attempt, voice_speech_attempt, voice_turn_attempt
+from app.core.rate_limit import (
+    retry_after_value,
+    voice_session_attempt,
+    voice_speech_attempt,
+    voice_turn_attempt,
+)
 from app.models import User
 from app.schemas.voice import (
     RELAY_AUDIO_TYPES,
@@ -219,7 +224,7 @@ def _throttled(attempt: tuple[bool, float], detail: str) -> None:
     allowed, retry = attempt
     if not allowed:
         raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS, detail, {"Retry-After": str(max(1, int(retry + 0.999)))}
+            status.HTTP_429_TOO_MANY_REQUESTS, detail, {"Retry-After": retry_after_value(retry)}
         )
 
 

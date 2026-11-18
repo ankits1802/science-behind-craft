@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Leather-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "f45b471413096f03e8a6bac8777c496062d096464a0e5e76d79a619454f19ddd",
+  "checkedAt": "2026-11-18T10:00:00Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/329-kolhapuri-chappal-_journal_109.pdf",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/614",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "route": "LIVE",
+      "readUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "finalUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "route": "LIVE",
+      "readUrl": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "finalUrl": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0047877",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "route": "LIVE",
+      "readUrl": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "finalUrl": "https://irf.fhnw.ch/bitstreams/195a3787-a8b5-4574-b668-b22a3143a69b/download",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.britannica.com/topic/leather",
+      "route": "LIVE",
+      "readUrl": "https://www.britannica.com/topic/leather",
+      "finalUrl": "https://www.britannica.com/topic/leather",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.britannica.com/topic/Chamar",
+      "route": "LIVE",
+      "readUrl": "https://www.britannica.com/topic/Chamar",
+      "finalUrl": "https://www.britannica.com/topic/Chamar",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "route": "LIVE",
+      "readUrl": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "finalUrl": "https://wepa.unima.org/en/togalu-gombeyata/",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "route": "LIVE",
+      "readUrl": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "finalUrl": "https://www.sahapedia.org/tholu-bommalata-telugu-shadow-puppet-theatre",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "route": "LIVE",
+      "readUrl": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "finalUrl": "https://www.thehindu.com/society/the-last-original-kolhapuris/article19231770.ece",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/west-bengal/santiniketan-leather-goods",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "route": "LIVE",
+      "readUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "finalUrl": "https://www.incredibleindia.gov.in/en/uttar-pradesh/kanpur-saddlery",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "route": "LIVE",
+      "readUrl": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "finalUrl": "https://prinseps.com/research/leather-craft-at-santiniketan/",
+      "fetchedAt": "2026-11-17T12:00:00+05:30",
+      "contentType": "text/plain",
+      "textSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "characters": 100,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S10",
+      "quote": "animalskins and hides that have been treated with chemicals to preserve them and make them suitable for use as clothing, footwear, handbags, furniture, tools, and sports equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S10",
+      "quote": "The preservation process employed is a chemical treatment called tanning, which converts the otherwise perishable skin to a stable and nondecaying material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S05",
+      "quote": "the tanning process is the most important chemical process that converts animal skins into leather",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S10",
+      "quote": "Tanning agents include vegetable tannins (from sources such as tree bark), mineral salts (such as chromiumsulfate), and fish or animal oils.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S05",
+      "quote": "Traditionally, leathers are processed by the three types of tanning methods including vegetable tanning, chrome tanning and syntan tanning but recently the tanning processes are quite improved with the development of various sustainable tanning methods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "Kolhapuri Chappal are handmade open Indian footwear made of tanned vegetable leather produced using traditional technique and tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "The Kolhapuri chappal is completely and exclusively made from bag tanned vegetable leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S16",
+      "quote": "literally means the dance (attam, ata) of the leather (tholu) puppets (bommalu)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S16",
+      "quote": "Tholu bommalata is the shadow theatre tradition of Andhra Pradesh, Telangana and part of Karnataka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S15",
+      "quote": "Traditional shadow theatre from Karnataka in south-west India. Togalu signifies \"leather\" and gombeyata \"figure, doll, dance and performance\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S20",
+      "quote": "Santiniketan leather goods are a byproduct of Rabindranath Tagore's Rural Reconstruction initiative at the Visva Bharati University.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S21",
+      "quote": "High-quality leather, obtained from local tanneries, is crafted meticulously to create saddles, harnesses and other equestrian equipment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S10",
+      "quote": "The leather is then ready to be fashioned into any of a multitude of products. These include shoes and boots, outer apparel, belts, upholstery materials, suede products, saddles, gloves, luggage and purses, and recreational equipment",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S11",
+      "quote": "widespreadcaste in northern India whose hereditary occupation is tanning leather; the name is derived from the Sanskrit word charmakara (\"skin worker\").",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S01",
+      "quote": "In the un divided Bombay State (before 1947), most of the Kolhapuri chappals were produced form bag tanned leathers by chamars of Maharashtra and Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S16",
+      "quote": "Shadow puppetry in South India has a very long history-it was indeed already popular under Satavahana and Chalukya dynasties (4th - 6th centuries AD).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S16",
+      "quote": "It is probably during this period that shadow theatre from South India spread to South East Asia and beyond, and local styles developed in Indonesia, Burma, Thailand, Malaysia, Japan and China.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S20",
+      "quote": "Such vegetable-tanned leather pieces retain embossed imprints permanently, making them an ideal raw material for this craft. The leather pieces come from sheep and goat skins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S23",
+      "quote": "trays, and domestic objects-made from vegetable-tanned goat and sheepskin and decorated through embossing, stencil work, and batik techniques",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S01",
+      "quote": "Kolhapuri Chappals are renowned for aesthetically pleasing look and known for decorative woven pattern fixed over upper bands of these Chappals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S09",
+      "quote": "There are approximately 3,000 tanneries located along the Ganga River (Dwivedi et al. 2018). A cluster of around 400 tanneries can be found in Jajmau, Kanpur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S09",
+      "quote": "Published online: 29 Oct 2025.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S06",
+      "quote": "While the records of Central Leather Research Institute, India showed only 170 tanneries at Kanpur, a study conducted in 2000 found twice this number in just one tanning cluster",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S06",
+      "quote": "Received: January 19, 2012; Accepted: September 24, 2012; Published: October 24, 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S17",
+      "quote": "The Dhors, to which Vathkar belongs, run the tanneries, and the Chambhars make the chappals by hand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Application Number | 614 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Geographical Indications | Chamba Chappal |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Date of Filing | 25-05-2018 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Geographical Area | Himachal Pradesh |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Certificate Number | 403 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S03",
+      "quote": "| Certificate Date | 14-09-2021 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S01",
+      "quote": "614 Chamba Chappal 25 Handicraft",
+      "result": "PASS"
+    }
+  ]
+}

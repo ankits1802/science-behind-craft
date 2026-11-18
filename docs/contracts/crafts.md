@@ -15,6 +15,8 @@ This lane owns `etl/crafts/`, `backend/app/data/`, `shared/` and `.github/workfl
 | `backend/app/data/craft_master_loader.py` | Pure port of DR `services/craft_master.py` (`load_master`, `master_categories`, `normalise`, `craft_aliases`, `with_alias`, a DB-free `build_catalogue`) and the seed plan | Code |
 | `backend/app/data/craft_wikidata.json` | Wikidata/Wikipedia links for the 455 crafts | `etl/crafts/wikidata_link.py`, weekly in CI as an artifact |
 | `backend/app/data/craft_aliases.json` | Every alias for every craft, deduplicated and normalised | `etl/crafts/aliases.py`, weekly in CI as an artifact |
+| `backend/app/data/craft_names.json` | Editorial reader names: `displayName` spelling and case fixes for master crafts (never a catch-all row, which takes its kind's other name) and `localName` overrides (`null` hides a wrong sourced name); loader `craft_names.py` refuses an unknown slug, field, repeated master name or outer space (decision 0082) | By hand |
+| `backend/app/data/state_languages.json` | The ISO 639 languages of each LGD state and union territory, in order, used to choose a craft's local name; loader `state_languages.py` refuses a missing or unknown state (decision 0082) | By hand |
 | `backend/app/data/seed_claims.json` | Seed knowledge: 1,914 claims, 582 concepts, 767 edges, 122 sources | `etl/crafts/seed_claims.py`, local only (it reads the sibling repos) |
 
 ## How the backend seeds crafts

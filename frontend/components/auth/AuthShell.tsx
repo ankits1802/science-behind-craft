@@ -7,7 +7,7 @@ import { BrandMark } from "@/components/BrandMark";
 import { GLASS_PANEL, GlassSurface } from "@/components/ui/GlassSurface";
 
 const BRAND_POINTS = [
-  "455 crafts from the IIT master list, each on the map of India.",
+  "Every craft on the IIT master list, each on the map of India.",
   "Materials, process stages and the chemistry at every stage.",
   "Every sentence cited, with the quoted passage and a link out."
 ];

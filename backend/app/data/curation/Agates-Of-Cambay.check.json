@@ -1,0 +1,1595 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Agates-Of-Cambay",
+  "dossierVersion": 1,
+  "dossierDigest": "5862dd2f0372489ac0dc786a4c4ddf0943bee3203000fdbc9cc64e9f94906477",
+  "checkedAt": "2026-11-18T11:05:23.127444Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "finalUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "fetchedAt": "2026-11-18T11:04:47.259033Z",
+      "contentType": "application/pdf",
+      "textSha256": "af2dd07e3a196f181d706eda2b1c968a6adc93d72fea371d8093b41eec0c6153",
+      "characters": 384102,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/101",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/101",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/101",
+      "fetchedAt": "2026-11-18T11:04:39.779104Z",
+      "contentType": "text/html",
+      "textSha256": "4da04214e8ea00a6866ea9f19abe567381d1861a1ffb1196d3947c7388dd50ba",
+      "characters": 5752,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/508",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/508",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/508",
+      "fetchedAt": "2026-11-18T11:04:41.473860Z",
+      "contentType": "text/html",
+      "textSha256": "47955217aa6956daf75c045bf0a37309b3c5cb5c60b8d1ef585839e59e54c423",
+      "characters": 1253,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T11:04:39.293511Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "route": "LIVE",
+      "readUrl": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "finalUrl": "https://www.penn.museum/sites/expedition/cambay-beadmaking/",
+      "fetchedAt": "2026-11-18T11:04:40.076462Z",
+      "contentType": "text/html",
+      "textSha256": "85f6d6fe47c266ddc4b67c697b2192643fabcb4ff5b87cbb7ede31e07c7f4cb0",
+      "characters": 14214,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2004_Sidis%20in%20the%20Agate%20Bead%20Industry%20of%20Western%20Indi.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2004_Sidis%20in%20the%20Agate%20Bead%20Industry%20of%20Western%20Indi.pdf",
+      "finalUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2004_Sidis%20in%20the%20Agate%20Bead%20Industry%20of%20Western%20Indi.pdf",
+      "fetchedAt": "2026-11-18T11:04:41.784210Z",
+      "contentType": "application/pdf",
+      "textSha256": "b762555c73c05ccf54a0f965e27f7f564966b2c6c00123d2a14cfe003dd299bb",
+      "characters": 34147,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "finalUrl": "https://www.harappa.com/content/carnelian-bead-production-khambat-india-ethnoarchaeological-study",
+      "fetchedAt": "2026-11-18T11:04:43.489462Z",
+      "contentType": "text/html",
+      "textSha256": "c180bc64c29501d8a06c5d4121029eacdbcd54a9698032535544909a49ba01f2",
+      "characters": 963,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.harappa.com/sites/default/files/essays/Chapter%208.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/sites/default/files/essays/Chapter%208.pdf",
+      "finalUrl": "https://www.harappa.com/sites/default/files/essays/Chapter%208.pdf",
+      "fetchedAt": "2026-11-18T11:05:16.062293Z",
+      "contentType": "application/pdf",
+      "textSha256": "e6bfd5e47d1b520e7de49f4510c79ab7e86bd24822ce5684547fcdc4c7de429b",
+      "characters": 79496,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2003_Stone%20Beads%20and%20Pendant%20Making%20Techniques.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2003_Stone%20Beads%20and%20Pendant%20Making%20Techniques.pdf",
+      "finalUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer2003_Stone%20Beads%20and%20Pendant%20Making%20Techniques.pdf",
+      "fetchedAt": "2026-11-18T11:05:18.677779Z",
+      "contentType": "application/pdf",
+      "textSha256": "33469e1a202dd530537e77005f13a6fc89a8dd3d4d885897978c5a6e013f798d",
+      "characters": 26390,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.investindia.gov.in/odop/gujarat/cambay",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20210507105040id_/https://www.investindia.gov.in/odop/gujarat/cambay",
+      "finalUrl": "https://web.archive.org/web/20210507105040id_/https://www.investindia.gov.in/odop/gujarat/cambay",
+      "fetchedAt": "2026-11-18T11:04:51.854431Z",
+      "contentType": "text/html",
+      "textSha256": "1025c10d9cd7de632ed50f93b49a3903d8351ed8badfe0e2f2700ee0b08800ec",
+      "characters": 16091,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Agate",
+      "route": "LIVE",
+      "readUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Agate",
+      "finalUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Agate",
+      "fetchedAt": "2026-11-18T11:04:42.047941Z",
+      "contentType": "text/html",
+      "textSha256": "2c4d28ed83f6cb20d53b9410b06aa3bf62a38f0e0448fdd3806f945852ee9683",
+      "characters": 12713,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Carnelian",
+      "route": "LIVE",
+      "readUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Carnelian",
+      "finalUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Carnelian",
+      "fetchedAt": "2026-11-18T11:04:43.691868Z",
+      "contentType": "text/html",
+      "textSha256": "d85ebef8be1fd6f10eaef07deb6845a69000807b33a7b9ab774455ffc710b0c7",
+      "characters": 1828,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cambay",
+      "route": "LIVE",
+      "readUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cambay",
+      "finalUrl": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Cambay",
+      "fetchedAt": "2026-11-18T11:04:45.306686Z",
+      "contentType": "text/html",
+      "textSha256": "0226942049852e97ff64e7477ef26f1a6cfe4b170bd1e529a70087e15a9d948c",
+      "characters": 2429,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.millenniumpost.in/sundaypost/insight/beads-of-brilliance-512889",
+      "route": "LIVE",
+      "readUrl": "https://www.millenniumpost.in/sundaypost/insight/beads-of-brilliance-512889",
+      "finalUrl": "https://www.millenniumpost.in/sundaypost/insight/beads-of-brilliance-512889",
+      "fetchedAt": "2026-11-18T11:04:46.116284Z",
+      "contentType": "text/html",
+      "textSha256": "31fd2f90c5323a73711c4b6a48b2c3b5e010cc380482cba4db222a1ef99e11f4",
+      "characters": 6411,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://bharuch.nic.in/history/",
+      "route": "LIVE",
+      "readUrl": "https://bharuch.nic.in/history/",
+      "finalUrl": "https://bharuch.nic.in/history/",
+      "fetchedAt": "2026-11-18T11:04:46.845664Z",
+      "contentType": "text/html",
+      "textSha256": "cc5fc37ac893dc7de4bec7152d5b2b133ca04680c0ae90575c8ca80229f410ed",
+      "characters": 3704,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.harappa.com/sites/default/files/pdf/Kenoyer%20Vidale%20Bhan%201991%20Craftspecialization%20Khambhat.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer%20Vidale%20Bhan%201991%20Craftspecialization%20Khambhat.pdf",
+      "finalUrl": "https://www.harappa.com/sites/default/files/pdf/Kenoyer%20Vidale%20Bhan%201991%20Craftspecialization%20Khambhat.pdf",
+      "fetchedAt": "2026-11-18T11:05:21.519101Z",
+      "contentType": "application/pdf",
+      "textSha256": "bcdc7111e9c0e21390c74f3d2b28b2ac14109c64f8f3c55b11fbd275d75ef16d",
+      "characters": 57897,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://censusindia.gov.in/nada/index.php/catalog/31713/download/34894/44955_1961_SEL.pdf",
+      "route": "LIVE",
+      "readUrl": "https://censusindia.gov.in/nada/index.php/catalog/31713/download/34894/44955_1961_SEL.pdf",
+      "finalUrl": "https://censusindia.gov.in/nada/index.php/catalog/31713/download/34894/44955_1961_SEL.pdf",
+      "fetchedAt": "2026-11-18T11:04:52.779687Z",
+      "contentType": "application/pdf",
+      "textSha256": "190a5a6184e6e9e394b60693cd841dc3705c36e675d12f8bc4785ba2bc2b5286",
+      "characters": 288468,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Agates are semi precious stones which display a wide spectrum of colours and fancy images. One of the most interesting gems of collectors delight, agate is a type of microcrystalline quartz falling under the general category chalcedony.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "(H) Geographical area of production and maps as shown in the page no 253 &254. Cambay is in Anand district of Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S05",
+      "quote": "Cambay is a small city, population about 50,000, on the coast of Gujarat state in western India. This name is an English corruption of Khambhat. It is a center for lapidary craftsmanship, its products reaching a market on four continents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S05",
+      "quote": "The largest of these lapidary undertakings is bead-making, the focus of this paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S14",
+      "quote": "Cambay or Khambhat is perhaps the only place in India where the Harappan craft of agate bead-making is found in the living tradition.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S13",
+      "quote": "The town is celebrated for its manufacture of agate and carnelian ornaments, of reputation principally in China.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S05",
+      "quote": "The craft seems to have started here as early as the third millennium B.C. with the founding of the Harappan settlement at Lothal (Rao 1973, 1979).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S14",
+      "quote": "As per archaeological evidence, the origin of the craft can be traced to nearby Lothal, a Harappan outpost that flourished about 4,000 years ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S05",
+      "quote": "This ancient town, which dates to ca. 2400-1700 B.C., had a large scale bead manufacturing operation taking a variety of raw materials -chalcedony and other agates, jasper, rock crystal and the like-and turning them into beads",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S05",
+      "quote": "turning them into beads that were used by the Harappans themselves and shipped to places as distant as Mesopotamia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S05",
+      "quote": "Since the Harappan era the Cambay region, if not the site of the actual town, has been an important commercial center, involving the manufacture and distribution of beads and other products, especially textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S05",
+      "quote": "Due to the recovery of extensive bead-working facilities at Lothal and Chanhudaro (Mackay 19431, another Harappan site, we can outline completely the Harappan manufacturing technology.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S05",
+      "quote": "The first step involved a two-phase chipping process which formed the beads to their rough shape. The bead was then ground to a smooth outline. The perforation of the bead was done next.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S05",
+      "quote": "It is of considerable interest that this sequence of steps and the same basic technology are still used today in Cambay. There are some minor variations which can be noted, but the similarities are striking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S07",
+      "quote": "With the aid of archaeological research, the stone bead industry in Pakistan and western India can be traced back even earlier to the cities and villages of the Harappan phase of the Indus tradition, dated to around 2500 BC.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S07",
+      "quote": "At present the city of Khambhat (Cambay) is one of the largest stone bead working centres of the world, and it has been an important centre for over 3000 years of documented history.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S08",
+      "quote": "Indus craftspeople likely altered the original appearance of certain sub-varieties of these microcrystalline silicates when they heat-treated them",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S06",
+      "quote": "Red carnelian was being produced as early as the Harappan pe riod (2500 Be) and is relatively common throughout the early Bud dhist period, and the process of heating certain agates to enhance their colour was not a new discovery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S06",
+      "quote": "It is in the scale of production that Gori Pir may have excelled and thereby gained fame in the agate industry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S08",
+      "quote": "Lastly, Gujarat was a historically important source area. Greek (McCrindle 1885: 77, 334; Schoff 1912: 42), Mughal (Khan 1756: 250) and early European colonial (Barbosa 1517: 66-67; Foster 1906: 52, 178) records all make reference to the agate resources there.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S08",
+      "quote": "The city of Khambhat (Cambay) has been a major center for the manufacture of agate ornaments since at least the 16th century (Arkell 1936; Campbell 1880: 206-207)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S10",
+      "quote": "These beautiful stones have been mined and polished at Khambat or Cambay in the western state of Gujarat at least since 1,500 AD.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "Cambay came into the picture towards the end of 15th century and the start of 16th century. Akik industry assumed importance during the rule of sultans of Gujarat when it reached the zenith of prosperity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S01",
+      "quote": "The fate of Akik industry seemed to have been linked with the rise and fall of different places that grew into importance as seaports or centers of maritime trade at different periods of history.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S01",
+      "quote": "In Gujarat various places came into prominence as centers of trade and commerce at one time or another according to their importance as seaports. At one time it was Bharuch, at another time it was Vallabhi and still another time it was Surat or Cambay/Khambhat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S01",
+      "quote": "Finally it was at Khambhat that Akik industry reached the pinnacle or prosperity",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "In the beginning of 17th century many Akik craftsmen of Cambay were staying at Goa where they had their own locality and shops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "In the beginning of 17th century many Akik craftsmen of Cambay were staying at Goa where they had their own locality and shops.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "Forty years later an Abyssinian merchant by the name of Baba Ghor started Akik factory at Limodra near Rajpipla where the raw material was available in plenty.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "For the export of finished products to the African coast he had to resort to a seaport, which was Cambay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "Here the Abyssinian merchant seemed to have started a lucrative business in agates under the supervision of his brother Baba Abbas. They later shifted all their business to Cambay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "Export in Akik got boost up when Cambay became a principal port of embankment by Hajj pilgrims to M ecca. The pilgrims carried with them their agate beads, which were highly valued as articles of sanctity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S01",
+      "quote": "During the 18th century agate trade was referred to as one of the most important of the Cambay industries. Some of the articles made at Cambay stones for signets and rings were said to be worth double their weight in gold.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S01",
+      "quote": "Agate industry r eached the pinnacle of prosperity during the 16th century and continued its importance till 18th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "During the 19th century the agate trade fluctuated but did not really decline.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Moreover, the Cambay port got silted, which made it impossible for the larger vessel to reach the harbor and as a result it lost all its former glory.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S13",
+      "quote": "but owing principally to the gradually increasing difficulty of access by water, owing to the silting up of the gulf, its commerce has long since fallen away, and the town has become poor and dilapidated.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "During the 20th century due to decline of Cambay as an important center of trade, industry and export, diversion of trade channels with the opening of rail route from Bombay to Ahmedabad , and increase in competition from cheap synthetic stones agate industry declined.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S06",
+      "quote": "The main market city and port for trading agate beads was Bharuch, which had sea trade with the ports on the Red Sea, in East Africa and throughout the Persian Gulf",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S06",
+      "quote": "But as the bay at Bharuch gradually silted up, the main port shifted to Khambhat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S06",
+      "quote": "This shift began to impact the agate bead in dustry around 1500, when several European travellers make men tion of agate workshops in Khambhat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S06",
+      "quote": "The major workshops of agate bead making were shifted from Limbodara and Bharuch to Khambhat in the 14th century when Bharuch lost its prominence as a port city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S06",
+      "quote": "Nevertheless, Limbodara continued to be an important craft center and agate nodules were being processed there until the 1850s.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S06",
+      "quote": "We can only assume that the Sidis were actively involved in this trade since in 1832 a colony of Sidis was reported at Limbodara",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S08",
+      "quote": "Gori Pir (or Baba Ghor) - a Muslim saint who is said to have come from Africa in the 15th century and established bead-making operations at nearby settlements such as Limodara",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S06",
+      "quote": "Most scholars agree that Gori Pir arrived in the region sometime during the 15th century, when the region around Gori Pir emerged as a major center of the agate trade",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S06",
+      "quote": "If this tradition is true, then Gori Pir would have arrived in Gujarat sometime during the life of the Prophet Muhammad (circa 570 AD to 632 AD)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S06",
+      "quote": "While this tradition does not seem to be supported by other historical and oral traditions",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S14",
+      "quote": "In the folklore of Khambhat, the revival of the craft is attributed to Baba Ghor, a medieval saint from Ethiopia (Habash) who had led a large contingent of Sidi Muslims to migrate to India for trade and services under the Sultans of Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S06",
+      "quote": "One of our main informants was the late Sidi Kamar Badshah, an outspoken leader of the Sidi community",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S06",
+      "quote": "According to interviews with Kamar Badshah taken over the past ten years, one of the first Sidis to arrive in agate mining regions near Rajpipla was Gori Pir, who came with his twelve brothers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S06",
+      "quote": "It is not unlikely that one of the im portant contributions of Gori Pir was in developing a more precise method for determining which agates should be heated and how much to heat them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S06",
+      "quote": "Many of the heating tech niques currently used in Khambhat may have had their origins in the techniques perfected by Gori Pir and the Sidis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S06",
+      "quote": "Drying is often begun by the middlemen in the min ing areas, and as mentioned above the initial heating used to be car ried out by Sidis in Limbodara.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S06",
+      "quote": "One of the most highly desired form of agate are the deep blood-red carnelians that must be heated slowly and repeatedly to avoid breakage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S06",
+      "quote": "Prayer beads and pendants made from this type of carnelian were in great demand in the Islamic world and were among the major products of the workshops in Limbodara.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S08",
+      "quote": "Using INAA, agate samples collected from Ratanpur and two other sources located in northern Gujarat were analyzed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S08",
+      "quote": "When agate artifacts from Harappa and five other Indus Tradition sites were compared to them, it was found that although most are analogous to geologic samples from the Gujarati deposits, very few appear to be from the Ratanpur source.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S08",
+      "quote": "It is unclear if Harappans might have had direct access to agate from the Ratanpur area deposits. Lothal - the nearest site that is inarguably an Indus Civilization settlement, is located around 130 km to the northwest of Gori Pir Hill.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S05",
+      "quote": "Prior to the use of electricity and more elaborate mechanical contrivances, the polishing was done by hand. That is, beads and slurry were sewn into a skin bag and this was 'rolled' across a floor between two men.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S06",
+      "quote": "Today, however, due to the shift in mining areas and restrictions by the forest department, the Sidi community is no longer in an economically important location for selection and stockpiling of agates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S06",
+      "quote": "On the basis of current evidence it is clear that the Sidi communities of Gujarat and adjacent regions have made significant contributions to the larger sphere of South Asian culture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S06",
+      "quote": "These contributions include agate mining and bead manufacture, as well as local trade and long distance trade networks that connected the Indian subcontinent to the furthest reaches of the Islamic world in Africa, Southeast Asia and West Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S02",
+      "quote": "| Class | 14 | | Goods | Handicraft | | Geographical Area | Gujarat |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "Geographical Indication : Agates of Cambay Class : 14 Goods : Semi precious stones",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S08",
+      "quote": "Among the low hills around the village of Ratanpur, Bharuch District, Gujarat (Figure 8.8), there are hundreds of agate mining pits and shafts (Figure 8.9) sunk into the Miocene conglomerate of the Babaguru Formation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S08",
+      "quote": "Throughout the historic era, the preeminent agate source within Gujarat has been the deposits around Ratanpur (Figure 8.7) in the southeast part of the state",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S08",
+      "quote": "Although these workings are often referred to as the \"Rajpipla\" deposits/mines (as they were within the confines of that princely state prior to 1947), \"Ratanpur\" is a more appropriate designation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S10",
+      "quote": "Even though the Cambay area does not have mineral deposits, the stone is brought from the Rajpipla Hills about 200 kilometres away.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S14",
+      "quote": "Although Khambhat has no stone deposits; the craft has survived mainly through acquiring stones from the Rajpipla hills, about 200 km away from the city.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "In Gujarat the major mining area is located approximately 80 to 100 kilometers from Khambhat in Bharuch district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S06",
+      "quote": "The mining activities have concentrated in the relatively accessible agate bearing gravels exposed in tilted beds at the footofGori Pir Hill",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "The main sources of raw material are the mines located on the slope of the hill known as Ratanpore H ill or Baba Ghori Hill.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S05",
+      "quote": "the beads manufactured in Gujarat have been made, for the most part, from stone found in the agate beds along the banks of the Narmada River",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S05",
+      "quote": "The erstwhile Princely State of Rajpipla has been particularly prominent in the production of this raw material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S15",
+      "quote": "Bharuch (formerly commonly known as Broach) in India, is a district in the southern part of the Gujarat peninsula on the west coast of state of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S15",
+      "quote": "The Narmada River outlets into the Gulf of Khambat through its lands",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S15",
+      "quote": "It also contains the city of Bharuch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S05",
+      "quote": "the beads manufactured in Gujarat have been made, for the most part, from stone found in the agate beds along the banks of the Narmada River which passes through eastern Gujarat just before entering the Gulf of Cambay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S05",
+      "quote": "The agates are associated with the Deccan Trap of central and western India, a series of Mesozoic lava flows which cover an immense area of the subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S05",
+      "quote": "Over the millennia the high silica content stones have been eroded from the interstices of the basalt trap rock, from where they have entered the riverine system.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S05",
+      "quote": "The Narmada, with its immense catchment area, has consequently received a great deal of this material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S05",
+      "quote": "There are extensive strata of these agates which have been concentrated by fluvial processes into workable beds of stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S08",
+      "quote": "The famous Ratanpur area sources are part of the early Miocene epoch conglomerate called the Babaguru Formation (Gadekar 1977).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S08",
+      "quote": "Chatterjee noted (1963b: 166) that \"chalcedonic silica, carnelian, chalcedony, chrysophrase, plasma, bloodstones, onyx, jasper, agate jasper, flint, chert, etc ... [all] occur\" within it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S11",
+      "quote": "In India agates occur abundantly in the amygdaloidal varieties of the Deccan and Rájmahàl traps, and as pebbles in the detritus derived from these rocks. Some of the finest are found in the agate-gravels near Ratanpur, in Rájpipla.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S12",
+      "quote": "Much carnelian comes from India, being mostly derived from agate-gravels, resulting from the disintegration of the Deccan traps, in the neighbourhood of Ratanpur, near Broach.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S01",
+      "quote": "It is a mineral generally of sec ondary origin, forming in cavities and veins by deposition from meteoric groundwater containing gelatinous silica from the weathering of silicate minerals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "Specific gravity: 2.57-2.64 Index of refraction: 1.53-1.55 Birefringence: weak, 0.005 to 0.009 Hardness: 6.5 to 7",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S01",
+      "quote": "Akik or agate is the general term applied to different varieties or Carnelians, and includes various forms of Chalcedonic silica found either underground in mines, in beds of rivers or on hill slopes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S01",
+      "quote": "The word again a derivative of the Arabic word Akik, a name for agate which means riverbed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S05",
+      "quote": "The modern Cambay lapidary industry makes use of stone from most, if not all, of the regions of India and adjacent countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S05",
+      "quote": "Lapis lazuli from the Badakshan region of Afghanistan is as much used as is rose quartz from Tamil Nadu. There are also fuchsite from Karnataka and various corals and other silicious stones from western India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S06",
+      "quote": "White banded agate is not available in Kharnbhat, and the raw materials had to be obtained further inland in Central and South India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S08",
+      "quote": "For example, the varied agate deposits in the Deccan Traps of central Maharashtra (recall Figure 8.3) are important raw material sources for Khambhat lapidaries today (Vidale 2000: 42).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S08",
+      "quote": "in his review of the Khambhat bead industry (Figure 8.10), which to this day consumes tons of Ratanpur agate (Figure 8.11).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S01",
+      "quote": "Two methods are followed for firing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S01",
+      "quote": "Rajpipla Carnelian needs this treatment. The rest are worked upon directly without any heating.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "Emery stone or corundum or carborandum from which the emery wheel is made, is known as \"Kurund\" in Hindi and \"samado\" in Gujarati.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S01",
+      "quote": "Formally the lapidaries at Cambay used to purchase this stone, powder it and prepare the polishing disc, by adding it to seed Lac in required proportion.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S01",
+      "quote": "But in course of time, the price of emery stone went so high, that it was cheaper to utilize ready-made emery wheels instead.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "In addition to the emery discs, copper or wooden plates were also used- the former for polishing very hard stones, while the later for softer ones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S05",
+      "quote": "The rough chipping hammer is made of water buffalo horn on a thin flexible bamboo handle. It was made clear to me that the horn must be buffalo and that the horn of cows was completely unsuitable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S05",
+      "quote": "Rough diamond chips are purchased by individual drillers and set in the drill tip by using an awl to form a cup at the drill point.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "(b) Agate Chemical composition: SiO2",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "The composition of agate varies greatly, but silica is always predominant, usually with alumina and oxide of iron.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "Color: frequently colored by impurities and then may be any color, most agate used for ornamental purposes is colored by artificial means.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "Heating brings out the real color of the agate. The temperature at which this change takes place is in between 300 degree centigrade to 400 degree centigrade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "With too low a temperature, the stone becomes salmon colored (pinkish orange) and in case the heat is excessive, the color is lost entirely.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "After baking among brown stones, the light tint brightens into white and the darker tint depends into chestnut, while maize yellow takes a rosy tint, orange turns into red as iron oxide spreads evenly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S01",
+      "quote": "Stones which in their raw form appears cloudy brown or yellow now distinctly marked by clear bands of white and red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S08",
+      "quote": "Most (but not all) are either natural carnelian or the type of yellowish-brown, iron-impregnated agate that will develop the red-orange hue characteristic of carnelian when heat-treated.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S12",
+      "quote": "The red colour of typical carnelian is due to the presence of ferric oxide. This is often developed artificially by exposure to sunshine, or to artificial heat, whereby any ferric hydrate in the stone becomes more or less dehydrated",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S11",
+      "quote": "Some stones are \"burnt\" by mere exposure to the heat of the sun, whereby the brown colour passes to red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S11",
+      "quote": "Agate is stained red, so as to form carnelian and sardonyx, by means of ferric oxide. This may be derived from any iron compound naturally present in the stone, especially from limonite by dehydration on baking.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S05",
+      "quote": "This causes a physical change in the stone which makes the next step, chipping, an easier one.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S09",
+      "quote": "The nodules are then slowly heated to around 340 0 C to drive off the intercrystalline water, making them easier to flake.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "The speed at which the beads are drilled is in large part determined by the hardness of the material, and there is some variety here. I have information on the cutting rates for chalcedony, a kind of banded agate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S05",
+      "quote": "The perforation of a single spherical bead approximately one-half centimeter in diameter takes about twenty seconds, including turning the bead and initiating the cut from the end opposite the starting point.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S06",
+      "quote": "The first stage of production is the mining and selection of agate nodules that will eventually be processed into specific types of beads.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S01",
+      "quote": "At the mine mouth, the stones are chipped and classified into three grades, good \"tukdi\", medium \" gar\" and low \"khadya\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S05",
+      "quote": "The extraction of the nodules is done with picks and shovels. In the community I visited the work force was made up of teams of three to five men and women. The men dug small holes, about three feet in diameter, to gain access to the agates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "After the pans were dumped near the opening of the access hole, women sorted the valuable agates from the undesirable material (Fig. 2).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S05",
+      "quote": "This frequently demanded that a small 'window' be chipped on the surface of the stone to remove the millennia of patina that today obscures the quality of the stone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S05",
+      "quote": "Stones are sorted and graded in a preliminary way at the mine. A second, more careful, sort takes place at the village and the material is then bagged in fifty or hundred kilogram lots for shipment by truck or boat to Cambay.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S06",
+      "quote": "Once the nodules have been mined, the next stage of production is drying to remove as much moisture as possible prior to firing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "The stones and pebbles have high moisture content. Before firing they are left in the open in the sun on corrugated iron sheets for a period of 1 1⁄2 to 2 months. This is done because if the stones are directly baked they will crack.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S06",
+      "quote": "but generally speaking, the longer they dry in the sun, the less chance for cracking in the heating process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Bhasal: The stones are placed in a trench two feet deep and heated with heat ash and goat or cow dung cake. Heating is done for 3 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "Handa: The stones are placed in cracked and holed earthenware pots. They are heated with goat or cow dung cakes [Heating is done for 12 hours].",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S05",
+      "quote": "Once the bagged raw material has reached Cambay it enters a process which will transform the smooth patinated stones into beads and other objects. The first step in the process is to heat the material in small pots filled with smoldering sawdust",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S06",
+      "quote": "One of the most highly desired form of agate are the deep blood-red carnelians that must be heated slowly and repeatedly to avoid breakage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S05",
+      "quote": "The knapping of the agates is done in two stages, the first of which roughs out the shape of the bead (Fig. 5). This is then smoothed by finer chipping. In both cases the technique involves the use of a hammer and spike, or anvil, driven into the ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S01",
+      "quote": "Stones which are baked properly cut in the required shape on iron spike known as \"sink\" with \"shingadi\", a buffalo horn headed hammer. The iron spike is 2-3 feet in length and is fixed at an angle of 60 degree in the ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "The workers squatting on the pieces of g unny bags strike the stone with the hammer very deftly and carefully. The striking is called \"tappa\". This removes the outer shell and preliminary shaping is done.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S09",
+      "quote": "In India, beadmakers use the technique of inverse indirect percussion, as shown in Figure 2. An iron stake is set into the ground at an angle and the bead chipper sits on the ground with one knee bracing the stake.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "The work at the chipping stations in Cambay proceeds briskly and a final, roughed-out bead can be produced in no more than two or three minutes. Beads requiring further chipping are moved to another worker who handles this task.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "The chipped bead 'blanks' are then sorted and sent to be ground to their final shape. This smoothing operation takes place in a separate workshop area, and is, again, a specialized craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "The stones after they are chiseled into desired shapes flat, round, triangular, quadrangular, hexagonal etc. are handed over to \"ghasiya\" for smoothening of the surface by grinding on emery wheel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S05",
+      "quote": "The abrasive wheels against which the beads are ground are commercially made today and powered by electric motors. This is one of the few applications of a mechanical contrivance in the Cambay bead industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S01",
+      "quote": "This wooden frame is known as \"charak\". Two or three workers can operate at a time. The workers keep one small earthen vessel filled with water by their side and articles are dipped in water before they are put on the emery wheel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S05",
+      "quote": "Spherical beads are shaped on a specially formed 'corrugated' grinding wheel as shown in Fig. 8. This wheel is used in conjunction with a simple but specially prepared wooden implement which holds the rough chipped stones in place while they are pressed against the rapidly spinning wheel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S05",
+      "quote": "It takes only a matter of seconds for rough chipped blanks to be transformed into nearly perfect tiny spheres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S05",
+      "quote": "At this point the beads are ready to be drilled. Perforation is accomplished with a diamond-tipped bit set in a wooden shank and propelled by a bow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S09",
+      "quote": "Left-hand images show drilling with single and double diamond drills in Khambhat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S05",
+      "quote": "The small clay pots seen in the photographs hold water and the grit from past drillings. This acts as a lubricant for the cutting operation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S05",
+      "quote": "The flow of water comes not through a hollow tube but as individual drops down a wire and is regulated by the snugness of fit of the wire's mount into a small spout, or bung, on the vessel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "He cups a small (ca. 5 by 5 cm.) fragment of hard coconut shell in his right palm. This acts as the top bearing in which the drill shank turns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "His leg is positioned over the work in such a way as to allow him to use it to apply a carefully controlled downward force.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S05",
+      "quote": "No matter how small the bead, the drilling is always started from one end and completed by drilling a second hole from the opposite side.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S05",
+      "quote": "The precision with which the second hole is placed, and the way in which the two holes meet, are important criteria for grading the final bead.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S05",
+      "quote": "The next step in this process of bead manufacture is the final polishing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S05",
+      "quote": "The beads are placed in a drum with an abrasive slurry (Fig. 12), and continuously turned until their surfaces have been smoothed and polished.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S05",
+      "quote": "This takes approximately a week. The Cambay process involves a first turning in slurry with a coarse abrasive, and a second session with a finer powder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S05",
+      "quote": "The drums are wooden vessels containing 100 kilogram loads, and are propelled by electric motors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "The latest innovation is that the leather bag containing beads, emery dust, leather pieces and fine carnelian powder is placed in a barrel of crude oil or tar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S01",
+      "quote": "The barrels are 3 to 4 in number. Three of them are made of tin and one of copper. The finished articles are rotated in these drums in turn and finally transferred to the copper drum.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "The barrel is rotated mechanically and within two or three days, the beads get polished. There is no physical labor involved in this method. What is required is general supervision and examination of the glaze obtained.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "The articles, which are roughed and smoothened on emery wheel, are polished to give them shine and luster. The people involved in this activity are polishers known as \"Opiya\" derived from the word \"op\" which means shine or luster.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "Various methods of hand polishing were used in the past: \"Saran\" or lapidary's wheel \"Pattimar \"or polishing against a wooden board Leather bag",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "All these processes have been replaced by mechanical met hods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "The articles to be produced from agate are determined by and shaped according to the size, color, and natural formation of raw stones. The color and design found in one article wouldn't exactly be the same as that in any other article and in that lays its uniqueness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "Other agate products are flower vases, ash trays, bangle, mortar and pestle necklaces, paper weights, buttons, rosaries, lamp shades, earrings, rings, bracelets, key chains, bowls, cufflinks, pendants etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S06",
+      "quote": "Some of the oldest forms are carnelian bicones and barrel-shaped beads as well as short to long-faceted beads.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "Large white agate barrel beads called dudhia (i.e. milky) were also in high demand among some communities in East and Central Africa",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S06",
+      "quote": "Long rectangular carnelian beads called modan were produced particularly for trade to Nigeria in West Africa.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S06",
+      "quote": "one variety of agate that seems to have been very popular was actually referred to as bavagor after the man who first processed it and made it available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S06",
+      "quote": "Today, Sidi bead merchants refer to red carnelian beads as 'bavagor' but it is not unlikely that the term may have been used for various types of beads produced from the workshops of Gori Pir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "Agate beads are the chief products, which command a good market in the countries of Middle East and African coast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S10",
+      "quote": "From Gujarat, these stones travel to popular markets across the Middle East and Africa - they are used in everything from making rosaries to jewellery and home decorations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "Truck or rail from Jagadia to Cambay carries them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S01",
+      "quote": "The Akik dealers, who are also the \"karkhanedars\", purchase that from the mining contactors or from the cooperative society of which they are the members. They then store them in go-downs in gunny bags.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S17",
+      "quote": "The Karkhanedar is thus the real financier who plays the key role of feeding the various branches of the industry which are dependent on the work he parcels out to them",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S05",
+      "quote": "It is also interesting to note that all of the chipping is done by males, a fact in agreement with the overwhelming ethnographic record documenting the working of stone in other societies from other parts of the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S05",
+      "quote": "The work force here, however, is composed of both males and females, generally young-evidence that the operation is one requiring little skill.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S05",
+      "quote": "Finally, polished beads are sorted by quality and enter the commercial market either as bulk packets of unstrung objects or as necklaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S02",
+      "quote": "| Application Number | 101 | | Geographical Indications | Agates of Cambay | | Status | Registered | | Applicant Name | Development Commissioner (Handicrafts) |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 05-07-2007 | | Class | 14 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S01",
+      "quote": "G.I. - APPLICATION NUMBER - 101 Application is made by Development Commissioner (Handcrafts), Ministry of Textiles, Government of India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S02",
+      "quote": "| Journal Number | Supplementary 1 | | Availability Date | 24-03-2008 | | Certificate Number | 80 | | Certificate Date | 10-07-2008 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S01",
+      "quote": "it is informed that the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008 / Chaitra- 4 Saka 1930 has been made available to the public from 24th March 2008.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S04",
+      "quote": "80 101 Agates of Cambay Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S02",
+      "quote": "| 1 | 101 - GI - GI Renewal Form GI - 4 - 19-05-2017 | 19-05-2017 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 04-07-2027 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S02",
+      "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S02",
+      "quote": "| 33 | AU/18794/GI/101/33 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S03",
+      "quote": "| Application Number | 508 | | Geographical Indications | Agates of Cambay (Logo) | | Status | Registered |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S03",
+      "quote": "| Date of Filing | 08-01-2015 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S03",
+      "quote": "| Certificate Number | 251 | | Certificate Date | 31-03-2016 | | Registration Valid Upto | 07-01-2025 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S04",
+      "quote": "251 508 Agates of Cambay (Logo) Handicrafts Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "The Narmada River agate mines are owned by the Government of India and the Siddis have to purchase a lease to dig for the stones.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S06",
+      "quote": "Based on recent trade networks and interviews with Hindu and Jain mer chants, it is clear that they dominated the trade of agate and other processed stones that were being shipped to the inland towns and distant communities within the subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S06",
+      "quote": "the Mus lim/Arab traders, including Sidis, clearly dominated the sea trade and would have been the major players in the trade of agate beads and pendants to Africa and Arabia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S06",
+      "quote": "They do still continue to sell beads at the tomb of Gori Pir, but these beads are now made in Khambhat, often by other communities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S06",
+      "quote": "there were numerous bead types that fetched a good price in Arabia. These include spherical carnelian and rock crystal used to make prayer beads",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S06",
+      "quote": "Although most of the miners are local Bhil tribals, we were informed by some of the local Sidis near Gori Pir Hill that when necessary, they also get involved in the actual mining.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S05",
+      "quote": "The people who mine the stones, in this locality at least, are of African descent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S05",
+      "quote": "Such people are actually more common than one might suspect in western India and Pakistan, especially the coastal areas, where they are called Siddis.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S05",
+      "quote": "This is a result of the lively commerce between India and Africa for at least the past two thousand years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "To protect the fingers from injury the workers wrap them in cotton bandages called \"anguthia\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "If water is not used, the wheel moves more rapidly giving better \"wadh\" or cut in greater output. But it releases tiny particles of dust, which while breathing, goes inside the lungs and causes T.B.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "as the \"ghasiyas\" are given wages on piece rate basis, they do not dip the stones in water and thereby get greater output of seven or eight pieces per minute.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "But by doing this they render themselves liable to this fatal disease, which is, reported to claim three to five deaths every year.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S14",
+      "quote": "The entire process is quite hazardous to the health of the workers, especially when the process is mechanised.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S14",
+      "quote": "It is therefore high time that we also paid attention to the safety aspects by providing protective gear and face masks to those engaged in the production of agates",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S06",
+      "quote": "Many Sidis appear to have also shifted to Khambhat, but here they were in the minority, as the city was filled with many competing workshops run by various communities (Muslim, Jain and Hindu)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S16",
+      "quote": "At present, the city of Khambhat in western India is one of the largest stone beadworking centers of the world, and it has been an important center for over two thousand years of documented history",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S16",
+      "quote": "World Archaeology, Vol. 23, No. 1, Craft Production and Specialization (Jun., 1991), pp. 44-63",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S17",
+      "quote": "there is no mention of agate industry till the 15th century, when it got itself esta blished in Cam bay which had then come into prom inence as a port of international trade",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S17",
+      "quote": "which has thrived in India since ages, known to Gujarat since ancient times and prospered at Cambay for over five centuries",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S17",
+      "quote": "CENSUS OF INDIA 1961 VOLUME V-PART VII-A (1) SELECTED CRAFTS OF GUJARAT AGATE INDUSTRY OF CAMBAY",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S17",
+      "quote": "The agate industry has suffered a progressive decline in its prosperity since the middle of the nineteenth century as can be seen from the fact that the total number of families",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S17",
+      "quote": "engaged in this industry have dwindled down to 446 from 600 in 1878 as stated by the author of the Gazetteer",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S17",
+      "quote": "A total number of 2,903 persons are dependent upon this industry, of whom 739 are workers707 males, 32 females and 134 children",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S17",
+      "quote": "CENSUS OF INDIA 1961 VOLUME V-PART VII-A (1) SELECTED CRAFTS OF GUJARAT AGATE INDUSTRY OF CAMBAY",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S17",
+      "quote": "Another peculiarity of this industry is parti cipation by people of all castes and religions",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S17",
+      "quote": "Out of a total number of 446 house holds engaged in this industry as many as 161 belong to Patel community, 96 are Ranas, 39 Muslims, 21 Thakors, 20 Valmiks",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S17",
+      "quote": "CENSUS OF INDIA 1961 VOLUME V-PART VII-A (1) SELECTED CRAFTS OF GUJARAT AGATE INDUSTRY OF CAMBAY",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S17",
+      "quote": "It has been esti mated that about 400 workers are employed in mining, of whom 300 male workers are skilled and about 100 female workers unskilled",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S17",
+      "quote": "finding out the real type of stones from different trap beds is a specialised and skilled job, which can be undertaken only by experienced Adivasi (Bhil) labourers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S17",
+      "quote": "CENSUS OF INDIA 1961 VOLUME V-PART VII-A (1) SELECTED CRAFTS OF GUJARAT AGATE INDUSTRY OF CAMBAY",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S16",
+      "quote": "After the nodules are brought to Khambhat they are dried in the sun to remove the moisture that is trapped inside the rock. This manufacturing stage is usually carried out for two to three months beginning in March",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S16",
+      "quote": "World Archaeology, Vol. 23, No. 1, Craft Production and Specialization (Jun., 1991), pp. 44-63",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S16",
+      "quote": "The dominant merchant families in Khambhat include Hindu, Jain and Muslim communities",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S16",
+      "quote": "In Khambhat the major merchant families carefully monitor and control all stages of bead production, and often extend their control to the mining of the raw agate nodules in the district of Ratanpura, some 125km south-east of Khambhat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S16",
+      "quote": "World Archaeology, Vol. 23, No. 1, Craft Production and Specialization (Jun., 1991), pp. 44-63",
+      "result": "PASS"
+    }
+  ]
+}

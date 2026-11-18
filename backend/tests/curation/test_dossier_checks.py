@@ -81,8 +81,20 @@ def test_an_unresolved_reference_stops_the_content_rules() -> None:
 
 def test_an_unknown_craft_slug_is_reported() -> None:
     dossier = changed_dossier(lambda plain: plain.update(craftSlug="Not-A-Craft"))
-    assert ("craftSlug", "Not-A-Craft is not a craft slug on the master list") in found(
+    assert ("craftSlug", "Not-A-Craft is not on the master list or the portal craft register") in found(
         content_problems(dossier, default_context())
+    )
+
+
+def test_a_craft_the_portals_added_is_curated_like_a_master_craft() -> None:
+    portal = changed_dossier(lambda plain: plain.update(craftSlug="Krishnanagar-Terracotta"))
+    assert not [
+        where for where, _ in found(content_problems(portal, default_context())) if where == "craftSlug"
+    ]
+    merged = changed_dossier(lambda plain: plain.update(craftSlug="Cane-And-Bamboo"))
+    assert found(content_problems(merged, default_context()))[0] == (
+        "craftSlug",
+        "Cane-And-Bamboo is merged into Cane-Bamboo-Craft; curate Cane-Bamboo-Craft",
     )
 
 
@@ -101,6 +113,33 @@ def test_a_d_source_alone_supports_only_a_dated_price() -> None:
 
     priced = found(content_problems(changed_dossier(price), default_context()))
     assert [where for where, message in priced if "D sources" in message] == ["C007"]
+
+
+def test_a_claim_keeps_the_hedge_of_its_only_quote() -> None:
+    def hedge_the_quote(plain: dict[str, Any]) -> None:
+        plain["claims"][1]["quotes"][0]["quote"] = (
+            "It is believed that the printers of Ajrakhpur in Kachchh moved there from Dhamadka after the "
+            "earthquake of 2001."
+        )
+
+    problems = found(content_problems(changed_dossier(hedge_the_quote), default_context()))
+    assert [(where, message) for where, message in problems if "hedge" in message] == [
+        (
+            "C002",
+            "every quote hedges (believed) and the text does not; keep the hedge (probably, believed, about, ...) "
+            "or cite words that state it plainly",
+        )
+    ]
+
+    def hedge_the_claim(plain: dict[str, Any]) -> None:
+        hedge_the_quote(plain)
+        plain["claims"][1]["text"] = (
+            "The printers of Ajrakhpur in Kachchh are believed to have moved there from Dhamadka after the "
+            "earthquake of 2001."
+        )
+
+    hedged = found(content_problems(changed_dossier(hedge_the_claim), default_context()))
+    assert not [where for where, message in hedged if "hedge" in message]
 
 
 def test_hypotheses_show_only_under_open_questions() -> None:
@@ -202,4 +241,117 @@ def test_a_thin_dossier_that_meets_every_full_target_is_marked_full() -> None:
     assert full_shortfalls(dossier) == []
     assert [problem.message for problem in coverage_problems(dossier)] == [
         "the dossier meets every FULL target; mark it FULL"
+    ]
+
+
+FAMILIES = ("Cane-Bamboo-Craft", "Other-Stone-Carving", "Stone-Others")
+
+
+def full_plain(craft_slug: str, scope: str = "FAMILY") -> dict[str, Any]:
+    plain = passing_plain()
+    plain["craftSlug"] = craft_slug
+    plain["scope"] = scope
+    plain["sources"] = [dict(plain["sources"][0], id=f"S{n:02d}") for n in range(1, 9)]
+    disciplines = ["OVERVIEW", "HISTORY", "PROCESS", "MATERIALS", "CHEMISTRY", "DESIGN"]
+    template = plain["claims"][0]
+    plain["claims"] = [
+        dict(template, id=f"C{n:03d}", discipline=disciplines[n % len(disciplines)]) for n in range(1, 43)
+    ]
+    sentence = plain["overview"]["lede"][0]
+    plain["overview"]["sections"] = [
+        {"discipline": discipline, "sentences": [sentence] * 3} for discipline in disciplines
+    ]
+    plain["coverage"] = "FULL"
+    plain["places"] = [
+        dict(place, claimIds=["C001"], role="PRACTISED")
+        for place in (
+            {"id": "L01", "name": "Assam", "kind": "STATE", "state": "Assam", "country": "India"},
+            {"id": "L02", "name": "Northeast India", "kind": "REGION", "country": "India"},
+            {"id": "L03", "name": "Tripura", "kind": "STATE", "state": "Tripura", "country": "India"},
+        )
+    ]
+    return plain
+
+
+def scope_messages(plain: dict[str, Any], change: Any = None) -> list[tuple[str, str]]:
+    if change is not None:
+        change(plain)
+    problems = found(content_problems(Dossier.model_validate(plain), default_context()))
+    kept = ("coverage", "scope", "market.gi", "craftSlug", "categorySlug", "overview")
+    return [
+        (where, message) for where, message in problems if where in kept or where.startswith(("L0", "O0"))
+    ]
+
+
+def test_a_family_craft_names_its_centres_by_state_or_region() -> None:
+    assert scope_messages(full_plain("Kutch-Ajrakh", "CRAFT")) == [
+        ("coverage", "FULL needs the district of every centre (L01, L02, L03 names none)")
+    ]
+    for family in FAMILIES:
+        assert scope_messages(full_plain(family)) == []
+    family = Dossier.model_validate(full_plain("Cane-Bamboo-Craft"))
+    assert full_shortfalls(family) == []
+    as_craft = family.model_copy(update={"scope": "CRAFT"})
+    assert full_shortfalls(as_craft) == ["the district of every centre (L01, L02, L03 names none)"]
+
+
+def test_the_scope_is_declared_and_must_match_the_register() -> None:
+    assert scope_messages(full_plain("Cane-Bamboo-Craft", "CRAFT"))[0] == (
+        "scope",
+        "Cane-Bamboo-Craft is a family craft (catch-all or practised across India); its scope is FAMILY",
+    )
+    assert scope_messages(full_plain("Kutch-Ajrakh"))[0] == (
+        "scope",
+        "Kutch-Ajrakh is a single named craft; its scope is CRAFT",
+    )
+    with pytest.raises(ValidationError, match="names its categorySlug"):
+        Dossier.model_validate(full_plain("Cane-Bamboo-Craft", "CATEGORY"))
+    assert Dossier.model_validate(passing_plain()).scope == "CRAFT"
+
+
+def test_a_family_craft_still_places_its_villages_in_their_districts() -> None:
+    def add_village(plain: dict[str, Any]) -> None:
+        plain["places"].append(
+            {
+                "id": "L04",
+                "name": "Ajrakhpur",
+                "kind": "VILLAGE",
+                "state": "Gujarat",
+                "country": "India",
+                "role": "PRACTISED",
+                "claimIds": ["C001"],
+            }
+        )
+
+    assert scope_messages(full_plain("Cane-Bamboo-Craft"), add_village) == [
+        ("coverage", "FULL needs the district of every centre (L04 names none)"),
+        ("L04", "a VILLAGE in India names its district and state as the LGD register does"),
+    ]
+
+
+def test_a_family_craft_has_no_gi_record_and_may_be_thin() -> None:
+    def thin(plain: dict[str, Any]) -> None:
+        plain["coverage"] = "THIN"
+        plain["claims"] = plain["claims"][:5]
+        plain["overview"]["sections"] = []
+
+    assert scope_messages(full_plain("Other-Stone-Carving"), thin) == []
+
+    def with_gi(plain: dict[str, Any]) -> None:
+        plain["market"] = {"gi": {"applicationNumber": "151", "claimIds": ["C001"]}}
+
+    assert ("market.gi", "a family craft has no GI record; a GI names one craft") in scope_messages(
+        full_plain("Other-Stone-Carving"), with_gi
+    )
+
+
+def test_only_a_category_names_sub_categories_or_member_crafts() -> None:
+    plain = full_plain("Other-Stone-Carving")
+    lede = plain["overview"]["lede"]
+    lede[0] = dict(lede[0], subCategories=["Stone-Carving"])
+    lede[1] = dict(lede[1], crafts=["Mysuru-Stone-Carving"])
+    problems = found(content_problems(Dossier.model_validate(plain), default_context()))
+    assert [(where, message) for where, message in problems if message.startswith("only a category")] == [
+        ("overview.lede.0", "only a category dossier names sub-categories or member crafts"),
+        ("overview.lede.1", "only a category dossier names sub-categories or member crafts"),
     ]

@@ -27,6 +27,7 @@ from app.research.blocks import ExplainerSentence, ProseBlock
 from app.research.citations import Citation
 from app.research.crafts import CraftRef
 from app.research.embedding import TextEmbedder
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.retrieval.indexing import embed_pieces
 from app.science.ladder import process_ladder
 from app.services import knowledge_view
@@ -74,8 +75,10 @@ def store_for(session: AsyncSession, embed: TextEmbedder = fixed_embedder) -> Sq
     return SqlPieceStore(sessions, embed=embed, shield=ShieldedWork())
 
 
-async def prose_of(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> ProseBlock:
-    views, _ = await knowledge_view.claims_by_id(session, claim_ids)
+async def prose_of(
+    session: AsyncSession, claim_ids: Sequence[uuid.UUID], *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> ProseBlock:
+    views, _ = await knowledge_view.claims_by_id(session, claim_ids, acls=acls)
     sentences = [
         ExplainerSentence(
             id=f"s1.b1.{n}",

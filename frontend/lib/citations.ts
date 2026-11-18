@@ -12,22 +12,42 @@ export function sourceNumbers(sections: readonly AnswerSection[], reactions: rea
   return numbers;
 }
 
-export function listedSourceNumbers(sources: readonly Pick<SourceRef, "id">[]): Map<string, number> {
-  const numbers = new Map<string, number>();
-  for (const source of sources) if (!numbers.has(source.id)) numbers.set(source.id, numbers.size + 1);
+export function listedSourceNumbers(sources: readonly Pick<SourceRef, "id">[], numbered: ReadonlyMap<string, number> = new Map()): Map<string, number> {
+  const numbers = new Map(numbered);
+  let next = Math.max(0, ...numbers.values()) + 1;
+  for (const source of sources) {
+    if (numbers.has(source.id)) continue;
+    numbers.set(source.id, next);
+    next += 1;
+  }
   return numbers;
 }
 
-export function uniqueCitations(citations: readonly Citation[]): Citation[] {
-  const seen = new Set<string>();
-  const out: Citation[] = [];
+export type SourceCitations = { sourceId: string; number: number | null; citations: Citation[] };
+
+function passageKey(citation: Citation): string {
+  return JSON.stringify([citation.sourceId, citation.evidence, citation.quote, citation.locator]);
+}
+
+function byNumber(a: SourceCitations, b: SourceCitations): number {
+  if (a.number === b.number) return 0;
+  if (a.number === null) return 1;
+  if (b.number === null) return -1;
+  return a.number - b.number;
+}
+
+export function citationsBySource(citations: readonly Citation[], numbers: ReadonlyMap<string, number>): SourceCitations[] {
+  const groups = new Map<string, SourceCitations>();
+  const passages = new Set<string>();
   for (const citation of citations) {
-    const key = `${citation.sourceId}:${citation.claimId}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(citation);
+    const passage = passageKey(citation);
+    if (passages.has(passage)) continue;
+    passages.add(passage);
+    const group = groups.get(citation.sourceId) ?? { sourceId: citation.sourceId, number: numbers.get(citation.sourceId) ?? null, citations: [] };
+    group.citations.push(citation);
+    groups.set(citation.sourceId, group);
   }
-  return out;
+  return [...groups.values()].sort(byNumber);
 }
 
 const ALLOWED_PROTOCOLS = new Set(["https:"]);

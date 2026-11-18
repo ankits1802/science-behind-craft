@@ -10,6 +10,10 @@ from starlette.requests import HTTPConnection
 from app.core.config import get_settings
 
 _MAX_KEYS = 50_000
+PUBLIC_READS_PER_WINDOW = 300
+PUBLIC_READ_WINDOW_SECONDS = 600
+SERVER_READS_PER_WINDOW = 3000
+SERVER_READ_KEY = "public-read:web-server"
 
 
 class SlidingWindow:
@@ -53,20 +57,26 @@ WEB_PROXY_SECRET_HEADER = "x-web-proxy-secret"
 VIEWER_ADDRESS_HEADER = "x-viewer-address"
 
 
-def trusted_viewer_address(connection: HTTPConnection) -> str | None:
+def sent_by_web_server(connection: HTTPConnection) -> bool:
     secret = (get_settings().web_proxy_secret or "").strip()
-    if not secret:
-        return None
     sent = connection.headers.get(WEB_PROXY_SECRET_HEADER)
+    if not secret or sent is None:
+        return False
+    return hmac.compare_digest(sent.strip().encode("utf-8"), secret.encode("utf-8"))
+
+
+def trusted_viewer_address(connection: HTTPConnection) -> str | None:
     viewer = connection.headers.get(VIEWER_ADDRESS_HEADER)
-    if sent is None or viewer is None:
-        return None
-    if not hmac.compare_digest(sent.strip().encode("utf-8"), secret.encode("utf-8")):
+    if viewer is None or not sent_by_web_server(connection):
         return None
     try:
         return str(ip_address(viewer.strip()))
     except ValueError:
         return None
+
+
+def is_web_server_read(connection: HTTPConnection) -> bool:
+    return connection.headers.get(VIEWER_ADDRESS_HEADER) is None and sent_by_web_server(connection)
 
 
 def client_ip(connection: HTTPConnection) -> str:
@@ -155,6 +165,18 @@ def voice_turn_attempt(user_id: str) -> tuple[bool, float]:
 
 def voice_speech_attempt(user_id: str) -> tuple[bool, float]:
     return _windows.attempt(f"voice-speech:{user_id}", 60, 600)
+
+
+def public_read_attempt(connection: HTTPConnection) -> tuple[bool, float]:
+    if is_web_server_read(connection):
+        return _windows.attempt(SERVER_READ_KEY, SERVER_READS_PER_WINDOW, PUBLIC_READ_WINDOW_SECONDS)
+    return _windows.attempt(
+        f"public-read:{client_ip(connection)}", PUBLIC_READS_PER_WINDOW, PUBLIC_READ_WINDOW_SECONDS
+    )
+
+
+def retry_after_value(wait_seconds: float) -> str:
+    return str(max(1, int(wait_seconds + 0.999)))
 
 
 def reset_all() -> None:

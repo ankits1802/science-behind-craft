@@ -6,10 +6,10 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import map_districts
 from app.core.db import get_session
-from app.core.deps import get_current_user
 from app.main import create_app
 from app.models import User
 
+from ..readers import sign_in_as
 from .test_district_view import golden, records
 
 PATH = "/api/map/districts/449"
@@ -23,22 +23,18 @@ async def no_session() -> Any:
 def signed_in(monkeypatch: pytest.MonkeyPatch) -> TestClient:
     asked: list[int] = []
 
-    async def stored(_session: Any, district_lgd: int) -> Any:
+    async def stored(_session: Any, district_lgd: int, **_kwargs: Any) -> Any:
         asked.append(district_lgd)
         return records() if district_lgd == 449 else None
 
     monkeypatch.setattr(map_districts, "district_records", stored)
     app = create_app()
     student = User(id=uuid.UUID(int=7), name="Asha", email="asha@example.com", role="STUDENT")
-    app.dependency_overrides[get_current_user] = lambda: student
+    sign_in_as(app, lambda: student)
     app.dependency_overrides[get_session] = no_session
     client = TestClient(app)
     client.asked = asked
     return client
-
-
-def test_ask_the_map_needs_a_session() -> None:
-    assert TestClient(create_app()).get(PATH).status_code == 401
 
 
 def test_a_tapped_district_answers_its_stored_crafts_and_land(signed_in: TestClient) -> None:

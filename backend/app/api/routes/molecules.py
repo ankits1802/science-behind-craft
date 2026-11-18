@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import hashlib
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.public_deps import public_reader, read_headers, unchanged_read
 from app.core.db import get_session, release_connection, sessionmaker
-from app.core.deps import get_current_user
 from app.core.errors import AppError
 from app.models import User
 from app.services.live_sources import LiveSourcesStore
@@ -18,7 +19,6 @@ logger = logging.getLogger(__name__)
 
 NO_CONFORMER_DETAIL = "There is no 3D structure for that compound."
 UNAVAILABLE_DETAIL = "The 3D structure isn't available right now. Try again later."
-CONFORMER_CACHE_CONTROL = "private, max-age=604800"
 PUBCHEM_CID_MAX = 10**12 - 1
 
 
@@ -39,7 +39,7 @@ async def conformer(
     request: Request,
     pubchem_cid: int = Path(ge=1, le=PUBCHEM_CID_MAX),
     *,
-    _: User = Depends(get_current_user),
+    reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
     stored = await stored_compound_cid(session, pubchem_cid)
@@ -54,4 +54,8 @@ async def conformer(
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, UNAVAILABLE_DETAIL) from None
     if sdf is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NO_CONFORMER_DETAIL)
-    return Response(sdf, media_type=CONFORMER_TYPE, headers={"Cache-Control": CONFORMER_CACHE_CONTROL})
+    version = hashlib.sha256(sdf.encode("utf-8")).hexdigest()
+    unchanged = unchanged_read(request, reader, version)
+    if unchanged is not None:
+        return unchanged
+    return Response(sdf, media_type=CONFORMER_TYPE, headers=read_headers(reader, version))

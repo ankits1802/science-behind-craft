@@ -16,7 +16,10 @@ client types and runtime shapes in `frontend/lib/explainerContract.ts`, `explain
 `frontend/components/answer/blockRenderers.ts`. Change a type only together with this page, the
 fixtures and both sides' tests. Design choices: decisions 0030, 0042, 0054 and 0062; phase D
 adds `blocks_learning.py`, `blocks_insight.py` and `measures.py` and, on the client,
-`explainerLearning.ts` and `explainerInsight.ts`.
+`explainerLearning.ts` and `explainerInsight.ts`. The lede, headings, question order and the
+signature figures (decision 0077) add `blocks_lede.py`, `blocks_signature.py`,
+`question_cues.py` and `trail.py` (the trail event, moved out of `explainer.py`) and, on the
+client, `explainerSignature.ts`.
 
 Last reviewed: 2026-11-18.
 
@@ -41,21 +44,23 @@ Last reviewed: 2026-11-18.
 
 ## The document (`Explainer`)
 
-`Explainer {schemaVersion 1, answerId, question, understood, sections[ExplainerSection] (at
-least one), sources[SourceRef], followUps[] (at most 5), createdAt}`.
+`Explainer {schemaVersion 1, answerId, question, understood, lede?, sections[ExplainerSection]
+(at least one), sources[SourceRef], followUps[] (at most 5), createdAt}`. `lede` is the
+`LedeBlock` below; an explainer stored before decision 0077 has none and still reads.
 
 A finished explainer is kept on its `Answer` row under `payload.explainer`
 (`services/answer_store.EXPLAINER_PAYLOAD_KEY`): this document's JSON, in the answer language, as
-the reader saw it. Listen reads it from there (decision 0035) and refuses one whose `answerId` is
-another answer's; a `payload` without it (a voice turn's) holds no explainer.
+the reader saw it, rebuilt once through the claim ledger below. Listen reads it from there
+(decision 0035) and refuses one whose `answerId` is another answer's; a `payload` without it (a
+voice turn's) holds no explainer.
 
 - `understood` is the `Understood` shape of the stream event below.
 - Sections are listed by `order`, 1 to n; ids are `s1`, `s2`, ... and unique. Order is the
   reading order and adapts to the question; section ids are only names.
 - Block ids (`^[a-z0-9]+(?:[.-][a-z0-9]+)*$`, at most 80, for example `s1.b2`) are unique across
   the explainer.
-- `sources` lists every source the blocks cite, once, in order of first citation walking the
-  sections in order (`cited_source_ids`).
+- `sources` lists every source the blocks cite, once, in order of first citation: the lede's
+  first, then the sections in order (`explainer_blocks` yields the lede first, `cited_source_ids`).
 - At least one section is `READY`.
 
 `ExplainerSection {id, discipline, title (1-120), original?, order >= 1, state, blocks[Block],
@@ -65,6 +70,55 @@ blocks, `searched` the one sentence of what was searched). `original` is the Eng
 section cites. Disciplines (`models/enums.DISCIPLINES`): `OVERVIEW`, `PROCESS`, `CHEMISTRY`,
 `PHYSICS`, `MATERIALS`, `GEOGRAPHY` (geography and water), `GEOLOGY` (geology and soil),
 `CLIMATE`, `ECOLOGY`, `BOTANY`, `HISTORY`, `ECONOMICS`, `DESIGN`, `HEALTH`.
+
+## One claim, one rendering (the claim ledger, decision 0080)
+
+Every block of an answer passes one `services/claim_ledger.ClaimLedger` before it is sent: the
+stream holds it (`ExplainerStream.blocks` sends and returns only what it lets through, and the
+section runner, reused sections, pictures and the stored-only answer keep only that), and
+`explainer_document` rebuilds the finished answer through a fresh one in reading order
+(`services/ledgered_explainer`). Sections that finish out of order can make the stored answer hold
+fewer sentences than the live page, never more.
+
+- **Restating blocks** (`prose`, `material_card` facts and handling, `expert_view` takes) drop a
+  sentence whose text is already on the page (folded by `data/craft_text.fold`, its English
+  `original` too) or whose every claim an earlier block already showed. **Story blocks** (every
+  other kind with `SENTENCES`: `process_ladder` stages, `region_story` steps, `supply_map` links,
+  `zoom_story` levels, `timeline_map` points and routes, `concept_graph` entries, `seasons`,
+  `measure`, `compare`, `what_if`, `market_gi`, `climate_risk` and the rest) drop an item only when
+  its sentence's text is already shown, and in one call they are let through before the restating
+  blocks; a supply map may repeat a sentence within itself (the client shows it once per material).
+  An item left with no sentence goes; a ladder stage keeps the level of the sentences it keeps; a
+  compare cell already shown is left `null` and a row with fewer than two crafts goes; a block whose
+  own sentence (an indigo vat's lift) was shown is not sent. An `expert_view` difference goes from
+  both seats when either view was already shown. Kinds without sentences pass whole. A block left
+  empty or off its contract is not sent; a section left with nothing ends `EMPTY` with
+  `COVERED_NOTE` ("Already covered in this answer."), which the client does not draw
+  (`lib/explainerView.shownSections`).
+- **Calls:** a section's ladder, prose and pictures are admitted alone and its built blocks together
+  (`claim_ledger.admission_batches`), for fresh sections, reused sections and the rebuild alike.
+  `ExplainerStream.blocks(section_id, blocks, sources, *, in_language)` admits in English, then
+  translates what it let through, all at once, then sends it.
+- **Once per answer:** a material card per material (PubChem CID, compound, material, term or
+  folded name), a `molecule_3d` per CID, a concept-graph node per term (a node that loses the
+  focus craft or falls below two crafts goes), one `region_story`.
+- **Experts:** a seat with no new sentence left is not shown; the others stop agreeing or differing
+  with it, and a difference whose two views now share a source goes.
+- **Pictures:** one per section, the first ranked item that illustrates a claim the section's
+  shown blocks cite, was not shown earlier in the answer (media id, page or image address, the
+  zoom story's pictures included) and is not from a shop, marketplace or social site
+  (`services/picture_sites.blocked_picture`: the maintained `BLOCKED_PICTURE_SITES`, a
+  `SHOP_PATH_SEGMENTS` path segment, a `/collections/<name>` store listing
+  (`SHOP_LISTING_SEGMENTS`), or a title starting "Buy" or "Shop"). A zoom level whose picture was
+  already shown or is blocked is left out of the zoom.
+- **Sources** merge (`services/source_merge.SourceMerge`) by DOI (the field or a doi.org link), by
+  address (host without `www.`, path without its last slash, query without `utm_`) or by title
+  (asides in brackets left out, at least `TITLE_KEY_WORDS_MIN` distinct words, in any order), never
+  across two different DOIs, and by title alone never across two different stated years. The first cited keeps its id, kind and title; the others fill its gaps and the
+  year is the earliest stated. Citations, pictures, molecules and open questions are remapped to
+  it, so `sources` and the `source` events list each work once.
+- **The lede** goes through first (`admit_lede`): its sources become the canonical ones and its
+  sentences count as shown text, not shown claims, so the sections may still explain them.
 
 ## The block envelope
 
@@ -91,6 +145,7 @@ piece ("From earlier research" and its date). Each block says what it rests on:
 | `in_practice`, `open_questions` | D | declared |
 | `artisan_voice` | E | declared |
 | `designs` | deferred (owner, 2026-11-17) | declared |
+| `indigo_vat`, `mordant_bath`, `lost_wax`, `firing` | `SIGNATURE` (0077) | declared; built by task 3-04 |
 
 A phase builds a kind by adding it to `BUILT_BLOCK_KINDS` (server and client, pinned by
 `e2e/backend-vocabulary-unit.spec.ts`) and its client shape and renderer; the envelope does not
@@ -173,7 +228,7 @@ construct, and the builder that made it adds nothing.
 - **`molecule_3d`** `{compoundId, pubchemCid, name, formula?, sourceId}`. Server: everything from
   the stored `Compound` and its `COMPOUND_RECORD` source (`compound_lookup.record_source_id`).
   Model: which compound of the section's blocks. The conformer comes through the PubChem adapter:
-  `GET /api/molecules/{pubchemCid}/conformer` (signed in) answers the 3D SDF, cached in the
+  `GET /api/molecules/{pubchemCid}/conformer` (public, decision 0079) answers the 3D SDF, cached in the
   private media bucket, 404 without a 3D conformer; the builder adds a molecule only for a
   compound with a kept conformer (decision 0045). Cites its record. **Piece:** none (it cites no
   claim).
@@ -279,19 +334,24 @@ their PubChem record sources), and an answer for any craft gets none.
   linked to the reaction, when built and when its piece is reused.
 - **`material_card`** (`CHEMISTRY`, `MATERIALS`, 20 s): materials a section sentence marks by a
   glossary term or names, at most 3, each offered with its own stored claims and the section's
-  claims naming it (facts, at most 10); one plan-model call (`composer/material_cards`) sorts
+  claims naming it (facts, at most 10), never a claim the section's blocks already cite. Materials
+  linked to one PubChem CID (or one compound row) are one material (`merged_materials`): named for
+  the one whose name is the compound's, else the shortest, with every use and term of the others
+  and their names in the brief (decision 0080). One plan-model call (`composer/material_cards`) sorts
   them into facts and handling by ref; an unknown ref is dropped and a card without a fact is not
   shown. `role` only when every stage use agrees; `termKey`, `localNames` and `wikidataId` from
   the linked term whose label the material's name contains; `formula` and `pubchemCid` only from
   a compound the compound lookup linked to its PubChem record.
 - **`molecule_3d`** (`CHEMISTRY`, `MATERIALS`, 8 s): the first compound, in order of first
   mention, with a CID, a stored record source and a 3D conformer (at most 3 tried); one per
-  section.
+  section, and the claim ledger shows one per CID per answer (decision 0080).
 
-`GET /api/molecules/{pubchemCid}/conformer` (signed in; it checks the stored compound on the
+`GET /api/molecules/{pubchemCid}/conformer` (public; it checks the stored compound on the
 request's one session and releases the connection before the bucket and PubChem, decision 0050)
 answers the compound's 3D SDF
-(`chemical/x-mdl-sdfile`, `Cache-Control: private, max-age=604800`) for a CID a stored `Compound`
+(`chemical/x-mdl-sdfile`; `Cache-Control: private, no-cache` with a token and
+`public, max-age=300` without, `Vary: Authorization`, and an `ETag` of the SDF that a matching
+`If-None-Match` turns into a 304, decision 0079) for a CID a stored `Compound`
 holds; 404 `{detail}` for any other CID or a compound PubChem has no 3D conformer for, 503 when
 the media bucket or PubChem fails, 422 for a CID below 1. The SDF comes from
 `PubChemAdapter.conformer` (PUG REST `compound/cid/<cid>/record/SDF?record_type=3d`, paced at
@@ -377,8 +437,9 @@ Registered in `BLOCK_BUILDERS` from `services/expert_views.py` (`expert_view`, e
 `PANEL_FIELDS`, 45 s). It hears nothing for a section without a checked block or a speaking seat.
 
 - **Evidence.** The fact-level stored claims the section's checked sentences rest on
-  (`BuildAsk.cited`), those the blocks cite first, each offered as its claim text and its
-  citations' quotes inside an untrusted block (`panel_candidates`).
+  (`BuildAsk.cited`), those the blocks do not yet cite first, each offered as its claim text and
+  its citations' quotes inside an untrusted block (`panel_candidates`). When the blocks already
+  cite every one, no call is made (decision 0080).
 - **One call.** `composer/expert_takes.compose_takes`: one `COMPOSE` call (Claude Sonnet first)
   with the section line, an `Expert <SEAT>: <label>. <brief>` line per speaking seat, the
   statements and the question in untrusted blocks, and the compose source rules. Reply
@@ -387,7 +448,7 @@ Registered in `BLOCK_BUILDERS` from `services/expert_views.py` (`expert_view`, e
   take sentences and 3 differences are read; a reply off the schema is a model failure.
 - **Takes.** Every take sentence passes the prose checks (the composer's sentence validator, then
   `section_blocks.prose_problems`) or that seat's view is not shown; a view for a seat not
-  offered is ignored.
+  offered is ignored, and so is a view whose every claim the section's blocks already cite.
 - **Experts differ.** A proposed pair is kept when its seats differ and both gave a view, both
   statements are fact-level stored claims of the section, they are two claims, no source is
   cited by both and both claims are stored on one concept (`ClaimView.concept_id`); each pair of
@@ -558,7 +619,9 @@ datasets, "Model" is all a model may do, and every validator fails closed. Lanes
   (`research/timeline.years_named`: four-digit years 1000 to 2099 not followed by BC or BCE, ranges such as
   `1586-1631`, `1855 - ca. 1879`, `1855-79` and `1947 to 2001` with each end named too, decades
   such as `1950s`, ordinal centuries in digits or words such as `15th-century`, `fifteenth century`
-  and `11th-14th century`; "400 years ago" names none); coordinates only from the Wikidata item's
+  and `mid-18th century`, and century ranges such as `11th-14th century`, `11th to 14th century`,
+  `18th and 19th centuries` or `late 16th or early 17th century` as one span from the first
+  century's start to the last one's end; "400 years ago" names none); coordinates only from the Wikidata item's
   P625, placed as supply origins are (decision 0047: one exact label or alias match, of several only
   the one whose description names a capitalised word of the stated texts, then one `place_points`
   query), else the place is listed without a pin; `DR_DISTRICT_SHAPES` and the caption. Model:
@@ -629,7 +692,9 @@ joined both kinds to `BUILT_BLOCK_KINDS` (decision 0061), their renderers being 
   compound record's.
 - **`timeline_map`** (`HISTORY`, 30 s). The statements are the section's fact claims whose
   sentence or quotes state a span of years (`timeline.years_offered`: `years_named` without a
-  single year whose numeral is followed by a plural noun, "1500 artisans"), at most 12, each
+  single year whose numeral is followed by a plural noun, "1500 artisans", other than "hundreds",
+  "thousands", "millions" or "dozens", and without a temperature, a sum of money or a multiplied
+  count, "1250-1280°C", "Rs 2000 crore", "1450 million years"), at most 12, each
   offered with its quotes (at most 3) and its spans by ref (`y1`, ...) in a server line outside
   the untrusted blocks. No dated statement or no `DR_DISTRICT_SHAPES` row asks no model. One
   plan-model call (`composer/timeline_map`) answers `{points[{statement, place, years}],
@@ -1057,6 +1122,42 @@ renderers being in place (decision 0068). `quiz` is never streamed in an answer,
 of `BUILT_BLOCK_KINDS`: its route and the lesson pack carry a `QuizBlock` that the client reads
 with the quiz shape.
 
+### The lede and the signature figures (decision 0077)
+
+- **`LedeBlock`** `{id "lede", kind "lede", version 1, reuse null, headline, sentences
+  (2-3), figure}` opens the explainer, outside every section and never a stored piece. `headline`
+  is the question as asked (`Explainer.question`, word for word). The sentences answer this
+  question directly: facts only, each holding the prose rules (the composer's quote, figure and
+  overlap checks, then `section_blocks.prose_problems`). `figure` is null or one signature block
+  of a built kind; the document, the `lede` event and the client refuse any other. Sentence ids
+  are `lede.<n>`; translation and term marking walk the lede and its figure through
+  `explainer.payload_sentences`.
+- **How the server writes it** (`services/answer_lede.py`): at the start of the answer, from the
+  craft's stored claims ranked for the question (`knowledge_view.claims_for` at the depth's mode,
+  hypotheses left out, `LEDE_CLAIMS_MAX` 16) and the claims of each reused section
+  (`HEADING_CLAIMS_MAX` 8, in reading order), one `LedeRequest` to the COMPOSE route
+  (`ModelComposer.lede`, `LEDE_SYSTEM_PROMPT`, `lede_schema`) returns 2-3 sentences, one heading
+  per reused section and the questions the answer leaves open. A failing sentence is regenerated
+  once like any section's; a sentence still failing is dropped and fewer than two is no lede.
+  Blocks are held until the lede settles (`ExplainerStream.hold_blocks_for_lede`), so `lede` comes
+  before the first `block`; sections without a stored piece research meanwhile. `LEDE_WAIT_SECONDS`
+  (30 s) bounds the whole opening: the question's English rendering, the stored read, the call and
+  the lede's translation. Only when the opening found no stored finding (`Opening.deferred`) is the
+  lede written once the sections are checked, from the claims they cite, without any sentence a
+  section already states, and sent before `follow_ups`. A failure, a refusal or the wait leaves the
+  answer without a lede; it is never tried a second time.
+- **Signature figures** (`research/blocks_signature.py`) are hand-built figures for mechanisms that
+  recur across crafts, fed by claims and chosen by `chosen_signature` from the answer's glossary
+  terms in order (`SIGNATURE_TERMS`), never by a model. Every value a figure shows is stated by its
+  own cited sentence (`blocks.named_in`), and every sentence is a fact.
+
+| Kind | Fields | Rules |
+|---|---|---|
+| `indigo_vat` | `vat` (`FERMENTED`, `CHEMICAL`), `lift` sentence, `forms[{form (KETO, LEUCO), name, colour, soluble, compound?{compoundId, pubchemCid, formula?, sourceId}, sentence}]`, `dips[{dips 1-8, stated, shade?, sentence}]`, `contents[{name, sentence}]` | each form and content once; dips by rising count, each once, `stated` naming the count in digits or words; a compound's record is a direct source |
+| `mordant_bath` | `dye`, `fibre`, `swatches[{mordant?, colour, sentence}]` (1-4) | each mordant (or none) once; dye and fibre named by a swatch sentence |
+| `lost_wax` | `metal`, `steps[{step, sentence}]` (1-5) | steps `MODEL`, `JACKET`, `BURNOUT`, `POUR`, `BREAK_OUT`, each once, in that order; the metal named by a step sentence |
+| `firing` | `body`, `atmospheres[{atmosphere, colour, sentence}]` (1-2), `temperature?{stated, sentence}` | `OXIDISING`, `REDUCING` each once; the body named by a sentence; a temperature only as stated |
+
 ### Declared for later phases
 
 Fields are fixed now so the phases fill them without changing the envelope. `ExplainerSentence`
@@ -1081,7 +1182,10 @@ is written "sentence" below; every sentence is cited.
   summary[AnswerSentence] (1-3), sources[SourceRef], checkedAt}`** is the glossary row a tap
   opens, cached per key and language. `basis` is `STORED` (cited claims already held), else
   `WIKIPEDIA`, else `WEB_SEARCH`; the summary states facts only, and `sources` lists the cited
-  ones in order of first citation. Local names and crafts are listed once each.
+  ones in order of first citation. Local names and crafts are listed once each. `checkedAt` is,
+  for `STORED`, the latest change of the cited claims and citations, else when the summary was
+  researched. A kept summary is answered only while every citation it quotes is still shown to
+  the reader, chunk ACLs included (decision 0079).
 - **`MediaRef {id, display, provider, pageUrl, imageUrl, width?, height?, title, alt, author?,
   site, credit?, licence?, licenceUrl?, sourceId?, retrievedAt}`** is one stored picture.
   `INLINE` needs an open licence (`licences.open_licence` of the licence or its URL) and the
@@ -1119,8 +1223,13 @@ is written "sentence" below; every sentence is cited.
   open questions and `section_done`. Each image service has 6 s (`IMAGE_SEARCH_SECONDS`), the
   whole step 8 s (`PICTURES_WAIT_SECONDS`); a failure, a timeout or no relevant picture sends no
   `images` block and the section is still `READY`. Reused sections get pictures the same way from
-  their placed blocks' claims. An `images` block is never stored as a piece.
-- **`GET /api/terms/{key}?language=`** (signed in; 60 in 10 minutes, Master Admin unlimited)
+  their placed blocks' claims. An `images` block is never stored as a piece. A fresh section
+  searches from the blocks the claim ledger let through, a candidate from a shop, marketplace or
+  social site is never chosen (`section_images.shown_candidates`), and the ledger keeps one
+  picture per section (decision 0080).
+- **`GET /api/terms/{key}?language=`** (public, decision 0079: without a token only a kept summary, or
+  for English one built from stored defining claims, never a search, model call, translation or
+  write, else 401 "Sign in to look this term up."; signed in, 60 in 10 minutes, Master Admin unlimited)
   answers a `Term`: the cached summary while every claim it cites is visible, else `STORED`
   (each concept's defining claim), else `WIKIPEDIA` (verbatim lead sentences of the article for
   the term's Wikidata item or one of its names), else `WEB_SEARCH` (one search, up to 2 pages
@@ -1132,7 +1241,7 @@ is written "sentence" below; every sentence is cited.
 
 ## Stream events (`research/stream.py`)
 
-The explainer stream is the answer stream (`docs/contracts/research.md`) with eight more events,
+The explainer stream is the answer stream (`docs/contracts/research.md`) with ten more events,
 validated by `event_frame` like every other: a payload off the contract never reaches the wire.
 
 | Event | Payload | Notes |
@@ -1145,10 +1254,14 @@ validated by `event_frame` like every other: a payload off the contract never re
 | `section_done` | `{sectionId, state, searched}` | `READY`, or `EMPTY` with what was searched |
 | `builds_on` | `BuildsOnEvent {explainerId, version, sections[{id, order}]}` | a follow-up only, right after `understood`: the explainer and version it extends (decision 0062, `docs/contracts/learning.md`) |
 | `version` | `VersionMark {explainerId, version, answerId, basedOn, question, changes[], createdAt}` | a follow-up only, before `done`: the version it stored |
+| `lede` | `{block: LedeBlock}` | once at most, before the first `block`; every source it cites was sent as `source` first. Without a stored finding it comes after the sections, before `follow_ups` (decision 0077) |
+| `section_heading` | `{sectionId, title, original?}` | the heading written for a started section, before its first block; `original` is the English heading when `title` is a translation |
 
-Order: `understood`; reused pieces stream first (their `trail` with `storedAt`, `section_started`,
-`block`, `section_done`); every researched section is then started (`RESEARCHING`) and the
-sections run in parallel, so events of different sections interleave and `order` places them
+Order: `understood`; every researched section is started (`RESEARCHING`) and researches while the
+`lede` is written (decision 0077: blocks wait for it, and reused sections wait for their headings
+from it); reused pieces then stream (their `trail` with `storedAt`, `section_started`, `block`,
+`section_done`) while the researched sections run in parallel, so events of different sections
+interleave and `order` places them
 (within a section: its trail, `WRITING`, `CHECKING`, sources and blocks, open questions,
 `section_done`, then `trail` `QUOTED` for what it quoted; a section researching again goes back
 to `RESEARCHING`); `follow_ups` or `not_enough_evidence`; `done {answerId}` last. A section's
@@ -1254,12 +1367,14 @@ table also holds `embedding` (1536 dimensions, filled like claims, never sent) a
   now, every shown citation still stored, at the shown level) and every ladder passes
   `science/ladder.ladder_problems` against the craft's process rows. Among several sets, the one
   whose piece is nearest the question's embedding (`task: search result | query:`), else the newest.
-- **Streaming**: reused sections first, each `trail FOUND` per piece (`piece:<id>`, the shown
+- **Streaming**: the open sections are started first and research while the lede is written
+  (decision 0077); then each reused section, `trail FOUND` per piece (`piece:<id>`, the shown
   section title, `storedAt`), `section_started WRITING`, sources, the placed blocks (block ids
   `<section>.b<n>`, translated like any block), its `images` block when pictures are found (no
-  reuse mark: the pictures are searched for this answer), `section_done READY`; then the open
-  sections. An answer made only of reused sections offers `answer_events.stored_follow_ups` for
-  the headings of its pieces' claims (decision 0039).
+  reuse mark: the pictures are searched for this answer), `section_done READY`. An answer made
+  only of reused sections offers what any answer offers (`follow_ups.left_open`, decision 0077):
+  the questions the lede call says the sources leave open, then one per field the question
+  touched that the answer did not show.
 
 ## Listen (read by the explainer UI, decision 0037)
 
@@ -1342,6 +1457,16 @@ section's running water, made at 10:30 IST and served from the cache at 16:00 IS
 with its kind's shape, refuses each in the built-only parser and the stream, and checks the frame
 constants and the score (`e2e/explainer-phase-c-unit.spec.ts`).
 
+`explainer.lede.golden.json` (decision 0077) is the answer to "Which mordant fixes the red in
+Kutch Ajrakh block printing?" at Detailed depth: a lede of three composed sentences naming alum and
+myrobalan (harde), each citing seeded claims, then chemistry, materials and the process, in the
+order `question_order` gives for that question, under written headings. `explainer.lede.golden.sse`
+is its stream: the fallback headings in `section_started`, the lede's sources, the `lede`, then
+each section's `section_heading`, sources, block and `section_done`, `follow_ups` and `done`. The
+backend reproduces both byte for byte and holds the lede to the prose checks
+(`tests/contracts/test_explainer_lede_contract.py`); the client parses both and reduces the stream
+to the document (`e2e/explainer-contract-unit.spec.ts`, `e2e/explainer-view-unit.spec.ts`).
+
 `explainer.phase-d.golden.json` (decision 0062) holds every phase D kind for Kutch Ajrakh,
 compared with Bagru Hand Block Print, in six sections: a quiz (three cloze questions on alum,
 kut and indigo, each keyed to a GI journal claim, the distractors glossary terms of other Ajrakh
@@ -1393,8 +1518,23 @@ rebuilt-each-time kinds, the stream's `builds_on` and `version`, the learning ro
 ### How the server fills the phase A blocks (decision 0032)
 
 - A section is a field the question touches (`Understanding.disciplines`, most important first,
-  at most the depth's `maxSections`; `OVERVIEW` when the understanding names none), titled by
-  `research/sections.DISCIPLINE_TITLES`.
+  at most the depth's `maxSections`, keeping the fields the question asks about before the others;
+  `OVERVIEW` when the understanding names none). Since decision
+  0077 the chosen fields are read in the order the question needs (`sections.question_order`: the
+  fields its words ask about first, by `research/question_cues.py` in English and Hindi with the
+  craft's own name left out, then the rest, and the full process last unless the question asks
+  how the craft is made). A section starts under its fallback heading
+  (`sections.fallback_heading`, which names the craft and is never a field's label) and takes the
+  heading its COMPOSE reply writes (or, for a reused section, the lede call) once the composer
+  (`drafts.checked_heading`) and the server (`services/section_headings`) accept it: no figure,
+  link or personal data, not a field's label, no place, month or season its section does not
+  state, and at least one content word of its section. `DISCIPLINE_TITLES` names the field on the
+  composer's Section line only.
+- Follow-ups (decision 0077, `follow_ups.left_open`): the questions the lede call and the section
+  calls say the sources leave open, then one per field the question touched that the answer did
+  not show, never the question again (as asked or as rendered in English, `Opening.asked`), at
+  most five. The stored-only answer of a spent budget heads a concept group named by a field's
+  label with that field's fallback heading (`stored_explainer.stored_heading`).
 - `prose`: the composer's sentences that passed its checks, each with the visible citations of
   the stored claims it rests on (written back first for live evidence); the whole block is refused
   when one sentence cites no stored claim, is not a fact or states a figure that none of its

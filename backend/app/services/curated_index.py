@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import logging
 import uuid
-from typing import Literal
+from collections.abc import Mapping
+from typing import Any, Literal
 
-from pydantic import AwareDatetime, Field
+from pydantic import AwareDatetime, Field, ValidationError
 
-from app.models.enums import COVERAGE_CLASSES, PLACE_ROLES
+from app.models.enums import COVERAGE_CLASSES, ENVIRONMENT_FACTORS, PLACE_ROLES
 from app.research.base import ContractModel
 from app.research.vocabulary import Discipline, MaterialKind, MaterialRole, ReactionKind
 
@@ -29,7 +31,10 @@ __all__ = [
     "IndexTerm",
     "IndexTiming",
     "IndexTool",
+    "stored_curated_page",
 ]
+
+logger = logging.getLogger(__name__)
 
 CURATED_PAGE_SCHEMA_VERSION = 1
 
@@ -143,7 +148,7 @@ class IndexPicture(ContractModel):
 
 
 class IndexEnvironment(ContractModel):
-    factor: str
+    factor: Literal[*ENVIRONMENT_FACTORS]
     place_key: str | None
     claim_ids: ClaimIds
 
@@ -175,6 +180,12 @@ class IndexOverview(ContractModel):
     lede_piece_id: uuid.UUID | None = None
     sections: list[IndexSection] = Field(default_factory=list)
     key_facts: list[IndexFact] = Field(default_factory=list)
+
+    def piece_ids(self) -> dict[str, uuid.UUID]:
+        parts: dict[str, uuid.UUID] = {section.discipline: section.piece_id for section in self.sections}
+        if self.lede_piece_id is not None:
+            parts["lede"] = self.lede_piece_id
+        return parts
 
 
 class CuratedPage(ContractModel):
@@ -216,7 +227,14 @@ class CuratedPage(ContractModel):
         return {place.location_id for place in self.places if place.location_id is not None}
 
     def piece_ids(self) -> dict[str, uuid.UUID]:
-        parts = {section.discipline: section.piece_id for section in self.overview.sections}
-        if self.overview.lede_piece_id is not None:
-            parts["lede"] = self.overview.lede_piece_id
-        return parts
+        return self.overview.piece_ids()
+
+
+def stored_curated_page(craft_id: uuid.UUID, page: Mapping[str, Any] | None) -> CuratedPage | None:
+    if page is None:
+        return None
+    try:
+        return CuratedPage.model_validate(page)
+    except ValidationError:
+        logger.warning("craft %s has a curated page index that no longer meets its model", craft_id)
+        return None

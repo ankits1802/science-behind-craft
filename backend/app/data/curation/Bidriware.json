@@ -1,0 +1,5103 @@
+{
+ "schemaVersion": 1,
+ "craftSlug": "Bidriware",
+ "version": 1,
+ "curatedAt": "2026-11-18T09:40:00+00:00",
+ "curator": "claude-code",
+ "coverage": "FULL",
+ "searched": [
+  {
+   "query": "Bidriware geographical indication application number GI journal Karnataka",
+   "site": "web search"
+  },
+  {
+   "query": "Bidriware applications 20 and 85",
+   "site": "search.ipindia.gov.in GIRPublicSearch (application 20 is Bidriware; its documents, including Form GI-1 and the statement of case, are listed but not downloadable as text)"
+  },
+  {
+   "query": "Geographical Indications Journal No. 10 (2005)",
+   "site": "ipindia.nic.in/girindia/journal and web.archive.org CDX (issues 1 to 8 and 12 onward are archived; issue 10 is not, so the journal was not read)"
+  },
+  {
+   "query": "Bidriware Form GI-1 statement of case",
+   "site": "origin-gi.com (copy of the GI application read)"
+  },
+  {
+   "query": "Karnataka State Gazetteer Bidar district bidriware damascening",
+   "site": "web search (the gazetteer itself was not found online; it is cited only as quoted in the GI application)"
+  },
+  {
+   "query": "bidri ware black patina chemistry zinc alloy ammonium chloride soil study",
+   "site": "web search"
+  },
+  {
+   "query": "Surface patina and clay characterization: Bidri handicraft",
+   "site": "ijcs.ro"
+  },
+  {
+   "query": "The technical examination of Bidri ware (La Niece and Martin 1987)",
+   "site": "mci.si.edu (abstract, archived copy) and api.crossref.org"
+  },
+  {
+   "query": "Bidri ware and its black patina (La Niece 2015)",
+   "site": "pennds.org archaeobib (abstract, archived copy)"
+  },
+  {
+   "query": "Surface Analysis Studies of Bidri Archaeomaterials from the Collection of the British Museum (AVS 1998)",
+   "site": "www2.avs.org (abstract not in the extracted text, so not used)"
+  },
+  {
+   "query": "Alternative Method of Processing Bidri-ware Crafts",
+   "site": "acr.iitm.ac.in"
+  },
+  {
+   "query": "bidri",
+   "site": "api.vam.ac.uk and collections.vam.ac.uk"
+  },
+  {
+   "query": "Bidriware census of India 1961 selected crafts monograph",
+   "site": "web search and censusindia.gov.in (catalog 31726)"
+  },
+  {
+   "query": "bidar.nic.in Bidriware art craft district administration",
+   "site": "web search (no district page with text found)"
+  },
+  {
+   "query": "Bidriware craft page",
+   "site": "handicrafts.gov.in (timed out, no Wayback snapshot; not used)"
+  },
+  {
+   "query": "Integrated design and technical development project in Bidri craft at Bidar",
+   "site": "epch.in (not used: the report prints artisans' identity and bank details)"
+  },
+  {
+   "query": "Life of Bidri; Types of Bidri Work",
+   "site": "sahapedia.org"
+  },
+  {
+   "query": "Bidriware",
+   "site": "imp-art.org (theprint.in carries the same MAP Academy text, so it was not used as a separate source)"
+  },
+  {
+   "query": "Bidriware",
+   "site": "mapacademy.io (no extractable text; not used)"
+  },
+  {
+   "query": "Bidriware",
+   "site": "incredibleindia.gov.in"
+  },
+  {
+   "query": "Karnataka Bidriware artisans struggle",
+   "site": "thenewsminute.com"
+  },
+  {
+   "query": "Shah Rasheed Ahmed Quadri Padma Shri 2023 Bidri",
+   "site": "web search and pib.gov.in"
+  },
+  {
+   "query": "Category:Bidriware",
+   "site": "commons.wikimedia.org"
+  },
+  {
+   "query": "Bidar; Hyderabad; Purnia; Murshidabad; Lucknow; Vijayapura",
+   "site": "wikidata.org"
+  },
+  {
+   "query": "ammonium chloride; copper(II) sulfate; potassium nitrate; sodium chloride; zinc; copper; silver; lead; gold",
+   "site": "pubchem.ncbi.nlm.nih.gov"
+  },
+  {
+   "query": "Bidriware authorised users",
+   "site": "search.ipindia.gov.in GIRPublicSearch application 20 (the authorised-user table prints no total and no list date; it has 182 rows, two of them numbered 1, so no authorised-user count was recorded)"
+  },
+  {
+   "query": "bidri; bidriware (D'source, Industrial Design Centre, IIT Bombay)",
+   "site": "web search and dsource.in (no bidri page found; the resource addresses tried returned 404)"
+  },
+  {
+   "query": "Karnataka State Gazetteer, Bidar district",
+   "site": "gazetteer.karnataka.gov.in (connection failed) and web search (no copy found; the gazetteer is cited only as quoted in the GI application)"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S01",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Application Details: Bidriware, Application Number 20",
+   "publisher": "Geographical Indications Registry, IP India",
+   "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/20",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S02",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Form GI-1: Application for the registration of a geographical indication, Bidriware (statement of case)",
+   "publisher": "Karnataka State Handicrafts Development Corporation Limited",
+   "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/13-bidriware.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S03",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Census of India 1961, Volume II, Andhra Pradesh, Part VII-A (3): Selected Crafts of Andhra Pradesh (monograph: Bidriware of Hyderabad City)",
+   "authors": [
+    "K. V. N. Gowd"
+   ],
+   "publisher": "Census of India",
+   "url": "https://censusindia.gov.in/nada/index.php/catalog/31726/download/34907/22310_1961_SEL.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S04",
+   "kind": "PAPER",
+   "title": "Surface patina and clay characterization: multi-analytical investigations into Bidri handicraft",
+   "authors": [
+    "Krishna Priya Rolla",
+    "Abhijeet Shelke",
+    "Bhaskar Sathe",
+    "Arbaj Khan",
+    "Vijay Sapner",
+    "Balaji Mulik"
+   ],
+   "publisher": "International Journal of Conservation Science",
+   "year": 2023,
+   "url": "https://ijcs.ro/public/IJCS-23-95_Rolla.pdf",
+   "doi": "10.36868/IJCS.2023.04.12",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S05",
+   "kind": "PAPER",
+   "title": "The technical examination of Bidri ware",
+   "authors": [
+    "Susan La Niece",
+    "Graham Martin"
+   ],
+   "publisher": "The International Institute for Conservation of Historic and Artistic Works",
+   "year": 1987,
+   "url": "https://mci.si.edu/node/1221430",
+   "doi": "10.1179/sic.1987.32.3.97",
+   "archivedUrl": "https://web.archive.org/web/20250329122307id_/https://mci.si.edu/node/1221430",
+   "language": "en",
+   "access": "ABSTRACT_ONLY",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S06",
+   "kind": "BOOK_CHAPTER",
+   "title": "Bidri ware and its black patina",
+   "authors": [
+    "Susan La Niece"
+   ],
+   "publisher": "National Institute of Advanced Studies",
+   "year": 2015,
+   "url": "https://pennds.org/archaeobib/items/show/22389",
+   "archivedUrl": "https://web.archive.org/web/20241004233519id_/https://pennds.org/archaeobib/items/show/22389",
+   "language": "en",
+   "access": "ABSTRACT_ONLY",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S07",
+   "kind": "OTHER",
+   "subKind": "THESIS",
+   "title": "Alternative Method of Processing Bidri-ware Crafts: An Electrochemical Study",
+   "authors": [
+    "Akshaykumar Varma"
+   ],
+   "publisher": "Indian Institute of Technology Madras",
+   "year": 2017,
+   "url": "https://acr.iitm.ac.in/wp-content/uploads/2018/08/AkshayKumar-Varma-MM13B006.pdf",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S08",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "Huqqa base, Bidar, ca. 1850, museum number 136-1852",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O16017/huqqa-base-unknown/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S09",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "Vessel and lid, bidri, probably Bidar, ca. 1850, museum number 151&A-1852",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O77425/vessel-and-lid-unknown/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S10",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "Huqqa base, Deccan, mid 17th century, museum number 45-1905",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O153328/huqqa-base-unknown/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S11",
+   "kind": "OTHER",
+   "subKind": "MUSEUM_RECORD",
+   "title": "Huqqa base, Bidar, ca. 1850, museum number 139-1852",
+   "publisher": "Victoria and Albert Museum",
+   "url": "https://collections.vam.ac.uk/item/O84939/huqqa-base-unknown/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S12",
+   "kind": "ENCYCLOPEDIA",
+   "title": "Life of Bidri: 600 Years of Survival",
+   "authors": [
+    "Monisha Dhamodaran"
+   ],
+   "publisher": "Sahapedia",
+   "url": "https://www.sahapedia.org/life-of-bidri-600-years-of-survival",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S13",
+   "kind": "ENCYCLOPEDIA",
+   "title": "Types of Bidri Work",
+   "authors": [
+    "Monisha Dhamodaran"
+   ],
+   "publisher": "Sahapedia",
+   "url": "https://www.sahapedia.org/types-of-bidri-work",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S14",
+   "kind": "ENCYCLOPEDIA",
+   "title": "Bidriware",
+   "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+   "year": 2023,
+   "url": "https://imp-art.org/articles/bidriware/",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "B",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S15",
+   "kind": "OTHER",
+   "subKind": "NEWS",
+   "title": "Exports hit, declining interest: Karnataka's Bidriware artisans struggle to earn a living",
+   "authors": [
+    "Sanjana Deshpande"
+   ],
+   "publisher": "The News Minute",
+   "year": 2021,
+   "url": "https://www.thenewsminute.com/karnataka/exports-hit-declining-interest-karnataka-s-bidriware-artisans-struggle-earn-living-144528",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S16",
+   "kind": "WEB_PAGE",
+   "title": "Bidriware",
+   "publisher": "Incredible India, Ministry of Tourism, Government of India",
+   "url": "https://www.incredibleindia.gov.in/en/karnataka/bidriware",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "C",
+   "retrievedAt": "2026-11-18"
+  },
+  {
+   "id": "S17",
+   "kind": "GOVERNMENT_REPORT",
+   "title": "Padma Awards 2023 announced",
+   "publisher": "Press Information Bureau, Government of India",
+   "year": 2023,
+   "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1893797",
+   "language": "en",
+   "access": "OPEN",
+   "reliability": "A",
+   "retrievedAt": "2026-11-18"
+  }
+ ],
+ "claims": [
+  {
+   "id": "C001",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidriware is a metal craft of Bidar in which designs engraved on a cast zinc-copper alloy are inlaid with silver.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 109-110",
+     "quote": "Bidri ware is a famous handicraft of Bidar District."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 224-227",
+     "quote": "Bidriware is an alloy ofzinc , copper and other non ferrous metals. Pretty designs are engtaved on it and there after inlaid with pure silver ware."
+    },
+    {
+     "sourceId": "S08",
+     "locator": "line 5",
+     "quote": "The technique consists of casting objects from a high-zinc alloy and then inlaying them with silver or brass, or a combination of both."
+    }
+   ]
+  },
+  {
+   "id": "C002",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidri takes its name from the city of Bidar, where the technique is thought to have originated.",
+   "quotes": [
+    {
+     "sourceId": "S08",
+     "locator": "line 5",
+     "quote": "The technique takes its name from the city of Bidar, in present day Karnataka, where it is thought to have originated"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 503-504",
+     "quote": "The art with silver is called Bidriware-so called after the name of the old city of Bidar"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 190-191",
+     "quote": "The very name \"Bidri' is derived from Bidar"
+    }
+   ]
+  },
+  {
+   "id": "C003",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidriware is a kind of damascene work, a system of ornamentation that encrusts one metal on another.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "line 479",
+     "quote": "The craft ofBidriware is a kind of damascene work."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 482-484",
+     "quote": "It is a system of orna mentation consisting of encrusting one metal on the other."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 250-251",
+     "quote": "Bidriware is a special type of work called Damascening in silver."
+    }
+   ]
+  },
+  {
+   "id": "C004",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The black background of bidri ware contrasts strikingly with its lustrous silver inlay.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 116-119",
+     "quote": "The contrast between the black oxidized background and lustrous silver inlay gives a beauty to the Bidri ware."
+    },
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "The inlays contrast strikingly with the matt black patina of the vessel."
+    }
+   ]
+  },
+  {
+   "id": "C005",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidri is a metalworking technique known only in the Indian subcontinent.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "line 5",
+     "quote": "Bidri is a technique known only in the Indian subcontinent"
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 245-246",
+     "quote": "This metalwork as well as the technique to produce it are found in India alone."
+    }
+   ]
+  },
+  {
+   "id": "C006",
+   "discipline": "OVERVIEW",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidar and Hyderabad are named as the chief, and in one account the only, present-day centres of bidri production.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 7",
+     "quote": "Bidar remains one of the chief centres of bidriware production in the country, alongside Hyderabad in present-day Telangana."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 1",
+     "quote": "Today, Bidri is produced only in two centres in India: Bidar and Hyderabad."
+    }
+   ]
+  },
+  {
+   "id": "C008",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application states that bidri was introduced in Bidar about 400 years ago by King Ahmed Shah Wali Bhamani.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 110-112",
+     "quote": "It was introduced in Bidar about 400 years ago by King Ahmed Shah Wali Bhamani."
+    }
+   ]
+  },
+  {
+   "id": "C009",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The start of bidri at Bidar is attributed to the reign of Ahmed Shah Bahamani, who ruled from 1422 to 1436.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 251-255",
+     "quote": "Its name is derived from Bidar where the skill in this art was developed during time of Ahmed Shah Bahamani (1422 A.D.- 1436 A.D)"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 3",
+     "quote": "The history of bidriware is said to have begun with the reign of Ahmed Shah Al Wali Baihmani."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 3",
+     "quote": "Ahmed Shah Al Wali Baihmani (1422-1436), the ninth king of the Baihmani dynasty ruled for a period of 13 years and was a great patron of the arts."
+    }
+   ]
+  },
+  {
+   "id": "C010",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Citing the Karnataka Gazetteer, the GI application says Ahmed Shah Bahamani set up a training centre for Bidri workers at Bidar.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 248-251",
+     "quote": "As Per Karnataka Gazetteer, - Govemment of Kamataka - Bidar district, - Bidriware is a special type of work called Damascening in silver."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 255-258",
+     "quote": "this sultan who was a lover of art and literature had set up a training center for Bidri workers at Bidar."
+    }
+   ]
+  },
+  {
+   "id": "C011",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The origin of bidri is usually attributed to the Bahamani sultans of Bidar, and the craft is dated back to the fifteenth century.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 258-259",
+     "quote": "The origin of Bidriware is usually attributed to the Bahamani sultans who ruled Bidar in the 14th-15th centuries."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "line 18",
+     "quote": "Bidri handicraft in India, patronised by Bahamani kings, dates back to the fifteenth century"
+    }
+   ]
+  },
+  {
+   "id": "C012",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Production of bidri in Bidar is believed to have begun under Alauddin Ahmad Bahmani II (r. 1436-58).",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "The production of bidriware in Bidar is believed to have begun during the reign of Alauddin Ahmad Bahmani II (r. 1436-58)"
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C013",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A craftsman's account in the census monograph says Allauddin II of Bidar invited the craftsmen of Bijapur to settle at Bidar.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 555-557",
+     "quote": "It is gathered from the narration of Bn experienced craftsman llS follows."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 576-579",
+     "quote": "The beautiful articles presented to Al1auddin II (1434-1457 A. D.) of Bidar on the occasion ofhiscoro nation impressed him very much and he invited the craftsmen of Bijapur to settle at Bidar itself."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "who encouraged artisans from Bijapur to settle in the capital"
+    }
+   ]
+  },
+  {
+   "id": "C014",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A craftsman's account in the census monograph says the craft was brought to India about 900 years ago by migrants from Iraq, and its original home seems to be Iran.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 555-557",
+     "quote": "It is gathered from the narration of Bn experienced craftsman llS follows."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 558-560",
+     "quote": "Sometime about 900 years ago the craft was brought down to India by migrants from Iraq. The original home of the work seems to be Iran"
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C015",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The technique is believed to have been introduced by Persian and Syrian artisans who migrated to the Deccan under the patronage of the Bahmani sultans.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 8",
+     "quote": "The technique is believed to have been introduced to the subcontinent by Persian and Syrian artisans who migrated to the Deccan region under the patronage of the Bahmani sultans."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C016",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A craftsman's account in the census monograph says Abdullah-bin-Khaiser, versed in the art, settled at Bijapur, and it is said that the carpenter Sivanna became the first native of India to learn it.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 562-565",
+     "quote": "After many years one Abdullah-bin-Khaiser, who W<lS conver sant with the knowledge of this art came down to Bijapur and settled there."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 567-569",
+     "quote": "It is said that a carpenter by na'11e Sivanna, who won recognition for his services and gained confi dence of Khaiser, was taught the craft."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 569-570",
+     "quote": "Thus Sivanna became the first native of India to learn this art."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C017",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "An IIT Madras thesis says Abdullah bin Kaiser, a craftsman from Iran, was invited by Sultan Ahmed Shah Bahmani to decorate the royal palaces and courts.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 262-264",
+     "quote": "Abdullah bin Kaiser, a craftsman from Iran was invited by the Sultan Ahmed Shah Bahmani to work on decorating the royal palaces and courts."
+    }
+   ]
+  },
+  {
+   "id": "C018",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidri vessels have been made in India from at least the 17th century until the present day.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "Bidri vessels have been manufactured in India from at least the 17th century until the present day"
+    },
+    {
+     "sourceId": "S06",
+     "locator": "line 1",
+     "quote": "produced in India from the 17th century or earlier and which is still being made today"
+    }
+   ]
+  },
+  {
+   "id": "C019",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The V&A states that bidri's origins are unknown but that surviving pieces date from the late 16th or early 17th century.",
+   "quotes": [
+    {
+     "sourceId": "S10",
+     "locator": "line 5",
+     "quote": "Its origins are unknown, but surviving pieces date from the late 16th or early 17th century."
+    }
+   ]
+  },
+  {
+   "id": "C020",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Another V&A record dates the earliest bidri pieces to the early 17th century, when production is thought to have been only in centres such as Bidar and Hyderabad.",
+   "quotes": [
+    {
+     "sourceId": "S08",
+     "locator": "line 5",
+     "quote": "The earliest pieces of bidri date from the early 17th century, when production is thought to have been only in centres such as Bidar and Hyderadabad in the Deccan sultanates."
+    }
+   ]
+  },
+  {
+   "id": "C021",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The Impart encyclopedia names a Deccani painting of about 1625, showing a bidri hookah, as the earliest evidence of a bidri object.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 8",
+     "quote": "The earliest evidence of a bidriware object comes from a Deccani painting dated to c. 1625, in which an officer of African descent is seen smoking a hookah made in the bidri technique."
+    }
+   ]
+  },
+  {
+   "id": "C022",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Sahapedia notes that no examples of bidri dating to the 15th or 16th centuries have been found in paintings or literature.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 7",
+     "quote": "No examples of bidri dating to the 15th or 16th centuries have been found in paintings or literature, thus making one sceptical if bidri should still be related to the 15th century or not."
+    }
+   ]
+  },
+  {
+   "id": "C023",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Jagdish Mittal identifies the earliest written reference to bidri ware in Chahar Gulshan, a Persian history of India written in 1759.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 19",
+     "quote": "The earliest reference of bidri ware is in Chahar Gulshan, a history of India written in Persian in 1759, which in turn is based on a work of 1720"
+    }
+   ]
+  },
+  {
+   "id": "C025",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "By the late eighteenth century bidri had spread to the courts of Purnia and Murshidabad, and by the nineteenth century to Lucknow.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "By the late eighteenth century, the technique had spread to the Muslim courts of Purnia (in present-day Bihar) and Murshidabad (in present-day Bengal), and by the nineteenth century, to Lucknow (in present-day Uttar Pradesh)."
+    }
+   ]
+  },
+  {
+   "id": "C026",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph says the craft's popularity led to working centres at Murshidabad in Bengal, Lucknow in Uttar Pradesh and Purnia in Bihar.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 647-650",
+     "quote": "It gained such popularity that working centres came to be opent'd at Murshidabad in Bengal, Lucknow in Uttar Pn,desh and Purniah in Bihar."
+    }
+   ]
+  },
+  {
+   "id": "C027",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Sahapedia dates the start of bidri production in Lucknow, Purnea and Murshidabad to the early 19th century.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 26",
+     "quote": "By the early 19th century, bidri started to be produced in other parts of India-Lucknow, Purnea and Murshidabad."
+    }
+   ]
+  },
+  {
+   "id": "C028",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The technique flourished in Bidar and Hyderabad between the sixteenth and nineteenth centuries and appeared regularly in Deccan paintings from the seventeenth century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "The technique flourished in Bidar and Hyderabad between the sixteenth and nineteenth century and regularly appeared in Deccan paintings from the seventeenth century onwards."
+    }
+   ]
+  },
+  {
+   "id": "C029",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidriware from the Deccan was exported to the Mughal court, the Rajput courts of Rajasthan and the Maratha kingdoms.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "Bidriware from the region was also exported to the Mughal court, Rajput courts of Rajasthan and Maratha kingdoms."
+    }
+   ]
+  },
+  {
+   "id": "C030",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidri was extensively patronised by the Asaf Jahi dynasty, under whose rulers the industry flourished from the early 18th to the mid-20th century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 9",
+     "quote": "The art form was also extensively patronised by the Asaf Jahi Dynasty that ruled over the Hyderabad State between the eighteenth and twentieth century."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 29",
+     "quote": "From the early 18th century to the mid-20th century, the bidri industry flourished under the Asaf Jahi rulers."
+    }
+   ]
+  },
+  {
+   "id": "C031",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L07"
+   },
+   "text": "Many artisans from Bidar migrated to Hyderabad, the new capital of the Deccan, where the art began to flourish.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 29",
+     "quote": "Many artisans from Bidar migrated to Hyderabad, which was the new capital of the Deccan. The art started to flourish in Hyderabad."
+    }
+   ]
+  },
+  {
+   "id": "C032",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L07"
+   },
+   "text": "After the 1956 reorganisation of states placed Bidar in Mysore State, many bidri artisans migrated to Hyderabad City in 1956 and 1957.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 729-730",
+     "quote": "At the time of Re-organisation of States in the year 1956 Bidar was included in Mysore State."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 736-737",
+     "quote": "So, many of them chose to migrate to Hyderabad City and came there in the years 1956 and 1957."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 37",
+     "quote": "Most artisans moved to Hyderabad in search of better livelihoods as it remained a hub for trade."
+    }
+   ]
+  },
+  {
+   "id": "C033",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L07"
+   },
+   "text": "The census monograph says almost all the workers of the Hyderabad co-operative societies came originally from Bidar in pursuit of their livelihood.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1814-1816",
+     "quote": "Almo t all the workers belong to Bidar originally and have come away to the City in pursuit of their livelihood."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "line 241",
+     "quote": "The present volume consists of the monographs on (i) Bidriware of Hyderabad City"
+    }
+   ]
+  },
+  {
+   "id": "C034",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidriware was exhibited at the Great Exhibition of 1851 in London, the Exposition Universelle of 1855 in Paris and the Delhi Durbar of 1903.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 10",
+     "quote": "Bidriware was exhibited at colonial exhibitions, including the Great Exhibition of 1851, the Exposition Universelle in 1855 and the Delhi Durbar of 1903."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 29",
+     "quote": "The Great Exhibition at the Crystal Palace in London in 1851 followed by the Paris Universal Exposition, 1855 had showcased bidri."
+    }
+   ]
+  },
+  {
+   "id": "C035",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The international exhibitions stimulated demand and new production centres, which led to repetitious designs and inferior quality.",
+   "quotes": [
+    {
+     "sourceId": "S11",
+     "locator": "line 5",
+     "quote": "The exhibitions stimulated demand considerably and caused new centres of production to spring up in the Indian subcontinent, but this led to repetitious designs and inferior quality as the craftsmen struggled to keep up with their markets."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "line 10",
+     "quote": "This led to new production centres being established."
+    }
+   ]
+  },
+  {
+   "id": "C036",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "There is recorded evidence that the craft declined during the later part of the 19th century.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 650-651",
+     "quote": "There is recorded evidence that the craft declined during the later part of the 19th century."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 32",
+     "quote": "The bidri industry saw its first downfall in the 19th century."
+    }
+   ]
+  },
+  {
+   "id": "C037",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "In 1817 Benjamin Heyne noted that bidri work at Bidar, once the means of enriching the place, scarcely yielded food for the five families that remained.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 42",
+     "quote": "Stronge also mentions a short note on the industry at Bidar from the Asiatic Journal, III, March 1817, in which Benjamin Heyne notes that"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 42",
+     "quote": "complained of want, in employment in which former times had been the means of substituting a numerous classis of their own cast [sic], and of enriching the place, but now scarcely yielded food for five families that remained"
+    }
+   ]
+  },
+  {
+   "id": "C038",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L10"
+   },
+   "text": "Francis Buchanan, observing bidri making at Purnea in 1809-10, found each stage of the work done by a specialised set of workers.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 40",
+     "quote": "Susan Stronge mentions a well-observed description of the process of making bidri, as seen by Francis Buchanan in 1809-10 at Purnea"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 40",
+     "quote": "Each stage of the work at Purnea was done by a specialised set of workers, the object passing from one hand to another through different processes."
+    }
+   ]
+  },
+  {
+   "id": "C039",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph says boys trained at the beginning of the twentieth century in a school organised at Bidar, where the bidri masters Ramanna and Irsangu were instructors.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 664-666",
+     "quote": "Collector of Bidar and some other notable personalities took steps to bring together the talent and improve it."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 666-669",
+     "quote": "A school was organised to teach this craft to young and enthusiastic boys. Ramanna and Irs<lngu were the instructors for training the boys"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 680-683",
+     "quote": "Among the people who received training in the school run by Ramanlla and Irsangu at the beginning of this century were the following who won reputation"
+    }
+   ]
+  },
+  {
+   "id": "C040",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Jagdish Mittal writes that the Nizam's government started a training school for bidri at Bidar in 1931, merged with the local high school in 1938.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 34",
+     "quote": "in 1931 the Nizam's government started a training school for bidri works in 1931 at Bidar with these artisans as instructors. The school was merged with the local High School in 1938"
+    }
+   ]
+  },
+  {
+   "id": "C041",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Susan Stronge writes that from 1950 the government trained bidri workers, its Artisans Training Institute giving hereditary workers two years of training with a monthly allowance.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 34",
+     "quote": "in 1950, special units were set up and the Government began to involve itself in training the bidri workers. The Government Artisans Training Institute provided two years training to hereditary bidri workers, giving them a monthly allowance"
+    }
+   ]
+  },
+  {
+   "id": "C042",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "An IIT Madras thesis says the craft has been handed down through generations mostly among the local Muslim and Lingayat communities.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 268-269",
+     "quote": "Since then, the craft has been handed down succeeding generations mostly among the local Muslim and Lingayat sects."
+    }
+   ]
+  },
+  {
+   "id": "C043",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G07"
+   },
+   "text": "Sahapedia names M. A. Rauf, Shah Rasheed Ahmed Quadri and Raj Nageshwar among Bidar's award-winning bidri artisans, Rauf and Quadri as National and Shilp Guru awardees.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 41",
+     "quote": "Currently in Bidar, the artisans can be categorised into two classes-the first being the National/State/Shilp Guru Award winners versus the rest of the artisans."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 41",
+     "quote": "This came forth after a conversation with M.A. Rauf (a National and Shilp Guru award winner)"
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 41",
+     "quote": "A similar response was received from Shah Rasheed Ahmed Quadri (Senior National award and Shilp Guru award winner), Raj Nageshwar (National Award winner)"
+    }
+   ]
+  },
+  {
+   "id": "C044",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G07"
+   },
+   "text": "The 2023 Padma Awards list names Shah Rasheed Ahmed Quadri of Karnataka, for art, at serial 69 under its Padma Shri heading.",
+   "quotes": [
+    {
+     "sourceId": "S17",
+     "locator": "line 2",
+     "quote": "For the year 2023, the President has approved conferment of 106 Padma Awards including 3 duo cases"
+    },
+    {
+     "sourceId": "S17",
+     "locator": "lines 22-23",
+     "quote": "Padma Shri (91) | SN | Name | Field | State/Country |"
+    },
+    {
+     "sourceId": "S17",
+     "locator": "line 77",
+     "quote": "| 69 | Shri Shah Rasheed Ahmed Quadri | Art | Karnataka |"
+    }
+   ]
+  },
+  {
+   "id": "C045",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The GI application gives Bidar district as the geographical area of production of Bidriware, made in Bidar town.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 240-241",
+     "quote": "(h) Geographical area of Production and Map : Bidar District"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 167-168",
+     "quote": "Bidar Town in Bidar District (Kamataka)."
+    }
+   ]
+  },
+  {
+   "id": "C046",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The GI application states that Bidar is the only district in the state engaged in the craft.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 372-373",
+     "quote": "Bidar is the only district in the state which is engaged in this craft."
+    }
+   ]
+  },
+  {
+   "id": "C047",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI registry records Karnataka as the geographical area of the Bidriware geographical indication.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "line 10",
+     "quote": "| Geographical Area | Karnataka |"
+    }
+   ]
+  },
+  {
+   "id": "C048",
+   "discipline": "GEOGRAPHY",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L04"
+   },
+   "text": "Because Bidar fort is a heritage conservation site, the craft's dependence on its clay threatens its continued practice.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 22-23",
+     "quote": "the handicraft mandates the use of Bidar Fort (in Karnataka, India) clay, which bestows the handicraft its characteristic matt-black patina"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 23-24",
+     "quote": "The fort is a heritage conservation site and thus poses a threat to the perennial practice of handicraft."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 55-56",
+     "quote": "Also the fort being an heritage center, an alternative to the sand has to be developed."
+    }
+   ]
+  },
+  {
+   "id": "C049",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application's method of production runs from melting and casting the alloy through smoothing, temporary blackening, engraving, silver inlay and sanding to dipping in fort earth solution, drying and oiling.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 277-283",
+     "quote": "Firstly, copper and zinc are melted in the proportion of I to 16 in a crucible and the alloy is prepared. This alloy is casted with the help of molding boxes to the required pattem of article to be produced."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 283-287",
+     "quote": "After casting, the surface ofthe articles is made smooth with the help of buffing machines. The smooth surface is made black temporarily by applying copper sulphate."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 287-293",
+     "quote": "On the black-colour surface, the design is engraved with a grooving chisel. A pure silver wire is inlayed in the grooved portion i.e., damascening in silver and the whole surface is again rubbed with sand paper or buffrng machine."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 296-299",
+     "quote": "The polished article is then dipped in a boiled solution of ammonium chloride and earth collected and available only from the fort area"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 307-311",
+     "quote": "The article is taken out from the solution and dried for five to ten minutes. Later the whole surface is rubbed with groundnut oil, so as to give the article a shining."
+    }
+   ]
+  },
+  {
+   "id": "C050",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application divides bidri production into three parts: casting, engraving and inlaying.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 275-277",
+     "quote": "The process of production may be broadly divided into three parts vrz., casting, engraving and inlaying."
+    }
+   ]
+  },
+  {
+   "id": "C051",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph divides production into three phases: mould making and casting, engraving and inlaying, and finishing.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 949-951",
+     "quote": "The entire technique of production can be divided into three broad phases as follows: I. Mould making and casting"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 955-956",
+     "quote": "II. Engraving and inlaying: The design is drawn with free hand drawing on the surface"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 960-961",
+     "quote": "Ill. Finishing: The article is blackened and then polished carefully."
+    }
+   ]
+  },
+  {
+   "id": "C052",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Rolla and colleagues announce four stages of bidri operations but list three: moulding or casting, carving and inlaying, and oxidising and finishing.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 109-111",
+     "quote": "Broadly, the operations of Bidri handicraft are divided into four categorical stages: a) Molding (casting), b) Carving and Inlaying, c) Oxidizing and Finishing."
+    }
+   ]
+  },
+  {
+   "id": "C053",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "One bidri artisan told The News Minute that Bidriware goes through an 8-stage process before it attains its final shape.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "line 4",
+     "quote": "explains Khwaja, a Bidri artisan"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "line 5",
+     "quote": "said that Bidriware goes through an 8-stage process before it attains its final shape."
+    }
+   ]
+  },
+  {
+   "id": "C054",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P01"
+   },
+   "text": "The alloy is melted in a crucible in a furnace that uses coal, the zinc first and the copper then added to it.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1103-1104",
+     "quote": "the alloy metal is being melted in the furnace nearby in a crucible"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1106-1107",
+     "quote": "First the zinc is well melted in the crucible and then the copper is added to it."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 828-830",
+     "quote": "The coal used for the furnace is the burnt out railway coal ejected by the locomotives"
+    }
+   ]
+  },
+  {
+   "id": "C055",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Moulds are made in hollow iron frames called darza boxes, with a thin layer of fine red clay mixed with resin and castor oil over the pattern and ordinary red clay filling the rest.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1007-1008",
+     "quote": "There are hollow frames made of iron sheets which are called darza boxes."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1012-1014",
+     "quote": "The fine screened red clay wi th resin and castor oil mixed in it is now laid in a thin layer on the pattern plate"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1018-1020",
+     "quote": "Over this layer, layers of ordinary red clay are laid one after the other till the whole darza box is completely filled in."
+    }
+   ]
+  },
+  {
+   "id": "C056",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Fine clay with resin and castor oil gives the casting a smooth surface and avoids cracks that may form if only dry clay is used.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1015-1017",
+     "quote": "The reason for using this fine clay is to get smooth surface in the cast article and secondly to avoid cracks which may form if only dry clay is used."
+    }
+   ]
+  },
+  {
+   "id": "C057",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Sangjeera, a white stone powder, is dusted on the pattern so that the clay does not stick to it, and on the mould to keep it free from clay residue.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 770-771",
+     "quote": "Sangjeera (white stone powder)"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1001-1003",
+     "quote": "Sangjeera powder, which is earlier tied up in a piece of cloth, is dusted on the zinc sheet including the pattern plate"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1004-1005",
+     "quote": "This pre vents the clay from sticking on to the pattern"
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 12",
+     "quote": "the resulting mould is dusted with sangjeera to keep it free from any clay residue"
+    }
+   ]
+  },
+  {
+   "id": "C058",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P02"
+   },
+   "text": "Hollow objects such as vases can be cast in two pieces and soldered at a later stage.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 12",
+     "quote": "For hollow objects such as vases, the object can be cast in two pieces and soldered at a later stage."
+    }
+   ]
+  },
+  {
+   "id": "C059",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "The cast article is smoothed to shape on a lathe and with files, or with buffing machines.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1120-1122",
+     "quote": "The cast article is now smoothened to the desired shape and fineness with the lathe machine and also with files."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 283-285",
+     "quote": "After casting, the surface ofthe articles is made smooth with the help of buffing machines."
+    }
+   ]
+  },
+  {
+   "id": "C060",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P03"
+   },
+   "text": "The as-cast surface does not take on the decorative patina unless the casting skin is removed.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 290-291",
+     "quote": "the as-cast surface of the metal does not take on the decorative patina if the surface casting skin is not removed."
+    }
+   ]
+  },
+  {
+   "id": "C062",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P04"
+   },
+   "text": "Copper sulphate solution temporarily blackens the smoothed surface so that the design can be seen while it is drawn and engraved.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 285-287",
+     "quote": "The smooth surface is made black temporarily by applying copper sulphate."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1267-1269",
+     "quote": "Copper sulphate solution is first smea red to the article and this turns the greyish white surface of the alloy-cast article to black."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "line 8",
+     "quote": "The surface of the object is made smooth and is darkened temporarily with a solution of copper sulphate; a design is then engraved on the surface to expose the silvery grey of the alloy."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 13",
+     "quote": "The surface of the object is then blackened with a solution of copper sulphate to allow the artisan to engrave a pattern using chisels and a hammer."
+    }
+   ]
+  },
+  {
+   "id": "C063",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "Designs are drawn freehand on the metal with a sharp iron point called kalam, and an experienced worker usually needs no replica to copy.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1260-1262",
+     "quote": "Only a simple scale and a sharp end of an iron spoke called kalam are used for the purpose."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1264-1266",
+     "quote": "Usually an experienced worker needs no replica of the proposed design from which he has to copy."
+    }
+   ]
+  },
+  {
+   "id": "C064",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "Engraving to the required depth, locally called khodna, is done with fine pointed chisels struck with a hammer.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1273-1274",
+     "quote": "With finer pointed chisels engraving in the required depth is now carried on."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1277-1278",
+     "quote": "The operation is called in the local verna cular as khodna."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1275-1277",
+     "quote": "The chisel is held in the left hand and the hammer in the right hand."
+    }
+   ]
+  },
+  {
+   "id": "C065",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P05"
+   },
+   "text": "During engraving the piece is held fixed in a bed of melted wax mixed with ash or sawdust.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1228-1229",
+     "quote": "only possible by embedding it on a wax surface"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1229-1231",
+     "quote": "For preparing such surface, wax is melted thick on a charcoal oven and some ash or saw dust is added to it."
+    }
+   ]
+  },
+  {
+   "id": "C066",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T07"
+   },
+   "text": "Bidri chisels include a needle-sharp drawing kalam for sketching the design and the chilne-ki-kalam, a chisel for chasing.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 939-941",
+     "quote": "(a) drawing kalam or pen with a sharp end like a needle, used to sketch the design on the surface; (b) chilne-ki-kalam Or chisel for chasing"
+    }
+   ]
+  },
+  {
+   "id": "C067",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "Silver bars are made into wire or sheet by a goldsmith and then thinned further by the bidri workers themselves.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 812-814",
+     "quote": "The bars of silver purchased in the market are given to goldsmith to make it into the form of a wire or sheet"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 815-817",
+     "quote": "that wire or sheet is made further thinner and thinner according to the requirements at the workshOps by the workers themselves"
+    }
+   ]
+  },
+  {
+   "id": "C068",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "TOOL",
+    "ref": "T08"
+   },
+   "text": "Silver wire is thinned by drawing it through the pautha or tarpatti, a steel plate with diamond-drilled holes of different sizes.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1288-1290",
+     "quote": "For thinning the wire, it is drawn through the pautha (a steel plate with diamond-drilled holes of different sizes)."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1290-1292",
+     "quote": "The pautha or tarpatti which is about 8\" in }ength, is held in posi\" tion between the two feet of the worker"
+    }
+   ]
+  },
+  {
+   "id": "C069",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P06"
+   },
+   "text": "Embedding the silver wire, called bithana, is done by holding the wire on the engraved design with a flat chisel and hammering it in.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1303-1304",
+     "quote": "This is called bithana (to make sit or fix) in vernacular."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1305-1308",
+     "quote": "The wire is held fast on the engraved design by a flat pointed chisel grasped by the craftsman with left hand, and by the right hand it is hammered into the interstices"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 943-946",
+     "quote": "chappat ka lam-chisel with a blunt Or :flat end used for embedd,. ing the silver wire into the furrows of the engraved designs"
+    }
+   ]
+  },
+  {
+   "id": "C070",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P07"
+   },
+   "text": "In tarkashi and tainishan work the inlaid surface is then filed or sanded level, and the temporary black vanishes to leave a smooth, zinc-white surface.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1331-1333",
+     "quote": "filing the above piece with a flat iron file so that the embedded silver and the base material's surface form a smooth single level"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1333-1334",
+     "quote": "This is done only in the case of tarkashi and taihnishan techniques."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 291-295",
+     "quote": "the whole surface is again rubbed with sand paper or buffrng machine. Thereafter the temporary black colour vanishes and the surface becomes smooth and zinc-white."
+    }
+   ]
+  },
+  {
+   "id": "C071",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The finished article is dipped in a boiling solution of fort earth and ammonium chloride, which turns the zinc alloy black while the silver keeps its colour.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 296-299",
+     "quote": "The polished article is then dipped in a boiled solution of ammonium chloride and earth collected and available only from the fort area"
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 305-307",
+     "quote": "By this process, the zinc portion ofthe articles become black and the silver portion retains its own colour."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1348-1349",
+     "quote": "The finished article is now given a dip in this hot solution."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1350-1351",
+     "quote": "The zinc alloy turns permanently jet black while the silver retains its brilliance."
+    }
+   ]
+  },
+  {
+   "id": "C072",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "Ammonium chloride or sal ammoniac, locally called navsadar, and fort clay are mixed in water in a ratio of 5 to 30 for the blackening bath.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1344-1347",
+     "quote": "For blackening the base material saltpetre containing clay and sal ammoniac are mixed in sufficient water in the ratio of 30 : 5"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 117-118",
+     "quote": "ammonium chloride (locally called as Navsadar) and Bidar fort clay (sieved for granular uniformity and removal of foreign elements) are blended in water in the ratio of 5:30"
+    }
+   ]
+  },
+  {
+   "id": "C073",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The blackening slurry is boiled in an open iron or aluminium vessel and the engraved piece is rolled in it.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "line 119",
+     "quote": "the poultice is boiled in an open iron or aluminium vessel (Fig. 3b)."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 120-121",
+     "quote": "the engraved artefact (Fig. 3c) is introduced into the boiling slurry and rolled."
+    }
+   ]
+  },
+  {
+   "id": "C074",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "Rolla and colleagues report that the engraved piece goes into the slurry when the solution reaches 110-150°C.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 119-121",
+     "quote": "When the solution attains a temperature of 110-150°C, the engraved artefact (Fig. 3c) is introduced into the boiling slurry and rolled."
+    }
+   ]
+  },
+  {
+   "id": "C075",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "An IIT Madras thesis reports that artisans heat their sand and ammonium chloride mixture to approximately 80 degrees before dipping the piece.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 434-435",
+     "quote": "In normal practice the artisans use a sand and ammonium chloride mixture. This is heated to approximately 80oC following which the sample is dipped in it."
+    }
+   ]
+  },
+  {
+   "id": "C076",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P09"
+   },
+   "text": "After the dip the article is taken out of the solution and dried for five to ten minutes.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 307-309",
+     "quote": "The article is taken out from the solution and dried for five to ten minutes."
+    }
+   ]
+  },
+  {
+   "id": "C077",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P10"
+   },
+   "text": "The blackened piece is polished with groundnut oil, in some accounts as a paste with fine charcoal powder, to give it a shine.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 309-311",
+     "quote": "Later the whole surface is rubbed with groundnut oil, so as to give the article a shining."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1356-1357",
+     "quote": "For this purpose a paste of fine charcoal powder and ground nut oil is prepared."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 15",
+     "quote": "Following this, the object is polished with groundnut oil and charcoal."
+    }
+   ]
+  },
+  {
+   "id": "C078",
+   "discipline": "PROCESS",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P10"
+   },
+   "text": "Oil rubbed into the piece after the mud paste is removed deepens the black hue.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "line 8",
+     "quote": "The mud is removed, and finally oil is rubbed into the piece to deepen the black hue."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "line 5",
+     "quote": "After removal of the mud paste, the surface of the piece would be rubbed with oil."
+    }
+   ]
+  },
+  {
+   "id": "C079",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M01"
+   },
+   "text": "The bidri base alloy is 16 parts zinc to one part copper, a proportion of 94 to 6.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 761-763",
+     "quote": "Zinc and copper mixed in the proportion 16 : 1 form the base material for all the articles."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1104-1106",
+     "quote": "The alloy is composed of 16 parts of zinc and one part of copper or a proportion of 94: 6."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 277-278",
+     "quote": "Bidriware is manufactured from an alloy of copper and zinc (in the ratio 1:16) by casting."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 278-279",
+     "quote": "copper and zinc are melted in the proportion of I to 16 in a crucible"
+    }
+   ]
+  },
+  {
+   "id": "C080",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M02"
+   },
+   "text": "One bidri artisan told The News Minute that 60 gm of copper goes into every kilogram of zinc to get the perfect black hue.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "line 4",
+     "quote": "explains Khwaja, a Bidri artisan"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "line 5",
+     "quote": "For every kilogram of zinc, we use 60 gm of copper for it to get the perfect black hue."
+    }
+   ]
+  },
+  {
+   "id": "C081",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M02"
+   },
+   "text": "Analysed bidri vessels are zinc alloys with between 2% and 10% copper, the majority between 2% and 5%.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "A number of vessels were analyzed, and all were found to be alloys of zinc with between 2% and 10% copper"
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 307-308",
+     "quote": "They are usually high zinc alloys with between 2 and 10% copper, with the majority between 2 and 5% copper."
+    }
+   ]
+  },
+  {
+   "id": "C082",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M06"
+   },
+   "text": "Lead, tin or iron are present in some bidri alloys, in which zinc predominates.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "Some have lead, tin, or iron also present in the alloy."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "line 5",
+     "quote": "Bidri objects are cast from an alloy in which zinc predominates, though small amounts of lead, copper and tin may also be found."
+    }
+   ]
+  },
+  {
+   "id": "C083",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M06"
+   },
+   "text": "An IIT Madras thesis says lead, tin and iron do not appear consistently in bidri alloys and are probably accidental ingredients.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 308-309",
+     "quote": "Lead, tin and iron are sometimes mentioned in the literature, but do not appear consistently and are probably accidental ingredients."
+    }
+   ]
+  },
+  {
+   "id": "C084",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M06"
+   },
+   "text": "The 1908 Imperial Gazetteer, quoted in the census monograph, melts copper, lead and tin together and adds sixteen ounces of zinc to every three ounces of that alloy.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 971-972",
+     "quote": "extract from the Imperial Ga zetteer of India published in 1908"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 973-976",
+     "quote": "Its component parts are copper sixteen ounces, lead four ounces and tin two ounces which are melted together,and to every three ounces of the alloy, sixteen ounces ofspeiter, that is of zinc, are added"
+    }
+   ]
+  },
+  {
+   "id": "C085",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M01"
+   },
+   "text": "Experienced bidri workers told the census survey that no metal other than zinc and copper is used in the base alloy.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 987-990",
+     "quote": "But the workers including very old people, who have had very long experience, em phasise the fact that no other metal, except zinc and copper, is used for the alloy of the base article."
+    }
+   ]
+  },
+  {
+   "id": "C086",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M05"
+   },
+   "text": "Silver remains the main inlay metal, though brass was used in Deccan bidri until the eighteenth century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 13",
+     "quote": "Silver remains the material of choice for inlay work, though brass was used in Deccan bidriware until the eighteenth century."
+    }
+   ]
+  },
+  {
+   "id": "C087",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M05"
+   },
+   "text": "Jagdish Mittal says early bidris inlaid with two metals were never made after 1725, because brass was a hard metal and slow to work.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 12",
+     "quote": "early bidris of two metals were never made after 1725, the reason being that brass is a hard metal and it took more time to work on."
+    }
+   ]
+  },
+  {
+   "id": "C088",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M04"
+   },
+   "text": "The census monograph found gold inlay still practised but rarely used, owing to the scarcity and cost of gold.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1474-1475",
+     "quote": "The gold inlay work is still there, but it is rarely used owing to its scarcity and cost."
+    }
+   ]
+  },
+  {
+   "id": "C089",
+   "discipline": "MATERIALS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M03"
+   },
+   "text": "The census monograph reproduces quality-marking standards set for Bidriware at Hyderabad, requiring a base alloy of 93% to 94% zinc and 6% to 7% copper and inlay silver of at least 96%.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1853-1854",
+     "quote": "a quality marking scheme was introduced in the State first on a voluntary basis in 1960"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1856-1858",
+     "quote": "The scheme was extended by phases to the other crafts also, including Bidriware at Hyderabad."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1868-1872",
+     "quote": "Those set up for Bidriware are reproduced below: 1. Base alloy should have the following com position: Zinc = 93% to 94% Copper = 6% to 7%"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1877-1878",
+     "quote": "Silver used for inlay work shOUld contain a minimum of 96% silver"
+    }
+   ]
+  },
+  {
+   "id": "C090",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph lists five varieties of bidri work: tarkashi, tainishan, zarnishan in low relief, zarbuland in high relief and aftabi.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1365-1368",
+     "quote": "The varieties of workmanship of the designs consist of tarkashi (inlay of wire), tainishan (inlay of sheet), zarnishan (low relief), zarbuland (high relief) and aftabi (cut out designs on overlaid metal sheet)."
+    }
+   ]
+  },
+  {
+   "id": "C091",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W10"
+   },
+   "text": "Tarkashi is plain wire inlay, set into grooves made in the surface of the object for the design.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 11",
+     "quote": "Tarkashi is nothing but plain wire work. Grooves for the required design are made on the surface of the object."
+    },
+    {
+     "sourceId": "S16",
+     "locator": "line 3",
+     "quote": "Tarkashi is simply plain wire work and thus appears to be more intricate with fine lines."
+    }
+   ]
+  },
+  {
+   "id": "C092",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W11"
+   },
+   "text": "Teh nashin is a thick inlay of gold or silver in deep engravings, set flush with the surface without relief.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 7",
+     "quote": "Teh nashin refers to 'thick inlay of gold or silver in deep engravings on a baser metal surface' (Sen 1983:37)."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 7",
+     "quote": "The designs are flushed with the surface of the metal without any relief."
+    }
+   ]
+  },
+  {
+   "id": "C093",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W12"
+   },
+   "text": "In aftabi or mehatabi work the silver covers the background while the design appears in black.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 9",
+     "quote": "Aftabi, also known as mehatabi, refers to silver inlay on the background while the designs appear to be in black."
+    },
+    {
+     "sourceId": "S16",
+     "locator": "line 3",
+     "quote": "The Aftabi also known as Mehatabi work refers to pieces that portray a reversal - the silver seems to form the base while the designs seems to be in black."
+    }
+   ]
+  },
+  {
+   "id": "C094",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W13"
+   },
+   "text": "In zar buland work silver is laid over a lead pad so that the pattern stands up from the surface.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 13",
+     "quote": "In bidri it is done using a 'zar buland' where silver is inlaid over a lead pad so that the pattern stands up from the surface (Stronge 1985:11)."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 14",
+     "quote": "In the zarbuland technique, the silver is inlaid over a lead pad and is then incised with motifs or gold overlay, leading to a high-relief effect."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1317-1319",
+     "quote": "The margin or rim of each is bent over and the cavity thus formed is filled with a piece of soft lead."
+    }
+   ]
+  },
+  {
+   "id": "C095",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L12"
+   },
+   "text": "The zarbuland high-relief inlay style was developed in Lucknow.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 14",
+     "quote": "A distinctive inlay style, called zarbuland (high-relief inlaying), was developed in Lucknow."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 26",
+     "quote": "The inlay with high relief-zarbuland or zarnishan (creating a raised effect)-comes from Lucknow."
+    }
+   ]
+  },
+  {
+   "id": "C096",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W14"
+   },
+   "text": "Ganga-Yamuna work sets gold and silver side by side, though it is now taken to mean an inlay of two or more metals.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 14",
+     "quote": "Ganga-Yamuna style - where gold and silver are used side-by-side for inlays, though this is now taken to mean an inlay of two or more metals"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 21",
+     "quote": "The pattern's true meaning of using two specified metals-gold and silver, today translates to the use of any two or more metals for inlay."
+    }
+   ]
+  },
+  {
+   "id": "C097",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M04"
+   },
+   "text": "In Ganga-Yamuna work the gold is inlaid only after the final colouring, because the softer gold tends to fall out during buffing and polishing.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 19",
+     "quote": "And after the final colouring of the article, gold is inlaid. This is because gold is a softer metal and it tends to fall out during the process of buffing and polishing."
+    }
+   ]
+  },
+  {
+   "id": "C098",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W15"
+   },
+   "text": "Phooljhadi, also called star work, is the most famous tarkashi design.",
+   "quotes": [
+    {
+     "sourceId": "S16",
+     "locator": "line 3",
+     "quote": "The most famous of Tarkashi designs is Phooljhadi (fountain)."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 11",
+     "quote": "Star work, commonly known as phooljhadi work, is also an example of tarkashi."
+    }
+   ]
+  },
+  {
+   "id": "C099",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The Mughal poppy flower motif, said to have been introduced around 1740, was used extensively in eighteenth-century bidri.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 15",
+     "quote": "The most beautiful and best known pattern, the 'Mughal poppy flower motif' is said to be introduced around 1740 and has since been used in bidri extensively."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 11",
+     "quote": "In the eighteenth century, a popular motif, also derived from Mughal art, was the poppy flower, which was used extensively."
+    }
+   ]
+  },
+  {
+   "id": "C100",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W16"
+   },
+   "text": "By the mid-nineteenth century, as the poppy motif declined, the kothmir or coriander leaf motif became popular and lasted into the twentieth century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 11",
+     "quote": "By the mid-nineteenth century, as the quality and use of the poppy motif declined, the kothmir (coriander) leaf motif became popular, and its variations were used until the twentieth century."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 30",
+     "quote": "The kothmiri design which is seen 1850 onwards, appears to get more prominent and continues until the 20th century."
+    }
+   ]
+  },
+  {
+   "id": "C101",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Patterns such as ashrafi-ki booti, teenpatti-ki-booti, stars, vine creepers and the stylised poppy plant are traced back to Persian influence.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1414-1419",
+     "quote": "Highly conventionalised patterns, ashrafi-ki booti or teenpatti-ki-booti, stars, vine creepers and stylized poppy plant with flower, single bloom or whole plant in various shapes, mostly in medallion form or mango shape, are amongst those which can be traced back to Persian influence."
+    }
+   ]
+  },
+  {
+   "id": "C102",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L12"
+   },
+   "text": "Fish-shaped spice boxes are common to Lucknow and Bidar, but articles ornamented with fish designs are special to Lucknow.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1424-1427",
+     "quote": "Fish-shaped spice boxes are common to Lucknow and Bidar, but articles ornamented with fish designs are special to Lucknow only."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 11",
+     "quote": "In Lucknow, the double-fish insignia of the Nawabs of Awadh was a common motif."
+    }
+   ]
+  },
+  {
+   "id": "C103",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L10"
+   },
+   "text": "Purnia bidri had two grades by finish, the superior gharki bidri and the inferior karna bidri.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 11",
+     "quote": "had two categories of bidriware according to the finish - gharki bidri (superior) and karna bidri (inferior)."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 26",
+     "quote": "Bidri at Purnea was expensive to produce and hence we see two types here-gharki bidri (well-finished) and karna bidri (inferior in finish)."
+    }
+   ]
+  },
+  {
+   "id": "C104",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Earlier bidri objects included hookah bases, bowls, ewers, betel-leaf boxes, spittoons, cot legs, candelabra, incense burners and rosewater sprinklers.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 10",
+     "quote": "Earlier, the technique was used to embellish objects such as hookah base, abkhora or katora (bowl), aftaba (ewer), pandan or khasdan (box for betel leaves), ugaldan (spittoon), palang pae (cot legs), shamadan (candelabra), uddan (incense burner), gulab pash (rosewater sprinkler)"
+    }
+   ]
+  },
+  {
+   "id": "C105",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "In the colonial period bidri was applied to new objects such as flower vases, picture frames, chairs, buttons, walking sticks and cigar boxes.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 10",
+     "quote": "In the colonial period, the technique began to be applied to large flower vases and basins, mirror and picture frames, chairs, buttons, walking sticks, cigar boxes and ink stands."
+    }
+   ]
+  },
+  {
+   "id": "C106",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph found decorative motifs from the Ajanta murals used in designing new bidri ware.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1437-1439",
+     "quote": "With the increase of interest in the Ajanta murals, many of their decorative motifs found their way in the designing of new fashioned Bidriware"
+    }
+   ]
+  },
+  {
+   "id": "C107",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Motifs from bidri shown at the Great Exhibition and the Paris exhibition were reproduced by Owen Jones in his book The Grammar of Ornament.",
+   "quotes": [
+    {
+     "sourceId": "S09",
+     "locator": "line 10",
+     "quote": "Bidri ware found a vastly increased market after being shown at the Great Exhibition and the International Exhibition in Paris in 1855."
+    },
+    {
+     "sourceId": "S09",
+     "locator": "line 10",
+     "quote": "Motifs drawn from the bidri shown at both exhibitions were reproduced by the British architect and designer Owen Jones (1809-1874) in his book The Grammar of Ornament."
+    }
+   ]
+  },
+  {
+   "id": "C108",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "To cut production time and labour costs, bidri artisans have turned to tarkashi wire work and screen-printed designs.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 16",
+     "quote": "Faced with these issues, bidriware artisans have switched to using tarkashi and screen printing designs in order to cut down on production time and labour costs."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 45",
+     "quote": "Bidri articles today mostly have wire work, not just in order to cut down the cost but also to reduce time while filling space at the same time."
+    }
+   ]
+  },
+  {
+   "id": "C109",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "The blackening uses soil from around Bidar fort, which sources describe as found only there and as having oxidising properties.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 228-231",
+     "quote": "It is then dipoed in a solution orepared with the Soil available onlv around the Bidar fort, which has oxidizing properties."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 302-304",
+     "quote": "This type of earth needed' which is available qly in the Bidar fort area, has a fine effect on zinc alloy."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 326-327",
+     "quote": "The traditional patination process uses the soil from beneath the mud-brick walls of the fort of Bidar city which is said to have special oxidizing properties."
+    },
+    {
+     "sourceId": "S16",
+     "locator": "line 2",
+     "quote": "A special earth, found only near Bidar Fort, brews a magical solution"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 22-23",
+     "quote": "the handicraft mandates the use of Bidar Fort (in Karnataka, India) clay, which bestows the handicraft its characteristic matt-black patina"
+    }
+   ]
+  },
+  {
+   "id": "C110",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "The census monograph says the special clay is found at Bidar only in the ruins of the fort and its walls and in old buildings built with mud only, and is believed to contain saltpetre.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 820-824",
+     "quote": "The special type clay. contain ing saltpetre, is available at Bidar only in the ruins of the fort and walls there, as well as some old buildings which were constructed in those old days with mud only."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 825-826",
+     "quote": "It is believed that clay contains saltpetre."
+    }
+   ]
+  },
+  {
+   "id": "C111",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "An IIT Madras thesis says the fort soil matters because it is saturated with salts and rich in nitrate, the walls being commonly used as a latrine.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 331-332",
+     "quote": "The main significance of the soil around the fort used in the traditional recipes is that it is saturated with salts because the walls are commonly used as a latrine."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 435-436",
+     "quote": "The sand is rich in nitrate due to there being a latrine nearby."
+    }
+   ]
+  },
+  {
+   "id": "C112",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "Analysis of unused Bidar fort clay found silica, aluminium, magnesium, iron, antimony, carbon and sulphur in elemental and oxide forms.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 203-206",
+     "quote": "The energy-dispersive X-ray spectroscopy (EDS) analysis (Fig. 8) report of unused clay contains silica, aluminium, magnesium, iron, antimony, carbon and sulphur in their elemental and oxide forms."
+    }
+   ]
+  },
+  {
+   "id": "C113",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "Bidar fort clay was found distinct in containing chloride and rare minerals such as antimony, indium and barium, and richer than general soils in calcium, iron, magnesium and carbon.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 213-214",
+     "quote": "the clay sample was distinct on parameters of presence of chloride and rare minerals like antimony, indium, barium and traces of gold"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 215-216",
+     "quote": "when compared with broad (general) soil compositions, the Bidar fort clay was rich in calcium, iron, magnesium, and carbon"
+    }
+   ]
+  },
+  {
+   "id": "C114",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "Bidar fort soil can be used 3-4 times, depending on the size of the pieces and the time since it was quarried, before it loses its ability to blacken.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "line 123",
+     "quote": "It could be noted here that Bidar fort soil, can be used for 3-4 times,"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 126-127",
+     "quote": "conditional to the size of the artefact oxidized (patinated), and the time-lag from the period of soil quarrying."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 200-201",
+     "quote": "It was recognized that the Bidar fort clay loses its ability to bestow the black sheen (i.e., oxidize) after a few uses (Fig. 7)."
+    }
+   ]
+  },
+  {
+   "id": "C115",
+   "discipline": "GEOLOGY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "One bidri artisan told The News Minute that the soil is brought from Bidar fort and tasted to judge whether it is fit for use.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "line 2",
+     "quote": "Two Bidri artisans speak to TNM"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "line 7",
+     "quote": "The soil is brought from Bidar fort, no other soil will work as perfectly as this one."
+    },
+    {
+     "sourceId": "S15",
+     "locator": "line 7",
+     "quote": "We taste the soil to determine if it's fit for use or not"
+    }
+   ]
+  },
+  {
+   "id": "C116",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "The blackening paste is described as mud mixed with ammonium chloride, potassium nitrate and salt, and in one account copper sulphate.",
+   "quotes": [
+    {
+     "sourceId": "S08",
+     "locator": "line 5",
+     "quote": "the craftsman briefly covers the object with a mud paste contining salt, ammonium chloride and unrefined potassium nitrate"
+    },
+    {
+     "sourceId": "S09",
+     "locator": "line 8",
+     "quote": "This is done by applying a paste of mud mixed with ammonium chloride, potassium nitrate, sodium chloride and copper sulphate."
+    },
+    {
+     "sourceId": "S14",
+     "locator": "line 15",
+     "quote": "it is treated with a solution of clay that contains saltpetre, sal ammoniac, sodium chloride and other chemicals"
+    }
+   ]
+  },
+  {
+   "id": "C117",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "STAGE",
+    "ref": "P08"
+   },
+   "text": "La Niece and Martin found that the black patina forms instantly when the alloy is immersed in a warm solution of one part potassium nitrate to four parts ammonium chloride.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "The black patina forms instantaneously on immersion of the alloy in a warm solution of potassium nitrate (one part) and ammonium chloride (four parts)."
+    }
+   ]
+  },
+  {
+   "id": "C118",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M02"
+   },
+   "text": "Replication experiments showed that the copper content of the alloy is critical: the patina forms on zinc with 2-10% copper but not on pure zinc or on brass.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "x-ray fluorescence (XRF) analysis and replication experiments have proved that the copper content of the alloy is critical for the patina formation"
+    },
+    {
+     "sourceId": "S06",
+     "locator": "line 1",
+     "quote": "The patina is easy to produce in the laboratory on alloys of zinc with 2-10% copper, falling within the ε + η phase field of the binary copper-zinc equilibrium diagram, but it does not form on pure zinc or on brass"
+    },
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "Standard brasses, as used for the inlay, are unaffected by the solution which induces only a whitish-gray patina on pure zinc."
+    }
+   ]
+  },
+  {
+   "id": "C119",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M08"
+   },
+   "text": "Ammonium chloride preferentially dissolves zinc from the bidri alloy, leaving a copper-enriched surface.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "The ammonium chloride preferentially dissolves the zinc from the Bidri alloy."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "line 834",
+     "quote": "In such a solution zinc dissolves preferentially leading to copper enriched surface"
+    }
+   ]
+  },
+  {
+   "id": "C120",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M10"
+   },
+   "text": "La Niece and Martin suggested, while calling it unproven, that the copper-enriched surface is then oxidised by potassium nitrate.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "The rest of the process is unproven but it is suggested that the resulting copper-enriched surface is oxidized by potassium nitrate."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C121",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "La Niece and Martin reported that the compounds forming the black patina had not been identified, and a V&A record calls the exact chemical process still unidentified.",
+   "quotes": [
+    {
+     "sourceId": "S05",
+     "locator": "line 29",
+     "quote": "The compound or compounds forming the patina have not been identified."
+    },
+    {
+     "sourceId": "S10",
+     "locator": "line 5",
+     "quote": "The exact chemical process which takes place is still unidentified."
+    }
+   ]
+  },
+  {
+   "id": "C122",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "None of the commonly occurring zinc compounds is black, and La Niece wrote that no adequate explanation for the patina's colour had yet been published.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "line 1",
+     "quote": "None of the commonly occurring zinc compounds is black and no adequate explanation for the colour of the patina has yet been published."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "line 81",
+     "quote": "as technically, none of the zinc compounds are black in colour"
+    }
+   ]
+  },
+  {
+   "id": "C123",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "La Niece proposes that the patina looks matt black because its small, acicular particles absorb light, rather than because of additional components.",
+   "quotes": [
+    {
+     "sourceId": "S06",
+     "locator": "line 1",
+     "quote": "it is now proposed that it is the ability of the patina particles, by reason of their small size and acicular form, to absorb light which gives the appearance of a matt black surface, rather than the existence of additional components within the patina."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C124",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "An IIT Madras thesis inferred that the copper-enriched surface converts in nitrate solution to CuO and Cu2O, and that these oxides give the black appearance.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "line 828",
+     "quote": "From the current investigation, the following can be inferred"
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 834-836",
+     "quote": "In such a solution zinc dissolves preferentially leading to copper enriched surface, which in nitrate containing solution converts to CuO and Cu2O. These oxides render the black appearance."
+    }
+   ]
+  },
+  {
+   "id": "C125",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "X-ray diffraction of bidri patinas found simonkolleite, zincite and cuprite as the main crystalline phases, which are white or reddish rather than black.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 359-363",
+     "quote": "identified the three main crystalline components of all the object and experimental patinas analysed:- Simonkolleite, zinc hydroxychloride (Zn5(OH)8 Cl2) Zincite, zinc oxide (ZnO) Cuprite, copper I oxide (Cu2O)"
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 364-365",
+     "quote": "The two zinc compounds identified are white in colour and cuprite appears reddish, so these results do not directly explain the black colouration of the patina."
+    }
+   ]
+  },
+  {
+   "id": "C126",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Black copper II oxide, tenorite, had been expected in the bidri patina but was only rarely found.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 365-367",
+     "quote": "The copper II oxide tenorite (CuO) does appear black, and had been expected to be present, but it was only rarely found in the patina"
+    }
+   ]
+  },
+  {
+   "id": "C127",
+   "discipline": "PHYSICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "An experimental patina on a specially prepared zinc alloy with about 4% copper measured only about three to ten micrometres thick in cross-section.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 344-345",
+     "quote": "Similar experiments were performed with a specially prepared alloy of zinc containing 4% copper."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "line 369",
+     "quote": "To provide more information, the experimental patina was examined using FE SEMEDX."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 371-372",
+     "quote": "The depth of the patina was measured in cross- section using the SEM and found to be only of the order of three to ten micrometres thick."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 373-374",
+     "quote": "The alloy composition of the unpatinated surface is approximately 4% copper and 96% zinc."
+    }
+   ]
+  },
+  {
+   "id": "C128",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The bidri surface is described as a network of copper-rich dendrites, which in an experimental patina held 12-30% copper against 2-5% in the interdendritic phase.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "line 369",
+     "quote": "To provide more information, the experimental patina was examined using FE SEMEDX."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 374-375",
+     "quote": "In the patinated area the dendrites were found to contain 12-30% copper and the interdendritic phase 2-5% copper."
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 257-258",
+     "quote": "The current manuscript brings to focal the characterization of the Bidri surface that is a dense network of dendrites and inter-dendrites perforations, with copper-rich surfaces"
+    }
+   ]
+  },
+  {
+   "id": "C129",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "ED-XRF analysis of a patinated bidri surface measured 91.681% zinc and 6.110% copper, with traces of sulphur, potassium, calcium and iron.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 192-193",
+     "quote": "Elements Zn Cu S K Ca Fe Composition (in %) 91.681 6.110 1.046 0.676 0.478 0.009"
+    },
+    {
+     "sourceId": "S04",
+     "locator": "lines 188-189",
+     "quote": "which exhibited existence of the fundamental alloys; besides traces of sulphur, potassium, calcium and iron"
+    }
+   ]
+  },
+  {
+   "id": "C130",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The black patina is credited with protecting bidri ware from corrosion under normal atmospheric conditions.",
+   "quotes": [
+    {
+     "sourceId": "S04",
+     "locator": "lines 79-80",
+     "quote": "A lot of this anti-corrosive characteristics has been attributed to the black patina that is formed."
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 276-277",
+     "quote": "The black patina on bidri ware also seems to protect it from unattractive corrosion growths under a range of normal atmospheric conditions."
+    }
+   ]
+  },
+  {
+   "id": "C131",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M10"
+   },
+   "text": "An IIT Madras thesis found that 20 g of ammonium chloride and 5 g of potassium nitrate in 100 ml of water gave a black patina like that from Bidri sand.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 668-670",
+     "quote": "5g of potassium nitrate (KNO3), 20g of ammonium chloride (NH4Cl) was dissolved in 100 ml of de-ionised water"
+    },
+    {
+     "sourceId": "S07",
+     "locator": "lines 829-831",
+     "quote": "An alternative to Bidri sand has been identified. A mixture of NH4Cl and KNO3 (20g:5g) in 100mL of de-ionized water renders black patina on the surface similar to one seen with Bidri sand."
+    }
+   ]
+  },
+  {
+   "id": "C133",
+   "discipline": "CHEMISTRY",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M09"
+   },
+   "text": "An IIT Madras thesis suggests the clay could merely supply nitrate and act as a poultice absorbing the unwanted zinc chloride formed.",
+   "quotes": [
+    {
+     "sourceId": "S07",
+     "locator": "lines 352-354",
+     "quote": "The use of clay does not seem to be crucially important. It could merely serve as a source of alkali nitrate and as a poultice to absorb the unwanted zinc chloride formed during the process."
+    }
+   ],
+   "hypothesis": true
+  },
+  {
+   "id": "C134",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G04"
+   },
+   "text": "Bidriware is a registered geographical indication under application number 20, filed by the Karnataka State Handicrafts Development Corporation Limited on 24 January 2005.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "lines 2-5",
+     "quote": "| Application Number | 20 | | Geographical Indications | Bidriware | | Status | Registered | | Applicant Name | Karnataka State Handicrafts Development Corporation Limited |"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "line 7",
+     "quote": "| Date of Filing | 24-01-2005 |"
+    }
+   ]
+  },
+  {
+   "id": "C135",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The registry issued certificate number 21 for Bidriware on 30 January 2006, after publication in Geographical Indications Journal number 10.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "lines 12-15",
+     "quote": "| Journal Number | 10 | | Availability Date | 21-10-2005 | | Certificate Number | 21 | | Certificate Date | 30-01-2006 |"
+    },
+    {
+     "sourceId": "S16",
+     "locator": "line 5",
+     "quote": "In 2006, Bidriware was granted the Geographical Indications status by the Government of India."
+    }
+   ]
+  },
+  {
+   "id": "C136",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The Bidriware geographical indication registration is valid up to 23 January 2035.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "line 16",
+     "quote": "| Registration Valid Upto | 23-01-2035 |"
+    }
+   ]
+  },
+  {
+   "id": "C137",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI registry lists authorised users of the Bidriware indication, among them TRIFED and the applicant corporation.",
+   "quotes": [
+    {
+     "sourceId": "S01",
+     "locator": "line 19",
+     "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "line 187",
+     "quote": "| 166 | AU/7139/GI/20/166 | Tribal Cooperative Marketing Development Federaion ofIndia Limited (TRIFED), Regional Office |"
+    },
+    {
+     "sourceId": "S01",
+     "locator": "line 202",
+     "quote": "| 181 | AU/37239/GI/20/181 | 1. Karnataka State Handicrafts Development Corporation, Limited Represented By The Managing Director |"
+    }
+   ]
+  },
+  {
+   "id": "C138",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Sahapedia states that bidri received its geographical indication tag at the beginning of 2008.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 39",
+     "quote": "However, the much awaited GI tag was given to bidri in the beginning of 2008"
+    }
+   ]
+  },
+  {
+   "id": "C139",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G04"
+   },
+   "text": "The GI application says Bidriware is marketed by the Karnataka State Handicrafts corporation, set up by the state government in 1964 to improve artisans' conditions.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 194-197",
+     "quote": "These handicraft articles which are manufactured are co-ordinated and marketed by Kamataka State Handicrafts Corporation Ltd. Bangalore."
+    },
+    {
+     "sourceId": "S02",
+     "locator": "lines 197-201",
+     "quote": "The corporation has been set up by Kamataka State Government, during 1964 to improve the conditions of artlsans."
+    }
+   ]
+  },
+  {
+   "id": "C140",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The GI application, filed in 2005, put the number of artisans engaged in the craft at Bidar at about 500.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 373-375",
+     "quote": "There are about 500 artisans engaged in this craft aJ Bidar."
+    },
+    {
+     "sourceId": "S01",
+     "locator": "line 7",
+     "quote": "| Date of Filing | 24-01-2005 |"
+    }
+   ]
+  },
+  {
+   "id": "C141",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "A 1994 rural artisans survey by the Government of Karnataka, cited in the GI application, found in general most bidri families above the poverty line.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 338-342",
+     "quote": "According to rural artisans survey-1994 conducted by Government ofKarnataka it is noticed in general most ofthe families engaged in this craft are above poverty line."
+    }
+   ]
+  },
+  {
+   "id": "C142",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application states that Bidriware articles are exported to the USA, Europe and the Gulf countries.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 208-210",
+     "quote": "The articles of Bidriware are exporled to U.S.A, Europe, and Gulf countnes."
+    }
+   ]
+  },
+  {
+   "id": "C143",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L01"
+   },
+   "text": "The census monograph on Bidriware of Hyderabad City, whose survey day was 24 February 1966, puts the craft at Bidar at 61 households and 96 workers.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "line 241",
+     "quote": "The present volume consists of the monographs on (i) Bidriware of Hyderabad City"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 810-812",
+     "quote": "On the day of survey (24th February 1966) its rate was Rs. 4.37 per tola."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 737-738",
+     "quote": "At present there are only 61 households left at Bidar"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 739-740",
+     "quote": "the total number of persons work ing is put at 96"
+    }
+   ]
+  },
+  {
+   "id": "C144",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "COMMUNITY",
+    "ref": "G01"
+   },
+   "text": "The census monograph, whose survey day was 24 February 1966, reports that of 96 workers at Bidar the adults included 77 Muslims from 55 families, 7 Medars and 1 Bestha.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1912-1914",
+     "quote": "Of the 96 total workers belonging to 61 families of Bidar"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1914-1916",
+     "quote": "the caste wise distribution of adult workers is as follows, the remaining 11 being boys"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1921-1923",
+     "quote": "Muslim 55 77 75 2 Medar 5 7 7 Bestha 1 1 1"
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 810-812",
+     "quote": "On the day of survey (24th February 1966) its rate was Rs. 4.37 per tola."
+    }
+   ]
+  },
+  {
+   "id": "C145",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "PLACE",
+    "ref": "L05"
+   },
+   "text": "The census survey of 1966 found eight bidri workshops in Hyderabad, two of them run by the Mumtaz and Gulisthan Bidri Works co-operative societies.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1667-1669",
+     "quote": "There are 8 established workshops manufac turing Bidriware articles at Hyderabad, of which two are mannged by the following Co-operative Societies."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 1670-1671",
+     "quote": "(i) M umtaz Bidri Works Co-operative Society; and (ii) Gulisthan Bidri Works Co-operative Society."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "lines 810-812",
+     "quote": "On the day of survey (24th February 1966) its rate was Rs. 4.37 per tola."
+    }
+   ]
+  },
+  {
+   "id": "C146",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The census monograph estimated that about 25% of bidri production cost went to raw materials and about 75% to wages and sundry items.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 1658-1661",
+     "quote": "convey the fact that about 25% of the production cost goes towards the basic raw materials; and the wages to workers, including sundry items, like fuel, wax, oil, resin etc., account for about 75%."
+    }
+   ]
+  },
+  {
+   "id": "C147",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "MATERIAL",
+    "ref": "M03"
+   },
+   "text": "On the census survey day, 24 February 1966, silver bought in the market for Hyderabad bidri inlay cost Rs. 4.37 per tola.",
+   "quotes": [
+    {
+     "sourceId": "S03",
+     "locator": "lines 809-812",
+     "quote": "Silver is purchased from the market at the rates prevailing on the respective d<:.ys. On the day of survey (24th February 1966) its rate was Rs. 4.37 per tola."
+    },
+    {
+     "sourceId": "S03",
+     "locator": "line 241",
+     "quote": "The present volume consists of the monographs on (i) Bidriware of Hyderabad City"
+    }
+   ]
+  },
+  {
+   "id": "C148",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The bidri industry faces the high cost of and access to raw materials, particularly silver and saltpetre-bearing clay, and its artisans are poorly remunerated.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 16",
+     "quote": "The challenges include high cost of and access to raw materials, particularly silver and clay with saltpetre. Artisans are also poorly remunerated."
+    }
+   ]
+  },
+  {
+   "id": "C149",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Bidri artisans are apprehensive about counterfeit bidriware, and fake bidri has been produced and sold for higher prices in Hyderabad.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 16",
+     "quote": "They are also apprehensive about the proliferation of counterfeit bidriware items."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 48",
+     "quote": "One such example can be taken from Hyderabad, where fake bidri was produced and sold for higher prices (Desai 2007)."
+    }
+   ]
+  },
+  {
+   "id": "C150",
+   "discipline": "ECONOMICS",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Two bidri artisans told The News Minute that the COVID-19 pandemic hit their business, whose major share of earnings comes from foreign sales.",
+   "quotes": [
+    {
+     "sourceId": "S15",
+     "locator": "line 2",
+     "quote": "Two Bidri artisans speak to TNM"
+    },
+    {
+     "sourceId": "S15",
+     "locator": "line 10",
+     "quote": "Referring to the COVID-19 pandemic that hit globally, the two artisans say that their business was hit adversely because the major share of their earnings comes from foreign sales."
+    }
+   ]
+  },
+  {
+   "id": "C151",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The GI application, Sahapedia and the Incredible India page name zar buland and zar nashin together as one kind of bidri work.",
+   "quotes": [
+    {
+     "sourceId": "S02",
+     "locator": "lines 315-319",
+     "quote": "generally oftwo kinds, namely, \" Teh-nishan\" in which design is deeply cut and the \"Zarnishan\" or \"Zar-buland' which resembles encrusted ware of Tanjavur"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 2",
+     "quote": "Bidri metalwork can be broadly classified into four types:"
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 13",
+     "quote": "Zar buland or Zar nashin refers to inlay with high or low relief."
+    },
+    {
+     "sourceId": "S16",
+     "locator": "line 3",
+     "quote": "The stunningly beautiful Bidriware pieces come in form of a range of products chiefly featuring Tarkashi, Aftabi, Teh Nashin and Zar Buland/Zar Nashin work."
+    }
+   ]
+  },
+  {
+   "id": "C152",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "TERM",
+    "ref": "W19"
+   },
+   "text": "Sahapedia notes that zar buland and zar nashin, though often referred to as the same work, differ slightly, zar buland being in higher relief.",
+   "quotes": [
+    {
+     "sourceId": "S13",
+     "locator": "line 13",
+     "quote": "Zar buland or zar nashin are often referred to as the same kind of work yet have a minute difference between them."
+    },
+    {
+     "sourceId": "S13",
+     "locator": "line 13",
+     "quote": "Zar buland is slightly higher relief than zar nashin, which is lower relief than zar buland (Sen 1983:37)."
+    }
+   ]
+  },
+  {
+   "id": "C153",
+   "discipline": "HISTORY",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "Jagdish Mittal refers to a miniature dated 1625 in the State Museum of Hyderabad as the first occurrence of bidri in paintings, a painting that apparently shows a huqqa.",
+   "quotes": [
+    {
+     "sourceId": "S12",
+     "locator": "line 9",
+     "quote": "Jagdish Mittal, a famous painter and collector of Indian art, refers to a miniature dated 1625 in the State Museum of Hyderabad as the first occurrence of bidri in paintings."
+    },
+    {
+     "sourceId": "S12",
+     "locator": "line 9",
+     "quote": "This painting apparently shows a huqqa (a tobacco smoking contraption) inlaid with silver and brass."
+    }
+   ]
+  },
+  {
+   "id": "C154",
+   "discipline": "DESIGN",
+   "subject": {
+    "type": "CRAFT"
+   },
+   "text": "The Impart encyclopedia lists zodiac signs and designs inspired by the Ajanta murals among bidri motifs towards the end of the twentieth century.",
+   "quotes": [
+    {
+     "sourceId": "S14",
+     "locator": "line 11",
+     "quote": "Towards the end of the twentieth century, the range of motifs included zodiac signs and designs inspired by the mural paintings of the Ajanta Caves"
+    }
+   ]
+  }
+ ],
+ "places": [
+  {
+   "id": "L01",
+   "name": "Bidar",
+   "kind": "TOWN",
+   "district": "Bidar",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q461922",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C006",
+    "C045",
+    "C140",
+    "C143"
+   ]
+  },
+  {
+   "id": "L02",
+   "name": "Bidar",
+   "kind": "TOWN",
+   "district": "Bidar",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q461922",
+   "role": "ORIGIN",
+   "claimIds": [
+    "C002",
+    "C009"
+   ]
+  },
+  {
+   "id": "L03",
+   "name": "Bidar",
+   "kind": "TOWN",
+   "district": "Bidar",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q461922",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C028",
+    "C020"
+   ]
+  },
+  {
+   "id": "L04",
+   "name": "Bidar",
+   "kind": "TOWN",
+   "district": "Bidar",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q461922",
+   "role": "MATERIAL_SOURCE",
+   "claimIds": [
+    "C109",
+    "C110",
+    "C114"
+   ]
+  },
+  {
+   "id": "L05",
+   "name": "Hyderabad",
+   "kind": "TOWN",
+   "district": "Hyderabad",
+   "state": "Telangana",
+   "country": "India",
+   "wikidata": "Q1361",
+   "role": "PRACTISED",
+   "claimIds": [
+    "C006",
+    "C145"
+   ]
+  },
+  {
+   "id": "L06",
+   "name": "Hyderabad",
+   "kind": "TOWN",
+   "district": "Hyderabad",
+   "state": "Telangana",
+   "country": "India",
+   "wikidata": "Q1361",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C028",
+    "C020"
+   ]
+  },
+  {
+   "id": "L07",
+   "name": "Hyderabad",
+   "kind": "TOWN",
+   "district": "Hyderabad",
+   "state": "Telangana",
+   "country": "India",
+   "wikidata": "Q1361",
+   "role": "MIGRATED_TO",
+   "claimIds": [
+    "C031",
+    "C032",
+    "C033"
+   ]
+  },
+  {
+   "id": "L08",
+   "name": "Bidar",
+   "kind": "TOWN",
+   "district": "Bidar",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q461922",
+   "role": "MIGRATED_FROM",
+   "claimIds": [
+    "C031",
+    "C032",
+    "C033"
+   ]
+  },
+  {
+   "id": "L09",
+   "name": "Bijapur (Vijayapura)",
+   "kind": "TOWN",
+   "district": "Vijayapura",
+   "state": "Karnataka",
+   "country": "India",
+   "wikidata": "Q3636023",
+   "role": "MIGRATED_FROM",
+   "claimIds": [
+    "C013"
+   ]
+  },
+  {
+   "id": "L10",
+   "name": "Purnia",
+   "kind": "TOWN",
+   "district": "Purnia",
+   "state": "Bihar",
+   "country": "India",
+   "wikidata": "Q1771762",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C025",
+    "C026",
+    "C027",
+    "C038",
+    "C103"
+   ]
+  },
+  {
+   "id": "L11",
+   "name": "Murshidabad",
+   "kind": "TOWN",
+   "district": "Murshidabad",
+   "state": "West Bengal",
+   "country": "India",
+   "wikidata": "Q1017175",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C025",
+    "C026"
+   ]
+  },
+  {
+   "id": "L12",
+   "name": "Lucknow",
+   "kind": "TOWN",
+   "district": "Lucknow",
+   "state": "Uttar Pradesh",
+   "country": "India",
+   "wikidata": "Q47916",
+   "role": "HISTORIC_CENTRE",
+   "claimIds": [
+    "C025",
+    "C026",
+    "C095",
+    "C102"
+   ]
+  }
+ ],
+ "communities": [
+  {
+   "id": "G01",
+   "kind": "COMMUNITY",
+   "name": "Muslim bidri artisans",
+   "claimIds": [
+    "C042",
+    "C144"
+   ]
+  },
+  {
+   "id": "G02",
+   "kind": "COMMUNITY",
+   "name": "Lingayat",
+   "claimIds": [
+    "C042"
+   ]
+  },
+  {
+   "id": "G03",
+   "kind": "COMMUNITY",
+   "name": "Medar",
+   "claimIds": [
+    "C144"
+   ]
+  },
+  {
+   "id": "G04",
+   "kind": "ORGANISATION",
+   "name": "Karnataka State Handicrafts Development Corporation Limited",
+   "claimIds": [
+    "C134",
+    "C139"
+   ]
+  },
+  {
+   "id": "G05",
+   "kind": "ORGANISATION",
+   "name": "Mumtaz Bidri Works Co-operative Society",
+   "placeId": "L05",
+   "claimIds": [
+    "C145"
+   ]
+  },
+  {
+   "id": "G06",
+   "kind": "ORGANISATION",
+   "name": "Gulisthan Bidri Works Co-operative Society",
+   "placeId": "L05",
+   "claimIds": [
+    "C145"
+   ]
+  },
+  {
+   "id": "G07",
+   "kind": "PERSON",
+   "name": "Shah Rasheed Ahmed Quadri",
+   "honours": [
+    "Senior National Award",
+    "Shilp Guru Award",
+    "Padma Shri (2023, art)"
+   ],
+   "placeId": "L01",
+   "claimIds": [
+    "C043",
+    "C044"
+   ]
+  },
+  {
+   "id": "G08",
+   "kind": "PERSON",
+   "name": "M.A. Rauf",
+   "honours": [
+    "National Award",
+    "Shilp Guru Award"
+   ],
+   "placeId": "L01",
+   "claimIds": [
+    "C043"
+   ]
+  },
+  {
+   "id": "G09",
+   "kind": "PERSON",
+   "name": "Raj Nageshwar",
+   "honours": [
+    "National Award"
+   ],
+   "placeId": "L01",
+   "claimIds": [
+    "C043"
+   ]
+  },
+  {
+   "id": "G10",
+   "kind": "COMMUNITY",
+   "name": "Bestha",
+   "claimIds": [
+    "C144"
+   ]
+  }
+ ],
+ "stages": [
+  {
+   "id": "P01",
+   "name": "Melting the alloy",
+   "stageType": "PREP",
+   "order": 1,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M01",
+     "claimId": "C054"
+    },
+    {
+     "materialId": "M02",
+     "claimId": "C054"
+    },
+    {
+     "materialId": "M19",
+     "claimId": "C054"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T01",
+     "claimId": "C054"
+    }
+   ],
+   "claimIds": [
+    "C054",
+    "C079"
+   ]
+  },
+  {
+   "id": "P02",
+   "name": "Mould making and casting",
+   "stageType": "CAST",
+   "order": 2,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M12",
+     "claimId": "C055"
+    },
+    {
+     "materialId": "M13",
+     "claimId": "C055"
+    },
+    {
+     "materialId": "M14",
+     "claimId": "C055"
+    },
+    {
+     "materialId": "M15",
+     "claimId": "C057"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T02",
+     "claimId": "C055"
+    }
+   ],
+   "claimIds": [
+    "C055",
+    "C056",
+    "C057",
+    "C058"
+   ]
+  },
+  {
+   "id": "P03",
+   "name": "Smoothing the cast article",
+   "stageType": "SHAPE",
+   "order": 3,
+   "orderClaimId": "C049",
+   "tools": [
+    {
+     "toolId": "T03",
+     "claimId": "C059"
+    },
+    {
+     "toolId": "T04",
+     "claimId": "C059"
+    },
+    {
+     "toolId": "T05",
+     "claimId": "C059"
+    }
+   ],
+   "claimIds": [
+    "C059",
+    "C060"
+   ]
+  },
+  {
+   "id": "P04",
+   "name": "Temporary blackening with copper sulphate",
+   "stageType": "PREP",
+   "order": 4,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M07",
+     "claimId": "C062"
+    }
+   ],
+   "claimIds": [
+    "C062"
+   ]
+  },
+  {
+   "id": "P05",
+   "name": "Drawing and engraving the design",
+   "localName": "khodna",
+   "stageType": "CARVE",
+   "order": 5,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M18",
+     "claimId": "C065"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T06",
+     "claimId": "C063"
+    },
+    {
+     "toolId": "T07",
+     "claimId": "C064"
+    }
+   ],
+   "claimIds": [
+    "C063",
+    "C064",
+    "C065"
+   ]
+  },
+  {
+   "id": "P06",
+   "name": "Silver inlay",
+   "localName": "bithana",
+   "stageType": "OTHER",
+   "order": 6,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M03",
+     "claimId": "C067"
+    }
+   ],
+   "tools": [
+    {
+     "toolId": "T08",
+     "claimId": "C068"
+    },
+    {
+     "toolId": "T09",
+     "claimId": "C069"
+    }
+   ],
+   "claimIds": [
+    "C067",
+    "C069"
+   ]
+  },
+  {
+   "id": "P07",
+   "name": "Levelling and sanding the inlaid surface",
+   "stageType": "FINISH",
+   "order": 7,
+   "orderClaimId": "C049",
+   "tools": [
+    {
+     "toolId": "T04",
+     "claimId": "C070"
+    },
+    {
+     "toolId": "T05",
+     "claimId": "C070"
+    },
+    {
+     "toolId": "T10",
+     "claimId": "C070"
+    }
+   ],
+   "claimIds": [
+    "C070"
+   ]
+  },
+  {
+   "id": "P08",
+   "name": "Blackening in fort earth solution",
+   "stageType": "FINISH",
+   "order": 8,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M08",
+     "claimId": "C071"
+    },
+    {
+     "materialId": "M09",
+     "claimId": "C071"
+    },
+    {
+     "materialId": "M10",
+     "claimId": "C116"
+    },
+    {
+     "materialId": "M11",
+     "claimId": "C116"
+    }
+   ],
+   "claimIds": [
+    "C071",
+    "C072",
+    "C073",
+    "C074",
+    "C075",
+    "C116",
+    "C117"
+   ]
+  },
+  {
+   "id": "P09",
+   "name": "Drying",
+   "stageType": "DRY",
+   "order": 9,
+   "orderClaimId": "C049",
+   "duration": {
+    "text": "five to ten minutes",
+    "claimId": "C076"
+   },
+   "claimIds": [
+    "C076"
+   ]
+  },
+  {
+   "id": "P10",
+   "name": "Oiling and polishing",
+   "stageType": "FINISH",
+   "order": 10,
+   "orderClaimId": "C049",
+   "materials": [
+    {
+     "materialId": "M16",
+     "claimId": "C077"
+    },
+    {
+     "materialId": "M17",
+     "claimId": "C077"
+    }
+   ],
+   "claimIds": [
+    "C077",
+    "C078"
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "id": "M01",
+   "name": "Zinc",
+   "kind": "METAL",
+   "role": "INPUT",
+   "pubchemCid": 23994,
+   "claimIds": [
+    "C079",
+    "C085",
+    "C054"
+   ]
+  },
+  {
+   "id": "M02",
+   "name": "Copper",
+   "kind": "METAL",
+   "role": "INPUT",
+   "pubchemCid": 23978,
+   "claimIds": [
+    "C079",
+    "C081",
+    "C080",
+    "C118"
+   ]
+  },
+  {
+   "id": "M03",
+   "name": "Silver",
+   "kind": "METAL",
+   "role": "INPUT",
+   "pubchemCid": 23954,
+   "claimIds": [
+    "C001",
+    "C067",
+    "C086",
+    "C089",
+    "C147"
+   ]
+  },
+  {
+   "id": "M04",
+   "name": "Gold",
+   "kind": "METAL",
+   "role": "INPUT",
+   "pubchemCid": 23985,
+   "claimIds": [
+    "C088",
+    "C097",
+    "C096"
+   ]
+  },
+  {
+   "id": "M05",
+   "name": "Brass",
+   "kind": "METAL",
+   "role": "INPUT",
+   "claimIds": [
+    "C086",
+    "C087"
+   ]
+  },
+  {
+   "id": "M06",
+   "name": "Lead",
+   "kind": "METAL",
+   "role": "INPUT",
+   "pubchemCid": 5352425,
+   "claimIds": [
+    "C082",
+    "C083",
+    "C084",
+    "C094"
+   ]
+  },
+  {
+   "id": "M07",
+   "name": "Copper sulphate",
+   "kind": "MINERAL",
+   "role": "OTHER",
+   "pubchemCid": 24462,
+   "claimIds": [
+    "C062"
+   ]
+  },
+  {
+   "id": "M08",
+   "name": "Ammonium chloride",
+   "kind": "MINERAL",
+   "role": "OTHER",
+   "localNames": [
+    "navsadar",
+    "sal ammoniac"
+   ],
+   "pubchemCid": 25517,
+   "claimIds": [
+    "C071",
+    "C072",
+    "C119"
+   ]
+  },
+  {
+   "id": "M09",
+   "name": "Bidar fort earth",
+   "kind": "CLAY",
+   "role": "OTHER",
+   "claimIds": [
+    "C109",
+    "C110",
+    "C112",
+    "C113",
+    "C114",
+    "C115"
+   ]
+  },
+  {
+   "id": "M10",
+   "name": "Potassium nitrate",
+   "kind": "MINERAL",
+   "role": "OTHER",
+   "localNames": [
+    "saltpetre"
+   ],
+   "pubchemCid": 24434,
+   "claimIds": [
+    "C116",
+    "C117",
+    "C131"
+   ]
+  },
+  {
+   "id": "M11",
+   "name": "Sodium chloride",
+   "kind": "MINERAL",
+   "role": "OTHER",
+   "pubchemCid": 5234,
+   "claimIds": [
+    "C116"
+   ]
+  },
+  {
+   "id": "M12",
+   "name": "Red clay",
+   "kind": "CLAY",
+   "role": "OTHER",
+   "claimIds": [
+    "C055",
+    "C056"
+   ]
+  },
+  {
+   "id": "M13",
+   "name": "Resin",
+   "kind": "RESIN",
+   "role": "BINDER",
+   "claimIds": [
+    "C055",
+    "C056"
+   ]
+  },
+  {
+   "id": "M14",
+   "name": "Castor oil",
+   "kind": "OTHER",
+   "role": "BINDER",
+   "claimIds": [
+    "C055",
+    "C056"
+   ]
+  },
+  {
+   "id": "M15",
+   "name": "White stone powder",
+   "kind": "MINERAL",
+   "role": "OTHER",
+   "localNames": [
+    "sangjeera"
+   ],
+   "claimIds": [
+    "C057"
+   ]
+  },
+  {
+   "id": "M16",
+   "name": "Groundnut oil",
+   "kind": "OTHER",
+   "role": "OTHER",
+   "claimIds": [
+    "C077"
+   ]
+  },
+  {
+   "id": "M17",
+   "name": "Charcoal powder",
+   "kind": "OTHER",
+   "role": "OTHER",
+   "claimIds": [
+    "C077"
+   ]
+  },
+  {
+   "id": "M18",
+   "name": "Wax",
+   "kind": "OTHER",
+   "role": "OTHER",
+   "claimIds": [
+    "C065"
+   ]
+  },
+  {
+   "id": "M19",
+   "name": "Coal",
+   "kind": "FUEL",
+   "role": "FUEL",
+   "claimIds": [
+    "C054"
+   ]
+  }
+ ],
+ "tools": [
+  {
+   "id": "T01",
+   "name": "Crucible",
+   "claimIds": [
+    "C054"
+   ]
+  },
+  {
+   "id": "T02",
+   "name": "Darza box (iron moulding frame)",
+   "localNames": [
+    "darza"
+   ],
+   "claimIds": [
+    "C055"
+   ]
+  },
+  {
+   "id": "T03",
+   "name": "Lathe",
+   "claimIds": [
+    "C059"
+   ]
+  },
+  {
+   "id": "T04",
+   "name": "File",
+   "claimIds": [
+    "C059",
+    "C070"
+   ]
+  },
+  {
+   "id": "T05",
+   "name": "Buffing machine",
+   "claimIds": [
+    "C059",
+    "C070"
+   ]
+  },
+  {
+   "id": "T06",
+   "name": "Drawing point",
+   "localNames": [
+    "kalam"
+   ],
+   "claimIds": [
+    "C063",
+    "C066"
+   ]
+  },
+  {
+   "id": "T07",
+   "name": "Chisels",
+   "localNames": [
+    "chilne-ki-kalam"
+   ],
+   "claimIds": [
+    "C064",
+    "C066"
+   ]
+  },
+  {
+   "id": "T08",
+   "name": "Wire-drawing plate",
+   "localNames": [
+    "pautha",
+    "tarpatti"
+   ],
+   "claimIds": [
+    "C068"
+   ]
+  },
+  {
+   "id": "T09",
+   "name": "Flat chisel",
+   "localNames": [
+    "chappat kalam"
+   ],
+   "claimIds": [
+    "C069"
+   ]
+  },
+  {
+   "id": "T10",
+   "name": "Sandpaper",
+   "claimIds": [
+    "C070"
+   ]
+  }
+ ],
+ "reactions": [],
+ "environment": [
+  {
+   "factor": "SOIL",
+   "placeId": "L04",
+   "claimIds": [
+    "C109",
+    "C110",
+    "C111",
+    "C112",
+    "C113",
+    "C114",
+    "C048"
+   ]
+  }
+ ],
+ "market": {
+  "gi": {
+   "applicationNumber": "20",
+   "certificateNumber": "21",
+   "filedOn": "2005-01-24",
+   "registeredOn": "2006-01-30",
+   "journalIssue": "10",
+   "proprietors": [
+    "Karnataka State Handicrafts Development Corporation Limited"
+   ],
+   "claimIds": [
+    "C134",
+    "C135",
+    "C136",
+    "C137"
+   ]
+  },
+  "prices": [
+   {
+    "claimId": "C147",
+    "date": "1966-02-24",
+    "placeId": "L05"
+   }
+  ],
+  "workforce": [
+   {
+    "claimId": "C140",
+    "year": 2005
+   },
+   {
+    "claimId": "C143",
+    "year": 1966
+   },
+   {
+    "claimId": "C144",
+    "year": 1966
+   }
+  ]
+ },
+ "glossary": [
+  {
+   "id": "W01",
+   "term": "bidri, bidriware",
+   "meaning": "Metalwork named after the city of Bidar: a damascene work in which silver is inlaid on a blackened zinc alloy.",
+   "claimIds": [
+    "C002",
+    "C003"
+   ]
+  },
+  {
+   "id": "W02",
+   "term": "darza",
+   "meaning": "The hollow iron frames in which the clay moulds are made.",
+   "claimIds": [
+    "C055"
+   ]
+  },
+  {
+   "id": "W03",
+   "term": "sangjeera",
+   "meaning": "A white stone powder dusted on the mould to keep it free from clay residue.",
+   "claimIds": [
+    "C057"
+   ]
+  },
+  {
+   "id": "W04",
+   "term": "kalam",
+   "meaning": "The sharp end of an iron spoke used to draw the design on the metal.",
+   "claimIds": [
+    "C063"
+   ]
+  },
+  {
+   "id": "W05",
+   "term": "khodna",
+   "meaning": "The local name for engraving the design to the required depth.",
+   "claimIds": [
+    "C064"
+   ]
+  },
+  {
+   "id": "W06",
+   "term": "chilne-ki-kalam",
+   "meaning": "The chisel used for chasing the design.",
+   "claimIds": [
+    "C066"
+   ]
+  },
+  {
+   "id": "W07",
+   "term": "pautha, tarpatti",
+   "meaning": "A steel plate with diamond-drilled holes of different sizes through which silver wire is drawn thin.",
+   "claimIds": [
+    "C068"
+   ]
+  },
+  {
+   "id": "W08",
+   "term": "bithana",
+   "meaning": "Embedding the silver wire in the engraved design; to make sit or fix.",
+   "claimIds": [
+    "C069"
+   ]
+  },
+  {
+   "id": "W09",
+   "term": "navsadar",
+   "meaning": "The local name for ammonium chloride.",
+   "claimIds": [
+    "C072"
+   ]
+  },
+  {
+   "id": "W10",
+   "term": "tarkashi",
+   "meaning": "Plain inlay of wire in grooves made for the design.",
+   "claimIds": [
+    "C091"
+   ]
+  },
+  {
+   "id": "W11",
+   "term": "teh nashin, tainishan",
+   "meaning": "Thick inlay of gold or silver in deep engravings, flush with the surface; the census monograph glosses tainishan as inlay of sheet.",
+   "claimIds": [
+    "C092",
+    "C090"
+   ]
+  },
+  {
+   "id": "W12",
+   "term": "aftabi, mehatabi",
+   "meaning": "Silver inlay over the background so that the design appears in black.",
+   "claimIds": [
+    "C093"
+   ]
+  },
+  {
+   "id": "W13",
+   "term": "zar buland, zarbuland",
+   "meaning": "High-relief inlay in which silver is laid over a lead pad so that the pattern stands up from the surface.",
+   "claimIds": [
+    "C094",
+    "C090"
+   ]
+  },
+  {
+   "id": "W14",
+   "term": "Ganga-Yamuna",
+   "meaning": "Inlay of gold and silver side by side, now taken to mean an inlay of two or more metals.",
+   "claimIds": [
+    "C096"
+   ]
+  },
+  {
+   "id": "W15",
+   "term": "phooljhadi",
+   "meaning": "Star work, the most famous tarkashi design.",
+   "claimIds": [
+    "C098"
+   ]
+  },
+  {
+   "id": "W16",
+   "term": "kothmir",
+   "meaning": "The coriander leaf motif.",
+   "claimIds": [
+    "C100"
+   ]
+  },
+  {
+   "id": "W17",
+   "term": "gharki bidri",
+   "meaning": "The superior, well-finished grade of Purnia bidri.",
+   "claimIds": [
+    "C103"
+   ]
+  },
+  {
+   "id": "W18",
+   "term": "karna bidri",
+   "meaning": "The inferior grade of Purnia bidri, by finish.",
+   "claimIds": [
+    "C103"
+   ]
+  },
+  {
+   "id": "W19",
+   "term": "zar nashin, zarnishan",
+   "meaning": "Low-relief inlay, in slightly lower relief than zar buland.",
+   "claimIds": [
+    "C090",
+    "C152"
+   ]
+  }
+ ],
+ "conflicts": [
+  {
+   "claimIds": [
+    "C009",
+    "C012",
+    "C013"
+   ],
+   "about": "Under which Bahmani sultan bidri began at Bidar"
+  },
+  {
+   "claimIds": [
+    "C008",
+    "C009"
+   ],
+   "about": "When bidri was introduced at Bidar: about 400 years before the GI application, or under Ahmed Shah Bahamani (1422-1436)"
+  },
+  {
+   "claimIds": [
+    "C011",
+    "C022",
+    "C019"
+   ],
+   "about": "Whether bidri can be dated to the fifteenth century"
+  },
+  {
+   "claimIds": [
+    "C019",
+    "C020",
+    "C021",
+    "C022",
+    "C028",
+    "C153"
+   ],
+   "about": "Date of the earliest evidence of bidri: late 16th-century pieces, early 17th-century pieces or a painting of about 1625"
+  },
+  {
+   "claimIds": [
+    "C016",
+    "C017"
+   ],
+   "about": "Whether Abdullah bin Kaiser settled at Bijapur or was invited to the Bahmani court"
+  },
+  {
+   "claimIds": [
+    "C039",
+    "C040"
+   ],
+   "about": "When the bidri training school at Bidar began"
+  },
+  {
+   "claimIds": [
+    "C082",
+    "C083",
+    "C084",
+    "C085"
+   ],
+   "about": "Whether lead and tin belong in the bidri alloy"
+  },
+  {
+   "claimIds": [
+    "C050",
+    "C051",
+    "C052",
+    "C053"
+   ],
+   "about": "How many stages bidri production has"
+  },
+  {
+   "claimIds": [
+    "C074",
+    "C075"
+   ],
+   "about": "Temperature of the blackening bath"
+  },
+  {
+   "claimIds": [
+    "C071",
+    "C116"
+   ],
+   "about": "Ingredients of the blackening bath"
+  },
+  {
+   "claimIds": [
+    "C121",
+    "C123",
+    "C124",
+    "C125",
+    "C126"
+   ],
+   "about": "What makes the bidri patina black"
+  },
+  {
+   "claimIds": [
+    "C135",
+    "C138"
+   ],
+   "about": "Year of the geographical indication: 2006 or 2008"
+  },
+  {
+   "claimIds": [
+    "C045",
+    "C047"
+   ],
+   "about": "Registered geographical area: Bidar district or Karnataka"
+  },
+  {
+   "claimIds": [
+    "C025",
+    "C027"
+   ],
+   "about": "When bidri spread to Purnia and Murshidabad: the late eighteenth or the early nineteenth century"
+  },
+  {
+   "claimIds": [
+    "C090",
+    "C095",
+    "C151",
+    "C152"
+   ],
+   "about": "Whether zar buland and zar nashin are one kind of bidri work or separate high- and low-relief varieties"
+  },
+  {
+   "claimIds": [
+    "C109",
+    "C110"
+   ],
+   "about": "Whether the blackening clay is found only around Bidar fort or also in old mud-built buildings"
+  }
+ ],
+ "openQuestions": [
+  {
+   "id": "O01",
+   "question": "Where and when did bidri originate, and how did it reach Bidar?",
+   "claimIds": [
+    "C012",
+    "C014",
+    "C015",
+    "C016",
+    "C022"
+   ]
+  },
+  {
+   "id": "O02",
+   "question": "Why is the bidri patina black?",
+   "claimIds": [
+    "C120",
+    "C121",
+    "C122",
+    "C123"
+   ]
+  },
+  {
+   "id": "O03",
+   "question": "What does the Bidar fort soil contribute to the blackening?",
+   "claimIds": [
+    "C111",
+    "C133"
+   ]
+  }
+ ],
+ "pictures": [
+  {
+   "id": "I01",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Bidri_craft%2C_Hyderabad%2C_India.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Bidri_craft,_Hyderabad,_India.jpg",
+   "author": "TWAS",
+   "licence": "CC BY-SA 2.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "caption": "A bidri craftsman in Hyderabad hammering silver wire into an engraved design",
+   "stageId": "P06"
+  },
+  {
+   "id": "I02",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Making_Bidriware.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Making_Bidriware.jpg",
+   "author": "Footlooseinme",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "A craftsman working a design into a blackened bidri piece with a chisel",
+   "stageId": "P05"
+  },
+  {
+   "id": "I03",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Bidar_Old_Fort_View_From_Outside.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Bidar_Old_Fort_View_From_Outside.jpg",
+   "author": "Satheesh N",
+   "licence": "CC BY-SA 3.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "caption": "Bidar fort, around which the soil used to blacken bidri is found",
+   "claimIds": [
+    "C109"
+   ]
+  },
+  {
+   "id": "I04",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Huqqah_base_from_India%2C_Bidar%2C_17th_century%2C_zinc_alloy_with_silver_inlay%2C_HAA.JPG",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Huqqah_base_from_India,_Bidar,_17th_century,_zinc_alloy_with_silver_inlay,_HAA.JPG",
+   "author": "Hiart",
+   "licence": "CC0 1.0",
+   "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "caption": "A huqqa base from Bidar, zinc alloy with silver inlay, dated to the 17th century, at the Honolulu Academy of Arts",
+   "claimIds": [
+    "C018"
+   ]
+  },
+  {
+   "id": "I05",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Bidriware_hookah_base_1750-1800.jpg",
+   "pageUrl": "https://commons.wikimedia.org/wiki/File:Bidriware_hookah_base_1750-1800.jpg",
+   "author": "Natasha Khaitan",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "caption": "A bidri hookah base of about 1750-1800 inlaid in silver with stylised poppy plants",
+   "claimIds": [
+    "C099"
+   ]
+  }
+ ],
+ "overview": {
+  "lede": [
+   {
+    "text": "Bidriware is a metal craft of Bidar in which designs engraved on a cast zinc-copper alloy are inlaid with silver, a kind of damascene work.",
+    "claimIds": [
+     "C001",
+     "C003"
+    ]
+   },
+   {
+    "text": "It takes its name from the city of Bidar, where the technique is thought to have originated, and Bidar and Hyderabad are named as its chief centres of production.",
+    "claimIds": [
+     "C002",
+     "C006"
+    ]
+   },
+   {
+    "text": "A dip in a boiling solution of fort earth and ammonium chloride turns the zinc alloy black while the silver keeps its colour, and the black background contrasts strikingly with the lustrous inlay.",
+    "claimIds": [
+     "C071",
+     "C004"
+    ]
+   },
+   {
+    "text": "An IIT Madras thesis says the craft has been handed down mostly among the local Muslim and Lingayat communities.",
+    "claimIds": [
+     "C042"
+    ]
+   }
+  ],
+  "keyFacts": [
+   {
+    "label": "GI status",
+    "value": "Registered geographical indication, application 20, certificate 21 dated 30 January 2006",
+    "claimIds": [
+     "C134",
+     "C135"
+    ]
+   },
+   {
+    "label": "Centres",
+    "value": "Bidar, Karnataka, and Hyderabad, Telangana",
+    "claimIds": [
+     "C006",
+     "C002"
+    ]
+   },
+   {
+    "label": "Base alloy",
+    "value": "16 parts zinc to one part copper, a proportion of 94 to 6",
+    "claimIds": [
+     "C079"
+    ]
+   },
+   {
+    "label": "Inlay",
+    "value": "Silver wire or sheet; brass in Deccan work until the eighteenth century; gold in Ganga-Yamuna work",
+    "claimIds": [
+     "C001",
+     "C067",
+     "C086",
+     "C096"
+    ]
+   },
+   {
+    "label": "Blackening",
+    "value": "Soil from around Bidar fort with ammonium chloride, locally called navsadar",
+    "claimIds": [
+     "C109",
+     "C072"
+    ]
+   },
+   {
+    "label": "Origins",
+    "value": "Usually attributed to the Bahamani sultans of Bidar; sources differ on the earliest evidence, from late 16th-century pieces to a painting of about 1625",
+    "claimIds": [
+     "C011",
+     "C019",
+     "C021"
+    ]
+   },
+   {
+    "label": "Artisans at Bidar",
+    "value": "About 500, according to the GI application filed in 2005",
+    "claimIds": [
+     "C140"
+    ]
+   },
+   {
+    "label": "Communities",
+    "value": "Mostly local Muslim and Lingayat communities, according to an IIT Madras thesis",
+    "claimIds": [
+     "C042"
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "discipline": "HISTORY",
+    "sentences": [
+     {
+      "text": "Sources differ on when bidri began at Bidar: the GI application dates it both to the reign of Ahmed Shah Bahamani (1422 to 1436) and to about 400 years ago, while a craftsman's account in the census monograph credits Allauddin II with inviting the craftsmen of Bijapur to Bidar.",
+      "claimIds": [
+       "C008",
+       "C009",
+       "C013"
+      ]
+     },
+     {
+      "text": "The V&A dates surviving pieces to the late 16th or early 17th century, while Sahapedia notes that no examples from the 15th or 16th centuries have been found in paintings or literature.",
+      "claimIds": [
+       "C019",
+       "C022"
+      ]
+     },
+     {
+      "text": "The Impart encyclopedia names a Deccani painting of about 1625 showing a bidri hookah as the earliest evidence, and Jagdish Mittal identifies the earliest written reference to bidri ware in Chahar Gulshan, written in 1759.",
+      "claimIds": [
+       "C021",
+       "C023"
+      ]
+     },
+     {
+      "text": "The Impart encyclopedia says bidri had spread to the courts of Purnia and Murshidabad by the late eighteenth century and to Lucknow by the nineteenth, while Sahapedia dates production there to the early 19th century.",
+      "claimIds": [
+       "C025",
+       "C027"
+      ]
+     },
+     {
+      "text": "Bidri flourished under the Asaf Jahi rulers, many artisans from Bidar migrated to Hyderabad, and the census monograph records a further migration in 1956 and 1957 after Bidar was placed in Mysore State.",
+      "claimIds": [
+       "C030",
+       "C031",
+       "C032"
+      ]
+     },
+     {
+      "text": "Bidriware was exhibited at the Great Exhibition of 1851 and the Exposition Universelle of 1855, and the exhibitions stimulated demand but led to repetitious designs and inferior quality.",
+      "claimIds": [
+       "C034",
+       "C035"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "PROCESS",
+    "sentences": [
+     {
+      "text": "The GI application's method of production runs from melting and casting the alloy through smoothing, temporary blackening, engraving, silver inlay and sanding to dipping in fort earth solution, drying and oiling.",
+      "claimIds": [
+       "C049"
+      ]
+     },
+     {
+      "text": "The alloy is melted in a crucible in a furnace that uses coal, the zinc first and the copper then added.",
+      "claimIds": [
+       "C054"
+      ]
+     },
+     {
+      "text": "Moulds are made in hollow iron frames called darza boxes, with a thin layer of fine red clay mixed with resin and castor oil over the pattern and ordinary red clay filling the rest.",
+      "claimIds": [
+       "C055"
+      ]
+     },
+     {
+      "text": "The cast article is smoothed on a lathe and with files, and copper sulphate solution temporarily blackens the surface so that the design can be seen while it is drawn and engraved.",
+      "claimIds": [
+       "C059",
+       "C062"
+      ]
+     },
+     {
+      "text": "Designs are drawn freehand with a sharp iron point called kalam and engraved with fine pointed chisels struck with a hammer.",
+      "claimIds": [
+       "C063",
+       "C064"
+      ]
+     },
+     {
+      "text": "Silver wire drawn thin through the pautha is hammered into the engraved design, and in tarkashi and tainishan work the surface is then filed or sanded level.",
+      "claimIds": [
+       "C068",
+       "C069",
+       "C070"
+      ]
+     },
+     {
+      "text": "The finished article is dipped in a boiling solution of fort earth and ammonium chloride, dried for five to ten minutes and polished with groundnut oil.",
+      "claimIds": [
+       "C071",
+       "C076",
+       "C077"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "CHEMISTRY",
+    "sentences": [
+     {
+      "text": "The blackening paste is described as mud mixed with ammonium chloride, potassium nitrate and salt, and the black patina forms instantly in a warm solution of potassium nitrate and ammonium chloride.",
+      "claimIds": [
+       "C116",
+       "C117"
+      ]
+     },
+     {
+      "text": "Ammonium chloride preferentially dissolves zinc from the bidri alloy, leaving a copper-enriched surface.",
+      "claimIds": [
+       "C119"
+      ]
+     },
+     {
+      "text": "The copper content of the alloy is critical: the patina forms on zinc with 2-10% copper but not on pure zinc or on brass.",
+      "claimIds": [
+       "C118"
+      ]
+     },
+     {
+      "text": "La Niece and Martin reported that the compounds forming the black patina had not been identified, and none of the commonly occurring zinc compounds is black.",
+      "claimIds": [
+       "C121",
+       "C122"
+      ]
+     },
+     {
+      "text": "Sources differ on the colour: an IIT Madras thesis inferred that copper oxides give the black appearance, while X-ray diffraction found white or reddish phases and only rarely black tenorite.",
+      "claimIds": [
+       "C124",
+       "C125",
+       "C126"
+      ]
+     },
+     {
+      "text": "An experimental patina measured only about three to ten micrometres thick, and the black patina is credited with protecting bidri ware from corrosion.",
+      "claimIds": [
+       "C127",
+       "C130"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "MATERIALS",
+    "sentences": [
+     {
+      "text": "The base alloy is 16 parts zinc to one part copper, a proportion of 94 to 6, and analysed vessels are zinc alloys with between 2% and 10% copper.",
+      "claimIds": [
+       "C079",
+       "C081"
+      ]
+     },
+     {
+      "text": "Sources differ on lead and tin: the 1908 Imperial Gazetteer melts copper, lead and tin into the alloy, while experienced workers said no metal other than zinc and copper is used.",
+      "claimIds": [
+       "C084",
+       "C085"
+      ]
+     },
+     {
+      "text": "Silver remains the main inlay metal, though brass was used in Deccan bidri until the eighteenth century, and the census monograph found gold inlay rarely used owing to its scarcity and cost.",
+      "claimIds": [
+       "C086",
+       "C088"
+      ]
+     },
+     {
+      "text": "The census monograph reproduces quality-marking standards set for Bidriware at Hyderabad, requiring 93% to 94% zinc and 6% to 7% copper in the base alloy and at least 96% silver in the inlay.",
+      "claimIds": [
+       "C089"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "GEOLOGY",
+    "sentences": [
+     {
+      "text": "The blackening uses soil from around Bidar fort, which sources describe as having oxidising properties.",
+      "claimIds": [
+       "C109"
+      ]
+     },
+     {
+      "text": "Sources differ on where the clay is found: around the fort only, or, as the census monograph says, also in old buildings built with mud, and it is believed to contain saltpetre.",
+      "claimIds": [
+       "C109",
+       "C110"
+      ]
+     },
+     {
+      "text": "Unused Bidar fort clay contains silica, aluminium, magnesium, iron, antimony, carbon and sulphur, and is richer than general soils in calcium, iron, magnesium and carbon.",
+      "claimIds": [
+       "C112",
+       "C113"
+      ]
+     },
+     {
+      "text": "Bidar fort soil can be used for 3-4 times before it loses its ability to give the black sheen.",
+      "claimIds": [
+       "C114"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "DESIGN",
+    "sentences": [
+     {
+      "text": "Sources group bidri inlay differently: the census monograph lists tarkashi, tainishan, zarnishan in low relief, zarbuland in high relief and aftabi, while the GI application and Sahapedia treat zar buland and zar nashin as one kind.",
+      "claimIds": [
+       "C090",
+       "C151"
+      ]
+     },
+     {
+      "text": "Tarkashi is plain wire inlay, teh nashin a thick inlay flush with the surface, and in aftabi work the silver covers the background while the design appears in black.",
+      "claimIds": [
+       "C091",
+       "C092",
+       "C093"
+      ]
+     },
+     {
+      "text": "In zar buland work silver is laid over a lead pad so that the pattern stands up from the surface, a high-relief style developed in Lucknow.",
+      "claimIds": [
+       "C094",
+       "C095"
+      ]
+     },
+     {
+      "text": "The Mughal poppy flower motif, said to have been introduced around 1740, was used extensively in eighteenth-century bidri, and by the mid-nineteenth century the kothmir leaf motif became popular.",
+      "claimIds": [
+       "C099",
+       "C100"
+      ]
+     },
+     {
+      "text": "In the colonial period bidri was applied to new objects such as flower vases, picture frames, buttons and cigar boxes.",
+      "claimIds": [
+       "C105"
+      ]
+     }
+    ]
+   },
+   {
+    "discipline": "ECONOMICS",
+    "sentences": [
+     {
+      "text": "Bidriware is a registered geographical indication under application number 20, filed by the Karnataka State Handicrafts Development Corporation Limited on 24 January 2005.",
+      "claimIds": [
+       "C134"
+      ]
+     },
+     {
+      "text": "The registry issued certificate number 21 on 30 January 2006, while Sahapedia gives the beginning of 2008 as the date of the tag.",
+      "claimIds": [
+       "C135",
+       "C138"
+      ]
+     },
+     {
+      "text": "The GI application, filed in 2005, put the number of artisans at Bidar at about 500, and the census monograph, whose survey day was 24 February 1966, puts the craft there at 61 households and 96 workers.",
+      "claimIds": [
+       "C140",
+       "C143"
+      ]
+     },
+     {
+      "text": "The census monograph estimated that about 25% of production cost went to raw materials and about 75% to wages and sundry items.",
+      "claimIds": [
+       "C146"
+      ]
+     },
+     {
+      "text": "The industry faces the high cost of and access to silver and saltpetre-bearing clay, poorly remunerated artisans and counterfeit bidriware.",
+      "claimIds": [
+       "C148",
+       "C149"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

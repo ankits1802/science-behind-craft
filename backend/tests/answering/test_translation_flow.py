@@ -121,7 +121,7 @@ async def test_an_english_question_in_verified_mode_makes_no_model_call() -> Non
     ask = AnswerAsk(question=QUESTION, depth="BASIC")
     found = events(await streamed(ask, pipeline(store=store, translated=translation(model), spent=True)))
     assert model.calls == []
-    assert store.questions == [QUESTION]
+    assert (store.questions, store.modes) == ([QUESTION], ["VERIFIED"])
     assert "translated" not in block_sentences(found)[0]
 
 
@@ -152,7 +152,7 @@ async def test_a_researched_answer_in_hindi_translates_the_title_each_block_and_
         ["follow-up:0"],
     ]
     (started,) = payloads(found, "section_started")
-    assert (started["title"], started["original"]) == (CHEMISTRY_HI, "The chemistry")
+    assert (started["title"], started["original"]) == (CHEMISTRY_HI, "The chemistry behind Kutch Ajrakh")
     assert [sentence["text"] for sentence in block_sentences(found)] == [ALUM_SHORT_HI, LAKE_HI, WASH_HI]
     assert [s["citations"] for s in block_sentences(found)] == [
         s["citations"] for s in block_sentences(english)

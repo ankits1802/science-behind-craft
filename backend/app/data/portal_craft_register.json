@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "about": "Crafts the portals added that are not on the master list (craft_master_list.json). The portal craft sync stores them in the Craft table under the same slug with no sourceSerial; curation dossiers may name them (docs/contracts/curation.md). Recorded from the shared IIT docs (crafts/IIT_Database_2026-10-21_Craft-Mapping-Applied_Report.md) and the field repository's workshop 4 craft step. Add a craft here when a portal adds one.",
+  "crafts": [
+    {
+      "slug": "Bishnupur-Terracotta-Craft",
+      "name": "Bishnupur Terracotta Craft",
+      "subCategorySlug": "Terracotta-Pottery-Works",
+      "stateOfOrigin": ["West Bengal"],
+      "stateOfPractice": ["West Bengal"],
+      "giStatus": "NON_GI",
+      "portals": ["DESIGNER", "FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    },
+    {
+      "slug": "Cane-And-Bamboo",
+      "name": "Cane and Bamboo",
+      "subCategorySlug": null,
+      "stateOfOrigin": [],
+      "stateOfPractice": [],
+      "giStatus": null,
+      "portals": ["FIELD_REPOSITORY"],
+      "status": "MERGED",
+      "mergedInto": "Cane-Bamboo-Craft"
+    },
+    {
+      "slug": "Dabu-Hand-Block-Printing",
+      "name": "Dabu Hand Block Printing",
+      "subCategorySlug": "Hand-Block-Printing",
+      "stateOfOrigin": ["Rajasthan"],
+      "stateOfPractice": ["Rajasthan"],
+      "giStatus": "NON_GI",
+      "portals": ["DESIGNER", "FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    },
+    {
+      "slug": "Ghurni-Clay-Doll-Craft",
+      "name": "Ghurni Clay Doll Craft",
+      "subCategorySlug": "Figurines-And-Toys",
+      "stateOfOrigin": ["West Bengal"],
+      "stateOfPractice": ["West Bengal"],
+      "giStatus": "NON_GI",
+      "portals": ["DESIGNER", "FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    },
+    {
+      "slug": "Krishnanagar-Terracotta",
+      "name": "Krishnanagar Terracotta",
+      "subCategorySlug": "Terracotta-Pottery-Works",
+      "stateOfOrigin": ["West Bengal"],
+      "stateOfPractice": ["West Bengal"],
+      "giStatus": "NON_GI",
+      "portals": ["DESIGNER", "FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    },
+    {
+      "slug": "Meghalaya-Stone-Carving",
+      "name": "Meghalaya Stone Carving",
+      "subCategorySlug": "Stone-Carving",
+      "stateOfOrigin": ["Meghalaya"],
+      "stateOfPractice": ["Meghalaya"],
+      "giStatus": "NON_GI",
+      "portals": ["FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    },
+    {
+      "slug": "Mysuru-Stone-Carving",
+      "name": "Mysuru Stone Carving",
+      "subCategorySlug": "Stone-Carving",
+      "stateOfOrigin": ["Karnataka"],
+      "stateOfPractice": ["Karnataka"],
+      "giStatus": "NON_GI",
+      "portals": ["FIELD_REPOSITORY"],
+      "status": "ACTIVE",
+      "mergedInto": null
+    }
+  ]
+}

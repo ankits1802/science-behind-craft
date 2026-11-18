@@ -5,7 +5,8 @@ import pytest
 
 from app.core.errors import InvalidInput
 from app.research import stream
-from app.research.explainer import EXPLAINER_EVENTS, TRAIL_GROUP_OF_SOURCE, TRAIL_GROUPS
+from app.research.explainer import EXPLAINER_EVENTS
+from app.research.trail import TRAIL_GROUP_OF_SOURCE, TRAIL_GROUPS
 from app.research.vocabulary import SourceType
 
 from .explainer_golden import DOCUMENT, STREAM, citations_in, golden_json, stream_events

@@ -8,6 +8,10 @@ from geo_etl.rows import Rows, pick
 BASE = "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010"
 PERIOD = "1981-2010"
 NODATA = (65535,)
+METHOD = (
+    "Averaged over each district on the 1 km grid, each cell weighted by the share of it inside the district; "
+    "the 10th and 90th percentiles are across the district's cells"
+)
 
 BIO = {
     "bio1": ("annual_mean_temperature", "degC"),
@@ -40,11 +44,7 @@ def layers(options: Options) -> list[tuple[str, str, str, str]]:
 
 
 def run(districts: gpd.GeoDataFrame, options: Options) -> Result:
-    rows = Rows(
-        CHELSA,
-        "exactextract coverage weight area_spherical_km2 on the native 30 arc-second grid; "
-        "scale and offset read from the GeoTIFF; raw 65535 treated as no data",
-    )
+    rows = Rows(CHELSA, METHOD)
     failures: list[dict] = []
     measured = Measured()
     bounds = raster.bounds_in(districts, "EPSG:4326", 0.02)

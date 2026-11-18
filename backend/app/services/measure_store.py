@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.data.district_register import load_district_codes
 from app.models import ClaimSource, Craft, CraftLocation
+from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.research.stated_quantities import UNIT_WORDS
 
 from . import knowledge_view
@@ -28,7 +29,9 @@ async def regional_factors(session: AsyncSession, craft_slug: str, units: Collec
     places = await craft_places(session, craft)
     if not places.states:
         return RegionalFactors()
-    views, sources = await knowledge_view.claims_by_id(session, await _stating_claims(session, units))
+    views, sources = await knowledge_view.claims_by_id(
+        session, await _stating_claims(session, units), acls=EVERY_CHUNK_ACLS
+    )
     facts = [fact for view in views.values() if (fact := known_fact(view)) is not None]
     found = (factor for fact in facts for factor in claim_factors(fact, units))
     return RegionalFactors(factors=chosen_factors(found, places), sources=source_refs(sources))

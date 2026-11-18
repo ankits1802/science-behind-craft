@@ -30,6 +30,7 @@ function parsed<T>(shape: Shape<T>, name: string): T {
 
 const GOLDEN: [string, Shape<unknown>][] = [
   ["craft.page.golden.json", craftPageShape],
+  ["craft.page.register.golden.json", craftPageShape],
   ["science.process.golden.json", craftProcessShape],
   ["region.craft.golden.json", craftRegionShape],
   ["region.layers.golden.json", mapLayerListShape],

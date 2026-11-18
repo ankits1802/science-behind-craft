@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    {
+      "slug": "Textiles-Based-Craft-Category",
+      "name": "Textiles based Craft Category",
+      "label": "Textiles",
+      "palette": "indigo",
+      "path": "/categories/Textiles-Based-Craft-Category",
+      "craftCount": 93,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Embroidery",
+          "name": "Embroidery",
+          "label": "Embroidery",
+          "craftCount": 36
+        },
+        {
+          "slug": "Hand-Block-Printing",
+          "name": "Hand Block Printing",
+          "label": "Hand block printing",
+          "craftCount": 16
+        },
+        {
+          "slug": "Carpet-Rugs-Durries",
+          "name": "Carpet, Rugs & Durries",
+          "label": "Carpets, rugs and durries",
+          "craftCount": 9
+        },
+        {
+          "slug": "Other-Textiles-Based-Craft",
+          "name": "Other Textiles based Craft",
+          "label": "Textile crafts",
+          "craftCount": 32
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Metal-Craft-Category",
+      "name": "Metal Craft Category",
+      "label": "Metal",
+      "palette": "bronze",
+      "path": "/categories/Metal-Craft-Category",
+      "craftCount": 43,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Silver-Metal",
+          "name": "Silver metal",
+          "label": "Silverwork",
+          "craftCount": 4
+        },
+        {
+          "slug": "Gold-Metal",
+          "name": "Gold Metal",
+          "label": "Goldwork",
+          "craftCount": 2
+        },
+        {
+          "slug": "Bronze-Metal",
+          "name": "Bronze Metal",
+          "label": "Bronze",
+          "craftCount": 2
+        },
+        {
+          "slug": "Brass-Metal",
+          "name": "Brass Metal",
+          "label": "Brass and bell metal",
+          "craftCount": 9
+        },
+        {
+          "slug": "Iron-Metal",
+          "name": "Iron Metal",
+          "label": "Ironwork",
+          "craftCount": 2
+        },
+        {
+          "slug": "Copper-Metal",
+          "name": "Copper Metal",
+          "label": "Copperwork",
+          "craftCount": 3
+        },
+        {
+          "slug": "Other-Metal-Crafts",
+          "name": "Other Metal Crafts",
+          "label": "Metal crafts",
+          "craftCount": 21
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Stone-Craft-Category",
+      "name": "Stone Craft Category",
+      "label": "Stone",
+      "palette": "sandstone",
+      "path": "/categories/Stone-Craft-Category",
+      "craftCount": 17,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Stone-Carving",
+          "name": "Stone (Carving)",
+          "label": "Stone carving",
+          "craftCount": 6
+        },
+        {
+          "slug": "Stone-Inlay",
+          "name": "Stone (Inlay)",
+          "label": "Stone inlay",
+          "craftCount": 1
+        },
+        {
+          "slug": "Stone-Others",
+          "name": "Stone (Others)",
+          "label": "Stone crafts",
+          "craftCount": 10
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Wood-Craft-Category",
+      "name": "Wood Craft Category",
+      "label": "Wood",
+      "palette": "teak",
+      "path": "/categories/Wood-Craft-Category",
+      "craftCount": 38,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Wooden-Artwares",
+          "name": "Wooden Artwares",
+          "label": "Wooden artware",
+          "craftCount": 26
+        },
+        {
+          "slug": "Wood-Carving",
+          "name": "Wood (Carving)",
+          "label": "Wood carving",
+          "craftCount": 8
+        },
+        {
+          "slug": "Wood-Inlay-Marquetry",
+          "name": "Wood (Inlay & Marquetry)",
+          "label": "Wood inlay and marquetry",
+          "craftCount": 1
+        },
+        {
+          "slug": "Wood-Turning-And-Lacquer-Ware",
+          "name": "Wood (turning and lacquer ware)",
+          "label": "Turned and lacquered wood",
+          "craftCount": 1
+        },
+        {
+          "slug": "Wooden-Furniture",
+          "name": "Wooden Furniture",
+          "label": "Wooden furniture",
+          "craftCount": 2
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Leather-Craft-Category",
+      "name": "Leather Craft Category",
+      "label": "Leather",
+      "palette": "hide",
+      "path": "/categories/Leather-Craft-Category",
+      "craftCount": 6,
+      "curated": true,
+      "subCategories": [
+        {
+          "slug": "Leather-Footwear",
+          "name": "Leather (Footwear)",
+          "label": "Leather footwear",
+          "craftCount": 3
+        },
+        {
+          "slug": "Leather-Other-Articles",
+          "name": "Leather (Other articles)",
+          "label": "Leather goods",
+          "craftCount": 3
+        }
+      ],
+      "hero": {
+        "media": {
+          "id": "9bad5f62-fcfe-5be8-987c-387bf2d769d0",
+          "display": "INLINE",
+          "provider": "curation",
+          "pageUrl": "https://commons.wikimedia.org/wiki/File:Indian_chappal,_Kolhapur,_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Indian_chappal%2C_Kolhapur%2C_late_20th_century_-_Bata_Shoe_Museum_-_DSC00445.JPG",
+          "width": null,
+          "height": null,
+          "title": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+          "alt": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto",
+          "author": "Daderot",
+          "site": "commons.wikimedia.org",
+          "credit": null,
+          "licence": "CC0",
+          "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "sourceId": null,
+          "retrievedAt": "2026-11-18T09:00:00Z"
+        },
+        "caption": "A Kolhapuri chappal from Kolhapur in the collection of the Bata Shoe Museum, Toronto"
+      },
+      "lede": {
+        "id": "p6be467902b26.1",
+        "text": "Leather is animal skin or hide that tanning, a chemical treatment with vegetable tannins, mineral salts such as chromium sulfate, or oils, converts from perishable skin into a stable, non-decaying material.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "dcc2ec5d-ea48-5001-894a-d21f6e7193be",
+            "claimId": "852cafa2-a62b-50c3-ab6e-0af34744ff35",
+            "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+            "quote": "animalskins and hides that have been treated with chemicals to preserve them and make them suitable for use as clothing, footwear, handbags, furniture, tools, and sports equipment.",
+            "locator": "introduction",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "01d04d3e-0e65-50c9-ac9f-1ad95ec2cffd",
+            "claimId": "9ae35f63-8f90-58dc-b549-133f27514bce",
+            "sourceId": "21a074d3-69da-54dd-9e0d-eca64e5d8daa",
+            "quote": "the tanning process is the most important chemical process that converts animal skins into leather",
+            "locator": "abstract",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "15c6cb3e-567a-54c3-8dd7-67355b051ea6",
+            "claimId": "9ae35f63-8f90-58dc-b549-133f27514bce",
+            "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+            "quote": "The preservation process employed is a chemical treatment called tanning, which converts the otherwise perishable skin to a stable and nondecaying material.",
+            "locator": "introduction",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "62edbd8e-a294-596b-8caf-b0039b69f6ef",
+            "claimId": "89ea0d23-f1dc-5b3f-9ee7-ba8cacdf46d8",
+            "sourceId": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+            "quote": "Tanning agents include vegetable tannins (from sources such as tree bark), mineral salts (such as chromiumsulfate), and fish or animal oils.",
+            "locator": "introduction",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false
+      }
+    },
+    {
+      "slug": "Natural-Fibre-Grass-Work",
+      "name": "Natural Fibre & Grass work",
+      "label": "Natural fibre and grass",
+      "palette": "cane",
+      "path": "/categories/Natural-Fibre-Grass-Work",
+      "craftCount": 35,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Natural-Fibre",
+          "name": "Natural Fibre",
+          "label": "Natural fibre",
+          "craftCount": 7
+        },
+        {
+          "slug": "Cane-Bamboo",
+          "name": "Cane & Bamboo",
+          "label": "Cane and bamboo",
+          "craftCount": 7
+        },
+        {
+          "slug": "Grass-Work",
+          "name": "Grass Work",
+          "label": "Grass work",
+          "craftCount": 9
+        },
+        {
+          "slug": "Leaf-Reed-Rattan",
+          "name": "Leaf, Reed & Rattan",
+          "label": "Leaf, reed and rattan",
+          "craftCount": 12
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Mud-Based-Craft-Category",
+      "name": "Mud based Craft Category",
+      "label": "Clay",
+      "palette": "terracotta",
+      "path": "/categories/Mud-Based-Craft-Category",
+      "craftCount": 21,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Terracotta-Pottery-Works",
+          "name": "Terracotta & Pottery works",
+          "label": "Terracotta and pottery",
+          "craftCount": 18
+        },
+        {
+          "slug": "Other-Mud-Based-Crafts",
+          "name": "Other Mud Based Crafts",
+          "label": "Clay and mud crafts",
+          "craftCount": 3
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Paper-Craft-Category",
+      "name": "Paper Craft Category",
+      "label": "Paper",
+      "palette": "paper",
+      "path": "/categories/Paper-Craft-Category",
+      "craftCount": 10,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Paper-Crafts",
+          "name": "Paper Crafts",
+          "label": "Paper crafts",
+          "craftCount": 10
+        }
+      ],
+      "hero": null,
+      "lede": null
+    },
+    {
+      "slug": "Miscellaneous",
+      "name": "Miscellaneous",
+      "label": "More crafts",
+      "palette": "lac",
+      "path": "/categories/Miscellaneous",
+      "craftCount": 163,
+      "curated": false,
+      "subCategories": [
+        {
+          "slug": "Folk-Painting",
+          "name": "Folk Painting",
+          "label": "Folk painting",
+          "craftCount": 51
+        },
+        {
+          "slug": "Jewellery",
+          "name": "Jewellery",
+          "label": "Jewellery",
+          "craftCount": 15
+        },
+        {
+          "slug": "Bone-Horn-Shell-Crafts",
+          "name": "Bone, Horn & Shell Crafts",
+          "label": "Bone, horn and shell",
+          "craftCount": 12
+        },
+        {
+          "slug": "Lac-And-Wax-Crafts",
+          "name": "Lac and Wax Crafts",
+          "label": "Lac and wax",
+          "craftCount": 3
+        },
+        {
+          "slug": "Figurines-And-Toys",
+          "name": "Figurines and Toys",
+          "label": "Figurines and toys",
+          "craftCount": 21
+        },
+        {
+          "slug": "Musical-Instrument",
+          "name": "Musical Instrument",
+          "label": "Musical instruments",
+          "craftCount": 31
+        },
+        {
+          "slug": "Glass-And-Beads-Crafts",
+          "name": "Glass and Beads Crafts",
+          "label": "Glass and beads",
+          "craftCount": 5
+        },
+        {
+          "slug": "Other-Crafts",
+          "name": "Other Crafts",
+          "label": "Other crafts",
+          "craftCount": 25
+        }
+      ],
+      "hero": null,
+      "lede": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "45c6bcdc-3d1e-5d21-b8f2-a0f35380157c",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Leather",
+      "authors": [],
+      "year": null,
+      "doi": null,
+      "url": "https://www.britannica.com/topic/leather",
+      "publisher": "Encyclopaedia Britannica",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "21a074d3-69da-54dd-9e0d-eca64e5d8daa",
+      "kind": "PAPER",
+      "title": "A review of the green chemistry approaches to leather tanning in imparting sustainable leather manufacturing",
+      "authors": [
+        "Mohammad Mahbubul Hassan",
+        "Jane Harris",
+        "James JC Busfield",
+        "Emiliano Bilotti"
+      ],
+      "year": 2023,
+      "doi": "10.1039/D3GC02948D",
+      "url": "https://ualresearchonline.arts.ac.uk/id/eprint/20571/1/Review%20Article%20-%20Sustainable%20Leather%20.pdf",
+      "publisher": "Green Chemistry, Royal Society of Chemistry (author manuscript, UAL Research Online)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    }
+  ]
+}

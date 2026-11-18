@@ -1,0 +1,3036 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Textiles-Based-Craft-Category",
+  "dossierVersion": 1,
+  "dossierDigest": "39fbc963d1a3b0ab03118b2302be4237f42aceb9eee5acd80b8b955c4fa6b206",
+  "checkedAt": "2026-11-18T10:26:48.726117Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "route": "LIVE",
+      "readUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "finalUrl": "https://www.metmuseum.org/perspectives/indian-block-printed-textiles",
+      "fetchedAt": "2026-11-18T10:25:13.826682Z",
+      "contentType": "text/html",
+      "textSha256": "bbcc3729a83a487f9367d9017f6f406978d82438ec644338dad2bc7fa57b0cf4",
+      "characters": 8069,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://html.rhhz.net/YYTRCW/html/2017/1/20170103.htm",
+      "route": "LIVE",
+      "readUrl": "https://html.rhhz.net/YYTRCW/html/2017/1/20170103.htm",
+      "finalUrl": "https://html.rhhz.net/YYTRCW/html/2017/1/20170103.htm",
+      "fetchedAt": "2026-11-18T10:25:15.019439Z",
+      "contentType": "text/html",
+      "textSha256": "e10c56344bc14c09c34f30da056b91b01c53ccf337b26974b43ca28717d83aca",
+      "characters": 74720,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T10:25:13.831471Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://collections.vam.ac.uk/item/O472037/chintz-unknown",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O472037/chintz-unknown",
+      "finalUrl": "https://collections.vam.ac.uk/item/O472037/chintz-unknown",
+      "fetchedAt": "2026-11-18T10:25:14.418298Z",
+      "contentType": "text/html",
+      "textSha256": "25b29a5eb1f12f709f15670148b6a71a7e3c4d8d87eff0a6008359754766d812",
+      "characters": 6038,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "route": "LIVE",
+      "readUrl": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "finalUrl": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "fetchedAt": "2026-11-18T10:25:15.684908Z",
+      "contentType": "text/html",
+      "textSha256": "470f26292785beccbc7560cfa29364dd3c3590439b66e2b92daf6b5d7ffd8db5",
+      "characters": 73239,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://www.metmuseum.org/art/collection/search/446999",
+      "route": "LIVE",
+      "readUrl": "https://www.metmuseum.org/art/collection/search/446999",
+      "finalUrl": "https://www.metmuseum.org/art/collection/search/446999",
+      "fetchedAt": "2026-11-18T10:25:15.516403Z",
+      "contentType": "text/html",
+      "textSha256": "00df99403872513a715c6addfff509a31e4788764d658db3c11391f9d1a75562",
+      "characters": 3599,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://csb.gov.in/silk-sericulture/silk/",
+      "route": "LIVE",
+      "readUrl": "https://csb.gov.in/silk-sericulture/silk/",
+      "finalUrl": "https://csb.gov.in/silk-sericulture/silk/",
+      "fetchedAt": "2026-11-18T10:25:20.581719Z",
+      "contentType": "text/html",
+      "textSha256": "043ec34075a66c5c53712d5839f2b1b068b4cd6176a9371532eb67659f541718",
+      "characters": 3719,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://cameo.mfa.org/wiki/Cotton",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260616153649id_/https://cameo.mfa.org/wiki/Cotton",
+      "finalUrl": "https://web.archive.org/web/20260616153649id_/https://cameo.mfa.org/wiki/Cotton",
+      "fetchedAt": "2026-11-18T10:25:24.757345Z",
+      "contentType": "text/html",
+      "textSha256": "1ac975a95d7278e00b1be82941418f69651ea406426d0e3494b2274682f8b105",
+      "characters": 17423,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://cameo.mfa.org/wiki/Wool",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260311200038id_/https://cameo.mfa.org/wiki/Wool",
+      "finalUrl": "https://web.archive.org/web/20260311200038id_/https://cameo.mfa.org/wiki/Wool",
+      "fetchedAt": "2026-11-18T10:25:39.045172Z",
+      "contentType": "text/html",
+      "textSha256": "f54e564a2cf53d6d8b02c50be4a1409599c6eac9d26a6767047ba343734eba52",
+      "characters": 3381,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://imp-art.org/collections/understanding-south-asias-most-recognisable-dyes/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/collections/understanding-south-asias-most-recognisable-dyes/",
+      "finalUrl": "https://imp-art.org/collections/understanding-south-asias-most-recognisable-dyes/",
+      "fetchedAt": "2026-11-18T10:25:22.191011Z",
+      "contentType": "text/html",
+      "textSha256": "e4d0ce63be519ac6bd790d076f4da70cc6bd097e2b83a1e7c120eb6660055be4",
+      "characters": 1480,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://imp-art.org/articles/indigo/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/indigo/",
+      "finalUrl": "https://imp-art.org/articles/indigo/",
+      "fetchedAt": "2026-11-18T10:25:24.459437Z",
+      "contentType": "text/html",
+      "textSha256": "0cdcbe03092f206f262e6c7f23ab2fc30423bb8d1756437a254bc11f232b2ecc",
+      "characters": 7987,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://imp-art.org/articles/madder-dye/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/madder-dye/",
+      "finalUrl": "https://imp-art.org/articles/madder-dye/",
+      "fetchedAt": "2026-11-18T10:25:26.803941Z",
+      "contentType": "text/html",
+      "textSha256": "95d40962d7ac70790dc39eed346d7e8f64ac400511f27bf935ecb41289ab0f80",
+      "characters": 3719,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://imp-art.org/articles/turmeric-root-dye/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/turmeric-root-dye/",
+      "finalUrl": "https://imp-art.org/articles/turmeric-root-dye/",
+      "fetchedAt": "2026-11-18T10:25:28.976680Z",
+      "contentType": "text/html",
+      "textSha256": "d8c62aea28b46bd20532f66318e34d9bfa7c8e25957907a5791b44958993f911",
+      "characters": 2568,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://imp-art.org/articles/cotton/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/cotton/",
+      "finalUrl": "https://imp-art.org/articles/cotton/",
+      "fetchedAt": "2026-11-18T10:25:31.413177Z",
+      "contentType": "text/html",
+      "textSha256": "b2dd2729306e30556fa59cad6afafd8186ac3e7d729045ef06eae9bc639fbf30",
+      "characters": 8818,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://imp-art.org/articles/silk/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/silk/",
+      "finalUrl": "https://imp-art.org/articles/silk/",
+      "fetchedAt": "2026-11-18T10:25:33.711320Z",
+      "contentType": "text/html",
+      "textSha256": "27d983230db62d1043845b13d00468660ddac6124612ce9561e7c87160e04a38",
+      "characters": 13154,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://imp-art.org/articles/pashmina/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/pashmina/",
+      "finalUrl": "https://imp-art.org/articles/pashmina/",
+      "fetchedAt": "2026-11-18T10:25:36.203109Z",
+      "contentType": "text/html",
+      "textSha256": "7acb61bd85a73dbab127278a489d57c28663310208c1ae3919a003e947a37468",
+      "characters": 4023,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://imp-art.org/articles/bandhani/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/bandhani/",
+      "finalUrl": "https://imp-art.org/articles/bandhani/",
+      "fetchedAt": "2026-11-18T10:25:38.500360Z",
+      "contentType": "text/html",
+      "textSha256": "205f45e68723b3cc604653c6932b51e496c45fad584fc6f97efd29a8e3838e12",
+      "characters": 7338,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://imp-art.org/articles/leheriya/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/leheriya/",
+      "finalUrl": "https://imp-art.org/articles/leheriya/",
+      "fetchedAt": "2026-11-18T10:25:46.120176Z",
+      "contentType": "text/html",
+      "textSha256": "d12302ffb9da696d3d1a703a31bf220134d141bade866070a1d1b65aed4befc5",
+      "characters": 5214,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://imp-art.org/articles/batik/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/batik/",
+      "finalUrl": "https://imp-art.org/articles/batik/",
+      "fetchedAt": "2026-11-18T10:25:48.283873Z",
+      "contentType": "text/html",
+      "textSha256": "212d2efd15e88c0c372477e541a2674d00a7a1232f33d2f063cd56394eafda90",
+      "characters": 4619,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://imp-art.org/articles/dabu/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/dabu/",
+      "finalUrl": "https://imp-art.org/articles/dabu/",
+      "fetchedAt": "2026-11-18T10:25:50.992211Z",
+      "contentType": "text/html",
+      "textSha256": "80bfe74910ce19370dbb12734f146fbecd4ff78d6c3e5a15b3a78c0aea7e1694",
+      "characters": 3228,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://imp-art.org/articles/chintz/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/chintz/",
+      "finalUrl": "https://imp-art.org/articles/chintz/",
+      "fetchedAt": "2026-11-18T10:25:54.183845Z",
+      "contentType": "text/html",
+      "textSha256": "55fde85990b1bd0a58a4f12804429422279210be791a162172a65a98c5b967f1",
+      "characters": 5656,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://imp-art.org/articles/kalamkari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kalamkari/",
+      "finalUrl": "https://imp-art.org/articles/kalamkari/",
+      "fetchedAt": "2026-11-18T10:25:57.541743Z",
+      "contentType": "text/html",
+      "textSha256": "880499b5dbdac485285169da7a95ca0bb778a67c89de10cefc4432125d728457",
+      "characters": 6304,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://imp-art.org/collections/through-the-eye-of-the-needle-embroidery-and-applique-in-the-subcontinent/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/collections/through-the-eye-of-the-needle-embroidery-and-applique-in-the-subcontinent/",
+      "finalUrl": "https://imp-art.org/collections/through-the-eye-of-the-needle-embroidery-and-applique-in-the-subcontinent/",
+      "fetchedAt": "2026-11-18T10:26:00.862946Z",
+      "contentType": "text/html",
+      "textSha256": "ffbd10d002ed9360f96a9286e6ef79b9b7e11297648df48bd1b950c901021232",
+      "characters": 2067,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://imp-art.org/articles/phulkari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/phulkari/",
+      "finalUrl": "https://imp-art.org/articles/phulkari/",
+      "fetchedAt": "2026-11-18T10:26:03.766061Z",
+      "contentType": "text/html",
+      "textSha256": "fb3979be9c8d1b5b2d23c15e35d2fb3d2bb4a52468e561e2feccf1390f5f3e87",
+      "characters": 7311,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://imp-art.org/articles/chikankari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/chikankari/",
+      "finalUrl": "https://imp-art.org/articles/chikankari/",
+      "fetchedAt": "2026-11-18T10:26:05.926449Z",
+      "contentType": "text/html",
+      "textSha256": "459d4b4dd4065a7793ed55b1d1060b945aba3f9de217906c61641748f7571875",
+      "characters": 6995,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://imp-art.org/articles/banjara-embroidery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/banjara-embroidery/",
+      "finalUrl": "https://imp-art.org/articles/banjara-embroidery/",
+      "fetchedAt": "2026-11-18T10:26:08.132196Z",
+      "contentType": "text/html",
+      "textSha256": "c32f8987f2646ab87dee6258df3a2b5b47da12031ceec302400a72d0650f2d87",
+      "characters": 3451,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://imp-art.org/articles/ari-embroidery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/ari-embroidery/",
+      "finalUrl": "https://imp-art.org/articles/ari-embroidery/",
+      "fetchedAt": "2026-11-18T10:26:10.503440Z",
+      "contentType": "text/html",
+      "textSha256": "3c307c27d0260c7e52f11fc279fb24e918d36c9037355cbe5b19e93fab33b62c",
+      "characters": 2543,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://imp-art.org/articles/applique/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/applique/",
+      "finalUrl": "https://imp-art.org/articles/applique/",
+      "fetchedAt": "2026-11-18T10:26:12.681100Z",
+      "contentType": "text/html",
+      "textSha256": "0b2be0ae6822df3c5f7b436c9091997d78143cb3040a503ebe57e85bcfceb601",
+      "characters": 4592,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://imp-art.org/definitions/zari/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/zari/",
+      "finalUrl": "https://imp-art.org/definitions/zari/",
+      "fetchedAt": "2026-11-18T10:26:15.071612Z",
+      "contentType": "text/html",
+      "textSha256": "f23320f0fd9e1a45da278ad1c19409ba07cd8371fe6fb794332a21a678db019c",
+      "characters": 1177,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://imp-art.org/collections/hand-woven-and-hand-knotted-carpets-and-rugs/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/collections/hand-woven-and-hand-knotted-carpets-and-rugs/",
+      "finalUrl": "https://imp-art.org/collections/hand-woven-and-hand-knotted-carpets-and-rugs/",
+      "fetchedAt": "2026-11-18T10:26:17.450458Z",
+      "contentType": "text/html",
+      "textSha256": "fd291c5664353674544196859a5e7a1dc5b799a314db1e57907e5f578b5a4e21",
+      "characters": 1398,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://imp-art.org/articles/carpet-and-rug-weaving-in-india/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/carpet-and-rug-weaving-in-india/",
+      "finalUrl": "https://imp-art.org/articles/carpet-and-rug-weaving-in-india/",
+      "fetchedAt": "2026-11-18T10:26:19.735163Z",
+      "contentType": "text/html",
+      "textSha256": "f69177bd13588f89a44fcfc440fdd359bb307754229011c030c7bec62b3f5c39",
+      "characters": 9044,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://imp-art.org/articles/dhurrie-weaving/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/dhurrie-weaving/",
+      "finalUrl": "https://imp-art.org/articles/dhurrie-weaving/",
+      "fetchedAt": "2026-11-18T10:26:22.029853Z",
+      "contentType": "text/html",
+      "textSha256": "a69dea48fb8a356b6dcd78e4682418ca74b25e0169c824395af50e9703fc7063",
+      "characters": 9309,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://imp-art.org/articles/namda/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/namda/",
+      "finalUrl": "https://imp-art.org/articles/namda/",
+      "fetchedAt": "2026-11-18T10:26:24.336741Z",
+      "contentType": "text/html",
+      "textSha256": "093aae7dbfa27d191c1f1b6b7a76e940349fc7ad9d2bb5a6db38c29aab1a559d",
+      "characters": 3734,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://imp-art.org/articles/aal-dye/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/aal-dye/",
+      "finalUrl": "https://imp-art.org/articles/aal-dye/",
+      "fetchedAt": "2026-11-18T10:26:26.613434Z",
+      "contentType": "text/html",
+      "textSha256": "a44c92313e1cabe43eaef1bfe9c2093e732d1da4d7a81a8e9375b2a66e95296c",
+      "characters": 3634,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://www.winterthur.org/charting-chintz-making-the-fabric/",
+      "route": "LIVE",
+      "readUrl": "https://www.winterthur.org/charting-chintz-making-the-fabric/",
+      "finalUrl": "https://www.winterthur.org/charting-chintz-making-the-fabric/",
+      "fetchedAt": "2026-11-18T10:25:22.929028Z",
+      "contentType": "text/html",
+      "textSha256": "f15c9ba73de7a146c979a9feafd5bbbb37eb69b8cf5e2cd1f9cad9f651155c1a",
+      "characters": 6828,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "route": "LIVE",
+      "readUrl": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "finalUrl": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "fetchedAt": "2026-11-18T10:25:24.288441Z",
+      "contentType": "text/html",
+      "textSha256": "3a58fc81daaeb3d60447dc20c4cb3ba59d392f532f7f89aca9fb38fdce776272",
+      "characters": 13306,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://www.downtoearth.org.in/amp/story/environment/dyeing-cotton-fabrics-is-an-ancient-indian-art-30445",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/amp/story/environment/dyeing-cotton-fabrics-is-an-ancient-indian-art-30445",
+      "finalUrl": "https://www.downtoearth.org.in/amp/story/environment/dyeing-cotton-fabrics-is-an-ancient-indian-art-30445",
+      "fetchedAt": "2026-11-18T10:25:23.404430Z",
+      "contentType": "text/html",
+      "textSha256": "4fd514c7a06f3476b1eedd4dba016c01ad2fc7ce185332b591ed0b0320505911",
+      "characters": 6182,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://www.indiawaterportal.org/agriculture/livelihoods/colourful-fabrics-lead-murky-waters",
+      "route": "LIVE",
+      "readUrl": "https://www.indiawaterportal.org/agriculture/livelihoods/colourful-fabrics-lead-murky-waters",
+      "finalUrl": "https://www.indiawaterportal.org/agriculture/livelihoods/colourful-fabrics-lead-murky-waters",
+      "fetchedAt": "2026-11-18T10:25:24.078898Z",
+      "contentType": "text/html",
+      "textSha256": "c0fb77dcc5740c38bb80d364c4bc1cad573a146a39c62ca514babef0e5f18e0f",
+      "characters": 5142,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://imp-art.org/articles/block-printing/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/block-printing/",
+      "finalUrl": "https://imp-art.org/articles/block-printing/",
+      "fetchedAt": "2026-11-18T10:26:29.108014Z",
+      "contentType": "text/html",
+      "textSha256": "2b5da4509e8f0ccf788968edbd558ecc18b6a6f678e863d29acaaa533cfeb42c",
+      "characters": 9223,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S40",
+      "url": "https://imp-art.org/articles/kantha-embroidery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/kantha-embroidery/",
+      "finalUrl": "https://imp-art.org/articles/kantha-embroidery/",
+      "fetchedAt": "2026-11-18T10:26:31.404848Z",
+      "contentType": "text/html",
+      "textSha256": "916189ceed6613835294eaca0306852dca636b615778b495d47bd8bce4530bb7",
+      "characters": 5536,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S41",
+      "url": "https://imp-art.org/articles/ahir-embroidery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/ahir-embroidery/",
+      "finalUrl": "https://imp-art.org/articles/ahir-embroidery/",
+      "fetchedAt": "2026-11-18T10:26:33.895622Z",
+      "contentType": "text/html",
+      "textSha256": "596247a44151dc04e090cbff3a6dbf5428cb5c11b97827285d11c1c28d7a6f27",
+      "characters": 3255,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S42",
+      "url": "https://imp-art.org/articles/gota-work/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/gota-work/",
+      "finalUrl": "https://imp-art.org/articles/gota-work/",
+      "fetchedAt": "2026-11-18T10:26:36.244048Z",
+      "contentType": "text/html",
+      "textSha256": "318e25e8298d7bf90aa7510ffbf0fc5f2bed65b3cd8a24238becd5e55770f686",
+      "characters": 9028,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S43",
+      "url": "https://imp-art.org/articles/beetle-wing-embroidery/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/beetle-wing-embroidery/",
+      "finalUrl": "https://imp-art.org/articles/beetle-wing-embroidery/",
+      "fetchedAt": "2026-11-18T10:26:38.570082Z",
+      "contentType": "text/html",
+      "textSha256": "81382b83bd594073a5638eac32f97cc2f1af3f6e9475510060ab61861f8890e3",
+      "characters": 4149,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S44",
+      "url": "https://imp-art.org/articles/mata-ni-pachedi/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/mata-ni-pachedi/",
+      "finalUrl": "https://imp-art.org/articles/mata-ni-pachedi/",
+      "fetchedAt": "2026-11-18T10:26:40.881046Z",
+      "contentType": "text/html",
+      "textSha256": "2f29ce96835e70259a99a948f81f2ccfd5f0bfb54476ae2ed5657e16e11e8b71",
+      "characters": 5893,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S45",
+      "url": "https://imp-art.org/articles/goan-crochet/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/goan-crochet/",
+      "finalUrl": "https://imp-art.org/articles/goan-crochet/",
+      "fetchedAt": "2026-11-18T10:26:43.166849Z",
+      "contentType": "text/html",
+      "textSha256": "1e68ae14772534041320bb515fc3866fcd75368ce536c6c1a7350c8bf45d3c1c",
+      "characters": 3384,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S46",
+      "url": "https://imp-art.org/definitions/shisha/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/definitions/shisha/",
+      "finalUrl": "https://imp-art.org/definitions/shisha/",
+      "fetchedAt": "2026-11-18T10:26:45.395931Z",
+      "contentType": "text/html",
+      "textSha256": "1d4b27aed74228b0f3909282aa1cbeb5a5d96d9ae72e74da0752357760f4b16f",
+      "characters": 310,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S47",
+      "url": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "finalUrl": "https://imp-art.org/articles/sculpture-at-mamallapuram/",
+      "fetchedAt": "2026-11-18T10:26:47.927268Z",
+      "contentType": "text/html",
+      "textSha256": "2b86522ef09cdbe887cb6411a87ffe63231f5f3b6b8560c798834df0ff88a45f",
+      "characters": 7456,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S48",
+      "url": "https://krishna.ap.gov.in/one-district-one-product/",
+      "route": "LIVE",
+      "readUrl": "https://krishna.ap.gov.in/one-district-one-product/",
+      "finalUrl": "https://krishna.ap.gov.in/one-district-one-product/",
+      "fetchedAt": "2026-11-18T10:25:24.612221Z",
+      "contentType": "text/html",
+      "textSha256": "87388cbd86ae5cab5e9962faff52357b587d30b8830b9e9a2058ae6427849999",
+      "characters": 9584,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S49",
+      "url": "https://puri.nic.in/tourist-place/pipili/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20231206211525id_/https://puri.nic.in/tourist-place/pipili/",
+      "finalUrl": "https://web.archive.org/web/20231206211525id_/https://puri.nic.in/tourist-place/pipili/",
+      "fetchedAt": "2026-11-18T10:25:35.171033Z",
+      "contentType": "text/html",
+      "textSha256": "5c5f0d753d645fb1efc98c27a05f1b0d8ca32e6e06536387657b97aa03f6f436",
+      "characters": 1003,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S50",
+      "url": "https://tiruvallur.nic.in/tourist-place/pulicat/",
+      "route": "LIVE",
+      "readUrl": "https://tiruvallur.nic.in/tourist-place/pulicat/",
+      "finalUrl": "https://tiruvallur.nic.in/tourist-place/pulicat/",
+      "fetchedAt": "2026-11-18T10:25:25.176066Z",
+      "contentType": "text/html",
+      "textSha256": "2caa9922cd271f17327b09400560b6e7935df56406bc779957b2b254f1ea1300",
+      "characters": 3761,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S51",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/28",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/28",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/28",
+      "fetchedAt": "2026-11-18T10:25:25.998755Z",
+      "contentType": "text/html",
+      "textSha256": "160f6a515db5c4abd48006298726c73aef6f63c38220b3b46e2e03a55a5114fe",
+      "characters": 2848,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S52",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/865",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/865",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/865",
+      "fetchedAt": "2026-11-18T10:25:27.642586Z",
+      "contentType": "text/html",
+      "textSha256": "da4cce243bf012b72e52fff574e4d9a4b5ed06e7759892b33681cf1d7221366a",
+      "characters": 2805,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S53",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "fetchedAt": "2026-11-18T10:25:38.629236Z",
+      "contentType": "application/pdf",
+      "textSha256": "c3c953076e87fed24439e6fdd7c1ba8cacbe2ee58f070ba4a26a49b9ce915ccc",
+      "characters": 533096,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S54",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2017/01/102-sanganeri-hand-block-printing.pdf",
+      "fetchedAt": "2026-11-18T10:25:36.881064Z",
+      "contentType": "application/pdf",
+      "textSha256": "d1f0cc7609c4e12b99b389237c4af094004b275f768a85bde8e1f4f5b759d6e5",
+      "characters": 42369,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "Historically, Indian textile production has been acclaimed worldwide for the alchemy of applying natural dyes to cotton fabric-a difficult fiber to dye-and for the resulting vivid and fast colors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "Both in the past and up to the present day, Indian artisans have been known for their skillful and ingenious use of local materials to produce exquisite textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S23",
+      "quote": "Ornamentation has been a key aspect in the long history of craftsmanship in the Indian subcontinent - and this is perhaps most striking in the region's textile crafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S23",
+      "quote": "The specialised skills and techniques of embroidery that artisans use - sometimes spending months at a stretch on a single garment - often make for luxury textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S23",
+      "quote": "Appliqué traditions such as pipili, tharu, kantha, and khatwa repurpose fabric from old or damaged garments to make everyday items that include quilts, such as the kowdhi, and bags.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S28",
+      "quote": "There are several applique traditions in India, most traditionally used as a means to recycle leftover fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S23",
+      "quote": "Many of these techniques are complex enough to have resisted mechanisation, such as those of beetle wing and sozni embroidery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S30",
+      "quote": "Notable types of carpets and rugs from across India include gabba, kaleen, galeecha and dhurrie.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S32",
+      "quote": "Dhurries are distinguished from carpets by their flat weave, their relative lightness and their often-reversible designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S18",
+      "quote": "Rajasthan, along with its neighbouring state of Gujarat, has a long-established tradition of resist-dyed textiles, particularly the technique of bandhani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S10",
+      "quote": "Indian dyes were coveted not only for their vibrancy and their use in inventive textiles but also because of the carefully guarded traditional dyeing processes, which often involved the application of mineral salts or mordants that fixed the colour to the fabric, making the colours uniquely durable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S14",
+      "quote": "The earliest evidence of cotton cultivation in the world is a fragment of thread found in Mehrgarh (in present-day Balochistan) dating back to approximately 5500 BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S08",
+      "quote": "Cotton cloth was made as early as 5000 BCE in India. By 3000 BCE, cotton fabrics were being woven in Egypt, China, and Peru.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S10",
+      "quote": "Indian textile dyes date back four thousand years, with the earliest evidence being madder-dyed cloth fragments from Mohenjo-Daro dating to the second millennium BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S12",
+      "quote": "Madder has been used across the Indian subcontinent since the second millennium BCE, with traces of the dye found in cloth from Mohenjo-daro.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S02",
+      "quote": "Excavation at Mohanjodaro shows the use of madder on cotton clothes is the testimony of genius Indian craftspersons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S37",
+      "quote": "A fragment of mordant-dyed cotton fibre has been found in Moenjodaro -- proof of the antiquity of the process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S02",
+      "quote": "Indian dyers were perfect in the process of bleaching, mordanting and dyeing by the fourth and fifth century AD.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S02",
+      "quote": "In the period of Mughal reign (1556-1803) dyers used Madder, Myrobalan, Pomegranate, Turmeric, Kachnar, Tun, Dhao, Indigo, Henna, Catechu, Saffron and Patang as natural dyes and pigments",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S02",
+      "quote": "the mordants which were used in those days were soluble salts of Aluminium, Chromium, Iron and Tin which adheres strongly with fibres and give fast colors",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "Textiles from the Indian block-printed group came to light in the 1920s in Fustat (Old Cairo), Egypt, and were collected rather than excavated professionally, making them difficult to date.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "The historic Indian block prints are ascribed to workshops of Gujarat, where a substantial printing tradition still exists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "Fortunately, more recent controlled archeological excavations, including finds of textiles similar in construction and pattern, were found at Quseir al-Qadim in Egypt, and were assigned to the Mamluk period (mid-13th-late 14th century).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "The two Met fragments are attributed to the 13th to 14th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S36",
+      "quote": "Fourteenth-century printed and dyed Gujarati textile fragments excavated in Fustat (Old Cairo), Egypt, document that indigo dyeing and trade flourished in western India from at least that time",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S14",
+      "quote": "with the earliest evidence being a fragment of patterned cloth from Gujarat that was found in Egypt and dated to the fourteenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S17",
+      "quote": "Evidence from the fifteenth to sixteenth-century printed cloth fragments, found in Egypt and traced to Gujarat, suggest well-established and interconnected block printing and resist-dyeing traditions in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S19",
+      "quote": "Some of the fragments show the use of wax-resist dyeing techniques and are likely to have been made in Gujarat in the fifteenth and sixteenth centuries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S11",
+      "quote": "The earliest literary mention occurs in the Atharvaveda at the start of the first millennium BCE.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S11",
+      "quote": "The genizah documents - a set of over four hundred thousand papers found in Fustat, Egypt, containing commercial and administrative records from the ninth to nineteenth centuries - suggest a thriving indigo trade in the early medieval period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S11",
+      "quote": "The documents even used the Sanskrit word for indigo, nili, as a suffix for the names of some Arab merchants who traded the dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S11",
+      "quote": "For most of the medieval period, parts of present-day Gujarat, Rajasthan and coastal Pakistan produced the bulk of indigo from the subcontinent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S11",
+      "quote": "Production later shifted to Bengal as the British East India Company emerged as a ruling power in the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S11",
+      "quote": "During the Indigo Revolt of 1859, farmers from Chaugacha and other parts of Bengal staged a violent uprising against planters and zamindars.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S11",
+      "quote": "In the late nineteenth century, Badische Anilin- und Soda-Fabrik (BASF), a chemical factory in Germany, developed and began the mass production of synthetic indigo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S11",
+      "quote": "By 1914, natural indigo comprised only four percent of the global indigo usage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S02",
+      "quote": "In 1856, William Henry Perkin, while experimenting with coal tar in the hope of finding an artificial quinine as a cure for malaria, discovered the first violet synthetic dyestuff which he called Mauve.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S12",
+      "quote": "Madder dye was replaced by synthetic dyes by the late nineteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S10",
+      "quote": "before they were largely replaced by European synthetic dyes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S02",
+      "quote": "After the advent of synthetic dyes and their immediate acceptability throughout the world, the use of natural dyes in textile coloration industries slowly became a thing of the past",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S01",
+      "quote": "The most critical change is the dyes used, which are more often the synthesized chemical versions of alizarin and indigo, but surprisingly they are utilized in the complex time-honored processes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S01",
+      "quote": "Jerusalem 1000-1400: Every People Under Heaven, on view through January 8, 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S10",
+      "quote": "Commercial activity around natural dyes reached its height during the medieval and early colonial periods in the form of block-printed and kalamkari cloth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S14",
+      "quote": "Between the eleventh and nineteenth centuries, cloth from the Indian subcontinent occupied the largest share of the global cotton trade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S37",
+      "quote": "Gujarati cottons were sold mostly in African and Persian Gulf ports and in Indonesia, while prime outlets for the southern cottons were Malaysia, Indonesia and the Philippines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S37",
+      "quote": "Each market had its own layout, motifs and colour and these had to be adhered to rigidly in order to ensure successful sale.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S37",
+      "quote": "Some of the major mordanting centres in India were in Gujarat and at Masulipatnam, Kalahasti, Pulicat and the Tanjore region on the Coromandel coast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S50",
+      "quote": "In Tamil Nadu, the city Pulicat is located in the district of Tiruvallur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S37",
+      "quote": "Basic techniques for mordanting cotton varied only in that in Gujarat wooden blocks were used for stamping, while on the Coromandel coast the transfer technique and the brush or pen were preferred.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S14",
+      "quote": "By the eighteen century, however, the British East India Company came to control the actual production of cotton fabric in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S14",
+      "quote": "In Britain and France, during the early eighteenth century, a blanket ban was imposed on imported cotton to protect the native textile industry from the highly coveted and competitive Indian chintzes and muslins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S14",
+      "quote": "By the mid nineteenth century, India supplied the world with a modest quantity of hand-painted kalamkari goods and raw cotton, while Indian consumers largely bought the relatively cheaper British-made chintz instead of native cotton textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S21",
+      "quote": "Owing to the ban on imported Indian cotton, cheaper British cotton began to outnumber block-printed textiles from India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S14",
+      "quote": "A cornerstone of the Indian independence movement was khadi, or handspun cotton yarn, which was seen as a pro-handicraft, nativist rebuttal to a market that was flooded with British cotton fabrics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S35",
+      "quote": "certain fixed elements required by the process, like ample sunlight as part of the process of bleaching, or the use of chay root, which was unavailable in Europe, acted as fixed and largely unsurmountable constraints in Europe",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S35",
+      "quote": "Two of the earliest innovations in textile printing in Europe were aimed at overcoming these fixed constraints via the development of chemical bleaching and the isolation of alizarin for the color red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S21",
+      "quote": "Along with calico, it was traded across the Indian Ocean as far back as the fifteenth century, usually as painted (kalamkari) or printed cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S21",
+      "quote": "The Netherlands, Britain and France were early manufacturers of imitation chintz in the late seventeenth century, often using plain cotton cloth imported by the Dutch East India Company.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S21",
+      "quote": "The production of Indian chintz involved covering the cloth in resin, which helped confine the mordant to certain areas of the cloth while also brightening the colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S21",
+      "quote": "since resin alum had to be imported to Europe at high prices, the cotton cloth printed or dyed in Europe had duller, less defined colours",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S31",
+      "quote": "The Great Exhibition of 1851 displayed several Indian carpets, including Kashmiri knotted carpets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S32",
+      "quote": "The showcase of dhurries at the Great Exhibition in 1851, led to a surge in demand for floor coverings manufactured in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S31",
+      "quote": "Jail workshops also emerged as centres of carpet production in the mid- to late-nineteenth century, owing to the availability of convict labour, the relative ease of teaching carpet weaving and the inexpensive raw material and technology involved in production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S30",
+      "quote": "Carpets were a major trade textile in the colonial period as well and were sometimes made by inmates in prisons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S31",
+      "quote": "hand-knotted carpets and rugs in India date to c. 985 CE, with Mahabalipuram being one of the oldest production centres in the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S30",
+      "quote": "Dating back to the tenth century, traditional Indian hand-knotted carpets and rugs rose to prominence",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S47",
+      "quote": "A historical site in Chengalpattu district, Tamil Nadu on the Coromandel coast comprising monuments, caves, sculptures and temples, Mamallapuram - now known as Mahabalipuram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S31",
+      "quote": "Akbar is widely credited with introducing the weaving of hand-knotted carpets to India and giving a fresh impetus to the carpet-weaving industry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S30",
+      "quote": "rose to prominence in the sixteenth century under sustained Mughal patronage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S31",
+      "quote": "they rose to prominence in the sixteenth century under sustained Mughal patronage, especially during the reign of emperor Akbar, and the establishment of royal workshops known as farrash-khanas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S31",
+      "quote": "owing primarily to the influx of skilled carpet makers from Iran and Central Asia, who incorporated new designs and skills in the existing practice",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S31",
+      "quote": "travelled to Central Asia, where they learned carpet making at Andijan, Uzbekistan, and disseminated these skills amongst Kashmiri weavers, resulting in Kashmir emerging as a hub of carpet making",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S31",
+      "quote": "Under Jehangir's patronage, craftspeople such as Akhund Rahmuna",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S31",
+      "quote": "as many as forty-six carpets were exported to England in 1619, and by 1625, traders such as the British East India Company were involved in exporting carpets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S31",
+      "quote": "This led to the establishment of regional carpet-weaving centres in regions in northern India, such as Bhadohi, Mirzapur, Amritsar and Panipat, which were largely managed by private enterprises",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S30",
+      "quote": "Most historic carpet and rug manufacturing centres were located in the northern and western regions of the Indian subcontinent, while contemporary centres include some in the south and north-east India as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S30",
+      "quote": "Additionally, Tibetan rugs like khabdan have been produced by Tibetan artisans at centres in Himachal Pradesh and Assam since the 1950s.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S31",
+      "quote": "Today, the Indian carpet industry is primarily export-oriented, aimed at markets in the US, UK, UAE, Italy, Australia, Turkey, Japan, Netherlands and Sweden.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S31",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S33",
+      "quote": "namda use felting instead of weaving, a technique that came to India from Iran and Turkey during the Mughal period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S27",
+      "quote": "Scholars believe that this style of embroidery originated in the twelfth century among the mochi community of Kutch, who used it to decorate leather.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S27",
+      "quote": "By the eighteenth century, ari work was introduced to Europe through trade under the British East India Company and was adopted in France and Britain, where it is practised to this day as tambour embroidery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S23",
+      "quote": "Embroidery and appliqué traditions from the region have been well known across the historic Indian Ocean trade network for millennia, finding mention in texts such as the first-century CE Greek maritime logbook Periplus of the Erythrean Sea.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S28",
+      "quote": "The oldest extant craft dates back to the twelfth century in Pipili, Odisha, where it is called Pipili chandua.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S25",
+      "quote": "The earliest material evidence of chikan work is from the nineteenth century, when the main production centres were in Calcutta (now Kolkata), Dacca (now Dhaka), Peshawar (now in Pakistan) and Madras (now Chennai).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S25",
+      "quote": "It became popular in Lucknow around the same time under the patronage of nawab Nazir Ud Din Haidar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S24",
+      "quote": "Prior to British rule in South Asia, phulkaris were not produced for commercial purposes but circulated as heirlooms in what is now Pakistani Punjab",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S15",
+      "quote": "evidence suggesting that production of wild silks such as tussar and eri was already underway in the second or third millennium BCE",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S15",
+      "quote": "In the seventeenth century, Bengal emerged as an important centre for mulberry sericulture in the subcontinent. It exported silk to Europe through Dutch and British traders",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S16",
+      "quote": "Pashmina garments were coveted as luxury goods from Northern Africa to South Asia since the sixteenth century and became popular among the European elite after India's colonisation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S17",
+      "quote": "Scholars believe that the first evidence of bandhani in South Asia can be seen in a sixth-century cave painting depicting the life of the Buddha in the Ajanta murals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S17",
+      "quote": "The bandhani technique was originally practised by the Khatri community in Sindh and subsequently gained popularity among artisans of Gujarat, Rajasthan and Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S18",
+      "quote": "Precise details about the historical origin of the leheriya technique are not known but visual evidence - in the form of miniature paintings from the seventeenth century - depicts Rajasthani noblemen wearing turbans with the leheriya patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S22",
+      "quote": "the oldest surviving samples of the craft are dated from the fifteenth and sixteenth centuries. These samples were made as trade fabrics, to be exported to Southeast Asia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S20",
+      "quote": "The origins of dabu have been traced as far back as to the eighth century as indicated by a fabric specimen found in Central Asia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S19",
+      "quote": "A more direct historical connection with Indonesian batik can be found in Bengal, where techniques from Indonesia were taught at Kala Bhavana, the fine arts institute at Shantiniketan. This exchange came about after Rabindranath Tagore's visit to Java and Bali in 1927",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S36",
+      "quote": "In the 1950s, as India began nation building, the government focused on rapid industrialization.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S36",
+      "quote": "With the influx of industrially produced goods, traditional clients began to prefer cheaper, newly available mass-produced textiles over handcraft, and artisans were forced to look to distant, unknown markets in urban centers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S36",
+      "quote": "They bartered their dyed fabrics directly to their users for milk, animals, and grain.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S38",
+      "quote": "This laborious process gave way to screen printing in the 1960s, which tried to piggy back on the reputation of block printing. Screen printing was a cost effective, mechanical and faster way of printing by using synthetic dyes and chemicals for bleaching.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S20",
+      "quote": "the colours - indigo, yellow and red - were naturally derived but have given way to synthetic chemical products such as Naphthol for red colour and tar instead of the mud-resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S14",
+      "quote": "Extracted from the cotton plants of the genus Gossypium, cotton is a seed-hair fibre used to make fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S08",
+      "quote": "A strong, natural vegetable fiber obtained from the exterior of the seeds of various species of Gossypium native to India, the Sudan, and Ethiopia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S08",
+      "quote": "It contains 88-96% pure alpha cellulose; the remainder is protein, pectin, sugar, oil, and wax.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S14",
+      "quote": "Longer staple lengths are highly prized and used for fine clothing, while the shorter fibres are used in carpets or blankets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S37",
+      "quote": "Before the industrial era, only natural dyes were used. It was found that for cotton, which is a cellulose fibre, only two dyes -- indigo and madder -- ensured permanence of colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S01",
+      "quote": "A mordant is used in order to fix the dye molecule to the cotton fiber, which also influences the hue, intensity, and colorfastness of the end result.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S04",
+      "quote": "Mordants are chemicals that react with dyes to change their shade and make them fast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S02",
+      "quote": "a mordant, a chemical that increases the interaction between dye and fibre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S02",
+      "quote": "This classical definition of mordant dyes has been extended to cover all those dyes which are capable of forming complex with the metal mordant. Most of these dyes yield different shades or colors with different mordants with different hue and tone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S37",
+      "quote": "Iron acetate would result in a black colour and alum would make it red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S04",
+      "quote": "The chay reacts with the alum mordant to produce red, and with the iron mordant to produce black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S02",
+      "quote": "For example, alum, iron mordant were accepted for their improved fastness properties and broadening the color range.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S37",
+      "quote": "As cotton in its natural state could not absorb madder, it had to be treated to enable the dye to bond with the fibre and remain insoluble. The first stage of the treatment involves dipping the cloth in tannic solution after which mordants would be applied.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "Myrobalan (Harde), a strong tannin from the fruit of Chebulic Myrobalan, a flowering evergreen tree, has traditionally been used as a mordant in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "The red printed fabric was block printed with a paste of the mordant alum, which fixes the red dye to the cotton fiber, but only in the areas where it was applied",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "The darker shade of purple at the center of the leaves was block printed with a paste of iron acetate made of fermented scrap iron, which together with the myrobalan tannin created the corrosive dye that caused fiber loss.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S22",
+      "quote": "black was made by mixing jaggery and iron filings with water",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "Traditionally, the red dye sourced and used in India has been madder from the Rubiaceae botanical family, growing in different locales.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "These plants include some of the following varieties: Indian mulberry (Morinda citrifolia L.), also known as Al; Indian madder or munjeet (Rubia cordifolia); and chay root (Oldenlandia umbellata L.)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "These dyes are all chemically different from each other and from the more well-known dyer's madder (Rubia tinctorum L.), which is Middle Eastern and European in origin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S12",
+      "quote": "Indian madder is a cultivated species of madder that contains high amounts of alizarin, which is the main compound responsible for producing red in most natural dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "analyzed the red dye on five Indian block prints from The Met collection",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "using a high-performance liquid chromatography-photodiode array detector, and the results demonstrated that Al (Morinda citrifolia L.) was used on four textiles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "Dyer's madder (Rubia tinctorum L.) was found on one textile with a very saturated red",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "This preliminary study is inconclusive due to the small number of textiles analyzed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S01",
+      "quote": "This result was expected, as the Al shrub grew in Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "In India today, most artisans often use synthetic alizarin-an orange or red crystalline compound-though a discerning customer sometimes requests both Al and munjeet. Chay root has been discontinued and the knowledge of its application seems to be lost.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "Jerusalem 1000-1400: Every People Under Heaven, on view through January 8, 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S12",
+      "quote": "In pre-industrial India, soft water was first heated without bringing it to a boil before adding the cloth and salt- or oil-based mordants, preferably alum, to the water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S12",
+      "quote": "A dyebath was then prepared by wrapping the crushed madder in cotton cloth and placing it in a separate vat of water, followed by the mordanted cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S12",
+      "quote": "Since alizarin has low solubility in water, this method allowed the red colour to disperse through the water slowly, so that the bath was evenly coloured and the cloth dyed uniformly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S10",
+      "quote": "Shades of blue made from indigo, black from haritaki (black myrobalan) and khair (acacia bark), and a range of reds, lilac and burgundy made from manjistha (madder), chay root, aal (Indian mulberry) and lac insects were the longest-lasting dyes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S10",
+      "quote": "Yellow dyes are made mainly from haldi (turmeric root) and to a lesser extent kusumba (safflower), palash (Parrot tree) flowers and pomegranate rind.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S10",
+      "quote": "However, natural yellow dyes are relatively short-lived compared to blue or red, as are mixed dyes that use a yellow element, such as greens and oranges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S13",
+      "quote": "Like all natural yellow dyes, turmeric is not durable and fades after several washes and prolonged exposure to light.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S13",
+      "quote": "When dyeing calico cloth, pomegranate rind and alum are added to brighten the yellow colour and extend its life.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S13",
+      "quote": "Dyed blue or red cloth is also overdyed with turmeric to obtain shades of green or orange. However, since turmeric is a fugitive dye, the yellow component of the colour eventually fades",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S04",
+      "quote": "Once the wax has been removed, yellow dye can be applied directly over top of the blue areas to produce green.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S11",
+      "quote": "A natural dye extracted from the Indigofera tinctoria plant native to South Asia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S11",
+      "quote": "Due to the rarity of usable blue pigments in nature, indigo has historically been a prized good",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "Leaves are harvested before the flowers of the plant bloom and then soaked in water and churned until they release a navy blue froth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "The water and fine sediment at the bottom of the tank are allowed to settle for a day, after which the liquid is separated from the sediment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S11",
+      "quote": "This deep blue paste is filtered for dirt and other impurities, pressed into cakes and dried for a few days, after which the indigo is ready to be used as a dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S05",
+      "quote": "which transforms indican (no color) to indoxyl (no color) and produces indigo dye via oxidation (when exposed to air)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S05",
+      "quote": "Indigo can be extracted from indigo dye-containing plants with water and is processed by intrinsic enzymatic reactions carried out by β-glucosidase in chloroplasts",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S05",
+      "quote": "The extracted indigo dye is oxidized by aeration, heated, and air dried or used to make a paste with lime hydrate (Ca(OH)2). The former method is popular in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S02",
+      "quote": "They are insoluble in their colored form, however can undergo reduction into soluble colorless (leuco) form which has an affinity for fibre or textile to be dyed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S05",
+      "quote": "Although indigo is not soluble in water, leucoindigo is soluble in water. Therefore, leucoindigo penetrates textiles dipped in indigo fermentation fluid, followed by a brief exposure to air to oxidize leucoindigo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S01",
+      "quote": "Then, when the fabric is exposed to air, the dye oxidizes to the insoluble blue form, adhering to the fibers permanently.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S37",
+      "quote": "The fabric would first be dipped into a prepared dye vat and then exposed to air, so that the indigo white could revert into insoluble indigo blue and be bonded to the cotton fibre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S02",
+      "quote": "Only three natural dyes belong to vat dyes: indigo, woad and tyrian purple.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "Indigo fermentation, which depends on the indigo-reducing action of microorganisms, has traditionally been performed to dye textiles blue in Asia as well as in Europe.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S05",
+      "quote": "This fermentation process is carried out by naturally occurring microbial communities and occurs under alkaline, anaerobic conditions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S37",
+      "quote": "On oxidisation, indigo white is converted into granules of indigo blue which has then to be reduced through fermentation into soluble indigo white, before dyeing can begin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S05",
+      "quote": "Therefore, the fermentation procedure has been replaced with chemical reduction using sodium dithionite (Na2S2O2). However, the addition of Na2S2O2 produces environmentally unfavorable products, which leads problems in the disposal of the dye waste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S37",
+      "quote": "As oxidisation is very rapid indigo could not be used in block-printing",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S37",
+      "quote": "In India, indigo was usually the last colour to be applied to prevent unwanted colour from permeating into the rest of the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S11",
+      "quote": "Fragments of fourteenth-century block-printed cloth from Gujarat found in Fustat, Egypt, as well as some later examples from the eighteenth century show that indigo was sometimes used for printing, although the method is unclear.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S37",
+      "quote": "The fabric itself would be protected by an impermeable substance called the resist which was made in various combinations of gum and mud or from wax. The preferred medium in the southern centres was wax and a cold process was used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "The most common resist used for indigo today is a mud paste called Dabu, which often displays the characteristic \"crack\" lines where the dye penetrated the cracks in the resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "Jerusalem 1000-1400: Every People Under Heaven, on view through January 8, 2017",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S20",
+      "quote": "a paste prepared with chuna (calcium hydroxide), beedan (pounded wheat chaff), locally-sourced mud from local riverbed and gond (gum) is sieved until it becomes fine",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S20",
+      "quote": "A mud-resist printing technique practised in Rajasthan and Gujarat, dabu gets its name from the Hindi word dabana which means \"to press\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S20",
+      "quote": "Its roots in India have been traced to the village Akora, Rajasthan, where it is still actively practised and the block-printers are known as chippas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "The first steps of the current production process involved in the creation of the block-printed textiles require long and laborious cleaning and bleaching of the cotton fabric to remove impurities and prepare the fiber to receive the dye",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "The fabric is immersed in a solution of camel dung, castor oil, soda ash, and water, and then subjected to trampling and beating until a soap-like solution is formed (fig. 4). This treatment is repeated several times, interspersed with laying in the sun to be bleached by oxidation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S19",
+      "quote": "Beeswax was traditionally used as a resist, but there were local variations as well",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S19",
+      "quote": "Over time, however, paraffin wax has become the most popular resist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S19",
+      "quote": "in the Kutch region of Gujarat, for example, the resist was a paste made of hot oil extracted from the seeds of the local pilu tree",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S36",
+      "quote": "Originally, Khatri artisans used a natural wax laboriously extracted from the fruit of the pilu tree (Salvadora persica).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S36",
+      "quote": "The limitation was that wax required cold-water dyes. Indigo and kaiyu mud were the only cold-water natural dyes; thus, these were the only two natural dyes used with batik.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S19",
+      "quote": "Once the resist is applied, the cloth is dyed in cold water - going from lighter to darker shades - with the process being repeated and more areas being reserved and dyed as needed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S19",
+      "quote": "After the required design and colours are achieved, the cloth is boiled in hot water to allow the wax to melt away.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S19",
+      "quote": "giving finished batik textiles their distinctively veined appearance as the dyes often seep into the cracks in the wax",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S19",
+      "quote": "In India, the states of Bengal, Gujarat and Madhya Pradesh are known for batik-printed textiles, although the technique is also practised on a smaller scale in other parts of the country",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S19",
+      "quote": "the word batik derives from titik, the Malay word for dot or point and the Javanese word amba, which means \"to write.\" Though Indonesian in its origin, the term has come to be associated with wax-based resist dyeing techniques practiced around the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S17",
+      "quote": "tiny sections of cloth are pinched by hand, or raised with a metal ring, and bound with a strong thread",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S17",
+      "quote": "Once the threads are untied, small dots of colour surrounded by lighter undyed rings are revealed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S36",
+      "quote": "Bandhani is a resist-dyeing technique in which small portions of fabric are pinched and tied tightly before the fabric is dyed, resulting in dotted patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S17",
+      "quote": "The design is then printed onto one face of the cloth using specially carved wooden blocks coated with geru. While the blocks are the traditional printing tools, most dyers today apply the geru with stencils made of plastic Farma paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S17",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S17",
+      "quote": "Bandhani in its many variations is identified by light circular or square-shaped repeating motifs on a dark ground. It derives its name from the Sanskrit word baandh, meaning \"to tie,\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S17",
+      "quote": "patterns with numerous small and closely spaced dots are preferred to those with fewer, widely spaced or irregular dots",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S17",
+      "quote": "with the colours standing as social designators of community, social position, occupation and marital status of the person wearing it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S17",
+      "quote": "Major centres for bandhani textile production include Mandvi, Bhuj, Jamnagar, Porbandar and Rajkot in Gujarat and Udaipur, Jaipur, Ajmer and Bikaner in Rajasthan.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S17",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S53",
+      "quote": "It is one of the most important crafts of Kutch which gives whole or part-time employment to 4,000 persons particularly at Bhuj, Mandvi, Anjar, Mundra and Naliya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S17",
+      "quote": "the high level of skill coupled with the time-consuming nature of the work has given rise to a disparity in demand and supply",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S17",
+      "quote": "This has led to the growth of printed imitation bandhani designs, which has adversely affected variations such as sungadi textiles to the point of effectively substituting tie-resist dyeing techniques altogether.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S17",
+      "quote": "Sungadi, a very similar variation of bandhani found in Tamil Nadu, is practised by Saurashtrian artisans who migrated to Madurai in the seventeenth century at the behest of the local ruler.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S18",
+      "quote": "Unlike bandhani, where small sections of the textile are reserved and dyed, the wrap-resist technique of leheriya involves rolling up the entire material and tying it at intervals according to a pattern. The untied segments of the fabric receive the dyes, while the resist segments emerge undyed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S18",
+      "quote": "Because the dye needs to penetrate through layers of tightly rolled fabric, the technique demands the use of muslin or fine silks as its base material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S18",
+      "quote": "Fugitive dyes, also known as kuccha dyes, are used in leheriya, so that the excessive dye may be easily discharged, leaving clean lines in the pattern.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S18",
+      "quote": "Leheriya derives its name from the Sanskrit word lahara, meaning \"wave,\" and refers to the inspirations behind the designs: the monsoon season - a time of celebration in the state - as well as the patterns created by the wind on the desert sand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S18",
+      "quote": "The cities of Jodhpur and Jaipur are the two main centres of leheriya textiles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S18",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "Then, alum and iron mordants are applied to the cloth using a kalam (a bamboo pen).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "The cotton is then submerged in a dye bath of chay root, a natural red dye from the Coromandel Coast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S04",
+      "quote": "Once all the desired red shades have been acheived, the whole cloth is covered in beeswax excepting those areas that are to be dyed blue. Then the cloth is dipped into an indigo dye bath. The wax resists the dye, and protects the rest of the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S04",
+      "quote": "Chintz is made by a combination of mordant and resist-dyeing cotton.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S04",
+      "quote": "Making chintz involves many additional stages in which the cloth is pre-treated, washed and bleached in between each colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S35",
+      "quote": "The cloth will undergo four dungings and bleachings in all during the process of chintz making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S35",
+      "quote": "In the absence of kid-dung, which was recommended by the Beaulieu manuscript for dunging, a modern version of soaking cloth in a mixture of wheat bran and chalk (calcium carbonate) mixed with warm water, was adopted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S35",
+      "quote": "It was immersed in a bath made of powdered madder root and water, and brought up to heat in the bath, with temperature maintained under 60°C, for 2 hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S04",
+      "quote": "Chintz makers from the Coromandel Coast were particularly admired for the brilliance of their colours and the delicacy of their designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S21",
+      "quote": "A popular motif among British consumers was the Tree of Life, which was frequently depicted with deep red flowers characteristic of Indian chintz.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S30",
+      "quote": "Carpets typically feature recurring motifs, including palmettes, geometrical shapes, flowers, the tree of life and occasionally, animals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S21",
+      "quote": "A glazed cotton fabric with a plain or tabby weave, typically printed with floral and geometric patterns",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S21",
+      "quote": "The word derives from the Hindi word chint, meaning \"spotted.\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S22",
+      "quote": "Kalamkari consists of twenty-three steps including treating the fabric by bleaching it and then softening it",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S22",
+      "quote": "Commonly, cotton is used which is then treated with a solution of cow dung and bleach casting the fabric in an off-white colour. This is followed by the immersion of fabric in a mixture of buffalo milk and myrobalans so that it absorbs and retains the colour of dyes and paints without smudging.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S22",
+      "quote": "A textile tradition where cotton textiles are traditionally hand-painted with pictorial narratives through a bamboo pen known as kalam, kalamkari emerged across the Coromandel coast in southern India and the state of Andhra Pradesh has long been considered its focal centre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S22",
+      "quote": "Concentrated largely around the town of Srikalahasti, kalamkari's other major centres of production include Machilipatnam (formerly Masulipatnam) and Madurai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S51",
+      "quote": "Srikalahasti, Chitoor, District, Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S48",
+      "quote": "Machilipatnam, the head quarter of Krishna district in coastal Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S37",
+      "quote": "In Masulipatnam, mordant is uniformly printed with a block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S37",
+      "quote": "a major difference is that in Kalahasti there is total reliance on the pen",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S37",
+      "quote": "The term kalamkari is derived from the tools used by the artisans to apply resist and mordant. In medieval India a brush-like instrument called the kalam was used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S22",
+      "quote": "Themes depicted in the textile included scenes from Puranas and epics such as Mahabharata and Ramayana, with the latter enjoying a notable popularity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S29",
+      "quote": "A gold or silver thread used in brocade and zardosi designs. It is typically used to decorate silk saris, ghaghras or border designs. From the Persian word zar, meaning 'gold'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S23",
+      "quote": "embroidery using zari, or gold thread, practised through most of South Asian history in major weaving centres such as Varanasi and Kanchipuram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S23",
+      "quote": "The dense needlework used for the all-over floral designs of sozni embroidery from Kashmir, and the counting-thread technique of angular, carefully proportioned kasuti designs from Karnataka are examples of such ornate textiles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S26",
+      "quote": "embellished by a variety of visually distinct materials such as bells, beads, cowries, shisha, metal bits, coins and tassels are integrated into the embroidery patterns, often covering the entirety of the base fabric, which is typically red-dyed cotton",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S23",
+      "quote": "the highly varied embroidery of the nomadic Banjara community, who add coins, sequins and cowrie shells to their colourful designs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S26",
+      "quote": "Shishas appear frequently and are used for their reflectiveness, while materials such as ivory and gold are used to lend greater commercial value to the fabric. Additional materials, such as cowrie shells and coins, are also incorporated to lend symbolic value to the work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S25",
+      "quote": "Chikankari employs at least thirty different stitches that can broadly be divided into three groups - flat stitches, raised or embossed stitches and jaali work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S25",
+      "quote": "traditionally using white thread applied on white cloth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S25",
+      "quote": "The production process for chikankari is divided into three phases - chapya (printing), tankha (embroidery) and dhulayi (washing). In the first, patterned wooden blocks are used to print designs on the fabric using temporary inks such as safeda and neel, which are washed off in the final step.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S24",
+      "quote": "It is a form of counted-thread embroidery recognised by its neat, regular patterns of geometric and natural motifs",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S24",
+      "quote": "Phulkari embroidery is done using a running stitch with brightly coloured untwisted silk thread historically imported from Kashmir and Bengal. It uses a base of coarse handwoven cloth called khaddar (or khadi)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S24",
+      "quote": "In most cases, the khaddar is traditionally dyed red using plant-based dyes obtained from palash (Butea monosperma) flowers, madder root (genus Rubia) or the bark of acacia (genus Acacia) trees.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S27",
+      "quote": "A style of embroidery that involves a chain stitch created by hand using an ari - a wooden-handled tool with a long, fine needle ending in a hook, resembling a crochet hook.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S27",
+      "quote": "the base fabric is stretched tightly over a wooden support frame and the pattern is traced by hand. The artisan holds the thread below the material and the ari is fed from above the surface to catch and pull the thread up through the fabric, creating a loop.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S27",
+      "quote": "The threads used for this embroidery range from cotton and silk to zari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S28",
+      "quote": "There are two variations of the applique technique. In one, the overlying cloth may be cut into the desired shape and then stitched onto the base fabric to create patterns",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S28",
+      "quote": "while in the other, sometimes known as reverse appliqué, incisions are made in the layer of overlying fabric, revealing the base fabric to make patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S28",
+      "quote": "In Pipili and Madurai (Tamil Nadu), appliqué has historically been used to decorate temple chariots and chattris; in Gujarat and Rajasthan, where it is known as katab, the tradition has flourished among the nomadic and pastoralist communities where it has been used to make camel and cattle covers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S28",
+      "quote": "these handmade goods are typically expensive because of the elaborate nature of the craft, and therefore face strong competition from cheaper, mass-produced textiles",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S30",
+      "quote": "Indian carpets are typically made of knotted wool with a woven cotton base.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S31",
+      "quote": "Carpets are generally made using wool, with the warp and weft consisting of cotton, and rarely, in areas such as Kashmir, silk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S06",
+      "quote": "Cotton (warp and weft), wool (pile); asymmetrically knotted pile",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S30",
+      "quote": "Most traditions use the asymmetrical Persian knot, for which a strand of yarn is tied around two adjacent warp threads, and fineness is determined by the kind and number of knots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S31",
+      "quote": "The asymmetrical Persian knot, which uses a strand of yarn tied around two adjacent warp threads, is used exclusively in Indian carpets, where fineness is determined by the kind and number of knots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S31",
+      "quote": "Indian carpets are most commonly made using the roller-beam loom",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S31",
+      "quote": "The carpets are woven by hand and rolled back into the loom while it is knotted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S31",
+      "quote": "This period also saw the use of the talim in carpet weaving, especially in Kashmir and Amritsar, to dictate patterns to the weavers - a process adopted from shawl making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S31",
+      "quote": "They were further differentiated from Persian carpets due to their relatively brighter colours, primarily red, with the occasional use of orange, yellow and green dyes, and the fineness of the knotting, which had about 4424 knots per square inch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S06",
+      "quote": "Mughal carpets are very brilliant in their color. Their reds tend to be very bright and almost fire engine red",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S30",
+      "quote": "they were soon distinguished from these traditions by the relatively brighter colours of Indian dyes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S32",
+      "quote": "Dhurries are typically woven by hand, using horizontal pit looms",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S32",
+      "quote": "They are characterised by weft-facing weaves in plain, striped, extra-weft (peddle) or tapestry (cut-shuttle) designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S32",
+      "quote": "After each line of the weft design is completed, it is beaten down with a metal comb or panja to tighten the weft-thread line.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S32",
+      "quote": "Commonly made with cotton, fleece, jute, wool and silk yarns in various combinations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S32",
+      "quote": "The warp yarns, usually made of undyed cotton or wool, form the backbone of the weft-facing dhurrie weave.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S32",
+      "quote": "The decorative woven patterns of a dhurrie are based originally on the vernacular tradition of temporary or painted floor decorations such as rangoli and kolam.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S32",
+      "quote": "Because of their versatility and portability, dhurries came to replace carpets as floor coverings especially in warmer regions or during warmer months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S32",
+      "quote": "Today, dhurries are widely sought-after craft objects and are produced chiefly in the centres of Hoshiarpur in Punjab, Jodhpur in Rajasthan, Varanasi in Uttar Pradesh, Warangal in Andhra Pradesh, Salem in Tamil Nadu, Panipat in Haryana, Belgaum in Karnataka, and Pune in Maharashtra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S32",
+      "quote": "First published: 21 April 2022",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S32",
+      "quote": "Several regional varieties of dhurries, such as the Warangal Dhurrie, Navalgund Dhurrie and Agra dhurrie, among others, have been recognised and protected under the Geographical Indications of Goods(Registration & Protection) Act, 1999.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S03",
+      "quote": "523 Warangal Durries Handicraft Telangana",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S03",
+      "quote": "61 Navalgund Durries Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S03",
+      "quote": "233 Agra Durrie Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S33",
+      "quote": "A minimum of three layers are prepared and each layer is spread separately, sprinkled with soapy water and pressed with a pinjra tool to enmesh and interlock the fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S33",
+      "quote": "In Kashmir, namdas are used as mattresses and floor coverings as they are warm and cater to extreme cold weather conditions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S33",
+      "quote": "Prominent manufacturing centres are situated in Tonk, Rajasthan and Srinagar, Kashmir where the rugs are sold in craft bazaars.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S09",
+      "quote": "The term wool is also used for a small amount of hair that is obtained from camels, alpacas, Angora rabbits (angora), Angora goats (mohair), Kashmir goats (cashmere), llamas, and vicuñas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S09",
+      "quote": "Wool, or hair, fibers are composed of keratin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S09",
+      "quote": "Damaged by alkalis and most bleach solutions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S09",
+      "quote": "Susceptible to moth larvae and other protein-feeding insects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S07",
+      "quote": "Chemically speaking, silk is made of proteins secreted in the fluid state by a caterpillar, popularly known as 'silkworm'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S15",
+      "quote": "The cocoon fibre comprises two filaments of the protein fibroin, held together by a smaller amount of viscous protein called sericin.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S15",
+      "quote": "the yarn or fabric may be boiled in a soap solution to remove the sericin - this step, known as degumming or silk scouring, smoothens the fibres and imparts lustre to the fabric",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S07",
+      "quote": "India has the unique distinction of producing all these commercial varieties of silk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S07",
+      "quote": "These are: - Mulberry - Oak Tasar & Tropical Tasar - Muga - Eri",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S15",
+      "quote": "However, the tussar and muga worms are wild and harvested in their natural habitat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S15",
+      "quote": "Muga silk, known for its strength and golden yellow colour, is produced by Antheraea assamensis, belonging to the same genus and endemic to Assam.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S15",
+      "quote": "India is the second largest producer of silk in the world, after China.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S15",
+      "quote": "First published: 25 August 2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S07",
+      "quote": "India is the second largest producer of silk and also the largest consumer of silk in the world.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S15",
+      "quote": "Silk in the Indian subcontinent is, and historically has been, a luxury good.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S16",
+      "quote": "A fine variety of yarn obtained from the fleece of Changthangi goats native to Mongolia, China, Nepal and Ladakh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S16",
+      "quote": "Pashmina goats have two types of hair: a soft undercoat used for the yarn and coarser bristles called guard hair. The two are separated by combing the softer hair out by hand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S16",
+      "quote": "The fibres are exceptionally fine, ranging from twelve to sixteen microns (μm) in diameter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S16",
+      "quote": "pashmina - originating from the Persian pashm, meaning \"wool\" - is also known as cashmere",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S16",
+      "quote": "Pashmina is substantially warmer, softer and lighter than sheep wool",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S16",
+      "quote": "Until the 1950s, Ladakhi traders were the primary middlemen in the local market for pashmina fibre, as the Changthang region of Ladakh lay between western Tibet where the goats were raised, and Kashmir, where the shawls were woven.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S34",
+      "quote": "The yarns are then dipped in the ash water and wrung multiple times a day until they froth from the process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S34",
+      "quote": "The alumina dissolved in the water from contact with the ash helps the yarn gain a deep, rich red during the dyeing process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S02",
+      "quote": "Although metallic mordants are used to enhance the affinity of natural dyes to textile fibers, they generate wastewater containing residual toxic metal ions which leave negative impacts on the environment and, cause severe health-related problems and allergic responses",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S38",
+      "quote": "The effluents from these industrial units were released untreated into the nallahs causing water pollution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S38",
+      "quote": "into the nallahs which drain into the Dravyawati river",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S38",
+      "quote": "\"Washing the fabric in the water from the nallahs here gives it amazing shine\", an artisan says.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S01",
+      "quote": "In India, it is common to see fields strewn with lengths of fabric laid on the ground to dry and bask in the sun",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S36",
+      "quote": "Kutch, an arid region in western India, is politically a district of the state of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S36",
+      "quote": "Physically and culturally, it is an island between the province of Sindh, Pakistan, and mainland Gujarat. Indigo was historically grown in both Kutch and Sindh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S36",
+      "quote": "Indian societies comprise many strictly delineated castes or ethnic communities, and each wore a specific dress that clearly identified its members. Within traditions, variations in color and pattern demarcated age, social status, and occasion.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S14",
+      "quote": "Most exports of cotton from India came from ports along the western and eastern coasts, as well as the larger hinterlands present-day Gujarat, Kerala, Odisha and Andhra Pradesh that these ports serviced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S07",
+      "quote": "In India, mulberry silk is produced mainly in the states of Karnataka, Andhra Pradesh, Tamil Nadu, Jammu & Kashmir and West Bengal, while the non-mulberry silks are produced in Jharkhand, Chattisgarh, Orissa and north-eastern states.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S22",
+      "quote": "In 2006, Srikalahasti kalamkari registered a Geographical Indication (GI) tag, and Machilipatnam kalamkari did so in 2009.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S25",
+      "quote": "Chikankari embroidery received the Geographical Indication (GI) status in 2008",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S03",
+      "quote": "28 Srikalahasthi Kalamkari Handicraft Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S51",
+      "quote": "Certificate Date | 12-01-2006",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S03",
+      "quote": "119 Lucknow Chikan Craft Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S03",
+      "quote": "90 Machilipatnam Kalamkari Handicraft Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "31 Kasuti Embroidery Handicraft Karnataka",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "27 Phulkari Handicraft India (Punjab, Haryana & Rajasthan)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "48 Kashmir Sozani Craft Handicraft Jammu & Kashmir",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "171 Surat Zari Craft Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "103 Kutch Embroidery Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "135 Toda Embroidery Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "79 Chamba Rumal Handicraft Himachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "236 Lucknow Zardozi Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S03",
+      "quote": "620 Banaras Zardozi Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S03",
+      "quote": "147 Sanganeri Hand Block Printing Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S03",
+      "quote": "183 Bagru Hand Block Print Handicraft Rajasthan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S03",
+      "quote": "98 Bagh Prints of Madhya Pradesh Handicraft Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S03",
+      "quote": "1050 Kutch Ajrakh Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S54",
+      "quote": "sanganir Town is the r^Ieadquarrcr- o{ sa'ganer Tehsil District-Jaipur, Rajasthar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S03",
+      "quote": "148 Hand Made Carpet of Bhadohi Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S03",
+      "quote": "527 Kashmiri Hand Knotted Carpet Handicrafts Jammu & Kashmir",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S03",
+      "quote": "708 Gwalior Handmade Carpet Handicraft Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S03",
+      "quote": "589 Bhotia Dann of Uttarakhand Handicraft Uttarakhand",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "21 Madurai Sungudi Handicraft Tamil Nadu",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "221 Jamnagari Bandhani Handicrafts Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "756 Kutch Bandhani Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "726 Pashmina Wool of Ladakh Handicraft Ladakh (UT)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "694 Mata ni Pachhedi Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "713 Narasapur Crochet Lace Products Handicraft Andhra Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "647 Lahauli Knitted Socks & Gloves Handicraft Himachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S03",
+      "quote": "677 Patchwork of Rampur Handicraft Uttar Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S03",
+      "quote": "73 Applique (Khatwa) Work of Bihar Handicraft Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S03",
+      "quote": "74 Sujini Embroidery Work of Bihar Handicraft Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S03",
+      "quote": "52 Nakshi Kantha Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S03",
+      "quote": "86 & 108 Pipli Applique Work Handicraft Odisha",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S11",
+      "quote": "The conventional dyeing method is to add a reducing agent such as zinc or ammonia to the hot dye bath in order to make indigo soluble - a state known as \"white indigo\" - before the cloth is dipped into it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S11",
+      "quote": "This method was typically used for dyeing whole sheets of fabric and was the prevalent method of using indigo in pre-colonial India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S39",
+      "quote": "The process of stamping designs and patterns on base fabrics such as cotton or silk using dye-soaked, hand-carved wooden blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S39",
+      "quote": "The technique is central to a variety of printing traditions across India in which blocks are used to create a range of designs composed of floral and religious motifs, geometric forms, and calligraphy.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S38",
+      "quote": "Conventional hand block printing involved printing the impression through small carved wooden blocks onto the fabric, one after the other.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S39",
+      "quote": "While several Indian communities practise the craft, the Khatris and Chippas in the country's northwestern regions are the oldest known communities to have been continuously involved in block printing, since at least the sixteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S39",
+      "quote": "direct textual evidence dates the craft of block printing on textiles to the eleventh century in Kerala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S39",
+      "quote": "While engraved blocks of metal and terracotta are sometimes used, those made from types of wood such as sheesham, sagwan and rohida are often preferred for their texture and ease of carving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S39",
+      "quote": "Teak is the preferred variety of wood for making blocks, as it remains undamaged even after frequent contact with water and other substances used in the printing process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S39",
+      "quote": "Woodblock carving has been traditionally carried out in Gujarat and Rajasthan, each with producing blocks in distinctive styles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S39",
+      "quote": "While in Gujarat, Pethapur has been the centre of block making, in Rajasthan, it is Jaipur that serves as the primary centre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S03",
+      "quote": "585 Pethapur Printing Blocks Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S39",
+      "quote": "A single printed motif may require the use of multiple blocks. For instance, one block can be used to create a rekh of the motif, another can be used to fill it, such as a datta, and a third block, such as gadh, can be used to create the background of the design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S21",
+      "quote": "The block was coated evenly with dye and pressed on the fabric, with a different block used for each colour and outline.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S36",
+      "quote": "Each pattern is created with impressions of three blocks, an outline called rekh, and two filling patterns called datlo-one for each color; all patterns must register.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S39",
+      "quote": "This requires both the block maker and printer to be aware of how every block will be used, and how the motifs will fit into the design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S39",
+      "quote": "karigars also mark the date on each block, in case it needs to be repaired or altered, so that patterns will repeat perfectly when the fabric is printed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S39",
+      "quote": "Air passages known as pavansar are also often drilled into the blocks to prevent them from clinging to the fabric when lifted.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S39",
+      "quote": "Prior to printing, a mordant is typically added to the dye to allow it to stick to the base fabric because many natural dyes do not easily adhere to the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S39",
+      "quote": "Only a few - such as indigo, which is used in several block printing traditions and was a key product in colonial extraction - do not require the use of mordants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S36",
+      "quote": "Forced to calculate the cost of time and materials, they outsource block carving to professional carpenters.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S36",
+      "quote": "Traditional blocks, called char pa ek (four parts to one), in which motifs are created by registering four impressions, have been abandoned for a style called sal type (flush joining), in which the entire motif is on one block.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S36",
+      "quote": "Printing with these blocks is faster, though less perfect-suited for cheap, scaled-up production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S42",
+      "quote": "the same Persianate karkhanas, or workshops, of the Sultanate and Mughal courts in northern India where zari was used for intricate zardozi and ari embroidery since the fourteenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S43",
+      "quote": "Their earliest recorded use in India dates back to the fifteenth century when the blue-green jewel tones of beetle wings were often paired with lustrous zardozi embroidery to decorate clothing worn to signify high status in the Mughal courts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S42",
+      "quote": "By the nineteenth century, Jaipur, a significant centre of Rajput power in northern India, had emerged as the main centre for zari and badla production, alongside Lucknow and Surat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S42",
+      "quote": "A technique of embellishing textiles and other objects with gold or silver trims, gota work is popular in north and northwestern India, particularly the states of Rajasthan, Gujarat, Punjab and Himachal Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S42",
+      "quote": "In the eighteenth century gota work was being produced in the courts and wealthy households of present-day Rajasthan, as well as Lucknow, Mirzapur and Varanasi in present-day Uttar Pradesh and Aurangabad in present-day Maharashtra.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S42",
+      "quote": "By the late twentieth century industrialisation and mass-produced raw materials such as lurex, a synthetic yarn with a metallic sheen, made gota cheaper and more accessible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S42",
+      "quote": "While lurex has almost completely replaced metal gota, it has led to the wide popularity of gota work in India's rural areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S46",
+      "quote": "Derived from the Persian word shisheh, meaning \"glass.\" Also known as mirror-work, it is an embroidery technique in which small mirrors are secured to the fabric by stitching along their edges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S41",
+      "quote": "Prominently featuring the use of tiny circular or almond-shaped shisha, Ahir embroidery, practised by the Ahirs of Kutch for centuries, comes under the larger umbrella of bharat or \"filling\" embroidery of the Kutch tradition in Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S41",
+      "quote": "The shisha work that features so prominently in ahir embroidery is also a part of banjara and banni embroidery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S40",
+      "quote": "A household craft practised by women from West Bengal and Bangladesh, kantha - derived from the Sanskrit word kontha, or \"rags\" - embroidery is applied on quilts, bags and other textiles made from reused fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S40",
+      "quote": "The raw material for kantha quilts is usually old sarees and dhotis in a single solid colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S40",
+      "quote": "While the designs differ between the various styles of kantha, they are all typically done with a running stitch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S40",
+      "quote": "The craft received encouragement from Revivalist artists at Shantiniketan (now Visva-Bharati University) in the 1940s, and again in the 1980s through Shamlu Dudeja's organisation Self Help Enterprise (SHE)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S44",
+      "quote": "A form of traditional cloth-painting made for the worship of matas, or goddesses, mata ni pachedi is associated with western India's nomadic Vaghri community, which has traditionally lived along the banks of the Sabarmati river in Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S44",
+      "quote": "Deriving their name from the Gujarati for 'shawl of the goddess' or 'goddess backdrop'",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S44",
+      "quote": "Before painting, the cloth is soaked, washed, de-starched and treated with a harda (Terminalia chebula) solution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S44",
+      "quote": "While woodblocks are usually used for the borders, many drawings, embellishments and motifs are painted with a bamboo kalam (pen), and a brush in more recent times.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S44",
+      "quote": "Traditionally, the colours used were naturally procured and processed, and consisted of a visual scheme of masoor (red) and black on a white cloth - the red extracted from alum, alizarin, tamarind and dhawadi (Woodfordia fruticosa) flowers, and the black from jaggery and iron rust.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S45",
+      "quote": "In Goa, crochet production, alongside lace making and European forms of embroidery was fostered by missionaries and other colonial agents.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S38",
+      "quote": "Today, the Sanganer cluster comprising of small firms in the unorganised sector provides employment to almost 10,000 people directly and indirectly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S38",
+      "quote": "In a fresh directive in May 2015, the High Court has asked the Power Department and the Public Health Engineering Department to snap electricity and water connections to these units",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S38",
+      "quote": "The health of these artisans exposed to polluted waters for extensive periods is at risk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S03",
+      "quote": "700 Ujjain Batik Print Handicraft Madhya Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S03",
+      "quote": "865 Santiniketan Batik Textile Handicraft West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S52",
+      "quote": "Po-Shantiniketan, PS-Shantiniketan, Birbhum, West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S49",
+      "quote": "The place is famous for Applique works which is a traditional craft of the local People.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S49",
+      "quote": "During World famous RathaYatra, the chariots (Raths) are being decorated by colorful clothes made by the People of pipili.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C246",
+      "sourceId": "S49",
+      "quote": "from Puri (District Headquarter) to Pipili is 40 Kms",
+      "result": "PASS"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine, get_session
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, get_optional_user
 from app.main import app
 from app.models import (
     Claim,
@@ -30,6 +30,7 @@ from app.services.craft_process import process_records
 from app.services.science_seed import seed_science
 
 from ..contracts.golden import dumped, golden_text
+from ..readers import sign_in_as
 from ..science.golden_process import GOLDEN, LEFT_OUT_OF_THE_EXCERPT, claim_id, golden_rows
 
 pytestmark = pytest.mark.db
@@ -86,7 +87,7 @@ async def test_the_route_reproduces_the_golden_process_from_stored_rows(session:
 
     reader = User(id=uuid.uuid4(), name="Reader", email="reader@example.com", role="STUDENT")
     app.dependency_overrides[get_session] = this_session
-    app.dependency_overrides[get_current_user] = lambda: reader
+    sign_in_as(app, lambda: reader)
     try:
         transport = httpx.ASGITransport(app=app)
         async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
@@ -94,6 +95,7 @@ async def test_the_route_reproduces_the_golden_process_from_stored_rows(session:
     finally:
         app.dependency_overrides.pop(get_session, None)
         app.dependency_overrides.pop(get_current_user, None)
+        app.dependency_overrides.pop(get_optional_user, None)
     assert response.status_code == 200, response.text
     assert response.headers["cache-control"] == "private, no-cache"
     assert dumped(CraftProcess, CraftProcess.model_validate(response.json())) == golden_text(GOLDEN)

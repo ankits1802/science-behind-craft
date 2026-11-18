@@ -11,6 +11,7 @@ import { LayerPicker } from "@/components/map/LayerPicker";
 import { MapLayerView } from "@/components/map/MapLayerView";
 import { PageHeader } from "@/components/PageHeader";
 import { LoadingPanel, RetryPanel } from "@/components/RemotePanels";
+import { placedCountLine, useCraftCatalogue } from "@/lib/craftCatalogue";
 import { fetchCraftMapPoints } from "@/lib/craftRegion";
 import { DISTRICT_PARAM } from "@/lib/districtView";
 import { chosenLayerId, fetchMapLayers, LAYER_PARAM } from "@/lib/mapLayers";
@@ -49,6 +50,7 @@ function MapScreen() {
   const router = useRouter();
   const pathname = usePathname();
   const places = useRemote(fetchCraftMapPoints);
+  const { catalogue } = useCraftCatalogue();
   const layers = useRemote(fetchMapLayers);
   const layerId = chosenLayerId(layers.data, params.get(LAYER_PARAM));
   const districtLgd = positiveParam(params.get(DISTRICT_PARAM));
@@ -63,7 +65,6 @@ function MapScreen() {
         .map(mapPoint),
     [points]
   );
-  const crafts = useMemo(() => new Set((points ?? []).flatMap((point) => point.crafts.map((craft) => craft.slug))).size, [points]);
 
   const choose = (param: string, value: string | null) => {
     const search = new URLSearchParams(params.toString());
@@ -79,7 +80,7 @@ function MapScreen() {
     <>
       <PageHeader
         title="Map"
-        description={points ? `${crafts} crafts across ${points.length} places` : undefined}
+        description={catalogue ? placedCountLine(catalogue) : undefined}
         icon={<MapPinned className="h-5 w-5" aria-hidden />}
         back={false}
       />

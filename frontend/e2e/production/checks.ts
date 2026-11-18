@@ -26,7 +26,11 @@ export const GAP_COPY_PATTERNS: readonly RegExp[] = [
   /\bwork in progress\b/gi,
   /\bnot (?:yet )?(?:wired|hooked) up\b/gi,
   /\bstay tuned\b/gi,
-  /\bin a (?:future|later) (?:release|version|phase|update)\b/gi
+  /\bin a (?:future|later) (?:release|version|phase|update)\b/gi,
+  /\bnot enough (?:cited )?evidence\b/gi,
+  /\bnot (?:yet )?curated\b/gi,
+  /\byet to be (?:added|built|curated|researched|written)\b/gi,
+  /\bnothing (?:here|to show) yet\b/gi
 ];
 
 export type NavExpectation = { bar: string[]; menu: string[]; depths: string[] };

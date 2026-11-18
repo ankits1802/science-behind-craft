@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState, type ReactNode } from "react";
 
 import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
 import { ExplainerReadingProvider, type ExplainerReading } from "@/components/answer/ExplainerReading";
-import { SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
+import { openedSource, SourceDialog, type OpenCitation } from "@/components/answer/SourceDialog";
 import { SourcesList } from "@/components/answer/SourcesList";
 import { TermSheet } from "@/components/answer/TermSheet";
 import { useTermState } from "@/components/answer/useTermState";
@@ -24,7 +24,7 @@ export function CitedReading({ sources, numbers, language = ENGLISH, children }:
   const terms = useTermState();
   const sourcesById = useMemo(() => new Map(sources.map((source) => [source.id, source])), [sources]);
   const onOpen = useCallback(
-    (citation: Citation) => setOpened({ citation, source: sourcesById.get(citation.sourceId) ?? null, number: numbers.get(citation.sourceId) ?? null }),
+    (citations: readonly Citation[]) => setOpened(openedSource(citations, numbers, sourcesById)),
     [numbers, sourcesById]
   );
   const lookup = useMemo<CitationLookup>(() => ({ numbers, sourcesById, onOpen }), [numbers, sourcesById, onOpen]);
@@ -43,8 +43,11 @@ export function CitedReading({ sources, numbers, language = ENGLISH, children }:
   );
 }
 
-export function ListedSources({ sources, idPrefix }: { sources: readonly SourceRef[]; idPrefix: string }) {
+export function ListedSources({ sources, idPrefix, numbers }: { sources: readonly SourceRef[]; idPrefix: string; numbers?: ReadonlyMap<string, number> }) {
   const byId = new Map(sources.map((source) => [source.id, source]));
-  const entries = [...listedSourceNumbers(sources)].map(([id, number]) => ({ number, id, source: byId.get(id) ?? null }));
+  const entries = [...listedSourceNumbers(sources, numbers)]
+    .filter(([id]) => byId.has(id))
+    .map(([id, number]) => ({ number, id, source: byId.get(id) ?? null }))
+    .sort((a, b) => a.number - b.number);
   return entries.length > 0 ? <SourcesList entries={entries} idPrefix={idPrefix} /> : null;
 }

@@ -1,0 +1,613 @@
+{
+  "version": 2,
+  "defaultQuestions": [
+    "Which materials go into {craft}?",
+    "What are the stages in the making of {craft}?",
+    "How did the tradition of {craft} begin, and where does the work go on today?"
+  ],
+  "families": [
+    {
+      "slug": "Textiles-Based-Craft-Category",
+      "label": "Textiles",
+      "palette": "indigo",
+      "kinds": [
+        {
+          "slug": "Embroidery",
+          "label": "Embroidery",
+          "otherName": "Other embroidery",
+          "questions": [
+            "Which stitches and threads are used in {craft}, and how is each stitch worked?",
+            "How does the choice of cloth change the stitches of {craft}?",
+            "Where did the tradition of {craft} begin, and who carries on the work today?"
+          ],
+          "otherQuestions": [
+            "Which stitches and threads do Indian embroidery traditions use?",
+            "How does the choice of cloth change the way embroidery stitches sit?",
+            "Where in India is embroidery practised, and by whom?"
+          ]
+        },
+        {
+          "slug": "Hand-Block-Printing",
+          "label": "Hand block printing",
+          "otherName": "Other hand block printing",
+          "questions": [
+            "How do mordants and dyes fix the colours of {craft} in the cloth?",
+            "What are the stages of {craft}, from plain cloth to finished print?",
+            "What do local water and climate give to the colours of {craft}?"
+          ],
+          "otherQuestions": [
+            "How do mordants and dyes fix the colours of a block print in the cloth?",
+            "What are the stages of hand block printing, from plain cloth to finished print?",
+            "Why do water and climate matter so much to hand block printing?"
+          ]
+        },
+        {
+          "slug": "Carpet-Rugs-Durries",
+          "label": "Carpets, rugs and durries",
+          "otherName": "Other carpets, rugs and durries",
+          "questions": [
+            "How are the knots and weaves of {craft} made on the loom?",
+            "Which fibres and dyes go into {craft}, and why those?",
+            "How long does one piece of {craft} take to make, and who does the work?"
+          ],
+          "otherQuestions": [
+            "How are carpets, rugs and durries knotted or woven on the loom?",
+            "Which fibres and dyes go into Indian carpets, rugs and durries, and why those?",
+            "How long does one carpet or durrie take to make, and who does the work?"
+          ]
+        },
+        {
+          "slug": "Other-Textiles-Based-Craft",
+          "label": "Textile crafts",
+          "otherName": "Other textile crafts",
+          "questions": [
+            "Which fibres or cloth go into {craft}, and how are these prepared?",
+            "What are the stages in the making of {craft}?",
+            "How did the tradition of {craft} begin, and where does the work go on today?"
+          ],
+          "otherQuestions": [
+            "Which fibres and cloths do Indian textile crafts use, and how are these prepared?",
+            "What are the main stages of making a handmade textile?",
+            "Where in India are textile crafts practised, and how did they begin?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Metal-Craft-Category",
+      "label": "Metal",
+      "palette": "bronze",
+      "kinds": [
+        {
+          "slug": "Silver-Metal",
+          "label": "Silverwork",
+          "otherName": "Other silverwork",
+          "questions": [
+            "How is silver drawn, soldered or chased to make {craft}?",
+            "What makes silver right for {craft}, and how is the purity of the metal kept?",
+            "Which tools and stages go into {craft}?"
+          ],
+          "otherQuestions": [
+            "How is silver drawn, soldered or chased by Indian silversmiths?",
+            "Why does silver suit fine metalwork, and how is its purity kept?",
+            "Which tools and stages does silverwork need?"
+          ]
+        },
+        {
+          "slug": "Gold-Metal",
+          "label": "Goldwork",
+          "otherName": "Other goldwork",
+          "questions": [
+            "How is gold shaped and joined in {craft}?",
+            "What makes gold workable at the fineness used in {craft}?",
+            "Who are the makers of {craft}, and where is the work done?"
+          ],
+          "otherQuestions": [
+            "How is gold shaped and joined in Indian goldwork?",
+            "What makes gold workable at the fineness goldsmiths use?",
+            "Who makes goldwork in India, and where?"
+          ]
+        },
+        {
+          "slug": "Bronze-Metal",
+          "label": "Bronze",
+          "otherName": "Other bronze work",
+          "questions": [
+            "How are pieces of {craft} cast, from wax model to finished metal?",
+            "Which metals go into the alloy of {craft}, and why?",
+            "What do the clay moulds of {craft} do in the furnace?"
+          ],
+          "otherQuestions": [
+            "How is bronze cast, from wax model to finished metal?",
+            "Which metals go into a bronze alloy, and why?",
+            "What do clay moulds do in the furnace when bronze is cast?"
+          ]
+        },
+        {
+          "slug": "Brass-Metal",
+          "label": "Brass and bell metal",
+          "otherName": "Other brass work",
+          "questions": [
+            "How are pieces of {craft} cast, beaten or turned?",
+            "Which alloy goes into {craft}, and how does the mix change colour and ring?",
+            "Which communities make pieces of {craft}, and where?"
+          ],
+          "otherQuestions": [
+            "How is brass or bell metal cast, beaten or turned?",
+            "How does the mix of copper with zinc or tin change the colour and ring of the metal?",
+            "Where in India is brass and bell metal worked, and by which communities?"
+          ]
+        },
+        {
+          "slug": "Iron-Metal",
+          "label": "Ironwork",
+          "otherName": "Other ironwork",
+          "questions": [
+            "How is iron heated and forged to make {craft}?",
+            "Where does the iron for {craft} come from?",
+            "Which tools and stages go into {craft}?"
+          ],
+          "otherQuestions": [
+            "How is iron heated and forged by Indian blacksmiths?",
+            "Where does the iron for traditional ironwork come from?",
+            "Which tools and stages does hand-forged ironwork use?"
+          ]
+        },
+        {
+          "slug": "Copper-Metal",
+          "label": "Copperwork",
+          "otherName": "Other copperwork",
+          "questions": [
+            "How is copper beaten and shaped in {craft}?",
+            "What makes copper right for {craft}, and how is the surface finished?",
+            "Where is the work of {craft} done, and by whom?"
+          ],
+          "otherQuestions": [
+            "How is copper beaten and shaped by hand?",
+            "Why does copper suit vessels and ornaments, and how is it finished?",
+            "Where in India is copper worked, and by whom?"
+          ]
+        },
+        {
+          "slug": "Other-Metal-Crafts",
+          "label": "Metal crafts",
+          "otherName": "Other metal crafts",
+          "questions": [
+            "Which metals go into {craft}, and how is each metal worked?",
+            "What are the stages in the making of {craft}?",
+            "Where did the tradition of {craft} begin, and who carries on the work today?"
+          ],
+          "otherQuestions": [
+            "Which metals do Indian metal crafts use, and how is each one worked?",
+            "What are the main stages of making a hand-worked metal piece?",
+            "Where in India are metal crafts practised, and by whom?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Stone-Craft-Category",
+      "label": "Stone",
+      "palette": "sandstone",
+      "kinds": [
+        {
+          "slug": "Stone-Carving",
+          "label": "Stone carving",
+          "otherName": "Other stone carving",
+          "questions": [
+            "Which stone is used for {craft}, and why does that stone carve well?",
+            "Which tools and stages turn a raw block into {craft}?",
+            "Where is the stone for {craft} quarried?"
+          ],
+          "otherQuestions": [
+            "Which stones are best for carving, and why?",
+            "Which tools and stages turn a raw block of stone into a carving?",
+            "Where in India is carving stone quarried?"
+          ]
+        },
+        {
+          "slug": "Stone-Inlay",
+          "label": "Stone inlay",
+          "otherName": "Other stone inlay",
+          "questions": [
+            "How are the stones of {craft} cut and fitted into the base?",
+            "Which stones are used in {craft}, and where do the colours of the stones come from?",
+            "What holds the inlaid pieces of {craft} in place?"
+          ],
+          "otherQuestions": [
+            "How are inlay stones cut and fitted into marble or stone?",
+            "Which stones are used for inlay, and what gives them their colours?",
+            "What holds inlaid pieces of stone in place?"
+          ]
+        },
+        {
+          "slug": "Stone-Others",
+          "label": "Stone crafts",
+          "otherName": "Other stone crafts",
+          "questions": [
+            "Which stone is used for {craft}, and how is the stone shaped?",
+            "What are the stages in the making of {craft}?",
+            "Where does the stone for {craft} come from?"
+          ],
+          "otherQuestions": [
+            "Which stones do Indian stone crafts use, and how are they shaped?",
+            "What are the main stages of making a stone object by hand?",
+            "Where does the stone for Indian stone crafts come from?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Wood-Craft-Category",
+      "label": "Wood",
+      "palette": "teak",
+      "kinds": [
+        {
+          "slug": "Wooden-Artwares",
+          "label": "Wooden artware",
+          "otherName": "Other wooden artware",
+          "questions": [
+            "Which wood is used for {craft}, and why that one?",
+            "How are pieces of {craft} carved, joined and finished?",
+            "Which colours or lacquers are used on {craft}, and how do these hold to the wood?"
+          ],
+          "otherQuestions": [
+            "Which woods are used for wooden artware, and why?",
+            "How is wooden artware carved, joined and finished?",
+            "What colours or lacquers finish wooden artware, and how do they hold to the wood?"
+          ]
+        },
+        {
+          "slug": "Wood-Carving",
+          "label": "Wood carving",
+          "otherName": "Other wood carving",
+          "questions": [
+            "Which wood is used for {craft}, and how is the wood seasoned?",
+            "Which tools and stages go into {craft}?",
+            "Which buildings and objects carry the work of {craft}, and where are these found?"
+          ],
+          "otherQuestions": [
+            "Which woods suit carving, and how are they seasoned?",
+            "Which tools and stages does wood carving use?",
+            "Where in India is wood carving practised, and on what buildings or objects?"
+          ]
+        },
+        {
+          "slug": "Wood-Inlay-Marquetry",
+          "label": "Wood inlay and marquetry",
+          "otherName": "Other wood inlay",
+          "questions": [
+            "How are the pieces of {craft} cut and set into the wood?",
+            "Which woods and other materials are inlaid in {craft}?",
+            "What glue or joint holds the pieces of {craft} together?"
+          ],
+          "otherQuestions": [
+            "How are inlay pieces cut and set into wood?",
+            "Which woods and other materials are used for inlay and marquetry?",
+            "What glue or joint holds inlaid wood together?"
+          ]
+        },
+        {
+          "slug": "Wood-Turning-And-Lacquer-Ware",
+          "label": "Turned and lacquered wood",
+          "otherName": "Other turned and lacquered wood",
+          "questions": [
+            "How are pieces of {craft} turned on the lathe?",
+            "What is the lacquer of {craft} made from, and how does the lacquer bond to the wood?",
+            "Where do the colours of {craft} come from?"
+          ],
+          "otherQuestions": [
+            "How is wood turned on the lathe for lacquerware?",
+            "What is lacquer made from, and how does it bond to the wood?",
+            "Where do the colours of lacquerware come from?"
+          ]
+        },
+        {
+          "slug": "Wooden-Furniture",
+          "label": "Wooden furniture",
+          "otherName": "Other wooden furniture",
+          "questions": [
+            "Which wood is used for {craft}, and why?",
+            "How are the joints of {craft} made?",
+            "How is the finish of {craft} made to last?"
+          ],
+          "otherQuestions": [
+            "Which woods are used for handmade furniture, and why?",
+            "How are the joints of handmade furniture made?",
+            "How is wooden furniture finished to last?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Leather-Craft-Category",
+      "label": "Leather",
+      "palette": "hide",
+      "kinds": [
+        {
+          "slug": "Leather-Footwear",
+          "label": "Leather footwear",
+          "otherName": "Other leather footwear",
+          "questions": [
+            "How is the leather for {craft} tanned?",
+            "How are pairs of {craft} cut, stitched and decorated?",
+            "Which communities make {craft}, and where?"
+          ],
+          "otherQuestions": [
+            "How is the leather for handmade footwear tanned?",
+            "How is handmade leather footwear cut, stitched and decorated?",
+            "Where in India is leather footwear made, and by which communities?"
+          ]
+        },
+        {
+          "slug": "Leather-Other-Articles",
+          "label": "Leather goods",
+          "otherName": "Other leather goods",
+          "questions": [
+            "How is the leather for {craft} tanned and dyed?",
+            "What are the stages in the making of {craft}?",
+            "Where is the work of {craft} done, and by whom?"
+          ],
+          "otherQuestions": [
+            "How is leather tanned and dyed for handmade goods?",
+            "What are the main stages of making a leather article by hand?",
+            "Where in India are leather goods made, and by whom?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Natural-Fibre-Grass-Work",
+      "label": "Natural fibre and grass",
+      "palette": "cane",
+      "kinds": [
+        {
+          "slug": "Natural-Fibre",
+          "label": "Natural fibre",
+          "otherName": "Other natural fibre crafts",
+          "questions": [
+            "Which plant fibre is used for {craft}, and how is the fibre extracted?",
+            "How is the fibre of {craft} prepared, dyed and woven?",
+            "Where does the fibre for {craft} grow?"
+          ],
+          "otherQuestions": [
+            "Which plant fibres are used in Indian fibre crafts, and how are they extracted?",
+            "How is plant fibre prepared, dyed and woven?",
+            "Where in India do the plants for fibre crafts grow?"
+          ]
+        },
+        {
+          "slug": "Cane-Bamboo",
+          "label": "Cane and bamboo",
+          "otherName": "Other cane and bamboo",
+          "questions": [
+            "How is the cane or bamboo for {craft} cut, seasoned and split?",
+            "How are pieces of {craft} woven or bent into shape?",
+            "How are pieces of {craft} protected from insects and damp?"
+          ],
+          "otherQuestions": [
+            "How is cane or bamboo cut, seasoned and split for craftwork?",
+            "How is cane or bamboo woven or bent into shape?",
+            "How is cane and bamboo work protected from insects and damp?"
+          ]
+        },
+        {
+          "slug": "Grass-Work",
+          "label": "Grass work",
+          "otherName": "Other grass work",
+          "questions": [
+            "Which grass is used for {craft}, and when is the grass harvested?",
+            "How is the grass for {craft} dried, dyed and coiled or woven?",
+            "Where does the grass for {craft} grow?"
+          ],
+          "otherQuestions": [
+            "Which grasses are used in Indian grass work, and when are they harvested?",
+            "How is grass dried, dyed and coiled or woven?",
+            "Where in India do the grasses for grass work grow?"
+          ]
+        },
+        {
+          "slug": "Leaf-Reed-Rattan",
+          "label": "Leaf, reed and rattan",
+          "otherName": "Other leaf, reed and rattan",
+          "questions": [
+            "Which plant is used for {craft}, and how is the plant prepared?",
+            "How are pieces of {craft} plaited or woven?",
+            "Where does the plant for {craft} grow?"
+          ],
+          "otherQuestions": [
+            "Which leaves, reeds and rattans are used in Indian craftwork, and how are they prepared?",
+            "How are leaf, reed and rattan plaited or woven?",
+            "Where in India do the plants for leaf, reed and rattan work grow?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Mud-Based-Craft-Category",
+      "label": "Clay",
+      "palette": "terracotta",
+      "kinds": [
+        {
+          "slug": "Terracotta-Pottery-Works",
+          "label": "Terracotta and pottery",
+          "otherName": "Other terracotta and pottery",
+          "questions": [
+            "Which clay is used for {craft}, and how is the clay prepared?",
+            "How is the firing of {craft} done, and what does the fire do to the clay?",
+            "Where do the colours or glaze of {craft} come from?"
+          ],
+          "otherQuestions": [
+            "Which clays are used for terracotta and pottery, and how are they prepared?",
+            "How is pottery fired, and what does the fire do to the clay?",
+            "Where do the colours and glazes of Indian pottery come from?"
+          ]
+        },
+        {
+          "slug": "Other-Mud-Based-Crafts",
+          "label": "Clay and mud crafts",
+          "otherName": "Other clay and mud crafts",
+          "questions": [
+            "Which clay or earth is used for {craft}?",
+            "How is the work of {craft} shaped, dried and finished?",
+            "Where is the work of {craft} done, and why there?"
+          ],
+          "otherQuestions": [
+            "Which clays and earths are used in clay and mud crafts?",
+            "How is clay or mud work shaped, dried and finished?",
+            "Where in India are clay and mud crafts practised, and why there?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Paper-Craft-Category",
+      "label": "Paper",
+      "palette": "paper",
+      "kinds": [
+        {
+          "slug": "Paper-Crafts",
+          "label": "Paper crafts",
+          "otherName": "Other paper crafts",
+          "questions": [
+            "What is the paper or pulp of {craft} made from?",
+            "How is the work of {craft} shaped and finished?",
+            "Where is the work of {craft} done, and by whom?"
+          ],
+          "otherQuestions": [
+            "What are handmade paper and papier-mâché made from?",
+            "How are paper crafts shaped and finished?",
+            "Where in India are paper crafts made, and who makes them?"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "Miscellaneous",
+      "label": "More crafts",
+      "palette": "lac",
+      "kinds": [
+        {
+          "slug": "Folk-Painting",
+          "label": "Folk painting",
+          "otherName": "Other folk painting",
+          "questions": [
+            "Where do the colours of {craft} come from, and how are the paints made?",
+            "What surface is used for {craft}, and how is the surface prepared?",
+            "Which stories and motifs appear in {craft}?"
+          ],
+          "otherQuestions": [
+            "Where do the colours of Indian folk paintings come from, and how are they made?",
+            "On what surfaces are folk paintings made, and how are these prepared?",
+            "Which stories and motifs do Indian folk paintings show?"
+          ]
+        },
+        {
+          "slug": "Jewellery",
+          "label": "Jewellery",
+          "otherName": "Other jewellery",
+          "questions": [
+            "Which metals and stones are used in {craft}?",
+            "What are the stages in the making of {craft}?",
+            "Who wears pieces of {craft}, and when?"
+          ],
+          "otherQuestions": [
+            "Which metals and stones are used in traditional Indian jewellery?",
+            "How is handmade jewellery made, stage by stage?",
+            "Who wears traditional jewellery, and when?"
+          ]
+        },
+        {
+          "slug": "Bone-Horn-Shell-Crafts",
+          "label": "Bone, horn and shell",
+          "otherName": "Other bone, horn and shell crafts",
+          "questions": [
+            "Which material is used for {craft}, and how is the material softened or cut?",
+            "Which tools and stages go into {craft}?",
+            "Where does the material for {craft} come from?"
+          ],
+          "otherQuestions": [
+            "How are bone, horn and shell softened or cut for craftwork?",
+            "Which tools and stages do bone, horn and shell crafts use?",
+            "Where does the material for bone, horn and shell work come from?"
+          ]
+        },
+        {
+          "slug": "Lac-And-Wax-Crafts",
+          "label": "Lac and wax",
+          "otherName": "Other lac and wax crafts",
+          "questions": [
+            "Where does the lac or wax of {craft} come from?",
+            "How is the lac or wax of {craft} heated, coloured and shaped?",
+            "What makes lac or wax right for {craft}?"
+          ],
+          "otherQuestions": [
+            "Where do lac and wax come from?",
+            "How are lac and wax heated, coloured and shaped?",
+            "Why do lac and wax suit craftwork?"
+          ]
+        },
+        {
+          "slug": "Figurines-And-Toys",
+          "label": "Figurines and toys",
+          "otherName": "Other figurines and toys",
+          "questions": [
+            "Which materials go into {craft}?",
+            "How are pieces of {craft} shaped and coloured?",
+            "Where is the work of {craft} done, and how are the pieces played with or used?"
+          ],
+          "otherQuestions": [
+            "Which materials are traditional Indian toys and figurines made from?",
+            "How are figurines and toys shaped and coloured?",
+            "Where in India are toys and figurines made, and how are they played with or used?"
+          ]
+        },
+        {
+          "slug": "Musical-Instrument",
+          "label": "Musical instruments",
+          "otherName": "Other musical instruments",
+          "questions": [
+            "Which materials go into {craft}, and how does each shape the sound?",
+            "What are the stages in the making and tuning of {craft}?",
+            "Where is the work of {craft} done, and where is the music played?"
+          ],
+          "otherQuestions": [
+            "Which materials go into Indian musical instruments, and how do they shape the sound?",
+            "How are musical instruments made and tuned by hand?",
+            "Where in India are traditional instruments made and played?"
+          ]
+        },
+        {
+          "slug": "Glass-And-Beads-Crafts",
+          "label": "Glass and beads",
+          "otherName": "Other glass and bead crafts",
+          "questions": [
+            "How is the glass of {craft} melted and shaped?",
+            "Where do the colours of {craft} come from?",
+            "Where is the work of {craft} done, and by whom?"
+          ],
+          "otherQuestions": [
+            "How is glass melted and shaped by hand?",
+            "Where do the colours of glass and beads come from?",
+            "Where in India are glass and beads made, and by whom?"
+          ]
+        },
+        {
+          "slug": "Other-Crafts",
+          "label": "Other crafts",
+          "otherName": "Other crafts",
+          "questions": [
+            "Which materials go into {craft}?",
+            "What are the stages in the making of {craft}?",
+            "How did the tradition of {craft} begin, and where does the work go on today?"
+          ],
+          "otherQuestions": [
+            "Which materials do other Indian handicrafts use?",
+            "How are other Indian handicrafts made, stage by stage?",
+            "Where are other Indian handicrafts practised, and how did they begin?"
+          ]
+        }
+      ]
+    }
+  ]
+}

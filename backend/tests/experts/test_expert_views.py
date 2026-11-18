@@ -208,6 +208,25 @@ def test_a_difference_is_kept_only_between_two_views_on_two_stored_facts(
     assert found is not None and refusal in found
 
 
+async def test_a_view_that_only_restates_its_section_is_not_seated() -> None:
+    model = panel_model([take("HISTORIAN", said(SEVENTH_CENTURY)), take("ANTHROPOLOGIST", said(CLIENTS))])
+    (anthropologist,) = await built(("HISTORIAN", "ANTHROPOLOGIST"), model)
+    assert (anthropologist.seat, anthropologist.agrees_with) == ("ANTHROPOLOGIST", [])
+
+
+async def test_a_view_adding_one_new_claim_is_seated_whole() -> None:
+    model = panel_model([take("HISTORIAN", said(SEVENTH_CENTURY), said(FOUR_HUNDRED))])
+    (historian,) = await built(("HISTORIAN",), model)
+    assert [sentence.text for sentence in historian.take] == [SEVENTH_CENTURY.text, FOUR_HUNDRED.text]
+
+
+async def test_no_panel_is_asked_when_the_section_already_shows_every_stored_fact() -> None:
+    model = panel_model([take("HISTORIAN", said(FOUR_HUNDRED))])
+    every = (FOUR_HUNDRED, SEVENTH_CENTURY, DHAMADKA, CLIENTS, BHARMALJI)
+    assert await built(("HISTORIAN",), model, shown=every) == []
+    assert model.calls == []
+
+
 async def test_two_views_resting_on_one_claim_agree() -> None:
     model = panel_model([take("HISTORIAN", said(BHARMALJI)), take("DESIGN_HISTORIAN", said(BHARMALJI))])
     historian, design = await built(("HISTORIAN", "DESIGN_HISTORIAN"), model)
@@ -225,11 +244,11 @@ async def test_the_artisan_seat_adds_nothing_yet() -> None:
     assert "ARTISAN" not in call["user"] and "ARTISAN" not in json.dumps(call["schema"])
 
 
-def test_the_panel_hears_the_section_s_stored_facts_its_blocks_cite_first() -> None:
+def test_the_panel_hears_the_stored_facts_its_section_has_not_shown_first() -> None:
     ask = build_ask(("HISTORIAN",))
     candidates = panel_candidates(ask.cited, ask.blocks)
     assert [c.id for c in candidates] == [
-        str(v.id) for v in (FOUR_HUNDRED, SEVENTH_CENTURY, DHAMADKA, CLIENTS, BHARMALJI)
+        str(v.id) for v in (FOUR_HUNDRED, CLIENTS, BHARMALJI, SEVENTH_CENTURY, DHAMADKA)
     ]
     assert candidates[0].quotes == [
         "came to Kutch from Sindh some 400 years ago at the behest of the King of Kutch"

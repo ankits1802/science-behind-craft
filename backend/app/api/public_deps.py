@@ -1,0 +1,81 @@
+from __future__ import annotations
+
+from typing import Any
+
+from fastapi import Depends, HTTPException, Request, Response, status
+from starlette.requests import HTTPConnection
+
+from app.core.deps import get_optional_user
+from app.core.http_cache import (
+    PRIVATE_NO_CACHE,
+    PUBLIC_READ_CACHE,
+    body_version,
+    not_modified,
+    revalidation_headers,
+)
+from app.core.rate_limit import public_read_attempt, retry_after_value
+from app.core.roles import LOWEST_ROLE
+from app.models import User
+from app.research.retrieval import chunk_acls_for
+
+__all__ = [
+    "READER_VARY",
+    "THROTTLED_DETAIL",
+    "cached_read",
+    "public_reader",
+    "read_headers",
+    "reader_cache",
+    "reading_acls",
+    "reading_role",
+    "unchanged_read",
+]
+
+READER_VARY = "Authorization"
+THROTTLED_DETAIL = "Many pages were read from this address in the last few minutes. Wait a little, or sign in, and try again."
+
+
+async def public_reader(
+    connection: HTTPConnection, user: User | None = Depends(get_optional_user)
+) -> User | None:
+    if user is not None:
+        return user
+    allowed, retry = public_read_attempt(connection)
+    if not allowed:
+        raise HTTPException(
+            status.HTTP_429_TOO_MANY_REQUESTS, THROTTLED_DETAIL, {"Retry-After": retry_after_value(retry)}
+        )
+    return None
+
+
+def reading_role(reader: User | None) -> User | str:
+    return LOWEST_ROLE if reader is None else reader
+
+
+def reading_acls(reader: User | None) -> tuple[str, ...]:
+    return chunk_acls_for(reading_role(reader))
+
+
+def reader_cache(reader: User | None) -> str:
+    return PUBLIC_READ_CACHE if reader is None else PRIVATE_NO_CACHE
+
+
+def read_headers(reader: User | None, version: str) -> dict[str, str]:
+    return {**revalidation_headers(version, cache_control=reader_cache(reader)), "Vary": READER_VARY}
+
+
+def unchanged_read(request: Request, reader: User | None, version: str) -> Response | None:
+    answer = not_modified(request, version, cache_control=reader_cache(reader))
+    if answer is not None:
+        answer.headers["Vary"] = READER_VARY
+    return answer
+
+
+def cached_read(
+    request: Request, response: Response, reader: User | None, body: Any, *, version: str | None = None
+) -> Any:
+    stamp = version or body_version(body)
+    unchanged = unchanged_read(request, reader, stamp)
+    if unchanged is not None:
+        return unchanged
+    response.headers.update(read_headers(reader, stamp))
+    return body

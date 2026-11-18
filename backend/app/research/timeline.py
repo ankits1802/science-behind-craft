@@ -86,14 +86,40 @@ RANGE = re.compile(
 SINGLE = re.compile(YEAR + r"(?!s\b)" + BEFORE_COMMON_ERA)
 DECADE = re.compile(r"(?<![\d.,])(1\d{2}0|20\d0)s\b")
 ORDINAL_WORDS = "|".join(sorted(CENTURY_WORDS, key=len, reverse=True))
-ORDINAL = rf"(?:(\d{{1,2}})(?:st|nd|rd|th)|({ORDINAL_WORDS}))"
+ORDINAL = rf"(?:\d{{1,2}}(?:st|nd|rd|th)|(?:{ORDINAL_WORDS}))"
+ORDINAL_JOIN = r"(?:\s*[-,]\s*(?:(?:and|or)\s+)?|\s+(?:to|and|or)\s+)(?:the\s+)?(?:(?:early|late|mid)[\s-]+)?"
 CENTURY = re.compile(
-    rf"(?<![\w-]){ORDINAL}(?:\s*-\s*{ORDINAL})?[\s-]+centur(?:y|ies)\b{BEFORE_COMMON_ERA}", re.IGNORECASE
+    rf"(?<!\w){ORDINAL}(?:{ORDINAL_JOIN}{ORDINAL})*[\s-]+centur(?:y|ies)\b{BEFORE_COMMON_ERA}", re.IGNORECASE
 )
+CENTURY_ORDINAL = re.compile(rf"(?<!\w)(?:(\d{{1,2}})(?:st|nd|rd|th)|({ORDINAL_WORDS}))(?!\w)", re.IGNORECASE)
+MEASURED = re.compile(
+    r"(?<![\w.,])\d[\d,.]*(?:\s*(?:-|to)\s*\d[\d,.]*)?\s*"
+    r"(?:°|º|degrees?\b|(?:hundred|thousand|million|billion)\b|(?:lakh|crore)s?\b)",
+    re.IGNORECASE,
+)
+PRICED = re.compile(r"(?:₹|\brs\b\.?|\binr\b)\s*\d[\d,.]*", re.IGNORECASE)
 WORD = re.compile(r"[^\W\d_]+")
 COUNTED = re.compile(r"\s+([a-z]{2,}s)\b")
 NOT_COUNTED = frozenset(
-    {"across", "as", "has", "his", "is", "its", "less", "plus", "this", "thus", "unless", "was", "whereas"}
+    {
+        "across",
+        "as",
+        "dozens",
+        "has",
+        "his",
+        "hundreds",
+        "is",
+        "its",
+        "less",
+        "millions",
+        "plus",
+        "this",
+        "thousands",
+        "thus",
+        "unless",
+        "was",
+        "whereas",
+    }
 )
 
 
@@ -109,7 +135,7 @@ def years_named(texts: Iterable[str]) -> set[YearSpan]:
 
 
 def years_offered(texts: Iterable[str]) -> set[YearSpan]:
-    plain = [fold_digits(normalise_quote_text(text)) for text in texts]
+    plain = [_unmeasured(fold_digits(normalise_quote_text(text))) for text in texts]
     dated = {year for text in plain for year in _dated_singles(text)}
     return {span for span in years_named(plain) if span[0] != span[1] or span[0] in dated}
 
@@ -155,12 +181,16 @@ def _decades(text: str) -> Iterator[YearSpan]:
         yield start, start + YEARS_PER_DECADE - 1
 
 
+def _unmeasured(text: str) -> str:
+    return PRICED.sub(" ", MEASURED.sub(" ", text))
+
+
 def _centuries(text: str) -> Iterator[YearSpan]:
     for match in CENTURY.finditer(text):
-        first = _century(match.group(1), match.group(2))
-        last = _century(match.group(3), match.group(4)) or first
-        if first and last and first <= last:
-            yield (first - 1) * YEARS_PER_CENTURY + 1, last * YEARS_PER_CENTURY
+        named = [_century(*found.groups()) for found in CENTURY_ORDINAL.finditer(match.group())]
+        centuries = [century for century in named if century]
+        if centuries and len(centuries) == len(named) and centuries == sorted(centuries):
+            yield (centuries[0] - 1) * YEARS_PER_CENTURY + 1, centuries[-1] * YEARS_PER_CENTURY
 
 
 def _century(digits: str | None, word: str | None) -> int | None:

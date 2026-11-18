@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import type { CitationLookup } from "@/components/answer/CitationContext";
 import type { ExplainerReading } from "@/components/answer/ExplainerReading";
-import type { OpenCitation } from "@/components/answer/SourceDialog";
+import { openedSource, type OpenCitation } from "@/components/answer/SourceDialog";
 import { useTermState } from "@/components/answer/useTermState";
 import { ENGLISH } from "@/lib/answerLanguages";
 import type { CraftPage } from "@/lib/craftPageContract";
@@ -18,7 +18,7 @@ export function useCraftReading(page: CraftPage, regionSources: readonly SourceR
   const numbers = useMemo(() => pageSourceNumbers(page, regionSources), [page, regionSources]);
   const sourcesById = useMemo(() => pageSourcesById(page, regionSources), [page, regionSources]);
   const onOpen = useCallback(
-    (citation: Citation) => setOpened({ citation, source: sourcesById.get(citation.sourceId) ?? null, number: numbers.get(citation.sourceId) ?? null }),
+    (citations: readonly Citation[]) => setOpened(openedSource(citations, numbers, sourcesById)),
     [numbers, sourcesById]
   );
   const lookup = useMemo<CitationLookup>(() => ({ numbers, sourcesById, onOpen }), [numbers, sourcesById, onOpen]);

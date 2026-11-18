@@ -68,7 +68,7 @@ class ConceptPlan:
 
 def source_rows(dossier: Dossier, check: CheckFile) -> list[dict[str, Any]]:
     digests = {entry.source_id: entry.text_sha256 for entry in check.sources}
-    return [_source_row(dossier.craft_slug, source, digests.get(source.id)) for source in dossier.sources]
+    return [_source_row(dossier.slug, source, digests.get(source.id)) for source in dossier.sources]
 
 
 def _source_row(slug: str, source: DossierSource, digest: str | None) -> dict[str, Any]:
@@ -114,10 +114,10 @@ def _place_identity(place: Place) -> tuple[Any, ...]:
     return place.name.casefold(), place.kind, place.district, place.state, place.country
 
 
-def concept_plan(dossier: Dossier, craft: CraftTarget) -> ConceptPlan:
+def concept_plan(dossier: Dossier, *, craft_id: uuid.UUID | None, name: str) -> ConceptPlan:
     named: dict[str, tuple[str, str, str | None]] = {}
     for discipline in dict.fromkeys(c.discipline for c in dossier.claims if c.subject.type == "CRAFT"):
-        named[craft_concept_key(discipline)] = (DISCIPLINE_CONCEPT_TYPES[discipline], craft.name, None)
+        named[craft_concept_key(discipline)] = (DISCIPLINE_CONCEPT_TYPES[discipline], name, None)
     entity = ENTITY_CONCEPT_TYPES
     named.update((stage.id, (entity["STAGE"], stage.name, None)) for stage in dossier.stages)
     named.update((item.id, (entity["MATERIAL"], item.name, None)) for item in dossier.materials)
@@ -128,19 +128,19 @@ def concept_plan(dossier: Dossier, craft: CraftTarget) -> ConceptPlan:
         named.setdefault(places[place.id], (entity["PLACE"], place.name, None))
     for term in dossier.glossary:
         named[term.id] = (entity["TERM"], term.term, term.meaning)
-    ids = {key: curated_id(dossier.craft_slug, "concept", key) for key in named}
+    ids = {key: curated_id(dossier.slug, "concept", key) for key in named}
     rows = tuple(
         {
             "id": ids[key],
-            "craftId": craft.id,
+            "craftId": craft_id,
             "subCategoryId": None,
             "type": concept_type,
-            "name": name,
+            "name": concept_name,
             "description": description,
-            "originRef": f"curation:{dossier.craft_slug}:{key}",
+            "originRef": f"curation:{dossier.slug}:{key}",
             "sensitivity": "OPEN",
         }
-        for key, (concept_type, name, description) in named.items()
+        for key, (concept_type, concept_name, description) in named.items()
     )
     crafted = {key.split(":", 1)[1]: ids[key] for key in named if key.startswith("craft:")}
     subjects = {place_id: ids[key] for place_id, key in places.items()}
@@ -156,7 +156,7 @@ def claim_rows(dossier: Dossier, check: CheckFile, concepts: ConceptPlan) -> lis
     verified = f"every quote re-found verbatim by {check.tool} on {check.checked_at.date().isoformat()}"
     return [
         {
-            "id": curated_id(dossier.craft_slug, claim.id),
+            "id": curated_id(dossier.slug, claim.id),
             "subjectType": "CONCEPT",
             "subjectId": concepts.subject(claim),
             "predicate": CURATED_PREDICATE,
@@ -175,11 +175,11 @@ def claim_rows(dossier: Dossier, check: CheckFile, concepts: ConceptPlan) -> lis
     ]
 
 
-def curated_claim_rows(dossier: Dossier, craft: CraftTarget) -> list[dict[str, Any]]:
+def curated_claim_rows(dossier: Dossier, owner_column: str, owner_id: uuid.UUID) -> list[dict[str, Any]]:
     return [
         {
-            "claimId": curated_id(dossier.craft_slug, claim.id),
-            "craftId": craft.id,
+            "claimId": curated_id(dossier.slug, claim.id),
+            owner_column: owner_id,
             "key": claim.id,
             "discipline": claim.discipline,
         }
@@ -192,7 +192,7 @@ def claim_source_id(slug: str, claim_key: str, source_key: str, quote: str) -> u
 
 
 def claim_source_rows(dossier: Dossier, check: CheckFile) -> list[dict[str, Any]]:
-    slug = dossier.craft_slug
+    slug = dossier.slug
     retrieved = {source.id: day_start(source.retrieved_at) for source in dossier.sources}
     rows: dict[uuid.UUID, dict[str, Any]] = {}
     for claim in dossier.claims:

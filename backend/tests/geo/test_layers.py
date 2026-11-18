@@ -15,7 +15,8 @@ from app.geo.layers import (
     quantile_classes,
     stored_depth_or_period,
 )
-from app.geo.records import LayerRow
+from app.geo.records import LayerRow, ValueRecord
+from app.geo.region_view import district_value, region_facets
 from app.schemas.region import (
     DATASET_FACETS,
     DEPTH_PATTERN,
@@ -26,10 +27,13 @@ from app.schemas.region import (
 )
 
 from ..contracts.golden import dumped, golden_json, golden_text
+from ..contracts.phase_b_golden import catalog_dataset
 from .golden_region import (
     GOLDEN_LAYER,
     GOLDEN_LAYERS,
+    KACHCHH,
     SOIL_PH,
+    dataset_record,
     golden_datasets,
     golden_layer_values,
     golden_listing,
@@ -135,3 +139,36 @@ def test_registry_depths_and_periods_are_the_stored_ones() -> None:
     chirps = dataclasses.replace(datasets["SOILGRIDS_2_0"], code="CHIRPS_3_0", period="2016-2025")
     assert stored_depth_or_period(LAYERS_BY_ID["monsoon-share"], chirps) == "2016-2025"
     assert stored_depth_or_period(LAYERS_BY_ID["soil-ph-0-5cm"], datasets["SOILGRIDS_2_0"]) == "0-5cm"
+
+
+def test_a_climate_layer_draws_the_normal_the_district_panel_shows() -> None:
+    datasets = {
+        code: dataset_record(catalog_dataset(code) | {"period": period})
+        for code, period in (
+            ("CHELSA_2_1_1981_2010", "1981-2010"),
+            ("CHIRPS_3_0", "1981-2025"),
+            ("GHCN_CAMS_T2M", "1981-2025"),
+        )
+    }
+    stored = (
+        ("CHELSA_2_1_1981_2010", "annual_precipitation", "1981-2010", 434.14, "mm/year"),
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025", 449.36, "mm/year"),
+        ("CHELSA_2_1_1981_2010", "annual_mean_temperature", "1981-2010", 27.2, "degC"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025", 27.07, "degC"),
+    )
+    rows = [
+        ValueRecord(KACHCHH, code, variable, period, "NORMAL", value, None, unit, None, None)
+        for code, variable, period, value, unit in stored
+    ]
+    facets = region_facets(district_value(row, datasets[row.dataset_code]) for row in rows)
+    panel = {(value.dataset_code, value.variable, value.period) for facet in facets for value in facet.values}
+    specs = (LAYERS_BY_ID["annual-precipitation"], LAYERS_BY_ID["annual-mean-temperature"])
+    drawn = {
+        (spec.dataset_code, spec.variable, stored_depth_or_period(spec, datasets[spec.dataset_code]))
+        for spec in specs
+    }
+    trend_normals = {
+        ("CHIRPS_3_0", "annual_precipitation", "1981-2025"),
+        ("GHCN_CAMS_T2M", "annual_mean_temperature", "1981-2025"),
+    }
+    assert panel == drawn == trend_normals

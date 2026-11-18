@@ -1,0 +1,2646 @@
+{
+  "schemaVersion": 1,
+  "categorySlug": "Natural-Fibre-Grass-Work",
+  "dossierVersion": 1,
+  "dossierDigest": "1b72795ab72a4447004c9669b78dd13ee42306cb03e2f9fc0fd8c74b7e09460c",
+  "checkedAt": "2026-11-18T10:13:34.603783Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20251106063657id_/https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "finalUrl": "https://web.archive.org/web/20251106063657id_/https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "fetchedAt": "2026-11-18T10:09:57.943971Z",
+      "contentType": "application/pdf",
+      "textSha256": "2e1af4412f37680c1dcb7f65c95e3c41f52bad914277d1d0a68da8473388d66a",
+      "characters": 78240,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "route": "LIVE",
+      "readUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "finalUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "fetchedAt": "2026-11-18T10:10:05.392436Z",
+      "contentType": "application/pdf",
+      "textSha256": "9c87967b5219b340b6d1e11c1c64b33bc7c188258aecc087adad1b6517391388",
+      "characters": 32175,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://serialsjournals.com/abstract/66604_8.pdf",
+      "route": "LIVE",
+      "readUrl": "https://serialsjournals.com/abstract/66604_8.pdf",
+      "finalUrl": "https://serialsjournals.com/abstract/66604_8.pdf",
+      "fetchedAt": "2026-11-18T10:09:57.393227Z",
+      "contentType": "application/pdf",
+      "textSha256": "0584b646d53da168b257a23cf808a927079c03950fe996c7e901407f754a3f95",
+      "characters": 32739,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.fao.org/4/y2783e/y2783e05.htm",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/4/y2783e/y2783e05.htm",
+      "finalUrl": "https://www.fao.org/4/y2783e/y2783e05.htm",
+      "fetchedAt": "2026-11-18T10:09:54.223685Z",
+      "contentType": "text/html",
+      "textSha256": "886579044fdb492ffc31a5e8e9f95ba6b86ad20316185ceae80f9be8f42f070a",
+      "characters": 47003,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "finalUrl": "https://openknowledge.fao.org/server/api/core/bitstreams/aec0f623-bdba-4420-b4ab-7682207de6ce/content",
+      "fetchedAt": "2026-11-18T10:10:25.483451Z",
+      "contentType": "application/pdf",
+      "textSha256": "6cecb9f658d767615902e9b1dc26e92a85a3a20ad98130de0c1e4b0ccbea00f0",
+      "characters": 1533314,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/253/216",
+      "route": "LIVE",
+      "readUrl": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/253/216",
+      "finalUrl": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/253/216",
+      "fetchedAt": "2026-11-18T10:10:07.730248Z",
+      "contentType": "application/pdf",
+      "textSha256": "dca5c138b15b83143e967c7caf4ead45cc69fd86023a1387fa9b61ce4b2a69e5",
+      "characters": 7972,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/287/250",
+      "route": "LIVE",
+      "readUrl": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/287/250",
+      "finalUrl": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/287/250",
+      "fetchedAt": "2026-11-18T10:10:09.947904Z",
+      "contentType": "application/pdf",
+      "textSha256": "152cbfcafec2e3415d78757b2de7eae9b3e01a9ddfc26b914227f27be5510e72",
+      "characters": 10742,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://ccriindia.org/Coirret.html",
+      "route": "LIVE",
+      "readUrl": "https://ccriindia.org/Coirret.html",
+      "finalUrl": "https://ccriindia.org/Coirret.html",
+      "fetchedAt": "2026-11-18T10:10:08.490141Z",
+      "contentType": "text/html",
+      "textSha256": "2b459cef567971e9058f9f86862fabcf18ac350fb3ad5626cc352e793b951949",
+      "characters": 1525,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://bioresources.cnr.ncsu.edu/resources/coir-from-coconut-processing-waste-as-a-raw-material-for-applications-beyond-traditional-uses/",
+      "route": "LIVE",
+      "readUrl": "https://bioresources.cnr.ncsu.edu/resources/coir-from-coconut-processing-waste-as-a-raw-material-for-applications-beyond-traditional-uses/",
+      "finalUrl": "https://bioresources.cnr.ncsu.edu/resources/coir-from-coconut-processing-waste-as-a-raw-material-for-applications-beyond-traditional-uses/",
+      "fetchedAt": "2026-11-18T10:10:13.792168Z",
+      "contentType": "text/html",
+      "textSha256": "77a19a9fa8ae2249b8cbf1b3aee55d2c537488a6fc1e2419524651150518b10f",
+      "characters": 77180,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://journal.iisc.ac.in/index.php/iisc/article/download/2721/2806",
+      "route": "LIVE",
+      "readUrl": "https://journal.iisc.ac.in/index.php/iisc/article/download/2721/2806",
+      "finalUrl": "https://journal.iisc.ac.in/index.php/iisc/article/download/2721/2806",
+      "fetchedAt": "2026-11-18T10:10:13.914824Z",
+      "contentType": "application/pdf",
+      "textSha256": "6ac5b0174d320addcfc1fed667af0458e0a9c8586b2a393823ba436e404ad269",
+      "characters": 40888,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://jtfp.jntbgri.res.in/index.php/jtfp/article/download/73/68/136",
+      "route": "LIVE",
+      "readUrl": "https://jtfp.jntbgri.res.in/index.php/jtfp/article/download/73/68/136",
+      "finalUrl": "https://jtfp.jntbgri.res.in/index.php/jtfp/article/download/73/68/136",
+      "fetchedAt": "2026-11-18T10:10:15.228236Z",
+      "contentType": "application/pdf",
+      "textSha256": "00f074bcbe57fe63236917a5d0569aab2476cc11326b876f4238d80e79389cee",
+      "characters": 27950,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://www.origin-gi.com/wp-content/uploads/2022/02/567-madurkathi.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/567-madurkathi.pdf",
+      "finalUrl": "https://www.origin-gi.com/wp-content/uploads/2022/02/567-madurkathi.pdf",
+      "fetchedAt": "2026-11-18T10:10:20.611574Z",
+      "contentType": "application/pdf",
+      "textSha256": "4138ced9fd327f2bfecbd40d66ecd2c20f2d4925ef86850f3915b76f2a33d869",
+      "characters": 28037,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.folkartopedia.com/archive/moonj-basketry-of-allahabad-uttar-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://www.folkartopedia.com/archive/moonj-basketry-of-allahabad-uttar-pradesh/",
+      "finalUrl": "https://www.folkartopedia.com/archive/moonj-basketry-of-allahabad-uttar-pradesh/",
+      "fetchedAt": "2026-11-18T10:10:17.834383Z",
+      "contentType": "text/html",
+      "textSha256": "68c478f3ce63b4bf21f94ee07aab6b8c58e1e3928a0add3ead9d238bb06987d8",
+      "characters": 6232,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://ethnobiology.org/traditional-uses-schoenoplectus-lacustris-linn-palla-and-schoenoplectus-mucronatus-linn-palla-local",
+      "route": "LIVE",
+      "readUrl": "https://ethnobiology.org/traditional-uses-schoenoplectus-lacustris-linn-palla-and-schoenoplectus-mucronatus-linn-palla-local",
+      "finalUrl": "https://ethnobiology.org/traditional-uses-schoenoplectus-lacustris-linn-palla-and-schoenoplectus-mucronatus-linn-palla-local",
+      "fetchedAt": "2026-11-18T10:10:18.447032Z",
+      "contentType": "text/html",
+      "textSha256": "1786af26bbb36a37fec1c9b1473be3db4f2d59bcf5e2a112a67f4027829fc882",
+      "characters": 1513,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://horizons.tatatrusts.org/2019/march/manipur-kauna-craft.html",
+      "route": "LIVE",
+      "readUrl": "https://horizons.tatatrusts.org/2019/march/manipur-kauna-craft.html",
+      "finalUrl": "https://horizons.tatatrusts.org/2019/march/manipur-kauna-craft.html",
+      "fetchedAt": "2026-11-18T10:10:18.156266Z",
+      "contentType": "text/html",
+      "textSha256": "4052a2521b133b7cbd8f8a3f2c16a94b62e5cbfa447aec7d60de8272acf62771",
+      "characters": 6792,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://epubs.icar.org.in/index.php/IndFarm/article/download/165152/63342/498047",
+      "route": "LIVE",
+      "readUrl": "https://epubs.icar.org.in/index.php/IndFarm/article/download/165152/63342/498047",
+      "finalUrl": "https://epubs.icar.org.in/index.php/IndFarm/article/download/165152/63342/498047",
+      "fetchedAt": "2026-11-18T10:10:19.026335Z",
+      "contentType": "application/pdf",
+      "textSha256": "e80ebf94f0d793897ff0b8686f8f395b1a35ef4e89cda1a2b01eb800958995a7",
+      "characters": 13972,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://www.harappa.com/sites/default/files/pdf/Jute.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.harappa.com/sites/default/files/pdf/Jute.pdf",
+      "finalUrl": "https://www.harappa.com/sites/default/files/pdf/Jute.pdf",
+      "fetchedAt": "2026-11-18T10:10:20.074105Z",
+      "contentType": "application/pdf",
+      "textSha256": "ffdebeee136de74bcf40da83cf5098826f3748d76ab9153e446fc9bac96a7c8b",
+      "characters": 26623,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://scholar.uoc.ac.in/server/api/core/bitstreams/87e2b065-a0eb-4e26-8395-a552511465f7/content",
+      "route": "LIVE",
+      "readUrl": "https://scholar.uoc.ac.in/server/api/core/bitstreams/87e2b065-a0eb-4e26-8395-a552511465f7/content",
+      "finalUrl": "https://scholar.uoc.ac.in/server/api/core/bitstreams/87e2b065-a0eb-4e26-8395-a552511465f7/content",
+      "fetchedAt": "2026-11-18T10:11:32.090019Z",
+      "contentType": "application/pdf",
+      "textSha256": "0efeebbcf67f8dfa2dfd5fdf401e3d4a4a876f3ef7317cb0bc0ef5d5d3bd9ca3",
+      "characters": 658936,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://www.thehindu.com/features/magazine/Sole-stories/article16193129.ece",
+      "route": "LIVE",
+      "readUrl": "https://www.thehindu.com/features/magazine/Sole-stories/article16193129.ece",
+      "finalUrl": "https://www.thehindu.com/features/magazine/Sole-stories/article16193129.ece",
+      "fetchedAt": "2026-11-18T10:10:21.963363Z",
+      "contentType": "text/html",
+      "textSha256": "83642756d1e27b85f94dbf12d0cb34c4f7e8d1fc4a9e4a8f71ed676514f94055",
+      "characters": 5318,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://shanlaxjournals.in/journals/index.php/sijash/article/view/1080/917",
+      "route": "LIVE",
+      "readUrl": "https://shanlaxjournals.in/journals/index.php/sijash/article/view/1080/917",
+      "finalUrl": "https://www.shanlaxjournals.in/pdf/ASH/V5N1/ASH_V5_N1_038.pdf",
+      "fetchedAt": "2026-11-18T10:10:28.306849Z",
+      "contentType": "application/pdf",
+      "textSha256": "9e0b1ab1d43966fde3b9de06daf31d1e135bdd874b290ee7f4090a1880427767",
+      "characters": 7334,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://ethnobotanyjournal.org/index.php/era/article/download/487/364/3092",
+      "route": "LIVE",
+      "readUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/487/364/3092",
+      "finalUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/487/364/3092",
+      "fetchedAt": "2026-11-18T10:10:12.163724Z",
+      "contentType": "application/pdf",
+      "textSha256": "74d5cca9da3c9f657eb674433e6f0be9471652b6bb42df89d115f85537b1b66f",
+      "characters": 37708,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://krishi.icar.gov.in/jspui/handle/123456789/62612",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20240912073721id_/https://krishi.icar.gov.in/jspui/handle/123456789/62612",
+      "finalUrl": "https://web.archive.org/web/20240912073721id_/https://krishi.icar.gov.in/jspui/handle/123456789/62612",
+      "fetchedAt": "2026-11-18T10:10:25.316294Z",
+      "contentType": "text/html",
+      "textSha256": "ba4093639b27e1c41f7daf9284e229b72e4e3339847001e4012041bef055660b",
+      "characters": 4997,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://www.outlooktraveller.com/experiences/heritage/eco-friendly-crafts-from-west-bengal",
+      "route": "LIVE",
+      "readUrl": "https://www.outlooktraveller.com/experiences/heritage/eco-friendly-crafts-from-west-bengal",
+      "finalUrl": "https://www.outlooktraveller.com/experiences/heritage/eco-friendly-crafts-from-west-bengal",
+      "fetchedAt": "2026-11-18T10:10:25.867702Z",
+      "contentType": "text/html",
+      "textSha256": "f87dd2b0e123ca60be8b79fdcfdf578d0cea85b0a1750cb28b07afb8a13ba879",
+      "characters": 4160,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://drsj.fis.ung.ac.id/DRSJ/article/view/96",
+      "route": "LIVE",
+      "readUrl": "https://drsj.fis.ung.ac.id/DRSJ/article/view/96",
+      "finalUrl": "https://drsj.fis.ung.ac.id/DRSJ/article/view/96",
+      "fetchedAt": "2026-11-18T10:10:40.261922Z",
+      "contentType": "text/html",
+      "textSha256": "a0c695d3b44c5222ce8bf9041ce66a43621dc680d4181d1c347aa02172eeab55",
+      "characters": 6498,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S18",
+      "quote": "However, in the case of handicrafts, 'grass-based materials' cover a large group of plant fibers which",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S18",
+      "quote": "are functionally similar but which do not happen to be taxonomically homogeneous",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S13",
+      "quote": "The objects can be made in two different forms: coiling for baskets; and weaving of mats.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "used by people since time immemorial to craft a variety of utilitarian, decorative and even ritualistic objects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S01",
+      "quote": "In one form or the other, bamboo features dominantly in the craft traditions of many communities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S02",
+      "quote": "In North-East India, bamboo craftsmanship has evolved over time, as evident from the diverse range of bamboo products manufactured and used by different tribes and states.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S02",
+      "quote": "These products showcase exquisite craftsmanship including an array of baskets, bridges, fences, toys, houses, combs, gates, furniture, carts, smoking pipes, hats, storage bins, flutes, and ropes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S02",
+      "quote": "of bamboo craftsmanship is quite popular and widespread amongst the ethnic groups, although it is not an exclusive occupation for the people",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S03",
+      "quote": "Arunachal Pradesh has a rich tradition of Bamboo and Cane Handicrafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S03",
+      "quote": "The products reflect the rich and varied culture of the tribes inhabiting this enchanting State",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S12",
+      "quote": "In Bengal, the word Madur is a generic for floor mats.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S12",
+      "quote": "Though actually, it is the name given to mats woven from a specific type of reed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S12",
+      "quote": "The weavers of Madur Kathi mat in Medinipur are known as Mahishyas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S11",
+      "quote": "Majority of women artists in the field of Madhubani Painting are well versed in the field of 'Sikki art' as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S13",
+      "quote": "This craft, Moonj basketry is basically been in the limelight for its massive involvement of the rural women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S13",
+      "quote": "In some parts of Uttar Pradesh, the baskets are made by mothers during the wedding time of their daughters as a gift.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S14",
+      "quote": "Both species are locally known as Kouna in Manipur and are closely associated with the tradition and culture of the Meitei Community of Manipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S14",
+      "quote": "Since time immemorial, Kouna was used for making different types of mats only.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S15",
+      "quote": "the making of mats from Kauna reeds is an expertise handed down the generations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S14",
+      "quote": "The ethnobotanical use of water rush in mat making is closely associated with the legendary divine snake God \"Nongda Lairen Pakhangba\" who ascended the throne of Manipur in 33 AD.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S17",
+      "quote": "The discovery of the preserved structure of jute fibers on an artifact securely dated to 2200-1900 (cal.) BC is the earliest evidence for the use of this plant for textiles in the Indus civilization.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S17",
+      "quote": "Its presence in this location may be explained by a common pottery practice of draping damp cloth over areas susceptible to fast drying in order to slow the drying rate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S17",
+      "quote": "The cloth was still in place when the dish was fired, burning out the fibers but leaving the clay coatings intact.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S17",
+      "quote": "Notably, there is evidence for jute cloth seeds from the site of Rojdi in Gujarat dated to approximately 2200-2000 BC (Weber 1991:62).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S17",
+      "quote": "Since fiber remains are rare in prehistoric South Asia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S17",
+      "quote": "Evidence for cloth produced from plant fibers is rare before the third millennium BC at Indus-related sites.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S12",
+      "quote": "The history of mat-weaving in India dates back to the Indus Valley Civilisation and its socio - cultural relevance can be traced to the references found in our ancient literature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S12",
+      "quote": "The sociocultural importance can be vestige in the credentials from ancient literature such as Atharva Veda.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S12",
+      "quote": "Records of the Medieval Period provide the first information about mat weaving in the region of Bengal-when both ordinary mats and the fine variety were produced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S12",
+      "quote": "Mats would be collected as revenue of the jaigirdari system in 1744, Nawab Alibardi Khan issued a charter to the jaigirdars in this regard & as a result, it was obligatory to supply ,masland' mats for use in the collectorate.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S12",
+      "quote": "Kasijora & Narajol were the two most important centers of 'masland' mat weaving during this period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S12",
+      "quote": "According to a census repoft of 1872 the number of skilled workers engaged in mat making at the district of Midnapore was 618 and mats were one of the principle articles of trade in Midnapore district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S12",
+      "quote": "It is reported that 448,300 mats were manufactured in the year of 1907-1908.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S12",
+      "quote": "Government officials in the British period found out that a large number of masland mats were being manufactured in Midnapore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S12",
+      "quote": "finest mat masland was named after the Persian word Masnad which means",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S12",
+      "quote": "There is a place at Midnapore district named Maslandpur which is a village very close to Tamluk subdivision. That probably came from the masland mat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S12",
+      "quote": "to which the geographical indication relates and which is in continuous use since 300 years in respect of the said goods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S10",
+      "quote": "The word coir ' is manifestly the transliteration of kayiru= rope, fibre and rope having long been important produce on the West Coast and exported to Europe from the middle of the fifteenth century",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S10",
+      "quote": "but apparently articles manufactured from coir were not known in England until about the middle of the nineteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S10",
+      "quote": "apparently the matter has not been studied, and the production probably follows the lines to-day which it did 500 years ago.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S10",
+      "quote": "observations made in the Department of Industries, Madras, when it became responsible to the Munitions Board for the control of the supply of coir-products required by the military services from 1914 onwards",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S10",
+      "quote": "In July, 1921, a Conference of officers of the Department of Industries was held in Madras, at which the desirability of investigating the production and methods of utilising the coir-fibre was stressed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S09",
+      "quote": "Historically, Sri Lanka has been the world's largest exporter of various fiber grades, mainly mattress fiber, bristle fiber, and twisted fiber. India traditionally focused on the production of value-added products such as yarn, mats, ropes and rugs made from coir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S11",
+      "quote": "Late Bindeshwari Devi of village Raiyam in Madhubani is known as an accomplished Sikki artist who was honoured by the late Prime Minister Indira Gandhi with the National Master Crafts Woman Award in 1969.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S11",
+      "quote": "Social Scientists are of the view that some of these designs resemble those found in the clay potteries and coins obtained in Harappa excavations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S11",
+      "quote": "Farmers in remote rural areas still observe a practice of Katara (Vetiver) worship as a sequel to the ancient method of land conservation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S11",
+      "quote": "Plate 1 - Katara Puja (Vetiver Worship) in Mithila (North Bihar), India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S18",
+      "quote": "Indian Forest (Amendment) Bill, 2017 removed bamboo from the definition of 'tree' under the Indian Forest Act, 1927 and acknowledged its special nature and growth",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S03",
+      "quote": "Ministry of Agriculture, Government of India launched National Bamboo Mission in 2006 for development of bamboo as resource for economic development.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S19",
+      "quote": "Legend says shoes made with leather were considered impure for dev bhoomi or the land of gods, Himachal Pradesh. Thus the sacred bhang was put to use in making the pula.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "BELONGS TO the grass family. It is a hardy and vigorous plant, capable of growing in a variety of soils and climates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S18",
+      "quote": "Although it looks like a tree, bamboo is actually a botanical grass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S03",
+      "quote": "Bamboos are a sub-family of grasses that include over 1,200 species worldwide.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "There are over 90 genera and 1,200 species of bamboo worldwise, with 18 genera belonging to 130 species available in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S02",
+      "quote": "with approximately 1250 species across 75 genera worldwide",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "There are over 90 genera and 1,200 species of bamboo worldwise, with 18 genera belonging to 130 species available in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S02",
+      "quote": "India is home to around 125 species belonging to 23 genera",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S03",
+      "quote": "also has the richest bamboo diversity in the world with 23 genera and 125 indigenous as well as exotic species",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S03",
+      "quote": "In North Eastern India, the diversity of bamboo is very high where about 19 genera and 78 species occur (Hore, 1998).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S03",
+      "quote": "26 species belonging to 9 genera occur in Arunachal Pradesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S03",
+      "quote": "In Arunachal Pradesh, which has about 46 bamboo species, the bamboo flora is seen up to an elevation of 2000 m or even more.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "An individual culm attains its maximum diameter and height in a single spurt of growth, typically within a period of between 80-110 days after emergence from the ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "Each year new culms are added, which, unless extracted, will live for 7-9 year.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "In drier areas the bamboo is smaller in diameter, with thinner culm walls; the bamboo culm tends to become semi-solid",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "For instance, in dry regions, the culms of Dendrocalamus strictus tend to be solid.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "Thirty four traditionally used bamboo gadgets were recorded in the study.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "31 items were made of Bambusa tulda Roxb. and only 3 items were made of Bambus balcooa Roxb.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S04",
+      "quote": "Rattans are spiny palms found in the old world tropics and subtropics and are the source of cane for the well-developed rattan industry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S04",
+      "quote": "Rattans are climbing palms exploited for their flexible stems that form the basis of a significant market for cane and cane products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S04",
+      "quote": "There are around 600 different species of rattan belonging to 13 genera and these are concentrated solely in the old world tropics",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S04",
+      "quote": "The largest rattan genus is Calamus, with ca. 370 species",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S04",
+      "quote": "Calamus is predominantly an Asian genus and ranges from the Indian subcontinent and south China southwards and east through the Malaysian region to Fiji",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S18",
+      "quote": "Some of the important grass-based natural fibre materials used in Kerala handicraft industries are:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S18",
+      "quote": "Kora Grass (Cyperaceae family): Although not technically a grass, this sedge family plant grows into material that is good for mats, roofing and eco-friendly home crafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S18",
+      "quote": "Rattan Cane (Arecaceae family): Though it is part of the palm family, cane is usefully comparable to grass-based products in craft use, especially for furniture making.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S18",
+      "quote": "Screw Pine (Pandanaceae family): Weaving with the help of screw pine leaves",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S14",
+      "quote": "This paper deals with the ethnobotanical investigation of two species of matting rush/water rush/club rush i.e. Schoenoplectus lacustris (Linn.) Palla and Schoenoplectus mucronatus (Linn.) Palla belonging to the family Cyperaceae.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S15",
+      "quote": "Kauna grass - to call it by its proper name - is a species of water reed that grows extensively in the wetlands and marshlands of the Northeast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S15",
+      "quote": "Manipur is a particularly fertile place for this hardy plant",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S12",
+      "quote": "The raw material used in this craft, Cyperus tegetum or Cyperus pangorei, locally known as Madurkathi, grows in this area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S12",
+      "quote": "Cyperus pangorei) is found abundantly in the alluvial tracts of Purba and Paschim Medinipur in West Bengal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S11",
+      "quote": "In Mithila area of north Bihar it forms the basis of \"Sikki Art\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S11",
+      "quote": "In Mithila area it is the peduncle that forms",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S11",
+      "quote": "Exquisite domestic items of both conventional and modern hues are carved out from inflorescence stalks of Vetiver after their softening by pretreatment with warm water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S11",
+      "quote": "In Mithila area it is the peduncle that forms",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S11",
+      "quote": "In South India, it is the fragrant roots from which art forms are made. Outside India, it is generally the long narrow leaves from which art items are carved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S13",
+      "quote": "Moonj and Kaasa are the types of wild grass that richly grows near the banks of the river in and around vast areas of Allahabad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S13",
+      "quote": "Moonj is outer layer of the grass which is peeled and knotted. Originally it is the '' Sarpat'' grass that is quite thick and green.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S13",
+      "quote": "These are then called ''balla of the moonj'' in the local language.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S19",
+      "quote": "This trend spurred-off a few years back when kora grass slippers, now popularly known as the chattai chappal, became a rage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S19",
+      "quote": "Until then, kora, a marsh reed growing abundantly across southern India, was used to weave the humble Indian chattai or floor mat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S16",
+      "quote": "Bhimal is widely distributed in the sub-Himalayan region, especially Uttarakhand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S16",
+      "quote": "while its bark yields strong fibre traditionally used for crafting ropes and other household items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S07",
+      "quote": "The mesocarp of the coconut or its husk is the source of coir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S10",
+      "quote": "source of the fibre is the thick fibrous layer (mesocarp) surrounding the kernel in the fruit of the coconut palm (Cocos nucifera)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S09",
+      "quote": "The copra is surrounded by a shell and a thick husk comprised of coir and pith",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S09",
+      "quote": "within the husk, coir acts as reinforcing fibers embedded in a matrix of spongy pith.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S09",
+      "quote": "The pith cells adhere to the coir, resulting in the formation of a natural composite.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S09",
+      "quote": "The coconut husk makes up about 35% of the total weight of the coconut, and of that husk, about 30% is coir (Thampan 1981).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S09",
+      "quote": "Fibers from mature coconuts, indicated by a thick, brown, abrasion-resistant husk, are referred to as brown coir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S09",
+      "quote": "The fibers extracted from immature nuts, also called white coir",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S07",
+      "quote": "'White fibre' or retted coir is ideal for spinning yarn which in turn is utilized for the manufacture of products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S06",
+      "quote": "fibre is versatile hard fibre having an average length of 35 cms and diameter ranging from 0.3 to 1.0 mm and used in the manufacture of floor coverings (mats, mattings, carpets) and cordage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S07",
+      "quote": "Irrespective of its extraction method, coir has remarkable stretching properties besides possessing high resistance to attack from microorganisms because of its impervious nature. The property of resistance to decay in salt water makes coir most suitable for different marine operations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S06",
+      "quote": "Coir matting has also found its use in roof surface cooling and controlling sea",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S06",
+      "quote": "in place of normal barricading materials like bamboo mats since coir mats can be reused",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S09",
+      "quote": "The husk is comprised of long fibers surrounded by a non-fibrous, lightweight, fluffy material referred to as coir pith. The pith makes up 50 to 70% of the fiber and is separated from the coir during the defibrillation process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "The most important product of rattan palms is cane; this is the rattan stem stripped of its leaf sheaths. This stem is solid, strong and uniform, yet is highly flexible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "It comes naturally pre-finished, with a smooth luster.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "It can be easily split and woven into a variety of products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "Bamboo products are washable and do not deteriorate when in contact with water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S01",
+      "quote": "There are over 1,500 documented uses of bamboo worldwide. Bamboo needs little preparation for it to be worked with.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S01",
+      "quote": "Although bamboo culms will attain their full physical dimensions in only a few months of emergence from the ground, the process of attaining maturity, i.e. of attaining their full strength will take place over the next 3-4 years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S01",
+      "quote": "Immature culms, i.e. culms harvested in the first two year, will tend to be weak, and vulnerable to borders and termites.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "It is highly renewable, taking 3-5 years to mature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "Bamboo can be grown on degraded land.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "Bamboo serves as nature's band-aid, its extensive roots binding soil together",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "These beetles live inside the bamboo, entering it through scars and cut ends. They consume the starch present in the bamboo, making multiple hollow tunnels along the length of the culm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "These tunnels reduce the strength of the bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "Culm containers of varying sizes, conveniently placed in the cooking area, are used to store salt, condiments and even grain. These are almost always single-noded and lidded.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "These containers can last for a very long time, since smoke from the hearth ensures seasoning and protection from insects and pests.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "It is estimated that about 20 percent of the harvested canes become stained.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S05",
+      "quote": "The most common cause is blue stain fungi that penetrate with their hyphae deep inside the stem, utilizing starch and sugar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S11",
+      "quote": "Sikki items are almost immune to pest attacks, which could be ascribed to the presence of pesticidal principles in the plant.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S11",
+      "quote": "which could be ascribed to the presence of pesticidal principles in the plant. Investigations are required to decipher the genetic diversity in its populations with a view to ascertaining the quantum of inherent pest resistance components",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S15",
+      "quote": "The stem of the Kauna reed is soft, spongy and supple, which makes it ideal to be woven into baskets, mats, cushions, mattresses and purses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S15",
+      "quote": "the reed's flexibility, durability and water-resistant quality are its strengths.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S16",
+      "quote": "Bhimal fibre is very long and fine, and have great tensile strength, which makes it durable and suitable for various applications.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S16",
+      "quote": "bhimal fibre typically has a natural brownish hue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S16",
+      "quote": "Local artisans utilize bhimal fibre to create a variety of handicrafts, including baskets, mats, and decorative items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S07",
+      "quote": "This brown fibre is mainly extracted from dry and semidry husks and finds end uses, in the manufacture of rubberized coir, upholstery fittings and coir needled felt.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S06",
+      "quote": "White coir fibre is extracted from coconut husks after 'retting' for a period varying between six to ten months",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S07",
+      "quote": "The retting period ranges between six to nine months by traditional methods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S07",
+      "quote": "Thus the period of retting coconut husks which by traditional methods takes 6-9 months could be brought down to three months to yield fibre of a fine quality.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S08",
+      "quote": "Retting not only pollutes the back waters in Kerala but it is also not economical to soak the husks in water for 6 to 11 months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S10",
+      "quote": "it is usual to continue the soaking for a full period",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S10",
+      "quote": "of ten months or even longer",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S06",
+      "quote": "subjected to retting in the natural backwaters either in pits covered by soil and coconut leaves or in large nets (malis).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S07",
+      "quote": "Green husks are separated from dry husks, and bundled into lots between 8000 to 1000 in coir nets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S07",
+      "quote": "The bundles are afloat in the saline waters until they get fully soaked, become heavy and submerge under water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S07",
+      "quote": "This leads to the loosening of the fibres which can be extracted by subjecting to a beating treatment with wooden bars.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S09",
+      "quote": "Traditionally, workers beat the retted pulp with wooden mallets to separate the fibers from the pith and the outer skin, but this process has been replaced by motorized processes carried out in steel drums with beater arms",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S07",
+      "quote": "The phenomenon of retting essentially consists of three stages - a physical, a biological and a mechanical",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S07",
+      "quote": "In the first stage the tissues of the binding matter within the husks swell under water at the same time air is expelled from the tissues",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S10",
+      "quote": "For producing coir of good colour it is everywhere recognized that the husk, after splitting, should not be exposed to the sun and",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S10",
+      "quote": "weather, but should be set to steep with as little delay as possible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S10",
+      "quote": "Exposure reddens the mass and from such exposed husk the production of the fine, light-coloured fibre characteristic of the best districts is an impossibility.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S06",
+      "quote": "It was observed that inoculation of the bacterial strains could shorten the period of retting by two and a half months and yield an improved quality of fibre with respect to colour and texture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S07",
+      "quote": "Thus the period of retting coconut husks which by traditional methods takes 6-9 months could be brought down to three months to yield fibre of a fine quality.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S07",
+      "quote": "be of a brighter colour with little pith content",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S08",
+      "quote": "Central Coir Research Institute has developed a bacterial consortium \"COIRRET\". By applying COIRRET we can reduce the retting period from 11 months to 3 months",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "Whole bamboo crafts utilize the characteristic typical of most bamboo species - the fact that they are natural hollow containers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "Bamboo lends itself easily to being slatted at the fibres along its length split under slight pressure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "Bamboo silvers of varying dimensions are woven into basketry products of all shapes and sizes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S18",
+      "quote": "Various stages of bamboo processing include, but are not limited to, harvesting, cross-cutting, knot removal, preservation treatment, cleaning, polishing, radial splitting, sliver making, weaving, varnishing and drying",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "The culms should be approximately 2-3 years old for use as containers and less than 2-3 years old for basket weaving purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S01",
+      "quote": "The culm should be cut at a distance of 40-50 cms above the ground, keeping at least two internode lengths away from the ground level.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S01",
+      "quote": "Post-harvest, the cut bamboo with its leaves and branches intact should be stored vertically in a sunny spot for 2-3 days for the photosynthesis process to continue. This helps to reduce the starch content in the bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "The bamboo culms can be seasoned by soaking in water for a few week, immediately after felling. The starch in the bamboo leaches out into the water, providing the bamboo some protection from borer attacks. However, this seasoning does not prevent fungus attacks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "In the process, the bamboo is rubbed with castor oil and then heated over a gentle fire.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "Smoking reduces moisture content and imparts a protective layer of tar on culm surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "The traditional methods are simple and offer protection to a degree against borers. However, these methods do not offer total protection against termites and fungus.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "Even after a bamboo culm is cut from the plant, photosynthesis continues for a few days if the leaves and branches are kept intact.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "If the freshly felled culms are kept standing in a drum containing concentrated water-borne preservative solution.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "The nutrient juices which get used up are slowly replaced by the chemical solution over a period of 7-14 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S04",
+      "quote": "The canes are used either in whole or round form, especially for furniture frames, or split, peeled or cored for matting and basketry.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S05",
+      "quote": "They include primary processing of deglazing to remove the silicified epidermis, fumigation, bleaching, oil curing and drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S05",
+      "quote": "Curing means the immersion of canes in a hot oil bath to prevent deterioration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S05",
+      "quote": "This process reduces the moisture content so that biodeterioration is prevented. The rattan skin attains an ivory white colour, which is much desired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S05",
+      "quote": "In general, a treatment with kerosene oil at a temperature of 100-105°C for 20-45 minutes, depending on the stem diameter, appears to be best for enhancing the skin colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S13",
+      "quote": "The whole stem of cane and bamboo is cut with a hacksaw and split longitudinally into various sizes by a billhook. The cane is heated on a slow fire, generally with a kerosene lamp for flexibility.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S13",
+      "quote": "In coiled basketry, foundation of the basket is built first by coiling a cane round a central core. It is built up spirally and gradually the width is increased until desired height is attained.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S13",
+      "quote": "The coils are joined together by sewing strips",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S11",
+      "quote": "The circular stalks with 2 to 3.5 mm diameter are cleaved into two, four, eight or even sixteen pieces depending upon the artist's capacity to use the fineness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S11",
+      "quote": "The partitioned strands are intricately woven around a grassy base made of other poaceous grasses with the help of a specific needle called takua.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S13",
+      "quote": "These balla or coiled grass are to be dried in the sun but closely monitored because if dried too much they won't be able to be bend while weaving.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S13",
+      "quote": "This coil after being dried is dipped in cold water and then the weaving begins.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "The Madur kathi cultivation is done at the swampy land. The madhur kathi sapling is planted around the month of April-May.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S12",
+      "quote": "it is cut just above the ground leaving tiny part of it for its re growth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S12",
+      "quote": "From each of the stalks 4 to 8 strips can be prepared by discarding the soft inner tissue. The strips are further processed by soaking water to make it soft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S12",
+      "quote": "The colouration of Madurs was done with vegetable dyes only.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S12",
+      "quote": "Black dye is produced using haritaki fruit, fruit and barks of Babla tree. Reddish dye is formed from a local tree named rang gaach.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S12",
+      "quote": "Prior to start of dyeing the mat is tightly bound with palm leaves at the places where natural colour will be retained.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S12",
+      "quote": "The boiling differs in respect of times if dye for black it is l0 hours whereas for reddish dyeing it is 24 hours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S12",
+      "quote": "the soft reeds and cotton (some cases jute thread) are arranged on a bamboo frame loom as weft and warp respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S12",
+      "quote": "For weaving of masland mats at least two persons are required.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S12",
+      "quote": "The process of weaving of the masland mats very much resemblance to the weaving of sari.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S18",
+      "quote": "The screw pine is picked, the thorns removed, the leaves then allowed to dry in the sun, boiled in water with turmeric to ensure lasting quality and dried once more before weaving",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S15",
+      "quote": "The reed has to be processed before it can be crafted into products and this is done by cutting it near the base and drying it in the sun.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S15",
+      "quote": "The Kauna reeds used by the women artisans are smoked and stored for a period - to increase its shelf life - before being woven with basic tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S16",
+      "quote": "The traditional method of bhimal fibre extraction involves a process known as retting, where the plant materials are dipped in water bodies and then beating it to extract fibres from the woody stems.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S16",
+      "quote": "After retting, the fibres are washed, dried, and combed to remove impurities",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S19",
+      "quote": "Among all varieties of hemp fibre, the cannabis - or the indigenous bhang - is known to be the sturdiest.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S19",
+      "quote": "For use in the pula, it's plaited into ropes and then stretched, twisted and intertwined to firm it up. It's then arranged in meticulous fashion and stitched to form the durable outsole.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S06",
+      "quote": "As retting progresses the different constituents in the husk holding the individual fibres together viz. polyphenols and pectins are biologically degraded, thereby liberating the individual fibres from their natural setting in the husk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S09",
+      "quote": "The fibers are embedded in a matrix of pectin, polyphenols, and hemicelluloses that have to be degraded to release the fibers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S06",
+      "quote": "The lignocellulosic bondage that constitutes the coir fibre is normally resistant to microbial attack and hence the fibre is not disintegrated by the retting process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S07",
+      "quote": "the presence of polyphenols leached out during the soaking of the coconut husk results in the inhibition of survival and proliferation of the microorganisms responsible for bring ing about retting",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S06",
+      "quote": "inoculated into the lot of husks after 40 days of steeping",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S06",
+      "quote": "Three aerobic and one anaerobic species of bacterial cultures viz. Pseudomonas aeruginosa, Pseudomonas desmolyticum, Psuedomonas resinovorans and Clostridium felsineurn known for phenol and pectin degradation were grown in nutrient medium",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S09",
+      "quote": "Different yeast species play an especially vital role in the degradation of pectic and phenolic substances in the outer shell (Nambudiri et al. 1972).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S09",
+      "quote": "To accelerate the process, chemicals such as lime, sodium sulphate, or sodium carbonate, supplemented with hot water and/or steam treatment, can replace the microbiological process",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S10",
+      "quote": "That effective retting of the coconut husk requires only suitable water-conditions. The effective organisms reside in the husk itself, and can exert their full influence in water changing sufficiently frequently to prevent the organisms being poisoned by the products of their action",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S10",
+      "quote": "dulling of the fibre are due to its coming into contact with ferruginous water brought down by fresh-water floods from inland, forming tannate of iron with the tannin-matter in process of extraction from the husk.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S10",
+      "quote": "the reddening of the fibre is caused by exposure of the husk to the action of the air, the tannin-matter being highly oxidisable and readily convertible into coloured, insoluble phlobaphenes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S10",
+      "quote": "That the brown colour of the water on first setting to soak is due to the tannin-matter extracted with the juices",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S10",
+      "quote": "after about thirty days, a scum may form on the surface, a distinct smell of sulphuretted hydrogen becomes noticeable and there is a marked increase of temperature in the mass of husk",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S09",
+      "quote": "coir mainly stands out from other plant fibers due to its high lignin content. The cellulose content varies between 27 and 36 wt%, hemicelluloses between 17 and 23 wt%, and lignin between 37 and 42 wt%",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S09",
+      "quote": "The production of high-density fiberboards from coir has been studied in great detail by van Dam et al.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S09",
+      "quote": "The lignin content of the fibers was shown to be about 31.9 wt%",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "The outer part of the culm - the skin or rind - is called the cortex, and its main function is to protect the inner tissues and repel water. Bamboo fibres along the cortex contain lignin and silica, which strengthen the outermost layer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "It is best to harvest bamboo in the dry season; harvesting in the rainy season or when the bamboo is flowering should be avoided.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "the starch content of the bamboo is at its lowest, thereby reducing chances of attacks by borers and fungus, which feed on the starch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "A mixture of boric acid and borax in ratio 1: 1.5 is taken and a 5% aqueous solution is prepared.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "Boron salts are effective against termites and fungi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S05",
+      "quote": "Rattan is much liable to be infested by fungi and insects due to its high starch content. Fungal invasion can occur within one day after cutting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S11",
+      "quote": "Fast colours are applied to the Sikki items through hot water treatment with common salt also dissolved in it.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S13",
+      "quote": "During the dyeing process salt is added to the boiling solution as it helps to sustain the color for a longer period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S11",
+      "quote": "Earlier a dye obtained from the bark of Artocarpus lakoocha was used to colour the Sikki gadgets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "The lignin content of bhimal fibres ranges in between 14-16%. Lignin is stiff and hydrophobic in nature, which makes the bhimal fibres rigid and less flexible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S16",
+      "quote": "Hence, removal of lignin is necessary to increase flexibility of the extracted fibres",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S09",
+      "quote": "The coir itself is characterized by a gradually pitched helical structure with the cell wall composed of microfibrils oriented at an angle of approximately 45 degrees, explaining the high resilience of the fiber.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S09",
+      "quote": "Young's modulus was about 3.8 GPa for brown and 4 GPa for white coir, while the elongation at break was about 40% in both cases.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S09",
+      "quote": "The lower strength compared to jute and bamboo fibers was explained by the high degree of porosity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S09",
+      "quote": "The fibers extracted from immature nuts, also called white coir, have a lower mechanical strength compared to brown coir (Meenatchisunderam 1980).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S09",
+      "quote": "Biswas et al. (2013) studied the mechanical properties of mature (brown) and immature (white) coir in detail",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S09",
+      "quote": "They measured the tensile strength of brown coir as 165 to 222 MPa, and that of white coir as slightly higher at 185 to 237 MPa.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S01",
+      "quote": "Bamboo fibres run longitudinally down the internodal portion, making splitting easier. At the node, the bamboo fibres run transversely.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S01",
+      "quote": "The internal structure of the bamboo along its culm walls is such that it allows fro liquids to travel quickly through the entire length of the bamboo. Thus any chemical solution applied to one end of the bamboo is likely to be drawn in along the entire bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S01",
+      "quote": "two thirds of a tank is filled with a preservative solution and a hand-pump is used to raise the pressure on the solution to between 1 and 1.4 kg/cm2.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S01",
+      "quote": "The preservative solution is forced by pressure into the butt end of the trunk whilst the sap drains away from the top end.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S01",
+      "quote": "If the outer skin is taken off, as is normally done, the beverage will retain its freshness, since the softer inner skin allows a limited degree of evaporation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "The oil penetrates the cane axially, while the radial penetration through the skin is almost nil due to its refractory anatomical structure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S08",
+      "quote": "Retting leads to the release of large amount of phenolic compounds which emanate a foul smell and also effect the growth of aquatic flora and fauna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S06",
+      "quote": "Environmental factors like temperature, water quality, water movement by tidal action control the efficiency of retting and the quality of the retted fibre.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S16",
+      "quote": "Different chemical treatments are also available to extract bhimal fibres, such as urea retting which doesn't pollute water bodies as in case of traditional retting method.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S16",
+      "quote": "Its deep root system mitigates soil erosion, a prevalent issue in hilly areas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C156",
+      "sourceId": "S16",
+      "quote": "The tree's drought tolerance and ability to thrive in poor soils make it a sustainable and resilient resource for rural households.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S11",
+      "quote": "Vetiver occupies special significance in flood ridden areas in view of its deep penetrating roots which help check the process of soil erosion.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C157",
+      "sourceId": "S11",
+      "quote": "People generally plant it on the bunds of crop fields to ensure protection against high floods.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C158",
+      "sourceId": "S01",
+      "quote": "care should be taken to ensure that only mature bamboo culms are cut. Good harvesting practices will make available the required raw material over a longer period of time and will not hamper the normal growth of the mother clump.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S04",
+      "quote": "The thriving international and domestic trade in rattan and rattan products has led to substantial over-exploitation of the wild rattan resource.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C159",
+      "sourceId": "S04",
+      "quote": "This exploitation, coupled with the loss of forest cover through logging and subsequent agricultural activities, is threatening the long-term survival of the rattan industry, particularly in Southeast Asia",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C160",
+      "sourceId": "S18",
+      "quote": "Biodegradability: Natural fiber products degrade at the end of life, contrary to synthetic alternatives that exacerbate the problem of accumulated waste",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C161",
+      "sourceId": "S18",
+      "quote": "A small minority (27 units) cultivates raw materials because of the unavailability of land. The majority (141 units) are directly extracted from the forest.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C162",
+      "sourceId": "S12",
+      "quote": "The frequent flooding around Midnapore is not good for the cultivation of crop plant in many areas. Thus the cultivation of grass is a very altemative option for the farmers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S11",
+      "quote": "Mithila region in north Bihar is known for having a moderate to heavy rainfall of over 1200 mm and fine network of rivers mostly emanating from the Nepal Himalayas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C163",
+      "sourceId": "S11",
+      "quote": "As such a vast area remains water logged and provides habitat to a large number of wetland grasses of which Chrysopogon zizanioides is now well recognised for its carbon sequestration capacity.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C164",
+      "sourceId": "S07",
+      "quote": "The saline backwaters in Kerala on the South West Coast of India provide natural facilities for coconut husk retting. This has led to the establishment of the coir industry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C165",
+      "sourceId": "S10",
+      "quote": "It was generally agreed that stagnant water was unsuitable and that a periodical change was necessary ; this change of water is caused, in all the areas visited, by the rise and fall of the tide amounting to about 4 feet in the backwaters and channels extending along the whole Malabar Coast.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C166",
+      "sourceId": "S10",
+      "quote": "it is on the West Coast of India and in the Laccadive Islands that the best qualities are produced and exported",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C167",
+      "sourceId": "S18",
+      "quote": "Alappuzha dominates Kerala's coir sector with its large production network of smallscale units and cooperatives that offer flexible employment, especially for women in coastal areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C168",
+      "sourceId": "S18",
+      "quote": "Palakkad and Wayanad districts focus on the manufacturing of tribal crafts using bamboo, kora grass and reed bamboo. Screw pine crafts are mainly manufactured in Kottayam and Idukki. Kasargod district focused on cane craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C169",
+      "sourceId": "S02",
+      "quote": "with approximately 66% of the bamboo population concentrated in the North Eastern part of the country",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S02",
+      "quote": "Bamboo occupies around 12.8% of India's total forest cover and the country is the second largest producer globally (Tewari 1992).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C170",
+      "sourceId": "S03",
+      "quote": "India is the second largest producer of bamboo in the world, next to China",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C171",
+      "sourceId": "S02",
+      "quote": "The forest area under bamboos is estimated to be around 14 million hectares (FSI 2011).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C172",
+      "sourceId": "S03",
+      "quote": "They are widely distributed and occur abundantly in most regions of India except in the Rajasthan desert or upper reaches of Kashmir.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C173",
+      "sourceId": "S03",
+      "quote": "Arunachal Pradesh has an area of 7770 sq. km under bamboo cover and is richest in the country as far as the bamboo resources are concerned (Bhuyan et al., 2007).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C174",
+      "sourceId": "S01",
+      "quote": "The most widespread traditional use of bamboo culm containers if for carrying and storing water and food articles. These are especially common in the North East, but are also used in other parts of the country where good-sized bamboo is easily available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C175",
+      "sourceId": "S14",
+      "quote": "These two aquatic plants grows wild as well as cultivated in the wetlands of Imphal Valley mainly in Imphal East, Imphal West, Thoubal and Bishnupur Districts of Manipur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C176",
+      "sourceId": "S12",
+      "quote": "The geographical indication mainly lies at Bhagabanpur, Kanthi, Ramnagar of Purba Medinipur and Sabang, Pingla and Naryangarh block of Paschim Midnapore.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S11",
+      "quote": "Villages like Raiyam and Rampur in Madhubani district, Sursand in Sitamarhi district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C177",
+      "sourceId": "S11",
+      "quote": "and the Tharuhat area in West Champaran district are known as Vetiver hubs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S11",
+      "quote": "Raiyam Village in Madhubani District - A Hub of Sikki Activities",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C178",
+      "sourceId": "S11",
+      "quote": "Plate-3 further incorporates the Sikki activities going on at present in Raiyam village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S13",
+      "quote": "Naini is a small village situated near the banks of Yamuna River in Allahabad situated in Uttar Pradesh state. The village Naini is the major producer of Moonj-wild grass products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C179",
+      "sourceId": "S13",
+      "quote": "Moonj basketry is found in modern day Prayagraj in almost every of its local markets",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C180",
+      "sourceId": "S19",
+      "quote": "Worn extensively but not found easily, the pula, in a way, is the state shoe of Himachal Pradesh, particularly the district of Kulu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C181",
+      "sourceId": "S12",
+      "quote": "The non-conducting property and ability to absorb sweat makes the mat a necessity household item in the hot and humid climate of West Bengal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C182",
+      "sourceId": "S18",
+      "quote": "Coastal Communities: Techniques were developed for treating natural fibers to be resistant to humidity and a saline environment, which are especially pronounced in works in screw pine (Gunwant, 2024).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C183",
+      "sourceId": "S10",
+      "quote": "the usual age for collection of the nut was about ten months, or just before it was fully ripe, and that the best time for setting the pit was in the dry season and not in the rainy season (May to August)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S11",
+      "quote": "Women mostly belonging to the weaker sections of the society engage themselves in the business of collection of Sikki stalks from the floodplains after the rainy season nears its end.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C184",
+      "sourceId": "S11",
+      "quote": "They also make an income through the sale of these stalks as 'muthias' (fistfuls).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C185",
+      "sourceId": "S09",
+      "quote": "The Food and Agriculture Organization of the United Nations estimated the production of coir in 2019 to be at about 1.26 million tonnes on a global level. Almost half (518,000 tonnes) was produced in India, making the country by far the leading coir producer in the world",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S06",
+      "quote": "India ranks first among the coir producing nations in the world, although it ranks third among the coconut growing countries in the world after Philippines and Indonesia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C186",
+      "sourceId": "S07",
+      "quote": "ANITA DAS RAVINDRANATH, 1991. Processing of Coir - A Bio logical Approach to Retting of Coconut husks. CORD Vol. VII NO. 2 July 1991",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C187",
+      "sourceId": "S07",
+      "quote": "It also fetches an export earning of over 100 crores, rupees for India. The export figures for 1993 -94 was approximately 130 crores.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C188",
+      "sourceId": "S09",
+      "quote": "The biggest export market for coir today is China, which makes up 90% of the export volume (Rethinam 2018).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S10",
+      "quote": "The actual soaking of the husk and separation of the coir appears in general to be carried on as a cottage' industry, the products being collected and graded for export by the mercantile firms.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C189",
+      "sourceId": "S10",
+      "quote": "The marketvalue of the coir is dependent upon the colour and fineness of the fibre",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S03",
+      "quote": "it is known as the \"Poor man's timber\", \"Green gold of the forest\" and \"Friend of the people.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C190",
+      "sourceId": "S02",
+      "quote": "Known as the poor man's timber, bamboo has the potential to significantly impact rural economies in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S01",
+      "quote": "In fact, even today, many bamboo craftspersons use only a single tool, normally a dao or a machete.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C191",
+      "sourceId": "S01",
+      "quote": "The initial investment (in raw materials and machinery/tools) is low, especially for bamboo handicrafts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S01",
+      "quote": "The market for these products is also expanding due to the following factors:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S01",
+      "quote": "Increase in disposable income amongst the middle classes in metros and small towns across India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C192",
+      "sourceId": "S01",
+      "quote": "Increased awareness of ecological issues, and the need for wood and plastic substitutes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C193",
+      "sourceId": "S03",
+      "quote": "The National Mission for Bamboo Applications (NMBA) is an initiative of the Department of Science & Technology (DST), Government of India, and is being implemented by the Technology Information, Forecasting & Assessment Council (TIFAC)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S02",
+      "quote": "The study was carried out between January and September 2024 in 8 villages of Sivasagar district inhabited by Nath-Yogi community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S02",
+      "quote": "certain high demand bamboo products that are used throughout the year generate higher daily income for craftsmen compared to the average daily earning of rural Indian workers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C194",
+      "sourceId": "S02",
+      "quote": "Murha, Doon, and Khuka yield the highest increase at 78.57% each",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S02",
+      "quote": "Thirty four traditionally used bamboo gadgets were recorded in the study.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C195",
+      "sourceId": "S02",
+      "quote": "In 27 items, cane was used as an associated material to complete the making process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C196",
+      "sourceId": "S04",
+      "quote": "Rattan harvesting is often a secondary activity for many farmers, who rely on the cash sale of rattan canes",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S05",
+      "quote": "harvesting, cutting to size and infections by staining fungi and beetle attack",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C197",
+      "sourceId": "S05",
+      "quote": "The loss due to wastage is estimated to be at least 30 percent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C198",
+      "sourceId": "S11",
+      "quote": "A number of women Sikki artists in this region have earned national and international fame and this art has proved a significant tool in women empowerment, more particularly in the rural parts of Mithila.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C199",
+      "sourceId": "S11",
+      "quote": "Upendra Maharathi Shilp Anusandhan Sansthan, Patna is providing training to the Sikki art lovers since 2013.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S15",
+      "quote": "A band of women artisans in Thoubal district are using a supple water reed as raw material to craft an improved life for themselves",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S15",
+      "quote": "Used in homes and for ritual purposes, these mats are part of the local culture, but they don't fetch much. Changing tack to create higher-value products has resulted in a recasting of the revenue equation for the women artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C200",
+      "sourceId": "S15",
+      "quote": "The current phase of the programme began in 2016 and has the steadfast backing of the Tata Trusts.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S15",
+      "quote": "which takes less time and effort than the more popular paddy to cultivate and harvest",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C201",
+      "sourceId": "S15",
+      "quote": "that is being eased as more local farmers switch from paddy cultivation to growing Kauna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C202",
+      "sourceId": "S18",
+      "quote": "In many grass-based craft traditions, women outnumber men in the workforce, especially those in screw pine weaving (Sharif et al., 2017).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C203",
+      "sourceId": "S18",
+      "quote": "Males had greater participation in the entire range of activities, from raw material extraction to manufacture and distribution, while females were more specialised in manufacture alone.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S18",
+      "quote": "Raw Material Scarcity: Reduced availability of quality input materials caused by land use change, urbanisation and the impacts of climate change",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C204",
+      "sourceId": "S18",
+      "quote": "Competition from Synthetic Alternatives: Mass-produced plastic and synthetic goods displace traditional handicraft markets using competition on price",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C205",
+      "sourceId": "S18",
+      "quote": "Weaving with the help of screw pine leaves has officially been included under the Geographical Indications of Goods (Registration and Protection) Act, 1999, for Kerala as a traditional craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C206",
+      "sourceId": "S13",
+      "quote": "Often exporters take double the amount that they give to the worker and the art starts vanishing due to the poverty stricken communities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S01",
+      "quote": "In vertical containers, the whole bamboo culm section rests on one of its node ends, and the top end is cut off. The nodal diaphragm forms the base of the container.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C207",
+      "sourceId": "S01",
+      "quote": "Both the node walls remain intact in horizontal containers, effectively closing the ends.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C208",
+      "sourceId": "S01",
+      "quote": "Entrepreneurs and designers working both on their own and with traditional craft communities are creating innovative bamboo products suited to contemporary tastes and trends.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S02",
+      "quote": "It is a gadget used like an umbrella to protect from rain during farming. The leaves of the Himalayan fan palm are used along with a bamboo frame to make the gadget (Fig 2-g).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S02",
+      "quote": "The frame is woven with thin bamboo strips, forming an oval shaped structure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C209",
+      "sourceId": "S02",
+      "quote": "Figure 2. Bamboo gadgets used in agriculture- (a) Bhar pachi (b) Chaloni (c) Dola (d) Doon (e) Dooli (f) Gobar pachi (g) Japi",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S02",
+      "quote": "Made of cylindrical bamboo trap features a wide base tapering to the top, with two internal flexible openings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S02",
+      "quote": "Fish enter through the larger outer opening as water flows in, the fish getting trapped in the first flexible aperture and then the second.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C210",
+      "sourceId": "S02",
+      "quote": "Figure 3. Bamboo gadgets used in fishing- (n) Chepa (o) Chupohi (p) Jakoi (q) Juluki (r) Khaloi (s) Khuka (t) Polo (u) Lahoni.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C211",
+      "sourceId": "S04",
+      "quote": "The range of indigenous uses of rattan canes is vast; from bridges to baskets; from fish traps to furniture; from crossbow strings to yam ties.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S12",
+      "quote": "The craftsman or Mahishyas make three types of mat- ak rokha, dui rokha and masland- Ak rokha is a thin and light mat whereas Dui rokha is heavy and thicker.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C212",
+      "sourceId": "S12",
+      "quote": "Masland is the finest and most expensive mat among these three types.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C213",
+      "sourceId": "S11",
+      "quote": "Some plant-based designs include those of the leaves of Ipomoea aquatica , flower of Benincasa hispida, fruit of Trapa natans etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C214",
+      "sourceId": "S11",
+      "quote": "Sikki gadgets are mostly the containers of different shapes and sizes used for storing household items like masticatories and marital items like fruits of Bixa orellana (Sitasindur)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S11",
+      "quote": "An innovative practice of making exquisite wall hangings has been devised by Rachna Sikki Hastakala Kendra in Rampur village near Sarisab Pahi in Madhubani district of the state of Bihar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S11",
+      "quote": "This art form is based on the process of bending and pasting of the Sikki stalks and giving them a desired shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C215",
+      "sourceId": "S11",
+      "quote": "This centre was started in 1994 by",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C216",
+      "sourceId": "S13",
+      "quote": "The tribal areas of the Tharus, one of the dominant tribes of the state also practice this form of weaving but their motifs are normally more animal like or gigantic. The women of Allahabad and Gorakhpur normally make geometrical figures and the baskets are circular in shape.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S14",
+      "quote": "But in recent years the items manufactured from Kouna are diversified to include items like lady's hand bags, pen stands, tea coasters, wall hangings, hats, stools, chappals, cushions, chairs etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C217",
+      "sourceId": "S14",
+      "quote": "The products of Kouna are in great demand not only in Local markets but also in international markets as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C218",
+      "sourceId": "S19",
+      "quote": "Now usually flaunted by women, the pula has a delicately-embroidered, multi-coloured upper; a hemp fibre outsole; and a cloth insole. This makes it warm and soft and very desirable for cold climes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C219",
+      "sourceId": "S19",
+      "quote": "slippers and sandals made with a variety of fibre as banana, arecanut, and ramacham or vetiver, more widely known as the fragrant khus-khus. Most of these fibres are successful results of experiments carried out by various agencies in Kerala.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S01",
+      "quote": "Copper Chrome Arsenic: One of the most effective treatments for bamboo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C220",
+      "sourceId": "S01",
+      "quote": "However it is highly toxic and the use of Arsenic is banned in some countries. Good for usage in bamboo furniture and other handicrafts but not suitable for products which will be in contact with food.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C221",
+      "sourceId": "S01",
+      "quote": "These chemicals range from relatively harmless boron salts to toxic arsenic and chrome mixtures, which need to be handled very carefully.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C222",
+      "sourceId": "S01",
+      "quote": "It is the least harmful to use as it is not toxic and is specially recommended for use with woven strips of bamboo and for products intended to be used fro storing food.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S01",
+      "quote": "Wear protective gear such as gloves, facemask, eyeglasses and aprons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C223",
+      "sourceId": "S01",
+      "quote": "Do not allow children to come into the treatment area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S11",
+      "quote": "One such grass, Vetiver, having a strong root in Indian culture, has now attracted worldwide attention",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C224",
+      "sourceId": "S11",
+      "quote": "Botanically it is named as Chrysopogon zizanioides, belongs to the family Poaceae.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S17",
+      "quote": "Jute is now grown extensively in India, especially along the Ganges where several million acres are devoted to its production.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C225",
+      "sourceId": "S17",
+      "quote": "Received: 17 October 2011 / Accepted: 9 January 2012",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S17",
+      "quote": "Jute fibers are derived from the highly lignified sclerenchyma cells in the phloem tissue of mature stems that grow to a height of 2 to 4 m.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C226",
+      "sourceId": "S17",
+      "quote": "The plant thrives in rich, loamy alluvial soils that are well watered.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S17",
+      "quote": "Generally, it takes about 100 to 120 days for jute to mature before harvest usually in June in lowland areas in India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C227",
+      "sourceId": "S17",
+      "quote": "During harvest, plants are cut close to the ground and then sorted according to stem thickness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S17",
+      "quote": "Cut and sorted stems are stacked to dry in the field and tied into bundles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S17",
+      "quote": "After 3 days, the dried stems are defoliated by hand and then transported to an area with flowing water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S17",
+      "quote": "subsequent retting cannot be performed without a reliable source of moving water. Retting is a 10-16-day process of soaking the stems in specially prepared tanks or ditches.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C228",
+      "sourceId": "S17",
+      "quote": "This allows microbial action to remove the rot from the soft tissues surrounding the fibers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S17",
+      "quote": "Fiber extraction, or decortication, is performed by hand stripping that is often by beating with a wooden mallet to loosen the desired fibers from the residual unwanted tissues.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C229",
+      "sourceId": "S17",
+      "quote": "Bundles of fibers are washed then dried on racks in partial sun",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S14",
+      "quote": "Thus in recent years the products of Kouna have become a good source of income for many of the Meitei households.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C230",
+      "sourceId": "S14",
+      "quote": "Several cottage industries are being established solely based on Kouna.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S20",
+      "quote": "In Tamilnadu,there are certain other products of traditional Innovations, which have been adopted by the poor people of Tirunelveli District of Tamilnadu.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S20",
+      "quote": "They are 'Pathamadai mats / PathamadaiNanal Mats, the product was manufactured traditionally by the descendant generation as an ancestral product",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C231",
+      "sourceId": "S20",
+      "quote": "Pathamadai mats are produced from the natural straw (Nanal) found grown on the banks of river Tamiraparani in Pattamadai river side banks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S20",
+      "quote": "It was mainly manufactured by the Labbai Muslim weaver families in Pathamadai Village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C232",
+      "sourceId": "S20",
+      "quote": "A handwoven superfine silk mat was even sent to Queen Elizabeth II on the occasion of her coronation in June 1953.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C233",
+      "sourceId": "S20",
+      "quote": "the traditional palm leaf baskets known as 'ChettinadKottans' was granted registration following an application filed by \"Revive Kottan (Palm Leafs Knitting) Society\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S21",
+      "quote": "There are two broad groups of bamboo, thickbamboo and thin reed like bamboo (ringal).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S21",
+      "quote": "Bamboo is a thick, long and slender like plant (Figure 1) while ringal is thin spineless plant",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C234",
+      "sourceId": "S21",
+      "quote": "Ringal species grow at mid and high hill areas of the state (> 2000 m) while bamboo is generally found at mid and low hills (<2000 m).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S21",
+      "quote": "Among ringal species, dev-ringal (H. falconeri) is the most commonly used species for making different articles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S21",
+      "quote": "Himalayacalamus falconeri is recorded at highest elevations among all the bamboo species.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C235",
+      "sourceId": "S21",
+      "quote": "Drepanostachyum falcatum and Sinarundinaria anceps are other two species used in the local system for different articles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S21",
+      "quote": "The communities that make articles from bamboo and ringal are called Baruree and Rudia, respectively.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C236",
+      "sourceId": "S21",
+      "quote": "The socio-economic status of Barurees (bamboo-arti - sans) and Rudias (ringal artisans) in the state was very poor, which mainly comprised highly marginalized scheduled caste families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S21",
+      "quote": "This study has found that 65% of artisan families earned an income that ranges from Rs. 2000 to Rs. 4000 per month",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S21",
+      "quote": "In case of ringal, 20% of artisans earned between Rs. 4000 to Rs. 6000, 55% earned",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S21",
+      "quote": "between Rs. 2000 to Rs. 4000 and the remaining percent earned Rs. <2000.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C237",
+      "sourceId": "S21",
+      "quote": "Ethnobotany Research & Applications 9:445-454 (2011)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S21",
+      "quote": "Nearly 93% of ringal-artisans and 45% of bamboo-artisans directly collect the respective resources from forest areas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C238",
+      "sourceId": "S21",
+      "quote": "For ringal, the supply was met mainly from forest areas, viz. van-panchayat forests.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S22",
+      "quote": "Sisal Agave Sisalana is a multi-cellular leaf fibre occupies 6th place among plant fibres",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C239",
+      "sourceId": "S22",
+      "quote": "Its is a semi perennial plantation crop with a life cycle of about 12 years and the fibre is obtained from the leaf harvested yearly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S22",
+      "quote": "Bast fibres are found in the stems of the plant providing the plant its strength. Usually they run across the entire lenth of the stem and are therefore very long.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C240",
+      "sourceId": "S22",
+      "quote": "Fibres extracted from the leaves are rough and sturdy and form part of the plant's transportation system, they are called leaf fibres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S23",
+      "quote": "A traditional craft from Cooch Behar in West Bengal, the shital pati is woven from the muthra reed (Marantha dichotoma).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C241",
+      "sourceId": "S23",
+      "quote": "The green cane is soaked in water and then sliced into thin strips and the pati is made by weaving these in an interlacing pattern.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C242",
+      "sourceId": "S24",
+      "quote": "Water hyacinth (Eichhornia crassipes), an invasive aquatic plant, poses a persistent challenge to freshwater ecosystems in India, contributing to clogged waterways, reduced biodiversity, and economic strain on rural populations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S24",
+      "quote": "This study examines a community-based intervention in Meerut, supported by the Uttar Pradesh State Rural Livelihood Mission (UPSRLM)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S24",
+      "quote": "which aimed to address these issues by repurposing water hyacinth into value-added products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S24",
+      "quote": "Economically, participating women artisans reported an average income increase of approximately 35%, and profit margins for handicraft products ranged from 50% to 60%, although these figures varied based on market access and product demand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C243",
+      "sourceId": "S24",
+      "quote": "Copyright (c) 2025 Rinki Kumari, Bert Boerma, Rehan Ahmed, Swapan Suman, Sushil Sharma, Shikha Dhawan",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S19",
+      "quote": "Modestly priced, a pula pair can be purchased for as little as Rs. 60 from tucked away shops in Himachal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C244",
+      "sourceId": "S19",
+      "quote": "Published - July 10, 2010 07:23 pm IST",
+      "result": "PASS"
+    }
+  ]
+}

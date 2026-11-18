@@ -1,17 +1,20 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import NotConfigured
+from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.structured import StructuredModel
 
 from .answer_store import build_answer_translation
 from .live_sources import LiveSourcesStore
 from .term_research import LiveTermResearch, Searcher
 from .term_store import SqlTermStore
-from .term_summaries import TermLookup
+from .term_summaries import StoredTermLookup, TermLookup
 
-__all__ = ["WEB_SEARCHER", "WIKIPEDIA_SEARCHER", "build_term_lookup"]
+__all__ = ["WEB_SEARCHER", "WIKIPEDIA_SEARCHER", "build_term_lookup", "stored_term_lookup"]
 
 WIKIPEDIA_SEARCHER = "wikipedia"
 WEB_SEARCHER = "web"
@@ -23,6 +26,7 @@ async def build_term_lookup(
     live: LiveSourcesStore,
     summarise_model: StructuredModel,
     translate_model: StructuredModel,
+    acls: Sequence[str] = OPEN_CHUNK_ACLS,
 ) -> TermLookup:
     sources = await live.get(sessions)
     research = LiveTermResearch(
@@ -31,10 +35,16 @@ async def build_term_lookup(
         summarise=summarise_model,
     )
     return TermLookup(
-        store=SqlTermStore(sessions),
+        store=SqlTermStore(sessions, acls=acls),
         research=research,
         translation=build_answer_translation(sessions, model=translate_model),
     )
+
+
+def stored_term_lookup(
+    sessions: async_sessionmaker[AsyncSession], *, acls: Sequence[str] = OPEN_CHUNK_ACLS
+) -> StoredTermLookup:
+    return StoredTermLookup(store=SqlTermStore(sessions, acls=acls))
 
 
 def _searcher(searchers: tuple, name: str) -> Searcher:

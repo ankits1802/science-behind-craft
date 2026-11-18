@@ -1,0 +1,1973 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Madhubani-Paintings",
+  "dossierVersion": 1,
+  "dossierDigest": "26ea290da0f92747d120919650e70e6236d3f60d63a771ffcacb70a2471f68a5",
+  "checkedAt": "2026-11-18T09:36:50.093511Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://ipindia.nic.in/girindia/journal/14.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20130809213037id_/http://ipindia.nic.in/girindia/journal/14.pdf",
+      "finalUrl": "https://web.archive.org/web/20130809213037id_/http://ipindia.nic.in/girindia/journal/14.pdf",
+      "fetchedAt": "2026-11-18T09:36:37.359061Z",
+      "contentType": "application/pdf",
+      "textSha256": "c9fe07b691e4c86db2c2c6842347a93222783c271d0f22bb42134dc948ab42d4",
+      "characters": 217203,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/37",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/37",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/37",
+      "fetchedAt": "2026-11-18T09:36:32.342633Z",
+      "contentType": "text/html",
+      "textSha256": "2a4d4e5aaa18a7fb408d8bb09a999aa9a33a61961a1b0f25e7d80c6f151d6805",
+      "characters": 5590,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T09:36:32.051542Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://or.niscpr.res.in/index.php/IJTK/article/download/18122/4963/105223",
+      "route": "LIVE",
+      "readUrl": "https://or.niscpr.res.in/index.php/IJTK/article/download/18122/4963/105223",
+      "finalUrl": "https://or.niscpr.res.in/index.php/IJTK/article/download/18122/4963/105223",
+      "fetchedAt": "2026-11-18T09:36:44.677429Z",
+      "contentType": "application/pdf",
+      "textSha256": "b722f5367c9c90c31aec3de74fe17c920d85a69b6fa9a6c4dc4093733540e371",
+      "characters": 46407,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://journals.christuniversity.in/index.php/atna/article/download/2858/1886",
+      "route": "LIVE",
+      "readUrl": "https://journals.christuniversity.in/index.php/atna/article/download/2858/1886",
+      "finalUrl": "https://journals.christuniversity.in/index.php/atna/article/download/2858/1886",
+      "fetchedAt": "2026-11-18T09:36:42.336568Z",
+      "contentType": "application/pdf",
+      "textSha256": "5575499e2e0f3945000172e1512a32a98e1e659ca54e4d351c68f4db9fccf475",
+      "characters": 40305,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://imp-art.org/articles/madhubani-painting/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/madhubani-painting/",
+      "finalUrl": "https://imp-art.org/articles/madhubani-painting/",
+      "fetchedAt": "2026-11-18T09:36:34.419758Z",
+      "contentType": "text/html",
+      "textSha256": "c33fe9c725fc16e15db256ade247d22e70de8596629d7a78f805fbe187584c67",
+      "characters": 8209,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.folkartopedia.com/folk-painting/maithil-paintings-an-enquiry-into-its-historiographical-trajectory-sk/",
+      "route": "LIVE",
+      "readUrl": "https://www.folkartopedia.com/folk-painting/maithil-paintings-an-enquiry-into-its-historiographical-trajectory-sk/",
+      "finalUrl": "https://www.folkartopedia.com/folk-painting/maithil-paintings-an-enquiry-into-its-historiographical-trajectory-sk/",
+      "fetchedAt": "2026-11-18T09:36:36.173129Z",
+      "contentType": "text/html",
+      "textSha256": "a0bb37bdc5f36554faf5630c60743095f77ecaa80b18f89b4d7652ad6b961c89",
+      "characters": 53810,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://orias.berkeley.edu/sites/default/files/the_politics_of_mithila_painting_2-2017.pdf",
+      "route": "LIVE",
+      "readUrl": "https://orias.berkeley.edu/sites/default/files/the_politics_of_mithila_painting_2-2017.pdf",
+      "finalUrl": "https://orias.berkeley.edu/sites/default/files/the_politics_of_mithila_painting_2-2017.pdf",
+      "fetchedAt": "2026-11-18T09:36:43.861266Z",
+      "contentType": "application/pdf",
+      "textSha256": "2855d00c638138bbf546574177b3391ea650ef04fc89f7aaeafa0a974be5184c",
+      "characters": 40507,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://umsas.org.in/madhubani-painting-details/",
+      "route": "LIVE",
+      "readUrl": "https://umsas.org.in/madhubani-painting-details/",
+      "finalUrl": "https://umsas.org.in/madhubani-painting-details/",
+      "fetchedAt": "2026-11-18T09:36:43.776756Z",
+      "contentType": "text/html",
+      "textSha256": "e79c871c724efb4df0ed0332db5b7542b28b87f7735a9d599b843688dd3afb74",
+      "characters": 4771,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://madhubani.nic.in/handicraft/",
+      "route": "LIVE",
+      "readUrl": "https://madhubani.nic.in/handicraft/",
+      "finalUrl": "https://madhubani.nic.in/handicraft/",
+      "fetchedAt": "2026-11-18T09:36:44.024710Z",
+      "contentType": "text/html",
+      "textSha256": "3a2132ec8d87063fd6102bd213d46f04caff229e1617b6d827ecb3303abd347b",
+      "characters": 2070,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://tourism.bihar.gov.in/en/experiences/art-and-craft/painting/madhubani-or-mithila-painting",
+      "route": "LIVE",
+      "readUrl": "https://tourism.bihar.gov.in/en/experiences/art-and-craft/painting/madhubani-or-mithila-painting",
+      "finalUrl": "https://tourism.bihar.gov.in/en/experiences/art-and-craft/painting/madhubani-or-mithila-painting",
+      "fetchedAt": "2026-11-18T09:36:44.361066Z",
+      "contentType": "text/html",
+      "textSha256": "6537ebfae40bb3f4b1b8f396dc75c3eab94fc79cbb59fd58fc3b687f5eb34c72",
+      "characters": 802,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://padmaawards.gov.in/Document/pdf/CitationsForTickets/2024/202496.pdf",
+      "route": "LIVE",
+      "readUrl": "https://padmaawards.gov.in/Document/pdf/CitationsForTickets/2024/202496.pdf",
+      "finalUrl": "https://padmaawards.gov.in/Document/pdf/CitationsForTickets/2024/202496.pdf",
+      "fetchedAt": "2026-11-18T09:36:46.500804Z",
+      "contentType": "application/pdf",
+      "textSha256": "29d46acb00ea646c152c06ff094d714866350377a945e3b9358e341f431871d1",
+      "characters": 9464,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.worldhistory.org/article/1527/madhubani-paintings-peoples-living-cultural-herita/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260423204530id_/https://www.worldhistory.org/article/1527/madhubani-paintings-peoples-living-cultural-herita/",
+      "finalUrl": "https://web.archive.org/web/20260423204530id_/https://www.worldhistory.org/article/1527/madhubani-paintings-peoples-living-cultural-herita/",
+      "fetchedAt": "2026-11-18T09:36:47.999848Z",
+      "contentType": "text/html",
+      "textSha256": "a6e632746c1268c95e2c88b31b900d554a772c26b84ca61cd2b4b5f5ac640b98",
+      "characters": 10564,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://www.folkartopedia.com/archive/madhubani-painting-a-historical-context-sk/",
+      "route": "LIVE",
+      "readUrl": "https://www.folkartopedia.com/archive/madhubani-painting-a-historical-context-sk/",
+      "finalUrl": "https://www.folkartopedia.com/archive/madhubani-painting-a-historical-context-sk/",
+      "fetchedAt": "2026-11-18T09:36:38.917376Z",
+      "contentType": "text/html",
+      "textSha256": "a1f41e3b352ad6ed933024f9a58877a6a3f5fac98b6a14ab84fc4646eceda735",
+      "characters": 5804,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://www.folkartopedia.com/ich-bihar/jitwarpur-madhubani-msme-cluster-of-mithila-painting-sk/",
+      "route": "LIVE",
+      "readUrl": "https://www.folkartopedia.com/ich-bihar/jitwarpur-madhubani-msme-cluster-of-mithila-painting-sk/",
+      "finalUrl": "https://www.folkartopedia.com/ich-bihar/jitwarpur-madhubani-msme-cluster-of-mithila-painting-sk/",
+      "fetchedAt": "2026-11-18T09:36:42.743947Z",
+      "contentType": "text/html",
+      "textSha256": "2e938645ebed44de7e11eafb4b277dbb8dc067f418d46e57e740d92bb2d4f27c",
+      "characters": 5306,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://www.downtoearth.org.in/governance/authenticity-in-question-why-madhubani-art-deserves-better-protection",
+      "route": "LIVE",
+      "readUrl": "https://www.downtoearth.org.in/governance/authenticity-in-question-why-madhubani-art-deserves-better-protection",
+      "finalUrl": "https://www.downtoearth.org.in/governance/authenticity-in-question-why-madhubani-art-deserves-better-protection",
+      "fetchedAt": "2026-11-18T09:36:45.520956Z",
+      "contentType": "text/html",
+      "textSha256": "41325dabeb40b7dd110d6e3e698013e456a132be150d8bf6ada00190ffe3c6ae",
+      "characters": 7289,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://behanbox.com/2023/05/25/an-art-form-of-bihars-dalit-women-asserts-its-unique-identity/",
+      "route": "LIVE",
+      "readUrl": "https://behanbox.com/2023/05/25/an-art-form-of-bihars-dalit-women-asserts-its-unique-identity/",
+      "finalUrl": "https://behanbox.com/2023/05/25/an-art-form-of-bihars-dalit-women-asserts-its-unique-identity/",
+      "fetchedAt": "2026-11-18T09:36:46.865853Z",
+      "contentType": "text/html",
+      "textSha256": "2cda9cc3f158f798d0f7cf09aae893a80240fb6d46ebde47ba69a5fa2a88751a",
+      "characters": 12779,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S10",
+      "quote": "Madhubani painting, also referred to as Mithila Art (as it flourishes in the Mithila region of Bihar), is characterized by line drawings filled in by bright colours and contrasts or patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S06",
+      "quote": "Also known as Mithila or Maithil painting, Madhubani painting is a ritual and decorative art form primarily practised by women of the Madhubani region to make impermanent murals on the mud walls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "This craft is mainly dominated by Women Community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S10",
+      "quote": "This style of painting has been traditionally done by the women of the region, though today men are also involved to meet the demand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S13",
+      "quote": "Although the paintings are traditionally made by women, men are becoming more and more involved in order to meet market demand.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S11",
+      "quote": "Madhubani Painting is done with fingers, twigs, brushes, nib-pens, and matchsticks, using natural dyes and pigments, and is characterized by eye-catching geometrical patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S11",
+      "quote": "Traditionally, the painting was done on freshly plastered mud walls and floors of huts; but over the years it has moved to varied mediums including cloths, handmade papers, and canvas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S10",
+      "quote": "For commercial purposes, the work is now being done on paper, cloth, canvas etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S06",
+      "quote": "Floor and wall paintings, known locally as aipanas and bhitti chitras respectively, were traditionally painted to mark occasions such as births, marriages and religious events, while the more elaborate paintings, called kohabars, were reserved for marriage ceremonies.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S07",
+      "quote": "It was W. G. Archer who took the earliest academic notice of this painting in the year 1934 when a disastrous earthquake broke open the murals in the Maithil households.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S06",
+      "quote": "until the Bihar earthquake of 1934, when WG Archer, a British colonial officer stationed in the Madhubani district, encountered the paintings in the wreckage of the houses destroyed by the event",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S07",
+      "quote": "On 15th Jan. 1934, a disastrous earthquake ravaged Madhubani sub-division causing extensive damages.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S07",
+      "quote": "While conducting relief operations, W.G. Archer, a British I.C. S. officer, then posted as the S. D. O. of Madhubani came across some of the brilliant murals painted on the inner rooms of the damaged houses.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "W.C. Archar, ICS, SDO, Madhubani being influenced by the paintings of Madhubani first of all exposed them before the world view of painting art during relief work after earthquake of 1934.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S08",
+      "quote": "In January 1934, W.G. Archer, the local British Collector in Madhubani District, \"discovered\" the ancient wall painting tradition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S13",
+      "quote": "it was W.G. Archer, a British collector of this region (during the British colonial period of India) who was greatly attracted to this art",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S14",
+      "quote": "During the 1930s he took black and white photos of some of these paintings, which today are the earliest images of the art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S04",
+      "quote": "He captured these paintings on black and white film, which is thought to be the earliest known image of a Madhubani painting8",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S08",
+      "quote": "This photograph, and Figures 4 and 5 as well, are part of a set of 47 photographs from the 1930s donated to the British Library in London by William G Archer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S07",
+      "quote": "W.G. Archer, 'Maithil Painting', Marg, Vol.3, No. 3, 1949 pp.24-33.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S08",
+      "quote": "in 1949 he published an article about them in the Indian art journal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S14",
+      "quote": "He also wrote about the painting in a 1949 article in 'Marg' an Indian Art Journal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S07",
+      "quote": "A serious study was started on Maithil paintings in 1937-38 when Archer was posted as the Collector of Purnea district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S07",
+      "quote": "These studies were further conducted in 1940 when as Provincial Census Superintendent, he visited Darbhanga and Purnea Districts again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S07",
+      "quote": "Archer's analysis remained centered chiefly around the paintings of the Brahmanas and Kayasthas which he called the two caste styles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S08",
+      "quote": "him to see paintings on the interior walls of several high caste Brahmin and Kayastha homes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S07",
+      "quote": "It is true that Rajputs, Sonars, Ahirs and Dusadhs also do painting and it is almost as if painting is endemic to the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S07",
+      "quote": "But in these latter cases the styles are more fragmentary and it is likely that the custom of painting developed later",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S07",
+      "quote": "the colours of brahmin paintings are parallel to those in paintings by Miro while those of Kayastha paintings resemble the black and terracotta colours of Greek vases7",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S08",
+      "quote": "the parallels he perceived to contemporary Western modern art, and quite specifically to Klee, Miro, Chagall, and Picasso.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S08",
+      "quote": "rather than discussing the meanings of the wall paintings with the women who painted them, he largely drew on his",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S08",
+      "quote": "led him to see the kohbar in terms of sexual symbolism, exotic Tantrism, and even Herrick's 17th century erotic love poetry",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S07",
+      "quote": "Naina Yogins are the four veiled women painted in four corners of the Kohabar ghar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S07",
+      "quote": "are supposed to ward off the evil eye. Archer mistook them to be brides on account of their veiled faces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "First of all with Indian folk arts Mithila painting was exhibited in the art gallery of London in 1948.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "The first experiment for commercialization of these paintings was made by J. Walter Thompson company Pvt. Ltd. of Calcutta in Dec 1957.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S13",
+      "quote": "The commercialization of Madhubani paintings began in 1962 CE, when a foreign artist travelling through this town was attracted by the murals.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S13",
+      "quote": "He persuaded women to paint those same drawings on paper, so that he could take them and show them in his country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S05",
+      "quote": "As per Mr. Ajit Kumar Lal, a traditional artist from Jitwarpur village,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S05",
+      "quote": "the commercialization of Madhubani paintings started in 1962 CE, when a foreign artist travelling through the villages of Ranti and Jitwarpur was surprised to see the murals on the village walls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S08",
+      "quote": "However, in the late 1960s, in the midst of a severe drought, a handful of upper caste women began to transfer these wall paintings to paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S08",
+      "quote": "in order to sell them as a new source of family",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S14",
+      "quote": "The drought from 1966 to 1968 crippled the agricultural economy of the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S08",
+      "quote": "Thus during the severe 1966-68 drought in north India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S14",
+      "quote": "As part of a larger initiative to bring economic relief to the region, Ms Pupul Jayakar, the then Director of the All India Handicrafts Board, sent the Bombay based artist Mr Bhaskar Kulkarni to Mithila to encourage women there to replicate their mural paintings on paper",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S08",
+      "quote": "commissioned a Bombay artist, Bhaskar Kulkarni, to teach the upper caste Brahmin and Kayastha women in Madhubani how to transfer their wall paintings to paper for sale",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "Some time later Smt. Pupul Jaykar sent Mr. Bhaslar Kulkarni with hand made paper and colours to expedite the commercialization of Mithila painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S06",
+      "quote": "Pupul Jayakar developed a drought relief program which encouraged the women of the region to make their paintings on handmade paper for commercial purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S08",
+      "quote": "Pupil Jayakar, a close friend of Nehru, and Head of the All India Handicrafts Board",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S14",
+      "quote": "Ms Pupul Jayakar, the then Director of the All India Handicrafts Board",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Smt. Pupul Jaykar, Chairman, All India Handicraft Board, visited this region",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S06",
+      "quote": "then-chairperson of the Handloom Handicrafts Export Corporation Pupul Jayakar developed a drought relief program",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S07",
+      "quote": "Pupul Jayakar was the chairperson of Handloom Handicrafts Export Corporation (HHEC) and the main force behind the commercialisation of Maithil Painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S07",
+      "quote": "Jayakar helped the Maithil women artists by providing official patronage and encouragement as part of the relief programme during the Bihar Famine of 1966.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S06",
+      "quote": "In 1966, most of the districts in the Madhubani region were hit by severe drought.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S06",
+      "quote": "In order to provide a source of non-agricultural income to the affected communities, then-chairperson of the Handloom Handicrafts Export Corporation Pupul Jayakar developed a drought relief program",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "During the great famine of 1967 o f this region Smt. Pupul Jaykar, Chairman, All India Handicraft Board, visited this region and was introduced to Mithila Paintings by Mr. Upendra Maharathi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S15",
+      "quote": "In the year 1960-61 monsoon season, Bihar experienced serious drought resulting in widespread scarcity of food",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S15",
+      "quote": "Bihar government awarded Bombay based artist Bhaskar Kulkarni, erstwhile member of the Indian Handicrafts Federation, with a grant of Rs 50,000 to launch a relief enterprise.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S15",
+      "quote": "he encouraged their creators, the village women, to execute their designs on paper and provided the women with commercial colors, ink, brush, and other art supplies.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S15",
+      "quote": "only succeeded in initially cajoling a few Mahapatra Brahmin and Kayasth women to experiment with the new medium he proposed",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S15",
+      "quote": "Kulkarni displayed the initial paintings at the Government Industrial exhibition in New Delhi in 1962 where they were sold between Rs 5 and Rs 10.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S08",
+      "quote": "When Kulkarni exhibited the first paintings on paper in Delhi, in 1967, they caused great excitement.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S08",
+      "quote": "The paintings were snapped up by collectors, museums, and ordinary citizens.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S15",
+      "quote": "He organized the first exhibition of Maithili or Madhubani School of paintings at New Delhi in 1967.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S05",
+      "quote": "Jayakar visited the region in May 1968 again and she mentioned the change she experienced,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S05",
+      "quote": "old women, young women and girls, were bent over paper, painting with bamboo twigs and rags",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S07",
+      "quote": "I visited Mithila in the early fifties and was dismayed to find that the glory to which Archer referred had seemingly vanished.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S07",
+      "quote": "There were only traces of old painting here and there",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "Late Lalit Kr. Mishra, then the Union Ministry for Foreign Trade & Commerce encouraged the commercialization o f Madhubani Paintings as an additional source of income.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S08",
+      "quote": "since the late 1970s aside from a brief flurry of commissions by the Maithil Railroad Minister, Lalit Narayan Mishra, and awards to a few individual painters, neither the Bihar nor national government has given any serious recognition or support to Mithila",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S08",
+      "quote": "L'Art du Mithila (1976), and its English translation, \"The Women Painters of Mithila\" (1977), the first book solely devoted to the painting tradition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S07",
+      "quote": "Yves Vequaud, The Women Painters Of Mithila : Ceremonial Paintings from an Ancient Kingdom, London, 1977.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S08",
+      "quote": "late anthropologist, Raymond Owens, who worked closely with the painters between 1977 and 2000, counted 63 errors of fact or interpretation in Vequaud's text.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S05",
+      "quote": "Erika Moser, a German folklorist and filmmaker, spent four months in Jitwarpur in 1973, organised exhibitions in Germany and established a centre in the village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S14",
+      "quote": "The German anthropologist film-maker and social activist Erika Moser persuaded the impoverished Dusadh Dalit community to paint as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S14",
+      "quote": "typified by bold compositions and figures based on traditional tattoo patterns called Goidna locally",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S07",
+      "quote": "Erika Moser, a German anthropologist and folk-lorist whose most significant contribution lay in the evolution of Tattoo painting",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S17",
+      "quote": "Jitwarpur is the centre of Godna painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S17",
+      "quote": "According to the oral narratives of its artists, the art form originated sometime in the 1970s when two women, Zahida and Channo Devi, started painting in the tattoo form on paper/canvas.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S14",
+      "quote": "With the financial support of Moser and Raymond Lee Owens (a Fulbright Scholar then), along with land in Jitbarpur donated by Anthropologist Erika Moser likes of Dr Gauri Mishra spearheaded the setting up of the Master Craftsmen Association of Mithila in 1977.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S13",
+      "quote": "The Master Craftsmen Association of Mithila, founded by an American in 1977 CE, helps the artists of Madhubani with the sale of their works through exhibitions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S04",
+      "quote": "Craftsman Association of Mithila founded at Jitwarpur supports Madhubani artisans",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S07",
+      "quote": "The Ethnic Arts Foundation is a non-profit organisation founded in 1980 dedicated to the continuing development of Mithila Painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S08",
+      "quote": "Along with the late Raymond Owens, Joseph Elder, Parmeshwar Jha and other like-minded friends and colleagues in 1980 I helped to found",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S07",
+      "quote": "A co-founder of the Ethnic Arts Foundation started by Raymond Lee Owens in 1980",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S08",
+      "quote": "Then in 2003 the EAF founded and has struggled to fund in Madhubani a free art school, the Mithila Art Institute",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S08",
+      "quote": "with a one- and two-year curriculum taught by local painters",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S06",
+      "quote": "Tokio Hasegawa, who set up the Mithila Museum in Japan in 1989, focussing on the acquisition, display and research of Mithila painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S04",
+      "quote": "The Mithila Museum in in Tokamachi, Niigata Prefecture, Japan houses over 1,000 Madhubani paintings by artists from India and abroad.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S04",
+      "quote": "Vol 24(10), October 2025, pp 988-1001",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "The name of Mithila paintings was substituted by Madhubani Paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "Madhubani became the center of the e xport, research, development and publicity these paintings then latter came to be popularly known as",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "Madhubani paintings got official recognition in 1970. When the president of India gave a n award to Late Padma Shri Mrs. Jagdamba Devi of village jitwarpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S15",
+      "quote": "Jitwarpur was officially recognized in 1970 when the President of India gave an award to Jagdamba Devi, the first recipient from Jitwarpur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S05",
+      "quote": "the first Padmashree awardee (for Madhubani paintings), Late Jagdamba Devi of Jitwarpur village",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S09",
+      "quote": "Sita Devi, Jagadamba Devi, Bauwa Devi, Mahasundari Devi, Ganga Deviand Godavari Dutta have been awarded with Padmashri in this painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "Two others painters Mrs. Sita Devi, Jitwarpur and Late Mrs. Ganga Devi, Rashidpur were given \"padmashree\" a wards.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "This is clearly visible in Jyotida Jains analysis of the life works of Ganga Devi of Vill. Rati, a fine line drawing artist",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "Besides Mrs. Godawari Dutta Rati Mrs. Yamuna Devi, Jitwarpur, Mrs. Shanti Devi & Mr. Shivam Paswan, Lalherisaganj were given National Awards",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S05",
+      "quote": "In the words of Godavari Dutta (85 years), Padmashree awardee and resident of Ranti village,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S05",
+      "quote": "2020, Vol. 15, No. 2, 29-48",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S01",
+      "quote": "Late Ganga Devi and Smt. Maha Sundrari Devi, Ranti were given \"Tulsi Samman\".",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S12",
+      "quote": "Smt. Shanti Devi is an eminent Mithila (Madhubani) painting artist from Laheriaganj, Bihar, who is known for her outstanding contribution to Godna style of Mithila painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S12",
+      "quote": "In 1984, the Government of India bestowed Smt. Shanti with the National Award for her outstanding contributions to Godna Style of Mithila painting. Padma Shri",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S12",
+      "quote": "Collaborating with other artists, she pioneered the unique Godna style",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S12",
+      "quote": "He pioneered the \"Godana painting\" style of Mithila painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S12",
+      "quote": "weaving tales of Raja Salhesh, Dina-Bhadri and Mahatma Buddha into his artwork",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S12",
+      "quote": "SHRI SHIVAN PASWAN Padma Shri",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S08",
+      "quote": "Thus the early Dalit painters, Jumuna Devi (a Chamar), and Shanti Devi (a Dusadh), both drew on the techniques and style of the nearby eminent Brahmin painter, Sita Devi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S06",
+      "quote": "Indirect references to the Madhubani painting have been observed in regional texts dating as far back as the fourteenth century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S08",
+      "quote": "Literary references suggest that Mithila painting dates back to at least the 14th",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S13",
+      "quote": "The origins of Madhubani paintings are quite unknown.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S14",
+      "quote": "The exact time when Mithila art originated is not known.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S07",
+      "quote": "V. Mishra's treatment of the cultural history of",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S07",
+      "quote": "Citing evidences from Vidyapati's works such as Padavali24, he concluded that in the 14th century A.D., aripana had developed in all it details in Mithila",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S07",
+      "quote": "two very important traditions of aripanas or floor drawings and wall paintings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S14",
+      "quote": "It is locally believed that Madhubani painting tradition started when Raja Janak commissioned local artists to paint murals in his palace in preparations for the marriage of his daughter Sita to Lord Ram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S06",
+      "quote": "it is believed to have been developed in the eighth century BCE, when King Janaka asked that mode of painting be created to commemorate the wedding of his daughter Sita to Ram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S13",
+      "quote": "it is believed that King Janak, ruler of Mithila Kingdom in the 8th or 7th century BCE, had asked to develop these paintings in order to capture the moments of his daughter Sita's wedding to Prince Rama",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S13",
+      "quote": "Some art scholars also suggest that Madhubani Paintings were associated with the tantric culture of ancient India, though this notion is still debated among art historians.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S08",
+      "quote": "This despite the fact that the women painters see no connection to Tantrism in their paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S08",
+      "quote": "Thanks to W.G. Archer, his high caste friends, later reinforced by Yves Vequaud (1976/77), the exotica-seeking French writer and novelist, many senior \"authoritative\" local men today insist the paintings are based on Tantric traditions and practices.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S07",
+      "quote": "To her, the debates on Tantric origins have arisen largely due to the lack of women's participation in the meaning-making process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S07",
+      "quote": "The exercise of analysing the previous paradigms, a practice initiated by Jain, receives full treatment by Carolyn Henning Brown.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S01",
+      "quote": "There are three types of traditional paintings, namely wall paintings, line paintings and Godna paintings, known as Harijan paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S01",
+      "quote": "The most elaborate wall painting is done in the nuptial chamber i.e. Kohbar room.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S01",
+      "quote": "The paintings designed to bless the couple with fertility and protect them from the evil eyes of demons and evil spirits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S07",
+      "quote": "Kohabar is an elaborate painting done on the walls of the Kohabar ghar (wedding chamber)where the newly weds spend their first four nights after the wedding ceremony",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S07",
+      "quote": "The central motif comprising mainly of Purain (lotus plant) is surrounded by different painted images: two parrots making love in the air, fish, tortoise, the sun, the moon, palanquins, grass mats, bamboo grove, and a scene of worship of Gauri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S06",
+      "quote": "Jayakar also documented and outlined the various styles of Madhubani painting as well as unique motifs such as the kohabar, a lotus leaf pierced by a bamboo shoot considered symbolic of fertility.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S05",
+      "quote": "Fertility is the main aspect of the kohbar painting where the essential symbols depict specific meanings, as purain (rapid proliferation), bamboo (abundance), sun (energy) and moon (nectar), Naina Jogin (to ward off evil eye), fish (good luck or fertility).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S01",
+      "quote": "Pictures of Nayna-Jogin are painted on the four corners of the wall",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S04",
+      "quote": "The four corners of the bridal chamber are painted with images of Nayana yoginis holding objects on their heads.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "the tortoise, snakes, frogs, betal leafs, Kadambh trees, parrots, gods and goddess are a ll beautifully depicted in the kohbar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "The parrot also known as the \" love bird\" signifies love and the fish, which is Vishnu's first incarnation, is drawn for advent of children.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S01",
+      "quote": "Themes generally revolve around Hindu deities like Krishna, Ram, Shiv, Durga, Laxmi, Kali and Saraswati.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S01",
+      "quote": "Natural objects like sun, moon and religious plants like Tulsi, social events like wedding also are subjects of painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S10",
+      "quote": "The themes & designs widely painted are of Hindu deities such as Krishna, Rama, Siva, Durga, Lakshmi, Saraswati, Sun and Moon, Tulasi plant, court scenes, wedding scenes, social happenings etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S01",
+      "quote": "The colours are applied flat with no shading.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S10",
+      "quote": "The colours are applied flat with no shading and no empty space is left.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S06",
+      "quote": "Madhubani painting is characterised by a simple and direct style, with colours applied in a flat, solid manner without gradations.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "The decorative style of Madhubani Paintings abhors empty space.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S09",
+      "quote": "Generally no space is left empty; the gaps are filled with paintings of flowers, animals, birds, and even geometric designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S08",
+      "quote": "would-be empty spaces are filled with flowers and foliage",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S08",
+      "quote": "Mithila paintings remain consistently two dimensional; there is no horizon line or effort at perspective; figures are flat and \"float\" across the image",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S08",
+      "quote": "deities are usually full face, humans in profile",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S06",
+      "quote": "distinct styles began to be recognised within the larger framework of Madhubani paintings, such as bharni, which is marked by vivid colours and fewer lines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S17",
+      "quote": "This included Bharni, or filling in of colours, in paintings of Rama and Sita; Kachni or line paintings; and Tantric paintings portraying deities such as Durga, Vishu and his 10 avatars (forms) and so on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S06",
+      "quote": "Kachni or line painting comprises patterns filled with intricate line strokes, made with fine-nibbed pens, and marked by clear outlines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "This is known as line painting and is more strenuous to make.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S17",
+      "quote": "This included Bharni, or filling in of colours, in paintings of Rama and Sita; Kachni or line paintings; and Tantric paintings portraying deities such as Durga, Vishu and his 10 avatars (forms) and so on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S04",
+      "quote": "Goddess Kali is painted in Tantrik ceremonies",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S09",
+      "quote": "Some special images are used in painting Kali, Durga, Lakshmi etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S17",
+      "quote": "This included Bharni, or filling in of colours, in paintings of Rama and Sita; Kachni or line paintings; and Tantric paintings portraying deities such as Durga, Vishu and his 10 avatars (forms) and so on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S17",
+      "quote": "Godna (meaning ritual tattoo art) paintings are distinctly different - they are mostly black and white, and crafted by Dalit Dusadh women of the area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S17",
+      "quote": "The themes centre around nature, daily lives of the community or Dalit deities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S06",
+      "quote": "The gobar and godna traditions developed by the Dalit Chamar and Dusadh communities respectively were also documented.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S08",
+      "quote": "several of the major Dusadh artists have long been painting episodes from the numerous versions of the elaborate oral epic centered on their magical culture hero, Raja Salhesh",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S06",
+      "quote": "Dalit groups have also made paintings featuring figures from local oral epics, such as Raja Salesha, Rahu and Govinda.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S07",
+      "quote": "My research suggests that at least six styles were popular after commercialisation - Bharni, Kachni, Geru, Gobar , Godana and Tantric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S04",
+      "quote": "main styles: Kohbar, Kachni, Bharni, Godhana and Tantrik, which was once caste based",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S07",
+      "quote": "A style of painting distinguished by total lack of ornamentation with more emphasis on volume and depth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S07",
+      "quote": "Prevalent in the 1960's and 70's and practised by artists like Bhagvati Devi and Ookha Devi of village Jitwarpur, this style has now become totally extinct due to lack of patronage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S06",
+      "quote": "The use of these techniques and styles, however, has been fluid, with artists learning from and adopting the techniques of their peers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S08",
+      "quote": "techniques and images have often passed between artists and across castes at least since the paintings first went onto paper in the late 1960s and early 1970s",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S04",
+      "quote": "However, things have changed in the present era, and any group can create any Madhubani art style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S05",
+      "quote": "While Ranti and Rasidpur are famous for Line Painting, Jitwarpur and Rahika are famous for color painting within the Mithila Art forms as opinioned by Kamal Narayan Lal Karna, a traditional artist from Jitwarpur village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S06",
+      "quote": "Over the last few decades, the subject matter of Madhubani painting has expanded considerably, with artists tackling themes such as gender justice, environmental conservation and contemporary politics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S08",
+      "quote": "Thus many have now added to the traditional repertoire paintings that deal with current events: terrorism, floods, pollution, global warming, and reforestation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S04",
+      "quote": "The walls of three locations in Mithila households comprise wall paintings - Ghosain-ka-ghar (family deity's room), Kohbar ghar (nuptial chamber)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S04",
+      "quote": "and Kohbar ghar ka koniyan (verandah) outside the nuptial chamber",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S13",
+      "quote": "Bhittichitra is made on the mud-walls of the houses specifically at three places: the room of the family God/Goddess, the room of the newly wedded couple and the drawing-room.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "On all occasions like, the house hold alteration, on a birth day, on a marriage day",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "many mothers and daughters of the family would set about t o draw an 'Alpana'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "The women o f Mithila draw on the ground \"Dhuli Chitra\", Dust painting, as they are called.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "They are made of rice paste, Geometrical designs as also highly stylist figures and motifs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "Madhubani paintings have no specific dimension.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S01",
+      "quote": "Rectangular size of paintings, generally 2' x 4' are very poplar on silk and craft paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "they never rub off the wrong or crooked strokes and ride redo them, because they believe that redoing a picture is inauspicious",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Whatever they paint, they do it in one go.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S13",
+      "quote": "all the governemnt buildings of the Madhubani city, including the railway station, town hall, administrative office buildings, and government bungalows, etc. have been thoroughly covered by Madhubani paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S04",
+      "quote": "with Madhubani artwork on various government structures and several trains in India19",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S04",
+      "quote": "Wall surfaces are either plastered with cow dung or white-washed before painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S06",
+      "quote": "The paintings were originally made on mud walls washed with cow dung or plastered with lime, but are now rendered on a series of surfaces, including cement walls, paper and cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S14",
+      "quote": "The paintings were originally done on walls coated with mud and cow dung.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S08",
+      "quote": "upper caste painters at times use the light brown cow dung wash to prepare the white paper - a technique pioneered by Jumuna Devi - to suggest a background of a traditional mud-plastered wall.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S17",
+      "quote": "They first craft handmade sheets of cloth or paper, and then wash these with a mix of gobar (cow dung), gond (glue) and water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "The colors are prepared by the traditional artists themselves using available materials in their surroundings such as leaves of the plants, flowers, ashes of traditional lamp (Diya), cow dung, rice grains, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S10",
+      "quote": "These paintings are done with mineral pigments prepared by the artists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S05",
+      "quote": "a minimal range of palette; pink, yellow, blue, red, parrot-green, black and white colours. They were mostly obtained from natural sources and are used after processing by the artists herself/himself.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S08",
+      "quote": "paintings begin with a painted frame mimicking the wooden beams that framed the wall paintings",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S01",
+      "quote": "There is normally a double line drawn for the outlines with the gap between the lines filled b y cross or straight tiny lines.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "The paint is directly applied while creating the outline in a single flow of brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S05",
+      "quote": "The painting is a kind of extempore one where no preliminary sketching is required",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S09",
+      "quote": "Its artists begin drawing on a wall, or paper, with straight colors without any drawing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S17",
+      "quote": "The art style uses resources that are minimal and everyday - gobar, kajal and bamboo sticks to draw paintings/outlines",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S17",
+      "quote": "For colours, they use dye extracts from flowers, leaves and kajal or kohl.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S01",
+      "quote": "There are two methods of paintings, one in which the sketch is prepared and figures are filled on cloth, paper etc. with different colours.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "Fine bamboo splits provided the brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S05",
+      "quote": "a small beaten bamboo-twig from the tip (so that the fiber is like hair) was used while for the bolder lines, a small piece of cloth is tied to a twig made the brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S10",
+      "quote": "Cotton wrapped around a bamboo stick forms the brush.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S06",
+      "quote": "A cotton rag tied to a twig was used as a brush",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S09",
+      "quote": "Painting on paper is done with a holder or a nib.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S05",
+      "quote": "Artists are now using metal nibs and holders for outlining whereas bold detailing and color application is done by readymade brushes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S05",
+      "quote": "2020, Vol. 15, No. 2, 29-48",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "Originally, these village painters used to collect t he soot of the night l amp to prepare black colour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S04",
+      "quote": "Burnt barley seeds are used to make black",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S01",
+      "quote": "turmeric powder was used for making yellow colour",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S04",
+      "quote": "turmeric or lime juice combined with milk from banyan leaves to make yellow",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S09",
+      "quote": "Yellow color is prepared by mixing banana and banyan milk in lime.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S09",
+      "quote": "Yellow color is also extracted from Torai (Brassica compasts) and Marigold (Tagetis) flowers and turmeric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "prepared from Harshingara (Shefali) flower and red flower and red from Kusum, flower",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S04",
+      "quote": "kusuma flower juice to make red",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S06",
+      "quote": "pigments were obtained from plants such as palash, jowar and kusum",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S01",
+      "quote": "Saffron earth mixed with mustard extract provided another variety of red.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S04",
+      "quote": "Most of the paintings in Kohbar ghar depict mythological tales and legends and are created using gairika (red mineral pigment)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S01",
+      "quote": "indigo mixed with the extract of bean leaves gave blue",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S04",
+      "quote": "and bel leaves to make green",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S09",
+      "quote": "The green color is prepared from the leaves of bean (Dolicuslavalab) and vine (Egilmarmelos)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "green was obtained by mixing gum with the extract of bean cars",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S09",
+      "quote": "saffron and orange color are prepared from saffron and pallas flowers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S01",
+      "quote": "orange was prepared from Harshingara (Shefali) flower",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S10",
+      "quote": "Black colour is obtained by mixing soot with cow dung; yellow from turmeric or pollen or lime and the milk of banyan leaves; blue from indigo; red from the kusam flower juice or red sandalwood; green from the leaves of the wood apple tree; white from rice powder; orange from palasha flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S09",
+      "quote": "Apart from this, blue color is obtained from neem, dark brown color from boiled tea and purple color is obtained from Aparajita flowers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S09",
+      "quote": "Dried pomegranate peels form golden",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S09",
+      "quote": "The colors obtained from these are mixed with goat milk or acacia gum and the durability of the colors is increased.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "Raw materials are mixed with goat milk, gum Arabic and juice from bean p lants.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S04",
+      "quote": "The Kayastha families' paintings feature hues like brown,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S04",
+      "quote": "yellow-ochre, turmeric, harada, red madder, black and other colors blended with goat's milk9",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S09",
+      "quote": "In Tantric painting, colors derived from Gauranchan, Kumkum, Saffron and Kasturi etc. are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S05",
+      "quote": "The palettes are now filled with poster, acrylic and watercolors.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S05",
+      "quote": "2020, Vol. 15, No. 2, 29-48",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S04",
+      "quote": "Gulabi (pink), nila (blue), sindura (saffron), and sugapankhi (green) are the colours utilized; colours made from natural sources.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "It i s mainly centered in rural areas of Madhubani district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S06",
+      "quote": "Since the 1960s and 1970s, the district town of Madhubani in northern Bihar has come to be considered a centre for the art form.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S05",
+      "quote": "there are four major centers (villages) namely; Ranti, Jitwarpur, Rasidpur and Rahika (all within 5 Kms from the district headquarters of Madhubani).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S16",
+      "quote": "From Jitwarpur and Ranti to Rasidpur villages in Madhubani district and countless other villages of Bihar, the women of Mithila have carried this tradition",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S15",
+      "quote": "Jitwarpur is one of the 79 villages of Madhubani Tehsil and block of Madhubani district headquarter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S15",
+      "quote": "Jitwarpur is about 4 km from Madhubani district headquarter.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S04",
+      "quote": "Mithila painting is primarily associated with ancient epics",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S04",
+      "quote": "which also focus on fertility, love, and religion11,12",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S04",
+      "quote": "The walls of the homes in villages of Madhubani District, particularly at Jitwarpur, Ranti and villages of Darbhanga, Saharsa, Purnia and other districts display these themes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S07",
+      "quote": "This refers to the newly evolved Gobar and Godana styles of painting evolved by Harijan women living in the vicinity of Madhubani. The villages Jitwarpur and Laheriaganj are specially known for these paintings.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S09",
+      "quote": "There are some special centers of painting in Mithilanchal. Such as Jitwarpur, Bhawanipur, Ranti, Rasidpur, Rajnagar, Harinagar, Lahariaganj, Shayam, Simri etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S15",
+      "quote": "Some of the other prominent Madhubani painting clusters other than Jitwarpur are Ranti, Rashidpur, Simri, Rayam, Bhachhi, Samalia, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "the researcher visited Jitwarpur, Ranti, Rashidpur and Simari villages in Madhubani district to collect the primary data during the month of November and December 2020",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "The researcher interviewed 15 artists who live in the above-said areas",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S06",
+      "quote": "Today, it spans the districts of Darbhanga, Madhubani, Bhagalpur, Saharsa and Purnea in North Bihar as well as parts of the Terai region of Nepal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S07",
+      "quote": "Presently it comprises the modern districts of Madhubani, Darbhanga, Samastipur, Vaishali, Muzaffarpur, Champaran, Monghyr, Saharsa and Purnea in the state of Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S07",
+      "quote": "sq. miles in the kingdom of Nepal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S01",
+      "quote": "These ritual paintings, dating back to very ancient times are done through out the region of Mithila, Presently form Sitamarhi to saharsa district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S05",
+      "quote": "Madhubani paintings developed in the Mithilanchal region of Bihar are the perfect example of traditional art that maintained continuity through generations",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S01",
+      "quote": "Madhubani painting is the most important part of Mithila culture from generation to generation",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S09",
+      "quote": "Madhubani painting or Mithila painting is a style of art in the Mithila region of Nepal and Bihar in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S08",
+      "quote": "the Mithila region of Bihar in north India, just below the border with Nepal",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S01",
+      "quote": "Since 1875 to 1972 Madhubani was still sub division under Dharbhanga District.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S01",
+      "quote": "In 1972 Madhubani became a separate district under Dharbhanga Commissioery.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S14",
+      "quote": "Madhubani, which by one account means Forest of Honey, ('Madhu'-honey, 'Ban'-forest or woods) is a region in the northern part of Bihar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S04",
+      "quote": "Madhubani is derived from Madhu-Van (forest of honey)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S02",
+      "quote": "| Application Number | 37 | | Geographical Indications | Madhubani Paintings |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S02",
+      "quote": "| Applicant Name | Director of Industries |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 22-08-2005 | | Class | 16 | | Goods | Handicraft | | Geographical Area | Bihar |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "Application is made by The Director of Industries, Bihar,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "of Part A of the register of MADHUBANI PAINTING under Application No.37 in respect of Paintings falling in class 16 is hereby advertised as accepted under sub-section",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "issue No. 14 of the Geographical Indication Journal dated 1 st October 2006 / Asvina 9, Saka 1928 has been made available to the public from 6th February, 2007.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S02",
+      "quote": "| Journal Number | 14 | | Availability Date | 06-02-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "| Certificate Number | 31 | | Certificate Date | 16-05-2007 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S02",
+      "quote": "| 5 | 37 - Certificate of Registration - 16-05-2007 | 16-05-2007 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S03",
+      "quote": "FROM APRIL 2007 - MARCH 2008 31 37 Madhubani Paintings Handicraft Bihar",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S16",
+      "quote": "In 2007, Madhubani painting received the Geographical Indication (GI) tag.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 21-08-2025 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S02",
+      "quote": "| 2 | 37 - GI - Renewal Details - 30-07-2018 | 30-07-2018 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S02",
+      "quote": "| 1 | 37 - GI - Renewal Notice - 26-11-2024 | 26-11-2024 | |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S01",
+      "quote": "The applicant is taking steps to set-up a suitable and effective inspection body.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "34% people of the district are involved in Madhubani painting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "Total Registered handicraft & Artisan Units - 967",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 22-08-2005 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S10",
+      "quote": "In order to create a source of non-agricultural income, the All India Handicrafts Board and the Government of India have been encouraging the women artists to produce their traditional paintings on handmade paper for commercial sale.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S10",
+      "quote": "Madhubani painting has become a primary source of income for scores of families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S08",
+      "quote": "In the process, many have become the major - even the sole - source of family income.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S01",
+      "quote": "Now a day Madhubani paintings are designed on Sari, bed sheets, curtains, table clothes, and readymade garments.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S16",
+      "quote": "Today, Madhubani paintings appear not only as framed artworks but also on sarees, tiles, mugs, diaries, laptop sleeves, and home decor.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S08",
+      "quote": "between 2003 and 2016, I have bought, generally for four to five times local dealer's prices, some 1,100 paintings directly from the artists",
+      "result": "PASS"
+    }
+  ]
+}

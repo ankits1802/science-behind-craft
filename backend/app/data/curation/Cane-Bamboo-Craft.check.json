@@ -1,0 +1,1966 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Cane-Bamboo-Craft",
+  "dossierVersion": 1,
+  "dossierDigest": "da3d6f84ef924f6f1d2966662b6ddfdd1dda2bb0784e2f404901bf392b53fa4c",
+  "checkedAt": "2026-11-18T11:16:44.602581Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://nectar.dst.gov.in/sites/default/files/Publications/preservation_book.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20251028005327id_/https://nectar.dst.gov.in/sites/default/files/Publications/preservation_book.pdf",
+      "finalUrl": "https://web.archive.org/web/20251028005327id_/https://nectar.dst.gov.in/sites/default/files/Publications/preservation_book.pdf",
+      "fetchedAt": "2026-11-18T11:14:32.808105Z",
+      "contentType": "application/pdf",
+      "textSha256": "409d55be208507fb4058188bae858ef9a4dd606e0c3494a5d104ce68b1deb717",
+      "characters": 70971,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20251106063657id_/https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "finalUrl": "https://web.archive.org/web/20251106063657id_/https://nectar.dst.gov.in/sites/default/files/Publications/bamboo_craft_culm_containers.pdf",
+      "fetchedAt": "2026-11-18T11:14:44.780680Z",
+      "contentType": "application/pdf",
+      "textSha256": "2e1af4412f37680c1dcb7f65c95e3c41f52bad914277d1d0a68da8473388d66a",
+      "characters": 78240,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://bioresources.cnr.ncsu.edu/wp-content/uploads/2016/08/BioRes_11_4_10604_Kaur_SPN_EcoFriendly_Preservatives_Bamboo_Species_Techniques_9981.pdf",
+      "route": "LIVE",
+      "readUrl": "https://bioresources.cnr.ncsu.edu/wp-content/uploads/2016/08/BioRes_11_4_10604_Kaur_SPN_EcoFriendly_Preservatives_Bamboo_Species_Techniques_9981.pdf",
+      "finalUrl": "https://bioresources.cnr.ncsu.edu/wp-content/uploads/2016/08/BioRes_11_4_10604_Kaur_SPN_EcoFriendly_Preservatives_Bamboo_Species_Techniques_9981.pdf",
+      "fetchedAt": "2026-11-18T11:14:28.823465Z",
+      "contentType": "application/pdf",
+      "textSha256": "c17fa0d254531131f935a76b3a4eefc457c2730e00d6ef9dff3be76fec2724a0",
+      "characters": 69124,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "finalUrl": "https://openknowledge.fao.org/server/api/core/bitstreams/aec0f623-bdba-4420-b4ab-7682207de6ce/content",
+      "fetchedAt": "2026-11-18T11:14:53.413357Z",
+      "contentType": "application/pdf",
+      "textSha256": "6cecb9f658d767615902e9b1dc26e92a85a3a20ad98130de0c1e4b0ccbea00f0",
+      "characters": 1533314,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://jtfs.frim.gov.my/jtfs/article/download/944/791/1037",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20220710025146id_/https://jtfs.frim.gov.my/jtfs/article/download/944/791/1037",
+      "finalUrl": "https://web.archive.org/web/20220710025146id_/https://jtfs.frim.gov.my/jtfs/article/download/944/791/1037",
+      "fetchedAt": "2026-11-18T11:14:38.731256Z",
+      "contentType": "application/pdf",
+      "textSha256": "6b40d26d82c3b901cc0bd5e380483e37697f36980edd8273c4b560810f164a0e",
+      "characters": 24255,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "route": "LIVE",
+      "readUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "finalUrl": "https://ethnobotanyjournal.org/index.php/era/article/download/6651/2106/66119",
+      "fetchedAt": "2026-11-18T11:14:56.260053Z",
+      "contentType": "application/pdf",
+      "textSha256": "9c87967b5219b340b6d1e11c1c64b33bc7c188258aecc087adad1b6517391388",
+      "characters": 32175,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://www.odishabamboo.org/Bamboo/diseases-of-pests",
+      "route": "LIVE",
+      "readUrl": "https://www.odishabamboo.org/Bamboo/diseases-of-pests",
+      "finalUrl": "https://www.odishabamboo.org/Bamboo/diseases-of-pests",
+      "fetchedAt": "2026-11-18T11:14:39.300267Z",
+      "contentType": "text/html",
+      "textSha256": "1dc60786d8a5b3a522c12ecfe9aea81cb2c400fb6fa3ae7295172ee05b00e518",
+      "characters": 4932,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://www.odishabamboo.org/Bamboo/protective-treatment",
+      "route": "LIVE",
+      "readUrl": "https://www.odishabamboo.org/Bamboo/protective-treatment",
+      "finalUrl": "https://www.odishabamboo.org/Bamboo/protective-treatment",
+      "fetchedAt": "2026-11-18T11:14:40.941670Z",
+      "contentType": "text/html",
+      "textSha256": "1478c11798d982b87b0e31699a8534c86dc7a1843bef0629372d88479116d8d0",
+      "characters": 1428,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://www.odishabamboo.org/Bamboo/botany-of-bamboo",
+      "route": "LIVE",
+      "readUrl": "https://www.odishabamboo.org/Bamboo/botany-of-bamboo",
+      "finalUrl": "https://www.odishabamboo.org/Bamboo/botany-of-bamboo",
+      "fetchedAt": "2026-11-18T11:14:42.619632Z",
+      "contentType": "text/html",
+      "textSha256": "8d3913a949cac51dd57d14775ae31e5e7cb1aac8924cb57bca6c57fc2d470d6b",
+      "characters": 12224,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://www.odishabamboo.org/Bamboo/the-world-of-bamboo",
+      "route": "LIVE",
+      "readUrl": "https://www.odishabamboo.org/Bamboo/the-world-of-bamboo",
+      "finalUrl": "https://www.odishabamboo.org/Bamboo/the-world-of-bamboo",
+      "fetchedAt": "2026-11-18T11:14:44.265113Z",
+      "contentType": "text/html",
+      "textSha256": "406275e20e7689abe21e455f144f3b6ac21860239a2253dfd7f753c81e9005bc",
+      "characters": 3890,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://keralabamboomission.org/index.php/about-us/bamboo-in-kerala",
+      "route": "LIVE",
+      "readUrl": "https://keralabamboomission.org/index.php/about-us/bamboo-in-kerala",
+      "finalUrl": "https://keralabamboomission.org/index.php/about-us/bamboo-in-kerala",
+      "fetchedAt": "2026-11-18T11:14:45.149054Z",
+      "contentType": "text/html",
+      "textSha256": "7462d6ef3edcf4528d1d73e8a137602b56df639078730ea623b3a10146eb2fdf",
+      "characters": 1242,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://tbm.org.in/tbm-sub-sectors",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260605233052id_/https://www.tbm.org.in/tbm-sub-sectors",
+      "finalUrl": "https://web.archive.org/web/20260605233052id_/https://www.tbm.org.in/tbm-sub-sectors",
+      "fetchedAt": "2026-11-18T11:14:48.777524Z",
+      "contentType": "text/html",
+      "textSha256": "55bcc3a65f8ae04b06b06a13c870770ab7230705cdf62aa74ff65418b5d38ad5",
+      "characters": 5230,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://www.nabard.org/hindi/auth/writereaddata/tender/0506251509pub_1402251031411368.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.nabard.org/hindi/auth/writereaddata/tender/0506251509pub_1402251031411368.pdf",
+      "finalUrl": "https://www.nabard.org/hindi/auth/writereaddata/tender/0506251509pub_1402251031411368.pdf",
+      "fetchedAt": "2026-11-18T11:15:20.906137Z",
+      "contentType": "application/pdf",
+      "textSha256": "9798f90ba87bbd84ac8de914935bd97d9b0da2f82d249cbc3ed7a84671fe3f71",
+      "characters": 89826,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://asiainch.org/craft/cane-and-bamboo-craft-of-kerala/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-and-bamboo-craft-of-kerala/",
+      "finalUrl": "https://asiainch.org/craft/cane-and-bamboo-craft-of-kerala/",
+      "fetchedAt": "2026-11-18T11:14:49.772250Z",
+      "contentType": "text/html",
+      "textSha256": "1aae7ef59d254926a589c72d08018e1fac3867fc20b1f7d45ff181024be98385",
+      "characters": 2578,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://asiainch.org/craft/bamboo-mat-painting-of-kerala/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/bamboo-mat-painting-of-kerala/",
+      "finalUrl": "https://asiainch.org/craft/bamboo-mat-painting-of-kerala/",
+      "fetchedAt": "2026-11-18T11:14:51.868822Z",
+      "contentType": "text/html",
+      "textSha256": "863f51df61eb70bac14d137720dc78ae89fd954c5fd81c8ff07978fdbcb31436",
+      "characters": 600,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-assam/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-assam/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-assam/",
+      "fetchedAt": "2026-11-18T11:14:53.836219Z",
+      "contentType": "text/html",
+      "textSha256": "a2bb4bbac5fc8ef20ffee3a035eaf4422cca7503c016cadbaf05249df7492454",
+      "characters": 3105,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-tripura/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-tripura/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-tripura/",
+      "fetchedAt": "2026-11-18T11:15:10.471565Z",
+      "contentType": "text/html",
+      "textSha256": "a9a09dd04928f3eede4a25153a69cc78350d4802796e23607f9e2d86e7db04a0",
+      "characters": 3097,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://asiainch.org/craft/bamboo-mats-of-tripura/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/bamboo-mats-of-tripura/",
+      "finalUrl": "https://asiainch.org/craft/bamboo-mats-of-tripura/",
+      "fetchedAt": "2026-11-18T11:15:12.225605Z",
+      "contentType": "text/html",
+      "textSha256": "177d68f0302e3369dc9378a81c7549d6a19316264ffb4af0fa518a8fd1027c61",
+      "characters": 1707,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S19",
+      "url": "https://asiainch.org/craft/bamboo-furniture-of-katlamara-tripura/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/bamboo-furniture-of-katlamara-tripura/",
+      "finalUrl": "https://asiainch.org/craft/bamboo-furniture-of-katlamara-tripura/",
+      "fetchedAt": "2026-11-18T11:15:13.985317Z",
+      "contentType": "text/html",
+      "textSha256": "2a3c1592330500a6b5c0b21332831585cacfa467822542730190fefb0de7d53f",
+      "characters": 832,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S20",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-meghalaya/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-meghalaya/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-meghalaya/",
+      "fetchedAt": "2026-11-18T11:15:15.717805Z",
+      "contentType": "text/html",
+      "textSha256": "674e45b0f95f65c4b612851929c9727801096e88a6ea3adc469fa1b85dddc8af",
+      "characters": 1459,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S21",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-mizoram/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-mizoram/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-mizoram/",
+      "fetchedAt": "2026-11-18T11:15:17.467976Z",
+      "contentType": "text/html",
+      "textSha256": "4783f560d7a6510b18b504eab4c349e2188c6832b81b7753e419264602d0c3c7",
+      "characters": 1808,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S22",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-nagaland/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-nagaland/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-nagaland/",
+      "fetchedAt": "2026-11-18T11:15:19.214235Z",
+      "contentType": "text/html",
+      "textSha256": "bab4ef0975b3fde5298dc0e944e7d64ca96a5f7bd487edda3d6a38cbe6eb767a",
+      "characters": 2694,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S23",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-arunachal-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-arunachal-pradesh/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-arunachal-pradesh/",
+      "fetchedAt": "2026-11-18T11:15:20.984082Z",
+      "contentType": "text/html",
+      "textSha256": "0ca98af4e80c44c25c45f55fd5f39ea87d03f311ef1ae098b4da588b6899ebd8",
+      "characters": 2421,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S24",
+      "url": "https://asiainch.org/craft/bamboo-and-cane-bridges-of-arunachal-pradesh/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/bamboo-and-cane-bridges-of-arunachal-pradesh/",
+      "finalUrl": "https://asiainch.org/craft/bamboo-and-cane-bridges-of-arunachal-pradesh/",
+      "fetchedAt": "2026-11-18T11:15:25.232309Z",
+      "contentType": "text/html",
+      "textSha256": "94b060399b3c3f063735c4be3057435034f2cbaf31c12c5fa24c8bf90eea31e6",
+      "characters": 1104,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S25",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-manipur/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-manipur/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-manipur/",
+      "fetchedAt": "2026-11-18T11:15:27.007562Z",
+      "contentType": "text/html",
+      "textSha256": "8246a9189dcd2920e3c7e56d352e9b05e88f638115fb952906b40fdb3475c93d",
+      "characters": 1451,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S26",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-west-bengal/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-west-bengal/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-west-bengal/",
+      "fetchedAt": "2026-11-18T11:15:28.758175Z",
+      "contentType": "text/html",
+      "textSha256": "e8778895da0e1a8a5dc91cabd676b828db47f969e85fd8c08fc55e561a3f7ed6",
+      "characters": 2244,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S27",
+      "url": "https://asiainch.org/craft/cane-furniture-of-west-bengal/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-furniture-of-west-bengal/",
+      "finalUrl": "https://asiainch.org/craft/cane-furniture-of-west-bengal/",
+      "fetchedAt": "2026-11-18T11:15:30.494714Z",
+      "contentType": "text/html",
+      "textSha256": "93150f165668236cfa37d8806ab8b7e913eddd186dd7ba63f0d3f708aa468882",
+      "characters": 1036,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S28",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-tamil-nadu/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-tamil-nadu/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-tamil-nadu/",
+      "fetchedAt": "2026-11-18T11:15:32.300318Z",
+      "contentType": "text/html",
+      "textSha256": "7f56c654638fccb3e572692edbbba1f49d248e11eb9006d0e14d07291356d8aa",
+      "characters": 1556,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S29",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-karnataka/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-karnataka/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-karnataka/",
+      "fetchedAt": "2026-11-18T11:15:35.979089Z",
+      "contentType": "text/html",
+      "textSha256": "ec891fee243e1a3c5542456808e768e8931dbef46f8d2449b38e7d0226b9110d",
+      "characters": 588,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S30",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-chattisgarh/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-chattisgarh/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-chattisgarh/",
+      "fetchedAt": "2026-11-18T11:15:39.858878Z",
+      "contentType": "text/html",
+      "textSha256": "090b1f524310dcdff0fd402b5f0f347a142bfc104f06a48ceed418661ade69c7",
+      "characters": 2151,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S31",
+      "url": "https://asiainch.org/craft/cane-bamboo-of-andaman-nicobar/",
+      "route": "LIVE",
+      "readUrl": "https://asiainch.org/craft/cane-bamboo-of-andaman-nicobar/",
+      "finalUrl": "https://asiainch.org/craft/cane-bamboo-of-andaman-nicobar/",
+      "fetchedAt": "2026-11-18T11:15:43.393795Z",
+      "contentType": "text/html",
+      "textSha256": "3cec7e892b016d76f4f00f88ddd77fcf2757202e142fecf2c9ec5007407f6bcd",
+      "characters": 641,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S32",
+      "url": "https://villagesquare.in/keralas-kannadippaya-bamboo-mat-and-the-quest-for-identity/",
+      "route": "LIVE",
+      "readUrl": "https://villagesquare.in/keralas-kannadippaya-bamboo-mat-and-the-quest-for-identity/",
+      "finalUrl": "https://villagesquare.in/keralas-kannadippaya-bamboo-mat-and-the-quest-for-identity/",
+      "fetchedAt": "2026-11-18T11:15:00.007650Z",
+      "contentType": "text/html",
+      "textSha256": "d07bfb925f8f28f4ad07dd2fec0c2e4550374c749e95672f55bda28d5a7c0ae4",
+      "characters": 5497,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S33",
+      "url": "https://www.thenewsminute.com/kerala/once-famous-bamboo-products-kerala-village-losing-its-tradition-117043",
+      "route": "LIVE",
+      "readUrl": "https://www.thenewsminute.com/kerala/once-famous-bamboo-products-kerala-village-losing-its-tradition-117043",
+      "finalUrl": "https://www.thenewsminute.com/kerala/once-famous-bamboo-products-kerala-village-losing-its-tradition-117043",
+      "fetchedAt": "2026-11-18T11:15:10.851369Z",
+      "contentType": "text/html",
+      "textSha256": "8570752fae34b1466210a2df336da8e2438bf0b326e7dd0a91a17dc2bd6e5cc7",
+      "characters": 3769,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S34",
+      "url": "https://bambooinfo.in/downloads/Kerala_Bamboo_Corportation_success_story.pdf",
+      "route": "LIVE",
+      "readUrl": "https://bambooinfo.in/downloads/Kerala_Bamboo_Corportation_success_story.pdf",
+      "finalUrl": "https://bambooinfo.in/downloads/Kerala_Bamboo_Corportation_success_story.pdf",
+      "fetchedAt": "2026-11-18T11:15:13.953849Z",
+      "contentType": "application/pdf",
+      "textSha256": "b61ab85ce1936c9e711a379efb4efc45727e7757edbb7ce69ae4b6d14f224205",
+      "characters": 1235,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S35",
+      "url": "https://india.mongabay.com/2024/02/crafting-a-sustainable-future-for-artisans-using-bamboo/",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20260711081450id_/https://india.mongabay.com/2024/02/crafting-a-sustainable-future-for-artisans-using-bamboo/",
+      "finalUrl": "https://web.archive.org/web/20260711081450id_/https://india.mongabay.com/2024/02/crafting-a-sustainable-future-for-artisans-using-bamboo/",
+      "fetchedAt": "2026-11-18T11:15:17.582506Z",
+      "contentType": "text/html",
+      "textSha256": "67923887e7642ec3a98a26f8b22f9c07b4d7060d8c6e7bf82cd8cc7f5e8e6718",
+      "characters": 12237,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S36",
+      "url": "https://kalingatv.com/features/bamboo-lifeline-of-tribal-craftsmanship-and-culture-of-odisha",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20251014060940id_/https://kalingatv.com/features/bamboo-lifeline-of-tribal-craftsmanship-and-culture-of-odisha/",
+      "finalUrl": "https://web.archive.org/web/20251014060940id_/https://kalingatv.com/features/bamboo-lifeline-of-tribal-craftsmanship-and-culture-of-odisha/",
+      "fetchedAt": "2026-11-18T11:15:22.563773Z",
+      "contentType": "text/html",
+      "textSha256": "3edecf1886cb581a53bc87a2467668ededb7e0f0e15bfbb53bf80fd8ea382c05",
+      "characters": 6573,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S37",
+      "url": "https://archive.pib.gov.in/release02/lyr2002/rnov2002/06112002/r061120027.html",
+      "route": "LIVE",
+      "readUrl": "https://archive.pib.gov.in/release02/lyr2002/rnov2002/06112002/r061120027.html",
+      "finalUrl": "https://archive.pib.gov.in/release02/lyr2002/rnov2002/06112002/r061120027.html",
+      "fetchedAt": "2026-11-18T11:15:24.972280Z",
+      "contentType": "text/html",
+      "textSha256": "b8f8c37b343df08e87f56c305715aa70baa8c93608d620e9324ab779177d5593",
+      "characters": 1985,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S38",
+      "url": "https://www.inbar.int/wp-content/uploads/2020/05/1489454335.pdf",
+      "route": "ARCHIVE",
+      "readUrl": "https://web.archive.org/web/20210921180246id_/https://www.inbar.int/wp-content/uploads/2020/05/1489454335.pdf",
+      "finalUrl": "https://web.archive.org/web/20210921180246id_/https://www.inbar.int/wp-content/uploads/2020/05/1489454335.pdf",
+      "fetchedAt": "2026-11-18T11:15:29.266641Z",
+      "contentType": "application/pdf",
+      "textSha256": "4a87a5334e9ebd635200873e8e61f611eb6a085e2673816c0b4d143f3ccc3335",
+      "characters": 42336,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S39",
+      "url": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "finalUrl": "https://openknowledge.fao.org/server/api/core/bitstreams/aec0f623-bdba-4420-b4ab-7682207de6ce/content",
+      "fetchedAt": "2026-11-18T11:15:32.086543Z",
+      "contentType": "application/pdf",
+      "textSha256": "6cecb9f658d767615902e9b1dc26e92a85a3a20ad98130de0c1e4b0ccbea00f0",
+      "characters": 1533314,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S40",
+      "url": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.fao.org/3/y2783e/y2783e.pdf",
+      "finalUrl": "https://openknowledge.fao.org/server/api/core/bitstreams/aec0f623-bdba-4420-b4ab-7682207de6ce/content",
+      "fetchedAt": "2026-11-18T11:16:21.078829Z",
+      "contentType": "application/pdf",
+      "textSha256": "6cecb9f658d767615902e9b1dc26e92a85a3a20ad98130de0c1e4b0ccbea00f0",
+      "characters": 1533314,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "used by people since time immemorial to craft a variety of utilitarian, decorative and even ritualistic objects.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C001",
+      "sourceId": "S02",
+      "quote": "In one form or the other, bamboo features dominantly in the craft traditions of many communities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S01",
+      "quote": "woody, valuable, strong and exceptionally fastgrowing grass. It is commonly and abundantly available throughout the country.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S40",
+      "quote": "The most important product of rattan palms is cane; this is the rattan stem stripped of its leaf sheaths. This stem is solid, strong and uniform, yet is highly flexible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S40",
+      "quote": "Rattans are climbing palms belonging to the Palm family (Palmae or Arecaceae). There are around 600 different species of rattan belonging to 13 genera and these are concentrated solely in the old world tropics;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S40",
+      "quote": "Rattans belong to the Calamoideae, a large sub-family of palms.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S40",
+      "quote": "all of these climbing palms are spiny, a necessary pre-adaptation to the climbing habit",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S04",
+      "quote": "Rattans are recognized as one of the most useful forest products in India and the resource plays an important role in the rural economy, employing many people in the remote areas who earn their living through extraction and cleaning of rattans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S04",
+      "quote": "Apart from its importance as a commodity for the furniture and handicraft industries",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S06",
+      "quote": "The North-Eastern population comprises a diverse mix of tribes and ethnicities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S06",
+      "quote": "The skill of bamboo craftsmanship is quite popular and widespread amongst the ethnic groups, although it is not an exclusive occupation for the people (Shirali 1983).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S35",
+      "quote": "Bamboo is a prominent non-wood forest resource extensively used by tribal and rural communities in Tripura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S35",
+      "quote": "Approximately 1.49 lakh artisans are actively involved in making several products of this unique grass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S35",
+      "quote": "Banner image: An artisan showcasing bamboo products in Saras Mela organised in Noida in February 2024.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S13",
+      "quote": "Tripura, known for its exquisite bamboo and cane crafts, handwoven textiles, and terracotta pottery, reflects the artistic legacy of the region",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C010",
+      "sourceId": "S14",
+      "quote": "This most utilitarian yet critical craft of weaving reed baskets and mats is practiced across Kerala though the largest concentration of craftspeople is in Angamally, Thiruvananthapuram, Dedunganda, Aryanad in Ernakulam district and in Malapuram.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S16",
+      "quote": "There are innumerable types and shapes of the bamboo basket, varying with the use to which they are put. The men of the household usually weave the bamboo baskets. Each district has its own distinctive style.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S30",
+      "quote": "The Bansors or basketeers are considered to be a sub-caste of the Birchors who slice bamboos into rikas or fine splits and worship the deity Dasha.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S30",
+      "quote": "Basketry is a craft practised by entire families.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S32",
+      "quote": "Grannies of the Muthuvar, Urali, Mannan, Malayar and Kadar communities know how to weave an authentic Kannadippaya.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S32",
+      "quote": "The mat is made almost entirely by women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "Bamboo culms are stored in the kitchen over the fireplace. This process of using smoke to prevent insect attack is thousands of years old.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S03",
+      "quote": "Smoke treatment is used in villages to enhance the durability of bamboo species.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Bamboo culms have been used by people and communities for thousands of years, to build houses, fences and bridges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S02",
+      "quote": "Long before plastics were invented, such containers have been fashioned and used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S02",
+      "quote": "People and communities have long known the usage and value of bamboo culm containers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S04",
+      "quote": "there are great many other uses also known to the Indian people since ancient times. In the ancient books, the medicinal uses of rattans have been reported.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S10",
+      "quote": "This craft has been practiced by the North Eastern States for centuries as their prime income source",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S30",
+      "quote": "Initially, baskets, winnowing fans and mats were made out of leaves but they were very fragile. Later all these items were made out of bamboo which is much sturdier.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S33",
+      "quote": "It was in 1979 that the Kerala State Bamboo Corporation Limited began a community mat weaving centre near the colony. The community members wove bamboo mats which were bought by the Corporation and converted to bamboo plywood.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S33",
+      "quote": "in the Sambava community of Kurungalloor Colony lived by transforming bamboo reeds into a variety of products",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S33",
+      "quote": "Many decades ago, everyone - from children to the elderly - in the Sambava community of Kurungalloor Colony lived by transforming bamboo reeds into a variety of products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S33",
+      "quote": "this colony, which is in Veliyoor of Vallarada Panchayat in Thiruvananthapuram",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S22",
+      "quote": "Tradition states that a magician, Chang Kichaylangba, before he died, stated that if the people opened his grave on the sixth day after his death, they would discover something new. On the sixth day the grave was opened and all the designs and patterns of basketry work were found",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S14",
+      "quote": "Traditionally, however, it was the Parayas and Kaatakaras (literally, forest people) of Anapandan, a hillside near Thrissur who undertook the making of cane and bamboo baskets using plain, twill and occasionally the hexagonal weave.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S13",
+      "quote": "1. Harvesting and Preparation: Bamboo is cut and treated. It is split into strips and cured to prevent decay. 2. Designing: Craftspeople plan their designs based on the intended use, whether for functional items or decorative pieces. 3. Weaving and Assembling:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S13",
+      "quote": "4. Finishing: The crafted items are polished, and sometimes lacquered or stained to enhance their appearance and durability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S13",
+      "quote": "Bamboo strips are woven or assembled using techniques such as braiding, weaving, and lashing. Tools like knives and pliers are used for shaping and assembly.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "During the dry season: Winter is the period of dormancy of the bamboo plant. During this period, the plant is acquiring and conserving nutrients for the next season of growth; starch content is lower; and the chances of borer attack, now and later, is lower.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S02",
+      "quote": "It is best to harvest bamboo in the dry season; harvesting in the rainy season or when the bamboo is flowering should be avoided.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S03",
+      "quote": "During the dry seasons, susceptibility to attack by fungi is greater because of the increased starch content. Thus, the right time to harvest is during or after the rainy season.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S08",
+      "quote": "Post Harvest Protection of Bamboo from Insect Borers by a Technique Enhancing Starch Hydrolysis (KFRI, Peechi)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S08",
+      "quote": "Since harvesting during the low starch periods is not much practicable due to variability, it will be reasonable to schedule harvesting operation for the period when amylase activity and starch depletion are relatively higher (July-November).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "Immature bamboo culms (< 3 years old) tend to have higher starch content. In addition, the process of lignification is not complete, and they will be less strong and usually collapse on drying",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "At or near the harvest site, keep the culms stacked vertically in a sunny place. with the foliage (leaves, branches) intact. Kept in this way for 3-4 days after felling, the starch content in the culms will be lowered",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S02",
+      "quote": "Post-harvest, the cut bamboo with its leaves and branches intact should be stored vertically in a sunny spot for 2-3 days for the photosynthesis process to continue. This helps to reduce the starch content in the bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S01",
+      "quote": "Leaching helps remove starch and also enhances permeability for future treatment by diffusion and pressure.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S01",
+      "quote": "Storage in water causes leaching of starch and maintains pliability.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "Submerging the bamboo culms in running or stagnant water helps the villagers to preserve the bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S03",
+      "quote": "As the culms are lighter than water, weight is put on the culms to submerge them completely in water. The fresh poles are stored for about 3 months in stagnant or flowing water. Starch, carbohydrates, and other water-soluble substances may be fermented or washed out.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S02",
+      "quote": "The bamboo culms can be seasoned by soaking in water for a few week, immediately after felling. The starch in the bamboo leaches out into the water, providing the bamboo some protection from borer attacks. However, this seasoning does not prevent fungus attacks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S03",
+      "quote": "the ability of treated samples to resist insect and microbial attack under field conditions only lasted up to six months, which was much better than the control.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S03",
+      "quote": "The water leaching method was found to be incapable of giving complete protection to the culms under field conditions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S26",
+      "quote": "Paddy bins or containers for storing paddy are usually made of bamboo matting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S26",
+      "quote": "The bamboo which is used for this is slatted, and seasoned by soaking it in a mud bed for three to four weeks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S01",
+      "quote": "Traditionally, culms are stored over the hearth or fireplace. The moisture content in smoked culms is thus reduced so that biological degradation cannot take place. Built-up deposits from smoke form a protective layer on the culm.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S02",
+      "quote": "Smoking reduces moisture content and imparts a protective layer of tar on culm surface.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S03",
+      "quote": "If bamboo culms are fumigated (using their own branches and leaves) for a longer time, they become inedible to insects. The culms are smoked at an air temperature of 50 to 60 °C",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S03",
+      "quote": "However, no scientific data on the smoke treatment process for bamboo species can be found in the literature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S03",
+      "quote": "The most effective duration of smoking for producing high resistance in bamboo is not reported in the literature.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "Baking on open fire has been used to straighten crooked bamboo culms. Bamboo is rotated on an open flame to prevent localised heating.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S02",
+      "quote": "In the process, the bamboo is rubbed with castor oil and then heated over a gentle fire. A tarry substance oozes out of the bamboo and the bamboo becomes dark brown in colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S02",
+      "quote": "The traditional methods are simple and offer protection to a degree against borers. However, these methods do not offer total protection against termites and fungus.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "They are simple and cost-effective without the use of supporting equipment. But these methods are not appropriate for long-term protection of bamboo.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S02",
+      "quote": "Borax and Boric Acid is mixed in the ratio of 1:1.5, which is then used to make a 5 percent solution in water. Now the culms can be immersed in this solution for half an hour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S02",
+      "quote": "Modified Boucherie method: In this process, two thirds of a tank is filled with a preservative solution and a hand-pump is used to raise the pressure on the solution to between 1 and 1.4 kg/cm2.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S02",
+      "quote": "The preservative solution is forced by pressure into the butt end of the trunk whilst the sap drains away from the top end.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "In this method, the preservative is forced under pressure through the entire length of the culm, so that the sap is replaced by the preservative.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S38",
+      "quote": "Bamboos may be treated either by a simple sap displacement technique or by the modified Boucherie process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S38",
+      "quote": "Fill the tank with preservative solution to about two-thirds full.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S38",
+      "quote": "Develop a pressure of 1.0 to 1.4 Kg/cm2 in the tank",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "The cane and bamboo handicrafts of Tripura are known for their elegance and exquisite designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S17",
+      "quote": "Cane and bamboo are split vertically and made into extremely fine and uniform strips, using simple tools. The waxy top layer is used while the inner layer, which is fibrous and rougher than the outer layer, is removed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S36",
+      "quote": "The craft process begins with splitting bamboo into fine strips, which are then woven by hand-a skill passed from older to younger generations, often involving both men and women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "This is a process used to take off the skin of bamboo prior to polishing or painting. The skin contains silica, which tends to repel paints and polishers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S02",
+      "quote": "In this process, the skin of bamboo is peeled of slowly with a sharp knife.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S39",
+      "quote": "scraping is required to remove the burn marks of blowtorch, which is used by the villagers to soften the respective portion of a stem for bending.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S27",
+      "quote": "Simple tools such as hammer, handsaw and dao/cutting tool are used to create sturdy cane furniture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S27",
+      "quote": "The process of furniture making includes cutting the cane, bending it with heat and attaching with nails and binding. Lastly, sandpapering and varnishing is done to finish the item.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S04",
+      "quote": "In India air-drying is the most common method used for reducing the moisture content of rattans. Recently oil curing methods have been introduced (Yekantappa et al.,1990, Dhamodaran & Bhat, 1992).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S04",
+      "quote": "FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS Rome, 2002",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S39",
+      "quote": "Curing means the immersion of canes in a hot oil bath to prevent deterioration.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S39",
+      "quote": "This process reduces the moisture content so that biodeterioration is prevented. The rattan skin attains an ivory white colour, which is much desired.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S39",
+      "quote": "Different combinations of diesel oil, kerosene, palm oil, coconut oil are used, depending on availability and cost, and are applied at varying temperatures between 80°C and 150°C for a duration of 10 to 60 minutes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S04",
+      "quote": "The standardized curing method uses diesel - coconut oil mixture (9: 1 ratio) or kerosene.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S39",
+      "quote": "They include primary processing of deglazing to remove the silicified epidermis, fumigation, bleaching, oil curing and drying.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S23",
+      "quote": "Cane, the raw material for basketry is flexible and pliant and can be used in a variety of ways. There are two basic techniques used for basketry: the coiled technique and the plaited or woven technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S29",
+      "quote": "The baskets made today are either coiled or plaited and are classified according to their function of carrying or storing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S02",
+      "quote": "In fact, even today, many bamboo craftspersons use only a single tool, normally a dao or a machete.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S02",
+      "quote": "Mission Director January 2006",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S17",
+      "quote": "The tools used in making bamboo handicrafts are chaku/knife, takkal/broad-bladed knife, haath dao/bill hook knife, files, and chisels.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": "The high temperatures destroy the starch and other sugars and also produce tar in the structure. It kills existing infestations if any.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "Culms and mats are painted with slaked lime(Ca(OH) ) which is then transformed 2 into calcium carbonate, CaCO , which inhibits water absorption and 3 delays fungal attack.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S03",
+      "quote": "Slaked lime makes the surface of treated bamboo alkaline. This delays the attack of fungi.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S01",
+      "quote": "These are usually a mixture of boric acid:borax. Readymade formulation (disodium octaborate 1:1.4) is also available. Boron salts are effective against borers, termites and fungi (except soft rot fungi). High concentration salts have fire-retardant properties.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S02",
+      "quote": "Boron salts are effective against termites and fungi. They are not toxic, and when used in concentrated solutions impart a degree of fire retardance as well.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "These are leachable solutions and their use is restricted to bamboo used in dry conditions and under cover. Bamboo treated with these preservatives should not be exposed to rain or ground contact.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S01",
+      "quote": "Common example: Boric acid: Borax & copper sulphate",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S03",
+      "quote": "Boric acid preservative is associated with the disadvantage of leaching under outdoor conditions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S03",
+      "quote": "The solubility of boric acid in water is about 5%. However, when mixed with borax, the solubility of boric acid markedly",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S03",
+      "quote": "increases. This is an excellent preservative for protecting wood indoors because it is highly soluble in water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S39",
+      "quote": "Especially some Calamus species possess a highly silicified epidermis, which is taken off in different ways (deglazing), whereby the silica layer snaps off in flakes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S39",
+      "quote": "Fumigation with sulphur dioxide does not only sterilize the canes, but it also improves surface quality.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S02",
+      "quote": "Bamboo fibres along the cortex contain lignin and silica, which strengthen the outermost layer.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S03",
+      "quote": "The outer skin of bamboo is high in silica content. This restricts the flow of preservative into the culm. It is also difficult to penetrate inside the waxy layer of bamboo (Janssen 2000).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S39",
+      "quote": "The outer part, the epidermis, is often heavily encrusted with amorphous silica, which hinders processing and is therefore removed. The silica content varies considerably among species (0.9-2.7%).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S02",
+      "quote": "Bamboo fibres run longitudinally down the internodal portion, making splitting easier. At the node, the bamboo fibres run transversely.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S02",
+      "quote": "Due to the fact that the fibres run along the length of the bamboo (except at the node), once the initial cut is made, the bamboo splits easily along its length.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S01",
+      "quote": "the percentage of fibre in the culm wall increases from the inside of the culm wall to the outside, and from the bottom to the top. Consequently, specific gravity and strength properties of bamboo increase from the inside of the culm wall to the outside, and from the bottom to the top.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S01",
+      "quote": "Fibres of the bamboo become shorter at the nodes; also, their orientation changes from axial to transverse direction. This results in higher specific gravity, lower volume shrinkage and lower tensile strength compared to the internodes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S01",
+      "quote": "There are no radial pathways in the culm tissues, like the ray cells in wood, and lateral cell-to-cell movement of preservative depends on a slow diffusion process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S03",
+      "quote": "The absence of ray cells in bamboo also constrains the flow of preservative to only the longitudinal direction.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S01",
+      "quote": "The extent of conducting tissues are only 8% of the culm tissues, in comparison to 70% for softwoods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S01",
+      "quote": "making treatment of bamboo a difficult and timeconsuming process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S39",
+      "quote": "Fibre length varies between 0.9 and 2.9 mm with an average of 1.3-1.8 mm. Density varies between. 0.3 and 0.6 g/ cm3",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "A typical culm wall structure consists of parenchyma cells (52%), conducting vessels (8%) and fibres (40%).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "The ground tissues of the culm wall consist of parenchyma cells. These cells are axially oriented. Their large volume provide for storage of nutrients, mainly starch and carbohydrates.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S01",
+      "quote": "Without any protective treatment its durability is less than five years. Unlike varieties of timber like teak, bamboo structure is void of toxic deposits. The presence of starch makes it more attractive to microorganisms.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C077",
+      "sourceId": "S03",
+      "quote": "It has been found that untreated bamboo has a service life of only two to five years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S39",
+      "quote": "A cross-sectional view of a rattan stem reveals its principal architecture, consisting of two zones - the periphery with epidermis and cortex; and the central cylinder with vascular bundles with fibrous sheaths embedded in thin-walled parenchymatous ground tissue.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S39",
+      "quote": "It became clearly evident that a commercial cane is characterized by definite criteria such as:",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S39",
+      "quote": "even distribution of vascular bundles over the stem, cross-sectional composition of about 20-25 percent fibres, 45 percent conducting cells and 30-35 percent ground parenchyma",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C080",
+      "sourceId": "S02",
+      "quote": "The high silica content in bamboo makes blunt the sharp edges of tools like knives and machetes. Use sharpening or grinding devices to maintain the effectiveness of these tools.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S11",
+      "quote": "Kerala has a large number of (around 11) types of thin walled bamboos called reeds (Ochlandra genera) which are used mainly for weaving purposes by the traditional artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S14",
+      "quote": "The thick bamboo locally known as mula and the thinner bamboo called eeta are made into rough bamboo mats used as wall partitions and softer grass mats to sleep on.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S32",
+      "quote": "A Kannadippaya is woven with a specific layer of slivers - the fourth or fifth, which can be made ultra-thin and shiny - split out of a reed bamboo species endemic to the region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S32",
+      "quote": "Indigenous communities have different names, but it's better known as Teinostachyum wightii (Munro) Bedd among scientists.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S19",
+      "quote": "Bambusa affinis is an extremely strong and solid species of bamboo used as a substitute for cane to make furniture in Tripura.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S13",
+      "quote": "Melocanna baccifera Muli bamboo is known for its thick walls and strength",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S13",
+      "quote": "The middle section is moderately hard used for furniture, baskets, and construction materials due to its durability. While the top section is more flexible, employed in making smaller items like mats and winnowing fans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S13",
+      "quote": "Kanak Kaich Bamboo Bambusa tulda This bamboo is flexible, with a softer texture, making it easy to work with.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S02",
+      "quote": "Throstachys oliveri Kerala Thottimula, Lathimlua; Tripura Kanak kaich",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S02",
+      "quote": "These include Bambusa tulda, Bambusa polymorpha, Dendrocalamus giganteus, dendrocalamus hamilitonii, Teinostachyum dullooa and Thyrsostachys oliveri, making them extremely suitable for culm container craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S26",
+      "quote": "The variety of bamboo used for basketry has long fibres and widely-spaced internodes. When the bamboo is solid and thick and has close nodes it is used for construction.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S06",
+      "quote": "In 27 items, cane was used as an associated material to complete the making process.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S06",
+      "quote": "31 items were made of Bambusa tulda Roxb. and only 3 items were made of Bambus balcooa Roxb.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S04",
+      "quote": "In India there are about 60 species of rattans under four genera, Calamus, Daemonorops, Korthalsia and Plectocomia.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S04",
+      "quote": "FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS Rome, 2002",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S39",
+      "quote": "Out of a total of about 600 species only about 50 are said to be utilized commercially.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S40",
+      "quote": "it is estimated that only 20% of the known rattan species are of any commercial value",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "Most Indian bamboos are clump-forming ('sympodial'), and such stems will tend to be clustered together.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S09",
+      "quote": "Most of the Indian bamboos have sympodial rhizome.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S09",
+      "quote": "Unlike trees, bamboo does not acquire more diameter as it grow. The new culm emerges with full diameter and it reaches full height in 60 to 120 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S02",
+      "quote": "An individual culm attains its maximum diameter and height in a single spurt of growth, typically within a period of between 80-110 days after emergence from the ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S01",
+      "quote": "It turns woody rapidly and elongates to its full height within 3-4 months.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S10",
+      "quote": "In India 136 species of bamboos in 36 genera are found to exist.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S02",
+      "quote": "There are over 90 genera and 1,200 species of bamboo worldwise, with 18 genera belonging to 130 species available in India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S02",
+      "quote": "Mission Director January 2006",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S06",
+      "quote": "India is home to around 125 species belonging to 23 genera (Tewari 1992)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S28",
+      "quote": "Plaited basketry in Tamil Nadu is made by crossing the warp and the weft or two wefts. Plaited basketry is of various kinds: chequer work, twill work, wrapped work, intertwined work and hexagonal work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S02",
+      "quote": "They are actually thin, strong slivers of bamboo cut from a radial section, and are used to join and hold in place bamboo segments.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S02",
+      "quote": "Iron nails can cause splits and cracks that are unsightly, and can weaken the structure of the product. They are also prone to rusting, especially when the product is exposed to water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S19",
+      "quote": "Traditionally, Katlamara was known for its bamboo poles used in fishing, pole vaulting and boating but the production of furniture is said to have the potential to alter the economy of bamboo artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S19",
+      "quote": "The joints are made by drilling, housing and pinning with bamboo nails. The frames are made from the whole bamboo whereas the seat and the back are woven from bamboo splits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S19",
+      "quote": "The tools used are dao, hammer, handsaw, file and chisel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S23",
+      "quote": "Arunachal Pradesh has 16 major tribes of whom the Adi group is the largest in number",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S23",
+      "quote": "The Adis are known to use cane and bamboo to build houses and suspension bridges. The bridges are sometimes over 200 metres in length, spanning a river from bank to bank.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S24",
+      "quote": "The Adi tribes in Siang district also construct bamboo and cane suspension bridges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S26",
+      "quote": "Bamboo containers - which are smoked to a brown shade, decorated with poker work, with designs burnt in with a red hot point of a steel tool, bound by strips of cane, and fitted with cane handles - are used to store, carry, and measure oil and milk in many parts of north Bengal.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S20",
+      "quote": "Khasi conical baskets (khoks) are a common sight in Meghalaya.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S20",
+      "quote": "The khasis are famous for weaving cane mats, stools, and baskets and khasi umbrellas (locally known as kurup) are made in light and medium qualities. They make a special kind of cane mat called 'tlieng', which lasts for at least 20-30 years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S21",
+      "quote": "The conical bamboo basket called paikwang is a typical Mizo basket, broad at the rim and tapering at the bottom, and is used to carry firewood, cotton, vegetables, and other items.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S25",
+      "quote": "Among the variety of baskets, the chengbon has a domed lid made of bamboo. These have a square body of checks, in black and white, rest on four prominent legs and are used for storing clothes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S22",
+      "quote": "The khopi is a basket of bamboo and is always carried by the Naga womenfolk irrespective of age. It has a footrest",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S22",
+      "quote": "A basket without a footrest is a koshie.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S16",
+      "quote": "Whole bamboo culms are used as containers for storing home-brewed rice beer, for fetching water, and for carrying drinking water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S02",
+      "quote": "The most widespread traditional use of bamboo culm containers if for carrying and storing water and food articles. These are especially common in the North East, but are also used in other parts of the country where good-sized bamboo is easily available.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S18",
+      "quote": "Fine strips are woven on hand-operated looms and joined with rayon threads in a patterned weave placed close together so that the entire screen takes on the texture and pliability of fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S18",
+      "quote": "As a rule the bamboo mats are flexible only in the direction of the warp as the weft consists of the rigid bamboo splits.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S32",
+      "quote": "the lesser-known Kannadippaya mat woven by tribes-folks of the Western Ghats range in Kerala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S32",
+      "quote": "The squares create an optical illusion that gives the mat its name, a portmanteau of Kannadi, which means \"mirror\" in Malayalam, and \"paya\" that translates to mat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S14",
+      "quote": "Kotta or rough work baskets with short handles are often reinforced with coir; vatti or neatly woven square baskets made with slim bamboo splits are used for shopping, storage as well as a makeshift vessel.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S15",
+      "quote": "To start, the artisans create a mat of the appropriate size to serve as the canvas. The drawings are then generated by drawing sketches.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C113",
+      "sourceId": "S15",
+      "quote": "The paintings are done in a variety of sizes and bright colours. The mat paintings are finished by framing them in bamboo reed frames.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S10",
+      "quote": "The North East India holds the largest stock and diversity of bamboos. Next to the N.E., the Western ghats area has the second largest diversity of bamboos.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S06",
+      "quote": "with approximately 66% of the bamboo population concentrated in the North Eastern part of the country",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S04",
+      "quote": "They are mainly distributed in three major geographic regions, the Western Ghats of Peninsular India, Sub-Himalayan hills and valleys of eastern and northeastern India and Andaman",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S04",
+      "quote": "3 genera and 18 species from Andaman & Nicobar Islands",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S14",
+      "quote": "The basketry of Kerala is largely made by the Christian communities of Ernakulam and Thrissur.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S14",
+      "quote": "A large range of painted and woven mats that are crafted are in great demand all over India. The main centre for this craft is Irinjalakuda.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S15",
+      "quote": "Irinjalakuda, a town in Thrissur, is well known for its bamboo mat painting work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "Other areas of production include Kodali in Thrissur district",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S14",
+      "quote": "This most utilitarian yet critical craft of weaving reed baskets and mats is practiced across Kerala",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S36",
+      "quote": "In Odisha, bamboo is used by various tribal groups-including the Mahali, Lodha, and other communities from Sundargarh, Keonjhar, Koraput, and Rayagada districts-to make a wide array of articles.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S28",
+      "quote": "The main centres for cane products are Chennai, North Arcot and Thanjavur districts. Chennai is particularly well known for cane weaving and chairs, tables and chaise lounges.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S13",
+      "quote": "Location of the cluster and various Bamboo craft practices in Amarpur",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S13",
+      "quote": "Amarpur is a town situated in the Gomati district of Tripura, India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S31",
+      "quote": "Basketry is a traditional craft of the islands and beautiful cane baskets, made out of thin cane twigs that are not split, are used by the women for carrying market produce and for storage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "The study was carried out between January and September 2024 in 8 villages of Sivasagar district inhabited by Nath-Yogi community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S06",
+      "quote": "Thirty four traditionally used bamboo gadgets were recorded in the study. These gadgets were used mainly in agriculture, fishing, handloom, music, and other household purposes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S11",
+      "quote": "The main species found in Kerala are Bambusa bambos, Ochlandra travancorica (OT), Dendrocalamus strictus etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S11",
+      "quote": "Reed bamboo (O.T) is supplied to the artisans through the State Bamboo Corporation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S34",
+      "quote": "Three Process Units for value addition of Bamboo / Common Mat Weaving Centres (CMWC's)was established by Kerala State Bamboo Corporation, Angamaly, (2 Nos. at Cheranalloor and 1 No. at Chulli in Ernakulam District.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S11",
+      "quote": "The weaving sector artisans around Angamaly region is supported by the Kerala State Bamboo Corporation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S34",
+      "quote": "Kerala State Bamboo Corporation Ltd., Angamaly South, Ernakulam District",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S36",
+      "quote": "Craft clusters in districts like Keonjhar, Rayagada, and Balasore significantly contribute to sustainable livelihoods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S04",
+      "quote": "Socio-economic studies on rattans are mainly confined to Kerala.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S04",
+      "quote": "Rattan based industry in the State depends heavily on import of cane from the Northeastern Region. This has caused an adverse income and cost relationship in the industry, which provides fewer incentives to carry out the production, resulting in decline of units in the State.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S04",
+      "quote": "FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS Rome, 2002",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S06",
+      "quote": "These villages were chosen for their expertise in traditional bamboo crafts, with many families relying on it as a primary occupation alongside agriculture.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S12",
+      "quote": "Handicrafts sector in Tripura has been sub-divided into 5 subsectors - bamboo furniture, bamboo baskets, loom-mat based products, turning & cutting products, decorative and furniture etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S12",
+      "quote": "The bamboo-handicrafts and furniture sector has faced stiff competition from bamboo products from Thailand, China and other South East Asian countries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S32",
+      "quote": "The Kerala State Bamboo Corporation (KSBC), formed to support bamboo-dependent communities, had promoted only standardised reed mats required for making ply-boards, inadvertently causing an erosion of craft skills among the indigenous people.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C134",
+      "sourceId": "S07",
+      "quote": "The three species responsible for causing major damage to bamboo during storage and use are : Dinoderus brevis, D. minutus and D. ocellaris.They are collectively known as ghoon borers or shothole borers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S08",
+      "quote": "It has been found that, in a stack of bamboos subject to borer damage, culms that are heavily damaged are those with abundant starch; the culms that evade the attack are those with little or no starch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S07",
+      "quote": "Presence of starch, soluble carbohydrates and proteins in the bamboo increases its susceptibility to borer attack.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S05",
+      "quote": "A number of researchers have qualitatively observed a correlation between starch content and bamboo susceptibility (Plank & Hageman 1951, Mathur 1958).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S05",
+      "quote": "However, Dhamodaran et al. (1986) observed that the number of progeny produced by D. minutus on dried culms of bamboo reed did not correlate with starch content.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S05",
+      "quote": "Female beetles deposited eggs individually into the metaxylem and incubation period varied from 4 to 6 days. Larvae fed along the metaxylem, leaving behind tightly packed frass. The overall life cycle of D. minutus in bamboo was 98.28 ± 1.26 days.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "Dinoderus minutus (Coleoptera: Bostrychidae) is an important borer that attacks felled bamboo culms and finished bamboo products to utilise stored starch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S05",
+      "quote": "In storage yards, stacks with immature culms become the starting point of attack and the bamboo is often converted to dust. About 40% of the bamboo stack may be lost within a period of 8 to 10 months (Thapa et al. 1992).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S07",
+      "quote": "The beetles bore into the cut bamboo through spots where external rind has been damaged.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S07",
+      "quote": "The ghoon borers also attack the bamboos even after it has been made in to furniture and mats etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S01",
+      "quote": "A moisture level of 40 to 80% is ideal for rapid growth. Dry bamboo with moisture below 20% does not promote fungal growth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S39",
+      "quote": "Rattan is much liable to be infested by fungi and insects due to its high starch content. Fungal invasion can occur within one day after cutting.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S39",
+      "quote": "It is estimated that about 20 percent of the harvested canes become stained. The most common cause is blue stain fungi that penetrate with their hyphae deep inside the stem, utilizing starch and sugar.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "The growing popularity of rattan furniture resulted in overexploitation of this important forest resource. In many regions commercial species have been seriously depleted as the rapid exploitation continues unabated.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S04",
+      "quote": "FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS Rome, 2002",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "They are not toxic and can be used for treating bamboo products like baskets, dry containers, etc. which come in contact with food products.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S02",
+      "quote": "It is the least harmful to use as it is not toxic and is specially recommended for use with woven strips of bamboo and for products intended to be used fro storing food.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S02",
+      "quote": "Copper Chrome Arsenic: One of the most effective treatments for bamboo",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S02",
+      "quote": "However it is highly toxic and the use of Arsenic is banned in some countries. Good for usage in bamboo furniture and other handicrafts but not suitable for products which will be in contact with food.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S02",
+      "quote": "Mission Director January 2006",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S02",
+      "quote": "Wear protective gear such as gloves, facemask, eyeglasses and aprons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S02",
+      "quote": "In case, any chemical comes in contact with the skin, wash immediately with clean water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S01",
+      "quote": "Always use protection during spraying - masks, gloves, goggles, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S22",
+      "quote": "The Naga youth are expected to learn and practise the Naga crafts. Collection of the raw material happens between July and October.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S22",
+      "quote": "The bamboo used is about a year old, for bamboo stems more than three years old are too brittle.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S35",
+      "quote": "India has the highest area (13.96 million ha) under bamboo and is the second richest country, after China, in terms of bamboo diversity, with 136 species (125 indigenous and 11 exotic).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S35",
+      "quote": "Banner image: An artisan showcasing bamboo products in Saras Mela organised in Noida in February 2024.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S37",
+      "quote": "The three-year Cane and Bamboo pilot project, a joint initiative of Development Commissioner, handicrafts (DCH) and United Nations Development Programme (UNDP) is about to conclude.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S37",
+      "quote": "She told that the project started in December 1999 and will be completing in December 2002",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S37",
+      "quote": "The objectives of the joint venture were to identify craft specific bamboo and cane species, develop plantation and management techniques for large-scale plantation and provide modern technology and design inputs to the artisans.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S35",
+      "quote": "Simultaneously, approximately two million traditional artisans whose livelihoods hinge on activities ranging from harvesting and processing to value additions and the sale of bamboo products like baskets, mats, handicrafts, and more.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S35",
+      "quote": "Banner image: An artisan showcasing bamboo products in Saras Mela organised in Noida in February 2024.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S05",
+      "quote": "Beetle infestation in storage yards was found to be highly unpredictable and borer incidence was apparently not related to season but on the quality of bamboo (Nair et al. 1983).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S38",
+      "quote": "Bamboo culms 3-4 years old are the most widely used in the bamboo sector as they have optimum strength properties.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S38",
+      "quote": "International Network for Bamboo and Rattan 2001",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S14",
+      "quote": "The history of the bamboo reed industry of Kerala may be traced to the 14th century when the Arab traveler, Ibn Batuta, recorded the use of bamboo mats as sails on the Chinese ships at Kozhikode.",
+      "result": "PASS"
+    }
+  ]
+}

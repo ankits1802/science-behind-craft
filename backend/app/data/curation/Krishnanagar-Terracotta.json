@@ -1,0 +1,3189 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Krishnanagar-Terracotta",
+  "version": 1,
+  "curatedAt": "2026-11-18T11:01:16+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {
+      "query": "Krishnanagar clay dolls Ghurni Nadia history clay firing",
+      "site": "web search"
+    },
+    {
+      "query": "Krishnanagar terracotta Nadia West Bengal craft study pdf",
+      "site": "web search"
+    },
+    {
+      "query": "Krishnanagar clay doll geographical indication application",
+      "site": "web search"
+    },
+    {
+      "query": "\"Clay Doll of Krishnanagar\" GI journal 795",
+      "site": "web search"
+    },
+    {
+      "query": "GI application 795, Clay Doll of Krishnanagar",
+      "site": "search.ipindia.gov.in (registry record read)"
+    },
+    {
+      "query": "GI Journal No. 210, which the registry names for application 795",
+      "site": "search.ipindia.gov.in (the journal list ends at No. 209; guessed file names for No. 210 were refused)"
+    },
+    {
+      "query": "GI Journal No. 209, part 1",
+      "site": "search.ipindia.gov.in (authorised user notices; no Krishnanagar entry in the part read; not cited)"
+    },
+    {
+      "query": "Bengali clay modelling, Krishnanagar, Lucknow and Poona clay modelling articles",
+      "site": "collections.museumsvictoria.com.au (live pages refuse automated reading; read from the Wayback Machine; Lucknow and Poona articles not cited)"
+    },
+    {
+      "query": "Clay modelling industry and its problems: a case study of the Ghurni region (ShodhKosh)",
+      "site": "granthaalayahpublication.org (the article page and its full-text download both refused with HTTP 403; no Wayback copy; abstract only; not cited)"
+    },
+    {
+      "query": "Hazra and Barman, earthen doll of Krishnagar, International Journal of Management 8(4)",
+      "site": "iaeme.com (the file at the address tried is a different paper; not cited)"
+    },
+    {
+      "query": "Krishnanagar, the land of mesmerising clay toys and figurines",
+      "site": "outlookindia.com (the live page serves unrelated text; not cited)"
+    },
+    {
+      "query": "Ghurni artisans turn to fibreglass (The Statesman, 2007)",
+      "site": "web.archive.org (snapshot has no readable text)"
+    },
+    {
+      "query": "Nadia district culture, heritage and tourism pages",
+      "site": "nadia.gov.in (nothing on the clay craft beyond naming Ghurni a tourist spot; not cited)"
+    },
+    {
+      "query": "Krishnanagar destination page",
+      "site": "wbtourism.gov.in (TLS refused; no Wayback copy)"
+    },
+    {
+      "query": "Clay doll making and clay idol documentation pages",
+      "site": "gaatha.com, oaklores.com, indianartcottage.com, ebth.com (shop-linked, blog or sale pages; not cited)"
+    },
+    {
+      "query": "Natore, where potters came from",
+      "site": "the RCCH brochure places it in West Bengal, the Deccan Herald in North Bengal and a 30 Stades feature now in Bangladesh; no claim states its location, so it is not listed as a place"
+    },
+    {
+      "query": "Krishnanagar and Ghurni clay pictures",
+      "site": "commons.wikimedia.org (Category:Krishnanagar holds one clay model photograph; further listing was refused for rate limits)"
+    },
+    {
+      "query": "Bengali-language articles on Krishnanagar clay dolls",
+      "site": "bn.wikipedia.org (no article at the titles tried)"
+    },
+    {
+      "query": "Krishnanagar Ghurni terracotta plaques murals figurines artisans",
+      "site": "web search (Ghurni clay doll pages already read; a 30 Stades feature on Ghurni, read and cited as S17; craft blogs, decor and sales pages not cited)"
+    },
+    {
+      "query": "\"An Overview of Traditional Handicraft Industries of Krishnanagar Clay Doll\" Das 2018",
+      "site": "web search (the paper was not found; a 2018 income study of Ghurni in Research Review International Journal of Multidisciplinary was found, read and cited as S16)"
+    },
+    {
+      "query": "Krishnanagar clay doll industry Research Review International Journal of Multidisciplinary 2018 Ghurni",
+      "site": "web search (the same 2018 study, S16, on zenodo.org)"
+    },
+    {
+      "query": "Jana 2015 \"Role of Human Information Sources\" clay dolls clay models Krishnanagar",
+      "site": "web search (the paper was not found)"
+    },
+    {
+      "query": "Ghosh 1987 \"Terracotta of Nadia\" Agam Kala Prakashan",
+      "site": "web search (no such edition found; only catalogue and bookseller records of S. P. Ghosh, Terracottas of Bengal: with special reference to Nadia, 1986, with no open text; not cited)"
+    },
+    {
+      "query": "\"Terracottas of Bengal\" \"special reference to Nadia\" Ghosh review",
+      "site": "web search (bookseller pages only; no review or open text; not cited)"
+    },
+    {
+      "query": "Hazra Barman 2017 \"Earthen Doll of Krishnagar\" International Journal of Management pdf",
+      "site": "web search (no open copy found)"
+    },
+    {
+      "query": "Ghurni terracotta industry Krishnanagar fired clay kiln study",
+      "site": "web search (sources already read, the ShodhKosh article and an unrelated archaeological kiln study)"
+    },
+    {
+      "query": "Nadia district terracotta temple plaques tradition Krishnanagar terracotta craft today",
+      "site": "web search (pages on the terracotta temples of Nadia villages such as Dignagar and Birnagar, not on a Krishnanagar terracotta craft; not cited)"
+    },
+    {
+      "query": "Terracotta Temple in Nadia: History and Architecture",
+      "site": "culturalstudies.in (the article page holds no text and its PDF returned HTTP 404; no Wayback copy)"
+    },
+    {
+      "query": "Clay dolls truly represent a breakaway from the traditional form",
+      "site": "wbkvib.org.in (the page redirects to the Khadi board's home page; no craft text)"
+    },
+    {
+      "query": "Ghurni",
+      "site": "britannica.com (read from the Wayback Machine: a one-line index entry; not cited)"
+    },
+    {
+      "query": "Krishnanagar clay doll feature by Manjira Majumdar",
+      "site": "siesoiop.in (the page serves the foundation's own description; not cited)"
+    },
+    {
+      "query": "Report on the Lacquer Toys and Clay Toys and Dolls Industry at Channapatna and Krishnanagar (All India Handicrafts Board)",
+      "site": "globalinch.org bibliography (a bibliographic entry only, no text; not cited)"
+    },
+    {
+      "query": "Clay Doll craft page",
+      "site": "folklibrary.com/craft/clay-doll (repeats the RCCH brochure's text from the same publisher; the brochure, S09, is cited instead)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "GI Registry public record of Application 795 (Clay Doll of Krishnanagar)",
+      "publisher": "Geographical Indications Registry, IP India",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/795",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Bengali Clay Modelling",
+      "publisher": "Museums Victoria Collections",
+      "url": "https://collections.museumsvictoria.com.au/articles/2795",
+      "archivedUrl": "https://web.archive.org/web/20260717110403id_/https://collections.museumsvictoria.com.au/articles/2795",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Krishnanagar Clay Modelling",
+      "publisher": "Museums Victoria Collections",
+      "url": "https://collections.museumsvictoria.com.au/articles/2796",
+      "archivedUrl": "https://web.archive.org/web/20260419044944id_/https://collections.museumsvictoria.com.au/articles/2796",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "kind": "OTHER",
+      "subKind": "MUSEUM_RECORD",
+      "title": "Clay Modelling in India",
+      "publisher": "Museums Victoria Collections",
+      "url": "https://collections.museumsvictoria.com.au/articles/2794",
+      "archivedUrl": "https://web.archive.org/web/20260213155349id_/https://collections.museumsvictoria.com.au/articles/2794",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "kind": "PAPER",
+      "title": "Clay Doll Making Industry in Ghurni, West Bengal: Revisiting the Status during Covid Period",
+      "authors": [
+        "Sampriti Sanyal",
+        "Samhita Chaudhuri"
+      ],
+      "publisher": "BKGC Scholars, Bijoy Krishna Girls' College, Howrah",
+      "year": 2023,
+      "url": "https://bkgc.in/ejournal/paper_list/vol4_isu1_p49_56.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "kind": "PAPER",
+      "title": "Creativity by Divine Hands, Yet Struggles for Existence: An Ethnographic Account of the Heritage Craft and Livelihood Resilience among the Statue Makers of Ghurni, Nadia District, West Bengal, India",
+      "authors": [
+        "Abhinandan Das",
+        "Lakshminarayan Satpati"
+      ],
+      "publisher": "Indian Journal of Landscape Systems and Ecological Studies",
+      "year": 2025,
+      "url": "https://www.ilee.org.in/ArchivePdf/Chapter11_5.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "kind": "PAPER",
+      "title": "Socio-Economic Study of the Clay Doll Making Ghurni Artisan Community in West Bengal",
+      "authors": [
+        "Sangita Das"
+      ],
+      "publisher": "New Literaria (Adrija Press)",
+      "year": 2026,
+      "url": "https://newliteraria.com/articles/v09i1/v09i1-17.pdf",
+      "doi": "10.48189/nl.2026.v09i1.017",
+      "language": "en",
+      "licence": "CC BY-NC",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Krishnagar clay doll bags GI tag, gives much-needed protection to Ghurni artisans",
+      "authors": [
+        "Statesman News Service"
+      ],
+      "publisher": "The Statesman",
+      "year": 2026,
+      "url": "https://www.thestatesman.com/cities/kolkata/krishnagar-clay-doll-bags-gi-tag-gives-much-needed-protection-to-ghurni-artisans-1503612631.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "kind": "WEB_PAGE",
+      "title": "Clay Doll (Rural Craft & Cultural Hubs of West Bengal brochure)",
+      "publisher": "Rural Craft and Cultural Hubs (RCCH), Department of MSME&T, West Bengal, and UNESCO",
+      "url": "https://www.folklibrary.com/uploads/download/1699341287.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Hands of clay (Into the dolls house)",
+      "authors": [
+        "Maharaja Features"
+      ],
+      "publisher": "Deccan Herald",
+      "url": "https://www.deccanherald.com/Content/Sep22007/finearts2007083122669.asp",
+      "archivedUrl": "https://web.archive.org/web/20071022204134id_/http://www.deccanherald.com/Content/Sep22007/finearts2007083122669.asp",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18",
+      "year": 2007
+    },
+    {
+      "id": "S12",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Ghurni",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Ghurni",
+      "language": "en",
+      "licence": "CC BY-SA 4.0",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "kind": "WEB_PAGE",
+      "title": "Clay Toys and Figures of West Bengal",
+      "publisher": "Global InCH - International Journal of Intangible Cultural Heritage",
+      "url": "https://globalinch.org/craft/clay-toys-and-figure-of-west-bengal/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "kind": "PAPER",
+      "title": "Documentation of Terracotta Horse of Bankura",
+      "authors": [
+        "Amar Nath Shaw"
+      ],
+      "publisher": "The Chitrolekha Journal on Art and Design",
+      "year": 2013,
+      "url": "https://chitrolekha.com/documentation-of-terracotta-horse-of-bankura/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "title": "Heritage and the Mritshilpis and Pratimashilpis of Kumartuli: Report on a consultative meeting held in Kolkata, West Bengal, 25 November 2018, with proposals for research",
+      "authors": [
+        "Samir Kumar Das",
+        "Bishnupriya Basak",
+        "John Reuben Davies",
+        "Meghna Guhathakurta"
+      ],
+      "publisher": "University of Glasgow",
+      "year": 2019,
+      "url": "https://eprints.gla.ac.uk/178858/1/178858.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "kind": "PAPER",
+      "title": "Socio Economic Status of Rural Population an Income Level Analysis: A Case Study of Krishnanagar in Nadia District, West Bengal",
+      "authors": [
+        "Pinki Hira"
+      ],
+      "publisher": "Research Review International Journal of Multidisciplinary",
+      "year": 2018,
+      "url": "https://zenodo.org/records/1403830/files/786-790_RRIJM180308142.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "B",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Ghurni: Bengal's craft village where life-like clay dolls are bridging the rich-poor divide",
+      "authors": [
+        "Dola Mitra"
+      ],
+      "publisher": "30 Stades",
+      "year": 2021,
+      "url": "https://30stades.com/2021/03/17/ghurni-krishnanagar-bengal-craft-village-life-like-clay-dolls-bridge-rich-poor-divide-handmade",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Ghurni, a neighbourhood of Krishnanagar in Nadia district of West Bengal, is the centre for the production of clay dolls often called Krishnanagar clay dolls.",
+      "quotes": [
+        {
+          "sourceId": "S12",
+          "locator": "lead",
+          "quote": "Ghurni is a neighbourhood of Krishnanagar in Nadia district in the Indian state of West Bengal. It is the centre for the production of clay dolls, often referred to as Krishnanagar clay dolls."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "Ghurni is situated in the neighborhood of Krishnanagar in the Nadia district of West Bengal."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "V. Study Area, p. 51",
+          "quote": "Ghurni is a very important center for the production of clay dolls."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VII. Conclusion, p. 55",
+          "quote": "Ghurni is one of the major tourist attractions in the neighborhood of Krishnanagar and is widely known for the production of clay idols, toys, dolls and sculptures."
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Studies call Ghurni famous for its clay dolls and terracotta, or for terracotta clay doll making, and one says the making of terracotta or clay dolls flourished there.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "Ghurni is a famous place known for its clay dolls and terracotta."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "Introduction, p. 176",
+          "quote": "The Ghurni region is quite famous for terracotta clay doll making"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "I. Introduction, p. 49",
+          "quote": "Terracotta or clay dolls is basically the work of earthen matter and the making of this item have flourished in Ghurni Region in Krishnagar city of West Bengal"
+        },
+        {
+          "sourceId": "S16",
+          "locator": "3. Study Area, p. 786",
+          "quote": "Ghurni is a neighbourhood of Krishnanagar and it is situated on ward no2 in Krishnanagar. It is famous for production of clay dolls and terracotta."
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Museums Victoria, citing Mukharji, says lifelike appearance and real cloth and hair distinguish Krishnanagar clay models from other Indian clay figures, and the Statesman says realism distinguishes Ghurni's work from other terracotta and clay modelling.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 2",
+          "quote": "Krishnanagar clay models are characterised by their delicacy, attention to detail and animated appearance. They are distinguished from other Indian clay figures by their lifelike appearance and the use of real cloth and hair (Mukharji, 1888, p.59)."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 22",
+          "quote": "The realism achieved by Ghurni's craftsmen has long distinguished their work from other traditions of terracotta and clay modelling across the country."
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One craft documentation divides Bengal clay pottery into two segments, Bankura clay pottery and Krishnanagar clay pottery, and calls Bankura's art form the more ancient.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "Introduction",
+          "quote": "Broadly Bengal clay pottery can be divided into two segments-Bankura Clay Pottery and Krishnanagar Clay Pottery. Bankura's art form is an ancient form than the art form of Krishnanagar."
+        },
+        {
+          "sourceId": "S14",
+          "locator": "Introduction to the Craft",
+          "quote": "Bankura's art form is a more ancient art form than that of Krishnanagar."
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Maharaja Krishnachandra of Krishnanagar brought families of potters from Dhaka and Natore in 1728 and settled them in Ghurni.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Introduction",
+          "quote": "it gained momentum under the patronage of Maharaja Krishnachandra of Krishnanagar, who was a patron of the art, literature and music. In 1728, he brought families of potters from Dhaka, now in Bangladesh and Natore in West Bengal and settled them in Ghurni."
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 5",
+          "quote": "Krishnachandra, the Maharaja of Krishnanagar in 1728 brought them from Dacca in East Bengal and from Natore in North Bengal."
+        },
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 3",
+          "quote": "Potteries were established in Ghuri, a suburb of Krishnanagar, by Krishnachandra the Maharaja of Krishnanagar in 1728"
+        }
+      ]
+    },
+    {
+      "id": "C009",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Ghuri was chosen for the potters' settlement because it lay near the river Jalangi and close to the Maharaja's palace.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 3",
+          "quote": "The location of Ghuri was chosen for settlement because of its location near the river Jalangi, and its proximity to the Maharaja's palace."
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Figure modellers were originally brought to Krishnanagar to make stylised idols for religious worship.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 1",
+          "quote": "Figure modellers were originally brought to Krishnanagar by the higher castes to make stylised idols for religious worship"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 3",
+          "quote": "Originally, potters were brought to Krishnanagar to create religious idols"
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "TERM",
+        "ref": "W03"
+      },
+      "text": "In Krishnanagar, the introduction of Barawari Puja, or community worship, encouraged a new and more naturalistic style of figure modelling.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 1",
+          "quote": "Figure modellers were originally brought to Krishnanagar by the higher castes to make stylised idols for religious worship (Ghose, 1981, p.44). The introduction of Barawari Puja (community worship) encouraged a new, more naturalistic style of figure modelling."
+        }
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Museums Victoria writes that in the 18th century the making of naturalistic clay models in India was centred in Krishnanagar, Lucknow and Poona.",
+      "quotes": [
+        {
+          "sourceId": "S04",
+          "locator": "paragraph 2",
+          "quote": "While the manufacture of traditional clay toys and religious idols continued throughout India in the 18th century, the manufacture of naturalistic clay models was centred in three regions: Krishnanagar, Lucknow and Poona"
+        }
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Clay modelling has been practised in Krishnanagar in West Bengal for over 250 years.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 2",
+          "quote": "Clay modelling has been practised in Krishnanagar in West Bengal for over 250 years."
+        },
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 1",
+          "quote": "Clay modelling has been practised in Krishnanagar (near Calcutta), West Bengal, for over 250 years."
+        }
+      ]
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G08"
+      },
+      "text": "Museums Victoria names Mohan Pal (1745-?) as the earliest known Krishnanagar figure modeller.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 3",
+          "quote": "the earliest known Krishnanagar figure modeller was Mohan Pal 1745-?"
+        }
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "Mohan Pal's family continued modelling clay figures for religious festivals and the tourist market, and Museums Victoria, citing Bose (2007), says Pal family members still practise it.",
+      "quotes": [
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 3",
+          "quote": "Since Mohan Pal, his family has continued modelling clay figures for both religious festivals and the tourist market; the art-form has been passed down through generations and is still practised in Krishnanagar by members of the Pal family today (Bose, 2007)."
+        }
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L04"
+      },
+      "text": "Museums Victoria calls the second half of the 19th century and the early 20th century the zenith of figure modelling in Krishnanagar.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 4",
+          "quote": "Renowned figure modellers during the second half of the 19th century and early 20th century, the zenith of figure modelling in Krishnanagar, were Jadunath Pal (1821-1920), Ramlal Pal, Bakkeswar Pal (1875-1924), Rakhaldas Pal and Candrabhushan Pal"
+        }
+      ]
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Krishnanagar clay models were shown and won medals, certificates and prizes at most of the international exhibitions held after 1851.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 4",
+          "quote": "their models were shown and awarded prizes at most of the International Exhibitions after 1851"
+        },
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 7",
+          "quote": "in most of the international exhibitions held since 1851, Krishnanagar clay models have won medals and certificates and also great admiration from the Europeans."
+        }
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The clay dolls of Krishnanagar gained immense popularity with the advent of the British, who patronised the art and took the dolls to various exhibitions.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Introduction",
+          "quote": "The clay dolls of Krishnanagar gained immense popularity with the advent of the British, who patronised this art and took them to various exhibitions making it a popular art form."
+        }
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Kumartuli, a neighbourhood of Kolkata, was founded after a mass migration of Kumbhakars (earthen-pot makers) from Krishnanagar, and its figure modellers trace their descent to Krishnanagar's idol makers.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Foreword, p. 5",
+          "quote": "It was founded after the mass migration of Kumbhakars (earthen-pot makers) from Krishnanagar, now in the district of Nadia (sixty-five miles north of Kolkata), to the metropolis"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Foreword, p. 5",
+          "quote": "Kumartuli is a neighbourhood of Kolkata that sits on the east bank of the Hooghly"
+        },
+        {
+          "sourceId": "S02",
+          "locator": "paragraph 4",
+          "quote": "Kumartuli figure modellers trace their descent back to the idol makers of Krishnanagar"
+        }
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "Soujit Das, speaking at a consultative meeting on Kumartuli held in Kolkata in 2018, dated the migration of Kumbhakars from Krishnanagar to Kumartuli to the mid-eighteenth century.",
+      "quotes": [
+        {
+          "sourceId": "S15",
+          "locator": "Soujit Das, p. 13",
+          "quote": "The migration of Kumbhakars from Krishnanagar to Kumartuli took place in the mideighteenth century"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Participants, p. 3",
+          "quote": "Dr Soujit Das, Government College of Art and Craft, Kolkata"
+        },
+        {
+          "sourceId": "S15",
+          "locator": "Title page",
+          "quote": "Heritage and the Mritshilpis and Pratimashilpis of Kumartuli Report on a consultative meeting held in Kolkata, West Bengal, 25 November 2018"
+        }
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Statue-making in Ghurni has evolved gradually over the years from the making of clay dolls and idols.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Study Area, p. 58",
+          "quote": "Statue-making in Ghurni has evolved gradually over the years from making clay dolls and idols."
+        }
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "One study says sun-dried clay dolls have been used in the Ghurni region since Krishna Chandra, the king of Krishnanagar.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Introduction, p. 176",
+          "quote": "The Ghurni region is quite famous for terracotta clay doll making, and sundried clay dolls have been used since Krishna Chandra, the king of Krishnanagar."
+        }
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A Deccan Herald feature wrote that the petering out of zamindari-babu culture in West Bengal brought days of gloom for Krishnanagar's clay modellers, who witness continuous erosion of patronage.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 14",
+          "quote": "But the clay modellers of Krishnanagar have now fallen on bad days. The petering out of the 'zamindari-babu' culture in West Bengal brought with it days of gloom for the modelling artistes and they witness continous erosion of patronage."
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A study of Ghurni sets out clay doll making in steps: preparing the clay, then making the body of the doll, then decorating it.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3) Stages of Clay Doll Making, p. 52",
+          "quote": "Stages of Clay Doll Making: Following are the steps used in the clay doll making processa) Preparation of Clay for Doll Making"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3) Stages of Clay Doll Making, p. 52",
+          "quote": "b) Making the Body of the Doll: The body of the clay doll is made by hand"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3) Stages of Clay Doll Making, p. 52",
+          "quote": "c) Decoration of the Doll: After the body of the doll is prepared, it is painted with colors and decorated with clothes and ornaments."
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Pebbles, stones and other impurities are removed from the collected soil, and the mud is worked by hand into a dough or paste to make it more flexible.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3a), p. 52",
+          "quote": "all the impurities like pebbles, stones and other unnecessary things are removed. After that the mud is needed, i.e., make dough or paste with the hands to make it more flexible for doll making."
+        }
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P01"
+      },
+      "text": "Doll makers prepare and process the clay and leave it for at least one night to make it ready for the mould, the RCCH brochure states.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "Doll makers prepare the clay and process it and dumps it for at least one night to make it ready for the mould."
+        }
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "The body of a Ghurni clay doll is made by hand, and iron wires or pieces of bamboo are sometimes used to make its frame.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3b), p. 52",
+          "quote": "The body of the clay doll is made by hand and here the traditional idea and indigenous knowledge of the artisans help to create the unique products of the region. Sometimes iron wires or pieces of bamboo are used to make the frame of the doll."
+        }
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "Krishnanagar figures are created by modelling coils of clay over a metal armature, which also attaches them to modelled clay bases.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 2",
+          "quote": "Krishnanagar figures are created by modelling coils of clay over a metal armature"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 2",
+          "quote": "The figures are attached to modelled clay bases, via the metal armature."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 4",
+          "quote": "A metal wire acts as support and reinforcement in the clay models."
+        }
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M04"
+      },
+      "text": "For the more detailed, finer features of a Krishnanagar model, the clay is mixed with cotton wool.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 2",
+          "quote": "clay is mixed with cotton wool for the more detailed, finer features of the model"
+        }
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "TOOL",
+        "ref": "T01"
+      },
+      "text": "Facial features, hands, hair and feet of a Ghurni doll are defined using clay modelling tools.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3b), p. 52",
+          "quote": "Using clay modeling tools, facial features, hands, hair, feet etc. are defined."
+        }
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "After the features are modelled, Ghurni dolls are dried in the sun and put in a kiln to make them durable.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3b), p. 52",
+          "quote": "Using clay modeling tools, facial features, hands, hair, feet etc. are defined. After that, the dolls are dried in the sun and put in a kiln to make them durable."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 4",
+          "quote": "They are fired in a kiln and painted with poster or water colours."
+        }
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Krishnanagar clay dolls are usually dried in the open under sunlight, and a hand blower is sometimes used for the same, the RCCH brochure states.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "Dolls are usually kept in the open to be dried under sunlight. Sometimes, a hand blower is also used for the same."
+        }
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "The RCCH brochure states that fully dried clay dolls are placed in a furnace for 4 to 5 hours at 500 degrees centigrade.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "Once the clay dolls are fully dried, they are placed in a furnace for 4 to 5 hours at 500 degrees centigrade."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "Process, photo captions",
+          "quote": "Dried models are put in the furnace. Models are kept for 4-5 hours at 500 degree centigrade."
+        }
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "Museums Victoria describes Krishnanagar figures as sun-dried, with their cracks filled with paper and tamarind seed or glue.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 2",
+          "quote": "They are sun-dried and cracks are filled with paper and tamarind seed or glue."
+        }
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "Krishnanagar figures are painted and then dressed, with hair of sheep's wool or jute and fabric clothing, or decorated with clothes and ornaments.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 2",
+          "quote": "The figures are then painted in naturalistic colours, hair (made of sheep's wool or jute) is attached, and they are dressed in fabric clothing."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3c), p. 52",
+          "quote": "After the body of the doll is prepared, it is painted with colors and decorated with clothes and ornaments."
+        }
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P04"
+      },
+      "text": "In painting a Krishnanagar doll, the most vital thing is giving the eyes and the facial expressions, the RCCH brochure says.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "The most vital thing is giving the eyes and facial expressions of the dolls."
+        }
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M06"
+      },
+      "text": "After painting, kerosene is added to the burnish of Krishnanagar dolls, which increases the brightness, according to the RCCH brochure.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "The doll is then earnestly painted with vibrant colours."
+        },
+        {
+          "sourceId": "S09",
+          "locator": "Process",
+          "quote": "After that, kerosene is added to the burnish which increases the brightness."
+        }
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P05"
+      },
+      "text": "Some Ghurni dolls, specially those made of plaster of Paris or wax, are made by using moulds.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3b), p. 52",
+          "quote": "Some dolls specially made of plaster of Paris, wax etc. are made by using molds."
+        }
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Krishnanagar clay dolls are mainly made of soil or deltaic mud, collected from the river bed or bought from sellers.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 3a), p. 52",
+          "quote": "Krishnanagar clay dolls are mainly made of the soil or the deltaic mud. After collecting the soil from river bed or from sellers"
+        }
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "Traditionally, the soil for the idols is collected near the Jalangi River, where alluvial soil is available from the riverside.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Industry and Its Contemporary Problems",
+          "quote": "Traditionally, the primary raw material used to make idols is soil, which the artist collects near the Jalangi River."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "Organic materials like alluvial soil are available from the riverside of the Jalangi River."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 4",
+          "quote": "Krishnanagar is on the banks of Jalangi River and the clay is brought from the riverbed."
+        }
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "The Deccan Herald wrote that the Krishnanagar artisans' models are made from the special soil of Krishnagar in Nadia district.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 9",
+          "quote": "Exhibitions of their models, made from the special soil of Krishnagar in Nadia district of West Bengal, have been held in London, Paris and Boston"
+        }
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Besides clay, Ghurni's makers use stone dust, cement, fibreglass, organic cloth, bamboo, threads, marble, wax and metals such as bronze to meet market demand.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 1) Raw Materials, p. 51",
+          "quote": "Makers of clay dolls use not only clay, but stone dust, cement, fiberglass, organic cloth, bamboo, threads, marble, wax dolls and also some metals like bronze to fulfill the demands of the market."
+        }
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M05"
+      },
+      "text": "Ghurni clay doll artists previously used only powder colour but have shifted to pastel colour, tube colour, tarpin oil, varnish and kerosene oil.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 1) Raw Materials, p. 51",
+          "quote": "previously clay doll artists used only powder color, but now they have shifted to pastel color, tube color, tarpin oil, varnish, kerosene oil etc. to make the clay dolls more attractive."
+        }
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ghurni's artisans collect their raw materials from local markets and from wholesale markets in Kolkata.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 1) Raw Materials, p. 51",
+          "quote": "The artisans collect all these raw materials from local markets and from wholesale markets in Kolkata."
+        }
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "MATERIALS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One survey gives the raw materials per doll as clay 300 gram, colour 10 gram, gum 5 gram, G.I. wire 10 gram and cotton 5 gram.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Table 10 and text, p. 181",
+          "quote": "the amount of raw materials per doll needs clay, color, gum, G.I wire, cotton is 300 gram, 10 gram, 5 gram, 10gram, and 5 gram"
+        }
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "One study reports that the quality of river soil is being reduced by human interference, and that its silt has inferior properties for crafting idols.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Industry and Its Contemporary Problems",
+          "quote": "The quality of river soil is being reduced due to human interference. The properties of silt are inferior when crafting idols, which leads to the quality of the products."
+        }
+      ]
+    },
+    {
+      "id": "C047",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "MATERIAL",
+        "ref": "M01"
+      },
+      "text": "A geography study of Ghurni ties the quality of the silt to the construction of a dam and says the soil is presently brought from remote villages.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 7), p. 55",
+          "quote": "Soil is the main raw material but the construction of Dam has resulted in the quality of silt. Presently the soil is brought from the remote villages."
+        }
+      ]
+    },
+    {
+      "id": "C048",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L03"
+      },
+      "text": "Krishnanagar, the district headquarters of Nadia, lies on the right bank of the Jalangi River.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Study Area, p. 58",
+          "quote": "Krishnanagar city is located on the right bank of the Jalangi River"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "V. Study Area, p. 51",
+          "quote": "Krishnanagar is the district headquarters situated on the bank of Jalangi river in Nadia District."
+        }
+      ]
+    },
+    {
+      "id": "C049",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "Ghurni lies in the southeastern part of Krishnanagar City and is one of the wards of Krishnanagar Municipality, numbered 2.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Study Area, p. 58",
+          "quote": "Ghurni is located in the southeastern part of Krishnanagar City."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "V. Study Area, p. 51",
+          "quote": "Ghurni is situated on word number 2 in Krishnanagar Municipality."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "Decline",
+          "quote": "Ghurni is one of the wards of Krishnanagar municipality"
+        }
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The Ghurni clay doll community spreads over Pal Para, Halder Para, Sandhya Para, Kalipur, Bhatjangla, Rathtala and the surrounding suburban villages of Krishnanagar.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "This community spreads over the area (colonies) of Pal Para, Halder Para, Sandhya Para, Kalipur, Bhatjangla, Rathtala, and the surrounding Krishnanagar suburban villages."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "V. Study Area, p. 51",
+          "quote": "It spreads over the area of Kalipur, Bhatjangla, Pal Para, Haldar Para, Sandhya Para and the surroundings."
+        }
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L05"
+      },
+      "text": "A geography study says easily available water from the Jalangi River and its alluvial soil helped the clay doll industry flourish in Ghurni.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "Abstract, p. 49",
+          "quote": "The easily available water from Jalangi River and its alluvial soil helped the industry to flourish in this place"
+        }
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "CLIMATE",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "A geography study of Ghurni says hot weather in summer and dry weather in the winter months help the clay doll industry develop there.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "V. Study Area, p. 51",
+          "quote": "Hot weather during summer and dry weather conditions during winter months help to develop this industry in this place."
+        }
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L05"
+      },
+      "text": "The primary water source of the Ghurni community is the Jalangi River, with local ponds, tube wells and wells available nearby.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "The primary water source comes from the Jalangi River, and local ponds, tube wells, and wells are available nearby."
+        }
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "GEOLOGY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "One study says most areas around Ghurni have alluvial, fertile soil, and calls the place a very good source for producing clay dolls and clay idols.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Artisan Community in Ghurni, Krishnanagar- Profile",
+          "quote": "Alluvial soil is composed in most areas because this is an agricultural distribution center with fertile soil. The place is a very good source for producing clay dolls and clay idols."
+        }
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "GI application 795, for the geographical indication Clay Doll of Krishnanagar, was filed on 15 November 2021.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Application Number | 795 |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Geographical Indications | Clay Doll of Krishnanagar |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Date of Filing | 15-11-2021 |"
+        },
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 20",
+          "quote": "The cooperative submitted the application for GI registration in 2021"
+        }
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The applicant for the Clay Doll of Krishnanagar geographical indication is the Ghurni Clay Doll & Terracotta Artisans Cluster Co Operative Industrial Society Limited.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Applicant Name | Ghurni Clay Doll & Terracotta Artisans Cluster Co Operative Industrial Society Limited"
+        }
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G03"
+      },
+      "text": "The Statesman reports that the District MSME and Cottage Industries Department facilitated the formation of the Ghurni clay doll and terracotta artisans' cooperative.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 19",
+          "quote": "the District Micro, Small and Medium Enterprises (MSME) and Cottage Industries Department facilitated the formation of the Ghurni Clay Doll and Terracotta Artisan Cluster Cooperative Industrial Society Ltd."
+        }
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry gives application 795 the status Registered and lists a certificate of registration for it dated 27 March 2026.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Application Number | 795 | | Geographical Indications | Clay Doll of Krishnanagar | | Status | Registered |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Document Details table, row 1",
+          "quote": "795 - Certificate of Registration - 27-03-2026"
+        }
+      ]
+    },
+    {
+      "id": "C060",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Statesman reports that the GI Registry approved the application under the name Krishnagar Clay Doll.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 5",
+          "quote": "The Geographical Indication Registry has approved the application submitted under the name 'Krishnagar Clay Doll'"
+        }
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The GI registry gives application 795 the journal number 210 and lists its GI journal copy dated 26 November 2025.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "Application Details table",
+          "quote": "| Journal Number | 210 | | Availability Date | 26-11-2025 |"
+        },
+        {
+          "sourceId": "S01",
+          "locator": "Document Details table, row 2",
+          "quote": "795 - GI - Journal Copy - 26-11-2025"
+        }
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Statesman reports that mould-made replicas manufactured elsewhere increasingly flooded the market, often passed off as original Ghurni products.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 17",
+          "quote": "mould-made replicas manufactured elsewhere increasingly flooded the market, often being passed off as original Ghurni products, depriving genuine craftsmen of both recognition and income."
+        }
+      ]
+    },
+    {
+      "id": "C063",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The Statesman reports that authentic Krishnagar clay dolls demand weeks, often months, of painstaking manual work, making them considerably more expensive than other decorative items.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 16",
+          "quote": "authentic Krishnagar clay dolls demand weeks, often months, of painstaking manual work, making them considerably more expensive than other decorative items."
+        }
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Demand for the clay dolls of Ghurni generally increases in the festive seasons from September to February.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 5) Marketing, p. 53",
+          "quote": "The demand of the clay dolls of Ghurnigenerally increases in festive seasons from September to February."
+        }
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A primary survey found that during 2020-2021, 78 percent of the Ghurni artists' orders came online, mainly by telephone and e-mail, and only 22 percent face to face.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 54",
+          "quote": "during 2020-2021, the artists of Ghurni received more orders online, mainly through telephone and e-mail (78 percent of total order) in comparison to the face to face sales (i.e., only 22 percent)."
+        }
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One study's primary survey of Ghurni found that about 72 percent of the dolls produced in the Covid period were clay dolls, 16 percent plaster of Paris and 12 percent marble.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 54",
+          "quote": "In the Covid-period, out of total dolls produced, about 72 percent were clay dolls followed"
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 55",
+          "quote": "by dolls made up of plaster of Paris (16 percent) and marble dolls 12 percent of total production) (Primary Survey)."
+        }
+      ]
+    },
+    {
+      "id": "C067",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One study of Ghurni found that during 2020-2021 its artisans prepared mainly small dolls (34 percent), and that mother idols 10 to 12 feet high made up 13 percent.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 54",
+          "quote": "During the period of 2020-2021, artisans prepared mainly small sized dolls (34 percent). Also 10 to 12 feet height mother idols have been made (13 percent) here."
+        }
+      ]
+    },
+    {
+      "id": "C068",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "The average incomes of Ghurni's statue makers significantly exceed those of clay doll makers, idol makers and decoration artisans in the region, one study found.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Introduction, p. 56",
+          "quote": "The average incomes of statue makers significantly exceed those of clay doll makers, idol makers, and decoration artisans in the region."
+        }
+      ]
+    },
+    {
+      "id": "C069",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ghurni's clay dolls face competition from cheaper dolls made of plastic and glass fibre and from long-lasting plastic or fibre casting products.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 7), p. 55",
+          "quote": "Unhealthy competition leading the customers to buy cheaper dolls made of plastic and glass fiber."
+        },
+        {
+          "sourceId": "S07",
+          "locator": "Industry and Its Contemporary Problems",
+          "quote": "Those plastic or fiber casting products are permanent and long-lasting, which could destroy this traditional artisan business market."
+        }
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One study notes that buyers demanded machine-made products, whereas terracotta-made items are much more costly than fibre products.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Industry and Its Contemporary Problems",
+          "quote": "Buyers demanded machine-made products, whereas terracotta-made items are much more costly than fiber products."
+        }
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Local dealers and some businessmen from Kolkata and other places buy Ghurni's clay products and export them to different countries of the world.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 5) Marketing, p. 53",
+          "quote": "Local dealers, some businessmen from Kolkata and other places buy their products from them and export them to different countries of the world."
+        }
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A geography study of Ghurni found the present young generation less interested in taking up the clay doll craft as a profession.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 7), p. 55",
+          "quote": "Present young generation is less interested in taking up this craft as their professions."
+        }
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ghurni's artisans make statues of gods such as Durga, Kali, Radha Krishna and Shiba, and replicas of great persons such as Tagore, Vivekananda, Netaji and Gandhiji.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 54",
+          "quote": "about 26 percent of dolls are made of God statues like Durga, Kali , Radha Krishna, Shiba etc."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 6), p. 54",
+          "quote": "About 7 percent of total dolls are the replica of great persons like Rabindranath Tagore, Swami Vivekananda, Netaji, Gandhiji etc."
+        }
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Krishnanagar dolls are famed for realistic scenes of everyday village life, such as farming, rag picking, basket making, cooking, cleaning and worshipping, and for fruits, vegetables, birds and animals.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Products",
+          "quote": "These dolls are famed for their realistic depiction of everyday village life"
+        },
+        {
+          "sourceId": "S09",
+          "locator": "Products",
+          "quote": "farming, rag picking, basket making, cooking, cleaning and worshipping, among others - and subjects like fruits, vegetables, birds and animals."
+        }
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Krishnanagar clay models reproduce social scenes realistically, such as a collector's court, a tea garden, a pandit-sabha and the Charak festival.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 6",
+          "quote": "In Krishnanagar pottery, the social scenes of our country and the people, the different castes and racial types are reproduced realistically in clay-models. For example, social scenes like collector's court, tea garden, pandit-sabha, Charak festival etc are used for modelling."
+        }
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Popular clay models of the Ghurni artisan community include the Baul couple, the farmer, the blacksmith, the tribal couple and the Jhulan doll.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "Introduction, p. 176",
+          "quote": "Some popular clay models of the artisan community are 'Baul couple,' 'Farmar,' 'Blacksmith,' 'Tribal couple,' 'Jhulan Doll,' etc."
+        }
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "TERM",
+        "ref": "W01"
+      },
+      "text": "Bengalis fondly call their clay dolls putul, the RCCH brochure says.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "Products",
+          "quote": "Putuls, as the Bengalis fondly call their clay dolls, are replications of the thoughts of the doll makers."
+        }
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G04"
+      },
+      "text": "One study calls Biren Pal of Ghurni a nationally acclaimed clay artist and the inaugural recipient of the National Award in 1982.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Ethnographic Case Study, p. 67",
+          "quote": "His father, the late Biren Pal, was a nationally acclaimed clay artist and the inaugural recipient of the National Award in 1982."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 14",
+          "quote": "Ghurni has produced some of India's finest clay sculptors. Legendary artist Biren Pal earned worldwide acclaim for his work"
+        }
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G05"
+      },
+      "text": "The Statesman names President's Award recipients Subir Pal, Ganesh Pal and Tarit Pal among the later generations who carried Ghurni's clay modelling tradition forward.",
+      "quotes": [
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 14",
+          "quote": "while later generations, including President's Award recipients Subir Pal, Ganesh Pal and Tarit Pal, carried the tradition forward."
+        }
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "One study says Ghurni's sculptors are primarily Kumbhakars from the Pal caste, known in Bengal as Kumhars; a craft page says practitioners belong to the Kumbhakar or potter caste, many of them from Ghurni.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Dimensions of Caste and Gender of the Sculptors of Ghurni, p. 69",
+          "quote": "The sculptors of Ghurni are primarily Kumbhakars from the Pal caste. They are a ceremonially pure caste known as \"Kumhars\" in Bengal."
+        },
+        {
+          "sourceId": "S13",
+          "locator": "paragraph 3",
+          "quote": "Craftsperson's practicing this art, belong to the caste of Kumbhakar or potters. A large percentage of these come from Ghurni in Krishnanagar which has a concentration of potters."
+        }
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G01"
+      },
+      "text": "One study of Ghurni's statue makers says its artisans primarily belong to the Other Backward Classes.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Dimensions of Caste and Gender of the Sculptors of Ghurni, p. 69",
+          "quote": "The artisans primarily belong to the Other Backward Classes (OBC)."
+        }
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "One survey of Ghurni's clay doll producers found 52.5 percent of respondents in the Scheduled Caste, 42.5 percent in the general caste and 5 percent in the Other Backward Classes.",
+      "quotes": [
+        {
+          "sourceId": "S07",
+          "locator": "The Social Structure of the Community, p. 178",
+          "quote": "Table 3 shows that the respondent producer dominantly belongs to the Scheduled caste, with 52.5%, followed by the 'general' caste (42.5%) and other backward classes (OBC) (5%) of people."
+        }
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "One study notes that earlier work by Das (2018) and Jana (2015) explored the clay doll and terracotta industries in Ghurni, Krishnanagar, and their challenges.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Introduction, p. 56",
+          "quote": "Das (2018) and Jana (2015) explored the clay doll and terracotta industries in Ghurni, Krishnanagar, and the challenges they face."
+        }
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L01"
+      },
+      "text": "An income study of Ghurni says its lower income groups are mainly engaged in agricultural fields, terracotta, clay doll making, brick kilns or other places as day wage labour.",
+      "quotes": [
+        {
+          "sourceId": "S16",
+          "locator": "6. Conclusion and suggestion, p. 789",
+          "quote": "The lower income groups of people mainly engaged in agricultural fields, terracotta, clay doll making, brick kilns or other places as day wage labour."
+        }
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "DESIGN",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A press feature on Ghurni says one artisan advanced over five decades from small clay figurines and dolls to large statues and idols, murals and other terracotta decors.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 22",
+          "quote": "Over the past five decades, he has advanced from being a creator of small clay figurines and dolls to large statues and idols, murals and other terracotta decors."
+        }
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P03"
+      },
+      "text": "A press feature on Ghurni says the dolls are dried in the sun for a few days and later placed in a covered, charcoal-fed kiln and baked.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 39",
+          "quote": "The dolls are then dried in the sun for a few days and later placed in a covered, charcoal-fed kiln and baked."
+        }
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "A press feature says the Pal or Paul community have been the custodians of the clay craft in Krishnanagar for nearly four centuries.",
+      "quotes": [
+        {
+          "sourceId": "S17",
+          "locator": "paragraph 4",
+          "quote": "a putul shilpi (literally doll artist) of the Pal or Paul community, who have been the custodians of the clay craft for nearly four centuries in Krishnanagar."
+        }
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L02"
+      },
+      "text": "Two sources say Ghurni's artisans are said to have been brought by Raja Krishnachandra in the 18th century, and that the royal family is believed to have invited potter families from Natore and Dhaka.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Study Area, p. 58",
+          "quote": "These artisans are said to have been brought by Raja Krishnachandra, who was the king and zamindar of Krishnanagar, Nadia district, in the 18th century."
+        },
+        {
+          "sourceId": "S08",
+          "locator": "paragraph 13",
+          "quote": "The craft flourished under the patronage of the Krishnagar royal family, who are believed to have invited skilled potter families from Natore and Dhaka to settle in Ghurni."
+        }
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "A study of Ghurni says its artists mostly use easily available tools such as spade, wooden spatula, chisel, pliers, scissors, hammer, hand drill, brush, water sprayer and coconut shell, and some machinery such as blow lamp, grinder and spray gun.",
+      "quotes": [
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 2) Instruments, p. 52",
+          "quote": "The artists of Ghurni mostly use easily available tools like spade, wooden spatula, chisel, wooden pieces, pliers, scissors, screw driver, hammer, hand drill, water pot, bucket, mug, brush, water sprayer, palate, coconut shell etc."
+        },
+        {
+          "sourceId": "S05",
+          "locator": "VI. Data analysis, 2) Instruments, p. 52",
+          "quote": "Some semi heavy and heavy machineries are also used well like blow lamp, grinder, spray gun, driller, punching cutter, punching machine, board cutter etc."
+        }
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Museums Victoria, citing Mukharji (1888), says Krishnanagar clay figures at the 1880 Glasgow International Exhibition were priced at R1,200 for a Tea Garden scene, R150 for a Landlord's court scene and R9 to R12 a dozen for miniature figures.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 5",
+          "quote": "The Krishnanagar clay figures at the 1880 Glasgow International Exhibition ranged in price from R1,200 for a Tea Garden scene; R150 for a Landlord's court scene"
+        },
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 5",
+          "quote": "and R9 to R12 a dozen for individual miniature figures (Mukharji, 1888)."
+        }
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "HISTORY",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G09"
+      },
+      "text": "Museums Victoria says a group of figures by Jadunath Pal in its collection was awarded a second order of merit at the Melbourne International Exhibition in 1880.",
+      "quotes": [
+        {
+          "sourceId": "S03",
+          "locator": "paragraph 4",
+          "quote": "Jadunath Pal created a group of figures in Museum Victoria's collection; this group was awarded a second order of merit at the Melbourne International Exhibition in 1880."
+        }
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "ECONOMICS",
+      "subject": {
+        "type": "COMMUNITY",
+        "ref": "G02"
+      },
+      "text": "The Deccan Herald reported in September 2007 that about 100 old families at Ghurni, belonging to the Pal family, were actively engaged in clay modelling.",
+      "quotes": [
+        {
+          "sourceId": "S11",
+          "locator": "paragraph 13",
+          "quote": "At present there are about 100 old families at Ghurni area of Krishnanagar, belonging to the Pal family, who are actively engaged in clay modelling."
+        },
+        {
+          "sourceId": "S12",
+          "locator": "References, note 5",
+          "quote": "\"Hands of clay\". Into the Dolls house. Deccan Herald. 2 September 2007."
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "L01",
+      "name": "Ghurni",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C001",
+        "C002"
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Ghurni",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "MIGRATED_TO",
+      "claimIds": [
+        "C008",
+        "C009",
+        "C088"
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Krishnanagar",
+      "kind": "TOWN",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C013"
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Krishnanagar",
+      "kind": "TOWN",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "HISTORIC_CENTRE",
+      "claimIds": [
+        "C012",
+        "C016"
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Jalangi River",
+      "kind": "RIVER",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C040"
+      ]
+    },
+    {
+      "id": "L06",
+      "name": "Dhaka",
+      "kind": "TOWN",
+      "country": "Bangladesh",
+      "role": "MIGRATED_FROM",
+      "claimIds": [
+        "C008"
+      ]
+    },
+    {
+      "id": "L07",
+      "name": "Kumartuli",
+      "kind": "VILLAGE",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "MIGRATED_TO",
+      "claimIds": [
+        "C019"
+      ]
+    },
+    {
+      "id": "L08",
+      "name": "Pal Para",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L09",
+      "name": "Halder Para",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L10",
+      "name": "Sandhya Para",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L11",
+      "name": "Kalipur",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L12",
+      "name": "Bhatjangla",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L13",
+      "name": "Rathtala",
+      "kind": "VILLAGE",
+      "district": "Nadia",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "PRACTISED",
+      "claimIds": [
+        "C050"
+      ]
+    },
+    {
+      "id": "L14",
+      "name": "Kolkata",
+      "kind": "TOWN",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "MATERIAL_SOURCE",
+      "claimIds": [
+        "C044"
+      ]
+    },
+    {
+      "id": "L15",
+      "name": "Kolkata",
+      "kind": "TOWN",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "role": "MARKET",
+      "claimIds": [
+        "C071"
+      ]
+    },
+    {
+      "id": "L16",
+      "name": "Glasgow",
+      "kind": "TOWN",
+      "country": "United Kingdom",
+      "role": "MARKET",
+      "claimIds": [
+        "C090"
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "id": "G01",
+      "kind": "COMMUNITY",
+      "name": "Kumbhakar",
+      "localNames": [
+        "Kumbhakars",
+        "Kumhars"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C080",
+        "C081",
+        "C019",
+        "C020"
+      ]
+    },
+    {
+      "id": "G02",
+      "kind": "COMMUNITY",
+      "name": "Pal family of Krishnanagar",
+      "placeId": "L03",
+      "claimIds": [
+        "C015",
+        "C087",
+        "C092"
+      ]
+    },
+    {
+      "id": "G03",
+      "kind": "ORGANISATION",
+      "name": "Ghurni Clay Doll & Terracotta Artisans Cluster Co Operative Industrial Society Limited",
+      "placeId": "L01",
+      "claimIds": [
+        "C057",
+        "C058"
+      ]
+    },
+    {
+      "id": "G04",
+      "kind": "PERSON",
+      "name": "Biren Pal",
+      "honours": [
+        "National Award (1982)"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C078"
+      ]
+    },
+    {
+      "id": "G05",
+      "kind": "PERSON",
+      "name": "Subir Pal",
+      "honours": [
+        "President's Award"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "G06",
+      "kind": "PERSON",
+      "name": "Ganesh Pal",
+      "honours": [
+        "President's Award"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "G07",
+      "kind": "PERSON",
+      "name": "Tarit Pal",
+      "honours": [
+        "President's Award"
+      ],
+      "placeId": "L01",
+      "claimIds": [
+        "C079"
+      ]
+    },
+    {
+      "id": "G08",
+      "kind": "PERSON",
+      "name": "Mohan Pal",
+      "placeId": "L03",
+      "claimIds": [
+        "C014"
+      ]
+    },
+    {
+      "id": "G09",
+      "kind": "PERSON",
+      "name": "Jadunath Pal",
+      "honours": [
+        "Second order of merit, Melbourne International Exhibition (1880)"
+      ],
+      "placeId": "L04",
+      "claimIds": [
+        "C091",
+        "C016"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "P01",
+      "name": "Preparing the clay",
+      "stageType": "PREP",
+      "order": 1,
+      "orderClaimId": "C024",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C039"
+        }
+      ],
+      "claimIds": [
+        "C024",
+        "C025",
+        "C026"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Modelling the body",
+      "stageType": "SHAPE",
+      "order": 2,
+      "orderClaimId": "C024",
+      "materials": [
+        {
+          "materialId": "M01",
+          "claimId": "C028"
+        },
+        {
+          "materialId": "M02",
+          "claimId": "C028"
+        },
+        {
+          "materialId": "M03",
+          "claimId": "C027"
+        },
+        {
+          "materialId": "M04",
+          "claimId": "C029"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T01",
+          "claimId": "C030"
+        }
+      ],
+      "claimIds": [
+        "C027",
+        "C028",
+        "C029",
+        "C030"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Drying and firing",
+      "stageType": "FIRE",
+      "order": 3,
+      "orderClaimId": "C031",
+      "materials": [
+        {
+          "materialId": "M07",
+          "claimId": "C034"
+        },
+        {
+          "materialId": "M11",
+          "claimId": "C086"
+        }
+      ],
+      "tools": [
+        {
+          "toolId": "T02",
+          "claimId": "C031"
+        }
+      ],
+      "claimIds": [
+        "C031",
+        "C032",
+        "C033",
+        "C034",
+        "C086"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Painting and dressing",
+      "stageType": "FINISH",
+      "order": 4,
+      "orderClaimId": "C024",
+      "materials": [
+        {
+          "materialId": "M05",
+          "claimId": "C043"
+        },
+        {
+          "materialId": "M06",
+          "claimId": "C037"
+        },
+        {
+          "materialId": "M09",
+          "claimId": "C035"
+        },
+        {
+          "materialId": "M10",
+          "claimId": "C035"
+        }
+      ],
+      "claimIds": [
+        "C035",
+        "C036",
+        "C037"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Moulding plaster of Paris and wax dolls",
+      "stageType": "SHAPE",
+      "materials": [
+        {
+          "materialId": "M08",
+          "claimId": "C038"
+        }
+      ],
+      "claimIds": [
+        "C038"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "M01",
+      "name": "Soil or deltaic mud",
+      "kind": "CLAY",
+      "role": "INPUT",
+      "claimIds": [
+        "C028",
+        "C039",
+        "C040",
+        "C041",
+        "C046",
+        "C047"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Metal armature or iron wire",
+      "kind": "METAL",
+      "role": "OTHER",
+      "claimIds": [
+        "C027",
+        "C028"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Bamboo pieces",
+      "kind": "WOOD",
+      "role": "OTHER",
+      "claimIds": [
+        "C027"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Cotton wool",
+      "kind": "FIBRE",
+      "role": "INPUT",
+      "claimIds": [
+        "C029"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Colours (powder, pastel and tube colour)",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C043"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Kerosene",
+      "kind": "OTHER",
+      "role": "OTHER",
+      "claimIds": [
+        "C037",
+        "C043"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Paper and tamarind seed or glue",
+      "kind": "OTHER",
+      "role": "BINDER",
+      "claimIds": [
+        "C034"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Plaster of Paris",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C038",
+        "C066"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "Sheep's wool or jute hair",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C035"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Fabric clothing",
+      "kind": "FIBRE",
+      "role": "OTHER",
+      "claimIds": [
+        "C035"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Charcoal",
+      "kind": "FUEL",
+      "role": "FUEL",
+      "claimIds": [
+        "C086"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Stone dust",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C042"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Cement",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C042"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Fibreglass",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "claimIds": [
+        "C042"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "Marble",
+      "kind": "MINERAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C042",
+        "C066"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Wax",
+      "kind": "OTHER",
+      "role": "INPUT",
+      "claimIds": [
+        "C042",
+        "C038"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Bronze",
+      "kind": "METAL",
+      "role": "INPUT",
+      "claimIds": [
+        "C042"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "T01",
+      "name": "Clay modelling tools",
+      "claimIds": [
+        "C030"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Kiln or furnace",
+      "claimIds": [
+        "C031",
+        "C033",
+        "C086"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Spade",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Wooden spatula",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Chisel",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Pliers",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T07",
+      "name": "Scissors",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T08",
+      "name": "Hammer",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T09",
+      "name": "Hand drill",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T10",
+      "name": "Brush",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T11",
+      "name": "Water sprayer",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T12",
+      "name": "Coconut shell",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T13",
+      "name": "Blow lamp",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T14",
+      "name": "Grinder",
+      "claimIds": [
+        "C089"
+      ]
+    },
+    {
+      "id": "T15",
+      "name": "Spray gun",
+      "claimIds": [
+        "C089"
+      ]
+    }
+  ],
+  "environment": [
+    {
+      "factor": "WATER",
+      "placeId": "L05",
+      "claimIds": [
+        "C051",
+        "C054"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "placeId": "L05",
+      "claimIds": [
+        "C040",
+        "C046"
+      ]
+    },
+    {
+      "factor": "SOIL",
+      "placeId": "L01",
+      "claimIds": [
+        "C055"
+      ]
+    },
+    {
+      "factor": "CLIMATE",
+      "placeId": "L01",
+      "claimIds": [
+        "C052"
+      ]
+    }
+  ],
+  "market": {
+    "prices": [
+      {
+        "claimId": "C090",
+        "date": "1880",
+        "placeId": "L16"
+      }
+    ],
+    "workforce": [
+      {
+        "claimId": "C092",
+        "year": 2007
+      }
+    ]
+  },
+  "glossary": [
+    {
+      "id": "W01",
+      "term": "putul",
+      "meaning": "What Bengalis fondly call their clay dolls.",
+      "language": "bn",
+      "claimIds": [
+        "C077"
+      ]
+    },
+    {
+      "id": "W02",
+      "term": "Kumbhakar",
+      "meaning": "Earthen-pot makers.",
+      "language": "bn",
+      "claimIds": [
+        "C019"
+      ]
+    },
+    {
+      "id": "W03",
+      "term": "Barawari Puja",
+      "meaning": "Community worship.",
+      "language": "bn",
+      "claimIds": [
+        "C011"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claimIds": [
+        "C031",
+        "C033",
+        "C086",
+        "C034"
+      ],
+      "about": "Whether Krishnanagar clay figures are fired in a kiln or furnace, or sun-dried"
+    },
+    {
+      "claimIds": [
+        "C056",
+        "C060"
+      ],
+      "about": "The name of the geographical indication: Clay Doll of Krishnanagar or Krishnagar Clay Doll"
+    },
+    {
+      "claimIds": [
+        "C013",
+        "C087"
+      ],
+      "about": "How long the clay craft has been practised in Krishnanagar: over 250 years, or nearly four centuries"
+    },
+    {
+      "claimIds": [
+        "C081",
+        "C082"
+      ],
+      "about": "The caste category of Ghurni's artisans: primarily Other Backward Classes among statue makers in one study, mostly Scheduled Caste among the clay doll producers surveyed in another"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "O01",
+      "question": "Are Krishnanagar's clay figures fired in a kiln or furnace, as one study, the RCCH brochure and a press feature say, or only sun-dried, as Museums Victoria describes?",
+      "claimIds": [
+        "C031",
+        "C033",
+        "C086",
+        "C034"
+      ]
+    },
+    {
+      "id": "O02",
+      "question": "Is Krishnanagar terracotta a tradition separate from the Ghurni clay dolls, when studies name the two together or as one craft, yet one cites earlier work on Ghurni's clay doll and terracotta industries, another lists terracotta and clay doll making as separate day wage work, and one artisan's work runs to murals and terracotta decors?",
+      "claimIds": [
+        "C002",
+        "C083",
+        "C084",
+        "C085",
+        "C057"
+      ]
+    }
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Krishnanagar_Clay_Models.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Krishnanagar_Clay_Models.jpg",
+      "author": "Aman6496",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Clay models prepared at Ghurni, Krishnanagar",
+      "claimIds": [
+        "C001"
+      ]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {
+        "text": "Ghurni, a neighbourhood of Krishnanagar in Nadia district of West Bengal, is the centre for the production of Krishnanagar clay dolls and is known for its clay dolls and terracotta.",
+        "claimIds": [
+          "C001",
+          "C002"
+        ]
+      },
+      {
+        "text": "Museums Victoria, the RCCH brochure and the Deccan Herald say Maharaja Krishnachandra of Krishnanagar brought families of potters from Dhaka and Natore in 1728 and settled them in Ghurni, while other sources say only that the artisans are said or believed to have been brought or invited.",
+        "claimIds": [
+          "C008",
+          "C088"
+        ]
+      },
+      {
+        "text": "Museums Victoria and the Statesman say lifelike realism distinguishes Krishnanagar's clay figures from other Indian clay traditions, and Museums Victoria adds the use of real cloth and hair.",
+        "claimIds": [
+          "C005"
+        ]
+      },
+      {
+        "text": "Sources differ on firing: one study, the RCCH brochure and a press feature describe dolls dried in the sun and then put in a kiln or furnace, while Museums Victoria describes the figures as sun-dried.",
+        "claimIds": [
+          "C031",
+          "C033",
+          "C086",
+          "C034"
+        ]
+      }
+    ],
+    "keyFacts": [
+      {
+        "label": "Centre",
+        "value": "Ghurni, Krishnanagar, Nadia district, West Bengal",
+        "claimIds": [
+          "C001"
+        ]
+      },
+      {
+        "label": "Clay",
+        "value": "Soil or deltaic mud, traditionally collected near the Jalangi River",
+        "claimIds": [
+          "C039",
+          "C040"
+        ]
+      },
+      {
+        "label": "Firing",
+        "value": "Sources differ: sun-dried, or sun-dried then fired; one brochure gives 4 to 5 hours at 500 degrees centigrade",
+        "claimIds": [
+          "C031",
+          "C033",
+          "C086",
+          "C034"
+        ]
+      },
+      {
+        "label": "Makers",
+        "value": "Kumbhakars from the Pal caste, one study of Ghurni's sculptors says; the Pal family of Krishnanagar",
+        "claimIds": [
+          "C080",
+          "C015"
+        ]
+      },
+      {
+        "label": "Settled in Ghurni",
+        "value": "Potter families from Dhaka and Natore, in 1728 by several accounts; other sources say they are believed to have been invited",
+        "claimIds": [
+          "C008",
+          "C088"
+        ]
+      },
+      {
+        "label": "Related GI",
+        "value": "Clay Doll of Krishnanagar, application 795, filed 15 November 2021, registered with a certificate dated 27 March 2026",
+        "claimIds": [
+          "C056",
+          "C059"
+        ]
+      },
+      {
+        "label": "Products",
+        "value": "Gods such as Durga and Kali, replicas of great persons, scenes of village life",
+        "claimIds": [
+          "C073",
+          "C074"
+        ]
+      },
+      {
+        "label": "Stages",
+        "value": "Preparing the clay, making the body, drying and firing, painting and decorating",
+        "claimIds": [
+          "C024",
+          "C031"
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {
+            "text": "Figure modellers were originally brought to Krishnanagar to make stylised idols for religious worship, and the introduction of Barawari Puja encouraged a more naturalistic style of figure modelling.",
+            "claimIds": [
+              "C010",
+              "C011"
+            ]
+          },
+          {
+            "text": "Ghuri (Ghurni), a suburb of Krishnanagar, was chosen for the potters' settlement because it lay near the river Jalangi and close to the Maharaja's palace, Museums Victoria says.",
+            "claimIds": [
+              "C008",
+              "C009"
+            ]
+          },
+          {
+            "text": "Museums Victoria says clay modelling has been practised in Krishnanagar for over 250 years, while a press feature says the Pal or Paul community have been custodians of the clay craft there for nearly four centuries.",
+            "claimIds": [
+              "C013",
+              "C087"
+            ]
+          },
+          {
+            "text": "Museums Victoria writes that in the 18th century naturalistic clay models in India were centred in Krishnanagar, Lucknow and Poona, and calls the second half of the 19th century and the early 20th century the zenith of figure modelling in Krishnanagar.",
+            "claimIds": [
+              "C012",
+              "C016"
+            ]
+          },
+          {
+            "text": "Krishnanagar clay models won medals, certificates and prizes at most of the international exhibitions held after 1851, and a group of figures by Jadunath Pal was awarded a second order of merit at the Melbourne International Exhibition in 1880.",
+            "claimIds": [
+              "C017",
+              "C091"
+            ]
+          },
+          {
+            "text": "Kumartuli in Kolkata was founded after a mass migration of Kumbhakars from Krishnanagar, which Soujit Das, speaking at a 2018 meeting, dated to the mid-eighteenth century.",
+            "claimIds": [
+              "C019",
+              "C020"
+            ]
+          },
+          {
+            "text": "Statue-making in Ghurni has evolved gradually from the making of clay dolls and idols.",
+            "claimIds": [
+              "C021"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {
+            "text": "A study of Ghurni sets out clay doll making in steps: preparing the clay, then making the body of the doll, then decorating it.",
+            "claimIds": [
+              "C024"
+            ]
+          },
+          {
+            "text": "Pebbles, stones and other impurities are removed from the soil, and the mud is worked by hand into a dough or paste to make it more flexible.",
+            "claimIds": [
+              "C025"
+            ]
+          },
+          {
+            "text": "The body is made by hand, sometimes on a frame of iron wires or pieces of bamboo, or modelled in coils of clay over a metal armature.",
+            "claimIds": [
+              "C027",
+              "C028"
+            ]
+          },
+          {
+            "text": "A study of Ghurni says that after the features are modelled with clay modelling tools, the dolls are dried in the sun and put in a kiln to make them durable.",
+            "claimIds": [
+              "C030",
+              "C031"
+            ]
+          },
+          {
+            "text": "A press feature says the dolls are dried in the sun for a few days and later baked in a covered, charcoal-fed kiln.",
+            "claimIds": [
+              "C086"
+            ]
+          },
+          {
+            "text": "The RCCH brochure states that fully dried dolls are placed in a furnace for 4 to 5 hours at 500 degrees centigrade, while Museums Victoria describes the figures as sun-dried, with cracks filled with paper and tamarind seed or glue.",
+            "claimIds": [
+              "C033",
+              "C034"
+            ]
+          },
+          {
+            "text": "The figures are then painted and dressed, with hair of sheep's wool or jute and fabric clothing, or decorated with clothes and ornaments.",
+            "claimIds": [
+              "C035"
+            ]
+          },
+          {
+            "text": "A study of Ghurni names easily available tools such as spade, wooden spatula, chisel, pliers, hammer and brush, and machinery such as blow lamp, grinder and spray gun.",
+            "claimIds": [
+              "C089"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {
+            "text": "Krishnanagar clay dolls are mainly made of soil or deltaic mud, collected from the river bed or bought from sellers.",
+            "claimIds": [
+              "C039"
+            ]
+          },
+          {
+            "text": "Traditionally, the soil for the idols is collected near the Jalangi River, where alluvial soil is available from the riverside.",
+            "claimIds": [
+              "C040"
+            ]
+          },
+          {
+            "text": "For the finer features of a Krishnanagar model, the clay is mixed with cotton wool.",
+            "claimIds": [
+              "C029"
+            ]
+          },
+          {
+            "text": "Besides clay, Ghurni's makers use stone dust, cement, fibreglass, cloth, bamboo, threads, marble, wax and metals such as bronze to meet market demand.",
+            "claimIds": [
+              "C042"
+            ]
+          },
+          {
+            "text": "Artists previously used only powder colour but have shifted to pastel colour, tube colour, tarpin oil, varnish and kerosene oil.",
+            "claimIds": [
+              "C043"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {
+            "text": "Krishnanagar, the district headquarters of Nadia, lies on the right bank of the Jalangi River, and Ghurni lies in the southeastern part of Krishnanagar City.",
+            "claimIds": [
+              "C048",
+              "C049"
+            ]
+          },
+          {
+            "text": "The Ghurni clay doll community spreads over Pal Para, Halder Para, Sandhya Para, Kalipur, Bhatjangla, Rathtala and the surrounding suburban villages of Krishnanagar.",
+            "claimIds": [
+              "C050"
+            ]
+          },
+          {
+            "text": "A geography study says easily available water from the Jalangi River and its alluvial soil helped the clay doll industry flourish in Ghurni.",
+            "claimIds": [
+              "C051"
+            ]
+          },
+          {
+            "text": "The primary water source of the Ghurni community is the Jalangi River, with local ponds, tube wells and wells available nearby.",
+            "claimIds": [
+              "C054"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {
+            "text": "The Ghurni Clay Doll & Terracotta Artisans Cluster Co Operative Industrial Society Limited filed GI application 795, Clay Doll of Krishnanagar, on 15 November 2021.",
+            "claimIds": [
+              "C056",
+              "C057"
+            ]
+          },
+          {
+            "text": "The GI registry gives application 795 the status Registered, with a certificate of registration dated 27 March 2026, while the Statesman reports approval under the name Krishnagar Clay Doll.",
+            "claimIds": [
+              "C059",
+              "C060"
+            ]
+          },
+          {
+            "text": "Museums Victoria, citing Mukharji, says Krishnanagar clay figures at the 1880 Glasgow International Exhibition were priced from R1,200 for a Tea Garden scene to R9 to R12 a dozen for miniature figures.",
+            "claimIds": [
+              "C090"
+            ]
+          },
+          {
+            "text": "The Deccan Herald reported in September 2007 that about 100 old families at Ghurni, belonging to the Pal family, were actively engaged in clay modelling.",
+            "claimIds": [
+              "C092"
+            ]
+          },
+          {
+            "text": "Demand for the clay dolls of Ghurni generally increases in the festive seasons from September to February.",
+            "claimIds": [
+              "C064"
+            ]
+          },
+          {
+            "text": "A primary survey found that during 2020-2021, 78 percent of the Ghurni artists' orders came online and only 22 percent face to face.",
+            "claimIds": [
+              "C065"
+            ]
+          },
+          {
+            "text": "Ghurni's clay dolls face competition from cheaper dolls of plastic and glass fibre, and one study notes that terracotta-made items are much more costly than fibre products.",
+            "claimIds": [
+              "C069",
+              "C070"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {
+            "text": "Ghurni's artisans make statues of gods such as Durga, Kali, Radha Krishna and Shiba, and replicas of great persons such as Tagore, Vivekananda, Netaji and Gandhiji.",
+            "claimIds": [
+              "C073"
+            ]
+          },
+          {
+            "text": "Krishnanagar dolls are famed for realistic scenes of everyday village life and for fruits, vegetables, birds and animals.",
+            "claimIds": [
+              "C074"
+            ]
+          },
+          {
+            "text": "Krishnanagar clay models reproduce social scenes realistically, such as a collector's court, a tea garden, a pandit-sabha and the Charak festival.",
+            "claimIds": [
+              "C075"
+            ]
+          },
+          {
+            "text": "A press feature on Ghurni says one artisan advanced over five decades from small clay figurines and dolls to large statues and idols, murals and other terracotta decors.",
+            "claimIds": [
+              "C085"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

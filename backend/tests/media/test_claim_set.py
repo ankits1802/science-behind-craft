@@ -1,7 +1,8 @@
 import uuid
 
-from app.media.claim_set import acls_for, claim_set, enough_claims
+from app.media.claim_set import claim_set, enough_claims
 from app.media.records import CitationFacts
+from app.research.retrieval import chunk_acls_for
 from app.schemas.media import names_a_group
 
 from .fakes import claim, passing, unchecked
@@ -90,5 +91,5 @@ def test_two_claims_are_enough_and_acls_follow_the_role() -> None:
     a, b = ids(2)
     assert not enough_claims(claim_set([claim(a, "One.")], acls=STUDENT))
     assert enough_claims(claim_set([claim(a, "One."), claim(b, "Two.")], acls=STUDENT))
-    assert acls_for("STUDENT") == STUDENT
-    assert acls_for("RESEARCHER") == RESEARCHER
+    assert chunk_acls_for("STUDENT") == STUDENT
+    assert chunk_acls_for("RESEARCHER") == RESEARCHER

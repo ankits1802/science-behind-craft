@@ -1,0 +1,1590 @@
+{
+  "schemaVersion": 1,
+  "craftSlug": "Kutch-Bandhani",
+  "dossierVersion": 1,
+  "dossierDigest": "f7943b405062fc70d6f38570066327989e15404bab712a9e354715132880db83",
+  "checkedAt": "2026-11-18T09:47:37.542346Z",
+  "tool": "kalavigyan-curation-verify/2",
+  "sources": [
+    {
+      "sourceId": "S01",
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "finalUrl": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_185_Part_1%5CJournal+185+Part+1.pdf",
+      "fetchedAt": "2026-11-18T09:47:19.756677Z",
+      "contentType": "application/pdf",
+      "textSha256": "c3c953076e87fed24439e6fdd7c1ba8cacbe2ee58f070ba4a26a49b9ce915ccc",
+      "characters": 533096,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S02",
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/756",
+      "route": "LIVE",
+      "readUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/756",
+      "finalUrl": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/756",
+      "fetchedAt": "2026-11-18T09:47:36.266266Z",
+      "contentType": "text/html",
+      "textSha256": "3a77b6af249f747cf955af48e973bde522aa392070a3737da0aeb32732bc02ea",
+      "characters": 9170,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S03",
+      "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "finalUrl": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf",
+      "fetchedAt": "2026-11-18T09:47:01.080554Z",
+      "contentType": "application/pdf",
+      "textSha256": "1624ef1910b61aa09871610ca91d9ab4a3a43fdad02e801e2425696973892916",
+      "characters": 44576,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S04",
+      "url": "https://collections.vam.ac.uk/item/O70650/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O70650/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O70650/",
+      "fetchedAt": "2026-11-18T09:47:01.469098Z",
+      "contentType": "text/html",
+      "textSha256": "4ea6edc421491b53fc4e25e1ed3c6c2c0a4f7a582675a7d81ac8fba138b85b5f",
+      "characters": 2795,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S05",
+      "url": "https://collections.vam.ac.uk/item/O72832/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O72832/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O72832/",
+      "fetchedAt": "2026-11-18T09:47:03.192472Z",
+      "contentType": "text/html",
+      "textSha256": "64efd3abc19f6cdced0d5f02455c55a06e728f6e60c4b1043bd5ad02f77db36f",
+      "characters": 2430,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S06",
+      "url": "https://collections.vam.ac.uk/item/O71982/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O71982/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O71982/",
+      "fetchedAt": "2026-11-18T09:47:05.161086Z",
+      "contentType": "text/html",
+      "textSha256": "9df35dcd540064a8a6b1484e0ba626c3d6398871560cf85d585b5215ad495fbc",
+      "characters": 2444,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S07",
+      "url": "https://collections.vam.ac.uk/item/O1307232/",
+      "route": "LIVE",
+      "readUrl": "https://collections.vam.ac.uk/item/O1307232/",
+      "finalUrl": "https://collections.vam.ac.uk/item/O1307232/",
+      "fetchedAt": "2026-11-18T09:47:14.103307Z",
+      "contentType": "text/html",
+      "textSha256": "17d254e52dbc029dacfe9bbbe256d555764d35f22364c1ced7c1aa0f7e020b6b",
+      "characters": 4016,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S08",
+      "url": "https://ualresearchonline.arts.ac.uk/id/eprint/1256/",
+      "route": "LIVE",
+      "readUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/1256/",
+      "finalUrl": "https://ualresearchonline.arts.ac.uk/id/eprint/1256/",
+      "fetchedAt": "2026-11-18T09:47:01.436159Z",
+      "contentType": "text/html",
+      "textSha256": "d72a0a0c92f377fe6316a35fed6c64a74905e6920637887364282ab95a4cc495",
+      "characters": 2881,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S09",
+      "url": "https://imp-art.org/articles/bandhani/",
+      "route": "LIVE",
+      "readUrl": "https://imp-art.org/articles/bandhani/",
+      "finalUrl": "https://imp-art.org/articles/bandhani/",
+      "fetchedAt": "2026-11-18T09:47:02.795805Z",
+      "contentType": "text/html",
+      "textSha256": "205f45e68723b3cc604653c6932b51e496c45fad584fc6f97efd29a8e3838e12",
+      "characters": 7338,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S10",
+      "url": "https://kalpavriksh.org/wp-content/uploads/2020/07/Sandhani-Kachchh-full-report-final-English-2019.pdf",
+      "route": "LIVE",
+      "readUrl": "https://kalpavriksh.org/wp-content/uploads/2020/07/Sandhani-Kachchh-full-report-final-English-2019.pdf",
+      "finalUrl": "https://kalpavriksh.org/wp-content/uploads/2020/07/Sandhani-Kachchh-full-report-final-English-2019.pdf",
+      "fetchedAt": "2026-11-18T09:47:03.466128Z",
+      "contentType": "application/pdf",
+      "textSha256": "a3f3ea7f8d7e65f80e6492f561f8baeb826d42e971a2ec06a485270109386ec8",
+      "characters": 288444,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S11",
+      "url": "https://www.irci.jp/wp_files/wp-content/uploads/2024/05/Case-Studies-on-ICH-amid-the-COVID-19-Pandemic-in-the-Asia-Pacific-Region_04_R-Sethi.pdf",
+      "route": "LIVE",
+      "readUrl": "https://www.irci.jp/wp_files/wp-content/uploads/2024/05/Case-Studies-on-ICH-amid-the-COVID-19-Pandemic-in-the-Asia-Pacific-Region_04_R-Sethi.pdf",
+      "finalUrl": "https://www.irci.jp/wp_files/wp-content/uploads/2024/05/Case-Studies-on-ICH-amid-the-COVID-19-Pandemic-in-the-Asia-Pacific-Region_04_R-Sethi.pdf",
+      "fetchedAt": "2026-11-18T09:47:08.470103Z",
+      "contentType": "application/pdf",
+      "textSha256": "75e72bfb25f5722ab3cea935917619fd879ad8e32a7edfd4cc199402387d3f94",
+      "characters": 44707,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S12",
+      "url": "https://thesouthasiacollection.co.uk/collection/khombi-shawl/",
+      "route": "LIVE",
+      "readUrl": "https://thesouthasiacollection.co.uk/collection/khombi-shawl/",
+      "finalUrl": "https://thesouthasiacollection.co.uk/collection/khombi-shawl/",
+      "fetchedAt": "2026-11-18T09:47:13.155626Z",
+      "contentType": "text/html",
+      "textSha256": "09059210dcaf1756d3fc24aec4dfb7bbe36a9425d6955599d0f322881d74e537",
+      "characters": 3773,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S13",
+      "url": "https://warwick.ac.uk/fac/arts/history/ghcc/eac/oralhistoryproject/resources/sugrabai/",
+      "route": "LIVE",
+      "readUrl": "https://warwick.ac.uk/fac/arts/history/ghcc/eac/oralhistoryproject/resources/sugrabai/",
+      "finalUrl": "https://warwick.ac.uk/fac/arts/history/ghcc/eac/oralhistoryproject/resources/sugrabai/",
+      "fetchedAt": "2026-11-18T09:47:14.518846Z",
+      "contentType": "text/html",
+      "textSha256": "b6a9cf1a253b604797d8fe5c1e2b3841e7c29f2e03d3616e933230d9d30a7cd4",
+      "characters": 3294,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S14",
+      "url": "https://gulfnews.com/lifestyle/the-artisans-of-kutch-1.2239694",
+      "route": "LIVE",
+      "readUrl": "https://gulfnews.com/lifestyle/the-artisans-of-kutch-1.2239694",
+      "finalUrl": "https://gulfnews.com/lifestyle/the-artisans-of-kutch-1.2239694",
+      "fetchedAt": "2026-11-18T09:47:15.238151Z",
+      "contentType": "text/html",
+      "textSha256": "1be28875bb7d322bb2d2212033f507e1e5f4e0e475f6a4e3ac2bf100b0cd64c7",
+      "characters": 13051,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S15",
+      "url": "https://folkartmarket.org/ifamartiststories/adil-m-khatri-zakiya-adil-khatri",
+      "route": "LIVE",
+      "readUrl": "https://folkartmarket.org/ifamartiststories/adil-m-khatri-zakiya-adil-khatri",
+      "finalUrl": "https://folkartmarket.org/ifamartiststories/adil-m-khatri-zakiya-adil-khatri",
+      "fetchedAt": "2026-11-18T09:47:14.709004Z",
+      "contentType": "text/html",
+      "textSha256": "33caa7ca5bcc9a75b359576da702b0689bb52000e83919c00a2838780e1a6b5d",
+      "characters": 1919,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S16",
+      "url": "https://exhibitions-khamir.org/bandhani",
+      "route": "LIVE",
+      "readUrl": "https://exhibitions-khamir.org/bandhani",
+      "finalUrl": "https://exhibitions-khamir.org/bandhani",
+      "fetchedAt": "2026-11-18T09:47:15.061022Z",
+      "contentType": "text/html",
+      "textSha256": "008f8d838f9e8ee7e3e0af0f3f3d9ddeb06acba81e11ec55d4e57b126f78c985",
+      "characters": 3270,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S17",
+      "url": "https://exhibitions-khamir.org/bandhani/making-of",
+      "route": "LIVE",
+      "readUrl": "https://exhibitions-khamir.org/bandhani/making-of",
+      "finalUrl": "https://exhibitions-khamir.org/bandhani/making-of",
+      "fetchedAt": "2026-11-18T09:47:16.700908Z",
+      "contentType": "text/html",
+      "textSha256": "94398acd72297b97239a82aaa8285dd250f6f308e39987c39053a81712c01c15",
+      "characters": 6768,
+      "truncated": false,
+      "problem": null
+    },
+    {
+      "sourceId": "S18",
+      "url": "https://www.dsource.in/resource/bandhani/introduction",
+      "route": "LIVE",
+      "readUrl": "https://www.dsource.in/resource/bandhani/introduction",
+      "finalUrl": "https://www.dsource.in/resource/bandhani/introduction",
+      "fetchedAt": "2026-11-18T09:47:15.809669Z",
+      "contentType": "text/html",
+      "textSha256": "e23c3787775199542556bf1ecd33deeab3da799a40ff2864763444cfdd6a2fb3",
+      "characters": 1481,
+      "truncated": false,
+      "problem": null
+    }
+  ],
+  "quotes": [
+    {
+      "claimId": "C001",
+      "sourceId": "S01",
+      "quote": "The Kutch Bandhani is an ancient, dyeing technique, wherein the fabric is tied in intricate patterns with the help of nails, beads or grain, which prevents the colour from seeping into the tied areas during dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S11",
+      "quote": "Bandhani (Figure 1) is the traditional craft of tie-dye whereby patterning on textiles is created by tightly tying multiple parts of the fabric with thread to resist dyes and create dot like puckered designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C002",
+      "sourceId": "S05",
+      "quote": "bandhani work (a dyeing technique in which patterns are formed from arrangements of resist-dyed dots)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C003",
+      "sourceId": "S09",
+      "quote": "A tie-dyeing technique used to make patterned fabrics, Bandhani in its many variations is identified by light circular or square-shaped repeating motifs on a dark ground.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S01",
+      "quote": "The ter bandhani is derived from the Sanskrit verbal root bandh (\"to bind, to tie\").",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C004",
+      "sourceId": "S09",
+      "quote": "It derives its name from the Sanskrit word baandh, meaning \"to tie,\"",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C005",
+      "sourceId": "S01",
+      "quote": "Bandhani is an expression used in Gujarat for textiles where different designs are produced by tying individual parts of the fabric before dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C006",
+      "sourceId": "S01",
+      "quote": "Bandhani, is the name given to the characteristic feature on Indian tie and dye. It refers to the little dot created in the centre of square or circle motifs as the dye seeps into the fabric material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C007",
+      "sourceId": "S01",
+      "quote": "The manufacturing process of Kutch Bandhani products of Gujarat, using tie-dye method on the woven fabric, is unique with intricate designs and Rai Dana (Mustard Seed) dots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C008",
+      "sourceId": "S01",
+      "quote": "The manufacturing process is so cumber-some and time consuming to make a final product. The entire manufacturing process is manual.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C009",
+      "sourceId": "S01",
+      "quote": "The Geographical Area of production of Kutch Bandhani is Kutch district of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C011",
+      "sourceId": "S04",
+      "quote": "Historical significance: Khatri bandhani work is perhaps the finest in Gujarat and is usually made in Kutch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S12",
+      "quote": "In Kachchh, the craft is mainly practised by the Khatri community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S11",
+      "quote": "is practiced by the Khatri community of the Kutch region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C012",
+      "sourceId": "S16",
+      "quote": "Kachchh is home to many of bandhani's most prolific artists, majority of whom belong to the Khatri community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C013",
+      "sourceId": "S01",
+      "quote": "It is one of the traditional craft which is followed most by the Muslim Khatri communities and Jadejas, Lohanas, Bohras and other communities who follow this craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C014",
+      "sourceId": "S01",
+      "quote": "The Kutch Bandhani work has been exclusively carried out by Muslim Khatri in the Kutch region.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C015",
+      "sourceId": "S01",
+      "quote": "Khatris-both Hindus and Muslim-are engaged in this craft",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C016",
+      "sourceId": "S08",
+      "quote": "The Khatris are an hereditary caste of dyers and block-printers in Kachchh district, Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C017",
+      "sourceId": "S01",
+      "quote": "There is a special workshop for dyeing and printing fabric but the tying is done by women at homes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S01",
+      "quote": "For tying work, not only Khatri community, but ladies from other communities like Jain, Harijan, Darji, Kumbhar, Jat, Mansuri and Rajput are also involved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C018",
+      "sourceId": "S16",
+      "quote": "Women from communities other than Khatris are now earning incomes as tying artists, and doing so from the comfort of their homes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S11",
+      "quote": "The tying of the fabric is generally done by women. Men are usually involved in dyeing of the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C019",
+      "sourceId": "S16",
+      "quote": "Women do the laborious work of tying while the men generally do the dyeing and business management.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C020",
+      "sourceId": "S01",
+      "quote": "Bandhani is mainly produced in Gujarat. All the artisan of the bandhani are mostly immigrants form Sindh before Independence.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C021",
+      "sourceId": "S01",
+      "quote": "The members of the Khatri community believe that the Kutch Bandhani technique has come to Kutch from Sindh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C022",
+      "sourceId": "S01",
+      "quote": "It is believed that the tie & dye technique was introduced some centuries back by a fakir from Sindh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C023",
+      "sourceId": "S01",
+      "quote": "It is believed that the tie & dye technique was introduced some centuries back by a fakir from Sindh. However there is no historical reference about the exact time or period.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C024",
+      "sourceId": "S09",
+      "quote": "The bandhani technique was originally practised by the Khatri community in Sindh and subsequently gained popularity among artisans of Gujarat, Rajasthan and Madhya Pradesh.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C025",
+      "sourceId": "S15",
+      "quote": "Experts believe the technique was brought to Kutch by Khatri craftsmen from Sindh, probably in the 16th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C026",
+      "sourceId": "S01",
+      "quote": "It is believed that this craft exists from a very long time say about from 6th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C027",
+      "sourceId": "S01",
+      "quote": "Our earliest evidence of the use of Kutch Bandhani cloth in India is in the depiction on the walls of Ajanta caves, which dates back to 6th century AD. Here, women are shown wearing blouses with clearly discernible simple dotted tie-dye patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "Other earliest references to \"Kutch Bandhani\" fabrics is in Bana\"s Harshacharita life of King Harsh (606-648 A.D.)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C028",
+      "sourceId": "S01",
+      "quote": "the poet writes that at the wedding of one of the prince\"s sister \"old matrons were skilled in many sorts of (textile) pattern-ship, some of which were in the process of being tied (Bandhyamana).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C029",
+      "sourceId": "S01",
+      "quote": "Literature references in the 14th century include the Moroccan traveller Ibn Battuta, who described that a single piece silk cloth which was dyed in 5 colours being sent to the Emperor of China from Muhammad Tughlug\"s court. This piece may indicate Kutch Bandhani cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C030",
+      "sourceId": "S01",
+      "quote": "Another Gujarat text of the 15th century confirms that Mandvi in Kutch was renowned for its dyeing odhanis even then and in the second quarter of the 16th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C031",
+      "sourceId": "S01",
+      "quote": "Mandvi in Kutch was renowned for its dyeing odhanis even then and in the second quarter of the 16th century. It is still an important tie & dye centre. (Murphy, Veronica-1991)",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C032",
+      "sourceId": "S01",
+      "quote": "The \"Bandhani\" type of fabrics of Indian origin found at fostat in Egapt and attributed to the late medieval period (Irwin and Hall, l97I:17 and Plate 5A) appeared to have been only cheap imitations of true \"Bandhani\" and made with printing blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C033",
+      "sourceId": "S01",
+      "quote": "From the 12th century onwards, Jain script painting from Western India illustrates many garments with dotted pattern, which seems to be tie and dye. Several of them are with the Tribundi pattern (group of three dots) popular in Gujarat up to the 20th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C034",
+      "sourceId": "S01",
+      "quote": "True Gujarat Bandhani is mentioned in Varnaka, the seventeenth century inventory under bandhalaya (Moti Chandra, 1961:24).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C035",
+      "sourceId": "S01",
+      "quote": "statement of an unknown writer form Gujarat (around A.D.1373), using the expressing chundi navarangiya, multicoloured Bandhani",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C036",
+      "sourceId": "S01",
+      "quote": "Bandhani tie and dye became a staple local source of income with the export of Bandhani bandannas to Europe via English East India Company in the 18th century.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C037",
+      "sourceId": "S01",
+      "quote": "Much like the local block printers, bandhani artisans used local, natural resources like madder and pomegranate to dye their cloth in a brilliant range of hues.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C038",
+      "sourceId": "S11",
+      "quote": "The use of natural dyes such as madder roots and pomegranate which was traditionally practiced has seen a revival over the years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C039",
+      "sourceId": "S01",
+      "quote": "The technique of tightly winding a thread around a section of cloth, dyeing it, and then removing the thread to reveal a circular resist motif has remained the same since bandhani was first practiced.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C040",
+      "sourceId": "S01",
+      "quote": "It is one of the most important crafts of Kutch which gives whole or part-time employment to 4,000 persons particularly at Bhuj, Mandvi, Anjar, Mundra and Naliya",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "It is a common wear among the Kutchis",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C041",
+      "sourceId": "S01",
+      "quote": "It is one of the most important crafts of Kutch",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C042",
+      "sourceId": "S01",
+      "quote": "For a cotton bandhani the price varies from Rs. 10 to Rs. 50 and for georgette between Rs. 50 to Rs. 250, but those interwoven with Jari thread cost more.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "The price of bandhani varies widely depending on the type of cloth used, the intricacies of designs chosen and the number of colours used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C043",
+      "sourceId": "S01",
+      "quote": "Fabric, count and quality of the knots are calculated in pricing the product.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C044",
+      "sourceId": "S01",
+      "quote": "Though the demand for bandhani has not declined. this traditional craft has now a rival in screen and roller printing. The latter process being mechanised the output is greater and the finished product cheaper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C045",
+      "sourceId": "S01",
+      "quote": "The average annual value of bandhanis manufactured in Kutch is estimated at Rs. 5 to 6 lakhs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C046",
+      "sourceId": "S01",
+      "quote": "Bandhani is very popular in Kutch and Saurashtra where it is customary to present it to the bride at the time of marriage.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C047",
+      "sourceId": "S01",
+      "quote": "Kutch bandhani is normally of fast colours and available in a variety of designs, viz. bar bag. bawan bag, mor, putti, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C048",
+      "sourceId": "S01",
+      "quote": "The colours which are generally used in Kutch are red, green, blue and black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C049",
+      "sourceId": "S01",
+      "quote": "The process of bandhani production is simple but laborious and time consuming.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C050",
+      "sourceId": "S01",
+      "quote": "designs are marked on it with the help of wooden blocks or by hand. It Is then lied in tiny knots with thread, whereafter the cloth is dyed in appropriate colours. On completion of this process, when the ties are removed, the finished product presents a repeat design in dots",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C051",
+      "sourceId": "S01",
+      "quote": "The only tools and equipment needed are utensils for dyeing, and wooden blocks for printing designs.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S01",
+      "quote": "As per the details mentioned in the \"Gujarat State Gazetteers\" of Kutch District (1971) by Govt. of Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C052",
+      "sourceId": "S01",
+      "quote": "The raw materials required are cloth, colours and thread procured from the local market.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "G.I. APPLICATION NUMBER - 756",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "Application Date: 26-04-2021",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "A) Name of the Applicant : Kachchhi Khatri Bandhani Hastkala Association",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S01",
+      "quote": "D) Types of Goods : Class 24 & 25 - Textiles and textile goods",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C053",
+      "sourceId": "S02",
+      "quote": "| Date of Filing | 26-04-2021 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "in the Geographical Indications Journal 185 dated November 29, 2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S01",
+      "quote": "is hereby advertised as accepted under Sub-section (1) of Section 13",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C054",
+      "sourceId": "S02",
+      "quote": "756 - GI - Journal Copy - 29-11-2023 | 29-11-2023",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S02",
+      "quote": "| Certificate Number | 576 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S02",
+      "quote": "| Certificate Date | 30-03-2024 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S02",
+      "quote": "| Registration Valid Upto | 25-04-2031 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C055",
+      "sourceId": "S02",
+      "quote": "756 - Certificate of Registration - 30-03-2024 | 30-03-2024",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S03",
+      "quote": "FROM APRIL 2023 - MARCH 2024",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C056",
+      "sourceId": "S03",
+      "quote": "576 756 Kutch Bandhani Handicraft Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C057",
+      "sourceId": "S01",
+      "quote": "Facilitated By: 1. Textiles Committee, Ministry of Textiles, Government of India 2. Office of The Development Commissioner (Handicrafts), Ministry of Textiles,",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "1. Representative of the O/o Development Commissioner (Handicrafts), Govt. of India, Ministry of Textiles, Bhuj.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "2. Representative, Textiles Committee, Ministry of Textiles, Govt. of India, Mumbai.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "3. Representative of Gujarat State Handloom & Handicrafts Development Corporation Limited, Gandhinagar, Gujarat.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C058",
+      "sourceId": "S01",
+      "quote": "4. Two Master Artisans of the Kutch Bandhani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C059",
+      "sourceId": "S01",
+      "quote": "Khatri Abdul SatarBapu from Bhuj city is one of the famous Bandhani craftsmen",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "Tie-dyed cloths are often sold with knots still tied, in order to indicate that they are not printed but indeed tie-dyed.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S01",
+      "quote": "As long as the ties are there, the customer can be sure he is not buying an imitation.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S17",
+      "quote": "The tied fabric is stored without removing the ties so that the customer can be sure of its authenticity and can watch the design unfold for the first time.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C060",
+      "sourceId": "S18",
+      "quote": "For the sake of authenticity and to prove that it is not screen-printed; the genuine Bandhani is sold with the threads still tied to the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S10",
+      "quote": "In some crafts a significant population still derives its livelihood, e.g. in the 350 tie-dye units occupying about 25,000 women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C061",
+      "sourceId": "S10",
+      "quote": "Ashish Kothari, Durgalakshmi Venkataswamy, Ghatit Laheru, Arun Dixit, Kankana Trivedi, and Radhika Mulay (2019) Sandhani: Weaving Transformations in Kachchh, India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C062",
+      "sourceId": "S10",
+      "quote": "For their ritual textiles, especially for marriage ceremonies, Rabaris would buy fabric from the weaver and get it tie-dyed from Khatris of Bhadli village.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S10",
+      "quote": "Weavers started working with Khatris directly around 1970s thus changing the relationship dynamics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C063",
+      "sourceId": "S10",
+      "quote": "Bhadali and Moti Virani emerged as main bandhani centres. Tie dyed shawls continued to remain mainstay product of Kachchh weaving for many years.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C064",
+      "sourceId": "S10",
+      "quote": "Arab Rahim Khatri (Merit Award winner - 1971) of Bhadali was the first Khatri to start working directly with the weavers.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S10",
+      "quote": "Dyeing as a technique has not been part of the Kachchh weavers' traditional skill sets.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C065",
+      "sourceId": "S10",
+      "quote": "mastering dyeing which hitherto was the Khatri community's domain",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S10",
+      "quote": "The vankars wove this cotton into cloth and prepared head gear such as turbans and shoulder cloths that soon became marks of identity for every community that used them.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C066",
+      "sourceId": "S10",
+      "quote": "These fabrics were decorated by dyeing and tiedyeing, skills that were undertaken by the Khatri/Muslim community. The women of the Rabari community further embellished these tie-dyed fabrics with intricate embroidery patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S13",
+      "quote": "for tying 4,000 bhindi, or 1,000 kadi, she used to earn 150 rupees",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C067",
+      "sourceId": "S17",
+      "quote": "Payment for this work is dependent on the type of fabric, and the size and number of \"kadis\" that have been tied. One kadi is equal to four dots",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C068",
+      "sourceId": "S14",
+      "quote": "Techniques like Bandhani, an intricate style of tie-dye, requires dyers to manually handle boiling hot dyes. In the small workshops, workers are exposed to fumes and constant exposure to chemical dyes can cause damage to lungs and kidneys.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S14",
+      "quote": "According to Iqbal Ali Mohammed Khatri, a fifth-generation Bandhani artisan, synthetic dyes are mainly used because of customer preferences.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C069",
+      "sourceId": "S14",
+      "quote": "Since most customers prefer to buy cheaper products, we go for synthetic dyes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C070",
+      "sourceId": "S12",
+      "quote": "These pieces were recently acquired from SIDR Craft in Kachchh. SIDR Craft was founded in 1992 by brothers Abduljabbar Khatri and Abdullah Khatri with the aim of reviving the lost high-quality Bandhani craft technique.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S07",
+      "quote": "Aziz Khatri lives in Bhadli in the Kutch region of Gujarat. He is a specialist in tie-dyeing and a graduate of the Kala Raksha Vidhalaya, a design school run by Judy Frater",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C071",
+      "sourceId": "S07",
+      "quote": "Aziz comes from a family of dyers",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S11",
+      "quote": "Adil Khatri (Figure 11), a young Bandhini artisan-designer who along with his wife Zakiya Khatri runs Nilak, a contemporary design company producing Kutchi tie-dye products. Both are graduates of SKV.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S11",
+      "quote": "Bandhini textiles, Adil Khatri's workplace, Bhuj.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C072",
+      "sourceId": "S15",
+      "quote": "Studying design and business at Somaiya Kala Vidya, a school for artisans in Kutch, encouraged the pair to strive for unique innovations in their art.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C073",
+      "sourceId": "S15",
+      "quote": "The Khatris' works have been recognized with the Gujarat State Award for Craft Excellence, the Crafts Council of India Kamala Award for Young Artisans, and a World Crafts Council Seal of Excellence.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C074",
+      "sourceId": "S11",
+      "quote": "Traditionally, red, black and yellow formed the colour palette. Today we are working with a whole range of colours including pastels, indigo, etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C075",
+      "sourceId": "S01",
+      "quote": "Technological advancement and the use of eco-friendly synthetic dyes have caused a change in production time and quantity, resulting in a rise in competition and a reduction in price.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C076",
+      "sourceId": "S01",
+      "quote": "Mass production of cotton tie-dye fabric for dress materials, Sari, Dupatta, Scarf is done by Khatri community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "The city of Bhuj, located in the Gulf of Kutch, in Gujarat is well known for its red Bandhani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C078",
+      "sourceId": "S01",
+      "quote": "Dyeing process of Bandhani is carried out extensively in this city, as the water of this area is known to give a particular brightness to colors, specifically reds and maroons.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C079",
+      "sourceId": "S01",
+      "quote": "Quality in colour brightness due to usage of water from Gulf of Kutch for dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C081",
+      "sourceId": "S01",
+      "quote": "Kutch Bandhani fabric is produced in two regions of Gujarat, namely, Saurashtra and Kutch. In Saurashtra, the Jamnagar city is the city is main producing centre of Kutch Bandhani and where as in Kutch, the Kutch Bandhani is produced across the entire district.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C082",
+      "sourceId": "S01",
+      "quote": "Bandhani on cotton fabric for contemporary use is produced in Mandvi, Mundra, Anjar, and Bhuj.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C083",
+      "sourceId": "S09",
+      "quote": "Major centres for bandhani textile production include Mandvi, Bhuj, Jamnagar, Porbandar and Rajkot in Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S10",
+      "quote": "Kachchh was merged into Gujarat. Presently, the district is administered through 10 talukas (viz. Bhuj, Anjar, Mandvi, Mundra, Abdasa-Nalia, Lakhpat, Rapar, Bhachau Nakhatrana and Gandhidham).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C084",
+      "sourceId": "S10",
+      "quote": "Ashish Kothari, Durgalakshmi Venkataswamy, Ghatit Laheru, Arun Dixit, Kankana Trivedi, and Radhika Mulay (2019) Sandhani: Weaving Transformations in Kachchh, India",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C085",
+      "sourceId": "S01",
+      "quote": "Cotton tie and dye for Jat community is produced in Nani-Virani in Lakhpat Taluka by Khatri community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C086",
+      "sourceId": "S01",
+      "quote": "Jat Bandhani is mostly in dark brown or in marron colour ground with yellow and green colour in the resisted area.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C087",
+      "sourceId": "S01",
+      "quote": "Jat women have started using printed Bandhani but, they still use tie and dye Bandhani textiles at marriage and special occasions.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C088",
+      "sourceId": "S01",
+      "quote": "For cotton Bandhani simple motif are used like tra Kan, nav kan kadi, chut bhindi, kodi etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "The Kutch Bandhani is prepared on cotton, silk, wool, Georgette, Tussar and Rayon fabrics.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C089",
+      "sourceId": "S01",
+      "quote": "Silk, cotton, woollen fabrics are mainly used in this craft.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Material used for silk Kutch Bandhani are Gajji silk, Georgette, Chiffon, Chinon, Tussar, mulberry silk, cotton silk, (fabric woven with cotton warp and silk weft).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C090",
+      "sourceId": "S01",
+      "quote": "Materials used for Silk Bandhani are: Gajji Silk, Georgette, Chiffon, Chinon, Tussar, Mulberry Silk, Cotton-Silk, (Fabric woven with cotton warp and silk weft).",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S01",
+      "quote": "The fineness of the tying is also dependent on the fineness and texture of the material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S09",
+      "quote": "Materials such as silk or muslin, which are lighter and have a more desirable weave, conduce better to precise tying and dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C091",
+      "sourceId": "S17",
+      "quote": "The finer materials enable more intricate designs, and are therefore higher in cost.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C092",
+      "sourceId": "S06",
+      "quote": "This tie-dyed length of gajji, a satin-weave silk used particularly in Gujarat",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S11",
+      "quote": "The Bandhani tie-dye artisans procure fabric from outside Kutch from Surat, Jamnagar and Ahmedabad in Gujarat, Bangalore, Tamil Nadu, and other parts of India.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C093",
+      "sourceId": "S01",
+      "quote": "The raw material for manufacturing Kutch Bandhani is procured from Madurai, Bangaluru, Varanasi, Bhiwandi(Mumbai), Surat, Khambat etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C094",
+      "sourceId": "S01",
+      "quote": "The silk fabrics both Sarees and Dress Materials are procured from Bangalore. The Sarees are 6 metres and the length of Dress Materials ranges from 2.5 metres to 3 metres.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C095",
+      "sourceId": "S01",
+      "quote": "The designs are marked out on a thick plastic sheet. Pinholes are made around the pattern. The \"printing ink\" is a mixture of \"geru\" and black colour or soot mixed with water. The \"ink\" seeps through the holes to print the pattern on the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S09",
+      "quote": "While the blocks are the traditional printing tools, most dyers today apply the geru with stencils made of plastic Farma paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S12",
+      "quote": "Traditionally, blocks were used to print the designs, but craftspeople now use stencils made of farma paper, a type of laminated paper.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C096",
+      "sourceId": "S17",
+      "quote": "Traditionally, wooden blocks dipped in \"geru\" (red oxide mixed with water) were used to print the design, but now, plastic farma paper is used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C097",
+      "sourceId": "S01",
+      "quote": "The cloth which is bleached, usually thin cotton, silk or wool is folded two times and a design are marked out in the form of dots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C098",
+      "sourceId": "S01",
+      "quote": "The printing paste is that of direct dyes and can be washable. This printing is done for making designs for tying work.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C099",
+      "sourceId": "S01",
+      "quote": "The cloth is folded into four or more layers for tying. The \"rangara\" (colourer) marks the lay-out of the pattern with special geru (a burntsienna mixed with water) on the material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C100",
+      "sourceId": "S01",
+      "quote": "The Gujarati craftsman prefers to work without any aids like finger nail, small metal ring etc. The reason behind is, the flow is much better when working with bare hands and there is no risk of damaging the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C101",
+      "sourceId": "S01",
+      "quote": "Bandhani is a type of tie-dye textile decorated by plucking the cloth with the fingernails into many tiny bindings that form a figurative design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S09",
+      "quote": "As per the printed pattern, tiny sections of cloth are pinched by hand, or raised with a metal ring, and bound with a strong thread - traditionally by women known as bandhanaras.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C102",
+      "sourceId": "S17",
+      "quote": "who raises and pinches the fabric in the marked designs using a pointed small fingernail or metal ring with a pointed tip.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C103",
+      "sourceId": "S01",
+      "quote": "The time taken for tying work varies from 4 to 90 days depending upon the Kutch Bandhani design.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C104",
+      "sourceId": "S01",
+      "quote": "One of the important specialties of the Bandhani is that a meter long of cloth can have millions of tiny knots known as \"Bheendi\" in the local Kutch language.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C105",
+      "sourceId": "S01",
+      "quote": "A metre length of cloth can have thousands of tiny knots known as 'Bheendi' in the local language.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C106",
+      "sourceId": "S01",
+      "quote": "There are two different styles of Kutch Bandhani. One has the popular dots and the other has lines called \"Laheria\". \"Laheria\" originates from the \"lahar\" which means waves.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S01",
+      "quote": "It is tied in a similar design of thin lines gradually flowing into thicker lines. The tying process is usually done on bleached white cloth or cloth which is dyed yellow.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C107",
+      "sourceId": "S01",
+      "quote": "The cloth is rolled and tied with a thick thread which is wound at an interval of about an inch. The thread is wound on a long stick, which enables them to tie thread tightly on the cloth.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C108",
+      "sourceId": "S01",
+      "quote": "The thread is wound on a long stick, which enables them to tie thread tightly on the cloth. This work is mainly carried out by women and girls.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C109",
+      "sourceId": "S01",
+      "quote": "After the tying process, tied cloth is taken for dyeing. It is bleached First, and then rinsed in several tubs of water. Then it is dyed in another colour.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C110",
+      "sourceId": "S01",
+      "quote": "The desired amount of chemicals are put in a piece of cloth and swirled in hot water, then the cloth is put in the water and swirled around with the help of wooden stick.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C111",
+      "sourceId": "S01",
+      "quote": "After the desired shade is achieved it is removed and rinsed in several tubs of water. The process continues till the desired colour combination is achieved.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S09",
+      "quote": "This process may be repeated multiple times for each colour included in the pattern, starting with the lightest shade.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S17",
+      "quote": "The dyer always starts with the lightest colour (usually yellow), sends the fabric to be tied again if needed, and repeats the process until all the desired colours have been added.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C112",
+      "sourceId": "S15",
+      "quote": "If there are two colours, the pattern is tied again after the first dye, and then dyed again.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C114",
+      "sourceId": "S01",
+      "quote": "Colouring of the border involves another technique. The tied cloth is gathered and tightly wrapped in plastic, and wound over tightly by a rubber strip. The dye is manually scrubbed into the material taking care that wrapped areas does not come into contact with the dye.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C115",
+      "sourceId": "S01",
+      "quote": "Vat and Naphtha dyes are used for cotton and Acid dyes are used for silk clothes.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C116",
+      "sourceId": "S01",
+      "quote": "Earlier, most Kutch Bandhani cloth was maroon colour of alizarin derived from madder and black or brown derived from various plants which are very expensive.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C117",
+      "sourceId": "S01",
+      "quote": "The process using vegetable dyes requires more time and more use of water.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C118",
+      "sourceId": "S01",
+      "quote": "Bright colours are expensive and difficult to produce but synthetic dyes are affordable.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C119",
+      "sourceId": "S01",
+      "quote": "The colours used in the process are natural and hence best colour combinations are possible.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C120",
+      "sourceId": "S01",
+      "quote": "Chemical colours are never used directly, as some crystals could get caught in the material and may damage the material.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C121",
+      "sourceId": "S01",
+      "quote": "With the discovery of fast dyes which can also be applied cold, it has become possible to dye individual parts by hand with piece of felt which is tied round a wooden handle, with which the dye can be applied.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "Sulphuric acid is used instead of acetic acid for dyeing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C122",
+      "sourceId": "S01",
+      "quote": "The Vankar (weaver) community weaves woollen \"lodki\" (women's Veil cloth) in Adhoi, Bhachau Taluka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C123",
+      "sourceId": "S01",
+      "quote": "after washing, the \"lodki\" is dyed in red colour, for the suhagadi (bride) lodki brightened colour is used where as for \"Satbhateli lodki\" maroon colour is used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C124",
+      "sourceId": "S01",
+      "quote": "The Vankar (weaver) community weaves woollen \"lodki\" (women's Veil cloth) in Adhoi, Bhachau Taluka.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "After dyeing, the design is printed on it with the help of a fugitive black colour. Here block printing and hand-drawing technique is used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C125",
+      "sourceId": "S01",
+      "quote": "First the grid is drawn with the help of a cotton cord, and the filling design is printed with blocks.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C126",
+      "sourceId": "S01",
+      "quote": "The lodki is tied in a single layer. Two or three days are spent for tying one lodki which has 1800 to 2000 kadi. The tying is done by the women.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C127",
+      "sourceId": "S01",
+      "quote": "After tying all the designs, the material is dyed in black acid colour, then washed and dried. The tying is then opened up.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C128",
+      "sourceId": "S01",
+      "quote": "There are different types of patterns available in Kutch Bandhani like Chanderkhani, Shikari, Abha , Bagido, Ambadaal, Ras-Mandal, Bar-Bhag, Veerbut, Kamadia, Sangharia etc.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S01",
+      "quote": "Khatri brides wear a black background with the central moon-shaped medallion that gives the textile its name, Chandrokhani;",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C129",
+      "sourceId": "S04",
+      "quote": "The large odhanis have similar patterns, with large central medallions against a black ground, which give them the name chandrokhani or 'moon-like'.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C130",
+      "sourceId": "S01",
+      "quote": "The basic motifs used in Chandrokani are - in the center there is a big circular motif called gul and in the borders a wavy line called - Nag ni Sar or Sarpvel which means snake boarder.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C131",
+      "sourceId": "S01",
+      "quote": "Earlier Chandrokhani was in red dots with black ground, and red pallu (Border) with golden zari, but now other colours are also used.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S04",
+      "quote": "This headscarf or coverlet is in the red and black traditionally associated with the bridal costumes of the Khatri Muslim community.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C132",
+      "sourceId": "S06",
+      "quote": "The black and red colour scheme is reminiscent of the tie-dyed clothing of the Khatri Muslims of Kutch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S12",
+      "quote": "A khombi shawl is worn by brides of the Khatri and Muslim communities in Gujarat. It is made using the bandhani technique and is traditionally red and black with white dotted patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C133",
+      "sourceId": "S09",
+      "quote": "Khatri brides wear silk khombi veils with zari work on the border.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S01",
+      "quote": "Other traditional Bandhani include the Bavanbagh (the 52 gardens) and the Rasamandali (associated with Raas, the traditional dance form of Gujarat), both of which have patterned red backgrounds teamed with contrasting borders",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C135",
+      "sourceId": "S09",
+      "quote": "Other traditional bandhani designs from Gujarat include the bavanbagh and the rasamandali, in which motifs such as mango trees, peacocks and elephants are also prevalent.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C136",
+      "sourceId": "S01",
+      "quote": "Ambadaal means mango branches. In this design motifs like mango leaves and branches, along with elephants and statue of woman carrying water pot are also used. The mango tree is the symbol of fertility, elephant signifies wealth, woman carrying water pot signifies auspiciousness.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C137",
+      "sourceId": "S01",
+      "quote": "Bar-bhag means twelve parts. It is a pattern formed by diagonal checks in the ground and each rhombus has a motif of ritual symbolism.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C138",
+      "sourceId": "S01",
+      "quote": "Veerbut (Veer Bhet Bhat): It is a brother's gift to sister on the occasion of Raksha Bandhan. This traditional design sari is always in deep green colour which signifies growth, prosperity and fertility.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C139",
+      "sourceId": "S01",
+      "quote": "A Gharchola is a saree woven with gold or silver zari thread and embellished with Bandhani that a man gives his bride, and the tie-dyed veil worn by the bride is known as a Chunri.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C140",
+      "sourceId": "S01",
+      "quote": "The Bandhani saree, one of many tie and dye garments is a symbol of married life for many women. It is regarded as an article of great splendour that promises the bride a good future.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C141",
+      "sourceId": "S01",
+      "quote": "the social, economic and cultural connotations of a particular Bandhani is determined by the base fabric (gajji silk, fine cotton, muslin or wool), the design and its associations with festivals and rites of passage such as marriages and death.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S01",
+      "quote": "The quality of the craftsmanship can be judged by the contours or kaff of the dots formed, as well as by the uniformity of their size and spacing.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C142",
+      "sourceId": "S09",
+      "quote": "Traditional bandhani designs are valued based on the execution of this technique - patterns with numerous small and closely spaced dots are preferred to those with fewer, widely spaced or irregular dots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C143",
+      "sourceId": "S01",
+      "quote": "Kutch prepares intricate tie-and-dye cloth which can then be stitched as on Abha, a women\"s upper garment. The agho, yoke-like front, is tied and dyed up to the kali, the side worked with bandhani patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "Red, yellow, green and blue are more efficient and traditional colors particularly to Bandhani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C144",
+      "sourceId": "S01",
+      "quote": "Red, yellow, green and blue are traditional colours particularly to bandhani.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C145",
+      "sourceId": "S01",
+      "quote": "The main colours used in Bandhana are yellow, red, blue, green and black.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C146",
+      "sourceId": "S09",
+      "quote": "The entire cloth is then dipped in boiling dye for several minutes, washed and left to sun-dry. The small quantities of dye in the tied portions leak away while the concentrated dye in the surrounding cloth remains.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C147",
+      "sourceId": "S01",
+      "quote": "The process continues till the desired colour combination is achieved. The cloth is then dried without opening the folds. It must be dried thoroughly; as the cloth could get damaged if opened when it is still damp as the air pockets may have been trapped inside the knots.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S01",
+      "quote": "After it is dried, the folds of the cloth are pulled apart in a particular way, thus releasing the knots and revealing the patterns.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S01",
+      "quote": "For opening it, the Kutch Bandhani material is pulled crosswise forcibly, so that, simultaneously, all the ties open up and the tie-threads lie on the material in a loose mass.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C148",
+      "sourceId": "S17",
+      "quote": "is done when two ends of the material are pulled crosswise tightly, loosening and opening the ties to reveal the colours and patterns in the fabric.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S01",
+      "quote": "The raw materials required for Kutch Bandhani is carefully examined for its quality and if necessary, the cloth/fabric is bleached.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C149",
+      "sourceId": "S17",
+      "quote": "The plain white fabric is purchased, cut to size, and checked for impurities before it is washed for improved dye absorption.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S02",
+      "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C150",
+      "sourceId": "S02",
+      "quote": "| 67 | AU/58916/GI/756/67 |",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C151",
+      "sourceId": "S11",
+      "quote": "is practiced by the Khatri community of the Kutch region. It is estimated that about 15,000 women are involved in this craft in Kutch.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C152",
+      "sourceId": "S17",
+      "quote": "The number of ties per cloth can range from a few to many thousands, and can take a few days to many months depending on the design and garment.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S17",
+      "quote": "After dyeing, the cloth is washed gently with soft water to remove any extra dye or impurities.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C153",
+      "sourceId": "S17",
+      "quote": "The cloth is then left to dry for several hours before it is ready to be sold.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C154",
+      "sourceId": "S17",
+      "quote": "There are two types of tying: Sarkam, which is tying on the marked designs, and Bharti, which is filling in the empty spaces.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S16",
+      "quote": "According to the Khatri Itihaas, it is said that the King of Kutch, Khengarji I (1548-1585) established the regions of Rapar, Mandvi, Bhuj and Anjar, and invited communities from the Sindh to settle there in order to boost business, trade and industries.",
+      "result": "PASS"
+    },
+    {
+      "claimId": "C155",
+      "sourceId": "S16",
+      "quote": "People from both religions (Hindu and Muslim) are said to have answered his call, many of whom worked in bandhani.",
+      "result": "PASS"
+    }
+  ]
+}

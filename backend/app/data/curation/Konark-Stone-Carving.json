@@ -1,0 +1,1512 @@
+{
+  "schemaVersion": 1,
+  "scope": "CRAFT",
+  "craftSlug": "Konark-Stone-Carving",
+  "version": 1,
+  "curatedAt": "2026-11-18T10:44:41+00:00",
+  "curator": "claude-code",
+  "coverage": "FULL",
+  "searched": [
+    {"query": "Konark Stone Carving geographical indication application number GI journal", "site": "web search"},
+    {"query": "Konark stone carving khondalite Pathuria Maharana artisans Puri", "site": "web search"},
+    {"query": "\"Konark Stone Carving\" \"Geographical Indications Journal\" pdf 2008", "site": "web search"},
+    {"query": "Odisha stone carving khondalite soapstone Pathuria community study pdf", "site": "web search"},
+    {"query": "Orissa Review stone carving Puri Konark Maharana sculptors khondalite pdf odisha.gov.in", "site": "web search"},
+    {"query": "Odisha stone carving Shilpa Shastra artisans Puri Pathuria Maharana sculptors temple tradition research paper", "site": "web search"},
+    {"query": "dsource Odisha stone carving Puri craft documentation", "site": "web search (run on 2026-11-18: no dsource.gov.in page came up; the results repeated pages already read; no usable result)"},
+    {"query": "sahapedia stone carving Odisha Pathuria sahi Puri", "site": "web search (run on 2026-11-18: no Sahapedia page and nothing on Pathuria sahi came up; no usable result)"},
+    {"query": "shodhganga stone carving Odisha thesis Puri Bhubaneswar artisans", "site": "web search (run on 2026-11-18: the one Shodhganga record listed, handle 10603/502815, is a thesis on Indian stone sculpture after independence, not on Odisha; no usable result)"},
+    {"query": "Application 87 record, document list and authorised users", "site": "search.ipindia.gov.in/GIRPublicSearch (read; the Form GI-1, certificate, examination report and journal copy are form-only downloads that a plain request cannot read)"},
+    {"query": "Supplementary Journal 1, 24 March 2008", "site": "ipindia.nic.in/girindia/journal (read through the Wayback Machine)"},
+    {"query": "Form GI-1 for Konark Stone Carving with tools and inspection", "site": "origin-gi.com (read)"},
+    {"query": "Registration details of Geographical Indications", "site": "ipindia.gov.in (read)"},
+    {"query": "Authorised users of application 87", "site": "search.ipindia.gov.in/GIRPublicSearch (read: the list runs to serial number 2 and both status cells are blank; the users' names and addresses were not taken)"},
+    {"query": "Stone carving in Odisha", "site": "en.wikipedia.org (read as a pointer to Odisha Tourism and ORUPA; not cited)"},
+    {"query": "Stone carving handicraft page", "site": "odishatourism.gov.in (read through the Wayback Machine)"},
+    {"query": "Stone carving", "site": "orupa.org (read; a sales page with undated prices, not cited)"},
+    {"query": "Stone carvings in Orissa", "site": "incredibleodisha.org (read; a travel agency page, not cited)"},
+    {"query": "Orissan handicrafts, Orissa Reference Annual 2005", "site": "magazines.odisha.gov.in (read through the Wayback Machine)"},
+    {"query": "Khordha district art and culture, economy and about pages", "site": "khordha.odisha.gov.in (read)"},
+    {"query": "Puri district site", "site": "puri.odisha.gov.in (refused the connection)"},
+    {"query": "Integrated design and technical development project in stone carving, Bhubaneswar", "site": "epch.in (read)"},
+    {"query": "Paramparik Crafts page 22, stone carving Odisha", "site": "spentamultimedia.com (read)"},
+    {"query": "Exquisite carvings of Konark", "site": "millenniumpost.in (read)"},
+    {"query": "Pravakara Maharana Padma Shri Konark artisans", "site": "orissapost.com (read)"},
+    {"query": "Pravakar Maharana profile", "site": "sakoyafoundation.com (read; a profile page with contact details and no author, not cited)"},
+    {"query": "Sudarshan Sahoo Padma Vibhushan", "site": "indianexpress.com and timesofindia.indiatimes.com (read)"},
+    {"query": "Raghunath Mohapatra sculptor Padma Vibhushan 2013", "site": "thehindu.com (read; not cited because no source read states his place in a quotable sentence)"},
+    {"query": "Padma awards list 2013", "site": "mha.nic.in through the Wayback Machine (connection refused)"},
+    {"query": "Sun Temple, Konark", "site": "whc.unesco.org (read)"},
+    {"query": "Konarak Sun Temple", "site": "worldhistory.org (read through the Wayback Machine)"},
+    {"query": "Soapstone craft cluster of Dhakotha, Kendujhar", "site": "chitrolekha.com (read; a different soapstone cluster, not cited)"},
+    {"query": "Stone craft practices in Odisha (thesis)", "site": "repository.cept.ac.in (no readable text)"},
+    {"query": "Konark stone carving", "site": "sahasa.in (connection failed)"},
+    {"query": "Dhingra SAAI essay", "site": "agyeya.berkeley.edu (host not found)"},
+    {"query": "Lok Sabha debate on Konark sculptures", "site": "eparlib.nic.in (host not found)"},
+    {"query": "stone icon carving of odisha", "site": "globalinch.org (read; unattributed text that repeats the GI wording, not cited)"},
+    {"query": "Stone carving in Odisha, Artwork of Konark Sun Temple, Handicrafts of Odisha", "site": "commons.wikimedia.org categories"},
+    {
+      "query": "Konark stone carving; Odisha stone carving; Orissa stone carving artisans; serpentine stone carving Odisha",
+      "site": "api.openalex.org (read: the 2009 Orissa stone-carving clusters paper is closed and refused reading, Summerhill timed out, Zenodo gave a browser check, the rest are on temples; no usable result)"
+    },
+    {"query": "Odisha stone carving papers and theses", "site": "core.ac.uk (not run: its API needs a key)"},
+    {"query": "Shodhganga theses on Puri and Bhubaneswar stone carvers", "site": "shodhganga.inflibnet.ac.in (not run beyond the web search above: the session's web search limit was reached)"},
+    {"query": "Konarak; Orissa stone carving", "site": "api.vam.ac.uk collection search (read; the relief of King Narasimha I, O25164, is cited)"},
+    {"query": "Odisha stone sculpture collection records", "site": "nationalmuseumindia.gov.in (not run: the session's web search limit was reached)"},
+    {"query": "Konark Stone carving craft page", "site": "handicrafts.nic.in (connection timed out; no Wayback capture)"},
+    {"query": "Pravakar Maharana", "site": "en.wikipedia.org (read as a pointer; not cited)"},
+    {"query": "Gop block, Puri district", "site": "puri.odisha.gov.in (read: the blocks page is cited) and rtiodisha.gov.in, Puri police manual (read; not cited)"},
+    {"query": "Sujanagar near Gop", "site": "web search (not run: the session's web search limit was reached); the district rests on the Puri district blocks page, which lists Gop"},
+    {"query": "Barbil, the source of pink stone", "site": "rtiodisha.gov.in, Barbil Municipality manual (read: it names Kendujhar district but its text calls the town Badabil, never Barbil, so no district is quoted and no place is listed)"},
+    {"query": "Kendumundi (kenthumundi), the source of serpentine", "site": "web search (run: an Odisha one-district-one-product sheet for Jajpur names kendumundi as a soft carving stone, not where it is quarried; no district is quoted, so no place is listed)"},
+    {"query": "kunda Tapang district, the source of sandstone", "site": "lgd_register.json (no district of that name; no place is listed)"}
+  ],
+  "sources": [
+    {"id": "S01", "kind": "GOVERNMENT_REPORT", "title": "Application Details: Konark Stone Carving, Application Number 87", "publisher": "Geographical Indications Registry, Intellectual Property India", "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/87", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {
+      "id": "S02",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal (Supplementary - 1), 24 March 2008: G.I. Application Number 87, Konark Stone Carving",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2008,
+      "url": "https://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "archivedUrl": "https://web.archive.org/web/20130810000212id_/http://ipindia.nic.in/girindia/journal/Supplementary_Journal_1.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "kind": "GOVERNMENT_REPORT",
+      "title": "Form GI-1: application for the registration of Konark Stone Carving (scanned copy hosted by oriGIn)",
+      "publisher": "Orissa State Cooperative Handicrafts Corporation Limited",
+      "year": 2007,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/61-konark-stone-carving.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-18"
+    },
+    {"id": "S04", "kind": "GOVERNMENT_REPORT", "title": "Registration details of Geographical Indications", "publisher": "IP India", "url": "https://www.ipindia.gov.in/storage/uploads/docs-operator/aa9ef4c8-ae0e-4717-9181-52b6a9479b82.pdf", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S05", "kind": "WEB_PAGE", "title": "Sun Temple, Konârak", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/246/", "language": "en", "licence": "CC-BY-SA IGO 3.0 (description)", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S06", "kind": "ENCYCLOPEDIA", "title": "Konarak Sun Temple", "publisher": "World History Encyclopedia", "url": "https://www.worldhistory.org/Konarak_Sun_Temple/", "archivedUrl": "https://web.archive.org/web/20260615211101id_/https://www.worldhistory.org/Konarak_Sun_Temple/", "language": "en", "access": "OPEN", "reliability": "B", "retrievedAt": "2026-11-18"},
+    {
+      "id": "S07",
+      "kind": "WEB_PAGE",
+      "title": "Stone carving (Handicrafts)",
+      "publisher": "Odisha Tourism, Government of Odisha",
+      "url": "https://odishatourism.gov.in/Attractions/Handicrafts/Stone.aspx",
+      "archivedUrl": "https://web.archive.org/web/20160207230745id_/http://odishatourism.gov.in/Attractions/Handicrafts/Stone.aspx",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "kind": "BOOK_CHAPTER",
+      "title": "Orissan Handicrafts - Timeless Tradition, Orissa Reference Annual 2005",
+      "publisher": "Government of Odisha",
+      "year": 2005,
+      "url": "https://magazines.odisha.gov.in/orissaannualreference/ORA-2005/pdf/orissan_handicrafts.pdf",
+      "archivedUrl": "https://web.archive.org/web/20250506203950id_/https://magazines.odisha.gov.in/orissaannualreference/ORA-2005/pdf/orissan_handicrafts.pdf",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {"id": "S09", "kind": "WEB_PAGE", "title": "Economy, District Khordha", "publisher": "District Administration Khordha, Government of Odisha", "url": "https://khordha.odisha.gov.in/en/about-district/economy", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S10", "kind": "OTHER", "subKind": "NGO_REPORT", "title": "Integrated Design & Technical Development Project in Stone Carvings as Artwork, Bhubaneswar, Odisa", "publisher": "Export Promotion Council for Handicrafts", "url": "https://epch.in/sites/default/files/project/proj009.pdf", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S11", "kind": "BOOK_CHAPTER", "title": "Paramparik Crafts, page 22: Stone Carving, Odisha", "publisher": "Paramparik Karigar", "url": "https://spentamultimedia.com/flipbooks/Paramparik-Crafts/files/assets/basic-html/page22.html", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S12", "kind": "OTHER", "subKind": "NEWS", "title": "Exquisite carvings of Konark", "authors": ["Sanjeev Chopra"], "publisher": "Millennium Post", "year": 2023, "url": "https://www.millenniumpost.in/sundaypost/insight/exquisite-carvings-of-konark-514500", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {"id": "S13", "kind": "OTHER", "subKind": "NEWS", "title": "I owe my success to 1,200 Konark artisans: Maharana", "publisher": "OrissaPOST", "year": 2018, "url": "https://www.orissapost.com/i-owe-my-success-to-1200-konark-artisans-maharana/", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"},
+    {
+      "id": "S14",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Sudarshan Sahoo awarded Padma Vibhushan; know about the veteran sculptor",
+      "publisher": "The Indian Express",
+      "year": 2021,
+      "url": "https://indianexpress.com/article/lifestyle/art-and-culture/veteran-sculptor-sudarshan-sahoo-padma-vibhushan-odisha-legacy-7614588/",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "kind": "OTHER",
+      "subKind": "NEWS",
+      "title": "Padma Vibhushan for sculptor Sudarshan Sahoo and Padma Shri for five others in Odisha",
+      "publisher": "The Times of India",
+      "year": 2021,
+      "url": "https://timesofindia.indiatimes.com/city/bhubaneswar/padma-vibhushan-for-sculptor-sudarshan-sahoo-and-padma-shri-for-five-others-in-odisha/articleshow/80454443.cms",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "C",
+      "retrievedAt": "2026-11-18"
+    },
+    {"id": "S16", "kind": "OTHER", "subKind": "MUSEUM_RECORD", "title": "King Narasimha and his spiritual advisor, relief panel, accession number 938(IS)", "publisher": "Victoria and Albert Museum", "url": "https://collections.vam.ac.uk/item/O25164/king-narasimha-and-his-spiritual-relief-panel/", "language": "en", "access": "OPEN", "reliability": "A", "retrievedAt": "2026-11-18"},
+    {"id": "S17", "kind": "WEB_PAGE", "title": "Blocks, Administrative Setup, Puri District", "publisher": "District Administration Puri, Government of Odisha", "url": "https://puri.odisha.gov.in/en/about-district/administrative-setup/blocks", "language": "en", "access": "OPEN", "reliability": "C", "retrievedAt": "2026-11-18"}
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal advertised Konark Stone Carving as accepted for stone statues and statuettes of gods and goddesses, nature and human forms, candle stands, Konark wheels, flower vases, mobile holders and key rings.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, p. 55", "quote": "Goods : Statues and statuettes of gods and goddesses, nature and human forms, Candle stand, Konark wheel , Flower vase, Mobile holder, Key rings made of stone."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, p. 55", "quote": "made of stone falling in Class 19 is hereby advertised as accepted"}
+      ]
+    },
+    {
+      "id": "C002",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal names Konark in Puri district with its nearby areas, and Bhubaneswar with its outskirts, as the main areas producing Konark stone carving.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (H) Geographical area of production, p. 59", "quote": "The main geographical areas of production of konark stone carving are Konark (district Puri, Orissa, India) and near-by areas and Bhubaneswar (Orissa, India) and its outskirts."}
+      ]
+    },
+    {
+      "id": "C003",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal describes the craft as reducing a block of stone to a finished state with a variety of tools.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, p. 61", "quote": "The process is carried by the reduction of a block of stone to a finished state using a variety of tools."}
+      ]
+    },
+    {
+      "id": "C004",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "Stone carving is a very major handicraft of Odisha, whose artisans carve exact replicas of the original temple sculptures besides a variety of other items.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 1", "quote": "Stone carving is a very major handicraft of Odisha."},
+        {"sourceId": "S07", "locator": "paragraph 1", "quote": "their deft hands can and do chisel and carve exact replicas of the original temple sculptures besides producing a variety of other items."}
+      ]
+    },
+    {
+      "id": "C005",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The GI application names its raw material, serpentine stone, which it says other craftsmen do not employ, as the most important feature of Konark stone carving.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 61", "quote": "The most important feature of Konark stone carving is the raw material. Konark stone carving utilizes serpentine stone, which is not employed by other craftsman."}
+      ]
+    },
+    {
+      "id": "C006",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal says present-day stone carving products range from sculptures, vases and interior decorations to large monuments.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (G) Description of goods, p. 59", "quote": "The present day stone carving products range from sculptures, vases, interior decorations to large monuments."}
+      ]
+    },
+    {
+      "id": "C007",
+      "discipline": "OVERVIEW",
+      "subject": {"type": "CRAFT"},
+      "text": "The Orissa Reference Annual counts stone carving among the state's crafts of artistic excellence and says most of its handicrafts have their roots in the rituals of Lord Jagannath of Puri.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "p. 603", "quote": "Significantly, most handicrafts in the state have their roots in the rituals and traditions of the famed Lord Jagannath of Puri."},
+        {"sourceId": "S08", "locator": "p. 603", "quote": "Brass work, silver filigree work, stone carving, applique work and pattachitra are all illustrations of artistic excellence."}
+      ]
+    },
+    {
+      "id": "C010",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal says the craftspersons of the Kalinga School built masterpieces such as the Sun Temple at Konark.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (I) Proof of origin, p. 59", "quote": "The crafts persons of the Kalinga School have built masterpieces like the Sun Temple, Konark"}
+      ]
+    },
+    {
+      "id": "C011",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G01"},
+      "text": "The GI application says the work is confined to the Pathuria caste, with surnames such as Das, Mistri, Nayak and Maharana, as an Odia inscription of 1604 mentions.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, proof of origin, p. 61", "quote": "The work is confined to people of Pathurias caste with surnames of Das, Mistri, Nayak, Maharana, etc. this has been mentioned in the year 1604 in an oriya inscription"}
+      ]
+    },
+    {
+      "id": "C012",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application dates the art of Konark stone carving back to the late 6th or early 7th century AD.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, proof of origin, p. 61", "quote": "The art dates back to the late 6th century or early 7th century AD"}
+      ]
+    },
+    {
+      "id": "C013",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "The Orissa Reference Annual 2005 says stone carving art is perhaps the most ancient, as the 2200 years old elephant sculpture of Dhauli shows.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "p. 604, running head", "quote": "ORISSA REFERENCE ANNUAL - 2005"},
+        {"sourceId": "S08", "locator": "p. 604", "quote": "Stone carving art is perhaps the most ancient, as is evident from the 2200 years old elephant sculpture of Dhauli."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C014",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Sun Temple at Konark was built in the 13th century under King Narasimha Deva I of the Eastern Ganga dynasty, who reigned from 1238 to 1264.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "description", "quote": "Built in the 13th century, it is one of India's most famous Brahman sanctuaries."},
+        {"sourceId": "S05", "locator": "Outstanding Universal Value, brief synthesis", "quote": "The Sun Temple is an exceptional testimony, in physical form, to the 13th-century Hindu Kingdom of Orissa, under the reign of Narasimha Deva I (AD 1238-1264)."},
+        {"sourceId": "S06", "locator": "introduction", "quote": "It was built c. 1250 CE by King Narasimhadeva I (r. 1238-1264 CE) of the Eastern Ganga dynasty (8th century CE - 15th century CE)."}
+      ]
+    },
+    {
+      "id": "C015",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "UNESCO describes the Sun Temple at Konark as the culmination of Kalingan temple architecture, with all its defining elements in complete and perfect form.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Outstanding Universal Value, brief synthesis", "quote": "The Sun Temple is the culmination of Kalingan temple architecture, with all its defining elements in complete and perfect form."}
+      ]
+    },
+    {
+      "id": "C016",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "In a legend UNESCO records, building the Konark temple mobilised 1,200 workers for 12 years under the architect Bisu Moharana.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Criterion (i)", "quote": "the temple has raised up those lovely legends which are affiliated everywhere with absolute works of art"},
+        {"sourceId": "S05", "locator": "Criterion (i)", "quote": "its construction caused the mobilization of 1,200 workers for 12 years. The architect, Bisu Moharana, having left his birthplace to devote himself to his work"}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C017",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G04"},
+      "text": "Sculptor Pravakara Maharana credits his success to the 1,200 artisans who, he says, worked for 12 years to build the Sun Temple, and calls himself one of their descendants.",
+      "quotes": [
+        {"sourceId": "S13", "locator": "paragraph 1", "quote": "gave credit for his success to the 1,200 artisans who had constructed the world famous Sun Temple at Konark in 13th century"},
+        {"sourceId": "S13", "locator": "paragraph 2", "quote": "Those artisans had worked rigorously for 12 years to construct the magnificent structure."},
+        {"sourceId": "S13", "locator": "paragraph 2", "quote": "I consider myself as one of their descendants"}
+      ]
+    },
+    {
+      "id": "C018",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Odisha Tourism says the progeny of the artisans who built temples such as Lingaraj, Mukteswar and the Sun God's temple chariot at Konark have kept their forefathers' sculptural traditions alive.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 1", "quote": "The progeny of these artisans who built the magnificent temples of Parsurameswar, Mukteswar, Lingaraj, Puri and that wonder in stone, the temple chariot of the Sun God at Konark"},
+        {"sourceId": "S07", "locator": "paragraph 1", "quote": "have kept alive the sculptural traditions of their forefathers"}
+      ]
+    },
+    {
+      "id": "C019",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Odisha's stone-carving traditions are carried on from generation to generation, and a few ancient texts on the art that have survived are followed closely.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 3", "quote": "The traditions are carried on from generation to generation and a few ancient texts on the art which have survived are followed closely."}
+      ]
+    },
+    {
+      "id": "C020",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "Paramparik Karigar writes that sculptors of India's stone carving traditions follow the principles of the Shilpa Shastras, a doctrine containing guidelines on stone measurements and techniques of sculpting.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "Some of the finest examples of stone carving in India have evolved around religion"},
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "The sculptors follow the principles of the Shilpa Shastras , a doctrine containing guidelines on stone measurements and techniques of sculpting."}
+      ]
+    },
+    {
+      "id": "C021",
+      "discipline": "HISTORY",
+      "subject": {"type": "CRAFT"},
+      "text": "A Millennium Post feature says the artists work with the traditional chisel and hammer and faithfully follow age-old doctrines laid down in texts written by the legendary Vishwakarma.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 11", "quote": "The artists of today continue to work with the traditional tools of chisel and hammer, and faithfully follow the age-old doctrines laid down in the texts written by the legendary Vishwakarma to recreate these masterpieces."}
+      ]
+    },
+    {
+      "id": "C022",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L02"},
+      "text": "The GI application calls Konark one of the most ancient places of stone carving and a centre of its origin, saying its artisans originate from Konark and nearby villages.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Form GI-1, name of the geographical indication", "quote": "Konark is one of the most ancient places where stone carving has been practiced. This is one ofthe centers of origin of the art."},
+        {"sourceId": "S03", "locator": "Form GI-1, name of the geographical indication", "quote": "Although this art has been practiced in other places around Konark like Bhubaneswar, the artisians and craftmen orginate from konark and a nearby cluster of villages."}
+      ]
+    },
+    {
+      "id": "C023",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "UNESCO's short description presents the Konark temple as the sun god Surya's chariot, its 24 wheels decorated with symbolic designs and led by a team of six horses.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "description", "quote": "the temple at Konarak is a monumental representation of the sun god Surya's chariot; its 24 wheels are decorated with symbolic designs and it is led by a team of six horses."}
+      ]
+    },
+    {
+      "id": "C024",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The temple represents the Sun God's chariot with twelve pairs of wheels drawn by seven horses, and its 24 carved wheels are each about 3 m in diameter.",
+      "quotes": [
+        {"sourceId": "S05", "locator": "Outstanding Universal Value, brief synthesis", "quote": "the temple represents a chariot of the Sun God, with twelve pairs of wheels drawn by seven horses evoking its movement across the heavens"},
+        {"sourceId": "S05", "locator": "Outstanding Universal Value, brief synthesis", "quote": "On the north and south sides are 24 carved wheels, each about 3 m in diameter"},
+        {"sourceId": "S06", "locator": "The Architecture at Konarak", "quote": "in the form of a colossal chariot with twelve pairs of lavishly-ornamented wheels, drawn by seven richly-caparisoned, galloping horses"}
+      ]
+    },
+    {
+      "id": "C025",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W15"},
+      "text": "Early Europeans sailing the Bay of Bengal called the Konark temple the 'Black Pagoda' and the Jagannatha temple the 'White Pagoda', after its white plaster.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "From Fame to Decay", "quote": "The early Europeans traversing this sea referred to the Jagannatha temple as the 'White Pagoda' owing to its white plaster (now removed after restoration) and Konarak as the 'Black Pagoda'."},
+        {"sourceId": "S06", "locator": "From Fame to Decay", "quote": "it served as a landmark for sailors sailing the Bay of Bengal"}
+      ]
+    },
+    {
+      "id": "C026",
+      "discipline": "HISTORY",
+      "subject": {"type": "TERM", "ref": "W14"},
+      "text": "The name Konark combines two Sanskrit words, kona, meaning corner or angle, and arka, meaning the sun.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "The Architecture at Konarak", "quote": "The word 'Konark' is a combination of two Sanskrit words kona (corner or angle) and arka (the sun)."}
+      ]
+    },
+    {
+      "id": "C027",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "On the Konark Sun Temple, the sculptured designs were carved after the stones had been set into place.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Sculptures", "quote": "The designs were carved after the stones had been set into place."}
+      ]
+    },
+    {
+      "id": "C028",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M04"},
+      "text": "Temple panels at Konark that represent King Narasimhadeva in various roles are made from pink and green khondalite.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Sculptures", "quote": "Panels represent King Narasimhadeva in various roles"},
+        {"sourceId": "S06", "locator": "Sculptures", "quote": "These are made from pink and green khondalite"}
+      ]
+    },
+    {
+      "id": "C029",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The V&A's relief of King Narasimha I with his spiritual advisor, made in the 2nd quarter of the 13th century, belongs to a series that originally decorated the Konark Sun Temple's walls.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "title", "quote": "King Narasimha and his spiritual advisor"},
+        {"sourceId": "S16", "locator": "date", "quote": "2nd quarter of 13th century (made)"},
+        {"sourceId": "S16", "locator": "summary", "quote": "This relief is one of a series depicting aspects of royal Vaishnava worship in Odisha and is associated with the Sun Temple at Konarak."},
+        {"sourceId": "S16", "locator": "summary", "quote": "this series originally decorated the temple's walls"}
+      ]
+    },
+    {
+      "id": "C030",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Sculptor Sudarshan Sahoo was born in Puri in 1939 and has worked with the medium of stone and wood.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "The sculptor, who has nearly 70 years of experience, was born in Odisha's Puri in 1939."},
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "Sudarshan Sahoo was born in 1939 and has been working with the medium of stone and wood"}
+      ]
+    },
+    {
+      "id": "C031",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Sudarshan Sahoo received the National Award in 1981, the Padma Shri in 1988 and the Shilp Guru Award in 2003.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "He was bestowed with the National Award in 1981; the Padma Shri in 1988; the Shilp Guru Award in 2003"},
+        {"sourceId": "S14", "locator": "closing paragraph", "quote": "Sudarshan is also a recipient of the National Award for Stone Carving (1981). Seven years later, in 1988, he was awarded the Padma Shri and, in 2003, the Shilp Guru Award."}
+      ]
+    },
+    {
+      "id": "C032",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Sudarshan Sahoo was selected for the Padma Vibhushan award 2021 and was conferred with it by President Ram Nath Kovind.",
+      "quotes": [
+        {"sourceId": "S15", "locator": "paragraph 1", "quote": "Noted sculptor Sudarshan Sahoo has been selected for Padma Vibhushan award 2021, for his exceptional and distinguished service in the field of art."},
+        {"sourceId": "S14", "locator": "paragraph 1", "quote": "was conferred with the Padma Vibhushan, the second highest civilian award of the country by President Ram Nath Kovind"}
+      ]
+    },
+    {
+      "id": "C033",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Sudarshan Sahoo established the Sudarshan Crafts Museum in Puri in 1977 as a training-cum-production centre.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "He established the Sudarshan Crafts Museum in 1977, a training-cumproduction centre in Puri."},
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "In 1977, he set up Sudarshan Crafts Museum in Puri for artists to display their work in a streamlined space."}
+      ]
+    },
+    {
+      "id": "C034",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "In 1991 Sudarshan Sahoo set up the Sudarshan Art and Crafts Village in Bhubaneswar, a gurukul following the guru-shishya parampara to train other artists.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "In 1991, he set up the Sudarshan Art and Crafts Village in Bhubaneswar, which follows the ancient guru-shishya parampara"},
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "He also established a Gurukul in 1991, the Sudarshan Art and Crafts village, in Bhubaneswar, to train other artists."}
+      ]
+    },
+    {
+      "id": "C035",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "The Sudarshan Crafts Museum, a project supported by the Government of Odisha, and the Sudarshan Arts and Crafts Village aim to preserve Odisha's traditional sculpting craft and train future craftsmen in wood, stone and fibreglass, with free boarding.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "The Sudarshan Crafts Museum, a project supported by the Government of Odisha, along with Sudarshan Arts and Crafts Village aim at preserving the traditional craft of sculpting in Odisha and training future craftsmen in creating sculptures with wood, stone and fiberglass."},
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "The institution provides its craftsmen with all the facilities, including a free of cost boarding facility."}
+      ]
+    },
+    {
+      "id": "C036",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Sudarshan Sahoo carved the Jataka Tales at the Dhauli Peace Pagoda in 1971, and his stone panel on the life of Buddha was installed at Milton Keynes in 1980.",
+      "quotes": [
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "He created beautiful carvings of the Jataka Tales at the Dhauli Peace Pagoda in 1971 which earned him worldwide recognition and appreciation."},
+        {"sourceId": "S14", "locator": "Know more about the master sculptor", "quote": "a stone panel based around the life of Buddha was installed in Milton Keynes, London, in 1980."}
+      ]
+    },
+    {
+      "id": "C046",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G03"},
+      "text": "Paramparik Karigar writes that, on the invitation of the Buddha Sangha, London, Sudarshan Sahoo carved the Jataka Tales in the Buddhist Pagoda at Milton Keynes.",
+      "quotes": [
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "Sudarshan Sahoo was born in 1939 and has been working with the medium of stone and wood"},
+        {"sourceId": "S11", "locator": "Stone Carving, Odisha", "quote": "On the invitation of the Buddha Sangha, London, he carved the Jataka Tales in the Buddhist Pagoda at Milton Keynes."}
+      ]
+    },
+    {
+      "id": "C037",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G04"},
+      "text": "Padma Shri sculptor Pravakara Maharana, whose father carved wooden figures, began training at the Orissa State Handicraft Training Centre in Bhubaneswar in 1975 and has carved stone since.",
+      "quotes": [
+        {"sourceId": "S13", "locator": "paragraph 1", "quote": "Noted sculptor Pravakara Maharana, who has been felicitated with Padma Shri award"},
+        {"sourceId": "S13", "locator": "paragraph 3", "quote": "his father Sadhucharan was a carpenter and had expertise in carving wooden figures"},
+        {"sourceId": "S13", "locator": "paragraph 3", "quote": "my father enrolled me to the Orissa State Handicraft Training Centre in Bhubaneswar in 1975. Since then, I have been carving stones"}
+      ]
+    },
+    {
+      "id": "C038",
+      "discipline": "HISTORY",
+      "subject": {"type": "COMMUNITY", "ref": "G04"},
+      "text": "Pravakara Maharana trained under eminent artisans including Bhubaneswar Mahapatra and Satyabadi Maharana, and has received a state handicraft award and the Shilpiguru award.",
+      "quotes": [
+        {"sourceId": "S13", "locator": "paragraph 5", "quote": "who received training from eminent artisans like Bhubaneswar Mahapatra and Satyabadi Maharana, considers his father as his first teacher"},
+        {"sourceId": "S13", "locator": "paragraph 5", "quote": "Earlier, I received state handicraft award and Shilpiguru award."}
+      ]
+    },
+    {
+      "id": "C040",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L10"},
+      "text": "Sculptor Pravakara Maharana is a resident of Sujanagar near Gop, which the Puri district administration lists among the blocks of Puri district.",
+      "quotes": [
+        {"sourceId": "S13", "locator": "paragraph 2", "quote": "said the noted sculptor, a resident of Sujanagar near Gop"},
+        {"sourceId": "S17", "locator": "blocks of Puri district", "quote": "| Blocks of Puri Districts | | |---|---| | Sl No | Name of The Blocks | |---|---| | 1 | Astarang | | 2 | Brahmagiri | | 3 | Delang | | 4 | Gop |"}
+      ]
+    },
+    {
+      "id": "C039",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "COMMUNITY", "ref": "G05"},
+      "text": "In December 2016 the EPCH ran a 25-day design and technical development workshop in stone craft at Bhubaneswar for 40 selected artisans under master craftsperson and National Awardee Susil Kumar Maharana.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "A Design & Technological Development workshop in stone craft for General artisans at Bhubaneswar sanctioned"},
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "with 40 artisans under the guidance of master crafts person Susil Kumar Maharana The workshop is to commence from 5th Dec for a period of 25 days."},
+        {"sourceId": "S10", "locator": "contents", "quote": "Inauguration 5th Dec, 2016 meeting"},
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "Master crafts person Mr., Susil Kumar Maharana (National Awardee)."},
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "40 candidates were selected on the basis of their skill"},
+        {"sourceId": "S10", "locator": "implementation of the workshop", "quote": "The schedule of workshop was 5 hours daily from 11.00 a.m. - 4.00 p.m. for 25 days."}
+      ]
+    },
+    {
+      "id": "C041",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "During meetings in Bhubaneswar in October 2016, the EPCH designer was told that most of the skill at Bhubaneswar is average while a few households are very skilled.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "After contacting the DCH office at Bhubaneswar, I visited their office on the of 26th October, 2016"},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "He informed that most of the skill at Bhubaneswar is average while a few households are very skilled."}
+      ]
+    },
+    {
+      "id": "C042",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "During the same 2016 meetings in Bhubaneswar, the EPCH designer was told that women mostly take up the craft as a vocation, are not specifically from artisan families and supply local retailers.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "After contacting the DCH office at Bhubaneswar, I visited their office on the of 26th October, 2016"},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "We had a good discussion about the craft, need for diversification"},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "Women mostly do it as a vocation and are not specifically from the artisan families and supply to local retailers."}
+      ]
+    },
+    {
+      "id": "C043",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "An official of the Development Commissioner (Handicrafts) told the EPCH designer in 2016 that exports dealt with the same product line and were steadily declining.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "I visited their office on the of 26th October, 2016 and met with Mrs. Shalija"},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "Mr. A.K Panigrahy, the Asst. Director, DC (H)"},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "Mr. Panigrahy has been extremely helpful, supportive and has displayed keenness in the development of the products."},
+        {"sourceId": "S10", "locator": "meeting DC (H) officials, Bhubaneshwar", "quote": "Exports, he says, deals with the same product line and is steadily on the decline."}
+      ]
+    },
+    {
+      "id": "C044",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "PLACE", "ref": "L08"},
+      "text": "The EPCH report says the Bhubaneswar carvers market their products from home, at national and state fairs through Utkalika, at Ekamra Haat in Bhubaneswar, through Sasha in Kolkata and by custom orders.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "market for the products", "quote": "The products marking ting has been done through themselves at home, marketing in national fair and state fair through utkalika, Ekamra hat-Bhubaneswar, sasha Kolkata, customized order by individuals etc."}
+      ]
+    },
+    {
+      "id": "C045",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The EPCH report says the major product is mythological story bases in frames of different sizes, while diversification has reached candle stands, planters and decorative wall planters.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "market for the products", "quote": "Major product is mythological story base in frame of different sizes hold the share."},
+        {"sourceId": "S10", "locator": "market for the products", "quote": "Diversification has been done on many products but only product like candle stand, planter, decorative wall planter etc."}
+      ]
+    },
+    {
+      "id": "C050",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "In the GI method of production, the basic design is traced on the stone and given a crude shape, then the final carving is carried out and the items are polished.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, p. 61", "quote": "The process of doing is the basic design is traced on the stone and it is given a crude shape. The final carving is then carried out and the items are polished."}
+      ]
+    },
+    {
+      "id": "C051",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "In the GI journal's process, the block of stone is broken down into main planes or areas, following the form of the desired shape.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, Process, p. 61", "quote": "The block of stone is broken down in to main planes or areas, following form of the desired shape."}
+      ]
+    },
+    {
+      "id": "C052",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "In the GI journal's process, the surface is drilled to various desired depths and unwanted material is removed.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, Process, p. 61", "quote": "Surface is drilled to various desired depths and unwanted material removed."}
+      ]
+    },
+    {
+      "id": "C053",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P03"},
+      "text": "After the rough body outline, the intricate work is made, and tool marks are then removed with flat chisels.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, Process, p. 61", "quote": "rough body outline is made. Intricate work is then made. Tool marks are removed with flat chisels."}
+      ]
+    },
+    {
+      "id": "C054",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P01"},
+      "text": "Odisha Tourism says that whether the stone is hard or soft, an outline is first drawn on stone already cut to size, and once it is incised the figure is brought out by removing unwanted portions.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "Whether the stone is hard or soft a sort of outline is first drawn on the stone which is already cut to the appropriate size. Once the outline is incised indicating the shape, the final figure is brought out by removing the unwanted portions."}
+      ]
+    },
+    {
+      "id": "C055",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P02"},
+      "text": "Odisha Tourism says harder stones are worked by chiselling out the extra material, while softer stones are scraped with a sharp flat-edged iron tool.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "While for the harder stones this is done by chiseling out the extra material, with softer stones this is done by scraping out the same with a sharp flat-edged iron tool."}
+      ]
+    },
+    {
+      "id": "C056",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P03"},
+      "text": "The EPCH report on the Bhubaneswar project says finer detailing takes up the majority of the carving time.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "important craft in this region", "quote": "Finer detailing takes up majority of the time of carving."}
+      ]
+    },
+    {
+      "id": "C057",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "In the GI process, muscular definitions are further improved and finally all surfaces are meticulously finished.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, Process, p. 61", "quote": "Muscular definitions are further improved. Finally, all surfaces are meticulously finished."}
+      ]
+    },
+    {
+      "id": "C058",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "The EPCH report says sanding smooths the edges and removes file marks, by hand with sand paper or on a smoothening plate.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "important craft in this region", "quote": "Sanding is done on the structure to smooth the edges and to remove all the file marks. This can be carried out manually using a sand paper or same can be imposed on a smoothening plate."}
+      ]
+    },
+    {
+      "id": "C059",
+      "discipline": "PROCESS",
+      "subject": {"type": "STAGE", "ref": "P04"},
+      "text": "The EPCH report says hand polishing applies a traditional polishing powder with a soft, moist muslin cloth, and the final polishing is done with zinc powder.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "important craft in this region", "quote": "Hand polishing of the base article is done using a traditional polishing powder which is applied on the surface with a soft, moist muslin cloth."},
+        {"sourceId": "S10", "locator": "important craft in this region", "quote": "The final polishing is done using zinc powder."}
+      ]
+    },
+    {
+      "id": "C061",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "As filed, the GI application stated that computer-controlled cutters cannot yet improve upon works finished by hand.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, p. 61", "quote": "Computers controlled cutters etc., cannot yet improve upon works finished by hand."}
+      ]
+    },
+    {
+      "id": "C062",
+      "discipline": "PROCESS",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI application says every block of stone or marble demands a slightly different approach because of its own unique nature.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (J) Method of production, p. 61", "quote": "every block of stone or marble demands a slightly different approach to the next piece because of its own unique nature."}
+      ]
+    },
+    {
+      "id": "C064",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T02"},
+      "text": "The GI application lists tools known by Odia names, among them tagi (chisel), gunati (double sided chisel), thuk thuka (wooden hammer), mugura (heavy wooden hammer, spelt heaw in the scanned form) and matama (iron angle).",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Form GI-1, specification", "quote": "known by special local names given in Oriya areTagi (chisel) Gunati(double sided chisel) Thuk thuka (wooden hammer) Mugura (heaw wooden hammer) Matama (iron angle)"}
+      ]
+    },
+    {
+      "id": "C065",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T07"},
+      "text": "The GI application also lists ghasa stone (sharpening stone), hand saw, ouha (file), rounder (compass), hand drill, triangular, flat, half round and round files, and tools named tanki, guntha, tuli and muna.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Form GI-1, specification", "quote": "Tanki Ghasa stone (Sharpening stone) Hand saw Guntha Tuli Muna Ouha (file) Rounder (compass) Hand Drill Triangular file Flat fileHalf round file Round file"}
+      ]
+    },
+    {
+      "id": "C066",
+      "discipline": "PROCESS",
+      "subject": {"type": "TOOL", "ref": "T01"},
+      "text": "Odisha's stone carvers use a few simple tools, mainly hammers and chisels of various shapes and sizes, with local names such as muna, patili, martual, thuk-thuki and nihana.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "The tools they use are a few and simple and consist mainly of hammers and chisels of various shapes and sizes with such local names as muna, patili, martual, thuk-thuki and nihana."}
+      ]
+    },
+    {
+      "id": "C070",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The GI journal says serpentine, the soft green stone, looks solid grey at first but turns translucent green when worked or washed, and is got from kenthumundi.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Soft green stone (Serpentine): Initially it is looks like solid gray in color but when artisan work on it or wash the stone it become translucent green."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "It is very good in look. It is got from the kenthumundi."}
+      ]
+    },
+    {
+      "id": "C071",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M05"},
+      "text": "The GI journal says granite, a dark and heavy stone used for heavy work, is got from Moyurbanj (Mayurbhanj).",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Granite: It is used for heavy work. It is dark and heavy stone got from the Moyurbanj."}
+      ]
+    },
+    {
+      "id": "C072",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M06"},
+      "text": "The GI journal says sandstone, called saan patar, is used for rough, big and cheap sculpture and is got from kunda Tapang district.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Sand stone (Saan patar): it is used for rough big cheap sculpture. It is got from kunda Tapang district."}
+      ]
+    },
+    {
+      "id": "C073",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M07"},
+      "text": "The GI journal describes soft red stone, called naali stone, as very good to work, with fine lines and no translucency.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Soft red stone (Naali stone): It is very good at work. It has fine lines and no translucency."}
+      ]
+    },
+    {
+      "id": "C074",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M08"},
+      "text": "The GI specification says the adhesive car patch is much used in stone carving because of its quick bond, fixing and drying within 15 minutes.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Car patch (Adhesive): It is very much used in stone carving because of it's quick bond behavior (It will fix and dry with in 15 min.)."}
+      ]
+    },
+    {
+      "id": "C075",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M09"},
+      "text": "The GI specification says Araldite adhesive also joins the stone but takes a long time, 12 to 24 hours, and is used for its strong bonding.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Araldite (adhesive): It is also used for joining the stone but it is takes long time to join (12 to 24 ours). Araldite is used because of its strong bonding."}
+      ]
+    },
+    {
+      "id": "C076",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M10"},
+      "text": "In the GI specification, sand paper gives the product its finishing and makes the surface smooth.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (E) Specification, p. 57", "quote": "Sand paper: It is used for giving finishing the product and making the surface smooth."}
+      ]
+    },
+    {
+      "id": "C077",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal says soft stone, red sandstone and granite are used for carving, with household products made from sandstone and granite for images modelled on temple figures.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (I) Proof of origin, p. 59", "quote": "Soft stone, red sand stone, and granite are used for carving."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (I) Proof of origin, p. 59", "quote": "A variety of household products are made from sand stone while granite is used to make images modelled on temple figures."}
+      ]
+    },
+    {
+      "id": "C078",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "Odisha's carvers handle ultra soft white soapstone (khadipathara), slightly harder greenish chlorite (kochilapathara), still harder pinkish khondalite (sahanapathara or baulapathara) and, hardest of all, black granite (mugunipathara).",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "They handle with equal facility the ultra soft white soap stone, or Khadipathara, as the slightly harder greenish chlorite or Kochilapathara and the still harder pinkish Khandolite or Sahanapathara or Baulapathara and the hardest of all black granite or mugunipathara."}
+      ]
+    },
+    {
+      "id": "C079",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "A Millennium Post feature calls serpentine the most preferred stone of Konark carving and says it is locally called khadi pathara, or soft stone.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 9", "quote": "Compared to other dark rocks, serpentine is soft. Locally, it is called 'Khadi Pathara', or soft stone."},
+        {"sourceId": "S12", "locator": "paragraph 9", "quote": "Though this is the most preferred stone, red sandstone, Makrana marble, Khondalite (called 'Sahana Pathara'), black granite (called 'Muguni Pathara'), and 'Kochila Pathara' (Greenschist or greenstone deriving its name from the abundance of green chlorite) are also used."}
+      ]
+    },
+    {
+      "id": "C080",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The Millennium Post feature lists red sandstone, Makrana marble, khondalite (sahana pathara), black granite (muguni pathara) and kochila pathara, a greenstone rich in chlorite, as also used.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 9", "quote": "Though this is the most preferred stone, red sandstone, Makrana marble, Khondalite (called 'Sahana Pathara'), black granite (called 'Muguni Pathara'), and 'Kochila Pathara' (Greenschist or greenstone deriving its name from the abundance of green chlorite) are also used."}
+      ]
+    },
+    {
+      "id": "C081",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M04"},
+      "text": "The Orissa Reference Annual says the stones used are generally khondalites and granites, for detailed delicate carvings.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "p. 604", "quote": "The stones used are generally the khandolites and granites for detailed delicate carvings."}
+      ]
+    },
+    {
+      "id": "C082",
+      "discipline": "MATERIALS",
+      "subject": {"type": "CRAFT"},
+      "text": "The EPCH report says stone carvers from Puri, Bhubaneswar, Lalitagiri and Khiching work sandstone, kochila stone, kendumundi stone, nilagiri stone, granite, serpentine and pink stone with sharp-edged chisels.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "The stone carvers from Puri, Bhubaneswar, Lalitagiri & Khiching are engaged in making beautiful stone statues"},
+        {"sourceId": "S10", "locator": "minutes of the selection committee", "quote": "from sandstone, kochila stone, kendumundi stone, nilagiri stone, granite stone, serpentine stone, and pink stone with the help of sharp edged chisels."}
+      ]
+    },
+    {
+      "id": "C083",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M11"},
+      "text": "The EPCH report says Odisha's stone work uses, instead of hard marble, a soft pink stone brought from the Barbil areas, which polishes to mottled bright pink, green to black.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "stone work of Odisha", "quote": "Instead of hard marble,carving is done on a soft stone called pink stone - a stone brought from the barbil areas."},
+        {"sourceId": "S10", "locator": "stone work of Odisha", "quote": "The uniqueness of pink stone is its unpredictable range of colors. On polishing, mottled bright pink,green to black."}
+      ]
+    },
+    {
+      "id": "C084",
+      "discipline": "MATERIALS",
+      "subject": {"type": "MATERIAL", "ref": "M11"},
+      "text": "Because pink stone is soft, only small pieces are available, which limits the size of its products, such as the popular pen stands and candle stands.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "stone work of Odisha", "quote": "Due to its softness,only small pieces of pink stone are available,thereby,limiting the size of its end products. Pen stand,candel stand are popular products."}
+      ]
+    },
+    {
+      "id": "C085",
+      "discipline": "MATERIALS",
+      "subject": {"type": "PLACE", "ref": "L04"},
+      "text": "Craftsmen in Pathuriasahi at Puri use soft pink stone and hard kochila to carve replicas of temple sculptures, the EPCH report says.",
+      "quotes": [
+        {"sourceId": "S10", "locator": "important craft in this region", "quote": "Craftsmen in Pathuriasahi at Puri use soft pinkstone and hard kochila to carve replicas of temple sculptures."}
+      ]
+    },
+    {
+      "id": "C086",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The GI journal says the stone is called serpentine because its colour and markings resemble the skin of snakes.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 61", "quote": "The stone is called serpentine because of its color and markings resembling the skin of snakes."}
+      ]
+    },
+    {
+      "id": "C087",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Serpentine comes in multicoloured green, pink, grey and black and has a distinctive dull to greasy lustre and a greasy feel.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 61", "quote": "Serpentine comes in multicolored green, pink, gray, and black and has a distinctive dull to greasy luster and a greasy feel."}
+      ]
+    },
+    {
+      "id": "C088",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "Compared with other dark rocks, serpentine is a soft stone, the GI journal notes.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 61", "quote": "Compared to other dark rocks, serpentine is soft."}
+      ]
+    },
+    {
+      "id": "C089",
+      "discipline": "CHEMISTRY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "The GI journal gives serpentine's chemical formula as (Mg, Fe)3 Si2O5(OH)4 and says it is also often rich in other metal ores, including chromium, manganese, cobalt and nickel.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 61", "quote": "Chemically it can be given as ((M g, Fe) 3 Si2O5(OH)4) minerals; it is also often rich in other metal ores, including chromium, manganese, cobalt and nickel."}
+      ]
+    },
+    {
+      "id": "C090",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M01"},
+      "text": "In mineralogy, serpentine may refer to any of 20 minerals of the serpentine group, which are not always easy to tell apart because of admixture.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 62", "quote": "mineralogy, serpentine may refer to any of 20 minerals belonging to the serpentine group."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 62", "quote": "Owing to admixture, these minerals are not always easy to individualize, and distinctions are not usually made."}
+      ]
+    },
+    {
+      "id": "C091",
+      "discipline": "MATERIALS",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Konark Sun Temple was built of chlorite, laterite and khondalite: poor-quality khondalite throughout, chlorite for doorframes and a few sculptures, and laterite in the foundation, platform core and staircases.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Construction", "quote": "Three kinds of stone were used in the temple's construction - chlorite, laterite and khondalite."},
+        {"sourceId": "S06", "locator": "Construction", "quote": "Khondalite (though of poor quality) was used throughout the monument while chlorite was restricted to doorframes and to a few sculptures, while laterite was used in the foundation, the (invisible) core of the platform and in the staircases."}
+      ]
+    },
+    {
+      "id": "C092",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "None of the stones of the Konark Sun Temple was available near the site, so the material was brought long distances.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "Construction", "quote": "None of these stones was available near the site and so material was brought long distances."}
+      ]
+    },
+    {
+      "id": "C093",
+      "discipline": "GEOLOGY",
+      "subject": {"type": "MATERIAL", "ref": "M04"},
+      "text": "The main belief is that the Sun Temple crumbled gradually, as the use of poor quality khondalite led to its eventual decay.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "From Fame to Decay", "quote": "The main belief is that the temple crumbled gradually, as the use of poor quality khondalite led to the temple's eventual decay."}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C094",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The reasons for the collapse of the Sun Temple's deul, the sanctum, and its shikhara tower are not yet known.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "From Fame to Decay", "quote": "The reasons for the collapse of the deul and the shikhara are not as yet known."},
+        {"sourceId": "S06", "locator": "The Architecture at Konarak", "quote": "the deul or the sanctum housing the deity covered by a shikhara"}
+      ]
+    },
+    {
+      "id": "C095",
+      "discipline": "MATERIALS",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The V&A gives carboniferous shale as the material of its Konark relief of King Narasimha I with his spiritual advisor.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "physical description", "quote": "In this Konarak sculpture Narasimha is depicted with his guru"},
+        {"sourceId": "S16", "locator": "materials and techniques", "quote": "| Materials and techniques | Carboniferous shale |"}
+      ]
+    },
+    {
+      "id": "C096",
+      "discipline": "HISTORY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The V&A says a source contemporary with its Konark relief of King Narasimha I suggests that the artist was the eminent sculptor Visvanatha Mahapatra.",
+      "quotes": [
+        {"sourceId": "S16", "locator": "summary", "quote": "This relief is one of a series depicting aspects of royal Vaishnava worship in Odisha and is associated with the Sun Temple at Konarak."},
+        {"sourceId": "S16", "locator": "summary", "quote": "A source contemporary with this relief suggests that the artist was the eminent sculptor, Visvanatha Mahapatra."},
+        {"sourceId": "S16", "locator": "production", "quote": "(attributed to sculptor Visvanatha Mahapatra)"}
+      ],
+      "hypothesis": true
+    },
+    {
+      "id": "C097",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "World History Encyclopedia's introduction describes the Konark Sun Temple as conceived as a giant stone chariot with 12 wheels.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "introduction", "quote": "The Konark or Konarak Sun temple is dedicated to the Hindu sun god Surya"},
+        {"sourceId": "S06", "locator": "introduction", "quote": "conceived as a giant stone chariot with 12 wheels, it is the most famous of the few sun temples built in India"}
+      ]
+    },
+    {
+      "id": "C103",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "A Millennium Post feature says the artisans' modern pieces include stoneware utensils such as cups, vessels and glasses, and items for puja.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 13", "quote": "These days, the artisans have started creating modern pieces that are hugely popular among tourists as well as locals."},
+        {"sourceId": "S12", "locator": "paragraph 13", "quote": "These include home décor items like candle stands, bookends, vases, pen stands, paperweights, lamp bases, stoneware utensils like cups, vessels, glasses and items for puja."}
+      ]
+    },
+    {
+      "id": "C110",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal divides the endless variety of sculptures by the artists of Konark into four categories: the divine, the secular figure, the world of flora and the world of fauna.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (G) Description of goods, p. 59", "quote": "The artist of konark has produced an endless variety of sculptures, which can be divided into four categories The divine The secular figure The world of flora The world of fauna"}
+      ]
+    },
+    {
+      "id": "C111",
+      "discipline": "DESIGN",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "Konark specialises in icons and figures carved in different dance poses, according to the GI journal.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (I) Proof of origin, p. 59", "quote": "Konark specializes in icons and figures carved in different dance poses."}
+      ]
+    },
+    {
+      "id": "C112",
+      "discipline": "DESIGN",
+      "subject": {"type": "TERM", "ref": "W13"},
+      "text": "The GI journal says the figures generally carved depict Odissi dance poses (mudras), and the sculptures are dressed and ornamented with traditional Orissan garments and jewellery.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (K) Uniqueness, p. 62", "quote": "The figures genrally carved depict odissi dance poses (mudras) .Sculptures are dressed and ornamented with traditional Orissan graments and jewellery."}
+      ]
+    },
+    {
+      "id": "C113",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Temple sculptures provide the models for motifs such as alasa kanyas (indolent damsels), salabhanjikas (lady with the bough of a sal tree) and surasundaris adorning the Konark temple's topmost tier.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "As for the motifs, the endless variety of sculptures adorning the temples provide the models although other motifs are also not uncommon."},
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "Among the former the ubiquitous alasa Kanyas or indolent damsels and salabhanjikas, lady with the bough of a sal tree, surasundaris heavenly beauties playing on different musical instruments adorning the topmost tier of the Konark temple"}
+      ]
+    },
+    {
+      "id": "C114",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Popular motifs also include the nava grahas, nine deities representing the nine planets, the Konark wheel and horse, elephants, lions and composite mythical figures such as gajabidala and gajasimha.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "the nava grahas or nine deities representing the nine planets, Konark wheel, Konark horse, elephant, Stone carving lion composite mythical figures like 'Gajabidala', 'Gajasimha' are quite popular."}
+      ]
+    },
+    {
+      "id": "C115",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Other motifs represent Hindu deities such as Krishna and Radha, Laxmi, Vishnu, Durga, Buddha, Ganesh, Haraparvati and Nrusingha.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "Other motifs include representation of deities of the Hindu peantheon like Krishna and Radha, Laxmi, Vishnu, Durga, Budha, Ganesh, Haraparvati, Nrusingha etc."}
+      ]
+    },
+    {
+      "id": "C116",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "Odisha's carvers also make images for installation in temples as presiding deities and parswadevatas, as well as large pieces to decorate public places.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "These carvers also make images for installation in temples as presiding deities and parswadevatas as well as large pieces for decoration of public places."}
+      ]
+    },
+    {
+      "id": "C117",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "In recent times decorative and utilitarian articles such as ash trays, paperweights, candle stands and bookrests are also being made.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "In recent times may decorative and utilitarian articles like ash trays, paperweights, candle stands bookrests are also being made."}
+      ]
+    },
+    {
+      "id": "C118",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The Orissa Reference Annual says modern decorative pieces depict images from the temples and Buddhist sculptures, and the most famous of all is the Sun temple wheel.",
+      "quotes": [
+        {"sourceId": "S08", "locator": "p. 604", "quote": "The modern decorative pieces depict images from the temples and other Bddhists sculptures. The most famous of all is the Sun temple wheel."}
+      ]
+    },
+    {
+      "id": "C119",
+      "discipline": "DESIGN",
+      "subject": {"type": "CRAFT"},
+      "text": "The four colossal Buddha images and the friezes on the lives of Buddha and Ashoka at the modern Shanti Stupa in Dhauli are the handiwork of Odisha's craftsmen.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 2", "quote": "The four colossal Buddha images and the friezes depicting the life of the Budha and Ashoka in the modern shanti stupa at Dhauli are also the handiwork of Odisha's craftsmen."}
+      ]
+    },
+    {
+      "id": "C130",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "CRAFT"},
+      "text": "Odisha's stone carving is practised by artisans mainly at Puri, Bhubaneswar and Lalitgiri in Cuttack district, and some are also found in Khiching in Mayurbhanj district.",
+      "quotes": [
+        {"sourceId": "S07", "locator": "paragraph 3", "quote": "The handicraft is practiced by artisans mainly at Puri, Bhubaneswar, and Lalitgiri in Cuttack district though some are also found in Khiching in Mayurbhanj District."}
+      ]
+    },
+    {
+      "id": "C131",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI journal gives the production area's locations as Konark at 86° E 19° N and Bhubaneswar at 85° E 20° N.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (H) Geographical area of production, p. 59", "quote": "The specific location can be given in the terms of latitudes and longitudes. Konark 86° E 19 °N Bhubaneswar 85° E 20 °N"}
+      ]
+    },
+    {
+      "id": "C132",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L03"},
+      "text": "The Khordha district administration describes Bhubaneswar, the state capital, as the most important city of Khordha District.",
+      "quotes": [
+        {"sourceId": "S09", "locator": "paragraph 1", "quote": "Khordha District is the most urbanized of all the Districts of Odisha."},
+        {"sourceId": "S09", "locator": "paragraph 1", "quote": "Bhubaneswar, the capital of the state is the most important city of not only the District, but also of the whole state."}
+      ]
+    },
+    {
+      "id": "C133",
+      "discipline": "GEOGRAPHY",
+      "subject": {"type": "PLACE", "ref": "L01"},
+      "text": "The Konark Sun Temple stands on the shores of the Bay of Bengal, about 35 km northeast of the city of Puri.",
+      "quotes": [
+        {"sourceId": "S06", "locator": "introduction", "quote": "It is located about 35 km northeast of the city of Puri on the coastline in the state of Odisha (earlier Orissa)."},
+        {"sourceId": "S05", "locator": "description", "quote": "On the shores of the Bay of Bengal, bathed in the rays of the rising sun, the temple at Konarak"}
+      ]
+    },
+    {
+      "id": "C140",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "The Orissa State Cooperative Handicrafts Corporation Limited filed GI application 87 for Konark Stone Carving on 9 April 2007, in class 19 for handicraft goods of Odisha.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "application details", "quote": "| Applicant Name | Orissa State Cooperative Handicrafts Corporation Limited |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Application Number | 87 |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Date of Filing | 09-04-2007 |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Class | 19 | | Goods | Handicraft |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Geographical Area | Odisha |"}
+      ]
+    },
+    {
+      "id": "C141",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The application was published in Supplementary Journal 1 of the Geographical Indications Journal, dated 24 March 2008 and made available to the public that day.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "official notices, p. 2", "quote": "the issue of Supplementary Journal (1) of the Geographical Indication Journal dated 24th March 2008 / Chaitra- 4 Saka 1930 has been made available to the public from 24th March 2008."},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Journal Number | Supp 1 |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Availability Date | 24-03-2008 |"}
+      ]
+    },
+    {
+      "id": "C142",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "Konark Stone Carving holds GI certificate number 69, dated 10 July 2008, with registration valid up to 8 April 2027.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "application details", "quote": "| Certificate Number | 69 |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Certificate Date | 10-07-2008 |"},
+        {"sourceId": "S01", "locator": "application details", "quote": "| Registration Valid Upto | 08-04-2027 |"},
+        {"sourceId": "S04", "locator": "registrations from April 2008 to March 2009", "quote": "69 87 Konark Stone carving Handicraft Odisha"}
+      ]
+    },
+    {
+      "id": "C146",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "COMMUNITY", "ref": "G02"},
+      "text": "The GI journal's inspection body comprises the Managing Director of the corporation (Utkalika), handicrafts officials at Bhubaneswar, the State Institute for Development of Arts & Crafts and one national awardee, master craftsman or local designer.",
+      "quotes": [
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (L) Inspection body, p. 62", "quote": "Director, Orissa State Cooperative Handicrafts Corporation Limited (Utkalika)."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (L) Inspection body, p. 62", "quote": "Asst Director, Development Commissioner of Handicrafts Bhubaneswar, Orissa."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (L) Inspection body, p. 62", "quote": "Deputy Director, Handicrafts O/o Director Handicrafts & Cottage Industries, Bhubaneswar, Orissa."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (L) Inspection body, p. 62", "quote": "Executive Director, State Institue for Development ofArts & Crafts."},
+        {"sourceId": "S02", "locator": "G.I. Application Number 87, (L) Inspection body, p. 62", "quote": "One National Awardee/ Master Craftsman/ Local Designer from Bhubaneshwar/ Konark"}
+      ]
+    },
+    {
+      "id": "C147",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "As filed, the GI application said the end product is inspected by customers and retailers themselves, as no standard parameters are set for this artwork.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Form GI-1, xii. Inspection body", "quote": "Inspection of the end product is done by customers and retailers themselves as there are no standard parameters set for this artwork."}
+      ]
+    },
+    {
+      "id": "C148",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The application classed stone carving in class 19, which covers goods related with stone and building materials, since its end products are monuments, statues or interior decorative pieces.",
+      "quotes": [
+        {"sourceId": "S03", "locator": "Form GI-1, iv. Types of goods", "quote": "Stone carving can be classified as class 19 because class 19 consists of goods related with stone and building materials. The end products of stone carving can be either monuments, statues or interior decorative pieces."}
+      ]
+    },
+    {
+      "id": "C149",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "The GI registry's list of authorised users of Konark Stone Carving runs to serial number 2.",
+      "quotes": [
+        {"sourceId": "S01", "locator": "authorised user details", "quote": "| Sl.No. | Authorized User No | Authorized User Name | Authorized User Address | Status |"},
+        {"sourceId": "S01", "locator": "authorised user details", "quote": "| | | 2 | AU/32933/GI/87/2 |"}
+      ]
+    },
+    {
+      "id": "C150",
+      "discipline": "ECONOMICS",
+      "subject": {"type": "CRAFT"},
+      "text": "A Millennium Post feature on the artists of Konark refers to the memorandum filed with the GI registry in 2008.",
+      "quotes": [
+        {"sourceId": "S12", "locator": "paragraph 6", "quote": "the artists of Konark have retained and improvised their unique skills of stonework in Odisha"},
+        {"sourceId": "S12", "locator": "paragraph 6", "quote": "As per the memorandum filed with the GI registry in 2008"}
+      ]
+    }
+  ],
+  "places": [
+    {"id": "L01", "name": "Konark", "kind": "TOWN", "district": "Puri", "state": "Odisha", "country": "India", "role": "PRACTISED", "claimIds": ["C002", "C111"]},
+    {"id": "L02", "name": "Konark", "kind": "TOWN", "district": "Puri", "state": "Odisha", "country": "India", "role": "ORIGIN", "claimIds": ["C022"]},
+    {"id": "L03", "name": "Bhubaneswar", "kind": "TOWN", "district": "Khordha", "state": "Odisha", "country": "India", "role": "PRACTISED", "claimIds": ["C002", "C130", "C082"]},
+    {"id": "L04", "name": "Puri", "kind": "TOWN", "district": "Puri", "state": "Odisha", "country": "India", "role": "PRACTISED", "claimIds": ["C130", "C085", "C082"]},
+    {"id": "L07", "name": "Mayurbhanj", "kind": "DISTRICT", "district": "Mayurbhanj", "state": "Odisha", "country": "India", "role": "MATERIAL_SOURCE", "claimIds": ["C071"]},
+    {"id": "L08", "name": "Bhubaneswar", "kind": "TOWN", "district": "Khordha", "state": "Odisha", "country": "India", "role": "MARKET", "claimIds": ["C044"]},
+    {"id": "L09", "name": "Kolkata", "kind": "TOWN", "district": "Kolkata", "state": "West Bengal", "country": "India", "role": "MARKET", "claimIds": ["C044"]},
+    {"id": "L10", "name": "Sujanagar", "kind": "VILLAGE", "district": "Puri", "state": "Odisha", "country": "India", "role": "PRACTISED", "claimIds": ["C040"]}
+  ],
+  "communities": [
+    {"id": "G01", "kind": "COMMUNITY", "name": "Pathuria", "localNames": ["Pathurias"], "claimIds": ["C011"]},
+    {"id": "G02", "kind": "ORGANISATION", "name": "Orissa State Cooperative Handicrafts Corporation Limited", "localNames": ["Utkalika"], "placeId": "L03", "claimIds": ["C140", "C146"]},
+    {"id": "G03", "kind": "PERSON", "name": "Sudarshan Sahoo", "honours": ["National Award for Stone Carving (1981)", "Padma Shri (1988)", "Shilp Guru Award (2003)", "Padma Vibhushan (2021)"], "placeId": "L04", "claimIds": ["C030", "C031", "C032", "C033", "C034", "C035", "C036", "C046"]},
+    {"id": "G04", "kind": "PERSON", "name": "Pravakara Maharana", "honours": ["Padma Shri", "Shilpiguru award", "State handicraft award"], "placeId": "L10", "claimIds": ["C017", "C037", "C038", "C040"]},
+    {"id": "G05", "kind": "PERSON", "name": "Susil Kumar Maharana", "honours": ["National Award"], "placeId": "L03", "claimIds": ["C039"]}
+  ],
+  "stages": [
+    {"id": "P01", "name": "Drawing and incising the outline", "stageType": "PREP", "order": 1, "orderClaimId": "C054", "claimIds": ["C054", "C050"]},
+    {
+      "id": "P02",
+      "name": "Rough shaping",
+      "stageType": "CARVE",
+      "order": 2,
+      "orderClaimId": "C050",
+      "tools": [
+        {"toolId": "T01", "claimId": "C066"},
+        {"toolId": "T02", "claimId": "C064"},
+        {"toolId": "T03", "claimId": "C064"},
+        {"toolId": "T10", "claimId": "C065"},
+        {"toolId": "T13", "claimId": "C055"}
+      ],
+      "claimIds": ["C050", "C051", "C052", "C055"],
+      "materials": [
+        {"materialId": "M01", "claimId": "C005"},
+        {"materialId": "M05", "claimId": "C077"},
+        {"materialId": "M06", "claimId": "C077"},
+        {"materialId": "M11", "claimId": "C085"},
+        {"materialId": "M03", "claimId": "C085"}
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Intricate carving",
+      "stageType": "CARVE",
+      "order": 3,
+      "orderClaimId": "C053",
+      "tools": [
+        {"toolId": "T01", "claimId": "C066"},
+        {"toolId": "T02", "claimId": "C064"},
+        {"toolId": "T03", "claimId": "C064"},
+        {"toolId": "T12", "claimId": "C053"}
+      ],
+      "claimIds": ["C053", "C056"],
+      "materials": [
+        {"materialId": "M01", "claimId": "C005"},
+        {"materialId": "M05", "claimId": "C077"},
+        {"materialId": "M06", "claimId": "C077"},
+        {"materialId": "M11", "claimId": "C085"},
+        {"materialId": "M03", "claimId": "C085"}
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Finishing and polishing",
+      "stageType": "FINISH",
+      "order": 4,
+      "orderClaimId": "C057",
+      "materials": [
+        {"materialId": "M10", "claimId": "C058"},
+        {"materialId": "M12", "claimId": "C059"},
+        {"materialId": "M13", "claimId": "C059"},
+        {"materialId": "M14", "claimId": "C059"}
+      ],
+      "claimIds": ["C057", "C058", "C059", "C076"]
+    }
+  ],
+  "materials": [
+    {"id": "M01", "name": "Serpentine (soft green stone)", "kind": "MINERAL", "role": "INPUT", "localNames": ["khadi pathara"], "claimIds": ["C005", "C070", "C079", "C086", "C087", "C088", "C089", "C090"]},
+    {"id": "M02", "name": "Soapstone", "kind": "MINERAL", "role": "INPUT", "localNames": ["khadipathara"], "claimIds": ["C078"]},
+    {"id": "M03", "name": "Chlorite", "kind": "MINERAL", "role": "INPUT", "localNames": ["kochilapathara", "kochila pathara", "kochila"], "claimIds": ["C078", "C080", "C085", "C091"]},
+    {"id": "M04", "name": "Khondalite", "kind": "MINERAL", "role": "INPUT", "localNames": ["sahanapathara", "baulapathara", "sahana pathara"], "claimIds": ["C078", "C080", "C081", "C091", "C028"]},
+    {"id": "M05", "name": "Granite", "kind": "MINERAL", "role": "INPUT", "localNames": ["mugunipathara", "muguni pathara"], "claimIds": ["C071", "C077", "C078", "C081"]},
+    {"id": "M06", "name": "Sandstone", "kind": "MINERAL", "role": "INPUT", "localNames": ["saan patar"], "claimIds": ["C072", "C077"]},
+    {"id": "M07", "name": "Soft red stone", "kind": "MINERAL", "role": "INPUT", "localNames": ["naali stone"], "claimIds": ["C073"]},
+    {"id": "M08", "name": "Car patch adhesive", "kind": "OTHER", "role": "BINDER", "claimIds": ["C074"]},
+    {"id": "M09", "name": "Araldite adhesive", "kind": "OTHER", "role": "BINDER", "claimIds": ["C075"]},
+    {"id": "M10", "name": "Sand paper", "kind": "OTHER", "role": "OTHER", "claimIds": ["C076", "C058"]},
+    {"id": "M11", "name": "Pink stone", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C083", "C084", "C085"]},
+    {"id": "M12", "name": "Traditional polishing powder", "kind": "OTHER", "role": "OTHER", "claimIds": ["C059"]},
+    {"id": "M13", "name": "Muslin cloth", "kind": "FIBRE", "role": "OTHER", "claimIds": ["C059"]},
+    {"id": "M14", "name": "Zinc powder", "kind": "METAL", "role": "OTHER", "claimIds": ["C059"]},
+    {"id": "M15", "name": "Laterite", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C091"]},
+    {"id": "M16", "name": "Makrana marble", "kind": "MINERAL", "role": "INPUT", "claimIds": ["C080"]}
+  ],
+  "tools": [
+    {"id": "T01", "name": "Hammers and chisels of various shapes and sizes", "localNames": ["muna", "patili", "martual", "thuk-thuki", "nihana"], "claimIds": ["C066"]},
+    {"id": "T02", "name": "Chisel", "localNames": ["tagi"], "claimIds": ["C064"]},
+    {"id": "T03", "name": "Double sided chisel", "localNames": ["gunati"], "claimIds": ["C064"]},
+    {"id": "T04", "name": "Wooden hammer", "localNames": ["thuk thuka"], "claimIds": ["C064"]},
+    {"id": "T05", "name": "Heavy wooden hammer", "localNames": ["mugura"], "claimIds": ["C064"]},
+    {"id": "T06", "name": "Iron angle", "localNames": ["matama"], "claimIds": ["C064"]},
+    {"id": "T07", "name": "Sharpening stone", "localNames": ["ghasa stone"], "claimIds": ["C065"]},
+    {"id": "T08", "name": "File", "localNames": ["ouha"], "claimIds": ["C065"]},
+    {"id": "T09", "name": "Compass", "localNames": ["rounder"], "claimIds": ["C065"]},
+    {"id": "T10", "name": "Hand drill", "claimIds": ["C065"]},
+    {"id": "T11", "name": "Hand saw", "claimIds": ["C065"]},
+    {"id": "T12", "name": "Flat chisel", "claimIds": ["C053"]},
+    {"id": "T13", "name": "Sharp flat-edged iron scraping tool", "claimIds": ["C055"]}
+  ],
+  "reactions": [],
+  "environment": [
+    {"factor": "LANDFORM", "placeId": "L07", "claimIds": ["C071"]},
+    {"factor": "LANDFORM", "claimIds": ["C083"]},
+    {"factor": "LANDFORM", "placeId": "L01", "claimIds": ["C092"]}
+  ],
+  "market": {
+    "gi": {"applicationNumber": "87", "certificateNumber": "69", "filedOn": "2007-04-09", "registeredOn": "2008-07-10", "journalIssue": "Supplementary Journal 1", "proprietors": ["Orissa State Cooperative Handicrafts Corporation Limited"], "claimIds": ["C140", "C141", "C142", "C149"], "authorisedUserCount": 2}
+  },
+  "glossary": [
+    {"id": "W01", "term": "khadipathara, khadi pathara", "meaning": "Soft stone: the ultra soft white soapstone in Odisha Tourism's account, serpentine in a Millennium Post feature.", "language": "or", "claimIds": ["C078", "C079"]},
+    {"id": "W02", "term": "kochilapathara, kochila pathara, kochila", "meaning": "The slightly harder greenish chlorite; a Millennium Post feature calls kochila pathara a greenstone named for its abundant green chlorite.", "language": "or", "claimIds": ["C078", "C080"]},
+    {"id": "W03", "term": "sahanapathara, baulapathara, sahana pathara", "meaning": "The harder pinkish khondalite.", "language": "or", "claimIds": ["C078", "C080"]},
+    {"id": "W04", "term": "mugunipathara, muguni pathara", "meaning": "Black granite, the hardest stone the carvers handle.", "language": "or", "claimIds": ["C078", "C080"]},
+    {"id": "W05", "term": "saan patar", "meaning": "Sandstone, used for rough, big and cheap sculpture.", "language": "or", "claimIds": ["C072"]},
+    {"id": "W06", "term": "naali stone", "meaning": "Soft red stone with fine lines and no translucency.", "language": "or", "claimIds": ["C073"]},
+    {"id": "W09", "term": "alasa kanya", "meaning": "Indolent damsel, a motif from temple sculpture.", "claimIds": ["C113"]},
+    {"id": "W10", "term": "salabhanjika", "meaning": "Lady with the bough of a sal tree, a motif from temple sculpture.", "claimIds": ["C113"]},
+    {"id": "W11", "term": "nava graha", "meaning": "The nine deities representing the nine planets, a popular motif.", "claimIds": ["C114"]},
+    {"id": "W12", "term": "tagi, gunati, thuk thuka, mugura, matama, ouha", "meaning": "Odia names in the GI application for chisel, double sided chisel, wooden hammer, heavy wooden hammer, iron angle and file.", "language": "or", "claimIds": ["C064", "C065"]},
+    {"id": "W13", "term": "mudra", "meaning": "The Odissi dance poses that the figures generally depict.", "claimIds": ["C112"]},
+    {"id": "W14", "term": "Konark", "meaning": "From two Sanskrit words, kona (corner or angle) and arka (the sun).", "language": "sa", "claimIds": ["C026"]},
+    {"id": "W15", "term": "Black Pagoda", "meaning": "The name early Europeans gave the Konark temple; the Jagannatha temple was the White Pagoda.", "language": "en", "claimIds": ["C025"]},
+    {"id": "W16", "term": "deul, shikhara", "meaning": "The deul is the sanctum housing the deity, covered by a shikhara tower.", "claimIds": ["C094"]},
+    {"id": "W17", "term": "Pathuria", "meaning": "The caste to which the GI application says the work is confined.", "claimIds": ["C011"]}
+  ],
+  "conflicts": [
+    {"claimIds": ["C023", "C024"], "about": "How many horses draw the Sun Temple's chariot: six in UNESCO's short description, seven in its statement of value and in World History Encyclopedia"},
+    {"claimIds": ["C078", "C079"], "about": "Which stone the local name khadipathara names: soapstone or serpentine"},
+    {"claimIds": ["C005", "C081"], "about": "Which stone is the craft's main material: serpentine in the GI application, khondalites and granites in the Orissa Reference Annual"},
+    {"claimIds": ["C146", "C147"], "about": "Who inspects the goods: an inspection body in the GI journal, customers and retailers in the Form GI-1 as filed"},
+    {"claimIds": ["C036", "C046"], "about": "What Sudarshan Sahoo carved at Milton Keynes: the Jataka Tales in Paramparik Karigar, a stone panel on the life of Buddha in The Indian Express, which places his Jataka Tales at the Dhauli Peace Pagoda"},
+    {"claimIds": ["C140", "C150"], "about": "When the GI application was filed: 9 April 2007 in the registry's record, 2008 in a Millennium Post feature"},
+    {"claimIds": ["C023", "C024", "C097"], "about": "How many wheels the temple chariot has: 24, or twelve pairs, in UNESCO and in World History Encyclopedia's account of the architecture, 12 in that encyclopedia's introduction"},
+    {"claimIds": ["C028", "C095"], "about": "What stone the Konark temple's panels of King Narasimha are made of: pink and green khondalite in World History Encyclopedia, carboniferous shale in the V&A record of one such panel"}
+  ],
+  "openQuestions": [
+    {"id": "O01", "question": "Why did the Sun Temple's sanctum and tower collapse?", "claimIds": ["C094", "C093"]},
+    {"id": "O02", "question": "Did 1,200 workers really build the Konark temple over 12 years, as legend says?", "claimIds": ["C016", "C017"]},
+    {"id": "O03", "question": "How old is the stone-carving tradition of Odisha and Konark?", "claimIds": ["C013", "C012"]},
+    {"id": "O04", "question": "Who carved the Konark temple's reliefs of King Narasimha I?", "claimIds": ["C096"]}
+  ],
+  "pictures": [
+    {
+      "id": "I01",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Artwork_of_Chariot_wheels_and_sculptures_in_Konark_Sun_temple%2C_Odisha_01.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Artwork_of_Chariot_wheels_and_sculptures_in_Konark_Sun_temple,_Odisha_01.jpg",
+      "author": "Pinakpani",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A carved chariot wheel and sculptures on the Konark Sun Temple, Odisha",
+      "claimIds": ["C024"]
+    },
+    {
+      "id": "I02",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Stone_work_at_Konark_Orissa_India.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Stone_work_at_Konark_Orissa_India.jpg",
+      "author": "Jyotirmaya",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "Carved stone frieze of the 13th-century Sun Temple at Konark",
+      "claimIds": ["C014"]
+    },
+    {
+      "id": "I03",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Dancing_poses_sculpted_in_Konark_SunTemple.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Dancing_poses_sculpted_in_Konark_SunTemple.jpg",
+      "author": "Nagaragiri",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Figures in dancing poses sculpted on the Konark Sun Temple",
+      "claimIds": ["C111"]
+    },
+    {
+      "id": "I04",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Ganesha_Bhubaneswar_Odisha.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Ganesha_Bhubaneswar_Odisha.jpg",
+      "author": "Subhashish Panigrahi",
+      "licence": "CC BY 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "caption": "A stone carving of Ganesha, a handicraft of Odisha, photographed in Bhubaneswar",
+      "claimIds": ["C115"]
+    }
+  ],
+  "overview": {
+    "lede": [
+      {"text": "Konark Stone Carving is a geographical indication of Odisha for stone statues of gods and goddesses, nature and human forms, Konark wheels, candle stands and other goods, produced mainly at Konark in Puri district and at Bhubaneswar.", "claimIds": ["C001", "C002", "C140", "C142"]},
+      {"text": "The GI application says the work is confined to the Pathuria caste, with surnames such as Das, Mistri, Nayak and Maharana, and dates the art back to the late 6th or early 7th century AD.", "claimIds": ["C011", "C012"]},
+      {"text": "It names serpentine stone as the craft's most important feature, and Odisha Tourism lists soapstone, chlorite, khondalite and black granite among the stones Odisha's carvers handle.", "claimIds": ["C005", "C078"]},
+      {"text": "Konark specialises in icons and figures carved in different dance poses, and the sculptures adorning temples, among them the 13th-century Sun Temple at Konark, provide the models for the carvers' motifs.", "claimIds": ["C111", "C113", "C014"]}
+    ],
+    "keyFacts": [
+      {"label": "GI status", "value": "Registered, application 87, certificate 69 dated 10 July 2008, valid up to 8 April 2027", "claimIds": ["C140", "C142"]},
+      {"label": "Applicant", "value": "Orissa State Cooperative Handicrafts Corporation Limited, filed 9 April 2007", "claimIds": ["C140"]},
+      {"label": "Centres", "value": "GI area: Konark (Puri district) and nearby areas, Bhubaneswar and its outskirts; Odisha's stone carving is also practised at Puri, Lalitgiri and Khiching (Odisha Tourism)", "claimIds": ["C002", "C130"]},
+      {"label": "Carvers", "value": "Pathuria caste, surnames Das, Mistri, Nayak and Maharana, in the GI application", "claimIds": ["C011"]},
+      {"label": "Stones", "value": "Serpentine, soft stone, red sandstone and granite in the GI application; soapstone, chlorite and khondalite also among Odisha's carving stones (Odisha Tourism)", "claimIds": ["C005", "C077", "C078"]},
+      {"label": "Tools", "value": "GI application: tagi, gunati, thuk thuka, mugura (heavy wooden hammer), matama, ouha and others; Odisha Tourism: hammers and chisels named muna, patili, martual, thuk-thuki and nihana", "claimIds": ["C064", "C065", "C066"]},
+      {"label": "Stages", "value": "Outline drawn, crude shape, final carving, then finishing and polishing", "claimIds": ["C050", "C054", "C057"]},
+      {"label": "Products", "value": "Statues of gods and goddesses, figures in dance poses, Konark wheels and horses, candle stands, and stoneware utensils", "claimIds": ["C001", "C111", "C114", "C103"]}
+    ],
+    "sections": [
+      {
+        "discipline": "HISTORY",
+        "sentences": [
+          {"text": "The GI journal says the craftspersons of the Kalinga School built masterpieces such as the Sun Temple at Konark, which was built in the 13th century under King Narasimha Deva I of the Eastern Ganga dynasty.", "claimIds": ["C010", "C014"]},
+          {"text": "UNESCO describes the temple as the culmination of Kalingan temple architecture.", "claimIds": ["C015"]},
+          {"text": "A V&A relief of King Narasimha I with his spiritual advisor, made in the 2nd quarter of the 13th century, belongs to a series that originally decorated the temple's walls.", "claimIds": ["C029"]},
+          {"text": "The GI application says the work is confined to the Pathuria caste, as an Odia inscription of 1604 mentions, and calls Konark a centre of the art's origin.", "claimIds": ["C011", "C022"]},
+          {"text": "Odisha Tourism says the progeny of the temple builders have kept their forefathers' sculptural traditions alive, and that a few surviving ancient texts on the art are followed closely.", "claimIds": ["C018", "C019"]},
+          {"text": "Paramparik Karigar writes that sculptors of India's stone carving traditions follow the Shilpa Shastras, guidelines on stone measurements and techniques of sculpting.", "claimIds": ["C020"]},
+          {"text": "Sudarshan Sahoo, born in Puri in 1939, established the Sudarshan Crafts Museum in Puri in 1977 and received the Padma Shri in 1988 and the Padma Vibhushan in 2021.", "claimIds": ["C030", "C031", "C032", "C033"]},
+          {"text": "Padma Shri sculptor Pravakara Maharana, a resident of Sujanagar near Gop, began training at the Orissa State Handicraft Training Centre in Bhubaneswar in 1975.", "claimIds": ["C037", "C040"]}
+        ]
+      },
+      {
+        "discipline": "PROCESS",
+        "sentences": [
+          {"text": "Odisha Tourism says that, whether the stone is hard or soft, an outline is first drawn on stone already cut to size, and the figure is brought out by removing the unwanted portions.", "claimIds": ["C054"]},
+          {"text": "In the GI method of production, the traced design is given a crude shape, then the final carving is carried out and the items are polished.", "claimIds": ["C050"]},
+          {"text": "The block of stone is broken down into main planes, its surface drilled to various depths and a rough body outline made before the intricate work, after which tool marks are removed with flat chisels.", "claimIds": ["C051", "C052", "C053"]},
+          {"text": "Odisha Tourism says harder stones are chiselled, while softer stones are scraped with a sharp flat-edged iron tool.", "claimIds": ["C055"]},
+          {"text": "Finally all surfaces are meticulously finished; the EPCH report describes sanding with sand paper, hand polishing with a traditional powder on a moist muslin cloth and a final polish with zinc powder.", "claimIds": ["C057", "C058", "C059"]}
+        ]
+      },
+      {
+        "discipline": "MATERIALS",
+        "sentences": [
+          {"text": "The GI journal lists serpentine, which looks solid grey at first and turns translucent green when worked, granite from Moyurbanj for heavy work, sandstone (saan patar) for rough big sculpture and soft red naali stone.", "claimIds": ["C070", "C071", "C072", "C073"]},
+          {"text": "Odisha Tourism lists ultra soft white soapstone (khadipathara), greenish chlorite (kochilapathara), pinkish khondalite (sahanapathara or baulapathara) and black granite (mugunipathara), the hardest of all.", "claimIds": ["C078"]},
+          {"text": "Sources differ on khadipathara, which a Millennium Post feature gives as the local name of serpentine, and on the main stone, which the Orissa Reference Annual gives as khondalites and granites.", "claimIds": ["C079", "C081", "C078", "C005"]},
+          {"text": "The EPCH report describes a soft pink stone brought from the Barbil areas that polishes to mottled bright pink, green to black, and says Pathuriasahi craftsmen at Puri carve replicas of temple sculptures in pink stone and hard kochila.", "claimIds": ["C083", "C085"]},
+          {"text": "The adhesive car patch fixes and dries within 15 minutes, and Araldite takes 12 to 24 hours to join stone and is used for its strong bonding.", "claimIds": ["C074", "C075"]},
+          {"text": "The Konark Sun Temple itself was built of poor-quality khondalite throughout, with chlorite for doorframes and a few sculptures and laterite in its foundation.", "claimIds": ["C091"]}
+        ]
+      },
+      {
+        "discipline": "GEOLOGY",
+        "sentences": [
+          {"text": "The stone is called serpentine because its colour and markings resemble the skin of snakes.", "claimIds": ["C086"]},
+          {"text": "Serpentine comes in multicoloured green, pink, grey and black, with a dull to greasy lustre and a greasy feel, and is soft compared with other dark rocks.", "claimIds": ["C087", "C088"]},
+          {"text": "In mineralogy, serpentine may refer to any of 20 minerals of the serpentine group.", "claimIds": ["C090"]},
+          {"text": "None of the stones of the Konark Sun Temple was available near the site, so the material was brought long distances.", "claimIds": ["C092"]}
+        ]
+      },
+      {
+        "discipline": "DESIGN",
+        "sentences": [
+          {"text": "The GI journal divides the sculptures of Konark's artists into four categories: the divine, the secular figure, the world of flora and the world of fauna.", "claimIds": ["C110"]},
+          {"text": "The figures generally carved depict Odissi dance poses (mudras) and are dressed and ornamented with traditional Orissan garments and jewellery.", "claimIds": ["C112"]},
+          {"text": "Temple sculptures provide the models for motifs such as alasa kanyas, salabhanjikas, surasundaris, the nava grahas, the Konark wheel and horse, and composite figures such as gajabidala and gajasimha.", "claimIds": ["C113", "C114"]},
+          {"text": "Other motifs represent deities such as Krishna and Radha, Laxmi, Vishnu, Durga, Buddha and Ganesh, and recent articles include ash trays, paperweights, candle stands and bookrests.", "claimIds": ["C115", "C117"]},
+          {"text": "Odisha's carvers also make images for installation in temples as presiding deities and parswadevatas, and large pieces to decorate public places.", "claimIds": ["C116"]},
+          {"text": "The Orissa Reference Annual names the Sun temple wheel as the most famous of the modern decorative pieces.", "claimIds": ["C118"]},
+          {"text": "UNESCO counts 24 carved wheels on the temple, each about 3 m in diameter, while World History Encyclopedia's introduction gives 12, and UNESCO's descriptions differ on whether six or seven horses draw the chariot.", "claimIds": ["C023", "C024", "C097"]}
+        ]
+      },
+      {
+        "discipline": "ECONOMICS",
+        "sentences": [
+          {"text": "The Orissa State Cooperative Handicrafts Corporation Limited filed GI application 87 on 9 April 2007 in class 19, though a Millennium Post feature refers to the memorandum filed with the GI registry in 2008.", "claimIds": ["C140", "C150"]},
+          {"text": "The application was published in Supplementary Journal 1, dated 24 March 2008, and certificate number 69 is dated 10 July 2008, with registration valid up to 8 April 2027.", "claimIds": ["C141", "C142"]},
+          {"text": "The GI registry's list of authorised users runs to serial number 2.", "claimIds": ["C149"]},
+          {"text": "Sources differ on inspection: the GI journal names an inspection body that includes the Managing Director of Utkalika, while the application as filed left inspection to customers and retailers.", "claimIds": ["C146", "C147"]},
+          {"text": "In December 2016 the EPCH ran a 25-day stone craft workshop at Bhubaneswar for 40 artisans under National Awardee Susil Kumar Maharana.", "claimIds": ["C039"]},
+          {"text": "A Development Commissioner (Handicrafts) official told the EPCH designer in 2016 that exports dealt with the same product line and were steadily declining.", "claimIds": ["C043"]}
+        ]
+      },
+      {
+        "discipline": "GEOGRAPHY",
+        "sentences": [
+          {"text": "The GI journal names Konark in Puri district and Bhubaneswar with its outskirts as the main areas of production.", "claimIds": ["C002"]},
+          {"text": "Odisha Tourism says Odisha's stone carving is practised mainly at Puri, Bhubaneswar and Lalitgiri in Cuttack district, with some artisans at Khiching in Mayurbhanj district.", "claimIds": ["C130"]},
+          {"text": "The Konark Sun Temple stands on the shores of the Bay of Bengal, about 35 km northeast of the city of Puri.", "claimIds": ["C133"]}
+        ]
+      }
+    ]
+  }
+}

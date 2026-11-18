@@ -11,6 +11,7 @@ from app.api.voice_deps import current_voice, voice_runtime
 from app.core.db import sessionmaker
 from app.core.deps import get_current_user, require
 from app.core.errors import AppError
+from app.core.rate_limit import retry_after_value
 from app.core.roles import Capability, can, is_uncapped
 from app.models import User
 from app.schemas.listen import ListenOffer
@@ -49,7 +50,7 @@ def throttled_voice_user(attempt: Callable[[str], tuple[bool, float]], detail: s
             return user
         allowed, retry = attempt(str(user.id))
         if not allowed:
-            wait = str(max(1, int(retry + 0.999)))
+            wait = retry_after_value(retry)
             raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, detail, {"Retry-After": wait})
         return user
 

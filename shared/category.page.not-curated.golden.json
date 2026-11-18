@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "category": {
+    "slug": "Paper-Craft-Category",
+    "name": "Paper Craft Category",
+    "label": "Paper",
+    "palette": "paper",
+    "path": "/categories/Paper-Craft-Category",
+    "craftCount": 10
+  },
+  "curated": false,
+  "curation": null,
+  "hero": null,
+  "overview": {
+    "lede": [],
+    "keyFacts": [],
+    "sections": []
+  },
+  "subCategories": [
+    {
+      "slug": "Paper-Crafts",
+      "name": "Paper Crafts",
+      "label": "Paper crafts",
+      "craftCount": 10,
+      "crafts": [
+        {
+          "slug": "Arunachal-Pradesh-Monpa-Handmade-Paper",
+          "name": "Arunachal Pradesh Monpa Handmade Paper",
+          "path": "/crafts/Arunachal-Pradesh-Monpa-Handmade-Paper",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kalpi-Handmade-Paper",
+          "name": "Kalpi Handmade Paper",
+          "path": "/crafts/Kalpi-Handmade-Paper",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kashmir-Paper-Machie",
+          "name": "Kashmir Paper Machie",
+          "path": "/crafts/Kashmir-Paper-Machie",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Mathura-Sanjhi-Craft",
+          "name": "Mathura Sanjhi Craft",
+          "path": "/crafts/Mathura-Sanjhi-Craft",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Tirukanur-Papier-Mache-Craft",
+          "name": "Tirukanur Papier Mache Craft",
+          "path": "/crafts/Tirukanur-Papier-Mache-Craft",
+          "giStatus": "GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Kite-Making",
+          "name": "Kite making",
+          "path": "/crafts/Kite-Making",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Paper-Craft-Paper-Quiling-Rolling-Weaving",
+          "name": "Paper Craft (Paper Quiling, Rolling & Weaving)",
+          "path": "/crafts/Paper-Craft-Paper-Quiling-Rolling-Weaving",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Paper-Machie",
+          "name": "Paper machie",
+          "path": "/crafts/Paper-Machie",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Paper-Pulp-Sakhta-Saz",
+          "name": "Paper Pulp (Sakhta Saz)",
+          "path": "/crafts/Paper-Pulp-Sakhta-Saz",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Sanjhi-Art",
+          "name": "Sanjhi Art",
+          "path": "/crafts/Sanjhi-Art",
+          "giStatus": "NON_GI",
+          "catchAll": false,
+          "curated": false
+        },
+        {
+          "slug": "Other-Paper-Crafts",
+          "name": "Other Paper Crafts",
+          "path": "/crafts/Other-Paper-Crafts",
+          "giStatus": "NON_GI",
+          "catchAll": true,
+          "curated": false
+        }
+      ],
+      "sentence": null,
+      "openQuestion": null
+    }
+  ],
+  "sourcesDiffer": [],
+  "glossary": [],
+  "pictures": [],
+  "openQuestions": [],
+  "claims": [],
+  "sources": []
+}

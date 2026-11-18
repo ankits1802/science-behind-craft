@@ -3,11 +3,12 @@ from __future__ import annotations
 import uuid
 from collections.abc import Mapping
 from types import MappingProxyType
-from typing import Literal, Protocol, runtime_checkable
+from typing import Any, Literal, Protocol, runtime_checkable
 
 from pydantic import Field, field_validator
 
-from app.models.enums import CLAIM_STATUSES, EVIDENCE_LEVELS
+from app.core.roles import Capability, can
+from app.models.enums import CHUNK_ACLS, CLAIM_STATUSES, EVIDENCE_LEVELS
 
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS
@@ -15,10 +16,14 @@ from .vocabulary import AnswerMode, ChunkAcl, EvidenceLevel, FacetType
 
 __all__ = [
     "CLAIM_SUBJECT_TYPES",
+    "EVERY_CHUNK_ACLS",
     "HIDDEN_CLAIM_STATUSES",
     "KNOWLEDGE_RESULT_MAX",
     "MODE_CLAIM_LEVELS",
     "MODE_CLAIM_STATUSES",
+    "OPEN_CHUNK_ACLS",
+    "PUBLIC_CHUNK_ACL",
+    "RESEARCHER_CHUNK_ACL",
     "RESTRICTED_SENSITIVITY",
     "VISIBLE_SENSITIVITY",
     "ChunkHit",
@@ -26,6 +31,7 @@ __all__ = [
     "KnowledgeHits",
     "KnowledgeQuery",
     "KnowledgeRetriever",
+    "chunk_acls_for",
 ]
 
 KNOWLEDGE_RESULT_MAX = 50
@@ -36,6 +42,10 @@ VISIBLE_SENSITIVITY = "OPEN"
 RESTRICTED_SENSITIVITY = "RESTRICTED"
 VERIFIED_MODE_LEVELS = ("VERIFIED", "REVIEWED")
 SHOWN_CLAIM_STATUSES = tuple(status for status in CLAIM_STATUSES if status not in HIDDEN_CLAIM_STATUSES)
+PUBLIC_CHUNK_ACL: ChunkAcl = "PUBLIC"
+RESEARCHER_CHUNK_ACL: ChunkAcl = "RESEARCHER"
+OPEN_CHUNK_ACLS: tuple[ChunkAcl, ...] = (PUBLIC_CHUNK_ACL,)
+EVERY_CHUNK_ACLS: tuple[str, ...] = CHUNK_ACLS
 
 MODE_CLAIM_LEVELS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {"VERIFIED": VERIFIED_MODE_LEVELS, "HYBRID": EVIDENCE_LEVELS, "DEEP": EVIDENCE_LEVELS}
@@ -52,7 +62,7 @@ class KnowledgeQuery(ContractModel):
     text: str = Field(min_length=1, max_length=QUESTION_MAX_CHARS)
     mode: AnswerMode
     facets: tuple[FacetType, ...] = ()
-    chunk_acls: tuple[ChunkAcl, ...] = ("PUBLIC",)
+    chunk_acls: tuple[ChunkAcl, ...] = OPEN_CHUNK_ACLS
     limit: int = Field(default=KNOWLEDGE_RESULT_DEFAULT, ge=1, le=KNOWLEDGE_RESULT_MAX)
 
     @field_validator("facets", "chunk_acls")
@@ -94,3 +104,9 @@ class KnowledgeHits(ContractModel):
 @runtime_checkable
 class KnowledgeRetriever(Protocol):
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits: ...
+
+
+def chunk_acls_for(reader: Any) -> tuple[str, ...]:
+    if can(reader, Capability.READ_RESEARCHER_QUOTES):
+        return EVERY_CHUNK_ACLS
+    return OPEN_CHUNK_ACLS

@@ -1,0 +1,57 @@
+event: understood
+data: {"crafts":[{"slug":"Kutch-Ajrakh","name":"Kutch Ajrakh","path":"/crafts/Kutch-Ajrakh"}],"candidates":[],"depth":"DETAILED","language":"en"}
+
+event: status
+data: {"step":"PLANNING","message":"Planning the research on Kutch Ajrakh"}
+
+event: section_started
+data: {"id":"s1","discipline":"CHEMISTRY","title":"The chemistry behind Kutch Ajrakh","order":1,"state":"RESEARCHING"}
+
+event: section_started
+data: {"id":"s2","discipline":"MATERIALS","title":"What Kutch Ajrakh is made from","order":2,"state":"RESEARCHING"}
+
+event: section_started
+data: {"id":"s3","discipline":"PROCESS","title":"How Kutch Ajrakh is made","order":3,"state":"RESEARCHING"}
+
+event: source
+data: {"id":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","kind":"GI_JOURNAL","title":"Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)","authors":["Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan","facilitated by Textiles Committee, Ministry of Textiles)"],"year":2023,"doi":null,"url":"https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050","publisher":"Geographical Indications Registry, Chennai (IP India)","licence":null,"attribution":null,"reliability":"A"}
+
+event: source
+data: {"id":"907e2c52-14e7-5e41-9b27-9c10f70906a9","kind":"WEB_PAGE","title":"Water woes: Kutch's age-old Ajrakh craft faces its nemesis, once again","authors":["Azera Parveen Rahman"],"year":2019,"doi":null,"url":"https://india.mongabay.com/2019/10/water-woes-kutchs-age-old-ajrakh-craft-faces-its-nemesis-once-again/","publisher":"Mongabay India","licence":null,"attribution":null,"reliability":"B"}
+
+event: lede
+data: {"block":{"id":"lede","kind":"lede","version":1,"reuse":null,"headline":"Which mordant fixes the red in Kutch Ajrakh block printing?","sentences":[{"id":"lede.1","text":"Alum is the mordant that fixes the red, together with dhaori (tamarisk galls).","level":"PROVISIONAL","citations":[{"id":"bf4c4038-3785-5da6-b3eb-281648bc27fc","claimId":"f0b75ff9-d401-543e-b58e-4b73484ecafe","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"The different colours are prepared by using the above ingredients as follows: Red color: This color comes from alum as mordant and dhaori na phool (galls of tamarisk).","locator":"GI Journal No. 188 copy (application 1050), PDF p. 4","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]},{"id":"lede.2","text":"First the cloth is soaked in harde, and the tannin in the myrobalan is an essential pre-mordant aiding adhesion of printed mordants.","level":"PROVISIONAL","citations":[{"id":"f910f780-003e-5983-9953-5e997dd1b743","claimId":"dec96d9f-7344-5473-a62d-b895358242c4","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"The cloth is then dried in the sun without rinsing off the Harde solution. The tannin in the Myroballan penetrates the cotton fibres and is essential pre-mordant which aids the adhesion of the subsequent printed mordants onto the cloth.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 5","context":null,"evidence":"QUOTED","level":"PROVISIONAL"},{"id":"03610959-fde3-58bc-bd8f-2c449deba4ce","claimId":"dec96d9f-7344-5473-a62d-b895358242c4","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"The soft cleaned cloth now undergoes a soak in Harde","locator":"GI Journal No. 188 copy (application 1050), PDF p. 5","context":null,"evidence":"QUOTED","level":"PROVISIONAL"},{"id":"ae5dc5f7-00df-5300-b749-dd85ee0dc726","claimId":"d48ae73f-2f7c-57e1-a20c-38d46767680b","sourceId":"907e2c52-14e7-5e41-9b27-9c10f70906a9","quote":"\"One of the initial stages is when the cloth is dyed with myrobalan and then washed.","locator":"§ \"History repeats itself\"","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]},{"id":"lede.3","text":"The red dye then links to the alum mordant on the cotton fibres.","level":"PROVISIONAL","citations":[{"id":"a47cb201-1788-5479-a1c8-77d227b45692","claimId":"0b0f2a61-f9c6-5664-a04a-66ad4796020f","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design","locator":"GI Journal No. 188 copy (application 1050), PDF p. 8","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]}],"figure":null}}
+
+event: section_heading
+data: {"sectionId":"s1","title":"Alum holds the red, iron the black"}
+
+event: block
+data: {"sectionId":"s1","block":{"id":"s1.b1","kind":"prose","version":1,"reuse":null,"sentences":[{"id":"s1.b1.1","text":"Alum is used as a mordant to fasten the colours.","level":"PROVISIONAL","citations":[{"id":"c7c60b8b-8e49-5da9-9b60-3b3a7d360670","claimId":"1dcf0fe9-1f1c-518e-868b-5e54bcd44a2e","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"Alum is used as a mordant in the process to fasten the colours.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 2","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]},{"id":"s1.b1.2","text":"Printed on harde-treated cloth, kut develops a deep fast chocolate-black as iron reacts with the tannic acid.","level":"PROVISIONAL","citations":[{"id":"6211c7f6-8d84-5ac5-8528-256a5dc1cb5b","claimId":"8e106f5b-6c6e-5857-9d66-95ec73a07421","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 6","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]}]}}
+
+event: section_done
+data: {"sectionId":"s1","state":"READY","searched":null}
+
+event: section_heading
+data: {"sectionId":"s2","title":"Alum in tamarind paste, printed where red is wanted"}
+
+event: block
+data: {"sectionId":"s2","block":{"id":"s2.b1","kind":"prose","version":1,"reuse":null,"sentences":[{"id":"s2.b1.1","text":"Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (kachika).","level":"PROVISIONAL","citations":[{"id":"c106d4a7-5722-56bc-8fc8-7a0df35c5b0e","claimId":"924ebc33-e949-5655-95a4-538d13f8fca7","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (locally known as kachika).","locator":"GI Journal No. 188 copy (application 1050), PDF p. 6","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]},{"id":"s2.b1.2","text":"Pa, a smooth paste of alum in tamarind-seed paste, is printed with blocks patterned for the mavi areas where red is required.","level":"PROVISIONAL","citations":[{"id":"44887a17-3ba2-551b-8ac3-8604beadc326","claimId":"9a3c214f-f54f-5f76-a5b7-88aa6a363489","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"This smooth paste called Pa, is printed with blocks which have been carved so that the printing portion of the raised face is patterned only, with the areas of the design called mavi, where red is required.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 6","context":null,"evidence":"QUOTED","level":"PROVISIONAL"},{"id":"bbc5ffe3-77cd-574c-81fe-dd953be4d0a7","claimId":"9a3c214f-f54f-5f76-a5b7-88aa6a363489","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (locally known as kachika).","locator":"GI Journal No. 188 copy (application 1050), PDF p. 6","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]}]}}
+
+event: section_done
+data: {"sectionId":"s2","state":"READY","searched":null}
+
+event: section_heading
+data: {"sectionId":"s3","title":"From the harda soak to a cool morning wash"}
+
+event: block
+data: {"sectionId":"s3","block":{"id":"s3.b1","kind":"prose","version":1,"reuse":null,"sentences":[{"id":"s3.b1.1","text":"Cloth dipped in harda solution dries to a crude cream colour.","level":"PROVISIONAL","citations":[{"id":"a6288c95-4c72-5c0a-8bd8-e9d60789ac33","claimId":"3149bb67-db48-52b3-a89b-54e342356d8f","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"First, the white cloth of requisite size treated with emulsion of castor oil is dipped in the solution of harda powder (Terminalia chebula) and cold water. The cloth when dried gets a crude cream colour.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 3","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]},{"id":"s3.b1.2","text":"The final wash is usually done early in the morning when water is cool, as warm afternoon water may dissolve some of the alum.","level":"PROVISIONAL","citations":[{"id":"c55e7e8a-e1f1-511a-a63a-0b447d239b67","claimId":"aef422e3-a33e-5e74-96f4-3268621b710d","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"It is usually done early in the morning when the water is cool as the warm water of the afternoon may dissolve some of the alum.It clears the excess dyes and makes the whiteness of the Ajrakh stars shine bright.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 8","context":null,"evidence":"QUOTED","level":"PROVISIONAL"},{"id":"bfeaaf18-3f99-5c87-bd5b-fd4d5c2d7edd","claimId":"aef422e3-a33e-5e74-96f4-3268621b710d","sourceId":"d0f53ee9-4b97-5df7-a367-686957bdb7c8","quote":"Final Wash (Vichharana):The final washing and beating to remove any loose colour is vital.","locator":"GI Journal No. 188 copy (application 1050), PDF p. 8","context":null,"evidence":"QUOTED","level":"PROVISIONAL"}],"translated":false,"terms":[]}]}}
+
+event: section_done
+data: {"sectionId":"s3","state":"READY","searched":null}
+
+event: follow_ups
+data: {"items":["Why does iron in the wash water leave black spots on harde-treated cloth?","Does synthetic alizarin take to the alum mordant as madder does?"]}
+
+event: done
+data: {"answerId":"5e7a1d0c-3b2f-4c6d-9e8f-b0c1d2e3f4a5"}
+

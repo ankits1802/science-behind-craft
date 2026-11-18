@@ -21,11 +21,13 @@ from stored rows.
 
 | Method | Path | Auth | Answer |
 |---|---|---|---|
-| GET | `/api/crafts/{slug}/region` | signed in | `CraftRegion`; 404 for an unknown slug; a `MERGED` slug answers with its target's region |
-| GET | `/api/map/layers` | signed in | `MapLayerList`; 404 while no `DR_DISTRICT_SHAPES` dataset row is stored (nothing could cite the boundary) |
-| GET | `/api/map/layers/{layer}` | signed in | `MapLayer`; 404 for an unknown or empty layer, or without the boundary row. `ETag: "<version>"`; a matching `If-None-Match` answers 304 |
+| GET | `/api/crafts/{slug}/region` | public (decision 0079) | `CraftRegion`; 404 for an unknown slug; a `MERGED` slug answers with its target's region |
+| GET | `/api/map/layers` | public | `MapLayerList`; 404 while no `DR_DISTRICT_SHAPES` dataset row is stored (nothing could cite the boundary) |
+| GET | `/api/map/layers/{layer}` | public | `MapLayer`; 404 for an unknown or empty layer, or without the boundary row. `ETag: "<version>"`; a matching `If-None-Match` answers 304 |
 
-`Cache-Control: private, no-cache` on all three (CloudFront never caches `/api`, PLAN 15).
+All three answer `Cache-Control: private, no-cache` with a token and `public, max-age=300`
+without, with `Vary: Authorization` (decision 0079); the craft region's and the layer list's
+`ETag` is the SHA-256 of the body, and a matching `If-None-Match` answers 304 on all three.
 Nothing is queried live: every value is a stored per-district aggregate (PLAN 17.1).
 
 ## CraftRegion
@@ -57,7 +59,9 @@ is unchanged; the client keeps the name `RegionDataset` (`datasetShape`).
   `CRAFT_LOCATION` with the location's `sourceId` and that source's title as `label`, and the
   location's `evidenceLevel`. A location without a source, or whose source is `RESTRICTED`, is not
   shown (every fact cites) and is logged. Two locations in one district are one place, cited by
-  the stronger level (ties by location id).
+  the stronger level (ties by location id). A district place's `placeLabel` is its district's
+  name, since its values describe the whole district; the client names the craft's villages and
+  towns inside it from the craft page's places.
 - One `STATE` place per state in `Craft.stateOfPractice` that has no district place:
   `basis` `MASTER_LIST`, `sourceId` null, `label` `IIT Crafts Master List, 2026-10-20`
   (`MASTER_LIST_LABEL`), level `REVIEWED` (the profile's level for the master list,
@@ -82,6 +86,14 @@ is unchanged; the client keeps the name `RegionDataset` (`datasetShape`).
   name), `value` the area share, `stat` `SHARE`, `unit` `fraction`. GLiM also stores each share as
   a `DistrictEnvValue` `lithology_<code>`; those twins are not read (`LITHOLOGY_TWIN_PREFIX`).
   Geology rows without a share (the MRDS occurrence list) are not values.
+- **One normal per quantity.** Where two datasets give a climate normal of the same quantity
+  (`geo/region_view.CLIMATE_QUANTITIES`), a place shows the normal of the dataset of that
+  quantity's trend (`NORMAL_SOURCES`, built from `geo/climate.TREND_DATASETS`): annual and monthly
+  rainfall from CHIRPS, annual mean temperature from GHCN CAMS, so the Region card and the
+  answer's climate card state the same normal. The other dataset's `NORMAL` and its district percentiles
+  of that normal (`DISTRICT_P10`, `DISTRICT_P90` over a `YYYY-YYYY` or `YYYY-YYYY-MM` period) are
+  left out, month by month, only when the preferred dataset has that normal for the place. Yearly
+  values and trends are always kept. The map's district panel applies the same rule.
 - **Order within a facet**: dataset code, variable, depth from the surface down, period,
   `ENV_STATS` order, value text (`geo/region_view.value_order`).
 - **Inherited districts.** A district with no polygon (34 LGD districts and 9 pending ones today,
@@ -121,7 +133,7 @@ of a value decides its facet (`DATASET_FACETS`):
 | Facet | Datasets |
 |---|---|
 | SOIL | `SOILGRIDS_2_0` |
-| CLIMATE | `CHELSA_2_1_1981_2010`, `CHIRPS_3_0` |
+| CLIMATE | `CHELSA_2_1_1981_2010`, `CHIRPS_3_0`, `GHCN_CAMS_T2M` |
 | WATER | `HYDRORIVERS_1_0` |
 | FOREST | `HANSEN_GFC_2025_V1_13` |
 | LAND_COVER | `ESA_WORLDCOVER_2021_V200` |
@@ -145,7 +157,10 @@ BoundaryNote {caption, dataset}
 - Layers are a registry (`geo/layers.MAP_LAYERS`, decision 0016), each one dataset, variable,
   stored depth or period and stat, with an id of lowercase words and hyphens (`soil-ph-0-5cm`),
   in facet order. Only layers with at least one district value are listed, in registry order.
-  The unit is the stored rows' one unit; a CHIRPS layer's period is its dataset row's period.
+  The unit is the stored rows' one unit; a CHIRPS or GHCN CAMS layer's period is its dataset
+  row's period. The annual precipitation and annual mean temperature layers draw the normal of
+  the quantity's trend dataset (`TREND_DATASETS`, CHIRPS and GHCN CAMS), the normal the district
+  panel shows.
   A layer's `resolution` lists every grid its values were read at.
 - `values` maps each district LGD code (as a string) to its value; districts with no value are
   absent and drawn as no data.
@@ -203,7 +218,7 @@ RiverTrace {datasetCode: "HYDRORIVERS_1_0", mainRiv, reachIds[] (>= 1), district
   lines with `AdminDistrict.geom`, dumped into parts, ordered by reach, then by the
   `ST_LineLocatePoint` of each part's start, then by LGD). Computed by PostGIS each time a river
   is traced, so it always follows the stored district shapes (decision 0043).
-- **Geometry served.** `GET /api/rivers/{mainRiv}` (signed in) answers one TopoJSON topology per
+- **Geometry served.** `GET /api/rivers/{mainRiv}` (public, decision 0079) answers one TopoJSON topology per
   basin, read from the private media bucket where the ETL wrote it (key from `services/naming`,
   under `media/rivers/<edition>/<mainRiv>/<sha256>/`, with its naming golden row): object `reaches`
   (`RIVER_REACHES_OBJECT`), a `GeometryCollection` of `LineString`s, each `id` its `HYRIV_ID` and
@@ -216,7 +231,8 @@ RiverTrace {datasetCode: "HYDRORIVERS_1_0", mainRiv, reachIds[] (>= 1), district
   edition the dataset row's and the folder the file's own SHA-256, the `RiverBasin` row's
   `topologySha256`, so a load writes changed files beside the old ones and a row and its object
   never drift (decision 0050).
-  `Content-Type: application/json`, `Cache-Control: private, no-cache`, `ETag` the file's SHA-256
+  `Content-Type: application/json`, `Cache-Control: private, no-cache` with a token and
+  `public, max-age=300` without, `Vary: Authorization` (decision 0079), `ETag` the file's SHA-256
   (a matching `If-None-Match` answers 304 from the stored hash, without reading the bucket), 404
   for an unknown basin, a basin with no stored file or a file whose SHA-256 is not the row's (the
   client then hides the river; decision 0050), 503 when the bucket is not configured or

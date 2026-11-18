@@ -12,9 +12,9 @@ import {
   type KnownAnswerQuestion,
   type WaitOutcome
 } from "./answers";
+import { settle } from "./capture";
 import { CRAFT_SLUG, riversLoaded } from "./run";
 import { readSandboxFrames, watchSandboxFrames, type SandboxWatch } from "./sandboxWatch";
-import { settle } from "./screenRun";
 import { glanceAtTaps, pageNow, readTaps } from "./streamTap";
 
 const POLL_MS = 2_000;

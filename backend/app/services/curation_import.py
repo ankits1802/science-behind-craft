@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import uuid
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -18,12 +20,13 @@ from app.curation.checks import CheckContext, default_context
 from app.curation.dossier import Dossier
 from app.curation.files import CURATION_DIR, check_path, checked_dossier, dossier_paths
 from app.data.district_register import load_district_codes
+from app.data.portal_craft_register import load_portal_crafts
 from app.models import Craft, CuratedCraft, KnowledgePiece as PieceRow
 
 from . import knowledge_view
 from .answer_events import cited_claims
 from .curated_index import CuratedPage
-from .curation_claims import withdraw_seed_edges, write_claims
+from .curation_claims import craft_curated_claims, withdraw_seed_edges, write_claims
 from .curation_overview import OverviewPieces, indexed_overview, overview_pieces
 from .curation_plan import CurationPlan, curation_plan
 from .curation_rows import CraftTarget
@@ -32,12 +35,24 @@ from .curation_writes import insert_missing, stored_values, sync_rows
 from .piece_lookup import craft_districts
 from .piece_store import piece_values
 
-__all__ = ["DossierOutcome", "ImportReport", "dossier_digest", "import_curation", "import_dossier"]
+__all__ = [
+    "IMPORTED",
+    "REFUSED",
+    "WAITING",
+    "DossierOutcome",
+    "ImportReport",
+    "dossier_digest",
+    "import_curation",
+    "import_dossier",
+    "import_path",
+    "write_pieces",
+]
 
 logger = logging.getLogger(__name__)
 
 IMPORTED = "IMPORTED"
 REFUSED = "REFUSED"
+WAITING = "WAITING"
 
 
 @dataclass(frozen=True)
@@ -76,6 +91,7 @@ class ImportReport:
             "withdrawnEdgeSentences": self.withdrawn_edges,
             "imported": sum(1 for outcome in self.dossiers if outcome.status == IMPORTED),
             "refused": len(self.refused),
+            "waiting": sum(1 for outcome in self.dossiers if outcome.status == WAITING),
             "dossiers": [outcome.summary() for outcome in self.dossiers],
         }
 
@@ -92,17 +108,27 @@ async def import_curation(
 ) -> ImportReport:
     withdrawn = await withdraw_seed_edges(session)
     checking = context or default_context()
-    outcomes = [await _import_path(session, path, checking) for path in dossier_paths(directory)]
+    outcomes = [await import_path(session, path, checking) for path in dossier_paths(directory)]
     return ImportReport(withdrawn_edges=withdrawn, dossiers=tuple(outcomes))
 
 
-async def _import_path(session: AsyncSession, path: Path, context: CheckContext) -> DossierOutcome:
+async def import_path(session: AsyncSession, path: Path, context: CheckContext) -> DossierOutcome:
     result = checked_dossier(path, context)
     if result.problems or result.dossier is None or result.check is None:
         lines = tuple(problem.line(path.name) for problem in result.problems) or (
             "the check file is missing",
         )
         return DossierOutcome(file=path.name, status=REFUSED, problems=lines)
+    slug = result.dossier.craft_slug
+    if slug in {craft.slug for craft in load_portal_crafts()} and not await _stored(session, slug):
+        return DossierOutcome(
+            file=path.name,
+            status=WAITING,
+            craft_slug=slug,
+            problems=(
+                f"{slug} is a portal-added craft the database does not hold yet; the portal craft sync adds it",
+            ),
+        )
     digest = dossier_digest(path, check_path(path, result.dossier.craft_slug))
     try:
         async with session.begin_nested():
@@ -124,13 +150,14 @@ async def import_dossier(
     plan = curation_plan(dossier, check, target, load_district_codes())
     plan = plan.with_sources(await source_aliases(session, plan))
     note = f"curation import {dossier.craft_slug} v{dossier.version}"
-    changed = {"claims": await write_claims(session, craft.id, plan.part("claims"), note)}
+    marked = craft_curated_claims(craft.id)
+    changed = {"claims": await write_claims(session, marked, plan.part("claims"), note)}
     changed |= await write_evidence(session, plan)
     changed |= await write_structure(session, plan, previous)
     changed |= await write_records(session, plan, previous)
     await session.flush()
     overview = await _overview(session, plan, craft)
-    changed["pieces"] = await _write_pieces(session, overview, previous)
+    changed["pieces"] = await write_pieces(session, overview, previous.piece_ids() if previous else {})
     changed["curatedCraft"] = await _write_page(session, plan, overview, (digest, stored.get(craft.id)))
     return DossierOutcome(
         file=f"{dossier.craft_slug}.json",
@@ -140,6 +167,10 @@ async def import_dossier(
         changed={key: value for key, value in changed.items() if value},
         dropped_sentences=overview.dropped,
     )
+
+
+async def _stored(session: AsyncSession, slug: str) -> bool:
+    return await session.scalar(select(Craft.id).where(Craft.slug == slug)) is not None
 
 
 async def _craft(session: AsyncSession, slug: str) -> Craft:
@@ -162,13 +193,16 @@ def _previous_index(stored: dict[str, Any] | None) -> CuratedPage | None:
 async def _overview(session: AsyncSession, plan: CurationPlan, craft: Craft) -> OverviewPieces:
     views, sources = await knowledge_view.claims_by_id(session, plan.claim_ids())
     cited = cited_claims(list(views.values()), sources)
-    return overview_pieces(plan.dossier, plan.craft, cited, await craft_districts(session, craft))
+    districts = await craft_districts(session, craft)
+    return overview_pieces(plan.dossier, cited, craft_id=craft.id, districts=districts)
 
 
-async def _write_pieces(session: AsyncSession, overview: OverviewPieces, previous: CuratedPage | None) -> int:
+async def write_pieces(
+    session: AsyncSession, overview: OverviewPieces, previous_parts: Mapping[str, uuid.UUID]
+) -> int:
     written = await insert_missing(session, PieceRow, [piece_values(piece) for piece in overview.pieces])
     retired = 0
-    for part, old in (previous.piece_ids() if previous else {}).items():
+    for part, old in previous_parts.items():
         new = overview.parts.get(part)
         if new == old:
             continue
