@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 
 from app.research.blocks import ExplainerSentence, StagePicture
 from app.research.craft_page import PagePicture
+from app.research.craft_page_context import INLINE
 from app.research.craft_parts import Focal, PagePlate, PlatePart, RecordPart
 
 from .chapter_context import ChapterContext
@@ -59,7 +60,7 @@ def picture_plan(ctx: ChapterContext, pictures: Sequence[PagePicture]) -> Pictur
     indexed = _indexed(curated)
     masthead: PagePlate | None = None
     placed: list[PlacedPlate] = []
-    for picture in pictures:
+    for picture in (picture for picture in pictures if picture.media.display == INLINE):
         entry = indexed.get(picture.media.id)
         placement = entry.placement if entry is not None else None
         plate = _plate(ctx, picture, entry)

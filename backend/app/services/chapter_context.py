@@ -116,8 +116,8 @@ class ChapterContext:
 
     def process(self) -> ProcessRecords:
         known = {claim_id: fact for claim_id in self.claims if (fact := self.known(claim_id)) is not None}
-        sources = {**self.records.sources, **self.rows.record_sources}
         stored = self.records.process
+        sources = {**stored.sources, **self.records.sources, **self.rows.record_sources}
         uses = tuple(self._with_compound(use) for use in stored.materials)
         stages = tuple(self._with_listed(stage) for stage in stored.stages)
         claims = {**stored.claims, **known}
