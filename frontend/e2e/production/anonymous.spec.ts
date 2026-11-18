@@ -4,16 +4,16 @@ import { passPreviewProtection } from "./preview";
 import { COMPARED_CRAFTS, CRAFT_SLUG, baseUrl, previewBypassToken, type Credentials } from "./run";
 import { submitSignIn } from "./signIn";
 
-type ReadingPage = { name: string; path: string; heading: RegExp };
+type ReadingPage = { name: string; path: string; heading: RegExp; way: "sign-in" | "ask" };
 
 const REFUSED_STATUSES = new Set([401, 403]);
-const ASK_AFTER_SIGN_IN = `/ask?craft=${CRAFT_SLUG}`;
+const MONOGRAPH_ASK = 'a[href^="/ask?"]';
 
 const ANONYMOUS_PAGES: readonly ReadingPage[] = [
-  { name: "the atlas", path: "/crafts", heading: /^Crafts$/ },
-  { name: "Kutch Ajrakh", path: `/crafts/${CRAFT_SLUG}`, heading: /Ajrakh/ },
-  { name: "the map", path: "/map", heading: /^Map$/ },
-  { name: "compare", path: `/compare?${COMPARED_CRAFTS.map((slug) => `crafts=${slug}`).join("&")}`, heading: /^Compare crafts$/ }
+  { name: "the atlas", path: "/crafts", heading: /^Crafts$/, way: "sign-in" },
+  { name: "Kutch Ajrakh", path: `/crafts/${CRAFT_SLUG}`, heading: /Ajrakh/, way: "ask" },
+  { name: "the map", path: "/map", heading: /^Map$/, way: "sign-in" },
+  { name: "compare", path: `/compare?${COMPARED_CRAFTS.map((slug) => `crafts=${slug}`).join("&")}`, heading: /^Compare crafts$/, way: "sign-in" }
 ];
 
 function watchRefusals(page: Page): string[] {
@@ -42,16 +42,17 @@ for (const reading of ANONYMOUS_PAGES) {
     await expect(page.getByRole("heading", { level: 1, name: reading.heading })).toBeVisible();
     await page.waitForLoadState("networkidle");
     expect(new URL(page.url()).pathname).toBe(reading.path.split("?")[0]);
-    await expect(page.getByTestId("sign-in-link")).toBeVisible();
+    await expect(reading.way === "ask" ? page.locator(MONOGRAPH_ASK).first() : page.getByTestId("sign-in-link")).toBeVisible();
     expect(refused).toEqual([]);
   });
 }
 
 test("Ask on Kutch Ajrakh sends an anonymous reader to sign in and back to the question", async ({ page }) => {
   await page.goto(`/crafts/${CRAFT_SLUG}`, { waitUntil: "domcontentloaded" });
-  await page.getByTestId("ask-about-craft").click();
+  await page.locator(MONOGRAPH_ASK).first().click();
   await page.waitForURL((url) => url.pathname === "/login");
-  expect(new URL(page.url()).searchParams.get("next")).toBe(ASK_AFTER_SIGN_IN);
+  const next = new URL(new URL(page.url()).searchParams.get("next") ?? "/", baseUrl());
+  expect([next.pathname, next.searchParams.get("craft"), Boolean(next.searchParams.get("q"))]).toEqual(["/ask", CRAFT_SLUG, true]);
   const account = optionalAccount();
   test.skip(account === null, "Set E2E_EMAIL and E2E_PASSWORD to finish signing in.");
   if (!account) return;

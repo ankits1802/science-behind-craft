@@ -33,9 +33,9 @@ const CRAFT_TABS_SHOWN: readonly [CraftTab, string][] = [
 ];
 const OTHER_CRAFTS: readonly [string, string][] = [
   ["Empty craft", EMPTY_CRAFT_SLUG],
-  ["All India craft", ALL_INDIA_CRAFT_SLUG],
-  ["Printed craft", PRINTED_CRAFT_SLUG]
+  ["All India craft", ALL_INDIA_CRAFT_SLUG]
 ];
+const MONOGRAPH_ASK = 'a[href^="/ask?"]';
 const UNKNOWN_CRAFT_TEXT = recordLoadFailure("craft", 404);
 
 function heading(page: Page, name: string | null): () => Promise<string[]> {
@@ -82,7 +82,12 @@ async function craftTabs(run: ScreenRun, page: Page): Promise<void> {
 async function readingScreens(run: ScreenRun, page: Page, user: User): Promise<void> {
   await run.visit("Ask", "/ask", async () => [...(await barProblems(page, user)), ...(await depthProblems(page, user))]);
   await run.visit("Crafts", "/crafts", heading(page, "Crafts"));
-  await craftScreens(run, page, CRAFT_SLUG, `Craft ${CRAFT_TAB_LABEL.overview}`);
+  await run.visit("Craft monograph", `/crafts/${CRAFT_SLUG}`, async () => {
+    await expect(page.getByRole("heading", { level: 1, name: /Ajrakh/ })).toBeVisible();
+    await expect(page.locator(MONOGRAPH_ASK).first()).toBeVisible();
+    return [];
+  });
+  await craftScreens(run, page, PRINTED_CRAFT_SLUG, `Craft ${CRAFT_TAB_LABEL.overview}`);
   await craftTabs(run, page);
   for (const [name, slug] of OTHER_CRAFTS) await craftScreens(run, page, slug, name);
   await run.visit(
