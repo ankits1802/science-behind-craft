@@ -3077,3 +3077,17 @@ Last reviewed: 2026-11-18.
   runs locally.
 - **Clears it:** replace the two series with the loaded `DISTRICT_MEAN` rows of district 449 once
   the ETL's yearly output is in the repository, then regenerate the golden.
+
+## The Kutch Ajrakh monograph served as built (decision 0100)
+
+### One craft has a hand-built page; the rest use the renderer
+
+- **What:** `/crafts/Kutch-Ajrakh` serves a static, hand-built page
+  (`frontend/public/monographs/kutch-ajrakh/index.html`, mapped in `CRAFT_MONOGRAPHS` in
+  `frontend/next.config.ts`). It does not follow dossier changes, the app's theme and shell, or
+  the edition addresses, and it is about 3 MB of inline markup.
+- **Why left:** the owner wanted the approved page live as it looks, now; the chapter renderer
+  does not yet reproduce it.
+- **Clears it:** generalise the page into the template for every craft, rendered from each
+  craft's dossier by the chapter renderer, then drop the `CRAFT_MONOGRAPHS` entry and the static
+  file.

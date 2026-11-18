@@ -20,6 +20,7 @@ from app.models import (
 from app.retrieval.statements import claim_conditions
 from app.services import knowledge_view, testimony_writes
 from app.services.artisan_voice_builder import voice_quote_payload
+from app.services.testimony_claims import ERASED_STATUS, ERASED_TEXT
 from app.services.testimony_readback import refreshed_document
 from app.services.testimony_store import approved_quotes, quote_states
 from app.services.testimony_writes import ContributionEdit
@@ -51,6 +52,11 @@ async def approved(session: AsyncSession, seeded: Seeded) -> ArtisanContribution
 
 async def count(session: AsyncSession, *where: object) -> int:
     return int(await session.scalar(select(func.count()).where(*where)) or 0)
+
+
+async def erased(session: AsyncSession, claim_id: object) -> tuple[object, ...]:
+    found = select(Claim.text, Claim.status, Claim.createdById).where(Claim.id == claim_id)
+    return tuple((await session.execute(found)).one())
 
 
 async def test_approval_writes_one_testimony_source(session: AsyncSession) -> None:
@@ -146,9 +152,10 @@ async def test_withdrawal_erases_the_claim_its_source_and_the_text(session: Asyn
     objects = RecordedObjects()
     await testimony_writes.withdraw(session, objects, seeded.artisan, item.id, now=NOW + timedelta(hours=1))
     await session.flush()
-    assert await session.get(Claim, claim_id) is None
+    assert await erased(session, claim_id) == (ERASED_TEXT, ERASED_STATUS, None)
     assert await count(session, ClaimSource.claimId == claim_id) == 0
-    assert await count(session, ReviewEvent.claimId == claim_id) == 0
+    assert await count(session, ReviewEvent.claimId == claim_id, ReviewEvent.toStatus == "APPROVED") == 1
+    assert await count(session, ReviewEvent.claimId == claim_id, ReviewEvent.toStatus == ERASED_STATUS) == 1
     assert await session.get(Source, source_id) is None
     assert (item.status, item.quote, item.english, item.claimText, item.claimId) == (
         "WITHDRAWN",
@@ -182,7 +189,8 @@ async def test_unshowing_retracts_and_thirty_days_later_the_text_and_claim_go(se
     await session.flush()
     assert (rejected.quote, rejected.claimId, rejected.status) == (None, None, "REJECTED")
     assert rejected.textsClearedAt is not None
-    assert await session.get(Claim, claim.id) is None
+    assert await erased(session, claim.id) == (ERASED_TEXT, ERASED_STATUS, None)
+    assert await count(session, ClaimSource.claimId == claim.id) == 0
 
 
 async def test_editing_an_approved_contribution_supersedes_its_claim(session: AsyncSession) -> None:

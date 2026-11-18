@@ -5,7 +5,18 @@ import json
 from collections.abc import Mapping
 from typing import Any
 
-from sqlalchemy import ColumnElement, Select, String, and_, func, literal, literal_column, or_, select
+from sqlalchemy import (
+    ColumnElement,
+    Select,
+    String,
+    and_,
+    extract,
+    func,
+    literal,
+    literal_column,
+    or_,
+    select,
+)
 from sqlalchemy.dialects.postgresql import JSONB, aggregate_order_by
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -217,18 +228,22 @@ def _piece_terms(craft: Craft) -> Terms:
 def _voice_terms(craft: Craft) -> Terms:
     recordings = select(FieldRecordingCraft.recordingId).where(FieldRecordingCraft.craftId == craft.id)
     images = select(FieldImageCraft.imageId).where(FieldImageCraft.craftId == craft.id)
+    recorded = FieldRecording.id.in_(recordings)
+    pictured = FieldImage.id.in_(images)
     fresh = FieldVoiceStream.lastContactAt >= func.now() - FIELD_STALE_AFTER
     stream = FieldVoiceStream.stream + literal(":") + FieldVoiceStream.portal
     streams = func.string_agg(stream, aggregate_order_by(literal_column("','"), stream))
     return {
-        **_counted(
-            "fieldRecordings", FieldRecording.id, FieldRecording.updatedAt, FieldRecording.id.in_(recordings)
-        ),
+        **_counted("fieldRecordings", FieldRecording.id, FieldRecording.updatedAt, recorded),
+        "fieldRecordingsShown": _count(FieldRecording.id, recorded & FieldRecording.hiddenAt.is_(None)),
+        "fieldRecordingsHiddenAt": _scalar(func.max(FieldRecording.hiddenAt), recorded),
         "fieldSegments": _count(FieldSegment.id, FieldSegment.recordingId.in_(recordings)),
         "fieldQuotable": _count(
             FieldSegment.id, and_(FieldSegment.recordingId.in_(recordings), FieldSegment.quotable)
         ),
-        **_counted("fieldImages", FieldImage.id, FieldImage.updatedAt, FieldImage.id.in_(images)),
+        **_counted("fieldImages", FieldImage.id, FieldImage.updatedAt, pictured),
+        "fieldImagesShown": _count(FieldImage.id, pictured & FieldImage.hiddenAt.is_(None)),
+        "fieldImagesHiddenAt": _scalar(func.max(FieldImage.hiddenAt), pictured),
         "freshStreams": select(streams).where(fresh).scalar_subquery(),
         "artisanImages": _scalar(AppSetting.value.cast(String), AppSetting.key == ARTISAN_IMAGES_SETTING),
         "artisanImagesAt": _scalar(AppSetting.updatedAt, AppSetting.key == ARTISAN_IMAGES_SETTING),
@@ -255,7 +270,7 @@ def _testimony_terms(craft: Craft) -> Terms:
 def _counted(name: str, key: Any, changed: Any, where: ColumnElement[bool]) -> Terms:
     return {
         f"{name}Count": _count(key, where),
-        f"{name}At": select(func.max(changed)).where(where).scalar_subquery(),
+        f"{name}At": select(func.sum(extract("epoch", changed))).where(where).scalar_subquery(),
     }
 
 

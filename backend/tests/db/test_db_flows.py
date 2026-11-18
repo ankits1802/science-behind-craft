@@ -170,7 +170,7 @@ async def test_signup_waits_for_approval(client: httpx.AsyncClient, outbox: dict
     assert listing.status_code == 200, listing.text
     rows = listing.json()["items"]
     assert [row["email"] for row in rows] == [applicant]
-    assert listing.json()["assignableRoles"] == ["RESEARCHER", "STUDENT"]
+    assert listing.json()["assignableRoles"] == ["RESEARCHER", "ARTISAN", "STUDENT"]
 
     too_high = await client.post(
         f"/api/access/roster/{rows[0]['id']}/decision",
@@ -347,8 +347,7 @@ async def test_master_manages_keys_routing_and_usage(
 
     summary = await client.get("/api/usage/summary", headers=bearer(token))
     assert summary.status_code == 200, summary.text
-    assert summary.json()["monthlyCeilingUsd"] == 800.0
-    assert summary.json()["mediaCapUsd"] == 150.0
+    assert (summary.json()["monthlyCeilingUsd"], summary.json()["mediaCapUsd"]) == (None, None)
 
 
 async def test_suspension_ends_sessions(client: httpx.AsyncClient, master: dict[str, Any]) -> None:

@@ -94,7 +94,7 @@ async def test_admin_reaches_its_areas_and_no_others(client: httpx.AsyncClient) 
     for path, status_code in expected.items():
         assert (await client.get(path, headers=bearer(token))).status_code == status_code, path
     roster = (await client.get("/api/access/roster", headers=bearer(token))).json()
-    assert roster["assignableRoles"] == ["PROFESSOR", "RESEARCHER", "STUDENT"]
+    assert roster["assignableRoles"] == ["PROFESSOR", "RESEARCHER", "ARTISAN", "STUDENT"]
 
 
 async def test_admin_assigns_roles_up_to_professor(client: httpx.AsyncClient) -> None:
@@ -196,7 +196,14 @@ async def test_admin_restores_a_barred_professor_entry(client: httpx.AsyncClient
 async def test_master_admin_assigns_admin(client: httpx.AsyncClient) -> None:
     token = await signed_in(client, "MASTER_ADMIN")
     roster = (await client.get("/api/access/roster", headers=bearer(token))).json()
-    assert roster["assignableRoles"] == ["MASTER_ADMIN", "ADMIN", "PROFESSOR", "RESEARCHER", "STUDENT"]
+    assert roster["assignableRoles"] == [
+        "MASTER_ADMIN",
+        "ADMIN",
+        "PROFESSOR",
+        "RESEARCHER",
+        "ARTISAN",
+        "STUDENT",
+    ]
     student = unique_email("future-admin")
     await create_user(student, "STUDENT")
     promoted = await send(

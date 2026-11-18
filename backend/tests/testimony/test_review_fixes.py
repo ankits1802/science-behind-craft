@@ -108,14 +108,14 @@ def sql(statement: Any) -> str:
     return str(statement.compile(dialect=postgresql.dialect(), compile_kwargs={"literal_binds": True}))
 
 
-async def test_withdrawing_an_approved_item_clears_its_claim_before_the_claim_is_deleted() -> None:
+async def test_withdrawing_an_approved_item_clears_its_claim_before_the_claim_is_erased() -> None:
     item = contribution(status="APPROVED", claimId=CLAIM, approvedAt=NOW)
     session = Session()
     session.watched = item
     await testimony_withdrawal._taken_back(session, item, NOW)
     assert session.events[0] == ("flush", "WITHDRAWN", None)
     deleted = [event[1] for event in session.events[1:]]
-    assert deleted == ["ReviewEvent", "ClaimSource", "Claim"]
+    assert deleted == ["ClaimSource", "Claim"]
     assert (item.quote, item.english, item.claimText, item.textsClearedAt) == (None, None, None, NOW)
     assert (item.withdrawnAt, item.version) == (NOW, 3)
 

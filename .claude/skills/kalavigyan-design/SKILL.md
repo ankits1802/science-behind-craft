@@ -42,7 +42,7 @@ errand, steward, mango and evidence ramps; Plus Jakarta Sans and Inter; the flas
 logo tokens; GlassSurface, LiquidGlass, grad-mesh, grad-brand, text-gold-gradient,
 text-gradient-violet, glass-card, glass-dark and ambient-light; the island nav look; GSAP; staggered
 and spring entrances; the ochre and neem accents of version 1.0. Institution credit, where shown:
-IIT Kharagpur and its Centre of Excellence for Handicrafts.
+IIT Kharagpur and its Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform.
 
 ---
 
@@ -654,3 +654,25 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - **A second animation library or GSAP**: framer-motion and token keyframes only.
 - **Writing outside the files a task owns** while other lanes run: shared changes reach their
   components through tokens and the shared primitives above.
+
+Found by the Kutch Ajrakh critics (2026-11-19; the full list is
+`.claude/skills/kalavigyan-craft-pages/references/page-checklist.md`):
+
+- **The reader's raw question as a headline** or in a citation: edit it into a short display
+  line, with the full wording behind "Show the full question".
+- **The best photograph below the first screen**: the masthead picture belongs in the first
+  viewport.
+- **Two mastheads**, or a label card repeating the masthead's GI date and place.
+- **Two counts that disagree** ("7 chapters" over a rail of 12): one term, one true count.
+- **A signature sentence retold in every section**: hero once, a figure link elsewhere.
+- **Two photographs of the same scene** (same room, artisan, photographer): replace one or crop it
+  to a clearly different subject.
+- **A progress state at rest** ("Writing section 7 of 7", "Drawing · 58%"): pages rest finished;
+  a replay is opt-in.
+- **A toast in the document flow** draws far down the page; toasts are fixed to the viewport.
+- **A translucent sticky bar**, or two sticky bars stacked: opaque, one at a time.
+- **Dead zones**: a lone picture in a wide row, a framed box larger than its content, a lead over
+  an empty field. Pair the picture, size the box, fill the row.
+- **A credit a screen away from its figure**: it sits under the figure.
+- **A card with a title and no sentence**: it is not drawn.
+- **A media chapter that retells the text**: it is a gallery.

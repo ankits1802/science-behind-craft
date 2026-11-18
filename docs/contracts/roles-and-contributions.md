@@ -829,13 +829,19 @@ Indexes: (`status`, `createdAt`), (`craftId`, `status`), (`userId`, `createdAt`)
 | `PENDING` | `WITHDRAWN` | the artisan | the texts are cleared at once |
 | `APPROVED` | `APPROVED` (edited) | a reviewer | a new claim version (`supersedesId`); the old one `SUPERSEDED`; `claimId` moves |
 | `APPROVED` | `REJECTED` (unshown) | a reviewer | the claim `RETRACTED`, with a `ReviewEvent` |
-| `APPROVED` | `WITHDRAWN` | the artisan | every version of the claim is deleted with its citations and review events; the texts are cleared at once |
+| `APPROVED` | `WITHDRAWN` | the artisan | every version of the claim is erased (below); the texts are cleared at once |
 | `REJECTED`, `WITHDRAWN` | none | | final |
 
 - When a conversation's last claim goes, its `Source` is deleted, and so is any concept created for
   testimony that no claim rests on.
 - `TESTIMONY_RETENTION_DAYS` after a contribution is `REJECTED`, its texts are cleared and an unshown
-  claim is deleted. The row keeps its status and dates as a tombstone.
+  claim is erased. The row keeps its status and dates as a tombstone.
+- **Erasing a claim** (`testimony_claims.erase_claim`). `ReviewEvent` is append-only (a trigger
+  refuses every update and delete, and a claim's events go with it by cascade), so an erased claim
+  is redacted rather than deleted: its citations are deleted, its `text` becomes "Withdrawn by its
+  speaker.", its status `WITHDRAWN`, and its value, level reason, embedding and `createdById` are
+  cleared. One `ReviewEvent` per version is appended (to `WITHDRAWN`, `SYSTEM` actor
+  `testimony_erasure`); earlier events are never altered and hold no testimony text.
 
 ### 8.4 The speaker line
 

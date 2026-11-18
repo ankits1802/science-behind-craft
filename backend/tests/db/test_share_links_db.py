@@ -1,16 +1,19 @@
+import json
 import uuid
 from collections.abc import AsyncIterator
+from typing import Any
 
 import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AuditLog, Chunk, Claim, ClaimSource, Concept, Craft, Source, User
+from app.models import Answer, AuditLog, Chunk, Claim, ClaimSource, Concept, Craft, Source, User
 from app.research.explainer import Explainer, explainer_blocks
 from app.research.lessons import LessonRequest
 from app.research.share_links import ShareLink
 from app.services.access_roster import access_row
 from app.services.explainer_history import UnknownExplainer
+from app.services.explainer_payload import FIRST_VERSION, stored_payload
 from app.services.lesson_packs import build_lesson
 from app.services.reader_profiles import apply_role_change
 from app.services.share_links import (
@@ -26,8 +29,10 @@ from app.services.share_links import (
 )
 from app.services.share_owners import SHARES_WITHDRAWN, WithdrawnShares, withdraw_shares
 
+from ..contracts.explainer_golden import DOCUMENT, citations_in, golden_json
+from ..contracts.golden import golden_text
 from ..learning.lesson_fixtures import golden_request
-from .alerts_seed import NOW, Seeded, first_answer, reader, seeded
+from .alerts_seed import NOW, Seeded, reader, seeded
 
 pytestmark = pytest.mark.db
 
@@ -39,6 +44,32 @@ CLOSED_TEXT = "Closed-licence full text that only a researcher may quote."
 async def db() -> AsyncIterator[Seeded]:
     async with seeded() as found:
         yield found
+
+
+def fresh_document() -> dict[str, Any]:
+    cited = {cite[key] for cite in citations_in(golden_json(DOCUMENT)) for key in ("claimId", "sourceId")}
+    text = golden_text(DOCUMENT)
+    for stored in sorted(cited):
+        text = text.replace(stored, str(uuid.uuid4()))
+    return json.loads(text) | {"answerId": str(uuid.uuid4())}
+
+
+async def first_answer(session: AsyncSession, user: User) -> Explainer:
+    explainer = Explainer.model_validate(fresh_document())
+    session.add(
+        Answer(
+            id=explainer.answer_id,
+            userId=user.id,
+            question=explainer.question,
+            mode="DEEP",
+            payload=stored_payload(explainer, None),
+            claimIds=[],
+            explainerId=explainer.answer_id,
+            explainerVersion=FIRST_VERSION,
+        )
+    )
+    await session.commit()
+    return explainer
 
 
 def cited_pairs(explainer: Explainer) -> set[tuple[str, str]]:

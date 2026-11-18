@@ -69,6 +69,7 @@ async def test_the_seeded_glossary_links_kut_to_its_craft_and_material(session: 
 
 
 async def test_seeding_the_glossary_again_adds_nothing(session: AsyncSession) -> None:
+    await seed_terms(session)
     before = await session.scalar(select(func.count()).select_from(Term))
     again = await seed_terms(session)
     assert again["newLinks"] == 0

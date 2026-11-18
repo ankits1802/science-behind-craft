@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.data.craft_master_loader import ID_NAMESPACE
@@ -80,6 +80,7 @@ async def linked_compounds(
     cids = sorted({item.pubchem_cid for item in materials if item.pubchem_cid})
     if not cids:
         return LinkedCompounds(by_material={}, written=0)
+    adopted = await _adopt_unlinked(session, materials, cids, retrieved_at)
     stored = await _stored_compounds(session, cids)
     unlinked = await _unlinked_by_name(session, [item.name for item in materials if item.pubchem_cid])
     plan = curated_compounds(
@@ -89,10 +90,36 @@ async def linked_compounds(
         retrieved_at=retrieved_at,
         unlinked_names=unlinked,
     )
-    written = await insert_missing(session, Source, list(plan.sources))
+    written = adopted + await insert_missing(session, Source, list(plan.sources))
     written += await insert_missing(session, Compound, list(plan.compounds))
     by_cid = await _stored_compounds(session, cids) if plan.compounds else stored
     return LinkedCompounds(by_material=_by_material(materials, by_cid, unlinked), written=written)
+
+
+async def _adopt_unlinked(
+    session: AsyncSession, materials: Sequence[IndexMaterial], cids: Sequence[int], retrieved_at: datetime
+) -> int:
+    stored = await _stored_compounds(session, cids)
+    unlinked = await _unlinked_by_name(session, [item.name for item in materials if item.pubchem_cid])
+    adopted: dict[int, tuple[uuid.UUID, str]] = {}
+    for item in materials:
+        compound_id = unlinked.get(fold(item.name))
+        taken = {found for found, _name in adopted.values()}
+        if item.pubchem_cid and item.pubchem_cid not in stored and compound_id and compound_id not in taken:
+            adopted.setdefault(item.pubchem_cid, (compound_id, item.name))
+    if not adopted:
+        return 0
+    sources = await _stored_sources(session, list(adopted))
+    fresh = [
+        _record_source(cid, name, retrieved_at) for cid, (_id, name) in adopted.items() if cid not in sources
+    ]
+    written = await insert_missing(session, Source, fresh)
+    for cid, (compound_id, _name) in adopted.items():
+        source_id = sources.get(cid, record_source_id(cid))
+        await session.execute(
+            update(Compound).where(Compound.id == compound_id).values(pubchemCid=cid, sourceId=source_id)
+        )
+    return written + len(adopted)
 
 
 def _by_material(

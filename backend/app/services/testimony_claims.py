@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import delete, exists, func, select
+from sqlalchemy import delete, exists, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.clock import INDIA_TZ
@@ -30,6 +30,9 @@ from .reader_profiles import district_names
 __all__ = [
     "ARTISAN_ORIGIN",
     "CONTRIBUTION_ORIGIN",
+    "ERASED_STATUS",
+    "ERASED_TEXT",
+    "ERASURE_ACTOR",
     "FOUND_BY",
     "PREDICATE",
     "TESTIMONY_CONCEPT_REF",
@@ -56,6 +59,18 @@ PREDICATE = "artisan_testimony"
 FOUND_BY = "artisan_conversation"
 PUBLISHER = "KalaVigyan"
 EVIDENCE_KIND = "artisan testimony"
+ERASED_TEXT = "Withdrawn by its speaker."
+ERASED_STATUS = "WITHDRAWN"
+ERASURE_ACTOR = "testimony_erasure"
+ERASED_VALUES: dict[str, Any] = {
+    "text": ERASED_TEXT,
+    "status": ERASED_STATUS,
+    "valueNum": None,
+    "valueUnit": None,
+    "levelReason": None,
+    "embedding": None,
+    "createdById": None,
+}
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -205,9 +220,22 @@ async def erase_claim(session: AsyncSession, claim_id: uuid.UUID | None) -> int:
     versions = await claim_versions(session, claim_id)
     if not versions:
         return 0
-    await session.execute(delete(ReviewEvent).where(ReviewEvent.claimId.in_(versions)))
+    claims = list(await session.scalars(select(Claim).where(Claim.id.in_(versions))))
+    events = [
+        ReviewEvent(
+            claimId=claim.id,
+            actorKind="SYSTEM",
+            systemActor=ERASURE_ACTOR,
+            fromStatus=claim.status,
+            toStatus=ERASED_STATUS,
+        )
+        for claim in claims
+        if claim.status != ERASED_STATUS
+    ]
     await session.execute(delete(ClaimSource).where(ClaimSource.claimId.in_(versions)))
-    await session.execute(delete(Claim).where(Claim.id.in_(versions)))
+    await session.execute(update(Claim).where(Claim.id.in_(versions)).values(ERASED_VALUES))
+    for event in events:
+        session.add(event)
     return len(versions)
 
 

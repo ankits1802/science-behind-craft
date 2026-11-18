@@ -258,8 +258,9 @@ construct, and the builder that made it adds nothing.
   the stored `Compound` and its `COMPOUND_RECORD` source (`compound_lookup.record_source_id`).
   A curated dossier's PubChem CID becomes a `Compound` row at import when none holds it
   (`services/curated_compounds`, named by its first material, no formula until `link_compounds`
-  reads the record by its CID; a same-name compound without a CID is left to the lookup instead,
-  decision 0088), so its materials link to it.
+  reads the record by its CID; a same-name compound without a CID takes the CID and that record's
+  source instead, so the seeded alizarin and indigo stay one row each and a second import changes
+  nothing, decision 0088), so its materials link to it.
   Model: which compound of the section's blocks. The conformer comes through the PubChem adapter:
   `GET /api/molecules/{pubchemCid}/conformer` (public, decision 0079) answers the 3D SDF, cached in the
   private media bucket, 404 without a 3D conformer; the builder adds a molecule only for a

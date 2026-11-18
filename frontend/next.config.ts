@@ -10,6 +10,10 @@ export const WEB_PICTURE_SOURCE = "https:";
 export const IMAGE_SOURCES = ["'self'", "data:", MEDIA_BUCKET_ORIGIN, WEB_PICTURE_SOURCE];
 export const FRAME_SOURCES = [GOOGLE_IDENTITY_SOURCE];
 
+export const CRAFT_MONOGRAPHS: Readonly<Record<string, string>> = {
+  "Kutch-Ajrakh": "/monographs/kutch-ajrakh/index.html"
+};
+
 export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
   ["frame-src", ...FRAME_SOURCES].join(" "),
@@ -52,6 +56,13 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     root: __dirname
+  },
+  async rewrites() {
+    return {
+      beforeFiles: Object.entries(CRAFT_MONOGRAPHS).map(([slug, destination]) => ({ source: `/crafts/${slug}`, destination })),
+      afterFiles: [],
+      fallback: []
+    };
   },
   async headers() {
     return [

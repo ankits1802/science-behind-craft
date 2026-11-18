@@ -1,6 +1,6 @@
 ---
 name: kalavigyan-craft-pages
-description: How to make or deepen a KalaVigyan craft, family or category page's content (the curated dossier in backend/app/data/curation) to the Kutch Ajrakh bar - pictures placed in chapters, the masthead, each stage's colour after and its why, native names, reactions, botanical names, GI record - cheaply, one dossier per agent, with the verifier and checker as the judges. Load it before creating, deepening, fixing or reviewing any dossier or check file, before any work on a craft page's or category page's content, and before briefing an agent to do so.
+description: How to make or deepen a KalaVigyan craft, family or category page's content (the curated dossier in backend/app/data/curation) to the Kutch Ajrakh bar - pictures placed in chapters, the masthead, each stage's colour after and its why, native names, reactions, botanical names, GI record - cheaply, one dossier per agent, with the verifier and checker as the judges; and the general page checklist for every craft, family, category and answer page (each page's mechanisms, ambiguous terms and signature fact derived from its own dossier; first minute, true counts, no repetition, complete at rest, layout, science correctness). Load it before creating, deepening, fixing or reviewing any dossier or check file, before any work on a craft page's or category page's content, and before briefing an agent to do so.
 ---
 
 # KalaVigyan craft and category pages
@@ -93,6 +93,28 @@ Give the agent: this skill's name, the dossier path, and the gaps output for it.
 the skill carries the method. Run the dossiers of one family together so their pictures and
 reactions do not repeat, the lead runs `check.py --write-index` once, and the import on deploy
 does the rest (decision 0053).
+
+## The exemplar page
+
+The owner-approved Kutch Ajrakh page is served as built at `/crafts/Kutch-Ajrakh` from
+`frontend/public/monographs/kutch-ajrakh/index.html` (decision 0100). Every other craft, family
+and category page takes its form from it: the chapter order, the opening, the figures and their
+players, the citation clusters and popovers, the media gallery, the coda and the sources. Read
+it by section, never whole (it is about 3 MB). Its facts are Ajrakh's and never carry over:
+every sentence on another page comes from that craft's own dossier and stored claims. The
+scripts that built it are archived in `docs/design/monograph-build.zip` (`build.py` reads the
+boards and writes the page; `ship_monograph.py` copies a rebuilt page into `frontend/public`).
+Generalising them into one template for every craft is recorded in `docs/TECH_DEBT.md`.
+
+## The page itself
+
+The dossier is half the job; the page built from it is the other half.
+`references/page-checklist.md` holds 22 general rules for every craft, family, category and
+answer page: the first minute, true counts, no repetition, complete at rest, layout, and
+science correctness. Before building a page, derive its three lists from its own dossier:
+mechanisms, ambiguous terms and the signature fact. The rules apply through those lists, so they
+carry to any craft. One critic scores each built page against the checklist; fix to 9 or above.
+An owner-approved page is served as built (decision 0100).
 
 ## Order
 

@@ -11,12 +11,29 @@ depends_on: str | Sequence[str] | None = None
 
 STAMP = sa.DateTime(timezone=True)
 VARIANTS = "\"variant\" IN ('OPEN', 'RESEARCHER')"
+NEW_TABLES: tuple[str, ...] = ("CraftPageSnapshot", "CraftPageArchive", "WikidataPoint")
+
+REVOKE_PUBLIC_ROLES = """
+DO $do$
+DECLARE grantee text;
+BEGIN
+    FOREACH grantee IN ARRAY ARRAY['anon', 'authenticated'] LOOP
+        IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = grantee) THEN
+            EXECUTE format('REVOKE ALL ON "{table}" FROM %I', grantee);
+        END IF;
+    END LOOP;
+END
+$do$
+"""
 
 
 def upgrade() -> None:
     _page_tables()
     op.add_column("Compound", sa.Column("conformerKeptAt", STAMP, nullable=True))
     _wikidata_points()
+    for table in NEW_TABLES:
+        op.execute(f'ALTER TABLE "{table}" ENABLE ROW LEVEL SECURITY')
+        op.execute(REVOKE_PUBLIC_ROLES.replace("{table}", table))
 
 
 def _page_tables() -> None:

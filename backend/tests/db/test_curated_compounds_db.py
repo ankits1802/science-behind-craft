@@ -74,8 +74,8 @@ async def test_the_compound_lookup_fills_the_formula_of_a_curated_record_from_pu
 ) -> None:
     await import_curation(session)
     report = await link_compounds(session, FakeFinder({}, {10340: SODA_ASH_RECORD}), now=NOW)
-    assert "Soda ash" in report.filled
     soda = (await compounds(session))[10340]
+    assert soda.name in report.filled
     assert (soda.formula, soda.sourceId) == ("CNa2O3", record_source_id(10340))
     sources = (await session.scalars(select(Source).where(Source.url == SODA_ASH_RECORD.url))).all()
     assert len(sources) == 1
