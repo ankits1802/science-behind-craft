@@ -1,5 +1,6 @@
 import copy
 import json
+import uuid
 from datetime import UTC, datetime
 from typing import Any
 
@@ -55,7 +56,7 @@ def test_the_phase_b_fixture_is_reproduced_byte_for_byte() -> None:
 def test_every_citation_resolves_to_a_seeded_claim_source() -> None:
     seeded = seed_citations()
     found = list(citations_in(phase_b()))
-    assert len(found) == 38
+    assert len(found) == 55
     for cite in found:
         row = seeded[cite["id"]]
         assert (cite["claimId"], cite["sourceId"], cite["quote"], cite["locator"], cite["level"]) == (
@@ -181,6 +182,66 @@ def test_the_reaction_player_plays_the_seeded_reactions_of_the_process() -> None
         ]
         assert [c.id for c in step.citations] == cites
         assert step.level == "PROVISIONAL"
+
+
+REACTION_NOTES = (
+    ("iron-acetate", ("seed-e1a28b32e2c7416ebed3", "seed-ca39189df4e04dcb5a7a", "seed-b22aaa6d6607a5019194")),
+    (
+        "indigo-reduction",
+        ("seed-d9b4aea0626d66ccdb60", "seed-a16a0906bd1fa81c6de0", "seed-3965c8f733d2c1a997d5"),
+    ),
+    ("indigo-oxidation", ("seed-86fcd25c654d7a0e0079", "seed-bdce98b16440ad986190")),
+    (
+        "alizarin-lake",
+        (
+            "seed-b14a93745f3a652197c0",
+            "seed-bd5ef6022d643b22c6dd",
+            "seed-5bbd031c8cc0abd3b6b9",
+            "seed-0484b9bf06c14eb12785",
+        ),
+    ),
+)
+
+
+def test_each_reaction_step_names_its_stage_stated_conditions_and_colours() -> None:
+    steps = blocks()["s4.b1"].steps
+    assert [step.stage for step in steps] == [
+        "Kut (iron-black printing)",
+        "Indigo dyeing (kun me burana)",
+        "Indigo dyeing (kun me burana)",
+        "Red dyeing (rang) with madder or alizarin",
+    ]
+    assert [[(c.label, c.stated) for c in step.conditions] for step in steps] == [
+        [("Fermenting the iron paste", "ten to fifteen days")],
+        [],
+        [],
+        [("Red dye bath", "up to four hours")],
+    ]
+    assert [[(c.side, c.colour, c.stated) for c in step.colours] for step in steps] == [
+        [],
+        [],
+        [
+            ("BEFORE", "GREEN", "At first bright green, the cloth rapidly becomes blue"),
+            ("AFTER", "BLUE", "At first bright green, the cloth rapidly becomes blue"),
+        ],
+        [("AFTER", "RED", "develops red")],
+    ]
+
+
+def test_the_reaction_notes_are_each_reaction_s_seeded_claims_once_each() -> None:
+    block = blocks()["s4.b1"]
+    steps = [step.reaction_id for step in block.steps]
+    expected = [
+        (reaction, seed_id("claim", claim))
+        for reaction, (_, claims) in zip(steps, REACTION_NOTES, strict=True)
+        for claim in claims
+    ]
+    found = [(note.reaction_id, uuid.UUID(note.sentence.citations[0].claim_id)) for note in block.notes]
+    assert found == expected
+    texts = {seed_id("claim", row["id"]): row["text"] for row in load_seed_claims()["claims"]}
+    assert all(
+        note.sentence.text == texts[claim] for note, (_, claim) in zip(block.notes, expected, strict=True)
+    )
 
 
 def test_the_material_card_is_the_seeded_material_its_compound_and_its_term() -> None:

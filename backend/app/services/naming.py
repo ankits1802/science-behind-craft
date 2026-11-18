@@ -17,10 +17,14 @@ __all__ = [
     "SUBJECT_MAX",
     "MediaName",
     "PlaceParts",
+    "artisan_audio_file_name",
+    "artisan_audio_key",
     "content_disposition",
     "explainer_file_name",
     "export_key",
     "field",
+    "field_voice_file_name",
+    "field_voice_key",
     "file_name",
     "generated_media_file_name",
     "lesson_file_name",
@@ -46,10 +50,14 @@ NARRATION_FOLDER = "narration"
 MOLECULE_FOLDER = "molecules"
 RIVER_FOLDER = "rivers"
 SCORE_FOLDER = "score"
+FIELD_VOICE_FOLDER = "field-voices"
+FIELD_VOICE_EXTENSIONS = ("jpg", "png")
 SCORE_MANIFEST_LEAF = "score.json"
 RIVER_TOPOLOGY_SUBJECT = "HydroRIVERS-1-0"
 NARRATION_PARTS_MAX = 99
 LESSON_FILE_WHAT = {"html": "Slides", "pptx": "Slides", "pdf": "Lesson"}
+ARTISAN_AUDIO_EXTENSIONS = {"audio/webm": "webm", "audio/ogg": "ogg", "audio/mp4": "m4a", "audio/wav": "wav"}
+ARTISAN_TURNS_MAX = 99
 MEDIA_NAMES = {
     "IMAGE": ("Generated-Image", "Image", "png"),
     "VIDEO": ("Generated-Video", "Video", "mp4"),
@@ -214,6 +222,51 @@ def river_topology_key(edition: str, main_riv: int, sha256: str) -> str:
         raise InvalidInput("A river topology key is filed under the 64-hex SHA-256 of its content")
     folder = f"{MEDIA_PREFIX}/{RIVER_FOLDER}/{edition}/{main_riv}/{sha256}"
     return f"{folder}/{river_topology_file_name(main_riv)}"
+
+
+def field_voice_file_name(*, taken_at: datetime | None, place: PlaceParts, craft: str, ext: str) -> str:
+    if ext not in FIELD_VOICE_EXTENSIONS:
+        raise InvalidInput(f"A field image is stored as {' or '.join(FIELD_VOICE_EXTENSIONS)}, not {ext!r}")
+    fixed: tuple[str, ...] = (PORTAL, "Field-Image")
+    if taken_at is not None:
+        local = _ist(taken_at)
+        fixed = (*fixed, local.date().isoformat(), local.strftime("%H%M"))
+    where = PlaceParts(district=place.district, state=place.state)
+    return _named(fixed, ("Photo", None), ext, (_place_text(where), craft, None))
+
+
+def artisan_audio_file_name(
+    *, recorded_at: datetime, district: str | None, craft: str, ordinal: int, mime_type: str
+) -> str:
+    ext = ARTISAN_AUDIO_EXTENSIONS.get(mime_type)
+    if ext is None:
+        raise InvalidInput(
+            f"An artisan recording is one of {', '.join(ARTISAN_AUDIO_EXTENSIONS)}, not {mime_type!r}"
+        )
+    if not 1 <= ordinal <= ARTISAN_TURNS_MAX:
+        raise InvalidInput(f"Turn {ordinal} does not fit T-NN")
+    return file_name(
+        entity="Artisan-Conversation",
+        what="Recording",
+        ext=ext,
+        moment=recorded_at,
+        place=PlaceParts(district=district),
+        craft=craft,
+        subject=None,
+        sequence=f"T{ordinal:02d}",
+    )
+
+
+def artisan_audio_key(owner_id: uuid.UUID, leaf: str, *, token: uuid.UUID | None = None) -> str:
+    return (
+        f"{MEDIA_PREFIX}/{owner_id}/{(token or uuid.uuid4()).hex}/{_one_file_name(leaf, 'artisan recording')}"
+    )
+
+
+def field_voice_key(sha256: str, leaf: str) -> str:
+    if not _hex_digest(sha256):
+        raise InvalidInput("A field image is filed under the 64-hex SHA-256 of KalaVigyan's copy")
+    return f"{MEDIA_PREFIX}/{FIELD_VOICE_FOLDER}/{sha256}/{_one_file_name(leaf, 'field image')}"
 
 
 def _hex_digest(value: str) -> bool:

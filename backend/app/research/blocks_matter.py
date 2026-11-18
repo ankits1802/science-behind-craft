@@ -6,20 +6,50 @@ from typing import ClassVar, Literal, Self
 
 from pydantic import Field, model_validator
 
-from .base import ContractModel
-from .blocks import SENTENCE, BlockBase, ExplainerSentence, SentenceSpec, require_facts
+from .base import ContractModel, absent, empty
+from .blocks import SENTENCE, BlockBase, ExplainerSentence, LadderCondition, SentenceSpec, require_facts
 from .citations import Citation
+from .colours import ColourSide, ColourWord, states_colour
+from .quotes import quote_occurs
 from .reactions import SPECIES_ROLES, ReactionSpecies, mhchem_equation, reaction_level
 from .subject_keys import TermKey
 from .terms import WIKIDATA_ID_PATTERN
 from .vocabulary import MaterialKind, MaterialRole, ReactionKind, ShownLevel
 
 __all__ = [
+    "COMPOUND_RECORD_BASIS",
+    "FORMULA_BASES",
     "MaterialCardBlock",
     "Molecule3dBlock",
+    "ReactionNote",
     "ReactionPlayerBlock",
     "ReactionStep",
+    "StepColour",
 ]
+
+
+FORMULA_BASES = ("STATED", "COMPOUND_RECORD")
+COMPOUND_RECORD_BASIS = "COMPOUND_RECORD"
+
+
+class StepColour(ContractModel):
+    side: ColourSide
+    colour: ColourWord
+    stated: str = Field(min_length=1, max_length=200)
+    citations: list[Citation] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def _stated_by_a_cited_quote(self) -> Self:
+        if not states_colour(self.stated, self.colour):
+            raise ValueError(f"colour {self.colour} is not named by {self.stated!r}")
+        if not any(c.quote and quote_occurs(self.stated, c.quote) for c in self.citations):
+            raise ValueError(f"colour {self.colour} states {self.stated!r}, which no cited quote says")
+        return self
+
+
+class ReactionNote(ContractModel):
+    reaction_id: uuid.UUID
+    sentence: ExplainerSentence
 
 
 class ReactionStep(ContractModel):
@@ -32,6 +62,27 @@ class ReactionStep(ContractModel):
     balanced: bool
     level: ShownLevel
     citations: list[Citation] = Field(min_length=1)
+    stage: str | None = Field(default=None, min_length=1, max_length=300, exclude_if=absent)
+    conditions: list[LadderCondition] = Field(default_factory=list, exclude_if=empty)
+    colours: list[StepColour] = Field(default_factory=list, exclude_if=empty)
+    formula_basis: Literal[*FORMULA_BASES] | None = Field(default=None, exclude_if=absent)
+    formula_sources: list[str] = Field(default_factory=list, exclude_if=empty)
+
+    @model_validator(mode="after")
+    def _formulas_from_compound_records(self) -> Self:
+        inferred = self.formula_basis == COMPOUND_RECORD_BASIS
+        if inferred != bool(self.formula_sources):
+            raise ValueError(
+                f"reaction {self.reaction_id} cites compound records exactly when its formulas come from them"
+            )
+        if inferred and not (self.balanced and all(s.compound_id for s in self.species)):
+            raise ValueError(
+                f"reaction {self.reaction_id} takes its formulas from compound records only when every "
+                "species resolves to one and the science engine balances it"
+            )
+        if len(set(self.formula_sources)) != len(self.formula_sources):
+            raise ValueError(f"reaction {self.reaction_id} cites each compound record once")
+        return self
 
     @model_validator(mode="after")
     def _the_science_engine_s_reaction(self) -> Self:
@@ -46,24 +97,46 @@ class ReactionStep(ContractModel):
         )
         if self.level != level:
             raise ValueError(f"reaction {self.reaction_id} is {level}, not {self.level}")
+        sides = [colour.side for colour in self.colours]
+        if len(set(sides)) != len(sides):
+            raise ValueError(f"reaction {self.reaction_id} states each side's colour once")
         return self
+
+    def all_citations(self) -> Iterator[Citation]:
+        yield from self.citations
+        for condition in self.conditions:
+            yield from condition.citations
+        for colour in self.colours:
+            yield from colour.citations
 
 
 class ReactionPlayerBlock(BlockBase):
+    SENTENCES: ClassVar[SentenceSpec] = (("notes", [(("sentence", SENTENCE),)]),)
+
     kind: Literal["reaction_player"]
     version: Literal[1]
     steps: list[ReactionStep] = Field(min_length=1)
+    notes: list[ReactionNote] = Field(default_factory=list, exclude_if=empty)
 
     @model_validator(mode="after")
     def _each_reaction_once(self) -> Self:
         ids = [step.reaction_id for step in self.steps]
         if len(set(ids)) != len(ids):
             raise ValueError(f"reaction player {self.id} plays each reaction once")
+        if any(note.reaction_id not in ids for note in self.notes):
+            raise ValueError(f"reaction player {self.id} explains only the reactions it plays")
+        require_facts(f"reaction player {self.id}", [note.sentence for note in self.notes])
         return self
 
     def citations(self) -> Iterator[Citation]:
         for step in self.steps:
-            yield from step.citations
+            yield from step.all_citations()
+        for note in self.notes:
+            yield from note.sentence.citations
+
+    def direct_source_ids(self) -> Iterator[str]:
+        for step in self.steps:
+            yield from step.formula_sources
 
     def shown_labels(self) -> list[str]:
         return [step.label for step in self.steps]

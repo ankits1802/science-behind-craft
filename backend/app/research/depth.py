@@ -9,6 +9,7 @@ from pydantic import Field, model_validator
 from app.core.errors import InvalidInput
 from app.core.roles import (
     ADMIN,
+    ARTISAN,
     MASTER_ADMIN,
     PROFESSOR,
     RESEARCHER,
@@ -37,6 +38,7 @@ __all__ = [
     "depth_policy",
     "effective_depth",
     "research_budget",
+    "section_sentence_limit",
     "selectable_depths",
 ]
 
@@ -59,6 +61,8 @@ class DepthPolicy(ContractModel):
     max_experts: int = Field(ge=1)
     max_queries: int = Field(ge=0)
     max_fetches: int = Field(ge=0)
+    section_sentences: int = Field(ge=1)
+    stored_claims: int = Field(ge=1)
 
     @model_validator(mode="after")
     def _ranges_in_order(self) -> Self:
@@ -89,6 +93,8 @@ DEPTH_POLICIES: Mapping[str, DepthPolicy] = MappingProxyType(
             max_experts=2,
             max_queries=2,
             max_fetches=5,
+            section_sentences=8,
+            stored_claims=20,
         ),
         "DETAILED": DepthPolicy(
             depth="DETAILED",
@@ -100,6 +106,8 @@ DEPTH_POLICIES: Mapping[str, DepthPolicy] = MappingProxyType(
             max_experts=4,
             max_queries=4,
             max_fetches=10,
+            section_sentences=8,
+            stored_claims=20,
         ),
         "EXPERT": DepthPolicy(
             depth="EXPERT",
@@ -108,15 +116,18 @@ DEPTH_POLICIES: Mapping[str, DepthPolicy] = MappingProxyType(
             min_sections=1,
             max_sections=len(DISCIPLINES),
             min_experts=6,
-            max_experts=10,
-            max_queries=8,
-            max_fetches=20,
+            max_experts=12,
+            max_queries=24,
+            max_fetches=48,
+            section_sentences=16,
+            stored_claims=40,
         ),
     }
 )
 ROLE_DEFAULT_DEPTHS: Mapping[str, str] = MappingProxyType(
     {
         STUDENT: "BASIC",
+        ARTISAN: "BASIC",
         RESEARCHER: "DETAILED",
         PROFESSOR: "DETAILED",
         ADMIN: "EXPERT",
@@ -161,3 +172,7 @@ def research_budget(mode: str, depth: str | None = None) -> ResearchBudget:
         max_queries=min(limits.max_queries, chosen.max_queries),
         max_fetches=min(limits.max_fetches, chosen.max_fetches),
     )
+
+
+def section_sentence_limit(depth: str | None) -> int:
+    return depth_policy(depth or LEAST_DEPTH).section_sentences

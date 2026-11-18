@@ -9,7 +9,7 @@ from ..answering.fakes import SOURCES, VIEWS, WRITTEN_LAKE_ID, pipeline, streame
 from ..answering.piece_fakes import MemoryPieces
 from ..answering.test_answer_flow import REPLY, events
 from ..answering.test_piece_reuse_flow import asked
-from .fixtures import BUILT_AT, DraftModel, StoredPieces
+from .fixtures import BUILT_AT, DraftModel, PictureSearches, StoredPieces, no_matter
 
 BATH_STATED = ("Mordanting baths of 8 g/L alum were", "were heated to 60 °C")
 BATH_HTML = (
@@ -32,7 +32,10 @@ BATH_REPLY = {
 def simulations_only(model: DraftModel) -> BlockBuilders:
     (entry,) = [entry for entry in BLOCK_BUILDERS if entry.kind == "simulation"]
     tools = BuilderTools(sessions=None, live=None, plan_model=None, compose_model=model)
-    return BlockBuilders([(entry, SimulationBuilder(tools, stored=StoredPieces(), clock=lambda: BUILT_AT))])
+    built = SimulationBuilder(
+        tools, stored=StoredPieces(), clock=lambda: BUILT_AT, matter=no_matter, pictures=PictureSearches()
+    )
+    return BlockBuilders([(entry, built)])
 
 
 def blocks_of(found: list[tuple[str, dict[str, Any]]]) -> list[dict[str, Any]]:

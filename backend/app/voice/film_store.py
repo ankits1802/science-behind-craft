@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from app.models import Answer
 from app.research.explainer import Explainer
 from app.services.explainer_payload import stored_explainer
+from app.services.field_voices_readback import current_field_voices
 from app.services.simulation_hiding import with_hidden_marks
 
 __all__ = ["SqlFilmStore"]
@@ -25,4 +26,4 @@ class SqlFilmStore:
             explainer = stored_explainer(answer_id, payload)
             if explainer is None:
                 return None
-            return await with_hidden_marks(session, explainer)
+            return await current_field_voices(session, await with_hidden_marks(session, explainer))

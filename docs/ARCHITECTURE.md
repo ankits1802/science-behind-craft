@@ -31,7 +31,7 @@ are in `docs/RUNBOOK.md`; what the box assumes from the code is in `docs/contrac
 | `frontend/` | Next.js web client (npm, Node 26) |
 | `infra/` | Terraform, deploy scripts, systemd units, secret seeding, Supabase lockdown SQL |
 | `shared/` | Files checked by more than one side (`craft-master.sha1`, the `*.golden.*` contract files) |
-| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `curation/` (fetch, verify, check and schema for curated dossiers, decision 0051); their tests |
+| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `curation/` (fetch, verify, check, schema and migrate for curated dossiers, decisions 0051 and 0095); `design/` and `design_tokens.py`, the design token generator that writes `frontend/app/tokens.css` and the skill's references (decision 0092); their tests |
 | `docs/` | Plan, architecture, catalogue, contracts, decisions, debt, progress, runbook, data sources |
 | `.claude/skills/` | Practice skills (engineering, backend, frontend), naming, frontend design system |
 
@@ -112,14 +112,32 @@ into `geo/records`, and the routes hand them to `geo/region_view` and `geo/layer
 0016).
 `services/` imports `curation/` so the dossier import reads the checker's own model and rules
 (decision 0053); the craft page's response models live in `research/craft_page.py`,
-`craft_page_process.py` and `craft_page_context.py` so `services/craft_page` can build them, and
-the editorial family labels and kind questions are vendored data (`data/craft_families.json`,
-decision 0081).
+`craft_page_process.py`, `craft_page_context.py`, `craft_chapters.py`, `craft_parts.py`,
+`craft_masthead.py` and `craft_origins.py` so `services/craft_page` can build them, and the
+editorial family labels and kind questions are vendored data (`data/craft_families.json`,
+decision 0081). The page (schema version 3, decisions 0095 and 0098) is read once
+(`craft_page_records`, `chapter_records.chapter_rows`), built purely by one module per chapter
+(`services/chapter_<key>.py`) that reuses the answer builders' pure halves with fixed rules for
+the model's choices, passed through one page ledger (`chapter_ledger`), and cached per craft and
+variant under a stamp read in one statement (`craft_page_stamp`, `craft_page_snapshots`).
+
+## Students and artisans (decision 0083)
+
+Six roles: Student 15, Artisan 18, Researcher 30, Professor 40, Admin 50, Master Admin 60. A
+student gives an age band and gender at first entry (`StudentProfile`); an artisan gives one to
+twelve crafts, a district, a spoken language and a credit (`ArtisanProfile`, `ArtisanCraft`).
+Profiles are in tables of their own, read by `services/reader_profiles` and served only to the
+account holder (`api/routes/profile.py`). The age band becomes a reading style appended to the
+composer's system prompts; gender reaches no model. An artisan's conversation reuses the voice
+backend under its own switch and routes; what the artisan says is drawn into
+`ArtisanContribution` rows, reviewed by professors and admins, and only then written as a claim
+of sensitivity `ATTRIBUTE_REQUIRED`, which every shared claim reader already refuses, so testimony
+is shown only as the artisan's own words. Contract: `docs/contracts/roles-and-contributions.md`.
 
 ## API surface
 
 All routes are under `/api` except `/health` and `/health/ready`. Route groups (`api/routes/`):
-`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `film` (film mode's music and sound score, decision 0058), `knowledge`, `lessons` (lesson packs and their files, decision 0067), `explainer_exports` (an explainer version's PDF and citations, decision 0067), `listen` (an explainer read aloud, decision 0035), `map_districts` (ask the map, decision 0065), `map_layers`, `media`, `public` (the landing's summary, decision 0079), `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
+`auth`, `password_change` (change-password and the first-password nonce, decision 0028), `two_factor`, `me`, `access`, `users`, `crafts`, `film` (film mode's music and sound score, decision 0058), `knowledge`, `lessons` (lesson packs and their files, decision 0067), `explainer_exports` (an explainer version's PDF and citations, decision 0067), `listen` (an explainer read aloud, decision 0035), `map_districts` (ask the map, decision 0065), `map_layers`, `media`, `profile` (a student's and an artisan's first-entry profile, the artisan recording notice and its consent, and the public district list, decision 0083), `artisan_conversations` (an artisan's conversation with KalaVigyan, 404 while `ARTISAN_CONVERSATION_ENABLED` is off), `artisan_contributions` (an artisan's own conversations and contributions, and withdrawal), `testimony_review` (the review queue for artisan testimony), `public` (the landing's summary, decision 0079), `rivers` (a basin's river lines as TopoJSON, decision 0043), `secrets`,
 `settings`, `terms` (a glossary term's cited summary, decision 0034), `usage`, `voice` (404 throughout while `VOICE_CALL_ENABLED` is off, decision 0035). Shapes, headers and error forms are in `docs/contracts/backend.md`; the web client's
 side is `docs/contracts/frontend.md`. `GET /api/crafts/{slug}/page` (in `crafts`) answers the whole craft page from stored rows: the
 curated overview and facts and All evidence (`docs/contracts/craft-page.md`, decision 0053);
@@ -135,21 +153,24 @@ stored region story and place prose pieces and its land values, with no model ca
 (`docs/contracts/learning.md`). `GET /api/public/summary` (in `public`) answers the landing's live
 counts, featured curated crafts, specimen sentence and map points, cached a day.
 
-Public reading (decision 0079): the craft, category, map and science reads and the public summary
-take `api/public_deps.public_reader` (built on `core/deps.get_optional_user`) instead of the
-signed-in dependency. Without a session the reader is read as the lowest role, counted against a
-per-address limit and answered `public, max-age=300`; a session still gets its role-scoped answer,
+Public reading (decisions 0079 and 0097): every read except asking (crafts, categories, map,
+science, compare, field transcripts and photographs, shared answers and lessons, the public
+summary) takes `api/public_deps.public_reader`, or `public_asset_reader` for long-cached assets
+(both built on `core/deps.get_optional_user`), instead of the signed-in dependency. Without a
+session the reader is read as the lowest role, counted against a per-address limit (assets in a
+bucket of their own) and answered `public, max-age=300`; a session still gets its role-scoped answer,
 `private, no-cache`; every read varies on `Authorization` and carries an ETag. Every other route
-needs a session, which `tests/public/test_public_routes.py` checks route by route.
+needs a session and carries a reason class (asking, own records, admin, consent) in
+`tests/public/test_route_inventory.py`, which checks each one answers 401 anonymously.
 
 ## How a question is answered today
 
 1. `POST /api/answers/stream` (`api/routes/knowledge.py`) takes the reader's depth (default the
    role's: Student Basic, Researcher and Professor Detailed, Admin and Master Admin Expert; any
    known role may choose any depth) and the per-user ask rate limit (none for a Master Admin),
-   builds the answer pipeline with the asker's principal and one per-answer spend record (so the
-   depth's per-answer cap, the per-role daily cap and the monthly ceiling apply, none of them to a
-   Master Admin) and
+   builds the answer pipeline with the asker's principal and one per-answer spend record (so a
+   depth's per-answer cap, a per-role daily cap and a monthly ceiling apply when set, none of them
+   to a Master Admin; none is set for now, decision 0093) and
    streams `services/answering.answer_question` through `research/stream.event_stream`, which
    sends each event as it is produced and a heartbeat after 60 s of silence (decisions 0012,
    0031).
@@ -160,7 +181,7 @@ needs a session, which `tests/public/test_public_routes.py` checks route by rout
    one `PLAN` call for the choice among ambiguous candidates, crafts named but not matched, the
    fields the question touches and the experts to seat. A craft is never required: the best match
    proceeds and the others are offered, nothing found is any craft, and a resolver failure leaves
-   the choice to the model's reply (decision 0038). `understood` is the first event; past the degrade mark Expert runs as Detailed for every role but Master Admin.
+   the choice to the model's reply (decision 0038). `understood` is the first event; past a set degrade mark Expert runs as Detailed for every role but Master Admin (no mark is set for now, decision 0093).
 3. When that call is refused for spend, the chosen craft's verified and reviewed claims are
    sent as explainer sections, one `prose` block per concept heading (`knowledge_view.claims_for`,
    `services/stored_explainer`; a heading that is a field's label takes the field's fallback
@@ -354,9 +375,14 @@ answers 404 and no voice button is drawn. The steps hold when the setting is tru
    fields it may be added to, listed in the order a section reads its blocks (`PIECE_BLOCK_ORDER`).
    A researched section with a checked prose or ladder block starts its field's builders together
    with its pictures; their blocks go out after the section's own and before the pictures, each
-   builder bounded by its wait, and a failing builder adds nothing. A reused section starts only
-   the builders of kinds that are never stored as pieces (map layers, molecules) over its placed
-   pieces (decision 0050). Builders implement `services/builder_interface`; only kinds already
+   builder bounded by its wait, and a failing builder adds nothing. A reused section starts every
+   builder of its field whose kind it does not already show, and those marked `rebuilt_on_reuse`
+   (the generated explainer and the expert panel only at Expert), over its placed pieces re-marked
+   with the answer's glossary, all reused sections at once; a rebuilt reaction player takes the
+   stored one's place; a reused process section without a stored ladder is led by one built from
+   its stored stages; one answer builds each craft-level story once; at Expert a curated section is
+   the floor its field is researched on, and a group an answer made is reused before the curated
+   pieces, which no answer supersedes (`services/reuse_enrichment`, decision 0090). Builders implement `services/builder_interface`; only kinds already
    built start, and every phase B kind is built. The matter
    builders (`services/matter_builders`, decision 0045) read the craft's matter in one short
    session (`services/craft_matter`), then add the reaction player (the Process tab's reactions,
@@ -430,10 +456,16 @@ materials, compounds, reactions, readings; decision 0015); `app/scripts/link_com
 the seeded compounds up in PubChem, nightly in the Coverage enrichment run (decision 0045). After them, `app/scripts/sync_portal_crafts` adds every craft the two portals hold
 beyond the master list, with their aliases, spellings and merge redirects, through the signed
 peer route of `docs/contracts/portal-craft-feed.md`; it also runs daily (decision 0003).
-Consented artisan quotes and process photographs will come the same way, through the
-documentation portal's field voices routes (`docs/contracts/field-voices.md`, decision 0072);
-the reader (`services/field_voices_reader.py`) is built behind `FIELD_VOICES_ENABLED` and
-stores nothing yet.
+The transcripts and craft images of both portals come the same way, through the field voices
+routes (`docs/contracts/field-voices.md`, decisions 0084 and 0091): `app/scripts/sync_field_voices`
+(daily, `.github/workflows/field-voices-sync.yml`, behind `FIELD_VOICES_ENABLED`) reads each
+portal's two streams by cursor, applies tombstones, stores each recording as a `FIELD_TESTIMONY`
+source with `PUBLIC` quote chunks and `SIGNED_IN` transcript chunks, and each image as a credited
+`MediaRef` over a metadata-free copy in the media bucket. Field quote chunks join stored-knowledge
+retrieval and can be cited as field interviews; the craft page carries them as `voices` and
+`fieldPhotos`. A recording that is withdrawn, hidden or not heard from in 7 days leaves every read
+at once: its chunks, the claims that rest on it alone (`retrieval/field_scope`), and the sentences
+of stored explainers that cite it (`services/field_voices_readback`).
 Then `app/scripts/embed_craft_descriptors` fills missing craft name-and-alias vectors for the
 resolver; the daily Coverage enrichment run fills them first too (decision 0016). The region
 routes read the geo ETL's per-district statistics and compute state aggregates in Postgres per
@@ -450,13 +482,22 @@ district's yearly series from 1981 with its normal and its Theil-Sen and Mann-Ke
 
 ## Frontend
 
-Next.js App Router. Signed-in screens are under `app/(protected)/` (ask, crafts, map, saved,
-lessons, compare, settings, admin); `app/api/` holds route handlers that proxy auth and session calls; `lib/api.ts` is the
+Next.js App Router. Reading pages are under `app/(reading)/` (crafts, a craft, map, compare,
+field transcripts, shared answers and lessons), whose shell never redirects to sign-in (decision
+0097); asking and the signed-in tools are under `app/(protected)/` (ask, saved, lessons,
+settings, admin, contribute); `app/api/` holds route handlers that proxy auth and session calls; `lib/api.ts` is the
 one API client and `lib/server/apiProxy.ts` the server-side proxy. Generic components are in
 `components/ui/`, domain components in `components/<area>/`. Design rules are the
-`field-repo-frontend`, `motion` and `gsap` skills; practice rules are `frontend-practices`.
+`kalavigyan-design` skill (Alum & Indigo, decision 0092): generated tokens reach components
+through `app/globals.css` and `tailwind.config.ts`, button rows and controls through the shared
+primitives in `components/ui/`, the reading primitives (the citation cluster and its sources,
+evidence marks, specimen label, masthead, plates, fact grid, chapter rail, margin notes) through
+`components/editorial/`, and their CSS through `app/primitives.css` and `app/editorial.css`.
+Named motions are owned by `app/motion.css` with the hooks in `components/motion/`, declarative
+motion by framer-motion; GSAP is gone (decision 0094). `/design` draws every primitive in every
+state. Practice rules are `frontend-practices`.
 
-Who sees what is decided in `lib/permissions.ts`: the five roles' ranks and labels (checked
+Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub
 show an admin area only when its guard admits the viewer, so the two cannot disagree; the
 server checks every request again with `core/roles.py` (decision 0024).

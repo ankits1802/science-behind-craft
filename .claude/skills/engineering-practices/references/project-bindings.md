@@ -81,10 +81,12 @@ backend/app/scripts/     entry points: seed commands run by the deploy (seed_cra
                          with the science seed and the term glossary, seed_districts,
                          seed_admin), the curated dossier import (import_curation, decision
                          0053) and the portal craft sync
-                         (sync_portal_crafts, also run daily), embed_craft_descriptors,
+                         (sync_portal_crafts, also run daily), the portals' field voices
+                         (sync_field_voices, daily, decision 0091), embed_craft_descriptors,
                          embed_knowledge, the daily coverage enrichment (enrich_coverage),
                          the nightly rebuild of stale knowledge pieces (rebuild_pieces),
-                         the PubChem compound lookup (link_compounds), the nightly re-check
+                         the PubChem compound lookup (link_compounds), the nightly craft
+                         chapters job (build_craft_chapters, decision 0098), the nightly re-check
                          of saved explainers (recheck_saved) and the weekly alert digest
                          (send_alert_digest, decision 0063), the daily voice upkeep
                          (voice_upkeep), the voice agent's provisioning (provision_voice_agent)
@@ -101,7 +103,10 @@ frontend/                Next.js App Router web client (npm)
 infra/                   Terraform, deploy scripts and systemd units, secret seeding, Supabase lockdown
 shared/                  files both sides check (craft-master.sha1, the *.golden.* contract files)
 tools/                   developer tooling: the hygiene check, the curation tools (fetch, verify,
-                         check, schema; tools/curation) and their tests
+                         check, schema; tools/curation), the design token generator
+                         (tools/design, run by tools/design_tokens.py; decision 0092) and their
+                         tests
+docs/design/             the design system's pixel boards, their pictures and the landing mask
 docs/                    living documents, contracts, decisions
 ```
 
@@ -141,9 +146,14 @@ on the research contracts list `research` among their allowed imports.
 Frontend source (`frontend/`), as it is today:
 
 ```
-app/                       routes: (protected)/ for signed-in screens, login, signup, privacy...
+app/                       routes: (reading)/ for pages anyone reads without signing in (crafts,
+                           map, compare, field transcripts, shared answers and lessons; decision
+                           0097), (protected)/ for asking and the signed-in tools, login, signup...
 app/api/                   Next route handlers that proxy auth and session calls to the API
 components/ui/             generic kit, no domain knowledge
+components/editorial/      the design system's reading primitives (decision 0094): citation
+                           cluster, evidence marks, specimen label, masthead, plates, chapter rail
+components/motion/         the named-motion hooks; their keyframes are app/motion.css
 components/<area>/         domain components grouped by area: answer, ask, craft, map, admin,
                            settings, auth, nav, voice, data, dialogs, forms, guide, hooks...
 components/*.tsx           app-wide shell pieces (AppShell, providers, PageHeader, ErrorPanel...)
@@ -159,6 +169,13 @@ public/, fonts/            static assets
 `lib/api.ts` is the one API client; components and hooks call it. The frontend has no
 `features/` folder: domain components live under `components/<area>/`, and a component used by
 two areas belongs in `components/` or `components/ui/`, never copied.
+
+The design system is the `kalavigyan-design` skill (Alum & Indigo, decision 0092): load it with
+`frontend-practices` before any UI, styling, chart, map, picture, animation or reader-facing copy
+work. Its tokens are generated and reach components as Tailwind classes; frontend-practices'
+"design tokens defined once" means those tokens, never a typed hex. It replaced the portal skills
+(`field-repo-frontend`, `gsap`, `motion`) and their purple, Plus Jakarta Sans and GSAP look on
+2026-11-18.
 
 Versions: the latest stable release of every dependency (owner rule), pinned in `backend/uv.lock`
 and `frontend/package-lock.json`. When a version lags, upgrade the lagging side; never downgrade
@@ -220,8 +237,9 @@ no dev servers. Database tests, migrations and seeds run on GitHub Actions (Back
 | backend lint | `backend\.venv\Scripts\python.exe -m ruff check backend` and `... -m ruff format --check backend` |
 | backend DB-free tests | `cd backend; .venv\Scripts\python.exe -m pytest -q -m "not db"` |
 | hygiene check (ratchet) | `backend\.venv\Scripts\python.exe tools\hygiene_check.py` |
+| design tokens (write, or `--check` that nothing was edited by hand) | `backend\.venv\Scripts\python.exe tools\design_tokens.py` |
 | accept a lower baseline after a clean-up | `backend\.venv\Scripts\python.exe tools\hygiene_check.py --update-baseline` |
-| tools lint and tests (hygiene, curation) | `backend\.venv\Scripts\python.exe -m ruff check tools` and `... -m pytest -q tools\tests` |
+| tools lint and tests (hygiene, curation, design tokens) | `backend\.venv\Scripts\python.exe -m ruff check tools` and `... -m pytest -q tools\tests` |
 | curation checks and index (offline) | `backend\.venv\Scripts\python.exe tools\curation\check.py` (`--check-index` in CI); fetch and verify in `docs/RUNBOOK.md` |
 | craft data tests | `cd etl\crafts; .venv\Scripts\python.exe -m pytest -q tests` |
 | geo ETL tests | `cd etl\geo; python -m pip install -e .` in a venv, then `python -m pytest -q tests` |
@@ -266,7 +284,11 @@ not tracked (`.gitignore`).
 - **No code comments at all**, and no docstrings. The skills' "comment the why" and "comment the
   exception at the spot" become: record the why in `docs/decisions/`, and an exception in
   `docs/TECH_DEBT.md` naming the file and the rule. Only functional directives stay (`noqa`,
-  `type: ignore`, `eslint-disable` with a reason in the decision log).
+  `type: ignore`, `eslint-disable` with a reason in the decision log). `tools/hygiene_check.py`
+  enforces it across the whole repository (`tools/hygiene/comments.py`): Python comments and
+  docstrings; `//` and `/* */` in TypeScript, JavaScript and CSS; `#` lines in YAML, shell, TOML,
+  Terraform, systemd units, `.gitignore` and `.env.example`; and `<!--` in HTML, XML and SVG.
+  Vendored code (`reveal.js`, the security-audit skill) is exempt.
 - Latest stable dependency versions.
 - Secret values are never printed, logged, committed or put in fixtures: names only.
 - Nothing heavy runs locally; agents never stop, restart or deploy anything.
@@ -281,7 +303,9 @@ These come from the plan and are never traded away for a passing test, a demo or
   a cited claim or quote; a failed post-check drops the sentence.
 - **Evidence levels are stored, never inferred** from model text. Only a professor, admin or
   master admin review raises a level above provisional. There are no review gates: nothing
-  waits for approval to be shown.
+  waits for approval to be shown. The one exception is artisan testimony (decision 0083, item
+  16): a person's own words wait for a professor's or admin's review before anyone else sees
+  them, and even then are shown as their account, never as a checked fact.
 - **Retrieved web content is data, never instructions.** Pages, PDFs, search results and model
   output are passed to models as quoted data and never change what the system does.
 - **Research is not limited to the sources named in the plan**, and cites whatever it used.

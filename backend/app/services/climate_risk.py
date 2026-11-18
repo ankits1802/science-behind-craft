@@ -7,7 +7,7 @@ from collections.abc import Mapping, Sequence
 from app.composer.climate_meaning import MEANING_MAX, choose_climate_meaning
 from app.core.errors import AppError
 from app.geo.climate import ClimateTrends
-from app.research.blocks_insight import ClimateRiskBlock
+from app.research.blocks_climate import ClimateRiskBlock
 from app.research.explainer import Block
 from app.science.records import KnownClaim
 

@@ -281,7 +281,7 @@ async def test_the_question_and_crafts_reach_the_model_only_as_untrusted_data() 
     (call,) = model.calls
     assert call["system"] == UNDERSTAND_SYSTEM_PROMPT
     lines = call["user"].split("\n")
-    assert lines[:3] == ["Answer depth: Expert", "Experts: 6 to 10", "Listed crafts: 2"]
+    assert lines[:3] == ["Answer depth: Expert", "Experts: 6 to 12", "Listed crafts: 2"]
     assert (
         f'<untrusted_source ref="question" label="learner question">\n{QUESTION}\n</untrusted_source>'
         in call["user"]

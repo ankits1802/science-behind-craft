@@ -5,7 +5,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.public_deps import public_reader, read_headers, unchanged_read
+from app.api.public_deps import public_asset_reader, read_headers, unchanged_read
 from app.core.db import get_session, release_connection
 from app.core.errors import AppError
 from app.models import User
@@ -31,7 +31,7 @@ async def river_basin(
     request: Request,
     main_riv: int = Path(ge=1, le=REACH_ID_MAX),
     *,
-    reader: User | None = Depends(public_reader),
+    reader: User | None = Depends(public_asset_reader),
     session: AsyncSession = Depends(get_session),
     cache: TopologyCache = Depends(river_topologies),
 ) -> Response:

@@ -3,6 +3,8 @@ import { dirname, join } from "node:path";
 
 import { fileName } from "@/lib/naming";
 
+import { roleSiteRefusal } from "./preview";
+
 export const REPORT_DIR = process.env.E2E_REPORT_DIR || "production-run";
 export const SCREENSHOT_DIR = join(REPORT_DIR, "screens");
 export const REPORT_ENTITY = "Eval-Run";
@@ -56,6 +58,7 @@ export function credentials(): Credentials {
 }
 
 export function roleCredentials(role: RoleAccount): Credentials | null {
+  if (roleSiteRefusal(baseUrl()) !== null) return null;
   const read = (name: string) => process.env[`E2E_${role}_${name}`] ?? "";
   const account = { email: read("EMAIL"), password: read("PASSWORD"), totpSecret: read("TOTP_SECRET") };
   return account.email && account.password && account.totpSecret ? account : null;

@@ -4,8 +4,8 @@ import asyncio
 import logging
 import time
 import uuid
-from collections.abc import Callable, Sequence
-from dataclasses import dataclass, field
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass, field, replace
 from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
@@ -23,6 +23,7 @@ from app.services.ai_providers import (
     PUBLIC_TEXT_TASKS,
     AiTask,
     model_for,
+    output_limit,
     supports,
     task_of,
 )
@@ -71,6 +72,25 @@ class RouteChoice:
     params: dict[str, Any] = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class RouteTuning:
+    models: Mapping[str, str] = field(default_factory=dict)
+    effort: str | None = None
+    max_output_tokens: int | None = None
+
+    def __post_init__(self) -> None:
+        if self.effort is not None and self.effort not in REASONING_EFFORTS:
+            raise ValueError(f"unknown reasoning effort {self.effort!r}")
+        if self.max_output_tokens is not None and self.max_output_tokens < 1:
+            raise ValueError("a tuned output cap is at least one token")
+
+    def applied(self, choice: RouteChoice) -> RouteChoice:
+        params = {**choice.params, REASONING_EFFORT_PARAM: self.effort} if self.effort else choice.params
+        cap = max(choice.max_output_tokens or 0, self.max_output_tokens or 0) or None
+        model = self.models.get(choice.provider, choice.model)
+        return replace(choice, model=model, params=params, max_output_tokens=cap)
+
+
 def reasoning_effort(task: AiTask, choice: RouteChoice) -> str | None:
     chosen = choice.params.get(REASONING_EFFORT_PARAM)
     if chosen in REASONING_EFFORTS:
@@ -109,6 +129,12 @@ class RouterError(AppError):
         self.message = message
         self.reason = reason
         self.attempts = attempts or []
+
+
+def output_tokens_for(choice: RouteChoice, requested: int | None = None) -> int:
+    ceiling = output_limit(choice.provider, choice.model)
+    wanted = requested or choice.max_output_tokens or ceiling or DEFAULT_MAX_OUTPUT_TOKENS
+    return min(wanted, ceiling) if ceiling else wanted
 
 
 def route_allowed(choice: RouteChoice, task: AiTask) -> bool:
@@ -438,6 +464,7 @@ async def run(
     principal: Principal | None = None,
     request_budget_usd: Decimal | None = None,
     session_factory: async_sessionmaker[AsyncSession] | None = None,
+    tuning: RouteTuning | None = None,
 ) -> RouterResult:
     resolved = task_of(task)
     if resolved is None:
@@ -455,7 +482,9 @@ async def run(
     prompt_tokens = budget.estimate_tokens(prompt_text)
 
     async with session_factory() as session:
-        routes = await load_routes(session, resolved)
+        routes = [
+            tuning.applied(route) if tuning else route for route in await load_routes(session, resolved)
+        ]
         settings_values = await app_settings.load_all(session)
         overrides = settings_values.get(app_settings.MODEL_PRICES) or {}
         ceilings = budget.Ceilings.from_settings(settings_values)
@@ -465,7 +494,7 @@ async def run(
     degrade = budget.degrades(ceilings, spend, role=who.role)
 
     def output_cap(choice: RouteChoice) -> int:
-        return max_tokens or choice.max_output_tokens or DEFAULT_MAX_OUTPUT_TOKENS
+        return output_tokens_for(choice, max_tokens)
 
     def estimate(choice: RouteChoice) -> Decimal:
         return estimate_for(

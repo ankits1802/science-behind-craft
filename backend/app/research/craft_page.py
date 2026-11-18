@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import uuid
-from collections import Counter
 from collections.abc import Iterator
 from typing import Literal, Self
 
@@ -11,7 +10,11 @@ from pydantic import AwareDatetime, Field, model_validator
 from app.models.enums import COVERAGE_CLASSES, GI_STATUSES, PLACE_ROLES
 
 from .base import ContractModel
-from .citations import Citation, SourceRef
+from .blocks import ExplainerSentence
+from .citations import Citation
+from .craft_chapters import Chapter
+from .craft_masthead import CiteThis, Masthead, PageSource
+from .craft_page_checks import chapters_agree, cited_ids, evidence_covers, listed_once, v2_parts_agree
 from .craft_page_context import (
     DIFFER_WEIGHTS,
     PICTURE_ROLES,
@@ -26,6 +29,7 @@ from .craft_page_context import (
 )
 from .craft_page_process import PageProcess
 from .crafts import CraftRef
+from .field_voices import FieldVoicesTotals, PageFieldPhoto, PageVoice
 from .media_refs import MediaRef
 from .terms import TermSpan
 from .vocabulary import Discipline, EvidenceLevel
@@ -58,10 +62,9 @@ __all__ = [
     "SearchedFor",
     "SubjectRef",
     "craft_page_text",
-    "without_evidence",
 ]
 
-CRAFT_PAGE_SCHEMA_VERSION = 2
+CRAFT_PAGE_SCHEMA_VERSION = 3
 PROVENANCES = ("CURATED", "SEED", "FROM_ANSWERS", "RESEARCHER")
 SECTION_BASES = ("CURATED", "STORED_CLAIMS")
 SUBJECT_KINDS = ("CRAFT", "STAGE", "MATERIAL", "TOOL", "PLACE", "COMMUNITY", "TERM", "CONCEPT")
@@ -235,13 +238,22 @@ class PageEvidence(ContractModel):
 
 
 class CraftPage(ContractModel):
-    schema_version: Literal[2]
+    schema_version: Literal[3]
     craft: PageCraft
     curated: bool
     curation: CurationHeader | None
-    tabs: PageTabs
     depth: PageDepth
     suggested_questions: list[str] = Field(min_length=1)
+    masthead: Masthead
+    lede: list[ExplainerSentence]
+    chapters: list[Chapter] = Field(min_length=1)
+    cite: CiteThis | None
+    glossary: list[PageTerm]
+    evidence: PageEvidence
+    claims: list[PageClaim]
+    sources: list[PageSource]
+    field_voices_total: FieldVoicesTotals
+    tabs: PageTabs
     overview: PageOverview
     gi_card: PageGi
     events: list[PageEvent]
@@ -250,35 +262,31 @@ class CraftPage(ContractModel):
     places: list[PagePlace]
     communities: list[PageCommunity]
     process: PageProcess
-    glossary: list[PageTerm]
     pictures: list[PagePicture]
     open_questions: list[PageQuestion]
     same_family: list[PageRelative] = Field(max_length=SAME_FAMILY_MAX)
-    evidence: PageEvidence | None
-    claims: list[PageClaim]
-    sources: list[SourceRef]
+    voices: list[PageVoice]
+    field_photos: list[PageFieldPhoto]
 
     @model_validator(mode="after")
     def _everything_resolves(self) -> Self:
         if self.curated != (self.curation is not None):
             raise ValueError("a curated page, and only a curated one, carries its curation header")
-        levels = _listed_once({claim.id: claim.level for claim in self.claims}, [c.id for c in self.claims])
+        levels = listed_once({claim.id: claim.level for claim in self.claims}, [c.id for c in self.claims])
         unknown = sorted(str(claim_id) for claim_id in self.referenced_claim_ids() if claim_id not in levels)
         if unknown:
             raise ValueError(f"the page refers to claims it does not list: {', '.join(unknown)}")
-        if self.evidence is None:
-            uncited = sorted(str(claim_id) for claim_id in set(levels) - set(self.referenced_claim_ids()))
-            if uncited:
-                raise ValueError(
-                    f"a page without all evidence lists only claims its parts cite: {', '.join(uncited)}"
-                )
-        else:
-            _evidence_covers(self.evidence, levels)
-        _sources_resolve(self)
-        _parts_agree(self)
+        evidence_covers(self.evidence, levels)
+        self._sources_resolve()
+        chapters_agree(self)
+        v2_parts_agree(self)
         return self
 
     def referenced_claim_ids(self) -> Iterator[uuid.UUID]:
+        yield from self.flat_claim_ids()
+        yield from cited_ids(self.shown_citations(kin=False))
+
+    def flat_claim_ids(self) -> Iterator[uuid.UUID]:
         sentences = [
             *self.overview.lede,
             *(s for section in self.overview.sections for s in section.sentences),
@@ -293,71 +301,32 @@ class CraftPage(ContractModel):
         for listed in lists:
             yield from listed
 
+    def shown_citations(self, *, kin: bool) -> Iterator[Citation]:
+        masthead = self.masthead
+        if masthead.gi is not None:
+            yield from masthead.gi.citations
+        plates = [masthead.picture] if masthead.picture else []
+        plates += [chapter.opener for chapter in self.chapters if chapter.opener]
+        for sentence in [*self.lede, *(s for plate in plates for s in plate.sentences)]:
+            yield from sentence.citations
+        for chapter in self.chapters:
+            for item in chapter.items:
+                if kin or not item.kin:
+                    yield from item.citations()
 
-def _listed_once(levels: dict[uuid.UUID, str], ids: list[uuid.UUID]) -> dict[uuid.UUID, str]:
-    repeated = sorted(str(claim_id) for claim_id, count in Counter(ids).items() if count > 1)
-    if repeated:
-        raise ValueError(f"claims are listed once each; repeated: {', '.join(repeated)}")
-    return levels
-
-
-def _evidence_covers(evidence: PageEvidence, levels: dict[uuid.UUID, str]) -> None:
-    seen: list[uuid.UUID] = []
-    for entry, hypotheses in evidence.entries():
-        for claim_id in [entry.claim_id, *entry.folded_ids]:
-            if claim_id not in levels:
-                raise ValueError(f"evidence lists claim {claim_id}, which the page does not list")
-            if (levels[claim_id] == HYPOTHESIS) != hypotheses:
-                raise ValueError(f"claim {claim_id} is filed with the wrong kind: hypotheses stand apart")
-            seen.append(claim_id)
-    if sorted(map(str, seen)) != sorted(map(str, levels)):
-        raise ValueError("all evidence lists every claim of the page exactly once")
-
-
-def _sources_resolve(page: CraftPage) -> None:
-    listed = [source.id for source in page.sources]
-    if len(listed) != len(set(listed)):
-        raise ValueError("sources are listed once each")
-    cited = {citation.source_id for claim in page.claims for citation in claim.citations}
-    if cited - set(listed):
-        raise ValueError(f"cited sources missing from the page: {', '.join(sorted(cited - set(listed)))}")
-
-
-def _parts_agree(page: CraftPage) -> None:
-    if sum(1 for picture in page.pictures if picture.role == HERO) > 1:
-        raise ValueError("a page has one hero picture at most")
-    keys = [row.key for row in page.sources_differ]
-    if len(keys) != len(set(keys)):
-        raise ValueError("each row of sources differ has its own key")
-    unknown = {key for stage in page.process.stages for key in stage.differ} - set(keys)
-    if unknown:
-        raise ValueError(
-            f"stages point to sources-differ rows the page does not list: {', '.join(sorted(unknown))}"
-        )
-    if page.tabs.evidence and page.evidence is None:
-        raise ValueError("the All evidence tab is offered only with the evidence")
-    pointed = {group.place_key for group in page.communities if group.place_key}
-    pointed |= {step.place.key for step in page.environment if step.place}
-    unlisted = pointed - {place.key for place in page.places}
-    if unlisted:
-        raise ValueError(f"parts point to places the page does not list: {', '.join(sorted(unlisted))}")
-    if page.craft.slug in {relative.craft.slug for relative in page.same_family}:
-        raise ValueError("a craft is not its own relative")
+    def _sources_resolve(self) -> None:
+        listed = [source.id for source in self.sources]
+        if len(listed) != len(set(listed)):
+            raise ValueError("sources are listed once each")
+        cited = {citation.source_id for claim in self.claims for citation in claim.citations}
+        cited |= {voice.source_id for voice in self.voices}
+        cited |= {citation.source_id for citation in self.shown_citations(kin=True)}
+        cited |= {
+            sid for chapter in self.chapters for item in chapter.items for sid in item.cited_source_ids()
+        }
+        if cited - set(listed):
+            raise ValueError(f"cited sources missing from the page: {', '.join(sorted(cited - set(listed)))}")
 
 
 def craft_page_text(page: CraftPage) -> str:
     return json.dumps(page.model_dump(mode="json", by_alias=True), indent=2, ensure_ascii=False) + "\n"
-
-
-def without_evidence(page: CraftPage) -> CraftPage:
-    cited = set(page.referenced_claim_ids())
-    claims = [claim for claim in page.claims if claim.id in cited]
-    shown = {citation.source_id for claim in claims for citation in claim.citations}
-    plain = page.model_dump(by_alias=True)
-    plain.update(
-        tabs=page.tabs.model_copy(update={"evidence": False}).model_dump(by_alias=True),
-        evidence=None,
-        claims=[claim.model_dump(by_alias=True) for claim in claims],
-        sources=[source.model_dump(by_alias=True) for source in page.sources if source.id in shown],
-    )
-    return CraftPage.model_validate(plain)

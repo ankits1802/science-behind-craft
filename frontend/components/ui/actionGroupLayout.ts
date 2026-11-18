@@ -15,7 +15,7 @@ const TWO_BASE =
   "flex min-w-0 max-w-full flex-nowrap items-center gap-2 [&>*]:min-w-0 [&>*]:whitespace-normal max-sm:[&>*]:min-w-0 max-sm:[&>*]:flex-1 max-sm:[&>*]:text-center";
 
 const MANY_BASE =
-  "flex flex-col gap-2 max-sm:[&>*]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:[&>*]:rounded-full! [&>[data-danger]]:order-last max-sm:[&>[data-danger]]:mt-2 sm:[&>[data-danger]]:ms-4";
+  "flex flex-col gap-2 max-sm:[&>*]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:[&>*]:rounded-pill! [&>[data-danger]]:order-last max-sm:[&>[data-danger]]:mt-2 sm:[&>[data-danger]]:ms-4";
 
 const JUSTIFY_TWO: Record<ActionGroupAlign, string> = {
   start: "justify-start",

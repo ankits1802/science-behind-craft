@@ -6,6 +6,7 @@ from typing import Any
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
+    DateTime,
     ForeignKey,
     Index,
     Integer,
@@ -83,6 +84,7 @@ class Compound(Base):
     sourceId: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("Source.id", ondelete="SET NULL")
     )
+    conformerKeptAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 

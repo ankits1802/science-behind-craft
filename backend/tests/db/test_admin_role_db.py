@@ -212,19 +212,21 @@ async def test_master_admin_assigns_admin(client: httpx.AsyncClient) -> None:
     assert added.json()["admitRole"] == "ADMIN"
 
 
-async def test_admin_allowances_and_daily_cap(client: httpx.AsyncClient) -> None:
+async def test_admin_allowances_and_daily_cap_are_unlimited_for_now(client: httpx.AsyncClient) -> None:
     token = await signed_in(client, "ADMIN")
     mine = (await client.get("/api/usage/me", headers=bearer(token))).json()
-    assert mine["allowances"] == {"VOICE_SECONDS": 3600, "IMAGE": 100, "VIDEO": 20}
-    assert mine["dailyCapUsd"] == 10.0
+    assert mine["allowances"] == {"VOICE_SECONDS": None, "IMAGE": None, "VIDEO": None}
+    assert (mine["dailyCapUsd"], mine["platformDegraded"]) == (None, False)
     async with session_scope() as session:
         rows = (
             await session.execute(
-                select(QuotaPolicy.resource, QuotaPolicy.perDay).where(QuotaPolicy.role == "ADMIN")
+                select(QuotaPolicy.resource, QuotaPolicy.perDay, QuotaPolicy.perMonth).where(
+                    QuotaPolicy.role == "ADMIN"
+                )
             )
         ).all()
-    assert {resource: int(per_day) for resource, per_day in rows} == {
-        "VOICE_SECONDS": 3600,
-        "IMAGE": 100,
-        "VIDEO": 20,
+    assert {resource: (per_day, per_month) for resource, per_day, per_month in rows} == {
+        "VOICE_SECONDS": (None, None),
+        "IMAGE": (None, None),
+        "VIDEO": (None, None),
     }

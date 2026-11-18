@@ -8,55 +8,101 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import crafts
 from app.core.db import get_session
+from app.core.http_cache import body_version
 from app.main import create_app
 from app.models import User
 from app.services import knowledge_view
+from app.services.craft_page_cache import ServedPage, served_content
 
 from ..contracts.golden import golden_text
 from ..readers import sign_in_as
 from .import_support import AJRAKH, AJRAKH_GOLDEN
-from .test_craft_page import STUDENT_CLAIMS, ajrakh_records
 
 PATH = f"/api/crafts/{AJRAKH}/page"
+PIECE = uuid.UUID(int=41)
+OLDER = 1
 
 
 async def no_session() -> Any:
     yield None
 
 
-def client_for(monkeypatch: pytest.MonkeyPatch, role: str) -> TestClient:
-    async def resolve(_session: Any, slug: str) -> Any:
-        return SimpleNamespace(slug=slug) if slug == AJRAKH else None
+def golden() -> dict[str, Any]:
+    return json.loads(golden_text(AJRAKH_GOLDEN))
 
-    async def records(_session: Any, _craft: Any, **_kwargs: Any) -> Any:
-        return ajrakh_records()
+
+def client_for(monkeypatch: pytest.MonkeyPatch, role: str | None, served: list[str]) -> TestClient:
+    async def resolve(_session: Any, slug: str) -> Any:
+        return SimpleNamespace(slug=slug, id=uuid.UUID(int=1)) if slug == AJRAKH else None
+
+    async def page(_session: Any, _craft: Any, variant: str, **_options: Any) -> ServedPage:
+        served.append(variant)
+        body = golden()
+        return ServedPage(served_content(body), body_version(body), variant)
+
+    async def current(_session: Any, _craft: Any) -> int:
+        version: int = golden()["curation"]["version"]
+        return version
+
+    async def archived(_session: Any, _craft: Any, variant: str, version: int) -> dict[str, Any] | None:
+        return {**golden(), "archivedAs": variant} if version == OLDER else None
+
+    async def hidden(
+        _session: Any, _craft: Any, piece_id: uuid.UUID, *, hidden: bool, **_kwargs: Any
+    ) -> bool | None:
+        return hidden if piece_id == PIECE else None
 
     monkeypatch.setattr(knowledge_view, "resolve_craft", resolve)
-    monkeypatch.setattr(crafts, "craft_page_records", records)
+    monkeypatch.setattr(crafts, "served_page", page)
+    monkeypatch.setattr(crafts, "archived_page", archived)
+    monkeypatch.setattr(crafts, "curation_version", current)
+    monkeypatch.setattr(crafts, "set_page_piece_hidden", hidden)
     app = create_app()
-    reader = User(id=uuid.UUID(int=8), name=role.title(), email=f"{role.lower()}@example.com", role=role)
-    sign_in_as(app, lambda: reader)
+    if role is not None:
+        reader = User(id=uuid.UUID(int=8), name=role.title(), email=f"{role.lower()}@example.com", role=role)
+        sign_in_as(app, lambda: reader)
     app.dependency_overrides[get_session] = no_session
     return TestClient(app)
 
 
-def test_a_student_gets_no_evidence_and_no_uncited_claim(monkeypatch: pytest.MonkeyPatch) -> None:
-    response = client_for(monkeypatch, "STUDENT").get(PATH)
+@pytest.mark.parametrize("role", [None, "STUDENT"])
+def test_anonymous_and_student_readers_get_the_open_page_with_all_its_evidence(
+    monkeypatch: pytest.MonkeyPatch, role: str | None
+) -> None:
+    served: list[str] = []
+    response = client_for(monkeypatch, role, served).get(PATH)
     assert response.status_code == 200
-    page = response.json()
-    assert page["evidence"] is None
-    assert len(page["claims"]) == STUDENT_CLAIMS
-    full = json.loads(golden_text(AJRAKH_GOLDEN))
-    hidden = {claim["id"] for claim in full["claims"]} - {claim["id"] for claim in page["claims"]}
-    assert len(hidden) == len(full["claims"]) - STUDENT_CLAIMS
-    assert hidden.isdisjoint(
-        json.dumps({key: value for key, value in page.items() if key != "claims"}).split('"')
-    )
+    assert served == ["OPEN"]
+    assert response.json() == golden()
+    assert response.json()["evidence"] is not None
 
 
 @pytest.mark.parametrize("role", ["RESEARCHER", "PROFESSOR", "MASTER_ADMIN"])
-def test_a_researcher_and_above_get_the_whole_page(monkeypatch: pytest.MonkeyPatch, role: str) -> None:
-    response = client_for(monkeypatch, role).get(PATH)
+def test_a_researcher_and_above_get_the_researcher_variant(
+    monkeypatch: pytest.MonkeyPatch, role: str
+) -> None:
+    served: list[str] = []
+    response = client_for(monkeypatch, role, served).get(PATH)
     assert response.status_code == 200
+    assert served == ["RESEARCHER"]
     assert response.headers["cache-control"] == "private, no-cache"
-    assert response.json() == json.loads(golden_text(AJRAKH_GOLDEN))
+
+
+def test_the_current_version_answers_the_live_page_and_an_older_one_its_archive(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = client_for(monkeypatch, None, [])
+    current = golden()["curation"]["version"]
+    assert client.get(PATH, params={"version": current}).json() == golden()
+    assert client.get(PATH, params={"version": OLDER}).json()["archivedAs"] == "OPEN"
+    assert client.get(PATH, params={"version": current + 5}).status_code == 404
+
+
+def test_only_a_professor_hides_a_piece_on_the_page(monkeypatch: pytest.MonkeyPatch) -> None:
+    path = f"/api/crafts/{AJRAKH}/pieces/{PIECE}/hidden"
+    assert client_for(monkeypatch, None, []).put(path, json={"hidden": True}).status_code == 401
+    assert client_for(monkeypatch, "STUDENT", []).put(path, json={"hidden": True}).status_code == 403
+    professor = client_for(monkeypatch, "PROFESSOR", [])
+    assert professor.put(path, json={"hidden": True}).json() == {"hidden": True}
+    unknown = f"/api/crafts/{AJRAKH}/pieces/{uuid.UUID(int=99)}/hidden"
+    assert professor.put(unknown, json={"hidden": True}).status_code == 404

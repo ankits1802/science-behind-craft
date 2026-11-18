@@ -33,6 +33,7 @@ async def test_the_router_model_runs_the_plan_task_with_the_schema(monkeypatch: 
         "user": "usr",
         "json_schema": {"type": "object"},
         "principal": principal,
+        "tuning": None,
     }
 
 

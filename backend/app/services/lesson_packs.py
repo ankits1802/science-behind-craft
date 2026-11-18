@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
+from typing import Any
 
 from pydantic import ValidationError
 from sqlalchemy import delete, func, select
@@ -15,7 +16,7 @@ from app.research.lessons import LESSON_SCHEMA_VERSION, LessonList, LessonPack, 
 from .explainer_history import explainer_version
 from .visible_claims import visible_claim_ids
 
-__all__ = ["build_lesson", "delete_lesson", "lesson_list", "lesson_of"]
+__all__ = ["build_lesson", "delete_lesson", "lesson_list", "lesson_of", "stored_pack"]
 
 CRAFT_KEY = "craft"
 SLIDES_KEY = "slides"
@@ -80,8 +81,10 @@ async def lesson_of(session: AsyncSession, user_id: uuid.UUID, pack_id: uuid.UUI
     payload = await session.scalar(
         select(LessonRow.payload).where(LessonRow.id == pack_id, LessonRow.userId == user_id)
     )
-    if payload is None:
-        return None
+    return None if payload is None else stored_pack(pack_id, payload)
+
+
+def stored_pack(pack_id: uuid.UUID, payload: dict[str, Any]) -> LessonPack:
     try:
         return LessonPack.model_validate(payload)
     except ValidationError as error:

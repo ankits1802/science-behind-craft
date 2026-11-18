@@ -8,7 +8,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { SegmentedChoice } from "@/components/ui/SegmentedChoice";
 import { resolveRange, type RangeId } from "@/lib/dateRange";
 import { formatDate } from "@/lib/format";
-import { ceilingShare, fetchUsage, formatCount, formatUsd, money, type UsageReport } from "@/lib/usage";
+import { ceilingShare, fetchUsage, formatCount, formatUsd, money, monthlyCeiling, type UsageReport } from "@/lib/usage";
 
 const PERIODS: { value: RangeId; label: string }[] = [
   { value: "7d", label: "7 days" },
@@ -66,26 +66,11 @@ export default function UsagePage() {
           <div className="grid gap-4 sm:grid-cols-3">
             <Stat label="Spend" value={formatUsd(report.spentUsd)} note={`${formatDate(report.from)} – ${formatDate(report.to)}`} />
             <Stat label="Calls" value={formatCount(report.calls)} note={report.failures > 0 ? `${formatCount(report.failures)} failed` : "None failed"} />
-            <section className="panel p-5">
-              <p className="field-label">Monthly ceiling</p>
-              <p className="mt-2 font-display text-2xl font-bold tabular-nums text-ink-900">
-                {formatUsd(report.spentThisMonthUsd)} <span className="text-sm font-medium text-ink-500">of {formatUsd(report.ceilingUsd)}</span>
-              </p>
-              {share !== null ? (
-                <>
-                  <ProgressBar
-                    className="mt-3 h-2"
-                    percent={share}
-                    role="progressbar"
-                    aria-label="Monthly ceiling used"
-                    aria-valuenow={Math.round(share)}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  />
-                  <p className="mt-1.5 text-xs tabular-nums text-ink-500">{Math.round(share)}% used</p>
-                </>
-              ) : null}
-            </section>
+            {monthlyCeiling(report) === null ? (
+              <Stat label="This month" value={formatUsd(report.spentThisMonthUsd)} note="No monthly ceiling" />
+            ) : (
+              <CeilingPanel report={report} share={share} />
+            )}
           </div>
 
           <UsageTable
@@ -136,6 +121,31 @@ export default function UsagePage() {
         </div>
       )}
     </>
+  );
+}
+
+function CeilingPanel({ report, share }: { report: UsageReport; share: number | null }) {
+  return (
+    <section className="panel p-5">
+      <p className="field-label">Monthly ceiling</p>
+      <p className="mt-2 font-display text-2xl font-bold tabular-nums text-ink-900">
+        {formatUsd(report.spentThisMonthUsd)} <span className="text-sm font-medium text-ink-500">of {formatUsd(report.ceilingUsd)}</span>
+      </p>
+      {share !== null ? (
+        <>
+          <ProgressBar
+            className="mt-3 h-2"
+            percent={share}
+            role="progressbar"
+            aria-label="Monthly ceiling used"
+            aria-valuenow={Math.round(share)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          />
+          <p className="mt-1.5 text-xs tabular-nums text-ink-500">{Math.round(share)}% used</p>
+        </>
+      ) : null}
+    </section>
   );
 }
 

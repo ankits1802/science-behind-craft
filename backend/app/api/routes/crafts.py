@@ -1,27 +1,35 @@
+import uuid
+from datetime import UTC, datetime
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.public_deps import cached_read, public_reader, reading_acls, reading_role
+from app.api.public_deps import cached_read, public_reader, read_headers, reading_acls, unchanged_read
 from app.core.db import get_session
-from app.core.deps import SIGN_IN_DETAIL
+from app.core.deps import SIGN_IN_DETAIL, require
+from app.core.errors import Refused
 from app.core.kept_value import KeptValue
 from app.core.roles import PROFESSOR, Capability, can, has_rank
 from app.geo.region_view import craft_region
 from app.models import Craft, User
-from app.research.craft_page import without_evidence
+from app.schemas.craft_page import PageHiding
 from app.science.process_view import craft_process
 from app.services import craft_catalogue, knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
-from app.services.craft_page import craft_page
-from app.services.craft_page_records import craft_page_records
+from app.services.craft_page_archive import archived_page, curation_version
+from app.services.craft_page_cache import PageCache, ServedPage
+from app.services.craft_page_hiding import SIMULATION, set_page_media_hidden, set_page_piece_hidden
+from app.services.craft_page_snapshots import OPEN, RESEARCHER, served_page
 from app.services.craft_process import process_records
 from app.services.region_records import region_records
 
 router = APIRouter(prefix="/crafts", tags=["crafts"])
 
 INACTIVE_REFUSAL = "The full craft list, with retired crafts, is for professors and above."
+NO_VERSION_DETAIL = "This craft has no such curated version."
+NOT_ON_PAGE_DETAIL = "That piece is not on this craft's page."
+JSON_TYPE = "application/json"
 
 
 def catalogue_cache(request: Request) -> KeptValue[dict[str, Any]]:
@@ -68,13 +76,69 @@ async def get_craft_page(
     slug: str,
     request: Request,
     response: Response,
+    version: int | None = Query(default=None, ge=1),
+    *,
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
     craft = await _known_craft(session, slug)
-    page = craft_page(await craft_page_records(session, craft, acls=reading_acls(reader)))
-    shown = page if can(reading_role(reader), Capability.READ_ALL_EVIDENCE) else without_evidence(page)
-    return cached_read(request, response, reader, shown.model_dump(mode="json", by_alias=True))
+    variant = page_variant(reader)
+    if version is not None and version != await curation_version(session, craft):
+        archived = await archived_page(session, craft, variant, version)
+        if archived is None:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, NO_VERSION_DETAIL)
+        return cached_read(request, response, reader, archived)
+    served = await served_page(session, craft, variant, cache=page_cache(request))
+    return page_response(request, reader, served)
+
+
+@router.put("/{slug}/explainers/{piece_id}/hidden")
+async def put_explainer_hidden(
+    slug: str,
+    piece_id: uuid.UUID,
+    body: PageHiding,
+    *,
+    user: User = Depends(require(Capability.HIDE_GENERATED)),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, bool]:
+    craft = await _known_craft(session, slug)
+    marked = await set_page_piece_hidden(
+        session, craft, piece_id, hidden=body.hidden, user=user, now=datetime.now(UTC), kind=SIMULATION
+    )
+    return _hidden(marked)
+
+
+@router.put("/{slug}/pieces/{piece_id}/hidden")
+async def put_piece_hidden(
+    slug: str,
+    piece_id: uuid.UUID,
+    body: PageHiding,
+    *,
+    user: User = Depends(require(Capability.HIDE_GENERATED)),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, bool]:
+    craft = await _known_craft(session, slug)
+    marked = await set_page_piece_hidden(
+        session, craft, piece_id, hidden=body.hidden, user=user, now=datetime.now(UTC)
+    )
+    return _hidden(marked)
+
+
+@router.put("/{slug}/media/{asset_id}/hidden")
+async def put_media_hidden(
+    slug: str,
+    asset_id: uuid.UUID,
+    body: PageHiding,
+    *,
+    user: User = Depends(require(Capability.HIDE_GENERATED)),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, bool]:
+    craft = await _known_craft(session, slug)
+    try:
+        marked = await set_page_media_hidden(session, craft, asset_id, hidden=body.hidden, user=user)
+    except Refused as refused:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, refused.message) from refused
+    return _hidden(marked)
 
 
 @router.get("/{slug}/region")
@@ -87,6 +151,30 @@ async def get_craft_region(
 ) -> Any:
     region = craft_region(await region_records(session, await _known_craft(session, slug)))
     return cached_read(request, response, reader, region.model_dump(mode="json", by_alias=True))
+
+
+def page_cache(request: Request) -> PageCache | None:
+    kept: PageCache | None = getattr(request.app.state, "craft_pages", None)
+    return kept
+
+
+def page_response(request: Request, reader: User | None, served: ServedPage) -> Response:
+    unchanged = unchanged_read(request, reader, served.etag)
+    if unchanged is not None:
+        return unchanged
+    return Response(served.content, media_type=JSON_TYPE, headers=read_headers(reader, served.etag))
+
+
+def page_variant(reader: User | None) -> str:
+    if reader is not None and can(reader, Capability.READ_RESEARCHER_QUOTES):
+        return RESEARCHER
+    return OPEN
+
+
+def _hidden(marked: bool | None) -> dict[str, bool]:
+    if marked is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_ON_PAGE_DETAIL)
+    return {"hidden": marked}
 
 
 async def _known_craft(session: AsyncSession, slug: str) -> Craft:

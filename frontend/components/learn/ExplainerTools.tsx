@@ -7,12 +7,14 @@ import { useAuth } from "@/components/AuthProvider";
 import { FieldBlock } from "@/components/FormControls";
 import { ExplainerExport } from "@/components/learn/ExplainerExport";
 import { SaveButton } from "@/components/learn/SaveButton";
+import { ShareControl } from "@/components/learn/ShareControl";
 import { SearchableSelect } from "@/components/ui/SearchableSelect";
 import type { ExplainerRef, SectionView } from "@/lib/explainerState";
 import { versionChanges, versionOptions } from "@/lib/explainerVersions";
 import type { VersionMark } from "@/lib/learningContract";
 import { newLessonHref } from "@/lib/lessonView";
 import { canBuildLessons, canSaveExport } from "@/lib/permissions";
+import { EXPLAINER_SHARE_PATH } from "@/lib/shareContract";
 import type { User } from "@/lib/types";
 
 export type VersionChoice = { versions: VersionMark[]; viewing: VersionMark | null; onPick: (version: number) => void };
@@ -27,6 +29,7 @@ export function ExplainerActions({ explainer, user }: { explainer: ExplainerRef;
     <>
       <SaveButton explainerId={explainer.explainerId} />
       <ExplainerExport explainer={explainer} />
+      <ShareControl sharePath={EXPLAINER_SHARE_PATH(explainer.explainerId, explainer.version)} kind="answer" />
       {canBuildLessons(user) ? (
         <Link href={newLessonHref(explainer)} className="field-button-secondary min-h-10 rounded-full px-4" data-testid="make-lesson">
           <Presentation className="h-4 w-4" aria-hidden />

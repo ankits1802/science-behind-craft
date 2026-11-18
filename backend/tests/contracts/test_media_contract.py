@@ -152,6 +152,12 @@ def test_options_offer_only_kinds_left_today() -> None:
         MediaOptions.model_validate(body)
 
 
-def test_daily_media_quotas_follow_the_plan_table() -> None:
+def test_no_role_has_a_daily_media_quota_for_now() -> None:
+    assert [daily_allowance(role, "IMAGE") for role in (STUDENT, RESEARCHER, PROFESSOR)] == [None, None, None]
+    assert [daily_allowance(role, "VIDEO") for role in (STUDENT, RESEARCHER, PROFESSOR)] == [None, None, None]
+
+
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
+def test_daily_media_quotas_follow_the_plan_table_when_set() -> None:
     assert [daily_allowance(role, "IMAGE") for role in (STUDENT, RESEARCHER, PROFESSOR)] == [5, 30, 50]
     assert [daily_allowance(role, "VIDEO") for role in (STUDENT, RESEARCHER, PROFESSOR)] == [0, 5, 10]

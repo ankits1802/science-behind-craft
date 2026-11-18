@@ -1,5 +1,6 @@
 import type { ExplainerSentence, TermSpan } from "@/lib/explainerBlockBase";
 import type { BlockByKind, Discipline, ExplainerBlock, LadderStage, LedeBlock, TypedBlockKind, WorkingSectionState } from "@/lib/explainerContract";
+import { reactionPlayerCitations } from "@/lib/explainerMatter";
 import { signatureSentences, signatureSourceIds } from "@/lib/explainerSignature";
 import type { SectionState, SectionView } from "@/lib/explainerState";
 import { TRAIL_GROUPS, TRAIL_STAGES, type TrailEntry } from "@/lib/explainerStream";
@@ -67,7 +68,7 @@ export function stageCitations(stage: LadderStage): Citation[] {
 
 export function blockCitations(block: TypedBlock): Citation[] {
   if (block.kind === "process_ladder") return block.stages.flatMap(stageCitations);
-  if (block.kind === "reaction_player") return block.steps.flatMap((step) => step.citations);
+  if (block.kind === "reaction_player") return reactionPlayerCitations(block);
   if (block.kind === "simulation") return block.values.flatMap((value) => value.citations);
   const cited = blockSentences(block).flatMap((sentence) => sentence.citations);
   if (block.kind !== "measure") return cited;
@@ -200,6 +201,7 @@ export function blockSentences(block: TypedBlock): ExplainerSentence[] {
   if (block.kind === "prose") return block.sentences;
   if (block.kind === "process_ladder") return block.stages.flatMap((stage) => stage.sentences);
   if (block.kind === "region_story") return block.steps.map((step) => step.sentence);
+  if (block.kind === "reaction_player") return (block.notes ?? []).map((note) => note.sentence);
   if (block.kind === "seasons") return block.rows.map((row) => row.sentence);
   if (block.kind === "supply_map") return block.links.map((link) => link.sentence);
   if (block.kind === "material_card") return [...block.facts, ...block.handling];

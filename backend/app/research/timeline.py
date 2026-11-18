@@ -15,6 +15,7 @@ __all__ = [
     "states_movement",
     "years_named",
     "years_offered",
+    "years_stated",
 ]
 
 YEAR_MIN = 1000
@@ -124,14 +125,16 @@ NOT_COUNTED = frozenset(
 
 
 def years_named(texts: Iterable[str]) -> set[YearSpan]:
-    named: set[YearSpan] = set()
+    return set(years_stated(texts))
+
+
+def years_stated(texts: Iterable[str]) -> dict[YearSpan, str]:
+    stated: dict[YearSpan, str] = {}
     for text in texts:
         plain = fold_digits(normalise_quote_text(text))
-        named.update(_ranges(plain))
-        named.update((year, year) for year in _singles(plain))
-        named.update(_decades(plain))
-        named.update(_centuries(plain))
-    return named
+        for span, phrase in (*_ranges(plain), *_singles(plain), *_decades(plain), *_centuries(plain)):
+            stated.setdefault(span, phrase)
+    return stated
 
 
 def years_offered(texts: Iterable[str]) -> set[YearSpan]:
@@ -153,19 +156,19 @@ def states_movement(texts: Iterable[str], start: str, end: str) -> bool:
     return False
 
 
-def _ranges(text: str) -> Iterator[YearSpan]:
+def _ranges(text: str) -> Iterator[tuple[YearSpan, str]]:
     for match in RANGE.finditer(text):
         start, tail = int(match.group(1)), match.group(2)
         end = int(tail) if len(tail) == 4 else start - start % YEARS_PER_CENTURY + int(tail)
         if start <= end <= YEAR_MAX:
-            yield start, end
+            yield (start, end), match.group(0)
 
 
-def _singles(text: str) -> Iterator[int]:
+def _singles(text: str) -> Iterator[tuple[YearSpan, str]]:
     for match in SINGLE.finditer(text):
         year = int(match.group(1))
         if YEAR_MIN <= year <= YEAR_MAX:
-            yield year
+            yield (year, year), match.group(1)
 
 
 def _dated_singles(text: str) -> Iterator[int]:
@@ -175,22 +178,23 @@ def _dated_singles(text: str) -> Iterator[int]:
             yield int(match.group(1))
 
 
-def _decades(text: str) -> Iterator[YearSpan]:
+def _decades(text: str) -> Iterator[tuple[YearSpan, str]]:
     for match in DECADE.finditer(text):
         start = int(match.group(1))
-        yield start, start + YEARS_PER_DECADE - 1
+        yield (start, start + YEARS_PER_DECADE - 1), match.group(0)
 
 
 def _unmeasured(text: str) -> str:
     return PRICED.sub(" ", MEASURED.sub(" ", text))
 
 
-def _centuries(text: str) -> Iterator[YearSpan]:
+def _centuries(text: str) -> Iterator[tuple[YearSpan, str]]:
     for match in CENTURY.finditer(text):
         named = [_century(*found.groups()) for found in CENTURY_ORDINAL.finditer(match.group())]
         centuries = [century for century in named if century]
         if centuries and len(centuries) == len(named) and centuries == sorted(centuries):
-            yield (centuries[0] - 1) * YEARS_PER_CENTURY + 1, centuries[-1] * YEARS_PER_CENTURY
+            span = ((centuries[0] - 1) * YEARS_PER_CENTURY + 1, centuries[-1] * YEARS_PER_CENTURY)
+            yield span, match.group(0)
 
 
 def _century(digits: str | None, word: str | None) -> int | None:

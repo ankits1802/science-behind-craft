@@ -2,6 +2,7 @@ import type { User, UserRole } from "@/lib/types";
 
 export const ROLE_RANK: Record<UserRole, number> = {
   STUDENT: 15,
+  ARTISAN: 18,
   RESEARCHER: 30,
   PROFESSOR: 40,
   ADMIN: 50,
@@ -10,6 +11,7 @@ export const ROLE_RANK: Record<UserRole, number> = {
 
 export const ROLE_LABELS: Record<UserRole, string> = {
   STUDENT: "Student",
+  ARTISAN: "Artisan",
   RESEARCHER: "Researcher",
   PROFESSOR: "Professor",
   ADMIN: "Admin",
@@ -75,10 +77,6 @@ export function canManageAccessEntry(user: User | null | undefined, admitRole: U
   return isMasterAdmin(user) || roleRank(admitRole) < roleRank(user);
 }
 
-export function canReadAllEvidence(user: User | null | undefined) {
-  return hasRank(user, "RESEARCHER");
-}
-
 export function canShareMedia(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
 }
@@ -88,6 +86,18 @@ export function canHideGenerated(user: User | null | undefined) {
 }
 
 export function canBuildLessons(user: User | null | undefined) {
+  return hasRank(user, "PROFESSOR");
+}
+
+export function canContributeTestimony(user: User | null | undefined) {
+  return Boolean(user?.capabilities?.includes("CONTRIBUTE_TESTIMONY"));
+}
+
+export function canReviewTestimony(user: User | null | undefined) {
+  return hasRank(user, "PROFESSOR");
+}
+
+export function canConfirmGuardianConsent(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
 }
 
@@ -147,6 +157,8 @@ export const ROUTE_GUARDS: RouteGuard[] = [
   { path: "/admin/usage", ...ADMIN_GUARD, can: canReadUsage, gate: "require_view_usage" },
   { path: "/admin/users", ...PROFESSOR_GUARD },
   { path: "/admin/access", ...PROFESSOR_GUARD, gate: "require_access_roster_manager" },
+  { path: "/admin/testimony", ...PROFESSOR_GUARD, can: canReviewTestimony, gate: "require(REVIEW_TESTIMONY)" },
+  { path: "/contribute", can: canContributeTestimony, gate: "require(CONTRIBUTE_TESTIMONY)", title: "For artisans", message: "Artisan accounts only." },
   { path: "/lessons", ...PROFESSOR_GUARD, can: canBuildLessons, gate: "require(BUILD_LESSONS)" }
 ];
 

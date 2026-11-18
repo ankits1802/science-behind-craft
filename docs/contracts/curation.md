@@ -57,7 +57,7 @@ UTF-8 without a byte-order mark, LF line endings.
 
 | Field | Rule |
 |---|---|
-| `schemaVersion` | `1` |
+| `schemaVersion` | `2` (decision 0095 item 9). The loader refuses an older version with the command that migrates it (Migrating a dossier, below) |
 | `scope` | `CRAFT` (the default), `FAMILY` or `CATEGORY` (below) |
 | `craftSlug` | `CRAFT` and `FAMILY` only: a slug of `backend/app/data/craft_master_list.json` or an `ACTIVE` craft of `backend/app/data/portal_craft_register.json` (below), case as stored (`Kutch-Ajrakh`); the file is `<craftSlug>.json` |
 | `categorySlug` | `CATEGORY` only, instead of `craftSlug`: a `categorySlug` of the master list (`Stone-Craft-Category`); the file is `categories/<categorySlug>.json` |
@@ -126,7 +126,20 @@ connection with the craft, with name, honours and place only (decision D6): a `P
 neither: order is set only when a source states the sequence, and no two stages share one;
 `duration` and `season` as `{text, claimId}`, where `text` is stated by that claim or its quotes;
 `materials[{materialId, claimId}]` and `tools[{toolId, claimId}]`, each use backed by a claim;
-`claimIds` (what happens in the stage and why).
+`claimIds` (what happens in the stage and why). Two optional fields the craft page reads
+(`docs/contracts/craft-page.md`, "Dossier fields the page reads"; `curation/page_rules.py`):
+
+- `after {text, colours[], claimId}`: the cloth after the stage. `text` is 1 to 120 characters
+  (`limits.AFTER_TEXT_MAX_CHARS`); `colours` 0 to 3 distinct `StepColour` words
+  (`research/colours.ColourWord`: `RED`, `BLUE`, `BLACK`, `WHITE`, `GREEN`, `YELLOW`, `BROWN`,
+  `GREY`, `PINK`, `PURPLE`, `ORANGE`, `MAROON`; `limits.AFTER_COLOURS_MAX`). `claimId` is a fact
+  claim of that stage: listed in its `claimIds` or with the stage as its subject. Every content word
+  of `text` (`research/quotes.content_words`, compared by stem) occurs in the claim's text or its
+  quotes, and each colour is named in one of its quotes by its own word or by a compound whose last
+  word it is (`chocolate-black` names `BLACK`; `whiteness` and `reds` name nothing).
+- `whyClaimId`: the one-line why, a fact claim about the stage (as above) or about one of its
+  materials (with the material as its subject, or listed in the material's `claimIds`), filed under
+  `CHEMISTRY`, `MATERIALS`, `PHYSICS`, `BOTANY` or `PROCESS` (`vocabulary.WHY_DISCIPLINES`).
 
 ### Materials, tools and reactions (`curation/entities`)
 
@@ -169,11 +182,35 @@ neither: order is set only when a source states the sequence, and no two stages 
   so. It cites at least one claim, except in a category dossier, where a question with no claim
   names the `subCategories` no source was found for.
 
-### Pictures (`pictures`, `I..`, at most 6; `curation/records.Picture`)
+### Pictures (`pictures`, `I..`, at most 16; `curation/records.Picture`)
 
 `url`, `pageUrl`, `author`, `licence`, `licenceUrl`, `caption`, and the `claimIds` or `stageId`
 it shows (at least one). The licence or licence URL is on the open-licence allow-list
-(`research/licences.open_licence`). No screenshots of other sites.
+(`research/licences.open_licence`). No screenshots of other sites. At most 16 pictures
+(`limits.PICTURES_MAX`; 6 in schema 1). Optional, for the craft page:
+
+- `placement {chapter, role, stageId?, materialId?}`: `chapter` a key of
+  `research/chapter_keys.CHAPTER_KEYS` (`glance`, `made`, `chem`, `why`, `history`, `market`,
+  `whatif`, `people`, `kin`, `sources`); `role` one of `PICTURE_PLACEMENTS` (`MASTHEAD`, `OPENER`,
+  `PLATE`, `RECORD`, `STAGE`, `MATERIAL`). A `STAGE` placement names its `stageId` and a `MATERIAL`
+  placement its `materialId`, and no other role names either; both resolve in the dossier, and a
+  `STAGE` placement of a picture that names the stage it shows (`stageId`) is that stage. One
+  picture per dossier is placed `MASTHEAD` (`PLACED_ONCE_PER_PAGE`) and one per chapter `OPENER`
+  (`PLACED_ONCE_PER_CHAPTER`).
+- `focal {x, y, width, height}`: the crop box in fractions of the picture, inside it (`x` and `y`
+  from 0, `width` and `height` above 0, `x + width` and `y + height` at most 1).
+- `width` and `height`: the file's size in pixels, together or neither, read from its Commons page
+  with `fetch.py --picture` (Commands, below); the import stores them on the `MediaRef`.
+- `standIn`: what a picture from elsewhere shows when it is not this craft or its place ("Tasar silk
+  yarn, not ajrakh"), 1 to 300 characters.
+
+### Native names (`nativeNames`; `curation/records.NativeName`)
+
+`[{text, language (ISO 639), script (ISO 15924) | null, claimId}]`: a name the craft itself is
+called. The claim is about the craft (subject `CRAFT`); `text` occurs in one of its quotes, and that
+quote says the craft is called that: a naming word (`called`, `known as`, `named`, `name`,
+`termed`, `spelt`, `spelled`, `referred to as`) or a language label right before the name
+(`Ajrak (Sindhi: اجرڪ)`). They fill the page's `localNames` and the masthead's name.
 
 ### The overview (`overview`; `curation/overview.py`)
 
@@ -246,7 +283,13 @@ list and the portal craft register, so a curator cannot choose the looser rules.
 
 - **A** primary or authoritative: GI journal and registry, peer-reviewed papers, museum
   collection records, government reports (Textiles Committee, Development Commissioner
-  (Handicrafts), state handicraft boards), academic books.
+  (Handicrafts), state handicraft boards), academic books; a recorded field interview held by a
+  portal, for what the speaker says of their own practice (materials, steps, tools, terms,
+  quantities, the prices they get). A field interview may be the only support of a `PROCESS`,
+  `MATERIALS`, `DESIGN` or `ECONOMICS` claim about the speaker's own practice; any other claim cites
+  it only beside an A or B source of another kind. Curated dossiers never cite `FIELD_TESTIMONY`
+  (`CURATED_SOURCE_KINDS`); field interviews reach claims only through the answer write-back
+  (`docs/contracts/field-voices.md`, decision 0091).
 - **B** theses, conference papers, edited encyclopedias, established craft institutions with
   named authors.
 - **C** reputable press features; artisan organisations' own pages with a named author; and a
@@ -376,11 +419,13 @@ is dropped, and a source that could not be read is dropped with its claims.
 One line per problem, `<file>: <where>: <message>`, and a non-zero exit on any:
 
 1. Schema and vocabulary (`Dossier.model_validate_json`); a file that does not validate gets
-   only these lines.
+   only these lines. A dossier of an older `schemaVersion` gets one line naming the migration.
 2. Every id used once per part; every reference resolves (claims to sources and subjects;
-   places, communities, stages, materials, tools, reactions, environment links, market records,
-   glossary terms, pictures, conflicts, open questions and the overview to claims, places,
-   stages, materials and tools). Unresolved references stop the remaining rules.
+   places, communities, stages (with their `after` and `whyClaimId` claims), materials, tools,
+   reactions, environment links, market records, glossary terms, pictures (with their placement's
+   stage or material), native names, conflicts, open questions and the overview to claims, places,
+   stages, materials and tools). Unresolved references stop the remaining rules; a hypothesis named
+   by `after`, `whyClaimId` or a native name is cited as a fact (rule 7).
 3. Scope and slug (above): a craft slug on the master list or an `ACTIVE` portal-added craft,
    the declared scope `FAMILY` exactly for family crafts, a category slug on the master list;
    file named `<slug>.json`, a category in `categories/` and no other dossier there; Indian
@@ -393,7 +438,10 @@ One line per problem, `<file>: <where>: <message>`, and a non-zero exit on any:
 7. Hypotheses: each cited by an open question; none cited as a fact anywhere else.
 8. Reliability: no claim resting on D sources only, prices excepted.
 9. Sources: each quoted by a claim; no tracking parameters; no search-result or redirect URL.
-10. Stages, reactions, market records and pictures as described above.
+10. Stages, reactions, market records and pictures as described above; each stage's `after` and
+    `whyClaimId`, the pictures' placements (one `MASTHEAD`, one `OPENER` per chapter, a `STAGE`
+    placement at the stage the picture shows) and the native names
+    (`curation/page_rules.py`).
 11. The overview sentence rule; each section's discipline with 3 or more claims.
 12. No personal contact details in any text field (`research/evidence.personal_data_in`:
     email addresses, spoken email addresses, phone-like and Aadhaar-like numbers); URL fields
@@ -469,13 +517,31 @@ Windows, `backend/.venv/bin/python` on Linux):
 | Step | Command |
 |---|---|
 | read a source as the verifier will | `python tools/curation/fetch.py <https url> [--out <file>]` |
+| read a picture's file address, size and credit from its Commons file page (imageinfo) | `python tools/curation/fetch.py --picture https://commons.wikimedia.org/wiki/File:<name>` |
+| rewrite every dossier of the previous schema (or the ones named) as the current schema | `python tools/curation/migrate.py [<dossier> ...] [--dir <folder>]` |
 | verify every quote of dossiers | `python tools/curation/verify.py backend/app/data/curation/<CraftSlug>.json ...` (a category: `backend/app/data/curation/categories/<CategorySlug>.json`) |
 | run the offline checks (writes nothing) | `python tools/curation/check.py [backend/app/data/curation/<CraftSlug>.json ...]` |
 | regenerate the index (the lead, once per batch) | `python tools/curation/check.py --write-index` |
 | CI form (writes nothing, fails on a stale index) | `python tools/curation/check.py --check-index` |
 | regenerate the JSON Schema after a model change | `python tools/curation/schema.py` |
 
-`verify.py` and `fetch.py` use the network; `check.py` and the tests never do.
+`verify.py` and `fetch.py` use the network; `check.py`, `migrate.py` and the tests never do.
+
+`fetch.py --picture` asks the Commons API (`action=query&prop=imageinfo`, `iiprop=url|size|extmetadata`)
+through the same polite client and prints `pageUrl`, `url` (the original upload address, its
+query dropped), `width`, `height`, `author`, `licence` and `licenceUrl`, for the curator to copy
+into the picture; a page that is not a Commons file page, or a file Commons cannot size, is
+refused.
+
+### Migrating a dossier (`tools/curation/migrating.py`)
+
+A schema change that adds optional fields only migrates by `schemaVersion` alone. `migrate.py`
+reads each dossier (with no arguments, every dossier of the folder and of `categories/`), refuses
+one that is not a dossier or is not of the previous version, and rewrites the version number in
+place, keeping every other byte; a file already current is left alone, and when any file is
+refused nothing is written. The check files stay current, because the verified digest covers
+sources and quotes only, and so does `index.json`. Schema 1 to 2 was run over every dossier on
+2026-11-18.
 
 ## The import (`app.scripts.import_curation`, decision 0053)
 
@@ -501,13 +567,13 @@ sync stores it. Ids are `uuid5(ID_NAMESPACE, "curation:<slug>:<id>")` for claims
 | places | `CraftLocation` with `role` for places in India where the craft is made (`PRACTISED`, `ORIGIN`, `HISTORIC_CENTRE`, `MIGRATED_FROM`, `MIGRATED_TO`): `DISTRICT` precision with the district and state LGD codes (a village or town in its district), or `STATE` for a state; material sources, markets, pending districts and places abroad are page facts only |
 | stages | `Process` (variant `curation`) and `ProcessStage` (`ordered` false and an ordinal after the ordered stages when no source states the order; `durationText`); materials and tools are `Material` rows, their uses `StageMaterial` (tools with role `TOOL`) |
 | reactions | `Reaction` balanced by the science engine and `ReactionCitation` to every quote of its claims; no formula, no equation; a reaction without a stage is a page fact |
-| pictures | `MediaRef` (provider `curation`, `INLINE` under an open licence with its author) and `MediaRefClaim` |
+| pictures | `MediaRef` (provider `curation`, `INLINE` under an open licence with its author, `width` and `height` the dossier's) and `MediaRefClaim`; a stored row of the same file with no size gets the dossier's size, and nothing else of a stored row changes |
 | glossary | `Term` (key from the first spelling of a comma list, the rest aliases; inserted only when the key is new), `TermCraft`, `TermConcept` |
 | GI record | `CraftGiRecord {craftId, applicationNumber, certificateNumber, filedOn, registeredOn, journalIssue, proprietors[], authorisedUserCount, claimIds[]}`, one per craft; dates are partial (`YYYY`, `YYYY-MM`, `YYYY-MM-DD`) as the dossier gives them |
 | prices | `CraftPrice {id, craftId, claimId, pricedOn (partial date), placeName, stateLgd, districtLgd}` |
 | workforce | `CraftWorkforce {id, craftId, claimId, year}` |
 | overview | `KnowledgePiece` `prose` blocks, `EXPERT`, no answer id: the lede (facet `OVERVIEW`) and one per section, topic as answers compute it, sentences checked by the answer engine's prose validator (a failing one is dropped) and marked with the dossier's glossary |
-| the rest | `CuratedCraft {craftId, version, curatedAt, coverage, digest, page, importedAt}`: `page` is `services/curated_index.CuratedPage`, the references the craft page needs (key facts, conflicts, open questions, places, communities, stage details, picture captions, the overview's piece ids, environment links); `digest` is the SHA-256 of the dossier and its check file |
+| the rest | `CuratedCraft {craftId, version, curatedAt, coverage, digest, page, importedAt}`: `page` is `services/curated_index.CuratedPage`, the references the craft page needs (key facts, conflicts, open questions, places, communities, stage details with each stage's `after` and why claim, picture captions with their placement (dossier stage and material keys), focal box, size and stand-in, the native names, the overview's piece ids, environment links; claim ids are the stored claim ids); `digest` is the SHA-256 of the dossier and its check file |
 
 A new version supersedes the old: a curated claim it no longer holds becomes `SUPERSEDED` and
 keeps its citations; a level a person raised or a retraction is never undone; replaced overview
@@ -528,9 +594,16 @@ are marked by `CuratedCategoryClaim {claimId, categoryId, key, discipline}`; sub
 `Concept` rows with no craft and no sub-category; the glossary links terms by `TermConcept` only;
 the overview is `prose` knowledge pieces with no craft; and `CuratedCategory {categoryId, version,
 curatedAt, coverage, digest, page, importedAt}` holds the page index
-(`services/curated_category_index.CuratedCategoryPage`). Places, stages, materials, tools, market
-records and environment links stay claims and concepts. Supersession and idempotence are the
-craft rules. The page that reads it is `docs/contracts/category-page.md`.
+(`services/curated_category_index.CuratedCategoryPage`). The family's reactions (the Textiles
+family's indigo chain, decision 0095 item 9) are stored in that index as `reactions`
+(`IndexReaction` with no `reactionId` and no `stageKey`, its species as the dossier names them,
+`claimIds` the stored claim ids), so the craft pages whose materials they name can borrow them;
+no `Reaction` row is written. `materials` stays empty: the category import writes no `Material`
+rows. Places, stages, materials, tools, market records and environment links stay claims and
+concepts. Supersession and idempotence are the craft rules. The page that reads it is
+`docs/contracts/category-page.md`; without a database,
+`services/category_preview.category_dossier_records(slug)` builds the same index with the claim
+views and sources of a family dossier.
 
 ## Not built yet
 

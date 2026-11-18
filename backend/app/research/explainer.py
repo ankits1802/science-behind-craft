@@ -18,7 +18,8 @@ from .blocks import (
     sentences_in_payload,
     with_sentences_in_payload,
 )
-from .blocks_insight import ClimateRiskBlock, MarketGiBlock, MeasureBlock
+from .blocks_climate import ClimateRiskBlock
+from .blocks_insight import MarketGiBlock, MeasureBlock
 from .blocks_journey import TimelineMapBlock, ZoomStoryBlock
 from .blocks_learning import CompareBlock, ConceptGraphBlock, QuizBlock
 from .blocks_lede import LEDE_KIND, LedeBlock
@@ -44,6 +45,7 @@ __all__ = [
     "BLOCK_MODELS",
     "BLOCK_PHASES",
     "BUILT_BLOCK_KINDS",
+    "BUILT_FIGURE_KINDS",
     "EXPLAINER_EVENTS",
     "EXPLAINER_SCHEMA_VERSION",
     "FINAL_SECTION_STATES",
@@ -168,6 +170,7 @@ BUILT_BLOCK_KINDS = (
     "zoom_story",
     "timeline_map",
 )
+BUILT_FIGURE_KINDS = ("indigo_vat", "mordant_bath", "lost_wax", "firing")
 
 Block = Annotated[
     ProseBlock
@@ -353,8 +356,9 @@ def _require_built(block: BlockBase) -> None:
 
 
 def _require_built_figure(lede: LedeBlock) -> None:
-    if lede.figure is not None:
-        _require_built(lede.figure)
+    figure = lede.figure
+    if figure is not None and figure.kind not in BUILT_FIGURE_KINDS:
+        raise ValueError(f"figure {figure.id} is a {figure.kind} figure, which is not built yet")
 
 
 def _require_lede(lede: LedeBlock, question: str) -> None:

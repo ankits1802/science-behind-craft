@@ -88,10 +88,12 @@ def test_the_matter_builders_add_to_chemistry_and_materials_sections() -> None:
     assert fields["material_card"] == fields["molecule_3d"] == {"CHEMISTRY", "MATERIALS"}
 
 
-def test_seasons_join_climate_sections_and_supply_joins_materials_sections() -> None:
+def test_seasons_join_climate_process_and_geography_and_supply_joins_materials_process_and_economics() -> (
+    None
+):
     entries = {entry.kind: entry for entry in BLOCK_BUILDERS}
-    assert entries["seasons"].disciplines == {"CLIMATE"}
-    assert entries["supply_map"].disciplines == {"MATERIALS"}
+    assert entries["seasons"].disciplines == {"CLIMATE", "PROCESS", "GEOGRAPHY"}
+    assert entries["supply_map"].disciplines == {"MATERIALS", "PROCESS", "ECONOMICS"}
     assert (entries["seasons"].wait_seconds, entries["supply_map"].wait_seconds) == (8.0, 30.0)
     assert {"seasons", "supply_map"} <= set(BUILT_BLOCK_KINDS)
 
@@ -217,7 +219,9 @@ def test_the_registry_adds_kinds_in_the_one_order_a_reused_section_reads() -> No
         "map_layer",
         "climate_risk",
         "market_gi",
+        "reaction_player",
         "molecule_3d",
+        "artisan_voice",
         "compare",
         "concept_graph",
     ]
@@ -236,3 +240,49 @@ async def test_a_section_with_nothing_checked_starts_no_builder_and_stays_empty(
     (done,) = [payload for name, payload in found if name == "section_done"]
     assert (done["state"], done["searched"].startswith("Searched ")) == ("EMPTY", True)
     assert climate.asks == []
+
+
+SEASONS = TypeAdapter(Block).validate_python({**phase_b_blocks()["s3.b1"], "reuse": None})
+SEASON_SOURCES = {sid: SOURCES[sid] for sid in SEASONS.cited_source_ids()}
+
+
+@dataclasses.dataclass
+class SecondTime:
+    asks: list[str] = dataclasses.field(default_factory=list)
+
+    async def build(self, ask: BuildAsk) -> Built:
+        self.asks.append(ask.section.discipline)
+        return Built((SEASONS,), dict(SEASON_SOURCES)) if len(self.asks) > 1 else Built()
+
+
+def seasons_in(builder: Any, *fields: str) -> BlockBuilders:
+    entry = BuilderEntry("seasons", frozenset(fields), lambda tools: builder, 1.0)
+    return BlockBuilders([(entry, builder)])
+
+
+async def test_one_answer_builds_a_craft_level_story_once_and_takes_it_back_when_none_was_built() -> None:
+    builder = SecondTime()
+    answer = seasons_in(builder, "PROCESS", "CLIMATE", "GEOGRAPHY").for_answer()
+    assert (await answer.added(ask("PROCESS"))).blocks == ()
+    assert [block.kind for block in (await answer.added(ask("CLIMATE"))).blocks] == ["seasons"]
+    assert (await answer.added(ask("GEOGRAPHY"))).blocks == ()
+    assert builder.asks == ["PROCESS", "CLIMATE"]
+
+
+async def test_a_craft_level_story_a_reused_section_shows_is_not_built_again() -> None:
+    seasons = FakeBuilder((SEASONS,), dict(SEASON_SOURCES))
+    answer = seasons_in(seasons, "CLIMATE").for_answer()
+    answer.without(()).note_shown(["prose", "seasons"])
+    assert (await answer.added(ask("CLIMATE"))).blocks == ()
+    unscoped = seasons_in(seasons, "CLIMATE")
+    assert len((await unscoped.added(ask("CLIMATE"))).blocks) == 1
+    assert len((await unscoped.added(ask("CLIMATE"))).blocks) == 1
+
+
+def test_an_entry_replaces_a_stored_block_only_when_rebuilt_and_names_a_depth_it_is_reused_from() -> None:
+    with pytest.raises(InvalidInput):
+        BuilderEntry("reaction_player", frozenset({"CHEMISTRY"}), FakeBuilder, replaces_stored=True)
+    with pytest.raises(InvalidInput):
+        BuilderEntry("what_if", frozenset({"CHEMISTRY"}), FakeBuilder, reused_from="DEEP")
+    reused = {entry.kind: entry.reused_from for entry in BLOCK_BUILDERS if entry.reused_from != "BASIC"}
+    assert reused == {"expert_view": "EXPERT", "simulation": "EXPERT"}

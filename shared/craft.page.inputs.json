@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "districts": [
+    {
+      "districtLgd": 449,
+      "name": "Kachchh",
+      "stateName": "Gujarat"
+    }
+  ],
+  "craftDistricts": [
+    449
+  ],
+  "datasets": [
+    {
+      "code": "DR_DISTRICT_SHAPES",
+      "title": "Indian district boundaries, matched to LGD codes",
+      "publisher": "Indian districts GeoJSON on Kaggle",
+      "edition": "2026",
+      "period": "2026",
+      "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+      "licence": "For reference only",
+      "licenceUrl": null,
+      "attribution": "District boundaries are indicative.",
+      "citation": null,
+      "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+    },
+    {
+      "code": "CHIRPS_3_0",
+      "title": "Climate Hazards Center InfraRed Precipitation with Stations v3.0",
+      "publisher": "Climate Hazards Center, UC Santa Barbara",
+      "edition": "3.0",
+      "period": "1981-2025",
+      "nativeResolution": "0.05 degree",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Climate Hazards Center, UC Santa Barbara (CHIRPS3)",
+      "citation": "Climate Hazards Center InfraRed Precipitation with Stations version 3 (CHIRPS3) Data Repository (2025). https://doi.org/10.15780/G2JQ0P",
+      "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/"
+    },
+    {
+      "code": "GHCN_CAMS_T2M",
+      "title": "GHCN CAMS gridded monthly land surface air temperature",
+      "publisher": "NOAA Climate Prediction Center, distributed by NOAA Physical Sciences Laboratory",
+      "edition": "air.mon.mean.nc, file version 3.01",
+      "period": "1981-2025",
+      "nativeResolution": "0.5 degree",
+      "licence": "Public domain (U.S. Government work on a federal server)",
+      "licenceUrl": "https://psl.noaa.gov/data/help/",
+      "attribution": "GHCN_CAMS Gridded 2m Temperature (Land) data provided by the NOAA PSL, Boulder, Colorado, USA",
+      "citation": "Fan, Y., van den Dool, H. (2008). A global monthly land surface air temperature analysis for 1948-present. Journal of Geophysical Research 113, D01103. https://doi.org/10.1029/2007JD008470",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ghcncams/air.mon.mean.nc"
+    },
+    {
+      "code": "SOILGRIDS_2_0",
+      "title": "SoilGrids 2.0",
+      "publisher": "ISRIC World Soil Information",
+      "edition": "2.0",
+      "period": "modelled, 2020 release",
+      "nativeResolution": "250 m",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "SoilGrids 2.0, ISRIC World Soil Information",
+      "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021",
+      "url": "https://files.isric.org/soilgrids/latest/data/"
+    },
+    {
+      "code": "ESA_WORLDCOVER_2021_V200",
+      "title": "ESA WorldCover 10 m 2021 v200",
+      "publisher": "European Space Agency",
+      "edition": "v200",
+      "period": "2021",
+      "nativeResolution": "10 m (1/12000 degree)",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium",
+      "citation": "Zanaga, D., Van De Kerchove, R., Daems, D., et al. (2022). ESA WorldCover 10 m 2021 v200. https://doi.org/10.5281/zenodo.7254221",
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/"
+    }
+  ],
+  "layers": [
+    {
+      "id": "annual-precipitation",
+      "title": "Annual precipitation",
+      "datasetCode": "CHIRPS_3_0"
+    },
+    {
+      "id": "annual-mean-temperature",
+      "title": "Annual mean temperature",
+      "datasetCode": "GHCN_CAMS_T2M"
+    },
+    {
+      "id": "soil-ph-0-5cm",
+      "title": "Soil pH, 0-5 cm",
+      "datasetCode": "SOILGRIDS_2_0"
+    },
+    {
+      "id": "cropland-share",
+      "title": "Cropland share",
+      "datasetCode": "ESA_WORLDCOVER_2021_V200"
+    }
+  ],
+  "trends": [
+    {
+      "district": {
+        "districtLgd": 449,
+        "name": "Kachchh",
+        "stateName": "Gujarat"
+      },
+      "variable": "annual_precipitation",
+      "datasetCode": "CHIRPS_3_0",
+      "period": "1981-2025",
+      "resolution": "0.05 degree",
+      "mean": 449.356389,
+      "meanUnit": "mm/year",
+      "slopePerDecade": 70.760167,
+      "slopeUnit": "mm/year per decade",
+      "pValue": 0.004992,
+      "significant": true
+    },
+    {
+      "district": {
+        "districtLgd": 449,
+        "name": "Kachchh",
+        "stateName": "Gujarat"
+      },
+      "variable": "annual_mean_temperature",
+      "datasetCode": "GHCN_CAMS_T2M",
+      "period": "1981-2025",
+      "resolution": "0.5 degree",
+      "mean": 27.072876,
+      "meanUnit": "degC",
+      "slopePerDecade": 0.29645,
+      "slopeUnit": "degC per decade",
+      "pValue": 0.0,
+      "significant": true
+    }
+  ],
+  "series": [
+    {
+      "district": {
+        "districtLgd": 449,
+        "name": "Kachchh",
+        "stateName": "Gujarat"
+      },
+      "variable": "annual_precipitation",
+      "datasetCode": "CHIRPS_3_0",
+      "unit": "mm/year",
+      "firstYear": 1981,
+      "values": [
+        518.454025,
+        330.546987,
+        405.515159,
+        411.870632,
+        226.065965,
+        238.447322,
+        69.473355,
+        588.659332,
+        446.148639,
+        410.131985,
+        184.335957,
+        564.243668,
+        337.683559,
+        800.270643,
+        244.715962,
+        308.900118,
+        573.000409,
+        336.014914,
+        200.793849,
+        293.313001,
+        288.270586,
+        99.585829,
+        582.566068,
+        239.330508,
+        406.689445,
+        729.346121,
+        581.275289,
+        337.662367,
+        462.050371,
+        784.219266,
+        707.447782,
+        279.877697,
+        587.030683,
+        308.602397,
+        498.760244,
+        361.737573,
+        570.148404,
+        157.926221,
+        576.710733,
+        843.671683,
+        593.127647,
+        717.477821,
+        606.180678,
+        702.50989,
+        710.246711
+      ]
+    },
+    {
+      "district": {
+        "districtLgd": 449,
+        "name": "Kachchh",
+        "stateName": "Gujarat"
+      },
+      "variable": "annual_mean_temperature",
+      "datasetCode": "GHCN_CAMS_T2M",
+      "unit": "degC",
+      "firstYear": 1981,
+      "values": [
+        26.663785,
+        26.680931,
+        26.094973,
+        26.057829,
+        26.549424,
+        26.410637,
+        27.38557,
+        27.325769,
+        26.42286,
+        26.598431,
+        26.571553,
+        26.567946,
+        27.381348,
+        26.502972,
+        26.983318,
+        26.792177,
+        26.425836,
+        27.221214,
+        26.942047,
+        27.211409,
+        27.040297,
+        27.290349,
+        26.966038,
+        27.406247,
+        26.686991,
+        26.912815,
+        27.235853,
+        26.820916,
+        27.654028,
+        27.55503,
+        26.949729,
+        26.808309,
+        26.902941,
+        27.267323,
+        27.638285,
+        27.716673,
+        27.393871,
+        27.911627,
+        27.176758,
+        27.556522,
+        27.884025,
+        27.353742,
+        27.553478,
+        27.965157,
+        27.842378
+      ]
+    }
+  ],
+  "rainfall": null,
+  "conformers": [
+    10215,
+    6293,
+    24393,
+    10340,
+    14798,
+    24489,
+    6093208
+  ],
+  "points": [],
+  "explainers": [
+    {
+      "termKey": "kut",
+      "pieceId": "2e7b9c4d-1a3f-5b6e-8c0d-4f5a6b7c8d9e",
+      "golden": "explainer.craft-mechanism.golden.json"
+    }
+  ]
+}

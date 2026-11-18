@@ -43,6 +43,9 @@ class ObjectStore:
     async def exists(self, key: str) -> bool:
         return await asyncio.to_thread(self._exists, key)
 
+    async def delete(self, key: str) -> None:
+        await asyncio.to_thread(self._delete, key)
+
     def presigned_get(self, key: str, *, disposition: str, seconds: int, now: datetime) -> PresignedGet:
         url = self._client.generate_presigned_url(
             "get_object",
@@ -70,6 +73,12 @@ class ObjectStore:
                 return False
             raise _failure(error, "read") from error
         return True
+
+    def _delete(self, key: str) -> None:
+        try:
+            self._client.delete_object(Bucket=self.bucket, Key=key)
+        except Exception as error:
+            raise _failure(error, "delete") from error
 
     def _put(self, key: str, body: bytes, content_type: str) -> None:
         try:

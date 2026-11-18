@@ -20,8 +20,9 @@ from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
-from app.models.base import Base, created_at, updated_at, uuid_pk
+from app.models.base import Base, created_at, one_of, updated_at, uuid_pk
 from app.models.knowledge import QUOTE_MAX_CHARS
+from app.models.sharing import SharedByLink, shared_together
 
 EXPLAINER_VERSION_CHECK = (
     '("explainerId" IS NULL AND "explainerVersion" IS NULL) OR '
@@ -49,7 +50,7 @@ class Conversation(Base):
     __table_args__ = (Index(None, "userId", "updatedAt"),)
 
 
-class Answer(Base):
+class Answer(SharedByLink, Base):
     __tablename__ = "Answer"
 
     id: Mapped[uuid.UUID] = uuid_pk()
@@ -94,6 +95,7 @@ class Answer(Base):
         Index(None, "craftId"),
         UniqueConstraint("explainerId", "explainerVersion"),
         CheckConstraint(EXPLAINER_VERSION_CHECK, name="explainerVersion"),
+        shared_together(),
     )
 
 
@@ -207,10 +209,12 @@ class VoiceSession(Base):
     billedSeconds: Mapped[int | None] = mapped_column(Integer)
     transcriptEnc: Mapped[str | None] = mapped_column(Text)
     retentionUntil: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    purpose: Mapped[str] = mapped_column(String(16), nullable=False, server_default="ASK")
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
     __table_args__ = (
+        CheckConstraint(one_of("purpose", e.VOICE_PURPOSES), name="purpose"),
         Index(None, "userId", "endedAt"),
         Index(None, "retentionUntil"),
         Index(

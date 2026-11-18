@@ -135,7 +135,7 @@ async def update_budget(
     session: AsyncSession = Depends(get_session),
 ) -> dict[str, Any]:
     await require_step_up(session, actor, payload.twoFactorCode)
-    update = {name: value for name, value in payload if value is not None and name != "twoFactorCode"}
+    update = app_settings.sent_budget_fields(payload.model_dump(), payload.model_fields_set)
     try:
         changes = app_settings.budget_changes(update, await app_settings.load_all(session))
     except InvalidInput as error:

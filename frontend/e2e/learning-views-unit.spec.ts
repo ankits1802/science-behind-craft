@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 
+import { ApiError } from "@/lib/api";
 import { craftComparePath, craftComparisonShape } from "@/lib/compareContract";
 import { QUIZ_BLANK, quizPrompt } from "@/lib/explainerLearning";
+import { fetchExplainerQuiz } from "@/lib/learningApi";
 import { answerQuizPath, explainerQuizShape } from "@/lib/quizContract";
 import { parseShape, ShapeError } from "@/lib/shape";
 import { SHARED_CONCEPT_PATH } from "@/lib/sharedScienceContract";
@@ -46,4 +48,18 @@ test("the quiz, compare and shared-concept routes are named once and escaped", (
   expect(craftComparePath(["a", "b"], ["MATERIALS"])).toBe("/compare?crafts=a&crafts=b&facets=MATERIALS");
   expect(SHARED_CONCEPT_PATH("alum")).toBe("/shared-science/alum");
   expect(SHARED_CONCEPT_PATH("alum", "Kutch-Ajrakh")).toBe("/shared-science/alum?craft=Kutch-Ajrakh");
+});
+
+test("an explainer with nothing to quiz answers no content, which reads as no quiz rather than a failure", async () => {
+  const original = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => new Response(null, { status: 204 });
+    expect(await fetchExplainerQuiz("a1")).toBeNull();
+    globalThis.fetch = async () => new Response(JSON.stringify(QUIZ), { status: 200, headers: { "content-type": "application/json" } });
+    expect((await fetchExplainerQuiz("a1")) as unknown).toEqual(QUIZ);
+    globalThis.fetch = async () => new Response(JSON.stringify({ detail: "No answer has that address." }), { status: 404, headers: { "content-type": "application/json" } });
+    await expect(fetchExplainerQuiz("a1")).rejects.toBeInstanceOf(ApiError);
+  } finally {
+    globalThis.fetch = original;
+  }
 });

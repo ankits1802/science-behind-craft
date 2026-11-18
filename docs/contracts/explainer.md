@@ -54,6 +54,15 @@ the reader saw it, rebuilt once through the claim ledger below. Listen reads it 
 (decision 0035) and refuses one whose `answerId` is another answer's; a `payload` without it (a
 voice turn's) holds no explainer.
 
+A stored explainer is served as it may be shown now, never rewritten: every reader (the versions
+and their exports and lesson packs, the quiz, Listen and film mode) passes it through
+`services/field_voices_readback.current_field_voices` (decision 0091). A citation of a portal field
+interview whose recording is no longer shown (withdrawn, deleted, hidden, or its stream not heard
+from in 7 days) or whose claim no longer cites it is taken out with its prose sentence, or with its
+whole block for any other kind; an image left illustrating no cited claim goes; `sources` is
+renumbered; a section left with nothing is `EMPTY` with `searched` "A field interview this section
+quoted is no longer shown."; an explainer with no `READY` section left is not served (404).
+
 - `understood` is the `Understood` shape of the stream event below.
 - Sections are listed by `order`, 1 to n; ids are `s1`, `s2`, ... and unique. Order is the
   reading order and adapts to the question; section ids are only names.
@@ -80,31 +89,36 @@ section runner, reused sections, pictures and the stored-only answer keep only t
 (`services/ledgered_explainer`). Sections that finish out of order can make the stored answer hold
 fewer sentences than the live page, never more.
 
-- **Restating blocks** (`prose`, `material_card` facts and handling, `expert_view` takes) drop a
-  sentence whose text is already on the page (folded by `data/craft_text.fold`, its English
-  `original` too) or whose every claim an earlier block already showed. **Story blocks** (every
-  other kind with `SENTENCES`: `process_ladder` stages, `region_story` steps, `supply_map` links,
-  `zoom_story` levels, `timeline_map` points and routes, `concept_graph` entries, `seasons`,
-  `measure`, `compare`, `what_if`, `market_gi`, `climate_risk` and the rest) drop an item only when
-  its sentence's text is already shown, and in one call they are let through before the restating
-  blocks; a supply map may repeat a sentence within itself (the client shows it once per material).
-  An item left with no sentence goes; a ladder stage keeps the level of the sentences it keeps; a
-  compare cell already shown is left `null` and a row with fewer than two crafts goes; a block whose
-  own sentence (an indigo vat's lift) was shown is not sent. An `expert_view` difference goes from
-  both seats when either view was already shown. Kinds without sentences pass whole. A block left
-  empty or off its contract is not sent; a section left with nothing ends `EMPTY` with
-  `COVERED_NOTE` ("Already covered in this answer."), which the client does not draw
-  (`lib/explainerView.shownSections`).
+- **Restating blocks** (`RESTATING_KINDS`: `prose`, `material_card` facts and handling,
+  `expert_view` takes) drop a sentence whose text is already on the page (folded by
+  `data/craft_text.fold`, its English `original` too) or whose every claim an earlier block already
+  showed. **Story blocks** (every other kind with `SENTENCES`: `process_ladder` stages,
+  `region_story` steps, `supply_map` links, `zoom_story` levels, `timeline_map` points and routes,
+  `concept_graph` entries, `seasons`, `measure`, `compare`, `what_if`, `market_gi`, `climate_risk`
+  and the rest) drop an item only when its sentence's text is already shown, and in one call they
+  are let through before the restating blocks; a supply map may repeat a sentence within itself (the
+  client shows it once per material). An item left with no sentence goes, so a card whose every fact
+  was shown is not sent even when it shows a formula; a ladder stage keeps the level of the
+  sentences it keeps; a compare cell already shown is left `null` and a row with fewer than two
+  crafts goes; a block whose own sentence (an indigo vat's lift) was shown is not sent. An
+  `expert_view` difference goes from both seats when either view was already shown. Kinds without
+  sentences pass whole. A block left empty or off its contract is not sent; a section left with
+  nothing ends `EMPTY` with `COVERED_NOTE` ("Already covered in this answer."), which the client
+  does not draw (`lib/explainerView.shownSections`).
 - **Calls:** a section's ladder, prose and pictures are admitted alone and its built blocks together
   (`claim_ledger.admission_batches`), for fresh sections, reused sections and the rebuild alike.
   `ExplainerStream.blocks(section_id, blocks, sources, *, in_language)` admits in English, then
   translates what it let through, all at once, then sends it.
 - **Once per answer:** a material card per material (PubChem CID, compound, material, term or
   folded name), a `molecule_3d` per CID, a concept-graph node per term (a node that loses the
-  focus craft or falls below two crafts goes), one `region_story`.
-- **Experts:** a seat with no new sentence left is not shown; the others stop agreeing or differing
-  with it, and a difference whose two views now share a source goes.
-- **Pictures:** one per section, the first ranked item that illustrates a claim the section's
+  focus craft or falls below two crafts goes), one each of the craft-level stories
+  (`ONCE_PER_ANSWER_KINDS`: `region_story`, `seasons`, `supply_map`, `zoom_story`), one generated
+  explainer (`simulation`) per folded concept (decision 0090).
+- **Experts:** a seat whose take adds no sentence and no claim not yet shown is not shown; the
+  others stop agreeing or differing with it, and a difference whose two views share a claim or a
+  source goes.
+- **Pictures:** one per images block (a section's own picture, and since decision 0087 up to three
+  concept pictures from the generated explainer's builder), the first ranked item that illustrates a claim the section's
   shown blocks cite, was not shown earlier in the answer (media id, page or image address, the
   zoom story's pictures included) and is not from a shop, marketplace or social site
   (`services/picture_sites.blocked_picture`: the maintained `BLOCKED_PICTURE_SITES`, a
@@ -145,7 +159,7 @@ piece ("From earlier research" and its date). Each block says what it rests on:
 | `in_practice`, `open_questions` | D | declared |
 | `artisan_voice` | E | declared |
 | `designs` | deferred (owner, 2026-11-17) | declared |
-| `indigo_vat`, `mordant_bath`, `lost_wax`, `firing` | `SIGNATURE` (0077) | declared; built by task 3-04 |
+| `indigo_vat`, `mordant_bath`, `lost_wax`, `firing` | `SIGNATURE` (0077) | built as lede figures only (`BUILT_FIGURE_KINDS`, 0086), sent while `SIGNATURE_FIGURES_ENABLED` is on; never in a section |
 
 A phase builds a kind by adding it to `BUILT_BLOCK_KINDS` (server and client, pinned by
 `e2e/backend-vocabulary-unit.spec.ts`) and its client shape and renderer; the envelope does not
@@ -209,14 +223,29 @@ construct, and the builder that made it adds nothing.
   highlight. The client draws the route's current values and classes under the caption; a newer
   version is still drawn (values are dataset rows, not claims). **Piece:** none (it cites no
   claim); rebuilt each time.
-- **`reaction_player`** `{steps[ReactionStep] (1+)}`, `ReactionStep {reactionId, stageId?,
-  kind, label, species[ReactionSpecies] (2+), equation?, balanced, level, citations (1+)}`.
+- **`reaction_player`** `{steps[ReactionStep] (1+), notes[ReactionNote]?}`, `ReactionStep {reactionId, stageId?,
+  kind, label, species[ReactionSpecies] (2+), equation?, balanced, level, citations (1+), stage?,
+  conditions[LadderCondition]?, colours[StepColour]?}`, `StepColour {side (BEFORE, AFTER), colour
+  (RED, BLUE, BLACK, WHITE, GREEN, YELLOW, BROWN, GREY, PINK, PURPLE, ORANGE, MAROON), stated,
+  citations (1+)}`, `ReactionNote {reactionId, sentence}` (decision 0088; the optional fields are
+  left out of the JSON when empty, so a player stored before them keeps its content hash).
   Server: every value from the stored `Reaction` rows and their citations (the Process tab's
-  reaction view). Model: which offered reactions, their order. Rules: a reactant and a product;
+  reaction view): `stage` is the stage's stored name, `conditions` the reaction's and its stage's
+  stated readings (the ladder's rule, at most `STEP_CONDITIONS_MAX` 4), `colours` only a cited
+  quote's own words (`science/reaction_colours`: "at first green ... becomes blue" gives both
+  sides, "develops a deep fast chocolate-black colour" the after side by the compound's last colour
+  word; a denied or naming use such as "indigo white" gives none), and `notes` the reaction's
+  stored fact claims as cited sentences, each claim once per player, at most `NOTES_PER_STEP_MAX`
+  (4) per step, ids `<block>.<n>`. Model: none. Rules: a reactant and a product;
   `equation` is `mhchem_equation(species)`; balanced only with every formula; `level` is
   `reaction_level` of the citations (an unbalanced reaction with every formula is capped at
-  `HYPOTHESIS`); each reaction once. The builder re-checks steps against the process rows, as
-  ladders are (`reaction_player_problems`, decision 0045). Replaces the stream's `reaction` event,
+  `HYPOTHESIS`); each reaction once; each colour side once, its colour named in `stated` and
+  `stated` in one of its citations' quotes; a note only for a reaction the player plays, facts
+  only. `SENTENCES` is the notes' sentences, so the ledger drops a repeated note and keeps every
+  step, and translation and term marking walk the notes. The builder re-checks steps and notes
+  against the process rows, as ladders are (`reaction_player_problems`, decision 0045): a stage,
+  condition or colour list a stored step holds must equal the rows', a note must be a stored claim
+  of its reaction. Replaces the stream's `reaction` event,
   which no server path emits and which stays declared until removed (`docs/TECH_DEBT.md`). **Piece:** the section's slot; reuse re-checks against the process rows.
 - **`material_card`** `{materialId?, compoundId?, termKey?, name, materialKind?, role?, formula?,
   pubchemCid?, wikidataId?, localNames[], facts[sentence] (1+), handling[sentence]}`. Server: name,
@@ -227,6 +256,10 @@ construct, and the builder that made it adds nothing.
   key; local names once each. **Piece:** the section's slot.
 - **`molecule_3d`** `{compoundId, pubchemCid, name, formula?, sourceId}`. Server: everything from
   the stored `Compound` and its `COMPOUND_RECORD` source (`compound_lookup.record_source_id`).
+  A curated dossier's PubChem CID becomes a `Compound` row at import when none holds it
+  (`services/curated_compounds`, named by its first material, no formula until `link_compounds`
+  reads the record by its CID; a same-name compound without a CID is left to the lookup instead,
+  decision 0088), so its materials link to it.
   Model: which compound of the section's blocks. The conformer comes through the PubChem adapter:
   `GET /api/molecules/{pubchemCid}/conformer` (public, decision 0079) answers the 3D SDF, cached in the
   private media bucket, 404 without a 3D conformer; the builder adds a molecule only for a
@@ -234,10 +267,12 @@ construct, and the builder that made it adds nothing.
   claim).
 - **`expert_view`** `{seat, take[sentence] (1+), agreesWith[seat], differs[{seat, thisView,
   otherView}]}`. Server: the seat (from `Understanding.seats`, `expert_panel.speaking_seats` of
-  the section's field), the take's citations from stored claims, both sides of a difference as
-  the claims stand stored, the agreements (a shared cited claim). Model: composes the take from
-  the seat's brief, choosing claims; proposes differences, which the server keeps only on two
-  stored facts about one subject from two sources (decision 0046). Rules: never its own
+  the section's field, widened at Expert; decision 0099), the seat's own stored evidence, the
+  take's citations from stored claims, both sides of a difference as the claims stand stored, the
+  agreements (a shared cited claim), and the whole `ARTISAN` take, quoted from field transcripts.
+  Model: composes each other seat's take (at most 3 sentences) from that seat's brief in a call
+  of its own, choosing claims; proposes differences in a final pass, which the server keeps only on
+  two stored facts about one subject from two sources (decisions 0046, 0099). Rules: never its own
   seat; each other seat once; a difference rests each view on its own claims and its own
   sources. In a section (`expert_pairing_problems`, checked by `ExplainerSection`): one view per
   seat; an agreement is mutual; a difference is "Experts differ" only when the other seat states
@@ -273,12 +308,14 @@ The 18 seats of plan section 4 feature 6 are `EXPERT_PANEL`, in `EXPERT_SEATS` o
 (`EXPERT_SEAT_LABELS`, pinned to the panel), the role brief a compose prompt gives the seat, the
 source kinds it prefers (most preferred first), and the fields (disciplines) it speaks to. Every
 field has at least one seat. The understanding step seats experts by the depth's range
-(`DepthPolicy`: Basic 2, Detailed 4, Expert 6 to 10; plan 2.4); a seated expert gives a view in each
-section whose field it speaks to (`seats_for`), from the same evidence as the section.
-`speaking_seats(discipline, seated, depth=)` is the seats a section hears: the seated ones once
-each, the depth's first `max_experts`, those whose fields hold the section's, never a
-`TESTIMONY_SEATS` seat (the artisan's voice, which speaks only from phase E's field testimony).
-`PANEL_FIELDS` is every field a speaking seat covers.
+(`DepthPolicy`: Basic 2, Detailed 4, Expert 6 to 12; plan 2.4, decision 0099); a seated expert gives
+a view in each section whose field it speaks to (`seats_for`).
+`panel_seats(discipline, seated, depth=)` is the seats a section hears: at Basic and Detailed the
+seated ones once each, the depth's first `max_experts`, those whose fields hold the section's; at
+Expert (`WIDENED_DEPTHS`) the seated ones first, then every other panel seat whose fields hold the
+section's, up to `max_experts`. `speaking_seats` is those seats without a `TESTIMONY_SEATS` seat;
+`voiced_seats` is the testimony seat among them (the artisan's voice, which speaks only from
+field transcripts). `PANEL_FIELDS` is every field a speaking seat covers.
 
 ### Block builders (`services/block_builders.py`)
 
@@ -294,12 +331,21 @@ request (the answer's `PlanRequest`: question, craft, depth, seats, language), b
 section's checked English prose and ladder), cited (their claims and sources)}`; `Built {blocks,
 sources}` (the source refs of every source the blocks cite beyond `cited`). An entry adds a
 later-phase kind to the fields it names and waits `BUILDER_WAIT_SECONDS` (8 s) unless it raises
-it, at most `BUILDER_WAIT_MAX_SECONDS` (60 s) for a model call. Entries are listed in
+it, at most `BUILDER_WAIT_MAX_SECONDS` (180 s, decision 0087) for a model call. Entries are listed in
 `PIECE_BLOCK_ORDER`, so a fresh section shows its added blocks in the order a reused one reads
-them; `rebuilt_on_reuse` marks the kinds that are never pieces (`map_layer`, `molecule_3d`,
-`compare`, `concept_graph`), and
-`places_pieces` the one entry whose builder may return a stored piece placed with its reuse mark
-(`simulation`, decision 0055).
+them; `rebuilt_on_reuse` marks the kinds a reused section rebuilds even when its group already
+shows the kind (`region_story`, `map_layer`, `climate_risk`, `market_gi`, `reaction_player`,
+`molecule_3d`, `artisan_voice`, `compare`, `concept_graph`: never pieces, built per subject, or
+refreshed from stored rows with no model call); `replaces_stored` the one of them whose stored block
+a reused group leaves out, so the rebuilt one takes its place rather than joining it
+(`reaction_player`, decision 0090); `reused_from` the shallowest depth at which a reused section
+runs the entry (`EXPERT` for `simulation` and `expert_view`, the two longest model calls; `BASIC`
+for the rest); and `places_pieces` the one entry whose builder may return a stored piece placed with
+its reuse mark (`simulation`, decision 0055). One answer's builders share a set of the craft-level
+kinds already taken (`BlockBuilders.for_answer`, `ONCE_PER_ANSWER_KINDS`: `region_story`,
+`seasons`, `supply_map`, `zoom_story`): the first section whose builders start builds one, a
+reused section that shows one takes it (`note_shown`), and a builder that adds nothing gives it
+back for a later section.
 
 The sectioned flow makes one call: once a section's final attempt is checked, its builders start
 together (`SectionBuilds.start`; none when the section has no checked prose or ladder, so it stays
@@ -311,9 +357,42 @@ its wait, makes another kind, makes a kind not yet built, carries a reuse mark (
 `places_pieces`) or cites a source
 it did not return adds nothing and is logged; the section is never failed by a builder. A builder
 never holds a database connection while it waits on a model, the router or HTTP (decision 0040).
-A reused section runs the `rebuilt_on_reuse` builders over its placed pieces and the reused
-claims (`BlockBuilders.for_reuse`, `reused_sections.ReuseBuilds`), sending what they add after the
-placed blocks and before the pictures, so a reused climate section keeps its map (decision 0050).
+A reused section is enriched like a researched one (decision 0090): it runs every builder of its
+field whose kind its group does not already show, and every `rebuilt_on_reuse` one, from the
+entry's `reused_from` depth (`BlockBuilders.for_reuse(shown, depth=)`, `reused_sections.ReuseBuilds`),
+over its placed pieces and the reused claims, sending what they add after the placed blocks and
+before the pictures. Every reused section's builders start at once, before the headings are
+awaited; the placed blocks of every section are sent next, and then each section's additions in
+reading order, so the slowest builder of the reused sections bounds the wait rather than their
+sum. Placed blocks are term-marked again with the answer's glossary
+(`reuse_enrichment.placed_section`; a `replaces_stored` kind is left out of the placed blocks and of
+the copies), and a reused `PROCESS` section without a stored ladder is led by one built from the
+stored stages whose claims its blocks cite (`reuse_enrichment.reused_ladder`, no model call,
+checked by `ladder_problems`). A reused section is kept again as a group of this answer only when it
+gained a storable block its group does not already store (`Placed.stores`: same kind and the same
+content once sentence ids and term marks are set aside, `knowledge_pieces.shows_alike`): copies of
+its craft pieces (not region stories or generated explainers, which keep their own slots) and the
+blocks built for it (`reuse_enrichment.kept_with_reuse`), so a rebuilt player equal to the stored
+one keeps nothing and a later answer rebuilds only the kinds that are never pieces.
+
+**Curated sections are the Expert floor** (decision 0090). At `EXPERT`, a reused group whose craft
+pieces no answer made (a curated dossier's overview, decision 0053) does not settle its field
+(`reuse_enrichment.expert_floors`): the section streams those blocks first, then researches the
+field as a deepening of them (`SectionContext.floors`, `floor_deepening`: composed sentences whose
+claims the floor already cites are left out, the composed heading replaces the fallback), its
+builders run over the floor and the new blocks together, and the kept group holds copies of the
+floor. Each floor is sent as soon as its section starts, before the section waits for one of the
+`SECTION_CONCURRENCY` research slots, and a failure while sending it stops that section alone. A
+section whose floor shows something is never researched again on the web for composing nothing
+new (`_needs_fresh`). An answer's keep never supersedes a piece no answer made
+(`createdFromAnswerId` null): the curated pieces stay current for the craft page, the district page
+and compare, and serve reuse again once the answer's group goes stale, while reuse takes a group an
+answer made before a curated one of the same field (`piece_reuse.answered_first`), so the next ask
+reuses the richer group and an Expert ask is not floored twice. Also at `EXPERT`, every field with at least `FIELD_CLAIMS_MIN` (3) visible curated claims joins
+the understanding's fields after those it chose (`stored_fields.with_stored_fields`,
+`AnswerStore.fields`). Field reach of the builders: `seasons` `CLIMATE`, `PROCESS`, `GEOGRAPHY`;
+`supply_map` `MATERIALS`, `PROCESS`, `ECONOMICS`; `zoom_story` `MATERIALS`, `CHEMISTRY`, `PROCESS`;
+`timeline_map` `HISTORY`, `ECONOMICS`, `GEOGRAPHY` (`block_builders.*_FIELDS`).
 `region_story` is rebuilt on reuse too, but only for a section that carries no stored story: a
 placed `region_story` piece stops the builder before any query or model call. Without it, a
 geography section answered from pieces kept before its craft had mapped places (Kutch Ajrakh until
@@ -327,8 +406,9 @@ glossary terms of each material's concept, the compounds of its materials and re
 their PubChem record sources), and an answer for any craft gets none.
 
 - **`reaction_player`** (`CHEMISTRY`, 8 s): the craft's shown reactions in process order, each
-  step the Process tab's reaction view (`science/reaction_player`), at most `REACTION_STEPS_MAX`
-  (8; past it the reactions the section's claims cite are kept first). No model is asked.
+  step the Process tab's reaction view (`science/reaction_player`) with its stage, stated
+  conditions and colours and the notes above, at most `REACTION_STEPS_MAX`
+  (12; past it the reactions the section's claims cite are kept first). No model is asked.
   `reaction_player_problems` refuses a reaction that is not a stored row of the craft, a step
   whose stage, kind, label, species, equation or balance differ from the row, and a citation not
   linked to the reaction, when built and when its piece is reused.
@@ -342,9 +422,11 @@ their PubChem record sources), and an answer for any craft gets none.
   shown. `role` only when every stage use agrees; `termKey`, `localNames` and `wikidataId` from
   the linked term whose label the material's name contains; `formula` and `pubchemCid` only from
   a compound the compound lookup linked to its PubChem record.
-- **`molecule_3d`** (`CHEMISTRY`, `MATERIALS`, 8 s): the first compound, in order of first
-  mention, with a CID, a stored record source and a 3D conformer (at most 3 tried); one per
-  section, and the claim ledger shows one per CID per answer (decision 0080).
+- **`molecule_3d`** (`CHEMISTRY`, `MATERIALS`, 8 s): the compounds, in order of first mention and
+  then (in `CHEMISTRY`, `PLAYED_FIELDS`) those of every stored reaction of the craft, with a
+  CID, a stored record source and a 3D conformer, one per CID; at most `MOLECULES_PER_SECTION` (3)
+  per section from `MOLECULE_CANDIDATES_MAX` (6) tried, ids `<section>.molecule<n>`, and the claim
+  ledger shows one per CID per answer (decisions 0080, 0090).
 
 `GET /api/molecules/{pubchemCid}/conformer` (public; it checks the stored compound on the
 request's one session and releases the connection before the bucket and PubChem, decision 0050)
@@ -431,34 +513,58 @@ gets neither.
   names a capitalised word of the link's sentence or quotes. Otherwise, or when Wikidata fails, the
   origin is listed without a place.
 
-### Expert panel as built (decision 0046)
+### Expert panel as built (decisions 0046, 0099)
 
 Registered in `BLOCK_BUILDERS` from `services/expert_views.py` (`expert_view`, every field in
-`PANEL_FIELDS`, 45 s). It hears nothing for a section without a checked block or a speaking seat.
+`PANEL_FIELDS`, 90 s). It hears nothing for a section without a checked block, or without a
+speaking or voiced seat.
 
-- **Evidence.** The fact-level stored claims the section's checked sentences rest on
-  (`BuildAsk.cited`), those the blocks do not yet cite first, each offered as its claim text and
-  its citations' quotes inside an untrusted block (`panel_candidates`). When the blocks already
-  cite every one, no call is made (decision 0080).
-- **One call.** `composer/expert_takes.compose_takes`: one `COMPOSE` call (Claude Sonnet first)
-  with the section line, an `Expert <SEAT>: <label>. <brief>` line per speaking seat, the
-  statements and the question in untrusted blocks, and the compose source rules. Reply
-  `{views[{seat, take[{text, quotes[{source, quote}]}]}], differences[{seat, statement,
-  otherSeat, otherStatement}]}`, seats and statements as enums of what was offered; at most 3
-  take sentences and 3 differences are read; a reply off the schema is a model failure.
+- **Seat evidence.** Each speaking seat searches stored knowledge of its own
+  (`services/seat_search.py`, concurrently): one `KnowledgeRetriever.search` (the answer's
+  `SessionScopedSearch`, `BuilderTools.retriever`) scoped to the craft, in the answer's mode,
+  whose text is the question, the craft name, the seat's label and its fields' descriptions.
+  `seat_findings` keeps, in rank order, up to 6 fact-level stored claims the section's blocks do not
+  cite and that cite a source of one of the seat's `sourceKinds` (claims read with the `PUBLIC`
+  and `SIGNED_IN` chunk ACLs). A failed search leaves the seat the section's evidence only.
+- **Offer.** A seat is offered its own claims first, then the section's fact-level stored claims
+  (`panel_candidates`: those the blocks do not yet cite, then those they do), each as its claim
+  text and its citations' quotes inside an untrusted block. A seat whose offer holds no claim the
+  blocks do not cite is not called (decision 0080).
+- **One call per seat.** `composer/expert_takes.compose_take`: one `COMPOSE` call per offered
+  seat (Claude Sonnet 5.5 on the add-on route, decision 0089), all at once, with the section line,
+  that seat's `Expert <SEAT>: <label>. <brief>` line, its statements and the question in untrusted
+  blocks, and the compose source rules. Reply `{take[{text, quotes[{source, quote}]}]}`; at most 3
+  take sentences are read. A reply off the schema, a failed or a refused call drops that seat's
+  view only.
 - **Takes.** Every take sentence passes the prose checks (the composer's sentence validator, then
-  `section_blocks.prose_problems`) or that seat's view is not shown; a view for a seat not
-  offered is ignored, and so is a view whose every claim the section's blocks already cite.
-- **Experts differ.** A proposed pair is kept when its seats differ and both gave a view, both
-  statements are fact-level stored claims of the section, they are two claims, no source is
-  cited by both and both claims are stored on one concept (`ClaimView.concept_id`); each pair of
-  seats differs once. Both views carry it mirrored, each side the claim's own text, level and
-  citations (`difference_refusal` names why a pair is refused).
+  `section_blocks.prose_problems`) or that seat's view is not shown, and so is a view whose every
+  claim the section's blocks already cite (`kept_takes`).
+- **Experts differ.** A final pass (`composer/expert_differences.compose_differences`), one
+  `COMPOSE` call, runs only when two or more seats gave a view and two offered statements on one
+  concept cite no common source. It names the seats that spoke and the statements they were offered;
+  reply `{differences[{seat, statement, otherSeat, otherStatement}]}`, at most 3 read. A proposed
+  pair is kept when its seats differ and both gave a view, both statements are fact-level stored
+  claims, they are two claims, no source is cited by both and both claims are stored on one
+  concept (`ClaimView.concept_id`); each pair of seats differs once. Both views carry it mirrored,
+  each side the claim's own text, level and citations (`difference_refusal` names why a pair is
+  refused).
+- **The artisan's voice.** When `ARTISAN` is a voiced seat of the section, `FIELD_VOICES_ENABLED`
+  is on and the craft's field transcript chunks (`FIELD_TESTIMONY` sources, chunk ACLs `PUBLIC`
+  and `SIGNED_IN`, recordings shown for the craft) answer the question, the seat quotes up to 3
+  stored claims that quote those chunks, spoken by a speaker recorded as an artisan
+  (`services/artisan_seat.py`). Each sentence is one artisan's account, never the craft's general
+  fact: `In one artisan's account, <recorded name>, who practises <recorded craft> in <district>
+  district, said: "<quoted words>"`, the quoted words checked by `prose_problems` and the
+  sentence citing the stored claim and its transcript source. Without such a transcript the seat
+  gives no view and no text says so. The model never writes the artisan's view, and the seat never
+  takes part in a difference.
 - **Agreement.** Two views whose takes cite one stored claim and that do not differ agree, both
   ways.
-- **Spend.** Builders call their compose model as `AnswerSpend.headroom()` (decision 0046): a
-  call is refused unless the answer keeps half its depth's cap after it; Master Admins are never
-  refused. A refused, failed or late call shows no view and never fails the section.
+- **No repetition.** The claim ledger (decision 0080) is unchanged: it drops a take sentence whose
+  text was shown or whose every claim an earlier block showed, and a view left with no sentence.
+- **Spend.** Every seat call, the difference pass and the seat searches' embeddings are recorded
+  as the answer's spend through the builder's compose model and the retriever's embedder; the
+  builder adds no cap of its own.
 - Block ids are `<section>.<seat>` until the registry numbers them; sentence ids number the take,
   then each difference's two sides.
 
@@ -475,7 +581,13 @@ The place kinds (decision 0048) enter through `components/answer/place/placeRend
 the river from `GET /api/rivers/{mainRiv}` (`lib/riverTopology.ts`) and the districts from the
 district shapes, lights each district as the water reaches it in `river.districtLgds` order, and
 outlines a step's district and draws its stretch when the step is chosen; under either
-reduced-motion switch the full course, every district and every step show at once. Every map
+reduced-motion switch the full course, every district and every step show at once. A layer the
+reader picks for the story redraws the districts on the map in that layer's values, classed by
+inclusive quantiles over the districts drawn (`lib/layerClasses.viewClasses`, the server's
+`geo/layers.quantile_classes` rule, decision 0085), with the legend saying so and each story
+district's reading listed; the story map and a zoomed district map carry an India locator
+(`components/map/IndiaLocator.tsx`) that marks their districts, and the story's frame, on the
+India outline and district shapes the client already holds. Every map
 carries the block's `boundaryCaption` (the supply pin map the client's identical caption); the
 river cites its `HYDRORIVERS_1_0` row and a layer its route's dataset row. A map layer the layer
 route answers 404 for is not drawn. `explainerView.blockSentences` and `blockCitations` read the
@@ -559,7 +671,14 @@ datasets, "Model" is all a model may do, and every validator fails closed. Lanes
 `BUILT_BLOCK_KINDS` on both sides with the review (decision 0061).
 
 - **`simulation`**, the generated explainer of plan 2.6: `{concept, title, model, createdAt, html,
-  htmlSha256, values[SimulationValue] (1-40), datasets[DatasetRef], hidden}`, `SimulationValue
+  htmlSha256, values[SimulationValue] (0-40), datasets[DatasetRef], hidden, grounds?[Citation]
+  (1-24), reactions?[SimulationReaction] (1-8)}` (decision 0087: `grounds` and `reactions` are left
+  out of the JSON when empty, so an explainer stored before them keeps its content hash and reads
+  as before; the block cites at least one value, statement or reaction). `SimulationReaction
+  {reactionId, label, species[ReactionSpecies] (2+), equation?, balanced, citations (1+)}` is a
+  stored reaction exactly as the science engine wrote it (`equation` built from the species,
+  `balanced` only with a formula and a coefficient for each); `grounds` are the passages of the
+  cited statements the explainer acts out. `SimulationValue
   {key, label, value, unit?, stated?, citations[], datasetCode?}`. Server: each value is a figure
   a cited quote states (`stated` is the quote's own words holding it, found by `quote_occurs`, and
   `value` is one of their figures, `quotes.figures_in`) or the value of a dataset row named by
@@ -830,7 +949,31 @@ block wrapper, no reuse note).
 
 Registered in `BLOCK_BUILDERS` from `services/simulation_builder.py` for `piece_reuse.SIMULATION_FACETS`
 (`PROCESS`, `CHEMISTRY`, `PHYSICS`, `MATERIALS`, `GEOGRAPHY`, `GEOLOGY`, `CLIMATE`), waiting
-`SIMULATION_WAIT_SECONDS` (60 s), with `places_pieces`.
+`SIMULATION_WAIT_SECONDS` (150 s, within `BUILDER_WAIT_MAX_SECONDS` 180 s), with `places_pieces`
+and `adds_pictures` (the one entry that may also return `images` blocks, its concept pictures).
+
+- **Concepts** (decision 0087, `science/mechanisms.section_concepts`, fixed rules, no model): the
+  craft's stored reactions whose claims are facts, grouped when they share a compound or a species
+  word (generic words such as water, oxygen, acid and mordant left out), so indigo's reduction and
+  oxidation are one concept; and each stage's `RESIST` materials. A concept belongs to a section
+  when a section sentence cites one of its claims or names one of its species or materials, and
+  sections take concepts in the order their sentences first meet them. Per answer
+  (`simulation_grounding.EXPLAINERS_PER_ANSWER`): at most 1 explainer at Basic, 2 at Detailed and 3
+  at Expert, one per concept and at most one per section; a concept explained in one section is
+  neither explained nor pictured in another.
+- **Grounding** (`simulation_grounding.grounding_for`): the concept's own claims, then the
+  section's fact-level claims, once each, at most `STATEMENTS_MAX` (16), refs `s1`, `s2`, ...; the
+  concept's reactions, refs `r1`, `r2`, ..., each given to the model with its species, formulas,
+  coefficients and equation, and whether it is balanced. A section with no concept falls back to
+  the figures of its quotes as before, and one whose quotes state no figure asks no model.
+- **The model** is the answer's explainer route (`BuilderTools.explainer_model`, Claude Opus 5.5 at
+  high effort for Expert answers, decision 0089), else the builders' compose model.
+- **Concept pictures.** A concept of the section that gets no explainer (past the answer's limit,
+  declined by the model, or failing its checks twice) gets its own picture search, at most
+  `CONCEPT_PICTURES_PER_SECTION` (3) per section, each its own `images` block searched for the
+  concept's compound or material names (`SectionImagesAsk.topic`, then with the craft's name, then
+  the craft's name alone) and illustrating the section's claims about that concept; the claim
+  ledger keeps one picture per images block, never one already shown, never from a blocked site.
 
 - **Offered values** (`research/simulation_draft.offered_values`): every plain number a quote of
   the section's fact-level claims states (`quotes.numbers_in`, so a formula's digits are not
@@ -842,19 +985,25 @@ Registered in `BLOCK_BUILDERS` from `services/simulation_builder.py` for `piece_
   claims hold (`services/simulation_pieces`: `claimIds <@`, current and not stale, and every
   hidden one whatever its field or state).
   The one passing `reuse_refusal` (its own topic, the asked depth) with its claims visible as
-  cited, most claims first, then the newest, is placed with its reuse mark and no model is asked;
-  a placed block is never stored again (`piece_store.storable`). A reused section gets its stored
+  cited, most claims first, then the newest, is placed with its reuse mark and no model is asked,
+  and one that plays stored reactions only while each still matches its stored row
+  (`simulation_grounding.reactions_hold`); a placed block is never stored again
+  (`piece_store.storable`). A reused section gets its stored
   explainer the same way (`piece_reuse.with_simulation`, after the region story).
-- **One call** (`composer/simulation`): the builders' compose model (`COMPOSE`, decision 0052),
-  spending only from the answer's headroom, Master Admins uncapped. The system prompt holds the
-  rules only; the question, the checked statements, the offered values and the concepts of hidden
-  pieces on offer are inside untrusted blocks. The reply is `{build, concept, title,
-  values[{ref, key, label, unit}], html}` (portable schema); `build: false` adds nothing.
+- **One call** (`composer/simulation`): the explainer route above, spending only from the
+  answer's headroom, Master Admins uncapped. The system prompt holds the rules only; the question,
+  the concept, the checked statements, the reactions, the offered values and the concepts of
+  hidden pieces on offer are inside untrusted blocks. The reply is `{build, concept, title,
+  grounds[ref], reactions[ref], values[{ref, key, label, unit}], html}` (portable schema);
+  `build: false` adds nothing and, for a concept, sends it to its picture.
 - **Checks** (`simulation_draft.checked_draft`): a draft longer than `SIMULATION_HTML_MAX_CHARS`
-  (12,000, the prompt's limit) is a `SIZE` problem before anything is scanned, and a reply past
-  200 KiB is off its schema (decision 0061); each value an offered ref, used once, its unit
-  words its stated words hold or none, its label no figure (rule `VALUE`); then the static check
-  over the data object `{key: value}`; then the block's validators (`BLOCK`). On any problem one
+  (40,000, the prompt's limit; 12,000 before decision 0087) is a `SIZE` problem before anything is
+  scanned, and a reply past 200 KiB is off its schema (decision 0061); each value an offered ref,
+  used once, its unit words its stated words hold or none, its label no figure (rule `VALUE`);
+  each statement and reaction an offered ref, used once (rule `GROUND`); at least one value,
+  statement or reaction; then the static check over the data object `{key: value}` together with
+  the coefficients of the reactions used (`blocks_play.simulation_data`), so an equation's
+  coefficients may be shown and no other figure; then the block's validators (`BLOCK`). On any problem one
   redraft is asked with every failed check listed (inside an untrusted block); a second failure
   adds nothing and logs the rules that failed. `model` is the answering route's model id
   (`StructuredReply.model`); a route that names none fails the build.
@@ -1129,7 +1278,10 @@ with the quiz shape.
   is the question as asked (`Explainer.question`, word for word). The sentences answer this
   question directly: facts only, each holding the prose rules (the composer's quote, figure and
   overlap checks, then `section_blocks.prose_problems`). `figure` is null or one signature block
-  of a built kind; the document, the `lede` event and the client refuse any other. Sentence ids
+  of a kind in `BUILT_FIGURE_KINDS` (all four, server and client, pinned by
+  `e2e/backend-vocabulary-unit.spec.ts`); the document, the `lede` event and the client refuse any
+  other, and a signature kind in a section is refused as not built (it is not one of
+  `BUILT_BLOCK_KINDS`). Sentence ids
   are `lede.<n>`; translation and term marking walk the lede and its figure through
   `explainer.payload_sentences`.
 - **How the server writes it** (`services/answer_lede.py`): at the start of the answer, from the
@@ -1150,6 +1302,32 @@ with the quiz shape.
   recur across crafts, fed by claims and chosen by `chosen_signature` from the answer's glossary
   terms in order (`SIGNATURE_TERMS`), never by a model. Every value a figure shows is stated by its
   own cited sentence (`blocks.named_in`), and every sentence is a fact.
+- **How the server builds a figure** (decision 0086, `services/signature_blocks.py` with the rules
+  in `signature_rules.py` and the word lists in `signature_words.py`): only while the setting
+  `SIGNATURE_FIGURES_ENABLED` is on (default off: `LedeTools.figures` is `None` and the wire is
+  unchanged). After the lede's sentences are marked, the kind is `chosen_signature` over the term
+  keys of the question (as rendered in English) and then of the lede's sentences, in order. The
+  figure is built by fixed rules, with no model call, from the lede's evidence (the craft's stored
+  claims at the depth's mode, ranked for the question; hypotheses are never offered), each sentence
+  being one claim's own text and citations: a `mordant_bath` swatch is a claim naming exactly one
+  mordant (alum, iron; tin or chrome only beside the word mordant) and one mordant colour, with no
+  negation, a claim whose own text names a dye, then one naming tannin or a mordant, preferred; the dye is the one most named by the swatch
+  sentences, the fibre the first fibre word they name, a no-mordant swatch only from a sentence
+  naming that dye, and at least two swatches. An `indigo_vat` needs a lift (blue with oxygen, air or
+  oxidising, green preferred), at least one form (its name, colour and solubility stated together,
+  its `compound` the craft's compound row of that name with a PubChem CID and record source) and a
+  vat kind a claim about the vat states (fermenting, or hydrosulphite, caustic soda or
+  dithionite); dips are counts a claim about indigo states as times, dips or immersions, contents
+  the vat kind's named ingredients. A `lost_wax` step is the first claim whose words tell that step
+  (a claim telling only that step preferred), at least two, with the metal its sentences name most.
+  A `firing` atmosphere is a firing or kiln claim stating its cue and exactly one colour, with a
+  temperature only as a sentence writes it. A figure that breaks a rule is not built; the lede goes
+  out without one. The figure's citation sources and its compound record join the lede's sources.
+  Its sentences count as shown text in the claim ledger, so a later block's sentence with the same
+  text is left out. Goldens: `shared/explainer.signature.golden.json` (one figure of each kind from
+  the Kutch Ajrakh, Bastar Dhokra and Nizamabad Black Pottery dossiers) and
+  `explainer.signature-lede.golden.json` (a lede carrying the Ajrakh mordant bath); the redesign
+  draws them, and today's `LedeBlock.tsx` leaves a figure it has no renderer for undrawn.
 
 | Kind | Fields | Rules |
 |---|---|---|
@@ -1175,9 +1353,12 @@ is written "sentence" below; every sentence is cited.
 - **`TermSpan {text (1-120), termKey}`** marks a term in a sentence: `text` is found in the shown
   text (the first occurrence is underlined), each term once per sentence, spans never overlap.
   In a translated sentence the spans mark the translated text: the server keeps a span of the
-  English sentence only where its `text` still occurs in the translation and that first
-  occurrence overlaps no span kept before it (`research/terms.spans_still_shown`), and marks
-  nothing anew (decision 0039).
+  English sentence where its `text` still occurs in the translation, or else where the term's
+  own rendering does: each distinct span text is translated in the same call as its sentences
+  (segments `term:<n>`, `answer_translation.TERM_SEGMENT_PREFIX`) and the span moves to that
+  rendering (saaj to साज) when the translated sentence shows it; a first occurrence that overlaps
+  a span kept before it is dropped (`research/terms.spans_still_shown`), and no other term is
+  marked anew (decisions 0039 and 0089).
 - **`Term {schemaVersion 1, key, label, language, localNames[], craftSlugs[], wikidataId?, basis,
   summary[AnswerSentence] (1-3), sources[SourceRef], checkedAt}`** is the glossary row a tap
   opens, cached per key and language. `basis` is `STORED` (cited claims already held), else
@@ -1301,10 +1482,14 @@ How today's events map:
 - `core/roles.UNCAPPED_ROLES` is `MASTER_ADMIN` only: no per-answer cap, no daily cap, and the
   monthly ceiling never refuses or degrades their answers, and the ask, term and Listen
   throttles skip them (`is_uncapped`, decision 0038); their spend still shows on Usage. For
-  every other role, past the degrade mark (80 % of the monthly ceiling) `EXPERT` becomes
+  every other role, past a set degrade mark of a set monthly ceiling `EXPERT` becomes
   `DETAILED` (`effective_depth`, applied by the understanding step), and each answer is held to
-  its depth's cap in the AI budget (`AI_ANSWER_CAP_USD`, `answerCapUsd` on `/settings/ai-budget`;
-  decision 0031).
+  its depth's cap in the AI budget when one is set (`AI_ANSWER_CAP_USD`, `answerCapUsd` on
+  `/settings/ai-budget`; decisions 0031 and 0089). For now no cap, ceiling or mark is set, for any
+  role or depth (decision 0093): no answer is refused, cut short or degraded for spend, and every
+  call asks for its model's documented maximum output. An Expert answer researches with 24
+  queries and 48 documents, composes up to 16 sentences per section on Claude Opus 5.5 at high
+  effort and builds its add-on blocks on Claude Sonnet 5.5 (`providers/answer_routes.py`).
 - The understanding step (`docs/contracts/research.md`, decision 0031) sends `understood` and
   keeps the fields the question touches and the expert seats on `Answer.understanding`.
 

@@ -155,12 +155,14 @@ shows on Usage. The official reference was read on 2026-11-18 (decision 0058 lis
 
 ## Quotas, spend and refunds
 
-- Units per day by role (`core/roles.DAILY_ALLOWANCES`, PLAN 12): images student 5, researcher
-  30, professor 50; videos 0, 5, 10; master admin within the ceiling.
-- One unit is reserved when the job is created (`QuotaLedger` key `media:<jobId>`); dollars are
-  reserved and settled through `providers/router.reserve` and `settle`, so the media sub-cap
-  (`AppSetting`, $150 a month) and the monthly ceiling apply; `billedTokens` comes from the usage
-  metadata.
+- Units per day by role (`core/roles.DAILY_ALLOWANCES`): none for now, for every role (decision
+  0093); `remainingToday` is then `null` and no job is refused for units. A table set again there
+  (PLAN 12 had images student 5, researcher 30, professor 50; videos 0, 5, 10) is enforced by the
+  same code.
+- One unit is recorded when the job is created (`QuotaLedger` key `media:<jobId>`); dollars are
+  reserved and settled through `providers/router.reserve` and `settle`, so a media sub-cap or
+  monthly ceiling set in the AI budget applies (none is set by default); `billedTokens` comes from
+  the usage metadata.
 - A job that ends `FAILED` (after its retries) or `BLOCKED` (the provider refused the content) is
   refunded: one `media-refund:<jobId>` row returns the unit and the reservation is released.
   `refunded` is true exactly then.
@@ -205,6 +207,16 @@ label {text, model, generatedOn}, altText, visibility}`.
   governance lane's queue, since a job is visible to its requester only.
 
 ## Naming and storage (PLAN 14.3, the naming skill)
+
+- Field images (`docs/contracts/field-voices.md`): KalaVigyan's own metadata-free copy of a portal
+  image at `media/field-voices/<sha256 of the copy>/<leaf>` (`naming.field_voice_key`), leaf
+  `KalaVigyan_Field-Image_<YYYY-MM-DD>_<HHMM>_<District>_<Craft>_Photo.<jpg|png>`
+  (`naming.field_voice_file_name`: IST capture time left out when unknown; the district, else the
+  state; no person's name, no finer place), golden rows `fieldVoiceFiles` in
+  `shared/naming-golden.json`. Its `MediaRef` (`provider` `designer_portal` or `field_repository`,
+  `display` `INLINE`, `licence` null, `objectKey` the key) points at
+  `GET /api/field-voices/images/{id}`, which answers 302 to a 15-minute presigned URL. Shown inline
+  with its credit; never offered for reuse, download or export.
 
 - S3 key `media/<requesterUserId>/<uuid32hex>/<fileName>` (`MEDIA_S3_KEY_PATTERN`), private
   bucket `S3_BUCKET`, SSE-S3, written by the worker with the instance role.

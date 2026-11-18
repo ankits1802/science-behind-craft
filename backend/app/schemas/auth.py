@@ -65,7 +65,7 @@ class SignUpRequest(APIModel):
     email: EmailStr = Field(max_length=320)
     name: str = Field(min_length=1, max_length=160)
     affiliation: str | None = Field(default=None, max_length=300)
-    requestedRole: Literal["STUDENT", "RESEARCHER", "PROFESSOR"] = "STUDENT"
+    requestedRole: Literal["STUDENT", "ARTISAN", "RESEARCHER", "PROFESSOR"] = "STUDENT"
     profileUrl: str | None = Field(default=None, max_length=500, pattern=r"^https?://\S+$")
     note: str | None = Field(default=None, max_length=1000)
     ageAttested: bool = False

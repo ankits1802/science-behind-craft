@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 
+import { useAuth } from "@/components/AuthProvider";
 import { fetchAskConfig } from "@/lib/askConfig";
 import type { VoiceAvailability } from "@/lib/voiceContract";
 import { detectVoiceSupport } from "@/lib/voiceDevice";
@@ -33,7 +34,10 @@ export function useVoiceOffered(availability: VoiceAvailability): boolean {
 
 export function useVoiceAvailability(): VoiceAvailability {
   const [availability, setAvailability] = useState<VoiceAvailability>(NO_VOICE);
+  const readerId = useAuth().user?.id ?? null;
   useEffect(() => {
+    setAvailability(NO_VOICE);
+    if (readerId === null) return;
     let cancelled = false;
     fetchAskConfig()
       .then((raw) => {
@@ -43,6 +47,6 @@ export function useVoiceAvailability(): VoiceAvailability {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [readerId]);
   return availability;
 }

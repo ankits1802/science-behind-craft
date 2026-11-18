@@ -2,41 +2,80 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const BASE =
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors outline-offset-2 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0";
+export type ButtonLook = "primary" | "quiet" | "danger" | "destroy" | "text";
 
-const VARIANTS = {
-  default: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
-  destructive: "bg-destructive text-white shadow-sm hover:bg-destructive/90",
-  outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-  secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-  ghost: "hover:bg-accent hover:text-accent-foreground",
-  link: "text-primary underline-offset-4 hover:underline",
-  provider: "gap-2.5 border border-line-200 bg-card/60 text-ink-900 shadow-sm hover:bg-card/85"
-} as const;
+export type ButtonVariant = ButtonLook | "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "provider";
 
-const SIZES = {
-  default: "h-9 px-4 py-2",
-  sm: "h-8 px-3 text-xs",
-  lg: "h-10 px-8",
-  icon: "h-9 w-9",
-  auth: "h-[52px] px-4"
-} as const;
+export type ButtonSize = "md" | "sm" | "default" | "lg" | "icon" | "auth";
 
-export type ButtonVariant = keyof typeof VARIANTS;
-export type ButtonSize = keyof typeof SIZES;
+const LOOK: Record<ButtonVariant, ButtonLook> = {
+  primary: "primary",
+  quiet: "quiet",
+  danger: "danger",
+  destroy: "destroy",
+  text: "text",
+  default: "primary",
+  destructive: "destroy",
+  outline: "quiet",
+  secondary: "quiet",
+  ghost: "quiet",
+  link: "text",
+  provider: "quiet"
+};
+
+export type ButtonLookProps = {
+  className: string;
+  "data-variant": ButtonLook;
+  "data-size"?: "sm";
+  "data-shape"?: "icon";
+  "data-on-photo"?: "";
+};
+
+export function buttonLook({ variant = "quiet", size = "md", onPhoto = false, className }: { variant?: ButtonVariant; size?: ButtonSize; onPhoto?: boolean; className?: string } = {}): ButtonLookProps {
+  return {
+    className: cn("kv-btn", className),
+    "data-variant": LOOK[variant],
+    ...(size === "sm" ? { "data-size": "sm" as const } : {}),
+    ...(size === "icon" ? { "data-shape": "icon" as const } : {}),
+    ...(onPhoto ? { "data-on-photo": "" as const } : {})
+  };
+}
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  busy?: boolean;
+  busyLabel?: React.ReactNode;
+  onPhoto?: boolean;
 }
 
-export function buttonVariants({ variant = "default", size = "default", className }: { variant?: ButtonVariant; size?: ButtonSize; className?: string } = {}) {
-  return cn(BASE, VARIANTS[variant], SIZES[size], className);
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, ...props }, ref) => (
-  <button className={buttonVariants({ variant, size, className })} ref={ref} {...props} />
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant = "default", size = "md", busy = false, busyLabel, onPhoto = false, type = "button", onClick, children, ...props }, ref) => (
+  <button
+    ref={ref}
+    type={type}
+    aria-busy={busy || undefined}
+    onClick={(event) => {
+      if (busy) {
+        event.preventDefault();
+        return;
+      }
+      onClick?.(event);
+    }}
+    {...buttonLook({ variant, size, onPhoto, className })}
+    {...props}
+  >
+    {busy || busyLabel ? (
+      <span className="kv-btn-label">
+        <span data-rest="">{children}</span>
+        <span data-busy="" aria-hidden={!busy}>
+          <span className="kv-spin" aria-hidden />
+          {busyLabel ?? children}
+        </span>
+      </span>
+    ) : (
+      children
+    )}
+  </button>
 ));
 Button.displayName = "Button";
 

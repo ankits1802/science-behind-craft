@@ -1,0 +1,11 @@
+{
+  "role": "STUDENT",
+  "profileRequired": false,
+  "student": {
+    "ageBand": "14_17",
+    "gender": "UNSAID",
+    "guardianConsent": "NEEDED"
+  },
+  "artisan": null,
+  "updatedAt": "2026-11-18T10:00:00+00:00"
+}

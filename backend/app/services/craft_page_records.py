@@ -24,6 +24,7 @@ from app.models import (
 from app.research.citations import SourceRef
 from app.research.craft_page import PageCraft
 from app.research.craft_page_context import PageRelative
+from app.research.field_voices import FIELD_PHOTOS_SHOWN, FIELD_VOICES_SHOWN
 from app.research.knowledge_pieces import KnowledgePiece
 from app.research.media_refs import MediaRef
 from app.research.retrieval import OPEN_CHUNK_ACLS
@@ -35,6 +36,7 @@ from .craft_page_market import MarketFacts, market_facts
 from .craft_page_offers import PageOffers, page_offers
 from .craft_process import process_records
 from .curated_index import CuratedPage, stored_curated_page
+from .field_voices_view import FieldVoicesPart, voices_part
 from .knowledge_view import ClaimView
 from .media_ref_store import stored_media_ref, stored_media_refs
 from .piece_lookup import stored_pieces
@@ -93,6 +95,7 @@ class CraftPageRecords:
     relatives: tuple[PageRelative, ...] = ()
     offers: PageOffers = field(default_factory=PageOffers)
     catch_all: bool = False
+    field_voices: FieldVoicesPart = field(default_factory=FieldVoicesPart)
 
 
 def page_craft(craft: Craft, names: tuple[str | None, str | None]) -> PageCraft:
@@ -134,6 +137,9 @@ async def craft_page_records(
         relatives=await family_relatives(session, craft, mode=PAGE_MODE),
         offers=await page_offers(session, craft),
         catch_all=bool(craft.isCatchAll),
+        field_voices=await voices_part(
+            session, craft.id, voices=FIELD_VOICES_SHOWN, photos=FIELD_PHOTOS_SHOWN
+        ),
     )
     if curated is None:
         return await _stored_extras(session, craft, records)

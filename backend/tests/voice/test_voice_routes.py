@@ -38,7 +38,7 @@ from .fakes import (
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
-NOTICE_SHA256 = "f4284511228c9cc6bafd2c530376d9c2033c9d2497dc6cdc8fc0391ef1dbef0a"
+NOTICE_SHA256 = "c06c887978ff6d32269507ba5f9c25ed1203468f821e4e920c6940e4960fab99"
 REPLY_AUDIO = b"\xff\xfb" * 48_000
 
 
@@ -163,6 +163,7 @@ def test_starting_without_the_notice_names_its_version() -> None:
     assert response.headers["x-voice-consent-required"] == VOICE_NOTICE_VERSION
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 def test_a_day_without_seconds_left_is_429_until_midnight() -> None:
     store = MemoryStore(used_before=600)
     store.consents.add((USER_ID, VOICE_NOTICE_VERSION))
@@ -252,11 +253,13 @@ def test_the_voice_notice_is_served_with_its_version() -> None:
     body = Client(MemoryStore()).http.get("/api/voice/notice").json()
     assert body["version"] == VOICE_NOTICE_VERSION and body["title"] == "Voice notice"
     assert "{contact}" not in body["body"]
+    assert "daily" not in body["body"].lower() and "We record how long each call lasts." in body["body"]
     assert voice_notice_sha256() == NOTICE_SHA256, (
         "the notice changed: bump VOICE_NOTICE_VERSION and this hash"
     )
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 def test_the_answer_config_carries_voice_availability() -> None:
     voice = Client(MemoryStore(used_before=60)).http.get("/api/answers/config").json()["voice"]
     assert voice["configured"] is True and voice["transport"] == "RELAY" and voice["remainingSeconds"] == 540

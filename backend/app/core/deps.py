@@ -9,6 +9,7 @@ from starlette.requests import HTTPConnection
 
 from app.core.config import get_settings
 from app.core.db import get_session, release_connection
+from app.core.guardian_hold import refuse_until_guardian_consent
 from app.core.logging import set_log_user
 from app.core.roles import (
     ROLE_LABELS,
@@ -162,8 +163,10 @@ async def get_current_user_any_step(
 async def get_current_user(
     connection: HTTPConnection,
     user: User = Depends(get_current_user_any_step),
+    session: AsyncSession = Depends(get_session),
 ) -> User:
     refuse_pending_steps(user, connection)
+    await refuse_until_guardian_consent(session, user, _route(connection))
     return user
 
 
@@ -177,6 +180,7 @@ async def get_optional_user(
         return None
     user = await _signed_in_user(session, token)
     refuse_pending_steps(user, connection)
+    await refuse_until_guardian_consent(session, user, _route(connection))
     return user
 
 
@@ -191,6 +195,9 @@ CAPABILITY_REFUSALS: dict[Capability, str] = {
     Capability.MANAGE_QUOTAS: "Only the master admin can change quotas.",
     Capability.MANAGE_CEILINGS: "Only the master admin can change spending limits.",
     Capability.VIEW_USAGE: "Only admins can see platform usage.",
+    Capability.CONTRIBUTE_TESTIMONY: "Conversations about a craft are for artisans.",
+    Capability.REVIEW_TESTIMONY: "Reviewing artisans' contributions is for professors and admins.",
+    Capability.CONFIRM_GUARDIAN_CONSENT: "Confirming a guardian's agreement is for professors and admins.",
 }
 
 

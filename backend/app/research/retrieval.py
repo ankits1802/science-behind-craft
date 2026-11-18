@@ -12,7 +12,7 @@ from app.models.enums import CHUNK_ACLS, CLAIM_STATUSES, EVIDENCE_LEVELS
 
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS
-from .vocabulary import AnswerMode, ChunkAcl, EvidenceLevel, FacetType
+from .vocabulary import AnswerMode, ChunkAcl, EvidenceLevel, FacetType, SourceType
 
 __all__ = [
     "CLAIM_SUBJECT_TYPES",
@@ -25,6 +25,8 @@ __all__ = [
     "PUBLIC_CHUNK_ACL",
     "RESEARCHER_CHUNK_ACL",
     "RESTRICTED_SENSITIVITY",
+    "SIGNED_IN_CHUNK_ACL",
+    "SIGNED_IN_CHUNK_ACLS",
     "VISIBLE_SENSITIVITY",
     "ChunkHit",
     "ClaimHit",
@@ -44,7 +46,9 @@ VERIFIED_MODE_LEVELS = ("VERIFIED", "REVIEWED")
 SHOWN_CLAIM_STATUSES = tuple(status for status in CLAIM_STATUSES if status not in HIDDEN_CLAIM_STATUSES)
 PUBLIC_CHUNK_ACL: ChunkAcl = "PUBLIC"
 RESEARCHER_CHUNK_ACL: ChunkAcl = "RESEARCHER"
+SIGNED_IN_CHUNK_ACL: ChunkAcl = "SIGNED_IN"
 OPEN_CHUNK_ACLS: tuple[ChunkAcl, ...] = (PUBLIC_CHUNK_ACL,)
+SIGNED_IN_CHUNK_ACLS: tuple[ChunkAcl, ...] = (PUBLIC_CHUNK_ACL, SIGNED_IN_CHUNK_ACL)
 EVERY_CHUNK_ACLS: tuple[str, ...] = CHUNK_ACLS
 
 MODE_CLAIM_LEVELS: Mapping[str, tuple[str, ...]] = MappingProxyType(
@@ -93,6 +97,8 @@ class ChunkHit(ContractModel):
     score: float = Field(gt=0)
     lexical_rank: int | None = Field(default=None, ge=1)
     vector_rank: int | None = Field(default=None, ge=1)
+    source_kind: SourceType | None = None
+    source_title: str | None = Field(default=None, min_length=1)
 
 
 class KnowledgeHits(ContractModel):
@@ -107,6 +113,6 @@ class KnowledgeRetriever(Protocol):
 
 
 def chunk_acls_for(reader: Any) -> tuple[str, ...]:
-    if can(reader, Capability.READ_RESEARCHER_QUOTES):
+    if reader is not None and can(reader, Capability.READ_RESEARCHER_QUOTES):
         return EVERY_CHUNK_ACLS
-    return OPEN_CHUNK_ACLS
+    return SIGNED_IN_CHUNK_ACLS

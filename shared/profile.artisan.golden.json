@@ -1,0 +1,44 @@
+{
+  "role": "ARTISAN",
+  "profileRequired": false,
+  "student": null,
+  "artisan": {
+    "crafts": [
+      {
+        "slug": "kutch-ajrakh",
+        "name": "Ajrakh Block Printing",
+        "displayName": "Ajrakh",
+        "familyLabel": "Printing and dyeing",
+        "kindLabel": "Block printing"
+      },
+      {
+        "slug": "kutch-bandhani",
+        "name": "Bandhani",
+        "displayName": "Bandhani",
+        "familyLabel": "Printing and dyeing",
+        "kindLabel": null
+      }
+    ],
+    "district": {
+      "lgd": 449,
+      "name": "Kachchh",
+      "state": {
+        "lgd": 24,
+        "name": "Gujarat"
+      }
+    },
+    "spokenLanguage": "gu",
+    "credit": {
+      "mode": "FIRST_NAME",
+      "name": "Ismail Mohammed Khatri",
+      "shortName": "Ismail",
+      "preview": "Ismail, Ajrakh, Kachchh, Gujarat"
+    },
+    "recordingConsent": {
+      "noticeVersion": "2026-11-18",
+      "acceptedAt": "2026-11-18T10:05:00+00:00"
+    },
+    "recordingNoticeVersion": "2026-11-18"
+  },
+  "updatedAt": "2026-11-18T10:00:00+00:00"
+}

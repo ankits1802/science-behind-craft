@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "portal": "FIELD_REPOSITORY",
+  "generatedAt": "2026-11-18T02:00:01Z",
+  "stream": "images",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "fr-i-1",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "fr-img-1",
+      "revision": "57f643ddf2785ee2c3842107b5268f60",
+      "updatedAt": "2026-11-17T12:00:01.000001Z",
+      "takenAt": "2026-03-14T11:40:00+05:30",
+      "caption": "Printing the first resist",
+      "artisanLinked": false,
+      "crafts": [
+        {
+          "id": "fr-craft-ajrakh",
+          "slug": "Kutch-Ajrakh",
+          "code": "ajrakh",
+          "name": "Ajrakh Print of Kutch"
+        }
+      ],
+      "belongsTo": [
+        {
+          "kind": "PROCESS_STEP",
+          "id": "fr-step-2",
+          "processId": "fr-proc-1",
+          "process": "Ajrakh printing",
+          "name": "First resist printing",
+          "order": 2
+        },
+        {
+          "kind": "PRODUCT",
+          "id": "fr-prod-1",
+          "name": "Ajrakh stole",
+          "localName": null,
+          "productType": "FINISHED_GOOD"
+        }
+      ],
+      "workshop": {
+        "kind": "WORKSHOP",
+        "id": "fr-ws-1",
+        "code": null,
+        "title": "Ajrakh documentation visit",
+        "startsOn": "2026-03-12",
+        "endsOn": "2026-03-16",
+        "area": {
+          "state": "Gujarat",
+          "district": "Kachchh",
+          "stateLgd": 24,
+          "districtLgd": 449
+        }
+      },
+      "people": [
+        {
+          "id": "fr-art-1",
+          "kind": "ARTISAN",
+          "name": "Asha Demo",
+          "localName": "આશા ડેમો",
+          "yearsInCraft": 31,
+          "area": {
+            "state": "Gujarat",
+            "district": "Kachchh",
+            "stateLgd": 24,
+            "districtLgd": 449
+          },
+          "samePersonIn": [
+            {
+              "portal": "DESIGNER",
+              "id": "dr-art-9"
+            }
+          ],
+          "mergedIds": [
+            "fr-art-old"
+          ]
+        }
+      ],
+      "credits": [
+        {
+          "personId": "fr-art-1",
+          "as": "ARTISAN"
+        }
+      ],
+      "permission": {
+        "statement": "Shown on KalaVigyan with the consent of the people pictured. Not openly licensed: ask the rights holder before any other use.",
+        "rightsHolder": "Field Repository Demo Rights Holder",
+        "licence": null
+      },
+      "image": {
+        "url": "https://fieldrepo-media-626159998512.s3.dualstack.ap-south-1.amazonaws.com/field-voices/ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91.jpg?response-content-disposition=inline%3B%20filename%3D%22ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91.jpg%22&X-Amz-Expires=900&X-Amz-Signature=abc",
+        "expiresAt": "2026-11-18T02:15:03Z",
+        "mimeType": "image/jpeg",
+        "width": 2400,
+        "height": 1600,
+        "bytes": 812345,
+        "sha256": "ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91"
+      },
+      "scrubbing": {
+        "version": 1,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          },
+          {
+            "kind": "PLACE",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      }
+    }
+  ]
+}

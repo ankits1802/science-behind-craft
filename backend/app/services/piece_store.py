@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import uuid
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Protocol
@@ -36,11 +36,14 @@ from app.research.knowledge_pieces import (
 from app.research.piece_reuse import (
     REGION_STORY_FACETS,
     SIMULATION_FACETS,
+    ClaimState,
+    answered_first,
     reusable_groups,
     with_region_story,
     with_simulation,
 )
 from app.research.piece_topics import facet_topics
+from app.research.reading_style import ReadingStyle
 from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.retrieval.indexing import embed_pieces
 from app.retrieval.text import query_text
@@ -61,6 +64,7 @@ from .piece_lookup import (
 )
 from .region_pieces import region_story_pieces
 from .simulation_pieces import simulation_pieces
+from .stored_fields import curated_field_counts, fields_held
 
 __all__ = [
     "BuiltSection",
@@ -91,8 +95,16 @@ class PieceStore(Protocol):
     async def reusable(self, ask: PieceAsk) -> PieceLookup: ...
 
     async def keep(
-        self, lookup: PieceLookup, *, answer_id: uuid.UUID, depth: str, sections: Sequence[BuiltSection]
+        self,
+        lookup: PieceLookup,
+        *,
+        answer_id: uuid.UUID,
+        depth: str,
+        sections: Sequence[BuiltSection],
+        reading_style: ReadingStyle | None = None,
     ) -> None: ...
+
+    async def fields(self, craft_slug: str) -> tuple[str, ...]: ...
 
 
 def piece_id(answer_id: uuid.UUID, block_id: str) -> uuid.UUID:
@@ -135,12 +147,14 @@ class SqlPieceStore:
             records = await process_records(session, craft, acls=EVERY_CHUNK_ACLS) if checked else None
         reused: dict[str, ReusedSection] = {}
         for facet, topic in topics.items():
-            reuse = ReuseAsk(craft_id=craft.id, facet=facet, topic_key=topic, depth=ask.depth)
-            groups = [
-                group
-                for group in reusable_groups(pieces, reuse, states)
-                if _process_blocks_hold(group, records)
-            ]
+            reuse = ReuseAsk(
+                craft_id=craft.id,
+                facet=facet,
+                topic_key=topic,
+                depth=ask.depth,
+                reading_style=ask.reading_style,
+            )
+            groups = _facet_groups(pieces, reuse, states, records)
             if groups:
                 closest = await self._closest(groups, ask.question)
                 shown = with_region_story(closest, regions, depth=ask.depth, current=states)
@@ -149,11 +163,24 @@ class SqlPieceStore:
         return PieceLookup(craft_id=craft.id, topics=topics, reused=reused, craft_slug=craft.slug)
 
     async def keep(
-        self, lookup: PieceLookup, *, answer_id: uuid.UUID, depth: str, sections: Sequence[BuiltSection]
+        self,
+        lookup: PieceLookup,
+        *,
+        answer_id: uuid.UUID,
+        depth: str,
+        sections: Sequence[BuiltSection],
+        reading_style: ReadingStyle | None = None,
     ) -> None:
-        pieces = kept_pieces(lookup, answer_id=answer_id, depth=depth, sections=sections)
+        pieces = kept_pieces(
+            lookup, answer_id=answer_id, depth=depth, sections=sections, reading_style=reading_style
+        )
         if pieces:
             await self._shield.run(self._kept(pieces), name="knowledge pieces")
+
+    async def fields(self, craft_slug: str) -> tuple[str, ...]:
+        async with self._sessions() as session:
+            craft = await knowledge_view.resolve_craft(session, craft_slug)
+            return fields_held(await curated_field_counts(session, craft)) if craft is not None else ()
 
     async def _closest(
         self, groups: Sequence[tuple[KnowledgePiece, ...]], question: str
@@ -183,6 +210,16 @@ class SqlPieceStore:
                 )
 
 
+def _facet_groups(
+    pieces: Sequence[KnowledgePiece],
+    reuse: ReuseAsk,
+    states: Mapping[uuid.UUID, ClaimState],
+    records: ProcessRecords | None,
+) -> list[tuple[KnowledgePiece, ...]]:
+    held = [group for group in reusable_groups(pieces, reuse, states) if _process_blocks_hold(group, records)]
+    return answered_first(held)
+
+
 def _process_blocks_hold(group: Sequence[KnowledgePiece], records: ProcessRecords | None) -> bool:
     checked = [piece.payload for piece in group if isinstance(piece.payload, PROCESS_BLOCKS)]
     if checked and records is None:
@@ -204,7 +241,12 @@ def process_problems(block: Block, records: ProcessRecords) -> list[str]:
 
 
 def kept_pieces(
-    lookup: PieceLookup, *, answer_id: uuid.UUID, depth: str, sections: Sequence[BuiltSection]
+    lookup: PieceLookup,
+    *,
+    answer_id: uuid.UUID,
+    depth: str,
+    sections: Sequence[BuiltSection],
+    reading_style: ReadingStyle | None = None,
 ) -> list[KnowledgePiece]:
     created_at = datetime.now(UTC)
     kept: list[KnowledgePiece] = []
@@ -215,7 +257,14 @@ def kept_pieces(
             if slot is not None:
                 piece = piece_id(answer_id, block.id)
                 kept.append(
-                    knowledge_piece(block, slot, piece_id=piece, answer_id=answer_id, created_at=created_at)
+                    knowledge_piece(
+                        block,
+                        slot,
+                        piece_id=piece,
+                        answer_id=answer_id,
+                        created_at=created_at,
+                        reading_style=reading_style,
+                    )
                 )
     return kept
 
@@ -257,6 +306,7 @@ def piece_values(piece: KnowledgePiece) -> dict[str, Any]:
         "contentHash": piece.content_hash,
         "createdFromAnswerId": piece.created_from_answer_id,
         "createdAt": piece.created_at,
+        "readingStyle": piece.reading_style,
     }
 
 
@@ -275,7 +325,9 @@ async def _supersede(session: AsyncSession, piece: KnowledgePiece) -> None:
             PieceRow.topicKey == piece.topic_key,
             PieceRow.kind == piece.kind,
             PieceRow.depth.in_(shallower),
+            PieceRow.readingStyle.is_not_distinct_from(piece.reading_style),
             PieceRow.id != piece.id,
+            PieceRow.createdFromAnswerId.is_not(None),
             PieceRow.createdFromAnswerId.is_distinct_from(piece.created_from_answer_id),
             PieceRow.supersededById.is_(None),
             PieceRow.createdAt <= piece.created_at,

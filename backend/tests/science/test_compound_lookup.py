@@ -15,13 +15,20 @@ def compound(cid: int, title: str, formula: str) -> PubChemCompound:
 
 
 class FakeFinder:
-    def __init__(self, answers: dict[str, list[PubChemCompound]]) -> None:
+    def __init__(
+        self, answers: dict[str, list[PubChemCompound]], records: dict[int, PubChemCompound] | None = None
+    ) -> None:
         self.answers = answers
+        self.records = records or {}
         self.asked: list[str] = []
 
     async def compounds(self, text: str, k: int) -> list[PubChemCompound]:
         self.asked.append(text)
         return self.answers.get(text, [])[:k]
+
+    async def compound(self, cid: int) -> PubChemCompound | None:
+        self.asked.append(f"cid:{cid}")
+        return self.records.get(cid)
 
 
 def pubchem(routes: dict) -> PubChemAdapter:
@@ -77,3 +84,14 @@ async def test_an_unknown_name_is_found_by_its_hill_formula_through_the_pubchem_
     )
     found = await find_compound(adapter, name="madder red", formula="C14H8O4")
     assert (found.cid, found.formula) == (6293, "C14H8O4")
+
+
+async def test_a_known_record_is_read_by_its_cid_through_the_pubchem_adapter() -> None:
+    adapter = pubchem({f"{PUG}/compound/cid/6293/{PROPERTIES}": Reply("pubchem_properties.json")})
+    found = await adapter.compound(6293)
+    assert (found.cid, found.title, found.formula) == (6293, "Alizarin", "C14H8O4")
+
+
+async def test_a_record_pubchem_does_not_hold_is_none() -> None:
+    adapter = pubchem({f"{PUG}/compound/cid/9/{PROPERTIES}": Reply("pubchem_not_found.json", status=404)})
+    assert await adapter.compound(9) is None

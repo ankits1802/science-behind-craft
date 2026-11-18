@@ -10,21 +10,34 @@ from app.research.vocabulary import CANONICAL_LANGUAGE
 from app.schemas.voice import CLIENT_TOOL_NAMES, MAX_SESSION_SECONDS
 from app.schemas.voice_llm import CONVERSATION_HEADER, SYSTEM_TOOL_NAMES, VOICE_LLM_MODEL, VOICE_LLM_PATH
 
+from .artisan_guide import agent_opening
 from .languages import VOICE_LANGUAGES
 
 __all__ = [
     "AGENT_NAME",
+    "ARTISAN_AGENT_NAME",
+    "ARTISAN_LLM_PATH",
     "CLIENT_TOOLS",
     "LLM_SECRET_NAME",
     "AgentPlan",
     "ProvisionedAgent",
     "agent_body",
+    "artisan_agent_body",
+    "artisan_language_presets",
     "language_presets",
     "llm_base_url",
     "provision_agent",
+    "provision_artisan_agent",
 ]
 
 AGENT_NAME = "KalaVigyan voice"
+ARTISAN_AGENT_NAME = "KalaVigyan artisan conversations"
+ARTISAN_LLM_PATH = "/api/artisan/llm/v1/chat/completions"
+ARTISAN_TURN_EAGERNESS = "patient"
+ARTISAN_SOFT_TIMEOUT_SECONDS = 5.0
+ARTISAN_PROMPT = (
+    "You are KalaVigyan, listening to an artisan. Every reply comes from the custom language model."
+)
 LLM_SECRET_NAME = "KALAVIGYAN_VOICE_LLM_BEARER"
 CHAT_COMPLETIONS_SUFFIX = "/chat/completions"
 AGENT_PROMPT = "You are KalaVigyan. Every reply comes from the custom language model."
@@ -207,4 +220,54 @@ async def _existing_agent(elevenlabs: ElevenLabs) -> str | None:
         raise InvalidInput(
             f"ElevenLabs holds {len(found)} agents named {AGENT_NAME}; set ELEVENLABS_AGENT_ID"
         )
+    return found[0] if found else None
+
+
+def artisan_language_presets() -> dict[str, Any]:
+    return {
+        code: {"overrides": {"tts": {"model_id": TTS_MODEL}, "agent": {"first_message": agent_opening(code)}}}
+        for code in VOICE_LANGUAGES
+        if code != CANONICAL_LANGUAGE
+    }
+
+
+def artisan_agent_body(plan: AgentPlan, *, secret_id: str) -> dict[str, Any]:
+    body = agent_body(plan, secret_id=secret_id, tool_ids=())
+    config = body["conversation_config"]
+    prompt = config["agent"]["prompt"]
+    prompt["prompt"] = ARTISAN_PROMPT
+    prompt["custom_llm"]["url"] = _origin(plan.api_base_url) + ARTISAN_LLM_PATH.removesuffix(
+        CHAT_COMPLETIONS_SUFFIX
+    )
+    config["agent"]["first_message"] = agent_opening(CANONICAL_LANGUAGE)
+    config["language_presets"] = artisan_language_presets()
+    config["turn"] |= {
+        "turn_eagerness": ARTISAN_TURN_EAGERNESS,
+        "soft_timeout_config": {"timeout_seconds": ARTISAN_SOFT_TIMEOUT_SECONDS},
+    }
+    return {**body, "name": ARTISAN_AGENT_NAME}
+
+
+async def provision_artisan_agent(elevenlabs: ElevenLabs, plan: AgentPlan) -> ProvisionedAgent:
+    secret_id = await _llm_secret(elevenlabs, plan.llm_bearer)
+    body = artisan_agent_body(plan, secret_id=secret_id)
+    agent_id = plan.agent_id or await _existing_named(elevenlabs, ARTISAN_AGENT_NAME)
+    if agent_id is None:
+        created = await elevenlabs.create_agent(body)
+        return ProvisionedAgent(agent_id=created, created=True, secret_id=secret_id, tool_ids={})
+    await elevenlabs.update_agent(agent_id, body)
+    return ProvisionedAgent(agent_id=agent_id, created=False, secret_id=secret_id, tool_ids={})
+
+
+def _origin(api_base_url: str) -> str:
+    origin = api_base_url.rstrip("/")
+    if not origin.startswith("https://"):
+        raise InvalidInput("The custom language model must be reached over https")
+    return origin
+
+
+async def _existing_named(elevenlabs: ElevenLabs, name: str) -> str | None:
+    found = await elevenlabs.agent_ids(name)
+    if len(found) > 1:
+        raise InvalidInput(f"ElevenLabs holds {len(found)} agents named {name}; set its agent id")
     return found[0] if found else None

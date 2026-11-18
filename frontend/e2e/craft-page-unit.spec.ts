@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { checkedCraftPage, craftPageShape, referencedClaimIds, type CraftPage } from "@/lib/craftPageContract";
+import { checkedCraftPage, craftPageShape, readingSourceIds, shownSentences, type CraftPage } from "@/lib/craftPageContract";
 import {
   claimIndex,
   craftTabs,
@@ -20,11 +20,9 @@ import {
 } from "@/lib/craftPageView";
 import { citationsBySource } from "@/lib/citations";
 import { placeDistricts, placeRows } from "@/lib/craftPlaces";
-import { canReadAllEvidence } from "@/lib/permissions";
 import { parseShape, ShapeError } from "@/lib/shape";
-import type { User, UserRole } from "@/lib/types";
 
-import { curatedPage, emptyPage, pageEvidence, rawPage, studentPage, uncuratedPage } from "./craftPageFixture";
+import { curatedPage, emptyPage, pageEvidence, rawPage, uncuratedPage } from "./craftPageFixture";
 import { eagerModules, FRONTEND } from "./moduleGraph";
 import { curatedOverviewProblems, overviewNote } from "./production/checks";
 
@@ -41,17 +39,15 @@ function refused(edit: (body: CraftPage) => void): () => CraftPage {
   };
 }
 
-const user = (role: UserRole): User => ({ id: role, email: `${role}@example.org`, name: role, role });
-
 test("the Kutch Ajrakh page parses as the backend wrote it, curated, with every part filled", () => {
   const page = curatedPage();
   expect(page.curated).toBe(true);
-  expect(page.curation).toMatchObject({ version: 1, coverage: "FULL" });
+  expect(page.curation).toMatchObject({ version: 2, coverage: "FULL" });
   expect(page.overview.lede).toHaveLength(3);
   expect(page.overview.keyFacts.map((fact) => fact.label)).toEqual(["GI status", "Centres", "Makers and wearers", "Colours", "Dyes and mordants", "Stages", "Time per piece", "Resists"]);
   expect(page.overview.sections.map((section) => section.title)).toEqual(["History", "How it is made", "The chemistry", "Materials", "Geography and water", "Economics", "Design"]);
-  expect([page.sourcesDiffer.length, page.places.length, page.communities.length, page.glossary.length, page.pictures.length, page.openQuestions.length]).toEqual([14, 12, 8, 17, 4, 4]);
-  expect([page.claims.length, page.sources.length, page.evidence?.hypotheses.length]).toEqual([132, 20, 5]);
+  expect([page.sourcesDiffer.length, page.places.length, page.communities.length, page.glossary.length, page.pictures.length, page.openQuestions.length]).toEqual([14, 12, 8, 17, 10, 4]);
+  expect([page.claims.length, page.sources.length, page.evidence.hypotheses.length]).toEqual([135 + 4, 21 + 5 + 7, 5]);
 });
 
 test("the client refuses a page that names a claim or source it does not list", () => {
@@ -87,9 +83,9 @@ test("sources are numbered in reading order, every page source numbered once, re
   const extra = { ...page.sources[0], id: OUTSIDE, title: "District register" };
   const numbers = pageSourceNumbers(page, [extra]);
   expect([numbers.get(GI_JOURNAL), numbers.get(RHYTHM_OF_BLUES), numbers.get(CASTE_DRESS)]).toEqual([1, 2, 3]);
-  expect(numbers.size).toBe(21);
-  expect(numbers.get(OUTSIDE)).toBe(21);
-  expect(new Set(numbers.values()).size).toBe(21);
+  expect(numbers.size).toBe(34);
+  expect(numbers.get(OUTSIDE)).toBe(34);
+  expect(new Set(numbers.values()).size).toBe(34);
   expect(pageSourcesById(page, [extra]).get(OUTSIDE)?.title).toBe("District register");
 });
 
@@ -153,9 +149,10 @@ test("sources group by reliability A to D, each source in its own grade once", (
   const page = curatedPage();
   const groups = sourceGroups(page.sources, pageSourceNumbers(page, []));
   expect(groups.map((group) => [group.label, group.sources.length])).toEqual([
-    ["A · peer-reviewed or official", 9],
-    ["B · reputable reference", 7],
-    ["C · general web", 4]
+    ["A · peer-reviewed or official", 18],
+    ["B · reputable reference", 9],
+    ["C · general web", 5],
+    ["D · unknown", 1]
   ]);
   for (const group of groups) for (const source of group.sources) expect(source.reliability).toBe(group.reliability);
   const unrated = sourceGroups([{ ...page.sources[0], reliability: null }], new Map());
@@ -171,9 +168,7 @@ test("a glossary meaning shows only with its citations; aliases leave out the la
   expect(glossaryMeaning(uncuratedPage().glossary[0])).toBeNull();
 });
 
-test("All evidence is offered to researchers and above, as the backend ranks them", () => {
-  expect([canReadAllEvidence(null), canReadAllEvidence(user("STUDENT"))]).toEqual([false, false]);
-  expect((["RESEARCHER", "PROFESSOR", "ADMIN", "MASTER_ADMIN"] as const).map((role) => canReadAllEvidence(user(role)))).toEqual([true, true, true, true]);
+test("the Evidence tab shows whenever the page holds evidence, for every reader", () => {
   const page = curatedPage();
   expect(craftTabs(page, { sources: true, evidence: false, science: false })).toEqual(["overview", "process", "region", "sources"]);
   expect(craftTabs(page, { sources: true, evidence: true, science: false })).toEqual(["overview", "process", "region", "sources", "evidence"]);
@@ -181,25 +176,51 @@ test("All evidence is offered to researchers and above, as the backend ranks the
   expect(shownTab("process", craftTabs(page, { sources: true, evidence: false, science: false }))).toBe("process");
 });
 
-test("canReadAllEvidence mirrors the backend capability READ_ALL_EVIDENCE", () => {
-  const roles = readFileSync(join(FRONTEND, "..", "backend", "app", "core", "roles.py"), "utf8");
-  expect(/Capability\.READ_ALL_EVIDENCE: (\w+),/.exec(roles)?.[1]).toBe("RESEARCHER");
-});
-
-test("a Student's page, as the server sends it, carries no evidence and only the claims its parts cite", () => {
-  const student = studentPage();
-  expect(student.evidence).toBeNull();
-  expect([student.claims.length, student.sources.length]).toEqual([128, 20]);
-  expect(new Set(student.claims.map((claim) => claim.id))).toEqual(new Set(referencedClaimIds(student)));
-  expect(craftTabs(student, { sources: true, evidence: true, science: false })).toEqual(["overview", "process", "region", "sources"]);
-  expect(shownTab("evidence", craftTabs(student, { sources: true, evidence: true, science: false }))).toBe("overview");
-  const researcher = curatedPage();
-  expect([researcher.claims.length, researcher.evidence === null]).toEqual([132, false]);
+test("every reader's page holds All evidence; the client refuses a page served without it", () => {
+  const page = curatedPage();
+  const filed = [...page.evidence.groups.flatMap((group) => group.subjects.flatMap((subject) => subject.entries)), ...page.evidence.hypotheses];
+  expect(filed.flatMap((entry) => [entry.claimId, ...entry.foldedIds]).sort()).toEqual(page.claims.map((claim) => claim.id).sort());
   expect(
     refused((body) => {
-      body.evidence = null;
+      (body as { evidence: unknown }).evidence = null;
     })
-  ).toThrow(/no evidence/);
+  ).toThrow(ShapeError);
+});
+
+test("the masthead names the craft, its family and kind, its GI date as cited, its place and its curation", () => {
+  const page = curatedPage();
+  const { masthead } = page;
+  expect([masthead.name, masthead.kicker]).toEqual(["Kutch Ajrakh", { family: "Textiles", kind: "Hand block printing" }]);
+  expect([masthead.place, masthead.palette]).toEqual(["Kachchh, Gujarat", "indigo"]);
+  expect(masthead.gi?.status).toBe("REGISTERED");
+  expect(masthead.gi?.on).toBe("2024-04-22");
+  expect(masthead.gi?.citations.length).toBeGreaterThan(0);
+  expect(masthead.provenance.basis).toBe("CURATED");
+  expect(masthead.provenance.curatedOn).toBe(page.curation?.curatedAt.slice(0, 10));
+  expect(refused((body) => (body.masthead.provenance.curatedOn = null))).toThrow(/curation day/);
+  expect(refused((body) => body.masthead.gi && (body.masthead.gi.citations = []))).toThrow(/GI date/);
+});
+
+test("Cite this names the lower-case versioned address of the curation the page shows", () => {
+  const page = curatedPage();
+  const version = page.curation?.version;
+  expect(page.cite).toMatchObject({ url: `/crafts/kutch-ajrakh/v${version}`, version, curatedOn: page.masthead.provenance.curatedOn });
+  expect(page.cite?.bibtex.startsWith("@misc{")).toBe(true);
+  expect(refused((body) => body.cite && (body.cite.url = "/crafts/kutch-ajrakh"))).toThrow(/versioned/);
+});
+
+test("sources are listed once in reading order, grouped, borrowed ones naming their monograph, each counting the sentences it supports", () => {
+  const page = curatedPage();
+  const sentences = shownSentences(page);
+  for (const source of page.sources) {
+    const supports = sentences.filter((sentence) => sentence.citations.some((citation) => citation.sourceId === source.id)).length;
+    expect([source.id, source.supports]).toEqual([source.id, supports]);
+    expect(source.from !== null).toBe(source.group === "FAMILY" || source.group === "KIN");
+  }
+  const order = readingSourceIds(page);
+  expect(page.sources.slice(0, order.length).map((source) => source.id)).toEqual(order);
+  expect(refused((body) => (body.sources[0].group = "FAMILY"))).toThrow(/monograph/);
+  expect(refused((body) => body.sources.push(body.sources[0]))).toThrow(/once/);
 });
 
 test("an uncurated craft keeps its stored sections and evidence; a craft with nothing shows only what the register holds", () => {
@@ -230,7 +251,7 @@ test("the production Overview check needs a curated page's lede and key facts on
 });
 
 test("the craft page reads only the page and region routes and mounts no generator", () => {
-  const graph = [...eagerModules("@/app/(protected)/crafts/[slug]/page")];
+  const graph = [...eagerModules("@/app/(reading)/crafts/[slug]/page")];
   const texts = graph.map((file) => readFileSync(join(FRONTEND, file), "utf8"));
   expect(graph).toContain("lib/craftPageContract.ts");
   expect(graph).toContain("lib/craftRegion.ts");

@@ -71,7 +71,7 @@ export function GeneratedExplainerView({ block, canHide, hiding }: { block: Simu
         </h3>
       </header>
       <SandboxFrame block={block} />
-      <GeneratedSources values={block.values} bases={bases} />
+      <GeneratedSources values={block.values} bases={bases} grounds={block.grounds ?? []} reactions={block.reactions ?? []} />
       <ActionGroup align="start">
         <button
           type="button"

@@ -24,7 +24,7 @@ from app.research.craft_page_process import (
 from app.research.reactions import ReactionSpecies, mhchem_equation
 from app.science.records import ProcessRecords, ReactionRecord, StageRecord
 
-from .craft_page_family import ShownPicture, hero_index, shown_pictures
+from .craft_page_family import ShownPicture, hero_index, masthead_index, shown_pictures
 from .craft_page_records import CraftPageRecords
 from .curated_index import CuratedPage, IndexReaction, IndexStage, IndexTiming
 from .curation_keys import TOOL_ROLE
@@ -186,7 +186,8 @@ def page_pictures(records: CraftPageRecords, visible: Visible) -> list[PagePictu
 
 
 def _with_roles(found: Sequence[ShownPicture]) -> list[PagePicture]:
-    hero = hero_index([(picture.media, picture.stage_id) for picture in found])
+    masthead = masthead_index([picture.placed_as for picture in found])
+    hero = hero_index([(picture.media, picture.stage_id) for picture in found], masthead=masthead)
     return [
         PagePicture(
             media=picture.media,

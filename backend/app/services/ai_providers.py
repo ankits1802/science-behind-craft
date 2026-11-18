@@ -5,6 +5,11 @@ from datetime import date
 from enum import StrEnum
 
 PRICES_CHECKED_ON = "2026-11-15"
+CLAUDE_MAX_OUTPUT_TOKENS = 128_000
+GEMINI_MAX_OUTPUT_TOKENS = 65_536
+GEMINI_TTS_MAX_OUTPUT_TOKENS = 16_384
+OPENAI_MAX_OUTPUT_TOKENS = 128_000
+DEEPSEEK_MAX_OUTPUT_TOKENS = 384_000
 
 
 class AiProvider(StrEnum):
@@ -33,12 +38,23 @@ class AiTask(StrEnum):
     EVAL_JUDGE = "EVAL_JUDGE"
     MUSIC = "MUSIC"
     SOUND_EFFECT = "SOUND_EFFECT"
+    INTERVIEW = "INTERVIEW"
+    TESTIMONY = "TESTIMONY"
 
 
 TEXT_TASKS = frozenset({AiTask.PROOFREAD, AiTask.EXPAND, AiTask.SUMMARISE, AiTask.TRANSLATE})
 TEXT_AND_VISION = TEXT_TASKS | {AiTask.CAPTION}
 RESEARCH_TEXT_TASKS = frozenset(
-    {AiTask.PLAN, AiTask.COMPOSE, AiTask.WEB_READ, AiTask.EXTRACT, AiTask.VOICE_TURN, AiTask.EVAL_JUDGE}
+    {
+        AiTask.PLAN,
+        AiTask.COMPOSE,
+        AiTask.WEB_READ,
+        AiTask.EXTRACT,
+        AiTask.VOICE_TURN,
+        AiTask.EVAL_JUDGE,
+        AiTask.INTERVIEW,
+        AiTask.TESTIMONY,
+    }
 )
 PUBLIC_TEXT_TASKS = frozenset({AiTask.WEB_READ, AiTask.EXTRACT})
 MEDIA_TASKS = frozenset({AiTask.IMAGE, AiTask.VIDEO, AiTask.MUSIC, AiTask.SOUND_EFFECT})
@@ -63,6 +79,8 @@ TASK_LABELS: dict[AiTask, str] = {
     AiTask.EVAL_JUDGE: "Evaluation judge",
     AiTask.MUSIC: "Film music",
     AiTask.SOUND_EFFECT: "Film sound effects",
+    AiTask.INTERVIEW: "Artisan conversations",
+    AiTask.TESTIMONY: "Artisan testimony",
 }
 
 UNKNOWN_TOKEN_PRICE: tuple[float, float] = (5.0, 30.0)
@@ -80,6 +98,7 @@ class AiModel:
     unit: str | None = None
     price_changes: tuple[tuple[date, tuple[float, float]], ...] = field(default_factory=tuple)
     price_verified: bool = True
+    max_output_tokens: int | None = None
 
     def token_price_on(self, day: date) -> tuple[float, float] | None:
         price = self.price_per_mtok
@@ -126,12 +145,33 @@ _OPENAI = ProviderSpec(
             "Cheapest fallback for planning and voice turns.",
             (0.10, 0.50),
             CHAT_TASKS,
+            max_output_tokens=OPENAI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
-            "gpt-6.1-terra", "GPT-6.1 Terra", "Composer fallback.", None, CHAT_TASKS, price_verified=False
+            "gpt-6.1-terra",
+            "GPT-6.1 Terra",
+            "Composer fallback.",
+            None,
+            CHAT_TASKS,
+            price_verified=False,
+            max_output_tokens=OPENAI_MAX_OUTPUT_TOKENS,
         ),
-        AiModel("gpt-5.6-terra", "GPT-5.6 Terra", "Balanced previous generation.", (2.0, 12.0), CHAT_TASKS),
-        AiModel("gpt-5.6-sol", "GPT-5.6 Sol", "Most capable previous generation.", (5.0, 30.0), CHAT_TASKS),
+        AiModel(
+            "gpt-5.6-terra",
+            "GPT-5.6 Terra",
+            "Balanced previous generation.",
+            (2.0, 12.0),
+            CHAT_TASKS,
+            max_output_tokens=OPENAI_MAX_OUTPUT_TOKENS,
+        ),
+        AiModel(
+            "gpt-5.6-sol",
+            "GPT-5.6 Sol",
+            "Most capable previous generation.",
+            (5.0, 30.0),
+            CHAT_TASKS,
+            max_output_tokens=OPENAI_MAX_OUTPUT_TOKENS,
+        ),
         AiModel(
             "gpt-transcribe",
             "GPT Transcribe",
@@ -163,6 +203,7 @@ _GEMINI = ProviderSpec(
             (0.75, 3.75),
             CHAT_TASKS | {AiTask.TRANSCRIBE},
             price_changes=((date(2027, 1, 1), (1.50, 7.50)),),
+            max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "gemini-3.7-flash",
@@ -170,6 +211,7 @@ _GEMINI = ProviderSpec(
             "Previous fast model.",
             (0.75, 3.75),
             CHAT_TASKS | {AiTask.TRANSCRIBE},
+            max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "gemini-3.5-flash-lite",
@@ -177,6 +219,7 @@ _GEMINI = ProviderSpec(
             "Cheap planner and page reader.",
             (0.30, 2.50),
             CHAT_TASKS | {AiTask.TRANSCRIBE},
+            max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "gemini-3.1-pro-preview",
@@ -184,6 +227,7 @@ _GEMINI = ProviderSpec(
             "Strong reasoning, preview.",
             (2.0, 12.0),
             CHAT_TASKS,
+            max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "gemini-4-argon",
@@ -192,6 +236,7 @@ _GEMINI = ProviderSpec(
             None,
             frozenset({AiTask.EVAL_JUDGE, AiTask.COMPOSE, AiTask.EXTRACT}),
             price_verified=False,
+            max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "gemini-embedding-2",
@@ -234,6 +279,7 @@ _GEMINI = ProviderSpec(
             None,
             frozenset({AiTask.VOICE_TURN}),
             price_verified=False,
+            max_output_tokens=GEMINI_TTS_MAX_OUTPUT_TOKENS,
         ),
     ),
     default_model="gemini-3.8-flash",
@@ -257,17 +303,40 @@ _ANTHROPIC = ProviderSpec(
             "Default composer and claim extractor.",
             (2.0, 10.0),
             CHAT_TASKS,
+            max_output_tokens=CLAUDE_MAX_OUTPUT_TOKENS,
         ),
-        AiModel("claude-opus-5-5", "Claude Opus 5.5", "Evaluation judge.", (4.0, 20.0), CHAT_TASKS),
+        AiModel(
+            "claude-opus-5-5",
+            "Claude Opus 5.5",
+            "Evaluation judge.",
+            (4.0, 20.0),
+            CHAT_TASKS,
+            max_output_tokens=CLAUDE_MAX_OUTPUT_TOKENS,
+        ),
         AiModel(
             "claude-haiku-5-5",
             "Claude Haiku 5.5",
             "Cheap planner, reader and voice fallback.",
             (0.10, 0.50),
             CHAT_TASKS,
+            max_output_tokens=CLAUDE_MAX_OUTPUT_TOKENS,
         ),
-        AiModel("claude-opus-5", "Claude Opus 5", "Previous Opus.", (5.0, 25.0), CHAT_TASKS),
-        AiModel("claude-sonnet-5", "Claude Sonnet 5", "Previous Sonnet.", (2.0, 10.0), CHAT_TASKS),
+        AiModel(
+            "claude-opus-5",
+            "Claude Opus 5",
+            "Previous Opus.",
+            (5.0, 25.0),
+            CHAT_TASKS,
+            max_output_tokens=CLAUDE_MAX_OUTPUT_TOKENS,
+        ),
+        AiModel(
+            "claude-sonnet-5",
+            "Claude Sonnet 5",
+            "Previous Sonnet.",
+            (2.0, 10.0),
+            CHAT_TASKS,
+            max_output_tokens=CLAUDE_MAX_OUTPUT_TOKENS,
+        ),
     ),
     default_model="claude-sonnet-5-5",
 )
@@ -291,6 +360,7 @@ _DEEPSEEK = ProviderSpec(
             None,
             PUBLIC_TEXT_TASKS,
             price_verified=False,
+            max_output_tokens=DEEPSEEK_MAX_OUTPUT_TOKENS,
         ),
         AiModel(
             "deepseek-v4-pro",
@@ -299,6 +369,7 @@ _DEEPSEEK = ProviderSpec(
             None,
             PUBLIC_TEXT_TASKS,
             price_verified=False,
+            max_output_tokens=DEEPSEEK_MAX_OUTPUT_TOKENS,
         ),
     ),
     default_model="deepseek-flash",
@@ -395,6 +466,16 @@ DEFAULT_ROUTES: dict[AiTask, tuple[tuple[AiProvider, str], ...]] = {
         (AiProvider.ANTHROPIC, "claude-haiku-5-5"),
         (AiProvider.OPENAI, "gpt-6-luna"),
     ),
+    AiTask.INTERVIEW: (
+        (AiProvider.GEMINI, "gemini-3.8-flash"),
+        (AiProvider.ANTHROPIC, "claude-haiku-5-5"),
+        (AiProvider.OPENAI, "gpt-6-luna"),
+    ),
+    AiTask.TESTIMONY: (
+        (AiProvider.ANTHROPIC, "claude-sonnet-5-5"),
+        (AiProvider.GEMINI, "gemini-3.8-flash"),
+        (AiProvider.OPENAI, "gpt-6.1-terra"),
+    ),
     AiTask.TRANSLATE: (
         (AiProvider.GEMINI, "gemini-3.8-flash"),
         (AiProvider.ANTHROPIC, "claude-sonnet-5-5"),
@@ -457,6 +538,11 @@ def model_for(provider: AiProvider | str, model_id: str) -> AiModel | None:
     return spec.model(model_id) if spec else None
 
 
+def output_limit(provider: AiProvider | str, model_id: str) -> int | None:
+    model = model_for(provider, model_id)
+    return model.max_output_tokens if model else None
+
+
 def allows_data(provider: AiProvider | str, task: AiTask | str) -> bool:
     spec = spec_for(provider)
     resolved = task_of(task)
@@ -505,6 +591,7 @@ def catalogue() -> list[dict]:
                     "pricePerUnit": model.price_per_unit,
                     "unit": model.unit,
                     "priceVerified": model.price_verified,
+                    "maxOutputTokens": model.max_output_tokens,
                     "tasks": sorted(task.value for task in model.tasks if allows_data(spec.provider, task)),
                 }
                 for model in spec.models

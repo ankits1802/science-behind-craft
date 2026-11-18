@@ -1,315 +1,200 @@
 from __future__ import annotations
 
+import copy
 import hashlib
-import re
-from collections.abc import Iterable
-from datetime import date, timedelta
-from typing import Annotated, Any, Literal, Self
-from urllib.parse import parse_qsl, urlsplit
+import json
+from collections.abc import Callable, Iterable, Mapping
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+from itertools import pairwise
+from typing import Any, Literal
+from urllib.parse import urlsplit
 
-from pydantic import AwareDatetime, Field, ValidationError, model_validator
+from pydantic import AwareDatetime, Field, ValidationError
 
 from app.core.errors import InvalidInput
+from app.services.field_voices_items import ImageItem, TranscriptItem
 from app.services.field_voices_never_sent import forbidden_keys
-from app.services.portal_craft_feed import FeedModel, Portal, first_problem, refuse_duplicates
+from app.services.portal_craft_feed import FeedModel, Portal, first_problem
 
 __all__ = [
-    "CONSENT_BASES",
     "FIELD_VOICES_SCHEMA_VERSION",
-    "IMAGE_KEY_PREFIX",
-    "IMAGE_MAX_EDGE",
+    "GONE_REASONS",
+    "IMAGES",
     "SIGNED_URL_MAX_LIFE",
-    "ArtisanCredit",
-    "Consent",
-    "FieldPhotograph",
-    "FieldQuote",
-    "FieldRecording",
-    "FieldVoicesEntry",
-    "FieldVoicesIndex",
-    "Permission",
-    "PhotographsPage",
-    "QuotesPage",
-    "SignedImage",
-    "Stage",
-    "Topic",
-    "VoicesPage",
-    "Workshop",
-    "parse_index",
-    "parse_photographs_page",
-    "parse_quotes_page",
-    "snapshot_digest",
+    "STREAMS",
+    "TRANSCRIPTS",
+    "VIEWS",
+    "VIEW_ALL",
+    "VIEW_GONE",
+    "FieldVoicesPage",
+    "FieldVoicesState",
+    "Gone",
+    "Live",
+    "Screen",
+    "StreamState",
+    "image_host",
+    "item_revision",
+    "parse_page",
+    "parse_state",
+    "stream_digest",
 ]
 
-FIELD_VOICES_SCHEMA_VERSION = 1
-CONSENT_BASES = ("VERBAL_RECORDED", "VERBAL_WITNESSED", "SIGNED_FORM", "OWNER_ATTESTATION")
-OWNER_ATTESTATION = "OWNER_ATTESTATION"
-CONSENT_SCOPES = ("RECORDING", "ARTISAN")
-RECORDING_SCOPE = "RECORDING"
-TEXT_SOURCES = ("MACHINE", "EDITED")
-ENGLISH_SOURCES = ("ORIGINAL", "MACHINE", "EDITED")
-IMAGE_EXTENSIONS = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp"}
-IMAGE_TYPES = tuple(IMAGE_EXTENSIONS)
-IMAGE_KEY_PREFIX = "field-voices"
-DISPOSITION_PARAM = "response-content-disposition"
-DISPOSITION_FILE_NAMES = re.compile(r"filename\*?=(?:UTF-8'')?\"?([^\";]*)\"?", re.IGNORECASE)
-QUOTE_MAX_CHARS = 4000
-ENGLISH_MAX_CHARS = 8000
-IMAGE_MAX_EDGE = 2400
-IMAGE_MAX_BYTES = 8 * 1024 * 1024
-SIGNED_URL_MAX_CHARS = 4096
+FIELD_VOICES_SCHEMA_VERSION = 2
+TRANSCRIPTS = "transcripts"
+IMAGES = "images"
+STREAMS = (TRANSCRIPTS, IMAGES)
+VIEW_ALL = "all"
+VIEW_GONE = "gone"
+VIEWS = (VIEW_ALL, VIEW_GONE)
+GONE_REASONS = ("DELETED", "WITHDRAWN", "REPLACED", "MERGED", "UNLISTED")
+SUCCEEDED_REASONS = ("REPLACED", "MERGED")
+LIVE = "LIVE"
+GONE = "GONE"
+REVISION_CHARS = 32
 SIGNED_URL_MAX_LIFE = timedelta(minutes=15)
 CLOCK_SKEW = timedelta(minutes=2)
-YEARS_IN_CRAFT_MAX = 90
-LANGUAGE_PATTERN = r"^(?:und|[a-z]{2,3}(?:-[A-Za-z0-9]{1,8})*)$"
-SHA256_PATTERN = r"^[0-9a-f]{64}$"
-SLUG_PATTERN = r"^[A-Za-z0-9][A-Za-z0-9-]{0,199}$"
-SIGNED_URL_PATTERN = r"^https://\S+$"
-TOKEN_PATTERN = r"^\S+$"
+UNSIGNED_ITEM_KEYS = ("state", "revision", "updatedAt")
+UNSIGNED_IMAGE_KEYS = ("url", "expiresAt")
+PAGE_LIMITS = {TRANSCRIPTS: 20, IMAGES: 100}
+ITEM_MODELS: Mapping[str, type[TranscriptItem] | type[ImageItem]] = {
+    TRANSCRIPTS: TranscriptItem,
+    IMAGES: ImageItem,
+}
+
+Screen = Callable[[str, dict[str, Any]], dict[str, Any]]
 
 
-Id = Annotated[str, Field(min_length=1, max_length=64, pattern=TOKEN_PATTERN)]
-Revision = Annotated[str, Field(min_length=1, max_length=64, pattern=TOKEN_PATTERN)]
-Place = Annotated[str, Field(min_length=1, max_length=120)]
-Sha256 = Annotated[str, Field(pattern=SHA256_PATTERN)]
-CraftSlug = Annotated[str, Field(pattern=SLUG_PATTERN)]
-Cursor = Annotated[str, Field(min_length=1, max_length=512)]
-Language = Annotated[str, Field(pattern=LANGUAGE_PATTERN)]
+class StreamState(FeedModel):
+    enabled: bool
+    live: int = Field(ge=0)
+    gone: int = Field(ge=0)
+    digest: str = Field(pattern=r"^[0-9a-f]{64}$")
+    latest_cursor: str | None = Field(default=None, min_length=1, max_length=512)
 
 
-class Consent(FeedModel):
-    basis: Literal[*CONSENT_BASES]
-    scope: Literal[*CONSENT_SCOPES]
-    recorded_at: AwareDatetime
+class StreamStates(FeedModel):
+    transcripts: StreamState
+    images: StreamState
 
 
-class ArtisanCredit(FeedModel):
-    id: Id
-    named: bool
-    name: str | None = Field(default=None, min_length=1, max_length=200)
-    local_name: str | None = Field(default=None, min_length=1, max_length=200)
-    years_in_craft: int | None = Field(default=None, ge=0, le=YEARS_IN_CRAFT_MAX)
-    district: Place | None = None
-    state: Place | None = None
-    consent: Consent
+class FieldVoicesState(FeedModel):
+    schema_version: Literal[2]
+    portal: Portal
+    generated_at: AwareDatetime
+    refreshed_at: AwareDatetime | None = None
+    streams: StreamStates
 
-    @model_validator(mode="after")
-    def _named_means_a_name(self) -> Self:
-        if self.named != (self.name is not None):
-            raise ValueError(f"artisan {self.id}: a name is sent exactly when named is true")
-        if not self.named and self.local_name is not None:
-            raise ValueError(f"artisan {self.id} is unnamed and carries a local name")
-        return self
+    def stream(self, name: str) -> StreamState:
+        return self.streams.transcripts if name == TRANSCRIPTS else self.streams.images
 
 
-class Workshop(FeedModel):
-    id: Id
-    title: str | None = Field(default=None, min_length=1, max_length=300)
-    starts_on: date | None = None
-    ends_on: date | None = None
-    district: Place | None = None
-    state: Place | None = None
-
-    @model_validator(mode="after")
-    def _ends_after_start(self) -> Self:
-        if self.starts_on and self.ends_on and self.ends_on < self.starts_on:
-            raise ValueError(f"workshop {self.id} ends before it starts")
-        return self
+class _PageEnvelope(FeedModel):
+    schema_version: Literal[2]
+    portal: Portal
+    generated_at: AwareDatetime
+    stream: Literal[*STREAMS]
+    view: Literal[*VIEWS]
+    cursor: str | None = Field(default=None, min_length=1, max_length=512)
+    next_cursor: str | None = Field(default=None, min_length=1, max_length=512)
+    has_more: bool
+    changes: list[dict[str, Any]]
 
 
-class Topic(FeedModel):
-    section_code: str = Field(min_length=1, max_length=40)
-    section_title: str = Field(min_length=1, max_length=200)
-    question: str | None = Field(default=None, min_length=1, max_length=1000)
-
-
-class FieldQuote(FeedModel):
-    id: str = Field(min_length=1, max_length=80, pattern=TOKEN_PATTERN)
-    artisan_id: Id
-    position: int = Field(ge=0)
-    start_ms: int = Field(ge=0)
-    end_ms: int = Field(ge=1)
-    language: Language
-    text: str = Field(min_length=1, max_length=QUOTE_MAX_CHARS)
-    text_source: Literal[*TEXT_SOURCES]
-    english: str | None = Field(default=None, min_length=1, max_length=ENGLISH_MAX_CHARS)
-    english_source: Literal[*ENGLISH_SOURCES] | None = None
-
-    @model_validator(mode="after")
-    def _timed_and_translated_together(self) -> Self:
-        if self.end_ms <= self.start_ms:
-            raise ValueError(f"quote {self.id} ends before it starts")
-        if (self.english is None) != (self.english_source is None):
-            raise ValueError(f"quote {self.id}: english and englishSource come together")
-        return self
-
-
-class FieldRecording(FeedModel):
-    id: Id
-    media_id: Id
-    revision: Revision
-    recorded_at: AwareDatetime
-    duration_ms: int | None = Field(default=None, ge=1)
-    workshop: Workshop | None = None
-    topics: tuple[Topic, ...] = ()
-    artisans: tuple[ArtisanCredit, ...] = Field(min_length=1)
-    quotes: tuple[FieldQuote, ...] = Field(min_length=1)
-
-    @model_validator(mode="after")
-    def _quotes_belong_to_credited_speakers(self) -> Self:
-        refuse_duplicates(f"recording {self.id} artisan", [a.id for a in self.artisans])
-        refuse_duplicates(f"recording {self.id} quote", [q.id for q in self.quotes])
-        credited = {a.id for a in self.artisans}
-        speakers = {q.artisan_id for q in self.quotes}
-        if speakers - credited:
-            raise ValueError(f"recording {self.id} quotes an artisan it does not credit")
-        if credited - speakers:
-            raise ValueError(f"recording {self.id} credits an artisan who is not quoted")
-        if self.duration_ms and any(q.end_ms > self.duration_ms for q in self.quotes):
-            raise ValueError(f"recording {self.id} has a quote past its end")
-        return self
-
-
-class Stage(FeedModel):
-    process: str = Field(min_length=1, max_length=200)
-    step: str = Field(min_length=1, max_length=200)
-    step_order: int | None = Field(default=None, ge=0)
-
-
-class SignedImage(FeedModel):
-    url: str = Field(max_length=SIGNED_URL_MAX_CHARS, pattern=SIGNED_URL_PATTERN)
-    expires_at: AwareDatetime
-    mime_type: Literal[*IMAGE_TYPES]
-    width: int = Field(ge=1, le=IMAGE_MAX_EDGE)
-    height: int = Field(ge=1, le=IMAGE_MAX_EDGE)
-    bytes: int = Field(ge=1, le=IMAGE_MAX_BYTES)
-    sha256: Sha256
-
-    @model_validator(mode="after")
-    def _names_only_the_opaque_copy(self) -> Self:
-        leaf = f"{self.sha256}.{IMAGE_EXTENSIONS[self.mime_type]}"
-        parts = urlsplit(self.url)
-        if not parts.hostname or parts.username or parts.port or parts.path != f"/{IMAGE_KEY_PREFIX}/{leaf}":
-            raise ValueError(f"image url must name the copy /{IMAGE_KEY_PREFIX}/{leaf} and nothing else")
-        named = [
-            name
-            for key, value in parse_qsl(parts.query)
-            if key.lower() == DISPOSITION_PARAM
-            for name in DISPOSITION_FILE_NAMES.findall(value)
-        ]
-        if any(name != leaf for name in named):
-            raise ValueError("image url names a file other than its copy")
-        return self
-
-
-class Permission(FeedModel):
-    statement: str = Field(min_length=1, max_length=600)
-    rights_holder: str = Field(min_length=1, max_length=200)
-    licence: str | None = Field(default=None, min_length=1, max_length=200)
-
-
-class FieldPhotograph(FeedModel):
-    id: Id
-    revision: Revision
-    taken_at: AwareDatetime | None = None
-    caption: str | None = Field(default=None, min_length=1, max_length=600)
-    stage: Stage | None = None
-    workshop: Workshop | None = None
-    artisans: tuple[ArtisanCredit, ...] = ()
-    consent: Consent
-    permission: Permission
-    image: SignedImage
-
-    @model_validator(mode="after")
-    def _consented_for_this_picture(self) -> Self:
-        if self.consent.scope != RECORDING_SCOPE or self.consent.basis == OWNER_ATTESTATION:
-            raise ValueError(f"photograph {self.id} needs its own consent, recorded by a person")
-        refuse_duplicates(f"photograph {self.id} artisan", [a.id for a in self.artisans])
-        return self
-
-
-class FieldVoicesEntry(FeedModel):
-    craft_slug: CraftSlug
-    craft_code: str | None = Field(default=None, min_length=1, max_length=40)
-    recordings: int = Field(ge=0)
-    quotes: int = Field(ge=0)
-    photographs: int = Field(ge=0)
-    digest: Sha256
+class _Header(FeedModel):
+    state: Literal[LIVE, GONE]
+    id: str = Field(min_length=1, max_length=64, pattern=r"^\S+$")
     updated_at: AwareDatetime
-
-    @model_validator(mode="after")
-    def _lists_something(self) -> Self:
-        if self.recordings + self.photographs == 0:
-            raise ValueError(f"craft {self.craft_slug} is listed with nothing to publish")
-        if self.quotes < self.recordings:
-            raise ValueError(f"craft {self.craft_slug} has fewer quotes than recordings")
-        return self
+    revision: str | None = Field(default=None, pattern=rf"^[0-9a-f]{{{REVISION_CHARS}}}$")
+    reason: Literal[*GONE_REASONS] | None = None
+    successor_id: str | None = Field(default=None, min_length=1, max_length=64)
 
 
-class FieldVoicesIndex(FeedModel):
-    schema_version: Literal[1]
-    portal: Portal
-    generated_at: AwareDatetime
-    crafts: tuple[FieldVoicesEntry, ...]
-
-    @model_validator(mode="after")
-    def _one_entry_per_craft(self) -> Self:
-        refuse_duplicates("craft", [c.craft_slug for c in self.crafts])
-        return self
+@dataclass(frozen=True)
+class Live:
+    id: str
+    updated_at: datetime
+    revision: str
+    item: TranscriptItem | ImageItem
 
 
-class VoicesPage(FeedModel):
-    schema_version: Literal[1]
-    portal: Portal
-    generated_at: AwareDatetime
-    craft_slug: CraftSlug
-    cursor: Cursor | None = None
-    next_cursor: Cursor | None = None
+@dataclass(frozen=True)
+class Gone:
+    id: str
+    updated_at: datetime
+    reason: str
+    successor_id: str | None
 
 
-class QuotesPage(VoicesPage):
-    recordings: tuple[FieldRecording, ...]
+@dataclass(frozen=True)
+class FieldVoicesPage:
+    portal: str
+    stream: str
+    view: str
+    generated_at: datetime
+    cursor: str | None
+    next_cursor: str | None
+    has_more: bool
+    changes: tuple[Live | Gone, ...]
 
 
-class PhotographsPage(VoicesPage):
-    photographs: tuple[FieldPhotograph, ...]
-
-    @model_validator(mode="after")
-    def _urls_are_short_lived(self) -> Self:
-        latest = self.generated_at + SIGNED_URL_MAX_LIFE + CLOCK_SKEW
-        for photograph in self.photographs:
-            if not self.generated_at < photograph.image.expires_at <= latest:
-                raise ValueError(
-                    f"photograph {photograph.id} has a signed URL outside the 15 minutes allowed"
-                )
-        return self
+def parse_state(payload: Any, *, portal: str) -> FieldVoicesState:
+    state = _validated(FieldVoicesState, _checked(payload, portal, "field voices state"), what="state")
+    _refuse_other_portal(state.portal, portal, "state")
+    return state
 
 
-def parse_index(payload: Any, *, portal: str) -> FieldVoicesIndex:
-    return _validated(FieldVoicesIndex, payload, portal=portal, what="field voices index")
+def parse_page(
+    payload: Any,
+    *,
+    portal: str,
+    asked: tuple[str, str, str | None],
+    screen: Screen | None = None,
+) -> FieldVoicesPage:
+    stream, view, cursor = asked
+    raw = _checked(payload, portal, f"{stream} page")
+    page = _validated(_PageEnvelope, raw, what=f"{stream} page")
+    _refuse_other_portal(page.portal, portal, f"{stream} page")
+    if (page.stream, page.view, page.cursor) != (stream, view, cursor):
+        raise InvalidInput(
+            f"{portal} answered {page.stream}/{page.view} at cursor {page.cursor!r} "
+            f"when asked for {stream}/{view} at cursor {cursor!r}"
+        )
+    if len(page.changes) > PAGE_LIMITS[stream]:
+        raise InvalidInput(f"{portal} sent {len(page.changes)} {stream} changes, over {PAGE_LIMITS[stream]}")
+    changes = tuple(_change(change, page, screen) for change in page.changes)
+    _refuse_out_of_order(portal, stream, changes)
+    if not changes and page.next_cursor != cursor:
+        raise InvalidInput(f"{portal} moved the {stream} cursor on an empty page")
+    if changes and page.next_cursor is None:
+        raise InvalidInput(f"{portal} sent {stream} changes without the cursor after them")
+    return FieldVoicesPage(
+        portal=page.portal,
+        stream=stream,
+        view=view,
+        generated_at=page.generated_at,
+        cursor=page.cursor,
+        next_cursor=page.next_cursor,
+        has_more=page.has_more,
+        changes=changes,
+    )
 
 
-def parse_quotes_page(payload: Any, *, portal: str, craft_slug: str, cursor: str | None) -> QuotesPage:
-    page = _validated(QuotesPage, payload, portal=portal, what=f"{craft_slug} quotes page")
-    _refuse_other_request(page, craft_slug, cursor)
-    return page
+def item_revision(raw_item: Mapping[str, Any]) -> str:
+    signed = {key: value for key, value in raw_item.items() if key not in UNSIGNED_ITEM_KEYS}
+    image = signed.get("image")
+    if isinstance(image, dict):
+        signed["image"] = {key: value for key, value in image.items() if key not in UNSIGNED_IMAGE_KEYS}
+    text = json.dumps(signed, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:REVISION_CHARS]
 
 
-def parse_photographs_page(
-    payload: Any, *, portal: str, craft_slug: str, cursor: str | None, image_hosts: frozenset[str]
-) -> PhotographsPage:
-    page = _validated(PhotographsPage, payload, portal=portal, what=f"{craft_slug} photographs page")
-    _refuse_other_request(page, craft_slug, cursor)
-    _refuse_other_image_hosts(page, image_hosts)
-    return page
+def stream_digest(live: Iterable[tuple[str, str]]) -> str:
+    lines = sorted(f"{item_id} {revision}\n" for item_id, revision in live)
+    return hashlib.sha256("".join(lines).encode("utf-8")).hexdigest()
 
 
-def snapshot_digest(recordings: Iterable[FieldRecording], photographs: Iterable[FieldPhotograph]) -> str:
-    lines = [f"R {r.id} {r.revision}\n" for r in recordings]
-    lines += [f"P {p.id} {p.revision}\n" for p in photographs]
-    return hashlib.sha256("".join(sorted(lines)).encode("utf-8")).hexdigest()
-
-
-def _validated[T: FeedModel](model: type[T], payload: Any, *, portal: str, what: str) -> T:
+def _checked(payload: Any, portal: str, what: str) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise InvalidInput(f"{portal} {what} is not a JSON object")
     version = payload.get("schemaVersion")
@@ -322,29 +207,62 @@ def _validated[T: FeedModel](model: type[T], payload: Any, *, portal: str, what:
         raise InvalidInput(
             f"{portal} {what} carries fields that are never sent: {', '.join(sorted(refused))}"
         )
+    return payload
+
+
+def _validated[T: FeedModel](model: type[T], payload: Any, *, what: str) -> T:
     try:
-        parsed = model.model_validate(payload)
+        return model.model_validate(payload)
     except ValidationError as error:
-        raise InvalidInput(f"{portal} {what} breaks the contract: {first_problem(error)}") from None
-    if getattr(parsed, "portal", None) != portal:
-        raise InvalidInput(
-            f"the {portal} address answered with a {what} from {getattr(parsed, 'portal', None)}"
-        )
-    return parsed
+        raise InvalidInput(f"the field voices {what} breaks the contract: {first_problem(error)}") from None
 
 
-def _refuse_other_request(page: VoicesPage, craft_slug: str, cursor: str | None) -> None:
-    if page.craft_slug != craft_slug or page.cursor != cursor:
-        raise InvalidInput(
-            f"{page.portal} answered {page.craft_slug} at cursor {page.cursor!r} "
-            f"when asked for {craft_slug} at cursor {cursor!r}"
-        )
+def _refuse_other_portal(answered: str, asked: str, what: str) -> None:
+    if answered != asked:
+        raise InvalidInput(f"the {asked} address answered with a {what} from {answered}")
 
 
-def _refuse_other_image_hosts(page: PhotographsPage, image_hosts: frozenset[str]) -> None:
-    for photograph in page.photographs:
-        if urlsplit(photograph.image.url).hostname not in image_hosts:
-            raise InvalidInput(
-                f"{page.portal} photograph {photograph.id} is served from a host "
-                "that FIELD_VOICES_IMAGE_HOSTS does not list"
-            )
+def _change(raw: dict[str, Any], page: _PageEnvelope, screen: Screen | None) -> Live | Gone:
+    header = _validated(_Header, raw, what=f"{page.stream} change")
+    if header.state == GONE:
+        return _gone(header, raw)
+    if page.view == VIEW_GONE:
+        raise InvalidInput(f"{page.portal} listed live item {header.id} in the gone view")
+    if header.revision is None or header.reason is not None or header.successor_id is not None:
+        raise InvalidInput(f"{page.portal} live item {header.id} needs a revision and no reason")
+    if item_revision(raw) != header.revision:
+        raise InvalidInput(f"{page.portal} item {header.id} does not match its revision {header.revision}")
+    shown = screen(page.stream, copy.deepcopy(raw)) if screen is not None else raw
+    item = _validated(ITEM_MODELS[page.stream], shown, what=f"{page.stream} item {header.id}")
+    if item.id != header.id:
+        raise InvalidInput(f"{page.portal} change {header.id} carries item {item.id}")
+    if isinstance(item, ImageItem):
+        _refuse_stale_link(item, page.generated_at)
+    return Live(id=header.id, updated_at=header.updated_at, revision=header.revision, item=item)
+
+
+def _gone(header: _Header, raw: dict[str, Any]) -> Gone:
+    extra = set(raw) - {"state", "id", "updatedAt", "reason", "successorId"}
+    if extra or header.revision is not None or header.reason is None:
+        raise InvalidInput(f"tombstone {header.id} carries content or lacks its reason")
+    if (header.successor_id is not None) != (header.reason in SUCCEEDED_REASONS):
+        raise InvalidInput(f"tombstone {header.id}: a successor comes exactly with REPLACED or MERGED")
+    return Gone(
+        id=header.id, updated_at=header.updated_at, reason=header.reason, successor_id=header.successor_id
+    )
+
+
+def _refuse_stale_link(item: ImageItem, generated_at: datetime) -> None:
+    latest = generated_at + SIGNED_URL_MAX_LIFE + CLOCK_SKEW
+    if not generated_at < item.image.expires_at <= latest:
+        raise InvalidInput(f"image {item.id} has a signed URL outside the 15 minutes allowed")
+
+
+def _refuse_out_of_order(portal: str, stream: str, changes: tuple[Live | Gone, ...]) -> None:
+    for before, after in pairwise(changes):
+        if (after.updated_at, after.id) <= (before.updated_at, before.id):
+            raise InvalidInput(f"{portal} {stream} changes are out of order at {after.id}")
+
+
+def image_host(item: ImageItem) -> str:
+    return (urlsplit(item.image.url).hostname or "").lower()

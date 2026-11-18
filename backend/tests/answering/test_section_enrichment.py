@@ -67,7 +67,17 @@ def hindi_model() -> FakeModel:
     return FakeModel(
         [
             reply(s1="रसायन"),
-            reply(**{"s1.b1.1": ALUM_HI, "s1.b1.2": LAKE_HI, "s1.b1.3": WASH_HI}),
+            reply(
+                **{
+                    "s1.b1.1": ALUM_HI,
+                    "s1.b1.2": LAKE_HI,
+                    "s1.b1.3": WASH_HI,
+                    "term:1": "फिटकरी",
+                    "term:2": "एलिज़रिन",
+                    "term:3": "सूती कपड़ा",
+                    "term:4": "फिटकरी",
+                }
+            ),
             reply(**{"s1.open.1": "धोने के पानी में चूना लाल रंग को चमका सकता है।"}),
             reply(**{"follow-up:0": "कच्छ अजरख के लिए फिटकरी का घोल कैसे तैयार किया जाता है?"}),
         ]
@@ -173,7 +183,7 @@ async def test_a_term_named_twice_in_a_sentence_is_marked_once_where_it_first_ap
     assert [(span.text, span.term_key) for span in sentence.terms] == [("Alum", "alum")]
 
 
-async def test_a_translated_sentence_keeps_only_the_spans_its_text_still_shows() -> None:
+async def test_a_translated_sentence_keeps_the_spans_its_text_or_the_term_s_own_rendering_shows() -> None:
     pieces = memory()
     ask = AnswerAsk(question=QUESTION, depth="DETAILED", language="hi")
     answer_pipeline = pipeline(
@@ -184,7 +194,11 @@ async def test_a_translated_sentence_keeps_only_the_spans_its_text_still_shows()
     )
     (shown,) = block_events(events(await streamed(ask, answer_pipeline)))
     assert [s["text"] for s in shown["sentences"]] == [ALUM_HI, LAKE_HI, WASH_HI]
-    assert spans_of(shown) == [[("alizarin", "alizarin"), ("cotton", "cotton")], [], []]
+    assert spans_of(shown) == [
+        [("फिटकरी", "alum"), ("alizarin", "alizarin"), ("cotton", "cotton")],
+        [("फिटकरी", "alum")],
+        [],
+    ]
     (stored,) = pieces.current()
     assert [
         [(s.text, s.term_key) for s in sentence.terms] for sentence in stored.payload.sentences

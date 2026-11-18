@@ -1,11 +1,30 @@
 import { citationShape, shownLevelShape, UUID } from "@/lib/answerShapes";
-import { envelope, explainerSentenceShape, TERM_KEY, WIKIDATA_ID, type BlockEnvelope, type ExplainerSentence } from "@/lib/explainerBlockBase";
+import {
+  envelope,
+  explainerSentenceShape,
+  ladderConditionShape,
+  TERM_KEY,
+  WIKIDATA_ID,
+  type BlockEnvelope,
+  type ExplainerSentence,
+  type LadderCondition
+} from "@/lib/explainerBlockBase";
 import { MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, reactionSpeciesShape, type ReactionSpecies } from "@/lib/scienceContract";
-import { boolean, integer, list, nullable, object, oneOf, text, type Shape } from "@/lib/shape";
+import { boolean, integer, list, nullable, object, oneOf, optional, text, type Shape } from "@/lib/shape";
 import type { Citation, EvidenceLevel } from "@/lib/types";
 
 export const MOLECULE_CONFORMER_PATH = (pubchemCid: number) => `/molecules/${pubchemCid}/conformer`;
+export const COLOUR_WORDS = ["RED", "BLUE", "BLACK", "WHITE", "GREEN", "YELLOW", "BROWN", "GREY", "PINK", "PURPLE", "ORANGE", "MAROON"] as const;
+export const COLOUR_SIDES = ["BEFORE", "AFTER"] as const;
+export const FORMULA_BASES = ["STATED", "COMPOUND_RECORD"] as const;
 
+export type StepColour = {
+  side: (typeof COLOUR_SIDES)[number];
+  colour: (typeof COLOUR_WORDS)[number];
+  stated: string;
+  citations: Citation[];
+};
+export type ReactionNote = { reactionId: string; sentence: ExplainerSentence };
 export type ReactionStep = {
   reactionId: string;
   stageId: string | null;
@@ -16,8 +35,13 @@ export type ReactionStep = {
   balanced: boolean;
   level: EvidenceLevel;
   citations: Citation[];
+  stage?: string;
+  conditions?: LadderCondition[];
+  colours?: StepColour[];
+  formulaBasis?: (typeof FORMULA_BASES)[number];
+  formulaSources?: string[];
 };
-export type ReactionPlayerBlock = BlockEnvelope<"reaction_player"> & { steps: ReactionStep[] };
+export type ReactionPlayerBlock = BlockEnvelope<"reaction_player"> & { steps: ReactionStep[]; notes?: ReactionNote[] };
 export type MaterialCardBlock = BlockEnvelope<"material_card"> & {
   materialId: string | null;
   compoundId: string | null;
@@ -40,6 +64,18 @@ export type Molecule3dBlock = BlockEnvelope<"molecule_3d"> & {
   sourceId: string;
 };
 
+export function stepCitations(step: ReactionStep): Citation[] {
+  return [...step.citations, ...(step.conditions ?? []).flatMap((condition) => condition.citations), ...(step.colours ?? []).flatMap((colour) => colour.citations)];
+}
+
+export function reactionNotes(block: ReactionPlayerBlock, reactionId: string): ExplainerSentence[] {
+  return (block.notes ?? []).filter((note) => note.reactionId === reactionId).map((note) => note.sentence);
+}
+
+export function reactionPlayerCitations(block: ReactionPlayerBlock): Citation[] {
+  return [...block.steps.flatMap(stepCitations), ...(block.notes ?? []).flatMap((note) => note.sentence.citations)];
+}
+
 export const reactionPlayerBlockShape: Shape<ReactionPlayerBlock> = object<ReactionPlayerBlock>({
   ...envelope("reaction_player"),
   steps: list(
@@ -52,10 +88,20 @@ export const reactionPlayerBlockShape: Shape<ReactionPlayerBlock> = object<React
       equation: nullable(text),
       balanced: boolean,
       level: shownLevelShape,
-      citations: list(citationShape, 1)
+      citations: list(citationShape, 1),
+      stage: optional(text),
+      conditions: optional(list(ladderConditionShape)),
+      colours: optional(
+        list(
+          object<StepColour>({ side: oneOf(COLOUR_SIDES), colour: oneOf(COLOUR_WORDS), stated: text, citations: list(citationShape, 1) })
+        )
+      ),
+      formulaBasis: optional(oneOf(FORMULA_BASES)),
+      formulaSources: optional(list(text, 1))
     }),
     1
-  )
+  ),
+  notes: optional(list(object<ReactionNote>({ reactionId: UUID, sentence: explainerSentenceShape })))
 });
 
 export const materialCardBlockShape: Shape<MaterialCardBlock> = object<MaterialCardBlock>({

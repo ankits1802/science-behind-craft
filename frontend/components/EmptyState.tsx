@@ -1,13 +1,23 @@
-import { Archive } from "lucide-react";
+import type { ReactNode } from "react";
 
-export function EmptyState({ title, body }: { title: string; body?: string }) {
+import { ActionGroup } from "@/components/ui/ActionGroup";
+
+export type EmptyStateProps = {
+  title: string;
+  body?: ReactNode;
+  plate?: ReactNode;
+  actions?: ReactNode;
+  headingLevel?: 2 | 3;
+};
+
+export function EmptyState({ title, body, plate, actions, headingLevel = 2 }: EmptyStateProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
-    <div className="rounded-xl border border-dashed border-line-200 bg-field-100 px-6 py-10 text-center">
-      <div className="mx-auto mb-3 grid h-11 w-11 place-items-center rounded-full bg-field-200 text-field-600 dark:text-purple-300">
-        <Archive className="h-5 w-5" aria-hidden />
-      </div>
-      <h2 className="text-base font-medium text-ink">{title}</h2>
-      {body ? <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-muted">{body}</p> : null}
+    <div className="kv-empty" data-testid="empty-state">
+      {plate ? <div className="mb-1 w-30">{plate}</div> : null}
+      <Heading className="font-reading text-h3 text-ink-1">{title}</Heading>
+      {body ? <p className="max-w-[44ch] font-ui text-ui font-normal text-ink-2">{body}</p> : null}
+      {actions ? <ActionGroup className="mt-1.5">{actions}</ActionGroup> : null}
     </div>
   );
 }

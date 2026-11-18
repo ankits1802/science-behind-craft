@@ -224,6 +224,6 @@ async def test_a_reply_off_its_schema_is_a_model_failure() -> None:
     assert json.loads(timeline_model().replies[0]) == TIMELINE_REPLY
 
 
-def test_the_timeline_joins_history_sections() -> None:
+def test_the_timeline_joins_history_economics_and_geography_sections() -> None:
     (entry,) = [entry for entry in BLOCK_BUILDERS if entry.kind == "timeline_map"]
-    assert (entry.disciplines, entry.wait_seconds) == ({"HISTORY"}, 30.0)
+    assert (entry.disciplines, entry.wait_seconds) == ({"HISTORY", "ECONOMICS", "GEOGRAPHY"}, 30.0)

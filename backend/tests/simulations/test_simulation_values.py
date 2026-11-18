@@ -85,7 +85,7 @@ def test_a_draft_using_offered_values_becomes_a_block_with_its_data_object() -> 
             "VALUE",
             "v9 is not an offered",
         ),
-        ({"values": []}, "VALUE", "no offered value is used"),
+        ({"values": []}, "VALUE", "no offered value, statement or reaction is used"),
         (
             {"values": [{"ref": "v1", "key": "a", "label": "A", "unit": ""}] * 2},
             "VALUE",

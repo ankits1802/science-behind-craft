@@ -5,7 +5,7 @@ import pytest
 
 from app.geo.climate import TREND_DATASETS, climate_trends
 from app.geo.records import DatasetRecord, ValueRecord
-from app.research.blocks_insight import TREND_SIGNIFICANCE
+from app.research.blocks_climate import TREND_SIGNIFICANCE
 from app.research.blocks_place import DistrictRef
 
 from ..contracts.phase_b_golden import catalog_dataset

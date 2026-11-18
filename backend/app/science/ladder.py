@@ -19,7 +19,7 @@ from app.schemas.science import CitedClaim, ProcessStageView, ProcessView, Stage
 from .process_view import craft_process
 from .records import ProcessRecords, StageRecord
 
-__all__ = ["ladder_problems", "ladder_stage_options", "process_ladder"]
+__all__ = ["ladder_problems", "ladder_stage_options", "process_ladder", "stated_condition"]
 
 
 def ladder_stage_options(records: ProcessRecords) -> list[StageOption]:
@@ -100,12 +100,14 @@ def _ladder_stage(view: ProcessStageView, sentences: list[ExplainerSentence]) ->
         level=weakest_level(sentence.level for sentence in sentences),
         sentences=sentences,
         materials=materials,
-        conditions=[c for c in (_condition(condition) for condition in view.conditions) if c is not None],
+        conditions=[
+            c for c in (stated_condition(condition) for condition in view.conditions) if c is not None
+        ],
         reaction_ids=[reaction.id for reaction in view.reactions],
     )
 
 
-def _condition(condition: StageCondition) -> LadderCondition | None:
+def stated_condition(condition: StageCondition) -> LadderCondition | None:
     facts = {claim.id: claim for claim in _facts(condition.claims)}
     for reading in condition.readings:
         claim = facts.get(reading.claim_id)

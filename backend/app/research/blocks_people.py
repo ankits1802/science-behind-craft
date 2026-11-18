@@ -7,17 +7,14 @@ from pydantic import Field, model_validator
 
 from .base import ContractModel, HttpsUrl, PartialDate
 from .blocks import SENTENCE, BlockBase, ExplainerSentence, SentenceSpec, require_facts
-from .citations import AnswerSentence
-from .evidence import personal_data_in
+from .citations import AnswerSentence, Citation
 from .media_refs import MediaRef
 from .quotes import figures_in
-from .vocabulary import AnswerLanguage
+from .voices import VoiceQuote
 
 __all__ = [
     "AUDIENCES",
     "EXPERT_SEATS",
-    "ArtisanQuote",
-    "ArtisanRef",
     "ArtisanVoiceBlock",
     "DesignRef",
     "DesignsBlock",
@@ -168,37 +165,24 @@ class OpenQuestionsBlock(BlockBase):
     items: list[OpenQuestion] = Field(min_length=1)
 
 
-class ArtisanRef(ContractModel):
-    name: str = Field(min_length=1, max_length=200)
-    credentials: list[str]
-    village: str | None = Field(max_length=200)
-    district: str | None = Field(max_length=200)
-    state: str | None = Field(max_length=200)
-    address: str | None = Field(max_length=300)
-
-
-class ArtisanQuote(ContractModel):
-    artisan: ArtisanRef
-    quote: str = Field(min_length=1, max_length=600)
-    language: AnswerLanguage
-    source_id: str = Field(min_length=1)
-    locator: str = Field(min_length=1, max_length=120)
-
-
 class ArtisanVoiceBlock(BlockBase):
     kind: Literal["artisan_voice"]
-    version: Literal[1]
-    quotes: list[ArtisanQuote] = Field(min_length=1)
+    version: Literal[2]
+    quotes: list[VoiceQuote]
+    removed: int = Field(default=0, ge=0)
 
     @model_validator(mode="after")
-    def _no_contact_or_identity_numbers(self) -> Self:
-        for quote in self.quotes:
-            artisan = quote.artisan
-            texts = [quote.quote, artisan.name, *artisan.credentials]
-            texts += [t for t in (artisan.village, artisan.district, artisan.state, artisan.address) if t]
-            if any(personal_data_in(text) for text in texts):
-                raise ValueError(f"artisan voice {self.id} never shows a phone, email or identity number")
+    def _every_block_carries_its_evidence(self) -> Self:
+        if not self.quotes and self.removed == 0:
+            raise ValueError(f"artisan voice {self.id} quotes nobody, so it is not shown")
+        ids = [quote.item_id for quote in self.quotes]
+        if len(ids) != len(set(ids)):
+            raise ValueError(f"artisan voice {self.id} quotes an item twice")
         return self
+
+    def citations(self) -> Iterator[Citation]:
+        for quote in self.quotes:
+            yield from quote.corroborated_by
 
     def direct_source_ids(self) -> Iterator[str]:
         for quote in self.quotes:

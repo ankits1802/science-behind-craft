@@ -150,12 +150,12 @@ export default function SignUpPage() {
             </label>
             <label className="grid gap-1">
               <span className="field-label">Institution</span>
-              <input name="affiliation" required autoComplete="organization" maxLength={200} className="field-input" />
+              <input name="affiliation" required={role !== "ARTISAN"} autoComplete="organization" maxLength={200} className="field-input" />
             </label>
             <FieldBlock label="I am a">
               <Dropdown value={role} onChange={(next) => setRole(next as UserRole)} options={roleOptions} searchable={false} advanceOnSelect={false} />
             </FieldBlock>
-            {role !== "STUDENT" ? (
+            {role !== "STUDENT" && role !== "ARTISAN" ? (
               <label className="grid gap-1">
                 <span className="field-label">Profile page</span>
                 <input name="profileUrl" type="url" inputMode="url" className="field-input" placeholder="https://" />
@@ -174,7 +174,7 @@ export default function SignUpPage() {
             className="mt-1 h-4 w-4 shrink-0 rounded border-line-200 [accent-color:oklch(0.47_0.198_305)]"
           />
           <label htmlFor="signup-adult" className="text-sm leading-6 text-ink-900">
-            I am 18 or older
+            {role === "STUDENT" ? "I am 18 or older, or I am under 18 and my parent or guardian agrees" : "I am 18 or older"}
           </label>
         </div>
         <div className="flex items-start gap-2.5">

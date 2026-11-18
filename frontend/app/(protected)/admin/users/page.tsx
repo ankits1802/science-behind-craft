@@ -24,11 +24,15 @@ import { resetTwoFactorForUser } from "@/lib/twoFactor";
 import type { PageResult, User, UserRole } from "@/lib/types";
 
 import {
+  GUARDIAN_STATEMENT,
   STANDING_LABEL,
   accountStanding,
   changeUserRole,
+  confirmGuardianConsent,
+  guardianConsentMissing,
   listUsers,
   reactivateUser,
+  offersGuardianConfirmation,
   roleChoices,
   rowOffers,
   suspendUser,
@@ -131,6 +135,15 @@ function ManageUsers() {
     if (ok) await run(target, () => resetTwoFactorForUser(target.id), "Two-step verification reset.");
   }
 
+  async function confirmGuardian(target: User) {
+    const ok = await confirm({
+      title: `Confirm guardian consent for ${target.name || target.email}?`,
+      body: GUARDIAN_STATEMENT,
+      confirmLabel: "Confirm"
+    });
+    if (ok) await run(target, () => confirmGuardianConsent(target), "Guardian consent confirmed.");
+  }
+
   const roleOptions = [{ value: "", label: "Every role" }, ...ROLES_BY_RANK.map((value) => ({ value, label: roleLabel(value) }))];
 
   return (
@@ -194,7 +207,10 @@ function ManageUsers() {
                             <span className="block text-xs text-ink-500">{account.email}</span>
                           </button>
                         </td>
-                        <td className="px-4 py-3 text-ink-700">{roleLabel(account.role)}</td>
+                        <td className="px-4 py-3 text-ink-700">
+                          <span className="block">{roleLabel(account.role)}</span>
+                          {guardianConsentMissing(account) ? <span className="block text-xs text-amber-800">Guardian consent not confirmed</span> : null}
+                        </td>
                         <td className="px-4 py-3 text-ink-700">{twoStepFact(account)}</td>
                         <td className="px-4 py-3 text-ink-700">{account.lastLoginAt ? formatDateTime(account.lastLoginAt) : "Never"}</td>
                         <td className="px-4 py-3">
@@ -213,6 +229,11 @@ function ManageUsers() {
                             {offers.role ? (
                               <button type="button" className={rowAction("edit")} disabled={busy} onClick={() => setRoleFor(account)}>
                                 Change role
+                              </button>
+                            ) : null}
+                            {offersGuardianConfirmation(viewer, account) ? (
+                              <button type="button" className={rowAction("positive")} disabled={busy} onClick={() => void confirmGuardian(account)}>
+                                Confirm guardian consent
                               </button>
                             ) : null}
                             {offers.resetTwoStep ? (
@@ -267,6 +288,7 @@ function ManageUsers() {
                 ["Role", roleLabel(viewing.role)],
                 ["Affiliation", viewing.affiliation ?? null],
                 ["Two-step verification", twoStepFact(viewing)],
+                ...(viewing.guardianConsent ? [["Guardian consent", viewing.guardianConsent === "CONFIRMED" ? "Confirmed" : "Not confirmed"] as [string, string]] : []),
                 ["Status", STANDING_LABEL[accountStanding(viewing)]],
                 ["First sign-in", viewing.firstLoginAt ? formatDateTime(viewing.firstLoginAt) : null],
                 ["Last sign-in", viewing.lastLoginAt ? formatDateTime(viewing.lastLoginAt) : null]

@@ -91,9 +91,9 @@ MODE_POLICIES: Mapping[str, ModePolicy] = MappingProxyType(
             mode="DEEP",
             tiers=RETRIEVAL_TIERS,
             live_only_for_open_facets=False,
-            max_queries=8,
-            max_native_queries=3,
-            max_fetches=20,
+            max_queries=24,
+            max_native_queries=6,
+            max_fetches=48,
         ),
     }
 )

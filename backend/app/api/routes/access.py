@@ -24,7 +24,7 @@ from app.core.security import hash_password
 from app.models import AccessRoster, User
 from app.schemas.admin import AccessDecision, AccessRosterCreate, AccessRosterUpdate
 from app.schemas.common import normalize_pagination, page_payload
-from app.services import access_roster, audit
+from app.services import access_roster, audit, reader_profiles
 from app.services.access_roster import access_payload, normalise_email, people_for
 
 router = APIRouter(prefix="/access", tags=["access"])
@@ -155,6 +155,7 @@ async def _apply_role_to_account(
     if not may_manage_target(actor, account) or not may_assign(actor, role):
         return f"The account at {account.email} keeps its {account.role} role."
     before = account.role
+    await reader_profiles.apply_role_change(session, account, role)
     account.role = role
     account.tokenVersion += 1
     await audit.record(
@@ -318,7 +319,7 @@ async def decide_access_request(
         row.decidedById = actor.id
         if payload.notes is not None:
             row.notes = _clean(payload.notes)
-        await access_roster.end_sessions_for_email(session, row.email)
+        await access_roster.bar_account(session, row.email, actor=actor, cause="access.rejected")
         await audit.record(
             session, action="access.rejected", actor=actor, target_type="AccessRoster", target_id=row.id
         )
@@ -391,7 +392,7 @@ async def suspend_access_entry(
     row.status = access_roster.SUSPENDED
     row.decidedAt = row.decidedAt or datetime.now(UTC)
     row.decidedById = row.decidedById or actor.id
-    await access_roster.end_sessions_for_email(session, row.email)
+    await access_roster.bar_account(session, row.email, actor=actor, cause="access.suspended")
     await audit.record(
         session, action="access.suspended", actor=actor, target_type="AccessRoster", target_id=row.id
     )

@@ -3,11 +3,12 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
+import { AI_MEDIA_KINDS, BORROWED_SCOPES, CHAPTER_KEYS, FIGURE_KINDS, GENERATED_KINDS, ORIGIN_BASES, SOURCE_GROUPS } from "@/lib/craftChapters";
 import { DEPTH_BASES, ENVIRONMENT_FACTORS, EVENT_KINDS, PICTURE_ROLES } from "@/lib/craftPageContext";
-import { COVERAGE_CLASSES, CRAFT_GI_STATUSES, GROUP_KINDS, PLACE_KINDS, PROVENANCES, SECTION_BASES, SPECIES_ROLES, SUBJECT_KINDS, TIMING_KINDS } from "@/lib/craftPageContract";
+import { COVERAGE_CLASSES, CRAFT_GI_STATUSES, GI_SHOWN, GROUP_KINDS, NATIVE_NAME_SOURCES, PLACE_KINDS, PROVENANCES, SECTION_BASES, SPECIES_ROLES, SUBJECT_KINDS, TIMING_KINDS } from "@/lib/craftPageContract";
 import { PLACE_ROLES } from "@/lib/districtCraftsContract";
 import { IMAGE_RELEVANCE, MEDIA_DISPLAYS } from "@/lib/explainerBlockBase";
-import { BLOCK_KINDS, BUILT_BLOCK_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
+import { BLOCK_KINDS, BUILT_BLOCK_KINDS, BUILT_FIGURE_KINDS, DEPTHS, DISCIPLINES, FINAL_SECTION_STATES, TERM_BASES, WORKING_SECTION_STATES } from "@/lib/explainerContract";
 import { EXPERT_SEATS } from "@/lib/explainerExperts";
 import { FIRING_ATMOSPHERES, INDIGO_FORMS, LOST_WAX_STEPS, SIGNATURE_KINDS, VAT_KINDS } from "@/lib/explainerSignature";
 import { CONVERSION_BASES, CURRENCIES, GI_STATUSES, METRIC_UNITS, PRICE_SCALES, TREND_VARIABLES } from "@/lib/explainerInsight";
@@ -16,10 +17,14 @@ import { ZOOM_LEVELS } from "@/lib/explainerPlay";
 import { TRAIL_GROUPS, TRAIL_STAGES } from "@/lib/explainerStream";
 import { NOTIFICATION_KINDS, SECTION_CHANGES } from "@/lib/learningContract";
 import { CITATION_FORMATS, LESSON_FORMATS, SLIDE_KINDS } from "@/lib/lessonContract";
+import { COLOUR_SIDES, FORMULA_BASES } from "@/lib/explainerMatter";
 import { MEDIA_JOB_STATUSES, MEDIA_KINDS } from "@/lib/mediaContract";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
 import { CONDITION_QUANTITIES, ENVELOPE_STATUSES, MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, STAGE_TYPES } from "@/lib/scienceContract";
 import { CLIENT_TOOL_NAMES, RELAY_AUDIO_TYPES, VOICE_MODES } from "@/lib/voiceContract";
+import { INTERVIEW_TOPICS } from "@/lib/conversationContract";
+import { AGE_BANDS, CREDIT_MODES, GENDERS } from "@/lib/profileContract";
+import { CONTRIBUTION_STATUSES, LOCATOR_PRECISIONS, TESTIMONY_ENGLISH_SOURCES, TESTIMONY_REJECT_REASONS, TESTIMONY_SCREENS } from "@/lib/testimonyContract";
 
 const BACKEND = join(__dirname, "..", "..", "backend", "app");
 const sources = new Map<string, string>();
@@ -53,6 +58,7 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["models/enums.py", "DISCIPLINES", DISCIPLINES],
   ["models/enums.py", "BLOCK_KINDS", BLOCK_KINDS],
   ["research/explainer.py", "BUILT_BLOCK_KINDS", BUILT_BLOCK_KINDS],
+  ["research/explainer.py", "BUILT_FIGURE_KINDS", BUILT_FIGURE_KINDS],
   ["research/explainer.py", "WORKING_SECTION_STATES", WORKING_SECTION_STATES],
   ["research/explainer.py", "FINAL_SECTION_STATES", FINAL_SECTION_STATES],
   ["research/trail.py", "TRAIL_STAGES", TRAIL_STAGES],
@@ -75,7 +81,7 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["research/blocks_insight.py", "GI_STATUSES", GI_STATUSES],
   ["research/blocks_insight.py", "CURRENCIES", CURRENCIES],
   ["research/blocks_insight.py", "PRICE_SCALES", PRICE_SCALES],
-  ["research/blocks_insight.py", "TREND_VARIABLES", TREND_VARIABLES],
+  ["research/blocks_climate.py", "TREND_VARIABLES", TREND_VARIABLES],
   ["research/explainer_versions.py", "SECTION_CHANGES", SECTION_CHANGES],
   ["research/lessons.py", "SLIDE_KINDS", SLIDE_KINDS],
   ["research/lessons.py", "LESSON_FORMATS", LESSON_FORMATS],
@@ -87,12 +93,32 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["research/craft_page_context.py", "DEPTH_BASES", DEPTH_BASES],
   ["research/craft_page_context.py", "EVENT_KINDS", EVENT_KINDS],
   ["research/craft_page_context.py", "PICTURE_ROLES", PICTURE_ROLES],
+  ["research/chapter_keys.py", "CHAPTER_KEYS", CHAPTER_KEYS],
+  ["research/craft_chapters.py", "FIGURE_KINDS", FIGURE_KINDS],
+  ["research/craft_chapters.py", "BORROWED_SCOPES", BORROWED_SCOPES],
+  ["research/craft_origins.py", "ORIGIN_BASES", ORIGIN_BASES],
+  ["research/craft_origins.py", "GENERATED_KINDS", GENERATED_KINDS],
+  ["research/craft_origins.py", "AI_MEDIA_KINDS", AI_MEDIA_KINDS],
+  ["research/craft_parts.py", "SOURCE_GROUPS", SOURCE_GROUPS],
+  ["research/craft_masthead.py", "GI_SHOWN", GI_SHOWN],
+  ["research/craft_masthead.py", "NATIVE_NAME_SOURCES", NATIVE_NAME_SOURCES],
+  ["research/blocks_matter.py", "FORMULA_BASES", FORMULA_BASES],
+  ["research/colours.py", "COLOUR_SIDES", COLOUR_SIDES],
   ["models/enums.py", "ENVIRONMENT_FACTORS", ENVIRONMENT_FACTORS],
   ["research/reactions.py", "SPECIES_ROLES", SPECIES_ROLES],
   ["models/enums.py", "GI_STATUSES", CRAFT_GI_STATUSES],
   ["models/enums.py", "COVERAGE_CLASSES", COVERAGE_CLASSES],
   ["curation/vocabulary.py", "PLACE_KINDS", PLACE_KINDS],
-  ["curation/vocabulary.py", "GROUP_KINDS", GROUP_KINDS]
+  ["curation/vocabulary.py", "GROUP_KINDS", GROUP_KINDS],
+  ["models/people_vocabulary.py", "AGE_BANDS", AGE_BANDS],
+  ["models/people_vocabulary.py", "GENDERS", GENDERS],
+  ["models/people_vocabulary.py", "CREDIT_MODES", CREDIT_MODES],
+  ["models/people_vocabulary.py", "INTERVIEW_TOPICS", INTERVIEW_TOPICS],
+  ["models/people_vocabulary.py", "CONTRIBUTION_STATUSES", CONTRIBUTION_STATUSES],
+  ["models/people_vocabulary.py", "TESTIMONY_ENGLISH_SOURCES", TESTIMONY_ENGLISH_SOURCES],
+  ["models/people_vocabulary.py", "TESTIMONY_REJECT_REASONS", TESTIMONY_REJECT_REASONS],
+  ["models/people_vocabulary.py", "TESTIMONY_SCREENS", TESTIMONY_SCREENS],
+  ["models/people_vocabulary.py", "LOCATOR_PRECISIONS", LOCATOR_PRECISIONS]
 ];
 
 for (const [file, name, client] of PAIRS) {

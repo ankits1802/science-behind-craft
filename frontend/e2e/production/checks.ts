@@ -53,6 +53,21 @@ export function clip(text: string, limit = TEXT_LIMIT): string {
   return flat.length > limit ? `${flat.slice(0, limit - 1)}…` : flat;
 }
 
+const ANSI_STYLE = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*m`, "g");
+const ERROR_DETAIL = /^Error:\s/;
+
+export function errorHeadline(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+  const lines = message
+    .replace(ANSI_STYLE, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+  const head = lines[0] ?? "";
+  const detail = lines.slice(1).find((line) => ERROR_DETAIL.test(line));
+  return clip(detail ? `${head} ${detail}` : head);
+}
+
 export function gapCopyFindings(text: string): string[] {
   const found = new Set<string>();
   for (const pattern of GAP_COPY_PATTERNS) {

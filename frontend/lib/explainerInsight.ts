@@ -2,7 +2,7 @@ import { citationShape, craftLinkShape, type CraftLink } from "@/lib/answerShape
 import { envelope, explainerSentenceShape, type BlockEnvelope, type ExplainerSentence } from "@/lib/explainerBlockBase";
 import { districtShape, type DistrictRef } from "@/lib/explainerPlace";
 import { datasetShape, type RegionDataset } from "@/lib/regionContract";
-import { boolean, integer, list, matching, nullable, number, object, oneOf, text, type Shape } from "@/lib/shape";
+import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, text, type Shape } from "@/lib/shape";
 import type { Citation } from "@/lib/types";
 
 export const METRIC_UNITS = ["mm", "cm", "m", "km", "m2", "ha", "g", "kg", "ml", "l"] as const;
@@ -85,11 +85,20 @@ export type GroundwaterValue = {
   unit: string | null;
   resolution: string;
 };
+export type ClimateSeries = {
+  district: DistrictRef;
+  variable: (typeof TREND_VARIABLES)[number];
+  datasetCode: string;
+  unit: string;
+  firstYear: number;
+  values: (number | null)[];
+};
 export type ClimateRiskBlock = BlockEnvelope<"climate_risk"> & {
   trends: ClimateTrend[];
   groundwater: GroundwaterValue[];
   meaning: ExplainerSentence[];
   datasets: RegionDataset[];
+  series?: ClimateSeries[];
 };
 
 export const PARTIAL_DATE = matching(/^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/, "a partial date");
@@ -186,5 +195,17 @@ export const climateRiskBlockShape: Shape<ClimateRiskBlock> = object<ClimateRisk
     })
   ),
   meaning: list(explainerSentenceShape),
-  datasets: list(datasetShape, 1)
+  datasets: list(datasetShape, 1),
+  series: optional(
+    list(
+      object<ClimateSeries>({
+        district: districtShape,
+        variable: oneOf(TREND_VARIABLES),
+        datasetCode: text,
+        unit: text,
+        firstYear: integer,
+        values: list(nullable(number), 1)
+      })
+    )
+  )
 });

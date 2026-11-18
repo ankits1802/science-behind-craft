@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "portal": "DESIGNER",
+  "generatedAt": "2026-11-18T02:00:00Z",
+  "refreshedAt": "2026-11-18T01:45:12Z",
+  "streams": {
+    "transcripts": {
+      "enabled": true,
+      "live": 1,
+      "gone": 1,
+      "digest": "cd6c9298a2cf1bfe43d489caaa61130d89694143f170dfbd16f06556c1652162",
+      "latestCursor": "dr-t-1"
+    },
+    "images": {
+      "enabled": true,
+      "live": 1,
+      "gone": 0,
+      "digest": "1e408849c76d60b873e2e5a226a0f701b4fe35850ce05db73bdc59c16bbda086",
+      "latestCursor": "dr-i-1"
+    }
+  }
+}

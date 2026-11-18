@@ -1,18 +1,19 @@
 import json
 import uuid
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
 from typing import Any
 
 from app.models import Source
 from app.research.planning import PlanRequest
 from app.research.sections import SectionSpec
+from app.research.structured import StructuredReply
 from app.services.answer_events import CitedClaims, cited_claims
 from app.services.builder_interface import BuildAsk, BuilderTools
 from app.services.knowledge_view import ClaimView
 from app.services.section_blocks import KeptSentence, prose_block
 
 from ..answering.fakes import stored_view
-from ..planner.fakes import FakeModel
 from ..research.fixtures import AJRAKH
 
 QUESTION = "When did the Khatris bring Ajrakh to Kutch?"
@@ -139,5 +140,40 @@ def differ(seat: str, mine: ClaimView, other_seat: str, theirs: ClaimView) -> di
     }
 
 
-def panel_model(views: Sequence[dict[str, Any]], differences: Sequence[dict[str, str]] = ()) -> FakeModel:
-    return FakeModel([json.dumps({"views": list(views), "differences": list(differences)})])
+@dataclass
+class PanelModel:
+    views: Mapping[str, dict[str, Any]]
+    differences: Sequence[dict[str, str]] = ()
+    calls: list[dict[str, Any]] = field(default_factory=list)
+
+    async def __call__(self, *, system: str, user: str, schema: Mapping[str, Any]) -> StructuredReply:
+        self.calls.append({"system": system, "user": user, "schema": schema})
+        if "differences" in schema["properties"]:
+            return StructuredReply(text=json.dumps({"differences": list(self.differences)}), degraded=False)
+        view = self.views.get(asked_seat(user), {"take": []})
+        return StructuredReply(
+            text=json.dumps({k: v for k, v in view.items() if k != "seat"}), degraded=False
+        )
+
+    @property
+    def seat_calls(self) -> list[dict[str, Any]]:
+        return [call for call in self.calls if "take" in call["schema"]["properties"]]
+
+    @property
+    def difference_calls(self) -> list[dict[str, Any]]:
+        return [call for call in self.calls if "differences" in call["schema"]["properties"]]
+
+
+def asked_seat(user: str) -> str:
+    (line,) = [line for line in user.splitlines() if line.startswith("Expert ")]
+    return line.removeprefix("Expert ").split(":")[0]
+
+
+def asked_seats(user: str) -> list[str]:
+    return [
+        line.removeprefix("Expert ").split(":")[0] for line in user.splitlines() if line.startswith("Expert ")
+    ]
+
+
+def panel_model(views: Sequence[dict[str, Any]], differences: Sequence[dict[str, str]] = ()) -> PanelModel:
+    return PanelModel({view["seat"]: view for view in views}, list(differences))

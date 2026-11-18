@@ -9,7 +9,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, created_at, one_of, updated_at, uuid_pk
 from app.models.crafts import EMBEDDING_DIMENSIONS
-from app.models.enums import BLOCK_KINDS, DISCIPLINES, EXPLAINER_DEPTHS
+from app.models.enums import BLOCK_KINDS, DISCIPLINES, EXPLAINER_DEPTHS, READING_STYLES
 
 TOPIC_KEY_COLUMN_CHARS = 200
 
@@ -26,6 +26,7 @@ class KnowledgePiece(Base):
     topicKey: Mapped[str] = mapped_column(String(TOPIC_KEY_COLUMN_CHARS), nullable=False)
     language: Mapped[str] = mapped_column(String(16), nullable=False)
     depth: Mapped[str] = mapped_column(String(16), nullable=False)
+    readingStyle: Mapped[str | None] = mapped_column(String(16))
     payload: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
     claimIds: Mapped[list[uuid.UUID]] = mapped_column(ARRAY(UUID(as_uuid=True)), nullable=False)
     sourceIds: Mapped[list[str]] = mapped_column(ARRAY(Text), nullable=False)
@@ -49,6 +50,9 @@ class KnowledgePiece(Base):
         CheckConstraint(one_of("kind", BLOCK_KINDS), name="kind"),
         CheckConstraint(one_of("facet", DISCIPLINES), name="facet"),
         CheckConstraint(one_of("depth", EXPLAINER_DEPTHS), name="depth"),
+        CheckConstraint(
+            '"readingStyle" IS NULL OR ' + one_of("readingStyle", READING_STYLES), name="readingStyle"
+        ),
         CheckConstraint('cardinality("claimIds") > 0 AND cardinality("sourceIds") > 0', name="rests_on"),
         CheckConstraint('"hiddenById" IS NULL OR "hiddenAt" IS NOT NULL', name="hidden_by"),
         Index(None, "craftId", "facet", "topicKey"),

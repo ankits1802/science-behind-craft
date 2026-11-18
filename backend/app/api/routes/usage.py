@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.clock import INDIA_TZ, INDIA_TZ_NAME
 from app.core.db import get_session
 from app.core.deps import get_current_user, require
-from app.core.roles import Capability, daily_allowance
+from app.core.roles import ALLOWANCE_RESOURCES, Capability, daily_allowance, is_uncapped
 from app.models import UsageEvent, User
 from app.providers import budget
 from app.providers.router import Principal, current_spend
@@ -42,6 +42,10 @@ def _month_bounds(month: str | None) -> tuple[str, datetime, datetime]:
 
 def _money(value: Any) -> float:
     return float(budget.usd(value))
+
+
+def _cap(value: Any) -> float | None:
+    return None if value is None else _money(value)
 
 
 @router.get("/summary")
@@ -112,7 +116,7 @@ async def usage_summary(
         )
     ).all()
     spent = budget.usd(totals[0])
-    fraction = float(spent / ceilings.monthly_usd) if ceilings.monthly_usd > 0 else 1.0
+    fraction = budget.month_fraction(ceilings, budget.SpendState(month_usd=spent))
     top_users = (
         await session.execute(
             select(User.id, User.name, User.email, User.role, func.sum(UsageEvent.costUsd), func.count())
@@ -125,13 +129,13 @@ async def usage_summary(
     ).all()
     return {
         "month": label,
-        "monthlyCeilingUsd": float(ceilings.monthly_usd),
-        "mediaCapUsd": float(ceilings.media_usd),
+        "monthlyCeilingUsd": _cap(ceilings.monthly_usd),
+        "mediaCapUsd": _cap(ceilings.media_usd),
         "spentUsd": float(spent),
         "mediaSpentUsd": _money(totals[1]),
         "reservedUsd": _money(reserved),
-        "fraction": round(fraction, 4),
-        "degraded": fraction >= float(ceilings.degrade_at),
+        "fraction": None if fraction is None else round(float(fraction), 4),
+        "degraded": budget.past_degrade_mark(ceilings, budget.SpendState(month_usd=spent)),
         "calls": int(totals[4] or 0),
         "refusedCalls": int(totals[2] or 0),
         "failedCalls": int(totals[3] or 0),
@@ -234,7 +238,7 @@ async def usage_report(
     return {
         "from": start.isoformat(),
         "to": end.isoformat(),
-        "ceilingUsd": float(ceilings.monthly_usd),
+        "ceilingUsd": _cap(ceilings.monthly_usd),
         "spentThisMonthUsd": _money(month_spent),
         "spentUsd": _money(totals[0]),
         "calls": int(totals[1] or 0),
@@ -277,12 +281,9 @@ async def my_usage(
     settings_values = await app_settings.load_all(session)
     ceilings = budget.Ceilings.from_settings(settings_values)
     spend = await current_spend(session, Principal(user_id=user.id, role=user.role))
-    cap = ceilings.role_daily_usd.get(user.role)
     return {
         "todayUsd": float(spend.user_day_usd),
-        "dailyCapUsd": float(cap) if cap is not None else None,
-        "allowances": {
-            resource: daily_allowance(user, resource) for resource in ("VOICE_SECONDS", "IMAGE", "VIDEO")
-        },
-        "platformDegraded": budget.month_fraction(ceilings, spend) >= ceilings.degrade_at,
+        "dailyCapUsd": None if is_uncapped(user) else _cap(ceilings.role_cap(user.role)),
+        "allowances": {resource: daily_allowance(user, resource) for resource in ALLOWANCE_RESOURCES},
+        "platformDegraded": budget.past_degrade_mark(ceilings, spend),
     }

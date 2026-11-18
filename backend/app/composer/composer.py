@@ -22,6 +22,7 @@ from app.research.composition import (
     sentence_level,
 )
 from app.research.planning import OPEN_QUESTION_LEVEL
+from app.research.reading_style import ReadingStyle
 from app.research.structured import StructuredModel, reply_object
 
 from .drafts import (
@@ -38,8 +39,6 @@ from .prompt import (
     LEDE_SYSTEM_PROMPT,
     REGENERATE_SYSTEM_PROMPT,
     SECTION_FOLLOW_UPS_MAX,
-    SECTION_SENTENCES_MAX,
-    SECTION_SYSTEM_PROMPT,
     compose_message,
     compose_schema,
     lede_message,
@@ -47,6 +46,8 @@ from .prompt import (
     regenerate_message,
     regenerate_schema,
     section_schema,
+    section_system_prompt,
+    styled,
 )
 
 __all__ = ["ModelComposer", "ReplyForm", "assembled_answer", "assembled_lede", "lede_form", "reply_form"]
@@ -61,26 +62,30 @@ class ReplyForm:
     system: str
     schema: dict[str, Any]
     parse: Parse
+    style: ReadingStyle | None = None
 
 
 def reply_form(request: ComposeRequest) -> ReplyForm:
     focus = request.focus
     if focus is None:
-        return ReplyForm(COMPOSE_SYSTEM_PROMPT, compose_schema(), parsed_answer)
+        system = styled(COMPOSE_SYSTEM_PROMPT, request.style)
+        return ReplyForm(system, compose_schema(), parsed_answer, request.style)
     stage_ids = [str(stage.id) for stage in focus.stages]
     parse = partial(
         parsed_section,
         title=focus.title,
         stage_ids=stage_ids,
-        limits=(SECTION_SENTENCES_MAX, SECTION_FOLLOW_UPS_MAX),
+        limits=(focus.sentences_max, SECTION_FOLLOW_UPS_MAX),
     )
-    return ReplyForm(SECTION_SYSTEM_PROMPT, section_schema(stage_ids), parse)
+    system = styled(section_system_prompt(focus.sentences_max), request.style)
+    return ReplyForm(system, section_schema(stage_ids), parse, request.style)
 
 
 def lede_form(request: LedeRequest) -> ReplyForm:
     section_ids = [section.section_id for section in request.sections]
     parse = partial(parsed_lede, section_ids=section_ids, limit=LEDE_SENTENCES_MAX)
-    return ReplyForm(LEDE_SYSTEM_PROMPT, lede_schema(section_ids), parse)
+    system = styled(LEDE_SYSTEM_PROMPT, request.style)
+    return ReplyForm(system, lede_schema(section_ids), parse, request.style)
 
 
 class ModelComposer:
@@ -104,7 +109,7 @@ class ModelComposer:
     ) -> DraftAnswer:
         draft, retries_left = await self._first_draft(form, message, allowed)
         if draft.failed and retries_left:
-            draft = await self._regenerated(message, draft, allowed)
+            draft = await self._regenerated(message, draft, allowed, form.style)
         _log_dropped(draft)
         return draft
 
@@ -121,11 +126,15 @@ class ModelComposer:
         return form.parse(reply_object(reply), allowed), 0
 
     async def _regenerated(
-        self, message: str, draft: DraftAnswer, allowed: Mapping[str, ComposeCandidate]
+        self,
+        message: str,
+        draft: DraftAnswer,
+        allowed: Mapping[str, ComposeCandidate],
+        style: ReadingStyle | None,
     ) -> DraftAnswer:
         failed = draft.failed
         reply = await self._model(
-            system=REGENERATE_SYSTEM_PROMPT,
+            system=styled(REGENERATE_SYSTEM_PROMPT, style),
             user=regenerate_message(message, failed),
             schema=regenerate_schema(len(failed)),
         )

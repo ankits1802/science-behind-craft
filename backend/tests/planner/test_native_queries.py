@@ -26,7 +26,7 @@ NATIVE_PLAN = {
 
 
 @pytest.mark.parametrize(
-    ("language", "mode", "native"), [("hi", "HYBRID", 2), ("ur", "DEEP", 3), ("en", "HYBRID", 0)]
+    ("language", "mode", "native"), [("hi", "HYBRID", 2), ("ur", "DEEP", 6), ("en", "HYBRID", 0)]
 )
 async def test_the_plan_call_asks_for_native_queries_only_outside_english(
     language: str, mode: str, native: int

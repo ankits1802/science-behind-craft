@@ -14,8 +14,8 @@ __all__ = [
 ]
 
 NOTICE_PATH = Path(__file__).resolve().parents[1] / "data" / "voice_notice.md"
-VOICE_NOTICE_VERSION = "2026-11-16"
-VOICE_NOTICE_PUBLISHED_AT = "2026-11-16T00:00:00+05:30"
+VOICE_NOTICE_VERSION = "2026-11-18"
+VOICE_NOTICE_PUBLISHED_AT = "2026-11-18T00:00:00+05:30"
 VOICE_NOTICE_TITLE = "Voice notice"
 
 

@@ -21,7 +21,7 @@ from .pack import VoicePack
 from .records import AnswerRecord, SessionRecord, TurnClaim, TurnHold, TurnSave
 from .seconds import AGENT_OCCUPANCY_SECONDS, VOICE_SECONDS, capped_seconds
 
-__all__ = ["VOICE_ANSWER_QUESTION", "VOICE_TIERS", "SqlVoiceStore"]
+__all__ = ["VOICE_ANSWER_QUESTION", "VOICE_TIERS", "SqlVoiceStore", "answer_row", "session_row"]
 
 VOICE_ANSWER_QUESTION = "Voice turn"
 VOICE_TIERS = ["T1"]
@@ -115,7 +115,7 @@ class SqlVoiceStore:
                     language=record.language,
                 )
             )
-            session.add(_session_row(record, craft_id))
+            session.add(session_row(record, craft_id))
             try:
                 await session.commit()
             except IntegrityError as error:
@@ -197,7 +197,7 @@ class SqlVoiceStore:
                 raise LookupError(f"Voice session {session_id} is gone")
             row.transcriptEnc = save.merge(row.transcriptEnc)
             if save.answer is not None:
-                session.add(await _answer_row(session, row, save.answer))
+                session.add(await answer_row(session, row, save.answer))
             for entry in save.seconds:
                 await _add_seconds(session, session_id, entry)
             await session.commit()
@@ -305,7 +305,7 @@ async def _craft_id(session: AsyncSession, craft: CraftRef | None) -> uuid.UUID 
     return row.id if row else None
 
 
-async def _answer_row(session: AsyncSession, row: VoiceSession, answer: AnswerRecord) -> Answer:
+async def answer_row(session: AsyncSession, row: VoiceSession, answer: AnswerRecord) -> Answer:
     craft_id = row.craftId
     if answer.craft_slug is not None and craft_id is None:
         resolved = await knowledge_view.resolve_craft(session, answer.craft_slug)
@@ -325,7 +325,7 @@ async def _answer_row(session: AsyncSession, row: VoiceSession, answer: AnswerRe
     )
 
 
-def _session_row(record: SessionRecord, craft_id: uuid.UUID | None) -> VoiceSession:
+def session_row(record: SessionRecord, craft_id: uuid.UUID | None) -> VoiceSession:
     return VoiceSession(
         id=record.id,
         userId=record.user_id,
@@ -338,6 +338,7 @@ def _session_row(record: SessionRecord, craft_id: uuid.UUID | None) -> VoiceSess
         expiresAt=record.expires_at,
         maxDurationSeconds=record.max_duration_seconds,
         retentionUntil=record.hard_end + RETENTION,
+        purpose=record.purpose,
     )
 
 
@@ -364,4 +365,5 @@ def _record(row: VoiceSession, role: str, slug: str | None, name: str | None) ->
         billed_seconds=row.billedSeconds,
         retention_until=row.retentionUntil,
         transcript=row.transcriptEnc,
+        purpose=row.purpose,
     )

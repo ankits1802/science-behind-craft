@@ -5,6 +5,7 @@ import {
   SESSION_END_PATH,
   SESSION_MARKER_COOKIE
 } from "@/lib/sessionCookie";
+import { isReadingRoute } from "@/lib/readingRoutes";
 
 let endedMarker: string | null = null;
 
@@ -69,7 +70,7 @@ export function hasLegacyToken(): boolean {
   return Boolean(readLegacyToken());
 }
 
-const SIGNED_OUT_ROUTES = ["/", "/login", "/signup", "/privacy", "/forgot-password", "/set-password", "/session-ended"];
+const SIGNED_OUT_ROUTES = ["/", "/login", "/signup", "/privacy", "/forgot-password", "/set-password", "/session-ended", "/design"];
 
 export function isSignedOutRoute(pathname: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";
@@ -83,7 +84,7 @@ export function markNotFoundPage(): void {
 }
 
 export function mayHoldSession(pathname: string, legacyToken: boolean): boolean {
-  return Boolean(getSessionMarker()) || legacyToken || (!notFoundPage && !isSignedOutRoute(pathname));
+  return Boolean(getSessionMarker()) || legacyToken || (!notFoundPage && !isSignedOutRoute(pathname) && !isReadingRoute(pathname));
 }
 
 function dropLegacyToken(): void {

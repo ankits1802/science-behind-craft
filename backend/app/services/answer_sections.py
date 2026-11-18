@@ -4,29 +4,31 @@ import asyncio
 import logging
 import uuid
 from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from functools import partial
 from typing import Any, Protocol
 
 from app.composer.candidates import compose_request, research_summary
 from app.core.errors import AppError, spend_refusal
 from app.research.composition import ComposedAnswer, ComposeFocus, ComposeRequest, searched_note
+from app.research.depth import section_sentence_limit
 from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Block
 from app.research.planning import PlanRequest, ResearchShare, RetrievalPlan
+from app.research.reading_style import ReadingStyle
 from app.research.sections import DISCIPLINE_TITLES, LADDER_DISCIPLINE, SectionSpec, block_id
 from app.research.stream import ResearchProgress
 from app.science.ladder import ladder_problems, ladder_stage_options, process_ladder
 from app.science.records import ProcessRecords
 
-from .answer_events import CitedClaims
-from .answer_trail import stored_key
+from .answer_events import CitedClaims, joined_claims
 from .answer_translation import AnswerTranslation
 from .block_builders import AddedBlocks, BlockBuilders, SectionBuilds
 from .builder_interface import BuildAsk
 from .claim_ledger import COVERED_NOTE
 from .explainer_events import ExplainerStream
 from .research_ledger import ResearchLedger, may_research_fresh
+from .reuse_enrichment import Floor, claim_texts, floor_sent, process_sources
 from .section_blocks import (
     BlockRefused,
     KeptSentence,
@@ -39,6 +41,7 @@ from .section_deepening import LADDER_KIND, NEW_SECTION, Deepening
 from .section_enrichment import Enrichment, PictureSearches
 from .section_headings import composed_heading
 from .section_language import block_in_language, open_questions_in_language
+from .section_trail import quote_trail, stored_sources
 
 __all__ = [
     "SECTION_CONCURRENCY",
@@ -83,6 +86,8 @@ class SectionContext:
     process: ProcessRecords | None = None
     builders: BlockBuilders = field(default_factory=BlockBuilders)
     deepening: Mapping[str, Deepening] = field(default_factory=dict)
+    floors: Mapping[str, Floor] = field(default_factory=dict)
+    reading_style: ReadingStyle | None = None
 
     def deepening_of(self, section_id: str) -> Deepening:
         return self.deepening.get(section_id, NEW_SECTION)
@@ -112,19 +117,15 @@ class _Attempt:
     cited: CitedClaims
     evidence_ids: tuple[str, ...]
     claim_ids: tuple[uuid.UUID, ...] = field(default=())
+    floored: tuple[Block, ...] = ()
 
 
 async def run_sections(specs: Sequence[SectionSpec], context: SectionContext) -> list[SectionOutcome]:
     gate = asyncio.Semaphore(SECTION_CONCURRENCY)
-
-    async def run(spec: SectionSpec, share: ResearchShare) -> SectionOutcome:
-        async with gate:
-            return await _guarded(spec, share, context)
-
     try:
         async with asyncio.TaskGroup() as group:
             tasks = [
-                group.create_task(run(s, share))
+                group.create_task(_guarded(s, share, context, gate))
                 for s, share in zip(specs, context.ledger.shares, strict=True)
             ]
     except BaseExceptionGroup as failed:
@@ -132,50 +133,76 @@ async def run_sections(specs: Sequence[SectionSpec], context: SectionContext) ->
     return [task.result() for task in tasks]
 
 
-async def _guarded(spec: SectionSpec, share: ResearchShare, context: SectionContext) -> SectionOutcome:
+async def _guarded(
+    spec: SectionSpec, share: ResearchShare, context: SectionContext, gate: asyncio.Semaphore
+) -> SectionOutcome:
+    floor = context.floors.get(spec.id, Floor())
+    floored: tuple[Block, ...] = ()
     try:
-        return await _section(spec, share, context)
+        floored = await floor_sent(
+            spec, floor, stream=context.stream, translation=context.tools.translation, process=context.process
+        )
+        async with gate:
+            return await _section(spec, share, context, floor, floored)
     except AppError as error:
         if spend_refusal(error):
             raise
         logger.warning("section %s stopped: %s", spec.id, error, exc_info=True)
-        await context.stream.section_done(spec.id, searched=SECTION_STOPPED_NOTE)
-        return SectionOutcome(spec, searched=SECTION_STOPPED_NOTE, failure=error)
+        searched = None if floored else SECTION_STOPPED_NOTE
+        await context.stream.section_done(spec.id, searched=searched)
+        claims = _claim_ids(floored, ())
+        return SectionOutcome(spec, blocks=floored, searched=searched, failure=error, claim_ids=claims)
 
 
-async def _section(spec: SectionSpec, share: ResearchShare, context: SectionContext) -> SectionOutcome:
+async def _section(
+    spec: SectionSpec, share: ResearchShare, context: SectionContext, floor: Floor, floored: tuple[Block, ...]
+) -> SectionOutcome:
     attempts = [await _attempt(spec, context, context.ledger.take(share), fresh=False)]
-    fresh = context.ledger.take_fresh(share) if _needs_fresh(attempts[0]) else None
+    fresh = context.ledger.take_fresh(share) if _needs_fresh(attempts[0], floored) else None
     if fresh is not None:
         await context.stream.section_state(spec.id, "RESEARCHING")
         attempts.append(await _attempt(spec, context, fresh, fresh=True))
-    shown = attempts[-1]
-    proposed = None if spec.id in context.deepening else shown.composed.heading
+    shown = replace(attempts[-1], floored=floored)
+    proposed = None if spec.id in context.deepening and not floored else shown.composed.heading
     headed = await composed_heading(spec, shown, proposed, context.stream, context.tools.translation)
+    cited = joined_claims(floor.cited, shown.cited)
+    blocks, added = await _built_on(
+        spec,
+        shown,
+        context,
+        BuildAsk(context.answer_id, spec, context.base, (*floor.placed.blocks, *shown.blocks), cited),
+    )
+    packs = tuple(attempt.pack for attempt in attempts)
+    searched = _searched(blocks, shown, packs)
+    sources = {**_section_sources(cited, context.process), **added.sources, **context.stream.shown_sources()}
+    await context.stream.section_done(spec.id, searched=searched)
+    await quote_trail(context.stream.trail, shown.evidence_ids, blocks, sources)
+    return SectionOutcome(
+        headed.spec,
+        shown_title=headed.shown,
+        blocks=blocks,
+        built=(*floor.placed.built, *floor.placed.copies, *shown.blocks, *added.blocks),
+        searched=searched,
+        plans=tuple(pack.plan for pack in packs),
+        packs=packs,
+        follow_ups=tuple(shown.composed.follow_ups),
+        claim_ids=tuple(
+            dict.fromkeys([*_claim_ids(floored, ()), *shown.claim_ids, *_claim_ids(added.blocks, ())])
+        ),
+        sources=sources,
+    )
+
+
+async def _built_on(
+    spec: SectionSpec, shown: _Attempt, context: SectionContext, ask: BuildAsk
+) -> tuple[tuple[Block, ...], AddedBlocks]:
     deepening = context.deepening_of(spec.id)
     async with (
         context.enrichment.searching() as pictures,
         context.builders.without(deepening.kinds).building() as builds,
     ):
-        builds.start(BuildAsk(context.answer_id, spec, context.base, shown.blocks, shown.cited))
-        blocks, added = await _shown(spec, shown, context, pictures, builds)
-    packs = tuple(attempt.pack for attempt in attempts)
-    searched = _searched(blocks, shown, packs)
-    sources = {**_sources(shown.cited, context.process), **added.sources, **context.stream.shown_sources()}
-    await context.stream.section_done(spec.id, searched=searched)
-    await _quote_trail(shown, blocks, context, sources)
-    return SectionOutcome(
-        headed.spec,
-        shown_title=headed.shown,
-        blocks=blocks,
-        built=(*shown.blocks, *added.blocks),
-        searched=searched,
-        plans=tuple(pack.plan for pack in packs),
-        packs=packs,
-        follow_ups=tuple(shown.composed.follow_ups),
-        claim_ids=tuple(dict.fromkeys([*shown.claim_ids, *_claim_ids(added.blocks, ())])),
-        sources=sources,
-    )
+        builds.start(ask)
+        return await _shown(spec, shown, context, pictures, builds)
 
 
 async def _attempt(
@@ -183,7 +210,8 @@ async def _attempt(
 ) -> _Attempt:
     pack = await _researched(spec, context, share, fresh=fresh)
     await context.stream.section_state(spec.id, "WRITING")
-    request = compose_request(pack, context.base.question, focus=_focus(spec, context.process))
+    focus = _focus(spec, context)
+    request = compose_request(pack, context.base.question, focus=focus, style=context.reading_style)
     if request.candidates:
         await context.stream.status("COMPOSING", len(request.candidates))
     composed = await context.tools.compose(request)
@@ -207,7 +235,7 @@ async def _researched(
     pack = await context.tools.research(request, progress, context.stream.trail)
     context.ledger.settle(share, pack)
     stored = await context.tools.store.cited(hit.claim_id for hit in pack.stored.claims)
-    await context.stream.trail.found_stored(_stored_sources(pack, stored))
+    await context.stream.trail.found_stored(stored_sources(pack, stored))
     return pack
 
 
@@ -288,10 +316,10 @@ async def _shown(
     pictures: PictureSearches,
     builds: SectionBuilds,
 ) -> tuple[tuple[Block, ...], AddedBlocks]:
-    sources = _sources(attempt.cited, context.process)
-    texts = _claim_texts(attempt.cited, context.process)
+    sources = _section_sources(attempt.cited, context.process)
+    texts = claim_texts(context.process, attempt.cited)
     in_language = partial(_in_language, context=context, texts=texts)
-    shown: list[Block] = []
+    shown: list[Block] = list(attempt.floored)
     for block in attempt.blocks:
         shown += await context.stream.blocks(spec.id, [block], sources, in_language=in_language)
     deepening = context.deepening_of(spec.id)
@@ -310,19 +338,6 @@ async def _shown(
     return tuple(shown), added
 
 
-async def _quote_trail(
-    attempt: _Attempt,
-    blocks: Sequence[Block],
-    context: SectionContext,
-    sources: Mapping[str, Mapping[str, Any]],
-) -> None:
-    trail = context.stream.trail
-    ladder = {sid for block in blocks if block.kind == LADDER_KIND for sid in block.cited_source_ids()}
-    cited = dict.fromkeys(source_id for block in blocks for source_id in block.cited_source_ids())
-    quoted = [sources[sid] for sid in cited if sid in ladder or trail.knows(stored_key(sid))]
-    await trail.quoted(attempt.evidence_ids, quoted)
-
-
 async def _in_language(block: Block, context: SectionContext, texts: Mapping[uuid.UUID, str]) -> Block:
     return await block_in_language(
         block, stream=context.stream, translation=context.tools.translation, claim_texts=texts
@@ -337,9 +352,15 @@ async def _open_in_language(
     )
 
 
-def _focus(spec: SectionSpec, records: ProcessRecords | None) -> ComposeFocus:
+def _focus(spec: SectionSpec, context: SectionContext) -> ComposeFocus:
+    records = context.process
     stages = ladder_stage_options(records) if records and spec.discipline == LADDER_DISCIPLINE else []
-    return ComposeFocus(discipline=spec.discipline, title=DISCIPLINE_TITLES[spec.discipline], stages=stages)
+    return ComposeFocus(
+        discipline=spec.discipline,
+        title=DISCIPLINE_TITLES[spec.discipline],
+        stages=stages,
+        sentences_max=section_sentence_limit(context.base.depth),
+    )
 
 
 def _searched(blocks: Sequence[Block], attempt: _Attempt, packs: Sequence[EvidencePack]) -> str | None:
@@ -348,31 +369,12 @@ def _searched(blocks: Sequence[Block], attempt: _Attempt, packs: Sequence[Eviden
     return COVERED_NOTE if attempt.blocks else searched_note(research_summary(*packs))
 
 
-def _needs_fresh(attempt: _Attempt) -> bool:
-    return not attempt.blocks and may_research_fresh(attempt.pack)
+def _needs_fresh(attempt: _Attempt, floored: Sequence[Block]) -> bool:
+    return not attempt.blocks and not floored and may_research_fresh(attempt.pack)
 
 
-def _stored_sources(pack: EvidencePack, stored: CitedClaims) -> list[Mapping[str, Any]]:
-    ordered = dict.fromkeys(
-        citation["sourceId"]
-        for hit in pack.stored.claims
-        if hit.claim_id in stored.views
-        for citation in stored.views[hit.claim_id].citations
-    )
-    return [stored.sources[source_id] for source_id in ordered if source_id in stored.sources]
-
-
-def _sources(cited: CitedClaims, records: ProcessRecords | None) -> dict[str, Mapping[str, Any]]:
-    stored = {
-        sid: ref.model_dump(mode="json", by_alias=True)
-        for sid, ref in (records.sources if records else {}).items()
-    }
-    return {**stored, **cited.sources}
-
-
-def _claim_texts(cited: CitedClaims, records: ProcessRecords | None) -> dict[uuid.UUID, str]:
-    texts = {claim_id: claim.text for claim_id, claim in (records.claims if records else {}).items()}
-    return texts | {claim_id: view.text for claim_id, view in cited.views.items()}
+def _section_sources(cited: CitedClaims, records: ProcessRecords | None) -> dict[str, Mapping[str, Any]]:
+    return {**process_sources(records), **cited.sources}
 
 
 def _claim_ids(blocks: Sequence[Block], open_questions: Sequence[Mapping[str, Any]]) -> tuple[uuid.UUID, ...]:

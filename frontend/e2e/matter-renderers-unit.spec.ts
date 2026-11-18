@@ -16,7 +16,20 @@ import { MOLECULE_CONFORMER_PATH } from "@/lib/explainerMatter";
 import type { SectionView } from "@/lib/explainerState";
 import { blockCitations, blockSentences, blockSourceIds, explainerSourceNumbers } from "@/lib/explainerView";
 import { materialRoleText } from "@/lib/processView";
-import { PLAYBACK_START, playable, playbackStep, reactionCast, stepPosition, stepRoles, stepSignal, type Playback, type PlaybackAction } from "@/lib/reactionPlayer";
+import {
+  carriedKeys,
+  colourChange,
+  colourChangeLine,
+  PLAYBACK_START,
+  playable,
+  playbackStep,
+  reactionCast,
+  stepPosition,
+  stepRoles,
+  stepSignal,
+  type Playback,
+  type PlaybackAction
+} from "@/lib/reactionPlayer";
 import { ShapeError } from "@/lib/shape";
 
 import { CONTENT_SECURITY_POLICY } from "../next.config";
@@ -107,7 +120,9 @@ test("reduced motion shows every step with its equation, species and citations, 
   expect(html).not.toContain('data-testid="species-cast"');
   expect(html).toContain('aria-label="Iron + 2 Acetic acid gives Iron(II) acetate + Hydrogen"');
   expect(html).toContain("Aluminium from the alum mordant + Alizarin gives Aluminium-alizarin lake");
-  expect(html.match(/data-testid="citation-chip"/g)).toHaveLength(11);
+  const clusters = attribute(html, "citation-chip", "data-numbers").map((numbers) => numbers.split(","));
+  expect(clusters.flat()).toHaveLength(11 + 2 + 2 + 12);
+  expect(clusters.length).toBeLessThan(clusters.flat().length);
   expect(html.match(/>Balanced</g)).toHaveLength(3);
   for (const step of player().steps) expect(html).toContain(step.label);
 });
@@ -122,6 +137,30 @@ test("playing shows the cast lit for the open step, one step open and the playba
   expect(html).toContain('data-testid="reaction-play"');
   expect(/<button[^>]*aria-label="Previous step"[^>]*>/.exec(html)?.[0]).toContain("disabled");
   expect(html).toContain('aria-current="step"');
+});
+
+test("each step shows its stage, the conditions and colours its sources state, and why it happens", () => {
+  const html = withReading(createElement(ReactionPlayerView, { block: player(), reduce: true }));
+  expect(attribute(html, "step-colour", "data-colour")).toEqual(["GREEN", "BLUE", "RED"]);
+  expect(attribute(html, "step-colour", "data-side")).toEqual(["BEFORE", "AFTER", "AFTER"]);
+  expect(attribute(html, "step-cloth", "data-testid")).toHaveLength(2);
+  expect(html).toContain("At first bright green, the cloth rapidly becomes blue");
+  expect(attribute(html, "step-condition", "data-testid")).toHaveLength(2);
+  expect(html).toContain("Fermenting the iron paste");
+  expect(html).toContain(": ten to fifteen days");
+  expect(attribute(html, "step-why", "data-testid")).toHaveLength(4);
+  expect(html.match(/data-testid="answer-sentence"/g)).toHaveLength(12);
+  expect(html).toContain("Redox · Indigo dyeing (kun me burana)");
+});
+
+test("a colour change reads before and after, and the species one step makes for the next is the intermediate", () => {
+  const [iron, reduction, oxidation, lake] = player().steps;
+  expect([iron, reduction].map(colourChange)).toEqual([null, null]);
+  expect(colourChangeLine(colourChange(oxidation)!)).toBe("Green turns blue");
+  expect(colourChangeLine(colourChange(lake)!)).toBe("Red as it forms");
+  const steps = player().steps;
+  expect([0, 1, 2, 3].map((at) => [...carriedKeys(steps, at)])).toEqual([[], ["formula:C16H12N2O2"], ["formula:C16H12N2O2"], []]);
+  expect(lake.stage).toBe("Red dyeing (rang) with madder or alizarin");
 });
 
 test("a material card shows its stored name, local names, role, formula, facts and handling with their citations", () => {
@@ -193,9 +232,9 @@ test("a molecule waits for its view, names its compound and cites its PubChem re
 
 test("the matter blocks join the answer's one numbering: reactions by their citations, the molecule by its record", () => {
   const blocks = [player(), card(), molecule()];
-  expect(blockSentences(player())).toEqual([]);
+  expect(blockSentences(player()).map((sentence) => sentence.id)).toEqual(Array.from({ length: 12 }, (_, n) => `s4.b1.${n + 1}`));
   expect(blockSentences(card()).map((sentence) => sentence.id)).toEqual(["s4.b2.1", "s4.b2.2", "s4.b2.3"]);
-  expect(blockCitations(player())).toHaveLength(13);
+  expect(blockCitations(player())).toHaveLength(13 + 2 + 3 + 12);
   expect(blockSourceIds(molecule())).toEqual([ALIZARIN_RECORD]);
   const section = { id: "s4", discipline: "CHEMISTRY", title: "Chemistry", order: 1, state: "READY", searched: null, blocks } as unknown as SectionView;
   expect([...explainerSourceNumbers([section])]).toEqual([

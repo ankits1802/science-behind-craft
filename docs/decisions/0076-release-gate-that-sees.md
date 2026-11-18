@@ -74,8 +74,10 @@ Vercel's deployment protection.
    nothing else from Google; a production run expects neither.
 5. **Professor and Admin screens on secrets.** `/lessons` and `/admin` run at 1440 light only when
    `E2E_PROFESSOR_*` or `E2E_ADMIN_*` (email, password, TOTP secret) exist, and are skipped
-   otherwise. The run computes the RFC 6238 code from the secret (`twoStep.ts`). This replaces
-   decision 0029's "not covered" for those roles.
+   otherwise. They run only against production: a preview can be built from any branch, so a
+   preview run gets neither the secrets nor the screens (`roleSiteRefusal` in `preview.ts`). The
+   run computes the RFC 6238 code from the secret (`twoStep.ts`). This replaces decision 0029's
+   "not covered" for those roles.
 6. **No new dependency.** The PNG reader is a streaming inflate over `node:zlib` with the five
    PNG filters, so a 200,000-row phone screenshot is read row by row; `sharp` is only Next's
    optional dependency.

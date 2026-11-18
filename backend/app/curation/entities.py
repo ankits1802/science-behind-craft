@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import Self
+from typing import Annotated, Self
 
-from pydantic import Field, model_validator
+from pydantic import AfterValidator, Field, model_validator
 
 from app.research.base import ContractModel
+from app.research.colours import ColourWord
 from app.research.vocabulary import MaterialKind, ReactionKind, StageType
 
 from .fields import (
@@ -18,11 +19,14 @@ from .fields import (
     ReactionId,
     StageId,
     ToolId,
+    distinct,
 )
+from .limits import AFTER_COLOURS_MAX, AFTER_TEXT_MAX_CHARS
 from .vocabulary import CuratedMaterialRole, GroupKind, PlaceKind, PlaceRole
 
 __all__ = [
     "WIKIDATA_PATTERN",
+    "After",
     "Community",
     "Material",
     "MaterialUse",
@@ -81,6 +85,14 @@ class ToolUse(ContractModel):
     claim_id: ClaimId
 
 
+class After(ContractModel):
+    text: str = Field(min_length=1, max_length=AFTER_TEXT_MAX_CHARS)
+    colours: Annotated[list[ColourWord], Field(max_length=AFTER_COLOURS_MAX), AfterValidator(distinct)] = (
+        Field(default_factory=list)
+    )
+    claim_id: ClaimId
+
+
 class Stage(ContractModel):
     id: StageId
     name: NameText
@@ -93,6 +105,8 @@ class Stage(ContractModel):
     materials: list[MaterialUse] = Field(default_factory=list)
     tools: list[ToolUse] = Field(default_factory=list)
     claim_ids: ClaimIds
+    after: After | None = None
+    why_claim_id: ClaimId | None = None
 
     @model_validator(mode="after")
     def _order_rests_on_a_claim(self) -> Self:

@@ -8,7 +8,7 @@ import pytest
 from app.core.errors import ExternalFailure
 from app.geo.climate import ClimateTrends
 from app.research.blocks import ExplainerSentence, ProseBlock
-from app.research.blocks_insight import ClimateRiskBlock
+from app.research.blocks_climate import ClimateRiskBlock
 from app.research.planning import PlanRequest
 from app.research.sections import SectionSpec
 from app.science.records import KnownClaim

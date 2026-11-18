@@ -80,6 +80,7 @@ async def test_an_answer_without_an_explainer_has_nothing_to_read(store: Stores)
     assert await listen.explainer(nothing, user.id) is None
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_hold_is_written_only_while_seconds_are_left(store: Stores) -> None:
     listen, session = store
     user = await reader(session)
@@ -90,6 +91,22 @@ async def test_a_hold_is_written_only_while_seconds_are_left(store: Stores) -> N
     await listen.record(seconds(user, -90, f"listen-refund:{uuid.uuid4()}"))
     units = await session.scalars(select(QuotaLedger.units).where(QuotaLedger.userId == user.id))
     assert sorted(int(unit) for unit in units) == [-90, 590]
+
+
+@pytest.mark.parametrize("role", ["STUDENT", "ARTISAN", "RESEARCHER", "PROFESSOR", "ADMIN"])
+async def test_by_default_every_role_holds_any_length_and_the_seconds_are_still_written(
+    store: Stores, role: str
+) -> None:
+    listen, session = store
+    user = await reader(session, role)
+    first = await listen.hold(seconds(user, 100_000, f"listen:{uuid.uuid4()}:hold"), NOW)
+    second = await listen.hold(seconds(user, 100_000, f"listen:{uuid.uuid4()}:hold"), NOW)
+    assert [(hold.held, hold.remaining_after, hold.refused) for hold in (first, second)] == [
+        (100_000, None, False),
+        (100_000, None, False),
+    ]
+    units = await session.scalars(select(QuotaLedger.units).where(QuotaLedger.userId == user.id))
+    assert sorted(int(unit) for unit in units) == [100_000, 100_000]
 
 
 async def test_a_master_admin_holds_any_length(store: Stores) -> None:

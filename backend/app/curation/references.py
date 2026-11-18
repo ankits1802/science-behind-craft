@@ -9,6 +9,7 @@ from .dossier import Dossier
 from .entities import Stage
 from .fields import SUBJECT_KINDS
 from .problems import Problem
+from .records import Picture
 
 __all__ = ["KINDS_BY_PART", "Reference", "id_problems", "reference_problems", "references"]
 
@@ -112,7 +113,12 @@ def _entity_references(dossier: Dossier) -> Iterator[Reference]:
 
 def _stage_references(stage: Stage) -> Iterator[Reference]:
     timings = (stage.duration, stage.season)
-    named = [stage.order_claim_id, *(timing.claim_id for timing in timings if timing is not None)]
+    named = [
+        stage.order_claim_id,
+        stage.why_claim_id,
+        stage.after.claim_id if stage.after is not None else None,
+        *(timing.claim_id for timing in timings if timing is not None),
+    ]
     yield from _claims(
         stage.id, [*stage.claim_ids, *(claim_id for claim_id in named if claim_id is not None)]
     )
@@ -140,6 +146,19 @@ def _record_references(dossier: Dossier) -> Iterator[Reference]:
         yield from _claims(picture.id, picture.claim_ids)
         if picture.stage_id is not None:
             yield Reference(picture.id, "stage", picture.stage_id)
+        yield from _placement_references(picture)
+    for index, name in enumerate(dossier.native_names):
+        yield Reference(f"nativeNames.{index}", "claim", name.claim_id)
+
+
+def _placement_references(picture: Picture) -> Iterator[Reference]:
+    placement = picture.placement
+    if placement is None:
+        return
+    if placement.stage_id is not None:
+        yield Reference(f"{picture.id}.placement", "stage", placement.stage_id)
+    if placement.material_id is not None:
+        yield Reference(f"{picture.id}.placement", "material", placement.material_id)
 
 
 def _note_references(dossier: Dossier) -> Iterator[Reference]:

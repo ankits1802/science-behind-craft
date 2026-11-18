@@ -1,4 +1,4 @@
-export type UserRole = "MASTER_ADMIN" | "ADMIN" | "PROFESSOR" | "RESEARCHER" | "STUDENT";
+export type UserRole = "MASTER_ADMIN" | "ADMIN" | "PROFESSOR" | "RESEARCHER" | "ARTISAN" | "STUDENT";
 
 export type RecordStatus = "DRAFT" | "PENDING" | "APPROVED" | "REJECTED" | "NEEDS_REVISION";
 
@@ -29,6 +29,10 @@ export type User = {
   lastLoginAt?: string | null;
   isActive?: boolean;
   suspendedAt?: string | null;
+  capabilities?: string[];
+  guardianConsent?: "CONFIRMED" | "NOT_CONFIRMED";
+  profileRequired?: boolean;
+  guardianConsentRequired?: boolean;
 };
 
 export type EvidenceLevel = "VERIFIED" | "REVIEWED" | "PROVISIONAL" | "HYPOTHESIS" | "UNAVAILABLE";

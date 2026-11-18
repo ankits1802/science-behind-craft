@@ -453,8 +453,9 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   A plan outside its mode's tiers, query or fetch limits, with tiers out of order or repeated,
   a query on a tier the plan does not run, a query naming a missing facet, or a native-language
   query (`query.language` other than English) that is not `T3` (`NATIVE_QUERY_TIER`) in the plan's
-  language, does not construct. Native-language queries count apart from the English limit. Past 80% of the monthly ceiling the router degrades and the planner plans DEEP as
-  HYBRID, for every role but Master Admin, whose calls are never degraded (decision 0031).
+  language, does not construct. Native-language queries count apart from the English limit. Past the degrade mark of a set monthly ceiling the router degrades and the planner plans DEEP
+  as HYBRID, for every role but Master Admin, whose calls are never degraded (decision 0031); no
+  ceiling or mark is set for now, so nothing degrades (decision 0093).
 - `PlanRequest.withheldTerms` (at most 20, each 2-200 characters): words a search query must
   never carry, such as the asker's own names (PLAN 6, search egress).
 - Coverage: `FacetCoverage {facetIndex, claimIds[]}` is `covered` when it holds at least
@@ -543,7 +544,8 @@ process: each adapter paces and caches itself.
 `EvidencePack {schemaVersion 1, plan, degraded, stored: KnowledgeHits, coverage[FacetCoverage],
 evidence[PackedEvidence], documents[SourceDocument], failures[ResearchFailure]}`.
 
-- `stored` is the question's stored search (limit `STORED_PACK_LIMIT` 20) for the plan's craft
+- `stored` is the question's stored search (limit `STORED_PACK_LIMIT` 20, or the depth's
+  `stored_claims`: 40 at Expert, decision 0089) for the plan's craft
   and mode; `coverage` lists every facet once, in facet order.
 - `PackedEvidence {item, facetIndexes (at least one, each a plan facet), foundBy (searcher
   names), hits >= 1, bestRank >= 1, followedFrom?}`; ids and source keys are unique, and
@@ -637,8 +639,9 @@ Gemini).
   switches the call to `SECTION_SYSTEM_PROMPT` and `section_schema(stage_ids)`: `{sentences[],
   stages[] (an enum of the offered stage ids, present only when stages are offered), followUps[]}`.
   The message adds the `Section` line and, for a ladder, the stored stages inside an untrusted
-  block. At most `SECTION_SENTENCES_MAX` (8) sentences and `SECTION_FOLLOW_UPS_MAX` (2) follow-ups
-  are kept; a stage id that was not offered is never chosen (logged). The same checks and the
+  block. At most `ComposeFocus.sentencesMax` sentences (the depth's `section_sentences`: 8, or 16 at
+  Expert, whose prompt adds `EXPERT_SECTION_RULES`; decision 0089) and `SECTION_FOLLOW_UPS_MAX` (2)
+  follow-ups are kept; a stage id that was not offered is never chosen (logged). The same checks and the
   one regenerate apply. `ComposedAnswer.stageIds` carries the chosen stages; an answer showing only
   a ladder is an answer.
 

@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 2,
+  "portal": "FIELD_REPOSITORY",
+  "generatedAt": "2026-11-18T02:00:01Z",
+  "stream": "transcripts",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "fr-t-2",
+  "hasMore": true,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "fr-media-1",
+      "revision": "0bcc09c0d7805131f7927c3182b694d0",
+      "updatedAt": "2026-11-17T12:00:00.000001Z",
+      "recordingId": "fr-rec-1",
+      "mediaType": "AUDIO",
+      "recordedAt": "2026-03-14T10:22:00+05:30",
+      "durationMs": 1832000,
+      "crafts": [
+        {
+          "id": "fr-craft-ajrakh",
+          "slug": "Kutch-Ajrakh",
+          "code": "ajrakh",
+          "name": "Ajrakh Print of Kutch"
+        }
+      ],
+      "workshop": {
+        "kind": "WORKSHOP",
+        "id": "fr-ws-1",
+        "code": null,
+        "title": "Ajrakh documentation visit",
+        "startsOn": "2026-03-12",
+        "endsOn": "2026-03-16",
+        "area": {
+          "state": "Gujarat",
+          "district": "Kachchh",
+          "stateLgd": 24,
+          "districtLgd": 449
+        }
+      },
+      "session": {
+        "id": "fr-ses-1",
+        "title": null,
+        "date": "2026-03-14",
+        "purpose": "FIRST_SITTING",
+        "questionnaire": {
+          "id": "fr-q-1",
+          "title": "Craft documentation questionnaire"
+        }
+      },
+      "topics": [
+        {
+          "sectionId": "fr-sec-c",
+          "sectionCode": "C",
+          "sectionTitle": "Process",
+          "questionId": "fr-qn-3",
+          "questionCode": "C-Q03",
+          "question": "How do you prepare the mordant paste?"
+        }
+      ],
+      "stage": null,
+      "record": null,
+      "area": {
+        "state": "Gujarat",
+        "district": "Kachchh",
+        "stateLgd": 24,
+        "districtLgd": 449
+      },
+      "people": [
+        {
+          "id": "fr-art-1",
+          "kind": "ARTISAN",
+          "name": "Asha Demo",
+          "localName": "આશા ડેમો",
+          "yearsInCraft": 31,
+          "area": {
+            "state": "Gujarat",
+            "district": "Kachchh",
+            "stateLgd": 24,
+            "districtLgd": 449
+          },
+          "samePersonIn": [
+            {
+              "portal": "DESIGNER",
+              "id": "dr-art-9"
+            }
+          ],
+          "mergedIds": [
+            "fr-art-old"
+          ]
+        },
+        {
+          "id": "fr-user-1",
+          "kind": "RESEARCHER",
+          "name": "Field Researcher Demo",
+          "localName": null,
+          "yearsInCraft": null,
+          "area": null,
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "speakers": [
+        {
+          "key": "speaker_0",
+          "label": "Asha",
+          "role": "ARTISAN",
+          "personId": "fr-art-1"
+        },
+        {
+          "key": "speaker_1",
+          "label": "Interviewer",
+          "role": "RESEARCHER",
+          "personId": "fr-user-1"
+        },
+        {
+          "key": "speaker_2",
+          "label": "Speaker 3",
+          "role": null,
+          "personId": null
+        }
+      ],
+      "transcript": {
+        "source": "TURNS",
+        "version": 2,
+        "languages": [
+          "gu",
+          "hi"
+        ],
+        "detectedLanguage": "gu",
+        "segments": [
+          {
+            "id": "fr-turn-1",
+            "position": 0,
+            "speakerKey": "speaker_1",
+            "startMs": 0,
+            "endMs": 6100,
+            "language": "hi",
+            "text": "आप फिटकरी का लेप कैसे बनाते हैं?",
+            "textSource": "EDITED",
+            "english": "How do you prepare the mordant?",
+            "englishSource": "EDITED",
+            "scrubbed": []
+          },
+          {
+            "id": "fr-turn-2",
+            "position": 1,
+            "speakerKey": "speaker_0",
+            "startMs": 6400,
+            "endMs": 33000,
+            "language": "gu",
+            "text": "અમે ફટકડીને આમલીના બીજ સાથે વાટીએ છીએ અને લેપ આખી રાત રહેવો જોઈએ.",
+            "textSource": "MACHINE",
+            "english": "We grind the alum with tamarind seed, and the paste must rest overnight. Call me on [number].",
+            "englishSource": "MACHINE",
+            "scrubbed": [
+              "NUMBER"
+            ]
+          },
+          {
+            "id": "fr-turn-3",
+            "position": 2,
+            "speakerKey": "speaker_0",
+            "startMs": 724000,
+            "endMs": 751000,
+            "language": "gu",
+            "text": "હા.",
+            "textSource": "EDITED",
+            "english": "Yes.",
+            "englishSource": "EDITED",
+            "scrubbed": []
+          },
+          {
+            "id": "fr-turn-4",
+            "position": 3,
+            "speakerKey": "speaker_2",
+            "startMs": 760000,
+            "endMs": 790000,
+            "language": "gu",
+            "text": "પાણી બદલાય તો રંગ પણ બદલાય છે, એવું અમારા દાદા કહેતા હતા.",
+            "textSource": "MACHINE",
+            "english": null,
+            "englishSource": null,
+            "scrubbed": []
+          }
+        ],
+        "english": null
+      },
+      "scrubbing": {
+        "version": 1,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 1
+          },
+          {
+            "kind": "PLACE",
+            "count": 0
+          }
+        ],
+        "nulled": [
+          "session.title"
+        ]
+      },
+      "extraFieldTheReaderIgnores": "kept for a later version"
+    },
+    {
+      "state": "GONE",
+      "id": "fr-media-0",
+      "updatedAt": "2026-11-17T12:00:00.000002Z",
+      "reason": "DELETED",
+      "successorId": null
+    }
+  ]
+}

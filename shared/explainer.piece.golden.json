@@ -96,5 +96,6 @@
   "createdAt": "2026-11-12T08:15:00Z",
   "staleSince": null,
   "supersededById": null,
-  "hiddenAt": null
+  "hiddenAt": null,
+  "readingStyle": null
 }

@@ -23,6 +23,7 @@ __all__ = [
     "PUBCHEM_RATE",
     "PubChemAdapter",
     "PubChemCompound",
+    "compound_url",
     "is_formula",
 ]
 
@@ -63,7 +64,7 @@ class PubChemCompound:
 
     @property
     def url(self) -> str:
-        return _compound_url(str(self.cid))
+        return compound_url(self.cid)
 
 
 class PubChemAdapter(HttpSourceAdapter):
@@ -75,6 +76,12 @@ class PubChemAdapter(HttpSourceAdapter):
             return []
         table = await self._properties(cids)
         return [_compound(table[cid]) for cid in cids if cid in table]
+
+    async def compound(self, cid: int) -> PubChemCompound | None:
+        if cid < 1:
+            raise InvalidInput(f"PubChem CID {cid} is not a record number")
+        row = (await self._properties([str(cid)])).get(str(cid))
+        return _compound(row) if row is not None else None
 
     async def conformer(self, cid: int) -> str | None:
         if cid < 1:
@@ -127,7 +134,7 @@ class PubChemAdapter(HttpSourceAdapter):
             adapter=self.name,
             tier=self.tier,
             source_type="COMPOUND_RECORD",
-            url=_compound_url(cid),
+            url=compound_url(cid),
             title=title_of(record.get("Title") or record.get("IUPACName")),
             retrieved_at=retrieved_at,
             licence=PUBCHEM_LICENCE,
@@ -226,7 +233,7 @@ def _compound(record: dict[str, Any]) -> PubChemCompound:
     )
 
 
-def _compound_url(cid: str) -> str:
+def compound_url(cid: int | str) -> str:
     return f"https://pubchem.ncbi.nlm.nih.gov/compound/{cid}"
 
 

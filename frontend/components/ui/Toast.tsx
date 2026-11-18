@@ -1,13 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Info, TriangleAlert, X, type LucideIcon } from "lucide-react";
+import { CheckCircle2, Info, OctagonAlert, TriangleAlert, X, type LucideIcon } from "lucide-react";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
-import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { cn } from "@/lib/utils";
-
-export type ToastTone = "info" | "success" | "error";
+export type ToastTone = "info" | "success" | "warning" | "error";
 
 export type ToastInput = {
   title: string;
@@ -17,7 +13,7 @@ export type ToastInput = {
   id?: string;
 };
 
-type ToastRecord = {
+export type ToastRecord = {
   id: string;
   title: string;
   description?: string;
@@ -32,13 +28,15 @@ type ToastContextValue = {
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
-const DEFAULT_DURATION = 5000;
 const MAX_VISIBLE = 3;
 
-const TONES: Record<ToastTone, { icon: LucideIcon; chip: string }> = {
-  info: { icon: Info, chip: "bg-purple-50 text-purple-700" },
-  success: { icon: CheckCircle2, chip: "bg-success-100 text-success-600" },
-  error: { icon: TriangleAlert, chip: "bg-error-100 text-red-800" }
+export const TOAST_DURATION: Record<ToastTone, number> = { info: 5000, success: 5000, warning: 8000, error: 0 };
+
+const TONES: Record<ToastTone, { icon: LucideIcon; tile: string }> = {
+  info: { icon: Info, tile: "bg-info-wash text-info" },
+  success: { icon: CheckCircle2, tile: "bg-success-wash text-success" },
+  warning: { icon: TriangleAlert, tile: "bg-warning-wash text-warning" },
+  error: { icon: OctagonAlert, tile: "bg-error-wash text-error" }
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -51,12 +49,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
   const toast = useCallback((input: ToastInput) => {
     counter.current += 1;
+    const tone = input.tone ?? "info";
     const record: ToastRecord = {
       id: input.id ?? `toast-${counter.current}`,
       title: input.title,
       description: input.description,
-      tone: input.tone ?? "info",
-      duration: input.duration ?? DEFAULT_DURATION
+      tone,
+      duration: input.duration ?? TOAST_DURATION[tone]
     };
     setToasts((current) => [...current.filter((item) => item.id !== record.id), record].slice(-MAX_VISIBLE));
     return record.id;
@@ -67,7 +66,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <ToastViewport toasts={toasts} onDismiss={dismiss} />
+      <div
+        aria-live="polite"
+        aria-atomic="false"
+        className="pointer-events-none fixed inset-x-4 z-toast flex flex-col items-center gap-2 sm:start-auto sm:end-4 sm:w-[min(24rem,calc(100vw-2rem))] sm:items-stretch"
+        style={{ bottom: "calc(var(--bottom-nav-h, 0px) + 0.75rem)" }}
+      >
+        {toasts.map((item) => (
+          <ToastCard key={item.id} toast={item} onDismiss={dismiss} />
+        ))}
+      </div>
     </ToastContext.Provider>
   );
 }
@@ -78,35 +86,7 @@ export function useToast() {
   return context;
 }
 
-function ToastViewport({ toasts, onDismiss }: { toasts: ToastRecord[]; onDismiss: (id: string) => void }) {
-  const reduce = useAppReducedMotion();
-
-  return (
-    <div
-      role="status"
-      aria-live="polite"
-      aria-atomic="false"
-      className="pointer-events-none fixed bottom-4 right-4 z-110 flex w-[min(24rem,calc(100vw-2rem))] flex-col gap-2"
-      style={{ bottom: "calc(var(--bottom-nav-h, 0px) + 0.75rem)" }}
-    >
-      <AnimatePresence initial={false}>
-        {toasts.map((item) => (
-          <ToastCard key={item.id} toast={item} reduce={reduce} onDismiss={onDismiss} />
-        ))}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-function ToastCard({
-  toast,
-  reduce,
-  onDismiss
-}: {
-  toast: ToastRecord;
-  reduce: boolean;
-  onDismiss: (id: string) => void;
-}) {
+export function ToastCard({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: string) => void }) {
   const [paused, setPaused] = useState(false);
   const remaining = useRef(toast.duration);
   const startedAt = useRef(0);
@@ -118,40 +98,32 @@ function ToastCard({
     const timer = setTimeout(dismiss, remaining.current);
     return () => {
       clearTimeout(timer);
-      remaining.current = Math.max(0, remaining.current - (Date.now() - startedAt.current));
+      remaining.current = Math.max(1, remaining.current - (Date.now() - startedAt.current));
     };
   }, [dismiss, paused]);
 
-  const { icon: Icon, chip } = TONES[toast.tone];
+  const { icon: Icon, tile } = TONES[toast.tone];
 
   return (
-    <motion.div
-      layout={reduce ? false : "position"}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }}
-      animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-      exit={reduce ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.97 }}
-      transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
+    <div
+      role={toast.tone === "error" ? "alert" : undefined}
+      data-tone={toast.tone}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
-      className="pointer-events-auto flex items-start gap-3 rounded-md border border-line-200 bg-card p-3 shadow-lg"
+      className="kv-toast motion-enter pointer-events-auto"
     >
-      <span aria-hidden className={cn("mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md", chip)}>
-        <Icon className="h-4 w-4" />
+      <span aria-hidden className={`kv-toast-tile ${tile}`}>
+        <Icon />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="font-display text-sm font-bold leading-snug text-ink-900">{toast.title}</p>
-        {toast.description ? <p className="mt-1 text-sm leading-5 text-ink-700">{toast.description}</p> : null}
+        <p className="font-ui text-ui font-semibold text-ink-1">{toast.title}</p>
+        {toast.description ? <p className="mt-0.5 font-ui text-ui font-normal text-ink-2">{toast.description}</p> : null}
       </div>
-      <button
-        type="button"
-        onClick={dismiss}
-        aria-label={`Dismiss: ${toast.title}`}
-        className="-m-1 shrink-0 rounded-md p-1 text-ink-300 transition hover:text-ink-700"
-      >
-        <X className="h-4 w-4" aria-hidden />
+      <button type="button" onClick={dismiss} aria-label={`Dismiss: ${toast.title}`} className="kv-close -mt-2.5 -me-2">
+        <X aria-hidden />
       </button>
-    </motion.div>
+    </div>
   );
 }

@@ -71,6 +71,7 @@ export async function fetchCraftSharedScience(slug: string): Promise<SharedScien
   return parseShape(sharedScienceShape, await apiFetch<unknown>(CRAFT_SHARED_SCIENCE_PATH(slug)));
 }
 
-export async function fetchExplainerQuiz(answerId: string): Promise<ExplainerQuiz> {
-  return parseShape(explainerQuizShape, await apiFetch<unknown>(answerQuizPath(answerId)));
+export async function fetchExplainerQuiz(answerId: string): Promise<ExplainerQuiz | null> {
+  const body = await apiFetch<unknown>(answerQuizPath(answerId));
+  return body === undefined ? null : parseShape(explainerQuizShape, body);
 }

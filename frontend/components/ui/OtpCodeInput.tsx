@@ -153,18 +153,14 @@ export const OtpCodeInput = forwardRef<OtpCodeInputHandle, OtpCodeInputProps>(fu
                 const edit = typeInto(code, index, typed);
                 if (edit.accepted) commit(edit.value, edit.focus);
               }}
-              className={`h-14 w-11 min-w-0 rounded-md border bg-card text-center font-display text-2xl font-semibold tabular-nums text-ink-900 outline-hidden transition-colors sm:h-16 sm:w-13 sm:text-3xl ${
-                error
-                  ? "border-error-600 ring-4 ring-error-600/15"
-                  : "border-line-200 focus:border-purple-600 focus:ring-4 focus:ring-purple-600/15"
-              } disabled:cursor-not-allowed disabled:opacity-60`}
+              className="code-box"
             />
           );
         })}
       </div>
       {name ? <input type="hidden" name={name} value={code} /> : null}
       {hint ? (
-        <p id={hintId} className={`text-xs leading-5 ${error ? "text-error-600" : "text-ink-500"}`}>
+        <p id={hintId} className={`text-label ${error ? "text-error" : "text-ink-3"}`}>
           {hint}
         </p>
       ) : null}

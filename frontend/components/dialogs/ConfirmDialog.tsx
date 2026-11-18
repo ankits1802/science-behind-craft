@@ -1,6 +1,5 @@
 "use client";
 
-import { AlertTriangle, HelpCircle, Trash2 } from "lucide-react";
 import {
   createContext,
   useCallback,
@@ -12,8 +11,8 @@ import {
   type ReactNode
 } from "react";
 
-import { DANGER_BUTTON_CLASS, FieldDialog, type DialogTone } from "@/components/dialogs/FieldDialog";
-import { cn } from "@/lib/utils";
+import { FieldDialog, type DialogTone } from "@/components/dialogs/FieldDialog";
+import { Button } from "@/components/ui/button";
 
 export type ConfirmOptions = {
   title: string;
@@ -22,12 +21,6 @@ export type ConfirmOptions = {
   confirmLabel?: string;
   cancelLabel?: string;
   tone?: DialogTone;
-};
-
-const TONE_ICON: Record<DialogTone, ReactNode> = {
-  neutral: <HelpCircle className="h-4 w-4" />,
-  warning: <AlertTriangle className="h-4 w-4" />,
-  danger: <Trash2 className="h-4 w-4" />
 };
 
 export function ConfirmDialog({
@@ -57,29 +50,22 @@ export function ConfirmDialog({
       onClose={onCancel}
       role={tone === "neutral" ? "dialog" : "alertdialog"}
       tone={tone}
-      icon={TONE_ICON[tone]}
       busy={busy}
       title={title}
       description={body}
       initialFocusRef={destructive ? cancelRef : confirmRef}
       footer={
         <>
-          <button type="button" ref={cancelRef} className="field-button-secondary" disabled={busy} onClick={onCancel}>
+          <Button ref={cancelRef} variant="quiet" disabled={busy} onClick={onCancel}>
             {cancelLabel}
-          </button>
-          <button
-            type="button"
-            ref={confirmRef}
-            className={cn(destructive ? DANGER_BUTTON_CLASS : "field-button")}
-            disabled={busy}
-            onClick={onConfirm}
-          >
-            {busy ? "Working…" : confirmLabel}
-          </button>
+          </Button>
+          <Button ref={confirmRef} variant={destructive ? "destroy" : "primary"} data-danger={destructive ? "" : undefined} busy={busy} busyLabel="Working" onClick={onConfirm}>
+            {confirmLabel}
+          </Button>
         </>
       }
     >
-      {note ? <p className="mt-2 text-sm leading-6 text-ink-500">{note}</p> : null}
+      {note ? <p className="mt-2 font-ui text-ui font-normal text-ink-3">{note}</p> : null}
     </FieldDialog>
   );
 }

@@ -1,5 +1,5 @@
 import { apiFetch, buildQuery } from "@/lib/api";
-import { assignableRoles, canChangeRoles, canManageUser, canSuspendUsers } from "@/lib/permissions";
+import { assignableRoles, canChangeRoles, canConfirmGuardianConsent, canManageUser, canSuspendUsers } from "@/lib/permissions";
 import type { PageResult, User, UserRole } from "@/lib/types";
 
 export const USERS_PAGE_SIZE = 20;
@@ -35,6 +35,27 @@ export function suspendUser(userId: string): Promise<User> {
 
 export function reactivateUser(userId: string): Promise<User> {
   return apiFetch<User>(`/users/${encodeURIComponent(userId)}/restore`, { method: "POST" });
+}
+
+export const GUARDIAN_STATEMENT_VERSION = "2026-11-18";
+
+export const GUARDIAN_STATEMENT =
+  "If this student is under 18, their parent or guardian has agreed to their using KalaVigyan, and our institution holds that agreement.";
+
+export function guardianConsentMissing(user: User): boolean {
+  return user.guardianConsent === "NOT_CONFIRMED";
+}
+
+export function offersGuardianConfirmation(viewer: User | null | undefined, target: User): boolean {
+  return Boolean(viewer) && viewer?.id !== target.id && canConfirmGuardianConsent(viewer) && canManageUser(viewer, target) && guardianConsentMissing(target);
+}
+
+export async function confirmGuardianConsent(target: User): Promise<User> {
+  await apiFetch<{ userId: string; confirmedAt: string }>(`/users/${encodeURIComponent(target.id)}/guardian-consent`, {
+    method: "POST",
+    body: JSON.stringify({ affirmed: true, noticeVersion: GUARDIAN_STATEMENT_VERSION })
+  });
+  return { ...target, guardianConsent: "CONFIRMED" };
 }
 
 export type RowOffers = {

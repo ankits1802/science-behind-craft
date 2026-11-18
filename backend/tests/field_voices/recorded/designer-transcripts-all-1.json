@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "portal": "DESIGNER",
+  "generatedAt": "2026-11-18T02:00:01Z",
+  "stream": "transcripts",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "dr-t-1",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "dr-media-1",
+      "revision": "7223bb79552a0aa7247fa79b85dacb12",
+      "updatedAt": "2026-11-17T13:00:00.000001Z",
+      "recordingId": null,
+      "mediaType": "AUDIO",
+      "recordedAt": "2026-06-24T15:10:00+05:30",
+      "durationMs": 240000,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-12",
+        "code": "DW-RJ-0012",
+        "title": null,
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "session": null,
+      "topics": [],
+      "stage": {
+        "key": "PROTOTYPE_DEVELOPMENT",
+        "title": "Prototype Development",
+        "entity": "prototype",
+        "entityLabel": "Prototypes",
+        "rowId": "dr-row-5",
+        "rowLabel": "Indigo dabu table runner",
+        "field": "audioNarration",
+        "fieldLabel": "Audio narration"
+      },
+      "record": null,
+      "area": {
+        "state": "Rajasthan",
+        "district": "Jaipur",
+        "stateLgd": 8,
+        "districtLgd": 102
+      },
+      "people": [
+        {
+          "id": "dr-user-7",
+          "kind": "DESIGNER",
+          "name": "Meera Demo",
+          "localName": null,
+          "yearsInCraft": null,
+          "area": null,
+          "samePersonIn": [],
+          "mergedIds": []
+        },
+        {
+          "id": "dr-art-9",
+          "kind": "ARTISAN",
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [
+            {
+              "portal": "FIELD_REPOSITORY",
+              "id": "fr-art-1"
+            }
+          ],
+          "mergedIds": []
+        }
+      ],
+      "speakers": [
+        {
+          "key": "speaker_0",
+          "label": "Meera",
+          "role": "OTHER",
+          "personId": "dr-user-7"
+        },
+        {
+          "key": "speaker_1",
+          "label": "Ravi",
+          "role": "ARTISAN",
+          "personId": "dr-art-9"
+        }
+      ],
+      "transcript": {
+        "source": "TURNS",
+        "version": 1,
+        "languages": [
+          "hi"
+        ],
+        "detectedLanguage": "hi",
+        "segments": [
+          {
+            "id": "dr-turn-1",
+            "position": 0,
+            "speakerKey": "speaker_0",
+            "startMs": 0,
+            "endMs": 20000,
+            "language": "en",
+            "text": "We kept the indigo lighter on the second prototype so the dabu lines stay crisp.",
+            "textSource": "EDITED",
+            "english": "We kept the indigo lighter on the second prototype so the dabu lines stay crisp.",
+            "englishSource": "ORIGINAL",
+            "scrubbed": []
+          },
+          {
+            "id": "dr-turn-2",
+            "position": 1,
+            "speakerKey": "speaker_1",
+            "startMs": 21000,
+            "endMs": 61000,
+            "language": "hi",
+            "text": "मिट्टी का लेप दो दिन सूखना चाहिए, नहीं तो नील अंदर रिस जाता है और रेखा फैल जाती है।",
+            "textSource": "MACHINE",
+            "english": "The mud paste must dry for two days, or the indigo seeps under and the line spreads.",
+            "englishSource": "MACHINE",
+            "scrubbed": []
+          }
+        ],
+        "english": null
+      },
+      "scrubbing": {
+        "version": 1,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          },
+          {
+            "kind": "PLACE",
+            "count": 0
+          }
+        ],
+        "nulled": [
+          "workshop.title"
+        ]
+      }
+    },
+    {
+      "state": "GONE",
+      "id": "dr-media-0",
+      "updatedAt": "2026-11-17T13:00:00.000002Z",
+      "reason": "REPLACED",
+      "successorId": "dr-media-1"
+    }
+  ]
+}

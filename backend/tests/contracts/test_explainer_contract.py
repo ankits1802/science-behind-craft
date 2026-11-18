@@ -30,6 +30,8 @@ from .explainer_golden import (
 )
 from .golden import reproduces
 
+BLOCK_VERSIONS = {"artisan_voice": 2}
+
 
 def document() -> dict[str, Any]:
     return copy.deepcopy(golden_json(DOCUMENT))
@@ -121,7 +123,7 @@ def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
     assert BLOCK_PHASES["designs"] == "DEFERRED"
     for kind, model in BLOCK_MODELS.items():
         assert model.model_fields["kind"].annotation.__args__ == (kind,)
-        assert model.model_fields["version"].annotation.__args__ == (1,)
+        assert model.model_fields["version"].annotation.__args__ == (BLOCK_VERSIONS.get(kind, 1),)
         assert list(model.model_fields)[:4] == ["id", "kind", "version", "reuse"]
 
 

@@ -20,6 +20,16 @@ of this page describes the call as it runs when the setting is true. Turning it 
 craft page's Talk dock only: the mic on `/ask` is dictation (decision 0036), and no call starts
 from there. Listening to finished explainers is Listen, below.
 
+**Session purpose (decision 0083).** `VoiceSession.purpose` is `ASK` for this call and `ARTISAN`
+for an artisan's conversation about their craft (`docs/contracts/roles-and-contributions.md`
+section 7). Artisan conversations reuse the session row, binding, relay rules, seconds ledger,
+adapter and cipher, under their own switch `ARTISAN_CONVERSATION_ENABLED` and their own routes
+under `/api/artisan`; neither switch turns the other on. Their agent is a second one
+(`ELEVENLABS_ARTISAN_AGENT_ID`, `provision_voice_agent.py --artisan`), bound with the nonce
+context `kalavigyan-artisan/v1`. The custom-LLM route below refuses an `ARTISAN` row, and the
+artisan route refuses an `ASK` row, with the same 401. A conversation's transcript is kept on
+`ArtisanConversation`, so `VoiceSession.transcriptEnc` stays null for it.
+
 ## ElevenLabs facts this contract rests on
 
 Verified on the official documentation (2026-11-16):
@@ -208,8 +218,11 @@ recorded at the session's `audioBitsPerSecond` and sent as soon as it reaches ni
 
 ## Quota in seconds
 
-- `VOICE_SECONDS` per day by role: student 600, researcher and professor 1800, master admin
-  unlimited (`core/roles.DAILY_ALLOWANCES`, PLAN 12), counted on Asia/Kolkata days.
+- `VOICE_SECONDS` per day by role (`core/roles.DAILY_ALLOWANCES`): unlimited for every role for
+  now (decision 0093), so `remainingSeconds` is `null` and no call, turn or Listen press is refused
+  for time; the seconds are still written to `QuotaLedger` on Asia/Kolkata days and shown on Usage.
+  A table set again there (PLAN 12 had student 600, researcher and professor 1800) is enforced by
+  the same code.
 - `AGENT`: when the token is minted the session holds its whole `maxDurationSeconds` in
   `QuotaLedger` under `voice:<sessionId>:hold`; custom-LLM turns write nothing more. Reconciliation
   (the daily upkeep, and the user's next start) reads `metadata.call_duration_secs` and settles both
@@ -300,6 +313,6 @@ sound effects through the media router (`docs/contracts/media.md`), not narratio
 
 ## Secrets (names only)
 
-`ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `VOICE_LLM_BEARER` (rotated quarterly),
-`VOICE_SESSION_HMAC_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`; each in GitHub Actions secrets and the box
-`.env` (PLAN 15).
+`ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `ELEVENLABS_ARTISAN_AGENT_ID` (decision 0083),
+`VOICE_LLM_BEARER` (rotated quarterly), `VOICE_SESSION_HMAC_KEY`, `TRANSCRIPT_ENCRYPTION_KEY`; each
+in GitHub Actions secrets and the box `.env` (PLAN 15).

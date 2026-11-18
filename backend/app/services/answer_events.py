@@ -24,6 +24,7 @@ __all__ = [
     "StreamEvent",
     "cited_claims",
     "composed_answer_events",
+    "joined_claims",
     "stored_follow_ups",
 ]
 
@@ -49,6 +50,12 @@ def cited_claims(views: Sequence[ClaimView], sources: Mapping[uuid.UUID, Source]
         views={view.id: view for view in views},
         sources={str(source_id): source_ref(source) for source_id, source in sources.items()},
     )
+
+
+def joined_claims(*found: CitedClaims) -> CitedClaims:
+    views = {claim_id: view for cited in found for claim_id, view in cited.views.items()}
+    sources = {source_id: ref for cited in found for source_id, ref in cited.sources.items()}
+    return CitedClaims(views=views, sources=sources)
 
 
 class _Answer:

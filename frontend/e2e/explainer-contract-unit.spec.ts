@@ -107,14 +107,15 @@ test("the lede golden parses as the backend writes it, the lede first and its st
   expect(types.filter((type) => type === "section_heading").length).toBe(3);
 });
 
-test("a lede shows only built figures and answers in two or three sentences", () => {
+test("a lede carries a built figure, never a section, and answers in two or three sentences", () => {
   const lede = golden("explainer.lede.golden.json").lede as Record<string, unknown>;
   const MORDANT_BATH = mordantBath((lede.sentences as unknown[])[0]);
   expect(parseShape(BLOCK_SHAPES.mordant_bath, MORDANT_BATH)).toEqual(MORDANT_BATH);
-  expect(() => parseShape(ledeBlockShape, { ...lede, figure: MORDANT_BATH })).toThrow(ShapeError);
+  expect(parseShape(ledeBlockShape, { ...lede, figure: MORDANT_BATH }).figure).toEqual(MORDANT_BATH);
+  expect(() => parseShape(ledeBlockShape, { ...lede, figure: { ...MORDANT_BATH, kind: "prose" } })).toThrow(ShapeError);
   expect(() => parseShape(explainerBlockShape, { ...MORDANT_BATH, id: "s1.b2" })).toThrow(ShapeError);
   expect(() => parseShape(ledeBlockShape, { ...lede, sentences: (lede.sentences as unknown[]).slice(0, 1) })).toThrow(ShapeError);
-  expect(() => parseExplainerStreamBlock(`event: lede\ndata: ${JSON.stringify({ block: { ...lede, figure: MORDANT_BATH } })}`)).toThrow(ShapeError);
+  expect(parseExplainerStreamBlock(`event: lede\ndata: ${JSON.stringify({ block: { ...lede, figure: MORDANT_BATH } })}`)?.type).toBe("lede");
   const heading = parseExplainerStreamBlock('event: section_heading\ndata: {"sectionId":"s1","title":"Alum holds the red"}');
   expect(heading).toEqual({ type: "section_heading", data: { sectionId: "s1", title: "Alum holds the red" } });
 });

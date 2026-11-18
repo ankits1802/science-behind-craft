@@ -31,6 +31,7 @@ from .source_merge import SourceMerge
 __all__ = [
     "ANCHORED_KINDS",
     "COVERED_NOTE",
+    "ONCE_PER_ANSWER_KINDS",
     "RESTATING_KINDS",
     "SINGLE_BLOCK_KINDS",
     "ClaimLedger",
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 COVERED_NOTE = "Already covered in this answer."
 EXPERT_KIND = "expert_view"
+SIMULATION_KIND = "simulation"
 SINGLE_BLOCK_KINDS = frozenset({"prose", "process_ladder", "images"})
+ONCE_PER_ANSWER_KINDS = frozenset({"region_story", "seasons", "supply_map", "zoom_story"})
 
 RESTATING_KINDS: Mapping[str, SentenceSpec] = MappingProxyType(
     {
@@ -79,8 +82,9 @@ class ClaimLedger:
         self._molecules: set[int] = set()
         self._concepts: set[str] = set()
         self._pictures: set[str] = set()
+        self._explained: set[str] = set()
         self._section_claims: dict[str, set[str]] = {}
-        self._region_story = False
+        self._once: set[str] = set()
 
     def admit(
         self, section_id: str, blocks: Sequence[Block], sources: Mapping[str, Mapping[str, Any]]
@@ -138,9 +142,9 @@ class ClaimLedger:
             return not _material_keys(payload) & self._materials
         if kind == "molecule_3d":
             return payload["pubchemCid"] not in self._molecules
-        if kind == "region_story":
-            return not self._region_story
-        return True
+        if kind == SIMULATION_KIND:
+            return fold(payload["concept"]) not in self._explained
+        return kind not in self._once
 
     def _without_repeats(self, kind: str, payload: Payload) -> Payload | None:
         if kind in RESTATING_KINDS:
@@ -230,12 +234,14 @@ class ClaimLedger:
             sentence.model_dump(mode="json", by_alias=True) for sentence in block.cited_sentences()
         )
         self._section_claims.setdefault(section_id, set()).update(block.cited_claim_ids())
+        if block.kind in ONCE_PER_ANSWER_KINDS:
+            self._once.add(block.kind)
         if block.kind == "material_card":
             self._materials.update(_material_keys(payload))
         elif block.kind == "molecule_3d":
             self._molecules.add(payload["pubchemCid"])
-        elif block.kind == "region_story":
-            self._region_story = True
+        elif block.kind == SIMULATION_KIND:
+            self._explained.add(fold(payload["concept"]))
         elif block.kind == "concept_graph":
             self._concepts.update(node["termKey"] for node in payload["nodes"])
         elif block.kind == "zoom_story":

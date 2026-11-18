@@ -71,8 +71,21 @@ test("every offered language's own name is detected as its script", () => {
   for (const entry of BACKEND_LANGUAGES) expect(scriptOf(entry.autonym), entry.code).toBe(entry.script);
 });
 
-test("every non-Latin script of the offered languages has a local Noto Sans face", () => {
+test("every non-Latin script of the offered languages has a local Noto Sans face and a reading face", () => {
   const fonts = read("frontend", "app", "scriptFonts.ts");
+  const reading = read("frontend", "app", "readingScriptFonts.ts");
+  const readingFiles: Record<string, string> = {
+    Deva: "noto-serif-devanagari-var.woff2",
+    Beng: "noto-serif-bengali-var.woff2",
+    Taml: "noto-serif-tamil-var.woff2",
+    Telu: "noto-serif-telugu-var.woff2",
+    Gujr: "noto-serif-gujarati-var.woff2",
+    Knda: "noto-serif-kannada-var.woff2",
+    Mlym: "noto-serif-malayalam-var.woff2",
+    Orya: "noto-serif-oriya-var.woff2",
+    Guru: "noto-serif-gurmukhi-var.woff2",
+    Arab: "noto-nastaliq-urdu-var.woff2"
+  };
   const files: Record<string, string> = {
     Deva: "noto-sans-devanagari-var.woff2",
     Beng: "noto-sans-bengali-var.woff2",
@@ -87,10 +100,11 @@ test("every non-Latin script of the offered languages has a local Noto Sans face
   };
   for (const script of new Set(BACKEND_LANGUAGES.map((entry) => entry.script).filter((script) => script !== "Latn"))) {
     expect(fonts, script).toContain(`src: "../fonts/${files[script]}"`);
-    expect(readFileSync(join(ROOT, "frontend", "fonts", files[script])).subarray(0, 4).toString("latin1"), script).toBe("wOF2");
+    expect(reading, script).toContain(`src: "../fonts/${readingFiles[script]}"`);
+    for (const file of [files[script], readingFiles[script]]) expect(readFileSync(join(ROOT, "frontend", "fonts", file)).subarray(0, 4).toString("latin1"), file).toBe("wOF2");
   }
-  expect(fonts.match(/preload: false/g)).toHaveLength(10);
-  expect(read("frontend", "app", "layout.tsx")).toContain("${SCRIPT_FONT_VARIABLES}");
+  for (const faces of [fonts, reading]) expect(faces.match(/preload: false/g)).toHaveLength(faces.match(/localFont\(/g)?.length ?? -1);
+  expect(read("frontend", "app", "layout.tsx")).toContain("${SCRIPT_FONT_VARIABLES} ${READING_SCRIPT_FONT_VARIABLES}");
 });
 
 test("the question's script picks the answer language", () => {

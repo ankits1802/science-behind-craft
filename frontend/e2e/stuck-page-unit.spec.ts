@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { answersScript, stuckStack, watchScript } from "./production/stuckPage";
 
+test.use({ trace: "off" });
+
 test("a page whose script never yields is caught, and its stack names the function that spins", async ({ page }) => {
   await page.setContent('<button type="button" onclick="setTimeout(function spinForever() { for (;;) {} }, 0)">Spin</button>');
   const watcher = await watchScript(page);

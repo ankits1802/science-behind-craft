@@ -32,7 +32,7 @@ import {
 } from "@/lib/regionView";
 import { parseShape, ShapeError } from "@/lib/shape";
 
-import { registerPage } from "./craftPageFixture";
+import { emptyPage } from "./craftPageFixture";
 
 const SHARED = join(__dirname, "..", "..", "shared");
 
@@ -210,7 +210,7 @@ test("each dataset lists its distinct methods once", () => {
 test("a location's source is numbered and linked even when no claim cites it", () => {
   const body = region();
   const [place] = body.places;
-  const page: CraftPage = registerPage();
+  const page: CraftPage = emptyPage();
   expect([page.claims.length, page.sources.length]).toEqual([0, 0]);
   const numbers = pageSourceNumbers(page, body.sources);
   const byId = pageSourcesById(page, body.sources);

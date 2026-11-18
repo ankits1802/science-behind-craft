@@ -4,6 +4,7 @@
     "ADMIN": 50,
     "PROFESSOR": 40,
     "RESEARCHER": 30,
+    "ARTISAN": 18,
     "STUDENT": 15
   },
   "labels": {
@@ -11,6 +12,7 @@
     "ADMIN": "Admin",
     "PROFESSOR": "Professor",
     "RESEARCHER": "Researcher",
+    "ARTISAN": "Artisan",
     "STUDENT": "Student"
   }
 }

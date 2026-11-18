@@ -89,9 +89,13 @@ attribution; only short quoted passages are stored, with a link back.
 | Adapter | Service | Licence and attribution |
 |---|---|---|
 | `wikipedia` | Wikipedia Action API (English and Indian-language wikis) | CC BY-SA 4.0, read live from each wiki's rightsinfo; attributed to "Wikipedia contributors" with the article title and revision |
-| `wikidata` | Wikidata Action API and query service (SPARQL) | Structured data CC0 1.0; cited by item id and revision; an item's coordinate location (P625) places a supply origin, linked by its item id (decision 0047) |
+| `wikidata` | Wikidata Action API and query service (SPARQL) | Structured data CC0 1.0; cited by item id and revision; an item's coordinate location (P625) places a supply origin, linked by its item id (decision 0047), and a craft page's timeline place, stored in `WikidataPoint` by the chapters job for a dossier place's item (decision 0098) |
 | `pubchem` | PubChem PUG REST and PUG View, National Library of Medicine | Compound properties: NCBI places no restrictions (https://www.ncbi.nlm.nih.gov/home/about/policies/). GHS hazards keep the reporting source's terms; for ECHA, non-commercial reuse with "Source: European Chemicals Agency, http://echa.europa.eu/" (https://echa.europa.eu/web/guest/legal-notice) |
 | `wikimedia_commons` | Wikimedia Commons file metadata | Each file's own licence (short name and URL) and author, attributed "author, licence, via Wikimedia Commons" |
+
+District other names (`backend/app/data/district_other_names.json`, decision 0098): other names
+under which sources name an LGD district, each checked against the register's name on load. Kutch
+for Kachchh (449) follows Wikidata's Kutch district item (Q1063417, CC0 1.0), which carries both.
 
 ## Seeded reference passages (science engine)
 
@@ -154,6 +158,21 @@ which travels with it.
 | reveal.js 6.0.2 (`reveal.js`, `reveal.css`, `LICENSE.txt`) | the npm package `reveal.js@6.0.2` | MIT; the header and the full licence text are kept in every HTML deck |
 | APA 7 CSL style (`csl/apa.csl`, id `http://www.zotero.org/styles/apa`, updated 2026-02-07) | citation-style-language/styles, commit `3c6698d7` (2026-10-02) | CC BY-SA 3.0 (its `rights` element); XML comments removed, nothing else changed |
 | Noto Sans, Noto Sans Devanagari, Bengali, Tamil, Telugu, Gujarati, Kannada, Malayalam, Oriya, Gurmukhi and Noto Naskh Arabic, Regular and Bold (unhinted TTF, `fonts/`) | notofonts/notofonts.github.io | SIL Open Font License 1.1 (`fonts/OFL.txt`); embedded as subsets in PDFs |
+
+## Web fonts (decision 0092)
+
+The faces of the design system, self-hosted in `frontend/fonts/` through `next/font/local`
+(`app/latinFonts.ts`, `app/scriptFonts.ts`, `app/readingScriptFonts.ts`), fetched on
+2026-11-18. Every face is SIL Open Font License 1.1; each licence travels in
+`frontend/fonts/licences/`. Only the Plex Sans Latin-1 weights and the Newsreader roman core are
+preloaded; every other file loads when its `unicode-range` is used.
+
+| Faces | Source | Processing | Licence file |
+|---|---|---|---|
+| Newsreader, roman and italic (optical size 6 to 72) | google/fonts `ofl/newsreader`, commit `5bd87dfc` | weight limited to 300 to 600 and split into the `latin` (preloaded) and `latin-ext` ranges with fontTools 4.68; WOFF2. No Reserved Font Name | `newsreader.txt` |
+| IBM Plex Sans 400, 500, 600 and italic 400; IBM Plex Mono 400 and 500 | IBM/plex `packages/plex-sans` and `packages/plex-mono`, `fonts/split/woff2`, commit `bc6a7e4b` | IBM's own Latin1, Latin2, Latin3 and Pi subsets, unmodified, because the licence reserves the name "Plex" | `ibm-plex.txt` (line endings made LF) |
+| Noto Serif Devanagari, Bengali, Gujarati, Gurmukhi, Kannada, Malayalam, Oriya, Tamil and Telugu; Noto Nastaliq Urdu; Noto Naskh Arabic; Noto Sans Meetei Mayek and Ol Chiki | google/fonts `ofl/<family>`, commit `5bd87dfc` | width pinned to 100, weight limited to 400 to 600, subset to the script's `unicode-range` with every layout feature kept; WOFF2 | `noto-<script>.txt`, `noto-nastaliq.txt`, `noto-naskh-arabic.txt` |
+| Noto Sans Devanagari, Bengali, Gujarati, Gurmukhi, Kannada, Malayalam, Oriya, Tamil, Telugu and Arabic (the interface faces) | google/fonts, earlier | unchanged | `noto-<script>.txt`, `noto-arabic.txt` |
 
 ## Generated media
 

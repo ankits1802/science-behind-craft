@@ -32,6 +32,7 @@ __all__ = [
     "ANSWER_LANGUAGES",
     "ANSWER_LANGUAGE_SPECS",
     "CANONICAL_LANGUAGE",
+    "CONCEPT_TYPE_DISCIPLINES",
     "EVIDENCE_LABELS",
     "FACT_LEVELS",
     "LABEL_LEVELS",
@@ -69,6 +70,25 @@ __all__ = [
     "text_direction",
     "weakest_level",
 ]
+
+CONCEPT_TYPE_DISCIPLINES: Mapping[str, str] = MappingProxyType(
+    {
+        "TRADITION": "OVERVIEW",
+        "HISTORICAL_CONTEXT": "HISTORY",
+        "DESIGN_PRINCIPLE": "DESIGN",
+        "PROCESS_STAGE": "PROCESS",
+        "ARTISAN_ACTION": "PROCESS",
+        "ARTISAN_DECISION": "PROCESS",
+        "SENSORY_CUE": "PROCESS",
+        "MATERIAL": "MATERIALS",
+        "TOOL": "MATERIALS",
+        "PROPERTY": "MATERIALS",
+        "MECHANISM": "CHEMISTRY",
+        "EXPLANATION": "CHEMISTRY",
+        "CHANGE": "CHEMISTRY",
+        "ENVIRONMENTAL_CONDITION": "GEOGRAPHY",
+    }
+)
 
 STORED_TIERS = ("T0", "T1", "T2")
 RETRIEVAL_TIERS = (*STORED_TIERS, *LIVE_TIERS)

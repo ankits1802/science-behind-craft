@@ -90,10 +90,12 @@ def test_past_the_cap_the_reactions_the_section_cites_are_kept_in_process_order(
     )
     crowded = dataclasses.replace(records, reactions=(*copies, lake))
     plain = reaction_player(crowded, block_id="s4.b2")
-    assert [step.reaction_id for step in plain.steps] == [uuid.UUID(int=n) for n in range(1, 9)]
+    assert [step.reaction_id for step in plain.steps] == [
+        uuid.UUID(int=n) for n in range(1, REACTION_STEPS_MAX + 1)
+    ]
     alizarin_claim = lake.citations[0][0]
     cited = reaction_player(crowded, block_id="s4.b2", cited_claim_ids={str(alizarin_claim)})
     assert [step.reaction_id for step in cited.steps] == [
-        *(uuid.UUID(int=n) for n in range(1, 8)),
+        *(uuid.UUID(int=n) for n in range(1, REACTION_STEPS_MAX)),
         ALIZARIN_LAKE,
     ]

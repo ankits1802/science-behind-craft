@@ -122,7 +122,9 @@ test("a GI record shows its status, registry facts, proprietors and cited senten
   expect(text(html)).toContain(ajrakhMarket().gi!.sentences[0].text);
   expect(html).not.toContain('data-testid="gi-imitation"');
   expect(html).not.toContain('data-testid="price-range"');
-  expect(html.match(/data-testid="citation-chip"/g)).toHaveLength(2);
+  const clusters = attribute(html, "citation-chip", "data-numbers");
+  expect(clusters).toHaveLength(ajrakhMarket().gi!.sentences.length);
+  expect(clusters.flatMap((numbers) => numbers.split(","))).toHaveLength(2);
 });
 
 test("signs of imitation stand apart, and a certificate is listed when the registry states one", () => {
@@ -194,7 +196,7 @@ test("trends are grouped by variable in a fixed order, and groundwater is shown 
 });
 
 test("significance is the backend's threshold, and the fixture's trend agrees with it", () => {
-  const insight = readRepo("backend", "app", "research", "blocks_insight.py");
+  const insight = readRepo("backend", "app", "research", "blocks_climate.py");
   expect(Number(/^TREND_SIGNIFICANCE = ([\d.]+)$/m.exec(insight)?.[1])).toBe(TREND_SIGNIFICANCE);
   for (const trend of climate().trends) expect(trend.significant).toBe(trend.pValue < TREND_SIGNIFICANCE);
 });

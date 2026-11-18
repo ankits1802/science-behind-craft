@@ -5,7 +5,8 @@ from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from sqlalchemy import update
+from sqlalchemy import func, literal, update
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
@@ -37,6 +38,7 @@ from app.science.records import ProcessRecords
 from . import knowledge_view
 from .answer_events import CitedClaims, cited_claims
 from .answer_lede import LedeTools
+from .answer_models import AnswerModels
 from .answer_sections import ClaimsOf
 from .answer_translation import AnswerTranslation
 from .answering import AnswerAsk, AnswerPipeline
@@ -46,21 +48,26 @@ from .craft_process import process_records
 from .craft_resolver import CraftIndexStore, DatabaseCraftResolver
 from .explainer_history import StaleVersion
 from .explainer_payload import EXPLAINER_PAYLOAD_KEY, FIRST_VERSION, stored_payload
+from .field_voices_citations import writes_back
 from .live_sources import LiveSourcesStore
 from .piece_store import SqlPieceStore
 from .research_write_back import sentence_claim_ids, store_live_research
 from .section_enrichment import EnrichmentTools
 from .section_images import SectionImagesAsk, section_images
+from .signature_blocks import signature_figures
 from .term_glossary import glossary_entries
 from .translation_cache import SqlTranslationCache
 
 __all__ = [
     "EXPLAINER_PAYLOAD_KEY",
+    "READING_STYLE_KEY",
     "SqlAnswerStore",
     "build_answer_enrichment",
     "build_answer_pipeline",
     "build_answer_translation",
 ]
+
+READING_STYLE_KEY = "readingStyle"
 
 
 class SqlAnswerStore:
@@ -118,6 +125,7 @@ class SqlAnswerStore:
                     mode=depth_policy(understanding.depth).mode,
                     craftId=row.id if row else None,
                     understanding=understanding.model_dump(mode="json", by_alias=True),
+                    plan={READING_STYLE_KEY: ask.reading_style},
                 )
             )
             await session.commit()
@@ -126,7 +134,7 @@ class SqlAnswerStore:
     async def _kept(self, answer_id: uuid.UUID, pack: EvidencePack, composed: ComposedAnswer) -> ClaimsOf:
         async with self._sessions() as session:
             stored = None
-            if pack.documents:
+            if writes_back(pack):
                 stored = await store_live_research(
                     session, pack, composed, embed=self._embed, found_by="ANSWER", answer_id=answer_id
                 )
@@ -142,7 +150,9 @@ class SqlAnswerStore:
     ) -> None:
         tiers = dict.fromkeys(tier for section in plans.sections for tier in section.plan.tiers)
         values = {
-            "plan": plans.model_dump(mode="json", by_alias=True),
+            "plan": func.coalesce(Answer.plan, literal({}, JSONB)).op("||")(
+                literal(plans.model_dump(mode="json", by_alias=True), JSONB)
+            ),
             "claimIds": list(claim_ids),
             "tiersUsed": list(tiers),
         }
@@ -185,14 +195,12 @@ def build_answer_pipeline(
     sessions: async_sessionmaker[AsyncSession],
     index: CraftIndexStore,
     live: LiveSourcesStore,
-    plan_model: StructuredModel,
-    compose_model: StructuredModel,
-    builder_plan_model: StructuredModel,
-    builder_compose_model: StructuredModel,
-    translate_model: StructuredModel,
+    models: AnswerModels,
     embed: TextEmbedder,
     shield: ShieldedWork,
 ) -> AnswerPipeline:
+    retriever = SessionScopedSearch(sessions, embed=embed)
+
     async def resolve(query: CraftQuery) -> CraftResolution:
         async with sessions() as session:
             return await DatabaseCraftResolver(session, store=index, embed=embed).resolve(query)
@@ -201,24 +209,26 @@ def build_answer_pipeline(
         request: PlanRequest, progress: ResearchProgress, trail: ResearchTrail
     ) -> EvidencePack:
         planner = ResearchPlanner(
-            model=plan_model,
-            retriever=SessionScopedSearch(sessions, embed=embed),
+            model=models.plan,
+            retriever=retriever,
             sources=await live.get(sessions),
         )
         return await planner.research(request, progress=progress, trail=trail)
 
-    tools = BuilderTools(sessions, live, builder_plan_model, builder_compose_model)
-    composer = ModelComposer(model=compose_model)
+    tools = BuilderTools(
+        sessions, live, models.builder_plan, models.builder_compose, models.explainer, retriever=retriever
+    )
+    composer = ModelComposer(model=models.compose)
     return AnswerPipeline(
-        understand=ModelUnderstander(model=plan_model, resolve=resolve).understand,
+        understand=ModelUnderstander(model=models.plan, resolve=resolve).understand,
         research=research,
         compose=composer.compose,
         store=SqlAnswerStore(sessions, embed=embed, shield=shield),
-        translation=build_answer_translation(sessions, model=translate_model),
+        translation=build_answer_translation(sessions, model=models.translate),
         pieces=SqlPieceStore(sessions, embed=embed, shield=shield),
         enrichment=build_answer_enrichment(sessions, live),
         builders=BlockBuilders.from_registry(tools),
-        lede=LedeTools(compose=composer.lede),
+        lede=LedeTools(compose=composer.lede, figures=signature_figures(sessions)),
     )
 
 

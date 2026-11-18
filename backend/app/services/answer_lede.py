@@ -15,11 +15,12 @@ from app.research.composition import ComposeCandidate, ComposedLede, LedeRequest
 from app.research.crafts import CraftRef
 from app.research.depth import depth_policy
 from app.research.planning import OPEN_QUESTION_LEVEL
+from app.research.reading_style import ReadingStyle
 from app.research.sections import SectionSpec
 from app.research.understanding import Understanding
 from app.research.vocabulary import CANONICAL_LANGUAGE, LEVEL_ORDER
 
-from .answer_events import CitedClaims
+from .answer_events import CitedClaims, joined_claims
 from .answer_sections import SectionOutcome
 from .answer_translation import AnswerTranslation, english_question, translated_block
 from .claim_ledger import sentence_keys
@@ -28,6 +29,7 @@ from .knowledge_view import ClaimView
 from .piece_lookup import PieceLookup, ReusedSection
 from .section_blocks import BlockRefused, KeptSentence, lede_block
 from .section_enrichment import Enrichment
+from .signature_blocks import FiguredLede, SignatureFigures
 
 __all__ = [
     "HEADING_CLAIMS_MAX",
@@ -43,7 +45,6 @@ __all__ = [
     "SectionToHead",
     "SectionsShown",
     "early_opening",
-    "evidence_for",
     "late_opening",
     "lede_plan",
     "opening_lede",
@@ -73,6 +74,7 @@ class OpeningStore(Protocol):
 class LedeTools:
     compose: ComposeLede | None = None
     wait_seconds: float = LEDE_WAIT_SECONDS
+    figures: SignatureFigures | None = None
 
 
 @dataclass(frozen=True)
@@ -90,6 +92,7 @@ class LedeAsk:
     evidence: CitedClaims
     sections: tuple[SectionToHead, ...] = ()
     said: frozenset[str] = frozenset()
+    style: ReadingStyle | None = None
 
 
 @dataclass(frozen=True)
@@ -100,6 +103,7 @@ class LedePlan:
     heads: tuple[SectionToHead, ...] = ()
     reused: CitedClaims = field(default_factory=CitedClaims)
     english: str = ""
+    style: ReadingStyle | None = None
 
 
 @dataclass(frozen=True)
@@ -168,15 +172,20 @@ async def opening_lede(
 
 
 def lede_plan(
-    question: str, understanding: Understanding, untitled: Sequence[SectionSpec], lookup: PieceLookup
+    question: str,
+    understanding: Understanding,
+    untitled: Sequence[SectionSpec],
+    lookup: PieceLookup,
+    *,
+    style: ReadingStyle | None = None,
 ) -> LedePlan:
     reused = [(spec, lookup.reused[spec.discipline]) for spec in untitled if spec.discipline in lookup.reused]
     heads = tuple(
         SectionToHead(spec.id, spec.discipline, _claims_in_reading_order(section)) for spec, section in reused
     )
     mode = depth_policy(understanding.depth).mode
-    cited = evidence_for(*(section.cited for _, section in reused))
-    return LedePlan(question, understanding.craft, mode, heads, cited)
+    cited = joined_claims(*(section.cited for _, section in reused))
+    return LedePlan(question, understanding.craft, mode, heads, cited, style=style)
 
 
 async def early_opening(
@@ -186,7 +195,8 @@ async def early_opening(
         return Opening()
     english = await _english(plan, writing)
     found = await stored(plan.craft.slug, english, plan.mode) if plan.craft else CitedClaims()
-    ask = LedeAsk(plan.question, english, plan.craft, evidence_for(found, plan.reused), plan.heads)
+    evidence = joined_claims(found, plan.reused)
+    ask = LedeAsk(plan.question, english, plan.craft, evidence, plan.heads, style=plan.style)
     return await written_opening(ask, tools, writing)
 
 
@@ -196,7 +206,8 @@ async def late_opening(
     if tools.compose is None or not shown.claim_ids:
         return Opening()
     english = await _english(plan, writing)
-    ask = LedeAsk(plan.question, english, plan.craft, await cited(shown.claim_ids), said=shown.said)
+    evidence = await cited(shown.claim_ids)
+    ask = LedeAsk(plan.question, english, plan.craft, evidence, said=shown.said, style=plan.style)
     opening = await written_opening(ask, tools, writing)
     if opening.lede is not None:
         await writing.stream.lede(opening.lede, opening.sources)
@@ -214,11 +225,12 @@ async def written_opening(ask: LedeAsk, tools: LedeTools, writing: LedeWriting) 
     except AppError as error:
         logger.warning("the lede was not written: %s", error)
         return Opening(english=ask.english)
+    shown = await _shown_lede(ask, composed, writing, tools.figures)
     return Opening(
-        lede=await _shown_lede(ask, composed, writing),
+        lede=shown.lede if shown is not None else None,
         headings=dict(composed.headings),
         follow_ups=tuple(composed.follow_ups),
-        sources=ask.evidence.sources,
+        sources={**ask.evidence.sources, **(shown.sources if shown is not None else {})},
         english=ask.english,
     )
 
@@ -278,6 +290,7 @@ def _lede_request(ask: LedeAsk) -> LedeRequest:
         craft=ask.craft,
         candidates=[_candidate(view) for view in views],
         sections=sections,
+        style=ask.style,
     )
 
 
@@ -308,7 +321,9 @@ def _candidate(view: ClaimView) -> ComposeCandidate:
     )
 
 
-async def _shown_lede(ask: LedeAsk, composed: ComposedLede, writing: LedeWriting) -> LedeBlock | None:
+async def _shown_lede(
+    ask: LedeAsk, composed: ComposedLede, writing: LedeWriting, figures: SignatureFigures | None
+) -> FiguredLede | None:
     kept = [
         KeptSentence(s.text, tuple(s.claim_ids), tuple(s.evidence_ids), False)
         for s in composed.sentences
@@ -319,22 +334,26 @@ async def _shown_lede(ask: LedeAsk, composed: ComposedLede, writing: LedeWriting
     except BlockRefused as refused:
         logger.warning("%s", refused)
         return None
-    marked = writing.enrichment.marked(lede)
+    figured = await _figured(ask, writing.enrichment.marked(lede), writing, figures)
     if writing.stream.language == CANONICAL_LANGUAGE:
-        return marked
+        return figured
     await writing.stream.status("TRANSLATING")
     texts = {claim_id: view.text for claim_id, view in ask.evidence.views.items()}
-    payload = marked.model_dump(mode="json", by_alias=True)
+    payload = figured.lede.model_dump(mode="json", by_alias=True)
     shown = await translated_block(
         payload, language=writing.stream.language, translation=writing.translation, claim_texts=texts
     )
-    return LedeBlock.model_validate(shown)
+    return replace(figured, lede=LedeBlock.model_validate(shown))
 
 
-def evidence_for(*found: CitedClaims) -> CitedClaims:
-    views = {claim_id: view for cited in found for claim_id, view in cited.views.items()}
-    sources = {source_id: ref for cited in found for source_id, ref in cited.sources.items()}
-    return CitedClaims(views=views, sources=sources)
+async def _figured(
+    ask: LedeAsk, lede: LedeBlock, writing: LedeWriting, figures: SignatureFigures | None
+) -> FiguredLede:
+    if figures is None:
+        return FiguredLede(lede)
+    return await figures.figured(
+        lede, question=ask.english, craft=ask.craft, evidence=ask.evidence, enrichment=writing.enrichment
+    )
 
 
 def _claims_in_reading_order(section: ReusedSection) -> tuple[uuid.UUID, ...]:

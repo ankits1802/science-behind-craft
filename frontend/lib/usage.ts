@@ -57,8 +57,12 @@ export function formatCount(value: number | null | undefined): string {
   return Number.isFinite(value) ? (value as number).toLocaleString("en-IN") : "—";
 }
 
+export function monthlyCeiling(report: UsageReport): number | null {
+  return money(report.ceilingUsd);
+}
+
 export function ceilingShare(report: UsageReport): number | null {
-  const ceiling = money(report.ceilingUsd);
+  const ceiling = monthlyCeiling(report);
   const spent = money(report.spentThisMonthUsd);
   if (ceiling === null || spent === null || ceiling <= 0) return null;
   return (spent / ceiling) * 100;

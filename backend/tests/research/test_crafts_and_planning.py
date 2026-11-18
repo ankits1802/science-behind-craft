@@ -68,7 +68,7 @@ def test_mode_policies_follow_the_plan() -> None:
     assert summary == {
         "VERIFIED": (("T0", "T1"), True, 0, 0),
         "HYBRID": (("T0", "T1", "T2", "T3", "T4"), True, 4, 10),
-        "DEEP": (("T0", "T1", "T2", "T3", "T4"), False, 8, 20),
+        "DEEP": (("T0", "T1", "T2", "T3", "T4"), False, 24, 48),
     }
 
 

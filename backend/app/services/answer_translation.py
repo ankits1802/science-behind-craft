@@ -20,6 +20,7 @@ from app.research.vocabulary import CANONICAL_LANGUAGE
 
 __all__ = [
     "ENGLISH_SCRIPTS",
+    "TERM_SEGMENT_PREFIX",
     "AnswerTranslation",
     "Segment",
     "TranslationCache",
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 ENGLISH_SCRIPTS = frozenset({"Latn", "Zyyy"})
 QUESTION_KEY = "question"
+TERM_SEGMENT_PREFIX = "term:"
 
 
 class TranslationCache(Protocol):
@@ -78,7 +80,8 @@ async def translated_sentences(
     found = await translate_segments(
         _sentence_segments(sentences, claim_texts), language=language, translation=translation
     )
-    return [_translated_sentence(sentence, found) for sentence in sentences]
+    renderings = _renderings(found, _term_surfaces(sentences))
+    return [_translated_sentence(sentence, found, renderings) for sentence in sentences]
 
 
 async def translated_block(
@@ -94,7 +97,8 @@ async def translated_block(
     found = await translate_segments(
         _sentence_segments(sentences, claim_texts), language=language, translation=translation
     )
-    return with_payload_sentences(block, lambda sentence: _translated_sentence(sentence, found))
+    renderings = _renderings(found, _term_surfaces(sentences))
+    return with_payload_sentences(block, lambda sentence: _translated_sentence(sentence, found, renderings))
 
 
 async def translate_segments(
@@ -135,7 +139,18 @@ async def _translated(segments: Sequence[Segment], language: str, translator: Tr
 def _sentence_segments(
     sentences: Sequence[Mapping[str, Any]], claim_texts: Mapping[uuid.UUID, str]
 ) -> list[Segment]:
-    return [Segment(s["id"], s["text"], _claim_of(s, claim_texts)) for s in sentences]
+    shown = [Segment(s["id"], s["text"], _claim_of(s, claim_texts)) for s in sentences]
+    surfaces = _term_surfaces(sentences)
+    return [*shown, *(Segment(key, text) for text, key in surfaces.items())]
+
+
+def _term_surfaces(sentences: Sequence[Mapping[str, Any]]) -> dict[str, str]:
+    texts = dict.fromkeys(span["text"] for sentence in sentences for span in sentence.get("terms", ()))
+    return {text: f"{TERM_SEGMENT_PREFIX}{n}" for n, text in enumerate(texts, start=1)}
+
+
+def _renderings(found: Mapping[str, str], surfaces: Mapping[str, str]) -> dict[str, str]:
+    return {text: found[key] for text, key in surfaces.items() if key in found}
 
 
 def _claim_of(sentence: Mapping[str, Any], claim_texts: Mapping[uuid.UUID, str]) -> uuid.UUID | None:
@@ -146,11 +161,13 @@ def _claim_of(sentence: Mapping[str, Any], claim_texts: Mapping[uuid.UUID, str])
     return claim_id if claim_texts.get(claim_id) == sentence["text"] else None
 
 
-def _translated_sentence(sentence: Mapping[str, Any], found: Mapping[str, str]) -> dict[str, Any]:
+def _translated_sentence(
+    sentence: Mapping[str, Any], found: Mapping[str, str], renderings: Mapping[str, str]
+) -> dict[str, Any]:
     text = found.get(sentence["id"])
     if text is None:
         return dict(sentence)
     shown = {**sentence, "text": text, "translated": True, "original": sentence["text"]}
     if "terms" in sentence:
-        shown["terms"] = spans_still_shown(text, sentence["terms"])
+        shown["terms"] = spans_still_shown(text, sentence["terms"], renderings)
     return shown

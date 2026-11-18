@@ -1,78 +1,14 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type ReactNode,
-  type RefObject
-} from "react";
+import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 
-import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
+import { useModalFocus } from "@/components/hooks/useModalFocus";
 import { ActionGroup } from "@/components/ui/ActionGroup";
-import { lockPageScroll, unlockPageScroll } from "@/lib/scrollLock";
 import { cn } from "@/lib/utils";
 
 export type DialogTone = "neutral" | "danger" | "warning";
-
-const FOCUSABLE_SELECTOR = [
-  "a[href]",
-  "area[href]",
-  "button:not([disabled])",
-  "input:not([disabled]):not([type='hidden'])",
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  "iframe",
-  "audio[controls]",
-  "video[controls]",
-  "[contenteditable]:not([contenteditable='false'])",
-  "[tabindex]:not([tabindex='-1'])"
-].join(",");
-
-const dialogStack: string[] = [];
-
-let lastFocusedOutsideDialog: HTMLElement | null = null;
-let focusTrackerRefs = 0;
-
-function onDocumentFocusIn(event: FocusEvent) {
-  const target = event.target;
-  if (!(target instanceof HTMLElement)) return;
-  if (target === document.body) return;
-  if (target.closest("[data-field-dialog]")) return;
-  lastFocusedOutsideDialog = target;
-}
-
-function installFocusTracker() {
-  if (typeof document === "undefined") return;
-  focusTrackerRefs += 1;
-  if (focusTrackerRefs === 1) document.addEventListener("focusin", onDocumentFocusIn, true);
-}
-
-function releaseFocusTracker() {
-  if (typeof document === "undefined") return;
-  focusTrackerRefs = Math.max(0, focusTrackerRefs - 1);
-  if (focusTrackerRefs === 0) {
-    document.removeEventListener("focusin", onDocumentFocusIn, true);
-    lastFocusedOutsideDialog = null;
-  }
-}
-
-const TONE_RING: Record<DialogTone, string> = {
-  neutral: "border-line-200",
-  danger: "border-error-600/30",
-  warning: "border-amber-500/40"
-};
-
-const TONE_CHIP: Record<DialogTone, string> = {
-  neutral: "bg-purple-50 text-purple-700",
-  danger: "bg-error-100 text-red-800",
-  warning: "bg-amber-100 text-amber-800"
-};
 
 export type FieldDialogProps = {
   open: boolean;
@@ -83,7 +19,6 @@ export type FieldDialogProps = {
   footer?: ReactNode;
   role?: "dialog" | "alertdialog";
   tone?: DialogTone;
-  icon?: ReactNode;
   dismissible?: boolean;
   dismissOnBackdrop?: boolean;
   busy?: boolean;
@@ -94,6 +29,8 @@ export type FieldDialogProps = {
   zIndex?: number;
 };
 
+const DIALOG_LAYER = 90;
+
 export function FieldDialog({
   open,
   onClose,
@@ -103,7 +40,6 @@ export function FieldDialog({
   footer,
   role = "dialog",
   tone = "neutral",
-  icon,
   dismissible = true,
   dismissOnBackdrop,
   busy = false,
@@ -111,200 +47,69 @@ export function FieldDialog({
   className,
   surfaceClassName,
   showClose,
-  zIndex = 100
+  zIndex = DIALOG_LAYER
 }: FieldDialogProps) {
   const titleId = useId();
   const descriptionId = `${titleId}-desc`;
   const instanceId = useId();
   const panelRef = useRef<HTMLDivElement | null>(null);
-  const restoreFocusRef = useRef<HTMLElement | null>(null);
-  const reduce = useAppReducedMotion();
-
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    installFocusTracker();
-    return releaseFocusTracker;
-  }, []);
-
-  const callerSetsMaxWidth = /(?:^|\s)!?max-w-/.test(className ?? "");
-
   const canDismiss = dismissible && !busy;
   const backdropCloses = dismissOnBackdrop ?? (role !== "alertdialog" && tone !== "danger");
+  const callerSetsMaxWidth = /(?:^|\s)!?max-w-/.test(className ?? "");
+  const onPanelKeyDown = useModalFocus({ id: instanceId, open, panelRef, onEscape: onClose, canEscape: canDismiss, initialFocusRef });
 
-  const focusableNodes = useCallback(() => {
-    const panel = panelRef.current;
-    if (!panel) return [] as HTMLElement[];
-    return Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
-      (node) => node.offsetParent !== null || node === document.activeElement
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const active = document.activeElement;
-    restoreFocusRef.current =
-      active instanceof HTMLElement && active !== document.body ? active : lastFocusedOutsideDialog;
-    dialogStack.push(instanceId);
-    lockPageScroll();
-
-    return () => {
-      const index = dialogStack.lastIndexOf(instanceId);
-      if (index >= 0) dialogStack.splice(index, 1);
-      unlockPageScroll();
-      const target = restoreFocusRef.current;
-      restoreFocusRef.current = null;
-      if (target && document.contains(target)) {
-        requestAnimationFrame(() => target.focus({ preventScroll: true }));
-      }
-    };
-  }, [open, instanceId]);
-
-  useEffect(() => {
-    if (!open) return;
-    const frame = requestAnimationFrame(() => {
-      const preferred = initialFocusRef?.current;
-      if (preferred && document.contains(preferred)) {
-        preferred.focus({ preventScroll: true });
-        return;
-      }
-      const [first] = focusableNodes();
-      (first ?? panelRef.current)?.focus({ preventScroll: true });
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [open, initialFocusRef, focusableNodes]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Escape") return;
-      if (dialogStack[dialogStack.length - 1] !== instanceId) return;
-      if (!canDismiss) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      onClose();
-    }
-    document.addEventListener("keydown", onKeyDown, true);
-    return () => document.removeEventListener("keydown", onKeyDown, true);
-  }, [open, canDismiss, onClose, instanceId]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onFocusIn(event: FocusEvent) {
-      if (dialogStack[dialogStack.length - 1] !== instanceId) return;
-      const panel = panelRef.current;
-      if (!panel) return;
-      const target = event.target;
-      if (target instanceof Node && panel.contains(target)) return;
-      const [first] = focusableNodes();
-      (first ?? panel).focus({ preventScroll: true });
-    }
-    document.addEventListener("focusin", onFocusIn);
-    return () => document.removeEventListener("focusin", onFocusIn);
-  }, [open, instanceId, focusableNodes]);
-
-  function onPanelKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key !== "Tab") return;
-    const nodes = focusableNodes();
-    if (nodes.length === 0) {
-      event.preventDefault();
-      panelRef.current?.focus({ preventScroll: true });
-      return;
-    }
-    const first = nodes[0];
-    const last = nodes[nodes.length - 1];
-    const active = document.activeElement;
-    if (event.shiftKey && (active === first || active === panelRef.current)) {
-      event.preventDefault();
-      last.focus({ preventScroll: true });
-    } else if (!event.shiftKey && active === last) {
-      event.preventDefault();
-      first.focus({ preventScroll: true });
-    }
-  }
-
-  if (!mounted) return null;
+  if (!mounted || !open) return null;
 
   return createPortal(
-    <AnimatePresence>
-      {open ? (
-        <motion.div
-          key="field-dialog-overlay"
-          data-field-dialog-overlay=""
-          className="fixed inset-0 grid place-items-center overflow-y-auto bg-ink-900/45 p-4 backdrop-blur-[2px]"
-          style={{ zIndex, paddingRight: "calc(1rem + var(--nav-scroll-gutter, 0px))" }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: reduce ? 0 : 0.14 }}
-          onMouseDown={(event) => {
-            if (event.target !== event.currentTarget) return;
-            if (canDismiss && backdropCloses) onClose();
-          }}
-        >
-          <motion.div
-            ref={panelRef}
-            role={role}
-            aria-modal="true"
-            aria-labelledby={titleId}
-            aria-describedby={description ? descriptionId : undefined}
-            tabIndex={-1}
-            data-field-dialog=""
-            data-tone={tone}
-            onKeyDown={onPanelKeyDown}
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.98 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
-            transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
-            className={cn(
-              "relative w-full rounded-xl border p-5 shadow-lg outline-hidden",
-              callerSetsMaxWidth ? null : "max-w-md",
-              surfaceClassName ?? cn("bg-card", TONE_RING[tone]),
-              className
-            )}
-          >
-            <div className="flex items-start gap-3">
-              {icon ? (
-                <span aria-hidden className={cn("mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-md", TONE_CHIP[tone])}>
-                  {icon}
-                </span>
-              ) : null}
-              <div className="min-w-0 flex-1">
-                <h2 id={titleId} className="display-title text-lg leading-snug">
-                  {title}
-                </h2>
-                {description ? (
-                  <div id={descriptionId} className="mt-2 text-sm leading-6 text-ink-700">
-                    {description}
-                  </div>
-                ) : null}
-                {children}
+    <div
+      data-field-dialog-overlay=""
+      className="kv-overlay"
+      style={{ zIndex, paddingRight: "calc(1rem + var(--nav-scroll-gutter, 0px))" }}
+      onMouseDown={(event) => {
+        if (event.target !== event.currentTarget) return;
+        if (canDismiss && backdropCloses) onClose();
+      }}
+    >
+      <div
+        ref={panelRef}
+        role={role}
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={description ? descriptionId : undefined}
+        tabIndex={-1}
+        data-field-dialog=""
+        data-tone={tone}
+        onKeyDown={onPanelKeyDown}
+        className={cn("motion-enter relative outline-hidden", surfaceClassName ?? "kv-dialog", callerSetsMaxWidth || !surfaceClassName ? null : "max-w-md", className)}
+      >
+        <div className="flex items-start gap-3">
+          <div className="min-w-0 flex-1">
+            <h2 id={titleId} className="font-reading text-h3 text-ink-1">
+              {title}
+            </h2>
+            {description ? (
+              <div id={descriptionId} className="mt-2 font-ui text-ui-lg text-ink-2">
+                {description}
               </div>
-              {(showClose ?? true) && dismissible ? (
-                <button
-                  type="button"
-                  onClick={onClose}
-                  disabled={busy}
-                  aria-label="Close dialog"
-                  className="-m-1 shrink-0 rounded-md p-1 text-ink-300 transition hover:text-ink-700 disabled:opacity-40"
-                >
-                  <X className="h-4 w-4" aria-hidden />
-                </button>
-              ) : null}
-            </div>
-            {footer ? <ActionGroup align="end" className="mt-5">{footer}</ActionGroup> : null}
-          </motion.div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>,
+            ) : null}
+            {children}
+          </div>
+          {(showClose ?? true) && dismissible ? (
+            <button type="button" onClick={onClose} disabled={busy} aria-label="Close dialog" className="kv-close disabled:opacity-40">
+              <X aria-hidden />
+            </button>
+          ) : null}
+        </div>
+        {footer ? (
+          <ActionGroup align="end" className="mt-5">
+            {footer}
+          </ActionGroup>
+        ) : null}
+      </div>
+    </div>,
     document.body
   );
 }
-
-export const DANGER_BUTTON_CLASS =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-error-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-line-200 disabled:text-ink-500";

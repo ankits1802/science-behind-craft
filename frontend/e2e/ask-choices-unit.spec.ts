@@ -26,7 +26,7 @@ const EVERY_DEPTH = [
   { depth: "DETAILED", label: "Detailed" },
   { depth: "EXPERT", label: "Expert" }
 ];
-const PLAN_DEFAULTS: Record<string, Depth> = { STUDENT: "BASIC", RESEARCHER: "DETAILED", PROFESSOR: "DETAILED", ADMIN: "EXPERT", MASTER_ADMIN: "EXPERT" };
+const PLAN_DEFAULTS: Record<string, Depth> = { STUDENT: "BASIC", ARTISAN: "BASIC", RESEARCHER: "DETAILED", PROFESSOR: "DETAILED", ADMIN: "EXPERT", MASTER_ADMIN: "EXPERT" };
 
 function understood(crafts: Understood["crafts"], candidates: Understood["candidates"] = []): Understood {
   return { crafts, candidates, depth: "EXPERT", language: "en" };

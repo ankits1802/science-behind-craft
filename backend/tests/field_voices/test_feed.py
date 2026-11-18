@@ -1,259 +1,233 @@
-import hashlib
-from collections.abc import Callable
+import copy
 from typing import Any
 
 import pytest
 
 from app.core.errors import InvalidInput
-from app.services.field_voices_feed import (
-    parse_index,
-    parse_photographs_page,
-    parse_quotes_page,
-    snapshot_digest,
-)
+from app.services.field_voices_feed import Gone, Live, item_revision, parse_page, parse_state, stream_digest
+from app.services.field_voices_items import ImageItem, TranscriptItem
 from app.services.field_voices_never_sent import forbidden_keys
-from tests.field_voices.fixtures import AJRAKH, IMAGE_HOST, recorded
-from tests.portal_sync.fixtures import edited
-
-FR = "FIELD_REPOSITORY"
-COPY = "ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91.jpg"
+from tests.field_voices.fixtures import DR, FR, recorded, reference_digest, reference_revision, resigned
 
 
-def quotes(payload: dict[str, Any], cursor: str | None = None) -> Any:
-    return parse_quotes_page(payload, portal=FR, craft_slug=AJRAKH, cursor=cursor)
+def page(name: str, portal: str = FR, payload: dict[str, Any] | None = None) -> Any:
+    body = payload if payload is not None else recorded(name)
+    return parse_page(body, portal=portal, asked=(body["stream"], body["view"], body["cursor"]))
 
 
-def photographs(payload: dict[str, Any], image_hosts: frozenset[str] = frozenset({IMAGE_HOST})) -> Any:
-    return parse_photographs_page(payload, portal=FR, craft_slug=AJRAKH, cursor=None, image_hosts=image_hosts)
+def test_both_portals_answer_the_same_state_shape() -> None:
+    for portal, prefix in ((FR, "field"), (DR, "designer")):
+        state = parse_state(recorded(f"{prefix}-state"), portal=portal)
+        assert state.portal == portal
+        assert state.stream("transcripts").enabled and state.stream("images").enabled
 
 
-def test_the_recorded_index_parses_with_unknown_fields_ignored() -> None:
-    index = parse_index(recorded("index"), portal=FR)
-    assert [c.craft_slug for c in index.crafts] == ["Kutch-Ajrakh", "Dabu-Print"]
-    ajrakh = index.crafts[0]
-    assert (ajrakh.recordings, ajrakh.quotes, ajrakh.photographs) == (2, 3, 1)
-    assert index.crafts[1].craft_code is None
+def test_the_state_digest_is_the_live_set_of_the_recorded_pages() -> None:
+    state = parse_state(recorded("field-state"), portal=FR)
+    live = [
+        (change["id"], change["revision"])
+        for name in ("field-transcripts-all-1", "field-transcripts-all-2")
+        for change in recorded(name)["changes"]
+        if change["state"] == "LIVE"
+    ]
+    assert state.stream("transcripts").digest == reference_digest(live)
+    assert stream_digest(live) == reference_digest(live)
 
 
-def test_the_recorded_quote_pages_parse() -> None:
-    first = quotes(recorded("quotes-1"))
-    recording = first.recordings[0]
-    assert first.next_cursor == "c2"
-    assert recording.workshop is not None and recording.workshop.district == "Kachchh"
-    assert recording.topics[0].question == "How do you prepare the mordant paste?"
-    artisan = recording.artisans[0]
-    assert (artisan.name, artisan.years_in_craft, artisan.consent.scope) == ("Asha Demo", 31, "ARTISAN")
-    gujarati, hindi = recording.quotes
-    assert (gujarati.language, gujarati.text_source, gujarati.english_source) == ("gu", "EDITED", "MACHINE")
-    assert (hindi.english, hindi.english_source) == (None, None)
-    second = quotes(recorded("quotes-2"), cursor="c2")
-    unnamed = second.recordings[0].artisans[0]
-    assert (unnamed.named, unnamed.name, unnamed.consent.basis) == (False, None, "OWNER_ATTESTATION")
-    assert second.recordings[0].quotes[0].id == "turn-3.2"
+def test_a_field_repository_transcript_page_parses_with_unknown_fields_ignored() -> None:
+    first = page("field-transcripts-all-1")
+    live, gone = first.changes
+    assert isinstance(live, Live) and isinstance(live.item, TranscriptItem)
+    item = live.item
+    assert (first.next_cursor, first.has_more) == ("fr-t-2", True)
+    assert [segment.speaker_key for segment in item.transcript.segments] == [
+        "speaker_1",
+        "speaker_0",
+        "speaker_0",
+        "speaker_2",
+    ]
+    assert item.transcript.segments[1].scrubbed == ("NUMBER",)
+    assert item.people[0].merged_ids == ("fr-art-old",)
+    assert isinstance(gone, Gone) and (gone.reason, gone.successor_id) == ("DELETED", None)
 
 
-def test_the_recorded_photograph_page_parses() -> None:
-    photograph = photographs(recorded("photographs-1")).photographs[0]
-    assert photograph.stage is not None and photograph.stage.step == "First resist printing"
-    assert (photograph.image.width, photograph.image.height, photograph.image.mime_type) == (
-        2400,
-        1600,
-        "image/jpeg",
+def test_a_designer_portal_stage_recording_and_prototype_image_parse() -> None:
+    transcripts = page("designer-transcripts-all-1", DR)
+    recording = transcripts.changes[0]
+    assert isinstance(recording, Live) and isinstance(recording.item, TranscriptItem)
+    assert recording.item.stage is not None and recording.item.stage.field == "audioNarration"
+    replaced = transcripts.changes[1]
+    assert isinstance(replaced, Gone) and (replaced.reason, replaced.successor_id) == (
+        "REPLACED",
+        "dr-media-1",
     )
-    assert photograph.consent.basis == "SIGNED_FORM"
-    assert photograph.permission.licence is None
+    image = page("designer-images-all-1", DR).changes[0]
+    assert isinstance(image, Live) and isinstance(image.item, ImageItem)
+    placement = image.item.belongs_to[0]
+    assert (placement.kind, placement.prototype_id) == ("DESIGN_STAGE", "dr-row-5")
+    assert [credit.role for credit in image.item.credits] == ["ARTISAN", "DESIGNER"]
+
+
+def test_the_revision_is_the_contracts_hash_without_the_link() -> None:
+    for name in ("field-transcripts-all-1", "field-images-all-1", "designer-images-all-1"):
+        for change in recorded(name)["changes"]:
+            if change["state"] == "LIVE":
+                assert item_revision(change) == reference_revision(change) == change["revision"]
+    image = recorded("field-images-all-1")["changes"][0]
+    moved = copy.deepcopy(image)
+    moved["image"]["url"] = moved["image"]["url"].replace("abc", "zzz")
+    moved["image"]["expiresAt"] = "2026-11-18T02:14:00Z"
+    assert item_revision(moved) == image["revision"]
+
+
+@pytest.mark.parametrize(
+    ("path", "key"),
+    [
+        ("people", "phone"),
+        ("people", "mobileNumber"),
+        ("people", "aadhaarLast4"),
+        ("people", "dateOfBirth"),
+        ("people", "emailAddress"),
+        ("area", "village"),
+        ("area", "pincode"),
+        ("area", "lat"),
+        ("workshop", "venue"),
+        ("workshop", "clusterName"),
+        ("people", "bankAccount"),
+        ("people", "signatureMediaId"),
+        ("people", "empanelmentNo"),
+        ("people", "otp"),
+        ("workshop", "city"),
+    ],
+)
+def test_a_never_sent_key_anywhere_refuses_the_page(path: str, key: str) -> None:
+    body = recorded("field-transcripts-all-1")
+    holder = body["changes"][0][path]
+    (holder[0] if isinstance(holder, list) else holder)[key] = "x"
+    with pytest.raises(InvalidInput, match="never sent"):
+        page("", payload=body)
+
+
+def test_scrub_counts_are_a_list_because_their_kinds_are_never_sent_keys() -> None:
+    body = recorded("field-transcripts-all-1")
+    assert forbidden_keys(body) == []
+    assert body["changes"][0]["scrubbing"]["replaced"] == [
+        {"kind": "EMAIL", "count": 0},
+        {"kind": "NUMBER", "count": 1},
+        {"kind": "PLACE", "count": 0},
+    ]
+    body["changes"][0]["scrubbing"]["replaced"] = {"EMAIL": 0, "NUMBER": 1, "PLACE": 0}
+    assert sorted(forbidden_keys(body)) == [
+        "changes[0].scrubbing.replaced.EMAIL",
+        "changes[0].scrubbing.replaced.PLACE",
+    ]
+    with pytest.raises(InvalidInput, match="never sent"):
+        page("", payload=body)
+
+
+def test_a_scrub_kind_counted_twice_refuses_the_page() -> None:
+    body = recorded("field-transcripts-all-1")
+    body["changes"][0]["scrubbing"]["replaced"].append({"kind": "NUMBER", "count": 1})
+    resigned(body["changes"][0])
+    with pytest.raises(InvalidInput, match="scrub kind"):
+        page("", payload=body)
+
+
+def test_a_live_item_whose_revision_differs_is_refused() -> None:
+    body = recorded("field-transcripts-all-1")
+    body["changes"][0]["transcript"]["segments"][1]["text"] = "changed after signing"
+    with pytest.raises(InvalidInput, match="does not match its revision"):
+        page("", payload=body)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        lambda b: b.update(stream="images"),
+        lambda b: b.update(cursor="fr-t-9"),
+        lambda b: b.update(view="gone"),
+        lambda b: b.update(portal=DR),
+    ],
+)
+def test_a_page_that_answers_another_request_is_refused(change: Any) -> None:
+    body = recorded("field-transcripts-all-1")
+    change(body)
+    with pytest.raises(InvalidInput):
+        parse_page(body, portal=FR, asked=("transcripts", "all", None))
+
+
+def test_changes_out_of_order_are_refused() -> None:
+    body = recorded("field-transcripts-all-1")
+    body["changes"].reverse()
+    with pytest.raises(InvalidInput, match="out of order"):
+        page("", payload=body)
+
+
+def test_the_gone_view_carries_only_tombstones() -> None:
+    body = recorded("field-transcripts-all-1")
+    body.update(view="gone")
+    with pytest.raises(InvalidInput, match="live item"):
+        parse_page(body, portal=FR, asked=("transcripts", "gone", None))
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        lambda g: g.update(transcript={"segments": []}),
+        lambda g: g.update(reason="REPLACED"),
+        lambda g: g.update(successorId="fr-media-9"),
+        lambda g: g.update(reason=None),
+    ],
+)
+def test_a_tombstone_carries_its_reason_and_nothing_else(change: Any) -> None:
+    body = recorded("field-transcripts-gone-1")
+    change(body["changes"][0])
+    with pytest.raises(InvalidInput):
+        page("", payload=body)
+
+
+def test_a_speaker_mapped_to_an_unlisted_person_is_refused() -> None:
+    body = recorded("field-transcripts-all-1")
+    body["changes"][0]["speakers"][0]["personId"] = "fr-art-unknown"
+    resigned(body["changes"][0])
+    with pytest.raises(InvalidInput, match="does not list"):
+        page("", payload=body)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://fieldrepo.example.com/media/u1/x/Asha_Demo.jpg",
+        "https://fieldrepo.example.com:8443/field-voices/{leaf}",
+        "https://fieldrepo.example.com/field-voices/{leaf}?response-content-disposition=inline%3B%20filename%3DAsha.jpg",
+    ],
+)
+def test_an_image_link_naming_anything_but_the_neutral_copy_is_refused(url: str) -> None:
+    body = recorded("field-images-all-1")
+    image = body["changes"][0]["image"]
+    image["url"] = url.format(leaf=f"{image['sha256']}.jpg")
+    with pytest.raises(InvalidInput):
+        page("", payload=body)
+
+
+def test_an_image_link_living_past_fifteen_minutes_is_refused() -> None:
+    body = recorded("field-images-all-1")
+    body["changes"][0]["image"]["expiresAt"] = "2026-11-18T03:00:00Z"
+    with pytest.raises(InvalidInput, match="15 minutes"):
+        page("", payload=body)
+
+
+def test_an_empty_page_keeps_the_cursor_it_was_asked_for() -> None:
+    empty = page("field-images-gone-1")
+    assert (empty.changes, empty.next_cursor, empty.has_more) == ((), None, False)
+    body = recorded("field-images-gone-1")
+    body["nextCursor"] = "fr-i-9"
+    with pytest.raises(InvalidInput, match="moved"):
+        page("", payload=body)
 
 
 def test_another_schema_version_is_refused() -> None:
-    with pytest.raises(InvalidInput, match="schemaVersion 2"):
-        parse_index(edited(recorded("index"), lambda p: p.update(schemaVersion=2)), portal=FR)
-
-
-def test_an_answer_from_the_other_portal_is_refused() -> None:
-    with pytest.raises(InvalidInput, match="answered with a field voices index from DESIGNER"):
-        parse_index(edited(recorded("index"), lambda p: p.update(portal="DESIGNER")), portal=FR)
-
-
-@pytest.mark.parametrize(
-    ("change", "cursor"),
-    [(lambda p: p.update(craftSlug="Dabu-Print"), None), (lambda p: None, "c9")],
-)
-def test_a_page_for_another_craft_or_cursor_is_refused(change: Callable, cursor: str | None) -> None:
-    with pytest.raises(InvalidInput, match="when asked for Kutch-Ajrakh"):
-        quotes(edited(recorded("quotes-1"), change), cursor=cursor)
-
-
-def put(path: tuple[Any, ...], key: str, value: Any) -> Callable[[dict[str, Any]], None]:
-    def change(payload: dict[str, Any]) -> None:
-        target: Any = payload
-        for step in path:
-            target = target[step]
-        target[key] = value
-
-    return change
-
-
-@pytest.mark.parametrize(
-    ("page", "path", "key", "shown"),
-    [
-        ("quotes-1", ("recordings", 0, "artisans", 0), "phone", "recordings[0].artisans[0].phone"),
-        ("quotes-1", ("recordings", 0, "artisans", 0), "dateOfBirth", "artisans[0].dateOfBirth"),
-        ("quotes-1", ("recordings", 0, "artisans", 0), "age", "artisans[0].age"),
-        ("quotes-1", ("recordings", 0, "artisans", 0, "consent"), "aadhaarLast4", "consent.aadhaarLast4"),
-        ("quotes-1", ("recordings", 0, "workshop"), "address", "workshop.address"),
-        ("quotes-1", ("recordings", 0), "pehchanCardNumber", "recordings[0].pehchanCardNumber"),
-        ("photographs-1", ("photographs", 0), "latitude", "photographs[0].latitude"),
-        ("photographs-1", ("photographs", 0, "artisans", 0), "email", "artisans[0].email"),
-        ("photographs-1", ("photographs", 0, "artisans", 0), "gender", "artisans[0].gender"),
-        ("photographs-1", ("photographs", 0), "lat", "photographs[0].lat"),
-        ("photographs-1", ("photographs", 0), "lng", "photographs[0].lng"),
-        ("photographs-1", ("photographs", 0), "lon", "photographs[0].lon"),
-        ("photographs-1", ("photographs", 0), "long", "photographs[0].long"),
-        ("photographs-1", ("photographs", 0), "gps", "photographs[0].gps"),
-        ("photographs-1", ("photographs", 0), "coordinates", "photographs[0].coordinates"),
-        ("photographs-1", ("photographs", 0), "geo", "photographs[0].geo"),
-        ("photographs-1", ("photographs", 0), "geoLocation", "photographs[0].geoLocation"),
-        ("photographs-1", ("photographs", 0), "altitude", "photographs[0].altitude"),
-        ("photographs-1", ("photographs", 0), "accuracy", "photographs[0].accuracy"),
-        ("photographs-1", ("photographs", 0, "workshop"), "subjectLatitude", "workshop.subjectLatitude"),
-        ("quotes-1", ("recordings", 0, "workshop"), "village", "workshop.village"),
-        ("quotes-1", ("recordings", 0, "workshop"), "placeName", "workshop.placeName"),
-        ("quotes-1", ("recordings", 0, "workshop"), "place", "workshop.place"),
-        ("quotes-1", ("recordings", 0, "artisans", 0), "place", "artisans[0].place"),
-        ("quotes-1", ("recordings", 0, "artisans", 0), "locality", "artisans[0].locality"),
-    ],
-)
-def test_a_field_that_is_never_sent_refuses_the_whole_answer(
-    page: str, path: tuple[Any, ...], key: str, shown: str
-) -> None:
-    payload = edited(recorded(page), put(path, key, "x"))
-    parse = quotes if page.startswith("quotes") else photographs
-    with pytest.raises(InvalidInput, match="never sent") as caught:
-        parse(payload)
-    assert shown in str(caught.value)
-
-
-def test_forbidden_keys_spares_words_that_only_contain_a_forbidden_one() -> None:
-    payload = {
-        "language": "gu",
-        "stage": {},
-        "translation": "x",
-        "geology": "x",
-        "longest": "x",
-        "placement": "x",
-        "image": {"mimeType": "x"},
-        "a": [{"phoneNumber": 1}],
-    }
-    assert forbidden_keys(payload) == ["a[0].phoneNumber"]
-
-
-RECORDING = ("recordings", 0)
-MEDIA_KEY_URL = (
-    f"https://{IMAGE_HOST}/media/user-7/0f0e/FieldRepository_Workshop_2026-03-13_Ajrakhpur-Kachchh_Photo.jpg"
-)
-NAMED_FILE_URL = (
-    f"https://{IMAGE_HOST}/field-voices/{COPY}"
-    "?response-content-disposition=inline%3B%20filename%3D%22Ajrakhpur-Kachchh_Asha-Demo_Photo.jpg%22"
-)
-ARTISAN = ("recordings", 0, "artisans", 0)
-QUOTE = ("recordings", 0, "quotes", 0)
-PHOTOGRAPH = ("photographs", 0)
-
-
-def credit_a_silent_artisan(payload: dict[str, Any]) -> None:
-    artisans = payload["recordings"][0]["artisans"]
-    artisans.append({**artisans[0], "id": "art-3"})
-
-
-@pytest.mark.parametrize(
-    ("page", "change", "problem"),
-    [
-        ("quotes-1", put(QUOTE, "artisanId", "art-9"), "does not credit"),
-        ("quotes-1", credit_a_silent_artisan, "who is not quoted"),
-        ("quotes-1", put(ARTISAN, "name", None), "named is true"),
-        ("quotes-2", put((*RECORDING, "artisans", 0), "name", "Somebody"), "named is true"),
-        ("quotes-2", put((*RECORDING, "artisans", 0), "localName", "x"), "unnamed and carries"),
-        ("quotes-1", put((*RECORDING, "quotes", 1), "english", "Iron turns it black."), "come together"),
-        ("quotes-1", put(QUOTE, "endMs", 700000), "ends before it starts"),
-        ("quotes-1", put(QUOTE, "endMs", 1900000), "past its end"),
-        ("quotes-1", put(QUOTE, "language", "Gujarati"), "language"),
-        ("quotes-1", put((*ARTISAN, "consent"), "basis", "IMPLIED"), "basis"),
-        ("quotes-1", put(RECORDING, "recordedAt", "2026-03-14T10:22:00"), "recordedAt"),
-        ("quotes-1", put(ARTISAN, "yearsInCraft", 120), "yearsInCraft"),
-        ("quotes-1", put(RECORDING, "revision", "two words"), "revision"),
-        ("photographs-1", put((*PHOTOGRAPH, "consent"), "basis", "OWNER_ATTESTATION"), "own consent"),
-        ("photographs-1", put((*PHOTOGRAPH, "consent"), "scope", "ARTISAN"), "own consent"),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "expiresAt", "2026-11-18T02:20:03Z"), "15 minutes"),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "expiresAt", "2026-11-18T01:59:00Z"), "15 minutes"),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "url", "http://media.example.com/a.jpg"), "url"),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "width", 4000), "width"),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "mimeType", "image/heic"), "mimeType"),
-        (
-            "photographs-1",
-            put((*PHOTOGRAPH, "image"), "mimeType", "image/png"),
-            f"/field-voices/{COPY[:-3]}png",
-        ),
-        ("photographs-1", put((*PHOTOGRAPH, "image"), "url", MEDIA_KEY_URL), "nothing else"),
-        (
-            "photographs-1",
-            put((*PHOTOGRAPH, "image"), "url", f"https://{IMAGE_HOST}:8443/field-voices/{COPY}"),
-            "nothing else",
-        ),
-        (
-            "photographs-1",
-            put((*PHOTOGRAPH, "image"), "url", NAMED_FILE_URL),
-            "names a file other than its copy",
-        ),
-    ],
-)
-def test_a_page_that_breaks_the_contract_is_refused(
-    page: str, change: Callable[[dict[str, Any]], None], problem: str
-) -> None:
-    payload = edited(recorded(page), change)
-    with pytest.raises(InvalidInput, match="breaks the contract") as caught:
-        if page.startswith("quotes"):
-            quotes(payload, cursor=payload["cursor"])
-        else:
-            photographs(payload)
-    assert problem in str(caught.value)
-
-
-@pytest.mark.parametrize(
-    ("change", "problem"),
-    [
-        (lambda p: p["crafts"].append(dict(p["crafts"][0])), "appears twice"),
-        (lambda p: p["crafts"][0].update(recordings=0, photographs=0), "nothing to publish"),
-        (lambda p: p["crafts"][0].update(quotes=1), "fewer quotes than recordings"),
-        (lambda p: p["crafts"][0].update(digest="ABC"), "digest"),
-        (lambda p: p["crafts"][0].update(craftSlug="../crafts"), "craftSlug"),
-    ],
-)
-def test_an_index_that_breaks_the_contract_is_refused(change: Callable, problem: str) -> None:
-    with pytest.raises(InvalidInput, match="breaks the contract") as caught:
-        parse_index(edited(recorded("index"), change), portal=FR)
-    assert problem in str(caught.value)
-
-
-def test_the_snapshot_digest_is_the_sha256_of_the_sorted_lines() -> None:
-    recordings = quotes(recorded("quotes-1")).recordings + quotes(recorded("quotes-2"), "c2").recordings
-    pictures = photographs(recorded("photographs-1")).photographs
-    lines = (
-        "P photo-1 7b44d54b1fb4b16a9fd145c5fc893613\n"
-        "R rec-1 91bdd4e889f5d9736c6c2fbd944dfd73\n"
-        "R rec-2 f934cb90d32e02ebeebf08105f111c34\n"
-    )
-    expected = hashlib.sha256(lines.encode("utf-8")).hexdigest()
-    assert snapshot_digest(recordings, pictures) == expected
-    assert recorded("index")["crafts"][0]["digest"] == expected
-
-
-def test_an_image_on_a_host_that_is_not_listed_is_refused() -> None:
-    with pytest.raises(InvalidInput, match="photo-1 is served from a host") as caught:
-        photographs(recorded("photographs-1"), image_hosts=frozenset({"other.example.com"}))
-    assert IMAGE_HOST not in str(caught.value)
-
-
-def test_a_workshop_without_a_title_parses() -> None:
-    payload = edited(recorded("quotes-1"), put((*RECORDING, "workshop"), "title", None))
-    workshop = quotes(payload).recordings[0].workshop
-    assert workshop is not None and (workshop.title, workshop.district) == (None, "Kachchh")
+    body = recorded("field-state")
+    body["schemaVersion"] = 1
+    with pytest.raises(InvalidInput, match="schemaVersion"):
+        parse_state(body, portal=FR)

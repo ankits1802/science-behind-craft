@@ -1,0 +1,151 @@
+@property --vat {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --vat-air {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@keyframes kv-press {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes kv-dip {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes kv-oxidise {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@keyframes kv-pop-in {
+  from {
+    transform: translateY(4px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes kv-sheet-in {
+  from {
+    transform: translateY(24px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes kv-pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}
+
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  :root[data-reduced-motion="true"] *,
+  :root[data-reduced-motion="true"] *::before,
+  :root[data-reduced-motion="true"] *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .motion-press {
+    transform-origin: 50% 60%;
+  }
+
+  .motion-press[data-playing] {
+    animation: kv-press var(--dur-press) var(--ease-out);
+  }
+
+  .motion-dip {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .motion-dip[data-playing] {
+    animation: kv-dip var(--dur-dip) var(--ease-inout) both;
+  }
+
+  .motion-oxidise {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .motion-oxidise[data-playing] {
+    animation: kv-oxidise var(--dur-oxidise) var(--ease-inout) both;
+  }
+
+  .motion-enter {
+    animation: kv-pop-in var(--dur-state) var(--ease-out);
+  }
+
+  .motion-rise {
+    animation: kv-sheet-in var(--dur-panel) var(--ease-out);
+  }
+
+  .motion-pulse {
+    animation: kv-pulse 1600ms var(--ease-inout) infinite alternate;
+  }
+
+  .vat-tint {
+    --vat: -4%;
+    --vat-air: -13%;
+    mask-image:
+      linear-gradient(to top, black var(--vat), transparent calc(var(--vat) + 3%)),
+      linear-gradient(to bottom, transparent var(--vat-air), black calc(var(--vat-air) + 12%)),
+      var(--vat-mask, linear-gradient(black, black));
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-composite: intersect;
+    transition: none;
+  }
+
+  [data-vat-phase="in"] .vat-tint {
+    --vat: 103%;
+    transition: --vat var(--dur-dip) var(--ease-inout);
+  }
+
+  [data-vat-phase="lifted"] .vat-tint {
+    --vat: 103%;
+  }
+
+  [data-vat-phase="air"] .vat-tint {
+    --vat: 103%;
+    --vat-air: 100%;
+    transition: --vat-air var(--dur-oxidise) var(--ease-inout);
+  }
+}

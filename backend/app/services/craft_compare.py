@@ -25,10 +25,9 @@ from app.research.offered_facts import PIECE_FIRST, OfferedFact, fact_rank, sent
 from app.research.piece_reuse import visible_as_cited
 from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.sections import FALLBACK_DISCIPLINE
-from app.research.vocabulary import CANONICAL_LANGUAGE
+from app.research.vocabulary import CANONICAL_LANGUAGE, CONCEPT_TYPE_DISCIPLINES
 
 from . import knowledge_view
-from .craft_page import CONCEPT_TYPE_DISCIPLINES
 from .learning_facts import offered_fact, source_refs
 from .piece_lookup import claim_states, stored_piece
 

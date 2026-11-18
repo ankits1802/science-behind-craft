@@ -10,8 +10,9 @@ from pydantic.alias_generators import to_camel
 
 from app.models.enums import EVIDENCE_LEVELS, IMAGE_RELEVANCE
 
-from .base import ContractModel
+from .base import ContractModel, absent, empty
 from .citations import AnswerSentence, Citation
+from .colours import ColourWord
 from .crafts import CraftRef
 from .media_refs import MediaRef
 from .quotes import quote_occurs
@@ -19,22 +20,29 @@ from .terms import TermSpan, span_problems
 from .vocabulary import FACT_LEVELS, MaterialKind, MaterialRole, ShownLevel, StageType, weakest_level
 
 __all__ = [
+    "AFTER_COLOURS_MAX",
+    "AFTER_TEXT_MAX_CHARS",
     "BLOCK_ID_MAX_CHARS",
     "BLOCK_ID_PATTERN",
     "IMAGES_MAX",
     "IMAGE_RELEVANCE",
     "SENTENCE",
     "BlockBase",
+    "DifferRead",
+    "DifferReading",
     "ExplainerSentence",
     "ImageItem",
     "ImagesBlock",
     "LadderCondition",
     "LadderMaterial",
     "LadderStage",
+    "LadderTool",
     "ProcessLadderBlock",
     "ProseBlock",
     "ReuseMarker",
     "SentenceSpec",
+    "StageAfter",
+    "StagePicture",
     "named_in",
     "require_facts",
     "require_findings",
@@ -46,6 +54,9 @@ __all__ = [
 BLOCK_ID_MAX_CHARS = 80
 BLOCK_ID_PATTERN = r"^[a-z0-9]+(?:[.-][a-z0-9]+)*$"
 IMAGES_MAX = 8
+AFTER_TEXT_MAX_CHARS = 120
+AFTER_COLOURS_MAX = 3
+DIFFER_WEIGHT_VALUES = (1, 2, 3)
 
 SENTENCE = "sentence"
 
@@ -131,6 +142,55 @@ class LadderMaterial(ContractModel):
     kind: MaterialKind
     role: MaterialRole
     citations: list[Citation] = Field(min_length=1)
+    botanical_name: str | None = Field(default=None, min_length=1, max_length=200, exclude_if=absent)
+    pubchem_cid: int | None = Field(default=None, ge=1, exclude_if=absent)
+    local_names: list[str] = Field(default_factory=list, exclude_if=empty)
+
+
+class StageAfter(ContractModel):
+    text: str = Field(min_length=1, max_length=AFTER_TEXT_MAX_CHARS)
+    colours: list[ColourWord] = Field(default_factory=list, max_length=AFTER_COLOURS_MAX)
+    citations: list[Citation] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def _each_colour_once(self) -> Self:
+        if len(set(self.colours)) != len(self.colours):
+            raise ValueError(f"the cloth after a stage names each colour once: {self.text!r}")
+        return self
+
+
+class LadderTool(ContractModel):
+    tool_id: uuid.UUID
+    name: str = Field(min_length=1, max_length=300)
+    local_names: list[str]
+    citations: list[Citation] = Field(min_length=1)
+
+
+class DifferRead(ContractModel):
+    sentence: ExplainerSentence | None
+    shown_in: str | None
+
+    @model_validator(mode="after")
+    def _a_sentence_or_where_it_is_shown(self) -> Self:
+        if (self.sentence is None) == (self.shown_in is None):
+            raise ValueError("a reading is its sentence, or the id of the sentence that already shows it")
+        return self
+
+
+class DifferReading(ContractModel):
+    key: str = Field(min_length=1, max_length=80)
+    about: str = Field(min_length=1, max_length=300)
+    weight: Literal[*DIFFER_WEIGHT_VALUES]
+    readings: list[DifferRead] = Field(min_length=2)
+
+    def sentences(self) -> Iterator[ExplainerSentence]:
+        yield from (read.sentence for read in self.readings if read.sentence is not None)
+
+
+class StagePicture(ContractModel):
+    media: MediaRef
+    caption: str = Field(min_length=1, max_length=300)
+    stand_in: str | None
 
 
 class LadderCondition(ContractModel):
@@ -155,6 +215,13 @@ class LadderStage(ContractModel):
     materials: list[LadderMaterial]
     conditions: list[LadderCondition]
     reaction_ids: list[uuid.UUID]
+    local_name: str | None = Field(default=None, min_length=1, max_length=200, exclude_if=absent)
+    unnumbered: bool | None = Field(default=None, exclude_if=absent)
+    after: StageAfter | None = Field(default=None, exclude_if=absent)
+    why: ExplainerSentence | None = Field(default=None, exclude_if=absent)
+    tools: list[LadderTool] = Field(default_factory=list, exclude_if=empty)
+    differs: list[DifferReading] = Field(default_factory=list, exclude_if=empty)
+    pictures: list[StagePicture] = Field(default_factory=list, exclude_if=empty)
 
     @model_validator(mode="after")
     def _level_follows_the_stage_sentences(self) -> Self:
@@ -167,12 +234,17 @@ class LadderStage(ContractModel):
         return self
 
     def citations(self) -> Iterator[Citation]:
-        for sentence in self.sentences:
+        for sentence in self.added_sentences():
             yield from sentence.citations
-        for material in self.materials:
-            yield from material.citations
-        for condition in self.conditions:
-            yield from condition.citations
+        for part in (*self.materials, *self.conditions, *self.tools, *([self.after] if self.after else [])):
+            yield from part.citations
+
+    def added_sentences(self) -> Iterator[ExplainerSentence]:
+        yield from self.sentences
+        if self.why is not None:
+            yield self.why
+        for differ in self.differs:
+            yield from differ.sentences()
 
 
 class ProcessLadderBlock(BlockBase):
@@ -194,6 +266,10 @@ class ProcessLadderBlock(BlockBase):
     def citations(self) -> Iterator[Citation]:
         for stage in self.stages:
             yield from stage.citations()
+
+    def cited_sentences(self) -> Iterator[AnswerSentence]:
+        for stage in self.stages:
+            yield from stage.added_sentences()
 
 
 class ImageItem(ContractModel):

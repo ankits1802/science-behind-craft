@@ -10,6 +10,7 @@ import { deleteConfirm, useConfirm } from "@/components/dialogs/ConfirmDialog";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { failureMessage, useRemote } from "@/components/hooks/useRemote";
 import { LessonPackView } from "@/components/learn/LessonPackView";
+import { ShareControl } from "@/components/learn/ShareControl";
 import { PageHeader } from "@/components/PageHeader";
 import { LoadingPanel, RetryPanel } from "@/components/RemotePanels";
 import { apiErrorMessage } from "@/lib/api";
@@ -17,6 +18,7 @@ import { languageFor } from "@/lib/answerLanguages";
 import { listedSourceNumbers } from "@/lib/citations";
 import { deleteLesson, fetchLesson } from "@/lib/lessonApi";
 import { LESSONS_HOME } from "@/lib/lessonView";
+import { LESSON_SHARE_PATH } from "@/lib/shareContract";
 
 export default function LessonPage() {
   const { id } = useParams<{ id: string }>();
@@ -41,9 +43,12 @@ export default function LessonPage() {
   }
 
   const actions = pack ? (
-    <button type="button" data-danger className="field-danger" onClick={() => void remove()}>
-      Delete
-    </button>
+    <>
+      <ShareControl sharePath={LESSON_SHARE_PATH(pack.id)} kind="lesson" />
+      <button type="button" data-danger className="field-danger" onClick={() => void remove()}>
+        Delete
+      </button>
+    </>
   ) : null;
 
   return (

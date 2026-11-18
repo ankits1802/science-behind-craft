@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import logging
 import uuid
 from collections.abc import Collection, Mapping, Sequence
@@ -9,17 +10,20 @@ from itertools import combinations
 from pydantic import ValidationError
 
 from app.composer.candidates import stored_claim_candidate
-from app.composer.expert_takes import PanelAsk, PanelDraft, ProposedDifference, SeatTake, compose_takes
+from app.composer.expert_differences import DifferenceAsk, compose_differences
+from app.composer.expert_takes import ProposedDifference, SeatAsk, SeatTake, compose_take
 from app.research.blocks import ExplainerSentence
 from app.research.blocks_people import ExpertDifference, ExpertViewBlock, expert_pairing_problems
 from app.research.composition import ComposeCandidate, ComposeFocus
-from app.research.expert_panel import EXPERT_PANEL, speaking_seats
+from app.research.expert_panel import EXPERT_PANEL, SeatBrief, speaking_seats, voiced_seats
 from app.research.explainer import Block
 from app.research.vocabulary import FACT_LEVELS
 
-from .answer_events import CitedClaims
+from .answer_events import CitedClaims, joined_claims
+from .artisan_seat import Heard, VoiceSearch, artisan_take, stored_voices
 from .builder_interface import BuildAsk, BuilderTools, Built
 from .knowledge_view import ClaimView
+from .seat_search import SeatEvidence, SeatSearch, stored_seat_search
 from .section_blocks import KeptSentence, cited_sentence, prose_problems
 
 __all__ = [
@@ -27,41 +31,95 @@ __all__ = [
     "ExpertPanelBuilder",
     "difference_refusal",
     "expert_views",
+    "kept_takes",
     "panel_candidates",
 ]
 
 logger = logging.getLogger(__name__)
 
-EXPERT_VIEW_WAIT_SECONDS = 45.0
+EXPERT_VIEW_WAIT_SECONDS = 90.0
 
 Take = tuple[KeptSentence, ...]
+Offers = Mapping[str, tuple[ComposeCandidate, ...]]
 
 
 class ExpertPanelBuilder:
-    def __init__(self, tools: BuilderTools) -> None:
-        self._tools = tools
+    def __init__(
+        self, tools: BuilderTools, *, search: SeatSearch | None = None, voices: VoiceSearch | None = None
+    ) -> None:
+        self._model = tools.compose_model
+        self._search = search or stored_seat_search(tools)
+        self._voices = voices or stored_voices(tools)
 
     async def build(self, ask: BuildAsk) -> Built:
-        seats = speaking_seats(ask.section.discipline, ask.request.seats, depth=ask.request.depth)
-        candidates = panel_candidates(ask.cited, ask.blocks)
+        request, section = ask.request, ask.section
+        seats = speaking_seats(section.discipline, request.seats, depth=request.depth)
+        voiced = voiced_seats(section.discipline, request.seats, depth=request.depth)
+        if not ask.blocks or not (seats or voiced):
+            return Built()
         shown = _shown_claims(ask.blocks)
-        if not seats or not ask.blocks or all(candidate.id in shown for candidate in candidates):
-            return Built()
-        panel = PanelAsk(
-            question=ask.request.question,
-            craft=ask.request.craft,
-            focus=ComposeFocus(discipline=ask.section.discipline, title=ask.section.title),
-            seats=tuple(EXPERT_PANEL[seat] for seat in seats),
-            candidates=tuple(candidates),
+        briefs = tuple(EXPERT_PANEL[seat] for seat in seats)
+        evidence, heard = await asyncio.gather(self._evidence(ask, briefs, shown), self._heard(ask, voiced))
+        cited = joined_claims(ask.cited, evidence.cited, heard.cited)
+        offers = _offers(ask, briefs, evidence, cited, shown)
+        takes = kept_takes(await self._takes(ask, offers), cited, shown)
+        differences = await self._differences(ask, offers, takes, cited)
+        voice = artisan_take(heard, shown)
+        if voice:
+            takes = {**takes, voiced[0]: voice}
+        return _built(section.id, expert_views(section.id, takes, differences, cited), cited)
+
+    async def _evidence(self, ask: BuildAsk, briefs: Sequence[SeatBrief], shown: set[str]) -> SeatEvidence:
+        try:
+            return await self._search(ask, briefs, shown)
+        except Exception as error:
+            logger.warning("the seats of %s search no evidence of their own: %s", ask.section.id, error)
+            return SeatEvidence()
+
+    async def _heard(self, ask: BuildAsk, voiced: Sequence[str]) -> Heard:
+        if not voiced:
+            return Heard()
+        try:
+            return await self._voices(ask)
+        except Exception as error:
+            logger.warning("the artisan seat of %s hears no field transcript: %s", ask.section.id, error)
+            return Heard()
+
+    async def _takes(self, ask: BuildAsk, offers: Offers) -> list[SeatTake]:
+        focus = ComposeFocus(discipline=ask.section.discipline, title=ask.section.title)
+        asks = [
+            SeatAsk(ask.request.question, ask.request.craft, focus, EXPERT_PANEL[seat], candidates)
+            for seat, candidates in offers.items()
+        ]
+        replies = await asyncio.gather(
+            *(compose_take(self._model, one) for one in asks), return_exceptions=True
         )
-        draft = await compose_takes(self._tools.compose_model, panel)
-        views = expert_views(ask.section.id, draft, ask.cited, shown=shown)
-        cited = dict.fromkeys(source_id for view in views for source_id in view.cited_source_ids())
-        missing = [source_id for source_id in cited if source_id not in ask.cited.sources]
-        if missing:
-            logger.warning("the expert views of %s cite unknown sources %s", ask.section.id, missing)
-            return Built()
-        return Built(tuple(views), {source_id: ask.cited.sources[source_id] for source_id in cited})
+        takes: list[SeatTake] = []
+        for one, reply in zip(asks, replies, strict=True):
+            if isinstance(reply, SeatTake):
+                takes.append(reply)
+            elif isinstance(reply, Exception):
+                logger.warning("the %s view of %s is dropped: %s", one.seat.seat, ask.section.id, reply)
+            else:
+                raise reply
+        return takes
+
+    async def _differences(
+        self, ask: BuildAsk, offers: Offers, takes: Mapping[str, Take], cited: CitedClaims
+    ) -> tuple[ProposedDifference, ...]:
+        offered = {c.id: c for seat in takes for c in offers.get(seat, ())}
+        if len(takes) < 2 or not _could_differ(offered, cited):
+            return ()
+        focus = ComposeFocus(discipline=ask.section.discipline, title=ask.section.title)
+        briefs = tuple(EXPERT_PANEL[seat] for seat in takes)
+        compared = DifferenceAsk(
+            ask.request.question, ask.request.craft, focus, briefs, tuple(offered.values())
+        )
+        try:
+            return await compose_differences(self._model, compared)
+        except Exception as error:
+            logger.warning("experts differ is not asked for %s: %s", ask.section.id, error)
+            return ()
 
 
 @dataclass(frozen=True)
@@ -79,16 +137,22 @@ def panel_candidates(cited: CitedClaims, blocks: Sequence[Block]) -> list[Compos
     return [_candidate(view) for view in views if view is not None]
 
 
-def expert_views(
-    section_id: str, draft: PanelDraft, cited: CitedClaims, *, shown: Collection[str] = frozenset()
-) -> list[ExpertViewBlock]:
-    takes = {
+def kept_takes(takes: Sequence[SeatTake], cited: CitedClaims, shown: Collection[str]) -> dict[str, Take]:
+    return {
         take.seat: kept
-        for take in draft.takes
+        for take in takes
         if (kept := _kept_take(take, cited)) is not None and _adds_a_claim(take.seat, kept, shown)
     }
-    differences = _kept_differences(draft.differences, takes, cited)
-    panel = _Panel(takes, differences, _agreements(takes, differences), cited)
+
+
+def expert_views(
+    section_id: str,
+    takes: Mapping[str, Take],
+    differences: Sequence[ProposedDifference],
+    cited: CitedClaims,
+) -> list[ExpertViewBlock]:
+    kept = _kept_differences(differences, takes, cited)
+    panel = _Panel(takes, kept, _agreements(takes, kept), cited)
     try:
         views = [_view(f"{section_id}.{seat.lower().replace('_', '-')}", seat, panel) for seat in takes]
     except ValidationError as refused:
@@ -119,6 +183,38 @@ def difference_refusal(
     if mine.concept_id is None or mine.concept_id != theirs.concept_id:
         return "the statements concern different subjects"
     return None
+
+
+def _offers(
+    ask: BuildAsk, briefs: Sequence[SeatBrief], evidence: SeatEvidence, cited: CitedClaims, shown: set[str]
+) -> dict[str, tuple[ComposeCandidate, ...]]:
+    section = panel_candidates(ask.cited, ask.blocks)
+    offers: dict[str, tuple[ComposeCandidate, ...]] = {}
+    for brief in briefs:
+        own = [_candidate(view) for view in evidence.found.get(brief.seat, ()) if view.id in cited.views]
+        candidates = tuple({candidate.id: candidate for candidate in [*own, *section]}.values())
+        if any(candidate.id not in shown for candidate in candidates):
+            offers[brief.seat] = candidates
+    return offers
+
+
+def _could_differ(offered: Mapping[str, ComposeCandidate], cited: CitedClaims) -> bool:
+    views = [view for claim in offered if (view := _stored(claim, cited)) is not None]
+    return any(
+        one.concept_id is not None
+        and one.concept_id == other.concept_id
+        and not _source_ids(one) & _source_ids(other)
+        for one, other in combinations(views, 2)
+    )
+
+
+def _built(section_id: str, views: Sequence[ExpertViewBlock], cited: CitedClaims) -> Built:
+    wanted = dict.fromkeys(source_id for view in views for source_id in view.cited_source_ids())
+    missing = [source_id for source_id in wanted if source_id not in cited.sources]
+    if missing:
+        logger.warning("the expert views of %s cite unknown sources %s", section_id, missing)
+        return Built()
+    return Built(tuple(views), {source_id: cited.sources[source_id] for source_id in wanted})
 
 
 def _kept_take(take: SeatTake, cited: CitedClaims) -> Take | None:

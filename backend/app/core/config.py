@@ -133,6 +133,9 @@ class Settings(BaseSettings):
     elevenlabs_agent_id: str | None = Field(default=None, alias="ELEVENLABS_AGENT_ID")
     voice_llm_bearer: str | None = Field(default=None, alias="VOICE_LLM_BEARER")
     voice_call_enabled: bool = Field(default=False, alias="VOICE_CALL_ENABLED")
+    artisan_conversation_enabled: bool = Field(default=False, alias="ARTISAN_CONVERSATION_ENABLED")
+    elevenlabs_artisan_agent_id: str | None = Field(default=None, alias="ELEVENLABS_ARTISAN_AGENT_ID")
+    signature_figures_enabled: bool = Field(default=False, alias="SIGNATURE_FIGURES_ENABLED")
     brave_search_api_key: str | None = Field(
         default=None, validation_alias=AliasChoices("BRAVE_SEARCH_API_KEY", "BRAVE_API_KEY")
     )

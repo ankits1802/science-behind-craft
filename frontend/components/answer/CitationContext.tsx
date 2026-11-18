@@ -2,8 +2,7 @@
 
 import { createContext, useContext } from "react";
 
-import { CitationChip } from "@/components/answer/CitationChip";
-import { citationsBySource } from "@/lib/citations";
+import { Cite } from "@/components/editorial/CitationCluster";
 import type { Citation, SourceRef } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -23,15 +22,16 @@ export function useCitations(): CitationLookup {
   return lookup;
 }
 
+export function useOptionalCitations(): CitationLookup | null {
+  return useContext(CitationContext);
+}
+
 export function CitationChips({ citations, className }: { citations: readonly Citation[]; className?: string }) {
-  const { numbers, sourcesById, onOpen } = useCitations();
-  const groups = citationsBySource(citations, numbers);
-  if (groups.length === 0) return null;
+  const { numbers, sourcesById } = useCitations();
+  if (citations.length === 0) return null;
   return (
     <span className={cn("inline", className)}>
-      {groups.map((group) => (
-        <CitationChip key={group.sourceId} group={group} title={sourcesById.get(group.sourceId)?.title ?? null} onOpen={onOpen} />
-      ))}
+      <Cite citations={citations} numbers={numbers} sourcesById={sourcesById} />
     </span>
   );
 }

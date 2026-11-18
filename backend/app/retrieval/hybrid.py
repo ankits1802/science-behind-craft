@@ -7,7 +7,7 @@ from sqlalchemy import Select, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import InvalidInput
-from app.models import Chunk, Claim, Craft
+from app.models import Chunk, Claim, Craft, Source
 from app.research.embedding import TextEmbedder, checked_vectors
 from app.research.planning import MODE_POLICIES
 from app.research.retrieval import ChunkHit, ClaimHit, KnowledgeHits, KnowledgeQuery
@@ -98,8 +98,20 @@ class StoredKnowledgeSearch:
     async def _chunk_hits(self, fused: Sequence[FusedItem[uuid.UUID]]) -> list[ChunkHit]:
         if not fused:
             return []
-        columns = (Chunk.id, Chunk.sourceId, Chunk.ordinal, Chunk.locator, Chunk.text)
-        rows = await self._session.execute(select(*columns).where(Chunk.id.in_([item.key for item in fused])))
+        columns = (
+            Chunk.id,
+            Chunk.sourceId,
+            Chunk.ordinal,
+            Chunk.locator,
+            Chunk.text,
+            Source.kind,
+            Source.title,
+        )
+        rows = await self._session.execute(
+            select(*columns)
+            .join(Source, Source.id == Chunk.sourceId)
+            .where(Chunk.id.in_([item.key for item in fused]))
+        )
         by_id = {row.id: row for row in rows}
         return [
             ChunkHit(
@@ -108,6 +120,8 @@ class StoredKnowledgeSearch:
                 ordinal=by_id[item.key].ordinal,
                 locator=by_id[item.key].locator,
                 text=by_id[item.key].text,
+                source_kind=by_id[item.key].kind,
+                source_title=by_id[item.key].title,
                 **_ranking_fields(item),
             )
             for item in fused

@@ -20,6 +20,7 @@ export const IPHONE: Width = { key: "iphone", label: "iPhone", device: "iPhone 1
 
 export const SCREEN_WIDTHS: readonly Width[] = [WIDE, DESKTOP, TABLET, PHONE, SMALL_PHONE];
 export const ANSWER_WIDTHS: readonly Width[] = [TABLET, PHONE];
+export const ANONYMOUS_WIDTHS: readonly Width[] = [SMALL_PHONE, TABLET, DESKTOP];
 export const QUESTIONS_WIDTH = DESKTOP;
 export const QUESTIONS_SCHEME: Scheme = "light";
 
@@ -31,6 +32,10 @@ export function runLabel(width: Width, scheme: Scheme): string {
 
 export function projectName(width: Width, scheme: Scheme): string {
   return `production-${width.key}-${scheme}`;
+}
+
+export function anonymousProjectName(width: Width): string {
+  return `production-anonymous-${width.key}`;
 }
 
 export function contextOptions(width: Width, scheme: Scheme): BrowserContextOptions {

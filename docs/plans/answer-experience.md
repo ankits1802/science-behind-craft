@@ -229,18 +229,19 @@ cited, cached per term and language; "Ask about it" starts a follow-up.
    firing); "other crafts that share this" with links; a graph view for researchers.
 8. **Local measures converter.** Recipes in local units converted to metric with the region and the
    source of each conversion.
-9. **Artisan voices.** Consented quotes from field interviews about the craft, and process
-   photographs, published and credited to the artisan and the workshop, never with contact or
-   identity details. The owner confirmed on 2026-11-17 that consent covers all existing
-   transcriptions and approved publishing on 2026-11-18. Source: the documentation portal's signed
-   field voices routes (`docs/contracts/field-voices.md`, decision 0072), which send only what
-   holds a publication grant. This replaces the first design, which pulled the transcript export
-   (`GET /api/data/transcripts/recordings.ndjson` and `turns.ndjson`) signed in with each portal's
-   master account. A nightly KalaVigyan job reads them, stores each recording as a
-   `FIELD_TESTIMONY` source linked to its crafts, and indexes the quotes for retrieval and for the
-   artisan seat of the expert panel. The portal work is listed at the end of the contract.
+9. **Artisan voices.** The transcripts and craft images of both portals (the designer portal and
+   the documentation portal), credited to the artisan or designer by the name the portal records,
+   the workshop and the date, never with contact or identity details. The owner stated on
+   2026-11-18 that everything in those applications is already consented for. Source: each
+   portal's signed field voices routes (`docs/contracts/field-voices.md` version 2, decisions 0084
+   and 0091). A nightly KalaVigyan job reads them by cursor, applies tombstones, stores each
+   recording as a `FIELD_TESTIMONY` source with public quote chunks and signed-in transcript chunks,
+   and each image as credited media; quotes join stored-knowledge retrieval and the craft page; the
+   full transcript is for signed-in readers. Built in KalaVigyan; the portal side is listed at the
+   end of the contract.
 10. **Designs from the workshops.** Prototypes and designs from designer-portal workshops for the
-    craft, as their sharing settings allow. Needs a peer route in the portals (section 7).
+    craft. The images arrive with feature 9 (prototypes, sketches, iterations, final products);
+    the design records themselves still need a peer route in the portals (section 7).
 11. **Lesson builder.** Professors turn an explainer into a lesson pack: slides, reading list, quiz;
     export PPTX and PDF.
 12. **Climate and risk.** Rainfall and temperature trends per district, groundwater notes where open
@@ -402,8 +403,9 @@ portal routes exist; the curation run one to two days of background running.
 
 ## 7. Dependencies
 
-- **Portal routes** for feature 9: the documentation portal's field voices routes and its
-  publication consent (`docs/contracts/field-voices.md`); no portal password is needed.
+- **Portal routes** for feature 9: both portals' field voices routes (`docs/contracts/field-voices.md`
+  version 2); no portal password, session or two-step code is ever used, which supersedes the sync
+  account of section 8.
 - **Feature 10** (designs): deferred until the workshops hold designs.
 - **Keys:** Brave (web search fallback and image results) and Semantic Scholar improve research;
   neither blocks.
@@ -421,9 +423,9 @@ portal routes exist; the curation run one to two days of background running.
   district, state) where it matters to the answer. Phone numbers, email addresses and identity
   numbers are never shown.
 - **O5. Local units:** only conversions a source states for that region are shown.
-- **Sync account:** the nightly transcript sync signs in with each portal's master account, the same
-  as the Research app. Its credentials live only in KalaVigyan's Parameter Store, and the sync makes
-  read-only calls.
+- **Sync account (superseded 2026-11-18):** no sync account exists. The nightly field voices sync
+  reads only the portals' signed peer routes with `CROSS_PORTAL_TOKEN` and never uses, requests or
+  stores any person's sign-in credentials, sessions or two-step codes (decisions 0084 and 0091).
 - **Feature 10 (designs from the workshops):** deferred; the workshops hold no designs yet.
 
 ## 8a. Production findings phase A must fix (E2E run 43959098727, 2026-11-17)

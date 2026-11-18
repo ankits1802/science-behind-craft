@@ -12,12 +12,13 @@ from .fields import CRAFT_SLUG_PATTERN
 from .limits import PICTURES_MAX
 from .overview import Overview
 from .parts import Claim, Conflict, OpenQuestion, Search, Source
-from .records import EnvironmentLink, Market, Picture, Term
+from .records import EnvironmentLink, Market, NativeName, Picture, Term
 from .vocabulary import CURATOR, DOSSIER_SCHEMA_VERSION, CoverageClass, Scope
 
 __all__ = [
     "CATEGORY_SCOPE",
     "DOSSIER_SCHEMA_TITLE",
+    "MIGRATE_COMMAND",
     "Dossier",
     "dossier_json_schema",
     "dossier_schema_text",
@@ -26,10 +27,11 @@ __all__ = [
 
 DOSSIER_SCHEMA_TITLE = "KalaVigyan curated craft dossier"
 CATEGORY_SCOPE = "CATEGORY"
+MIGRATE_COMMAND = "python tools/curation/migrate.py"
 
 
 class Dossier(ContractModel):
-    schema_version: Literal[1] = DOSSIER_SCHEMA_VERSION
+    schema_version: Literal[2] = DOSSIER_SCHEMA_VERSION
     craft_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN, max_length=200)
     category_slug: str | None = Field(default=None, pattern=CRAFT_SLUG_PATTERN, max_length=200)
     scope: Scope = "CRAFT"
@@ -52,7 +54,19 @@ class Dossier(ContractModel):
     conflicts: list[Conflict] = Field(default_factory=list)
     open_questions: list[OpenQuestion] = Field(default_factory=list)
     pictures: list[Picture] = Field(default_factory=list, max_length=PICTURES_MAX)
+    native_names: list[NativeName] = Field(default_factory=list)
     overview: Overview
+
+    @model_validator(mode="before")
+    @classmethod
+    def _current_schema(cls, data: Any) -> Any:
+        version = data.get("schemaVersion") if isinstance(data, dict) else None
+        if isinstance(version, int) and not isinstance(version, bool) and version < DOSSIER_SCHEMA_VERSION:
+            raise ValueError(
+                f"schemaVersion {version} is no longer read; run {MIGRATE_COMMAND} to rewrite the dossier "
+                f"as schema {DOSSIER_SCHEMA_VERSION}"
+            )
+        return data
 
     @model_validator(mode="after")
     def _one_slug_for_its_scope(self) -> Self:

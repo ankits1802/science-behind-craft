@@ -17,6 +17,7 @@ from app.core.logging import request_id_scope
 from app.models import Answer, Craft, KnowledgePiece as PieceRow, User
 from app.research.crafts import CraftRef
 from app.research.planning import withheld_name
+from app.research.reading_style import ReadingStyle
 from app.research.understanding import Understanding
 from app.research.vocabulary import CANONICAL_LANGUAGE
 
@@ -57,6 +58,7 @@ class StaleGroup:
     asks: int
     seats: tuple[str, ...] = ()
     withheld_terms: tuple[str, ...] = ()
+    reading_style: ReadingStyle | None = None
 
 
 @dataclass
@@ -102,6 +104,7 @@ async def stale_groups(
         select(
             PieceRow.facet,
             PieceRow.depth,
+            PieceRow.readingStyle,
             Answer.question,
             Answer.understanding,
             User.name.label("askerName"),
@@ -154,6 +157,7 @@ async def rebuild_group(group: StaleGroup, pipeline: AnswerPipeline) -> str:
         craft_slug=group.craft.slug,
         withheld_terms=group.withheld_terms,
         fresh=True,
+        reading_style=group.reading_style,
     )
     with request_id_scope(f"{PIECE_REBUILD_TAG}{uuid.uuid4().hex}"):
         await answer_understood(ask, rebuild_understanding(group), replace(pipeline, lede=LedeTools()), emit)
@@ -181,6 +185,7 @@ def _group(row: Any) -> StaleGroup:
         asks=row.asks,
         seats=_seats(row.understanding, row.depth),
         withheld_terms=withheld_name(row.askerName),
+        reading_style=row.readingStyle,
     )
 
 

@@ -4,6 +4,8 @@ locals {
   account_id      = data.aws_caller_identity.current.account_id
   env_param_path  = "/${var.project}/env"
   env_param_arn   = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter${local.env_param_path}"
+  e2e_param_path  = "/${var.project}/e2e"
+  e2e_param_arn   = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter${local.e2e_param_path}"
   run_shell_doc   = "arn:aws:ssm:${var.aws_region}::document/AWS-RunShellScript"
   oidc_provider   = "token.actions.githubusercontent.com"
   oidc_provider_a = "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"
@@ -98,6 +100,12 @@ resource "aws_iam_role_policy" "box" {
           "ssm:GetParameter",
         ]
         Resource = [local.env_param_arn, "${local.env_param_arn}/*"]
+      },
+      {
+        Sid      = "ReadE2EAccountParameters"
+        Effect   = "Allow"
+        Action   = "ssm:GetParameters"
+        Resource = "${local.e2e_param_arn}/*"
       },
     ]
   })

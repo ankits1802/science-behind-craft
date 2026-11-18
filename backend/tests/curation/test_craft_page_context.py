@@ -124,12 +124,19 @@ def test_materials_carry_their_botanical_name_and_compound(ajrakh: CraftPage) ->
     assert (items["Caustic soda"].botanical_name, items["Caustic soda"].pubchem_cid) == (None, 14798)
 
 
+def masthead_picture() -> dict[str, Any]:
+    (placed,) = [p for p in raw(AJRAKH)["pictures"] if (p.get("placement") or {}).get("role") == "MASTHEAD"]
+    return placed
+
+
 def test_one_hero_leads_the_pictures(ajrakh: CraftPage) -> None:
     roles = [picture.role for picture in ajrakh.pictures]
     assert roles.count("HERO") == 1
     hero = next(picture for picture in ajrakh.pictures if picture.role == "HERO")
-    assert hero.media.image_url == raw(AJRAKH)["pictures"][0]["url"]
-    assert set(roles) - {"HERO"} == {"OVERVIEW"}
+    assert hero.media.image_url == masthead_picture()["url"]
+    staged = [picture for picture in raw(AJRAKH)["pictures"] if picture.get("stageId")]
+    assert roles.count("STAGE") == len(staged)
+    assert set(roles) - {"HERO", "STAGE"} == {"OVERVIEW"}
 
 
 def test_the_environment_story_follows_the_dossier(ajrakh: CraftPage) -> None:
@@ -192,12 +199,14 @@ def test_the_richest_relative_comes_first() -> None:
 
 
 def test_sources_are_numbered_in_reading_order(ajrakh: CraftPage) -> None:
-    claims = {claim.id: claim for claim in ajrakh.claims}
-    first = claims[ajrakh.overview.lede[0].claim_ids[0]].citations[0].source_id
-    assert ajrakh.sources[0].id == first
-    referenced = set(ajrakh.referenced_claim_ids())
-    shown = {citation.source_id for claim_id in referenced for citation in claims[claim_id].citations}
-    assert {source.id for source in ajrakh.sources[: len(shown)]} == shown
+    gi = ajrakh.masthead.gi.citations if ajrakh.masthead.gi else []
+    plate = ajrakh.masthead.picture.sentences if ajrakh.masthead.picture else []
+    lede = [citation for sentence in [*plate, *ajrakh.lede] for citation in sentence.citations]
+    first = [citation.source_id for citation in [*gi, *lede]]
+    numbered = [source.id for source in ajrakh.sources]
+    assert numbered[: len(dict.fromkeys(first))] == list(dict.fromkeys(first))
+    shown = {citation.source_id for citation in ajrakh.shown_citations(kin=True)}
+    assert set(numbered[: len(shown)]) == shown
 
 
 def test_a_glossary_term_is_never_taken_for_the_crafts_own_name() -> None:
@@ -213,7 +222,10 @@ def test_a_glossary_term_is_never_taken_for_the_crafts_own_name() -> None:
 
 def test_a_craft_known_only_to_the_register_gets_a_complete_page() -> None:
     page = CraftPage.model_validate(golden_json(REGISTER_GOLDEN))
-    assert (page.curated, page.depth.basis, page.claims, page.sources) == (False, "REGISTER", [], [])
+    assert (page.curated, page.depth.basis, page.claims) == (False, "REGISTER", [])
+    assert {(source.group, source.from_.slug if source.from_ else None) for source in page.sources} == {
+        ("KIN", AJRAKH)
+    }
     assert (page.craft.slug, page.craft.family_label, page.craft.kind_label) == (
         "Farrukhabad-Prints",
         "Textiles",
@@ -230,7 +242,7 @@ def test_a_craft_known_only_to_the_register_gets_a_complete_page() -> None:
     assert (page.gi_card.status, page.gi_card.claim_ids) == ("GI", [])
     first = page.same_family[0]
     assert (first.craft.slug, first.basis, first.coverage) == (AJRAKH, "CURATED", "FULL")
-    assert first.hero is not None and first.hero.media.image_url == raw(AJRAKH)["pictures"][0]["url"]
+    assert first.hero is not None and first.hero.media.image_url == masthead_picture()["url"]
     assert first.lede is not None and first.lede.text == raw(AJRAKH)["overview"]["lede"][0]["text"]
     assert len(page.same_family) == 6
 

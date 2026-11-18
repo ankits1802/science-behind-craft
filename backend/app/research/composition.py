@@ -20,6 +20,7 @@ from .quotes import (
     trivial_quote,
     unsupported_figures,
 )
+from .reading_style import ReadingStyle
 from .vocabulary import (
     CANONICAL_LANGUAGE,
     AnswerLanguage,
@@ -37,6 +38,8 @@ __all__ = [
     "HEADING_MAX_CHARS",
     "LEDE_SENTENCES_MAX",
     "LEDE_SENTENCES_MIN",
+    "SECTION_SENTENCES_DEFAULT",
+    "SECTION_SENTENCES_LIMIT",
     "SENTENCE_MAX_CHARS",
     "VIOLATION_KINDS",
     "ComposeCandidate",
@@ -64,6 +67,8 @@ COMPOSE_RETRIES = 1
 SENTENCE_MAX_CHARS = 600
 HEADING_MAX_CHARS = 120
 FOLLOW_UPS_MAX = 5
+SECTION_SENTENCES_DEFAULT = 8
+SECTION_SENTENCES_LIMIT = 24
 LEDE_SENTENCES_MIN = 2
 LEDE_SENTENCES_MAX = 3
 CANDIDATE_KINDS = ("CLAIM", "EVIDENCE")
@@ -130,6 +135,7 @@ class ComposeFocus(ContractModel):
     discipline: Discipline
     title: str = Field(min_length=1, max_length=HEADING_MAX_CHARS)
     stages: list[StageOption] = Field(default_factory=list)
+    sentences_max: int = Field(default=SECTION_SENTENCES_DEFAULT, ge=1, le=SECTION_SENTENCES_LIMIT)
 
     @model_validator(mode="after")
     def _stages_once_each(self) -> Self:
@@ -145,6 +151,7 @@ class ComposeRequest(ContractModel):
     candidates: list[ComposeCandidate] = Field(default_factory=list)
     searched: ResearchSummary
     focus: ComposeFocus | None = None
+    style: ReadingStyle | None = None
 
     @field_validator("language")
     @classmethod
@@ -220,6 +227,7 @@ class LedeRequest(ContractModel):
     craft: CraftRef | None
     candidates: list[ComposeCandidate] = Field(default_factory=list)
     sections: list[LedeSection] = Field(default_factory=list)
+    style: ReadingStyle | None = None
 
     @model_validator(mode="after")
     def _stored_claims_once_each(self) -> Self:

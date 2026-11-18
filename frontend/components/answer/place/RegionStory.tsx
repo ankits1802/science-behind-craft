@@ -6,6 +6,8 @@ import { RotateCcw } from "lucide-react";
 import { MapPlaceholder } from "@/components/answer/place/MapPlaceholder";
 import { RiverStage, type StageFocus } from "@/components/answer/place/RiverStage";
 import { StoryKey, StoryLayerPicker } from "@/components/answer/place/StoryKey";
+import { shownLayerFill, storyLayerInView } from "@/components/answer/place/storyLayer";
+import { StoryLayerReadout } from "@/components/answer/place/StoryLayerReadout";
 import { storyGeometry, storyTone, type StoryGeometry } from "@/components/answer/place/storyGeometry";
 import { StorySteps } from "@/components/answer/place/StorySteps";
 import { useRiverFlow, type RiverFlow } from "@/components/answer/place/useRiverFlow";
@@ -13,15 +15,14 @@ import { useStoryLayer, type StoryLayer } from "@/components/answer/place/useSto
 import { DatasetCredit } from "@/components/DatasetCredit";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { useRemote, type Remote } from "@/components/hooks/useRemote";
-import { choroplethTone } from "@/components/map/ChoroplethLegend";
-import { NO_DATA_TONE, type DistrictFill } from "@/components/map/DistrictLayer";
+import type { DistrictFill } from "@/components/map/DistrictLayer";
+import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { MapAttribution } from "@/components/map/MapAttribution";
-import { LayerStatus } from "@/components/map/MapLayerView";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
 import { RetryLine } from "@/components/RemotePanels";
 import { HYDRORIVERS_DATASET_CODE, type RegionStoryBlock, type RiverPath } from "@/lib/explainerPlace";
 import { boundaryNote, datasetRow, isGone } from "@/lib/placeView";
-import { layerFills } from "@/lib/regionView";
+import type { MapLayer } from "@/lib/regionContract";
 import { ALL_PASSED, missingReaches, playingStep, storySummary } from "@/lib/regionStory";
 import { fetchRiverBasin, type RiverBasin } from "@/lib/riverTopology";
 import { ShapeError } from "@/lib/shape";
@@ -40,18 +41,26 @@ function useStoryBasin(river: RiverPath | null): Remote<RiverBasin> {
   return useRemote(mainRiv === null ? null : load);
 }
 
-function useStoryFill(geometry: StoryGeometry | null, story: StoryLayer, passed: number): DistrictFill {
+function useStoryFill(geometry: StoryGeometry | null, story: StoryLayer, passed: number): { fillOf: DistrictFill; shown: MapLayer | null } {
   const data = story.layer.data;
-  const fills = useMemo(() => (data ? layerFills(data) : null), [data]);
-  return useCallback(
+  const shown = useMemo(() => (data && geometry ? storyLayerInView(geometry, data) : null), [data, geometry]);
+  const layered = useMemo(() => (shown ? shownLayerFill(shown) : null), [shown]);
+  const fillOf = useCallback(
     (shape: DistrictShape) => {
-      if (data && fills) {
-        const index = fills.get(shape.lgd);
-        return index === undefined ? NO_DATA_TONE : choroplethTone(index, data.classes.length);
-      }
+      if (layered) return layered(shape);
       return geometry ? storyTone(geometry, shape.lgd, passed) : null;
     },
-    [data, fills, geometry, passed]
+    [layered, geometry, passed]
+  );
+  return { fillOf, shown };
+}
+
+function StoryLocator({ block, geometry }: { block: RegionStoryBlock; geometry: StoryGeometry }) {
+  const marked = useMemo(() => [...geometry.districts.values()].map((district) => district.shape), [geometry]);
+  return (
+    <div className={LOCATOR_INSET} data-testid="story-locator">
+      <IndiaLocator marked={marked} frame={geometry.view} label={locatorLabel(block.districts)} />
+    </div>
   );
 }
 
@@ -80,7 +89,7 @@ export function RegionStory({ block }: { block: RegionStoryBlock }) {
   const flow = useRiverFlow(frameRef, geometry?.thresholds ?? NO_THRESHOLDS, { expected, drawn: Boolean(geometry?.river) }, reduce);
   const story = useStoryLayer(block.layers);
   const [selected, setSelected] = useState<number | null>(null);
-  const fillOf = useStoryFill(geometry, story, flow.passed);
+  const { fillOf, shown } = useStoryFill(geometry, story, flow.passed);
   const fractions = geometry?.fractions ?? block.steps.map(() => ALL_PASSED);
   const step = selected ?? playingStep(fractions, flow.passed);
   const focus: StageFocus = {
@@ -99,10 +108,14 @@ export function RegionStory({ block }: { block: RegionStoryBlock }) {
         <figure ref={frameRef} className="min-w-0 lg:sticky lg:top-24">
           <StoryTools story={story} flow={flow} base={block.river ? "Water" : "Districts"} />
           {shapes.failure ? <RetryLine message="Couldn't load the map." onRetry={shapes.retry} /> : null}
-          {geometry ? <RiverStage geometry={geometry} flow={flow} fillOf={fillOf} focus={focus} summary={storySummary(block)} /> : waiting && !shapes.failure ? <MapPlaceholder /> : null}
-          {geometry ? <StoryKey block={block} geometry={geometry} layered={story.layer.data !== null} /> : null}
+          {geometry ? (
+            <RiverStage geometry={geometry} flow={flow} fillOf={fillOf} focus={focus} summary={storySummary(block)} inset={<StoryLocator block={block} geometry={geometry} />} />
+          ) : waiting && !shapes.failure ? (
+            <MapPlaceholder />
+          ) : null}
+          {geometry ? <StoryKey block={block} geometry={geometry} layered={shown !== null} /> : null}
           {basin.failure && !isGone(basin.failure) ? <RetryLine message="Couldn't load the river." onRetry={basin.retry} className="mt-3" /> : null}
-          {story.chosen ? <LayerStatus layer={story.layer} shapes={shapes} /> : null}
+          <StoryLayerReadout block={block} story={story} shown={shown} shapes={shapes} />
           {geometry?.river && hydro ? (
             <div className="mt-3">
               <DatasetCredit dataset={hydro} />

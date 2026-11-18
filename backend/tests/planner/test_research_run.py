@@ -127,7 +127,7 @@ async def test_deep_reads_open_access_full_text_and_follows_cited_dois() -> None
     fetcher = FakeFetcher({OPEN_COPY: full_text})
     sources = LiveSources(searchers=(openalex, web), fetcher=fetcher, locator=locator, doi_source=crossref)
     pack = await planner(sources).research(request("DEEP"))
-    assert pack.plan.mode == "DEEP" and pack.plan.max_fetches == 20
+    assert pack.plan.mode == "DEEP" and pack.plan.max_fetches == 48
     assert ids(pack.evidence) == [W1.id, P1.id, "crossref:10.2000/ref.1"]
     reference = pack.evidence[2]
     assert (reference.followed_from, reference.facet_indexes, reference.found_by) == (

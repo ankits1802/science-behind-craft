@@ -6,7 +6,6 @@ from typing import Any
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.geo.places import MASTER_LIST_LEVEL
 from app.models import (
     AdminDistrict,
     AdminState,
@@ -15,11 +14,7 @@ from app.models import (
     Concept,
     ConceptEdge,
     Craft,
-    CraftCategory,
     CraftLocation,
-    CraftSubCategory,
-    Process,
-    ProcessStage,
     Source,
 )
 from app.research.retrieval import (
@@ -39,8 +34,6 @@ from app.retrieval.statements import (
 )
 from app.retrieval.text import or_tsquery
 
-PROFILE_MODE = "HYBRID"
-MATERIAL_TYPES = ("MATERIAL", "TOOL")
 STAGE_TYPE = "PROCESS_STAGE"
 EDGE_SECTION = "RELATIONS"
 SECTION_HEADINGS = {
@@ -143,6 +136,11 @@ def order_claims(claims: Iterable[ClaimView]) -> list[ClaimView]:
 
 async def resolve_craft(session: AsyncSession, slug: str) -> Craft | None:
     craft = (await session.execute(select(Craft).where(Craft.slug == slug))).scalar_one_or_none()
+    if craft is None:
+        folded = (
+            await session.scalars(select(Craft).where(func.lower(Craft.slug) == slug.lower()).limit(2))
+        ).all()
+        craft = folded[0] if len(folded) == 1 else None
     hops = 0
     while craft is not None and craft.status == "MERGED" and craft.mergedIntoId and hops < 5:
         craft = await session.get(Craft, craft.mergedIntoId)
@@ -284,145 +282,6 @@ async def state_points(session: AsyncSession) -> dict[str, dict[str, Any]]:
     return {
         name.casefold(): {"lgd": lgd, "name": name, "latitude": lat, "longitude": lon}
         for lgd, name, lat, lon in rows
-    }
-
-
-async def craft_locations(session: AsyncSession, craft: Craft) -> list[dict[str, Any]]:
-    out: list[dict[str, Any]] = []
-    rows = (
-        await session.execute(
-            select(
-                CraftLocation,
-                AdminState.name,
-                AdminDistrict.name,
-                func.ST_Y(func.coalesce(func.geometry(CraftLocation.geom), AdminDistrict.centroid)),
-                func.ST_X(func.coalesce(func.geometry(CraftLocation.geom), AdminDistrict.centroid)),
-            )
-            .outerjoin(AdminState, AdminState.lgd == CraftLocation.stateLgd)
-            .outerjoin(AdminDistrict, AdminDistrict.lgd == CraftLocation.districtLgd)
-            .where(CraftLocation.craftId == craft.id)
-        )
-    ).all()
-    seen_states: set[str] = set()
-    for location, state_name, district_name, lat, lon in rows:
-        if state_name:
-            seen_states.add(state_name.casefold())
-        out.append(
-            {
-                "id": str(location.id),
-                "precision": location.precision,
-                "placeLabel": location.placeLabel or district_name or state_name or craft.name,
-                "stateName": state_name,
-                "districtName": district_name,
-                "latitude": lat,
-                "longitude": lon,
-                "level": location.evidenceLevel,
-            }
-        )
-    states = await state_points(session)
-    for name in craft.stateOfPractice or []:
-        point = states.get(str(name).casefold())
-        if point is None or point["name"].casefold() in seen_states:
-            continue
-        seen_states.add(point["name"].casefold())
-        out.append(
-            {
-                "id": f"state-{point['lgd']}",
-                "precision": "STATE",
-                "placeLabel": point["name"],
-                "stateName": point["name"],
-                "districtName": None,
-                "latitude": point["latitude"],
-                "longitude": point["longitude"],
-                "level": MASTER_LIST_LEVEL,
-            }
-        )
-    return out
-
-
-async def craft_profile(
-    session: AsyncSession, craft: Craft, *, acls: Sequence[str] = OPEN_CHUNK_ACLS
-) -> dict[str, Any]:
-    names = (
-        await session.execute(
-            select(CraftSubCategory.name, CraftCategory.name)
-            .join(CraftCategory, CraftCategory.id == CraftSubCategory.categoryId)
-            .where(CraftSubCategory.id == craft.subCategoryId)
-        )
-    ).first()
-    concepts = await craft_concepts(session, craft)
-    claims, sources = await claims_for(session, craft, mode=PROFILE_MODE, acls=acls)
-    stage_rows = (
-        (
-            await session.execute(
-                select(ProcessStage)
-                .join(Process, Process.id == ProcessStage.processId)
-                .where(Process.craftId == craft.id)
-                .order_by(Process.name, ProcessStage.ordinal)
-            )
-        )
-        .scalars()
-        .all()
-    )
-    stage_concepts = {stage.conceptId for stage in stage_rows if stage.conceptId}
-    material_concepts = sorted(
-        (c for c in concepts if c.type in MATERIAL_TYPES), key=lambda c: (c.type, c.name.casefold())
-    )
-    material_ids = {c.id for c in material_concepts}
-    by_concept: dict[uuid.UUID | None, list[ClaimView]] = {}
-    for view in claims:
-        by_concept.setdefault(view.concept_id, []).append(view)
-
-    def facet(concept_id: uuid.UUID | None) -> list[dict[str, Any]]:
-        return [view.payload() for view in order_claims(by_concept.get(concept_id, []))]
-
-    overview = [
-        view.payload()
-        for view in order_claims(
-            v
-            for v in claims
-            if v.concept_type == EDGE_SECTION
-            or (v.concept_id not in stage_concepts and v.concept_id not in material_ids)
-        )
-    ]
-    stages = [
-        {
-            "id": str(stage.id),
-            "ordinal": stage.ordinal,
-            "name": stage.name,
-            "stageType": stage.stageType,
-            "durationText": stage.durationText,
-            "claims": facet(stage.conceptId) if stage.conceptId else [],
-        }
-        for stage in stage_rows
-    ]
-    materials = [
-        {"id": str(c.id), "name": c.name, "description": c.description, "claims": facet(c.id)}
-        for c in material_concepts
-    ]
-    cited: list[str] = []
-    for view in claims:
-        for cite in view.citations:
-            if cite["sourceId"] not in cited:
-                cited.append(cite["sourceId"])
-    return {
-        "craft": {
-            **craft_ref(craft),
-            "id": str(craft.id),
-            "localName": craft.localName,
-            "giStatus": craft.giStatus,
-            "stateOfPractice": list(craft.stateOfPractice or []),
-            "stateOfOrigin": list(craft.stateOfOrigin or []),
-            "description": craft.description,
-            "categoryName": names[1] if names else craft.category,
-            "subCategoryName": names[0] if names else None,
-        },
-        "overview": overview,
-        "locations": await craft_locations(session, craft),
-        "stages": stages,
-        "materials": materials,
-        "science": [],
-        "sources": [source_ref(sources[uuid.UUID(sid)]) for sid in cited],
     }
 
 

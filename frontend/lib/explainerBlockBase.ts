@@ -1,6 +1,6 @@
-import { answerSentenceShape, HTTPS_URL, INSTANT, UUID } from "@/lib/answerShapes";
+import { answerSentenceShape, citationShape, HTTPS_URL, INSTANT, UUID } from "@/lib/answerShapes";
 import { integer, list, matching, nullable, object, oneOf, ShapeError, text, type Shape } from "@/lib/shape";
-import type { AnswerSentence } from "@/lib/types";
+import type { AnswerSentence, Citation } from "@/lib/types";
 
 export const DISCIPLINES = [
   "OVERVIEW",
@@ -25,6 +25,7 @@ export type Discipline = (typeof DISCIPLINES)[number];
 export type TermSpan = { text: string; termKey: string };
 export type ExplainerSentence = AnswerSentence & { terms: TermSpan[] };
 export type ReuseMarker = { pieceId: string; storedAt: string };
+export type LadderCondition = { label: string; stated: string; citations: Citation[] };
 export type BlockEnvelope<K extends string> = { id: string; kind: K; version: 1; reuse: ReuseMarker | null };
 export type MediaRef = {
   id: string;
@@ -50,6 +51,7 @@ export const TERM_KEY = matching(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "a term key");
 export const WIKIDATA_ID = matching(/^Q[1-9]\d*$/, "a Wikidata id");
 
 export const termSpanShape: Shape<TermSpan> = object<TermSpan>({ text, termKey: TERM_KEY });
+export const ladderConditionShape: Shape<LadderCondition> = object<LadderCondition>({ label: text, stated: text, citations: list(citationShape, 1) });
 
 export const mediaRefShape: Shape<MediaRef> = object<MediaRef>({
   id: UUID,

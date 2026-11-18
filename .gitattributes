@@ -8,3 +8,4 @@
 *.otf binary
 *.pdf binary
 *.parquet binary
+*.webp binary

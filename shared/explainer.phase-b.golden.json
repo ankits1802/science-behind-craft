@@ -345,6 +345,25 @@
                   "evidence": "QUOTED",
                   "level": "PROVISIONAL"
                 }
+              ],
+              "stage": "Kut (iron-black printing)",
+              "conditions": [
+                {
+                  "label": "Fermenting the iron paste",
+                  "stated": "ten to fifteen days",
+                  "citations": [
+                    {
+                      "id": "bbda0126-cff0-5edb-b58b-1b9ee4f8bc1a",
+                      "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+                      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                      "quote": "Kut printing is usually undertaken in the afternoon.The kut is a smooth finer paste made from jaggery, or molasses, in which scrap iron such as horse-hoes and besan (gram flour) have been fermented for ten to fifteen days.",
+                      "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                      "context": null,
+                      "evidence": "QUOTED",
+                      "level": "PROVISIONAL"
+                    }
+                  ]
+                }
               ]
             },
             {
@@ -416,7 +435,8 @@
                   "evidence": "QUOTED",
                   "level": "PROVISIONAL"
                 }
-              ]
+              ],
+              "stage": "Indigo dyeing (kun me burana)"
             },
             {
               "reactionId": "e6df0432-d41b-5ad2-aded-4ff814786935",
@@ -486,6 +506,43 @@
                   "context": null,
                   "evidence": "QUOTED",
                   "level": "PROVISIONAL"
+                }
+              ],
+              "stage": "Indigo dyeing (kun me burana)",
+              "colours": [
+                {
+                  "side": "BEFORE",
+                  "colour": "GREEN",
+                  "stated": "At first bright green, the cloth rapidly becomes blue",
+                  "citations": [
+                    {
+                      "id": "b07d4901-bd3a-5371-9c26-335792e34e39",
+                      "claimId": "90d52dfd-901a-5287-b34a-16498a1a1912",
+                      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                      "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                      "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                      "context": null,
+                      "evidence": "QUOTED",
+                      "level": "PROVISIONAL"
+                    }
+                  ]
+                },
+                {
+                  "side": "AFTER",
+                  "colour": "BLUE",
+                  "stated": "At first bright green, the cloth rapidly becomes blue",
+                  "citations": [
+                    {
+                      "id": "b07d4901-bd3a-5371-9c26-335792e34e39",
+                      "claimId": "90d52dfd-901a-5287-b34a-16498a1a1912",
+                      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                      "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                      "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                      "context": null,
+                      "evidence": "QUOTED",
+                      "level": "PROVISIONAL"
+                    }
+                  ]
                 }
               ]
             },
@@ -561,7 +618,311 @@
                   "evidence": "QUOTED",
                   "level": "PROVISIONAL"
                 }
+              ],
+              "stage": "Red dyeing (rang) with madder or alizarin",
+              "conditions": [
+                {
+                  "label": "Red dye bath",
+                  "stated": "up to four hours",
+                  "citations": [
+                    {
+                      "id": "244a9196-0787-5a14-ad11-ed7d5ae200da",
+                      "claimId": "cd8140e6-98fc-5882-b261-766e143dd8c2",
+                      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                      "quote": "Dyeing the purest reds continues for up to four hours.",
+                      "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                      "context": null,
+                      "evidence": "QUOTED",
+                      "level": "PROVISIONAL"
+                    }
+                  ]
+                }
+              ],
+              "colours": [
+                {
+                  "side": "AFTER",
+                  "colour": "RED",
+                  "stated": "develops red",
+                  "citations": [
+                    {
+                      "id": "59e42547-3723-53f0-b468-8af16d07504c",
+                      "claimId": "542cae98-9a85-5410-a375-69334290d130",
+                      "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                      "quote": "This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design, where Pa, Gach pastes have been printed.",
+                      "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                      "context": null,
+                      "evidence": "QUOTED",
+                      "level": "PROVISIONAL"
+                    }
+                  ]
+                }
               ]
+            }
+          ],
+          "notes": [
+            {
+              "reactionId": "d2e727af-a1bd-55a8-a151-f1aff8414e61",
+              "sentence": {
+                "id": "s4.b1.1",
+                "text": "Ajrakh colours come from indigo, madder and iron acetate.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "f5e2ff39-d761-5d50-bcff-34138c663abe",
+                    "claimId": "feaa25b3-b79c-59ce-9c6b-1a841c7e12ed",
+                    "sourceId": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+                    "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3).",
+                    "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "d2e727af-a1bd-55a8-a151-f1aff8414e61",
+              "sentence": {
+                "id": "s4.b1.2",
+                "text": "Kut is made from jaggery or molasses in which scrap iron such as horseshoes and gram flour have been fermented for ten to fifteen days; the iron-water is mixed with tree gum.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "bbda0126-cff0-5edb-b58b-1b9ee4f8bc1a",
+                    "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Kut printing is usually undertaken in the afternoon.The kut is a smooth finer paste made from jaggery, or molasses, in which scrap iron such as horse-hoes and besan (gram flour) have been fermented for ten to fifteen days.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "d2e727af-a1bd-55a8-a151-f1aff8414e61",
+              "sentence": {
+                "id": "s4.b1.3",
+                "text": "On a Met Indian block-printed fragment, iron acetate made from fermented scrap iron, together with myrobalan tannin, formed a corrosive dye that caused fibre loss.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "20ef34b8-306d-53a1-8a4f-57ef6b92b628",
+                    "claimId": "6401aedc-bb18-5c46-914b-c614fdec277e",
+                    "sourceId": "8a32aea5-44f7-5a50-942b-97534f0e5d8e",
+                    "quote": "The darker shade of purple at the center of the leaves was block printed with a paste of iron acetate made of fermented scrap iron, which together with the myrobalan tannin created the corrosive dye that caused fiber loss.",
+                    "locator": "§ \"Indian Block-Printed Textiles: Past and Present\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "c33b87a8-1dc1-5040-a4dc-07a182f52911",
+              "sentence": {
+                "id": "s4.b1.4",
+                "text": "Indigo can be natural (Indigofera tinctoria) or synthetic 'German' indigo; natural indigo is fermented with lime, dates and soda; synthetic indigo often has 'Hydros' added.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "51bfc60f-8b8b-54f8-8f27-4b7cab358fa4",
+                    "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "c33b87a8-1dc1-5040-a4dc-07a182f52911",
+              "sentence": {
+                "id": "s4.b1.5",
+                "text": "Indigo is not soluble in water whereas leucoindigo is; indigo is transformed to leucoindigo by indigo-reducing bacteria.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "d4702aa6-01c0-5374-b4ef-c9d6ff878739",
+                    "claimId": "a5761723-d8b3-5547-aa5c-919a865593de",
+                    "sourceId": "48309f78-3f0e-511e-a874-703135c913a6",
+                    "quote": "Indigo is transformed to leucoindigo by the action of indigo-reducing bacteria (indigo → leucoindigo) ( Figure 1 ). Although indigo is not soluble in water, leucoindigo is soluble in water.",
+                    "locator": "§ \"Introduction\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "c33b87a8-1dc1-5040-a4dc-07a182f52911",
+              "sentence": {
+                "id": "s4.b1.6",
+                "text": "Indigo is reduced to soluble 'indigo white' for dyeing and fixed to the fibre by air oxidation.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "ae32c96b-8c5d-544d-b6a3-1771f1b4e2d2",
+                    "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+                    "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+                    "quote": "On oxidisation, indigo white is converted into granules of indigo blue which has then to be reduced through fermentation into soluble indigo white, before dyeing can begin.",
+                    "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "e6df0432-d41b-5ad2-aded-4ff814786935",
+              "sentence": {
+                "id": "s4.b1.7",
+                "text": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye on the fibres.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "b07d4901-bd3a-5371-9c26-335792e34e39",
+                    "claimId": "90d52dfd-901a-5287-b34a-16498a1a1912",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "e6df0432-d41b-5ad2-aded-4ff814786935",
+              "sentence": {
+                "id": "s4.b1.8",
+                "text": "Dyed textiles are briefly exposed to air to oxidise leucoindigo back to indigo.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "f6057a5d-5586-5a32-a3ab-7f0120f4509a",
+                    "claimId": "00cedcde-83f0-541b-91ab-27b13ffb72b5",
+                    "sourceId": "48309f78-3f0e-511e-a874-703135c913a6",
+                    "quote": "Therefore, leucoindigo penetrates textiles dipped in indigo fermentation fluid, followed by a brief exposure to air to oxidize leucoindigo (leucoindigo → indigo).",
+                    "locator": "§ \"Introduction\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da",
+              "sentence": {
+                "id": "s4.b1.9",
+                "text": "Alizarin crystals or steeped madder roots are heated in a copper pot; dyeing the purest reds continues for up to four hours.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "bcc71322-675e-51c1-b19c-84258612d340",
+                    "claimId": "cd8140e6-98fc-5882-b261-766e143dd8c2",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Red Dyeing:- Alizarin crystals or the crushed and steeped roots of majeeta or Indian Madder are gently heated in a large copper pot.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da",
+              "sentence": {
+                "id": "s4.b1.10",
+                "text": "Indian madder roots (Rubia cordifolia), locally majeeta, link to the alum mordant on cotton to develop red where pa and gach were printed.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "59e42547-3723-53f0-b468-8af16d07504c",
+                    "claimId": "542cae98-9a85-5410-a375-69334290d130",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design, where Pa, Gach pastes have been printed.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da",
+              "sentence": {
+                "id": "s4.b1.11",
+                "text": "Alizarin, first synthesised in 1868 by Graebe and Liebermann, superseded madder and also requires alum to attach colour.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "affc1bd0-6880-526d-9596-9dbb65a46218",
+                    "claimId": "0899069c-80aa-5b60-bfb9-79eee94a39fe",
+                    "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+                    "quote": "Derived from coal tar this crystalline red dye rapidly superseded madder, its natural counterpart. Despite its chemical synthesis, alizarin dye also requires mordants such as alum to attach its colour to the cloth fibres.",
+                    "locator": "GI Journal No. 188 copy (application 1050), PDF p. 8",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            },
+            {
+              "reactionId": "65916ac6-7a8e-57c9-baf6-6b0ba5f684da",
+              "sentence": {
+                "id": "s4.b1.12",
+                "text": "Alizarin molecules can form six-member chelate rings with aluminium ions; it is also likely that the large complexes are physically trapped within the fibre.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "edad227e-f51e-5457-b8c0-bdedcb452326",
+                    "claimId": "c4727f5f-13c0-5fb0-8f18-d579a8d92ace",
+                    "sourceId": "9187df8b-62e3-510a-ba5d-827ec098c84c",
+                    "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions.",
+                    "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
             }
           ]
         },

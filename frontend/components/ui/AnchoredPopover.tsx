@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   useCallback,
   useEffect,
@@ -13,6 +12,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+import { MODAL_LAYER_SELECTOR } from "@/lib/focusable";
 import { cn } from "@/lib/utils";
 
 const GUTTER = 8;
@@ -31,22 +31,6 @@ const CLOSE_ON_SCROLL_GRACE_MS = 600;
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-function useLessMotion() {
-  const system = useReducedMotion() ?? false;
-  const [preference, setPreference] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const read = () => setPreference(root.dataset.reducedMotion === "true");
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(root, { attributes: true, attributeFilter: ["data-reduced-motion"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return system || preference;
-}
-
 function samePlacement(a: Placement | null, b: Placement) {
   return (
     a !== null &&
@@ -55,6 +39,13 @@ function samePlacement(a: Placement | null, b: Placement) {
     Math.abs(a.maxHeight - b.maxHeight) < 0.5 &&
     a.side === b.side
   );
+}
+
+function dockedPlacement(anchor: DOMRect, dock: DOMRect, height: number): Placement {
+  const viewportHeight = document.documentElement.clientHeight;
+  const maxHeight = viewportHeight - 2 * GUTTER;
+  const top = Math.max(GUTTER, Math.min(anchor.top, viewportHeight - GUTTER - Math.min(height, maxHeight)));
+  return { top, left: dock.left, maxHeight, side: "bottom" };
 }
 
 function computePlacement(anchor: DOMRect, width: number, height: number, offset: number): Placement {
@@ -91,6 +82,9 @@ export type AnchoredPopoverProps = {
   maxWidth?: number;
   className?: string;
   restoreFocusRef?: RefObject<HTMLElement | null>;
+  dockRef?: RefObject<HTMLElement | null>;
+  labelledBy?: string;
+  panelId?: string;
 };
 
 export function AnchoredPopover({
@@ -103,12 +97,14 @@ export function AnchoredPopover({
   matchAnchorWidth = false,
   maxWidth,
   className,
-  restoreFocusRef
+  restoreFocusRef,
+  dockRef,
+  labelledBy,
+  panelId
 }: AnchoredPopoverProps) {
   const instanceId = useId();
   const panelRef = useRef<HTMLDivElement | null>(null);
   const openedAt = useRef(0);
-  const reduce = useLessMotion();
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -123,7 +119,7 @@ export function AnchoredPopover({
     const anchor = anchorRef.current;
     if (!anchor) return;
     const dialogPanel = anchor.closest<HTMLElement>("[data-field-dialog]");
-    setHost(dialogPanel ?? document.body);
+    setHost(dialogPanel ?? anchor.closest<HTMLElement>(MODAL_LAYER_SELECTOR) ?? document.body);
     setAbsolute(Boolean(dialogPanel));
   }, [open, anchorRef]);
 
@@ -141,7 +137,8 @@ export function AnchoredPopover({
       }
     }
 
-    const next = computePlacement(rect, panel.offsetWidth, panel.scrollHeight, offset);
+    const dock = dockRef?.current?.getBoundingClientRect();
+    const next = dock && dock.width > 0 && !absolute ? dockedPlacement(rect, dock, panel.scrollHeight) : computePlacement(rect, panel.offsetWidth, panel.scrollHeight, offset);
 
     if (absolute) {
       const hostRect = host.getBoundingClientRect();
@@ -152,7 +149,7 @@ export function AnchoredPopover({
 
     setPlacement((current) => (samePlacement(current, next) ? current : next));
     setMinWidth(matchAnchorWidth ? rect.width : undefined);
-  }, [absolute, anchorRef, host, matchAnchorWidth, offset, onClose]);
+  }, [absolute, anchorRef, dockRef, host, matchAnchorWidth, offset, onClose]);
 
   useIsomorphicLayoutEffect(() => {
     if (!open || !host) return;
@@ -239,41 +236,32 @@ export function AnchoredPopover({
 
   const side = placement?.side ?? "bottom";
 
+  if (!open) return null;
+
   return createPortal(
-    <AnimatePresence>
-      {open ? (
-        <motion.div
-          key="anchored-popover"
-          ref={panelRef}
-          role="dialog"
-          aria-label={label}
-          data-anchored-popover=""
-          data-side={side}
-          data-strategy={absolute ? "absolute" : "fixed"}
-          style={{
-            position: absolute ? "absolute" : "fixed",
-            top: placement?.top ?? 0,
-            left: placement?.left ?? 0,
-            maxHeight: placement?.maxHeight,
-            minWidth,
-            maxWidth: maxWidth
-              ? `min(${maxWidth}px, calc(100vw - ${2 * GUTTER}px))`
-              : `calc(100vw - ${2 * GUTTER}px)`,
-            zIndex: absolute ? 50 : FLOATING_Z
-          }}
-          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98, y: side === "top" ? 4 : -4 }}
-          animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-          exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98, y: side === "top" ? 2 : -2 }}
-          transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 520, damping: 38, mass: 0.6 }}
-          className={cn(
-            "overflow-y-auto overscroll-contain rounded-lg border border-line-200 bg-card p-3 shadow-lg",
-            className
-          )}
-        >
-          {children}
-        </motion.div>
-      ) : null}
-    </AnimatePresence>,
+    <div
+      ref={panelRef}
+      id={panelId}
+      role="dialog"
+      aria-label={labelledBy ? undefined : label}
+      aria-labelledby={labelledBy}
+      data-anchored-popover=""
+      data-side={side}
+      data-strategy={absolute ? "absolute" : "fixed"}
+      style={{
+        position: absolute ? "absolute" : "fixed",
+        top: placement?.top ?? 0,
+        left: placement?.left ?? 0,
+        maxHeight: placement?.maxHeight,
+        minWidth,
+        maxWidth: maxWidth ? `min(${maxWidth}px, calc(100vw - ${2 * GUTTER}px))` : `calc(100vw - ${2 * GUTTER}px)`,
+        zIndex: absolute ? 50 : FLOATING_Z,
+        visibility: placement ? undefined : "hidden"
+      }}
+      className={cn("motion-enter overflow-y-auto overscroll-contain rounded-card border border-rule bg-raised p-3 shadow-pop", className)}
+    >
+      {children}
+    </div>,
     host
   );
 }

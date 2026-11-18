@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.research.explainer import Block
 from app.research.planning import PlanRequest
+from app.research.retrieval import KnowledgeRetriever
 from app.research.sections import SectionSpec
 from app.research.structured import StructuredModel
 
@@ -26,6 +27,8 @@ class BuilderTools:
     live: LiveSourcesStore
     plan_model: StructuredModel
     compose_model: StructuredModel
+    explainer_model: StructuredModel | None = None
+    retriever: KnowledgeRetriever | None = None
 
 
 @dataclass(frozen=True)

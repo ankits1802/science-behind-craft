@@ -1,27 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
 
 import { AdminViewProvider } from "@/components/AdminViewProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/components/ui/Toast";
 import { PREFERENCES_BOOT_SCRIPT, THEME_COLOR } from "@/lib/preferences";
+import { LATIN_FONT_VARIABLES } from "./latinFonts";
+import { READING_SCRIPT_FONT_VARIABLES } from "./readingScriptFonts";
 import { SCRIPT_FONT_VARIABLES } from "./scriptFonts";
 import "./globals.css";
-
-const inter = localFont({
-  src: "../fonts/inter-latin-var.woff2",
-  display: "swap",
-  variable: "--font-inter",
-  weight: "100 900"
-});
-
-const jakarta = localFont({
-  src: "../fonts/jakarta-latin-var.woff2",
-  display: "swap",
-  variable: "--font-jakarta",
-  weight: "200 800"
-});
 
 export const metadata: Metadata = {
   title: {
@@ -40,7 +27,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html className={`${inter.variable} ${jakarta.variable} ${SCRIPT_FONT_VARIABLES}`} lang="en" suppressHydrationWarning>
+    <html className={`${LATIN_FONT_VARIABLES} ${SCRIPT_FONT_VARIABLES} ${READING_SCRIPT_FONT_VARIABLES}`} lang="en" suppressHydrationWarning>
       <body className="font-sans">
         <script dangerouslySetInnerHTML={{ __html: PREFERENCES_BOOT_SCRIPT }} />
         <AuthProvider>

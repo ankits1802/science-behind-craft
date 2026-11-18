@@ -4,12 +4,26 @@ from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Any
 
-from app.api.routes import crafts, learning_views, map_districts, map_layers, molecules, public, rivers, terms
+from app.api.routes import (
+    crafts,
+    field_voices,
+    learning_views,
+    map_districts,
+    map_layers,
+    molecules,
+    public,
+    rivers,
+    terms,
+)
+from app.core.http_cache import body_version
 from app.data.craft_master_loader import build_catalogue
 from app.research.craft_compare import CraftComparison
 from app.research.craft_page import CraftPage
+from app.research.field_voices import FieldTranscript, FieldVoicesList
 from app.research.shared_science import SharedConcept, SharedScience
 from app.services import craft_catalogue, knowledge_view
+from app.services.craft_page_cache import ServedPage, served_content
+from app.services.craft_page_snapshots import VARIANT_ACLS
 from app.services.river_store import BasinFile
 from app.services.term_summaries import StoredTermLookup, TermLookup
 
@@ -25,10 +39,12 @@ from ..terms.fakes import CHECKED_AT, FakeResearch, FakeTermStore, golden_claims
 from ..voice.listen_fakes import MemoryObjects
 from .summary_fixture import summary_fixture_records
 
-__all__ = ["AJRAKH", "BAGRU", "OUTLET", "Asked", "stored_reads"]
+__all__ = ["AJRAKH", "BAGRU", "OUTLET", "RECORDING", "Asked", "stored_reads"]
 
 AJRAKH = "Kutch-Ajrakh"
 BAGRU = "Bagru-Hand-Block-Print"
+RECORDING = uuid.UUID(int=31)
+AJRAKH_REF = {"slug": AJRAKH, "name": "Kutch Ajrakh", "path": f"/crafts/{AJRAKH}"}
 POINTS = [
     {
         "key": "state-24",
@@ -86,22 +102,28 @@ def stored_reads(asked: Asked) -> dict[Any, dict[str, Any]]:
         **_map_reads(asked),
         **_media_reads(),
         **_term_reads(asked),
+        **_field_voice_reads(),
         public: {"summary_records": returning(summary_fixture_records())},
     }
 
 
 def _craft_reads(asked: Asked) -> dict[Any, dict[str, Any]]:
     page = CraftPage.model_validate(golden_json("craft.page.golden.json"))
+    body = page.model_dump(mode="json", by_alias=True)
 
     async def resolve(_session: Any, slug: str) -> Any:
         return CRAFTS.get(slug)
+
+    async def served(_session: Any, _craft: Any, variant: str, **_options: Any) -> ServedPage:
+        asked.heard("craft_page_records", VARIANT_ACLS[variant])
+        return ServedPage(served_content(body), body_version(body), f"stamp-{variant}")
 
     return {
         knowledge_view: {"resolve_craft": resolve, "map_points": returning(POINTS)},
         craft_catalogue: {"load_catalogue": returning(build_catalogue())},
         crafts: {
-            "craft_page_records": asked.loader("craft_page_records", None),
-            "craft_page": lambda _records: page,
+            "served_page": served,
+            "archived_page": nothing,
             "region_records": returning(golden_region_records()),
             "process_records": asked.loader("process_records", process_records()),
         },
@@ -177,3 +199,58 @@ def _term_reads(asked: Asked) -> dict[Any, dict[str, Any]]:
             "build_term_lookup": signed_in_terms,
         }
     }
+
+
+def _field_voice_reads() -> dict[Any, dict[str, Any]]:
+    listed = FieldVoicesList.model_validate(
+        {
+            "schemaVersion": 1,
+            "craft": AJRAKH_REF,
+            "kind": "quotes",
+            "total": 0,
+            "cursor": None,
+            "nextCursor": None,
+            "quotes": [],
+            "images": [],
+        }
+    )
+    return {
+        field_voices: {"field_list": returning(listed), "field_transcript": returning(field_transcript())}
+    }
+
+
+def field_transcript() -> FieldTranscript:
+    return FieldTranscript.model_validate(
+        {
+            "schemaVersion": 1,
+            "id": str(RECORDING),
+            "origin": "FIELD_REPOSITORY",
+            "publisher": "Field Repository",
+            "title": "Field interview, Ajrakh documentation visit, 14 March 2026",
+            "mediaType": "AUDIO",
+            "recordedAt": "2026-03-14T10:22:00+05:30",
+            "durationMs": 790000,
+            "crafts": [AJRAKH_REF],
+            "workshop": "Ajrakh documentation visit",
+            "context": ["Recorded in Kachchh, Gujarat"],
+            "stage": None,
+            "speakers": [{"key": "speaker_0", "label": "Asha Demo", "role": "ARTISAN"}],
+            "lines": [
+                {
+                    "id": "fr-turn-2",
+                    "position": 1,
+                    "speakerKey": "speaker_0",
+                    "locator": "0:06-0:33",
+                    "language": "gu",
+                    "text": "We wash the cloth in the river before the first print.",
+                    "english": None,
+                    "englishSource": None,
+                    "quotable": True,
+                }
+            ],
+            "english": None,
+            "englishSource": None,
+            "sourceId": str(uuid.UUID(int=32)),
+            "citation": "Asha Demo, interview recorded 14 March 2026, Ajrakh documentation visit, Field Repository",
+        }
+    )

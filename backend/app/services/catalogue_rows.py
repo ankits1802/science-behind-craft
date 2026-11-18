@@ -17,7 +17,7 @@ from app.research.media_refs import MediaRef
 from app.research.subject_keys import term_key
 from app.sources.reference.commons_urls import commons_thumbnail_url
 
-from .craft_page_family import hero_index
+from .craft_page_family import hero_index, masthead_index
 from .curated_index import IndexPicture
 
 __all__ = [
@@ -96,8 +96,10 @@ def material_link(name: str, craft_id: str) -> ConceptLink | None:
 def curated_hero(
     pictures: Sequence[IndexPicture], media: Mapping[uuid.UUID, MediaRef]
 ) -> CatalogueHero | None:
-    shown = [(media[item.media_ref_id], item.stage_key) for item in pictures if item.media_ref_id in media]
-    chosen = hero_index(shown)
+    held = [item for item in pictures if item.media_ref_id in media]
+    shown = [(media[item.media_ref_id], item.stage_key) for item in held]
+    masthead = masthead_index([item.placement.role if item.placement else None for item in held])
+    chosen = hero_index(shown, masthead=masthead)
     return None if chosen is None else catalogue_hero(shown[chosen][0])
 
 

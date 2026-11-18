@@ -8,9 +8,9 @@ import { ReactionStepList } from "@/components/answer/matter/ReactionStepList";
 import { SpeciesCast } from "@/components/answer/matter/SpeciesCast";
 import { usePlayback, type PlaybackControls } from "@/components/answer/matter/usePlayback";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import type { ReactionPlayerBlock } from "@/lib/explainerMatter";
+import { reactionNotes, type ReactionPlayerBlock, type ReactionStep } from "@/lib/explainerMatter";
 import { stepAt } from "@/lib/filmScenes";
-import { playable, reactionCast, stepPosition, stepRoles } from "@/lib/reactionPlayer";
+import { carriedKeys, playable, reactionCast, stepPosition, stepRoles } from "@/lib/reactionPlayer";
 
 const ROUND_BUTTON = "field-button-secondary h-10 w-10 shrink-0 rounded-full p-0 pointer-coarse:h-11 pointer-coarse:w-11";
 
@@ -63,11 +63,17 @@ export function ReactionPlayerView({ block, reduce }: { block: ReactionPlayerBlo
     <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-3" data-testid="reaction-player" data-step={open === null ? "all" : String(open + 1)}>
       {interactive ? (
         <>
-          <SpeciesCast cast={cast} roles={stepRoles(block.steps[at] ?? null)} />
+          <SpeciesCast cast={cast} roles={stepRoles(block.steps[at] ?? null)} carried={carriedKeys(block.steps, at)} />
           {film ? null : <PlayerControls playback={playback} count={count} />}
         </>
       ) : null}
-      <ReactionStepList steps={block.steps} open={open} reduce={reduce} onChoose={(index) => playback.send({ type: "choose", index })} />
+      <ReactionStepList
+        steps={block.steps}
+        open={open}
+        reduce={reduce}
+        onChoose={(index) => playback.send({ type: "choose", index })}
+        notesFor={(step: ReactionStep) => reactionNotes(block, step.reactionId)}
+      />
     </div>
   );
 }

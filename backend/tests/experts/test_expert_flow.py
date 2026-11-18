@@ -20,7 +20,7 @@ from ..answering.fakes import (
 )
 from ..answering.piece_fakes import MemoryPieces
 from ..answering.test_answer_flow import REPLY, detailed, events
-from .fixtures import differ, panel_model, said, take, tools
+from .fixtures import asked_seat, asked_seats, differ, panel_model, said, take, tools
 
 MORDANT = uuid.UUID("5a000000-0000-4000-8000-0000000000aa")
 ALUM, LAKE_VIEW, WASH, GUESS = (dataclasses.replace(view, concept_id=MORDANT) for view in VIEWS)
@@ -87,11 +87,9 @@ async def test_expert_views_stream_after_the_prose_and_join_the_explainer_and_it
         ("s1.b3", "expert_view"),
         ("s1.b4", "images"),
     ]
-    (call,) = panel.calls
-    assert call["schema"]["properties"]["views"]["items"]["properties"]["seat"]["enum"] == [
-        "CHEMIST",
-        "MATERIALS_SCIENTIST",
-    ]
+    assert [asked_seat(call["user"]) for call in panel.seat_calls] == ["CHEMIST", "MATERIALS_SCIENTIST"]
+    (compared,) = panel.difference_calls
+    assert asked_seats(compared["user"]) == ["CHEMIST", "MATERIALS_SCIENTIST"]
     (finished,) = store.finished
     chemist, scientist = finished["explainer"].sections[0].blocks[1:3]
     assert (chemist.seat, scientist.seat) == ("CHEMIST", "MATERIALS_SCIENTIST")

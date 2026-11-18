@@ -26,6 +26,7 @@ __all__ = [
     "SectionImages",
     "SectionImagesAsk",
     "image_search_text",
+    "search_texts",
     "searched_images",
     "section_images",
     "shown_candidates",
@@ -48,6 +49,7 @@ class SectionImagesAsk:
     block_id: str
     craft_name: str | None
     claim_ids: tuple[uuid.UUID, ...]
+    topic: str | None = None
 
 
 @dataclass(frozen=True)
@@ -61,8 +63,8 @@ class SectionImages:
         if not claims:
             return None
         named = ask.craft_name or ""
-        searched = image_search_text(named, claims)
-        found = await asyncio.gather(*(self._candidates(source, searched, named) for source in self.sources))
+        texts = search_texts(ask, claims)
+        found = await asyncio.gather(*(self._candidates(source, texts) for source in self.sources))
         chosen = choose_images(shown_candidates(c for batch in found for c in batch), claims, leave_out=named)
         if not chosen:
             return None
@@ -73,8 +75,8 @@ class SectionImages:
         ]
         return ImagesBlock(id=ask.block_id, kind="images", version=1, reuse=None, items=items)
 
-    async def _candidates(self, source: ImageSource, searched: str, named: str) -> list[ImageCandidate]:
-        return await searched_images(source, (searched, named), seconds=self.search_seconds)
+    async def _candidates(self, source: ImageSource, texts: Sequence[str]) -> list[ImageCandidate]:
+        return await searched_images(source, texts, seconds=self.search_seconds)
 
 
 async def searched_images(
@@ -106,6 +108,13 @@ def shown_candidates(candidates: Iterable[ImageCandidate]) -> list[ImageCandidat
             continue
         kept.append(candidate)
     return kept
+
+
+def search_texts(ask: SectionImagesAsk, claims: Sequence[ClaimText]) -> tuple[str, ...]:
+    named = ask.craft_name or ""
+    if ask.topic:
+        return (f"{named} {ask.topic}".strip(), ask.topic, named)
+    return (image_search_text(named, claims), named)
 
 
 def image_search_text(craft_name: str, claims: Sequence[ClaimText]) -> str:

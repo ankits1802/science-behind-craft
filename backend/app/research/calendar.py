@@ -15,6 +15,7 @@ __all__ = [
     "MONTH_NAMES",
     "SEASONS",
     "SEASON_WORDS",
+    "first_season",
     "months_named",
     "only_season",
     "season_months",
@@ -186,6 +187,14 @@ def year_months(texts: Iterable[str]) -> frozenset[int]:
 
 def seasons_named(texts: Iterable[str]) -> frozenset[str]:
     return frozenset(mention.season for text in texts for mention in _season_mentions(text))
+
+
+def first_season(texts: Iterable[str]) -> str | None:
+    for text in texts:
+        mentions = _season_mentions(text)
+        if mentions:
+            return mentions[0].season
+    return None
 
 
 def only_season(text: str) -> str | None:

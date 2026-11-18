@@ -6,6 +6,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
+from app.api.reading_deps import asker_style
 from app.api.routes import knowledge
 from app.core.deps import get_current_user
 from app.main import create_app
@@ -23,7 +24,7 @@ from app.voice.availability import HIDDEN_VOICE
 from .answering.fakes import pipeline, streamed
 from .craft_fixtures import sample_index
 
-NOTICE_SHA256 = "fe8d668470b89bfb16a2737dd6df82a931a8c90a95a7adbd42f3568e8bec6be4"
+NOTICE_SHA256 = "ac3e191cce8e3bbeae1f291071b4c1be47cea01c9983c679660f00f3da329d1f"
 
 
 def test_privacy_notice_version_moves_with_its_text() -> None:
@@ -42,7 +43,6 @@ def test_privacy_notice_is_public_and_fills_the_contact() -> None:
 
 def test_protected_knowledge_routes_need_a_session() -> None:
     client = TestClient(create_app())
-    assert client.get("/api/crafts/kutch-ajrakh/profile").status_code == 401
     assert client.get("/api/answers/config").status_code == 401
     assert client.post("/api/answers/stream", json={"question": "why indigo"}).status_code == 401
 
@@ -145,6 +145,7 @@ def signed_in(role: str, asked: Asked | None = None) -> TestClient:
     app.dependency_overrides[get_current_user] = lambda: user
     app.dependency_overrides[knowledge.answer_pipelines] = (asked or Asked()).pipelines
     app.dependency_overrides[knowledge.offered_voice] = lambda: dict(HIDDEN_VOICE)
+    app.dependency_overrides[asker_style] = lambda: None
     return TestClient(app)
 
 

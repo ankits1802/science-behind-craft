@@ -85,7 +85,7 @@ export async function overviewOutcome(page: Page, served: Promise<Response | nul
 
 export async function comparisonProblems(page: Page): Promise<string[]> {
   const table = page.getByTestId("comparison");
-  const outcome = table.or(page.getByTestId("compare-empty")).or(page.getByTestId("compare-unknown")).or(page.getByRole("alert"));
+  const outcome = table.or(page.getByTestId("compare-empty")).or(page.getByTestId("compare-unknown")).or(page.getByRole("main").getByRole("alert"));
   await expect(outcome.first()).toBeVisible({ timeout: COMPARE_TIMEOUT_MS });
   if (await table.isVisible()) return [];
   return [`the pair shows no comparison: "${clip(await outcome.first().innerText())}"`];

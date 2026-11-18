@@ -11,10 +11,25 @@ from app.curation.dossier import Dossier
 from app.models.enums import COVERAGE_CLASSES
 from app.research.base import ContractModel
 
-from .curated_index import IndexConflict, IndexOverview, IndexPicture, IndexQuestion, IndexSearch, IndexTerm
+from .curated_index import (
+    IndexConflict,
+    IndexMaterial,
+    IndexOverview,
+    IndexPicture,
+    IndexQuestion,
+    IndexReaction,
+    IndexSearch,
+    IndexTerm,
+)
 from .curation_keys import curated_id
 from .curation_overview import OverviewPieces, placed_overview
-from .curation_page_index import index_conflicts, index_glossary, index_key_facts, index_pictures
+from .curation_page_index import (
+    index_category_reactions,
+    index_conflicts,
+    index_glossary,
+    index_key_facts,
+    index_pictures,
+)
 from .curation_rows import ConceptPlan
 
 __all__ = [
@@ -55,6 +70,8 @@ class CuratedCategoryPage(ContractModel):
     open_questions: list[IndexCategoryQuestion]
     glossary: list[IndexTerm]
     pictures: list[IndexPicture]
+    materials: list[IndexMaterial] = Field(default_factory=list)
+    reactions: list[IndexReaction] = Field(default_factory=list)
 
     def piece_ids(self) -> dict[str, uuid.UUID]:
         return self.overview.piece_ids()
@@ -76,6 +93,7 @@ def category_index(dossier: Dossier, concepts: ConceptPlan) -> CuratedCategoryPa
         open_questions=_questions(dossier),
         glossary=index_glossary(dossier, concepts),
         pictures=index_pictures(dossier),
+        reactions=index_category_reactions(dossier),
     )
 
 

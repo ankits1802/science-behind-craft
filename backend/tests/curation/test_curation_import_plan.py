@@ -19,10 +19,10 @@ def test_claims_and_sources_take_the_plan_ids() -> None:
     plan = plan_of(AJRAKH)
     claims = {row["id"]: row for row in plan.part("claims")}
     assert expected_id("curation:Kutch-Ajrakh:C001") in claims
-    assert len(claims) == len(raw(AJRAKH)["claims"]) == 132
+    assert len(claims) == len(raw(AJRAKH)["claims"]) == 135
     sources = {row["id"] for row in plan.part("sources")}
     assert expected_id("curation:Kutch-Ajrakh:S01") in sources
-    assert len(sources) == 20
+    assert len(sources) == 21
 
 
 def test_sources_are_excerpts_imported_by_curation_with_their_reliability() -> None:
@@ -58,7 +58,7 @@ def test_every_quote_becomes_one_passing_citation() -> None:
         for quote in claim["quotes"]
     }
     citations = plan.part("claimSources")
-    assert len(citations) == len(quotes) == 269
+    assert len(citations) == len(quotes) == 274
     assert {row["quoteCheck"] for row in citations} == {"PASS"}
     claim, source, quote = sorted(quotes)[0]
     assert claim_source_id(AJRAKH, claim, source, quote) in {row["id"] for row in citations}
@@ -132,10 +132,10 @@ def test_tools_are_stage_materials_with_the_tool_role() -> None:
 def test_pictures_are_inline_under_their_open_licence() -> None:
     plan = plan_of(AJRAKH)
     media = plan.part("media")
-    assert len(media) == 4
+    assert len(media) == 10
     assert {row["display"] for row in media} == {"INLINE"}
     assert {row["provider"] for row in media} == {"curation"}
-    assert len(plan.part("mediaClaims")) == 4
+    assert len(plan.part("mediaClaims")) == 9
 
 
 def test_glossary_spellings_become_label_and_aliases() -> None:

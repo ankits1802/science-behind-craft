@@ -1,31 +1,64 @@
 "use client";
 
+import { CircleAlert } from "lucide-react";
 import { Children, isValidElement, useId, useMemo, useState, type ReactNode, type SelectHTMLAttributes } from "react";
 
 import { Dropdown, type DropdownOption } from "@/components/ui/Dropdown";
-import { FieldLabelProvider } from "@/components/ui/fieldLabel";
+import { FieldLabelProvider, FieldStateProvider, useFieldState, type FieldState } from "@/components/ui/fieldLabel";
 import { RequiredMark } from "@/components/ui/RequiredMark";
+
+export function FieldMessages({ id, hint, error }: { id: string; hint?: ReactNode; error?: ReactNode }) {
+  return (
+    <>
+      {error ? (
+        <span id={`${id}-error`} className="kv-field-error">
+          <CircleAlert aria-hidden />
+          <span>{error}</span>
+        </span>
+      ) : null}
+      {hint ? (
+        <span id={`${id}-hint`} className="kv-field-hint">
+          {hint}
+        </span>
+      ) : null}
+    </>
+  );
+}
+
+function fieldState(id: string, hint: ReactNode, error: ReactNode): FieldState {
+  const ids = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(Boolean);
+  return { describedBy: ids.length > 0 ? ids.join(" ") : undefined, invalid: Boolean(error) };
+}
 
 export function Field({
   label,
   children,
   required,
-  fieldKey
+  fieldKey,
+  hint,
+  error
 }: {
   label: string;
   children: React.ReactNode;
   required?: boolean;
   fieldKey?: string;
+  hint?: ReactNode;
+  error?: ReactNode;
 }) {
   const labelId = useId();
   return (
-    <label className="grid min-w-0 content-start gap-1" data-field={fieldKey}>
-      <span id={labelId} className="field-label">
-        {label}
-        <RequiredMark when={required} />
-      </span>
-      <FieldLabelProvider value={labelId}>{children}</FieldLabelProvider>
-    </label>
+    <div className="grid min-w-0 content-start gap-1.5" data-field={fieldKey}>
+      <label className="grid min-w-0 content-start gap-1.5">
+        <span id={labelId} className="field-label">
+          {label}
+          <RequiredMark when={required} />
+        </span>
+        <FieldLabelProvider value={labelId}>
+          <FieldStateProvider value={fieldState(labelId, hint, error)}>{children}</FieldStateProvider>
+        </FieldLabelProvider>
+      </label>
+      <FieldMessages id={labelId} hint={hint} error={error} />
+    </div>
   );
 }
 
@@ -44,7 +77,7 @@ export function FieldBlock({
 }) {
   const id = useId();
   return (
-    <div className="grid min-w-0 gap-1" data-field={fieldKey}>
+    <div className="grid min-w-0 gap-1.5" data-field={fieldKey}>
       <span id={id} className="field-label">
         {label}
         <RequiredMark when={required} />
@@ -57,12 +90,22 @@ export function FieldBlock({
   );
 }
 
-export function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={`field-input ${props.className ?? ""}`} />;
+function useFieldAria(props: { "aria-describedby"?: string; "aria-invalid"?: React.AriaAttributes["aria-invalid"] }) {
+  const state = useFieldState();
+  return {
+    "aria-describedby": props["aria-describedby"] ?? state.describedBy,
+    "aria-invalid": props["aria-invalid"] ?? (state.invalid || undefined)
+  };
+}
+
+export function TextInput(props: React.ComponentProps<"input">) {
+  const aria = useFieldAria(props);
+  return <input {...props} {...aria} className={`field-input ${props.className ?? ""}`} />;
 }
 
 export function TextArea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={`field-input min-h-24 ${props.className ?? ""}`} />;
+  const aria = useFieldAria(props);
+  return <textarea {...props} {...aria} className={`field-input min-h-24 ${props.className ?? ""}`} />;
 }
 
 function optionText(node: ReactNode): string {

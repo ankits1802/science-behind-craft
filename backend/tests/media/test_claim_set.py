@@ -13,7 +13,8 @@ def ids(n: int) -> list[uuid.UUID]:
 
 
 STUDENT = ("PUBLIC",)
-RESEARCHER = ("PUBLIC", "RESEARCHER")
+EVERY_READER = ("PUBLIC", "SIGNED_IN")
+RESEARCHER = ("PUBLIC", "RESEARCHER", "SIGNED_IN")
 
 
 def test_only_reviewed_verified_and_quote_checked_provisional_claims_enter() -> None:
@@ -91,5 +92,5 @@ def test_two_claims_are_enough_and_acls_follow_the_role() -> None:
     a, b = ids(2)
     assert not enough_claims(claim_set([claim(a, "One.")], acls=STUDENT))
     assert enough_claims(claim_set([claim(a, "One."), claim(b, "Two.")], acls=STUDENT))
-    assert chunk_acls_for("STUDENT") == STUDENT
+    assert chunk_acls_for("STUDENT") == EVERY_READER
     assert chunk_acls_for("RESEARCHER") == RESEARCHER

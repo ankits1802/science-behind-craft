@@ -1,27 +1,53 @@
 "use client";
 
 import { Search, X } from "lucide-react";
+import { useEffect, useRef } from "react";
+
+const TYPING_TARGETS = "input, textarea, select, [contenteditable]:not([contenteditable='false'])";
+
+export function takesSlashShortcut(key: string, target: EventTarget | null): boolean {
+  if (key !== "/") return false;
+  return !(target instanceof Element && target.closest(TYPING_TARGETS));
+}
 
 export function SearchInput({
   value,
   onChange,
   onSubmit,
   placeholder = "Search",
-  ariaLabel
+  ariaLabel,
+  shortcut = false
 }: {
   value: string;
   onChange: (v: string) => void;
   onSubmit?: () => void;
   placeholder?: string;
   ariaLabel?: string;
+  shortcut?: boolean;
 }) {
+  const input = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (!shortcut) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (!takesSlashShortcut(event.key, event.target)) return;
+      event.preventDefault();
+      input.current?.focus();
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [shortcut]);
+
   return (
-    <div className="relative">
-      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" aria-hidden />
+    <div className="kv-search" role="search">
+      <Search className="h-[1.125rem] w-[1.125rem] shrink-0 text-ink-3" aria-hidden />
       <input
+        ref={input}
         type="text"
         role="searchbox"
         aria-label={ariaLabel ?? placeholder}
+        aria-keyshortcuts={shortcut ? "/" : undefined}
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
@@ -31,17 +57,18 @@ export function SearchInput({
             onSubmit?.();
           }
         }}
-        className="field-input pl-9 pr-9"
       />
       {value ? (
         <button
           type="button"
-          aria-label="Clear search"
-          title="Clear search"
-          onClick={() => onChange("")}
-          className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-error-600 transition hover:bg-error-100"
+          aria-label="Clear the search"
+          onClick={() => {
+            onChange("");
+            input.current?.focus();
+          }}
+          className="kv-close m-0"
         >
-          <X className="h-4 w-4" aria-hidden />
+          <X aria-hidden />
         </button>
       ) : null}
     </div>

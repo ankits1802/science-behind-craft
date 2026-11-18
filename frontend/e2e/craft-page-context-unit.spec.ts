@@ -3,11 +3,13 @@ import { expect, test } from "@playwright/test";
 import { referencedClaimIds } from "@/lib/craftPageContract";
 import { ShapeError } from "@/lib/shape";
 
-import { curatedPage, registerPage, studentPage } from "./craftPageFixture";
+import { curatedPage, registerPage } from "./craftPageFixture";
 
 test("a craft with no dossier still has a complete page: family, GI status, kin and three questions", () => {
   const page = registerPage();
-  expect([page.curated, page.depth.basis, page.claims.length, page.sources.length]).toEqual([false, "REGISTER", 0, 0]);
+  expect([page.curated, page.depth.basis, page.claims.length]).toEqual([false, "REGISTER", 0]);
+  const kin = [...new Set(page.sameFamily.flatMap((relative) => relative.lede?.sources.map((source) => source.id) ?? []))];
+  expect(page.sources.map((source) => [source.id, source.group])).toEqual(kin.map((id) => [id, "KIN"]));
   expect([page.craft.familyLabel, page.craft.kindLabel, page.giCard.status]).toEqual(["Textiles", "Hand block printing", "GI"]);
   expect(page.suggestedQuestions).toHaveLength(3);
   expect(page.suggestedQuestions.every((question) => question.includes(page.craft.displayName))).toBe(true);
@@ -32,14 +34,14 @@ test("the curated page carries its GI card, dated events, environment steps and 
   expect(page.sameFamily.every((relative) => relative.craft.slug !== page.craft.slug)).toBe(true);
 });
 
-test("a Student's page keeps every claim the GI card, events and environment cite", () => {
-  const page = studentPage();
+test("every reader's page lists every claim the GI card, events and environment cite", () => {
+  const page = curatedPage();
   const listed = new Set(page.claims.map((claim) => claim.id));
   const context = [...page.giCard.claimIds, ...page.events.flatMap((event) => event.claimIds), ...page.environment.flatMap((step) => step.claimIds)];
   expect(context.length).toBeGreaterThan(0);
   expect(context.every((id) => listed.has(id))).toBe(true);
-  expect(new Set(referencedClaimIds(page))).toEqual(listed);
-  expect(page.tabs.evidence).toBe(false);
+  expect(referencedClaimIds(page).every((id) => listed.has(id))).toBe(true);
+  expect(page.tabs.evidence).toBe(true);
 });
 
 test("the client refuses a page whose new parts do not agree", () => {

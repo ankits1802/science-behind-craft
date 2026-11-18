@@ -20,6 +20,7 @@ from app.research.evidence_pack import EvidencePack, ResearchTrail
 from app.research.explainer import Explainer
 from app.research.explainer_versions import VersionMark
 from app.research.planning import PlanRequest
+from app.research.reading_style import ReadingStyle
 from app.research.sections import LADDER_DISCIPLINE, AnswerPlans, SectionPlan, SectionSpec
 from app.research.stream import Emit, ResearchProgress
 from app.research.understanding import UnderstandAsk, Understanding, UnknownCraft
@@ -55,11 +56,13 @@ from .follow_ups import (
     left_open,
     understood_for,
 )
-from .piece_lookup import PieceAsk
+from .piece_lookup import PieceAsk, PieceLookup, ReusedSection
 from .piece_store import BuiltSection, PieceStore
+from .reuse_enrichment import expert_floors, floor_deepening, floors_by_section
 from .reused_sections import ReuseBuilds, ReusedShowing, stream_reused_beside
 from .section_enrichment import Enrichment, EnrichmentTools
 from .stored_explainer import stream_stored_answer
+from .stored_fields import with_stored_fields
 
 __all__ = [
     "NOT_FOUND_DETAIL",
@@ -96,6 +99,7 @@ class AnswerAsk:
     withheld_terms: tuple[str, ...] = ()
     fresh: bool = False
     builds_on: FollowUp | None = None
+    reading_style: ReadingStyle | None = None
 
 
 class AnswerStore(Protocol):
@@ -142,6 +146,9 @@ class _Run:
     answer_id: uuid.UUID
     enrichment: Enrichment
     layout: AnswerLayout
+    process: ProcessRecords | None = None
+    floors: Mapping[str, ReusedSection] = field(default_factory=dict)
+    builders: BlockBuilders = field(default_factory=BlockBuilders)
 
 
 async def answer_question(ask: AnswerAsk, pipeline: AnswerPipeline, emit: Emit) -> None:
@@ -237,18 +244,24 @@ async def _researched_answer(
 ) -> uuid.UUID:
     craft = understanding.craft
     await stream.status("PLANNING", craft=craft.name if craft else "")
+    if ask.builds_on is None:
+        understanding = await with_stored_fields(understanding, pipeline.pieces.fields)
     layout = answer_layout(understanding, ask.builds_on, question=ask.question)
     specs = layout.specs
     answer_id = await pipeline.store.begin(ask, understanding)
-    titles = {
-        **await _translated(_title_segments(layout.untitled), stream.language, pipeline.translation),
-        **layout.titles,
-    }
-    lookup = await pipeline.pieces.reusable(_piece_ask(ask, understanding, layout.reusable))
+    segments = [Segment(spec.id, spec.title) for spec in layout.untitled]
+    translated = await translate_segments(
+        segments, language=stream.language, translation=pipeline.translation
+    )
+    titles = {**translated, **layout.titles}
+    looked = await pipeline.pieces.reusable(_piece_ask(ask, understanding, layout.reusable))
+    lookup, floors = (looked, {}) if ask.builds_on else expert_floors(understanding.depth, looked)
     enrichment = await pipeline.enrichment.for_answer(craft)
-    run = _Run(ask, understanding, pipeline, stream, answer_id, enrichment, layout)
+    process = await _process(craft, specs, pipeline.store)
+    builders = pipeline.builders.for_answer()
+    run = _Run(ask, understanding, pipeline, stream, answer_id, enrichment, layout, process, floors, builders)
     writing = LedeWriting(stream, pipeline.translation, enrichment)
-    plan = lede_plan(ask.question, understanding, layout.untitled, lookup)
+    plan = lede_plan(ask.question, understanding, layout.untitled, lookup, style=ask.reading_style)
     opening = AnswerOpening(plan, pipeline.lede, writing, pipeline.store)
     open_specs = [spec for spec in specs if spec.discipline not in lookup.reused]
     async with opening.started() as first_lede:
@@ -262,21 +275,23 @@ async def _researched_answer(
     offered = left_open(ask.question, understanding, outcomes, opened)
     follow_ups = await closed_answer(outcomes, offered, stream, pipeline.translation)
     await _finish(run, outcomes, titles=titles, follow_ups=follow_ups, opened=opened)
-    built = [
-        BuiltSection(
-            outcome.spec.discipline, outcome.built, deepened=not layout.keeps_pieces_of(outcome.spec)
-        )
-        for outcome in researched
-        if outcome.built
-    ]
-    await pipeline.pieces.keep(lookup, answer_id=answer_id, depth=understanding.depth, sections=built)
+    await _kept(run, lookup, outcomes)
     return answer_id
 
 
-def _reused_showing(run: _Run, titles: Mapping[str, str], opening: Awaitable[Opening]) -> ReusedShowing:
-    builds = ReuseBuilds(
-        run.pipeline.builders.for_reuse(), run.answer_id, _plan_request(run.ask, run.understanding)
+async def _kept(run: _Run, lookup: PieceLookup, outcomes: Sequence[SectionOutcome]) -> None:
+    keeps = run.layout.keeps_pieces_of
+    built = [
+        BuiltSection(o.spec.discipline, o.built, deepened=not keeps(o.spec)) for o in outcomes if o.built
+    ]
+    style = run.ask.reading_style
+    await run.pipeline.pieces.keep(
+        lookup, answer_id=run.answer_id, depth=run.understanding.depth, sections=built, reading_style=style
     )
+
+
+def _reused_showing(run: _Run, titles: Mapping[str, str], opening: Awaitable[Opening]) -> ReusedShowing:
+    builds = ReuseBuilds(run.builders, run.answer_id, _plan_request(run.ask, run.understanding), run.process)
     return ReusedShowing(run.stream, titles, run.pipeline.translation, run.enrichment, builds, opening)
 
 
@@ -285,6 +300,8 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
         return []
     pipeline = run.pipeline
     base = _plan_request(run.ask, run.understanding)
+    floors = floors_by_section(specs, run.floors, run.enrichment, run.process)
+    deepening = {**run.layout.deepening, **{sid: floor_deepening(f.placed) for sid, f in floors.items()}}
     context = SectionContext(
         tools=SectionTools(pipeline.research, pipeline.compose, pipeline.store, pipeline.translation),
         stream=run.stream,
@@ -292,9 +309,11 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
         base=base,
         ledger=ResearchLedger(request_limits(base, base.mode), len(specs)),
         enrichment=run.enrichment,
-        process=await _process(run.understanding.craft, specs, pipeline.store),
-        builders=pipeline.builders,
-        deepening=run.layout.deepening,
+        process=run.process,
+        builders=run.builders,
+        deepening=deepening,
+        floors=floors,
+        reading_style=run.ask.reading_style,
     )
     return await run_sections(specs, context)
 
@@ -337,6 +356,7 @@ def _piece_ask(ask: AnswerAsk, understanding: Understanding, specs: Sequence[Sec
         facets=tuple(spec.discipline for spec in specs),
         depth=understanding.depth,
         fresh=ask.fresh,
+        reading_style=ask.reading_style,
     )
 
 
@@ -346,18 +366,6 @@ async def _process(
     if craft is None or all(spec.discipline != LADDER_DISCIPLINE for spec in specs):
         return None
     return await store.process(craft.slug)
-
-
-async def _translated(
-    segments: Sequence[Segment], language: str, translation: AnswerTranslation
-) -> dict[str, str]:
-    if language == CANONICAL_LANGUAGE or not segments:
-        return {}
-    return await translate_segments(segments, language=language, translation=translation)
-
-
-def _title_segments(specs: Sequence[SectionSpec]) -> list[Segment]:
-    return [Segment(spec.id, spec.title) for spec in specs]
 
 
 def _plans(outcomes: Sequence[SectionOutcome]) -> AnswerPlans:

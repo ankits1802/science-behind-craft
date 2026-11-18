@@ -35,6 +35,7 @@ __all__ = [
     "family_place",
     "family_relatives",
     "hero_index",
+    "masthead_index",
     "page_relative",
     "ranked_family",
     "reader_name",
@@ -46,6 +47,7 @@ __all__ = [
 ACTIVE = "ACTIVE"
 GI = "GI"
 INLINE = "INLINE"
+MASTHEAD = "MASTHEAD"
 COVERAGE_RANK = MappingProxyType({coverage: rank for rank, coverage in enumerate(COVERAGE_CLASSES)})
 
 
@@ -71,6 +73,7 @@ class ShownPicture:
     caption: str
     stage_id: uuid.UUID | None
     claim_ids: list[uuid.UUID]
+    placed_as: str | None = None
 
 
 def family_place(category_name: str | None, sub_category_name: str | None) -> FamilyPlace:
@@ -117,10 +120,16 @@ def page_relative(candidate: FamilyCandidate, extras: RelativeExtras | None = No
     )
 
 
-def hero_index(pictures: Sequence[tuple[MediaRef, object]]) -> int | None:
+def hero_index(pictures: Sequence[tuple[MediaRef, object]], *, masthead: int | None = None) -> int | None:
+    if masthead is not None and pictures[masthead][0].display == INLINE:
+        return masthead
     inline = [index for index, (media, _stage) in enumerate(pictures) if media.display == INLINE]
     unstaged = [index for index in inline if pictures[index][1] is None]
     return (unstaged or inline or [None])[0]
+
+
+def masthead_index(placements: Sequence[str | None]) -> int | None:
+    return next((index for index, role in enumerate(placements) if role == MASTHEAD), None)
 
 
 def shown_pictures(
@@ -132,8 +141,9 @@ def shown_pictures(
         found = media.get(picture.media_ref_id)
         claims = [claim_id for claim_id in dict.fromkeys(picture.claim_ids) if claim_id in visible]
         stage = stages.get(picture.stage_key) if picture.stage_key else None
+        role = picture.placement.role if picture.placement else None
         if found is not None and (claims or stage):
-            shown.append(ShownPicture(found, picture.caption, stage, claims))
+            shown.append(ShownPicture(found, picture.caption, stage, claims, role))
     return shown
 
 
@@ -144,7 +154,8 @@ def relative_extras(
     cited: tuple[Collection[uuid.UUID], Mapping[str, SourceRef]],
 ) -> RelativeExtras:
     shown = shown_pictures(curated, media, cited[0])
-    chosen = hero_index([(picture.media, picture.stage_id) for picture in shown])
+    masthead = masthead_index([picture.placed_as for picture in shown])
+    chosen = hero_index([(picture.media, picture.stage_id) for picture in shown], masthead=masthead)
     hero = None if chosen is None else HeroImage(media=shown[chosen].media, caption=shown[chosen].caption)
     return RelativeExtras(hero=hero, lede=_first_lede(lede, *cited))
 

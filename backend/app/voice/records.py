@@ -36,6 +36,7 @@ class SessionRecord:
     billed_seconds: int | None = None
     retention_until: datetime | None = None
     transcript: str | None = None
+    purpose: str = "ASK"
 
     @property
     def hard_end(self) -> datetime:

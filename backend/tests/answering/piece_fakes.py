@@ -5,8 +5,21 @@ from datetime import UTC, datetime, timedelta
 
 from app.models import Source
 from app.research.depth import depth_at_least
-from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, ReuseAsk, knowledge_piece, piece_slot
-from app.research.piece_reuse import ClaimState, reusable_groups, with_region_story, with_simulation
+from app.research.knowledge_pieces import (
+    CLAIM_KEYED_KINDS,
+    KnowledgePiece,
+    PieceSlot,
+    ReuseAsk,
+    knowledge_piece,
+    piece_slot,
+)
+from app.research.piece_reuse import (
+    ClaimState,
+    answered_first,
+    reusable_groups,
+    with_region_story,
+    with_simulation,
+)
 from app.research.piece_topics import TopicSubjects, facet_topics
 from app.services.answer_events import cited_claims
 from app.services.knowledge_view import ClaimView
@@ -24,6 +37,10 @@ class MemoryPieces:
     pieces: list[KnowledgePiece] = field(default_factory=list)
     asked: list[PieceAsk] = field(default_factory=list)
     kept: list[tuple[uuid.UUID, str, tuple[BuiltSection, ...]]] = field(default_factory=list)
+    held_fields: tuple[str, ...] = ()
+
+    async def fields(self, craft_slug: str) -> tuple[str, ...]:
+        return self.held_fields
 
     async def reusable(self, ask: PieceAsk) -> PieceLookup:
         self.asked.append(ask)
@@ -42,8 +59,14 @@ class MemoryPieces:
         regions = [piece for piece in newest_first if piece.craft_id is None]
         reused = {}
         for facet, topic in topics.items():
-            ask_for = ReuseAsk(craft_id=CRAFT_ID, facet=facet, topic_key=topic, depth=ask.depth)
-            groups = reusable_groups(own, ask_for, states)
+            ask_for = ReuseAsk(
+                craft_id=CRAFT_ID,
+                facet=facet,
+                topic_key=topic,
+                depth=ask.depth,
+                reading_style=ask.reading_style,
+            )
+            groups = answered_first(reusable_groups(own, ask_for, states))
             if groups:
                 shown = with_region_story(groups[0], regions, depth=ask.depth, current=states)
                 shown = with_simulation(shown, regions, depth=ask.depth, current=states)
@@ -51,7 +74,13 @@ class MemoryPieces:
         return PieceLookup(craft_id=CRAFT_ID, topics=topics, reused=reused)
 
     async def keep(
-        self, lookup: PieceLookup, *, answer_id: uuid.UUID, depth: str, sections: Sequence[BuiltSection]
+        self,
+        lookup: PieceLookup,
+        *,
+        answer_id: uuid.UUID,
+        depth: str,
+        sections: Sequence[BuiltSection],
+        reading_style: str | None = None,
     ) -> None:
         self.kept.append((answer_id, depth, tuple(sections)))
         created_at = FIRST_KEPT_AT + timedelta(minutes=len(self.kept))
@@ -67,6 +96,7 @@ class MemoryPieces:
                         piece_id=piece_id(answer_id, f"{block.id}-{len(self.kept)}"),
                         answer_id=uuid.uuid5(answer_id, str(len(self.kept))),
                         created_at=created_at,
+                        reading_style=reading_style,
                     )
                     self._supersede(new)
                     self.pieces.append(new)
@@ -84,10 +114,21 @@ class MemoryPieces:
 
     def _supersede(self, new: KnowledgePiece) -> None:
         self.pieces = [
-            piece.model_copy(update={"superseded_by_id": new.id})
-            if (piece.facet, piece.topic_key, piece.kind) == (new.facet, new.topic_key, new.kind)
-            and piece.superseded_by_id is None
-            and depth_at_least(new.depth, piece.depth)
-            else piece
+            piece.model_copy(update={"superseded_by_id": new.id}) if superseded_by(piece, new) else piece
             for piece in self.pieces
         ]
+
+
+def superseded_by(piece: KnowledgePiece, new: KnowledgePiece) -> bool:
+    slot = (piece.craft_id, piece.facet, piece.topic_key, piece.kind)
+    return (
+        slot == (new.craft_id, new.facet, new.topic_key, new.kind)
+        and depth_at_least(new.depth, piece.depth)
+        and piece.reading_style == new.reading_style
+        and piece.id != new.id
+        and piece.created_from_answer_id is not None
+        and piece.created_from_answer_id != new.created_from_answer_id
+        and piece.superseded_by_id is None
+        and piece.created_at <= new.created_at
+        and (new.kind not in CLAIM_KEYED_KINDS or piece.claim_ids == new.claim_ids)
+    )

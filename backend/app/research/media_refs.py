@@ -9,6 +9,7 @@ from app.models.enums import MEDIA_DISPLAYS
 
 from .base import ContractModel, HttpsUrl
 from .evidence import ADAPTER_NAME_PATTERN
+from .field_voices import FIELD_IMAGE_PROVIDERS
 from .licences import open_licence
 
 __all__ = ["MEDIA_DISPLAYS", "MediaDisplay", "MediaRef"]
@@ -38,9 +39,14 @@ class MediaRef(ContractModel):
     def _inline_only_with_an_open_licence_and_its_author(self) -> Self:
         if (self.width is None) != (self.height is None):
             raise ValueError(f"media {self.id} gives both its width and height, or neither")
-        if self.display == "INLINE":
-            if not (open_licence(self.licence) or open_licence(self.licence_url)):
-                raise ValueError(f"media {self.id} is shown inline only under an open licence")
-            if not self.author:
-                raise ValueError(f"media {self.id} is shown inline only with its author")
+        if self.display != "INLINE":
+            return self
+        if self.provider in FIELD_IMAGE_PROVIDERS:
+            if not (self.author and self.credit):
+                raise ValueError(f"field image {self.id} is shown inline only with its credit")
+            return self
+        if not (open_licence(self.licence) or open_licence(self.licence_url)):
+            raise ValueError(f"media {self.id} is shown inline only under an open licence")
+        if not self.author:
+            raise ValueError(f"media {self.id} is shown inline only with its author")
         return self

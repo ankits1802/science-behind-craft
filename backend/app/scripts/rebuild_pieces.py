@@ -9,12 +9,11 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from app.core.db import dispose_engine, sessionmaker
 from app.core.shielded import ShieldedWork
 from app.providers import budget
+from app.providers.answer_routes import answer_models
 from app.providers.budget import AnswerSpend
 from app.providers.embedding import router_embedder
 from app.providers.router import Principal
-from app.providers.structured import router_structured_model
 from app.scripts.enrich_coverage import spent_since
-from app.services.ai_providers import AiTask
 from app.services.answer_store import build_answer_pipeline
 from app.services.answering import AnswerPipeline
 from app.services.coverage_enrichment import ENRICHMENT_DAILY_BUDGET_USD, ENRICHMENT_TAG
@@ -38,11 +37,7 @@ def rebuild_pipeline(
         sessions=sessions,
         index=index,
         live=live,
-        plan_model=router_structured_model(AiTask.PLAN, principal),
-        compose_model=router_structured_model(AiTask.COMPOSE, principal),
-        builder_plan_model=router_structured_model(AiTask.PLAN, optional),
-        builder_compose_model=router_structured_model(AiTask.COMPOSE, optional),
-        translate_model=router_structured_model(AiTask.TRANSLATE, principal),
+        models=answer_models(depth, principal=principal, optional=optional),
         embed=router_embedder(principal),
         shield=shield,
     )

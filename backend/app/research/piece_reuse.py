@@ -14,6 +14,7 @@ __all__ = [
     "SIMULATION_FACETS",
     "SIMULATION_KIND",
     "ClaimState",
+    "answered_first",
     "piece_group_key",
     "reusable_groups",
     "reusable_simulation",
@@ -42,6 +43,7 @@ PIECE_BLOCK_ORDER = (
     "material_card",
     "molecule_3d",
     "expert_view",
+    "artisan_voice",
     "what_if",
     "simulation",
     "zoom_story",
@@ -77,6 +79,11 @@ def visible_as_cited(piece: KnowledgePiece, current: Mapping[uuid.UUID, ClaimSta
 
 def piece_group_key(piece: KnowledgePiece) -> tuple[str, uuid.UUID]:
     return piece.facet, piece.created_from_answer_id or piece.id
+
+
+def answered_first(groups: Sequence[tuple[KnowledgePiece, ...]]) -> list[tuple[KnowledgePiece, ...]]:
+    answered = [group for group in groups if any(piece.created_from_answer_id for piece in group)]
+    return answered or list(groups)
 
 
 def reusable_groups(

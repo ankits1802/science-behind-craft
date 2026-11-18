@@ -23,7 +23,8 @@ Last reviewed: 2026-11-18.
 - Every fact a reader sees carries its citation: a sentence its claims' citations, a value its
   dataset row. Nothing here is written by a model; a model may only choose and order.
 - An explainer is its asker's. Every explainer, version, saved entry, notification and lesson
-  route answers 404 to anyone else, Master Admins included, so a stranger learns nothing.
+  route answers 404 to anyone else, Master Admins included, so a stranger learns nothing. The one
+  way out is a share link the asker (or, for a lesson, its builder) makes (Share links, below).
 - Routes are thin (`docs/contracts/backend.md`): read on one short session, release it before any
   model, bucket or HTTP call (decision 0040).
 - The paths below are under `/api`; the client's constants omit the prefix like every other
@@ -278,6 +279,68 @@ worker thread after the request's connection is released, as the citation routes
 fpdf2, uharfbuzz, citeproc-py and Pillow load on the first file a process makes, never at start-up
 (decision 0070).
 
+## Share links (decision 0097)
+
+An asker may make one version of an answer readable by anyone who has its link, and a lesson's
+builder a lesson pack. Nothing is shared until its owner asks; unshared answers and lessons stay
+404 to everyone else. Code: `research/share_links.py` (the shape), `services/share_links.py`,
+`services/public_explainer.py`, `api/routes/shared.py`; the token and its time are
+`Answer.shareToken` and `sharedAt`, `LessonPack.shareToken` and `sharedAt` (the
+`models/sharing.SharedByLink` mixin, migration `0030_share_links`).
+
+`ShareLink {schemaVersion 1, shared, path, sharedAt}`: `path` is the web page of the share,
+`/shared/answers/<token>` or `/shared/lessons/<token>`, and `path` and `sharedAt` are null exactly
+while it is not shared. The token is 32 URL-safe characters from `secrets.token_urlsafe(24)`
+(`SHARE_TOKEN_PATTERN` accepts 22 to 64), stored as it is, since it gives only reading of what its
+owner chose to publish; sharing again keeps the token, and stopping and sharing again makes a new
+one.
+
+| Method | Path | Auth | Response |
+|---|---|---|---|
+| GET | `/api/explainers/{explainerId}/versions/{version}/share` | the asker | `ShareLink`; 404 not theirs |
+| PUT | `/api/explainers/{explainerId}/versions/{version}/share` | the asker | `ShareLink`; 404 not theirs; 422 `{detail}` when nothing in the version may be shown publicly |
+| DELETE | `/api/explainers/{explainerId}/versions/{version}/share` | the asker | 204; 404 not theirs |
+| PUT | `/api/lessons/{id}/share` | `BUILD_LESSONS`, the builder | as above for the lesson |
+| GET, DELETE | `/api/lessons/{id}/share` | the builder, with or without `BUILD_LESSONS` | as above for the lesson |
+| GET | `/api/shared/answers/{token}` | public reading | `ExplainerVersionDocument` of the shared version, as public |
+| GET | `/api/shared/answers/{token}/citations`, `.../citations/{format}` | public reading | the version's `CitationExport` and files, as the asker's exports |
+| GET | `/api/shared/answers/{token}/pdf` | public reading | `ExportLink` of the version's report |
+| GET | `/api/shared/lessons/{token}` | public reading | `LessonPack`, as public |
+| GET | `/api/shared/lessons/{token}/files/{format}` | public reading | `ExportLink` of the pack's `html`, `pptx` or `pdf` |
+
+Owner routes answer `private, no-cache`. Public reads count against the anonymous per-address
+limit and set `Vary: Authorization` and an `ETag` (the body's SHA-256) with 304 revalidation;
+`Cache-Control` is `public, max-age=300` without a session and `private, no-cache` with one, the
+file links always `private, no-cache`. An unknown or unshared token is 404 `{"detail": "Nothing is
+shared at that address. Its owner may have stopped sharing it."}`, a malformed one 422. A shared
+cache may keep a stopped share for up to the 300 seconds of its `max-age`.
+
+**While its owner may publish.** A token opens only while its owner's account is not deleted and
+has no `REJECTED` or `SUSPENDED` access row (`services/access_roster.account_in_good_standing`).
+Deleting or suspending the account, and suspending or refusing its access, set every
+`shareToken` and `sharedAt` of the account to null in the same transaction, audited as
+`shares.withdrawn` with `{cause, answers, lessons}`; a role change that loses `BUILD_LESSONS` does
+the same for its lessons. A restored account shares again with a new token. The web app asks before
+it shares (`lib/shareNotice.SHARE_NOTICE`): the question, the version with its citations and its
+PDF report for an answer, the lesson with its citations, slides and handout for a lesson.
+
+**As public.** The shared version is the asker's stored version read as the asker reads it
+(`explainer_history.shown_version`: hidden generated explainers, withdrawn testimony and withdrawn
+field voices left out), then `public_explainer.public_version`: every citation whose claim and
+source have no `ClaimSource` an anonymous reader may quote (chunk ACL outside `PUBLIC` and
+`SIGNED_IN`, a `RESTRICTED` chunk or source, a withheld field source, a hidden claim status or a
+non-`OPEN` claim) is withdrawn with `field_voices_readback.without_withdrawn`, so a prose sentence
+citing it, or any other block citing it, leaves, and a section left with nothing is `EMPTY`. A
+Researcher's answer therefore never publishes its closed-licence quotes. A share whose public
+reading is empty is refused at `PUT` and answers 404 if it empties later. The body carries no user
+id, email address or role of the asker (the answer's own depth and language stay, as parts of the
+answer); its question is the asker's own words, which the asker sees before sharing. A shared lesson is rebuilt on every read from the public reading of
+its explainer with the stored pack's title, sections (those still `READY`) and quiz choice, its id
+and `createdAt` kept (`share_links.public_lesson`), so it never shows more than the shared answer
+would. Files of a share are filed under the neutral owner id `00000000-0000-0000-0000-000000000000`
+(`share_links.SHARED_EXPORT_OWNER`), so no signed link names the asker; they expire with the
+`exports/` rule like every other file.
+
 ## Shared-science explorer (decision 0064 builds it)
 
 `GET /api/crafts/{slug}/shared-science` (public, decision 0079) answers `SharedScience {schemaVersion 1, craft,
@@ -323,8 +386,9 @@ stored explainer of that answer (any version: each version's answer row holds th
 document) by the quiz rules below, from the chosen sections (each once, every section when none
 is given), read with the hidden marks of its generated explainers (a hidden one adds nothing,
 decision 0070); `sources` are the sources its sentences cite, in order of first citation. 404 for an
-answer that is not the asker's, holds no explainer or yields no question; 422 for a section the
-explainer lacks or one asked twice. `Cache-Control: private, no-cache`. No model call.
+answer that is not the asker's or holds no explainer; 204 with no body for an explainer that yields
+no question (decision 0089; the client reads it as no quiz and draws no Check yourself); 422 for a
+section the explainer lacks or one asked twice. `Cache-Control: private, no-cache`. No model call.
 
 - **The rules** (`research/quiz.py`, `quiz_block`, used by lesson packs too): the pool is the
   sections' fact sentences in reading order (quiz blocks left out, a sentence text once), each

@@ -1,4 +1,6 @@
 import uuid
+from dataclasses import replace
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -7,7 +9,13 @@ from app.core.errors import ExternalFailure
 from app.services import matter_builders
 from app.services.block_builders import BLOCK_BUILDERS, BlockBuilders
 from app.services.builder_interface import BuilderTools
-from app.services.matter_builders import MaterialCardBuilder, MoleculeBuilder, ReactionPlayerBuilder
+from app.services.matter_builders import (
+    MOLECULE_CANDIDATES_MAX,
+    MOLECULES_PER_SECTION,
+    MaterialCardBuilder,
+    MoleculeBuilder,
+    ReactionPlayerBuilder,
+)
 from app.sources.reference.pubchem import PubChemAdapter
 
 from ..science.golden_process import ALIZARIN, claim_id, known_claim
@@ -31,6 +39,9 @@ ALIZARIN_LAKE = uuid.UUID("26229ecd-184c-5adf-86d0-b45c56394f27")
 PUG = "pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid"
 ALIZARIN_SDF = Reply("pubchem_conformer.sdf")
 NO_CONFORMER = Reply("pubchem_conformer_missing.txt", status=404)
+SDF_TEXT = (Path(__file__).resolve().parents[1] / "sources" / "fixtures" / "pubchem_conformer.sdf").read_text(
+    encoding="ascii"
+)
 CARD_REPLY = {"cards": [{"material": "m1", "facts": ["m1.c1", "m1.c7"], "handling": ["m1.c2", "m1.c1"]}]}
 
 
@@ -133,7 +144,7 @@ async def test_a_named_compound_with_a_3d_conformer_becomes_a_molecule(stored: d
     adapter, recorder = pubchem({f"{PUG}/6293/record/SDF": ALIZARIN_SDF})
     built = await molecules(objects, adapter).build(chemistry_ask())
     (molecule,) = built.blocks
-    assert (molecule.id, molecule.compound_id, molecule.pubchem_cid) == ("s4.molecule", ALIZARIN, 6293)
+    assert (molecule.id, molecule.compound_id, molecule.pubchem_cid) == ("s4.molecule1", ALIZARIN, 6293)
     assert (molecule.name, molecule.formula, molecule.source_id) == ("Alizarin", "C14H8O4", ALIZARIN_RECORD)
     assert built.sources == {ALIZARIN_RECORD: alizarin_record_source()}
     assert len(recorder.requests) == 1 and "media/molecules/6293/conformer.json" in objects.stored
@@ -186,3 +197,44 @@ async def test_the_registry_adds_the_built_matter_blocks(
     assert set(chemistry.sources) == {GI_JOURNAL, COLOURS_SOURCE, ALIZARIN_RECORD}
     materials = await builders.added(chemistry_ask(discipline="MATERIALS"))
     assert [block.kind for block in materials.blocks] == ["material_card", "molecule_3d"]
+
+
+class EveryConformer:
+    def __init__(self) -> None:
+        self.asked: list[int] = []
+
+    async def conformer(self, cid: int) -> str | None:
+        self.asked.append(cid)
+        return SDF_TEXT
+
+
+def drawing(source: EveryConformer) -> MoleculeBuilder:
+    async def found() -> EveryConformer:
+        return source
+
+    return MoleculeBuilder(tools(), bucket=MemoryObjects, pubchem=found)
+
+
+async def test_a_section_draws_every_named_compound_with_a_conformer(stored: dict[str, Any]) -> None:
+    stored["matter"] = matter(alum_linked=True)
+    drawn = (await drawing(EveryConformer()).build(chemistry_ask())).blocks
+    assert [(block.id, block.pubchem_cid) for block in drawn] == [
+        ("s4.molecule1", 24856),
+        ("s4.molecule2", 6293),
+    ]
+
+
+async def test_a_chemistry_section_also_draws_the_compounds_of_the_reactions_it_plays(
+    stored: dict[str, Any],
+) -> None:
+    ask = chemistry_ask()
+    alum_only = ask.blocks[0].model_copy(update={"sentences": ask.blocks[0].sentences[:1]})
+    source = EveryConformer()
+    drawn = (await drawing(source).build(replace(ask, blocks=(alum_only,)))).blocks
+    assert ([block.pubchem_cid for block in drawn], source.asked) == ([6293], [6293])
+    history = replace(chemistry_ask(discipline="HISTORY"), blocks=(alum_only,))
+    assert (await drawing(EveryConformer()).build(history)).blocks == ()
+
+
+def test_a_section_draws_at_most_three_molecules() -> None:
+    assert (MOLECULES_PER_SECTION, MOLECULE_CANDIDATES_MAX) == (3, 6)

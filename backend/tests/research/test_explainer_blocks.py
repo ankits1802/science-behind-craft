@@ -57,22 +57,31 @@ DECLARED: dict[str, dict[str, Any]] = {
         "items": [{"sentence": sentence(level="HYPOTHESIS"), "howToFindOut": "Test the wash water."}]
     },
     "artisan_voice": {
+        "version": 2,
+        "removed": 0,
         "quotes": [
             {
-                "artisan": {
+                "itemId": "FIELD_REPOSITORY:media-1:turn-1",
+                "origin": "FIELD_REPOSITORY",
+                "speaker": {
                     "name": "A. Artisan",
-                    "credentials": ["Block printer"],
-                    "village": "Village A",
+                    "line": "A. Artisan",
+                    "role": "ARTISAN",
+                    "yearsInCraft": 31,
                     "district": "District A",
                     "state": "State A",
-                    "address": None,
                 },
                 "quote": "A quoted line from the recording.",
-                "language": "en",
+                "language": "gu",
+                "english": "A quoted line from the recording.",
+                "englishSource": "MACHINE",
                 "sourceId": SOURCE,
-                "locator": "turn 4",
+                "locator": "12:04–12:31",
+                "workshop": "a workshop in District A, State A, March 2026",
+                "recordedOn": "2026-03-14",
+                "corroboratedBy": [],
             }
-        ]
+        ],
     },
     "designs": {
         "designs": [
@@ -109,11 +118,12 @@ def test_every_kind_not_built_yet_is_declared_here() -> None:
 @pytest.mark.parametrize("kind", sorted(DECLARED))
 def test_each_declared_kind_validates_inside_the_one_envelope(kind: str) -> None:
     block = BLOCK.validate_python(declared(kind))
-    assert (block.kind, block.version, block.reuse) == (kind, 1, None)
+    version = DECLARED[kind].get("version", 1)
+    assert (block.kind, block.version, block.reuse) == (kind, version, None)
     assert type(block) is BLOCK_MODELS[kind]
     assert block.cited_source_ids() or block.cites_datasets()
     with pytest.raises(ValidationError):
-        BLOCK.validate_python(declared(kind, version=2))
+        BLOCK.validate_python(declared(kind, version=version + 1))
 
 
 @pytest.mark.parametrize(
@@ -123,6 +133,16 @@ def test_each_declared_kind_validates_inside_the_one_envelope(kind: str) -> None
             "artisan_voice",
             {"quotes": [{**DECLARED["artisan_voice"]["quotes"][0], "quote": "Call 98250 12345 67."}]},
             "phone",
+        ),
+        (
+            "artisan_voice",
+            {"quotes": [], "removed": 0},
+            "quotes nobody",
+        ),
+        (
+            "artisan_voice",
+            {"quotes": [{**DECLARED["artisan_voice"]["quotes"][0], "englishSource": None}]},
+            "come together",
         ),
         ("quiz", {"questions": [{**DECLARED["quiz"]["questions"][0], "answer": 5}]}, "keys one of"),
         ("open_questions", {"items": [{"sentence": sentence(), "howToFindOut": None}]}, "is a hypothesis"),

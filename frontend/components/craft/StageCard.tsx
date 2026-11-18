@@ -14,7 +14,7 @@ import { STAGE_TYPE_LABEL } from "@/lib/processView";
 function StageMark({ order }: { order: number | null }) {
   if (order === null) return <span aria-hidden className="mt-1.5 h-3.5 w-3.5 justify-self-center rounded-full border-2 border-purple-300 bg-card dark:border-purple-500" />;
   return (
-    <span aria-hidden className="grid h-8 w-8 place-items-center justify-self-center rounded-full bg-purple-700 font-display text-sm font-bold text-white">
+    <span aria-hidden className="grid h-8 w-8 place-items-center justify-self-center rounded-full bg-sunk font-ui text-ui font-semibold tabular-nums text-ink-1">
       {order}
     </span>
   );

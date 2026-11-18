@@ -48,7 +48,7 @@ export const MenuItem = ({
               <motion.div
                 transition={panelTransition}
                 layoutId="active"
-                className="overflow-hidden rounded-2xl border border-line-200 bg-card/95 shadow-panel backdrop-blur-xs"
+                className="overflow-hidden rounded-2xl border border-line-200 bg-card/95 shadow-pop backdrop-blur-xs"
               >
                 <motion.div
                   layout

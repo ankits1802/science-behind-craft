@@ -28,9 +28,11 @@ from .text import document_text
 __all__ = [
     "EMBED_BATCH",
     "EmbeddedCounts",
+    "SourceChunk",
     "embed_pending",
     "embed_pieces",
     "embed_written",
+    "replace_planned_chunks",
     "replace_source_chunks",
 ]
 
@@ -43,6 +45,14 @@ class EmbeddedCounts:
     claims: int
     chunks: int
     pieces: int = 0
+
+
+@dataclass(frozen=True)
+class SourceChunk:
+    text: str
+    locator: str
+    lang: str
+    acl: str
 
 
 @dataclass(frozen=True)
@@ -67,6 +77,26 @@ async def replace_source_chunks(
     await session.execute(delete(Chunk).where(Chunk.sourceId == source_id, Chunk.ordinal >= len(pieces)))
     await session.flush()
     return len(pieces)
+
+
+async def replace_planned_chunks(
+    session: AsyncSession, source_id: uuid.UUID, chunks: Sequence[SourceChunk]
+) -> int:
+    source = await session.get(Source, source_id)
+    if source is None:
+        raise InvalidInput(f"No source has the id {source_id}")
+    if not chunks:
+        raise InvalidInput(f"Source {source_id} is given no chunks to store")
+    stored = {
+        chunk.ordinal: chunk
+        for chunk in (await session.scalars(select(Chunk).where(Chunk.sourceId == source_id))).all()
+    }
+    for ordinal, planned in enumerate(chunks):
+        piece = TextChunk(ordinal=ordinal, text=planned.text, locator=planned.locator)
+        _apply(session, stored.get(ordinal), piece, source=source, lang=planned.lang, acl=planned.acl)
+    await session.execute(delete(Chunk).where(Chunk.sourceId == source_id, Chunk.ordinal >= len(chunks)))
+    await session.flush()
+    return len(chunks)
 
 
 async def embed_pending(

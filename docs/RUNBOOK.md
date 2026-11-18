@@ -45,7 +45,7 @@ sudo kv-blue-green status
 
 ## Secrets
 
-Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME>` in Parameter Store, and `/opt/kalavigyan/.env` on the box. The one exception is the E2E account (`E2E_EMAIL`, `E2E_PASSWORD`): only the E2E production workflow reads it, so it is a GitHub secret alone (E2E production run, below).
+Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME>` in Parameter Store, and `/opt/kalavigyan/.env` on the box. The exceptions are the E2E accounts. The Researcher's (`E2E_EMAIL`, `E2E_PASSWORD`) is a GitHub secret alone, because only the E2E production workflow reads it. The Professor's and Admin's passwords and two-step secrets are GitHub secrets and SecureString parameters under `/kalavigyan/e2e/`, outside `/kalavigyan/env/`, so they never reach the box `.env` (E2E production run, below).
 
 - GitHub secrets: `DATABASE_URL`, `JWT_SECRET`, `SECRETS_ENCRYPTION_KEY`, `TWO_FACTOR_ENCRYPTION_KEY`, `ORIGIN_VERIFY_SECRET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `GEMINI_API_KEY`, `ELEVENLABS_API_KEY`, `GOOGLE_CLIENT_ID`, `MASTER_ADMIN_EMAIL`, `MASTER_ADMIN_NAME`.
 - GitHub variables: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`, `AWS_RIVER_LOAD_ROLE_ARN` (decision 0050), `EC2_INSTANCE_ID`, `MEDIA_BUCKET`, `API_BASE_URL`, `CLOUDFRONT_DISTRIBUTION_ID`, `WEB_ORIGIN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
@@ -106,6 +106,10 @@ Decision 0017; contract `docs/contracts/voice.md`.
   `VOICE_CALL_ENABLED=true` to the environment **Deploy backend** writes to the box `.env` (a
   workflow change and a deploy); the call then starts from the craft page's Talk button only (the
   mic on `/ask` is dictation, decision 0036).
+- Signature figures (decision 0086) are off: `SIGNATURE_FIGURES_ENABLED` defaults to false, so
+  no lede carries a figure. Switch it on only with the redesigned answer page that draws them: put
+  `SIGNATURE_FIGURES_ENABLED=true` at `/kalavigyan/env/SIGNATURE_FIGURES_ENABLED` and re-render the
+  box `.env` (`sudo kv-render-env`); no model call or key is needed.
 - Listen (decision 0035) needs only `ELEVENLABS_API_KEY` (Settings, API keys) and `S3_BUCKET`. Its
   audio lives under `media/narration/<cacheId>/` in the media bucket (part MP3s, then
   `narration.json`); deleting a folder only makes the next listener synthesise it again. The
@@ -115,7 +119,7 @@ Decision 0017; contract `docs/contracts/voice.md`.
   migration `0022_elevenlabs_media`. The restricted key needs the Music and Sound Effects
   permissions; the ElevenLabs image and video choices (`gemini-3.1-flash-image`,
   `veo-3.1-fast-generate-001`, not in any chain until an admin adds them) need the Image and Video
-  permission and a Pro plan. Spend counts against the media sub-cap. Clips live under
+  permission and a Pro plan. Spend counts against a media sub-cap when one is set (none is, decision 0093). Clips live under
   `media/score/<cacheId>/` (MP3 and `clip.json`) and each score's manifest under
   `media/score/<answerId>/<language>/score.json`; deleting either only makes the next ask make it
   again. A finished ElevenLabs image or video is fetched only from `storage.googleapis.com`
@@ -158,13 +162,55 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 
 Craft sync (`.github/workflows/craft-sync.yml`): daily at 21:37 UTC and on dispatch, runs `app.scripts.sync_portal_crafts` in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/craft-sync/<run id>/`. It prints one JSON report and fails when a portal did not answer (`docs/contracts/portal-craft-feed.md`).
 
+Field voices sync (`.github/workflows/field-voices-sync.yml`): daily at 22:17 UTC (after the craft sync) and on dispatch, runs `app.scripts.sync_field_voices` on the box over SSM (up to 90 minutes), logging to `deploy/logs/field-voices-sync/<run id>/`. It prints `{ok, enabled, error, portals: [{portal, ok, skipped, error, streams: [{stream, pages, liveApplied, goneApplied, imagesStored, refusedPages, withdrawnUnlisted, portalScrubMisses, caughtUp, reconciled, error}]}]}` and fails when a portal or stream failed. While `FIELD_VOICES_ENABLED` is unset or false it reads nothing and succeeds; a portal that has not shipped the routes answers 404 and is reported `skipped: not_served`. To switch it on: `FIELD_VOICES_ENABLED=true` and `FIELD_VOICES_IMAGE_HOSTS` (both portals' bucket hosts, see `infra/.env.example`) at `/kalavigyan/env/`, with `CROSS_PORTAL_TOKEN`, `DESIGNER_PORTAL_API_URL`, `FIELD_REPOSITORY_API_URL`, `PUBLIC_WEB_URL` and `PUBLIC_API_URL` (https) already set, then `sudo kv-render-env`. Images are stored only when `S3_BUCKET` and an https `PUBLIC_API_URL` are set. Nothing reaches KalaVigyan until a portal has shipped its routes and set its own `CROSS_PORTAL_FIELD_VOICES_ENABLED` (and `FIELD_VOICES_RIGHTS_HOLDER` for images).
+
 Alert digest (`.github/workflows/alert-digest.yml`): Mondays at 03:30 UTC (09:00 India time) and on dispatch, runs `app.scripts.send_alert_digest` on the box over SSM, logging to `deploy/logs/alert-digest/<run id>/`. It prints `{enabled, weekOf, readers, sent, failed, ok}`; while `ALERT_DIGEST_ENABLED` is unset or false it sends nothing and succeeds. To switch it on, after an SES sender identity is verified for `MAIL_FROM_ADDRESS` (region `MAIL_SES_REGION`) and the account is out of the SES sandbox: put `ALERT_DIGEST_ENABLED=true` at `/kalavigyan/env/ALERT_DIGEST_ENABLED` as above and re-render the box `.env` (`sudo kv-render-env`). Enabled without `MAIL_FROM_ADDRESS` it fails without sending. Readers opt in under Settings (decision 0063).
 
-Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, runs `app.scripts.voice_upkeep`, `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016), `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013), `app.scripts.link_compounds` (links every unlinked compound with a formula to its PubChem record and prints `{linked, notFound, failed, ok}`, decision 0045) and last `app.scripts.recheck_saved` (re-checks every saved explainer for new cited claims in its fields, writes "This answer got better" notes, no model call, prints `{checked, notified, ok}`, decision 0063) in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/coverage-enrichment/<run id>/`; the step fails when any of them fails. Since commit fdf478c it no longer researches crafts or rebuilds pieces (`app.scripts.rebuild_pieces` and `app.scripts.enrich_coverage` are not run; the dataset is curated by Claude Code, `docs/plans/dataset-curation.md`).
+Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:17 UTC and on dispatch, runs `app.scripts.voice_upkeep`, `app.scripts.embed_craft_descriptors` (missing craft name-and-alias vectors for the resolver, decision 0016), `app.scripts.embed_knowledge` (fills every missing claim, chunk and knowledge-piece vector, so the backlog is never embedded inside a learner's request, decision 0013), `app.scripts.link_compounds` (links every unlinked compound with a formula to its PubChem record, fills the formula of a compound a curated dossier gave only its CID, and prints `{linked, filled, notFound, failed, ok}`, decisions 0045 and 0088), `app.scripts.build_craft_chapters` (keeps the 3D conformers of the curated and read crafts' compounds in the media bucket and `Compound.conformerKeptAt`, stores the Wikidata points of dossier places, rebuilds both page snapshots of every curated craft and every craft with a snapshot, logs an error naming a craft whose page changed under an unchanged stamp, and prints `{crafts, conformersKept, conformersWithout3d, pointsKept, pagesRebuilt, pagesChanged, failed, ok}`, decision 0098) and last `app.scripts.recheck_saved` (re-checks every saved explainer for new cited claims in its fields, writes "This answer got better" notes, no model call, prints `{checked, notified, ok}`, decision 0063) in `/opt/kalavigyan/current/backend` on the box over SSM, logging to `deploy/logs/coverage-enrichment/<run id>/`; the step fails when any of them fails. Since commit fdf478c it no longer researches crafts or rebuilds pieces (`app.scripts.rebuild_pieces` and `app.scripts.enrich_coverage` are not run; the dataset is curated by Claude Code, `docs/plans/dataset-curation.md`).
 
 Running the same sha again re-renders the env and restarts the live colour.
 
 Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there is no Actions deploy.
+
+## AI spend and token limits
+
+No caps for now, on anyone, in money or tokens (owner, 2026-11-18; decision 0093). Every cap is
+still a setting whose default is "none", and every call is still reserved and settled in
+`UsageEvent` with its cost, so `/admin/usage` shows all spend; voice seconds and media units are
+still written to `QuotaLedger`.
+
+Migration `0029_unlimited_ai_use` is the one data step. The deploy's `alembic upgrade head` runs
+it once, while the old colour serves; a second run changes nothing. It changes these production
+rows:
+
+- `AppSetting`: deletes `AI_MONTHLY_CEILING_USD`, `AI_MEDIA_CAP_USD`, `AI_ROLE_DAILY_USD`,
+  `AI_DEGRADE_AT_FRACTION` and `AI_ANSWER_CAP_USD` (seeded as $800, $150, the per-role daily caps
+  and 0.8; the answer caps if a Master Admin had stored them), so the code defaults, none, govern.
+  `AI_MODEL_PRICES`, `SIGN_UP_MODE`, `DOMAIN_ALLOWLIST` and the `voice.*` rows are not touched.
+  Until the switch the old release reads the missing rows as its own capped defaults and keeps
+  answering.
+- `QuotaPolicy`: `perDay` and `perMonth` to NULL on every row (the seeded seconds, images and
+  videos per role). No code reads this table; `core/roles.DAILY_ALLOWANCES` is what counts, and it
+  is unlimited for every role.
+- `RoutePolicy`: `maxOutputTokens` to NULL on every row (seeded as 8192 for `TRANSLATE` and 2048
+  for `SUMMARISE`, plus any set in AI routing), so each call asks for its model's documented
+  maximum: 128,000 for the Claude models, 65,536 for the Gemini text models, 16,384 for Gemini
+  3.8 Flash TTS, 128,000 for the OpenAI fallbacks and 384,000 for DeepSeek, so no route asks for
+  fewer tokens than the row held.
+
+After the deploy: `GET /api/settings/ai-budget` as the Master Admin answers `null` for the
+ceiling, the media cap, the degrade mark, every role's daily cap and every depth's answer cap, and
+`/admin/usage` shows "This month" with "No monthly ceiling".
+
+To bring a cap back: `PUT /api/settings/ai-budget` with a step-up code and the values
+(`monthlyCeilingUsd`, `mediaCapUsd`, `roleDailyUsd`, `degradeAtFraction`, `answerCapUsd`; an
+explicit `null` lifts one again). A per-route output cap is `maxOutputTokens` in AI routing
+(never above the model's maximum). Daily seconds and media units are the table
+`core/roles.DAILY_ALLOWANCES`, a code change and a deploy. The deploy does not reset any of these.
+
+To undo the data step: `alembic downgrade 0028_roles_and_contributions` from this release puts
+back the seeded `QuotaPolicy.perDay` values and the `TRANSLATE` and `SUMMARISE` route caps; it does
+not write the AI budget rows back (an earlier release then uses its own capped defaults).
 
 ## Geo ETL
 
@@ -203,7 +249,12 @@ elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make pla
    backend/.venv/Scripts/python.exe tools/curation/fetch.py "https://<the source page or PDF>" --out <scratch file>
    ```
    When it prints `read: ARCHIVE ...`, the live page refused and the text came from the Wayback
-   Machine: put the printed `archivedUrl` on the source.
+   Machine: put the printed `archivedUrl` on the source. For each picture, read its Commons file
+   page the same way and copy the printed `url`, `width`, `height`, `author`, `licence` and
+   `licenceUrl` into the dossier:
+   ```bash
+   backend/.venv/Scripts/python.exe tools/curation/fetch.py --picture "https://commons.wikimedia.org/wiki/File:<name>"
+   ```
 2. Write `backend/app/data/curation/<CraftSlug>.json` (`<CraftSlug>` as on the master list or the
    portal craft register `backend/app/data/portal_craft_register.json`, for example
    `Kutch-Ajrakh`), recording every query in `searched`. A catch-all or All India craft is
@@ -233,6 +284,13 @@ elsewhere). No model or keyed API is called; `fetch.py` and `verify.py` make pla
    backend/.venv/Scripts/python.exe tools/curation/check.py --check-index
    ```
 
+After a change of the dossier schema version (`docs/contracts/curation.md`, Migrating a
+dossier), the lead rewrites every dossier once, then runs step 5:
+
+```bash
+backend/.venv/Scripts/python.exe tools/curation/migrate.py
+```
+
 ## Import the curated dossiers again
 
 The deploy imports every checked dossier after the seeds (above). To re-run it on the box by hand
@@ -250,11 +308,13 @@ checker's lines. `WAITING` is a portal-added craft the portal craft sync has not
 To see a dossier's craft page without a database, from `backend/` on the laptop:
 
 ```bash
-.venv/Scripts/python.exe -m app.scripts.import_curation --preview Kutch-Ajrakh --out ../shared/craft.page.golden.json
+.venv/Scripts/python.exe -m app.scripts.import_curation --preview Kutch-Ajrakh --family Textiles-Based-Craft-Category --inputs ../shared/craft.page.inputs.json --out ../shared/craft.page.golden.json
 ```
 
-That command also regenerates the craft page fixture after a change to the Kutch Ajrakh dossier
-or the page; `tests/contracts/test_craft_page_contract.py` fails until it is rerun. The page of a
+`--family` borrows a family dossier's science (its reactions and claims) and `--inputs` adds the
+stored rows of a fixture file (geo values, conformers, explainers); without them the chapters show
+only what the dossier holds. That command also regenerates the craft page fixture after a change
+to the Kutch Ajrakh dossier, the Textiles family dossier, the inputs file or the page; `tests/contracts/test_craft_page_contract.py` fails until it is rerun. The page of a
 craft with no dossier, beside the Kutch Ajrakh one, is the second fixture:
 
 ```bash
@@ -327,11 +387,32 @@ The account is `e2e-researcher@kalavigyan.example`: Researcher (Deep allowed, no
    gh workflow run e2e-production.yml --repo cxacraftecosystem-ui/KalaVigyan -f questions=true -f rivers_loaded=true
    ```
 
-Professor and Admin screens (`/lessons`, `/admin`, at 1440 light) run only when all three of a role's secrets exist, and are skipped otherwise: `E2E_PROFESSOR_EMAIL`, `E2E_PROFESSOR_PASSWORD`, `E2E_PROFESSOR_TOTP_SECRET` and `E2E_ADMIN_EMAIL`, `E2E_ADMIN_PASSWORD`, `E2E_ADMIN_TOTP_SECRET`. Each account is a real Professor or Admin with two-step on; the TOTP secret is the base32 key shown when two-step was set up. Store them with `gh secret set <NAME> --repo cxacraftecosystem-ui/KalaVigyan`, pasting each value at the prompt.
+### Professor and Admin E2E accounts
+
+Professor and Admin screens (`/lessons`, `/admin`, at 1440 light) run only when all three of a role's secrets exist, and are skipped otherwise: `E2E_PROFESSOR_EMAIL`, `E2E_PROFESSOR_PASSWORD`, `E2E_PROFESSOR_TOTP_SECRET` and `E2E_ADMIN_EMAIL`, `E2E_ADMIN_PASSWORD`, `E2E_ADMIN_TOTP_SECRET`. They run only against production. A preview run gets none of the six secrets and skips both screens, because a preview can be built from any branch's code and must never receive an Admin sign-in. The accounts are `e2e-professor@kalavigyan.example` (Professor) and `e2e-admin@kalavigyan.example` (Admin): active on the roster, email verified, two-step on with a TOTP secret made on the operator's machine, no recovery codes. Each password and secret is kept in two places: a GitHub secret, which E2E production reads, and a SecureString parameter under `/kalavigyan/e2e/`, which the box reads. That path is outside `/kalavigyan/env/`, so the values never reach the box `.env`.
+
+1. Once, let the box role read `/kalavigyan/e2e/*` (`ReadE2EAccountParameters` in `infra/terraform/iam.tf`). The plan must change only `aws_iam_role_policy.box`, in place:
+   ```bash
+   cd infra/terraform
+   terraform init
+   terraform plan -target=aws_iam_role_policy.box
+   terraform apply -target=aws_iam_role_policy.box
+   ```
+2. Make the secrets on your machine and store them. Use a Python that has `boto3` (`backend/.venv` has it) and AWS credentials for account `626159998512`. `infra/scripts/seed_e2e_accounts.py` makes each password from 32 random bytes (URL-safe) and each TOTP secret from 20 random bytes (base32). It writes `/kalavigyan/e2e/E2E_<ROLE>_PASSWORD` and `/kalavigyan/e2e/E2E_<ROLE>_TOTP_SECRET` as SecureString, then sends all six GitHub secrets to `gh secret set` on stdin, as `ankits1802`. It prints names and sha256 fingerprints, never a value. Run again, it keeps the stored values and sets the GitHub secrets from them. `--rotate` makes new values. From the repository root on Windows (`backend/.venv/bin/python` elsewhere):
+   ```bash
+   backend/.venv/Scripts/python infra/scripts/seed_e2e_accounts.py
+   ```
+3. Once a backend deploy has shipped `app.scripts.provision_e2e_role_accounts`, dispatch **E2E accounts** (`.github/workflows/e2e-accounts.yml`, dispatch only, from `main`). It runs the script on the box as `kalavigyan` over SSM, and no secret is in the command. The script reads the four parameters with the box's instance role, not the media user's keys in the `.env`. It refuses a parameter that is missing or not SecureString, a password outside 12 to 200 characters, and a secret that is not base32 or is under 16 bytes; then nothing is changed. Otherwise it creates or resets both accounts: role, password, verified email, ACTIVE roster row, two-step on with that secret, lockouts cleared, sessions ended. It touches only the two reserved addresses, takes no arguments, and prints `{ok, accounts: [{email, role, outcome, twoStep}]}` to `deploy/logs/e2e-accounts/<run id>/`.
+   ```bash
+   gh workflow run e2e-accounts.yml --repo cxacraftecosystem-ui/KalaVigyan --ref main
+   ```
+4. Dispatch **E2E production** as above. The role screens sign in with the password, then type the current code made from the TOTP secret.
+
+After `--rotate`, dispatch E2E accounts again before the next E2E production run, or the role screens fail at sign-in.
 
 ### Driving a Vercel preview
 
-The run refuses any site but production and this project's previews, `https://kalavigyan-<9 characters>-cxacraftecosystem-8028s-projects.vercel.app`, because it types the E2E passwords into it. Once per environment:
+The run refuses any site but production and this project's previews, `https://kalavigyan-<9 characters>-cxacraftecosystem-8028s-projects.vercel.app`, because it types the E2E passwords into it. On a preview only the Researcher account signs in; the Professor and Admin screens are skipped. Once per environment:
 
 1. Let the API accept preview origins. Put the two slugs in Parameter Store, either by hand or with `seed_secrets.py --preview-cors`, and run **Deploy backend** (it rewrites the box `.env` and restarts the API):
    ```bash

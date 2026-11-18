@@ -7,7 +7,17 @@ import pytest
 
 from app.core.errors import InvalidInput
 from app.providers.elevenlabs import ElevenLabs
-from app.voice.agent import AGENT_NAME, LLM_SECRET_NAME, AgentPlan, agent_body, llm_base_url, provision_agent
+from app.voice.agent import (
+    AGENT_NAME,
+    ARTISAN_AGENT_NAME,
+    LLM_SECRET_NAME,
+    AgentPlan,
+    agent_body,
+    artisan_agent_body,
+    llm_base_url,
+    provision_agent,
+)
+from app.voice.artisan_guide import agent_opening
 
 PLAN = AgentPlan(
     api_base_url="https://d89rsltpszebp.cloudfront.net",
@@ -120,3 +130,24 @@ async def test_two_agents_with_our_name_stop_the_run() -> None:
     fake = FakeElevenLabs(agents=twins, tools=[], secrets=[])
     with pytest.raises(InvalidInput, match="ELEVENLABS_AGENT_ID"):
         await provision_agent(fake.client(), PLAN)
+
+
+def test_the_artisan_agent_reaches_its_own_route_opens_in_each_language_and_has_no_client_tools() -> None:
+    body = artisan_agent_body(PLAN, secret_id="secret_llm")
+    config = body["conversation_config"]
+    assert body["name"] == ARTISAN_AGENT_NAME != AGENT_NAME
+    assert (
+        config["agent"]["prompt"]["custom_llm"]["url"]
+        == "https://d89rsltpszebp.cloudfront.net/api/artisan/llm/v1"
+    )
+    assert config["agent"]["prompt"]["tool_ids"] == []
+    assert config["agent"]["first_message"] == agent_opening("en")
+    assert config["language_presets"]["hi"]["overrides"]["agent"]["first_message"] == agent_opening("hi")
+    assert config["turn"]["turn_eagerness"] == "patient"
+    assert config["turn"]["soft_timeout_config"] == {"timeout_seconds": 5.0}
+    assert config["conversation"]["max_duration_seconds"] == 600
+    assert body["platform_settings"]["privacy"]["record_voice"] is False
+    assert (
+        body["platform_settings"]["overrides"]["conversation_config_override"]["agent"]["first_message"]
+        is False
+    )

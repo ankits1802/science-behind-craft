@@ -1,19 +1,23 @@
 from typing import Any
 
+import pytest
 from pydantic import TypeAdapter
 
 from app.research.blocks import BlockBase
-from app.research.explainer import Block
+from app.research.explainer import Block, with_payload_sentences
 from app.services.claim_ledger import ClaimLedger
 
 from ..contracts.phase_b_golden import phase_b, phase_b_blocks
+from ..contracts.phase_c_golden import phase_c, phase_c_blocks
 from ..contracts.phase_d_golden import phase_d, phase_d_blocks
 from .indigo_blocks import ITOKRI, ZAVERI, card, ladder, pictures, prose, zoom
 from .indigo_claims import GREEN_BLUE, IMMERSED, SOURCES, TWO_SHADES
 from .shown import repeated_sentences
 
 BLOCK = TypeAdapter(Block)
-REFS = {ref["id"]: ref for ref in (*SOURCES, *phase_b()["sources"], *phase_d()["sources"])}
+REFS = {
+    ref["id"]: ref for ref in (*SOURCES, *phase_b()["sources"], *phase_c()["sources"], *phase_d()["sources"])
+}
 
 
 def admitted(ledger: ClaimLedger, section_id: str, *payloads: dict[str, Any]) -> list[BlockBase]:
@@ -117,3 +121,55 @@ def test_a_compare_row_left_with_one_craft_goes_and_the_others_stay_in_their_col
     assert [row.facet for row in kept.rows] == ["MATERIALS", "GEOGRAPHY", "HISTORY", "ECONOMICS"]
     assert kept.rows[0].term.key == "indigo"
     assert [len(row.cells) for row in kept.rows] == [2, 2, 2, 2]
+
+
+def test_a_card_leaves_out_a_fact_whose_claims_the_prose_showed_in_other_words() -> None:
+    ledger = ClaimLedger()
+    admitted(
+        ledger,
+        "s1",
+        prose("s1.b1", ("Lifted from the vat, the cloth goes from green to blue.", (GREEN_BLUE,))),
+    )
+    (kept,) = admitted(ledger, "s2", card("s2.b1", "Indigo", "indigo", GREEN_BLUE, TWO_SHADES))
+    assert [fact.text for fact in kept.facts] == [TWO_SHADES.text]
+
+
+def test_a_card_whose_every_fact_was_shown_goes_even_when_it_shows_a_formula() -> None:
+    ledger = ClaimLedger()
+    admitted(ledger, "s1", prose("s1.b1", (GREEN_BLUE.text, (GREEN_BLUE,)), (TWO_SHADES.text, (TWO_SHADES,))))
+    assert admitted(ledger, "s2", card("s2.b1", "Indigo", "indigo", GREEN_BLUE, TWO_SHADES)) == []
+
+
+def test_a_generated_explainer_of_one_concept_is_shown_once_per_answer() -> None:
+    (explained,) = [payload for payload in phase_c_blocks().values() if payload["kind"] == "simulation"]
+    ledger = ClaimLedger()
+    first = admitted(ledger, "s1", {**explained, "id": "s1.b9", "reuse": None})
+    again = admitted(
+        ledger, "s4", {**explained, "id": "s4.b9", "reuse": None, "concept": explained["concept"].upper()}
+    )
+    other = admitted(
+        ledger, "s5", {**explained, "id": "s5.b9", "reuse": None, "concept": "Another mechanism"}
+    )
+    assert ([b.id for b in first], again, [b.id for b in other]) == (["s1.b9"], [], ["s5.b9"])
+
+
+def retold(payload: dict[str, Any], block_id: str) -> dict[str, Any]:
+    def told(sentence: dict[str, Any]) -> dict[str, Any]:
+        return {**sentence, "id": f"{sentence['id']}x", "text": f"{sentence['text']} Told again."}
+
+    return with_payload_sentences({**payload, "id": block_id, "reuse": None}, told)
+
+
+@pytest.mark.parametrize(
+    ("kind", "blocks"),
+    [("seasons", phase_b_blocks), ("supply_map", phase_b_blocks), ("zoom_story", phase_c_blocks)],
+)
+def test_a_craft_level_story_is_shown_once_per_answer_even_when_told_in_other_words(
+    kind: str, blocks: Any
+) -> None:
+    (story,) = [payload for payload in blocks().values() if payload["kind"] == kind]
+    ledger = ClaimLedger()
+    first = admitted(ledger, "s1", {**story, "id": "s1.b9", "reuse": None})
+    again = admitted(ledger, "s4", retold(story, "s4.b9"))
+    assert ([block.id for block in first], again) == (["s1.b9"], [])
+    assert [block.id for block in admitted(ClaimLedger(), "s4", retold(story, "s4.b9"))] == ["s4.b9"]

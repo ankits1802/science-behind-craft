@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import MAX_PASSWORD_LENGTH, hash_password
 from app.models import AccessRoster, User
-from app.services import access_roster
+from app.services import access_roster, reader_profiles
 
 __all__ = [
     "CREATED",
@@ -55,6 +55,7 @@ async def upsert_password_account(
     else:
         user.tokenVersion += 1
         outcome = UPDATED
+        await reader_profiles.apply_role_change(session, user, role)
     user.role = role
     user.passwordHash = hash_password(password)
     user.passwordSetAt = now

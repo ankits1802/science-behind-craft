@@ -62,3 +62,15 @@ def test_a_translated_sentence_keeps_only_the_spans_its_text_still_shows() -> No
 def test_a_span_whose_first_place_overlaps_a_kept_one_is_dropped() -> None:
     spans = [{"text": "resist paste", "termKey": "resist-paste"}, {"text": "paste", "termKey": "paste"}]
     assert spans_still_shown("lime resist paste, then paste again", spans) == spans[:1]
+
+
+def test_a_translated_sentence_marks_a_term_where_its_own_rendering_shows() -> None:
+    spans = [{"text": "saaj", "termKey": "saaj"}, {"text": "kut", "termKey": "kut"}]
+    text = "साज के पेड़ की छाल से कुट बनता है।"
+    renderings = {"saaj": "साज", "kut": "कुट"}
+    assert spans_still_shown(text, spans, renderings) == [
+        {"text": "साज", "termKey": "saaj"},
+        {"text": "कुट", "termKey": "kut"},
+    ]
+    assert spans_still_shown(text, spans, {"saaj": "सज्जा"}) == []
+    assert spans_still_shown(text, spans, {"saaj": "  "}) == []

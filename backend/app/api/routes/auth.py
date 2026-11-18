@@ -16,6 +16,7 @@ from app.core.deps import (
     get_current_user_any_step,
     is_break_glass_master,
     is_configured_master_admin,
+    require,
 )
 from app.core.rate_limit import (
     client_ip,
@@ -32,7 +33,6 @@ from app.core.roles import (
     MASTER_ADMIN,
     STUDENT,
     Capability,
-    can,
     has_rank,
     is_known_role,
     may_manage_target,
@@ -60,6 +60,7 @@ from app.services import (
     google_auth,
     mailer,
     oidc_sign_in,
+    reader_profiles,
     turnstile,
     two_factor,
 )
@@ -188,10 +189,11 @@ def _sign_in_label(user: User) -> str:
     return oidc_sign_in.label_of(provider) if provider in oidc_sign_in.PROVIDERS else "Google"
 
 
-def _adopt_admitted_role(account: User, row: Any) -> None:
+async def _adopt_admitted_role(session: AsyncSession, account: User, row: Any) -> None:
     admitted = access_roster.role_of(row) if access_roster.admits(row) else None
     if not admitted or role_value(account) in (admitted, MASTER_ADMIN):
         return
+    await reader_profiles.apply_role_change(session, account, admitted)
     account.role = admitted
     account.tokenVersion += 1
 
@@ -245,7 +247,7 @@ async def _update_verified_account(
         )
     existing = await _clear_unverified_credentials(session, existing)
     if existing.emailVerifiedAt is None:
-        _adopt_admitted_role(existing, access)
+        await _adopt_admitted_role(session, existing, access)
     if existing.passwordHash is None:
         existing.name = name
         if str(existing.authProvider) in ("LOCAL", mailbox.provider):
@@ -254,6 +256,7 @@ async def _update_verified_account(
         existing.avatarUrl = mailbox.avatar_url
     existing.emailVerifiedAt = existing.emailVerifiedAt or datetime.now(UTC)
     if role == MASTER_ADMIN and existing.passwordHash is None and role_value(existing) != MASTER_ADMIN:
+        await reader_profiles.apply_role_change(session, existing, MASTER_ADMIN)
         existing.role = MASTER_ADMIN
         existing.tokenVersion += 1
     await session.flush()
@@ -464,7 +467,12 @@ async def login(
 
 
 SIGNUP_CLOSED_DETAIL = "Request access with Google instead."
-SIGNUP_ROLE_LABELS = {"STUDENT": "Student", "RESEARCHER": "Researcher", "PROFESSOR": "Professor"}
+SIGNUP_ROLE_LABELS = {
+    "STUDENT": "Student",
+    "ARTISAN": "Artisan",
+    "RESEARCHER": "Researcher",
+    "PROFESSOR": "Professor",
+}
 
 
 def _signup_answer(email: str) -> dict[str, Any]:
@@ -604,7 +612,10 @@ async def me(
 ) -> dict[str, Any]:
     row = await access_roster.access_row(session, user.email)
     access = "ACTIVE" if is_break_glass_master(user) else (access_roster.status_of(row) or "ACTIVE")
-    return serialize_user(user, access_status=access)
+    body = serialize_user(user, access_status=access)
+    body["profileRequired"] = await reader_profiles.profile_required(session, user)
+    body["guardianConsentRequired"] = await reader_profiles.guardian_consent_required(session, user)
+    return body
 
 
 @router.post("/consent")
@@ -668,11 +679,9 @@ async def google_link(
 @router.post("/password-links", status_code=status.HTTP_201_CREATED)
 async def issue_password_link(
     payload: IssuePasswordLinkRequest,
-    actor: User = Depends(get_current_user),
+    actor: User = Depends(require(Capability.MANAGE_ACCESS)),
     session: AsyncSession = Depends(get_session),
 ) -> dict[str, Any]:
-    if not can(actor, Capability.MANAGE_ACCESS):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Issuing password links is for professors and admins.")
     try:
         target_id = uuid.UUID(payload.userId)
     except ValueError as exc:
@@ -725,18 +734,15 @@ async def issue_password_link(
 
 @router.post("/password-links/{link_id}/revoke")
 async def revoke_password_link(
-    link_id: uuid.UUID, actor: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)
+    link_id: uuid.UUID,
+    actor: User = Depends(require(Capability.MANAGE_ACCESS)),
+    session: AsyncSession = Depends(get_session),
 ) -> dict[str, bool]:
     from app.models import PasswordResetToken
 
     row = await session.get(PasswordResetToken, link_id)
     target = await session.get(User, row.userId) if row is not None else None
-    if (
-        row is None
-        or target is None
-        or not can(actor, Capability.MANAGE_ACCESS)
-        or not may_manage_target(actor, target)
-    ):
+    if row is None or target is None or not may_manage_target(actor, target):
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Link not found")
     if not await credential_links.revoke_link(session, link_id):
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Link not found")
@@ -795,7 +801,7 @@ async def set_password(
     account.tokenVersion += 1
     if account.emailVerifiedAt is None:
         account.emailVerifiedAt = now
-        _adopt_admitted_role(account, await access_roster.access_row(session, account.email))
+        await _adopt_admitted_role(session, account, await access_roster.access_row(session, account.email))
         await _record_verified_request(session, account)
     await credential_links.mark_used_and_revoke_rest(session, verdict)
     await audit.record(

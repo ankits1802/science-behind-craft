@@ -2,26 +2,55 @@ from datetime import UTC, date, datetime
 from decimal import Decimal
 
 import pytest
-from pydantic import ValidationError
 
-from app.core.errors import InvalidInput
+from app.core.roles import ROLE_RANK
+from app.models.enums import EXPLAINER_DEPTHS
 from app.providers import budget
-from app.schemas.admin import AppSettingsUpdate
 from app.services import app_settings
 from app.services.ai_providers import model_for
 
+from .ai_caps import ceilings, unlimited
 
-def ceilings(**overrides: object) -> budget.Ceilings:
-    values = dict(app_settings.DEFAULTS)
-    values.update(overrides)
-    return budget.Ceilings.from_settings(values)
+FAR_PAST_ANY_EARLIER_CAP = budget.SpendState(Decimal(1_000_000), Decimal(1_000_000), Decimal(1_000_000))
 
 
-def test_defaults_are_the_owner_ceilings() -> None:
-    c = ceilings()
-    assert c.monthly_usd == Decimal("800")
-    assert c.media_usd == Decimal("150")
-    assert c.degrade_at == Decimal("0.8")
+@pytest.mark.parametrize("is_media", [False, True])
+@pytest.mark.parametrize("depth", EXPLAINER_DEPTHS)
+@pytest.mark.parametrize("role", [*ROLE_RANK, None, "GUEST"])
+def test_no_role_or_depth_is_refused_or_degraded_by_default(
+    role: str | None, depth: str, is_media: bool
+) -> None:
+    answer = budget.AnswerSpend(depth=depth)
+    answer.hold(Decimal(500))
+    for left in (answer.left(unlimited()), answer.headroom().left(unlimited())):
+        decision = budget.evaluate(
+            unlimited(),
+            FAR_PAST_ANY_EARLIER_CAP,
+            estimate_usd=Decimal(250),
+            is_media=is_media,
+            role=role,
+            answer_left_usd=left,
+        )
+        assert (decision.allowed, decision.reason, decision.degrade, decision.month_fraction) == (
+            True,
+            None,
+            False,
+            None,
+        )
+    assert not budget.degrades(unlimited(), FAR_PAST_ANY_EARLIER_CAP, role=role)
+    assert not budget.past_degrade_mark(unlimited(), FAR_PAST_ANY_EARLIER_CAP)
+
+
+@pytest.mark.parametrize("depth", EXPLAINER_DEPTHS)
+def test_an_uncapped_answer_still_counts_what_it_holds_and_spends(depth: str) -> None:
+    answer = budget.AnswerSpend(depth=depth)
+    optional = answer.headroom()
+    answer.hold(Decimal("3"))
+    optional.hold(Decimal("2"))
+    answer.settle(Decimal("3"), Decimal("1.25"))
+    optional.release(Decimal("2"))
+    assert (answer.left(unlimited()), optional.left(unlimited())) == (None, None)
+    assert (answer.held_usd, answer.spent_usd) == (Decimal(0), Decimal("1.25"))
 
 
 def test_allows_inside_every_cap() -> None:
@@ -70,6 +99,14 @@ def test_media_sub_cap_refuses_media_only() -> None:
     assert text.allowed
 
 
+def test_a_media_cap_without_a_monthly_ceiling_still_refuses_media() -> None:
+    c = unlimited(**{app_settings.MEDIA_CAP_USD: 1.0})
+    spend = budget.SpendState(Decimal(5000), Decimal("0.99"), Decimal(0))
+    media = budget.evaluate(c, spend, estimate_usd=Decimal("0.02"), is_media=True, role="ADMIN")
+    text = budget.evaluate(c, spend, estimate_usd=Decimal("0.02"), is_media=False, role="ADMIN")
+    assert (media.allowed, media.reason, text.allowed) == (False, budget.MEDIA_CAP, True)
+
+
 def test_role_daily_cap() -> None:
     spend = budget.SpendState(Decimal("10"), Decimal(0), Decimal("0.49"))
     student = budget.evaluate(ceilings(), spend, estimate_usd=Decimal("0.02"), is_media=False, role="STUDENT")
@@ -89,7 +126,7 @@ def test_role_daily_cap() -> None:
     assert master.allowed
 
 
-def test_admin_daily_cap_is_ten_dollars() -> None:
+def test_admin_daily_cap_is_ten_dollars_when_set() -> None:
     def admin_spending(today: str) -> budget.BudgetDecision:
         spend = budget.SpendState(Decimal(10), Decimal(0), Decimal(today))
         return budget.evaluate(ceilings(), spend, estimate_usd=Decimal("0.5"), is_media=False, role="ADMIN")
@@ -120,6 +157,15 @@ def test_degrade_at_eighty_percent() -> None:
     assert above.allowed
 
 
+def test_a_ceiling_without_a_degrade_mark_never_degrades() -> None:
+    c = ceilings(**{app_settings.DEGRADE_AT_FRACTION: None})
+    decision = budget.evaluate(
+        c, budget.SpendState(Decimal("799")), estimate_usd=Decimal("0.01"), is_media=False, role="STUDENT"
+    )
+    assert (decision.allowed, decision.degrade) == (True, False)
+    assert decision.month_fraction == Decimal("799") / Decimal("800")
+
+
 def test_zero_ceiling_refuses_paid_but_not_free() -> None:
     c = ceilings(**{app_settings.MONTHLY_CEILING_USD: 0})
     paid = budget.evaluate(
@@ -132,7 +178,7 @@ def test_zero_ceiling_refuses_paid_but_not_free() -> None:
 
 def test_request_budget() -> None:
     decision = budget.evaluate(
-        ceilings(),
+        unlimited(),
         budget.SpendState(),
         estimate_usd=Decimal("2.5"),
         is_media=False,
@@ -218,7 +264,7 @@ def test_a_master_admin_is_never_refused_or_degraded_at_the_ceiling(is_media: bo
 
 
 @pytest.mark.parametrize("role", ["STUDENT", "ADMIN", None])
-def test_everyone_else_is_refused_and_degraded_at_the_ceiling(role: str | None) -> None:
+def test_everyone_else_is_refused_and_degraded_at_a_set_ceiling(role: str | None) -> None:
     decision = budget.evaluate(
         ceilings(), AT_THE_CEILING, estimate_usd=Decimal("0.01"), is_media=False, role=role
     )
@@ -246,26 +292,11 @@ def test_a_master_admin_answer_has_no_cap() -> None:
     assert decision.allowed
 
 
-def test_the_answer_caps_per_depth_are_ai_budget_settings() -> None:
-    assert app_settings.DEFAULTS[app_settings.ANSWER_CAP_USD] == {
-        "BASIC": 0.25,
-        "DETAILED": 0.5,
-        "EXPERT": 1.0,
-    }
-    assert ceilings().answer_usd == {
-        "BASIC": Decimal("0.25"),
-        "DETAILED": Decimal("0.5"),
-        "EXPERT": Decimal("1"),
-    }
-    view = app_settings.public_view(dict(app_settings.DEFAULTS))
-    assert view["answerCapUsd"] == {"BASIC": 0.25, "DETAILED": 0.5, "EXPERT": 1.0}
-
-
 def test_an_answer_is_refused_past_its_depth_cap() -> None:
     spent = budget.AnswerSpend(depth="EXPERT")
     spent.hold(Decimal("0.3"))
     spent.settle(Decimal("0.3"), Decimal("0.25"))
-    spent.hold(Decimal("0.5"))
+    spent.hold(Decimal("2.0"))
     assert spent.left(ceilings()) == Decimal("0.25")
     inside = budget.evaluate(
         ceilings(),
@@ -299,25 +330,25 @@ def test_a_released_hold_frees_the_answer_cap() -> None:
 def test_optional_work_spends_only_while_the_answer_keeps_half_its_cap() -> None:
     answer = budget.AnswerSpend(depth="DETAILED")
     optional = answer.headroom()
-    assert optional.left(ceilings()) == Decimal("0.25")
+    assert optional.left(ceilings()) == Decimal("0.5")
     optional.hold(Decimal("0.1"))
     answer.hold(Decimal("0.1"))
     assert (answer.held_usd, answer.left(ceilings()), optional.left(ceilings())) == (
         Decimal("0.2"),
+        Decimal("0.8"),
         Decimal("0.3"),
-        Decimal("0.05"),
     )
     optional.settle(Decimal("0.1"), Decimal("0.04"))
     answer.release(Decimal("0.1"))
     assert (answer.spent_usd, answer.held_usd, optional.left(ceilings())) == (
         Decimal("0.04"),
         Decimal(0),
-        Decimal("0.21"),
+        Decimal("0.46"),
     )
     refused = budget.evaluate(
         ceilings(),
         budget.SpendState(),
-        estimate_usd=Decimal("0.22"),
+        estimate_usd=Decimal("0.47"),
         is_media=False,
         role="ADMIN",
         answer_left_usd=optional.left(ceilings()),
@@ -334,40 +365,14 @@ def test_optional_work_spends_only_while_the_answer_keeps_half_its_cap() -> None
     assert uncapped.allowed
 
 
-def test_a_depth_without_a_cap_leaves_nothing_to_spend() -> None:
+def test_a_depth_missing_from_a_stored_cap_row_leaves_nothing_to_spend() -> None:
     capped = ceilings(**{app_settings.ANSWER_CAP_USD: {"BASIC": 0.25}})
     assert budget.AnswerSpend(depth="EXPERT").left(capped) == Decimal(0)
     assert budget.AnswerSpend(depth="EXPERT").headroom().left(capped) == Decimal(0)
 
 
-def test_budget_changes_merge_answer_caps_by_depth() -> None:
-    current = dict(app_settings.DEFAULTS)
-    changes = app_settings.budget_changes({"answerCapUsd": {"EXPERT": 2.0}}, current)
-    assert changes == {app_settings.ANSWER_CAP_USD: {"BASIC": 0.25, "DETAILED": 0.5, "EXPERT": 2.0}}
-
-
-def test_budget_changes_refuse_a_master_admin_cap() -> None:
-    current = dict(app_settings.DEFAULTS)
-    with pytest.raises(InvalidInput, match="Master Admins have no caps"):
-        app_settings.budget_changes({"roleDailyUsd": {"MASTER_ADMIN": 5.0}}, current)
-    allowed = app_settings.budget_changes({"roleDailyUsd": {"MASTER_ADMIN": None, "ADMIN": 12.0}}, current)
-    assert allowed == {app_settings.ROLE_DAILY_USD: {"MASTER_ADMIN": None, "ADMIN": 12.0}}
-
-
-def test_budget_changes_refuse_unknown_roles_and_a_media_cap_over_the_ceiling() -> None:
-    current = dict(app_settings.DEFAULTS)
-    with pytest.raises(InvalidInput, match="Unknown roles: GUEST"):
-        app_settings.budget_changes({"roleDailyUsd": {"GUEST": 1.0}}, current)
-    with pytest.raises(InvalidInput, match="media cap"):
-        app_settings.budget_changes({"monthlyCeilingUsd": 100.0}, current)
-    assert app_settings.budget_changes({"domainAllowlist": [" IITB.ac.in", "iitb.ac.in", " "]}, current) == {
-        app_settings.DOMAIN_ALLOWLIST: ["iitb.ac.in"]
-    }
-
-
-def test_the_budget_update_body_takes_answer_caps_for_the_three_depths_only() -> None:
-    assert AppSettingsUpdate(answerCapUsd={"BASIC": 0.1}).answerCapUsd == {"BASIC": 0.1}
-    with pytest.raises(ValidationError):
-        AppSettingsUpdate(answerCapUsd={"DEEP": 0.1})
-    with pytest.raises(ValidationError):
-        AppSettingsUpdate(answerCapUsd={"EXPERT": -1})
+def test_a_depth_with_a_null_cap_is_unlimited_beside_a_capped_one() -> None:
+    mixed = ceilings(**{app_settings.ANSWER_CAP_USD: {"BASIC": 0.25, "DETAILED": None, "EXPERT": None}})
+    assert budget.AnswerSpend(depth="BASIC").left(mixed) == Decimal("0.25")
+    assert budget.AnswerSpend(depth="EXPERT").left(mixed) is None
+    assert budget.AnswerSpend(depth="EXPERT").headroom().left(mixed) is None

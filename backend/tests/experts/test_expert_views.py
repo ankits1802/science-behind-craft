@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from app.composer.expert_takes import PanelAsk, ProposedDifference, panel_message, panel_schema
-from app.core.errors import ExternalFailure
+from app.composer.expert_differences import DifferenceAsk, difference_message, difference_schema
+from app.composer.expert_takes import ProposedDifference, SeatAsk, seat_message, seat_schema
 from app.models.enums import DISCIPLINES
 from app.research.blocks_people import expert_pairing_problems
 from app.research.composition import ComposeFocus
@@ -24,6 +24,7 @@ from .fixtures import (
     KHAMIR,
     QUESTION,
     SEVENTH_CENTURY,
+    asked_seat,
     build_ask,
     cited,
     differ,
@@ -89,11 +90,8 @@ def test_a_depth_seats_its_first_experts_and_a_section_hears_those_of_its_field(
 async def test_the_panel_call_offers_only_the_section_s_seats(depth: str, offered: list[str]) -> None:
     model = panel_model([take("HISTORIAN", said(FOUR_HUNDRED)), take("ECONOMIST", said(CLIENTS))])
     views = await built(HISTORY_SEATED, model, depth=depth)
-    (call,) = model.calls
-    assert call["schema"]["properties"]["views"]["items"]["properties"]["seat"]["enum"] == offered
-    assert [line.split(":")[0] for line in call["user"].splitlines() if line.startswith("Expert ")] == [
-        f"Expert {seat}" for seat in offered
-    ]
+    assert [asked_seat(call["user"]) for call in model.seat_calls] == offered
+    assert model.difference_calls == []
     assert [view.seat for view in views] == ["HISTORIAN"]
 
 
@@ -233,7 +231,7 @@ async def test_two_views_resting_on_one_claim_agree() -> None:
     assert (historian.agrees_with, design.agrees_with) == (["DESIGN_HISTORIAN"], ["HISTORIAN"])
 
 
-async def test_the_artisan_seat_adds_nothing_yet() -> None:
+async def test_the_artisan_seat_is_never_composed_by_the_model() -> None:
     artisan_only = panel_model([take("ARTISAN", said(SEVENTH_CENTURY))])
     assert await built(("ARTISAN",), artisan_only) == []
     assert artisan_only.calls == []
@@ -257,24 +255,27 @@ def test_the_panel_hears_the_stored_facts_its_section_has_not_shown_first() -> N
 
 def test_the_panel_call_keeps_statements_and_the_question_inside_untrusted_blocks() -> None:
     ask = build_ask(("HISTORIAN", "ANTHROPOLOGIST"))
-    panel = PanelAsk(
-        question=QUESTION,
-        craft=ask.request.craft,
-        focus=ComposeFocus(discipline="HISTORY", title="History"),
-        seats=(EXPERT_PANEL["HISTORIAN"], EXPERT_PANEL["ANTHROPOLOGIST"]),
-        candidates=tuple(panel_candidates(ask.cited, ask.blocks)),
+    focus = ComposeFocus(discipline="HISTORY", title="History")
+    candidates = tuple(panel_candidates(ask.cited, ask.blocks))
+    seat = SeatAsk(QUESTION, ask.request.craft, focus, EXPERT_PANEL["HISTORIAN"], candidates)
+    briefs = (EXPERT_PANEL["HISTORIAN"], EXPERT_PANEL["ANTHROPOLOGIST"])
+    compared = DifferenceAsk(QUESTION, ask.request.craft, focus, briefs, candidates)
+    for message in (seat_message(seat), difference_message(compared)):
+        assert untrusted_block("question", "learner question", QUESTION) in message
+        assert f'ref="{FOUR_HUNDRED.id}"' in message
+        assert f"Expert HISTORIAN: Historian. {EXPERT_PANEL['HISTORIAN'].brief}" in message
+    assert "Expert ANTHROPOLOGIST" not in seat_message(seat)
+    assert schema_problems(seat_schema()) == []
+    assert schema_problems(difference_schema(compared)) == []
+
+
+async def test_an_off_schema_reply_drops_only_that_seat_s_view() -> None:
+    model = panel_model(
+        [{"seat": "HISTORIAN", "take": [], "mood": "sure"}, take("ANTHROPOLOGIST", said(CLIENTS))]
     )
-    message = panel_message(panel)
-    assert untrusted_block("question", "learner question", QUESTION) in message
-    assert f'ref="{FOUR_HUNDRED.id}"' in message
-    assert f"Expert HISTORIAN: Historian. {EXPERT_PANEL['HISTORIAN'].brief}" in message
-    assert schema_problems(panel_schema(panel)) == []
-
-
-async def test_an_off_schema_reply_is_a_model_failure() -> None:
-    model = panel_model([{"seat": "HISTORIAN", "take": [], "mood": "sure"}])
-    with pytest.raises(ExternalFailure, match="off its schema"):
-        await built(("HISTORIAN",), model)
+    views = await built(("HISTORIAN", "ANTHROPOLOGIST"), model)
+    assert [view.seat for view in views] == ["ANTHROPOLOGIST"]
+    assert len(model.seat_calls) == 2
 
 
 async def test_a_refused_spend_adds_no_view_and_fails_nothing() -> None:

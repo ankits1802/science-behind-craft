@@ -89,7 +89,7 @@ async function readingScreens(run: ScreenRun, page: Page, user: User): Promise<v
     "Unknown craft",
     `/crafts/${UNKNOWN_CRAFT_SLUG}`,
     async () => {
-      await expect(page.getByRole("alert")).toContainText(UNKNOWN_CRAFT_TEXT);
+      await expect(page.getByRole("alert").filter({ hasText: UNKNOWN_CRAFT_TEXT })).toBeVisible();
       return [];
     },
     { expectedResponses: [{ pathPrefix: `/api/crafts/${UNKNOWN_CRAFT_SLUG}`, status: 404 }], expectedAlert: UNKNOWN_CRAFT_TEXT }

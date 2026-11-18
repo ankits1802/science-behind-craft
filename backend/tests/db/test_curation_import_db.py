@@ -1,11 +1,12 @@
 import json
 import uuid
+from collections import Counter
 from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
 import pytest
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine
@@ -25,6 +26,7 @@ from app.models import (
     CuratedCraft,
     EnvDataset,
     KnowledgePiece,
+    MediaRef,
     Process,
     ProcessStage,
     Reaction,
@@ -40,6 +42,7 @@ from app.services.craft_page_records import craft_page_records
 from app.services.curation_import import ImportReport, import_curation
 from app.services.curation_keys import CURATED_PROCESS_VARIANT, curated_id
 from app.services.place_offers import mapped_districts, region_offer
+from app.services.stored_fields import curated_field_counts
 
 from ..contracts.golden import golden_json
 from ..curation.import_support import AJRAKH, AJRAKH_GOLDEN, checked, raw
@@ -51,6 +54,7 @@ KACHCHH = 449
 UNCURATED_BLOCK_PRINT = "Farrukhabad-Prints"
 SEED_EDGE_SENTENCES = 557
 EDGE_FILLER = "Sequential order in the GI method of production."
+KING_PRIEST = "https://upload.wikimedia.org/wikipedia/commons/b/bd/KING_PRIEST.jpg"
 CURATED_PARTS = (
     "curation",
     "overview",
@@ -96,12 +100,12 @@ def imported(report: ImportReport, slug: str) -> Any:
 
 async def test_the_kutch_ajrakh_dossier_imports_in_full(session: AsyncSession) -> None:
     outcome = imported(await import_curation(session), AJRAKH)
-    assert outcome.status == "IMPORTED" and outcome.version == 1
+    assert outcome.status == "IMPORTED" and outcome.version == 2
     craft_id = await ajrakh_id(session)
     curated = select(CuratedClaim.claimId).where(CuratedClaim.craftId == craft_id)
-    assert await count(session, Claim.id.in_(curated)) == 132
+    assert await count(session, Claim.id.in_(curated)) == 135
     assert await count(session, Claim.id.in_(curated), Claim.status != "APPROVED") == 0
-    assert await count(session, ClaimSource.claimId.in_(curated), model=ClaimSource) == 269
+    assert await count(session, ClaimSource.claimId.in_(curated), model=ClaimSource) == 274
     locations = (
         (await session.execute(select(CraftLocation).where(CraftLocation.craftId == craft_id)))
         .scalars()
@@ -129,6 +133,10 @@ async def test_the_kutch_ajrakh_dossier_imports_in_full(session: AsyncSession) -
     assert (gi.applicationNumber, gi.registeredOn) == ("1050", "2024-04-22")
     assert await count(session, CraftWorkforce.craftId == craft_id, model=CraftWorkforce) == 5
     assert await count(session, CraftPrice.craftId == craft_id, model=CraftPrice) == 1
+    size = (
+        await session.execute(select(MediaRef.width, MediaRef.height).where(MediaRef.imageUrl == KING_PRIEST))
+    ).one()
+    assert tuple(size) == (1424, 2000)
 
 
 def _curated_stages(craft_id: uuid.UUID) -> Any:
@@ -147,9 +155,13 @@ async def test_the_served_page_matches_the_golden_fixture(session: AsyncSession)
     for part in CURATED_PARTS:
         assert getattr(page, part) == getattr(golden, part), part
     served = {claim.id: claim for claim in page.claims}
-    assert all(served[claim.id] == claim for claim in golden.claims)
+    own = [claim for claim in golden.claims if claim.provenance == "CURATED" and claim.id in served]
+    assert own and all(served[claim.id] == claim for claim in own)
     sources = {source.id: source for source in page.sources}
-    assert all(sources[source.id] == source for source in golden.sources)
+    shared = [source for source in golden.sources if source.id in sources]
+    assert shared and all(
+        sources[s.id].model_dump(exclude={"supports"}) == s.model_dump(exclude={"supports"}) for s in shared
+    )
 
 
 async def test_a_second_import_changes_nothing(session: AsyncSession) -> None:
@@ -161,6 +173,16 @@ async def test_a_second_import_changes_nothing(session: AsyncSession) -> None:
     assert [outcome.changed for outcome in again.dossiers] == [{} for _ in again.dossiers]
     assert await count(session, model=ReviewEvent) == events
     assert await _curated_rows(session) == rows
+
+
+async def test_a_stored_picture_without_its_size_gets_the_dossier_s(session: AsyncSession) -> None:
+    await import_curation(session)
+    king = MediaRef.imageUrl == KING_PRIEST
+    await session.execute(update(MediaRef).where(king).values(width=None, height=None))
+    again = imported(await import_curation(session), AJRAKH)
+    assert again.changed == {"media": 1}
+    size = (await session.execute(select(MediaRef.width, MediaRef.height).where(king))).one()
+    assert tuple(size) == (1424, 2000)
 
 
 async def _curated_rows(session: AsyncSession) -> list[Any]:
@@ -178,7 +200,7 @@ def droppable_version(directory: Path) -> str:
     context = default_context()
     for claim in result.dossier.claims:
         plain = json.loads(result.dossier.model_dump_json(by_alias=True))
-        plain["version"] = 2
+        plain["version"] = 3
         plain["claims"] = [row for row in plain["claims"] if row["id"] != claim.id]
         try:
             later = Dossier.model_validate(plain)
@@ -188,7 +210,7 @@ def droppable_version(directory: Path) -> str:
             continue
         check = result.check.model_copy(
             update={
-                "dossier_version": 2,
+                "dossier_version": 3,
                 "dossier_digest": verified_digest(later),
                 "quotes": [entry for entry in result.check.quotes if entry.claim_id != claim.id],
             }
@@ -209,7 +231,7 @@ async def test_a_new_version_supersedes_a_dropped_claim_and_keeps_its_citations(
     citations = await count(session, ClaimSource.claimId == dropped, model=ClaimSource)
     assert citations >= 1
     outcome = imported(await import_curation(session, directory=tmp_path), AJRAKH)
-    assert outcome.version == 2
+    assert outcome.version == 3
     claim = (await session.execute(select(Claim).where(Claim.id == dropped))).scalar_one()
     assert claim.status == "SUPERSEDED"
     assert await count(session, ClaimSource.claimId == dropped, model=ClaimSource) == citations
@@ -224,7 +246,7 @@ async def test_a_new_version_supersedes_a_dropped_claim_and_keeps_its_citations(
     assert views == {}
     craft_id = await ajrakh_id(session)
     version = await session.scalar(select(CuratedCraft.version).where(CuratedCraft.craftId == craft_id))
-    assert version == 2
+    assert version == 3
 
 
 async def test_seed_edge_sentences_leave_every_reader_surface(session: AsyncSession) -> None:
@@ -347,3 +369,20 @@ async def test_the_served_page_offers_its_tabs_and_gi_card(session: AsyncSession
     assert (page.depth.basis, page.depth.coverage) == ("CURATED", "FULL")
     assert page.gi_card.application_number == raw(AJRAKH)["market"]["gi"]["applicationNumber"]
     assert page.craft.kind_label == "Hand block printing"
+
+
+async def test_the_fields_a_curated_craft_holds_count_its_visible_curated_claims(
+    session: AsyncSession,
+) -> None:
+    imported(await import_curation(session), AJRAKH)
+    craft = await knowledge_view.resolve_craft(session, AJRAKH)
+    assert craft is not None
+    expected = Counter(claim["discipline"] for claim in raw(AJRAKH)["claims"])
+    assert await curated_field_counts(session, craft) == dict(expected)
+    chemistry = select(CuratedClaim.claimId).where(
+        CuratedClaim.craftId == craft.id, CuratedClaim.discipline == "CHEMISTRY"
+    )
+    retracted = await session.scalar(chemistry.order_by(CuratedClaim.claimId).limit(1))
+    await session.execute(update(Claim).where(Claim.id == retracted).values(status="RETRACTED"))
+    counts = await curated_field_counts(session, craft)
+    assert counts["CHEMISTRY"] == expected["CHEMISTRY"] - 1

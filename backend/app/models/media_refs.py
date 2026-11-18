@@ -32,6 +32,7 @@ class MediaRef(Base):
     sourceId: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("Source.id", ondelete="SET NULL")
     )
+    objectKey: Mapped[str | None] = mapped_column(Text)
     retrievedAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()

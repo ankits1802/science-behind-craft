@@ -9,6 +9,12 @@ const config = [
     rules: {
       "react-hooks/set-state-in-effect": "off"
     }
+  },
+  {
+    files: ["components/editorial/**/*.tsx", "components/ui/Lightbox.tsx", "app/design/**/*.tsx"],
+    rules: {
+      "@next/next/no-img-element": "off"
+    }
   }
 ];
 

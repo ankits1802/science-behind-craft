@@ -50,6 +50,7 @@ __all__ = [
     "ElevenLabs",
     "Generation",
     "HeardSpeech",
+    "HeardWord",
     "TimedSpeech",
     "audio_seconds",
     "speech_seconds",
@@ -112,10 +113,18 @@ class ConversationRecord:
 
 
 @dataclass(frozen=True)
+class HeardWord:
+    text: str
+    start: float
+    end: float
+
+
+@dataclass(frozen=True)
 class HeardSpeech:
     text: str
     language: str | None
     seconds: int
+    words: tuple[HeardWord, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -127,6 +136,22 @@ class TimedSpeech:
 
 def speech_seconds(byte_count: int) -> int:
     return math.ceil(audio_seconds(byte_count))
+
+
+def heard_words(words: list[Any]) -> tuple[HeardWord, ...]:
+    kept: list[HeardWord] = []
+    for word in words:
+        if not isinstance(word, dict) or word.get("type", "word") != "word":
+            continue
+        text, start, end = word.get("text"), word.get("start"), word.get("end")
+        if (
+            isinstance(text, str)
+            and text.strip()
+            and isinstance(start, int | float)
+            and isinstance(end, int | float)
+        ):
+            kept.append(HeardWord(text=text.strip(), start=float(start), end=float(end)))
+    return tuple(kept)
 
 
 def audio_seconds(byte_count: int) -> float:
@@ -188,6 +213,7 @@ class ElevenLabs:
             text=text.strip(),
             language=language_code if isinstance(language_code, str) else None,
             seconds=math.ceil(max(ends)) if ends else 0,
+            words=heard_words(words),
         )
 
     async def speech(self, text: str, *, voice_id: str, language: str) -> bytes:

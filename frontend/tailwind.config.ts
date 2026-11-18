@@ -1,245 +1,84 @@
 import type { Config } from "tailwindcss";
 
-const neutral = (token: string) => `rgb(var(--${token}) / <alpha-value>)`;
+import { appearanceRamps, retiredColors, retiredUtilityColors } from "./tailwind.migration";
 
-const purple = {
-  50: "oklch(0.977 0.013 305 / <alpha-value>)",
-  100: "oklch(0.946 0.03 305 / <alpha-value>)",
-  200: "oklch(0.9 0.058 305 / <alpha-value>)",
-  300: "oklch(0.828 0.1 305 / <alpha-value>)",
-  400: "oklch(0.738 0.15 305 / <alpha-value>)",
-  500: "oklch(0.648 0.19 305 / <alpha-value>)",
-  600: "oklch(0.56 0.205 305 / <alpha-value>)",
-  700: "oklch(0.47 0.198 305 / <alpha-value>)",
-  800: "oklch(0.4 0.18 305 / <alpha-value>)",
-  900: "oklch(0.34 0.15 305 / <alpha-value>)",
-  950: "oklch(0.255 0.108 305 / <alpha-value>)"
-};
+const c = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
 
-const gold = {
-  100: "oklch(0.95 0.045 90 / <alpha-value>)",
-  200: "oklch(0.9 0.08 88 / <alpha-value>)",
-  300: "oklch(0.85 0.11 86 / <alpha-value>)",
-  400: "oklch(0.78 0.135 84 / <alpha-value>)",
-  500: "oklch(0.7 0.145 80 / <alpha-value>)",
-  600: "oklch(0.6 0.13 75 / <alpha-value>)",
-  700: "oklch(0.5 0.11 70 / <alpha-value>)"
+const legacyInk = { DEFAULT: c("ink-1"), 900: c("ink-1"), 700: c("ink-2"), 500: c("ink-3"), 300: c("ink-3"), body: c("ink-2"), muted: c("ink-3"), soft: c("ink-3") };
+const legacyColors = {
+  line: { 200: c("rule") }, surface: { 50: c("sunk") }, "bg-0": c("ground"),
+  progress: { track: c("sunk"), fill: c("ink-2"), done: c("success") },
+  secondary: c("ink-3"), "secondary-foreground": c("raised"), accent: c("indigo-wash"), "accent-foreground": c("indigo-hover"),
+  white: "rgb(255 255 255 / <alpha-value>)"
 };
-
-const ministry = {
-  50: "oklch(0.977 0.011 45 / <alpha-value>)",
-  100: "oklch(0.946 0.027 45 / <alpha-value>)",
-  200: "oklch(0.9 0.053 45 / <alpha-value>)",
-  300: "oklch(0.828 0.096 45 / <alpha-value>)",
-  400: "oklch(0.738 0.15 45 / <alpha-value>)",
-  500: "oklch(0.648 0.175 45 / <alpha-value>)",
-  600: "oklch(0.56 0.151 45 / <alpha-value>)",
-  700: "oklch(0.47 0.127 45 / <alpha-value>)",
-  800: "oklch(0.4 0.109 45 / <alpha-value>)",
-  900: "oklch(0.34 0.093 45 / <alpha-value>)",
-  950: "oklch(0.255 0.072 45 / <alpha-value>)"
+const legacyFontSize = {
+  xs: ["var(--text-caption)", { lineHeight: "var(--lh-caption)" }], sm: ["var(--text-ui)", { lineHeight: "var(--lh-ui)" }], base: ["var(--text-ui-lg)", { lineHeight: "var(--lh-ui-lg)" }],
+  lg: ["var(--text-body-sm)", { lineHeight: "var(--lh-body-sm)" }], xl: ["var(--text-lede)", { lineHeight: "var(--lh-lede)" }], "2xl": ["var(--text-h3)", { lineHeight: "var(--lh-h3)" }],
+  "3xl": ["var(--text-h2)", { lineHeight: "var(--lh-h2)" }], "4xl": ["var(--text-h1)", { lineHeight: "var(--lh-h1)" }]
 };
-
-const archive = {
-  50: "oklch(0.977 0.013 195 / <alpha-value>)",
-  100: "oklch(0.946 0.03 195 / <alpha-value>)",
-  200: "oklch(0.9 0.058 195 / <alpha-value>)",
-  300: "oklch(0.828 0.1 195 / <alpha-value>)",
-  400: "oklch(0.738 0.118 195 / <alpha-value>)",
-  500: "oklch(0.648 0.104 195 / <alpha-value>)",
-  600: "oklch(0.56 0.09 195 / <alpha-value>)",
-  700: "oklch(0.47 0.075 195 / <alpha-value>)",
-  800: "oklch(0.4 0.064 195 / <alpha-value>)",
-  900: "oklch(0.34 0.055 195 / <alpha-value>)",
-  950: "oklch(0.255 0.041 195 / <alpha-value>)"
-};
-
-const errand = {
-  50: "oklch(0.977 0.01 255 / <alpha-value>)",
-  100: "oklch(0.946 0.025 255 / <alpha-value>)",
-  200: "oklch(0.9 0.046 255 / <alpha-value>)",
-  300: "oklch(0.828 0.082 255 / <alpha-value>)",
-  400: "oklch(0.738 0.129 255 / <alpha-value>)",
-  500: "oklch(0.648 0.18 255 / <alpha-value>)",
-  600: "oklch(0.56 0.173 255 / <alpha-value>)",
-  700: "oklch(0.47 0.146 255 / <alpha-value>)",
-  800: "oklch(0.4 0.124 255 / <alpha-value>)",
-  900: "oklch(0.34 0.106 255 / <alpha-value>)",
-  950: "oklch(0.255 0.08 255 / <alpha-value>)"
-};
-
-const steward = {
-  50: "oklch(0.977 0.011 15 / <alpha-value>)",
-  100: "oklch(0.946 0.026 15 / <alpha-value>)",
-  200: "oklch(0.9 0.049 15 / <alpha-value>)",
-  300: "oklch(0.828 0.091 15 / <alpha-value>)",
-  400: "oklch(0.738 0.15 15 / <alpha-value>)",
-  500: "oklch(0.648 0.19 15 / <alpha-value>)",
-  600: "oklch(0.56 0.205 15 / <alpha-value>)",
-  700: "oklch(0.47 0.177 15 / <alpha-value>)",
-  800: "oklch(0.4 0.151 15 / <alpha-value>)",
-  900: "oklch(0.34 0.128 15 / <alpha-value>)",
-  950: "oklch(0.255 0.096 15 / <alpha-value>)"
-};
-
-const mango = {
-  50: "oklch(0.977 0.013 71 / <alpha-value>)",
-  100: "oklch(0.946 0.03 71 / <alpha-value>)",
-  200: "oklch(0.9 0.058 71 / <alpha-value>)",
-  300: "oklch(0.828 0.1 71 / <alpha-value>)",
-  400: "oklch(0.738 0.149 71 / <alpha-value>)",
-  500: "oklch(0.648 0.131 71 / <alpha-value>)",
-  600: "oklch(0.56 0.113 71 / <alpha-value>)",
-  700: "oklch(0.47 0.095 71 / <alpha-value>)",
-  800: "oklch(0.4 0.081 71 / <alpha-value>)",
-  900: "oklch(0.34 0.069 71 / <alpha-value>)",
-  950: "oklch(0.255 0.052 71 / <alpha-value>)"
-};
-
-const evidence = {
-  50: "oklch(0.977 0.013 150 / <alpha-value>)",
-  100: "oklch(0.946 0.03 150 / <alpha-value>)",
-  200: "oklch(0.9 0.058 150 / <alpha-value>)",
-  300: "oklch(0.828 0.1 150 / <alpha-value>)",
-  400: "oklch(0.738 0.15 150 / <alpha-value>)",
-  500: "oklch(0.648 0.168 150 / <alpha-value>)",
-  600: "oklch(0.56 0.145 150 / <alpha-value>)",
-  700: "oklch(0.47 0.122 150 / <alpha-value>)",
-  800: "oklch(0.4 0.104 150 / <alpha-value>)",
-  900: "oklch(0.34 0.088 150 / <alpha-value>)",
-  950: "oklch(0.255 0.066 150 / <alpha-value>)"
-};
-
-const tailwind3Stock = {
-  amber: { 200: "#fde68a", 700: "#b45309", 900: "#78350f", 950: "#451a03" },
-  red: { 100: "#fee2e2", 200: "#fecaca", 400: "#f87171", 700: "#b91c1c" },
-  emerald: { 100: "#d1fae5", 200: "#a7f3d0", 400: "#34d399", 700: "#047857", 800: "#065f46", 900: "#064e3b" },
-  green: { 200: "#bbf7d0", 700: "#15803d" },
-  rose: { 700: "#be123c", 900: "#881337" }
-};
-
-const tailwind3Type: Record<string, [string, { lineHeight: string }]> = {
-  xs: ["0.75rem", { lineHeight: "1rem" }],
-  sm: ["0.875rem", { lineHeight: "1.25rem" }],
-  base: ["1rem", { lineHeight: "1.5rem" }],
-  lg: ["1.125rem", { lineHeight: "1.75rem" }],
-  xl: ["1.25rem", { lineHeight: "1.75rem" }],
-  "2xl": ["1.5rem", { lineHeight: "2rem" }],
-  "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
-  "4xl": ["2.25rem", { lineHeight: "2.5rem" }]
-};
+const legacyRadius = { sm: "4px", DEFAULT: "4px", md: "6px", lg: "6px", xl: "6px", "2xl": "6px" };
+const legacyShadow = { sm: "none", soft: "none", cta: "none", "cta-ministry": "none", glow: "none", "glow-soft": "none", md: "none", lg: "none", panel: "none", island: "none" };
 
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   darkMode: ["class", '[data-theme="dark"]'],
   theme: {
+    screens: { sm: "640px", md: "768px", lg: "1024px", rail: "1200px", xl: "1280px", "2xl": "1536px" },
+    colors: {
+      transparent: "transparent", current: "currentColor", inherit: "inherit",
+      "ground": c("ground"), "raised": c("raised"), "sunk": c("sunk"), "rule": c("rule"), "rule-strong": c("rule-strong"), "terracotta": c("terracotta"),
+      ink: { ...legacyInk, "1": c("ink-1"), "2": c("ink-2"), "3": c("ink-3") },
+      indigo: { DEFAULT: c("indigo"), hover: c("indigo-hover"), wash: c("indigo-wash"), on: c("on-indigo") },
+      madder: { DEFAULT: c("madder"), wash: c("madder-wash"), on: c("on-madder") },
+      turmeric: { DEFAULT: c("turmeric"), wash: c("turmeric-wash"), text: c("turmeric-text") },
+      error: { 100: c("error-wash"), 600: c("error"), DEFAULT: c("error"), wash: c("error-wash") },
+      warning: { DEFAULT: c("warning"), wash: c("warning-wash") },
+      info: { DEFAULT: c("info"), wash: c("info-wash") },
+      success: { 100: c("success-wash"), 600: c("success"), DEFAULT: c("success"), wash: c("success-wash") },
+      primary: c("indigo"), "primary-foreground": c("on-indigo"), ring: c("indigo"), border: c("rule"), input: c("rule-strong"),
+      background: c("ground"), foreground: c("ink-1"), card: c("raised"), popover: c("raised"), "popover-foreground": c("ink-1"), muted: c("sunk"), "muted-foreground": c("ink-3"),
+      destructive: c("madder"), "destructive-foreground": c("on-madder"),
+      ...legacyColors,
+      ...retiredColors(c)
+    },
+    fontFamily: {
+      headline: ["var(--font-headline)"], reading: ["var(--font-reading)"], serif: ["var(--font-reading)"],
+      ui: ["var(--font-ui)"], sans: ["var(--font-ui)"], display: ["var(--font-ui)"], code: ["var(--font-code)"], mono: ["var(--font-code)"]
+    },
+    fontSize: {
+      ...legacyFontSize,
+      caption: ["var(--text-caption)", { lineHeight: "var(--lh-caption)", letterSpacing: "var(--track-caption)", fontWeight: "400" }],
+      label: ["var(--text-label)", { lineHeight: "var(--lh-label)", letterSpacing: "var(--track-label)", fontWeight: "500" }],
+      ui: ["var(--text-ui)", { lineHeight: "var(--lh-ui)", letterSpacing: "var(--track-ui)", fontWeight: "500" }],
+      "ui-lg": ["var(--text-ui-lg)", { lineHeight: "var(--lh-ui-lg)", letterSpacing: "var(--track-ui-lg)", fontWeight: "400" }],
+      h4: ["var(--text-h4)", { lineHeight: "var(--lh-h4)", letterSpacing: "var(--track-h4)", fontWeight: "600" }],
+      figcaption: ["var(--text-figcaption)", { lineHeight: "var(--lh-figcaption)", letterSpacing: "var(--track-figcaption)", fontWeight: "400" }],
+      quote: ["var(--text-quote)", { lineHeight: "var(--lh-quote)", letterSpacing: "var(--track-quote)", fontWeight: "400" }],
+      "body-sm": ["var(--text-body-sm)", { lineHeight: "var(--lh-body-sm)", letterSpacing: "var(--track-body-sm)", fontWeight: "400" }],
+      body: ["var(--text-body)", { lineHeight: "var(--lh-body)", letterSpacing: "var(--track-body)", fontWeight: "400" }],
+      lede: ["var(--text-lede)", { lineHeight: "var(--lh-lede)", letterSpacing: "var(--track-lede)", fontWeight: "400" }],
+      h3: ["var(--text-h3)", { lineHeight: "var(--lh-h3)", letterSpacing: "var(--track-h3)", fontWeight: "500" }],
+      h2: ["var(--text-h2)", { lineHeight: "var(--lh-h2)", letterSpacing: "var(--track-h2)", fontWeight: "480" }],
+      h1: ["var(--text-h1)", { lineHeight: "var(--lh-h1)", letterSpacing: "var(--track-h1)", fontWeight: "470" }],
+      title: ["var(--text-title)", { lineHeight: "var(--lh-title)", letterSpacing: "var(--track-title)", fontWeight: "480" }],
+      hero: ["var(--text-hero)", { lineHeight: "var(--lh-hero)", letterSpacing: "var(--track-hero)", fontWeight: "460" }],
+      numeral: ["var(--text-numeral)", { lineHeight: "var(--lh-numeral)", letterSpacing: "var(--track-numeral)", fontWeight: "300" }],
+      stat: ["var(--text-stat)", { lineHeight: "var(--lh-stat)", letterSpacing: "var(--track-stat)", fontWeight: "480" }]
+    },
+    fontWeight: { light: "300", normal: "400", medium: "500", semibold: "600", bold: "600" },
+    borderRadius: { ...legacyRadius, none: "0", plate: "2px", control: "4px", card: "6px", sheet: "14px", pill: "9999px", full: "9999px" },
+    boxShadow: { ...legacyShadow, none: "none", pop: "var(--shadow-pop)", label: "var(--shadow-label)", sheet: "var(--shadow-sheet)" },
+    backdropBlur: {},
+    transitionDuration: { press: "var(--dur-press)", state: "var(--dur-state)", panel: "var(--dur-panel)", dip: "var(--dur-dip)", oxidise: "var(--dur-oxidise)" },
+    transitionTimingFunction: { out: "var(--ease-out)", "in-out": "var(--ease-inout)", linear: "linear", toggle: "var(--ease-toggle)", spring: "var(--ease-out)" },
     extend: {
-      fontFamily: {
-        sans: ["var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-jakarta)", "var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "sans-serif"],
-        serif: ["var(--font-jakarta)", "var(--font-inter)", "var(--font-scripts)", "ui-sans-serif", "sans-serif"]
-      },
-      fontSize: tailwind3Type,
-      colors: {
-        purple,
-        gold,
-        ministry,
-        archive,
-        errand,
-        steward,
-        mango,
-        evidence,
-        ink: {
-          DEFAULT: neutral("ink-900"),
-          900: neutral("ink-900"),
-          700: neutral("ink-700"),
-          500: neutral("ink-500"),
-          300: neutral("ink-300"),
-          body: neutral("ink-700"),
-          muted: neutral("ink-500"),
-          soft: neutral("ink-300")
-        },
-        line: { 200: neutral("line-200") },
-        progress: { track: neutral("progress-track"), fill: neutral("progress-fill"), done: neutral("progress-done") },
-        surface: { 50: neutral("surface-50") },
-        "bg-0": neutral("bg-0"),
-        field: {
-          50: neutral("surface-50"),
-          100: neutral("surface-100"),
-          200: neutral("surface-200"),
-          300: neutral("surface-300"),
-          400: purple[400],
-          500: purple[600],
-          600: purple[700],
-          700: purple[800],
-          900: neutral("ink-900")
-        },
-        thread: { DEFAULT: gold[500], soft: gold[200] },
-        logo: { cream: "#FAF9F5", terracotta: "#CC785C", ink: "#181715" },
-        amber: { 100: "#fef3c7", 500: "#f59e0b", 800: "#92400e", ...tailwind3Stock.amber },
-        red: tailwind3Stock.red,
-        emerald: tailwind3Stock.emerald,
-        green: tailwind3Stock.green,
-        rose: tailwind3Stock.rose,
-        success: { 100: "#dcfce7", 600: "#15803d" },
-        error: { 100: "#fee2e2", 600: "#dc2626" },
-        background: neutral("bg-0"),
-        foreground: neutral("ink-900"),
-        card: neutral("card"),
-        popover: neutral("card"),
-        border: neutral("line-200"),
-        input: neutral("line-200"),
-        ring: purple[600],
-        accent: purple[50],
-        "accent-foreground": purple[700],
-        primary: purple[700],
-        "primary-foreground": "#ffffff",
-        secondary: neutral("ink-500"),
-        "secondary-foreground": neutral("card"),
-        destructive: "#dc2626",
-        "destructive-foreground": "#ffffff",
-        muted: neutral("surface-50"),
-        "muted-foreground": neutral("ink-500")
-      },
-      borderRadius: {
-        sm: "8px",
-        md: "12px",
-        lg: "16px",
-        xl: "24px"
-      },
-      boxShadow: {
-        sm: "0 1px 2px rgba(46, 16, 101, 0.06)",
-        soft: "0 1px 2px rgba(46, 16, 101, 0.06)",
-        md: "0 4px 16px rgba(46, 16, 101, 0.08)",
-        lg: "0 8px 32px rgba(46, 16, 101, 0.12)",
-        panel: "0 8px 32px rgba(46, 16, 101, 0.12)",
-        island: "0 4px 16px rgba(46, 16, 101, 0.12), 0 1px 2px rgba(46, 16, 101, 0.06)",
-        cta: "0 8px 24px oklch(0.47 0.198 305 / 0.28)",
-        glow: "0 8px 24px oklch(0.47 0.198 305 / 0.28)",
-        "glow-soft": "0 4px 16px oklch(0.47 0.198 305 / 0.16)",
-        "cta-ministry": "0 8px 24px oklch(0.47 0.127 45 / 0.29)"
-      },
-      transitionTimingFunction: {
-        out: "cubic-bezier(0.16, 1, 0.3, 1)",
-        spring: "cubic-bezier(0.34, 1.56, 0.64, 1)"
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" }
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" }
-        }
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out"
-      }
+      ...retiredUtilityColors(c),
+      spacing: { section: "var(--space-section)", control: "var(--control-h)", "control-sm": "var(--control-h-sm)", input: "var(--input-h)", target: "var(--target)" },
+      maxWidth: { measure: "var(--measure)", content: "var(--content-max)" },
+      zIndex: { sticky: "20", appbar: "30", popover: "70", scrim: "80", sheet: "85", dialog: "90", toast: "110", skip: "120" }
     }
   },
-  plugins: []
+  plugins: [appearanceRamps]
 };
 
 export default config;

@@ -118,6 +118,17 @@ Last reviewed: 2026-11-18.
   service's interval.
 - **Clears it:** a shared store (Redis is on the box) behind the same functions.
 
+### An answer piece whose answer was deleted reads as curated for supersession
+
+- **What:** decision 0090 item 2 keeps "a piece no answer made" from being superseded, and
+  `services/piece_store._supersede` tells such a piece by `createdFromAnswerId` being null. That
+  column is set null when an answer is deleted, so a reader's piece outlives its answer as if it
+  were curated. The craft page tells them apart by the curated claims a piece cites (decision 0096
+  item 2), but supersession and reuse order (`piece_reuse.answered_first`) still read the id alone.
+- **Why left:** the craft page's merge is one module that edits no other file (decision 0096).
+- **Clears it:** one shared rule for "curated piece" (every cited claim curated and no answer id)
+  used by `_supersede`, `answered_first` and the page merge, with a test that deletes an answer.
+
 ### Craft descriptor embeddings are not filled
 
 - **What:** `app/scripts/embed_craft_descriptors.py` now runs after the seeds and the craft sync
@@ -325,7 +336,8 @@ Last reviewed: 2026-11-18.
   reading and composer calls are not capped, so a run can pass the day's budget by one question
   (`ENRICHMENT_QUESTION_RESERVE_USD` $0.25 is the assumed size). `router_structured_model` has
   no `request_budget_usd` parameter (`backend/app/providers/structured.py`).
-- **Why left:** the monthly ceiling still holds; the overshoot is bounded and small.
+- **Why left:** the overshoot is bounded and small, and production no longer runs the job (no
+  monthly ceiling is set either, decision 0093).
 - **Clears it:** pass the remaining day budget as `request_budget_usd` through
   `router_structured_model` and `router_embedder`.
 
@@ -954,15 +966,13 @@ Last reviewed: 2026-11-18.
 - **Clears it:** drop `RESOLVING`, `match`, `section`, `sentence` and their golden from
   `research/stream.py` and `answerStatusShape`.
 
-### Per-answer caps are starting values, edited only through the API
+### The AI budget is edited only through the API
 
-- **What:** `AI_ANSWER_CAP_USD` starts at $0.25 Basic, $0.50 Detailed and $1.00 Expert, set
-  before any Expert answer was measured; the Settings hub has no AI budget screen, so a Master
-  Admin changes the caps (like the ceilings) only through `PUT /settings/ai-budget`.
-- **Why left:** owner O3: start modest and raise once phase A measures real costs; the budget
-  screen was never built.
-- **Clears it:** after the first Expert answers in production, set the caps from their measured
-  spend (Usage, by request id), and add the AI budget to the Settings hub.
+- **What:** no AI cap is set for now (decision 0093), and the Settings hub has no AI budget
+  screen, so a Master Admin who brings a cap back (a ceiling, a role's daily cap, a depth's answer
+  cap, the degrade mark) does it only through `PUT /settings/ai-budget`.
+- **Why left:** the owner set no caps for now on 2026-11-18; the budget screen was never built.
+- **Clears it:** add the AI budget to the Settings hub, with "No cap" as each field's empty state.
 
 ### The understanding call shares the PLAN route
 
@@ -1485,18 +1495,20 @@ Last reviewed: 2026-11-18.
 
 - **What:** prose gets one regenerate for failing sentences; a panel take does not, so a view with
   one unquoted or unsupported sentence is not shown at all.
-- **Why left:** the panel is optional work inside a 45 s wait and the first half of the cap.
+- **Why left:** the panel is optional work inside a 90 s wait (decision 0099).
 - **Clears it:** one regenerate of the failing seats' takes when the wait and the headroom allow.
 
-### The panel hears only the claims the section's sentences rest on
+### A seat's own search is a text search over stored claims only
 
-- **What:** `BuildAsk.cited` holds the claims of the section's composed sentences; stored claims
-  the research retrieved but the prose did not use are not offered, so a disagreement the prose
-  left out is never found.
-- **Why left:** the builder interface (decision 0042) passes the checked blocks and their claims
-  only; widening it changes `answer_sections` for every builder.
-- **Clears it:** `BuildAsk` carrying the views of the section pack's stored hits, offered after
-  the cited claims.
+- **What:** since decision 0099 each seat searches stored claims of its own, but its fields reach
+  the search only as words in the query text (`seat_query`), since `KnowledgeQuery.facets` are
+  concept types, not disciplines; and the seat keeps a found claim only when it cites a source of
+  one of the seat's kinds. Stored chunks the search returns are not offered (a take cites stored
+  claims only), and no live search runs for a seat.
+- **Why left:** stored evidence and the existing retrieval only (owner, 2026-11-19); a discipline
+  filter needs a mapping from fields to concept types that the retriever does not have.
+- **Clears it:** a discipline-to-concept-type mapping in `retrieval/statements` used as the seat's
+  facets, and the live write-back of chunks a seat reads into claims.
 
 ### Experts differ only on claims stored on one concept
 
@@ -2747,3 +2759,321 @@ Last reviewed: 2026-11-18.
   only suggestion is a downgrade of `eslint-config-next` to 14.
 - **Clears it:** a fixed picomatch. The audit then stops reporting the advisory, the check fails
   on the stale entry, and removing the entry clears this.
+
+### Field voices are stored and served, but not drawn on the craft page
+
+- **What:** the craft page carries `voices`, `fieldPhotos` and `fieldVoicesTotal`, and the list
+  route pages them (decision 0091), but no component draws "In the artisan's words" or "From the
+  workshops" yet; only the signed-in reading page `/voices/<id>` exists.
+- **Why left:** the answer and craft components were being edited by another lane in the same
+  batch.
+- **Clears it:** a Voices part and a gallery on the craft page, each with its first page and
+  "Show all N" through `fetchFieldVoices`, and "Read the full interview" linking `/voices/<id>`.
+
+### The field voices database tests have not run on a laptop
+
+- **What:** `backend/tests/db/test_field_voices_db.py` (storage, idempotency, ACLs by reader, the
+  craft page part, both tombstone cascades) and `test_field_voices_withdrawal_db.py` (the 7-day rule
+  and hidden streams across claims, chunks, the page, the reading view and the image route; claims
+  on a tombstone and on an edited turn; "Show all" over 60 quotes; re-keying; a stored explainer
+  after a withdrawal) run only on GitHub Actions.
+- **Why left:** nothing heavy runs locally (owner rule).
+- **Clears it:** the first green Backend checks run with this file.
+
+### The expert panel's artisan seat quotes only transcript chunks that back a stored claim
+
+- **What:** since decision 0099 the artisan seat speaks from field transcript chunks (`PUBLIC` and
+  `SIGNED_IN`), but only through a stored claim whose citation quotes the chunk; a chunk no claim
+  cites is not quoted. It reads with the public reading ACLs, not the asker's own (a researcher's
+  `RESEARCHER` chunks are not read), and it does not read KalaVigyan testimony (decision 0083).
+- **Why left:** an `expert_view` sentence cites stored claims only, and the builder writes no
+  claims; field quotes become claims through the live write-back.
+- **Clears it:** the builder writing back a quoted claim for each chunk it would quote, and the
+  asker's ACLs on `BuildAsk`.
+
+### The seat search and the artisan's transcript read have no database test
+
+- **What:** `seat_search.stored_seat_search` and `artisan_seat.stored_voices` past the retriever
+  (the `ClaimSource`, `FieldSegment` and `FieldRecording` reads) are covered by unit tests with
+  injected searches only; no test runs them against Postgres.
+- **Why left:** the change was bounded to unit tests; database tests run only on GitHub Actions.
+- **Clears it:** a `tests/db` test that stores a field recording, its chunks and a quoting claim,
+  and checks the artisan's sentence, name, craft and district.
+
+### The API index still names the single-call panel
+
+- **What:** `docs/CORE_API.md` (the `research/expert_panel` and `services/expert_views` rows)
+  still lists `compose_takes`, `PanelAsk`, `panel_message`, `panel_schema`, `parsed_panel` and
+  `PanelDraft`, removed by decision 0099, and does not list `panel_seats`, `voiced_seats`,
+  `kept_takes`, `compose_take`, `compose_differences`, `seat_search` or `artisan_seat`.
+- **Why left:** the change was bounded to the panel's files, its contract and its decision.
+- **Clears it:** rewrite both rows from `docs/contracts/explainer.md` ("Expert panel as built").
+
+### Field images are not illustration candidates of their crafts' claims
+
+- **What:** the field voices contract makes each stored field image an illustration candidate of
+  its crafts' claims (`MediaRefClaim`, relevance `TEXT` from its caption and labels). No field voices
+  module writes `MediaRefClaim` rows, so field images show only in the craft page's gallery, never
+  beside a sentence (decision 0091, point 12).
+- **Why left:** choosing which claims a photograph illustrates needs the caption-to-claim matching
+  of the media lane, and the gallery already shows every image credited.
+- **Clears it:** `field_voices_image_store` links each image's `MediaRef` to the visible claims of
+  its crafts whose text its caption or labels match, and the cascade deletes those rows with it.
+
+### A partly withdrawn explainer section shows no "quote withdrawn" note
+
+- **What:** `services/field_voices_readback.py` drops the sentences and blocks of a stored explainer
+  that cite a withdrawn or stale field interview when the explainer is read. A section left empty
+  says so ("A field interview this section quoted is no longer shown."), but a section that keeps
+  other sentences shows no note that one was taken out, as the contract asks.
+- **Why left:** the explainer contract has a count of removed quotes only on `artisan_voice`, which
+  is not a built section block; a note on any section is a new field in `docs/contracts/explainer.md`
+  and its web shape, owned by the answer lane.
+- **Clears it:** a `withdrawn` count on `ExplainerSection` (and the web shape), set by the readback
+  and shown under the section.
+
+### The field voices order check does not span runs
+
+- **What:** `field_voices_sync` refuses a page whose first change is not after the last change of
+  the page before it in the same view and run, but keeps no last (`updatedAt`, `id`) between runs;
+  the first page of a run is checked only within itself.
+- **Why left:** a run resumes at the portal's signed cursor, which already names the last change
+  read; storing the stamp beside it needs two more columns per view and a reset on every re-read.
+- **Clears it:** `FieldVoiceStream` keeps the last stamp and id of each view, cleared with the cursor,
+  and `_read` starts from them.
+
+## The design system migration (decision 0092)
+
+### Retired classes still compile through migration aliases
+
+- **What:** `frontend/tailwind.config.ts` keeps the neutral, type, radius, shadow and status
+  aliases of SYSTEM.md section 6, and `frontend/tailwind.migration.ts` re-points the retired ramps
+  that are still used (decision 0092, point 6 as amended). Purple is aliased by lightness per
+  utility: text, rings and the 300 to 700 fills to indigo, light washes to sunk, `bg-purple-200`
+  to the turmeric highlighter, edges to rule-strong. Purple fills and strokes, and the errand,
+  steward and archive ramps, go through `--legacy-<ramp>-<shade>` variables (map, density, rain
+  and heat tokens), mirrored under `[data-theme="dark"]` so a `dark:` pair keeps its order; the
+  choropleth fill has its own dark order (`DARK_APPEARANCE_RAMPS`) so its five classes stay five
+  density steps. Field, gold, evidence, amber, red and emerald map to surfaces, turmeric and the
+  status tokens; `text-white` is on-indigo because most of it sits on indigo fills; the reaction
+  player's `dye-*` palette is carried unchanged. Where lightness and job disagree the alias is
+  wrong, and the guard cannot see it: non-pressable indigo fills on `answer/LadderStageCard.tsx`
+  (reached steps) and `answer/place/StorySteps.tsx`; the What-if lab's option note
+  (`answer/play/WhatIfLab.tsx`, `text-purple-100` on the indigo fill, 1.27:1); the dark-mode
+  highlight of the spoken and caption word (`answer/ExplainerSentence.tsx`,
+  `answer/film/FilmStage.tsx`, `dark:bg-purple-800`, an indigo-hover block); plain
+  `fill-purple-700` markers on dark land (`map/MapMarks.tsx`, `answer/journey/TimelinePins.tsx`,
+  density-2 on map-land).
+- **Why left:** about 700 retired-class uses in 120 files, many in lanes being edited now;
+  migrating by job needs each file's owner. The badges, stage numbers and the sign-in screens this
+  lane owned were migrated.
+- **Clears it:** the answer lane makes the one-class changes (the note to `text-indigo-on/80`
+  when selected, the highlights to `bg-turmeric-wash text-ink-1` in both themes, reached steps to
+  the 2px ink-1 leading rule, markers to `--map-marker` with `--map-marker-ring`); every other file
+  migrates by job when touched; lower the baseline with `DESIGN_GUARD_SHRINK=1 npx playwright test
+  --project=unit e2e/design-guard-unit.spec.ts`; delete each alias when its count reaches zero,
+  then `tailwind.migration.ts`.
+
+### The design guard does not see shadcn colour names or inline styles
+
+- **What:** `frontend/e2e/designGuard.ts` counts retired and stock classes, hex and colour
+  literals, aliases, physical utilities and CSS properties, off-list media queries and misplaced
+  `var()` values per file. It does not count the shadcn names the approved config keeps
+  (`primary`, `ring`, `border`, `input`, `background`, `foreground`, `popover`, `muted`,
+  `destructive`), physical keys in inline `style` objects, or a class built by string
+  concatenation, and it cannot tell a badge's indigo from a button's.
+- **Why left:** the shadcn names are part of the approved config rather than migration aliases;
+  inline positions are computed at run time (popover placement); job is a judgement.
+- **Clears it:** add the shadcn names to the alias count once the components that use them move
+  to the semantic names; review by job stays with the skill's section 11.
+
+### The contrast preference has two states
+
+- **What:** `prefers-contrast: more` applies high contrast unless `data-high-contrast="false"`,
+  but the preference (`lib/preferences.ts`, `UserPreference.highContrast`, a non-null boolean)
+  only knows on and off, and `applyPreferences` removes the attribute when it is off. A reader
+  whose system asks for more contrast cannot choose Standard, and the High contrast switch in
+  Settings reads off while high contrast is applied.
+- **Why left:** a third state changes the backend column and route (`api/routes/me.py`) and the
+  Settings card (`components/settings/PersonalSettingsCards.tsx`), both owned by lanes running
+  now. The tokens already honour `"false"`.
+- **Clears it:** store `highContrast` as system, standard or high (a migration with `system` for
+  today's `false`), write `data-high-contrast="false"` for standard in `applyPreferences` and the
+  boot script, and show the effective state in Settings.
+
+### Two answer components still draw one cluster per source
+
+- **What:** `components/answer/AnswerSectionBlock.tsx` and `components/answer/ReactionsPanel.tsx`
+  map a sentence's sources to one `CitationChip` each. Each chip now renders a one-source cluster
+  and `app/editorial.css` joins neighbouring clusters with a comma, so the numerals read "1,4"
+  but are two buttons, each opening its own source (decision 0094).
+- **Why left:** another lane was editing the answer components; this change touched only
+  `CitationChip.tsx` and `CitationContext.tsx` in that folder. Dropping the comma rule first would
+  only make those sentences read "14".
+- **Clears it:** both render `<Cite citations={sentence.citations} …/>` (or `CitationChips`), the
+  comma rule in `editorial.css` and the per-group `CitationChip` signature go.
+
+### The source dialog and the evidence badge outlive the new primitives
+
+- **What:** citation clusters open their own popover or sheet (`editorial/SourcePanel.tsx`, which
+  shows each source's attribution and licence beside the byline), so nothing opens
+  `components/answer/SourceDialog` any more: `CitationLookup.onOpen` and the `SourceDialog` mounted
+  by `ExplainerView`, `CitedReading` and `TermSheet` (through `onOpenCitation`) are dead wiring, and
+  `CitationChip` ignores its `onOpen` prop. `components/answer/EvidenceBadge` (purple and amber
+  badges) stands beside `components/editorial/EvidenceMark`; `craft/MediaFigure`,
+  `craft/CraftTabs`, `craft/CraftOverview` and `craft/SourcesDiffer` are not yet drawn with
+  `Plate`, `ChapterRail`, `FactGrid` and `SourcesDifferNote`.
+- **Why left:** those files belong to the answer and craft page migrations running beside this
+  one.
+- **Clears it:** each page lane switches to the editorial primitives, deletes `SourceDialog`, the
+  replaced components and `onOpen` from `CitationLookup` and `CitationChip`.
+
+### The map hover card lost its shadow with the legacy aliases
+
+- **What:** `shadow-panel`, `shadow-island`, `shadow-md` and `shadow-lg` now compile to none (only
+  popovers, menus, toasts, dialogs, labels on photographs and the phone sheet cast a shadow). The
+  menus and sheets this lane owns moved to `shadow-pop` and `shadow-sheet`; the map hover card
+  (`components/map/MapHoverCard.tsx`) keeps only its ring.
+- **Why left:** the map components belong to the maps lane running now.
+- **Clears it:** `MapHoverCard` takes `shadow-pop`.
+
+### The wordmark generator needs a package the backend environment lacks
+
+- **What:** `tools/brand/wordmark.py` reads the WOFF2 fonts in `frontend/fonts`, which needs
+  `brotli` beside `fontTools` and `uharfbuzz`; the backend virtual environment has the last two
+  only, so the outlines in `frontend/components/brandOutlines.ts` were written from a scratch
+  install.
+- **Why left:** adding a dependency to the backend for a one-off asset was not worth a lock change.
+- **Clears it:** add `brotli` to the tools' development dependencies, or read the fonts from TTF.
+
+## No caps for now (decision 0093)
+
+### Daily allowances are a code table, not a setting
+
+- **What:** the daily voice seconds and media units are `core/roles.DAILY_ALLOWANCES`, unlimited
+  for every role; bringing one back is a code change and a deploy, unlike the money caps in the AI
+  budget. `QuotaPolicy` rows exist but no code reads them (`backend/app/core/roles.py`).
+- **Why left:** the table was code before this change; the owner asked for no caps, not for a new
+  setting.
+- **Clears it:** read the allowances from `QuotaPolicy` (one loader, `None` unlimited) and drop the
+  code table, or drop `QuotaPolicy`.
+
+## Public transcripts and share links (decision 0097)
+
+### The `SIGNED_IN` chunk ACL is read by everyone
+
+- **What:** since the full field transcripts became public, `research/retrieval.chunk_acls_for`
+  gives every reader `PUBLIC` and `SIGNED_IN`, so the `SIGNED_IN` value of `ChunkAcl` (migration
+  `0027_field_voices`, written by `services/field_voices_records.py`) no longer means signed in.
+  `OPEN_CHUNK_ACLS`, the loaders' default when no reader is named, still holds `PUBLIC` only.
+- **Why left:** folding the value into `PUBLIC` needs a migration of the stored transcript chunks,
+  the field voices writer and its tests, and the field voices lane was finishing its own changes.
+- **Clears it:** a migration that sets every `SIGNED_IN` chunk to `PUBLIC` and drops the value,
+  `field_voices_records` writing `PUBLIC`, and `SIGNED_IN_CHUNK_ACLS` removed.
+
+### A stopped share's files stay in the bucket until they expire
+
+- **What:** the report PDF and lesson files of a share are filed once under the neutral owner id
+  (`services/share_links.SHARED_EXPORT_OWNER`) and kept until the `exports/` lifecycle rule
+  removes them. Stopping the share ends the routes and every new link at once, but not the
+  stored object.
+- **Why left:** the key carries the SHA-256 of what the file was made from, so it cannot be
+  guessed, and every signed link lasts 300 seconds; the owner's own exports work the same way.
+- **Clears it:** delete the share's objects when it stops, by recording each file's key against
+  the share.
+
+### Reading-page metadata reads the version 2 craft page fields
+
+- **What:** `frontend/lib/readingMetadata.craftPageMetadata` takes the description from
+  `overview.lede` and the preview picture from the `HERO` entry of `pictures`, which craft page
+  schema 3 keeps only until schema 4 (decision 0095, removal by 2026-12-18).
+- **Why left:** the client contract for schema 3 (`lib/craftPageContract.ts`) belongs to the
+  chapters lane and had not landed when the reading pages moved (decision 0097).
+- **Clears it:** read `lede` and `masthead.picture` when the chapter screen replaces the tabs, in
+  the same change that drops the flat fields.
+
+### Shared answers draw in English reading metadata
+
+- **What:** `/shared/answers/[token]` and `/shared/lessons/[token]` pass `[ENGLISH]` as the
+  answer languages, so a shared Hindi or Urdu answer reads with English language metadata (script
+  and direction) in its header and reading styles.
+- **Why left:** the list of answer languages comes from `GET /answers/config`, a signed-in read
+  (decision 0097 keeps asking signed in).
+- **Clears it:** serve the answer language list from a public read (or ship it in the shared
+  body) and pass it to the shared screens.
+
+### Craft page chapters not built yet (decision 0098)
+
+- **What:** the version 3 page (`services/chapter_*.py`) doesn't build `what_if`, `concept_graph`,
+  `zoom_story`, `supply_map` or `measure` for a chapter. One reaction player holds every step
+  instead of one per mechanism. `services/chapter_records.py` loads no concept pictures. The
+  chapters job (`app.scripts.build_craft_chapters`) runs steps 1 (conformers and Wikidata points)
+  and 6 (pages and the nightly holes check) only: no generated explainers, concept pictures, AI
+  media copies or film score, and it runs nightly from Coverage enrichment, not after each
+  deploy's import. Until its first run keeps conformers, live pages show no `molecule_3d`; the
+  golden's seven molecules are the inputs fixture's kept conformers. An archived version
+  (`?version=N`) is served without any field voice or testimony (decision 0098 item 14), so a
+  still-consented quote is missing from it too.
+- **Why left:** what-if and concept-graph offers need the relationship and shared-term rows that
+  only answer builders load today, and a page builder may not search. Per-mechanism players wait
+  on `science/mechanisms.craft_concepts`, which the CURATION lane didn't land. Steps 2 to 5 spend
+  on models and media and need their own budgets and tests.
+- **Clears it:** a rows loader for what-if evidence and shared terms in `chapter_records.py` and
+  their pure builders. Cut `chapter_chem._player` by `craft_concepts`. Build job steps 2 to 5 and
+  run the job after the deploy's import. Read archived bodies back through the live field-voice
+  filters instead of stripping them.
+
+### The timeline map has no pins for Kutch Ajrakh, and the region story never draws a river
+
+- **What:** job step 1 stores a Wikidata point only for a dossier place with a `wikidataId`, and no
+  Kutch Ajrakh place carries one, so every `timeline_map` place of its page is unpinned (the route
+  Sindh to Kutch is drawn between named places). `region_story` never chooses a river: HydroRIVERS
+  basins carry no name, so no offered basin's name can occur in a step's sentence or quote.
+  Several curated `whyClaimId`s (C062, C080, C088) describe a step rather than explain it, and the
+  page now leaves a stage's why out when its claim is already one of the stage's sentences (Scouring,
+  Alum mordant printing, Indigo dyeing, Washing, Final wash show none).
+- **Why left:** Wikidata ids for places, and better why claims, are dossier content (the curation
+  lane, one agent per dossier); placing by name was tried against Wikidata and does not resolve
+  Ajrakhpur or Dhamadka, picks a family name for Kutch and two items for Sindh. Basin names need a
+  named river dataset.
+- **Clears it:** the curation lane adds `wikidataId` to the Kutch Ajrakh places (Sindh Q37211,
+  Kutch district Q1063417) and reviews its why claims; a river-name source joined to HydroRIVERS
+  basins.
+
+### The decision 0096 merge is the minimal novelty rule
+
+- **What:** `services/craft_page_answer_assets.py` joins only pieces whose `craftId` is the craft
+  and that came from an answer. A piece joins its chapter when every claim it cites is listed on
+  the page and it adds something: its kind isn't in that chapter yet, or it cites a claim the
+  chapter drafts don't show. Kinds the page rebuilds from rows keep the page's own. Within a slot
+  (chapter, kind, topic) the piece showing more claims wins, then the newer one. Left out of
+  decision 0096: cross-craft pieces and pieces of any-craft answers; a curated reading of a piece
+  with no answer id; the evidence-floor comparison between a curated item and an answer piece; the
+  question screen (`research/question_screen`), so `fromQuestion.text` is always null; and the
+  `CraftPiece` table and `KnowledgePiece.origin`. The stamp reads the craft's pieces (count, latest
+  `updatedAt`, stale, hidden and superseded marks).
+- **Why left:** the CURATION lane, which owned the merge, stopped at 23:11 on 2026-11-18. The
+  coordinator asked for a minimal rule with targeted tests only.
+- **Clears it:** the rest of decision 0096's items 1 to 4 in the same module, with the question
+  screen and its tests.
+
+### AI media, film scores and media routes on the craft page
+
+- **What:** AI images and videos made from a craft's claims don't join its page. Nothing builds
+  `ai_media`. There's no `MediaAsset.pageKey`, no craft-neutral copy, no `GET /api/crafts/media/{assetId}`
+  and no film-score route. The chapters job (`scripts/build_craft_chapters.py`) doesn't exist, so
+  nothing sets `Compound.conformerKeptAt`, and a live page shows no `molecule_3d` until a job sets it.
+- **Why left:** these were the CURATION lane's (decision 0096 item 5, the job and the media
+  worker's page copy), and that lane stopped.
+- **Clears it:** a migration adding `MediaAsset.pageKey`, the media worker's copy, the public
+  redirect route, the job with its conformer step, and an `ai_media` loader in `chapter_records`.
+
+### The craft page golden's climate series is synthetic
+
+- **What:** `shared/craft.page.inputs.json` holds 45 yearly values per variable for Kachchh. They
+  were generated around the stored trend (mean and slope from `explainer.phase-d.golden.json`),
+  not read from CHIRPS or GHCN-CAMS.
+- **Why left:** the geo ETL output on the laptop holds no Kachchh yearly rows, and nothing heavy
+  runs locally.
+- **Clears it:** replace the two series with the loaded `DISTRICT_MEAN` rows of district 449 once
+  the ETL's yearly output is in the repository, then regenerate the golden.

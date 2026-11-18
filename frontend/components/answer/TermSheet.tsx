@@ -6,8 +6,10 @@ import { Loader2, MessageCircleQuestion, RotateCw } from "lucide-react";
 import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
 import { ExplainerSentence } from "@/components/answer/ExplainerSentence";
 import { openedSource, type OpenCitation } from "@/components/answer/SourceDialog";
+import { SignInLink } from "@/components/auth/SignInLink";
 import { FieldDialog } from "@/components/dialogs/FieldDialog";
-import { failureMessage, useRemote } from "@/components/hooks/useRemote";
+import { failureMessage, useRemote, type RemoteFailure } from "@/components/hooks/useRemote";
+import { ApiError } from "@/lib/api";
 import type { TermSpan } from "@/lib/explainerBlockBase";
 import type { Term } from "@/lib/explainerContract";
 import { fetchTerm } from "@/lib/termSummary";
@@ -17,6 +19,10 @@ type Looked = { key: string; term: Term | null };
 function useTermSummary(span: TermSpan | null, language: string) {
   const load = useMemo(() => (span ? (): Promise<Looked> => fetchTerm(span.termKey, language).then((term) => ({ key: span.termKey, term })) : null), [span, language]);
   return useRemote(load);
+}
+
+function needsSignIn(failure: RemoteFailure | null): boolean {
+  return failure?.cause instanceof ApiError && failure.cause.status === 401;
 }
 
 function termLookup(term: Term, onOpen: (open: OpenCitation) => void): CitationLookup {
@@ -97,10 +103,14 @@ export function TermSheet({
       {remote.failure ? (
         <div role="alert" className="mt-3 flex flex-wrap items-center gap-3 text-sm text-error-600">
           <span>{failureMessage(remote.failure, "Couldn't load this term.")}</span>
-          <button type="button" className="field-button-secondary min-h-9 px-3 py-1.5 text-xs" onClick={remote.retry}>
-            <RotateCw className="h-3.5 w-3.5" aria-hidden />
-            Try again
-          </button>
+          {needsSignIn(remote.failure) ? (
+            <SignInLink variant="quiet" />
+          ) : (
+            <button type="button" className="field-button-secondary min-h-9 px-3 py-1.5 text-xs" onClick={remote.retry}>
+              <RotateCw className="h-3.5 w-3.5" aria-hidden />
+              Try again
+            </button>
+          )}
         </div>
       ) : null}
     </FieldDialog>

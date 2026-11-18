@@ -9,7 +9,7 @@ from pydantic import AwareDatetime, Field, model_validator
 
 from app.core.errors import InvalidInput
 
-from .base import ContractModel
+from .base import ContractModel, empty
 from .blocks import (
     SENTENCE,
     BlockBase,
@@ -22,26 +22,33 @@ from .blocks import (
 from .citations import Citation
 from .datasets import DATASET_CODE_PATTERN, DatasetRef, dataset_codes_problems
 from .quotes import figures_in, quote_occurs, unsupported_figures
+from .reactions import SPECIES_ROLES, ReactionSpecies, mhchem_equation
 from .sandbox import SANDBOX_MAX_BYTES, sandbox_problems
 from .subject_keys import TermKey, term_key
 
 __all__ = [
+    "SIMULATION_GROUNDS_MAX",
     "SIMULATION_MAX_BYTES",
+    "SIMULATION_REACTIONS_MAX",
     "SIMULATION_VALUES_MAX",
     "SIMULATION_VALUE_KEY_PATTERN",
     "WHAT_IF_OPTIONS_MAX",
     "WHAT_IF_OUTCOMES_MAX",
     "SimulationBlock",
+    "SimulationReaction",
     "SimulationValue",
     "WhatIfBlock",
     "WhatIfOption",
     "WhatIfOutcome",
     "hidden_block",
     "simulation_concept_key",
+    "simulation_data",
 ]
 
 SIMULATION_MAX_BYTES = SANDBOX_MAX_BYTES
 SIMULATION_VALUES_MAX = 40
+SIMULATION_GROUNDS_MAX = 24
+SIMULATION_REACTIONS_MAX = 8
 SIMULATION_VALUE_KEY_PATTERN = r"^[a-z][a-zA-Z0-9]{0,39}$"
 WHAT_IF_OPTIONS_MAX = 6
 WHAT_IF_OUTCOMES_MAX = 3
@@ -73,6 +80,33 @@ class SimulationValue(ContractModel):
         return self
 
 
+class SimulationReaction(ContractModel):
+    reaction_id: uuid.UUID
+    label: str = Field(min_length=1, max_length=200)
+    species: list[ReactionSpecies] = Field(min_length=2)
+    equation: str | None
+    balanced: bool
+    citations: list[Citation] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def _a_stored_reaction_as_the_science_engine_wrote_it(self) -> Self:
+        if {species.role for species in self.species} != set(SPECIES_ROLES):
+            raise ValueError(f"reaction {self.reaction_id} names at least one reactant and one product")
+        if self.equation != mhchem_equation(self.species):
+            raise ValueError(f"reaction {self.reaction_id} equation is not built from its species")
+        if self.balanced and (self.equation is None or any(s.coefficient is None for s in self.species)):
+            raise ValueError(
+                f"reaction {self.reaction_id} is balanced only with a formula and coefficient each"
+            )
+        return self
+
+    def stated(self) -> list[str]:
+        return [self.label, *(self.equation or "").split(), *(s.formula or "" for s in self.species)]
+
+    def coefficients(self) -> list[int]:
+        return [s.coefficient for s in self.species if s.coefficient is not None]
+
+
 class SimulationBlock(BlockBase):
     kind: Literal["simulation"]
     version: Literal[1]
@@ -82,26 +116,29 @@ class SimulationBlock(BlockBase):
     created_at: AwareDatetime
     html: str = Field(min_length=1)
     html_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
-    values: list[SimulationValue] = Field(min_length=1, max_length=SIMULATION_VALUES_MAX)
+    values: list[SimulationValue] = Field(max_length=SIMULATION_VALUES_MAX)
     datasets: list[DatasetRef]
     hidden: bool
+    grounds: list[Citation] = Field(default_factory=list, max_length=SIMULATION_GROUNDS_MAX, exclude_if=empty)
+    reactions: list[SimulationReaction] = Field(
+        default_factory=list, max_length=SIMULATION_REACTIONS_MAX, exclude_if=empty
+    )
 
     @model_validator(mode="after")
     def _fed_only_cited_values_and_sandboxed(self) -> Self:
-        keys = [value.key for value in self.values]
-        if len(set(keys)) != len(keys):
-            raise ValueError(f"simulation {self.id} passes each value once")
+        problems = _grounding_problems(self)
         if hashlib.sha256(self.html.encode("utf-8")).hexdigest() != self.html_sha256:
             raise ValueError(f"simulation {self.id} names the SHA-256 of its own HTML")
         simulation_concept_key(self.concept)
         stated = [value.stated for value in self.values if value.stated]
+        stated += [text for reaction in self.reactions for text in reaction.stated()]
         if unsupported_figures(self.title, stated) or unsupported_figures(self.concept, stated):
             raise ValueError(f"simulation {self.id} titles itself with a figure no value states")
         used = [value.dataset_code for value in self.values if value.dataset_code]
-        problems = dataset_codes_problems(f"simulation {self.id}", self.datasets, used)
+        problems += dataset_codes_problems(f"simulation {self.id}", self.datasets, used)
         if {dataset.code for dataset in self.datasets} - set(used):
             problems.append(f"simulation {self.id} cites only the dataset rows its values use")
-        sandboxed = sandbox_problems(self.html, {value.key: value.value for value in self.values})
+        sandboxed = sandbox_problems(self.html, simulation_data(self.values, self.reactions))
         problems += [f"simulation {self.id} fails the sandbox check: {p.rule} {p.detail}" for p in sandboxed]
         if problems:
             raise ValueError("; ".join(problems))
@@ -110,12 +147,41 @@ class SimulationBlock(BlockBase):
     def citations(self) -> Iterator[Citation]:
         for value in self.values:
             yield from value.citations
+        yield from self.grounds
+        for reaction in self.reactions:
+            yield from reaction.citations
 
     def cites_datasets(self) -> bool:
         return bool(self.datasets)
 
     def shown_labels(self) -> list[str]:
-        return [self.title, self.concept, *(value.label for value in self.values)]
+        return [
+            self.title,
+            self.concept,
+            *(value.label for value in self.values),
+            *(reaction.label for reaction in self.reactions),
+        ]
+
+
+def simulation_data(
+    values: Sequence[SimulationValue], reactions: Sequence[SimulationReaction] = ()
+) -> dict[str, float]:
+    data = {value.key: value.value for value in values}
+    for n, reaction in enumerate(reactions, 1):
+        data |= {f"r{n}c{m}": float(c) for m, c in enumerate(reaction.coefficients(), 1)}
+    return data
+
+
+def _grounding_problems(block: SimulationBlock) -> list[str]:
+    problems: list[str] = []
+    keys = [value.key for value in block.values]
+    if len(set(keys)) != len(keys):
+        problems.append(f"simulation {block.id} passes each value once")
+    if len({c.id for c in block.grounds}) != len(block.grounds):
+        problems.append(f"simulation {block.id} cites each statement once")
+    if len({r.reaction_id for r in block.reactions}) != len(block.reactions):
+        problems.append(f"simulation {block.id} plays each reaction once")
+    return problems
 
 
 def hidden_block(block: BlockBase) -> bool:

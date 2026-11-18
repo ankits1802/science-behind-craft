@@ -10,6 +10,7 @@ from app.models import Answer, User
 from app.providers.quota import LedgerEntry, record_units, remaining_today, used_today
 from app.research.explainer import Explainer
 from app.services.explainer_payload import stored_explainer
+from app.services.field_voices_readback import current_field_voices
 
 from .listen import ListenHold
 from .seconds import VOICE_SECONDS
@@ -26,7 +27,8 @@ class SqlListenStore:
             payload = await session.scalar(
                 select(Answer.payload).where(Answer.id == answer_id, Answer.userId == user_id)
             )
-        return stored_explainer(answer_id, payload)
+            explainer = stored_explainer(answer_id, payload)
+            return await current_field_voices(session, explainer) if explainer is not None else None
 
     async def hold(self, entry: LedgerEntry, now: datetime) -> ListenHold:
         if entry.user_id is None:

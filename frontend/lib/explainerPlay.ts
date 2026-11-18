@@ -12,7 +12,8 @@ import {
 } from "@/lib/explainerBlockBase";
 import { districtShape, type DistrictRef } from "@/lib/explainerPlace";
 import { datasetShape, type RegionDataset } from "@/lib/regionContract";
-import { boolean, integer, list, matching, nullable, number, object, oneOf, ShapeError, text, type Shape } from "@/lib/shape";
+import { reactionSpeciesShape, type ReactionSpecies } from "@/lib/scienceContract";
+import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import type { Citation } from "@/lib/types";
 
 export const ZOOM_LEVELS = ["DISTRICT", "WORKSHOP", "CLOTH", "FIBRE", "MOLECULE"] as const;
@@ -31,6 +32,14 @@ export type SimulationValue = {
   citations: Citation[];
   datasetCode: string | null;
 };
+export type SimulationReaction = {
+  reactionId: string;
+  label: string;
+  species: ReactionSpecies[];
+  equation: string | null;
+  balanced: boolean;
+  citations: Citation[];
+};
 export type SimulationBlock = BlockEnvelope<"simulation"> & {
   concept: string;
   title: string;
@@ -41,6 +50,8 @@ export type SimulationBlock = BlockEnvelope<"simulation"> & {
   values: SimulationValue[];
   datasets: RegionDataset[];
   hidden: boolean;
+  grounds?: Citation[];
+  reactions?: SimulationReaction[];
 };
 export type WhatIfOutcome = { sentence: ExplainerSentence; reactionId: string | null };
 export type WhatIfOption = { label: string; materialId: string | null; termKey: string | null; outcomes: WhatIfOutcome[] };
@@ -78,7 +89,18 @@ export const sandboxHtmlShape: Shape<string> = {
   }
 };
 
-export const simulationBlockShape: Shape<SimulationBlock> = object<SimulationBlock>({
+const SIMULATION_GROUNDED = "a generated explainer resting on a cited value, statement or stored reaction";
+
+const simulationReactionShape: Shape<SimulationReaction> = object<SimulationReaction>({
+  reactionId: UUID,
+  label: text,
+  species: list(reactionSpeciesShape, 2),
+  equation: nullable(text),
+  balanced: boolean,
+  citations: list(citationShape, 1)
+});
+
+const simulationFieldsShape: Shape<SimulationBlock> = object<SimulationBlock>({
   ...envelope("simulation"),
   concept: text,
   title: text,
@@ -95,12 +117,26 @@ export const simulationBlockShape: Shape<SimulationBlock> = object<SimulationBlo
       stated: nullable(text),
       citations: list(citationShape),
       datasetCode: nullable(text)
-    }),
-    1
+    })
   ),
   datasets: list(datasetShape),
-  hidden: boolean
+  hidden: boolean,
+  grounds: optional(list(citationShape, 1)),
+  reactions: optional(list(simulationReactionShape, 1))
 });
+
+export function simulationGrounded(block: Pick<SimulationBlock, "values" | "grounds" | "reactions">): boolean {
+  return block.values.length > 0 || (block.grounds?.length ?? 0) > 0 || (block.reactions?.length ?? 0) > 0;
+}
+
+export const simulationBlockShape: Shape<SimulationBlock> = {
+  expected: SIMULATION_GROUNDED,
+  parse(value, path) {
+    const block = simulationFieldsShape.parse(value, path);
+    if (!simulationGrounded(block)) throw new ShapeError(path, SIMULATION_GROUNDED);
+    return block;
+  }
+};
 
 export const whatIfBlockShape: Shape<WhatIfBlock> = object<WhatIfBlock>({
   ...envelope("what_if"),

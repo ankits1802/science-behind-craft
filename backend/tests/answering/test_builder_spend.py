@@ -8,7 +8,7 @@ import pytest
 
 from app.api.routes import knowledge
 from app.models import User
-from app.providers import budget
+from app.providers import answer_routes, budget
 from app.providers.router import Principal
 from app.scripts import rebuild_pieces
 from app.services import answer_store
@@ -50,7 +50,7 @@ def test_builders_plan_and_compose_only_from_the_answer_s_headroom(
     made: list[SimpleNamespace] = []
     started: list[BuilderTools] = []
 
-    def model(task: AiTask, principal: Principal | None = None) -> SimpleNamespace:
+    def model(task: AiTask, principal: Principal | None = None, **_: Any) -> SimpleNamespace:
         made.append(SimpleNamespace(task=task, principal=principal))
         return made[-1]
 
@@ -58,8 +58,8 @@ def test_builders_plan_and_compose_only_from_the_answer_s_headroom(
         started.append(tools)
         return BlockBuilders()
 
+    monkeypatch.setattr(answer_routes, "router_structured_model", model)
     for module in (knowledge, rebuild_pieces):
-        monkeypatch.setattr(module, "router_structured_model", model)
         monkeypatch.setattr(module, "router_embedder", lambda principal: None)
     monkeypatch.setattr(knowledge, "sessionmaker", lambda: None)
     monkeypatch.setattr(answer_store.BlockBuilders, "from_registry", classmethod(from_registry))
@@ -69,6 +69,7 @@ def test_builders_plan_and_compose_only_from_the_answer_s_headroom(
     assert (tools.plan_model.task, tools.compose_model.task) == (AiTask.PLAN, AiTask.COMPOSE)
     assert isinstance(headroom, budget.AnswerHeadroom)
     assert tools.compose_model.principal.answer is headroom
+    assert tools.explainer_model is not None and tools.explainer_model.principal.answer is headroom
     answering = next(m for m in made if m.task == AiTask.PLAN and m.principal.answer is headroom.answer)
     headroom.answer.settle(Decimal(0), ceilings().answer_usd["DETAILED"] / 2)
     refused = asked(tools.plan_model.principal)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import itertools
 import re
 from collections.abc import Mapping, Sequence
 from types import MappingProxyType
@@ -14,7 +15,7 @@ from .composition import HEADING_MAX_CHARS
 from .depth import depth_policy
 from .explainer import SECTION_ID_PATTERN
 from .planning import RetrievalPlan
-from .question_cues import QUESTION_CUES
+from .question_cues import HOW_IT_WORKS_FILLERS, HOW_IT_WORKS_SUBJECTS, HOW_IT_WORKS_VERBS, QUESTION_CUES
 from .vocabulary import Discipline
 
 __all__ = [
@@ -157,7 +158,12 @@ def question_order(disciplines: Sequence[str], question: str, craft_name: str | 
 
 def asked_disciplines(disciplines: Sequence[str], question: str, craft_name: str | None = None) -> list[str]:
     words = _words(question) - _words(craft_name or "")
-    return [discipline for discipline in disciplines if _cued(QUESTION_CUES.get(discipline, ()), words)]
+    works = _asks_how_it_works(question, craft_name)
+    return [
+        discipline
+        for discipline in disciplines
+        if _cued(QUESTION_CUES.get(discipline, ()), words) or (works and discipline == LADDER_DISCIPLINE)
+    ]
 
 
 def fallback_heading(discipline: str, craft_name: str | None) -> str:
@@ -177,6 +183,17 @@ def block_id(section_id: str, ordinal: int) -> str:
 
 def _words(text: str) -> set[str]:
     return set(QUESTION_WORD.findall(text.casefold()))
+
+
+def _asks_how_it_works(question: str, craft_name: str | None) -> bool:
+    words = QUESTION_WORD.findall(question.casefold())
+    named = HOW_IT_WORKS_SUBJECTS | HOW_IT_WORKS_FILLERS | _words(craft_name or "")
+    for start in (n for n, word in enumerate(words) if word == "how"):
+        subject = list(itertools.takewhile(named.__contains__, words[start + 1 :]))
+        rest = words[start + 1 + len(subject) :]
+        if rest and rest[0] in HOW_IT_WORKS_VERBS and set(subject) - HOW_IT_WORKS_FILLERS:
+            return True
+    return False
 
 
 def _cued(cues: Sequence[str], words: set[str]) -> bool:

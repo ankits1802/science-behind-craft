@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { EyeOff, Lock, WifiOff } from "lucide-react";
+import { EyeOff, Lock } from "lucide-react";
 
 import {
   adminChromeRouteFor,
@@ -16,22 +15,17 @@ import { useAuth } from "@/components/AuthProvider";
 import { DeadEndFrame, ErrorState } from "@/components/DeadEnd";
 import { DynamicIslandNav } from "@/components/DynamicIslandNav";
 import { ErrorPanel } from "@/components/ErrorPanel";
-import { FirstPasswordGate } from "@/components/FirstPasswordGate";
-import { TwoStepVerificationCard } from "@/components/settings/TwoStepVerificationCard";
-import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { BrandMark } from "@/components/BrandMark";
-import { hasAdminView, routeGuardFor } from "@/lib/permissions";
-import { browserOffline } from "@/lib/errorKind";
-import { signInHref } from "@/lib/sessionReturn";
-import { mustChangePassword } from "@/lib/signIn";
+import { AccountGate } from "@/components/shell/AccountGate";
+import { ShellFrame } from "@/components/shell/ShellFrame";
 import { ActionGroup } from "@/components/ui/ActionGroup";
+import { browserOffline } from "@/lib/errorKind";
+import { hasAdminView, routeGuardFor } from "@/lib/permissions";
+import { signInHref } from "@/lib/sessionReturn";
+import type { User } from "@/lib/types";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { user, loading, reach, retryMe, logout, markPasswordChanged } = useAuth();
-  const { adminMode, adminViewResolved, setAdminView } = useAdminView();
+  const { user, loading, reach, retryMe } = useAuth();
   const router = useRouter();
-  const pathname = usePathname();
-  const reduce = useAppReducedMotion();
 
   useEffect(() => {
     if (!loading && !user && reach === "ok") router.replace(signInHref(`${window.location.pathname}${window.location.search}`));
@@ -49,75 +43,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (!user) return null;
 
-  if (mustChangePassword(user)) {
-    return (
-      <FirstPasswordLocked
-        onDone={markPasswordChanged}
-        onSignOut={() => {
-          logout().catch(() => undefined);
-        }}
-      />
-    );
-  }
-
-  if (user.twoFactorRequired && !user.twoFactorEnabled) {
-    return (
-      <TwoStepRequired
-        onSignOut={() => {
-          logout().catch(() => undefined);
-        }}
-      />
-    );
-  }
-
-  const guard = routeGuardFor(pathname);
-  const blocked = Boolean(guard && !guard.can(user));
-
-  const chrome = blocked ? null : adminChromeRouteFor(pathname);
-  const chromeSettling = Boolean(chrome) && hasAdminView(user) && !adminViewResolved;
-  const chromeHidden = Boolean(chrome) && !adminChromeVisible(user, adminMode);
-
   return (
-    <div className="min-h-screen bg-bg-0">
-      <a
-        href="#main-content"
-        className="sr-only left-3 top-3 z-60 rounded-md bg-purple-700 px-3 py-2 text-sm font-medium text-white focus:not-sr-only focus:fixed"
-      >
-        Skip to content
-      </a>
-      <DynamicIslandNav />
-      <motion.main
-        id="main-content"
-        tabIndex={-1}
-        key={pathname}
-        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={reduce ? { duration: 0 } : { duration: 0.22, ease: "easeOut" }}
-        className="relative mx-auto max-w-7xl px-4 pb-[calc(var(--bottom-nav-h,env(safe-area-inset-bottom,0px))+1.5rem)] pt-[calc(60px+1.25rem)] lg:pb-12 lg:pt-24"
-      >
-        {reach === "retrying" ? (
-          <p role="status" className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-md border border-line-200 bg-surface-50 px-3 py-2 text-sm text-ink-700" data-testid="reconnecting">
-            <span className="inline-flex items-center gap-2">
-              <WifiOff className="h-4 w-4 text-ink-500" aria-hidden />
-              Connection lost. Retrying…
-            </span>
-            <button type="button" onClick={retryMe} className="font-semibold text-purple-700 underline underline-offset-2 dark:text-purple-300 pointer-coarse:min-h-11">
-              Try again
-            </button>
-          </p>
-        ) : null}
-        {blocked && guard ? (
-          <RouteLocked title={guard.title} message={guard.message} />
-        ) : chrome && chromeSettling ? (
-          <section className="panel p-6 text-sm text-ink-500">Checking your admin view…</section>
-        ) : chrome && chromeHidden ? (
-          <AdminViewHidden route={chrome} onEnable={() => setAdminView(true)} />
-        ) : (
-          children
-        )}
-      </motion.main>
-    </div>
+    <AccountGate user={user}>
+      <ShellFrame nav={<DynamicIslandNav />} onRetry={reach === "retrying" ? retryMe : null}>
+        <GuardedRoute user={user}>{children}</GuardedRoute>
+      </ShellFrame>
+    </AccountGate>
   );
+}
+
+function GuardedRoute({ user, children }: { user: User; children: React.ReactNode }) {
+  const { adminMode, adminViewResolved, setAdminView } = useAdminView();
+  const pathname = usePathname();
+  const guard = routeGuardFor(pathname);
+  if (guard && !guard.can(user)) return <RouteLocked title={guard.title} message={guard.message} />;
+  const chrome = adminChromeRouteFor(pathname);
+  if (chrome && hasAdminView(user) && !adminViewResolved) {
+    return <section className="panel p-6 text-sm text-ink-500">Checking your admin view…</section>;
+  }
+  if (chrome && !adminChromeVisible(user, adminMode)) return <AdminViewHidden route={chrome} onEnable={() => setAdminView(true)} />;
+  return <>{children}</>;
 }
 
 function Unreachable({ onRetry }: { onRetry: () => void }) {
@@ -126,42 +71,6 @@ function Unreachable({ onRetry }: { onRetry: () => void }) {
       <DeadEndFrame nav={false}>
         <ErrorState kind={browserOffline() ? "offline" : "unavailable"} onRetry={onRetry} />
       </DeadEndFrame>
-    </div>
-  );
-}
-
-function FirstPasswordLocked({ onDone, onSignOut }: { onDone: () => void; onSignOut: () => void }) {
-  return (
-    <div className="grid min-h-screen place-items-center bg-bg-0 px-4 py-12">
-      <main id="main-content" tabIndex={-1} className="w-full max-w-md">
-        <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <BrandMark className="h-12 w-12 rounded-xl shadow-sm" />
-          <h1 className="font-display text-2xl font-bold text-ink-900">Set a new password</h1>
-        </div>
-        <section className="panel p-6">
-          <FirstPasswordGate currentPassword="" onDone={onDone} onSignOut={onSignOut} />
-        </section>
-      </main>
-    </div>
-  );
-}
-
-function TwoStepRequired({ onSignOut }: { onSignOut: () => void }) {
-  return (
-    <div className="grid min-h-screen place-items-center bg-bg-0 px-4 py-12">
-      <main id="main-content" tabIndex={-1} className="w-full max-w-lg" data-testid="two-step-required">
-        <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <BrandMark className="h-12 w-12 rounded-xl shadow-sm" />
-          <h1 className="font-display text-2xl font-bold text-ink-900">Turn on two-step verification</h1>
-          <p className="text-sm text-ink-500">Your role needs it.</p>
-        </div>
-        <TwoStepVerificationCard />
-        <ActionGroup className="mt-6">
-          <button type="button" className="field-button-secondary" onClick={onSignOut}>
-            Sign out
-          </button>
-        </ActionGroup>
-      </main>
     </div>
   );
 }

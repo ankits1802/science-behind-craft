@@ -2,17 +2,20 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { ChemEquation } from "@/components/answer/ChemEquation";
-import { CitationChips } from "@/components/answer/CitationContext";
-import { EvidenceLevelBadge, EvidenceSignalBadge } from "@/components/answer/EvidenceBadge";
-import { SpeciesRow } from "@/components/answer/SpeciesRow";
+import { StepDetail } from "@/components/answer/matter/StepDetail";
 import { layoutSpring } from "@/components/guide/guideMotion";
+import type { ExplainerSentence } from "@/lib/explainerBlockBase";
 import type { ReactionStep } from "@/lib/explainerMatter";
-import { reactionSpoken, speciesNamesLine } from "@/lib/processView";
-import { stepKindLabel, stepSignal } from "@/lib/reactionPlayer";
+import { stepKindLabel } from "@/lib/reactionPlayer";
 import { cn } from "@/lib/utils";
 
-type StepListProps = { steps: readonly ReactionStep[]; open: number | null; reduce: boolean; onChoose: (index: number) => void };
+type StepListProps = {
+  steps: readonly ReactionStep[];
+  open: number | null;
+  reduce: boolean;
+  onChoose: (index: number) => void;
+  notesFor: (step: ReactionStep) => readonly ExplainerSentence[];
+};
 
 function StepNumber({ number, reached }: { number: number; reached: boolean }) {
   return (
@@ -34,36 +37,13 @@ function StepLabel({ step, number, reached }: { step: ReactionStep; number: numb
       <StepNumber number={number} reached={reached} />
       <span className="min-w-0 pt-0.5">
         <span className="block break-words text-sm font-semibold text-ink-900">{step.label}</span>
-        <span className="block text-xs text-ink-500">{stepKindLabel(step)}</span>
+        <span className="block text-xs text-ink-500">{step.stage ? `${stepKindLabel(step)} · ${step.stage}` : stepKindLabel(step)}</span>
       </span>
     </span>
   );
 }
 
-function StepDetail({ step }: { step: ReactionStep }) {
-  const signal = stepSignal(step);
-  return (
-    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 px-3 pb-3 sm:pl-[3.25rem]" data-testid="reaction-step-detail">
-      <span className="flex flex-wrap items-center gap-1.5">
-        {signal ? <EvidenceSignalBadge signal={signal} /> : null}
-        <EvidenceLevelBadge level={step.level} />
-      </span>
-      {step.equation ? (
-        <>
-          <ChemEquation equation={step.equation} label={reactionSpoken(step)} className="text-base" />
-          <p className="text-xs text-ink-500">{speciesNamesLine(step)}</p>
-        </>
-      ) : (
-        <SpeciesRow reaction={step} />
-      )}
-      <p className="text-xs">
-        <CitationChips citations={step.citations} />
-      </p>
-    </div>
-  );
-}
-
-function StepItem({ step, index, open, reduce, onChoose }: Omit<StepListProps, "steps"> & { step: ReactionStep; index: number }) {
+function StepItem({ step, index, open, reduce, onChoose, notesFor }: Omit<StepListProps, "steps"> & { step: ReactionStep; index: number }) {
   const current = open === index;
   const expanded = open === null || current;
   const reached = open === null || index <= open;
@@ -96,7 +76,7 @@ function StepItem({ step, index, open, reduce, onChoose }: Omit<StepListProps, "
             transition={reduce ? { duration: 0 } : { height: layoutSpring(false), opacity: { duration: 0.18 } }}
             className="overflow-hidden"
           >
-            <StepDetail step={step} />
+            <StepDetail step={step} notes={notesFor(step)} animate={current && !reduce} />
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -104,11 +84,11 @@ function StepItem({ step, index, open, reduce, onChoose }: Omit<StepListProps, "
   );
 }
 
-export function ReactionStepList({ steps, open, reduce, onChoose }: StepListProps) {
+export function ReactionStepList({ steps, open, reduce, onChoose, notesFor }: StepListProps) {
   return (
     <ol className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2" aria-label="Reaction steps">
       {steps.map((step, index) => (
-        <StepItem key={step.reactionId} step={step} index={index} open={open} reduce={reduce} onChoose={onChoose} />
+        <StepItem key={step.reactionId} step={step} index={index} open={open} reduce={reduce} onChoose={onChoose} notesFor={notesFor} />
       ))}
     </ol>
   );

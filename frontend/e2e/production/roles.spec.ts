@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import type { Scheme } from "./matrix";
-import { passPreviewProtection } from "./preview";
+import { passPreviewProtection, roleSiteRefusal } from "./preview";
 import { ROLE_SCREENS_TIMEOUT_MS, baseUrl, previewBypassToken, roleCredentials, type RoleAccount } from "./run";
 import { ScreenRun } from "./screenRun";
 import { submitSignIn } from "./signIn";
@@ -15,6 +15,8 @@ const ROLE_SCREENS: readonly RoleScreen[] = [
 
 for (const screen of ROLE_SCREENS) {
   test(`the ${screen.label} account sees ${screen.path}`, async ({ page }, testInfo) => {
+    const refusal = roleSiteRefusal(baseUrl());
+    test.skip(refusal !== null, refusal ?? "");
     const account = roleCredentials(screen.account);
     const prefix = `E2E_${screen.account}`;
     test.skip(account === null, `Set ${prefix}_EMAIL, ${prefix}_PASSWORD and ${prefix}_TOTP_SECRET to visit ${screen.path}.`);

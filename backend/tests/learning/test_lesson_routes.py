@@ -8,6 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 from pptx import Presentation
 
+from app.api import export_deps
 from app.api.export_deps import export_tools
 from app.api.routes import explainer_exports, lessons
 from app.core.db import get_session
@@ -144,7 +145,7 @@ def test_a_lesson_file_is_filed_once_and_answered_as_a_short_lived_link(
         return {}
 
     monkeypatch.setattr(lessons, "lesson_of", own)
-    monkeypatch.setattr(lessons, "accessed_dates", no_dates)
+    monkeypatch.setattr(export_deps, "accessed_dates", no_dates)
     bucket, pictures = FakeBucket(), CountingPictures()
     http = client(PROFESSOR, bucket=bucket, pictures=pictures)
     first = http.get(f"/api/lessons/{PACK_ID}/files/pptx")
@@ -174,7 +175,7 @@ def test_any_reader_exports_their_own_explainer_and_its_citations(monkeypatch: p
         return {thing.id: date(2026, 10, 14) for thing in cited}
 
     monkeypatch.setattr(explainer_exports, "explainer_version", version)
-    monkeypatch.setattr(explainer_exports, "accessed_dates", seed_dates)
+    monkeypatch.setattr(export_deps, "accessed_dates", seed_dates)
     http = client(STUDENT)
     assert http.get(f"/api/explainers/{EXPLAINER_ID}/versions/2/citations").json() == learning(CITATIONS)
     bib = http.get(f"/api/explainers/{EXPLAINER_ID}/versions/2/citations/bib")

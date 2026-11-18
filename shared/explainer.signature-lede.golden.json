@@ -1,0 +1,166 @@
+{
+  "id": "lede",
+  "kind": "lede",
+  "version": 1,
+  "reuse": null,
+  "headline": "Explain how Ajrakh works from every angle: its history, geography, politics and chemistry.",
+  "sentences": [
+    {
+      "id": "lede.1",
+      "text": "Myrobalan fruits contain high levels of tannic acid, and this tannin is an essential pre-mordant that helps later printed mordants hold on the cotton.",
+      "level": "PROVISIONAL",
+      "citations": [
+        {
+          "id": "724dcb33-e841-5462-b0a0-5627865d94f7",
+          "claimId": "5feb2829-74ac-5426-9893-8c9f80059de1",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "these dried plums contain high levels of Tannic acid.",
+          "locator": "Application 1050, method of production, p. 10",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "0ff3456e-6ac4-5c3a-8df2-ef3b556a87c9",
+          "claimId": "5feb2829-74ac-5426-9893-8c9f80059de1",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "The tannin in the Myroballan penetrates the cotton fibres and is essential pre-mordant which aids the adhesion of the subsequent printed mordants onto the cloth.",
+          "locator": "Application 1050, method of production, p. 10",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ],
+      "translated": false,
+      "terms": []
+    },
+    {
+      "id": "lede.2",
+      "text": "Pa, the red mordant paste, is alum suspended in boiled tamarind seed powder and printed on mavi, the parts of the design that must be red.",
+      "level": "PROVISIONAL",
+      "citations": [
+        {
+          "id": "b842380f-7d0b-56eb-97fb-f1c6c04ceaf3",
+          "claimId": "9766f581-c81f-53ae-a60f-b7ab2c269406",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "The mordant, alum required for producing red is now applied to the cloth. Alum is suspended in a sticky paste of boiled powder from roasted and ground tamarind seeds (locally known as kachika).",
+          "locator": "Application 1050, method of production, p. 11",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "928dafb2-0a32-5ab6-afad-3eca98b18bfb",
+          "claimId": "9766f581-c81f-53ae-a60f-b7ab2c269406",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "This smooth paste called Pa, is printed with blocks which have been carved so that the printing portion of the raised face is patterned only, with the areas of the design called mavi, where red is required.",
+          "locator": "Application 1050, method of production, p. 11",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ],
+      "translated": false,
+      "terms": [
+        {
+          "text": "alum",
+          "termKey": "alum"
+        }
+      ]
+    }
+  ],
+  "figure": {
+    "id": "lede.figure",
+    "kind": "mordant_bath",
+    "version": 1,
+    "reuse": null,
+    "dye": "madder",
+    "fibre": "cotton",
+    "swatches": [
+      {
+        "mordant": "alum",
+        "colour": "red",
+        "sentence": {
+          "id": "lede.figure.1",
+          "text": "The long thin roots of Indian madder, Rubia cordifolia or majeeta, give a dye that binds to the alum mordant and develops red where pa and gach were printed.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "97315b0a-5507-5869-8943-f99b75584ab1",
+              "claimId": "6732e950-cd6f-5d1c-9714-452d0384cdeb",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "Indian Madder roots, Rubia Cordifolia, locally known as majeeta, have been traditionally used in the creation of Ajrakh",
+              "locator": "Application 1050, method of production, p. 13",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "508f6438-8cc3-5aa1-a4a2-9af045b98374",
+              "claimId": "6732e950-cd6f-5d1c-9714-452d0384cdeb",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design, where Pa, Gach pastes have been printed.",
+              "locator": "Application 1050, method of production, p. 13",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": [
+            {
+              "text": "madder",
+              "termKey": "madder"
+            },
+            {
+              "text": "alum",
+              "termKey": "alum"
+            },
+            {
+              "text": "gach",
+              "termKey": "gach"
+            }
+          ]
+        }
+      },
+      {
+        "mordant": "iron",
+        "colour": "black",
+        "sentence": {
+          "id": "lede.figure.2",
+          "text": "On harde-treated cloth kut turns a deep, fast chocolate-black as the iron in the paste oxidises with the tannic acid.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "d89dfd48-7b87-53f1-bdde-4d3589624f2e",
+              "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.",
+              "locator": "Application 1050, method of production, p. 11",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "ebfa138c-0ab6-5ad8-a15b-dbb32d5d7c0a",
+              "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+              "sourceId": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+              "quote": "These lines oxidise when exposed to air and the harda and develop a black colour.",
+              "locator": "paragraph 6",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": [
+            {
+              "text": "kut",
+              "termKey": "kut"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

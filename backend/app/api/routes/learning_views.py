@@ -20,6 +20,7 @@ from app.services import knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
 from app.services.craft_compare import craft_comparison
 from app.services.explainer_payload import stored_explainer
+from app.services.field_voices_readback import current_field_voices
 from app.services.shared_concepts import craft_shared_science, shared_concept_of
 from app.services.simulation_hiding import with_hidden_marks
 from app.services.visible_claims import visible_claim_ids
@@ -108,11 +109,13 @@ async def get_answer_quiz(
     chosen = list(sections or [])
     if len(set(chosen)) != len(chosen) or not set(chosen) <= {section.id for section in explainer.sections}:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, SECTIONS_DETAIL)
-    shown = await with_hidden_marks(session, explainer)
+    shown = await current_field_voices(session, await with_hidden_marks(session, explainer))
+    if shown is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
     visible = await visible_claim_ids(session, shown)
     quiz = explainer_quiz(shown, visible_claim_ids=visible, section_ids=chosen)
     if quiz is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
+        return Response(status_code=status.HTTP_204_NO_CONTENT, headers={"Cache-Control": PRIVATE_NO_CACHE})
     response.headers["Cache-Control"] = PRIVATE_NO_CACHE
     return quiz.model_dump(mode="json", by_alias=True)
 

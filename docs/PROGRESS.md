@@ -4,7 +4,7 @@ Where work stands and what comes next. Update it in the same change that finishe
 piece of work. The plan is `docs/PLAN.md` (section 0 overrides the rest); the build order is its
 section 17.
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-19.
 
 ## Done
 
@@ -898,6 +898,29 @@ Last updated: 2026-11-18.
   rows. The audit of 18 November (score 3/10 against the owner's "magnificent" bar) and the owner's
   decisions that follow from it are in the redesign plan below.
 
+- **Craft page v3, field voices v2, students and artisans, no caps (2026-11-19, integrated, to
+  release).** Migrations `0027_field_voices` to `0031_craft_page_chapters`, one head.
+  - Craft page v3: nine chapters in the monograph's order with numbered figures and tables,
+    snapshots and archived versions (`?version=N`), professor hide routes, and reader pieces
+    joining their craft's page with their provenance (decisions 0095, 0096, 0098).
+  - Public reading of everything except asking; Ask leads to sign-in; server-rendered craft pages
+    with preview metadata; share links (Share, Copy link, Stop sharing) for answers and lesson
+    packs (`0030_share_links`, decision 0097).
+  - Field voices v2: the portals send everything above the legal floor, artisan-linked images
+    held hidden; `FIELD_VOICES_ENABLED` off until release (decisions 0084, 0091).
+  - Students and artisans: roles, contributions and testimony review, artisan conversations off
+    until provisioned (`0028_roles_and_contributions`, decision 0083).
+  - No caps on any role, money or tokens; output tokens at each model's maximum; spend still
+    recorded (`0029_unlimited_ai_use`, decision 0093).
+  - Answer richness: Opus 5.5 at high for Expert compose, richer reused and curated sections
+    (decisions 0089, 0090); the wider expert panel, one call per seat, up to 12 seats at Expert,
+    the artisan seat from field transcripts (decision 0099).
+  - Design foundation: tokens, self-hosted fonts, primitives, the citation system, `/design` and
+    the design and craft-page skills (decisions 0092, 0094).
+  - The hygiene check finds comments in every checked language, repo-wide.
+  - Kutch Ajrakh v2: ten placed pictures, stage colours, native names, botanical names; the page
+    golden carries the real Kachchh CHIRPS and GHCN CAMS yearly means for 1981 to 2025.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
@@ -939,6 +962,11 @@ Last updated: 2026-11-18.
   lesson pack built by hand from the English known answer after the deploy, its PPTX and PDF
   checked against the explainer's sources. Until then each run checks the report PDF and the
   citations and notes the lesson step.
+
+- Professor and Admin E2E accounts: apply the box role's `/kalavigyan/e2e/*` read, run
+  `infra/scripts/seed_e2e_accounts.py`, and after the next backend deploy dispatch **E2E accounts**
+  (`docs/RUNBOOK.md`, Professor and Admin E2E accounts). Until then E2E production skips the
+  `/lessons` and `/admin` screens.
 
 - Free OpenAlex, Semantic Scholar and Springer Nature API keys (Settings, API keys); without
   them OpenAlex shares a small daily allowance per IP, Semantic Scholar's shared pool answers

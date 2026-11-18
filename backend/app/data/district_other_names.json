@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "about": "Other names under which sources name an LGD district. The LGD register keeps one name per district; a source may use another, as the Kutch Ajrakh dossier's sources write Kutch for Kachchh.",
+  "districts": [
+    {
+      "lgd": 449,
+      "name": "Kachchh",
+      "otherNames": ["Kutch"],
+      "sourceUrl": "https://www.wikidata.org/wiki/Q1063417"
+    }
+  ]
+}

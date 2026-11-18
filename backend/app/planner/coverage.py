@@ -35,8 +35,13 @@ def covering_claims(hits: KnowledgeHits, *, mode: str) -> tuple[uuid.UUID, ...]:
 
 
 async def stored_knowledge(
-    retriever: KnowledgeRetriever, *, craft_slug: str | None, mode: str, question: str
+    retriever: KnowledgeRetriever,
+    *,
+    craft_slug: str | None,
+    mode: str,
+    question: str,
+    limit: int = STORED_PACK_LIMIT,
 ) -> KnowledgeHits:
     return await retriever.search(
-        KnowledgeQuery(craft_slug=craft_slug, text=question, mode=mode, limit=STORED_PACK_LIMIT)
+        KnowledgeQuery(craft_slug=craft_slug, text=question, mode=mode, limit=limit)
     )

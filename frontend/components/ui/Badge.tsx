@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 export type BadgeTone = "note" | "attention";
 
 const TONE_CLASS: Record<BadgeTone, string> = {
-  note: "border-purple-300 bg-purple-50 text-purple-800",
-  attention: "border-amber-500 bg-amber-100 text-amber-800"
+  note: "border-rule-strong text-ink-2",
+  attention: "border-warning bg-warning-wash text-warning"
 };
 
 export function Badge({
@@ -20,7 +20,7 @@ export function Badge({
 }) {
   return (
     <Tag
-      className={`w-fit rounded-full border px-2 py-0.5 text-xs font-medium ${TONE_CLASS[tone]}${className ? ` ${className}` : ""}`}
+      className={`w-fit rounded-plate border px-1.5 py-px font-ui text-caption font-semibold tracking-[0.04em] ${TONE_CLASS[tone]}${className ? ` ${className}` : ""}`}
     >
       {children}
     </Tag>

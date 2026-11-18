@@ -11,9 +11,11 @@ from app.models.enums import (
     SENSITIVITIES,
     SOURCE_KINDS,
 )
+from app.research.chapter_keys import CHAPTER_KEYS, PICTURE_PLACEMENTS
 
 __all__ = [
     "CENTRE_ROLES",
+    "CHAPTER_KEYS",
     "COVERAGE_CLASSES",
     "CURATED_MATERIAL_ROLES",
     "CURATED_SOURCE_KINDS",
@@ -25,6 +27,7 @@ __all__ = [
     "GROUP_KINDS",
     "INDIA",
     "INDIAN_DISTRICT_PLACE_KINDS",
+    "PICTURE_PLACEMENTS",
     "PLACE_KINDS",
     "PLACE_ROLES",
     "QUOTE_RESULTS",
@@ -33,11 +36,14 @@ __all__ = [
     "SOURCE_ACCESS",
     "SOURCE_SUB_KINDS",
     "SUBJECT_TYPES",
+    "WHY_DISCIPLINES",
+    "ChapterKey",
     "CoverageClass",
     "CuratedMaterialRole",
     "CuratedSourceKind",
     "EnvironmentFactor",
     "GroupKind",
+    "PictureRole",
     "PlaceKind",
     "PlaceRole",
     "QuoteResult",
@@ -49,7 +55,7 @@ __all__ = [
     "SubjectType",
 ]
 
-DOSSIER_SCHEMA_VERSION = 1
+DOSSIER_SCHEMA_VERSION = 2
 CURATOR = "claude-code"
 CURATED_SOURCE_KINDS = tuple(kind for kind in SOURCE_KINDS if kind != "FIELD_TESTIMONY")
 SOURCE_SUB_KINDS = ("THESIS", "MUSEUM_RECORD", "NGO_REPORT", "NEWS")
@@ -66,6 +72,7 @@ QUOTE_RESULTS = tuple(check for check in QUOTE_CHECKS if check != "NA")
 READ_ROUTES = ("LIVE", "ARCHIVE")
 INDIA = "India"
 SCOPES = ("CRAFT", "FAMILY", "CATEGORY")
+WHY_DISCIPLINES = ("CHEMISTRY", "MATERIALS", "PHYSICS", "BOTANY", "PROCESS")
 
 CoverageClass = Literal[*COVERAGE_CLASSES]
 CuratedSourceKind = Literal[*CURATED_SOURCE_KINDS]
@@ -81,3 +88,5 @@ QuoteResult = Literal[*QUOTE_RESULTS]
 Scope = Literal[*SCOPES]
 ReadRoute = Literal[*READ_ROUTES]
 Sensitivity = Literal[*SENSITIVITIES]
+ChapterKey = Literal[*CHAPTER_KEYS]
+PictureRole = Literal[*PICTURE_PLACEMENTS]

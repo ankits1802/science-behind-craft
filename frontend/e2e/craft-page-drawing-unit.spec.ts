@@ -49,8 +49,8 @@ function reference(page: CraftPage, requested: string): string {
 
 test("the page offers the tabs its response fills, and a tab it does not offer falls back to Overview", () => {
   const page = curatedPage();
-  const reader = reference(page, "evidence");
-  expect(tabLabels(reader)).toEqual(["Overview", "Process", "Region", "Sources"]);
+  const reader = reference(page, "profile");
+  expect(tabLabels(reader)).toEqual(["Overview", "Process", "Region", "Sources", "All evidence"]);
   expect(count(reader, "craft-panel-overview")).toBe(1);
   const steps = reference(page, "process");
   expect(count(steps, "craft-panel-process")).toBe(1);
@@ -70,7 +70,7 @@ test("a curated overview shows its lede, key facts with citations, pictures with
   expect(attribute(html, "craft-section", "data-basis")).toEqual(Array(7).fill("CURATED"));
   expect(count(html, "answer-sentence")).toBe(3 + 38);
   expect(count(html, "term-span")).toBe(13 + 17);
-  expect(count(html, "craft-picture")).toBe(4);
+  expect(count(html, "craft-picture")).toBe(10 - 1);
   expect(html).toContain("Visdaviva");
   expect(html).toContain('href="https://creativecommons.org/licenses/by-sa/3.0/"');
   expect(html).toContain('href="https://commons.wikimedia.org/wiki/File:Ajrak_Craft_artisan.jpeg"');
@@ -193,19 +193,19 @@ test("sources list under their reliability grade with their numbers", () => {
   const page = curatedPage();
   const numbers = pageSourceNumbers(page, []);
   const html = drawn(page, createElement(CraftSourcesTab, { groups: sourceGroups(page.sources, numbers), numbers }));
-  expect(attribute(html, "craft-source-group", "data-reliability")).toEqual(["A", "B", "C"]);
-  expect(count(html, "craft-source")).toBe(20);
-  expect(text(html)).toContain("A · peer-reviewed or official 9 sources");
+  expect(attribute(html, "craft-source-group", "data-reliability")).toEqual(["A", "B", "C", "D"]);
+  expect(count(html, "craft-source")).toBe(21 + 5 + 7);
+  expect(text(html)).toContain("A · peer-reviewed or official 18 sources");
   expect(text(html)).toContain("[1] Geographical Indications Journal No. 188");
 });
 
 test("All evidence lists every claim once by discipline and subject, hypotheses apart, each tagged with where it came from", () => {
   const page = curatedPage();
   const html = drawn(page, createElement(CraftEvidence, { evidence: pageEvidence(page) }));
-  expect(count(html, "evidence-claim")).toBe(132);
+  expect(count(html, "evidence-claim")).toBe(135 + 4);
   expect(count(html, "evidence-group")).toBe(11);
   expect(count(html, "evidence-hypotheses")).toBe(1);
-  expect(attribute(html, "evidence-provenance", "data-testid")).toHaveLength(132);
+  expect(attribute(html, "evidence-provenance", "data-testid")).toHaveLength(135 + 4);
   expect(html.split('data-testid="evidence-hypotheses"')[1].split('data-testid="evidence-claim"').length - 1).toBe(5);
   const seed = uncuratedPage();
   expect(text(drawn(seed, createElement(CraftEvidence, { evidence: pageEvidence(seed) })))).toContain("Seed");
@@ -220,7 +220,7 @@ test("near-duplicates fold under the strongest claim", () => {
   const html = drawn(page, createElement(CraftEvidence, { evidence: pageEvidence(page) }));
   expect(count(html, "evidence-folded")).toBe(1);
   expect(text(html)).toContain("1 similar claim");
-  expect(count(html, "evidence-claim")).toBe(132);
+  expect(count(html, "evidence-claim")).toBe(135 + 4);
 });
 
 test("no grid on the craft page can widen a phone page", () => {

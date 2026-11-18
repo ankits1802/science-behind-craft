@@ -3,7 +3,7 @@ import { join } from "node:path";
 import type { CDPSession, ConsoleMessage, Page, Request, Response } from "@playwright/test";
 
 import { NetworkQuiet, captureScreen, readyForCapture, settle, sightProblems } from "./capture";
-import { CITED_CONTENT, OVERFLOW_LIMIT, clip, gapCopyFindings } from "./checks";
+import { CITED_CONTENT, OVERFLOW_LIMIT, clip, errorHeadline, gapCopyFindings } from "./checks";
 import type { Scheme } from "./matrix";
 import { auditPage } from "./pageAudit";
 import { googleRefusesPreview, isPreview } from "./preview";
@@ -22,11 +22,6 @@ export type RunOptions = { scheme?: Scheme | null };
 const STEP_LIMIT_MS = 180_000;
 const ANSWER_WAIT_MS = 5_000;
 const UNKNOWN_WEBRTC_DIRECTIVE = "Unrecognized Content-Security-Policy directive 'webrtc'.";
-
-function firstLine(error: unknown): string {
-  const message = error instanceof Error ? error.message : String(error);
-  return clip(message.split("\n")[0] ?? message);
-}
 
 export class ScreenRun {
   readonly screens: ScreenOutcome[] = [];
@@ -52,7 +47,7 @@ export class ScreenRun {
     this.preview = isPreview(baseUrl());
     this.network = new NetworkQuiet(page);
     page.on("console", (message) => this.onConsole(message));
-    page.on("pageerror", (error) => this.flag(`uncaught error: ${firstLine(error)}`));
+    page.on("pageerror", (error) => this.flag(`uncaught error: ${errorHeadline(error)}`));
     page.on("requestfailed", (request) => this.onRequestFailed(request));
     page.on("response", (response) => this.onResponse(response));
   }
@@ -156,7 +151,7 @@ export class ScreenRun {
     })().then(
       () => true,
       (error: unknown) => {
-        this.flag(`could not finish: ${firstLine(error)}`);
+        this.flag(`could not finish: ${errorHeadline(error)}`);
         return true;
       }
     );
@@ -170,7 +165,7 @@ export class ScreenRun {
     if (await answersScript(this.page, ANSWER_WAIT_MS)) return;
     this.stuckSince = name;
     const stack = this.debuggerSession
-      ? await stuckStack(this.debuggerSession).catch((error: unknown) => [`no stack: ${firstLine(error)}`])
+      ? await stuckStack(this.debuggerSession).catch((error: unknown) => [`no stack: ${errorHeadline(error)}`])
       : ["no debugger session"];
     this.flag("the page stopped running script", ...stack);
   }
@@ -202,7 +197,7 @@ export class ScreenRun {
       this.note(...captured.notes);
       return file;
     } catch (error) {
-      this.flag(`no screenshot: ${firstLine(error)}`);
+      this.flag(`no screenshot: ${errorHeadline(error)}`);
       return null;
     }
   }

@@ -19,6 +19,7 @@ from .entity_rules import (
     stage_problems,
 )
 from .overview_rules import overview_problems
+from .page_rules import native_name_problems, placement_problems, stage_page_problems
 from .problems import Problem
 from .references import id_problems, reference_problems
 from .scope_rules import category_problems, craft_scope_problems, scope_header_problems
@@ -34,6 +35,9 @@ DOSSIER_RULES: tuple[Callable[[Dossier], list[Problem]], ...] = (
     reaction_problems,
     market_problems,
     picture_problems,
+    stage_page_problems,
+    placement_problems,
+    native_name_problems,
     overview_problems,
     coverage_problems,
     personal_data_problems,

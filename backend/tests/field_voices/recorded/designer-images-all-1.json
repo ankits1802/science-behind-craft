@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "portal": "DESIGNER",
+  "generatedAt": "2026-11-18T02:00:01Z",
+  "stream": "images",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "dr-i-1",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "dr-img-1",
+      "revision": "38d99bab8307cb08c569cd0c1a585d4e",
+      "updatedAt": "2026-11-17T13:00:01.000001Z",
+      "takenAt": "2026-06-24T11:40:00+05:30",
+      "caption": "Second prototype after the colour trial",
+      "artisanLinked": false,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "belongsTo": [
+        {
+          "kind": "DESIGN_STAGE",
+          "stage": {
+            "key": "PROTOTYPE_DEVELOPMENT",
+            "title": "Prototype Development"
+          },
+          "entity": {
+            "key": "prototype",
+            "label": "Prototypes"
+          },
+          "row": {
+            "id": "dr-row-5",
+            "label": "Indigo dabu table runner"
+          },
+          "field": {
+            "key": "prototypePhotos",
+            "label": "Prototype photographs"
+          },
+          "prototypeId": "dr-row-5"
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-12",
+        "code": "DW-RJ-0012",
+        "title": null,
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "people": [
+        {
+          "id": "dr-art-9",
+          "kind": "ARTISAN",
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [
+            {
+              "portal": "FIELD_REPOSITORY",
+              "id": "fr-art-1"
+            }
+          ],
+          "mergedIds": []
+        },
+        {
+          "id": "dr-user-7",
+          "kind": "DESIGNER",
+          "name": "Meera Demo",
+          "localName": null,
+          "yearsInCraft": null,
+          "area": null,
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "credits": [
+        {
+          "personId": "dr-art-9",
+          "as": "ARTISAN"
+        },
+        {
+          "personId": "dr-user-7",
+          "as": "DESIGNER"
+        }
+      ],
+      "permission": {
+        "statement": "Shown on KalaVigyan with the consent of the people pictured. Not openly licensed: ask the rights holder before any other use.",
+        "rightsHolder": "DesignWorkshop Demo Rights Holder",
+        "licence": null
+      },
+      "image": {
+        "url": "https://designrepo-media-626159998512.s3.dualstack.ap-south-1.amazonaws.com/field-voices/5d41402abc4b2a76b9719d911017c592ae0b4b1e8b6e1b5e2b1f1e9b6a5d4c3b.png?X-Amz-Expires=900&X-Amz-Signature=def",
+        "expiresAt": "2026-11-18T02:15:04Z",
+        "mimeType": "image/png",
+        "width": 1200,
+        "height": 800,
+        "bytes": 345678,
+        "sha256": "5d41402abc4b2a76b9719d911017c592ae0b4b1e8b6e1b5e2b1f1e9b6a5d4c3b"
+      },
+      "scrubbing": {
+        "version": 1,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          },
+          {
+            "kind": "PLACE",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      }
+    }
+  ]
+}

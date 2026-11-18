@@ -1,6 +1,6 @@
 import { defineConfig, devices, type Project } from "@playwright/test";
 
-import { IPHONE, QUESTIONS_SCHEME, QUESTIONS_WIDTH, SCHEMES, SCREEN_WIDTHS, contextOptions, projectName, runLabel, type Scheme, type Width } from "./e2e/production/matrix";
+import { ANONYMOUS_WIDTHS, IPHONE, QUESTIONS_SCHEME, QUESTIONS_WIDTH, SCHEMES, SCREEN_WIDTHS, anonymousProjectName, contextOptions, projectName, runLabel, type Scheme, type Width } from "./e2e/production/matrix";
 import { isPreview, siteRefusal } from "./e2e/production/preview";
 
 const BASE_URL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -12,6 +12,7 @@ const PRODUCTION_SPECS = /[\\/]e2e[\\/]production[\\/]/;
 const SCREENS_SPEC = /[\\/]e2e[\\/]production[\\/]screens\.spec\.ts$/;
 const QUESTIONS_SPEC = /[\\/]e2e[\\/]production[\\/]questions\.spec\.ts$/;
 const ROLES_SPEC = /[\\/]e2e[\\/]production[\\/]roles\.spec\.ts$/;
+const ANONYMOUS_SPEC = /[\\/]e2e[\\/]production[\\/]anonymous\.spec\.ts$/;
 
 if (PRODUCTION && !process.env.E2E_BASE_URL) throw new Error("E2E_PRODUCTION=1 needs E2E_BASE_URL");
 const REFUSED_SITE = PRODUCTION ? siteRefusal(BASE_URL) : null;
@@ -39,8 +40,19 @@ function specsFor(width: Width, scheme: Scheme): RegExp[] {
   return width === QUESTIONS_WIDTH && scheme === QUESTIONS_SCHEME ? [SCREENS_SPEC, QUESTIONS_SPEC, ROLES_SPEC] : [SCREENS_SPEC];
 }
 
+function anonymousProject(width: Width): Project {
+  return {
+    name: anonymousProjectName(width),
+    testMatch: [ANONYMOUS_SPEC],
+    retries: 0,
+    metadata: { label: `${width.label} signed out`, scheme: "light" },
+    use: { ...devices[width.device], ...contextOptions(width, "light"), ...RUN_USE }
+  };
+}
+
 const PRODUCTION_PROJECTS: Project[] = [
   ...SCREEN_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => productionProject(width, scheme, specsFor(width, scheme)))),
+  ...ANONYMOUS_WIDTHS.map(anonymousProject),
   ...(isPreview(BASE_URL) ? [productionProject(IPHONE, "light", [SCREENS_SPEC])] : [])
 ];
 

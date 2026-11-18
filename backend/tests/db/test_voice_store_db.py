@@ -202,6 +202,7 @@ async def test_the_claim_pack_holds_the_seeded_cited_claims(store: Stores) -> No
     assert pack.craft == AJRAKH and pack.mode == "HYBRID"
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_relay_turn_claim_holds_what_the_day_allows_and_counts_the_turn(store: Stores) -> None:
     voice, session = store
     user = await learner(session)

@@ -3,14 +3,16 @@ from __future__ import annotations
 import asyncio
 import uuid
 from collections.abc import Awaitable, Mapping, Sequence
+from contextlib import AsyncExitStack
 from dataclasses import dataclass, replace
 from functools import partial
 from typing import Any
 
+from app.models.enums import EXPLAINER_DEPTHS
 from app.research.explainer import Block
-from app.research.knowledge_pieces import placed_block
 from app.research.planning import PlanRequest
-from app.research.sections import SectionSpec, block_id
+from app.research.sections import SectionSpec
+from app.science.records import ProcessRecords
 
 from .answer_lede import Opening
 from .answer_sections import SectionOutcome
@@ -20,6 +22,7 @@ from .builder_interface import BuildAsk
 from .claim_ledger import COVERED_NOTE, admission_batches
 from .explainer_events import ExplainerStream, shown_title
 from .piece_lookup import PieceLookup, ReusedSection
+from .reuse_enrichment import Placed, claim_texts, kept_with_reuse, placed_section, process_sources
 from .section_enrichment import Enrichment, PictureSearches
 from .section_headings import Headed, headed_specs, heading_supports
 from .section_language import block_in_language
@@ -27,6 +30,7 @@ from .section_language import block_in_language
 __all__ = ["REUSED_SECTION_STATE", "ReuseBuilds", "ReusedShowing", "stream_reused", "stream_reused_beside"]
 
 REUSED_SECTION_STATE = "WRITING"
+DEEPEST_DEPTH = EXPLAINER_DEPTHS[-1]
 
 
 @dataclass(frozen=True)
@@ -34,9 +38,19 @@ class ReuseBuilds:
     builders: BlockBuilders
     answer_id: uuid.UUID
     request: PlanRequest
+    process: ProcessRecords | None = None
 
-    def ask(self, spec: SectionSpec, placed: Sequence[Block], reused: ReusedSection) -> BuildAsk:
-        return BuildAsk(self.answer_id, spec, self.request, tuple(placed), reused.cited)
+    def placed(self, spec: SectionSpec, reused: ReusedSection, enrichment: Enrichment) -> Placed:
+        replaced = self.builders.replaced_on_reuse(spec.discipline)
+        return placed_section(spec, reused, enrichment, self.process, replaced=replaced)
+
+    async def started(
+        self, stack: AsyncExitStack, spec: SectionSpec, placed: Placed, reused: ReusedSection
+    ) -> SectionBuilds:
+        builders = self.builders.for_reuse(placed.kinds, depth=self.request.depth or DEEPEST_DEPTH)
+        builds = await stack.enter_async_context(builders.building())
+        builds.start(BuildAsk(self.answer_id, spec, self.request, placed.blocks, reused.cited))
+        return builds
 
 
 @dataclass(frozen=True)
@@ -49,6 +63,15 @@ class ReusedShowing:
     opening: Awaitable[Opening] | None = None
 
 
+@dataclass(frozen=True)
+class _Reused:
+    spec: SectionSpec
+    reused: ReusedSection
+    placed: Placed
+    builds: SectionBuilds
+    shown_title: str | None = None
+
+
 async def stream_reused(
     specs: Sequence[SectionSpec], lookup: PieceLookup, showing: ReusedShowing
 ) -> list[SectionOutcome]:
@@ -57,16 +80,25 @@ async def stream_reused(
         for spec in sorted(specs, key=lambda spec: spec.order)
         if spec.discipline in lookup.reused
     ]
-    placed = {spec.id: _placed(spec, reused) for spec, reused in chosen}
-    headed = await _headed(chosen, placed, showing)
-    shown = replace(showing, titles={**showing.titles, **{h.spec.id: h.shown for h in headed if h.shown}})
-    async with showing.enrichment.searching() as pictures:
-        return [
-            replace(
-                await _reused_section(h.spec, reused, placed[h.spec.id], shown, pictures), shown_title=h.shown
-            )
+    builds = showing.builds
+    placed = {spec.id: builds.placed(spec, reused, showing.enrichment) for spec, reused in chosen}
+    builds.builders.note_shown(kind for one in placed.values() for kind in one.kinds)
+    async with AsyncExitStack() as stack:
+        running = {
+            spec.id: await builds.started(stack, spec, placed[spec.id], reused) for spec, reused in chosen
+        }
+        headed = await _headed(chosen, placed, showing)
+        shown = replace(showing, titles={**showing.titles, **{h.spec.id: h.shown for h in headed if h.shown}})
+        sections = [
+            _Reused(h.spec, reused, placed[h.spec.id], running[h.spec.id], h.shown)
             for h, (_, reused) in zip(headed, chosen, strict=True)
         ]
+        async with shown.enrichment.searching() as pictures:
+            opened = [await _opened(section, shown, pictures) for section in sections]
+            return [
+                await _closed(section, sent, shown, pictures)
+                for section, sent in zip(sections, opened, strict=True)
+            ]
 
 
 async def stream_reused_beside(
@@ -86,55 +118,51 @@ async def stream_reused_beside(
 
 async def _headed(
     chosen: Sequence[tuple[SectionSpec, ReusedSection]],
-    placed: Mapping[str, Sequence[Block]],
+    placed: Mapping[str, Placed],
     showing: ReusedShowing,
 ) -> list[Headed]:
     if showing.opening is None or not chosen:
         return [Headed(spec) for spec, _ in chosen]
     opened = await showing.opening
-    shown = [(spec, heading_supports(placed[spec.id], reused.cited)) for spec, reused in chosen]
+    shown = [(spec, heading_supports(placed[spec.id].blocks, reused.cited)) for spec, reused in chosen]
     language = showing.stream.language
     return await headed_specs(opened.headings, shown, language=language, translation=showing.translation)
 
 
-def _placed(spec: SectionSpec, reused: ReusedSection) -> tuple[Block, ...]:
-    return tuple(
-        placed_block(piece, block_id(spec.id, ordinal))
-        for ordinal, piece in enumerate(reused.pieces, start=1)
-    )
-
-
-async def _reused_section(
-    spec: SectionSpec,
-    reused: ReusedSection,
-    placed: Sequence[Block],
-    showing: ReusedShowing,
-    pictures: PictureSearches,
-) -> SectionOutcome:
-    stream = showing.stream
+async def _opened(section: _Reused, showing: ReusedShowing, pictures: PictureSearches) -> list[Block]:
+    spec, stream = section.spec, showing.stream
     title = shown_title(spec, showing.titles)["title"]
-    for piece in reused.pieces:
+    for piece in section.reused.pieces:
         await stream.trail.found_piece(piece.id, title=title, stored_at=piece.created_at)
     await stream.section_started(spec, titles=showing.titles, state=REUSED_SECTION_STATE)
-    async with showing.builds.builders.building() as builds:
-        builds.start(showing.builds.ask(spec, placed, reused))
-        shown: list[Block] = []
-        for batch in admission_batches(placed):
-            shown += await _sent(spec, batch, reused, showing, reused.cited.sources)
-        pictures.start(spec.id, shown)
-        rebuilt = await _rebuilt(spec, builds, showing, first_ordinal=len(placed) + 1)
-    sources = {**reused.cited.sources, **rebuilt.sources}
-    shown += await _sent(spec, rebuilt.blocks, reused, showing, sources)
-    images = await pictures.sent(spec.id, stream, ordinal=len(placed) + len(rebuilt.blocks) + 1)
+    shown: list[Block] = []
+    for batch in admission_batches(section.placed.blocks):
+        shown += await _sent(section, batch, showing, _placed_sources(section, showing))
+    pictures.start(spec.id, shown)
+    return shown
+
+
+async def _closed(
+    section: _Reused, shown: Sequence[Block], showing: ReusedShowing, pictures: PictureSearches
+) -> SectionOutcome:
+    spec, placed, stream = section.spec, section.placed, showing.stream
+    first = len(placed.blocks) + 1
+    rebuilt = await _rebuilt(spec, section.builds, showing, first_ordinal=first)
+    sources = {**_placed_sources(section, showing), **rebuilt.sources}
+    sent = [*shown, *await _sent(section, rebuilt.blocks, showing, sources)]
+    images = await pictures.sent(spec.id, stream, ordinal=first + len(rebuilt.blocks))
     if images is not None:
-        shown.append(images)
-    searched = None if shown else COVERED_NOTE
+        sent.append(images)
+    searched = None if sent else COVERED_NOTE
     await stream.section_done(spec.id, searched=searched)
+    rested = [*(claim for piece in section.reused.pieces for claim in piece.claim_ids), *_cited_claims(sent)]
     return SectionOutcome(
         spec,
-        blocks=tuple(shown),
+        shown_title=section.shown_title,
+        blocks=tuple(sent),
+        built=kept_with_reuse(placed, rebuilt.blocks),
         searched=searched,
-        claim_ids=tuple(dict.fromkeys(claim for piece in reused.pieces for claim in piece.claim_ids)),
+        claim_ids=tuple(dict.fromkeys(rested)),
         sources={**sources, **stream.shown_sources()},
     )
 
@@ -147,14 +175,21 @@ async def _rebuilt(
 
 
 async def _sent(
-    spec: SectionSpec,
+    section: _Reused,
     blocks: Sequence[Block],
-    reused: ReusedSection,
     showing: ReusedShowing,
     sources: Mapping[str, Mapping[str, Any]],
 ) -> list[Block]:
-    texts = {claim_id: view.text for claim_id, view in reused.cited.views.items()}
+    texts = claim_texts(showing.builds.process, section.reused.cited)
     in_language = partial(
         block_in_language, stream=showing.stream, translation=showing.translation, claim_texts=texts
     )
-    return await showing.stream.blocks(spec.id, blocks, sources, in_language=in_language)
+    return await showing.stream.blocks(section.spec.id, blocks, sources, in_language=in_language)
+
+
+def _placed_sources(section: _Reused, showing: ReusedShowing) -> dict[str, Mapping[str, Any]]:
+    return {**process_sources(showing.builds.process), **section.reused.cited.sources}
+
+
+def _cited_claims(blocks: Sequence[Block]) -> list[uuid.UUID]:
+    return [uuid.UUID(citation.claim_id) for block in blocks for citation in block.citations()]

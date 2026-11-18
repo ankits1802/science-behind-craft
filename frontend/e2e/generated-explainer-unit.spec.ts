@@ -137,7 +137,7 @@ test("the explainer is labelled with its model and date and lists what it was bu
   expect(html).toContain(">15 feet a year<");
   expect(html.match(/<q>10-15 feet every year<\/q>/g)).toHaveLength(2);
   expect(html.match(/data-testid="citation-chip"/g)).toHaveLength(2);
-  expect(html.match(/<span class="tabular-nums">1<\/span>/g)).toHaveLength(2);
+  expect(attribute(html, "citation-chip", "data-numbers")).toEqual(["1", "1"]);
   expect(attribute(html, "generated-view-code", "aria-expanded")).toEqual(["false"]);
   expect(html).not.toContain("aria-controls");
   expect(html).not.toContain('data-testid="generated-code"');

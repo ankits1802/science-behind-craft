@@ -16,6 +16,8 @@ import {
   MapPinned,
   Menu as MenuIcon,
   MessageCircleQuestion,
+  MessageSquareQuote,
+  Mic,
   Presentation,
   Route,
   Settings as SettingsIcon,
@@ -65,7 +67,7 @@ function UnreadBadge({ count }: { count: number }) {
   const text = unreadText(count);
   if (!text) return null;
   return (
-    <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-purple-700 px-1.5 text-[11px] font-semibold leading-5 text-white" data-testid="unread-notes">
+    <span className="ms-1.5 inline-flex min-w-5 items-center justify-center rounded-pill bg-ink-1 px-1.5 font-ui text-caption font-semibold leading-5 text-ground tabular-nums" data-testid="unread-notes">
       <span aria-hidden>{count > 99 ? "99+" : count}</span>
       <span className="sr-only">{`, ${text}`}</span>
     </span>
@@ -90,10 +92,12 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/map", label: "Map", icon: MapPinned, group: null, can: everyone, gate: "get_current_user" },
   { href: SAVED_PATH, label: "Saved", icon: Bookmark, group: null, can: everyone, gate: "get_current_user" },
   { href: "/lessons", label: "Lessons", icon: Presentation, group: null, can: routeAllows("/lessons"), gate: "require(BUILD_LESSONS)" },
+  { href: "/contribute", label: "Contribute", icon: Mic, group: null, can: routeAllows("/contribute"), gate: "require(CONTRIBUTE_TESTIMONY)" },
 
   { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: routeAllows("/admin"), gate: "require_admin", adminSurface: true },
   { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: routeAllows("/admin/access"), gate: "require_access_roster_manager", adminSurface: true },
   { href: "/admin/users", label: "Manage users", icon: UserCog, group: "Admin", can: routeAllows("/admin/users"), gate: "require_professor", adminSurface: true },
+  { href: "/admin/testimony", label: "Artisan testimony", icon: MessageSquareQuote, group: "Admin", can: routeAllows("/admin/testimony"), gate: "require(REVIEW_TESTIMONY)", adminSurface: true },
   { href: "/admin/keys", label: "API keys", icon: KeyRound, group: "Admin", can: routeAllows("/admin/keys"), gate: "require_master_admin", adminSurface: true },
   { href: "/admin/routing", label: "AI routing", icon: Route, group: "Admin", can: routeAllows("/admin/routing"), gate: "require_master_admin", adminSurface: true },
   { href: "/admin/usage", label: "Usage", icon: BarChart3, group: "Admin", can: routeAllows("/admin/usage"), gate: "require_view_usage", adminSurface: true },
@@ -364,7 +368,7 @@ export function DynamicIslandNav() {
               animate={{ y: 0, opacity: 1 }}
               exit={reduce ? { y: 0, opacity: 0 } : { y: -16, opacity: 0 }}
               transition={islandTransition}
-              className="nav-sheet relative mx-auto w-[min(680px,92vw)] rounded-xl border border-line-200 bg-card shadow-lg"
+              className="nav-sheet relative mx-auto w-[min(680px,92vw)] rounded-xl border border-line-200 bg-card shadow-pop"
             >
               <div className="grid gap-1 sm:grid-cols-2">
                 {visibleItems.map((item) => (

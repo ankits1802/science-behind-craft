@@ -14,6 +14,7 @@ from app.research.write_back import FoundBy, WriteBackResult
 from app.retrieval.indexing import EmbeddedCounts, embed_written
 
 from .claim_writer import SqlClaimWriter
+from .field_voices_citations import field_documents
 from .live_source_store import keep_document
 from .write_back_plan import SkippedSentence, composed_sentences, write_back_plan
 
@@ -48,7 +49,8 @@ async def store_live_research(
     answer_id: uuid.UUID | None = None,
 ) -> StoredResearch:
     source_ids = [await keep_document(session, document) for document in pack.documents]
-    plan = write_back_plan(pack, answer, found_by=found_by, answer_id=answer_id)
+    fields = await field_documents(session, pack)
+    plan = write_back_plan(pack, answer, found_by=found_by, answer_id=answer_id, field_documents=fields)
     results = await SqlClaimWriter(session).write(plan.claims)
     await session.commit()
     kept = tuple(dict.fromkeys(source_ids))

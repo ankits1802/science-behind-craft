@@ -68,4 +68,4 @@ async def test_a_detailed_answer_keeps_the_hybrid_budget_and_an_expert_one_the_d
     assert plan.max_fetches == 10
     expert = request("DEEP", depth="EXPERT")
     plan = retrieval_plan(expert, await draft_plan(model_for(), expert), OPEN, mode="DEEP")
-    assert plan.max_fetches == 20
+    assert plan.max_fetches == 48

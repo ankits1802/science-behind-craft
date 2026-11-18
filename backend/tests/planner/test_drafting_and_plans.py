@@ -110,7 +110,7 @@ async def test_deep_researches_every_facet_and_degrades_to_hybrid() -> None:
         "Ajrakh alum mordant",
         "Kutch Ajrakh alizarin alum lake chemistry",
     ]
-    assert plan.max_fetches == 20
+    assert plan.max_fetches == 48
     assert effective_mode("DEEP", degraded=True) == "HYBRID"
     assert effective_mode("HYBRID", degraded=True) == "HYBRID"
     assert effective_mode("DEEP", degraded=False) == "DEEP"

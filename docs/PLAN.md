@@ -14,6 +14,8 @@ Repo: `C:/dev/IIT/science-behind-craft`. Today it holds only `.claude/skills/{fi
 - **Open datasets only** for geography and environment (§17.1). No registration-dependent data.
 - **Accuracy checks are small**: 1–2 known-answer questions run at a time, on demand when a change touches answering, not a large suite on every change. The owner corrects answers as they come up.
 - **Infrastructure**: new EC2 (ap-south-1), private S3 bucket and new Supabase project, provisioned for this project.
+- **No caps for now (owner, 2026-11-18): "no caps for now on anyone, not in terms of money or tokens".** Every spend cap, daily allowance and degrade rule in §9 and §12 defaults to none, and every model call asks for its model's documented maximum output; spend is still recorded and shown on Usage, and each cap can return as a setting (decision 0093).
+- **Reading is public; only asking is signed in (owner, 2026-11-18): "add all the information that you have generated, including the image and the other assets to the ajrakh page as well, all the information should be directly accessible from there too, only the query part is to be guarded, the rest of the application is going to be public only".** The craft page is a monograph in chapters carrying every piece answers build, built from stored rows without a question, with All evidence for everyone; Ask, Talk and research lookups stay signed in, and personal data under its own consent terms stays private (decision 0095, `docs/contracts/craft-page.md`).
 
 ## 1. Product and users
 
@@ -82,7 +84,7 @@ A derived artefact (a balanced equation, a unit conversion) inherits the minimum
 | Hosting and deploy | `designer-portal/backend/DEPLOY_AWS.md:1-40`, `backend/deploy/blue_green.sh`, `infra/terraform/*`, `.github/workflows/{checks.yml,deploy-backend.yml,deploy-frontend.yml,codeql.yml,monitor.yml,keep-supabase-active.yml,backup-db.yml}`, `docs/DEPLOYMENT_VERCEL.md` | Trimmed copies: no Android, questionnaire or parity jobs. |
 | Supabase pooler | `designer-portal/backend/app/core/db.py` (build_runtime_database_url), `docs/ENVIRONMENT.md:168-214` | Session pooler :5432 (§3.3 for limits). |
 | Cross-portal peer | `designer-portal/backend/app/api/routes/cross_portal.py:314-588`, `services/cross_portal_client.py` | Craft catalogue sync (§5.1). |
-| Frontend system | `science-behind-craft/.claude/skills/field-repo-frontend/SKILL.md`, `motion/`, `gsap/` | §14. |
+| Frontend system | `science-behind-craft/.claude/skills/kalavigyan-design/SKILL.md` (decision 0092; it replaced the portal skills on 2026-11-18) | §14. |
 | Naming | `science-behind-craft/.claude/skills/naming/SKILL.md:10-68`, `C:/dev/IIT/docs/conventions/NAMING_2026-10-18.md` | §14.3. |
 | Provenance helpers | `C:/dev/IIT/cxa-cms/lib/{citation.ts,provenance.ts}` | Citation formatting. |
 
@@ -491,7 +493,7 @@ Enforcement: capability sets in `core/deps.py`; `shared/roles.json` ranks with a
 
 ## 14. Frontend
 
-Next.js 16 App Router, React 19, Tailwind 4, framer-motion 14, gsap only for the hero headline (dynamic import). Latest stable versions at scaffold. Inter and Plus Jakarta Sans via `next/font/local`. Single `apiFetch`; client components; JWT from the backend (DR `frontend/proxy.ts`).
+Next.js 16 App Router, React 19, Tailwind 4, framer-motion 14 (no GSAP). Latest stable versions at scaffold. Newsreader, IBM Plex Sans, IBM Plex Mono and the Noto script faces via `next/font/local`, per the design system (decision 0092). Single `apiFetch`; client components; JWT from the backend (DR `frontend/proxy.ts`).
 
 | Screen | Route | Roles | From |
 |---|---|---|---|
@@ -515,19 +517,19 @@ Next.js 16 App Router, React 19, Tailwind 4, framer-motion 14, gsap only for the
 
 A route ships only in the phase that makes it work; nav items for later phases do not exist before then.
 
-### 14.1 Skill rules that bind (field-repo-frontend)
+### 14.1 The design system (kalavigyan-design)
 
-- §1 non-negotiables: purple-700 the only action colour; themed neutrals; both reduced-motion paths; one back control; z-ladder; truncation stated; ActionGroup for every button row (1 centred, 2 on one line, 3+ stacked on phone and pills from sm).
-- Tokens, radius, shadow scales; `data-theme` and related attributes on html; the pre-hydration boot script allowed by a CSP hash.
-- Island nav, NAV_ITEMS: Ask · Crafts · Map · Saved, Enrich, Review, Admin; hidden when not entitled.
-- Five form primitives; FieldDialog; Markdown without rehype-raw; useRevealRow for map↔list; ProgressBar.
-- Evidence badges StatusBadge-style, icon plus word: Verified (check-badge), Reviewed (check), Provisional (clock), Hypothesis (lightbulb), No source found (minus-circle); scoped `evidence` ramp derived per the skill rule.
-- §19 copy: concise, no how-it-works text, no gap admissions.
-- §18 checklists.
+The owner approved the Alum & Indigo design system on 2026-11-18 (decision 0092); it replaces the portal look this section first adopted. The skill `.claude/skills/kalavigyan-design` binds every screen:
+
+- Non-negotiables: indigo the only interactive colour; madder for emphasis, Sources differ and hazards; data ramps never borrow the identity colours; the Rann drawn as salt flat; citations as superscript clusters with margin notes and a phone sheet; one control per job; ActionGroup for every button row (1 centred, 2 on one line, 3+ stacked on phone and pills from sm); concise copy and no gap admissions; motion only to explain, with reduced-motion end states; native-script names only when sourced; pictures credited at standard Commons widths; complete at rest.
+- Generated tokens in four themes; `data-theme` and related attributes on html; the pre-hydration boot script allowed by a CSP hash.
+- NAV_ITEMS hidden when not entitled; form primitives, dialogs and Markdown without rehype-raw as the skill lists them.
+- Evidence: the page states its norm once and a mark appears only where a sentence differs (Inferred, Hypothesis, Sources differ), always as a word, never colour alone.
+- Acceptance: board-versus-implementation screenshots per the skill.
 
 ### 14.2 Adapted
 
-No Android parity, no ministry ramp, no group tones. Preference key `kalavigyan_preferences`. `useAppReducedMotion`, guideMotion factories; process timeline uses staggerParent and riseItem.
+No Android parity, no ministry ramp, no group tones. Preference key `kalavigyan_preferences`. `useAppReducedMotion` for both reduced-motion switches; no staggered or spring entrances; the process stage list keeps its numbers and hairlines.
 
 ### 14.3 Naming
 

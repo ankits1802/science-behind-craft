@@ -4,19 +4,24 @@ import uuid
 from collections.abc import Sequence
 
 from app.curation.dossier import Dossier
-from app.curation.entities import Timing
+from app.curation.entities import After, Reaction, Timing
+from app.curation.records import Picture
 from app.data.district_register import DistrictCodes
 
 from .curated_index import (
     CuratedPage,
+    IndexAfter,
     IndexCommunity,
     IndexConflict,
     IndexEnvironment,
     IndexFact,
+    IndexFocal,
     IndexMaterial,
+    IndexNativeName,
     IndexOverview,
     IndexPicture,
     IndexPlace,
+    IndexPlacement,
     IndexQuestion,
     IndexReaction,
     IndexSearch,
@@ -31,7 +36,15 @@ from .curation_records import glossary_key, picture_media_id, term_names
 from .curation_rows import ConceptPlan
 from .curation_structure import place_codes
 
-__all__ = ["curated_page_index", "index_conflicts", "index_glossary", "index_key_facts", "index_pictures"]
+__all__ = [
+    "curated_page_index",
+    "index_category_reactions",
+    "index_conflicts",
+    "index_glossary",
+    "index_key_facts",
+    "index_native_names",
+    "index_pictures",
+]
 
 
 def curated_page_index(
@@ -58,6 +71,8 @@ def curated_page_index(
         glossary=index_glossary(dossier, concepts),
         pictures=index_pictures(dossier),
         environment=_environment(dossier),
+        native_names=index_native_names(dossier),
+        claim_order=_ids(slug, [claim.id for claim in dossier.claims]),
     )
 
 
@@ -163,9 +178,17 @@ def _stages(dossier: Dossier, concepts: ConceptPlan) -> list[IndexStage]:
             duration=_timing(slug, stage.duration),
             season=_timing(slug, stage.season),
             claim_ids=_ids(slug, stage.claim_ids),
+            after=_after(slug, stage.after),
+            why_claim_id=curated_id(slug, stage.why_claim_id) if stage.why_claim_id else None,
         )
         for stage in dossier.stages
     ]
+
+
+def _after(slug: str, after: After | None) -> IndexAfter | None:
+    if after is None:
+        return None
+    return IndexAfter(text=after.text, colours=list(after.colours), claim_id=curated_id(slug, after.claim_id))
 
 
 def _materials(dossier: Dossier, concepts: ConceptPlan) -> list[IndexMaterial]:
@@ -205,17 +228,32 @@ def _tools(dossier: Dossier, concepts: ConceptPlan) -> list[IndexTool]:
 def _reactions(dossier: Dossier) -> list[IndexReaction]:
     slug = dossier.craft_slug
     return [
-        IndexReaction(
-            key=item.id,
+        _reaction(
+            slug,
+            item,
             reaction_id=curated_id(slug, "reaction", item.id) if item.stage_id else None,
             stage_key=item.stage_id,
-            kind=item.kind,
-            reactants=[IndexSpecies(name=s.name, formula=s.formula) for s in item.reactants],
-            products=[IndexSpecies(name=s.name, formula=s.formula) for s in item.products],
-            claim_ids=_ids(slug, item.claim_ids),
         )
         for item in dossier.reactions
     ]
+
+
+def index_category_reactions(dossier: Dossier) -> list[IndexReaction]:
+    return [_reaction(dossier.slug, item, reaction_id=None, stage_key=None) for item in dossier.reactions]
+
+
+def _reaction(
+    slug: str, item: Reaction, *, reaction_id: uuid.UUID | None, stage_key: str | None
+) -> IndexReaction:
+    return IndexReaction(
+        key=item.id,
+        reaction_id=reaction_id,
+        stage_key=stage_key,
+        kind=item.kind,
+        reactants=[IndexSpecies(name=s.name, formula=s.formula) for s in item.reactants],
+        products=[IndexSpecies(name=s.name, formula=s.formula) for s in item.products],
+        claim_ids=_ids(slug, item.claim_ids),
+    )
 
 
 def index_glossary(dossier: Dossier, concepts: ConceptPlan) -> list[IndexTerm]:
@@ -243,6 +281,35 @@ def index_pictures(dossier: Dossier) -> list[IndexPicture]:
             caption=picture.caption,
             stage_key=picture.stage_id,
             claim_ids=_ids(dossier.slug, picture.claim_ids),
+            placement=_placement(picture),
+            focal=IndexFocal.model_validate(picture.focal.model_dump()) if picture.focal else None,
+            width=picture.width,
+            height=picture.height,
+            stand_in=picture.stand_in,
         )
         for picture in dossier.pictures
+    ]
+
+
+def _placement(picture: Picture) -> IndexPlacement | None:
+    placement = picture.placement
+    if placement is None:
+        return None
+    return IndexPlacement(
+        chapter=placement.chapter,
+        role=placement.role,
+        stage_key=placement.stage_id,
+        material_key=placement.material_id,
+    )
+
+
+def index_native_names(dossier: Dossier) -> list[IndexNativeName]:
+    return [
+        IndexNativeName(
+            text=name.text,
+            language=name.language,
+            script=name.script,
+            claim_id=curated_id(dossier.slug, name.claim_id),
+        )
+        for name in dossier.native_names
     ]

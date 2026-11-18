@@ -6,7 +6,6 @@ import { CitationProvider } from "@/components/answer/CitationContext";
 import { ExplainerReadingProvider } from "@/components/answer/ExplainerReading";
 import { SourceDialog } from "@/components/answer/SourceDialog";
 import { TermSheet } from "@/components/answer/TermSheet";
-import { useAuth } from "@/components/AuthProvider";
 import { CraftClaimsProvider } from "@/components/craft/CraftClaims";
 import { CraftEvidence } from "@/components/craft/CraftEvidence";
 import { CraftOverview } from "@/components/craft/CraftOverview";
@@ -23,7 +22,6 @@ import type { CraftPage } from "@/lib/craftPageContract";
 import { craftTabs, shownTab, sourceGroups, type CraftTab } from "@/lib/craftPageView";
 import { fetchCraftRegion } from "@/lib/craftRegion";
 import { fetchCraftSharedScience } from "@/lib/learningApi";
-import { canReadAllEvidence } from "@/lib/permissions";
 import type { SourceRef } from "@/lib/types";
 
 export type ReferenceVoice = Pick<CraftVoiceProps, "open" | "onClose" | "availability">;
@@ -55,7 +53,7 @@ export function CraftReference({ page, requested, onTab, voice }: { page: CraftP
   const science = useRemote(useCallback(() => fetchCraftSharedScience(slug), [slug])).data;
   const shared = science !== null && science.nodes.length > 0;
   const reading = useCraftReading(page, regionSources);
-  const evidence = canReadAllEvidence(useAuth().user);
+  const evidence = page.evidence !== null;
   const tabs = useMemo(
     () => craftTabs(page, { sources: page.sources.length + regionSources.length > 0, evidence, science: shared }),
     [evidence, page, regionSources.length, shared]

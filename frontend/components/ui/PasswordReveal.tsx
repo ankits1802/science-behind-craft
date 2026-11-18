@@ -24,7 +24,7 @@ export function PasswordRevealButton({
       aria-pressed={revealed}
       onClick={onToggle}
       className={cn(
-        "absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-300 transition hover:text-ink-500",
+        "absolute end-1 top-1/2 grid h-target w-target -translate-y-1/2 place-items-center rounded-full text-ink-3 transition-colors hover:bg-sunk hover:text-ink-1",
         className
       )}
     >

@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 2,
+  "portal": "DESIGNER",
+  "generatedAt": "2026-11-18T23:00:00Z",
+  "stream": "transcripts",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "eyJzIjoidHJhbnNjcmlwdHMiLCJ2IjoiYWxsIiwidSI6IjIwMjYtMTEtMThUMDE6MDA6MDAuMDAwMDAyWiIsImkiOiJkci1tZWRpYS1pZGVudGl0eSJ9.0c66425be93eb493a39f67fe412083c8",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "dr-media-built",
+      "revision": "189f03a516110deae435586d0b2dac71",
+      "updatedAt": "2026-11-18T01:00:00.000001Z",
+      "recordingId": null,
+      "mediaType": "AUDIO",
+      "recordedAt": "2026-06-24T15:10:00+05:30",
+      "durationMs": 61000,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-built",
+        "code": "DW-RJ-0012",
+        "title": "Workshop_2026-06-18_Bagru-Jaipur_Hand-Block-Printing_DW-RJ-0012",
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "session": null,
+      "topics": [],
+      "stage": {
+        "key": "PROTOTYPE_DEVELOPMENT",
+        "title": "Prototype Development",
+        "entity": "prototype",
+        "entityLabel": "Prototypes",
+        "rowId": "dr-row-built",
+        "rowLabel": "Indigo dabu table runner",
+        "field": "audioNarration",
+        "fieldLabel": "Audio narration"
+      },
+      "record": null,
+      "area": {
+        "state": "Rajasthan",
+        "district": "Jaipur",
+        "stateLgd": 8,
+        "districtLgd": 102
+      },
+      "people": [
+        {
+          "id": "dr-art-built",
+          "kind": "ARTISAN",
+          "craft": {
+            "id": "dr-craft-bagru",
+            "slug": "Bagru-Hand-Block-Print",
+            "code": null,
+            "name": "Bagru Hand Block Print"
+          },
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [],
+          "mergedIds": []
+        },
+        {
+          "id": "dr-user-built",
+          "kind": "DESIGNER",
+          "craft": null,
+          "name": "Meera Demo",
+          "localName": null,
+          "yearsInCraft": null,
+          "area": null,
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "speakers": [
+        {
+          "key": "speaker_0",
+          "label": "Meera",
+          "role": "OTHER",
+          "personId": "dr-user-built"
+        },
+        {
+          "key": "speaker_1",
+          "label": "Ravi",
+          "role": "ARTISAN",
+          "personId": "dr-art-built"
+        }
+      ],
+      "transcript": {
+        "source": "TURNS",
+        "version": 1,
+        "languages": [
+          "hi"
+        ],
+        "detectedLanguage": "hi",
+        "segments": [
+          {
+            "id": "dr-turn-0",
+            "position": 0,
+            "speakerKey": "speaker_0",
+            "startMs": 0,
+            "endMs": 9000,
+            "language": "en",
+            "text": "Ravi, tell us how the indigo vat is kept at Bagru.",
+            "textSource": "MACHINE",
+            "english": "Ravi, tell us how the indigo vat is kept at Bagru.",
+            "englishSource": "ORIGINAL",
+            "scrubbed": []
+          },
+          {
+            "id": "dr-turn-1",
+            "position": 1,
+            "speakerKey": "speaker_1",
+            "startMs": 9500,
+            "endMs": 61000,
+            "language": "hi",
+            "text": "हम बगरू में आँगन में नील का माट रखते हैं।",
+            "textSource": "MACHINE",
+            "english": "We keep the indigo vat in the courtyard at Bagru; call me on [number] or write to [email]",
+            "englishSource": "MACHINE",
+            "scrubbed": [
+              "EMAIL",
+              "NUMBER"
+            ]
+          }
+        ],
+        "english": null
+      },
+      "scrubbing": {
+        "version": 2,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 1
+          },
+          {
+            "kind": "NUMBER",
+            "count": 1
+          }
+        ],
+        "nulled": []
+      }
+    },
+    {
+      "state": "LIVE",
+      "id": "dr-media-identity",
+      "revision": "8a2a1cf0e1e15ca0ce5dfa24f1b35220",
+      "updatedAt": "2026-11-18T01:00:00.000002Z",
+      "recordingId": "dr-rec-identity",
+      "mediaType": "AUDIO",
+      "recordedAt": "2026-06-20T10:30:00+05:30",
+      "durationMs": 30000,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-built",
+        "code": "DW-RJ-0012",
+        "title": "Workshop_2026-06-18_Bagru-Jaipur_Hand-Block-Printing_DW-RJ-0012",
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "session": {
+        "id": "dr-session-built",
+        "title": "Interview_2026-06-20_Bagru-Jaipur_Dabu",
+        "date": "2026-06-20",
+        "purpose": "FIRST_SITTING",
+        "questionnaire": {
+          "id": "dr-form-built",
+          "title": "Craft documentation"
+        }
+      },
+      "topics": [
+        {
+          "sectionId": "dr-section-resp",
+          "sectionCode": "RESP",
+          "sectionTitle": "Respondent Information",
+          "questionId": "dr-question-phone",
+          "questionCode": "RESP-Q08",
+          "question": "Your phone number"
+        }
+      ],
+      "stage": null,
+      "record": null,
+      "area": {
+        "state": "Rajasthan",
+        "district": "Jaipur",
+        "stateLgd": 8,
+        "districtLgd": 102
+      },
+      "people": [
+        {
+          "id": "dr-art-built",
+          "kind": "ARTISAN",
+          "craft": {
+            "id": "dr-craft-bagru",
+            "slug": "Bagru-Hand-Block-Print",
+            "code": null,
+            "name": "Bagru Hand Block Print"
+          },
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "speakers": [
+        {
+          "key": "L1",
+          "label": "Ravi",
+          "role": null,
+          "personId": null
+        }
+      ],
+      "transcript": {
+        "source": "TEXT",
+        "version": null,
+        "languages": [
+          "hi"
+        ],
+        "detectedLanguage": "hi",
+        "segments": [
+          {
+            "id": "dr-media-identity.0",
+            "position": 0,
+            "speakerKey": "L1",
+            "startMs": null,
+            "endMs": null,
+            "language": "hi",
+            "text": "My number is [number] and I live in Bagru village, near the Sanganer road.",
+            "textSource": "MACHINE",
+            "english": null,
+            "englishSource": null,
+            "scrubbed": [
+              "NUMBER"
+            ]
+          }
+        ],
+        "english": null
+      },
+      "scrubbing": {
+        "version": 2,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 1
+          }
+        ],
+        "nulled": []
+      }
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { motion } from "framer-motion";
 
+import { hasRenderer } from "@/components/answer/blockRenderers";
 import { ExplainerBlockView } from "@/components/answer/ExplainerBlockView";
 import { useExplainerReading } from "@/components/answer/ExplainerReading";
 import { CitedText } from "@/components/answer/ProseBlockView";
@@ -27,7 +28,7 @@ export function LedeBlock({ lede, reduce }: { lede: Lede; reduce: boolean }) {
         {lede.headline}
       </h2>
       <CitedText id={lede.id} sentences={lede.sentences} className="mt-3 text-base leading-8 text-ink-900 md:text-[17px]" />
-      {lede.figure ? (
+      {lede.figure && hasRenderer(lede.figure) ? (
         <div className="mt-5">
           <ExplainerBlockView block={lede.figure} reduce={reduce} />
         </div>

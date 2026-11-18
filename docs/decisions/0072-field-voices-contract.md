@@ -1,6 +1,7 @@
 # 0072. Field voices come through signed peer routes, filtered by consent at the portal
 
-Date: 2026-11-18. Status: accepted.
+Date: 2026-11-18. Status: accepted; amended by 0084 (version 2: both portals, full transcripts and
+craft images, by cursor with tombstones).
 
 ## Context
 

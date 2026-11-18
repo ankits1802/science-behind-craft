@@ -5,7 +5,7 @@ import { createElement, type ReactElement } from "react";
 
 import type { CitationLookup } from "@/components/answer/CitationContext";
 import { CraftClaimsProvider } from "@/components/craft/CraftClaims";
-import { checkedCraftPage, craftPageShape, referencedClaimIds, type CraftPage, type OverviewSection, type PageClaim, type PageEvidence } from "@/lib/craftPageContract";
+import { checkedCraftPage, craftPageShape, type CraftPage, type OverviewSection, type PageClaim, type PageEvidence } from "@/lib/craftPageContract";
 import type { PageGi } from "@/lib/craftPageContext";
 import { claimIndex, pageSourceNumbers, pageSourcesById } from "@/lib/craftPageView";
 import { parseShape } from "@/lib/shape";
@@ -20,8 +20,10 @@ export function rawPage(): CraftPage {
   return JSON.parse(readFileSync(CRAFT_PAGE_GOLDEN, "utf8")) as CraftPage;
 }
 
-export function registerPage(): CraftPage {
-  return checkedCraftPage(parseShape(craftPageShape, JSON.parse(readFileSync(REGISTER_PAGE_GOLDEN, "utf8"))));
+export function registerPage(edit: (body: CraftPage) => void = () => undefined): CraftPage {
+  const body = JSON.parse(readFileSync(REGISTER_PAGE_GOLDEN, "utf8")) as CraftPage;
+  edit(body);
+  return checkedCraftPage(parseShape(craftPageShape, body));
 }
 
 function withoutRecord(gi: PageGi): PageGi {
@@ -35,19 +37,7 @@ export function curatedPage(edit: (body: CraftPage) => void = () => undefined): 
 }
 
 export function pageEvidence(page: CraftPage): PageEvidence {
-  if (page.evidence === null) throw new Error("this page carries no evidence");
   return page.evidence;
-}
-
-export function studentPage(): CraftPage {
-  return curatedPage((body) => {
-    const cited = new Set(referencedClaimIds(body));
-    body.evidence = null;
-    body.tabs = { ...body.tabs, evidence: false };
-    body.claims = body.claims.filter((claim) => cited.has(claim.id));
-    const shown = new Set(body.claims.flatMap((claim) => claim.citations.map((citation) => citation.sourceId)));
-    body.sources = body.sources.filter((source) => shown.has(source.id));
-  });
 }
 
 function storedSections(claims: readonly PageClaim[], titles: Map<string, string>): OverviewSection[] {
@@ -63,7 +53,7 @@ function storedSections(claims: readonly PageClaim[], titles: Map<string, string
 
 export function uncuratedPage(): CraftPage {
   return curatedPage((body) => {
-    const titles = new Map((body.evidence?.groups ?? []).map((group) => [group.discipline, group.title]));
+    const titles = new Map(body.evidence.groups.map((group) => [group.discipline, group.title]));
     body.claims = body.claims.map((claim) => ({ ...claim, provenance: "SEED", sourcesDiffer: false }));
     body.curated = false;
     body.curation = null;
@@ -103,6 +93,12 @@ export function emptyPage(): CraftPage {
     body.evidence = { groups: [], hypotheses: [] };
     body.claims = [];
     body.sources = [];
+    body.lede = [];
+    body.cite = null;
+    body.masthead = { ...body.masthead, nativeName: null, gi: null, picture: null, provenance: { basis: "REGISTER", sources: 0, reliability: { a: 0, b: 0, c: 0, d: 0 }, curatedOn: null, updatedOn: null } };
+    body.chapters = [
+      { key: "glance", title: "At a glance", opener: null, items: [{ block: null, part: { kind: "start_research", questions: body.suggestedQuestions.slice(0, 3) }, figure: null, origin: null, pieceId: null }] }
+    ];
   });
 }
 

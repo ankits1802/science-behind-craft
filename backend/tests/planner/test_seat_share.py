@@ -7,6 +7,7 @@ from app.planner.drafting import draft_plan
 from app.planner.policy import reference_reserve, seat_reading_kinds
 from app.planner.reading import LiveSources, reading_order
 from app.research.evidence_pack import PackedEvidence
+from app.research.expert_panel import EXPERT_PANEL
 from app.research.planning import ResearchShare
 
 from ..research.fixtures import evidence_item
@@ -53,10 +54,18 @@ def test_an_expert_with_no_kind_found_takes_no_read() -> None:
 
 def test_the_section_s_speaking_seats_give_their_kinds_in_seat_order() -> None:
     seated = ("CHEMIST", "HISTORIAN", "ARTISAN", "TOXICOLOGIST")
-    assert seat_reading_kinds(request(focus="HISTORY", seats=seated, depth="EXPERT")) == (HISTORIAN_READS,)
+    assert seat_reading_kinds(request(focus="HISTORY", seats=seated, depth="DETAILED")) == (HISTORIAN_READS,)
+    assert seat_reading_kinds(request(focus="HISTORY", seats=seated, depth="EXPERT")) == (
+        HISTORIAN_READS,
+        *(
+            EXPERT_PANEL[seat].source_kinds
+            for seat in ("ANTHROPOLOGIST", "DESIGN_HISTORIAN", "POLICY_EXPERT")
+        ),
+    )
     assert seat_reading_kinds(request(focus="HEALTH", seats=seated, depth="EXPERT")) == (
         ("PAPER", "BOOK", "COMPOUND_RECORD", "ENCYCLOPEDIA"),
         TOXICOLOGIST_READS,
+        EXPERT_PANEL["ECOLOGIST"].source_kinds,
     )
     assert seat_reading_kinds(request(focus="HEALTH", seats=seated, depth="BASIC")) == (
         ("PAPER", "BOOK", "COMPOUND_RECORD", "ENCYCLOPEDIA"),

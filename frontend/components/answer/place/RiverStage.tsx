@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion, useTransform } from "framer-motion";
 
 import type { PlacedBadge, StoryGeometry, StoryRiver } from "@/components/answer/place/storyGeometry";
@@ -78,7 +79,7 @@ function PointLabel({ text, at, view }: { text: string; at: readonly [number, nu
   );
 }
 
-export function RiverStage({ geometry, flow, fillOf, focus, summary }: { geometry: StoryGeometry; flow: RiverFlow; fillOf: DistrictFill; focus: StageFocus; summary: string }) {
+export function RiverStage({ geometry, flow, fillOf, focus, summary, inset = null }: { geometry: StoryGeometry; flow: RiverFlow; fillOf: DistrictFill; focus: StageFocus; summary: string; inset?: ReactNode }) {
   const { view, river } = geometry;
   const focused = focus.district === null ? undefined : geometry.districts.get(focus.district);
   const stretch = focused && river && focus.stretch ? (river.stretches.get(focused.lgd) ?? null) : null;
@@ -98,6 +99,7 @@ export function RiverStage({ geometry, flow, fillOf, focus, summary }: { geometr
           <PointLabel text="Outlet" at={points[points.length - 1]} view={view} />
         </>
       ) : null}
+      {inset}
       {geometry.badges.map((badge) => (
         <StepBadgeButton key={badge.districtLgd} badge={badge} view={view} focus={focus} />
       ))}

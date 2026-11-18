@@ -27,6 +27,7 @@ from app.research.blocks import ExplainerSentence, ProseBlock
 from app.research.citations import Citation
 from app.research.crafts import CraftRef
 from app.research.embedding import TextEmbedder
+from app.research.knowledge_pieces import PieceSlot, knowledge_piece
 from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.retrieval.indexing import embed_pieces
 from app.science.ladder import process_ladder
@@ -34,7 +35,7 @@ from app.services import knowledge_view
 from app.services.craft_process import process_records
 from app.services.piece_lookup import PieceAsk, PieceLookup
 from app.services.piece_rebuild import stale_groups
-from app.services.piece_store import BuiltSection, SqlPieceStore
+from app.services.piece_store import BuiltSection, SqlPieceStore, piece_values
 
 pytestmark = pytest.mark.db
 
@@ -309,3 +310,33 @@ async def test_a_stored_ladder_is_reused_only_while_it_matches_the_process_rows(
     )
     again = await store.reusable(PieceAsk(QUESTION, AJRAKH, ("PROCESS",), "EXPERT"))
     assert "PROCESS" not in again.reused
+
+
+async def curated_piece(session: AsyncSession, claims: Sequence[uuid.UUID]) -> uuid.UUID:
+    store = store_for(session)
+    lookup = await store.reusable(PieceAsk(QUESTION, AJRAKH, ("GEOGRAPHY",), "EXPERT", fresh=True))
+    craft = await knowledge_view.resolve_craft(session, AJRAKH.slug)
+    assert craft is not None
+    slot = PieceSlot(craft.id, "GEOGRAPHY", lookup.topics["GEOGRAPHY"], "EXPERT")
+    block = await prose_of(session, claims)
+    piece = knowledge_piece(
+        block, slot, piece_id=uuid.uuid4(), answer_id=None, created_at=datetime(2026, 11, 1, tzinfo=UTC)
+    )
+    session.add(PieceRow(**piece_values(piece)))
+    await session.flush()
+    return piece.id
+
+
+async def test_an_answer_never_supersedes_a_curated_piece_and_is_reused_before_it(
+    session: AsyncSession,
+) -> None:
+    curated = await curated_piece(session, WATER_CLAIMS[:2])
+    store = store_for(session)
+    _, row = await kept(session, store)
+    stored = await session.get(PieceRow, curated)
+    assert stored is not None
+    await session.refresh(stored)
+    assert stored.supersededById is None
+    assert await reused_ids(store) == [row.id]
+    await session.execute(update(Claim).where(Claim.id == WATER_CLAIMS[2]).values(status="RETRACTED"))
+    assert await reused_ids(store) == [curated]

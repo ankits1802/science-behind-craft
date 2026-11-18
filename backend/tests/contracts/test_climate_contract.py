@@ -2,7 +2,7 @@ import ast
 
 from app.geo.climate import MEAN_STAT, P_VALUE_STAT, P_VALUE_UNIT, SLOPE_STAT, TREND_DATASETS
 from app.models.enums import ENV_STATS
-from app.research.blocks_insight import TREND_SIGNIFICANCE, TREND_UNITS, TREND_YEARS_MIN
+from app.research.blocks_climate import TREND_SIGNIFICANCE, TREND_UNITS, TREND_YEARS_MIN
 from app.schemas.region import DATASET_FACETS
 
 from .phase_b_golden import catalog_dataset

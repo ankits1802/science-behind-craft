@@ -30,6 +30,7 @@ from app.core.security import verify_jwt_configuration
 from app.core.shielded import ShieldedWork
 from app.services import two_factor
 from app.services.craft_catalogue import new_catalogue_cache
+from app.services.craft_page_cache import PageCache
 from app.services.craft_resolver import CraftIndexStore
 from app.services.live_sources import LiveSourcesStore
 from app.services.public_summary import SummaryCache
@@ -104,6 +105,7 @@ def create_app() -> FastAPI:
     app.state.river_topologies = TopologyCache()
     app.state.public_summary = SummaryCache()
     app.state.craft_catalogue = new_catalogue_cache()
+    app.state.craft_pages = PageCache()
 
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception) -> JSONResponse:

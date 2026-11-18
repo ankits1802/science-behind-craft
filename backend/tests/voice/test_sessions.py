@@ -97,6 +97,7 @@ async def refused(store: MemoryStore, **kwargs: object) -> VoiceRefused:
     return error.value
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_relay_session_starts_with_the_day_s_time_left() -> None:
     store = consenting_store(used_before=60)
     started = RelaySessionStarted.model_validate(await start(store))
@@ -113,6 +114,14 @@ async def test_a_relay_session_starts_with_the_day_s_time_left() -> None:
     assert record.transport == "RELAY" and record.user_id == USER_ID and record.chat_id is not None
 
 
+async def test_by_default_a_session_starts_whatever_the_day_has_used_and_counts_no_time_left() -> None:
+    store = consenting_store(used_before=100_000)
+    started = RelaySessionStarted.model_validate(await start(store))
+    assert (started.max_duration_seconds, started.remaining_seconds) == (sessions.MAX_SESSION_SECONDS, None)
+    shown = await voice_availability(Learner(), store=store, runtime=runtime()[0], voice=voice(), now=NOW)
+    assert shown["remainingSeconds"] is None
+
+
 async def test_an_agent_session_binds_the_conversation_and_hands_out_only_the_token() -> None:
     store = consenting_store()
     payload = await start(store, settings=voice("AGENT"))
@@ -125,6 +134,7 @@ async def test_an_agent_session_binds_the_conversation_and_hands_out_only_the_to
     assert session_is_bound(HMAC_KEY, record, "conv_0123456789abcdef")
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_an_agent_session_holds_its_whole_length_at_the_start() -> None:
     store = consenting_store(used_before=60)
     await start(store, settings=voice("AGENT"))
@@ -157,6 +167,7 @@ async def test_an_ended_call_still_open_at_elevenlabs_keeps_the_user_s_slot() ->
     assert store.sessions[call.id].billed_seconds is None and store.ledger == {}
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_finished_call_is_settled_at_the_next_start_and_frees_its_hold() -> None:
     store = consenting_store()
     call = ended_agent_call()
@@ -171,6 +182,7 @@ async def test_a_finished_call_is_settled_at_the_next_start_and_frees_its_hold()
     assert f"DELETE /v1/convai/conversations/{CONVERSATION_ID}" in paths
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_availability_settles_a_finished_call_before_showing_the_time_left() -> None:
     store = MemoryStore(used_before=540)
     call = ended_agent_call()
@@ -230,6 +242,7 @@ async def test_a_lapsed_session_no_longer_blocks_a_new_one() -> None:
     assert store.sessions[old.id].ended_at == old.hard_end
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_less_than_thirty_seconds_left_waits_for_midnight_india_time() -> None:
     error = await refused(consenting_store(used_before=600 - 29))
     midnight_ist = datetime(2026, 11, 16, 18, 30, tzinfo=UTC)
@@ -260,6 +273,7 @@ async def test_ending_twice_answers_the_same() -> None:
         await end_session(store, Learner(id=uuid.uuid4()), session_id, now=NOW)
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_availability_names_the_transport_consent_and_time_left() -> None:
     store = MemoryStore(used_before=60)
     shown = await voice_availability(Learner(), store=store, runtime=runtime()[0], voice=voice(), now=NOW)

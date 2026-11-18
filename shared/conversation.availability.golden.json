@@ -1,0 +1,42 @@
+{
+  "configured": true,
+  "transport": "RELAY",
+  "languages": [
+    {
+      "code": "en",
+      "label": "English",
+      "autonym": "English",
+      "script": "Latn",
+      "direction": "ltr"
+    },
+    {
+      "code": "hi",
+      "label": "Hindi",
+      "autonym": "हिन्दी",
+      "script": "Deva",
+      "direction": "ltr"
+    },
+    {
+      "code": "ur",
+      "label": "Urdu",
+      "autonym": "اردو",
+      "script": "Arab",
+      "direction": "rtl"
+    }
+  ],
+  "noticeVersion": "2026-11-18",
+  "consentRequired": false,
+  "remainingSeconds": 3420,
+  "crafts": [
+    {
+      "slug": "kutch-ajrakh",
+      "name": "Kutch Ajrakh",
+      "path": "/crafts/kutch-ajrakh"
+    },
+    {
+      "slug": "kutch-bandhani",
+      "name": "Bandhani",
+      "path": "/crafts/kutch-bandhani"
+    }
+  ]
+}

@@ -41,6 +41,11 @@ class SuspendRequest(APIModel):
     reason: str | None = Field(default=None, max_length=1000)
 
 
+class GuardianConsentRequest(APIModel):
+    affirmed: Literal[True]
+    noticeVersion: str = Field(min_length=1, max_length=40)
+
+
 class ManagedSecretSetIn(APIModel):
     value: str = Field(min_length=1, max_length=8000)
     twoFactorCode: str | None = Field(default=None, max_length=64)
@@ -74,5 +79,5 @@ class AppSettingsUpdate(APIModel):
     signUpMode: Literal["ROSTER", "OPEN_DOMAIN_ALLOWLIST", "CLOSED"] | None = None
     domainAllowlist: list[str] | None = Field(default=None, max_length=200)
     degradeAtFraction: float | None = Field(default=None, gt=0, le=1)
-    answerCapUsd: dict[Depth, Annotated[float, Field(ge=0, le=1_000)]] | None = None
+    answerCapUsd: dict[Depth, Annotated[float, Field(ge=0, le=1_000)] | None] | None = None
     twoFactorCode: str | None = Field(default=None, max_length=64)

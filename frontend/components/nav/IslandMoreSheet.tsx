@@ -116,7 +116,7 @@ export function IslandMoreSheet({
             animate={{ y: 0 }}
             exit={reduce ? { y: 0 } : { y: "100%" }}
             transition={reduce ? { duration: 0 } : { duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-x-0 bottom-0 mx-auto max-h-[80dvh] w-full max-w-[560px] overflow-y-auto overscroll-contain rounded-t-[28px] border border-b-0 border-line-200 bg-card pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pt-2.5 shadow-lg"
+            className="absolute inset-x-0 bottom-0 mx-auto max-h-[80dvh] w-full max-w-[560px] overflow-y-auto overscroll-contain rounded-t-[28px] border border-b-0 border-line-200 bg-card pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pt-2.5 shadow-sheet"
           >
             <span aria-hidden className="mx-auto block h-1 w-8 rounded-full bg-line-200" />
             <h2 className="px-6 pb-1 pt-3 font-display text-base font-semibold text-ink-900">{ISLAND_MORE_LABEL}</h2>
@@ -196,7 +196,7 @@ function SheetRow({
         <Icon className="h-5 w-5 shrink-0" aria-hidden />
         <span className="truncate">{label}</span>
         {text ? (
-          <span aria-hidden className="ml-auto rounded-full bg-purple-700 px-1.5 text-[10px] font-semibold leading-[1.125rem] text-white">
+          <span aria-hidden className="ms-auto rounded-pill bg-ink-1 px-1.5 font-ui text-caption font-semibold leading-5 text-ground tabular-nums">
             {text}
           </span>
         ) : null}

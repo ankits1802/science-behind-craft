@@ -14,6 +14,7 @@ from app.research.crafts import CraftRef
 from app.research.knowledge_pieces import PIECE_SCHEMA_VERSION, KnowledgePiece
 from app.research.piece_reuse import ClaimState
 from app.research.piece_topics import TopicSubjects
+from app.research.reading_style import ReadingStyle
 from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.research.term_marking import TermMarker
 from app.research.vocabulary import CANONICAL_LANGUAGE
@@ -48,6 +49,7 @@ class PieceAsk:
     facets: tuple[str, ...]
     depth: str
     fresh: bool = False
+    reading_style: ReadingStyle | None = None
 
 
 @dataclass(frozen=True)
@@ -137,6 +139,7 @@ def stored_piece(row: PieceRow) -> KnowledgePiece | None:
                 "staleSince": row.staleSince,
                 "supersededById": row.supersededById,
                 "hiddenAt": row.hiddenAt,
+                "readingStyle": row.readingStyle,
             }
         )
     except ValidationError as refused:

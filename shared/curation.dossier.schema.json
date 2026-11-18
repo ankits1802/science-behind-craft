@@ -2,6 +2,50 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "KalaVigyan curated craft dossier",
   "$defs": {
+    "After": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "colours": {
+          "items": {
+            "enum": [
+              "RED",
+              "BLUE",
+              "BLACK",
+              "WHITE",
+              "GREEN",
+              "YELLOW",
+              "BROWN",
+              "GREY",
+              "PINK",
+              "PURPLE",
+              "ORANGE",
+              "MAROON"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Colours",
+          "type": "array"
+        },
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "claimId"
+      ],
+      "title": "After",
+      "type": "object"
+    },
     "CitedQuote": {
       "additionalProperties": false,
       "properties": {
@@ -244,6 +288,43 @@
         "claimIds"
       ],
       "title": "EnvironmentLink",
+      "type": "object"
+    },
+    "Focal": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "exclusiveMaximum": 1,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "exclusiveMaximum": 1,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Height",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "Focal",
       "type": "object"
     },
     "GiRecord": {
@@ -541,6 +622,47 @@
       "title": "MaterialUse",
       "type": "object"
     },
+    "NativeName": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "language": {
+          "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$",
+          "title": "Language",
+          "type": "string"
+        },
+        "script": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z][a-z]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Script"
+        },
+        "claimId": {
+          "pattern": "^C\\d{3,4}$",
+          "title": "Claimid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "language",
+        "claimId"
+      ],
+      "title": "NativeName",
+      "type": "object"
+    },
     "OpenQuestion": {
       "additionalProperties": false,
       "properties": {
@@ -780,6 +902,68 @@
           ],
           "default": null,
           "title": "Stageid"
+        },
+        "placement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Placement"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "focal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Focal"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width"
+        },
+        "height": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height"
+        },
+        "standIn": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standin"
         }
       },
       "required": [
@@ -899,6 +1083,71 @@
         "claimIds"
       ],
       "title": "Place",
+      "type": "object"
+    },
+    "Placement": {
+      "additionalProperties": false,
+      "properties": {
+        "chapter": {
+          "enum": [
+            "glance",
+            "made",
+            "chem",
+            "why",
+            "history",
+            "market",
+            "whatif",
+            "people",
+            "kin",
+            "sources"
+          ],
+          "title": "Chapter",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "MASTHEAD",
+            "OPENER",
+            "PLATE",
+            "RECORD",
+            "STAGE",
+            "MATERIAL"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "stageId": {
+          "anyOf": [
+            {
+              "pattern": "^P\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stageid"
+        },
+        "materialId": {
+          "anyOf": [
+            {
+              "pattern": "^M\\d{2,3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Materialid"
+        }
+      },
+      "required": [
+        "chapter",
+        "role"
+      ],
+      "title": "Placement",
       "type": "object"
     },
     "Price": {
@@ -1342,6 +1591,30 @@
           "minItems": 1,
           "title": "Claimids",
           "type": "array"
+        },
+        "after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/After"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "whyClaimId": {
+          "anyOf": [
+            {
+              "pattern": "^C\\d{3,4}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Whyclaimid"
         }
       },
       "required": [
@@ -1563,8 +1836,8 @@
   "additionalProperties": false,
   "properties": {
     "schemaVersion": {
-      "const": 1,
-      "default": 1,
+      "const": 2,
+      "default": 2,
       "title": "Schemaversion",
       "type": "integer"
     },
@@ -1731,8 +2004,15 @@
       "items": {
         "$ref": "#/$defs/Picture"
       },
-      "maxItems": 6,
+      "maxItems": 16,
       "title": "Pictures",
+      "type": "array"
+    },
+    "nativeNames": {
+      "items": {
+        "$ref": "#/$defs/NativeName"
+      },
+      "title": "Nativenames",
       "type": "array"
     },
     "overview": {

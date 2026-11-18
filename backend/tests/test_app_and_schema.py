@@ -282,7 +282,7 @@ def initial_columns_of_enum(enum_name: str) -> set[tuple[str, str]]:
 def test_user_role_downgrade_restores_the_initial_values() -> None:
     later = ast.parse((MIGRATIONS / "0009_admin_role.py").read_text(encoding="utf-8"))
     assert module_constant(later, "USER_ROLES_BEFORE") == initial_enum_list()["UserRole"]
-    assert enum_additions()["UserRole"] == ("ADMIN",)
+    assert enum_additions()["UserRole"] == ("ADMIN", "ARTISAN")
     retyped = {(table, column) for table, column, _default in module_constant(later, "ROLE_COLUMNS")}
     assert retyped == initial_columns_of_enum("UserRole")
     assert len(retyped) == 6

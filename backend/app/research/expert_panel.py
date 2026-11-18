@@ -16,13 +16,17 @@ __all__ = [
     "PANEL_FIELDS",
     "SEAT_BRIEF_MAX_CHARS",
     "TESTIMONY_SEATS",
+    "WIDENED_DEPTHS",
     "SeatBrief",
+    "panel_seats",
     "seats_for",
     "speaking_seats",
+    "voiced_seats",
 ]
 
 SEAT_BRIEF_MAX_CHARS = 400
 TESTIMONY_SEATS = frozenset({"ARTISAN"})
+WIDENED_DEPTHS = frozenset({"EXPERT"})
 
 
 class SeatBrief(ContractModel):
@@ -199,10 +203,21 @@ def seats_for(discipline: str, seated: Sequence[str]) -> tuple[str, ...]:
     )
 
 
-def speaking_seats(discipline: str | None, seated: Sequence[str], *, depth: str | None) -> tuple[str, ...]:
+def panel_seats(discipline: str | None, seated: Sequence[str], *, depth: str | None) -> tuple[str, ...]:
     if discipline is None:
         return ()
     panel = tuple(seat for seat in dict.fromkeys(seated) if seat in EXPERT_PANEL)
-    if depth is not None:
-        panel = panel[: depth_policy(depth).max_experts]
-    return tuple(seat for seat in seats_for(discipline, panel) if seat not in TESTIMONY_SEATS)
+    if depth is None:
+        return seats_for(discipline, panel)
+    limit = depth_policy(depth).max_experts
+    if depth not in WIDENED_DEPTHS:
+        return seats_for(discipline, panel[:limit])
+    return seats_for(discipline, (*panel, *EXPERT_PANEL))[:limit]
+
+
+def speaking_seats(discipline: str | None, seated: Sequence[str], *, depth: str | None) -> tuple[str, ...]:
+    return tuple(seat for seat in panel_seats(discipline, seated, depth=depth) if seat not in TESTIMONY_SEATS)
+
+
+def voiced_seats(discipline: str | None, seated: Sequence[str], *, depth: str | None) -> tuple[str, ...]:
+    return tuple(seat for seat in panel_seats(discipline, seated, depth=depth) if seat in TESTIMONY_SEATS)

@@ -34,13 +34,17 @@ def usd(value: Any) -> Decimal:
     return Decimal(str(value or 0)).quantize(MICRO, rounding=ROUND_HALF_UP)
 
 
+def cap_usd(value: Any) -> Decimal | None:
+    return None if value is None else usd(value)
+
+
 @dataclass(frozen=True)
 class Ceilings:
-    monthly_usd: Decimal
-    media_usd: Decimal
+    monthly_usd: Decimal | None
+    media_usd: Decimal | None
     role_daily_usd: dict[str, Decimal | None]
-    degrade_at: Decimal
-    answer_usd: dict[str, Decimal]
+    degrade_at: Decimal | None
+    answer_usd: dict[str, Decimal | None]
 
     @classmethod
     def from_settings(cls, values: dict[str, Any]) -> Ceilings:
@@ -48,13 +52,21 @@ class Ceilings:
 
         role_caps = values.get(keys.ROLE_DAILY_USD) or {}
         answer_caps = values.get(keys.ANSWER_CAP_USD) or {}
+        degrade_at = values.get(keys.DEGRADE_AT_FRACTION)
         return cls(
-            monthly_usd=usd(values.get(keys.MONTHLY_CEILING_USD, 0)),
-            media_usd=usd(values.get(keys.MEDIA_CAP_USD, 0)),
-            role_daily_usd={role: (None if cap is None else usd(cap)) for role, cap in role_caps.items()},
-            degrade_at=Decimal(str(values.get(keys.DEGRADE_AT_FRACTION, 0.8))),
-            answer_usd={depth: usd(cap) for depth, cap in answer_caps.items() if cap is not None},
+            monthly_usd=cap_usd(values.get(keys.MONTHLY_CEILING_USD)),
+            media_usd=cap_usd(values.get(keys.MEDIA_CAP_USD)),
+            role_daily_usd={role: cap_usd(cap) for role, cap in role_caps.items()},
+            degrade_at=None if degrade_at is None else Decimal(str(degrade_at)),
+            answer_usd={depth: cap_usd(cap) for depth, cap in answer_caps.items()},
         )
+
+    def role_cap(self, role: str | None) -> Decimal | None:
+        if not role:
+            return None
+        if role not in self.role_daily_usd:
+            return self.role_daily_usd.get("STUDENT")
+        return self.role_daily_usd[role]
 
 
 @dataclass(frozen=True)
@@ -70,10 +82,12 @@ class AnswerSpend:
     held_usd: Decimal = Decimal(0)
     spent_usd: Decimal = Decimal(0)
 
-    def left(self, ceilings: Ceilings) -> Decimal:
-        cap = ceilings.answer_usd.get(self.depth)
-        if cap is None:
+    def left(self, ceilings: Ceilings) -> Decimal | None:
+        if self.depth not in ceilings.answer_usd:
             return Decimal(0)
+        cap = ceilings.answer_usd[self.depth]
+        if cap is None:
+            return None
         return cap - self.held_usd - self.spent_usd
 
     def hold(self, amount: Decimal) -> None:
@@ -95,11 +109,12 @@ class AnswerHeadroom:
     answer: AnswerSpend
     keeps: Decimal
 
-    def left(self, ceilings: Ceilings) -> Decimal:
+    def left(self, ceilings: Ceilings) -> Decimal | None:
+        left = self.answer.left(ceilings)
         cap = ceilings.answer_usd.get(self.answer.depth)
-        if cap is None:
-            return Decimal(0)
-        return self.answer.left(ceilings) - cap * self.keeps
+        if left is None or cap is None:
+            return left
+        return left - cap * self.keeps
 
     def hold(self, amount: Decimal) -> None:
         self.answer.hold(amount)
@@ -116,21 +131,32 @@ class BudgetDecision:
     allowed: bool
     reason: str | None
     degrade: bool
-    month_fraction: Decimal
+    month_fraction: Decimal | None
 
     @property
     def message(self) -> str | None:
         return REFUSAL_MESSAGES.get(self.reason or "")
 
 
-def month_fraction(ceilings: Ceilings, spend: SpendState) -> Decimal:
+def month_fraction(ceilings: Ceilings, spend: SpendState) -> Decimal | None:
+    if ceilings.monthly_usd is None:
+        return None
     if ceilings.monthly_usd <= 0:
         return Decimal(1)
     return spend.month_usd / ceilings.monthly_usd
 
 
+def past_degrade_mark(ceilings: Ceilings, spend: SpendState) -> bool:
+    fraction = month_fraction(ceilings, spend)
+    return ceilings.degrade_at is not None and fraction is not None and fraction >= ceilings.degrade_at
+
+
 def degrades(ceilings: Ceilings, spend: SpendState, *, role: str | None) -> bool:
-    return not is_uncapped(role) and month_fraction(ceilings, spend) >= ceilings.degrade_at
+    return not is_uncapped(role) and past_degrade_mark(ceilings, spend)
+
+
+def over(cap: Decimal | None, spent: Decimal, estimate: Decimal) -> bool:
+    return cap is not None and spent + estimate > cap
 
 
 def evaluate(
@@ -151,18 +177,15 @@ def evaluate(
 
     if estimate_usd <= 0 or is_uncapped(role):
         return BudgetDecision(True, None, degrade, fraction)
-    if request_budget_usd is not None and estimate_usd > request_budget_usd:
+    if over(request_budget_usd, Decimal(0), estimate_usd):
         return refuse(REQUEST_BUDGET)
-    if answer_left_usd is not None and estimate_usd > answer_left_usd:
+    if over(answer_left_usd, Decimal(0), estimate_usd):
         return refuse(ANSWER_CAP)
-    if spend.month_usd + estimate_usd > ceilings.monthly_usd:
+    if over(ceilings.monthly_usd, spend.month_usd, estimate_usd):
         return refuse(MONTHLY_CEILING)
-    if is_media and spend.media_month_usd + estimate_usd > ceilings.media_usd:
+    if is_media and over(ceilings.media_usd, spend.media_month_usd, estimate_usd):
         return refuse(MEDIA_CAP)
-    cap = ceilings.role_daily_usd.get(role or "", None) if role else None
-    if role and role not in ceilings.role_daily_usd:
-        cap = ceilings.role_daily_usd.get("STUDENT")
-    if cap is not None and spend.user_day_usd + estimate_usd > cap:
+    if over(ceilings.role_cap(role), spend.user_day_usd, estimate_usd):
         return refuse(ROLE_DAILY_CAP)
     return BudgetDecision(True, None, degrade, fraction)
 

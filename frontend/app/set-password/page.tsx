@@ -8,7 +8,6 @@ import { Eye, EyeOff, Lock } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { BrandMark } from "@/components/BrandMark";
 import { Button } from "@/components/ui/button";
-import { GLASS_PANEL, GlassSurface } from "@/components/ui/GlassSurface";
 import { ApiError } from "@/lib/api";
 import {
   MAX_PASSWORD_LENGTH,
@@ -21,22 +20,14 @@ import {
 
 function AuthCard({ children }: { children: React.ReactNode }) {
   return (
-    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-bg-0 px-6 py-6 md:px-10">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 grad-mesh opacity-60" />
-        <div className="absolute -left-16 top-12 h-72 w-72 rounded-full bg-purple-300/30 blur-3xl" />
-        <div className="absolute -right-12 bottom-8 h-80 w-80 rounded-full bg-amber-500/15 blur-3xl" />
-      </div>
-      <GlassSurface
-        options={GLASS_PANEL}
-        className="glass-card relative z-10 w-full max-w-md rounded-xl p-6 shadow-lg md:p-8"
-      >
+    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-ground px-6 py-6 md:px-10">
+      <div className="relative z-10 w-full max-w-md rounded-card border border-rule bg-raised p-6 md:p-8">
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <BrandMark className="h-12 w-12 rounded-xl shadow-sm" />
-          <h1 className="font-display text-2xl font-bold text-ink-900">Set your password</h1>
+          <BrandMark className="h-12 w-12 rounded-xl" />
+          <h1 className="font-headline text-h3 text-ink-1">Set your password</h1>
         </div>
         {children}
-      </GlassSurface>
+      </div>
     </main>
   );
 }

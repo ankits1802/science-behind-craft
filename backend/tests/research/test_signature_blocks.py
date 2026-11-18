@@ -5,7 +5,7 @@ import pytest
 from pydantic import TypeAdapter, ValidationError
 
 from app.research.blocks_signature import SIGNATURE_KINDS, SIGNATURE_TERMS, SignatureBlock, chosen_signature
-from app.research.explainer import BLOCK_MODELS, BUILT_BLOCK_KINDS, payload_sentences
+from app.research.explainer import BLOCK_MODELS, BUILT_BLOCK_KINDS, BUILT_FIGURE_KINDS, payload_sentences
 
 from .signature_fixtures import SIGNATURE_DECLARED, cited
 
@@ -22,9 +22,10 @@ def figure(kind: str) -> dict[str, Any]:
     }
 
 
-def test_the_signature_kinds_are_declared_with_their_shapes_and_not_built_yet() -> None:
+def test_the_signature_kinds_are_built_as_lede_figures_and_never_as_section_blocks() -> None:
     assert set(SIGNATURE_KINDS) <= set(BLOCK_MODELS)
     assert not set(SIGNATURE_KINDS) & set(BUILT_BLOCK_KINDS)
+    assert BUILT_FIGURE_KINDS == SIGNATURE_KINDS
     assert set(SIGNATURE_TERMS) == set(SIGNATURE_KINDS)
     for kind in SIGNATURE_KINDS:
         assert type(FIGURE.validate_python(figure(kind))) is BLOCK_MODELS[kind]

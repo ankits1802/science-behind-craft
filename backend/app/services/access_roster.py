@@ -2,12 +2,14 @@ import logging
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import func, select, update
+from sqlalchemy import ColumnElement, exists, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 from app.models import AccessRoster, User
+
+from .share_owners import withdraw_shares
 
 logger = logging.getLogger(__name__)
 
@@ -153,6 +155,18 @@ async def end_sessions_for_email(session: AsyncSession, email: Any) -> int:
         .values(tokenVersion=User.tokenVersion + 1, sessionsValidFrom=datetime.now(UTC))
     )
     return int(result.rowcount or 0)
+
+
+async def bar_account(session: AsyncSession, email: Any, *, actor: Any, cause: str) -> None:
+    await end_sessions_for_email(session, email)
+    owners = await session.execute(select(User.id).where(func.lower(User.email) == normalise_email(email)))
+    for owner_id in owners.scalars().all():
+        await withdraw_shares(session, owner_id, actor=actor, cause=cause)
+
+
+def account_in_good_standing(user_id: ColumnElement[Any]) -> ColumnElement[bool]:
+    barred = exists().where(AccessRoster.email == func.lower(User.email), AccessRoster.status.in_(BARRED))
+    return exists().where(User.id == user_id, User.deletedAt.is_(None), ~barred)
 
 
 def _iso(value: Any) -> str | None:

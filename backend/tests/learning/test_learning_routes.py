@@ -111,6 +111,14 @@ def test_a_quiz_can_be_made_from_chosen_sections(monkeypatch: pytest.MonkeyPatch
     assert ids <= process
 
 
+def test_an_explainer_with_nothing_to_quiz_answers_no_content(monkeypatch: pytest.MonkeyPatch) -> None:
+    http, _ = client(monkeypatch)
+    monkeypatch.setattr(learning_views, "explainer_quiz", lambda *_args, **_kwargs: None)
+    reply = http.get(f"/api/answers/{DOCUMENT_ID}/quiz")
+    assert (reply.status_code, reply.content) == (204, b"")
+    assert reply.headers["cache-control"] == "private, no-cache"
+
+
 @pytest.mark.parametrize("sections", [[("sections", "s9")], [("sections", "s1"), ("sections", "s1")]])
 def test_a_quiz_of_sections_the_explainer_lacks_is_refused(
     monkeypatch: pytest.MonkeyPatch, sections: Any

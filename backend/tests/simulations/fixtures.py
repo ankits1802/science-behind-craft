@@ -7,13 +7,17 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 
+from app.research.blocks import ImagesBlock
 from app.research.blocks_play import SimulationBlock
+from app.research.crafts import CraftRef
 from app.research.knowledge_pieces import KnowledgePiece, PieceSlot, knowledge_piece, piece_slot
 from app.research.planning import PlanRequest
 from app.research.sections import SectionSpec
 from app.research.structured import StructuredReply
+from app.science.mechanisms import Concept
 from app.services.answer_events import CitedClaims
 from app.services.builder_interface import BuildAsk, BuilderTools
+from app.services.craft_matter import CraftMatter
 from app.services.knowledge_view import ClaimView
 from app.services.section_blocks import KeptSentence, prose_block
 from app.services.simulation_builder import SimulationBuilder
@@ -102,9 +106,43 @@ class StoredPieces:
         return [piece for piece in self.pieces if set(piece.claim_ids) <= set(claim_ids)]
 
 
-def builder(model: DraftModel, stored: StoredPieces | None = None) -> SimulationBuilder:
-    tools = BuilderTools(sessions=None, live=None, plan_model=None, compose_model=model)
-    return SimulationBuilder(tools, stored=stored or StoredPieces(), clock=lambda: BUILT_AT)
+@dataclass
+class PictureSearches:
+    found: dict[str, ImagesBlock] = field(default_factory=dict)
+    asked: list[tuple[str, str, tuple[uuid.UUID, ...]]] = field(default_factory=list)
+
+    async def __call__(self, ask: BuildAsk, concept: Concept, block_id: str) -> ImagesBlock | None:
+        self.asked.append((concept.key, " ".join(concept.words), concept.shown_claim_ids))
+        block = self.found.get(concept.key)
+        return None if block is None else block.model_copy(update={"id": block_id})
+
+
+async def no_matter(craft: CraftRef) -> CraftMatter | None:
+    return None
+
+
+def builder(
+    model: DraftModel,
+    stored: StoredPieces | None = None,
+    *,
+    matter: CraftMatter | None = None,
+    pictures: PictureSearches | None = None,
+    explainer: DraftModel | None = None,
+) -> SimulationBuilder:
+    tools = BuilderTools(
+        sessions=None, live=None, plan_model=None, compose_model=model, explainer_model=explainer
+    )
+
+    async def matter_of(craft: CraftRef) -> CraftMatter | None:
+        return matter
+
+    return SimulationBuilder(
+        tools,
+        stored=stored or StoredPieces(),
+        clock=lambda: BUILT_AT,
+        matter=matter_of if matter is not None else no_matter,
+        pictures=pictures or PictureSearches(),
+    )
 
 
 def golden_block(**changes: Any) -> SimulationBlock:

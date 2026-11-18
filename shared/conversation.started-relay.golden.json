@@ -1,0 +1,29 @@
+{
+  "conversationId": "4a7b2c1d-9e8f-4a6b-8c5d-3e2f1a0b9c8d",
+  "voiceSessionId": "6c5b4a39-2817-4f6e-9d5c-4b3a29180f7e",
+  "transport": "RELAY",
+  "craft": {
+    "slug": "kutch-ajrakh",
+    "name": "Kutch Ajrakh",
+    "path": "/crafts/kutch-ajrakh"
+  },
+  "language": "hi",
+  "maxDurationSeconds": 600,
+  "remainingSeconds": 3570,
+  "maxTurns": 40,
+  "expiresAt": "2026-11-18T05:02:00+00:00",
+  "maxTurnSeconds": 60,
+  "maxAudioBytes": 300000,
+  "audioBitsPerSecond": 32000,
+  "audioTypes": [
+    "audio/webm",
+    "audio/ogg",
+    "audio/mp4",
+    "audio/wav"
+  ],
+  "opening": {
+    "turnId": "0f1e2d3c-4b5a-4968-8776-655443322110",
+    "text": "नमस्ते। Kutch Ajrakh के बारे में आप जो बताएँगे, मैं उसे रिकॉर्ड करूँगा, ताकि किसी और के देखने से पहले एक समीक्षक उसे जाँच सके। आप कभी भी रुक सकते हैं। कृपया बताइए कि आप अपना काम कैसे बनाते हैं, कच्चे माल से लेकर तैयार चीज़ तक।",
+    "speechPath": "/api/artisan/conversations/4a7b2c1d-9e8f-4a6b-8c5d-3e2f1a0b9c8d/turns/0f1e2d3c-4b5a-4968-8776-655443322110/speech"
+  }
+}

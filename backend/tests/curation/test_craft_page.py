@@ -7,7 +7,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.research.citations import SourceRef
-from app.research.craft_page import CraftPage, PageCraft, without_evidence
+from app.research.craft_page import CraftPage, PageCraft
 from app.research.crafts import CraftRef
 from app.science.records import ProcessRecords
 from app.services.craft_page import craft_page
@@ -43,7 +43,7 @@ def test_the_curated_page_lists_every_claim_once_in_all_evidence(ajrakh: CraftPa
         claim_id for entry, _ in ajrakh.evidence.entries() for claim_id in [entry.claim_id, *entry.folded_ids]
     ]
     assert sorted(map(str, filed)) == sorted(str(claim.id) for claim in ajrakh.claims)
-    assert len(ajrakh.claims) == 132
+    assert len(ajrakh.claims) == len(raw(AJRAKH)["claims"])
     assert {claim.provenance for claim in ajrakh.claims} == {"CURATED"}
 
 
@@ -60,7 +60,9 @@ def test_hypotheses_stand_apart(ajrakh: CraftPage) -> None:
 
 
 def test_the_overview_rests_on_the_dossier(ajrakh: CraftPage) -> None:
-    assert ajrakh.curated and ajrakh.curation is not None and ajrakh.curation.version == 1
+    assert (
+        ajrakh.curated and ajrakh.curation is not None and ajrakh.curation.version == raw(AJRAKH)["version"]
+    )
     assert len(ajrakh.overview.lede) == 3
     assert [section.discipline for section in ajrakh.overview.sections] == [
         section["discipline"] for section in raw(AJRAKH)["overview"]["sections"]
@@ -192,52 +194,19 @@ def test_a_page_refusing_an_unlisted_claim() -> None:
         CraftPage.model_validate(plain)
 
 
-STUDENT_CLAIMS = 128
-STUDENT_SOURCES = 20
-SHOWN_ELSEWHERE = ("evidence", "claims", "sources", "sameFamily")
-
-
-def claim_ids_in(value: Any) -> set[str]:
-    if isinstance(value, dict):
-        found = {str(item) for key in ("claimIds", "foldedIds") for item in value.get(key, [])}
-        found |= {str(value["claimId"])} if "claimId" in value else set()
-        return found.union(*(claim_ids_in(item) for item in value.values()))
-    if isinstance(value, list):
-        return set().union(*(claim_ids_in(item) for item in value))
-    return set()
-
-
 def golden_page() -> CraftPage:
     return CraftPage.model_validate(golden_json(AJRAKH_GOLDEN))
 
 
-def test_a_reader_without_all_evidence_gets_only_the_claims_the_page_cites() -> None:
-    full = golden_page()
-    student = without_evidence(full)
-    assert student.evidence is None
-    assert (len(student.claims), len(student.sources)) == (STUDENT_CLAIMS, STUDENT_SOURCES)
-    assert {claim.id for claim in student.claims} == set(full.referenced_claim_ids())
-    shown = {key: value for key, value in golden_json(AJRAKH_GOLDEN).items() if key not in SHOWN_ELSEWHERE}
-    assert {str(claim.id) for claim in student.claims} == claim_ids_in(shown)
-    assert [source.id for source in student.sources] == [source.id for source in full.sources][
-        : len(student.sources)
-    ]
-    cited = {citation.source_id for claim in student.claims for citation in claim.citations}
-    assert {source.id for source in student.sources} == cited
-    kept = student.model_dump(exclude={"evidence", "claims", "sources", "tabs"})
-    assert kept == full.model_dump(exclude={"evidence", "claims", "sources", "tabs"})
-    assert (full.tabs.evidence, student.tabs) == (True, full.tabs.model_copy(update={"evidence": False}))
+def test_every_reader_gets_all_the_evidence() -> None:
+    page = golden_page()
+    filed = [entry.claim_id for entry, _ in page.evidence.entries()]
+    folded = [claim_id for entry, _ in page.evidence.entries() for claim_id in entry.folded_ids]
+    assert sorted(map(str, [*filed, *folded])) == sorted(str(claim.id) for claim in page.claims)
 
 
-def test_the_researcher_view_is_the_whole_golden() -> None:
-    full = golden_page()
-    assert full.evidence is not None and len(full.claims) == 132
-
-
-def test_a_page_without_evidence_refuses_an_uncited_claim() -> None:
-    full = golden_page()
-    plain = without_evidence(full).model_dump(mode="json", by_alias=True)
-    plain["claims"] = full.model_dump(mode="json", by_alias=True)["claims"]
-    plain["sources"] = full.model_dump(mode="json", by_alias=True)["sources"]
-    with pytest.raises(ValidationError, match="only claims its parts cite"):
+def test_a_page_without_its_evidence_is_refused() -> None:
+    plain = golden_page().model_dump(mode="json", by_alias=True)
+    plain["evidence"] = None
+    with pytest.raises(ValidationError):
         CraftPage.model_validate(plain)

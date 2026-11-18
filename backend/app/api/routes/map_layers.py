@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.public_deps import cached_read, public_reader
+from app.api.public_deps import cached_read, public_asset_reader, public_reader
 from app.core.db import get_session
 from app.geo.layers import LAYERS_BY_ID, map_layer, map_layer_list
 from app.models import User
@@ -35,7 +35,7 @@ async def get_map_layer(
     layer: str,
     request: Request,
     response: Response,
-    reader: User | None = Depends(public_reader),
+    reader: User | None = Depends(public_asset_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
     spec = LAYERS_BY_ID.get(layer)

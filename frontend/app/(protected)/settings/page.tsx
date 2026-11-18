@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { AlertDigestCard } from "@/components/settings/AlertDigestCard";
 import { ChangePasswordCard } from "@/components/settings/ChangePasswordCard";
 import { AccessibilityCard, AppearanceCard } from "@/components/settings/PersonalSettingsCards";
+import { ProfileCards } from "@/components/settings/ProfileCards";
 import { TwoStepVerificationCard } from "@/components/settings/TwoStepVerificationCard";
 import { roleLabel } from "@/lib/permissions";
 
@@ -21,6 +22,7 @@ export default function SettingsPage() {
         back={false}
       />
       <div className="grid gap-4 lg:grid-cols-2">
+        <ProfileCards />
         <AppearanceCard />
         <AccessibilityCard />
         <TwoStepVerificationCard />

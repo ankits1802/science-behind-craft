@@ -823,14 +823,14 @@
       "craftSlug": "Kutch-Ajrakh",
       "scope": "CRAFT",
       "file": "Kutch-Ajrakh.json",
-      "version": 1,
+      "version": 2,
       "coverage": "FULL",
-      "curatedAt": "2026-11-17T18:17:00Z",
+      "curatedAt": "2026-11-18T17:00:00Z",
       "counts": {
-        "sources": 20,
-        "claims": 132,
+        "sources": 21,
+        "claims": 135,
         "hypotheses": 5,
-        "corroborated": 53,
+        "corroborated": 54,
         "places": 12,
         "communities": 8,
         "stages": 14,
@@ -838,19 +838,19 @@
         "materials": 32,
         "tools": 3,
         "reactions": 2,
-        "environment": 7,
+        "environment": 8,
         "terms": 17,
         "conflicts": 14,
         "openQuestions": 4,
-        "pictures": 4,
+        "pictures": 10,
         "overviewSections": 7
       },
       "claimsByDiscipline": {
-        "OVERVIEW": 7,
-        "PROCESS": 25,
+        "OVERVIEW": 8,
+        "PROCESS": 26,
         "CHEMISTRY": 13,
         "MATERIALS": 9,
-        "GEOGRAPHY": 10,
+        "GEOGRAPHY": 11,
         "CLIMATE": 2,
         "ECOLOGY": 1,
         "BOTANY": 4,
@@ -862,12 +862,12 @@
         "A": 9,
         "B": 7,
         "C": 4,
-        "D": 0
+        "D": 1
       },
       "check": {
         "status": "PASS",
         "problems": 0,
-        "verifiedAt": "2026-11-18T08:07:16.012195Z"
+        "verifiedAt": "2026-11-18T17:22:42.093121Z"
       }
     },
     {

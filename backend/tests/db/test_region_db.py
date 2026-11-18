@@ -1,8 +1,5 @@
-import importlib.util
 import uuid
 from collections.abc import AsyncIterator, Iterable
-from pathlib import Path
-from types import ModuleType
 from typing import Any
 
 import httpx
@@ -41,6 +38,7 @@ from ..geo.golden_region import (
     golden_datasets,
     golden_methods,
 )
+from ..migration_scripts import migration
 from ..readers import sign_in_as
 
 pytestmark = pytest.mark.db
@@ -343,12 +341,3 @@ async def test_rows_loaded_before_the_migration_get_their_grid_and_rock_names(se
     assert grids == {KACHCHH: WORLDCOVER_READ, AHMEDABAD: None}
     named = (await session.execute(select(DistrictGeology.lithologyName))).scalar_one()
     assert named == "Unconsolidated sediments"
-
-
-def migration(name: str) -> ModuleType:
-    path = Path(__file__).resolve().parents[2] / "migrations" / "versions" / f"{name}.py"
-    spec = importlib.util.spec_from_file_location(f"migration_{name}", path)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module

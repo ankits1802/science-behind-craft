@@ -10,7 +10,9 @@ os.environ.setdefault("BACKEND_CORS_ORIGINS", "http://localhost:3000")
 
 import pytest
 
-from app.core import rate_limit
+from app.core import rate_limit, roles
+
+from .ai_caps import ALLOWANCES_AN_OWNER_MIGHT_SET
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
@@ -25,3 +27,9 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
 @pytest.fixture(autouse=True)
 def _fresh_rate_limits() -> None:
     rate_limit.reset_all()
+
+
+@pytest.fixture
+def allowances_an_owner_might_set(monkeypatch: pytest.MonkeyPatch) -> dict[str, dict[str, int | None]]:
+    monkeypatch.setattr(roles, "DAILY_ALLOWANCES", ALLOWANCES_AN_OWNER_MIGHT_SET)
+    return ALLOWANCES_AN_OWNER_MIGHT_SET

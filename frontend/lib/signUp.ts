@@ -1,7 +1,7 @@
 import { apiFetch } from "@/lib/api";
 import type { UserRole } from "@/lib/types";
 
-export const REQUESTABLE_ROLES: readonly UserRole[] = ["STUDENT", "RESEARCHER", "PROFESSOR"];
+export const REQUESTABLE_ROLES: readonly UserRole[] = ["STUDENT", "ARTISAN", "RESEARCHER", "PROFESSOR"];
 
 export type SignUpBody = {
   name: string;

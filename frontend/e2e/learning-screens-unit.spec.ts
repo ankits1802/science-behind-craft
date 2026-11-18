@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { ConfirmProvider } from "@/components/dialogs/ConfirmDialog";
 import { NAV_ITEMS, isNavItemVisible } from "@/components/DynamicIslandNav";
 import { CompareLinks, FollowUpBox } from "@/components/learn/ExplainerFooter";
 import { ExplainerActions, VersionPicker } from "@/components/learn/ExplainerTools";
@@ -170,11 +171,11 @@ test("the version picker shows only with two versions, with the changes and a wa
 
 test("every role can save and export; lessons are offered to professors and above", () => {
   const ref = { explainerId: EXPLAINER_ID, version: 2 };
-  const student = renderToStaticMarkup(createElement(ExplainerActions, { explainer: ref, user: person("STUDENT") }));
+  const student = renderToStaticMarkup(createElement(ConfirmProvider, null, createElement(ExplainerActions, { explainer: ref, user: person("STUDENT") })));
   expect(student).toContain('data-testid="save-explainer"');
   expect(student).toContain('data-testid="explainer-export"');
   expect(student).not.toContain('data-testid="make-lesson"');
-  const professor = renderToStaticMarkup(createElement(ExplainerActions, { explainer: ref, user: person("PROFESSOR") }));
+  const professor = renderToStaticMarkup(createElement(ConfirmProvider, null, createElement(ExplainerActions, { explainer: ref, user: person("PROFESSOR") })));
   expect(attribute(professor, "make-lesson", "href")).toEqual([`/lessons/new?explainer=${EXPLAINER_ID}&amp;version=2`]);
   expect(renderToStaticMarkup(createElement(ExplainerActions, { explainer: ref, user: null }))).toBe("");
 });

@@ -4,11 +4,6 @@ import { useId, useState } from "react";
 
 import { switchAria, toggleOutcome } from "@/components/ui/toggleKeys";
 
-export const SWITCH_TRACK_ON = "border-purple-700 bg-purple-700 dark:border-purple-400 dark:bg-purple-400";
-export const SWITCH_TRACK_OFF = "border-ink-500 bg-field-200";
-export const SWITCH_THUMB_ON = "bg-white dark:bg-purple-950";
-export const SWITCH_THUMB_OFF = "bg-ink-500";
-
 export type ToggleProps = {
   checked?: boolean;
   defaultChecked?: boolean;
@@ -62,23 +57,23 @@ export function Toggle({
 
   return (
     <div
-      className={`flex min-h-11 items-center justify-between gap-4 rounded-md py-2 ${inert ? "" : "cursor-pointer"} ${className}`}
+      className={`flex min-h-target items-center justify-between gap-4 py-2 ${inert ? "" : "cursor-pointer"} ${className}`}
       onClick={(event) => {
         if ((event.target as HTMLElement).closest("button[role=switch]")) return;
         flip();
       }}
     >
       <div className="min-w-0">
-        <span id={labelId} className={`block text-sm font-medium ${disabled ? "text-ink-500" : "text-ink-900"}`}>
+        <span id={labelId} className={`block font-ui text-ui ${disabled ? "text-ink-3" : "text-ink-1"}`}>
           {label}
         </span>
         {description ? (
-          <div id={descriptionId} className="mt-0.5 text-xs leading-5 text-ink-500">
+          <div id={descriptionId} className="mt-0.5 font-ui text-label font-normal text-ink-3">
             {description}
           </div>
         ) : null}
         {status || (busy && busyLabel) ? (
-          <span id={statusId} className="mt-1 block text-xs font-medium leading-5 text-ink-700" aria-live="polite">
+          <span id={statusId} className="mt-1 block font-ui text-label text-ink-2" aria-live="polite">
             {busy && busyLabel ? busyLabel : status}
           </span>
         ) : null}
@@ -95,17 +90,8 @@ export function Toggle({
           event.preventDefault();
           flip();
         }}
-        className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border transition-colors duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-60 ${
-          checked ? SWITCH_TRACK_ON : SWITCH_TRACK_OFF
-        } ${busy ? "opacity-70" : ""}`}
-      >
-        <span
-          aria-hidden
-          className={`inline-block h-5 w-5 rounded-full shadow-sm transition-transform duration-200 ease-out ${
-            checked ? `translate-x-[22px] ${SWITCH_THUMB_ON}` : `translate-x-[3px] ${SWITCH_THUMB_OFF}`
-          }`}
-        />
-      </button>
+        className="kv-switch"
+      />
       {name && checked ? <input type="hidden" name={name} value="on" /> : null}
     </div>
   );
@@ -136,21 +122,10 @@ export function ToggleSwitch({
         const next = toggleOutcome(checked, { disabled });
         if (next !== null) onChange(next);
       }}
-      className={`group inline-flex min-h-11 shrink-0 items-center gap-2 px-0.5 disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+      className={`group inline-flex min-h-target shrink-0 items-center gap-2 px-0.5 disabled:cursor-not-allowed disabled:opacity-55 ${className}`}
     >
-      {showLabel ? <span className="text-xs font-medium text-ink-700">{label}</span> : null}
-      <span
-        aria-hidden
-        className={`relative inline-flex h-7 w-12 items-center rounded-full border transition-colors duration-200 ease-out ${
-          checked ? SWITCH_TRACK_ON : SWITCH_TRACK_OFF
-        }`}
-      >
-        <span
-          className={`inline-block h-5 w-5 rounded-full shadow-sm transition-transform duration-200 ease-out ${
-            checked ? `translate-x-[22px] ${SWITCH_THUMB_ON}` : `translate-x-[3px] ${SWITCH_THUMB_OFF}`
-          }`}
-        />
-      </span>
+      {showLabel ? <span className="font-ui text-label text-ink-2">{label}</span> : null}
+      <span aria-hidden className="kv-switch" data-checked={checked} />
     </button>
   );
 }

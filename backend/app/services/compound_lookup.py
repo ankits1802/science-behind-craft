@@ -36,16 +36,20 @@ CANDIDATES = 3
 class CompoundFinder(Protocol):
     async def compounds(self, text: str, k: int) -> list[PubChemCompound]: ...
 
+    async def compound(self, cid: int) -> PubChemCompound | None: ...
+
 
 @dataclass
 class LinkReport:
     linked: list[str] = field(default_factory=list)
     not_found: list[str] = field(default_factory=list)
     failed: list[str] = field(default_factory=list)
+    filled: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict[str, Any]:
         return {
             "linked": self.linked,
+            "filled": self.filled,
             "notFound": self.not_found,
             "failed": self.failed,
             "ok": not self.failed,
@@ -92,8 +96,34 @@ async def link_compounds(session: AsyncSession, finder: CompoundFinder, *, now: 
         taken.add(found.cid)
         _fill(compound, found, await _record_source(session, found, now))
         report.linked.append(compound.name)
+    await _fill_known_records(session, finder, report, now=now)
     await session.flush()
     return report
+
+
+async def _fill_known_records(
+    session: AsyncSession, finder: CompoundFinder, report: LinkReport, *, now: datetime
+) -> None:
+    unfilled = (
+        await session.scalars(
+            select(Compound)
+            .where(Compound.pubchemCid.is_not(None), Compound.formula.is_(None))
+            .order_by(Compound.name)
+        )
+    ).all()
+    for compound in unfilled:
+        try:
+            found = await finder.compound(int(compound.pubchemCid or 0))
+        except ExternalFailure as failure:
+            logger.warning("compound record lookup failed for %s: %s", compound.name, failure)
+            report.failed.append(compound.name)
+            continue
+        if found is None or found.cid != compound.pubchemCid or not found.formula:
+            report.not_found.append(compound.name)
+            continue
+        compound.formula = found.formula
+        _fill(compound, found, await _record_source(session, found, now))
+        report.filled.append(compound.name)
 
 
 def _same_composition(candidate: PubChemCompound, counts: dict[str, int]) -> bool:

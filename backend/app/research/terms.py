@@ -83,17 +83,33 @@ def span_problems(text: str, spans: list[TermSpan]) -> list[str]:
     return problems
 
 
-def spans_still_shown(text: str, spans: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
+def spans_still_shown(
+    text: str, spans: Sequence[Mapping[str, Any]], renderings: Mapping[str, str] | None = None
+) -> list[Mapping[str, Any]]:
     kept: list[Mapping[str, Any]] = []
     taken: list[tuple[int, int]] = []
     for span in spans:
-        start = text.find(span["text"])
-        end = start + len(span["text"])
-        if start < 0 or _overlaps(start, end, taken):
+        shown = _shown_span(text, span, renderings or {})
+        if shown is None:
             continue
-        kept.append(span)
+        start = text.find(shown["text"])
+        end = start + len(shown["text"])
+        if _overlaps(start, end, taken):
+            continue
+        kept.append(shown)
         taken.append((start, end))
     return kept
+
+
+def _shown_span(
+    text: str, span: Mapping[str, Any], renderings: Mapping[str, str]
+) -> Mapping[str, Any] | None:
+    if span["text"] in text:
+        return span
+    rendered = renderings.get(span["text"], "").strip()
+    if not rendered or rendered not in text or len(rendered) > TERM_LABEL_MAX_CHARS:
+        return None
+    return {**span, "text": rendered}
 
 
 def _overlaps(start: int, end: int, taken: Sequence[tuple[int, int]]) -> bool:

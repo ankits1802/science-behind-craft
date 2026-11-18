@@ -16,7 +16,7 @@ from app.research.depth import (
 PLAN_TABLE = {
     "BASIC": ("Basic", "HYBRID", (3, 4), (2, 2)),
     "DETAILED": ("Detailed", "HYBRID", (5, 7), (4, 4)),
-    "EXPERT": ("Expert", "DEEP", (1, 14), (6, 10)),
+    "EXPERT": ("Expert", "DEEP", (1, 14), (6, 12)),
 }
 
 
@@ -32,6 +32,7 @@ def test_each_depth_follows_the_plan_table(depth: str) -> None:
 def test_roles_default_to_their_plan_depth() -> None:
     assert dict(ROLE_DEFAULT_DEPTHS) == {
         "STUDENT": "BASIC",
+        "ARTISAN": "BASIC",
         "RESEARCHER": "DETAILED",
         "PROFESSOR": "DETAILED",
         "ADMIN": "EXPERT",
@@ -73,7 +74,7 @@ def test_depths_are_ordered_basic_detailed_expert() -> None:
 
 @pytest.mark.parametrize(
     ("depth", "mode", "queries", "fetches"),
-    [("BASIC", "HYBRID", 2, 5), ("DETAILED", "HYBRID", 4, 10), ("EXPERT", "DEEP", 8, 20)],
+    [("BASIC", "HYBRID", 2, 5), ("DETAILED", "HYBRID", 4, 10), ("EXPERT", "DEEP", 24, 48)],
 )
 def test_each_depth_researches_within_its_budget(depth: str, mode: str, queries: int, fetches: int) -> None:
     budget = research_budget(mode, depth)
@@ -87,7 +88,7 @@ def test_a_degraded_expert_answer_keeps_the_hybrid_limits() -> None:
 
 
 def test_without_a_depth_the_mode_sets_the_budget() -> None:
-    assert research_budget("DEEP").max_fetches == 20
+    assert research_budget("DEEP").max_fetches == 48
 
 
 def test_a_depth_may_not_research_beyond_its_mode() -> None:

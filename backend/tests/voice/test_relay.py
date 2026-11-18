@@ -90,6 +90,7 @@ def events(text: str) -> list[tuple[str, dict[str, object]]]:
     return found
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_relay_turn_streams_the_golden_turn() -> None:
     store = live_store()
     voice, paths = elevenlabs()
@@ -141,6 +142,7 @@ async def test_a_reply_is_not_synthesised_again_after_the_call_and_its_grace() -
     assert await turn_speech(ended, TURN_ID, soon) == REPLY_AUDIO
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_replay_with_no_time_left_is_refused_before_any_synthesis() -> None:
     store = live_store()
     voice, paths = elevenlabs()
@@ -149,6 +151,15 @@ async def test_a_replay_with_no_time_left_is_refused_before_any_synthesis() -> N
     with pytest.raises(VoiceRefused) as refused:
         await turn_speech(store.sessions[SESSION_ID], TURN_ID, deps(store, voice))
     assert refused.value.reason == "quota" and len(paths) == 2
+
+
+async def test_by_default_a_reply_is_spoken_whatever_the_day_has_used() -> None:
+    store = live_store()
+    voice, paths = elevenlabs()
+    await turn_text(store, deps(store, voice))
+    store.used_before = 100_000
+    audio = await turn_speech(store.sessions[SESSION_ID], TURN_ID, deps(store, voice))
+    assert audio and len(paths) == 3
 
 
 async def test_a_hindi_relay_turn_hears_and_speaks_hindi() -> None:
@@ -216,6 +227,7 @@ async def test_every_upload_takes_one_of_the_forty_turns() -> None:
     assert store.sessions[SESSION_ID].turn_count == 40
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_an_upload_bigger_than_the_time_left_is_refused_before_speech_to_text() -> None:
     store = live_store(used_before=600 - 5)
     voice, paths = elevenlabs()
@@ -234,6 +246,7 @@ async def test_a_turn_heard_past_a_minute_is_refused_and_billed_its_whole_hold()
     assert found[1][1]["billedSeconds"] == 60
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_the_last_seconds_end_the_call() -> None:
     store = live_store(used_before=600 - 5)
     found = events(await turn_text(store, deps(store, elevenlabs()[0])))

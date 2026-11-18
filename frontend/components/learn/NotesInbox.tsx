@@ -28,7 +28,7 @@ function NoteCard({ note, actions, reduce }: { note: Notification; actions: Note
           <Sparkles className="h-4 w-4" aria-hidden />
         </span>
         <h3 className="min-w-0 font-display text-base font-bold text-ink-900">{NOTE_TITLE}</h3>
-        {unread ? <span className="rounded-full bg-purple-700 px-2 py-0.5 text-[11px] font-semibold text-white">New</span> : null}
+        {unread ? <span className="rounded-pill bg-sunk px-2 py-0.5 font-ui text-caption font-semibold text-ink-1">New</span> : null}
         <span className="ml-auto text-xs text-ink-500">{formatDate(note.createdAt)}</span>
       </div>
       <Link href={explainerHref(payload.explainerId)} className="min-w-0 break-words text-sm font-semibold text-ink-900 underline-offset-2 hover:text-purple-700 hover:underline">

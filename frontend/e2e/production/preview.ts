@@ -22,12 +22,21 @@ export function isPreview(url: string): boolean {
   return site !== null && site.protocol === "https:" && site.port === "" && !site.username && !site.password && PREVIEW_HOST.test(site.hostname);
 }
 
+export function isProduction(url: string): boolean {
+  return parsed(url)?.origin === PRODUCTION_ORIGIN;
+}
+
+export function roleSiteRefusal(url: string): string | null {
+  if (isProduction(url)) return null;
+  return `The Professor and Admin accounts sign in only on ${PRODUCTION_ORIGIN}, never on ${url}, which can be built from any branch.`;
+}
+
 export function googleRefusesPreview(text: string, from: string): boolean {
   return text.startsWith(GOOGLE_ORIGIN_REFUSED) || (text.startsWith(FAILED_RESOURCE) && from.startsWith(GOOGLE_SIGN_IN));
 }
 
 export function siteRefusal(url: string): string | null {
-  if (parsed(url)?.origin === PRODUCTION_ORIGIN || isPreview(url)) return null;
+  if (isProduction(url) || isPreview(url)) return null;
   return `E2E_BASE_URL must be ${PRODUCTION_ORIGIN} or one of its Vercel previews (https://kalavigyan-<id>-cxacraftecosystem-8028s-projects.vercel.app), not ${url}`;
 }
 

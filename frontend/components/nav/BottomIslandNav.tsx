@@ -65,7 +65,7 @@ function SlotBadge({ count }: { count: number }) {
   return (
     <span
       aria-hidden
-      className="absolute -right-2.5 -top-1.5 inline-flex min-w-[1.125rem] items-center justify-center rounded-full bg-purple-700 px-1 text-[10px] font-semibold leading-[1.125rem] text-white ring-2 ring-card"
+      className="absolute -end-2.5 -top-1.5 inline-flex min-w-5 items-center justify-center rounded-pill bg-ink-1 px-1 font-ui text-caption font-semibold leading-5 text-ground tabular-nums ring-2 ring-raised"
     >
       {text}
     </span>
@@ -315,7 +315,7 @@ function IslandSlotControl({
         <div
           id={menuId}
           className={cn(
-            "absolute bottom-full mb-3 max-h-[calc(100dvh-11rem)] w-max min-w-[13rem] max-w-[min(20rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain rounded-xl border border-line-200 bg-card p-1.5 shadow-lg",
+            "absolute bottom-full mb-3 max-h-[calc(100dvh-11rem)] w-max min-w-[13rem] max-w-[min(20rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain rounded-xl border border-line-200 bg-card p-1.5 shadow-pop",
             alignEnd ? "right-0" : "left-0"
           )}
         >
@@ -338,7 +338,7 @@ function IslandSlotControl({
                     <entry.icon className="h-4 w-4 shrink-0" aria-hidden />
                     <span className="truncate">{entry.label}</span>
                     {text ? (
-                      <span aria-hidden className="ml-auto rounded-full bg-purple-700 px-1.5 text-[10px] font-semibold leading-[1.125rem] text-white">
+                      <span aria-hidden className="ms-auto rounded-pill bg-ink-1 px-1.5 font-ui text-caption font-semibold leading-5 text-ground tabular-nums">
                         {text}
                       </span>
                     ) : null}

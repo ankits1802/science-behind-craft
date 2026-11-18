@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "craftSlug": "Kutch-Ajrakh",
-  "version": 1,
-  "curatedAt": "2026-11-17T18:17:00+00:00",
+  "version": 2,
+  "curatedAt": "2026-11-18T17:00:00+00:00",
   "curator": "claude-code",
   "coverage": "FULL",
   "searched": [
@@ -125,6 +125,22 @@
     {
       "query": "Kachchh district census handbook 2011 ajrakh block printing",
       "site": "web search: handbook not found online; no census figures used"
+    },
+    {
+      "query": "Ajrak Sindhi name",
+      "site": "en.wikipedia.org"
+    },
+    {
+      "query": "harda kasanu yellow ajrakh",
+      "site": "imp-art.org"
+    },
+    {
+      "query": "Khavda Great Rann ajrakh",
+      "site": "e-space.mmu.ac.uk (Clifford 2012)"
+    },
+    {
+      "query": "Mohenjo-daro priest-king; madder natural dye; Great Rann of Kutch; woodblock carving; Banni grasslands; indigo factory 1877",
+      "site": "commons.wikimedia.org: file pages for the pictures, sizes read with fetch.py --picture"
     }
   ],
   "sources": [
@@ -398,6 +414,18 @@
       "access": "OPEN",
       "reliability": "C",
       "retrievedAt": "2026-11-17"
+    },
+    {
+      "id": "S21",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Ajrak",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Ajrak",
+      "language": "en",
+      "licence": "CC BY-SA 4.0",
+      "access": "OPEN",
+      "reliability": "D",
+      "retrievedAt": "2026-11-18"
     }
   ],
   "claims": [
@@ -3169,6 +3197,63 @@
           "quote": "Application of blue colour (Indigo Dip1):- To obtain blue in the design the cloth is immersed in indigo."
         }
       ]
+    },
+    {
+      "id": "C150",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "STAGE",
+        "ref": "P02"
+      },
+      "text": "In the step called kasanu, the fabric is dyed using harda, which lends it a yellow tinge.",
+      "quotes": [
+        {
+          "sourceId": "S14",
+          "locator": "para 5",
+          "quote": "In the subsequent step, called kasanu, the fabric is dyed using harda, which lends it a yellow tinge."
+        }
+      ]
+    },
+    {
+      "id": "C151",
+      "discipline": "GEOGRAPHY",
+      "subject": {
+        "type": "PLACE",
+        "ref": "L06"
+      },
+      "text": "Clifford places Khavda, a Kutch town with a long-standing ajrakh tradition, 50 km north of Bhuj near the Great White Rann, the desert dividing Kutch and Pakistan.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "section 3.7, p. 89",
+          "quote": "The area of Khatrivas in the town of Khavda is another place in Kutch with a long standing tradition of ajrakh block printing"
+        },
+        {
+          "sourceId": "S06",
+          "locator": "section 3.7, p. 89",
+          "quote": "Khavda is 50 km north of Bhuj, situated near the Great White Rann, the stretch of desert that divides Kutch and Pakistan."
+        }
+      ]
+    },
+    {
+      "id": "C152",
+      "discipline": "OVERVIEW",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ajrakh is also spelt ajrak in Sindh, where its Sindhi name is written اجرڪ.",
+      "quotes": [
+        {
+          "sourceId": "S06",
+          "locator": "Glossary, p. 142",
+          "quote": "Ajrakh (Also spelt ajrak in Sindh) Geometrically patterned resist-dyed and mordant printed cloth"
+        },
+        {
+          "sourceId": "S21",
+          "locator": "lead paragraph",
+          "quote": "Ajrak (Sindhi: اجرڪ; Saraiki: اجرک) is a unique form of textile block-printing found primarily among the Sindhi diaspora and in the Sindh region of Pakistan"
+        }
+      ]
     }
   ],
   "places": [
@@ -3439,7 +3524,15 @@
         "C063",
         "C064",
         "C065"
-      ]
+      ],
+      "after": {
+        "text": "Bright white and soft",
+        "colours": [
+          "WHITE"
+        ],
+        "claimId": "C064"
+      },
+      "whyClaimId": "C062"
     },
     {
       "id": "P02",
@@ -3456,8 +3549,17 @@
       ],
       "claimIds": [
         "C067",
-        "C068"
-      ]
+        "C068",
+        "C150"
+      ],
+      "after": {
+        "text": "A yellow tinge from the harda",
+        "colours": [
+          "YELLOW"
+        ],
+        "claimId": "C150"
+      },
+      "whyClaimId": "C068"
     },
     {
       "id": "P03",
@@ -3486,7 +3588,15 @@
         "C070",
         "C071",
         "C072"
-      ]
+      ],
+      "after": {
+        "text": "White outlines printed in resist",
+        "colours": [
+          "WHITE"
+        ],
+        "claimId": "C070"
+      },
+      "whyClaimId": "C072"
     },
     {
       "id": "P04",
@@ -3536,7 +3646,15 @@
         "C076",
         "C077",
         "C078"
-      ]
+      ],
+      "after": {
+        "text": "Black outlines",
+        "colours": [
+          "BLACK"
+        ],
+        "claimId": "C075"
+      },
+      "whyClaimId": "C078"
     },
     {
       "id": "P06",
@@ -3558,7 +3676,8 @@
       "claimIds": [
         "C079",
         "C080"
-      ]
+      ],
+      "whyClaimId": "C080"
     },
     {
       "id": "P07",
@@ -3592,7 +3711,8 @@
       "claimIds": [
         "C081",
         "C082"
-      ]
+      ],
+      "whyClaimId": "C082"
     },
     {
       "id": "P08",
@@ -3637,7 +3757,15 @@
         "C085",
         "C086",
         "C087"
-      ]
+      ],
+      "after": {
+        "text": "Rich blue, built up by immersions in the vat",
+        "colours": [
+          "BLUE"
+        ],
+        "claimId": "C087"
+      },
+      "whyClaimId": "C086"
     },
     {
       "id": "P09",
@@ -3648,7 +3776,8 @@
       "orderClaimId": "C088",
       "claimIds": [
         "C088"
-      ]
+      ],
+      "whyClaimId": "C088"
     },
     {
       "id": "P10",
@@ -3691,7 +3820,15 @@
         "C093",
         "C148",
         "C149"
-      ]
+      ],
+      "after": {
+        "text": "Red where pa and gach were printed",
+        "colours": [
+          "RED"
+        ],
+        "claimId": "C093"
+      },
+      "whyClaimId": "C095"
     },
     {
       "id": "P11",
@@ -3709,7 +3846,15 @@
       "claimIds": [
         "C091",
         "C092"
-      ]
+      ],
+      "after": {
+        "text": "Brighter, more brilliant red and blue",
+        "colours": [
+          "RED",
+          "BLUE"
+        ],
+        "claimId": "C091"
+      }
     },
     {
       "id": "P12",
@@ -3728,7 +3873,14 @@
       ],
       "claimIds": [
         "C098"
-      ]
+      ],
+      "after": {
+        "text": "Whites bleached by sun, moisture and dung",
+        "colours": [
+          "WHITE"
+        ],
+        "claimId": "C098"
+      }
     },
     {
       "id": "P13",
@@ -3743,7 +3895,8 @@
       ],
       "claimIds": [
         "C061"
-      ]
+      ],
+      "whyClaimId": "C061"
     },
     {
       "id": "P14",
@@ -3763,7 +3916,8 @@
         "C103",
         "C123",
         "C028"
-      ]
+      ],
+      "whyClaimId": "C103"
     }
   ],
   "materials": [
@@ -3772,6 +3926,7 @@
       "name": "Cotton cloth",
       "kind": "FIBRE",
       "role": "INPUT",
+      "botanicalName": "Gossypium",
       "claimIds": [
         "C108"
       ]
@@ -4023,6 +4178,7 @@
       "localNames": [
         "dhaori na phool"
       ],
+      "botanicalName": "Tamarix",
       "claimIds": [
         "C089",
         "C106"
@@ -4036,6 +4192,7 @@
       "localNames": [
         "kuwadia na beej"
       ],
+      "botanicalName": "Cassia tora",
       "claimIds": [
         "C083",
         "C085"
@@ -4088,6 +4245,7 @@
       "localNames": [
         "sag"
       ],
+      "botanicalName": "Tectona grandis",
       "claimIds": [
         "C103"
       ]
@@ -4109,6 +4267,7 @@
       "localNames": [
         "shisham"
       ],
+      "botanicalName": "Dalbergia sissoo",
       "claimIds": [
         "C103"
       ]
@@ -4121,6 +4280,7 @@
       "localNames": [
         "besan"
       ],
+      "botanicalName": "Cicer arietinum",
       "claimIds": [
         "C076",
         "C077"
@@ -4148,6 +4308,7 @@
       "localNames": [
         "al"
       ],
+      "botanicalName": "Morinda citrifolia",
       "claimIds": [
         "C148"
       ]
@@ -4157,6 +4318,7 @@
       "name": "Mustard oil",
       "kind": "OTHER",
       "role": "OTHER",
+      "botanicalName": "Brassica juncea",
       "claimIds": [
         "C103"
       ]
@@ -4296,6 +4458,13 @@
       "placeId": "L04",
       "claimIds": [
         "C051"
+      ]
+    },
+    {
+      "factor": "LANDFORM",
+      "placeId": "L06",
+      "claimIds": [
+        "C151"
       ]
     }
   ],
@@ -4640,7 +4809,13 @@
       "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
       "claimIds": [
         "C118"
-      ]
+      ],
+      "placement": {
+        "chapter": "people",
+        "role": "PLATE"
+      },
+      "width": 2448,
+      "height": 3264
     },
     {
       "id": "I02",
@@ -4652,7 +4827,19 @@
       "caption": "An ajrakh made by Kutch artisans, held up to show its repeated field and multiple borders",
       "claimIds": [
         "C118"
-      ]
+      ],
+      "placement": {
+        "chapter": "glance",
+        "role": "MASTHEAD"
+      },
+      "focal": {
+        "x": 0.0,
+        "y": 0.06,
+        "width": 1.0,
+        "height": 0.56
+      },
+      "width": 3264,
+      "height": 2448
     },
     {
       "id": "I03",
@@ -4664,7 +4851,13 @@
       "caption": "Natural dye and printing materials, among them alum and lime, laid out on an ajrakh cloth",
       "claimIds": [
         "C106"
-      ]
+      ],
+      "placement": {
+        "chapter": "chem",
+        "role": "PLATE"
+      },
+      "width": 2448,
+      "height": 3264
     },
     {
       "id": "I04",
@@ -4676,7 +4869,144 @@
       "caption": "Detail of an ajrakh print with star-shaped and geometric patterns on an indigo ground",
       "claimIds": [
         "C126"
-      ]
+      ],
+      "placement": {
+        "chapter": "glance",
+        "role": "PLATE"
+      },
+      "width": 4160,
+      "height": 3120
+    },
+    {
+      "id": "I05",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/KING_PRIEST.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:KING_PRIEST.jpg",
+      "author": "Irfanmurtaza",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "The priest-king bust of Mohenjo-daro, its shawl carved with trefoil motifs",
+      "claimIds": [
+        "C014"
+      ],
+      "placement": {
+        "chapter": "history",
+        "role": "RECORD"
+      },
+      "focal": {
+        "x": 0.1,
+        "y": 0.12,
+        "width": 0.8,
+        "height": 0.52
+      },
+      "width": 1424,
+      "height": 2000
+    },
+    {
+      "id": "I06",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Madder_as_a_natural_dye.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Madder_as_a_natural_dye.jpg",
+      "author": "Sailesh Patnaik",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "Madder roots beside skeins of tasar silk yarn coloured with natural dyes",
+      "claimIds": [
+        "C093"
+      ],
+      "placement": {
+        "chapter": "chem",
+        "role": "MATERIAL",
+        "materialId": "M19"
+      },
+      "width": 3264,
+      "height": 2448,
+      "standIn": "Tasar silk yarn, not ajrakh"
+    },
+    {
+      "id": "I07",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/The_White_Desert_in_Kutch%2C_the_great_rann_of_kutch.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:The_White_Desert_in_Kutch,_the_great_rann_of_kutch.jpg",
+      "author": "Ranjith Kumar Inbasekaran",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "The salt marshes of the Great Rann of Kachchh, the white desert of Kutch",
+      "claimIds": [
+        "C151"
+      ],
+      "placement": {
+        "chapter": "why",
+        "role": "OPENER"
+      },
+      "width": 4608,
+      "height": 3456
+    },
+    {
+      "id": "I08",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Master_artist_carves_a_woodblock_for_textile_printing.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Master_artist_carves_a_woodblock_for_textile_printing.jpg",
+      "author": "Journyes",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A master carver shows the wooden printing block he is carving, at the Anokhi Museum in Jaipur",
+      "stageId": "P14",
+      "placement": {
+        "chapter": "made",
+        "role": "STAGE",
+        "stageId": "P14"
+      },
+      "width": 3024,
+      "height": 3024,
+      "standIn": "A Jaipur block, not an ajrakh block"
+    },
+    {
+      "id": "I09",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Banni_Grasslands_Day.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Banni_Grasslands_Day.jpg",
+      "author": "Probablydhruv",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "A landscape of the Banni grasslands of Kachchh in April 2016",
+      "claimIds": [
+        "C035"
+      ],
+      "placement": {
+        "chapter": "why",
+        "role": "RECORD"
+      },
+      "width": 6000,
+      "height": 4000
+    },
+    {
+      "id": "I10",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/08-Indigo-factory-%28beating-the-Vats%29-bw.jpg",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:08-Indigo-factory-(beating-the-Vats)-bw.jpg",
+      "author": "Oscar Mallitte",
+      "licence": "Public domain",
+      "caption": "Workers beating the vats at an indigo factory in Allahabad in 1877",
+      "claimIds": [
+        "C113"
+      ],
+      "placement": {
+        "chapter": "chem",
+        "role": "MATERIAL",
+        "materialId": "M16"
+      },
+      "width": 4463,
+      "height": 3832,
+      "standIn": "An indigo factory at Allahabad in 1877, not Kachchh"
+    }
+  ],
+  "nativeNames": [
+    {
+      "text": "اجرڪ",
+      "language": "sd",
+      "script": "Arab",
+      "claimId": "C152"
+    },
+    {
+      "text": "ajrak",
+      "language": "sd",
+      "script": "Latn",
+      "claimId": "C152"
     }
   ],
   "overview": {

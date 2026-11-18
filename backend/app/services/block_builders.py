@@ -2,18 +2,21 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from collections.abc import Callable, Collection, Mapping, Sequence
+from collections.abc import Callable, Collection, Iterable, Mapping, Sequence
 from dataclasses import KW_ONLY, dataclass, field
 from typing import Any, Self
 
 from app.core.errors import InvalidInput
-from app.models.enums import DISCIPLINES
+from app.models.enums import DISCIPLINES, EXPLAINER_DEPTHS
+from app.research.depth import depth_at_least
 from app.research.expert_panel import PANEL_FIELDS
 from app.research.explainer import BLOCK_PHASES, BUILT_BLOCK_KINDS, Block
 from app.research.piece_reuse import REGION_STORY_FACETS, SIMULATION_FACETS
 from app.research.sections import block_id
 
+from .artisan_voice_builder import ARTISAN_VOICE_FIELDS, ArtisanVoiceBuilder
 from .builder_interface import BlockBuilder, BuildAsk, BuilderTools, Built, SourceRefs
+from .claim_ledger import ONCE_PER_ANSWER_KINDS
 from .climate_risk import CLIMATE_RISK_WAIT_SECONDS, ClimateRiskBuilder
 from .expert_views import EXPERT_VIEW_WAIT_SECONDS, ExpertPanelBuilder
 from .journey_builders import (
@@ -26,6 +29,7 @@ from .learning_builders import COMPARE_FIELDS, CONCEPT_GRAPH_FIELDS, CompareBuil
 from .market_builder import MARKET_FIELDS, MarketGiBuilder
 from .matter_builders import (
     MATERIAL_CARD_WAIT_SECONDS,
+    PLAYED_FIELDS,
     MaterialCardBuilder,
     MoleculeBuilder,
     ReactionPlayerBuilder,
@@ -40,6 +44,10 @@ __all__ = [
     "BLOCK_BUILDERS",
     "BUILDER_WAIT_MAX_SECONDS",
     "BUILDER_WAIT_SECONDS",
+    "SEASONS_FIELDS",
+    "SUPPLY_MAP_FIELDS",
+    "TIMELINE_MAP_FIELDS",
+    "ZOOM_STORY_FIELDS",
     "AddedBlocks",
     "BlockBuilders",
     "BuilderEntry",
@@ -50,8 +58,15 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 BUILDER_WAIT_SECONDS = 8.0
-BUILDER_WAIT_MAX_SECONDS = 60.0
+BUILDER_WAIT_MAX_SECONDS = 180.0
+PICTURES_KIND = "images"
 PHASE_A = "A"
+FIRST_DEPTH = EXPLAINER_DEPTHS[0]
+EXPERT_DEPTH = EXPLAINER_DEPTHS[-1]
+SEASONS_FIELDS = frozenset({"CLIMATE", "PROCESS", "GEOGRAPHY"})
+SUPPLY_MAP_FIELDS = frozenset({"MATERIALS", "PROCESS", "ECONOMICS"})
+ZOOM_STORY_FIELDS = frozenset({"MATERIALS", "CHEMISTRY", "PROCESS"})
+TIMELINE_MAP_FIELDS = frozenset({"HISTORY", "ECONOMICS", "GEOGRAPHY"})
 
 
 @dataclass(frozen=True)
@@ -62,7 +77,10 @@ class BuilderEntry:
     wait_seconds: float = BUILDER_WAIT_SECONDS
     _: KW_ONLY
     rebuilt_on_reuse: bool = False
+    replaces_stored: bool = False
+    reused_from: str = FIRST_DEPTH
     places_pieces: bool = False
+    adds_pictures: bool = False
 
     def __post_init__(self) -> None:
         if BLOCK_PHASES.get(self.kind, PHASE_A) == PHASE_A:
@@ -71,6 +89,10 @@ class BuilderEntry:
             raise InvalidInput(f"the {self.kind} builder names the fields it adds blocks to")
         if not 0 < self.wait_seconds <= BUILDER_WAIT_MAX_SECONDS:
             raise InvalidInput(f"the {self.kind} builder waits at most {BUILDER_WAIT_MAX_SECONDS} s")
+        if self.replaces_stored and not self.rebuilt_on_reuse:
+            raise InvalidInput(f"the {self.kind} builder replaces a stored block only when rebuilt on reuse")
+        if self.reused_from not in EXPLAINER_DEPTHS:
+            raise InvalidInput(f"the {self.kind} builder names the depth it is reused from")
 
 
 BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
@@ -82,7 +104,7 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
         rebuilt_on_reuse=True,
     ),
     BuilderEntry("map_layer", frozenset({"GEOLOGY", "CLIMATE"}), MapLayerBuilder, rebuilt_on_reuse=True),
-    BuilderEntry("seasons", frozenset({"CLIMATE"}), SeasonsBuilder),
+    BuilderEntry("seasons", SEASONS_FIELDS, SeasonsBuilder),
     BuilderEntry(
         "climate_risk",
         frozenset({"CLIMATE"}),
@@ -90,10 +112,12 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
         CLIMATE_RISK_WAIT_SECONDS,
         rebuilt_on_reuse=True,
     ),
-    BuilderEntry("supply_map", frozenset({"MATERIALS"}), SupplyMapBuilder, SUPPLY_MAP_WAIT_SECONDS),
+    BuilderEntry("supply_map", SUPPLY_MAP_FIELDS, SupplyMapBuilder, SUPPLY_MAP_WAIT_SECONDS),
     BuilderEntry("measure", MEASURE_FIELDS, MeasureBuilder),
     BuilderEntry("market_gi", MARKET_FIELDS, MarketGiBuilder, rebuilt_on_reuse=True),
-    BuilderEntry("reaction_player", frozenset({"CHEMISTRY"}), ReactionPlayerBuilder),
+    BuilderEntry(
+        "reaction_player", PLAYED_FIELDS, ReactionPlayerBuilder, rebuilt_on_reuse=True, replaces_stored=True
+    ),
     BuilderEntry(
         "material_card",
         frozenset({"CHEMISTRY", "MATERIALS"}),
@@ -103,16 +127,27 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
     BuilderEntry(
         "molecule_3d", frozenset({"CHEMISTRY", "MATERIALS"}), MoleculeBuilder, rebuilt_on_reuse=True
     ),
-    BuilderEntry("expert_view", PANEL_FIELDS, ExpertPanelBuilder, EXPERT_VIEW_WAIT_SECONDS),
+    BuilderEntry(
+        "expert_view", PANEL_FIELDS, ExpertPanelBuilder, EXPERT_VIEW_WAIT_SECONDS, reused_from=EXPERT_DEPTH
+    ),
+    BuilderEntry("artisan_voice", ARTISAN_VOICE_FIELDS, ArtisanVoiceBuilder, rebuilt_on_reuse=True),
     BuilderEntry("what_if", WHAT_IF_FIELDS, WhatIfBuilder, WHAT_IF_WAIT_SECONDS),
     BuilderEntry(
-        "simulation", SIMULATION_FACETS, SimulationBuilder, SIMULATION_WAIT_SECONDS, places_pieces=True
+        "simulation",
+        SIMULATION_FACETS,
+        SimulationBuilder,
+        SIMULATION_WAIT_SECONDS,
+        reused_from=EXPERT_DEPTH,
+        places_pieces=True,
+        adds_pictures=True,
     ),
-    BuilderEntry("zoom_story", frozenset({"MATERIALS"}), ZoomStoryBuilder, ZOOM_STORY_WAIT_SECONDS),
-    BuilderEntry("timeline_map", frozenset({"HISTORY"}), TimelineMapBuilder, TIMELINE_MAP_WAIT_SECONDS),
+    BuilderEntry("zoom_story", ZOOM_STORY_FIELDS, ZoomStoryBuilder, ZOOM_STORY_WAIT_SECONDS),
+    BuilderEntry("timeline_map", TIMELINE_MAP_FIELDS, TimelineMapBuilder, TIMELINE_MAP_WAIT_SECONDS),
     BuilderEntry("compare", COMPARE_FIELDS, CompareBuilder, rebuilt_on_reuse=True),
     BuilderEntry("concept_graph", CONCEPT_GRAPH_FIELDS, ConceptGraphBuilder, rebuilt_on_reuse=True),
 )
+
+Pair = tuple[BuilderEntry, BlockBuilder]
 
 
 @dataclass(frozen=True)
@@ -122,27 +157,43 @@ class AddedBlocks:
 
 
 class BlockBuilders:
-    def __init__(self, builders: Sequence[tuple[BuilderEntry, BlockBuilder]] = ()) -> None:
+    def __init__(self, builders: Iterable[Pair] = (), *, taken: set[str] | None = None) -> None:
         self._builders = tuple(builders)
+        self._taken = taken
 
     @classmethod
     def from_registry(cls, tools: BuilderTools, entries: Sequence[BuilderEntry] = BLOCK_BUILDERS) -> Self:
         return cls([(entry, entry.make(tools)) for entry in entries if entry.kind in BUILT_BLOCK_KINDS])
 
-    def for_section(self, discipline: str) -> tuple[tuple[BuilderEntry, BlockBuilder], ...]:
+    def for_answer(self) -> BlockBuilders:
+        return BlockBuilders(self._builders, taken=set())
+
+    def for_section(self, discipline: str) -> tuple[Pair, ...]:
         return tuple(pair for pair in self._builders if discipline in pair[0].disciplines)
 
-    def for_reuse(self) -> BlockBuilders:
-        return BlockBuilders([pair for pair in self._builders if pair[0].rebuilt_on_reuse])
+    def for_reuse(self, shown: Collection[str], *, depth: str) -> BlockBuilders:
+        return self._kept(
+            pair
+            for pair in self._builders
+            if (pair[0].rebuilt_on_reuse or pair[0].kind not in shown)
+            and depth_at_least(depth, pair[0].reused_from)
+        )
+
+    def replaced_on_reuse(self, discipline: str) -> frozenset[str]:
+        return frozenset(entry.kind for entry, _ in self.for_section(discipline) if entry.replaces_stored)
 
     def without(self, kinds: Collection[str]) -> BlockBuilders:
-        return BlockBuilders([pair for pair in self._builders if pair[0].kind not in kinds])
+        return self._kept(pair for pair in self._builders if pair[0].kind not in kinds)
+
+    def note_shown(self, kinds: Iterable[str]) -> None:
+        if self._taken is not None:
+            self._taken.update(kind for kind in kinds if kind in ONCE_PER_ANSWER_KINDS)
 
     def building(self) -> SectionBuilds:
         return SectionBuilds(self)
 
     async def added(self, ask: BuildAsk) -> AddedBlocks:
-        chosen = self.for_section(ask.section.discipline)
+        chosen = [pair for pair in self.for_section(ask.section.discipline) if self._took(pair[0])]
         if not chosen:
             return AddedBlocks()
         results = await asyncio.gather(*(_bounded(entry, builder, ask) for entry, builder in chosen))
@@ -150,16 +201,27 @@ class BlockBuilders:
         sources: dict[str, Mapping[str, Any]] = {}
         for (entry, _), built in zip(chosen, results, strict=True):
             known = {**ask.cited.sources, **built.sources}
-            for block in built.blocks:
-                refusal = _refusal(entry, block, known)
-                if refusal is not None:
-                    logger.warning(
-                        "a %s block of section %s is dropped: %s", entry.kind, ask.section.id, refusal
-                    )
-                    continue
-                blocks.append(block)
-                sources.update({sid: known[sid] for sid in block.cited_source_ids()})
+            checked = _checked(entry, built, known, ask)
+            if not checked:
+                self._give_back(entry)
+            blocks += checked
+            sources.update({sid: known[sid] for block in checked for sid in block.cited_source_ids()})
         return AddedBlocks(tuple(blocks), sources)
+
+    def _kept(self, pairs: Iterable[Pair]) -> BlockBuilders:
+        return BlockBuilders(pairs, taken=self._taken)
+
+    def _took(self, entry: BuilderEntry) -> bool:
+        if self._taken is None or entry.kind not in ONCE_PER_ANSWER_KINDS:
+            return True
+        if entry.kind in self._taken:
+            return False
+        self._taken.add(entry.kind)
+        return True
+
+    def _give_back(self, entry: BuilderEntry) -> None:
+        if self._taken is not None and entry.kind in ONCE_PER_ANSWER_KINDS:
+            self._taken.discard(entry.kind)
 
 
 class SectionBuilds:
@@ -214,8 +276,19 @@ async def _bounded(entry: BuilderEntry, builder: BlockBuilder, ask: BuildAsk) ->
     return Built()
 
 
+def _checked(entry: BuilderEntry, built: Built, known: SourceRefs, ask: BuildAsk) -> list[Block]:
+    checked: list[Block] = []
+    for block in built.blocks:
+        refusal = _refusal(entry, block, known)
+        if refusal is None:
+            checked.append(block)
+        else:
+            logger.warning("a %s block of section %s is dropped: %s", entry.kind, ask.section.id, refusal)
+    return checked
+
+
 def _refusal(entry: BuilderEntry, block: Block, known: SourceRefs) -> str | None:
-    if block.kind != entry.kind:
+    if block.kind != entry.kind and not (entry.adds_pictures and block.kind == PICTURES_KIND):
         return f"the {entry.kind} builder made a {block.kind} block"
     if block.kind not in BUILT_BLOCK_KINDS:
         return f"{block.kind} is not built yet"

@@ -1,0 +1,52 @@
+{
+  "id": "3f1e8b7a-2c4d-4e5f-9a1b-0c2d3e4f5a6b",
+  "version": 2,
+  "status": "PENDING",
+  "craft": {
+    "slug": "kutch-ajrakh",
+    "name": "Ajrakh Printing",
+    "path": "/crafts/kutch-ajrakh"
+  },
+  "discipline": "PROCESS",
+  "conceptType": "PROCESS_STAGE",
+  "conceptName": "Washing in running water",
+  "claimText": "After the alum bath the printed cloth is washed in running water.",
+  "quote": "फिटकरी के बाद हम कपड़े को बहते पानी में धोते हैं",
+  "language": "hi",
+  "script": "Deva",
+  "direction": "ltr",
+  "english": "After the alum we wash the cloth in running water",
+  "englishSource": "MACHINE",
+  "locator": "1:05–1:12",
+  "locatorPrecision": "WORD",
+  "recordedAt": "2026-11-18T05:30:00+00:00",
+  "speaker": {
+    "name": null,
+    "role": "ARTISAN",
+    "district": "Kachchh",
+    "state": "Gujarat"
+  },
+  "line": "An artisan of Ajrakh Printing, Kachchh, Gujarat",
+  "screens": [],
+  "corroboratedBy": [],
+  "context": {
+    "before": {
+      "text": "फिटकरी के बाद आप कपड़े के साथ क्या करते हैं?",
+      "english": "What do you do with the cloth after the alum?",
+      "answerId": null
+    },
+    "turnText": "हाँ। फिटकरी के बाद हम कपड़े को बहते पानी में धोते हैं, फिर धूप में सुखाते हैं।",
+    "audio": {
+      "url": "https://kalavigyan-media.s3.ap-south-1.amazonaws.com/media/2b3c4d5e-6f70-4a81-92a3-b4c5d6e7f809/0f1e2d3c4b5a69788796a5b4c3d2e1f0/KalaVigyan_Artisan-Conversation_2026-11-18_1100_Kachchh_Ajrakh-Printing_Recording_T03.webm?X-Amz-Expires=900",
+      "expiresAt": "2026-11-18T07:15:00+00:00",
+      "mimeType": "audio/webm",
+      "startMs": 2000,
+      "endMs": 9000
+    }
+  },
+  "submittedAt": "2026-11-18T06:02:00+00:00",
+  "reviewedAt": null,
+  "reviewerRole": null,
+  "rejectReason": null,
+  "reviewNote": null
+}

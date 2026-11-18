@@ -10,16 +10,23 @@ from typing import Any
 from .craft_master_loader import DATA_DIR
 
 __all__ = [
+    "OTHER_NAMES_FILE",
     "REGISTER_FILE",
     "DistrictCodes",
     "DistrictRegister",
     "load_district_codes",
+    "load_district_other_names",
     "load_district_register",
+    "load_listed_places",
     "parse_district_codes",
+    "parse_district_other_names",
     "parse_district_register",
+    "parse_listed_places",
 ]
 
 REGISTER_FILE = DATA_DIR / "lgd_register.json"
+OTHER_NAMES_FILE = DATA_DIR / "district_other_names.json"
+OTHER_NAMES_SCHEMA_VERSION = 1
 
 
 @dataclass(frozen=True)
@@ -93,3 +100,50 @@ def parse_district_codes(raw: Mapping[str, Any]) -> DistrictCodes:
 @lru_cache(maxsize=1)
 def load_district_codes() -> DistrictCodes:
     return parse_district_codes(json.loads(REGISTER_FILE.read_text(encoding="utf-8")))
+
+
+def parse_listed_places(raw: Mapping[str, Any]) -> list[dict[str, Any]]:
+    districts: dict[int, list[dict[str, Any]]] = {}
+    for row in raw["districts"]:
+        districts.setdefault(int(row["stateLgd"]), []).append(
+            {"lgd": int(row["lgd"]), "name": str(row["name"])}
+        )
+    states = [
+        {
+            "lgd": int(row["lgd"]),
+            "name": str(row["name"]),
+            "districts": sorted(districts.get(int(row["lgd"]), []), key=lambda d: d["name"]),
+        }
+        for row in raw["states"]
+    ]
+    return sorted(states, key=lambda state: state["name"])
+
+
+@lru_cache(maxsize=1)
+def load_listed_places() -> tuple[dict[str, Any], ...]:
+    return tuple(parse_listed_places(json.loads(REGISTER_FILE.read_text(encoding="utf-8"))))
+
+
+def parse_district_other_names(
+    raw: Mapping[str, Any], register: Mapping[str, Any]
+) -> Mapping[int, tuple[str, ...]]:
+    if raw.get("schemaVersion") != OTHER_NAMES_SCHEMA_VERSION:
+        raise ValueError(
+            f"district other names are schema {OTHER_NAMES_SCHEMA_VERSION}, not {raw.get('schemaVersion')!r}"
+        )
+    names = {int(row["lgd"]): str(row["name"]) for row in register["districts"]}
+    found: dict[int, tuple[str, ...]] = {}
+    for row in raw["districts"]:
+        lgd = int(row["lgd"])
+        if names.get(lgd) != row["name"]:
+            raise ValueError(f"district {lgd} is {names.get(lgd)!r} in the LGD register, not {row['name']!r}")
+        found[lgd] = tuple(str(name) for name in row["otherNames"])
+    return MappingProxyType(found)
+
+
+@lru_cache(maxsize=1)
+def load_district_other_names() -> Mapping[int, tuple[str, ...]]:
+    return parse_district_other_names(
+        json.loads(OTHER_NAMES_FILE.read_text(encoding="utf-8")),
+        json.loads(REGISTER_FILE.read_text(encoding="utf-8")),
+    )

@@ -4,7 +4,8 @@ from typing import Any
 import pytest
 from pydantic import TypeAdapter, ValidationError
 
-from app.research.blocks_insight import ClimateTrend, PriceRange, UnitConversion
+from app.research.blocks_climate import ClimateTrend
+from app.research.blocks_insight import PriceRange, UnitConversion
 from app.research.blocks_learning import QUIZ_BLANK, quiz_prompt
 from app.research.explainer import Block
 from app.research.measures import UNIT_DEFINITIONS, metric_value

@@ -1,0 +1,2731 @@
+{
+  "themes": [
+    "light",
+    "dark",
+    "hcLight",
+    "hcDark"
+  ],
+  "floor": 10.0,
+  "meta": {
+    "name": "KalaVigyan design system",
+    "direction": "Alum & Indigo, with the specimen label, collection wall, figure numbering and Cite this from the Specimen Cabinet, and the photographic first screen and the vat moment from Night Vat.",
+    "version": "1.1.0",
+    "date": "2026-11-18",
+    "themes": {
+      "light": "Alum paper. :root",
+      "dark": "An indigo vat at night. :root[data-theme=\"dark\"], and prefers-color-scheme: dark when no data-theme is set",
+      "hcLight": "High contrast on light. :root[data-high-contrast=\"true\"], and prefers-contrast: more when the reader has not set data-high-contrast=\"false\"",
+      "hcDark": "High contrast on dark. :root[data-theme=\"dark\"][data-high-contrast=\"true\"], prefers-contrast: more with data-theme=\"dark\", and prefers-contrast: more with prefers-color-scheme: dark when data-theme is not \"light\"; data-high-contrast=\"false\" opts out of the OS setting"
+    },
+    "contrastClasses": {
+      "text": "Usable for text of any size: 4.5:1 or better on ground, raised and sunk in its theme (7:1 or better in high contrast).",
+      "large-text": "Text 24px regular or 18.66px semibold and up, and graphics: 3:1 or better on every surface; below 4.5:1 somewhere.",
+      "graphic": "Non-text marks that identify a control, a state or a data value: 3:1 or better against the surface they sit on (recorded per surface).",
+      "onFill": "Text or icons set on a fill: 4.5:1 or better against that fill (7:1 in high contrast). Checked against its fills, not against ground.",
+      "fill": "A background; the text set on it is checked instead (onText lists the pairs).",
+      "surface": "A page, panel or map ground.",
+      "decorative": "No contrast requirement; never the only boundary of a control or the only carrier of meaning.",
+      "specimen": "A depicted material colour. Does not theme. Always textured and set in the specimen frame (1px ink-2, then a 2px raised mat), never a control."
+    },
+    "reservedFloor": "Every ramp step, series colour and family hue sits 10 or more OKLab delta E x100 from indigo, indigo-hover, madder, terracotta and turmeric in the same theme. The generator refuses to write a token file that breaks it.",
+    "cssPattern": "Semantic colours ship as RGB channel triplets in --c-<name> (so Tailwind alpha modifiers keep working) with a hex alias --<name>: rgb(var(--c-<name>)). Data, map, specimen and plate tokens ship as hex in --<name>.",
+    "sourceOfTruth": "This file, written by generator/gen_tokens.py, which also writes tokens.css beside it. Edit the generator, never the outputs."
+  },
+  "semantic": [
+    [
+      "ground",
+      "surface",
+      "Alum paper. The page.",
+      "Body background of every page. Paper grain sits on it only.",
+      "#F4F5F1",
+      "#0E121C",
+      "#FFFFFF",
+      "#000000"
+    ],
+    [
+      "raised",
+      "surface",
+      "Paper laid on paper.",
+      "Popovers, sheets, dialogs, specimen labels, inputs, interactive cards, the mat inside a specimen frame. Never a box around prose.",
+      "#FBFBF9",
+      "#161B28",
+      "#FFFFFF",
+      "#0E121C"
+    ],
+    [
+      "sunk",
+      "surface",
+      "A shallow well in the paper.",
+      "Figure grounds, the how-to-read band, skeletons, disabled inputs, code wells.",
+      "#E8EAE4",
+      "#0A0D15",
+      "#EEF0EA",
+      "#05070C"
+    ],
+    [
+      "rule",
+      "decorative",
+      "Hairline.",
+      "Dividers between rows and sections, gridlines. Never the only boundary of a control or a swatch.",
+      "#D2D6CE",
+      "#2A3142",
+      "#8A9088",
+      "#7F889C"
+    ],
+    [
+      "rule-strong",
+      "graphic",
+      "Control and specimen edge.",
+      "Borders of quiet buttons, chips, inputs, segmented choices and toggles off. 3:1 or better on every surface.",
+      "#767C74",
+      "#7A849A",
+      "#3D433C",
+      "#C4CBD8"
+    ],
+    [
+      "ink-1",
+      "text",
+      "Kut iron-black.",
+      "Headlines, body text, figure strokes, the chart baseline and trend line, dates, the current step of a process.",
+      "#1C1815",
+      "#ECEAE3",
+      "#000000",
+      "#FFFFFF"
+    ],
+    [
+      "ink-2",
+      "text",
+      "Second ink.",
+      "Captions in italic, standfirsts, chart annotation, botanical names in italic, list meta that is still read, and the 1px frame of every specimen swatch.",
+      "#3A3430",
+      "#CBC8C0",
+      "#1C1815",
+      "#F1EFE9"
+    ],
+    [
+      "ink-3",
+      "text",
+      "Third ink.",
+      "Credits, source lines, axis labels, kickers, timestamps, margin-note numbers. Never below 12px.",
+      "#59534E",
+      "#A5A198",
+      "#2E2925",
+      "#D9D6CE"
+    ],
+    [
+      "indigo",
+      "text",
+      "The only interactive colour.",
+      "Links, the primary button, citation numerals, the selected tab, chip and segment, a pressed stage, toggles on, focus rings. Nothing that cannot be pressed. Chroma 0.15 or more, so no dyed specimen (chroma 0.06 or less) reads as a control.",
+      "#243B9C",
+      "#A9BCF3",
+      "#172881",
+      "#C9D5FB"
+    ],
+    [
+      "indigo-hover",
+      "text",
+      "Indigo under the pointer.",
+      "Hover and pressed state of indigo text and the primary button.",
+      "#162779",
+      "#CBD7FA",
+      "#0C1761",
+      "#E2E9FD"
+    ],
+    [
+      "indigo-wash",
+      "fill",
+      "Selected fill.",
+      "Background of a pressed chip and the selected option in a list. Never a section background, never a focus indicator on its own.",
+      "#DFE6F6",
+      "#1E2849",
+      "#D3DCF4",
+      "#24305A"
+    ],
+    [
+      "on-indigo",
+      "onFill",
+      "Ink on indigo.",
+      "Label of the primary button, the selected segment and a pressed stage; the thumb of a switch that is on.",
+      "#FBFBF9",
+      "#0E121C",
+      "#FFFFFF",
+      "#000000"
+    ],
+    [
+      "madder",
+      "text",
+      "Emphasis, disagreement and real hazard.",
+      "The Sources differ marker and its 135 degree hatch, genuine chemical or safety hazards, destructive actions. Never decoration, never a chart series.",
+      "#9E2E27",
+      "#EF8E80",
+      "#7A1D18",
+      "#FFAFA3"
+    ],
+    [
+      "madder-wash",
+      "fill",
+      "Madder ground.",
+      "Behind a hazard note or a destructive confirmation. Text on it is madder or ink-1.",
+      "#F4DFDB",
+      "#3B2124",
+      "#F4DAD5",
+      "#45242A"
+    ],
+    [
+      "on-madder",
+      "onFill",
+      "Ink on madder.",
+      "Label of a confirming destructive button (madder fill).",
+      "#FBFBF9",
+      "#0E121C",
+      "#FFFFFF",
+      "#000000"
+    ],
+    [
+      "turmeric",
+      "decorative",
+      "Highlight only.",
+      "The 2px rule beside a demonstrated sentence. Never text, never a control, never a state indicator.",
+      "#E6AE2A",
+      "#F0C152",
+      "#E6AE2A",
+      "#FFD166"
+    ],
+    [
+      "turmeric-wash",
+      "fill",
+      "Highlighter.",
+      "The sentence a citation popover is open for, search matches, the sentences a selected source supports. Ink-1 reads on it.",
+      "#F8E6A8",
+      "#4A3A12",
+      "#F8E09A",
+      "#5A4614"
+    ],
+    [
+      "turmeric-text",
+      "text",
+      "Turmeric when it must be text.",
+      "The word Inferred and its dotted underline.",
+      "#7A5300",
+      "#F0C152",
+      "#5A3D00",
+      "#FFD166"
+    ],
+    [
+      "terracotta",
+      "large-text",
+      "Place.",
+      "Map pins, the outline and 45 degree hatch of the place a page is about, place glyphs, large place headings (24px and up). Not for small text in light.",
+      "#B05A36",
+      "#E0916C",
+      "#7D3519",
+      "#F5AE8C"
+    ],
+    [
+      "error",
+      "text",
+      "Something went wrong.",
+      "Field errors and failed actions. Same pigment as madder; always with an icon and words.",
+      "#9E2E27",
+      "#EF8E80",
+      "#7A1D18",
+      "#FFAFA3"
+    ],
+    [
+      "error-wash",
+      "fill",
+      "Error ground.",
+      "Error toast and inline error banner.",
+      "#F4DFDB",
+      "#3B2124",
+      "#F4DAD5",
+      "#45242A"
+    ],
+    [
+      "warning",
+      "text",
+      "Take care.",
+      "Expiring sessions, unsaved changes, quota near its limit. Never for ordinary stage facts.",
+      "#8A4A12",
+      "#F0A868",
+      "#6A3608",
+      "#FFC08A"
+    ],
+    [
+      "warning-wash",
+      "fill",
+      "Warning ground.",
+      "Warning toast and banner.",
+      "#F6E4D2",
+      "#3D2A17",
+      "#F4DCC4",
+      "#4A3016"
+    ],
+    [
+      "info",
+      "text",
+      "Neutral news.",
+      "Info toasts and notices. Slate, 10 or more delta E from indigo in every theme, so it never reads as a link.",
+      "#2F5266",
+      "#84A5B0",
+      "#1F3D4F",
+      "#A1BCCA"
+    ],
+    [
+      "info-wash",
+      "fill",
+      "Info ground.",
+      "Info toast and banner.",
+      "#DDE7EC",
+      "#16252F",
+      "#D2E1E8",
+      "#1A2C38"
+    ],
+    [
+      "success",
+      "text",
+      "Done.",
+      "Saved, copied, access granted.",
+      "#2E6A41",
+      "#8CC79A",
+      "#1F4F2E",
+      "#AEE0BA"
+    ],
+    [
+      "success-wash",
+      "fill",
+      "Success ground.",
+      "Success toast and banner.",
+      "#DCEADF",
+      "#16281C",
+      "#D0E6D5",
+      "#173020"
+    ]
+  ],
+  "onTextPairs": [
+    [
+      "indigo",
+      "indigo-wash"
+    ],
+    [
+      "ink-1",
+      "indigo-wash"
+    ],
+    [
+      "madder",
+      "madder-wash"
+    ],
+    [
+      "ink-1",
+      "madder-wash"
+    ],
+    [
+      "ink-1",
+      "turmeric-wash"
+    ],
+    [
+      "error",
+      "error-wash"
+    ],
+    [
+      "warning",
+      "warning-wash"
+    ],
+    [
+      "info",
+      "info-wash"
+    ],
+    [
+      "success",
+      "success-wash"
+    ],
+    [
+      "ink-1",
+      "warning-wash"
+    ]
+  ],
+  "reserved": [
+    "indigo",
+    "indigo-hover",
+    "madder",
+    "terracotta",
+    "turmeric"
+  ],
+  "grain": {
+    "use": "A 160px feTurbulence tile at 3 to 4.5 per cent on ground only. Off in high contrast and in print.",
+    "light": "rgba(28,24,21,.045)",
+    "dark": "rgba(236,234,227,.03)",
+    "hcLight": "none",
+    "hcDark": "none"
+  },
+  "specimen": [
+    [
+      "dye-cloth",
+      "#F4F2EA",
+      "Scoured cotton after saaj."
+    ],
+    [
+      "dye-harda",
+      "#DFC974",
+      "Myrobalan (harda) yellow after kasanu."
+    ],
+    [
+      "dye-harda-dry",
+      "#E7D48D",
+      "Harda yellow, sun-dried."
+    ],
+    [
+      "dye-lime",
+      "#F7F5EE",
+      "Lime and gum resist outline."
+    ],
+    [
+      "dye-lime-edge",
+      "#CFCBBE",
+      "Edge of a lime outline on cloth."
+    ],
+    [
+      "dye-kut",
+      "#2A1C17",
+      "Kut iron-black on tannin: chocolate-black."
+    ],
+    [
+      "dye-kesari",
+      null,
+      "Kesari rang, the fugitive saffron tint in the alum paste.",
+      [
+        0.72,
+        0.14,
+        52
+      ]
+    ],
+    [
+      "dye-mud",
+      "#97785A",
+      "Gach clay resist."
+    ],
+    [
+      "dye-mud-wet",
+      "#7D6249",
+      "Gach clay, wet from washing."
+    ],
+    [
+      "dye-leuco",
+      "#6F9A3E",
+      "Cloth lifted green from the vat."
+    ],
+    [
+      "dye-vat-liquor",
+      "#A3A14A",
+      "Yellow-green vat liquor with dissolved leucoindigo."
+    ],
+    [
+      "dye-indigo",
+      null,
+      "Indigo-dyed cotton after oxidation: a dull slate navy, chroma 0.04, never the interactive indigo.",
+      [
+        0.31,
+        0.04,
+        262
+      ]
+    ],
+    [
+      "dye-indigo-deep",
+      null,
+      "Indigo after the second round (minakari).",
+      [
+        0.22,
+        0.035,
+        262
+      ]
+    ],
+    [
+      "dye-madder",
+      null,
+      "Madder red where alum was printed: alizarin crimson, deeper and bluer than the semantic madder.",
+      [
+        0.38,
+        0.15,
+        12
+      ]
+    ],
+    [
+      "dye-madder-bright",
+      null,
+      "Madder after the second round: a lighter crimson.",
+      [
+        0.56,
+        0.17,
+        4
+      ]
+    ],
+    [
+      "dye-pink",
+      "#EED6CC",
+      "The pinkish tinge madder leaves on whites that no lime protected."
+    ],
+    [
+      "dye-pink-edge",
+      "#C98F86",
+      "Edge of the pink tinge."
+    ],
+    [
+      "dip-1",
+      null,
+      "One dip, oxidised.",
+      [
+        0.56,
+        0.06,
+        255
+      ]
+    ],
+    [
+      "dip-2",
+      null,
+      "Two dips.",
+      [
+        0.47,
+        0.055,
+        257
+      ]
+    ],
+    [
+      "dip-3",
+      null,
+      "Three dips.",
+      [
+        0.39,
+        0.05,
+        259
+      ]
+    ],
+    [
+      "dip-4",
+      null,
+      "Four dips, the darkest blue.",
+      [
+        0.31,
+        0.04,
+        261
+      ]
+    ],
+    [
+      "photo-ink-1",
+      "#FBFAF6",
+      "Headline ink over a scrimmed photograph."
+    ],
+    [
+      "photo-ink-2",
+      "#E6E3DA",
+      "Standfirst ink over a scrimmed photograph."
+    ]
+  ],
+  "photoScrims": {
+    "photo-scrim-start": {
+      "cssVar": "--photo-scrim-start",
+      "value": "linear-gradient(90deg, rgba(8,10,16,.84) 0%, rgba(8,10,16,.74) 36%, rgba(8,10,16,.46) 56%, rgba(8,10,16,.12) 74%, rgba(8,10,16,0) 88%)",
+      "use": "Desktop and tablet: under text set at the inline start of a full-bleed photograph (the landing headline column). Mirrors in right-to-left."
+    },
+    "photo-scrim-bottom": {
+      "cssVar": "--photo-scrim-bottom",
+      "value": "linear-gradient(180deg, rgba(8,10,16,.60) 0%, rgba(8,10,16,.52) 16%, rgba(8,10,16,.68) 34%, rgba(8,10,16,.86) 58%, rgba(8,10,16,.92) 100%)",
+      "use": "Phone: under text stacked at the bottom of a photograph, and under the appbar at the top."
+    },
+    "photo-scrim-check": {
+      "rule": "Build-time check for every art-directed crop and every text box on it: sample the photograph under the box through the scrim, take the 95th-percentile luminance, and require photo-ink-1 at 4.5:1 or better for the headline and standfirst and 4.5:1 for small text, in every vat phase (rest, in the vat, lifted green, in the air). When a crop fails, the scrim for that crop is strengthened, never the text weakened.",
+      "appbar": "The appbar wears photo ink while the photograph is under it; once 64px of page ground has scrolled under the bar, it switches to page ink (ink-1 on ground with a rule) in one state change of 200ms."
+    },
+    "frame": {
+      "rule": "Every specimen swatch sits in a 1px ink-2 frame with a 2px raised mat inside it, so its edge reads at 3:1 or better against the mat or the frame in every theme (frame in each specimen records both ratios).",
+      "exception": "Specimens depict real dyes, so dye-indigo and the dips sit 7 to 10 delta E from indigo-hover and dye-madder sits near the high-contrast madder. Safeguards: a specimen is always textured with the weave, framed and named in a key; it never fills a control, a link or a chart series; the interactive indigo is chroma 0.15 or more and every dyed blue chroma 0.06 or less."
+    }
+  },
+  "plates": [
+    [
+      "textile",
+      "Textiles",
+      "twill",
+      [
+        "#E8E4D6",
+        "#1C1815"
+      ],
+      [
+        "#373226",
+        "#F4EEE4"
+      ],
+      [
+        "#EFEBDD",
+        "#000000"
+      ],
+      [
+        "#2D291C",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "metal",
+      "Metal",
+      "hammer",
+      [
+        "#D5BD84",
+        "#1C1815"
+      ],
+      [
+        "#4D4122",
+        "#F4EEDD"
+      ],
+      [
+        "#DCC48C",
+        "#000000"
+      ],
+      [
+        "#433617",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "wood",
+      "Wood",
+      "grain",
+      [
+        "#B08A5F",
+        "#1C1815"
+      ],
+      [
+        "#45301C",
+        "#F4EEE4"
+      ],
+      [
+        "#BC9668",
+        "#000000"
+      ],
+      [
+        "#3B2612",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "fibre",
+      "Natural fibre and grass",
+      "weave",
+      [
+        "#DCCD92",
+        "#1C1815"
+      ],
+      [
+        "#454024",
+        "#F3EFDF"
+      ],
+      [
+        "#E3D59C",
+        "#000000"
+      ],
+      [
+        "#3B3619",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "clay",
+      "Clay",
+      "plaster",
+      [
+        "#9C553A",
+        "#FBF7EF"
+      ],
+      [
+        "#4F2A1D",
+        "#F6ECE6"
+      ],
+      [
+        "#84432B",
+        "#FFFFFF"
+      ],
+      [
+        "#442013",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "stone",
+      "Stone",
+      "speckle",
+      [
+        "#C6CAC6",
+        "#1C1815"
+      ],
+      [
+        "#33393E",
+        "#EEF0F2"
+      ],
+      [
+        "#D0D4D0",
+        "#000000"
+      ],
+      [
+        "#292E34",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "paper",
+      "Paper",
+      "laid",
+      [
+        "#EEEAE0",
+        "#1C1815"
+      ],
+      [
+        "#3F3D36",
+        "#F1EFE8"
+      ],
+      [
+        "#F4F1E8",
+        "#000000"
+      ],
+      [
+        "#35332C",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "leather",
+      "Leather",
+      "pebble",
+      [
+        "#673A2A",
+        "#FBF7EF"
+      ],
+      [
+        "#371F19",
+        "#F6ECE3"
+      ],
+      [
+        "#592C1D",
+        "#FFFFFF"
+      ],
+      [
+        "#2D1610",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "paint",
+      "Painting",
+      "brush",
+      [
+        "#EAE2CF",
+        "#1C1815"
+      ],
+      [
+        "#41392F",
+        "#F3EFE7"
+      ],
+      [
+        "#F0E9D8",
+        "#000000"
+      ],
+      [
+        "#362F25",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "instr",
+      "Musical instruments",
+      "grain",
+      [
+        "#C9A274",
+        "#1C1815"
+      ],
+      [
+        "#4E381F",
+        "#F5EEE3"
+      ],
+      [
+        "#D2AC7E",
+        "#000000"
+      ],
+      [
+        "#432E14",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "toys",
+      "Toys and figurines",
+      "plaster",
+      [
+        "#D2AC63",
+        "#1C1815"
+      ],
+      [
+        "#524225",
+        "#F6F0E1"
+      ],
+      [
+        "#D8B46D",
+        "#000000"
+      ],
+      [
+        "#48381A",
+        "#FFFFFF"
+      ]
+    ],
+    [
+      "misc",
+      "More crafts",
+      "brush",
+      [
+        "#E2D9C6",
+        "#1C1815"
+      ],
+      [
+        "#3C372F",
+        "#F2EEE6"
+      ],
+      [
+        "#E8E0CE",
+        "#000000"
+      ],
+      [
+        "#322D25",
+        "#FFFFFF"
+      ]
+    ]
+  ],
+  "plateRules": {
+    "knockout": "The kicker and the name sit on a block of the plate ground with 8px padding, so no texture runs through text.",
+    "minimumTexture": "Where the pattern falls it changes the ground by 3 or more delta E in every theme (textureDeltaE).",
+    "pattern": "Irregular materials (hammered metal, stone, wood, plaster, pebble, brush) use seeded random patterns on a large tile so no grid shows; woven and laid materials keep their regular structure.",
+    "shelfSwatch": "Shelf headers and the index use the plate ground as the family swatch, never a categorical data colour; a family legend never sits beside plates."
+  },
+  "textures": {
+    "twill": {
+      "tile": 7,
+      "kind": "regular diagonal twill",
+      "opacity": 0.12,
+      "seeded": false
+    },
+    "hammer": {
+      "tile": 112,
+      "kind": "seeded hammer dents: 26 open arcs, radius 2 to 6px, random rotation",
+      "opacity": 0.16,
+      "seeded": true,
+      "seed": 11
+    },
+    "grain": {
+      "tile": 240,
+      "kind": "seeded wood grain: 9 wavy lines of varying spacing and 2 knots",
+      "opacity": 0.15,
+      "seeded": true,
+      "seed": 23
+    },
+    "weave": {
+      "tile": 14,
+      "kind": "basket weave, over two under two",
+      "opacity": 0.16,
+      "seeded": false
+    },
+    "plaster": {
+      "tile": 128,
+      "kind": "seeded trowel arcs: 14 shallow curves",
+      "opacity": 0.15,
+      "seeded": true,
+      "seed": 37
+    },
+    "speckle": {
+      "tile": 120,
+      "kind": "seeded mineral speckle: 70 dots, radius 0.5 to 1.6px, clustered",
+      "opacity": 0.2,
+      "seeded": true,
+      "seed": 41
+    },
+    "laid": {
+      "tile": 26,
+      "kind": "laid lines with chain lines, as in handmade paper",
+      "opacity": 0.12,
+      "seeded": false
+    },
+    "pebble": {
+      "tile": 96,
+      "kind": "seeded pebble grain: 22 small ellipses",
+      "opacity": 0.15,
+      "seeded": true,
+      "seed": 53
+    },
+    "brush": {
+      "tile": 180,
+      "kind": "seeded brush strokes: 7 tapered curves",
+      "opacity": 0.13,
+      "seeded": true,
+      "seed": 61
+    }
+  },
+  "chart": [
+    [
+      "chart-axis-text",
+      "text",
+      "Axis tick labels and units (UI 12, tabular lining).",
+      "ink-3"
+    ],
+    [
+      "chart-axis-line",
+      "graphic",
+      "Baseline and the zero line.",
+      "ink-1"
+    ],
+    [
+      "chart-grid",
+      "decorative",
+      "Gridlines, 1px, behind the data. Never the only way to read a value.",
+      "#DDE0D9|#232A39|#B6BBB3|#4A5266"
+    ],
+    [
+      "chart-series",
+      "graphic",
+      "The default series colour: one neutral series when the variable has no series token of its own.",
+      "#5E6670|#97A0B2|#3E454E|#C2C9D6"
+    ],
+    [
+      "chart-emph",
+      "graphic",
+      "The one mark the title names (the record year, the flagship craft). Nothing else.",
+      "ink-1"
+    ],
+    [
+      "chart-reference",
+      "graphic",
+      "Mean or threshold lines, dashed 3 4.",
+      "ink-2"
+    ],
+    [
+      "chart-trend",
+      "graphic",
+      "Fitted trend lines, 2.5px, with a 6px ground halo under them.",
+      "ink-1"
+    ],
+    [
+      "chart-band",
+      "decorative",
+      "Uncertainty bands and whiskers. Use at 18 per cent over the series.",
+      "ink-3"
+    ],
+    [
+      "chart-annotation",
+      "text",
+      "Direct labels and annotation text.",
+      "ink-2"
+    ],
+    [
+      "chart-differ",
+      "graphic",
+      "A value the sources disagree on: the madder 135 degree hatch over the span between the two readings.",
+      "madder"
+    ]
+  ],
+  "series": {
+    "series-rain": [
+      "Rainfall bars and lines, in the rain ramp's teal in every theme.",
+      {
+        "light": [
+          0.5,
+          0.09,
+          190
+        ],
+        "dark": [
+          0.7,
+          0.085,
+          188
+        ],
+        "hcLight": [
+          0.42,
+          0.09,
+          192
+        ],
+        "hcDark": [
+          0.78,
+          0.085,
+          186
+        ]
+      }
+    ],
+    "series-heat": [
+      "Temperature lines and dots, in the heat ramp's rose-plum in every theme.",
+      {
+        "light": [
+          0.45,
+          0.12,
+          342
+        ],
+        "dark": [
+          0.68,
+          0.12,
+          345
+        ],
+        "hcLight": [
+          0.43,
+          0.12,
+          338
+        ],
+        "hcDark": [
+          0.76,
+          0.11,
+          342
+        ]
+      }
+    ],
+    "series-count": [
+      "Counts of crafts: proportional circles and the ranked bars beside them, in the density ramp's umber.",
+      {
+        "light": [
+          0.5,
+          0.045,
+          85
+        ],
+        "dark": [
+          0.62,
+          0.045,
+          88
+        ],
+        "hcLight": [
+          0.34,
+          0.045,
+          85
+        ],
+        "hcDark": [
+          0.7,
+          0.04,
+          88
+        ]
+      }
+    ]
+  },
+  "ramps": {
+    "rain": {
+      "kind": "sequential",
+      "label": "Rainfall and water",
+      "hue": "monsoon: yellow-green for little rain to teal for much, in every theme; never indigo, never the water fill",
+      "use": "Annual or seasonal rainfall, rain anomalies above zero, groundwater recharge on maps. Bars and lines take --series-rain, not a ramp step.",
+      "breaks": "Classes from the data (Jenks or quantiles) unless the variable has agreed thresholds; label each break in mm.",
+      "light": [
+        "#E8E281",
+        "#ACCE78",
+        "#71B679",
+        "#389B7A",
+        "#007C76",
+        "#005C68"
+      ],
+      "dark": [
+        "#434600",
+        "#4B6425",
+        "#4F824C",
+        "#579F77",
+        "#68BBA3",
+        "#85D6CF"
+      ],
+      "hcLight": [
+        "#E3E584",
+        "#A5C975",
+        "#6AAB6F",
+        "#348A68",
+        "#02675C",
+        "#004447"
+      ],
+      "hcDark": [
+        "#364000",
+        "#436228",
+        "#4E8552",
+        "#5EA880",
+        "#77CAB1",
+        [
+          0.86,
+          0.09,
+          185
+        ]
+      ]
+    },
+    "density": {
+      "kind": "sequential",
+      "label": "Craft density and counts",
+      "hue": "unbleached cotton to kut umber, kept below chroma 0.075 and away from terracotta and turmeric",
+      "use": "Crafts per state or district on choropleths. Proportional circles and ranked bars of the same count take --series-count.",
+      "breaks": "Counts: natural breaks; proportional circles scale by area, never radius.",
+      "light": [
+        [
+          0.72,
+          0.055,
+          98
+        ],
+        [
+          0.63,
+          0.055,
+          94
+        ],
+        [
+          0.545,
+          0.05,
+          96
+        ],
+        [
+          0.46,
+          0.045,
+          82
+        ],
+        [
+          0.375,
+          0.04,
+          74
+        ],
+        [
+          0.29,
+          0.035,
+          68
+        ]
+      ],
+      "dark": [
+        "#4C3201",
+        "#604D2A",
+        "#7B6E4F",
+        "#9D9275",
+        "#C2BA9C",
+        "#ECE6C2"
+      ],
+      "hcLight": [
+        [
+          0.71,
+          0.062,
+          98
+        ],
+        [
+          0.6,
+          0.056,
+          96
+        ],
+        [
+          0.49,
+          0.05,
+          98
+        ],
+        [
+          0.375,
+          0.04,
+          100
+        ],
+        [
+          0.28,
+          0.035,
+          86
+        ],
+        [
+          0.19,
+          0.03,
+          76
+        ]
+      ],
+      "hcDark": [
+        [
+          0.34,
+          0.05,
+          72
+        ],
+        [
+          0.46,
+          0.05,
+          78
+        ],
+        [
+          0.57,
+          0.045,
+          85
+        ],
+        [
+          0.66,
+          0.04,
+          92
+        ],
+        [
+          0.75,
+          0.025,
+          110
+        ],
+        [
+          0.98,
+          0.075,
+          110
+        ]
+      ]
+    },
+    "heat": {
+      "kind": "sequential",
+      "label": "Temperature",
+      "hue": "blush for cool to plum for hot, in every theme: warm without borrowing madder, terracotta or turmeric",
+      "use": "Mean, maximum and minimum temperature on maps, firing temperature bands. Temperature lines take --series-heat.",
+      "breaks": "Whole degrees Celsius; firing bands by the kiln stage named in the source.",
+      "light": [
+        "#FFB3AD",
+        "#E58D95",
+        "#C56A84",
+        "#A04C74",
+        "#7A3163",
+        "#531A4F"
+      ],
+      "dark": [
+        "#5B161D",
+        "#802E41",
+        "#A34A6B",
+        "#C36999",
+        "#DF8CC8",
+        "#F9B2F6"
+      ],
+      "hcLight": [
+        "#FFB5B3",
+        "#E8929E",
+        "#C76E8A",
+        "#9F4C77",
+        "#752E61",
+        "#4A1147"
+      ],
+      "hcDark": [
+        "#541400",
+        "#7D2B2A",
+        "#A3465A",
+        "#C5658F",
+        "#E189C7",
+        "#F8B1FF"
+      ]
+    },
+    "ph": {
+      "kind": "diverging",
+      "label": "Soil and water pH",
+      "hue": "rose-violet for acid, green for alkaline, a warm grey neutral class that always contains 7.0",
+      "use": "Soil pH, water pH. The middle class is fixed at 6.5 to 7.5 whatever the data range; never re-centre on the mean. The neutral class is 10 or more delta E from land, so a neutral district never looks unshaded.",
+      "breaks": "Agronomic classes: below 5.5, 5.5 to 6.5, 6.5 to 7.5, 7.5 to 8.5, above 8.5.",
+      "classes": [
+        "< 5.5",
+        "5.5 – 6.5",
+        "6.5 – 7.5",
+        "7.5 – 8.5",
+        "> 8.5"
+      ],
+      "spec": {
+        "light": [
+          [
+            0.48,
+            0.13,
+            340
+          ],
+          [
+            0.68,
+            0.09,
+            345
+          ],
+          [
+            0.72,
+            0.04,
+            85
+          ],
+          [
+            0.7,
+            0.1,
+            145
+          ],
+          [
+            0.5,
+            0.11,
+            148
+          ]
+        ],
+        "dark": [
+          [
+            0.76,
+            0.12,
+            335
+          ],
+          [
+            0.6,
+            0.09,
+            340
+          ],
+          [
+            0.44,
+            0.025,
+            95
+          ],
+          [
+            0.62,
+            0.1,
+            145
+          ],
+          [
+            0.79,
+            0.12,
+            145
+          ]
+        ],
+        "hcLight": [
+          [
+            0.42,
+            0.13,
+            340
+          ],
+          [
+            0.64,
+            0.1,
+            345
+          ],
+          [
+            0.71,
+            0.04,
+            85
+          ],
+          [
+            0.66,
+            0.11,
+            145
+          ],
+          [
+            0.44,
+            0.11,
+            148
+          ]
+        ],
+        "hcDark": [
+          [
+            0.8,
+            0.12,
+            335
+          ],
+          [
+            0.62,
+            0.1,
+            340
+          ],
+          [
+            0.44,
+            0.025,
+            95
+          ],
+          [
+            0.65,
+            0.11,
+            145
+          ],
+          [
+            0.84,
+            0.12,
+            145
+          ]
+        ]
+      }
+    },
+    "elevation": {
+      "kind": "hypsometric",
+      "label": "Elevation",
+      "hue": "lowland green, upland buff and brown, the highest ground a cool pale grey that stays distinct from land",
+      "use": "Relief tints on locator and region maps. Always paired with labelled contours or spot heights.",
+      "breaks": "Metres: below 100, 100 to 300, 300 to 600, 600 to 1,000, 1,000 to 2,000, 2,000 to 4,000, above 4,000.",
+      "classes": [
+        "< 100 m",
+        "100 – 300",
+        "300 – 600",
+        "600 – 1,000",
+        "1,000 – 2,000",
+        "2,000 – 4,000",
+        "> 4,000"
+      ],
+      "spec": {
+        "light": [
+          [
+            0.78,
+            0.095,
+            138
+          ],
+          [
+            0.86,
+            0.07,
+            112
+          ],
+          [
+            0.9,
+            0.04,
+            80
+          ],
+          [
+            0.8,
+            0.05,
+            65
+          ],
+          [
+            0.72,
+            0.06,
+            58
+          ],
+          [
+            0.64,
+            0.045,
+            55
+          ],
+          [
+            0.72,
+            0.055,
+            295
+          ]
+        ],
+        "dark": [
+          [
+            0.36,
+            0.06,
+            140
+          ],
+          [
+            0.42,
+            0.055,
+            115
+          ],
+          [
+            0.48,
+            0.055,
+            95
+          ],
+          [
+            0.54,
+            0.055,
+            80
+          ],
+          [
+            0.6,
+            0.05,
+            66
+          ],
+          [
+            0.65,
+            0.04,
+            60
+          ],
+          [
+            0.72,
+            0.02,
+            250
+          ]
+        ],
+        "hcLight": [
+          [
+            0.76,
+            0.1,
+            138
+          ],
+          [
+            0.85,
+            0.075,
+            112
+          ],
+          [
+            0.9,
+            0.045,
+            80
+          ],
+          [
+            0.77,
+            0.05,
+            62
+          ],
+          [
+            0.69,
+            0.06,
+            58
+          ],
+          [
+            0.59,
+            0.05,
+            52
+          ],
+          [
+            0.7,
+            0.05,
+            295
+          ]
+        ],
+        "hcDark": [
+          [
+            0.35,
+            0.06,
+            140
+          ],
+          [
+            0.41,
+            0.06,
+            115
+          ],
+          [
+            0.47,
+            0.06,
+            95
+          ],
+          [
+            0.53,
+            0.06,
+            80
+          ],
+          [
+            0.59,
+            0.055,
+            66
+          ],
+          [
+            0.65,
+            0.045,
+            56
+          ],
+          [
+            0.76,
+            0.02,
+            250
+          ]
+        ]
+      }
+    }
+  },
+  "familyOrder": [
+    "textiles",
+    "metal",
+    "wood",
+    "paper",
+    "clay",
+    "stone",
+    "leather",
+    "fibre"
+  ],
+  "familyLabel": {
+    "textiles": "Textiles",
+    "metal": "Metal",
+    "wood": "Wood",
+    "paper": "Paper",
+    "clay": "Clay",
+    "stone": "Stone",
+    "leather": "Leather",
+    "fibre": "Natural fibre and grass"
+  },
+  "families": {
+    "light": [
+      "#B3487E",
+      "#A1942F",
+      "#664610",
+      "#569CD4",
+      "#E75E70",
+      "#00A0B4",
+      "#69344A",
+      "#529E41"
+    ],
+    "dark": [
+      "#CE6196",
+      "#989018",
+      "#805B2C",
+      "#5399D1",
+      "#D75063",
+      "#0092A4",
+      "#894667",
+      "#55A144"
+    ],
+    "hcLight": [
+      "#9F366C",
+      "#8F8214",
+      "#473418",
+      "#3786C3",
+      "#C94358",
+      "#00839A",
+      "#4A1F32",
+      "#408C2D"
+    ],
+    "hcDark": [
+      "#E47FAD",
+      "#B0A941",
+      "#9C703A",
+      "#69AFE8",
+      "#ED6576",
+      "#25AEC5",
+      "#A66082",
+      "#6EBB5D"
+    ]
+  },
+  "familyOther": {
+    "light": "#8A8F88",
+    "dark": "#7E8496",
+    "hcLight": "#5E645C",
+    "hcDark": "#A9B0C0"
+  },
+  "familyNotes": {
+    "otherLabel": "More crafts (painting, instruments, toys and the rest)",
+    "rule": "Fixed order, never cycled. Bars, stacks and legends may use all eight. Maps, scatter and small multiples carry at most three families at once (all-pairs check); fold the rest into More crafts or facet. Every family mark carries a 1px ink-1 outline (bars, swatches) or sits in an ink-ringed marker, so no family relies on its own contrast.",
+    "validation": "OKLab delta E x100, protan and deutan simulated with Machado 2009 at severity 1.0, adjacent pairs. Target 8, floor 6; normal vision floor 15. Every family hue sits 10 or more from the reserved colours.",
+    "whyNotMaterialHues": "Material-matched hues (brass for metal, terracotta for clay, oxblood for leather) would sit on turmeric, terracotta and madder, and the plate tones are too close in lightness to pass the CVD check; families stay categorical and plates keep the material."
+  },
+  "map": [
+    [
+      "map-land",
+      "surface",
+      "Indian land.",
+      "#E4E7DF",
+      "#262C3A",
+      "#E3E5DE",
+      "#1E2433"
+    ],
+    [
+      "map-land-foreign",
+      "surface",
+      "Neighbouring land, quieter than India. Natural Earth land under the Survey of India outline.",
+      "#EEEFEA",
+      "#181D29",
+      "#F4F5F1",
+      "#10141D"
+    ],
+    [
+      "map-water",
+      "surface",
+      "Sea, lakes and reservoirs. Cool grey, 10 or more delta E from land in every theme, never indigo, never a ramp step.",
+      "#B4C8D0",
+      "#0A141D",
+      "#A7BFC9",
+      "#03090F"
+    ],
+    [
+      "map-coast",
+      "graphic",
+      "Coastline and the outer edge of land, 0.75px. 3:1 or better against land and water.",
+      "#646A62",
+      "#8790A3",
+      "#3D433C",
+      "#B4BCCC"
+    ],
+    [
+      "map-water-label",
+      "text",
+      "Italic labels on water, 4.5:1 or better on water.",
+      "#2F4652",
+      "#93ACB9",
+      "#1C3240",
+      "#C2D6E0"
+    ],
+    [
+      "map-river",
+      "graphic",
+      "Rivers, 0.75 to 1.25px by order. Slate, never indigo; 3:1 or better on land.",
+      "#566F7C",
+      "#7896A7",
+      "#3E5A68",
+      "#9CBDCD"
+    ],
+    [
+      "map-salt",
+      "surface",
+      "Salt flat (the Great and Little Rann). Land, not water: brighter than land and always stippled.",
+      "#FBFAF6",
+      "#4A4740",
+      "#FFFFFF",
+      "#4F4D47"
+    ],
+    [
+      "map-salt-hatch",
+      "graphic",
+      "The stipple and dotted edge that mark a salt flat, 3:1 or better on the salt.",
+      "#7D827B",
+      "#B1B6BF",
+      "#5E645C",
+      "#D2D7E0"
+    ],
+    [
+      "map-border-intl",
+      "graphic",
+      "India external boundary as depicted by Survey of India, 1px.",
+      "#3A3430",
+      "#CBC8C0",
+      "#1C1815",
+      "#F1EFE9"
+    ],
+    [
+      "map-border-state",
+      "graphic",
+      "State and union-territory lines, 0.75px, 3:1 or better on land.",
+      "#747A72",
+      "#8A93A6",
+      "#4E544C",
+      "#A9B2C4"
+    ],
+    [
+      "map-border-district",
+      "decorative",
+      "District lines, 0.5px, only when zoomed in; never the only boundary of a selection.",
+      "#B9BEB5",
+      "#3E4558",
+      "#8A9088",
+      "#6E778B"
+    ],
+    [
+      "map-label",
+      "text",
+      "Place labels, UI 12 to 14, with the halo.",
+      "ink-1",
+      "ink-1",
+      "ink-1",
+      "ink-1"
+    ],
+    [
+      "map-label-minor",
+      "text",
+      "Minor place labels.",
+      "ink-3",
+      "ink-3",
+      "ink-3",
+      "ink-3"
+    ],
+    [
+      "map-label-halo",
+      "surface",
+      "3px halo behind labels (paint-order: stroke).",
+      "ground",
+      "ground",
+      "ground",
+      "ground"
+    ],
+    [
+      "map-selection",
+      "graphic",
+      "Selected district or marker: 2px outline over a 4px halo. Outside every ramp.",
+      "ink-1",
+      "ink-1",
+      "ink-1",
+      "ink-1"
+    ],
+    [
+      "map-selection-halo",
+      "surface",
+      "Halo under the selection outline.",
+      "ground",
+      "ground",
+      "ground",
+      "ground"
+    ],
+    [
+      "map-hover",
+      "graphic",
+      "Hovered district: 1.25px outline.",
+      "ink-2",
+      "ink-2",
+      "ink-2",
+      "ink-2"
+    ],
+    [
+      "map-marker",
+      "surface",
+      "Point markers: a paper disc. A family marker fills the disc with its family colour; the ring stays ink.",
+      "raised",
+      "raised",
+      "raised",
+      "raised"
+    ],
+    [
+      "map-marker-ring",
+      "graphic",
+      "Point marker ring, 1.5px. It carries the 3:1 edge, so any fill reads on any land.",
+      "ink-1",
+      "ink-1",
+      "ink-1",
+      "ink-1"
+    ],
+    [
+      "map-place",
+      "large-text",
+      "The place a page is about: terracotta outline and the 45 degree hatch, never a solid fill.",
+      "terracotta",
+      "terracotta",
+      "terracotta",
+      "terracotta"
+    ],
+    [
+      "map-nodata",
+      "graphic",
+      "Cross-hatch for a district with no reading in the dataset.",
+      "rule-strong",
+      "rule-strong",
+      "rule-strong",
+      "rule-strong"
+    ]
+  ],
+  "mapHillshade": {
+    "cssVar": "--map-hillshade",
+    "use": "Relief shading: ink-1 at 6 per cent multiplied over land (9 per cent in dark). Never terracotta, which means place. Off in high contrast."
+  },
+  "mapRules": [
+    "Water, land and salt flat are three different fills: water is 10 or more delta E from land; salt is brighter than land and always carries its stipple, dotted edge and italic label.",
+    "The Great and Little Rann of Kachchh are drawn as salt flat from the Natural Earth playa polygons, labelled in italic \"Great Rann of Kachchh\" and \"Little Rann\", never in the water fill. A seasonal flooding layer may tint them only when the layer is named.",
+    "The first step of every ramp sits 10 or more delta E from ground, sunk, land, neighbouring land and water; the pH neutral class and the highest elevation class too.",
+    "Selection is an ink outline over a ground halo, so it reads on every ramp.",
+    "Markers are paper discs with a 1.5px ink ring; a family marker fills its disc with the family colour. Proportional circles use --series-count at 85 per cent with a 1px ground edge.",
+    "External boundaries follow the Survey of India depiction and carry its one-line caption. Neighbouring land comes from Natural Earth, drawn under India. No third-party tiles.",
+    "Legends sit under the map on a phone; from 768px they sit in the map frame over open sea (the Arabian Sea on an India map, the Gulf of Kachchh on a regional one), never over land or islands.",
+    "Labels never collide: a label that would overlap another label, a marker or a coast is moved along its leader or dropped to the ranked list beside the map; minor labels drop first below 768px.",
+    "No scale bar unless the map is drawn to a stated projection and scale; locators carry none."
+  ],
+  "hatch": {
+    "salt": {
+      "meaning": "Salt flat (the Rann)",
+      "pattern": "stipple",
+      "spacing": 4,
+      "mark": "dots, radius 0.55px, jittered by 0.8px",
+      "angle": null,
+      "colour": "map-salt-hatch",
+      "ground": "map-salt",
+      "edge": "0.75px dotted map-salt-hatch, 1 2"
+    },
+    "place": {
+      "meaning": "The place a page is about",
+      "pattern": "lines",
+      "spacing": 5,
+      "mark": "stroke 1.4px",
+      "angle": 45,
+      "colour": "terracotta",
+      "ground": "transparent",
+      "edge": "1.25px solid terracotta"
+    },
+    "differ": {
+      "meaning": "Sources differ: the span between two readings",
+      "pattern": "lines",
+      "spacing": 4,
+      "mark": "stroke 1.4px",
+      "angle": 135,
+      "colour": "madder",
+      "ground": "transparent",
+      "edge": "1px solid madder"
+    },
+    "nodata": {
+      "meaning": "No reading in the dataset",
+      "pattern": "cross-hatch",
+      "spacing": 6,
+      "mark": "stroke 0.8px",
+      "angle": "45 and 135",
+      "colour": "rule-strong",
+      "ground": "map-land",
+      "edge": "none"
+    },
+    "ground": {
+      "meaning": "Earth in a section drawing (Figs. 2 and 7, the vat in the answer)",
+      "pattern": "strata",
+      "spacing": 8,
+      "mark": "horizontal dashes 6 4, stroke 0.8px",
+      "angle": 0,
+      "colour": "ink-3 at 35 per cent",
+      "ground": "sunk",
+      "edge": "1.2px solid ink-1 on the surface line"
+    },
+    "rule": "No two meanings share a pattern: stipple, 45 degree lines, 135 degree lines, cross-hatch and horizontal strata are the five. A legend explains every hatch it shows."
+  },
+  "typeScale": [
+    [
+      "caption",
+      "ui",
+      12,
+      12,
+      1440,
+      1.3333333333333333,
+      0,
+      400,
+      "Credits, source lines, axis labels, map labels, kickers, tags. The floor for any text."
+    ],
+    [
+      "label",
+      "ui",
+      13,
+      13,
+      1440,
+      1.3846153846153846,
+      0,
+      500,
+      "Field labels, chip text, provenance lines, fact labels, margin notes."
+    ],
+    [
+      "ui",
+      "ui",
+      14,
+      14,
+      1440,
+      1.4285714285714286,
+      0,
+      500,
+      "Buttons, nav, tabs, list meta, popover body."
+    ],
+    [
+      "ui-lg",
+      "ui",
+      16,
+      16,
+      1440,
+      1.5,
+      0,
+      400,
+      "Inputs (16px stops iOS focus zoom), toasts, dialog body."
+    ],
+    [
+      "h4",
+      "ui",
+      16,
+      16,
+      1440,
+      1.35,
+      0,
+      600,
+      "Small figure titles, card names on tool pages, demo heads. The interface voice at weight 600, so it never matches body text."
+    ],
+    [
+      "figcaption",
+      "reading",
+      15,
+      16,
+      1440,
+      1.45,
+      0,
+      400,
+      "Picture captions in italic, what to look at."
+    ],
+    [
+      "quote",
+      "reading",
+      16,
+      17,
+      1440,
+      1.48,
+      0,
+      400,
+      "Verbatim quotes in popovers and quote cards, italic."
+    ],
+    [
+      "body-sm",
+      "reading",
+      16,
+      17,
+      1440,
+      1.62,
+      0,
+      400,
+      "Dense prose: stage text, fact values, figure keys, result sentences."
+    ],
+    [
+      "body",
+      "reading",
+      17,
+      19,
+      1440,
+      1.63,
+      0,
+      400,
+      "Monograph and answer prose. Measure 66ch."
+    ],
+    [
+      "lede",
+      "reading",
+      20,
+      23,
+      1440,
+      1.45,
+      0,
+      400,
+      "The opening paragraph of a monograph or answer; standfirsts."
+    ],
+    [
+      "h3",
+      "reading",
+      21,
+      26,
+      1440,
+      1.2,
+      -0.01,
+      500,
+      "Sub-sections, family shelf names, figure titles, stage names."
+    ],
+    [
+      "h2",
+      "headline",
+      28,
+      52,
+      1920,
+      1.08,
+      -0.016,
+      480,
+      "Chapter titles."
+    ],
+    [
+      "h1",
+      "headline",
+      36,
+      80,
+      1920,
+      1.03,
+      -0.022,
+      470,
+      "Page titles that are sentences: questions, the atlas title, a long craft name stepped down from title."
+    ],
+    [
+      "title",
+      "headline",
+      44,
+      108,
+      1920,
+      1.0,
+      -0.024,
+      480,
+      "The craft name in a masthead, set at equal size with its own-script name when one is sourced."
+    ],
+    [
+      "hero",
+      "headline",
+      54,
+      134,
+      1920,
+      0.98,
+      -0.026,
+      460,
+      "The landing headline over the photograph. One per site."
+    ],
+    [
+      "numeral",
+      "headline",
+      76,
+      88,
+      1920,
+      0.86,
+      -0.03,
+      300,
+      "Light chapter numerals in the left rail, from 1200px only. Below 1200px the chapter number is the chapter-no kicker (\"Chapter 3\" with its 40px rule)."
+    ],
+    [
+      "stat",
+      "headline",
+      36,
+      64,
+      1920,
+      1.0,
+      -0.02,
+      480,
+      "A headline number with its unit in label beneath."
+    ]
+  ],
+  "type": {
+    "families": {
+      "headline": {
+        "cssVar": "--font-headline",
+        "tailwind": "font-headline",
+        "stack": null,
+        "settings": "font-optical-sizing: auto. Newsreader's opsz axis runs 6 to 72, so auto gives opsz 72 to every size from 72px up and follows the size below; never force opsz 72 below 40px.",
+        "weights": "axis 200 to 800; the system uses 300 to 600 and loads only that range",
+        "use": "Display lines only: hero, title, h1, h2, numerals, stats. A separate token from font-display, which stays on the UI face."
+      },
+      "reading": {
+        "cssVar": "--font-reading",
+        "tailwind": "font-reading (font-serif is an alias)",
+        "stack": null,
+        "settings": "font-optical-sizing: auto",
+        "weights": "400, 500, italic 400",
+        "use": "Prose, ledes, quotes, captions, h3, names on plates. Old-style proportional figures. The stack routes each Indian script to its Noto Serif by glyph."
+      },
+      "ui": {
+        "cssVar": "--font-ui",
+        "tailwind": "font-ui (font-sans is an alias; font-display is an alias during migration, then removed)",
+        "stack": null,
+        "weights": "400, 500, 600, italic 400; b and strong are 600 and font-synthesis is none, so nothing renders faux bold",
+        "use": "Everything you operate or scan: nav, buttons, labels, chips, tables, axes, credits, citation numerals, h4."
+      },
+      "code": {
+        "cssVar": "--font-code",
+        "tailwind": "font-code",
+        "stack": null,
+        "weights": "400, 500",
+        "use": "The six-box sign-in code, API keys, PubChem CIDs, slugs. Lining tabular figures; never old-style serif figures."
+      }
+    },
+    "scripts": {},
+    "scale": {},
+    "figures": {
+      "reading": "font-variant-numeric: oldstyle-nums proportional-nums",
+      "headline": "font-variant-numeric: lining-nums proportional-nums",
+      "ui": "font-variant-numeric: lining-nums proportional-nums",
+      "tabular": "font-variant-numeric: lining-nums tabular-nums (tables, charts, axes, counts, dates, codes)",
+      "citation": "IBM Plex Sans 500 at max(0.6875rem, 0.62em), lining tabular, raised 0.6em, indigo; the only text allowed below 12px",
+      "chemistry": "True subscripts at 0.7em, baseline shift -0.25em, in the face of the surrounding text. A formula is set at 17px or more so its subscripts stay at 12px or more; smaller labels spell the species out."
+    },
+    "tracking": {
+      "hero": "-0.026em",
+      "title": "-0.024em",
+      "h1": "-0.022em",
+      "h2": "-0.016em",
+      "h3": "-0.01em",
+      "body": "0",
+      "kicker": "0.08em uppercase, UI 12 600, font-feature-settings \"case\"",
+      "caps": "Only kickers and the GI tag are uppercase. Labels are sentence case."
+    },
+    "italic": "Italic marks transliterated local terms (saaj, kut, gach), botanical names (in ink-2), verbatim quotes and photo captions. English names are never italic.",
+    "wordmark": "KalaVigyan in Newsreader 600 and कलाविज्ञान in Noto Serif Devanagari 500, the Devanagari at x1.08 so its headline matches the Latin x-height, separated by a 1px rule. Shipped as SVG outlines.",
+    "larger": "Every size is rem, and the fluid part of every clamp is multiplied by --text-zoom. The Larger text preference sets html font-size to 112.5 per cent and --text-zoom to 1.125, so every token is exactly 1.125 times its standard size at every width; breakpoints stay in px."
+  },
+  "scripts": [
+    [
+      "Deva",
+      "Devanagari",
+      [
+        "hi",
+        "mr",
+        "ne",
+        "sa",
+        "kok",
+        "mai",
+        "doi",
+        "bho",
+        "brx",
+        "ks-Deva",
+        "sd-Deva"
+      ],
+      "Noto Serif Devanagari",
+      "Noto Sans Devanagari",
+      1.08,
+      1.75,
+      1.25,
+      "ltr",
+      ""
+    ],
+    [
+      "Beng",
+      "Bengali-Assamese",
+      [
+        "bn",
+        "as",
+        "mni-Beng"
+      ],
+      "Noto Serif Bengali",
+      "Noto Sans Bengali",
+      1.08,
+      1.75,
+      1.25,
+      "ltr",
+      ""
+    ],
+    [
+      "Gujr",
+      "Gujarati",
+      [
+        "gu"
+      ],
+      "Noto Serif Gujarati",
+      "Noto Sans Gujarati",
+      1.08,
+      1.75,
+      1.25,
+      "ltr",
+      ""
+    ],
+    [
+      "Guru",
+      "Gurmukhi",
+      [
+        "pa"
+      ],
+      "Noto Serif Gurmukhi",
+      "Noto Sans Gurmukhi",
+      1.08,
+      1.75,
+      1.25,
+      "ltr",
+      ""
+    ],
+    [
+      "Orya",
+      "Odia",
+      [
+        "or"
+      ],
+      "Noto Serif Oriya",
+      "Noto Sans Oriya",
+      1.08,
+      1.75,
+      1.3,
+      "ltr",
+      ""
+    ],
+    [
+      "Taml",
+      "Tamil",
+      [
+        "ta"
+      ],
+      "Noto Serif Tamil",
+      "Noto Sans Tamil",
+      1.0,
+      1.8,
+      1.3,
+      "ltr",
+      ""
+    ],
+    [
+      "Mlym",
+      "Malayalam",
+      [
+        "ml"
+      ],
+      "Noto Serif Malayalam",
+      "Noto Sans Malayalam",
+      1.0,
+      1.8,
+      1.35,
+      "ltr",
+      ""
+    ],
+    [
+      "Telu",
+      "Telugu",
+      [
+        "te"
+      ],
+      "Noto Serif Telugu",
+      "Noto Sans Telugu",
+      1.0,
+      1.8,
+      1.35,
+      "ltr",
+      ""
+    ],
+    [
+      "Knda",
+      "Kannada",
+      [
+        "kn"
+      ],
+      "Noto Serif Kannada",
+      "Noto Sans Kannada",
+      1.0,
+      1.8,
+      1.35,
+      "ltr",
+      ""
+    ],
+    [
+      "Aran",
+      "Urdu and Kashmiri, Nastaliq",
+      [
+        "ur",
+        "ks-Arab"
+      ],
+      "Noto Nastaliq Urdu",
+      "Noto Sans Arabic",
+      1.0,
+      2.2,
+      1.7,
+      "rtl",
+      "Nastaliq needs 2.2 leading in prose and 1.7 in display, and never sits inside a 44px chip or button; controls use Noto Sans Arabic."
+    ],
+    [
+      "Arab",
+      "Sindhi, Naskh",
+      [
+        "sd-Arab"
+      ],
+      "Noto Naskh Arabic",
+      "Noto Sans Arabic",
+      1.0,
+      1.9,
+      1.45,
+      "rtl",
+      "Sindhi is set in Naskh, its print convention, not Nastaliq."
+    ],
+    [
+      "Mtei",
+      "Meetei Mayek",
+      [
+        "mni-Mtei"
+      ],
+      "Noto Sans Meetei Mayek",
+      "Noto Sans Meetei Mayek",
+      1.05,
+      1.7,
+      1.25,
+      "ltr",
+      "No Noto Serif exists for this script; the sans serves reading and UI."
+    ],
+    [
+      "Olck",
+      "Ol Chiki",
+      [
+        "sat-Olck"
+      ],
+      "Noto Sans Ol Chiki",
+      "Noto Sans Ol Chiki",
+      1.0,
+      1.7,
+      1.25,
+      "ltr",
+      "No Noto Serif exists for this script; the sans serves reading and UI."
+    ]
+  ],
+  "scriptRules": {
+    "selection": "Faces are chosen by script, never by language: every non-Latin string carries data-script with its ISO 15924 code and a BCP 47 lang (with a script subtag where the language is written in two scripts: ks-Arab, ks-Deva, sd-Arab, sd-Deva, mni-Mtei, mni-Beng).",
+    "tokens": "--script-scale, --script-leading and --script-display-leading are set by the [data-script] selector; sizes are calc(var(--text-x) * var(--script-scale)).",
+    "equalStanding": "Two names at equal standing share one size: the Latin name at the size token, the own-script name at that token times --script-scale, on one baseline or stacked with a hairline. On plates and the names wall the display shows one name and the strip carries the English catalogue line; those are labels, not titles, so equal standing does not apply there.",
+    "loading": "Each face is self-hosted with its unicode-range and preload false. Pages with prose in a script load that script's reading face subset to the page. The atlas wall and the names view load one build-time subset per script holding only the glyphs of the catalogue's sourced native names: 24 KB or less per script, 160 KB or less for all scripts together. The wordmark is SVG outlines, so an English page loads no Indian script.",
+    "bidi": "A native name inside an English line is wrapped in bdi (or unicode-bidi: isolate) so its direction cannot reorder the sentence."
+  },
+  "space": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64,
+    96,
+    128
+  ],
+  "spaceSection": {
+    "min": 64,
+    "max": 96,
+    "from": 360,
+    "to": 1440,
+    "use": "Between chapters and landing acts: 64px phone to 96px desktop. A hairline or a full-bleed photograph separates them, never a box."
+  },
+  "fluid": {
+    "from": 360,
+    "numeralFrom": 1200,
+    "widths": {
+      "tablet": 834,
+      "desktop": 1440,
+      "projector": 1920
+    },
+    "larger": 1.125
+  },
+  "staticCss": [
+    "--ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-inout: cubic-bezier(0.65, 0, 0.35, 1); --ease-toggle: cubic-bezier(0.34, 1.56, 0.64, 1);",
+    "--measure: 66ch; --rail: 160px; --margin-rail: 240px; --spread-gap: 40px; --content-max: 1280px;",
+    "--gutter: max(16px, env(safe-area-inset-left, 0px)); --gutter-r: max(16px, env(safe-area-inset-right, 0px));"
+  ],
+  "scriptFallbacks": {
+    "ltr": "\"Nirmala UI\", serif",
+    "rtl": "\"Urdu Typesetting\", serif",
+    "ui": "\"Nirmala UI\", sans-serif"
+  },
+  "spaceStack": {
+    "value": "1.05em",
+    "use": "Between paragraphs of prose."
+  },
+  "control": {
+    "control-h": {
+      "rem": "2.875rem",
+      "px": 46,
+      "use": "Button height."
+    },
+    "control-h-touch": {
+      "rem": "3rem",
+      "px": 48,
+      "use": "Button height on coarse pointers."
+    },
+    "control-h-sm": {
+      "rem": "2.5rem",
+      "px": 40,
+      "use": "Small button height."
+    },
+    "control-h-sm-touch": {
+      "rem": "2.75rem",
+      "px": 44,
+      "use": "Small button on coarse pointers."
+    },
+    "input-h": {
+      "rem": "3rem",
+      "px": 48,
+      "use": "Inputs, select triggers."
+    },
+    "chip-h": {
+      "rem": "2.125rem",
+      "px": 34,
+      "use": "Chips."
+    },
+    "chip-h-touch": {
+      "rem": "2.75rem",
+      "px": 44,
+      "use": "Chips on coarse pointers."
+    },
+    "search-h": {
+      "rem": "3.75rem",
+      "px": 60,
+      "use": "The atlas search box."
+    },
+    "segment-h": {
+      "rem": "2.5rem",
+      "px": 40,
+      "use": "Segmented choice."
+    },
+    "segment-h-touch": {
+      "rem": "2.75rem",
+      "px": 44,
+      "use": "Segmented choice on coarse pointers."
+    },
+    "code-w": {
+      "rem": "2.875rem",
+      "px": 46,
+      "use": "Six-box code: box width, flexing down at 360px with Larger text."
+    },
+    "code-h": {
+      "rem": "3.5rem",
+      "px": 56,
+      "use": "Six-box code: box height."
+    },
+    "code-w-lg": {
+      "rem": "3.25rem",
+      "px": 52,
+      "use": "Six-box code from 640px."
+    },
+    "code-h-lg": {
+      "rem": "4rem",
+      "px": 64,
+      "use": "Six-box code from 640px."
+    },
+    "toggle-w": {
+      "rem": "3rem",
+      "px": 48,
+      "use": "Switch track width."
+    },
+    "toggle-h": {
+      "rem": "1.75rem",
+      "px": 28,
+      "use": "Switch track height."
+    },
+    "target": {
+      "rem": "2.75rem",
+      "px": 44,
+      "use": "Minimum touch target."
+    },
+    "appbar-h": {
+      "rem": "4rem",
+      "px": 64,
+      "use": "Appbar from 768px (3.5rem below)."
+    },
+    "rail-h": {
+      "rem": "2.875rem",
+      "px": 46,
+      "use": "Chapter rail height; scroll-margin-top of every chapter is this plus 1rem."
+    }
+  },
+  "radius": {
+    "plate": {
+      "px": 2,
+      "use": "Photographs, plates, swatches, specimen labels, figures. Print, not app."
+    },
+    "control": {
+      "px": 4,
+      "use": "Buttons, inputs, code boxes, segmented choices, the search box."
+    },
+    "card": {
+      "px": 6,
+      "use": "Popovers, quote cards, toasts, dialogs, menus."
+    },
+    "sheet": {
+      "px": 14,
+      "use": "Top corners of the phone bottom sheet only."
+    },
+    "pill": {
+      "px": 999,
+      "use": "Chips, toggle tracks, and button rows of three or more from 640px (the ActionGroup rule)."
+    }
+  },
+  "border": {
+    "hair": "1px solid var(--rule)",
+    "control": "1px solid var(--rule-strong)",
+    "ink": "1px solid var(--ink-1)",
+    "emphasis": "2px solid var(--ink-1)",
+    "current": "2px solid var(--ink-1) on the leading edge (top of a horizontal step, inline start of a vertical one), with the label at weight 600: the one look of the current step of a process that cannot be pressed",
+    "differ": "2px solid var(--madder) on the inline start of a disagreement body",
+    "hypothesis": "2px dashed var(--ink-2) on the inline start of a hypothesis sentence",
+    "specimen": "1px solid var(--ink-2) outside a 2px var(--raised) mat"
+  },
+  "focus": {
+    "default": "2px solid var(--indigo), offset 3px (3px width in high contrast). Never removed, never only a colour change.",
+    "field": "Inputs, select triggers and the six code boxes keep the same 2px indigo outline, offset 2px; the edge also turns indigo. No halo is relied on.",
+    "option": "The keyboard-highlighted option in a listbox: a 2px indigo bar on its inline start plus the sunk fill.",
+    "photo": "Anything on a photograph: a 2px photo-ink-1 outline at 2px offset over a 2px rgba(8,10,16,.8) inner ring, so it reads on light and dark parts of the picture.",
+    "figure": "One tab stop per figure; the focused mark takes a 2px ink-1 outline over a 2px ground halo, like a map selection."
+  },
+  "shadow": {
+    "pop": {
+      "light": "0 1px 0 rgba(28,24,21,.05), 0 18px 40px -18px rgba(28,24,21,.30)",
+      "dark": "0 1px 0 rgba(0,0,0,.5), 0 24px 48px -18px rgba(0,0,0,.75)",
+      "hcLight": "0 0 0 2px var(--ink-1)",
+      "hcDark": "0 0 0 2px var(--ink-1)",
+      "use": "Popovers, menus, toasts, dialogs."
+    },
+    "label": {
+      "light": "0 24px 48px -24px rgba(8,10,16,.45)",
+      "dark": "0 24px 48px -20px rgba(0,0,0,.8)",
+      "hcLight": "0 0 0 2px var(--ink-1)",
+      "hcDark": "0 0 0 2px var(--ink-1)",
+      "use": "A specimen label lying on a photograph. A label on paper casts none."
+    },
+    "sheet": {
+      "light": "0 -12px 32px -12px rgba(28,24,21,.28)",
+      "dark": "0 -12px 32px -8px rgba(0,0,0,.7)",
+      "hcLight": "0 0 0 2px var(--ink-1)",
+      "hcDark": "0 0 0 2px var(--ink-1)",
+      "use": "The phone bottom sheet."
+    },
+    "rule": "Nothing else casts a shadow. Cards on paper use a 1px rule, not a shadow. In high contrast every shadow is a 2px ink outline, and raised equals ground, so floating surfaces rely on that outline."
+  },
+  "motion": {
+    "durations": {
+      "press": "120ms",
+      "state": "200ms",
+      "panel": "320ms",
+      "dip": "600ms",
+      "hold": "500ms",
+      "oxidise": "1500ms",
+      "vat": "2600ms",
+      "vat-delay": "800ms"
+    },
+    "easings": {
+      "out": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "inOut": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "linear": "linear (scroll-linked only)",
+      "toggle": "cubic-bezier(0.34, 1.56, 0.64, 1) (switch thumb only)"
+    },
+    "named": {
+      "dip": {
+        "does": "A colour band fills from the bottom with clip-path, as cloth goes into a bath.",
+        "duration": "dip (600ms)",
+        "easing": "inOut",
+        "trigger": "Choosing a stage on the living cloth.",
+        "reduced": "The band is shown filled; no movement."
+      },
+      "oxidise": {
+        "does": "Leuco green turns indigo from the top edge down, the colour of the cloth in air, with a soft ragged edge.",
+        "duration": "oxidise (1500ms)",
+        "easing": "inOut",
+        "trigger": "Stage 8 opening; the last phase of the vat.",
+        "reduced": "The blue end state, with the green state shown beside it as a still frame."
+      },
+      "press": {
+        "does": "A citation numeral or the Saved mark settles from scale 1.02 to 1.",
+        "duration": "press (120ms)",
+        "easing": "out",
+        "trigger": "Pressing a numeral, saving.",
+        "reduced": "No scale; the state changes at once."
+      },
+      "vat": {
+        "does": "The single orchestrated animation: dip (600ms), hold lifted and green (500ms), oxidise from the top down (1500ms), 2600ms in all. On the landing it starts vat-delay (800ms) after the photograph is shown and tints only the authored dyed-region mask of the photograph: the green rises with a soft meniscus edge, and the blue returns from the top with a ragged edge. Resist whites, kut black and madder never change. In the answer's VatFigure it plays on the drawn cloth from Dip again.",
+        "duration": "vat (2600ms)",
+        "easing": "inOut",
+        "trigger": "Landing: first view, once per visit (sessionStorage key kv-vat-played), and the Play again control in the specimen label. VatFigure: Dip again.",
+        "reduced": "The finished blue cloth and the three captioned phases as still frames; Play again and Dip again step the state and announce it without movement."
+      }
+    },
+    "banned": [
+      "Ken Burns drift on photographs",
+      "Word-by-word or letter headline reveals",
+      "Staggered rise-in of cards",
+      "Parallax",
+      "Scroll-linked decoration (the thread motion is retired)",
+      "Any first paint at opacity 0 for the largest element on screen",
+      "Overshoot on anything but a switch thumb",
+      "Two animation systems on one property"
+    ],
+    "switches": "Both switches count: the OS setting (prefers-reduced-motion) and the in-app preference (html[data-reduced-motion=\"true\"]). Read both synchronously before any motion starts.",
+    "pattern": "Author every end state as the default style. Motion is added only under one variant that checks both switches (motion-safe: and :root:not([data-reduced-motion=\"true\"])); under either switch, animation and transition are none, so nothing snaps back to a start state."
+  },
+  "zIndex": {
+    "base": 0,
+    "raised": 1,
+    "sticky": 20,
+    "appbar": 30,
+    "popover": 70,
+    "scrim": 80,
+    "sheet": 85,
+    "dialog": 90,
+    "toast": 110,
+    "skip-link": 120
+  },
+  "breakpoints": {
+    "phone": {
+      "min": 0,
+      "design": [
+        360,
+        390
+      ],
+      "note": "360 is the design width; nothing scrolls sideways at 320. Citation popovers are bottom sheets; shelves scroll sideways with scroll-snap."
+    },
+    "sm": {
+      "min": 640,
+      "note": "Citation popover replaces the sheet; button rows of three become pills; two-up grids."
+    },
+    "md": {
+      "min": 768,
+      "note": "Tablet: the single 66ch column, map legend inside the map frame, appbar nav replaces the Menu button."
+    },
+    "lg": {
+      "min": 1024,
+      "note": "Masthead label overlaps the photograph; landing and atlas heads go two columns; six-column shelves."
+    },
+    "rail": {
+      "min": 1200,
+      "note": "The spread: left rail with the chapter numeral, right margin with source notes; the popover docks into the margin."
+    },
+    "xl": {
+      "min": 1280,
+      "note": "Margins reach 64px."
+    },
+    "2xl": {
+      "min": 1536
+    },
+    "tablet": {
+      "design": [
+        834,
+        1194
+      ]
+    },
+    "wide": {
+      "design": [
+        1920
+      ],
+      "note": "Content stays at 1280; display type keeps growing to 1920; photographs and figures may go full bleed."
+    },
+    "unit": "px in media queries, so Larger text does not shift layouts. No other breakpoint is allowed in components; a guard spec rejects media queries at any other width."
+  },
+  "grid": {
+    "columns": {
+      "phone": 4,
+      "tablet": 8,
+      "desktop": 12
+    },
+    "gutter": {
+      "phone": 16,
+      "tablet": 20,
+      "desktop": 24
+    },
+    "margin": {
+      "below 640": 16,
+      "640 to 767": 24,
+      "768 to 1199": 40,
+      "1200 to 1279": 48,
+      "1280 and up": 64,
+      "safeArea": "max(margin, env(safe-area-inset-left/right))"
+    },
+    "content": {
+      "max": 1280,
+      "canvas": 1440
+    },
+    "measure": {
+      "value": "66ch",
+      "px": 640,
+      "note": "About 66 characters at body size; never wider than 75ch. Below 1200px the reading column is max-width 66ch, centred."
+    },
+    "spread": {
+      "from": 1200,
+      "template": "160px minmax(0, 680px) 240px",
+      "columnGap": 40,
+      "justify": "space-between",
+      "at1200": "content 1104px: rail 160, gap 40, main 624, gap 40, margin 240",
+      "rail": "left 160px: the light chapter numeral, dates, provenance",
+      "margin": "right 240px: numbered short source titles beside the first sentence that cites them, evidence labels, small plates"
+    },
+    "tablet": "From 768 to 1199px a monograph is the single 66ch column centred, the chapter rail on top, margin notes folded into the citation popover. No right rail.",
+    "breakouts": "Living cloth, maps, charts and photographs break out to the full content width or full bleed."
+  },
+  "image": {
+    "thumbWidths": [
+      330,
+      500,
+      960,
+      1280,
+      1920
+    ],
+    "thumbRule": "Wikimedia Commons thumbnails are requested only at these standard widths. Never 320, 640 or any other width.",
+    "mechanism": "Plain <img srcset sizes> through commonsThumb(fileUrl, width), which snaps any request to the next standard width; next/image is not used for Commons pictures (its deviceSizes would request other widths). The acceptance spec asserts every Commons URL width.",
+    "srcset": {
+      "hero": [
+        960,
+        1280,
+        1920
+      ],
+      "masthead": [
+        500,
+        960,
+        1280,
+        1920
+      ],
+      "plate": [
+        330,
+        500,
+        960
+      ],
+      "margin": [
+        330,
+        500
+      ]
+    },
+    "sizes": {
+      "hero": "100vw",
+      "masthead": "(min-width: 1280px) 1280px, 100vw",
+      "plate": "(min-width: 1024px) 16vw, (min-width: 640px) 25vw, 72vw",
+      "margin": "240px",
+      "lead": "(min-width: 1024px) 33vw, 72vw"
+    },
+    "ratios": {
+      "hero": "21:9 desktop, 4:5 phone",
+      "masthead": "16:7.4 desktop, 4:3 tablet and phone",
+      "textile detail": "4:5",
+      "process and people": "3:2",
+      "swatch": "1:1"
+    },
+    "focal": "Each picture record carries a focal box per ratio ({ratio: [x, y, w, h]} in fractions of the original), drawn by the curator so faces and the object stay in frame. Crops come from the box, never a centre crop.",
+    "derivatives": "Where a crop would upscale (a 4:5 phone crop from a 21:9 hero gives about 660 source px across), the crop is made once from the Commons original and cached in the media bucket with its credit, at the standard widths.",
+    "caption": "Caption first, Newsreader italic at --text-figcaption in ink-2, saying what to look at; credit after it in UI 12 ink-3 under a hairline: \"Photo: Author, licence, via Wikimedia Commons\".",
+    "rules": [
+      "Every picture carries its credit and licence where it is shown.",
+      "A picture never repeats within a page.",
+      "No stock, shopping, social or AI imagery: no price tags, sale tables or shop displays.",
+      "The landing photograph is cloth edge to edge, with no skin or background, and ships with its dyed-region mask.",
+      "No scale bar on a photograph unless a museum record states the object's size."
+    ]
+  },
+  "hillshadeOpacity": {
+    "light": ".06",
+    "dark": ".09",
+    "hcLight": "0",
+    "hcDark": "0"
+  },
+  "fontStacks": {
+    "headline": {
+      "primary": "Newsreader",
+      "scriptFaces": null,
+      "fallback": "\"newsreader Fallback\", \"Noto Serif\", Georgia, \"Times New Roman\", serif"
+    },
+    "reading": {
+      "primary": "Newsreader",
+      "scriptFaces": "reading",
+      "fallback": "\"newsreader Fallback\", \"Noto Serif\", Georgia, \"Times New Roman\", serif"
+    },
+    "ui": {
+      "primary": "IBM Plex Sans",
+      "scriptFaces": "ui",
+      "fallback": "\"plexSans Fallback\", \"Noto Sans\", \"Segoe UI\", system-ui, -apple-system, Roboto, Arial, sans-serif"
+    },
+    "code": {
+      "primary": "IBM Plex Mono",
+      "scriptFaces": null,
+      "fallback": "ui-monospace, \"SFMono-Regular\", Consolas, monospace"
+    }
+  },
+  "staticColours": {
+    "photo-indigo": "rgb(36 59 156)",
+    "photo-indigo-hover": "rgb(22 39 121)",
+    "photo-paper-hover": "rgb(232 236 247)",
+    "photo-quiet-fill": "rgb(8 10 16 / 0.4)",
+    "photo-quiet-hover": "rgb(251 250 246 / 0.14)",
+    "photo-quiet-edge": "rgb(251 250 246 / 0.85)",
+    "photo-focus-ring": "rgb(8 10 16 / 0.8)",
+    "scrim": "rgb(8 10 16 / 0.42)",
+    "scrim-deep": "rgb(8 10 16 / 0.92)",
+    "plate-edge": "rgb(0 0 0 / 0.1)"
+  }
+}

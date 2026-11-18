@@ -264,6 +264,6 @@ def test_a_fibre_micrograph_is_captioned_only_by_a_claim_naming_the_fibre() -> N
     assert chosen_level_images([micrograph], alone, ["FIBRE"]) == {}
 
 
-def test_the_zoom_joins_materials_sections() -> None:
+def test_the_zoom_joins_materials_chemistry_and_process_sections() -> None:
     (entry,) = [entry for entry in BLOCK_BUILDERS if entry.kind == "zoom_story"]
-    assert (entry.disciplines, entry.wait_seconds) == ({"MATERIALS"}, 20.0)
+    assert (entry.disciplines, entry.wait_seconds) == ({"MATERIALS", "CHEMISTRY", "PROCESS"}, 20.0)

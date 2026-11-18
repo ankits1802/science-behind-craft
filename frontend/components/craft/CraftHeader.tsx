@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { BookOpen, MessageCircleQuestion, Mic } from "lucide-react";
 
+import { useAskHref } from "@/components/ask/useAskHref";
 import { PageHeader } from "@/components/PageHeader";
 import type { PageCraft } from "@/lib/craftPageContract";
 import { craftSubtitle } from "@/lib/craftPageView";
 
 export function CraftHeader({ craft, onVoice }: { craft: PageCraft; onVoice?: () => void }) {
+  const askHref = useAskHref({ craft: craft.slug });
   return (
     <>
       <PageHeader
@@ -22,7 +24,7 @@ export function CraftHeader({ craft, onVoice }: { craft: PageCraft; onVoice?: ()
                 Talk
               </button>
             ) : null}
-            <Link href={`/ask?craft=${encodeURIComponent(craft.slug)}`} className="field-button">
+            <Link href={askHref} className="field-button" data-testid="ask-about-craft">
               <MessageCircleQuestion className="h-4 w-4" aria-hidden />
               Ask about this craft
             </Link>

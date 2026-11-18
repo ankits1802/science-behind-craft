@@ -9,7 +9,7 @@ from sqlalchemy import func, select, text
 
 from app.core.db import session_scope
 from app.core.security import hash_password
-from app.models import AccessRoster, AppSetting, Provider, RoutePolicy, UsageEvent, User
+from app.models import AccessRoster, Provider, RoutePolicy, UsageEvent, User
 from app.providers import router as ai_router
 from app.providers.base import Adapter, ChatResult, ProviderError
 from app.services import app_settings, two_factor
@@ -83,12 +83,10 @@ async def test_schema_is_hardened_and_seeded() -> None:
             )
         ).scalar_one()
         assert first_compose == "claude-sonnet-5-5"
-        ceiling = (
-            await session.execute(
-                select(AppSetting.value).where(AppSetting.key == app_settings.MONTHLY_CEILING_USD)
-            )
-        ).scalar_one()
-        assert float(ceiling) == 800.0
+        caps = app_settings.public_view(await app_settings.load_all(session))
+        assert [caps["monthlyCeilingUsd"], caps["mediaCapUsd"], caps["degradeAtFraction"]] == [None] * 3
+        assert set(caps["roleDailyUsd"].values()) | set(caps["answerCapUsd"].values()) <= {None}
+        assert set((await session.execute(select(RoutePolicy.maxOutputTokens))).scalars()) == {None}
     with pytest.raises(Exception, match="append-only"):
         async with session_scope() as session:
             await session.execute(text("INSERT INTO \"AuditLog\" (action) VALUES ('test.probe')"))
@@ -439,10 +437,12 @@ async def test_router_falls_back_records_usage_and_enforces_ceiling(monkeypatch:
         assert refusals == 1
     finally:
         async with session_scope() as session:
-            await app_settings.set_value(session, app_settings.MONTHLY_CEILING_USD, 800.0)
+            await app_settings.set_value(session, app_settings.MONTHLY_CEILING_USD, None)
 
 
-async def test_role_daily_cap_blocks_student(monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_a_student_is_uncapped_by_default_and_a_set_role_cap_refuses(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr(ai_router, "build_adapter", fake_build_adapter)
     FakeAdapter.failing_providers = set()
     email = unique_email("capped")
@@ -459,6 +459,17 @@ async def test_role_daily_cap_blocks_student(monkeypatch: pytest.MonkeyPatch) ->
                 estimatedCostUsd=Decimal("0.5"),
             )
         )
-    with pytest.raises(ai_router.RouterError) as refused:
-        await ai_router.run("PLAN", system="s", user="u", principal=ai_router.Principal(user_id, "STUDENT"))
-    assert refused.value.reason == "ROLE_DAILY_CAP"
+    principal = ai_router.Principal(user_id, "STUDENT")
+    uncapped = await ai_router.run("PLAN", system="s", user="u", principal=principal)
+    assert (uncapped.degraded, uncapped.cost_usd > 0) == (False, True)
+    async with session_scope() as session:
+        await app_settings.set_value(session, app_settings.ROLE_DAILY_USD, {"STUDENT": 0.5})
+    try:
+        with pytest.raises(ai_router.RouterError) as refused:
+            await ai_router.run("PLAN", system="s", user="u", principal=principal)
+        assert refused.value.reason == "ROLE_DAILY_CAP"
+    finally:
+        async with session_scope() as session:
+            await app_settings.set_value(
+                session, app_settings.ROLE_DAILY_USD, dict(app_settings.UNCAPPED_ROLE_DAILY_USD)
+            )

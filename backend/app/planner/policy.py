@@ -4,7 +4,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
 
-from app.research.depth import research_budget
+from app.research.depth import depth_policy, research_budget
 from app.research.evidence import SEARCH_MAX_K
 from app.research.expert_panel import EXPERT_PANEL, speaking_seats
 from app.research.planning import MODE_POLICIES, PlanRequest, ResearchShare
@@ -31,6 +31,7 @@ __all__ = [
     "reference_reserve",
     "request_limits",
     "seat_reading_kinds",
+    "stored_pack_limit",
 ]
 
 PLAN_DRAFT_RETRIES = 1
@@ -41,7 +42,7 @@ SEARCH_TIMEOUT_SECONDS = 30.0
 READ_CONCURRENCY = 8
 DOCUMENT_TIMEOUT_SECONDS = 45.0
 READ_ATTEMPT_FACTOR = 2
-DEEP_REFERENCE_RESERVE = 6
+DEEP_REFERENCE_RESERVE = 15
 REFERENCES_PER_DOCUMENT = 5
 DEGRADED_MODES: Mapping[str, str] = MappingProxyType({"DEEP": "HYBRID"})
 NATIVE_QUERY_SEARCHERS = frozenset({WikipediaAdapter.name, WikidataAdapter.name})
@@ -99,3 +100,7 @@ def request_limits(request: PlanRequest, mode: str) -> ResearchShare:
         fetches=budget.max_fetches,
     )
     return limits if request.share is None else request.share.capped(limits)
+
+
+def stored_pack_limit(depth: str | None) -> int:
+    return STORED_PACK_LIMIT if depth is None else depth_policy(depth).stored_claims

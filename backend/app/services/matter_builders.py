@@ -19,18 +19,23 @@ from .object_store import media_bucket
 
 __all__ = [
     "MATERIAL_CARD_WAIT_SECONDS",
+    "MOLECULES_PER_SECTION",
     "MOLECULE_CANDIDATES_MAX",
+    "PLAYED_FIELDS",
     "LinkedCompound",
     "MaterialCardBuilder",
     "MoleculeBuilder",
     "ReactionPlayerBuilder",
     "molecule_candidates",
+    "played_compounds",
 ]
 
 logger = logging.getLogger(__name__)
 
 MATERIAL_CARD_WAIT_SECONDS = 20.0
-MOLECULE_CANDIDATES_MAX = 3
+MOLECULE_CANDIDATES_MAX = 6
+MOLECULES_PER_SECTION = 3
+PLAYED_FIELDS = frozenset({"CHEMISTRY"})
 
 Bucket = Callable[[], ConformerObjects | None]
 PubChem = Callable[[], Awaitable[ConformerSource]]
@@ -92,14 +97,18 @@ class MoleculeBuilder:
         matter = await _matter(self._tools, ask)
         if matter is None:
             return Built()
-        candidates = molecule_candidates(matter, ask.blocks)[:MOLECULE_CANDIDATES_MAX]
+        played = played_compounds(matter) if ask.section.discipline in PLAYED_FIELDS else []
+        candidates = _distinct([*molecule_candidates(matter, ask.blocks), *played])[:MOLECULE_CANDIDATES_MAX]
         if not candidates:
             return Built()
         cache = ConformerCache(objects=objects, source=await self._pubchem())
+        drawn: list[LinkedCompound] = []
         for candidate in candidates:
+            if len(drawn) == MOLECULES_PER_SECTION:
+                break
             if await cache.conformer(candidate.pubchem_cid) is not None:
-                return _molecule(ask, candidate, matter)
-        return Built()
+                drawn.append(candidate)
+        return _molecules(ask, drawn, matter)
 
 
 @dataclass(frozen=True)
@@ -119,7 +128,26 @@ def molecule_candidates(matter: CraftMatter, blocks: Sequence[Block]) -> list[Li
         position = first_naming(sentences, _compound_surfaces(compound, matter), _term_keys(compound, matter))
         if position is not None:
             named.append((position, LinkedCompound(compound, compound.pubchem_cid, source_id)))
-    return [linked for _, linked in sorted(named, key=lambda pair: (pair[0], pair[1].compound.name))]
+    return _distinct(
+        [linked for _, linked in sorted(named, key=lambda pair: (pair[0], pair[1].compound.name))]
+    )
+
+
+def played_compounds(matter: CraftMatter) -> list[LinkedCompound]:
+    ids = dict.fromkeys(s.compound_id for r in matter.records.reactions for s in r.species if s.compound_id)
+    found = [matter.compounds[compound_id] for compound_id in ids if compound_id in matter.compounds]
+    return [
+        LinkedCompound(compound, compound.pubchem_cid, str(compound.source_id))
+        for compound in found
+        if compound.pubchem_cid is not None and str(compound.source_id) in matter.record_sources
+    ]
+
+
+def _distinct(linked: Sequence[LinkedCompound]) -> list[LinkedCompound]:
+    first: dict[int, LinkedCompound] = {}
+    for candidate in linked:
+        first.setdefault(candidate.pubchem_cid, candidate)
+    return list(first.values())
 
 
 async def _matter(tools: BuilderTools, ask: BuildAsk) -> CraftMatter | None:
@@ -128,19 +156,22 @@ async def _matter(tools: BuilderTools, ask: BuildAsk) -> CraftMatter | None:
     return await craft_matter(tools.sessions, ask.request.craft)
 
 
-def _molecule(ask: BuildAsk, linked: LinkedCompound, matter: CraftMatter) -> Built:
-    block = Molecule3dBlock(
-        id=f"{ask.section.id}.molecule",
-        kind="molecule_3d",
-        version=1,
-        reuse=None,
-        compound_id=linked.compound.id,
-        pubchem_cid=linked.pubchem_cid,
-        name=linked.compound.name,
-        formula=linked.compound.formula,
-        source_id=linked.source_id,
+def _molecules(ask: BuildAsk, drawn: Sequence[LinkedCompound], matter: CraftMatter) -> Built:
+    blocks = tuple(
+        Molecule3dBlock(
+            id=f"{ask.section.id}.molecule{number}",
+            kind="molecule_3d",
+            version=1,
+            reuse=None,
+            compound_id=linked.compound.id,
+            pubchem_cid=linked.pubchem_cid,
+            name=linked.compound.name,
+            formula=linked.compound.formula,
+            source_id=linked.source_id,
+        )
+        for number, linked in enumerate(drawn, start=1)
     )
-    return Built((block,), {linked.source_id: matter.record_sources[linked.source_id]})
+    return Built(blocks, {linked.source_id: matter.record_sources[linked.source_id] for linked in drawn})
 
 
 def _compound_surfaces(compound: CompoundRecord, matter: CraftMatter) -> list[str]:

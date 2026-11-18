@@ -115,11 +115,16 @@ def test_the_vector_ranking_is_an_exact_cosine_scan_of_the_scoped_rows() -> None
     assert params["param_1"] == 7
 
 
-def test_chunks_come_from_sources_cited_by_scoped_claims_within_the_reader_acl() -> None:
+def test_chunks_come_from_sources_cited_by_scoped_claims_or_shown_field_interviews_within_the_reader_acl() -> (
+    None
+):
     conditions = chunk_conditions(SCOPE, mode="HYBRID", acls=("PUBLIC",))
     sql, params = compiled(chunk_lexical_ranking(conditions, "alum"))
-    assert sql.startswith('SELECT "Chunk".id FROM "Chunk" WHERE "Chunk"."sourceId" IN (SELECT "Source".id')
+    assert sql.startswith('SELECT "Chunk".id FROM "Chunk" WHERE ("Chunk"."sourceId" IN (SELECT "Source".id')
     assert '"ClaimSource"."claimId" IN (SELECT "Claim".id FROM "Claim"' in sql
+    assert ' OR "Chunk"."sourceId" IN (SELECT "FieldRecording"."sourceId" FROM "FieldRecording"' in sql
+    assert '"FieldRecording"."hiddenAt" IS NULL' in sql
+    assert '"FieldRecordingCraft"."craftId" = ' in sql
     assert '"Chunk".acl IN' in sql and params_with(params, "acl_") == [["PUBLIC"]]
     assert '"Chunk".sensitivity != ' in sql
     assert params_with(params, "sensitivity_").count("RESTRICTED") == 3

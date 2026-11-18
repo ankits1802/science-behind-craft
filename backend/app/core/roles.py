@@ -5,10 +5,12 @@ MASTER_ADMIN = "MASTER_ADMIN"
 ADMIN = "ADMIN"
 PROFESSOR = "PROFESSOR"
 RESEARCHER = "RESEARCHER"
+ARTISAN = "ARTISAN"
 STUDENT = "STUDENT"
 
 ROLE_RANK: dict[str, int] = {
     STUDENT: 15,
+    ARTISAN: 18,
     RESEARCHER: 30,
     PROFESSOR: 40,
     ADMIN: 50,
@@ -17,6 +19,7 @@ ROLE_RANK: dict[str, int] = {
 
 ROLE_LABELS: dict[str, str] = {
     STUDENT: "Student",
+    ARTISAN: "Artisan",
     RESEARCHER: "Researcher",
     PROFESSOR: "Professor",
     ADMIN: "Admin",
@@ -59,7 +62,9 @@ class Capability(StrEnum):
     VIEW_AUDIT_LOG = "VIEW_AUDIT_LOG"
     BUILD_LESSONS = "BUILD_LESSONS"
     HIDE_GENERATED = "HIDE_GENERATED"
-    READ_ALL_EVIDENCE = "READ_ALL_EVIDENCE"
+    CONTRIBUTE_TESTIMONY = "CONTRIBUTE_TESTIMONY"
+    REVIEW_TESTIMONY = "REVIEW_TESTIMONY"
+    CONFIRM_GUARDIAN_CONSENT = "CONFIRM_GUARDIAN_CONSENT"
 
 
 CAPABILITY_MIN_ROLE: dict[Capability, str] = {
@@ -91,15 +96,17 @@ CAPABILITY_MIN_ROLE: dict[Capability, str] = {
     Capability.VIEW_AUDIT_LOG: ADMIN,
     Capability.BUILD_LESSONS: PROFESSOR,
     Capability.HIDE_GENERATED: PROFESSOR,
-    Capability.READ_ALL_EVIDENCE: RESEARCHER,
+    Capability.REVIEW_TESTIMONY: PROFESSOR,
+    Capability.CONFIRM_GUARDIAN_CONSENT: PROFESSOR,
 }
 
+ROLE_ONLY_CAPABILITIES: dict[Capability, frozenset[str]] = {
+    Capability.CONTRIBUTE_TESTIMONY: frozenset({ARTISAN}),
+}
+
+ALLOWANCE_RESOURCES: tuple[str, ...] = ("VOICE_SECONDS", "IMAGE", "VIDEO")
 DAILY_ALLOWANCES: dict[str, dict[str, int | None]] = {
-    STUDENT: {"VOICE_SECONDS": 600, "IMAGE": 5, "VIDEO": 0},
-    RESEARCHER: {"VOICE_SECONDS": 1800, "IMAGE": 30, "VIDEO": 5},
-    PROFESSOR: {"VOICE_SECONDS": 1800, "IMAGE": 50, "VIDEO": 10},
-    ADMIN: {"VOICE_SECONDS": 3600, "IMAGE": 100, "VIDEO": 20},
-    MASTER_ADMIN: {"VOICE_SECONDS": None, "IMAGE": None, "VIDEO": None},
+    role: dict.fromkeys(ALLOWANCE_RESOURCES) for role in ROLE_RANK
 }
 
 
@@ -127,8 +134,10 @@ def is_master_admin(user_or_role: Any) -> bool:
 
 
 def can(user_or_role: Any, capability: Capability) -> bool:
-    minimum = CAPABILITY_MIN_ROLE[capability]
-    return has_rank(user_or_role, minimum)
+    holders = ROLE_ONLY_CAPABILITIES.get(capability)
+    if holders is not None:
+        return role_value(user_or_role) in holders
+    return has_rank(user_or_role, CAPABILITY_MIN_ROLE[capability])
 
 
 def capabilities_of(user_or_role: Any) -> list[str]:

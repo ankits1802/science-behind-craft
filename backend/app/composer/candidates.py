@@ -11,7 +11,9 @@ from app.research.composition import (
 )
 from app.research.evidence import SourceDocument
 from app.research.evidence_pack import EvidencePack
-from app.research.retrieval import ClaimHit
+from app.research.field_voices import FIELD_SOURCE_KIND, FIELD_VOICES_ADAPTER
+from app.research.reading_style import ReadingStyle
+from app.research.retrieval import ChunkHit, ClaimHit
 from app.research.vocabulary import LABEL_LEVELS
 
 __all__ = [
@@ -20,6 +22,8 @@ __all__ = [
     "claim_candidate",
     "compose_request",
     "document_candidate",
+    "field_candidate",
+    "field_evidence_id",
     "research_summary",
     "stored_claim_candidate",
 ]
@@ -30,16 +34,22 @@ LABEL_MAX_CHARS = 300
 
 
 def compose_request(
-    pack: EvidencePack, question: str, *, focus: ComposeFocus | None = None
+    pack: EvidencePack,
+    question: str,
+    *,
+    focus: ComposeFocus | None = None,
+    style: ReadingStyle | None = None,
 ) -> ComposeRequest:
     claims = [claim_candidate(hit) for hit in pack.stored.claims]
+    fields = [field_candidate(hit) for hit in pack.stored.chunks if hit.source_kind == FIELD_SOURCE_KIND]
     documents = [candidate for doc in pack.documents if (candidate := document_candidate(doc)) is not None]
     return ComposeRequest(
         question=question,
         craft=pack.plan.craft,
-        candidates=[*claims, *documents],
+        candidates=[*claims, *fields, *documents],
         searched=research_summary(pack),
         focus=focus,
+        style=style,
     )
 
 
@@ -50,6 +60,23 @@ def claim_candidate(hit: ClaimHit) -> ComposeCandidate:
 def stored_claim_candidate(claim_id: uuid.UUID, text: str, level: str) -> ComposeCandidate:
     return ComposeCandidate(
         id=str(claim_id), kind="CLAIM", text=text, source_label=f"stored claim, {level.lower()}", level=level
+    )
+
+
+def field_evidence_id(hit: ChunkHit) -> str:
+    return f"{FIELD_VOICES_ADAPTER}:{hit.chunk_id}"
+
+
+def field_candidate(hit: ChunkHit) -> ComposeCandidate:
+    label = (
+        f"field interview: {hit.source_title or 'a recorded interview'}, {hit.locator or 'whole recording'}"
+    )
+    return ComposeCandidate(
+        id=field_evidence_id(hit),
+        kind="EVIDENCE",
+        text=hit.text,
+        source_label=label[:LABEL_MAX_CHARS],
+        level=EVIDENCE_LEVEL,
     )
 
 

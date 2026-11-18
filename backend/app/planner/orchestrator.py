@@ -15,7 +15,7 @@ from .drafting import draft_plan
 from .failures import FailureLog
 from .live_search import merged_evidence, run_searches
 from .plans import effective_mode, retrieval_plan, search_question
-from .policy import LIVE_BUDGETS, reference_reserve, seat_reading_kinds
+from .policy import LIVE_BUDGETS, reference_reserve, seat_reading_kinds, stored_pack_limit
 from .reading import DocumentReader, LiveSources, reading_order
 from .references import cited_dois, follow_references
 
@@ -81,7 +81,11 @@ class ResearchPlanner:
         plan = planned.plan
         await report("SEARCHING_STORED", len(plan.facets))
         stored = await stored_knowledge(
-            self._retriever, craft_slug=_slug(plan.craft), mode=plan.mode, question=planned.search_question
+            self._retriever,
+            craft_slug=_slug(plan.craft),
+            mode=plan.mode,
+            question=planned.search_question,
+            limit=stored_pack_limit(request.depth),
         )
         log = FailureLog()
         reading = _Reading(log, report, trail, seat_reading_kinds(request))

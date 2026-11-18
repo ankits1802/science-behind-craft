@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 2,
+  "portal": "FIELD_REPOSITORY",
+  "generatedAt": "2026-11-18T02:00:01Z",
+  "stream": "transcripts",
+  "view": "all",
+  "cursor": "fr-t-2",
+  "nextCursor": "fr-t-3",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "fr-media-2",
+      "revision": "53d16ba59681d1e1cf11536a7db9e46c",
+      "updatedAt": "2026-11-17T12:00:00.000003Z",
+      "recordingId": null,
+      "mediaType": "VIDEO",
+      "recordedAt": "2026-03-15T09:00:00+05:30",
+      "durationMs": null,
+      "crafts": [
+        {
+          "id": "fr-craft-ajrakh",
+          "slug": "Kutch-Ajrakh",
+          "code": "ajrakh",
+          "name": "Ajrakh Print of Kutch"
+        }
+      ],
+      "workshop": {
+        "kind": "WORKSHOP",
+        "id": "fr-ws-1",
+        "code": null,
+        "title": "Ajrakh documentation visit",
+        "startsOn": "2026-03-12",
+        "endsOn": "2026-03-16",
+        "area": {
+          "state": "Gujarat",
+          "district": "Kachchh",
+          "stateLgd": 24,
+          "districtLgd": 449
+        }
+      },
+      "session": null,
+      "topics": [],
+      "stage": null,
+      "record": {
+        "kind": "PRODUCT",
+        "id": "fr-prod-1",
+        "name": "Ajrakh stole",
+        "localName": null
+      },
+      "area": {
+        "state": "Gujarat",
+        "district": "Kachchh",
+        "stateLgd": 24,
+        "districtLgd": 449
+      },
+      "people": [
+        {
+          "id": "fr-art-2",
+          "kind": "ARTISAN",
+          "name": null,
+          "localName": null,
+          "yearsInCraft": null,
+          "area": {
+            "state": "Gujarat",
+            "district": "Kachchh",
+            "stateLgd": 24,
+            "districtLgd": 449
+          },
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "speakers": [
+        {
+          "key": "L1",
+          "label": "Artisan",
+          "role": null,
+          "personId": null
+        }
+      ],
+      "transcript": {
+        "source": "TEXT",
+        "version": null,
+        "languages": [
+          "gu"
+        ],
+        "detectedLanguage": null,
+        "segments": [
+          {
+            "id": "fr-media-2.0",
+            "position": 0,
+            "speakerKey": "L1",
+            "startMs": null,
+            "endMs": null,
+            "language": "gu",
+            "text": "ચાદર ધોઈને તડકે સૂકવીએ છીએ, પછી બીજો છાપો લગાવીએ છીએ.",
+            "textSource": "MACHINE",
+            "english": null,
+            "englishSource": null,
+            "scrubbed": []
+          }
+        ],
+        "english": {
+          "text": "We wash the cloth and dry it in the sun, then apply the second print.",
+          "source": "MACHINE"
+        }
+      },
+      "scrubbing": {
+        "version": 1,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          },
+          {
+            "kind": "PLACE",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      }
+    }
+  ]
+}

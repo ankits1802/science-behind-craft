@@ -1,0 +1,42 @@
+{
+  "counts": {
+    "pending": 1,
+    "approved": 1,
+    "rejected": 0,
+    "withdrawn": 1
+  },
+  "items": [
+    {
+      "id": "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "status": "APPROVED",
+      "conversationId": "9b2c4d6e-8f0a-4b1c-9d2e-3f4a5b6c7d8e",
+      "craft": {
+        "slug": "kutch-ajrakh",
+        "name": "Ajrakh Printing",
+        "path": "/crafts/kutch-ajrakh"
+      },
+      "discipline": "PROCESS",
+      "claimText": "After the alum bath the printed cloth is washed in running water.",
+      "quote": "फिटकरी के बाद हम कपड़े को बहते पानी में धोते हैं",
+      "language": "hi",
+      "english": "After the alum we wash the cloth in running water",
+      "englishSource": "REVIEWED",
+      "locator": "1:05–1:12",
+      "recordedAt": "2026-11-18T05:30:00+00:00",
+      "line": "An artisan of Ajrakh Printing, Kachchh, Gujarat",
+      "submittedAt": "2026-11-18T06:02:00+00:00",
+      "reviewedAt": "2026-11-18T09:00:00+00:00",
+      "reviewerRole": "PROFESSOR",
+      "rejectReason": null,
+      "reviewNote": null,
+      "approvedAt": "2026-11-18T09:00:00+00:00",
+      "withdrawnAt": null
+    },
+    {
+      "id": "6d7e8f90-a1b2-4c3d-8e4f-5a6b7c8d9e0f",
+      "status": "WITHDRAWN",
+      "conversationId": "9b2c4d6e-8f0a-4b1c-9d2e-3f4a5b6c7d8e",
+      "withdrawnAt": "2026-11-18T10:30:00+00:00"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import guardian_hold
 from app.core.config import get_settings
 from app.core.db import get_session
 from app.core.deps import (
@@ -15,11 +16,20 @@ from app.core.deps import (
     refuse_unless_manageable,
     require,
 )
-from app.core.roles import ROLE_RANK, Capability, can
-from app.models import AccessRoster, User
-from app.schemas.admin import SuspendRequest, UserUpdate
+from app.core.roles import ROLE_RANK, STUDENT, Capability, can, role_value
+from app.models import AccessRoster, ConsentRecord, User
+from app.schemas.admin import GuardianConsentRequest, SuspendRequest, UserUpdate
 from app.schemas.common import normalize_pagination, page_payload
-from app.services import access_roster, audit, credential_links, two_factor
+from app.services import (
+    access_roster,
+    audit,
+    credential_links,
+    reader_profiles,
+    share_owners,
+    testimony_writes,
+    two_factor,
+)
+from app.services.object_store import media_bucket
 from app.services.users import serialize_user
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -35,6 +45,11 @@ USER_SORTS = {
 lister = require(Capability.LIST_USERS)
 role_changer = require(Capability.CHANGE_ROLES)
 disabler = require(Capability.DISABLE_USERS)
+guardian_confirmer = require(Capability.CONFIRM_GUARDIAN_CONSENT)
+
+NOT_A_STUDENT_DETAIL = "Guardian consent is confirmed for student accounts only."
+STALE_STATEMENT_DETAIL = "Confirm the current statement, version {version}."
+ALREADY_CONFIRMED_DETAIL = "Guardian consent is already confirmed for this student."
 
 
 async def _target(session: AsyncSession, user_id: uuid.UUID) -> User:
@@ -49,10 +64,39 @@ def _protect_master(target: User, actor: User) -> None:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "The master admin account is protected")
 
 
+async def _guardian_marks(
+    session: AsyncSession, pairs: list[tuple[User, dict[str, Any]]]
+) -> list[dict[str, Any]]:
+    students = [user.id for user, _ in pairs if role_value(user) == STUDENT]
+    confirmed = await guardian_hold.confirmed_among(session, students)
+    for user, item in pairs:
+        if role_value(user) == STUDENT:
+            item["guardianConsent"] = "CONFIRMED" if user.id in confirmed else "NOT_CONFIRMED"
+    return [item for _, item in pairs]
+
+
+async def _listed(session: AsyncSession, rows: Any) -> list[dict[str, Any]]:
+    master_email = get_settings().master_admin_email.strip().lower()
+    pairs = [
+        (
+            user,
+            serialize_user(
+                user,
+                access_status="ACTIVE"
+                if user.email.lower() == master_email
+                else (row_status or "NOT_LISTED"),
+            ),
+        )
+        for user, row_status in rows
+    ]
+    return await _guardian_marks(session, pairs)
+
+
 async def _with_access(session: AsyncSession, user: User) -> dict[str, Any]:
     row = await access_roster.access_row(session, user.email)
     access = "ACTIVE" if is_configured_master_admin(user) else (access_roster.status_of(row) or "NOT_LISTED")
-    return serialize_user(user, access_status=access)
+    (item,) = await _guardian_marks(session, [(user, serialize_user(user, access_status=access))])
+    return item
 
 
 @router.get("")
@@ -92,15 +136,7 @@ async def list_users(
     column = getattr(User, USER_SORTS[sort])
     ordering = column.asc().nulls_last() if dir == "asc" else column.desc().nulls_last()
     rows = (await session.execute(joined.order_by(ordering, User.id).offset(skip).limit(clean_size))).all()
-    master_email = get_settings().master_admin_email.strip().lower()
-    items = [
-        serialize_user(
-            user,
-            access_status="ACTIVE" if user.email.lower() == master_email else (row_status or "NOT_LISTED"),
-        )
-        for user, row_status in rows
-    ]
-    return page_payload(items, total, clean_page, clean_size)
+    return page_payload(await _listed(session, rows), total, clean_page, clean_size)
 
 
 @router.get("/{user_id}")
@@ -138,6 +174,7 @@ async def update_user(
             changed.append(field)
     if "role" in data and data["role"] != target.role:
         before = target.role
+        await reader_profiles.apply_role_change(session, target, data["role"])
         target.role = data["role"]
         target.tokenVersion += 1
         changed.append("role")
@@ -210,6 +247,7 @@ async def suspend_user(
     await _set_access(session, actor, target, access_roster.SUSPENDED, payload.reason if payload else None)
     target.tokenVersion += 1
     target.sessionsValidFrom = datetime.now(UTC)
+    await share_owners.withdraw_shares(session, target.id, actor=actor, cause="users.suspended")
     await audit.record(
         session, action="users.suspended", actor=actor, target_type="User", target_id=target.id
     )
@@ -291,5 +329,47 @@ async def delete_user(
     target.deletedAt = datetime.now(UTC)
     target.tokenVersion += 1
     await credential_links.revoke_outstanding(session, target.id)
+    await testimony_writes.erase_artisan(session, media_bucket(), target, now=target.deletedAt)
+    await share_owners.withdraw_shares(session, target.id, actor=actor, cause="users.deleted")
     await audit.record(session, action="users.deleted", actor=actor, target_type="User", target_id=target.id)
     await session.commit()
+
+
+@router.post("/{user_id}/guardian-consent", status_code=status.HTTP_201_CREATED)
+async def confirm_guardian_consent(
+    user_id: uuid.UUID,
+    payload: GuardianConsentRequest,
+    actor: User = Depends(guardian_confirmer),
+    session: AsyncSession = Depends(get_session),
+) -> dict[str, str]:
+    target = await _target(session, user_id)
+    refuse_unless_manageable(actor, target)
+    if role_value(target) != STUDENT:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_A_STUDENT_DETAIL)
+    version = guardian_hold.GUARDIAN_STATEMENT_VERSION
+    if payload.noticeVersion != version:
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY, STALE_STATEMENT_DETAIL.format(version=version)
+        )
+    if await guardian_hold.guardian_confirmed(session, target.id):
+        raise HTTPException(status.HTTP_409_CONFLICT, ALREADY_CONFIRMED_DETAIL)
+    now = datetime.now(UTC)
+    session.add(
+        ConsentRecord(
+            userId=target.id,
+            kind=guardian_hold.GUARDIAN_CONSENT,
+            noticeVersion=version,
+            acceptedAt=now,
+            recordedById=actor.id,
+        )
+    )
+    await audit.record(
+        session,
+        action="users.guardian_consent_confirmed",
+        actor=actor,
+        target_type="User",
+        target_id=target.id,
+        detail={"noticeVersion": version},
+    )
+    await session.commit()
+    return {"userId": str(target.id), "confirmedAt": now.isoformat()}

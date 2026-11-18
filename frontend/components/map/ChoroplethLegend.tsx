@@ -16,11 +16,16 @@ export function Swatch({ className }: { className: string }) {
   );
 }
 
-export function ChoroplethLegend({ layer }: { layer: MapLayer }) {
+export function ChoroplethLegend({ layer, note }: { layer: MapLayer; note?: string }) {
   const labels = layerClassLabels(layer);
   return (
     <div className="mt-4 grid gap-2 border-t border-line-200 pt-4" data-testid="choropleth-legend">
       <p className="text-sm font-semibold text-ink-900">{layer.layer.title}</p>
+      {note ? (
+        <p className="text-xs text-ink-500" data-testid="choropleth-scope">
+          {note}
+        </p>
+      ) : null}
       <p className="sr-only">{layerSummary(layer)}</p>
       <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs tabular-nums text-ink-700">
         {labels.map((label, index) => (

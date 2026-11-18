@@ -24,6 +24,7 @@ __all__ = [
     "MaterialRows",
     "craft_matter",
     "first_naming",
+    "material_rows",
     "section_sentences",
 ]
 
@@ -82,7 +83,7 @@ async def craft_matter(sessions: async_sessionmaker[AsyncSession], craft: CraftR
         sources = await _record_sources(session, [c.source_id for c in compounds.values() if c.source_id])
     return CraftMatter(
         records=records,
-        materials=_materials(records.materials, terms),
+        materials=material_rows(records.materials, terms),
         compounds=compounds,
         record_sources=sources,
     )
@@ -109,7 +110,7 @@ def first_naming(
     return None
 
 
-def _materials(
+def material_rows(
     uses: Iterable[MaterialRecord], terms: Mapping[uuid.UUID, tuple[GlossaryTerm, ...]]
 ) -> tuple[MaterialRows, ...]:
     grouped: dict[uuid.UUID, list[MaterialRecord]] = {}

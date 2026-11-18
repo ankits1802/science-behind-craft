@@ -63,7 +63,7 @@ test("the panel draws each seat's cited take and one Experts differ card with bo
   expect(attribute(card, "experts-differ-side", "data-seat")).toEqual(["HISTORIAN", "ANTHROPOLOGIST"]);
   expect(shownText(card)).toContain(historian().differs[0].thisView.text);
   expect(shownText(card)).toContain(anthropologist().differs[0].thisView.text);
-  expect([...card.matchAll(/data-testid="citation-chip"[^>]*>.*?<span class="tabular-nums">(\d+)<\/span>/g)].map((found) => found[1])).toEqual(["2", "3"]);
+  expect(attribute(card, "citation-chip", "data-numbers")).toEqual(["2", "3"]);
 });
 
 test("one seat alone, or a difference only one seat states, draws no Experts differ card", () => {

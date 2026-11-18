@@ -10,7 +10,6 @@ import { AskOptions } from "@/components/ask/AskOptions";
 import { useAskScreen } from "@/components/ask/useAskScreen";
 import { useExplainerLearning } from "@/components/ask/useExplainerLearning";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { useGsapHeadline } from "@/components/guide/useGsapHeadline";
 import { failureMessage } from "@/components/hooks/useRemote";
 import { ExplainerNext } from "@/components/learn/ExplainerFooter";
 import { ExplainerTools, VersionPicker } from "@/components/learn/ExplainerTools";
@@ -29,7 +28,6 @@ export default function AskPage() {
 
 function AskScreen() {
   const reduce = useAppReducedMotion();
-  const headline = useGsapHeadline<HTMLHeadingElement>(reduce);
   const { state, round, config, question, setQuestion, language, dictation, busy, canAsk, options, understood, shownDepth, run, follow, load, stop, clear } = useAskScreen();
   const learning = useExplainerLearning({ state, load, follow, setQuestion });
   const started = state.phase !== "idle";
@@ -43,7 +41,7 @@ function AskScreen() {
     <div className="mx-auto grid w-full max-w-6xl gap-6">
       {!started && !learning.opening ? (
         <header className="pt-2 md:pt-8">
-          <h1 ref={headline} className="display-title text-2xl md:text-center md:text-[2.75rem] md:leading-tight">
+          <h1 className="display-title text-2xl md:text-center md:text-[2.75rem] md:leading-tight">
             What would you like to understand?
           </h1>
         </header>

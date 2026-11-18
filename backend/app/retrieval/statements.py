@@ -15,6 +15,8 @@ from app.research.retrieval import (
     VISIBLE_SENSITIVITY,
 )
 
+from .field_scope import field_interview_sources, withheld_field_sources
+
 __all__ = [
     "EVERY_CRAFT",
     "RANKING_DEPTH",
@@ -80,6 +82,7 @@ def claim_conditions(
         ClaimSource.claimId == Claim.id,
         ClaimSource.sourceId == Source.id,
         Source.sensitivity != RESTRICTED_SENSITIVITY,
+        Source.id.not_in(withheld_field_sources()),
     )
     return [
         scope_claims(scope, facets=facets),
@@ -98,7 +101,11 @@ def readable_citations(claim_ids: Sequence[uuid.UUID], *, acls: Sequence[str]) -
     return (
         select(ClaimSource)
         .outerjoin(Chunk, Chunk.id == ClaimSource.chunkId)
-        .where(ClaimSource.claimId.in_(list(claim_ids)), readable)
+        .where(
+            ClaimSource.claimId.in_(list(claim_ids)),
+            ClaimSource.sourceId.not_in(withheld_field_sources()),
+            readable,
+        )
     )
 
 
@@ -111,7 +118,8 @@ def chunk_conditions(
         Source.sensitivity != RESTRICTED_SENSITIVITY,
     )
     return [
-        Chunk.sourceId.in_(sources),
+        or_(Chunk.sourceId.in_(sources), Chunk.sourceId.in_(field_interview_sources(scope.craft_id))),
+        Chunk.sourceId.not_in(withheld_field_sources()),
         Chunk.acl.in_(list(acls)),
         Chunk.sensitivity != RESTRICTED_SENSITIVITY,
     ]

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,9 +13,11 @@ from . import knowledge_view
 __all__ = ["stored_uuids", "visible_claim_ids"]
 
 
-async def visible_claim_ids(session: AsyncSession, explainer: Explainer) -> frozenset[str]:
+async def visible_claim_ids(
+    session: AsyncSession, explainer: Explainer, *, acls: Sequence[str] = EVERY_CHUNK_ACLS
+) -> frozenset[str]:
     cited = dict.fromkeys(c.claim_id for block in explainer_blocks(explainer) for c in block.citations())
-    visible, _sources = await knowledge_view.claims_by_id(session, stored_uuids(cited), acls=EVERY_CHUNK_ACLS)
+    visible, _sources = await knowledge_view.claims_by_id(session, stored_uuids(cited), acls=acls)
     return frozenset(str(claim_id) for claim_id in visible)
 
 

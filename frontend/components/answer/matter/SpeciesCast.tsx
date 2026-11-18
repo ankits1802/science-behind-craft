@@ -17,18 +17,20 @@ const ROLE_MARK: Record<CastRole, { Icon: LucideIcon; className: string }> = {
 };
 
 const RESTING = "border-line-200 bg-card text-ink-500";
+const CARRIED_LABEL = "Intermediate";
 
 function RoleMark({ role }: { role: CastRole }) {
   const { Icon, className } = ROLE_MARK[role];
   return <Icon className={cn("h-2.5 w-2.5 shrink-0", className)} aria-hidden />;
 }
 
-function CastChip({ member, role }: { member: CastMember; role: CastRole | null }) {
+function CastChip({ member, role, carried }: { member: CastMember; role: CastRole | null; carried: boolean }) {
   return (
     <li
       title={member.name}
       data-testid="cast-species"
       data-role={role ?? "none"}
+      data-carried={carried ? "true" : undefined}
       className={cn("inline-flex min-h-8 max-w-full items-center gap-1.5 rounded-full border px-2.5 text-sm transition-colors duration-300", role ? ROLE_TONE[role] : RESTING)}
     >
       {role ? <RoleMark role={role} /> : null}
@@ -38,16 +40,19 @@ function CastChip({ member, role }: { member: CastMember; role: CastRole | null 
         <span className="min-w-0 break-words text-xs font-semibold">{member.name}</span>
       )}
       {role ? <span className="sr-only">{`, ${CAST_ROLE_LABEL[role]}`}</span> : null}
+      {carried ? <span className="rounded-full bg-gold-100 px-1.5 text-[11px] font-semibold text-ink-900">{CARRIED_LABEL}</span> : null}
     </li>
   );
 }
 
-export function SpeciesCast({ cast, roles }: { cast: readonly CastMember[]; roles: ReadonlyMap<string, CastRole> }) {
+type CastProps = { cast: readonly CastMember[]; roles: ReadonlyMap<string, CastRole>; carried?: ReadonlySet<string> };
+
+export function SpeciesCast({ cast, roles, carried = new Set() }: CastProps) {
   return (
     <div className="min-w-0 rounded-lg border border-line-200 bg-surface-50 p-3" data-testid="species-cast">
       <ul className="flex min-w-0 flex-wrap gap-1.5" aria-label="Species in this reaction">
         {cast.map((member) => (
-          <CastChip key={member.key} member={member} role={roles.get(member.key) ?? null} />
+          <CastChip key={member.key} member={member} role={roles.get(member.key) ?? null} carried={carried.has(member.key)} />
         ))}
       </ul>
       <p aria-hidden className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-500">

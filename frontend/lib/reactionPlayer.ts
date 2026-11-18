@@ -1,4 +1,4 @@
-import type { ReactionStep } from "@/lib/explainerMatter";
+import type { COLOUR_WORDS, ReactionStep, StepColour } from "@/lib/explainerMatter";
 import { REACTION_KIND_LABEL, speciesName } from "@/lib/processView";
 import type { ReactionSpecies } from "@/lib/scienceContract";
 
@@ -9,10 +9,42 @@ export type PlaybackAction = { type: "play" | "pause" | "next" | "previous" | "t
 export type CastRole = ReactionSpecies["role"];
 export type CastMember = { key: string; formula: string | null; name: string };
 export type StepSignal = "BALANCED" | "UNBALANCED";
+export type ColourWord = (typeof COLOUR_WORDS)[number];
+export type ColourChange = { before: StepColour | null; after: StepColour | null };
 
 export const PLAYBACK_START: Playback = { at: 0, playing: false };
 
 export const CAST_ROLE_LABEL: Record<CastRole, string> = { REACTANT: "Reactant", PRODUCT: "Product" };
+
+export const COLOUR_LABEL: Record<ColourWord, string> = {
+  RED: "Red",
+  BLUE: "Blue",
+  BLACK: "Black",
+  WHITE: "White",
+  GREEN: "Green",
+  YELLOW: "Yellow",
+  BROWN: "Brown",
+  GREY: "Grey",
+  PINK: "Pink",
+  PURPLE: "Purple",
+  ORANGE: "Orange",
+  MAROON: "Maroon"
+};
+
+export const DYE_SWATCH: Record<ColourWord, string> = {
+  RED: "bg-dye-red",
+  BLUE: "bg-dye-blue",
+  BLACK: "bg-dye-black",
+  WHITE: "bg-dye-white",
+  GREEN: "bg-dye-green",
+  YELLOW: "bg-dye-yellow",
+  BROWN: "bg-dye-brown",
+  GREY: "bg-dye-grey",
+  PINK: "bg-dye-pink",
+  PURPLE: "bg-dye-purple",
+  ORANGE: "bg-dye-orange",
+  MAROON: "bg-dye-maroon"
+};
 
 function stepIndex(index: number, count: number): number {
   return Math.min(Math.max(0, Math.trunc(index)), Math.max(0, count - 1));
@@ -74,4 +106,28 @@ export function stepKindLabel(step: Pick<ReactionStep, "kind">): string {
 
 export function stepPosition(at: number, count: number): string {
   return `Step ${stepIndex(at, count) + 1} of ${count}`;
+}
+
+export function colourChange(step: Pick<ReactionStep, "colours">): ColourChange | null {
+  const colours = step.colours ?? [];
+  const before = colours.find((colour) => colour.side === "BEFORE") ?? null;
+  const after = colours.find((colour) => colour.side === "AFTER") ?? null;
+  return before || after ? { before, after } : null;
+}
+
+export function colourChangeLine(change: ColourChange): string {
+  const before = change.before ? COLOUR_LABEL[change.before.colour] : null;
+  const after = change.after ? COLOUR_LABEL[change.after.colour] : null;
+  if (before && after) return `${before} turns ${after.toLowerCase()}`;
+  return before ? `${before} at first` : `${after ?? ""} as it forms`;
+}
+
+export function carriedKeys(steps: readonly ReactionStep[], at: number): ReadonlySet<string> {
+  const sides = (index: number, role: CastRole) =>
+    new Set((steps[index]?.species ?? []).filter((species) => species.role === role).map(castKey));
+  const made = sides(at, "PRODUCT");
+  const used = sides(at, "REACTANT");
+  const next = sides(at + 1, "REACTANT");
+  const previous = sides(at - 1, "PRODUCT");
+  return new Set([...[...made].filter((key) => next.has(key)), ...[...used].filter((key) => previous.has(key))]);
 }

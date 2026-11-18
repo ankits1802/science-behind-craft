@@ -31,6 +31,7 @@ async def sessions() -> AsyncIterator[tuple[async_sessionmaker[AsyncSession], As
 
 async def spent_to_the_ceiling(session: AsyncSession) -> None:
     await app_settings.set_value(session, app_settings.MONTHLY_CEILING_USD, 0.01)
+    await app_settings.set_value(session, app_settings.DEGRADE_AT_FRACTION, 0.8)
     session.add(UsageEvent(task="PLAN", costUsd=Decimal("0.02"), outcome="OK", role="ADMIN"))
     await session.commit()
 
@@ -43,6 +44,27 @@ async def reserved(
             session, task=AiTask.PLAN, choice=None, principal=principal, estimate_usd=Decimal(estimate)
         )
         return await session.get(UsageEvent, event_id), decision
+
+
+@pytest.mark.parametrize("role", ["STUDENT", "ARTISAN", "RESEARCHER", "PROFESSOR", "ADMIN", "MASTER_ADMIN"])
+@pytest.mark.parametrize("depth", ["BASIC", "DETAILED", "EXPERT"])
+async def test_with_no_stored_caps_every_role_and_depth_reserves_and_the_estimate_is_recorded(
+    sessions: Any, role: str, depth: str
+) -> None:
+    factory, session = sessions
+    session.add(UsageEvent(task="COMPOSE", costUsd=Decimal("5000"), outcome="OK", role=role))
+    await session.commit()
+    answer = AnswerSpend(depth=depth)
+    main, main_decision = await reserved(factory, Principal(role=role, answer=answer), "40")
+    extra, extra_decision = await reserved(factory, Principal(role=role, answer=answer.headroom()), "40")
+    assert [
+        (d.allowed, d.degrade, e.outcome, e.estimatedCostUsd)
+        for d, e in ((main_decision, main), (extra_decision, extra))
+    ] == [
+        (True, False, "RESERVED", Decimal("40")),
+        (True, False, "RESERVED", Decimal("40")),
+    ]
+    assert answer.held_usd == Decimal("80")
 
 
 async def test_a_master_admin_reserves_past_the_ceiling_and_a_student_is_refused(sessions: Any) -> None:

@@ -7,7 +7,7 @@ from pydantic import ValidationError
 
 from app.research import stream
 from app.research.blocks_lede import LedeBlock
-from app.research.explainer import Explainer, LedeEvent, explainer_blocks, payload_sentences
+from app.research.explainer import BlockEvent, Explainer, LedeEvent, explainer_blocks, payload_sentences
 from app.research.quotes import QUOTE_OVERLAP_MIN, quote_overlap, unsupported_figures
 from app.research.sections import fallback_heading, is_facet_label, question_order
 from app.services.stated_names import unstated_names
@@ -131,9 +131,9 @@ def test_the_lede_is_the_first_block_its_sources_lead_and_its_sentences_translat
             "never reused",
         ),
         (
-            lambda b: b["lede"].update(
-                figure={
-                    "id": "lede.figure",
+            lambda b: b["sections"][0]["blocks"].append(
+                {
+                    "id": "s1.figure",
                     "kind": "mordant_bath",
                     "version": 1,
                     "reuse": None,
@@ -152,7 +152,7 @@ def test_the_lede_rules_fail_closed(change: Any, message: str) -> None:
         Explainer.model_validate(body)
 
 
-def test_a_lede_states_facts_only_and_its_event_shows_only_built_figures() -> None:
+def test_a_lede_states_facts_only_and_its_event_carries_a_built_figure() -> None:
     lede = document()["lede"]
     for cite in lede["sentences"][0]["citations"]:
         cite["level"] = "HYPOTHESIS"
@@ -168,5 +168,6 @@ def test_a_lede_states_facts_only_and_its_event_shows_only_built_figures() -> No
     }
     shown = document()["lede"] | {"figure": figure}
     assert LedeBlock.model_validate(shown).figure is not None
+    assert LedeEvent.model_validate({"block": shown}).block.figure.kind == "firing"
     with pytest.raises(ValidationError, match="not built yet"):
-        LedeEvent.model_validate({"block": shown})
+        BlockEvent.model_validate({"sectionId": "s1", "block": figure})

@@ -10,10 +10,16 @@ from starlette.requests import HTTPConnection
 from app.core.config import get_settings
 
 _MAX_KEYS = 50_000
-PUBLIC_READS_PER_WINDOW = 300
+CAMPUS_PAGE_VIEWS_PER_WINDOW = 30
+COUNTED_READS_PER_PAGE_VIEW = 30
+PUBLIC_READS_PER_WINDOW = CAMPUS_PAGE_VIEWS_PER_WINDOW * COUNTED_READS_PER_PAGE_VIEW
 PUBLIC_READ_WINDOW_SECONDS = 600
-SERVER_READS_PER_WINDOW = 3000
+SERVER_READS_PER_WINDOW = 9000
 SERVER_READ_KEY = "public-read:web-server"
+ASSET_READS_PER_COUNTED_READ = 10
+PUBLIC_ASSET_READS_PER_WINDOW = PUBLIC_READS_PER_WINDOW * ASSET_READS_PER_COUNTED_READ
+SERVER_ASSET_READS_PER_WINDOW = SERVER_READS_PER_WINDOW * ASSET_READS_PER_COUNTED_READ
+SERVER_ASSET_READ_KEY = "public-asset:web-server"
 
 
 class SlidingWindow:
@@ -168,11 +174,31 @@ def voice_speech_attempt(user_id: str) -> tuple[bool, float]:
 
 
 def public_read_attempt(connection: HTTPConnection) -> tuple[bool, float]:
-    if is_web_server_read(connection):
-        return _windows.attempt(SERVER_READ_KEY, SERVER_READS_PER_WINDOW, PUBLIC_READ_WINDOW_SECONDS)
-    return _windows.attempt(
-        f"public-read:{client_ip(connection)}", PUBLIC_READS_PER_WINDOW, PUBLIC_READ_WINDOW_SECONDS
+    return _reading_attempt(
+        connection,
+        prefix="public-read",
+        per_address=PUBLIC_READS_PER_WINDOW,
+        server_key=SERVER_READ_KEY,
+        per_server=SERVER_READS_PER_WINDOW,
     )
+
+
+def public_asset_attempt(connection: HTTPConnection) -> tuple[bool, float]:
+    return _reading_attempt(
+        connection,
+        prefix="public-asset",
+        per_address=PUBLIC_ASSET_READS_PER_WINDOW,
+        server_key=SERVER_ASSET_READ_KEY,
+        per_server=SERVER_ASSET_READS_PER_WINDOW,
+    )
+
+
+def _reading_attempt(
+    connection: HTTPConnection, *, prefix: str, per_address: int, server_key: str, per_server: int
+) -> tuple[bool, float]:
+    if is_web_server_read(connection):
+        return _windows.attempt(server_key, per_server, PUBLIC_READ_WINDOW_SECONDS)
+    return _windows.attempt(f"{prefix}:{client_ip(connection)}", per_address, PUBLIC_READ_WINDOW_SECONDS)
 
 
 def retry_after_value(wait_seconds: float) -> str:

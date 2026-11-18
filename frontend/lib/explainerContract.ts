@@ -5,15 +5,19 @@ import {
   envelope,
   explainerSentenceShape,
   IMAGE_RELEVANCE,
+  ladderConditionShape,
   mediaRefShape,
   TERM_KEY,
   WIKIDATA_ID,
   type BlockEnvelope,
   type Discipline,
   type ExplainerSentence,
+  type LadderCondition,
   type MediaRef
 } from "@/lib/explainerBlockBase";
+import { DIFFER_WEIGHTS } from "@/lib/craftPageContext";
 import { expertViewBlockShape, type ExpertViewBlock } from "@/lib/explainerExperts";
+import { artisanVoiceBlockShape, type ArtisanVoiceBlock } from "@/lib/explainerVoices";
 import {
   climateRiskBlockShape,
   marketGiBlockShape,
@@ -31,6 +35,7 @@ import {
   type QuizBlock
 } from "@/lib/explainerLearning";
 import {
+  COLOUR_WORDS,
   materialCardBlockShape,
   molecule3dBlockShape,
   reactionPlayerBlockShape,
@@ -71,7 +76,7 @@ import {
   type MordantBathBlock,
   type SignatureBlock
 } from "@/lib/explainerSignature";
-import { integer, list, matching, nullable, object, oneOf, optional, tagged, text, type Shape } from "@/lib/shape";
+import { boolean, integer, list, matching, nullable, object, oneOf, optional, ShapeError, tagged, text, type Shape } from "@/lib/shape";
 import type { AnswerSentence, Citation, EvidenceLevel, SourceRef } from "@/lib/types";
 
 export { DISCIPLINES, type Discipline };
@@ -108,6 +113,7 @@ export const BLOCK_KINDS = [
   "firing"
 ] as const;
 export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d", "compare", "concept_graph", "climate_risk", "measure", "market_gi", "simulation", "what_if", "zoom_story", "timeline_map"] as const;
+export const BUILT_FIGURE_KINDS = ["indigo_vat", "mordant_bath", "lost_wax", "firing"] as const satisfies readonly (typeof SIGNATURE_KINDS)[number][];
 export const WORKING_SECTION_STATES = ["RESEARCHING", "WRITING", "CHECKING"] as const;
 export const FINAL_SECTION_STATES = ["READY", "EMPTY"] as const;
 export const TERM_BASES = ["STORED", "WIKIPEDIA", "WEB_SEARCH"] as const;
@@ -124,8 +130,15 @@ export type LadderMaterial = {
   kind: (typeof MATERIAL_KINDS)[number];
   role: (typeof MATERIAL_ROLES)[number];
   citations: Citation[];
+  botanicalName?: string;
+  pubchemCid?: number;
+  localNames?: string[];
 };
-export type LadderCondition = { label: string; stated: string; citations: Citation[] };
+export type StageAfter = { text: string; colours: (typeof COLOUR_WORDS)[number][]; citations: Citation[] };
+export type LadderTool = { toolId: string; name: string; localNames: string[]; citations: Citation[] };
+export type DifferRead = { sentence: ExplainerSentence | null; shownIn: string | null };
+export type DifferReading = { key: string; about: string; weight: (typeof DIFFER_WEIGHTS)[number]; readings: DifferRead[] };
+export type StagePicture = { media: MediaRef; caption: string; standIn: string | null };
 export type LadderStage = {
   stageId: string;
   ordinal: number;
@@ -136,6 +149,13 @@ export type LadderStage = {
   materials: LadderMaterial[];
   conditions: LadderCondition[];
   reactionIds: string[];
+  localName?: string;
+  unnumbered?: boolean;
+  after?: StageAfter;
+  why?: ExplainerSentence;
+  tools?: LadderTool[];
+  differs?: DifferReading[];
+  pictures?: StagePicture[];
 };
 export type ProcessLadderBlock = BlockEnvelope<"process_ladder"> & { craft: CraftLink; processId: string; stages: LadderStage[] };
 export type ImageItem = { media: MediaRef; claimIds: string[]; relevance: (typeof IMAGE_RELEVANCE)[number] };
@@ -150,6 +170,7 @@ export type BlockByKind = {
   molecule_3d: Molecule3dBlock;
   images: ImagesBlock;
   expert_view: ExpertViewBlock;
+  artisan_voice: ArtisanVoiceBlock;
   seasons: SeasonsBlock;
   supply_map: SupplyMapBlock;
   simulation: SimulationBlock;
@@ -209,6 +230,22 @@ export type Term = {
 
 export const SECTION_ID = matching(/^s[1-9]\d{0,2}$/, "a section id");
 
+const differReadShape: Shape<DifferRead> = {
+  expected: "a reading's sentence or where it is shown",
+  parse(value, path) {
+    const read = object<DifferRead>({ sentence: nullable(explainerSentenceShape), shownIn: nullable(text) }).parse(value, path);
+    if ((read.sentence === null) === (read.shownIn === null)) throw new ShapeError(path, "a sentence, or the id of the sentence that shows it");
+    return read;
+  }
+};
+
+export const differReadingShape: Shape<DifferReading> = object<DifferReading>({
+  key: text,
+  about: text,
+  weight: oneOf(DIFFER_WEIGHTS),
+  readings: list(differReadShape, 2)
+});
+
 const ladderStageShape: Shape<LadderStage> = object<LadderStage>({
   stageId: UUID,
   ordinal: integer,
@@ -217,10 +254,26 @@ const ladderStageShape: Shape<LadderStage> = object<LadderStage>({
   level: shownLevelShape,
   sentences: list(explainerSentenceShape, 1),
   materials: list(
-    object<LadderMaterial>({ materialId: UUID, name: text, kind: oneOf(MATERIAL_KINDS), role: oneOf(MATERIAL_ROLES), citations: list(citationShape, 1) })
+    object<LadderMaterial>({
+      materialId: UUID,
+      name: text,
+      kind: oneOf(MATERIAL_KINDS),
+      role: oneOf(MATERIAL_ROLES),
+      citations: list(citationShape, 1),
+      botanicalName: optional(text),
+      pubchemCid: optional(integer),
+      localNames: optional(list(text, 1))
+    })
   ),
-  conditions: list(object<LadderCondition>({ label: text, stated: text, citations: list(citationShape, 1) })),
-  reactionIds: list(UUID)
+  conditions: list(ladderConditionShape),
+  reactionIds: list(UUID),
+  localName: optional(text),
+  unnumbered: optional(boolean),
+  after: optional(object<StageAfter>({ text, colours: list(oneOf(COLOUR_WORDS)), citations: list(citationShape, 1) })),
+  why: optional(explainerSentenceShape),
+  tools: optional(list(object<LadderTool>({ toolId: UUID, name: text, localNames: list(text), citations: list(citationShape, 1) }), 1)),
+  differs: optional(list(differReadingShape, 1)),
+  pictures: optional(list(object<StagePicture>({ media: mediaRefShape, caption: text, standIn: nullable(text) }), 1))
 });
 
 export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K]> } = {
@@ -236,6 +289,7 @@ export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K
     items: list(object<ImageItem>({ media: mediaRefShape, claimIds: list(UUID, 1), relevance: oneOf(IMAGE_RELEVANCE) }), 1)
   }),
   expert_view: expertViewBlockShape,
+  artisan_voice: artisanVoiceBlockShape,
   seasons: seasonsBlockShape,
   supply_map: supplyMapBlockShape,
   simulation: simulationBlockShape,
@@ -259,11 +313,9 @@ export const explainerBlockShape: Shape<ExplainerBlock> = tagged<ExplainerBlock>
   Object.fromEntries(BUILT_BLOCK_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<BuiltBlockKind, Shape<ExplainerBlock>>
 );
 
-const BUILT_SIGNATURE_KINDS = SIGNATURE_KINDS.filter((kind) => (BUILT_BLOCK_KINDS as readonly string[]).includes(kind));
-
 export const signatureFigureShape: Shape<SignatureBlock> = tagged<SignatureBlock>(
   "kind",
-  Object.fromEntries(BUILT_SIGNATURE_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<string, Shape<SignatureBlock>>
+  Object.fromEntries(BUILT_FIGURE_KINDS.map((kind) => [kind, BLOCK_SHAPES[kind]])) as Record<string, Shape<SignatureBlock>>
 );
 
 export const ledeBlockShape: Shape<LedeBlock> = object<LedeBlock>({

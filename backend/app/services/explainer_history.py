@@ -25,8 +25,10 @@ from .explainer_payload import (
     stored_mark,
     stored_version,
 )
+from .field_voices_readback import current_field_voices
 from .follow_ups import FollowUp
 from .simulation_hiding import with_hidden_marks
+from .testimony_readback import current_quotes
 
 __all__ = [
     "STALE_VERSION_DETAIL",
@@ -39,6 +41,7 @@ __all__ = [
     "latest_version",
     "mark_seen",
     "owned_explainer",
+    "shown_version",
 ]
 
 UNKNOWN_EXPLAINER_DETAIL = "No explainer has that address."
@@ -102,13 +105,13 @@ async def explainer_version(
     ).first()
     if row is None:
         raise UnknownExplainer(explainer_id)
-    return await _shown(session, stored_version(row[0], number, row[1]))
+    return await shown_version(session, stored_version(row[0], number, row[1]))
 
 
 async def latest_version(
     session: AsyncSession, explainer_id: uuid.UUID, user_id: uuid.UUID
 ) -> ExplainerVersionDocument:
-    return await _shown(session, await _latest_stored(session, explainer_id, user_id))
+    return await shown_version(session, await _latest_stored(session, explainer_id, user_id))
 
 
 async def follow_up_of(session: AsyncSession, user_id: uuid.UUID, builds_on: BuildsOn) -> FollowUp:
@@ -142,8 +145,14 @@ async def _latest_stored(
     return stored_version(row[0], row[1], row[2])
 
 
-async def _shown(session: AsyncSession, document: ExplainerVersionDocument) -> ExplainerVersionDocument:
-    return document.model_copy(update={"explainer": await with_hidden_marks(session, document.explainer)})
+async def shown_version(
+    session: AsyncSession, document: ExplainerVersionDocument
+) -> ExplainerVersionDocument:
+    shown = await current_quotes(session, await with_hidden_marks(session, document.explainer))
+    current = await current_field_voices(session, shown)
+    if current is None:
+        raise UnknownExplainer(document.explainer.answer_id)
+    return document.model_copy(update={"explainer": current})
 
 
 def _mark(row: tuple[Any, ...]) -> VersionMark:

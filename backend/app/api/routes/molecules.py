@@ -6,7 +6,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.public_deps import public_reader, read_headers, unchanged_read
+from app.api.public_deps import public_asset_reader, read_headers, unchanged_read
 from app.core.db import get_session, release_connection, sessionmaker
 from app.core.errors import AppError
 from app.models import User
@@ -39,7 +39,7 @@ async def conformer(
     request: Request,
     pubchem_cid: int = Path(ge=1, le=PUBCHEM_CID_MAX),
     *,
-    reader: User | None = Depends(public_reader),
+    reader: User | None = Depends(public_asset_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
     stored = await stored_compound_cid(session, pubchem_cid)

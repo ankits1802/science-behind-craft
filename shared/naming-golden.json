@@ -88,5 +88,14 @@
   ],
   "exportKeys": [
     {"ownerId": "00000000-0000-0000-0000-000000000007", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf", "key": "exports/00000000-0000-0000-0000-000000000007/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"}
+  ],
+  "fieldVoiceFiles": [
+    {"takenAt": "2026-06-24T06:10:00Z", "district": "Jaipur", "state": "Rajasthan", "craft": "Bagru Hand Block Print", "ext": "jpg", "sha256": "9f2c1a7e5b3d4c6a8e0f1b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4", "fileName": "KalaVigyan_Field-Image_2026-06-24_1140_Jaipur_Bagru-Hand-Block-Print_Photo.jpg", "key": "media/field-voices/9f2c1a7e5b3d4c6a8e0f1b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4/KalaVigyan_Field-Image_2026-06-24_1140_Jaipur_Bagru-Hand-Block-Print_Photo.jpg"},
+    {"takenAt": null, "district": null, "state": "Gujarat", "craft": "Ajrakh Print of Kutch", "ext": "png", "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef", "fileName": "KalaVigyan_Field-Image_Gujarat_Ajrakh-Print-Of-Kutch_Photo.png", "key": "media/field-voices/0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef/KalaVigyan_Field-Image_Gujarat_Ajrakh-Print-Of-Kutch_Photo.png"},
+    {"takenAt": "2026-03-14T18:45:00Z", "district": "Kachchh", "state": "Gujarat", "craft": "Ajrakh Print of Kutch", "ext": "jpg", "sha256": "ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91", "fileName": "KalaVigyan_Field-Image_2026-03-15_0015_Kachchh_Ajrakh-Print-Of-Kutch_Photo.jpg", "key": "media/field-voices/ac43569be24108f18e631ec01bedaa001551fbfec80219bc5e7dad7a1a16ad91/KalaVigyan_Field-Image_2026-03-15_0015_Kachchh_Ajrakh-Print-Of-Kutch_Photo.jpg"}
+  ],
+  "artisanAudioFiles": [
+    {"recordedAt": "2026-11-18T14:35:00+05:30", "district": "Kachchh", "craft": "Ajrakh Block Printing", "ordinal": "3", "mimeType": "audio/webm", "ownerId": "00000000-0000-0000-0000-000000000007", "token": "00000000-0000-0000-0000-000000000001", "fileName": "KalaVigyan_Artisan-Conversation_2026-11-18_1435_Kachchh_Ajrakh-Block-Printing_Recording_T03.webm", "key": "media/00000000-0000-0000-0000-000000000007/00000000000000000000000000000001/KalaVigyan_Artisan-Conversation_2026-11-18_1435_Kachchh_Ajrakh-Block-Printing_Recording_T03.webm"},
+    {"recordedAt": "2026-11-18T23:50:00+05:30", "district": "Bankura", "craft": "Dokra", "ordinal": "12", "mimeType": "audio/mp4", "ownerId": "00000000-0000-0000-0000-000000000007", "token": "00000000-0000-0000-0000-000000000001", "fileName": "KalaVigyan_Artisan-Conversation_2026-11-18_2350_Bankura_Dokra_Recording_T12.m4a", "key": "media/00000000-0000-0000-0000-000000000007/00000000000000000000000000000001/KalaVigyan_Artisan-Conversation_2026-11-18_2350_Bankura_Dokra_Recording_T12.m4a"}
   ]
 }

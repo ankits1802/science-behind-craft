@@ -20,7 +20,7 @@ import {
   type KnownAnswerQuestion
 } from "./production/answers";
 import { NetworkQuiet, captureScreen, judgeCapture, readyForCapture, sightProblems } from "./production/capture";
-import { CITED_CONTENT, NAV_BY_ROLE, gapCopyFindings, labelProblems } from "./production/checks";
+import { CITED_CONTENT, NAV_BY_ROLE, errorHeadline, gapCopyFindings, labelProblems } from "./production/checks";
 import {
   ANSWER_SCOPE,
   BUSY_PATTERN,
@@ -40,9 +40,9 @@ import {
   unpaintedNotes
 } from "./production/gates";
 import { SCHEMES, SCREEN_WIDTHS } from "./production/matrix";
-import { GOOGLE_ORIGIN_REFUSED, PRODUCTION_ORIGIN, googleRefusesPreview, isPreview, siteRefusal } from "./production/preview";
+import { GOOGLE_ORIGIN_REFUSED, PRODUCTION_ORIGIN, googleRefusesPreview, isPreview, roleSiteRefusal, siteRefusal } from "./production/preview";
 import type { AnswersReport, ScreensReport } from "./production/report";
-import { runFileName } from "./production/run";
+import { roleCredentials, runFileName } from "./production/run";
 import { answerRepeats, busyText, citationClusters, emptyPictures, opacityAtCapture, regionRunPx } from "./production/sight";
 import { scanTiles } from "./production/tiles";
 import { base32Bytes, totpCode } from "./production/twoStep";
@@ -537,6 +537,32 @@ test("only production and this project's Vercel previews may be driven", () => {
   }
 });
 
+test("the Professor and Admin accounts sign in only on production, never on a preview", () => {
+  const preview = "https://kalavigyan-ab12cd34e-cxacraftecosystem-8028s-projects.vercel.app";
+  expect(roleSiteRefusal(PRODUCTION_ORIGIN)).toBeNull();
+  expect(roleSiteRefusal(`${PRODUCTION_ORIGIN}/admin`)).toBeNull();
+  for (const url of [preview, "http://kalavigyan.vercel.app", "https://kalavigyan.vercel.app.evil.example", "https://localhost:3000", "not a url"]) {
+    expect(roleSiteRefusal(url), url).not.toBeNull();
+  }
+  const names = ["E2E_BASE_URL", "E2E_ADMIN_EMAIL", "E2E_ADMIN_PASSWORD", "E2E_ADMIN_TOTP_SECRET"] as const;
+  const before = names.map((name) => process.env[name]);
+  try {
+    process.env.E2E_ADMIN_EMAIL = "e2e-admin@kalavigyan.example";
+    process.env.E2E_ADMIN_PASSWORD = "unit-passphrase-only";
+    process.env.E2E_ADMIN_TOTP_SECRET = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ";
+    process.env.E2E_BASE_URL = preview;
+    expect(roleCredentials("ADMIN")).toBeNull();
+    process.env.E2E_BASE_URL = PRODUCTION_ORIGIN;
+    expect(roleCredentials("ADMIN")?.email).toBe("e2e-admin@kalavigyan.example");
+  } finally {
+    names.forEach((name, index) => {
+      const value = before[index];
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    });
+  }
+});
+
 test("Google refusing a preview origin is told apart from every other console error", () => {
   const forbidden = "Failed to load resource: the server responded with a status of 403 ()";
   expect(googleRefusesPreview(GOOGLE_ORIGIN_REFUSED, "https://accounts.google.com/gsi/client")).toBe(true);
@@ -569,4 +595,38 @@ test("a page is captured only once it has scrolled to the end, its molecules rep
   expect(await page.evaluate(() => [window.scrollY, document.querySelector("figure")?.getAttribute("data-status")])).toEqual([0, "ready"]);
   expect(await sightProblems(page, null)).toEqual([]);
   expect(await captureScreen(page, testInfo.outputPath("captured.png"))).toEqual({ problems: [], notes: [] });
+});
+
+test("a failed step is reported by its first line and Playwright's Error line, without terminal colours", () => {
+  const escape = String.fromCharCode(27);
+  const expectFailure = new Error(
+    [
+      `${escape}[2mexpect(${escape}[22m${escape}[31mlocator${escape}[39m${escape}[2m).${escape}[22mtoContainText${escape}[2m(${escape}[22m${escape}[32mexpected${escape}[39m${escape}[2m)${escape}[22m failed`,
+      "",
+      "Locator: getByRole('alert')",
+      "Expected substring: \"This craft could not be found.\"",
+      "Error: strict mode violation: getByRole('alert') resolved to 2 elements:",
+      "    1) <section role=\"alert\">…</section>"
+    ].join("\n")
+  );
+  expect(errorHeadline(expectFailure)).toBe(
+    "expect(locator).toContainText(expected) failed Error: strict mode violation: getByRole('alert') resolved to 2 elements:"
+  );
+  expect(errorHeadline(new Error("Timeout 30000ms exceeded."))).toBe("Timeout 30000ms exceeded.");
+  expect(errorHeadline("plain words")).toBe("plain words");
+  expect(errorHeadline(new Error(""))).toBe("");
+});
+
+test("the unknown craft's alert is found by its text, not confused with the route announcer in its shadow root", async ({ page }) => {
+  const text = "This craft could not be found. It may have been deleted.";
+  await page.setContent(
+    `<main><section role="alert">${text}</section></main><div id="announcer-host"></div><script>document.getElementById("announcer-host").attachShadow({ mode: "open" }).innerHTML = '<div role="alert" aria-live="assertive">Craft · KalaVigyan</div>';</script>`
+  );
+  expect(await page.getByRole("alert").count()).toBe(2);
+  await expect(page.getByRole("alert").filter({ hasText: text })).toBeVisible();
+  expect(await page.getByRole("main").getByRole("alert").count()).toBe(1);
+  const screens = readFileSync(join(__dirname, "production", "screens.spec.ts"), "utf8");
+  expect(screens).not.toMatch(/getByRole\("alert"\)\)/);
+  const screenChecks = readFileSync(join(__dirname, "production", "screenChecks.ts"), "utf8");
+  expect(screenChecks).not.toMatch(/\.or\(page\.getByRole\("alert"\)\)/);
 });

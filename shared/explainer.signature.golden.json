@@ -1,0 +1,696 @@
+[
+  {
+    "id": "lede.figure",
+    "kind": "indigo_vat",
+    "version": 1,
+    "reuse": null,
+    "vat": "FERMENTED",
+    "lift": {
+      "id": "lede.figure.1",
+      "text": "Cloth lifted from the indigo vat is bright green at first and turns blue as oxygen meets the dye on the fibres.",
+      "level": "PROVISIONAL",
+      "citations": [
+        {
+          "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+          "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+          "locator": "Application 1050, method of production, p. 12",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "13376db7-be0d-5c92-99f1-212601f33fe8",
+          "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+          "sourceId": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+          "quote": "The dyed cloth emerges a bright green that slowly turns blue once the dye oxidises.",
+          "locator": "paragraph 7",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ],
+      "translated": false,
+      "terms": []
+    },
+    "forms": [
+      {
+        "form": "KETO",
+        "name": "indigo blue",
+        "colour": "blue",
+        "soluble": false,
+        "compound": {
+          "compoundId": "18eabd7b-cf22-5e24-8945-507844794a88",
+          "pubchemCid": 10215,
+          "formula": "C16H10N2O2",
+          "sourceId": "12a95954-340a-549d-8a65-f22a6391b678"
+        },
+        "sentence": {
+          "id": "lede.figure.2",
+          "text": "Indigo is reduced to soluble 'indigo white' for dyeing and fixed to the fibre by air oxidation.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "ae32c96b-8c5d-544d-b6a3-1771f1b4e2d2",
+              "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+              "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+              "quote": "On oxidisation, indigo white is converted into granules of indigo blue which has then to be reduced through fermentation into soluble indigo white, before dyeing can begin.",
+              "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "62415cc2-cfd9-55e7-a036-b6314195d149",
+              "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+              "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+              "quote": "The fabric would first be dipped into a prepared dye vat and then exposed to air, so that the indigo white could revert into insoluble indigo blue and be bonded to the cotton fibre.",
+              "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "form": "LEUCO",
+        "name": "indigo white",
+        "colour": "white",
+        "soluble": true,
+        "compound": null,
+        "sentence": {
+          "id": "lede.figure.3",
+          "text": "Indigo is reduced to soluble 'indigo white' for dyeing and fixed to the fibre by air oxidation.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "ae32c96b-8c5d-544d-b6a3-1771f1b4e2d2",
+              "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+              "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+              "quote": "On oxidisation, indigo white is converted into granules of indigo blue which has then to be reduced through fermentation into soluble indigo white, before dyeing can begin.",
+              "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "62415cc2-cfd9-55e7-a036-b6314195d149",
+              "claimId": "84e0cfb0-4a8a-5e08-8475-6cfca77831d5",
+              "sourceId": "84ad0382-a600-5df1-8b10-3220a1e6df1a",
+              "quote": "The fabric would first be dipped into a prepared dye vat and then exposed to air, so that the indigo white could revert into insoluble indigo blue and be bonded to the cotton fibre.",
+              "locator": "§ \"Dyeing cotton fabrics is an ancient Indian art\"",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ],
+    "dips": [
+      {
+        "dips": 3,
+        "stated": "three or four times",
+        "shade": "darkest",
+        "sentence": {
+          "id": "lede.figure.4",
+          "text": "For the darkest blues the cloth may be dipped three or four times in the indigo vat, and it is reprinted between dips when two blue shades are wanted.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "18f246a2-9983-5a0c-8b4c-081797406092",
+              "claimId": "9950e260-3a8a-5510-9c1d-75666c16d5e4",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "If a design required the darkest shades of the blue then the cloth may be subjected to a total of three or four immersions into the vat to build up rich blue.",
+              "locator": "Application 1050, method of production, p. 12",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "ec73084f-fc9e-5c6c-94b7-37e0f44956b2",
+              "claimId": "9950e260-3a8a-5510-9c1d-75666c16d5e4",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "if two shades of the blue are required in the design then cloth is reprinted between the immersions into the Indigo vat, to preserve areas of the lighter blue achieved from the first dip.",
+              "locator": "Application 1050, method of production, p. 12",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ],
+    "contents": [
+      {
+        "name": "lime",
+        "sentence": {
+          "id": "lede.figure.5",
+          "text": "Clifford records a natural indigo vat of indigo, sagikhar salt, lime, casiatora seed and water, fermented for about one month, sometimes with jaggery.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "a7227a8a-1f09-5000-9919-2174826257c5",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "In order to establish an indigo vat, natural indigo, sagikhar (a salt), lime, casiatora (seed from kuwada plant) and water are mixed in a clay vessel, plastic barrel or concrete vat.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "daa3e439-84ca-5825-98fa-8eb1f4372556",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "The dye bath is left to ferment for about one month; sometimes jaggery is added to this to aid fermentation.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "name": "dates",
+        "sentence": {
+          "id": "lede.figure.6",
+          "text": "Indigo can be natural (Indigofera tinctoria) or synthetic 'German' indigo; natural indigo is fermented with lime, dates and soda; synthetic indigo often has 'Hydros' added.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "d8672570-92a1-51c3-9b6c-c48a73761953",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Indigo dye can either be natural Indigo from Indigofera tinctoria, or a synthesized substitute \"German\" indigo.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "0f4ac64c-2dda-5847-9a61-927226cf5a1a",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Synthetic indigo is also dissolved in alkaline lime powder and water, but often has a strong industrial chemical known as \"Hydros\" added.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "51bfc60f-8b8b-54f8-8f27-4b7cab358fa4",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "name": "soda",
+        "sentence": {
+          "id": "lede.figure.7",
+          "text": "Indigo can be natural (Indigofera tinctoria) or synthetic 'German' indigo; natural indigo is fermented with lime, dates and soda; synthetic indigo often has 'Hydros' added.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "d8672570-92a1-51c3-9b6c-c48a73761953",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Indigo dye can either be natural Indigo from Indigofera tinctoria, or a synthesized substitute \"German\" indigo.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "0f4ac64c-2dda-5847-9a61-927226cf5a1a",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Synthetic indigo is also dissolved in alkaline lime powder and water, but often has a strong industrial chemical known as \"Hydros\" added.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "51bfc60f-8b8b-54f8-8f27-4b7cab358fa4",
+              "claimId": "446933ae-9d7a-53ab-b2f2-da71f429fbef",
+              "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+              "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+              "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "name": "jaggery",
+        "sentence": {
+          "id": "lede.figure.8",
+          "text": "Clifford records a natural indigo vat of indigo, sagikhar salt, lime, casiatora seed and water, fermented for about one month, sometimes with jaggery.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "a7227a8a-1f09-5000-9919-2174826257c5",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "In order to establish an indigo vat, natural indigo, sagikhar (a salt), lime, casiatora (seed from kuwada plant) and water are mixed in a clay vessel, plastic barrel or concrete vat.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "daa3e439-84ca-5825-98fa-8eb1f4372556",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "The dye bath is left to ferment for about one month; sometimes jaggery is added to this to aid fermentation.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "name": "sagikhar",
+        "sentence": {
+          "id": "lede.figure.9",
+          "text": "Clifford records a natural indigo vat of indigo, sagikhar salt, lime, casiatora seed and water, fermented for about one month, sometimes with jaggery.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "a7227a8a-1f09-5000-9919-2174826257c5",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "In order to establish an indigo vat, natural indigo, sagikhar (a salt), lime, casiatora (seed from kuwada plant) and water are mixed in a clay vessel, plastic barrel or concrete vat.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "daa3e439-84ca-5825-98fa-8eb1f4372556",
+              "claimId": "4ef4fac0-91be-5422-9c81-d84347f21a3c",
+              "sourceId": "d9bbd980-75d1-55a3-b1a9-643ed4c96ab3",
+              "quote": "The dye bath is left to ferment for about one month; sometimes jaggery is added to this to aid fermentation.",
+              "locator": "appendix A, stage 8, p. 159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "name": "casatoria seeds",
+        "sentence": {
+          "id": "lede.figure.10",
+          "text": "Stage 8 dyes the cloth in indigo for 10 to 15 minutes, traditionally in a naand dug into the ground where indigo and casatoria seeds ferment for months.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "e2c614cd-6190-57a8-854e-892d25f919d9",
+              "claimId": "6b70f138-fea8-5f60-b970-db7107beb21f",
+              "sourceId": "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
+              "quote": "8 Indigo dyeing I: Traditionally, natural indigo is used and the naand ('V' shaped container), that was dug in ground is used for dyeing.",
+              "locator": "p. 95, printing process",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "e171619f-229b-52eb-85c4-8a38c6f0df4c",
+              "claimId": "6b70f138-fea8-5f60-b970-db7107beb21f",
+              "sourceId": "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
+              "quote": "The indigo along with kuwadia na beej (casatoria seeds) is added in naand containing water and is left for months for the growth of bacteria. Then, the fabric is dyed in it for 10-15 min.",
+              "locator": "p. 95, printing process",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "lede.figure",
+    "kind": "mordant_bath",
+    "version": 1,
+    "reuse": null,
+    "dye": "madder",
+    "fibre": "cotton",
+    "swatches": [
+      {
+        "mordant": "alum",
+        "colour": "red",
+        "sentence": {
+          "id": "lede.figure.1",
+          "text": "The long thin roots of Indian madder, Rubia cordifolia or majeeta, give a dye that binds to the alum mordant and develops red where pa and gach were printed.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "97315b0a-5507-5869-8943-f99b75584ab1",
+              "claimId": "6732e950-cd6f-5d1c-9714-452d0384cdeb",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "Indian Madder roots, Rubia Cordifolia, locally known as majeeta, have been traditionally used in the creation of Ajrakh",
+              "locator": "Application 1050, method of production, p. 13",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "508f6438-8cc3-5aa1-a4a2-9af045b98374",
+              "claimId": "6732e950-cd6f-5d1c-9714-452d0384cdeb",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "This dye extracted from these long thin roots links to the alum mordant on the cotton fibres and develops red area of a design, where Pa, Gach pastes have been printed.",
+              "locator": "Application 1050, method of production, p. 13",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "mordant": "iron",
+        "colour": "black",
+        "sentence": {
+          "id": "lede.figure.2",
+          "text": "On harde-treated cloth kut turns a deep, fast chocolate-black as the iron in the paste oxidises with the tannic acid.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "d89dfd48-7b87-53f1-bdde-4d3589624f2e",
+              "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+              "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+              "quote": "When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.",
+              "locator": "Application 1050, method of production, p. 11",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "ebfa138c-0ab6-5ad8-a15b-dbb32d5d7c0a",
+              "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+              "sourceId": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+              "quote": "These lines oxidise when exposed to air and the harda and develop a black colour.",
+              "locator": "paragraph 6",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "lede.figure",
+    "kind": "lost_wax",
+    "version": 1,
+    "reuse": null,
+    "metal": "brass",
+    "steps": [
+      {
+        "step": "MODEL",
+        "sentence": {
+          "id": "lede.figure.1",
+          "text": "Dhokra casters make hollow brass objects and images by the lost-wax process, modelling each piece in wax over a clay core.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "d07aa0ca-99bf-50b6-ae6f-cac857f6b96f",
+              "claimId": "47582abb-a06f-55c2-a9b7-4b0b2c4e1443",
+              "sourceId": "d6744bb5-3339-5b1f-b490-908a1aa343d4",
+              "quote": "The Dhokras use lost-wax process to cast hollow brass objects and images. A replica of the desired product is made with wax on a clay core, with all its finer details of designs and decorations.",
+              "locator": "lines 18-19",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "cc6a539a-bf4d-51fd-bb1b-3339ef61b56c",
+              "claimId": "47582abb-a06f-55c2-a9b7-4b0b2c4e1443",
+              "sourceId": "dfd0ec29-630e-5684-97c9-827a73c32b9a",
+              "quote": "Hollow casting - It is more traditional method which involves the use of the clay core.",
+              "locator": "lines 1111-1112",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "step": "JACKET",
+        "sentence": {
+          "id": "lede.figure.2",
+          "text": "Bastar Dhokra making is a twelve-stage process, from building the clay model to cooling and finishing the cast piece.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "5cac4e9a-dee3-5262-9910-af2749074472",
+              "claimId": "997e9dd0-4a4b-53cb-a63a-d67ce1192393",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "The unique 12-stage process of Dhokra making is the original creative instinct of the craft persons.",
+              "locator": "lines 1541-1543",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "54f74c67-a715-583f-95c8-c863a44ee8d5",
+              "claimId": "997e9dd0-4a4b-53cb-a63a-d67ce1192393",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "The process is carried out in twelve different steps as follows: Preparing vague model and coating it with first layer",
+              "locator": "lines 1357-1359",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "b604ee41-d6ce-5075-979d-8416ce8f072f",
+              "claimId": "997e9dd0-4a4b-53cb-a63a-d67ce1192393",
+              "sourceId": "20c82dfb-f399-5e5c-970a-cd3b60f4d41a",
+              "quote": "बस्तर की परंपरागत धातु शिल्प निर्माण की प्रक्रिया कुल बारह चरणों में पूरी होती है ।",
+              "locator": "lines 8-9",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "e2eab204-e92e-5db0-8550-8cac2606d229",
+              "claimId": "997e9dd0-4a4b-53cb-a63a-d67ce1192393",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "Cooling and finishing: The model is left to cool for 1-6 hours depending on the size.",
+              "locator": "lines 1483-1485",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "step": "BURNOUT",
+        "sentence": {
+          "id": "lede.figure.3",
+          "text": "Wax is indispensable to the process because it melts out and burns away, making room for the molten metal.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "5df2f0f8-dca8-5f81-a07d-fa00711376d9",
+              "claimId": "0cfafb3b-fb93-5882-9718-0fe669f5f545",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "And of course wax is indispensable in this process, since it conveniently melts out and burns, thus giving way to the molten metal.",
+              "locator": "lines 1530-1532",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "step": "POUR",
+        "sentence": {
+          "id": "lede.figure.4",
+          "text": "A channel is made at the bottom of the decorated model for pouring the metal, and a pin made of wax is inserted in it.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "83c112e9-af63-5353-bda7-5663a927a322",
+              "claimId": "d22cb755-2059-5839-b597-f70f60cd5040",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "A channel at appropriate spots at the bottom is made where the liquid metal is to be poured for casting and a pin made from wax is inserted in it.",
+              "locator": "lines 1421-1423",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      },
+      {
+        "step": "BREAK_OUT",
+        "sentence": {
+          "id": "lede.figure.5",
+          "text": "The outer mould is broken gently with a wooden mallet, and the piece is cleaned with wire brushes and files.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "fc9d56e4-6e80-51bd-b5b2-1d370ec51f54",
+              "claimId": "cdcfbd45-cc3d-54c2-9c66-8f1a21a05655",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "When it is cooled down the outer mould is broken gently with a wooden mallet.",
+              "locator": "lines 1485-1487",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "d764d71c-984e-5fcb-9bca-7bb3b6d84d47",
+              "claimId": "cdcfbd45-cc3d-54c2-9c66-8f1a21a05655",
+              "sourceId": "ff221665-9db6-59ce-ae4b-7a2d0944011e",
+              "quote": "Wire brushes are used to clean the dried soil sticked to it and filed to gently rub and clean.",
+              "locator": "lines 1486-1488",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "lede.figure",
+    "kind": "firing",
+    "version": 1,
+    "reuse": null,
+    "body": "terracotta",
+    "atmospheres": [
+      {
+        "atmosphere": "REDUCING",
+        "colour": "black",
+        "sentence": {
+          "id": "lede.figure.1",
+          "text": "The GI journal's description of the goods lists the later steps in order: baking, a vegetable wash, oil burnishing, twig decoration, smoke firing, oiling and baking again, filling the grooves, then washing and polishing.",
+          "level": "PROVISIONAL",
+          "citations": [
+            {
+              "id": "930bf21a-dc8b-5d4e-9ecc-daab10ae0c0a",
+              "claimId": "9eb6ff16-f5f5-55be-b034-daaffd072ae4",
+              "sourceId": "47d596aa-d832-5c4a-8e93-2eb2aca51722",
+              "quote": "After the clay moul d is given a desired shape, the items are baked in fire and then are washed with powered vegetable matter. The surface is then burnished with mustard oil after which a sh arp twig is used fo r decoration.",
+              "locator": "p. 8, F) Description of the Goods, lines 153-155",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "8c61424a-7e34-5c72-8e2a-dbc5989d8ef0",
+              "claimId": "9eb6ff16-f5f5-55be-b034-daaffd072ae4",
+              "sourceId": "47d596aa-d832-5c4a-8e93-2eb2aca51722",
+              "quote": "After following these procedures, the clay wares are then set to smoke firing which gives them the black luster. After creating the objects, the items are rubbed with oil and then baked once again. The grooves of the design are then fill ed in by hand with a fine silvery powder.",
+              "locator": "p. 8, F) Description of the Goods, lines 156-159",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            },
+            {
+              "id": "ea6bc29d-d92f-5d5a-a52c-bdd590e2bb88",
+              "claimId": "9eb6ff16-f5f5-55be-b034-daaffd072ae4",
+              "sourceId": "47d596aa-d832-5c4a-8e93-2eb2aca51722",
+              "quote": "When the silvery powder is washed with wa ter and polished, the clay wares exude a silvery hue against the black background of the terracotta.",
+              "locator": "p. 8, F) Description of the Goods, lines 160-161",
+              "context": null,
+              "evidence": "QUOTED",
+              "level": "PROVISIONAL"
+            }
+          ],
+          "translated": false,
+          "terms": []
+        }
+      }
+    ],
+    "temperature": {
+      "stated": "850°C",
+      "sentence": {
+        "id": "lede.figure.2",
+        "text": "In the 1998 study, the black pottery products it developed reached a highest fired strength of about 400 kg.cm-2 at a firing temperature of about 850°C.",
+        "level": "PROVISIONAL",
+        "citations": [
+          {
+            "id": "3fb6e23e-712d-5ddd-923b-28bba1762c50",
+            "claimId": "e939a6b5-53fb-5135-9cd6-3298a7cc9695",
+            "sourceId": "62b4f2db-0829-5553-b7e9-33c33696aa17",
+            "quote": "Prasad, C S and Maiti, Kedar Nath (1998) Physico-chemical characterisation of some common clays of Nizamabad, UP and their utilization in the production of black pottery.",
+            "locator": "citation, line 1",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "abebc2e1-a4a3-5e7a-8e67-a419fb3bf983",
+            "claimId": "e939a6b5-53fb-5135-9cd6-3298a7cc9695",
+            "sourceId": "62b4f2db-0829-5553-b7e9-33c33696aa17",
+            "quote": "The products developed also possessed the highest fired strength of about 400 kg.cm-2 at the firing temperature of about 850°C.",
+            "locator": "abstract, line 4",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ],
+        "translated": false,
+        "terms": []
+      }
+    }
+  }
+]

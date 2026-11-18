@@ -8,6 +8,7 @@ import { MapPlaceholder } from "@/components/answer/place/MapPlaceholder";
 import { cameraMove } from "@/components/guide/guideMotion";
 import { useRemote } from "@/components/hooks/useRemote";
 import { DistrictFills, DistrictOutlines, DistrictTag, HIGHLIGHT_TONES } from "@/components/map/DistrictLayer";
+import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { IndiaMap } from "@/components/map/IndiaMap";
 import { MapAttribution } from "@/components/map/MapAttribution";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
@@ -43,10 +44,15 @@ export function ZoomDistrictMap({
   );
   return (
     <figure className="min-w-0" data-testid="zoom-district" data-lgd={district.districtLgd} data-scale={target.scale}>
-      <div className="overflow-hidden rounded-md">
+      <div className="relative overflow-hidden rounded-md">
         <motion.div style={{ transformOrigin: "0% 0%" }} initial={AT_REST} animate={target} transition={cameraMove(!moving)}>
           <IndiaMap points={NO_POINTS} underlay={<DistrictFills shapes={shapes} fillOf={fillOf} />} overlay={marks} />
         </motion.div>
+        {target.scale > 1 ? (
+          <div className={LOCATOR_INSET} data-testid="zoom-locator">
+            <IndiaLocator marked={[shape]} frame={null} label={locatorLabel([district])} />
+          </div>
+        ) : null}
       </div>
       <MapAttribution boundary={boundary} />
     </figure>

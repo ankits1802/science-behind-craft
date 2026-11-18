@@ -79,6 +79,9 @@ jobs:
           if [ "$E2E_PREVIEW" = "1" ] && [ -z "$E2E_VERCEL_BYPASS" ]; then
             echo "::warning::VERCEL_AUTOMATION_BYPASS_SECRET is not set, so a protected preview answers 401 (docs/RUNBOOK.md, E2E production run)"
           fi
+          if [ "$E2E_PREVIEW" = "1" ]; then
+            echo "::notice::A preview run gets no Professor or Admin secret and skips their screens"
+          fi
           echo "::add-mask::$E2E_PASSWORD"
           echo "E2E_RUN_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
@@ -96,12 +99,12 @@ jobs:
           E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
           E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
           E2E_VERCEL_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-          E2E_PROFESSOR_EMAIL: ${{ secrets.E2E_PROFESSOR_EMAIL }}
-          E2E_PROFESSOR_PASSWORD: ${{ secrets.E2E_PROFESSOR_PASSWORD }}
-          E2E_PROFESSOR_TOTP_SECRET: ${{ secrets.E2E_PROFESSOR_TOTP_SECRET }}
-          E2E_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL }}
-          E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
-          E2E_ADMIN_TOTP_SECRET: ${{ secrets.E2E_ADMIN_TOTP_SECRET }}
+          E2E_PROFESSOR_EMAIL: ${{ inputs.base_url == '' && secrets.E2E_PROFESSOR_EMAIL || '' }}
+          E2E_PROFESSOR_PASSWORD: ${{ inputs.base_url == '' && secrets.E2E_PROFESSOR_PASSWORD || '' }}
+          E2E_PROFESSOR_TOTP_SECRET: ${{ inputs.base_url == '' && secrets.E2E_PROFESSOR_TOTP_SECRET || '' }}
+          E2E_ADMIN_EMAIL: ${{ inputs.base_url == '' && secrets.E2E_ADMIN_EMAIL || '' }}
+          E2E_ADMIN_PASSWORD: ${{ inputs.base_url == '' && secrets.E2E_ADMIN_PASSWORD || '' }}
+          E2E_ADMIN_TOTP_SECRET: ${{ inputs.base_url == '' && secrets.E2E_ADMIN_TOTP_SECRET || '' }}
         run: npx playwright test --project='production-*'
 
       - name: Keep the screenshots

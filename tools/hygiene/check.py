@@ -14,7 +14,7 @@ from hygiene.baseline import (
     write_baseline,
 )
 from hygiene.budgets import BudgetFindings, Overrun, measure_budgets
-from hygiene.comments import CommentViolation, comment_violations
+from hygiene.comments import CommentViolation, comment_language, comment_violations
 from hygiene.layers import BACKEND_APP, ImportViolation, import_violations
 from hygiene.text_files import EncodingViolation, encoding_violations
 
@@ -53,13 +53,14 @@ def run_check(root: Path, files: Sequence[PurePosixPath], *, update_baseline: bo
     contents = {path: (root / path).read_bytes() for path in files}
     encodings = encoding_violations(contents.items())
     unreadable = {violation.path for violation in encodings}
-    python = [
+    texts = [
         (path, contents[path].decode("utf-8"))
         for path in files
-        if path.suffix == ".py" and str(path) not in unreadable
+        if comment_language(path) and str(path) not in unreadable
     ]
+    python = [(path, text) for path, text in texts if path.suffix == ".py"]
     imports = import_violations((path, text) for path, text in python if path.is_relative_to(BACKEND_APP))
-    comments = comment_violations(python)
+    comments = comment_violations(texts)
     budgets = measure_budgets(python)
     counts = _counts(budgets)
     baseline_path = root / BASELINE_FILE

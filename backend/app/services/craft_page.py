@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Mapping, Sequence
 from types import MappingProxyType
 from typing import Any
 
@@ -22,8 +22,10 @@ from app.research.craft_page import (
 )
 from app.research.knowledge_pieces import KnowledgePiece
 from app.research.sections import DISCIPLINE_TITLES
-from app.research.vocabulary import LEVEL_ORDER, weakest_level
+from app.research.vocabulary import CONCEPT_TYPE_DISCIPLINES, LEVEL_ORDER, weakest_level
 
+from .chapter_assembly import page_chapters
+from .chapter_context import ChapterContext, ChapterRows
 from .craft_page_context import (
     page_depth,
     page_environment,
@@ -49,8 +51,8 @@ from .knowledge_view import ClaimView
 
 __all__ = [
     "CONCEPT_SUBJECT_KINDS",
-    "CONCEPT_TYPE_DISCIPLINES",
     "ORIGIN_PROVENANCES",
+    "chapter_context",
     "craft_page",
     "page_claims",
 ]
@@ -58,24 +60,6 @@ __all__ = [
 CURATED = "CURATED"
 HYPOTHESIS = "HYPOTHESIS"
 FALLBACK_DISCIPLINE = "OVERVIEW"
-CONCEPT_TYPE_DISCIPLINES: Mapping[str, str] = MappingProxyType(
-    {
-        "TRADITION": "OVERVIEW",
-        "HISTORICAL_CONTEXT": "HISTORY",
-        "DESIGN_PRINCIPLE": "DESIGN",
-        "PROCESS_STAGE": "PROCESS",
-        "ARTISAN_ACTION": "PROCESS",
-        "ARTISAN_DECISION": "PROCESS",
-        "SENSORY_CUE": "PROCESS",
-        "MATERIAL": "MATERIALS",
-        "TOOL": "MATERIALS",
-        "PROPERTY": "MATERIALS",
-        "MECHANISM": "CHEMISTRY",
-        "EXPLANATION": "CHEMISTRY",
-        "CHANGE": "CHEMISTRY",
-        "ENVIRONMENTAL_CONDITION": "GEOGRAPHY",
-    }
-)
 CONCEPT_SUBJECT_KINDS: Mapping[str, str] = MappingProxyType(
     {"PROCESS_STAGE": "STAGE", "MATERIAL": "MATERIAL", "TOOL": "TOOL", "TRADITION": "CRAFT"}
 )
@@ -90,32 +74,55 @@ ORIGIN_PROVENANCES: Mapping[str, str] = MappingProxyType(
 )
 
 
-def craft_page(records: CraftPageRecords) -> CraftPage:
+def chapter_context(records: CraftPageRecords, rows: ChapterRows | None = None) -> ChapterContext:
     claims = page_claims(records)
-    visible = Visible(
-        levels={claim.id: claim.level for claim in claims},
-        order={claim.id: index for index, claim in enumerate(claims)},
-        disciplines={claim.id: claim.discipline for claim in claims},
-    )
+    visible = _visible(claims)
+    found = rows or ChapterRows()
+    known = {claim.id: claim for claim in [*(found.family.claims if found.family else ()), *claims]}
+    return ChapterContext(records, found, known, visible, frozenset(claim.id for claim in claims))
+
+
+def craft_page(records: CraftPageRecords, rows: ChapterRows | None = None) -> CraftPage:
+    claims = page_claims(records)
+    visible = _visible(claims)
     curated = records.curated
     craft = records.craft
     parts = _parts(records, claims, visible)
     process, pictures = parts["process"], parts["pictures"]
     sources = _sources(claims, records.sources)
     place = family_place(craft.category_name, craft.sub_category_name)
+    depth = page_depth(curated, claims, (len(sources), len(process.stages), len(pictures)))
+    questions = suggested_questions(place, craft.display_name, catch_all=records.catch_all)
+    ctx = chapter_context(records, rows)
+    built = page_chapters(ctx, parts, depth, questions)
     return CraftPage(
         schema_version=CRAFT_PAGE_SCHEMA_VERSION,
         craft=craft,
         curated=curated is not None,
         curation=_header(curated),
+        depth=depth,
+        suggested_questions=questions,
+        masthead=built.masthead,
+        lede=built.lede,
+        chapters=built.chapters,
+        cite=built.cite,
+        evidence=page_evidence(built.claims),
+        claims=built.claims,
+        sources=built.sources,
+        field_voices_total=records.field_voices.totals,
         tabs=page_tabs(process, records.offers, sources=bool(sources), evidence=bool(claims)),
-        depth=page_depth(curated, claims, (len(sources), len(process.stages), len(pictures))),
-        suggested_questions=suggested_questions(place, craft.display_name, catch_all=records.catch_all),
         same_family=list(records.relatives),
-        evidence=page_evidence(claims),
-        claims=claims,
-        sources=_numbered(_reading_order(craft.local_names, parts, claims), claims, sources),
+        voices=list(records.field_voices.voices),
+        field_photos=list(records.field_voices.photos),
         **parts,
+    )
+
+
+def _visible(claims: Sequence[PageClaim]) -> Visible:
+    return Visible(
+        levels={claim.id: claim.level for claim in claims},
+        order={claim.id: index for index, claim in enumerate(claims)},
+        disciplines={claim.id: claim.discipline for claim in claims},
     )
 
 
@@ -223,38 +230,3 @@ def _piece_sentences(piece: KnowledgePiece | None, visible: Visible) -> list[Pag
 def _sources(claims: Sequence[PageClaim], known: Mapping[str, SourceRef]) -> list[SourceRef]:
     ordered = dict.fromkeys(citation.source_id for claim in claims for citation in claim.citations)
     return [known[source_id] for source_id in ordered if source_id in known]
-
-
-def _reading_order(
-    names: Iterable[Any], parts: Mapping[str, Any], claims: Sequence[PageClaim]
-) -> list[uuid.UUID]:
-    overview: PageOverview = parts["overview"]
-    rows = [
-        *overview.lede,
-        *overview.key_facts,
-        *parts["pictures"],
-        *names,
-        *(sentence for section in overview.sections for sentence in section.sentences),
-        parts["gi_card"],
-        *parts["events"],
-        *parts["environment"],
-        *parts["sources_differ"],
-        *parts["open_questions"],
-        *parts["glossary"],
-    ]
-    later = [*parts["places"], *parts["communities"]]
-    return [
-        *(claim_id for row in rows for claim_id in row.claim_ids),
-        *parts["process"].cited_claim_ids(),
-        *(claim_id for row in later for claim_id in row.claim_ids),
-        *(claim.id for claim in claims),
-    ]
-
-
-def _numbered(
-    order: Sequence[uuid.UUID], claims: Sequence[PageClaim], sources: Sequence[SourceRef]
-) -> list[SourceRef]:
-    cited = {claim.id: claim.citations for claim in claims}
-    first = dict.fromkeys(citation.source_id for claim_id in order for citation in cited[claim_id])
-    listed = {source.id: source for source in sources}
-    return [listed[source_id] for source_id in first if source_id in listed]

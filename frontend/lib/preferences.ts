@@ -23,8 +23,8 @@ export const PREFERENCES_PATH = "/preferences/me";
 export const DARK_MEDIA_QUERY = "(prefers-color-scheme: dark)";
 
 export const THEME_COLOR: Record<ResolvedTheme, string> = {
-  light: "#f7f6fb",
-  dark: "#110f19"
+  light: "#F4F5F1",
+  dark: "#0E121C"
 };
 
 export const THEME_CHOICES: ThemeChoice[] = ["system", "light", "dark"];

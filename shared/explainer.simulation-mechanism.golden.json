@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "claimId": "feaa25b3-b79c-59ce-9c6b-1a841c7e12ed",
+  "block": {
+    "id": "s2.b2",
+    "kind": "simulation",
+    "version": 1,
+    "reuse": null,
+    "concept": "Iron dissolving into iron acetate",
+    "title": "How scrap iron becomes the iron acetate of kut",
+    "model": "claude-opus-5-5",
+    "createdAt": "2026-11-18T10:30:00Z",
+    "html": "<style>\n.kv{display:grid;gap:12px;padding:16px;font:15px/1.5 system-ui,sans-serif;color:#1d1b16;background:#faf7f0}\n.kv .row{display:flex;flex-wrap:wrap;gap:8px}\n.kv .chip{padding:4px 8px;border-radius:8px;border:1px solid #c9bfa8;background:#fff;opacity:.4;transition:opacity .3s ease}\n.kv .chip.on{opacity:1}\n.kv .eq{font-weight:600}\n@media (prefers-reduced-motion: reduce){.kv .chip{transition:none;opacity:1}}\n</style>\n<div class=\"kv\">\n<p class=\"eq\">Fe + 2 CH3COOH &#8594; Fe(CH3COO)2 + H2</p>\n<div class=\"row\" id=\"cast\"></div>\n<p id=\"said\" aria-live=\"polite\"></p>\n<div class=\"row\">\n<button type=\"button\" id=\"play\" aria-label=\"Play the reaction\">Play</button>\n<button type=\"button\" id=\"step\" aria-label=\"Show the next stage\">Step</button>\n</div>\n</div>\n<script>\nconst data = JSON.parse(document.getElementById(\"kv-data\").textContent);\nconst stages = [\n  [\"Iron\", \"Fe\"],\n  [\"Acetic acid\", \"CH3COOH\"],\n  [\"Iron(II) acetate\", \"Fe(CH3COO)2\"],\n  [\"Hydrogen\", \"H2\"]\n];\nconst cast = document.getElementById(\"cast\");\nconst chips = stages.map(function (stage) {\n  const chip = document.createElement(\"span\");\n  chip.setAttribute(\"class\", \"chip\");\n  chip.textContent = stage[0] + \" (\" + stage[1] + \")\";\n  cast.appendChild(chip);\n  return chip;\n});\nlet shown = 0;\nlet timer = null;\nfunction step() {\n  shown = shown % stages.length + 1;\n  chips.forEach(function (chip, index) { chip.setAttribute(\"class\", index < shown ? \"chip on\" : \"chip\"); });\n  document.getElementById(\"said\").textContent = stages[shown - 1][0] + \" joins the reaction.\";\n}\ndocument.getElementById(\"step\").addEventListener(\"click\", step);\ndocument.getElementById(\"play\").addEventListener(\"click\", function () {\n  if (timer) { clearInterval(timer); timer = null; return; }\n  timer = setInterval(step, 1000);\n});\nif (window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) { shown = stages.length - 1; step(); }\n</script>",
+    "htmlSha256": "7cbc640b52ea060259a6d38934a4598744b3bb137b395b569fc062e338108909",
+    "values": [],
+    "datasets": [],
+    "hidden": false,
+    "grounds": [
+      {
+        "id": "f5e2ff39-d761-5d50-bcff-34138c663abe",
+        "claimId": "feaa25b3-b79c-59ce-9c6b-1a841c7e12ed",
+        "sourceId": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+        "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3).",
+        "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+        "context": null,
+        "evidence": "QUOTED",
+        "level": "PROVISIONAL"
+      }
+    ],
+    "reactions": [
+      {
+        "reactionId": "d9643f49-fefc-5e3a-ad08-a5ae499a4161",
+        "label": "Scrap iron dissolving into iron acetate",
+        "species": [
+          {
+            "role": "REACTANT",
+            "formula": "Fe",
+            "name": "Iron",
+            "coefficient": 1,
+            "compoundId": null
+          },
+          {
+            "role": "REACTANT",
+            "formula": "CH3COOH",
+            "name": "Acetic acid",
+            "coefficient": 2,
+            "compoundId": null
+          },
+          {
+            "role": "PRODUCT",
+            "formula": "Fe(CH3COO)2",
+            "name": "Iron(II) acetate",
+            "coefficient": 1,
+            "compoundId": "8bb3d4e7-5fc1-5685-9b72-8279a0449481"
+          },
+          {
+            "role": "PRODUCT",
+            "formula": "H2",
+            "name": "Hydrogen",
+            "coefficient": 1,
+            "compoundId": null
+          }
+        ],
+        "equation": "Fe + 2 CH3COOH -> Fe(CH3COO)2 + H2",
+        "balanced": true,
+        "citations": [
+          {
+            "id": "f5e2ff39-d761-5d50-bcff-34138c663abe",
+            "claimId": "feaa25b3-b79c-59ce-9c6b-1a841c7e12ed",
+            "sourceId": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+            "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3).",
+            "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "bbda0126-cff0-5edb-b58b-1b9ee4f8bc1a",
+            "claimId": "c407fde1-3c40-5c81-8a5e-320317aacf9d",
+            "sourceId": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+            "quote": "Kut printing is usually undertaken in the afternoon.The kut is a smooth finer paste made from jaggery, or molasses, in which scrap iron such as horse-hoes and besan (gram flour) have been fermented for ten to fifteen days.",
+            "locator": "GI Journal No. 188 copy (application 1050), PDF p. 6",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "4ce205e3-653f-51db-9e49-14fb3b3f2e14",
+      "kind": "WEB_PAGE",
+      "title": "Indigo in Kutch, India: Art and Science, Environment and Economics (essay in Blue Gold: The Art and Science of Indigo)",
+      "authors": [
+        "Judy Frater"
+      ],
+      "year": 2025,
+      "doi": null,
+      "url": "https://publications.mingei.org/blue-gold/essays/essay-4-fra-sc/",
+      "publisher": "Mingei International Museum, San Diego",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    },
+    {
+      "id": "d0f53ee9-4b97-5df7-a367-686957bdb7c8",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188 (19 Dec 2023), G.I. Application No. 1050 - Kutch Ajrakh (journal copy)",
+      "authors": [
+        "Office of the Controller General of Patents, Designs & Trade Marks (applicant: Ajarakhpur Hastkala Vikas Sangathan",
+        "facilitated by Textiles Committee, Ministry of Textiles)"
+      ],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/GIRPublicSearch/Application/Details/1050",
+      "publisher": "Geographical Indications Registry, Chennai (IP India)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    }
+  ]
+}

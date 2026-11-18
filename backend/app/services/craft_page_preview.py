@@ -7,6 +7,7 @@ from app.research.craft_page import CraftPage
 from app.research.crafts import CraftRef
 from app.science.records import ProcessRecords
 
+from .chapter_preview import preview_rows
 from .craft_page import craft_page
 from .craft_page_records import CraftPageRecords, page_craft
 from .craft_page_register import register_context
@@ -16,8 +17,9 @@ from .knowledge_view import craft_ref
 __all__ = ["register_page", "register_records"]
 
 
-def register_page(craft_slug: str, *, dossiers: Sequence[str] = ()) -> CraftPage:
-    return craft_page(register_records(craft_slug, dossiers=dossiers))
+def register_page(craft_slug: str, *, dossiers: Sequence[str] = (), family: str | None = None) -> CraftPage:
+    records = register_records(craft_slug, dossiers=dossiers)
+    return craft_page(records, preview_rows(records, family=family, inputs=None))
 
 
 def register_records(craft_slug: str, *, dossiers: Sequence[str] = ()) -> CraftPageRecords:

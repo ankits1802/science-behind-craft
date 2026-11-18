@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+  "block": {
+    "id": "s1.simulation",
+    "kind": "simulation",
+    "version": 1,
+    "reuse": null,
+    "concept": "Iron in kut darkening with the tannic acid of harde",
+    "title": "How kut turns black on harde-treated cloth",
+    "model": "claude-opus-5-5",
+    "createdAt": "2026-11-18T10:30:00Z",
+    "html": "<style>\n.kv{display:grid;gap:12px;padding:16px;font:15px/1.5 system-ui,sans-serif;color:#1d1b16;background:#faf7f0}\n.kv .row{display:flex;flex-wrap:wrap;gap:8px}\n.kv .chip{padding:4px 8px;border-radius:8px;border:1px solid #c9bfa8;background:#fff;opacity:.4;transition:opacity .3s ease}\n.kv .chip.on{opacity:1}\n.kv .cloth{height:28px;border-radius:6px;background:#d8c9a3;transition:background .6s ease}\n.kv .cloth.dark{background:#3b2a20}\n@media (prefers-reduced-motion: reduce){.kv .chip,.kv .cloth{transition:none;opacity:1}}\n</style>\n<div class=\"kv\">\n<p>Iron in kut paste meets the tannic acid of harde on the cloth.</p>\n<div class=\"cloth\" id=\"cloth\" role=\"img\" aria-label=\"A strip of harde-treated cloth\"></div>\n<div class=\"row\" id=\"cast\"></div>\n<p id=\"said\" aria-live=\"polite\"></p>\n<div class=\"row\">\n<button type=\"button\" id=\"play\" aria-label=\"Play the reaction\">Play</button>\n<button type=\"button\" id=\"step\" aria-label=\"Show the next stage\">Step</button>\n</div>\n</div>\n<script>\nconst data = JSON.parse(document.getElementById(\"kv-data\").textContent);\nconst stages = [\n  \"Iron in kut paste\",\n  \"Tannic acid from harde\",\n  \"Deep fast chocolate-black colour\"\n];\nconst cast = document.getElementById(\"cast\");\nconst cloth = document.getElementById(\"cloth\");\nconst chips = stages.map(function (stage) {\n  const chip = document.createElement(\"span\");\n  chip.setAttribute(\"class\", \"chip\");\n  chip.textContent = stage;\n  cast.appendChild(chip);\n  return chip;\n});\nlet shown = 0;\nlet timer = null;\nfunction step() {\n  shown = shown % stages.length + 1;\n  chips.forEach(function (chip, index) { chip.setAttribute(\"class\", index < shown ? \"chip on\" : \"chip\"); });\n  cloth.setAttribute(\"class\", shown === stages.length ? \"cloth dark\" : \"cloth\");\n  document.getElementById(\"said\").textContent = shown === stages.length\n    ? \"The iron oxidises with the tannic acid and the print turns black.\"\n    : stages[shown - 1] + \" joins the reaction.\";\n}\ndocument.getElementById(\"step\").addEventListener(\"click\", step);\ndocument.getElementById(\"play\").addEventListener(\"click\", function () {\n  if (timer) { clearInterval(timer); timer = null; return; }\n  timer = setInterval(step, 1000);\n});\nif (window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) { shown = stages.length - 1; step(); }\n</script>",
+    "htmlSha256": "31d9da6fc6d4c7daf36be42448758c1aca738534111e7a40dd68ddef08eafa01",
+    "values": [],
+    "datasets": [],
+    "hidden": false,
+    "grounds": [
+      {
+        "id": "d89dfd48-7b87-53f1-bdde-4d3589624f2e",
+        "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+        "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+        "quote": "When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.",
+        "locator": "Application 1050, method of production, p. 11",
+        "context": null,
+        "evidence": "QUOTED",
+        "level": "PROVISIONAL"
+      },
+      {
+        "id": "ebfa138c-0ab6-5ad8-a15b-dbb32d5d7c0a",
+        "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+        "sourceId": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+        "quote": "These lines oxidise when exposed to air and the harda and develop a black colour.",
+        "locator": "paragraph 6",
+        "context": null,
+        "evidence": "QUOTED",
+        "level": "PROVISIONAL"
+      }
+    ],
+    "reactions": [
+      {
+        "reactionId": "eac17f22-b178-5223-829a-31533912fb75",
+        "label": "iron in kut paste + tannic acid from harde → deep fast chocolate-black colour",
+        "species": [
+          {
+            "role": "REACTANT",
+            "formula": null,
+            "name": "iron in kut paste",
+            "coefficient": null,
+            "compoundId": null
+          },
+          {
+            "role": "REACTANT",
+            "formula": null,
+            "name": "tannic acid from harde",
+            "coefficient": null,
+            "compoundId": null
+          },
+          {
+            "role": "PRODUCT",
+            "formula": null,
+            "name": "deep fast chocolate-black colour",
+            "coefficient": null,
+            "compoundId": null
+          }
+        ],
+        "equation": null,
+        "balanced": false,
+        "citations": [
+          {
+            "id": "d89dfd48-7b87-53f1-bdde-4d3589624f2e",
+            "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+            "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+            "quote": "When printed onto the harde treated cloth kut develops a deep fast chocolate-black colour as the iron particles in the kut paste oxidise with the tannic acid.",
+            "locator": "Application 1050, method of production, p. 11",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          },
+          {
+            "id": "ebfa138c-0ab6-5ad8-a15b-dbb32d5d7c0a",
+            "claimId": "76c28e36-98a9-52a3-b09f-80250bab237c",
+            "sourceId": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+            "quote": "These lines oxidise when exposed to air and the harda and develop a black colour.",
+            "locator": "paragraph 6",
+            "context": null,
+            "evidence": "QUOTED",
+            "level": "PROVISIONAL"
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188: Kutch Ajrakh, G.I. Application No. 1050",
+      "authors": [],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_188%5CJournal+188.pdf",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    },
+    {
+      "id": "0e89a28c-dbc5-5771-a5c4-11f8874e79d4",
+      "kind": "ENCYCLOPEDIA",
+      "title": "Ajrakh",
+      "authors": [],
+      "year": 2022,
+      "doi": null,
+      "url": "https://imp-art.org/articles/ajrakh/",
+      "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+      "licence": null,
+      "attribution": null,
+      "reliability": "B"
+    }
+  ]
+}

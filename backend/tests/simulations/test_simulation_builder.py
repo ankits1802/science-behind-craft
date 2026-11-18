@@ -134,13 +134,13 @@ async def test_a_draft_past_the_prompt_s_length_is_refused_for_size_and_the_redr
 ) -> None:
     head = accepted_html()
     exact = head + "x" * (SIMULATION_HTML_MAX_CHARS - len(head))
-    assert len(exact) == 12000
+    assert len(exact) == SIMULATION_HTML_MAX_CHARS == 40000
     assert len(await built(DraftModel([draft(exact)]))) == 1
     model = DraftModel([draft(exact + "x")])
     with caplog.at_level(logging.INFO):
         assert await built(model) == []
     assert logged_rules(caplog) == {"SIZE"}
-    assert "SIZE: 12001 characters, more than 12000" in model.calls[1]["user"]
+    assert "SIZE: 40001 characters, more than 40000" in model.calls[1]["user"]
 
 
 async def test_a_reply_past_the_block_s_byte_cap_is_off_its_schema() -> None:

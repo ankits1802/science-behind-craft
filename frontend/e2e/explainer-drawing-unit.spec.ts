@@ -21,7 +21,7 @@ import { explainerStateOf } from "@/lib/explainerVersions";
 import type { UnderstoodPart } from "@/lib/explainerView";
 import { parseShape } from "@/lib/shape";
 
-import { shownText } from "./explainerRender";
+import { attribute, shownText } from "./explainerRender";
 
 const ROOT = join(__dirname, "..", "..");
 const read = (...parts: string[]) => readFileSync(join(ROOT, ...parts), "utf8");
@@ -59,7 +59,7 @@ function sentenceChips(html: string): [string, string[]][] {
   return marks.map((mark, index) => {
     const close = html.indexOf("</p>", mark.index);
     const end = Math.min(marks[index + 1]?.index ?? html.length, close < 0 ? html.length : close);
-    return [mark[1], [...html.slice(mark.index, end).matchAll(/<span class="tabular-nums">([^<]+)<\/span>/g)].map((found) => found[1])];
+    return [mark[1], attribute(html.slice(mark.index, end), "citation-chip", "data-numbers").flatMap((numbers) => numbers.split(","))];
   });
 }
 

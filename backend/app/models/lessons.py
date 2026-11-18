@@ -7,11 +7,12 @@ from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, created_at, uuid_pk
+from app.models.sharing import SharedByLink, shared_together
 
 LESSON_TITLE_CHARS = 120
 
 
-class LessonPack(Base):
+class LessonPack(SharedByLink, Base):
     __tablename__ = "LessonPack"
 
     id: Mapped[uuid.UUID] = uuid_pk()
@@ -30,4 +31,5 @@ class LessonPack(Base):
         CheckConstraint('"version" >= 1', name="version"),
         Index(None, "userId", "createdAt"),
         Index(None, "explainerId"),
+        shared_together(),
     )

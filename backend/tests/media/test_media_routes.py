@@ -1,5 +1,6 @@
 import uuid
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.api import media_deps as media_deps_module
@@ -48,6 +49,7 @@ def body(key: str = "media:route-test-key-0001", **changes: object) -> dict:
     return {"kind": "IMAGE", "stageId": str(STAGE_ID), "idempotencyKey": key, **changes}
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 def test_options_answer_the_contract_shape() -> None:
     answer = client(memory()).get("/api/media/options", params={"craftSlug": "Kutch-Ajrakh"})
     assert answer.status_code == 200

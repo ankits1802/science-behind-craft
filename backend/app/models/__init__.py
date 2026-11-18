@@ -22,6 +22,7 @@ from app.models.conversation import (
     Message,
     VoiceSession,
 )
+from app.models.craft_pages import CraftPageArchive, CraftPageSnapshot, WikidataPoint
 from app.models.crafts import (
     AdminDistrict,
     AdminState,
@@ -48,6 +49,14 @@ from app.models.curation import (
     CuratedCraft,
 )
 from app.models.evaluation import EvalCase, EvalResult, EvalRun
+from app.models.field_voices import (
+    FieldImage,
+    FieldImageCraft,
+    FieldRecording,
+    FieldRecordingCraft,
+    FieldSegment,
+    FieldVoiceStream,
+)
 from app.models.glossary import Term, TermConcept, TermCraft, TermSummary
 from app.models.identity import (
     AccessRoster,
@@ -82,6 +91,7 @@ from app.models.knowledge import (
 from app.models.knowledge_pieces import KnowledgePiece
 from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
+from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
 from app.models.rivers import RiverBasin, RiverReach
 from app.models.science import (
     Compound,
@@ -94,6 +104,7 @@ from app.models.science import (
     ReactionCitation,
     StageMaterial,
 )
+from app.models.testimony import ArtisanContribution, ArtisanConversation, ArtisanConversationAudio
 
 __all__ = [
     "AccessRoster",
@@ -105,6 +116,11 @@ __all__ = [
     "AnswerSentence",
     "AnswerTrace",
     "AppSetting",
+    "ArtisanContribution",
+    "ArtisanConversation",
+    "ArtisanConversationAudio",
+    "ArtisanCraft",
+    "ArtisanProfile",
     "AuditLog",
     "AuthNonce",
     "Base",
@@ -124,6 +140,8 @@ __all__ = [
     "CraftCode",
     "CraftGiRecord",
     "CraftLocation",
+    "CraftPageArchive",
+    "CraftPageSnapshot",
     "CraftPrice",
     "CraftSpelling",
     "CraftSubCategory",
@@ -142,6 +160,12 @@ __all__ = [
     "EvalCase",
     "EvalResult",
     "EvalRun",
+    "FieldImage",
+    "FieldImageCraft",
+    "FieldRecording",
+    "FieldRecordingCraft",
+    "FieldSegment",
+    "FieldVoiceStream",
     "GiRegistration",
     "Invite",
     "Job",
@@ -176,6 +200,7 @@ __all__ = [
     "SecretTestResult",
     "Source",
     "StageMaterial",
+    "StudentProfile",
     "Term",
     "TermConcept",
     "TermCraft",
@@ -186,4 +211,5 @@ __all__ = [
     "UserPreference",
     "VoiceSession",
     "WebFetch",
+    "WikidataPoint",
 ]

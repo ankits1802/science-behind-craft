@@ -43,7 +43,7 @@ export type SelectServerQuery = {
 const EMPTY_PINS: ReadonlySet<string> = new Set<string>();
 
 const TRIGGER_CLASS =
-  "flex w-full items-center justify-between gap-2 rounded-md border border-line-200 bg-card px-3.5 py-2.5 text-left text-sm text-ink-900 outline-hidden transition hover:border-purple-300 focus:border-purple-600 focus:ring-4 focus:ring-purple-600/15 disabled:cursor-not-allowed disabled:opacity-60";
+  "flex min-h-input w-full items-center justify-between gap-2.5 rounded-control border border-rule-strong bg-raised px-3.5 py-2.5 text-start font-ui text-ui-lg text-ink-1 outline-2 outline-offset-2 outline-transparent transition-colors duration-state hover:border-ink-2 focus-visible:border-indigo focus-visible:outline-indigo aria-expanded:border-indigo aria-expanded:outline-indigo disabled:cursor-not-allowed disabled:border-rule disabled:bg-sunk disabled:text-ink-3";
 
 const PANEL_CLASS = "overflow-hidden! p-0! flex flex-col";
 
@@ -83,10 +83,10 @@ function firstEnabled(options: SelectOption[]) {
 
 function optionClass(option: SelectOption, highlighted: boolean, active: boolean) {
   return cn(
-    "flex items-center gap-2 px-3.5 py-2 text-sm",
-    option.disabled ? "cursor-not-allowed text-ink-300" : "cursor-pointer",
-    !option.disabled && highlighted && "bg-purple-50 dark:bg-purple-950",
-    active ? "font-medium text-purple-700 dark:text-purple-300" : !option.disabled ? "text-ink-700" : ""
+    "flex items-center gap-2 px-3.5 py-2.5 font-ui text-ui font-normal",
+    option.disabled ? "cursor-not-allowed text-ink-3" : "cursor-pointer",
+    active ? "bg-indigo-wash font-medium text-indigo" : !option.disabled ? "text-ink-2" : "",
+    !option.disabled && highlighted && "kv-option-active"
   );
 }
 
@@ -209,9 +209,9 @@ function SearchRow({
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="flex shrink-0 items-center gap-2 border-b border-line-200 p-2">
+    <div className="flex shrink-0 items-center gap-2 border-b border-rule px-3 py-1">
       <div className="relative min-w-0 flex-1">
-        <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-500" aria-hidden />
+        <Search className="pointer-events-none absolute start-0 top-1/2 h-[0.9375rem] w-[0.9375rem] -translate-y-1/2 text-ink-3" aria-hidden />
         <input
           ref={inputRef}
           id={inputId}
@@ -228,11 +228,11 @@ function SearchRow({
           placeholder={placeholder}
           onChange={(event) => onQueryChange(event.target.value)}
           onKeyDown={onKeyDown}
-          className="w-full rounded-sm border border-line-200 bg-card py-1.5 pl-8 pr-2 text-sm text-ink-900 outline-hidden transition placeholder:text-ink-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/15"
+          className="min-h-target w-full border-0 bg-transparent ps-6 pe-2 font-ui text-ui-lg text-ink-1 placeholder:text-ink-3"
         />
       </div>
       {pending ? (
-        <span aria-hidden className="shrink-0 whitespace-nowrap text-xs text-ink-500">
+        <span aria-hidden className="shrink-0 whitespace-nowrap font-ui text-caption text-ink-3">
           {SEARCHING_LABEL}
         </span>
       ) : null}
@@ -243,7 +243,7 @@ function SearchRow({
 
 function CapNotice({ sentence }: { sentence: string }) {
   return (
-    <p className="shrink-0 border-t border-line-200 bg-surface-50 px-3.5 py-2 text-xs leading-4 text-ink-500">
+    <p className="shrink-0 border-t border-rule px-3.5 pt-2 pb-2.5 font-ui text-caption text-ink-3">
       {sentence}
     </p>
   );
@@ -259,7 +259,7 @@ function GroupHeading({ name }: { name: string }) {
   return (
     <div
       aria-hidden
-      className="px-3.5 pb-1 pt-2 text-[0.6875rem] font-semibold uppercase tracking-wide text-ink-500"
+      className="kv-group-head"
     >
       {name}
     </div>
@@ -271,7 +271,7 @@ function OptionText({ option }: { option: SelectOption }) {
     <>
       <span className="min-w-0 flex-1 truncate">{option.label}</span>
       {option.hint ? (
-        <span className="min-w-0 max-w-[55%] shrink truncate text-xs text-ink-500">{option.hint}</span>
+        <span className="min-w-0 max-w-[55%] shrink truncate font-ui text-caption text-ink-3">{option.hint}</span>
       ) : null}
     </>
   );
@@ -636,16 +636,16 @@ export function SearchableSelect({
         onKeyDown={onTriggerKeyDown}
         data-form-field=""
         data-searchable-select=""
-        className={cn(TRIGGER_CLASS, showClear && "pr-16 pointer-coarse:pr-20")}
+        className={cn(TRIGGER_CLASS, showClear && "pe-16 pointer-coarse:pe-20")}
       >
         <span
-          className={cn("min-w-0 truncate", (!selected || showingNone) && "text-ink-500")}
+          className={cn("min-w-0 truncate", (!selected || showingNone) && "text-ink-3")}
           title={selected?.label}
         >
           {selected ? selected.label : placeholder}
         </span>
         <ChevronDown
-          className={cn("h-4 w-4 shrink-0 text-ink-500 transition-transform", open && "rotate-180")}
+          className={cn("h-4 w-4 shrink-0 text-ink-3", open && "rotate-180")}
           aria-hidden
         />
       </button>
@@ -658,7 +658,7 @@ export function SearchableSelect({
             onChange("");
             triggerRef.current?.focus({ preventScroll: true });
           }}
-          className="absolute right-8 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-ink-500 transition hover:bg-surface-50 hover:text-ink-900 focus-visible:outline-2 focus-visible:outline-purple-600 pointer-coarse:h-11 pointer-coarse:w-11"
+          className="absolute end-8 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-ink-3 transition-colors hover:bg-sunk hover:text-ink-1 pointer-coarse:h-11 pointer-coarse:w-11"
         >
           <X className="h-3.5 w-3.5" aria-hidden />
         </button>
@@ -733,7 +733,7 @@ export function SearchableSelect({
                   >
                     <OptionText option={option} />
                     {active ? (
-                      <Check className="h-4 w-4 shrink-0 text-purple-700 dark:text-purple-300" aria-hidden />
+                      <Check className="h-3.5 w-3.5 shrink-0 text-indigo" aria-hidden />
                     ) : null}
                   </li>
                 );
@@ -747,7 +747,7 @@ export function SearchableSelect({
               );
             })}
             {windowed.length === 0 ? (
-              <li className="px-3.5 py-2 text-sm text-ink-500">
+              <li className="px-3.5 py-2.5 font-ui text-ui font-normal text-ink-3">
                 {emptyListSentence({
                   emptyLabel,
                   term: query,
@@ -762,7 +762,7 @@ export function SearchableSelect({
               type="button"
               onMouseDown={(event) => event.preventDefault()}
               onClick={create}
-              className="shrink-0 truncate border-t border-line-200 px-3.5 py-2 text-left text-sm font-medium text-purple-700 transition hover:bg-purple-50 dark:text-purple-300 dark:hover:bg-purple-950"
+              className="kv-link min-h-target shrink-0 truncate border-t border-rule px-3.5 py-2 text-start font-ui text-ui hover:bg-sunk"
             >
               {createAction.label(createTerm)}
             </button>
@@ -1050,7 +1050,7 @@ export function SearchableMultiSelect({
         type="button"
         onClick={applyBulk}
         onMouseDown={(event) => event.preventDefault()}
-        className="shrink-0 whitespace-nowrap rounded-sm border border-line-200 bg-card px-2 py-1.5 text-xs font-medium text-purple-700 outline-hidden transition hover:border-purple-300 hover:bg-purple-50 focus-visible:border-purple-600 focus-visible:ring-2 focus-visible:ring-purple-600/20 dark:text-purple-300 dark:hover:bg-purple-950"
+        className="kv-chip shrink-0"
       >
         {bulkLabel}
       </button>
@@ -1077,12 +1077,12 @@ export function SearchableMultiSelect({
         data-searchable-select=""
         className={TRIGGER_CLASS}
       >
-        <span className={cn("min-w-0 truncate", !values.length && "text-ink-500")}>
+        <span className={cn("min-w-0 truncate", !values.length && "text-ink-3")}>
           {values.length ? `${values.length} selected` : placeholder}
         </span>
         {ariaLabel ? null : <span className="sr-only">{selectionSummary}</span>}
         <ChevronDown
-          className={cn("h-4 w-4 shrink-0 text-ink-500 transition-transform", open && "rotate-180")}
+          className={cn("h-4 w-4 shrink-0 text-ink-3", open && "rotate-180")}
           aria-hidden
         />
       </button>
@@ -1096,7 +1096,8 @@ export function SearchableMultiSelect({
             return (
               <li
                 key={value}
-                className="inline-flex min-h-8 max-w-full items-center gap-1 rounded-full border border-purple-200 bg-purple-50 py-0.5 pl-3 pr-1 text-xs font-medium text-purple-800 dark:border-purple-800 dark:bg-purple-950/40 dark:text-purple-200"
+                className="kv-chip max-w-full gap-1 pe-1"
+                aria-current="true"
               >
                 <span className="min-w-0 truncate">{label}</span>
                 {removable ? (
@@ -1104,7 +1105,7 @@ export function SearchableMultiSelect({
                     type="button"
                     aria-label={`Remove ${label}`}
                     onClick={() => onChange(values.filter((kept) => kept !== value))}
-                    className="relative grid h-7 w-7 shrink-0 place-items-center rounded-full text-purple-700 transition hover:bg-purple-100 dark:text-purple-200 dark:hover:bg-purple-900 pointer-coarse:before:absolute pointer-coarse:before:-inset-2 pointer-coarse:before:content-['']"
+                    className="relative grid h-7 w-7 shrink-0 place-items-center rounded-full text-indigo-hover transition-colors hover:bg-raised pointer-coarse:before:absolute pointer-coarse:before:-inset-2 pointer-coarse:before:content-['']"
                   >
                     <X className="h-3.5 w-3.5" aria-hidden />
                   </button>
@@ -1115,7 +1116,7 @@ export function SearchableMultiSelect({
             );
           })}
           {values.length > CHIP_LIMIT ? (
-            <li className="self-center text-xs text-ink-500">and {values.length - CHIP_LIMIT} more</li>
+            <li className="self-center font-ui text-caption text-ink-3">and {values.length - CHIP_LIMIT} more</li>
           ) : null}
         </ul>
       ) : null}
@@ -1155,7 +1156,7 @@ export function SearchableMultiSelect({
               trailing={bulkButton}
             />
           ) : bulkButton ? (
-            <div className="flex shrink-0 justify-end border-b border-line-200 p-2">{bulkButton}</div>
+            <div className="flex shrink-0 justify-end border-b border-rule p-2">{bulkButton}</div>
           ) : null}
           <ul
             ref={listRef}
@@ -1191,8 +1192,8 @@ export function SearchableMultiSelect({
                     <span
                       aria-hidden
                       className={cn(
-                        "grid h-4 w-4 shrink-0 place-items-center rounded border transition",
-                        checked ? "border-purple-700 bg-purple-700 text-white" : "border-line-200 bg-card"
+                        "grid h-4 w-4 shrink-0 place-items-center rounded-control border",
+                        checked ? "border-indigo bg-indigo text-indigo-on" : "border-rule-strong bg-raised"
                       )}
                     >
                       {checked ? <Check className="h-3 w-3" /> : null}
@@ -1210,7 +1211,7 @@ export function SearchableMultiSelect({
               );
             })}
             {windowed.length === 0 ? (
-              <li className="px-3.5 py-2 text-sm text-ink-500">
+              <li className="px-3.5 py-2.5 font-ui text-ui font-normal text-ink-3">
                 {emptyListSentence({
                   emptyLabel,
                   term: query,
@@ -1222,10 +1223,10 @@ export function SearchableMultiSelect({
           </ul>
           {capSentence ? <CapNotice sentence={capSentence} /> : null}
           {confirmOnSelect && values.length > 0 ? (
-            <div className="shrink-0 border-t border-line-200 bg-card p-2">
+            <div className="shrink-0 border-t border-rule bg-raised p-2">
               <button
                 type="button"
-                className="field-button w-full py-1.5 text-xs"
+                className="field-button w-full"
                 onClick={() => closeAndMoveOn(true)}
                 onMouseDown={(event) => event.preventDefault()}
               >

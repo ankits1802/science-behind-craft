@@ -3,8 +3,11 @@ from __future__ import annotations
 from collections.abc import Mapping
 from types import MappingProxyType
 
-__all__ = ["QUESTION_CUES"]
+__all__ = ["HOW_IT_WORKS_FILLERS", "HOW_IT_WORKS_SUBJECTS", "HOW_IT_WORKS_VERBS", "QUESTION_CUES"]
 
+HOW_IT_WORKS_VERBS = frozenset({"work", "works", "working"})
+HOW_IT_WORKS_SUBJECTS = frozenset({"it", "this", "craft"})
+HOW_IT_WORKS_FILLERS = frozenset({"does", "do", "the"})
 QUESTION_CUES: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {
         "PROCESS": (
@@ -107,6 +110,8 @@ QUESTION_CUES: Mapping[str, tuple[str, ...]] = MappingProxyType(
             "village*",
             "district*",
             "land",
+            "geograph*",
+            "भूगोल",
             "पानी",
             "नदी",
             "जल",
@@ -152,6 +157,7 @@ QUESTION_CUES: Mapping[str, tuple[str, ...]] = MappingProxyType(
             "came",
             "began",
             "migrat*",
+            "politic*",
             "इतिहास",
         ),
         "ECONOMICS": (
@@ -165,6 +171,7 @@ QUESTION_CUES: Mapping[str, tuple[str, ...]] = MappingProxyType(
             "trade*",
             "buyer*",
             "wage*",
+            "politic*",
             "बाज़ार",
             "बाजार",
             "कीमत",

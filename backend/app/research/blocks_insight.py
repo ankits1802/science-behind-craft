@@ -18,10 +18,9 @@ from .blocks import (
     require_facts,
     stated_texts,
 )
-from .blocks_place import DistrictRef
 from .citations import Citation
 from .crafts import CraftRef
-from .datasets import DATASET_CODE_PATTERN, DatasetRef, dataset_codes_problems
+from .datasets import DatasetRef
 from .measures import (
     CONVERSION_BASES,
     DEFINED_UNITS,
@@ -41,16 +40,7 @@ __all__ = [
     "MEASURE_ROWS_MAX",
     "PRICE_SCALES",
     "SCALE_WORDS",
-    "TREND_METHOD",
-    "TREND_PERIOD_PATTERN",
-    "TREND_SIGNIFICANCE",
-    "TREND_UNITS",
-    "TREND_VARIABLES",
-    "TREND_YEARS_MIN",
-    "ClimateRiskBlock",
-    "ClimateTrend",
     "GiStatus",
-    "GroundwaterValue",
     "MarketGiBlock",
     "MeasureBlock",
     "MeasureRegion",
@@ -70,24 +60,10 @@ PRICE_SCALES = ("THOUSAND", "LAKH", "CRORE")
 SCALE_WORDS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {"THOUSAND": ("thousand",), "LAKH": ("lakh", "lakhs"), "CRORE": ("crore", "crores")}
 )
-TREND_VARIABLES = ("annual_precipitation", "annual_mean_temperature")
-TREND_UNITS: Mapping[str, tuple[str, str]] = MappingProxyType(
-    {
-        "annual_precipitation": ("mm/year", "mm/year per decade"),
-        "annual_mean_temperature": ("degC", "degC per decade"),
-    }
-)
-TREND_METHOD = "SEN_SLOPE_MANN_KENDALL"
-TREND_SIGNIFICANCE = 0.05
-TREND_YEARS_MIN = 30
-TREND_PERIOD_PATTERN = r"^(\d{4})-(\d{4})$"
-
 ConversionBasis = Literal[*CONVERSION_BASES]
 GiStatusName = Literal[*GI_STATUSES]
 Currency = Literal[*CURRENCIES]
 PriceScale = Literal[*PRICE_SCALES]
-TrendVariable = Literal[*TREND_VARIABLES]
-DatasetCode = Annotated[str, Field(pattern=DATASET_CODE_PATTERN, max_length=80)]
 Lgd = Annotated[int, Field(ge=1)]
 
 
@@ -282,87 +258,6 @@ class MarketGiBlock(BlockBase):
 
     def shown_labels(self) -> list[str]:
         return [self.craft.name, *(price.stated for price in self.prices)]
-
-
-class ClimateTrend(ContractModel):
-    district: DistrictRef
-    variable: TrendVariable
-    dataset_code: DatasetCode
-    period: str = Field(pattern=TREND_PERIOD_PATTERN)
-    resolution: str = Field(min_length=1, max_length=120)
-    mean: float
-    mean_unit: str
-    slope_per_decade: float
-    slope_unit: str
-    p_value: float = Field(ge=0, le=1)
-    significant: bool
-
-    @model_validator(mode="after")
-    def _a_long_series_tested_for_a_trend(self) -> Self:
-        first, last = (int(year) for year in self.period.split("-"))
-        if last - first + 1 < TREND_YEARS_MIN:
-            raise ValueError(f"a trend spans at least {TREND_YEARS_MIN} years, not {self.period}")
-        if (self.mean_unit, self.slope_unit) != TREND_UNITS[self.variable]:
-            raise ValueError(f"{self.variable} is given in {' and '.join(TREND_UNITS[self.variable])}")
-        if self.significant != (self.p_value < TREND_SIGNIFICANCE):
-            raise ValueError(f"a trend is significant exactly when p < {TREND_SIGNIFICANCE}")
-        return self
-
-
-class GroundwaterValue(ContractModel):
-    district: DistrictRef
-    dataset_code: DatasetCode
-    variable: str = Field(min_length=1, max_length=120)
-    period: str = Field(min_length=1, max_length=80)
-    value: float | None
-    value_text: str | None = Field(min_length=1, max_length=200)
-    unit: str | None = Field(min_length=1, max_length=40)
-    resolution: str = Field(min_length=1, max_length=120)
-
-    @model_validator(mode="after")
-    def _a_number_or_a_class(self) -> Self:
-        if self.value is None and self.value_text is None:
-            raise ValueError(f"groundwater {self.variable} has a number, a text or both")
-        if (self.value is None) != (self.unit is None):
-            raise ValueError(f"groundwater {self.variable} gives a unit exactly with a number")
-        return self
-
-
-class ClimateRiskBlock(BlockBase):
-    SENTENCES: ClassVar[SentenceSpec] = (("meaning", [SENTENCE]),)
-
-    kind: Literal["climate_risk"]
-    version: Literal[1]
-    trends: list[ClimateTrend]
-    groundwater: list[GroundwaterValue]
-    meaning: list[ExplainerSentence]
-    datasets: list[DatasetRef] = Field(min_length=1)
-
-    @model_validator(mode="after")
-    def _dataset_values_and_what_they_mean(self) -> Self:
-        if not self.trends and not self.groundwater:
-            raise ValueError(f"climate {self.id} shows a trend or a groundwater value")
-        require_facts(f"climate {self.id}", self.meaning)
-        pairs = [(trend.district.district_lgd, trend.variable) for trend in self.trends]
-        if len(set(pairs)) != len(pairs):
-            raise ValueError(f"climate {self.id} gives each district's trend of a variable once")
-        used = [value.dataset_code for value in (*self.trends, *self.groundwater)]
-        problems = dataset_codes_problems(f"climate {self.id}", self.datasets, used)
-        if {dataset.code for dataset in self.datasets} != set(used):
-            problems.append(f"climate {self.id} cites only the dataset rows it draws")
-        periods = {dataset.code: dataset.period for dataset in self.datasets}
-        if any(periods.get(trend.dataset_code) != trend.period for trend in self.trends):
-            problems.append(f"climate {self.id} reads each trend over its dataset row's period")
-        if problems:
-            raise ValueError("; ".join(problems))
-        return self
-
-    def cites_datasets(self) -> bool:
-        return bool(self.datasets)
-
-    def shown_labels(self) -> list[str]:
-        places = (value.district.name for value in (*self.trends, *self.groundwater))
-        return list(dict.fromkeys(places))
 
 
 def _states_range(stated: str, low: float, high: float | None) -> bool:

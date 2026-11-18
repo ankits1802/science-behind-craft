@@ -1,15 +1,17 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { rowOffers } from "@/app/(protected)/admin/users/userAdmin";
+import { offersGuardianConfirmation, rowOffers } from "@/app/(protected)/admin/users/userAdmin";
 import { accessEntryOffers, type AccessRosterEntry } from "@/lib/accessRoster";
 import {
   ROLE_LABELS,
   ROLE_RANK,
   assignableRoles,
   canAccessRoute,
+  canConfirmGuardianConsent,
+  canContributeTestimony,
   canManageUser,
   roleLabel,
   routeGuardFor
@@ -18,7 +20,7 @@ import type { User, UserRole } from "@/lib/types";
 
 const person = (role: UserRole, id: string = role): User => ({ id, email: `${id}@example.org`, name: id, role });
 
-const LADDER: UserRole[] = ["STUDENT", "RESEARCHER", "PROFESSOR", "ADMIN", "MASTER_ADMIN"];
+const LADDER: UserRole[] = ["STUDENT", "ARTISAN", "RESEARCHER", "PROFESSOR", "ADMIN", "MASTER_ADMIN"];
 
 const NAV_SOURCE = readFileSync(join(__dirname, "..", "components", "DynamicIslandNav.tsx"), "utf8");
 const ADMIN_NAV_HREFS = [...NAV_SOURCE.matchAll(/href: "(\/admin[^"]*)"/g)].map((match) => match[1]);
@@ -50,12 +52,19 @@ function rosterEntry(admitRole: UserRole | null, status: AccessRosterEntry["stat
 }
 
 test("the ladder matches the plan's ranks", () => {
-  expect(ROLE_RANK).toEqual({ STUDENT: 15, RESEARCHER: 30, PROFESSOR: 40, ADMIN: 50, MASTER_ADMIN: 60 });
+  expect(ROLE_RANK).toEqual({ STUDENT: 15, ARTISAN: 18, RESEARCHER: 30, PROFESSOR: 40, ADMIN: 50, MASTER_ADMIN: 60 });
 });
 
 test("ranks and labels agree with the shared roles file", () => {
   expect(ROLE_RANK).toEqual(SHARED_ROLES.ranks);
   expect(ROLE_LABELS).toEqual(SHARED_ROLES.labels);
+});
+
+test("only an account holding the testimony capability may contribute, whatever its rank", () => {
+  expect(canContributeTestimony({ ...person("ARTISAN"), capabilities: ["ASK_STANDARD", "CONTRIBUTE_TESTIMONY"] })).toBe(true);
+  expect(canContributeTestimony(person("ARTISAN"))).toBe(false);
+  expect(canContributeTestimony({ ...person("MASTER_ADMIN"), capabilities: ["MANAGE_KEYS"] })).toBe(false);
+  expect(roleLabel("ARTISAN")).toBe("Artisan");
 });
 
 test("the admin role reads as Admin", () => {
@@ -77,10 +86,11 @@ test("the longest guard wins, so a professor reaches the roster but not the hub"
 test("each role sees exactly the admin destinations it is entitled to", () => {
   const expected: Record<UserRole, string[]> = {
     STUDENT: [],
+    ARTISAN: [],
     RESEARCHER: [],
-    PROFESSOR: ["/admin/access", "/admin/users"],
-    ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/usage"],
-    MASTER_ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/keys", "/admin/routing", "/admin/usage"]
+    PROFESSOR: ["/admin/access", "/admin/users", "/admin/testimony"],
+    ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/testimony", "/admin/usage"],
+    MASTER_ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/testimony", "/admin/keys", "/admin/routing", "/admin/usage"]
   };
   for (const role of LADDER) {
     const visible = ADMIN_NAV_HREFS.filter((href) => canAccessRoute(person(role), href));
@@ -98,10 +108,11 @@ test("every admin nav destination is shown by its own route guard", () => {
 });
 
 test("roles are assigned only below one's own, and the master admin assigns Admin", () => {
-  expect(assignableRoles(person("PROFESSOR"))).toEqual(["RESEARCHER", "STUDENT"]);
-  expect(assignableRoles(person("ADMIN"))).toEqual(["PROFESSOR", "RESEARCHER", "STUDENT"]);
+  expect(assignableRoles(person("PROFESSOR"))).toEqual(["RESEARCHER", "ARTISAN", "STUDENT"]);
+  expect(assignableRoles(person("ADMIN"))).toEqual(["PROFESSOR", "RESEARCHER", "ARTISAN", "STUDENT"]);
   expect(assignableRoles(person("RESEARCHER"))).toEqual([]);
-  expect(assignableRoles(person("MASTER_ADMIN"))).toEqual(["MASTER_ADMIN", "ADMIN", "PROFESSOR", "RESEARCHER", "STUDENT"]);
+  expect(assignableRoles(person("ARTISAN"))).toEqual([]);
+  expect(assignableRoles(person("MASTER_ADMIN"))).toEqual(["MASTER_ADMIN", "ADMIN", "PROFESSOR", "RESEARCHER", "ARTISAN", "STUDENT"]);
 });
 
 test("nobody manages a peer, and another master admin is protected", () => {
@@ -127,6 +138,25 @@ test("an admin is offered every action on a professor and none on an admin or th
     reactivate: false,
     resetTwoStep: false
   });
+});
+
+test("guardian consent is confirmed from Professor up, only for a student still without it", () => {
+  const missing = { ...person("STUDENT", "s"), guardianConsent: "NOT_CONFIRMED" as const };
+  expect(canConfirmGuardianConsent(person("PROFESSOR"))).toBe(true);
+  expect(canConfirmGuardianConsent(person("RESEARCHER"))).toBe(false);
+  expect(offersGuardianConfirmation(person("PROFESSOR", "p"), missing)).toBe(true);
+  expect(offersGuardianConfirmation(person("RESEARCHER", "r"), missing)).toBe(false);
+  expect(offersGuardianConfirmation(person("PROFESSOR", "p"), { ...missing, guardianConsent: "CONFIRMED" })).toBe(false);
+  expect(offersGuardianConfirmation(person("PROFESSOR", "p"), person("STUDENT", "adult-or-unknown"))).toBe(false);
+});
+
+test("every nav destination is a page that exists", () => {
+  const literal = [...NAV_SOURCE.matchAll(/href: "(\/[^"?]*)"/g)].map((match) => match[1]);
+  expect(literal.length).toBeGreaterThan(0);
+  for (const href of literal) {
+    const pages = ["(protected)", "(reading)"].map((group) => join(__dirname, "..", "app", group, ...href.split("/").filter(Boolean), "page.tsx"));
+    expect(pages.some((page) => existsSync(page)), href).toBe(true);
+  }
 });
 
 test("roster actions follow the entry's role and the viewer's rank", () => {

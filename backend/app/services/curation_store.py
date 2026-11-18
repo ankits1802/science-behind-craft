@@ -9,7 +9,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
     ClaimSource,
-    Compound,
     Concept,
     CraftGiRecord,
     CraftLocation,
@@ -30,10 +29,11 @@ from app.models import (
     TermCraft,
 )
 
+from .curated_compounds import linked_compounds
 from .curated_index import CuratedPage
 from .curation_claims import craft_curated_claims
 from .curation_plan import CurationPlan, PlanParts
-from .curation_writes import delete_rows, insert_missing, keep_only, sync_rows, update_rows
+from .curation_writes import delete_rows, insert_missing, keep_only, stored_values, sync_rows, update_rows
 
 __all__ = [
     "source_aliases",
@@ -85,7 +85,8 @@ async def write_structure(
     changed = {"locations": await _locations(session, plan, previous)}
     changed["processes"] = await sync_rows(session, Process, plan.part("processes"))
     changed["stages"] = await _stages(session, plan)
-    changed["materials"] = await sync_rows(session, Material, await _with_compounds(session, plan))
+    materials, changed["compounds"] = await _with_compounds(session, plan)
+    changed["materials"] = await sync_rows(session, Material, materials)
     stage_ids = [row["id"] for row in plan.part("stages")]
     reaction_ids = [row["id"] for row in plan.part("reactions")]
     changed["stageMaterials"] = await _synced(
@@ -144,22 +145,12 @@ async def _stages(session: AsyncSession, plan: CurationPlan) -> int:
     return removed + await sync_rows(session, ProcessStage, rows)
 
 
-async def _with_compounds(session: AsyncSession, plan: CurationPlan) -> list[dict[str, Any]]:
-    cids = {item.material_id: item.pubchem_cid for item in plan.index.materials if item.pubchem_cid}
-    if not cids:
-        return list(plan.part("materials"))
-    found = dict(
-        (
-            await session.execute(
-                select(Compound.pubchemCid, Compound.id).where(
-                    Compound.pubchemCid.in_(list(set(cids.values())))
-                )
-            )
-        )
-        .tuples()
-        .all()
-    )
-    return [{**row, "compoundId": found.get(cids.get(row["id"]))} for row in plan.part("materials")]
+async def _with_compounds(session: AsyncSession, plan: CurationPlan) -> tuple[list[dict[str, Any]], int]:
+    if not any(item.pubchem_cid for item in plan.index.materials):
+        return list(plan.part("materials")), 0
+    linked = await linked_compounds(session, plan.index.materials, retrieved_at=plan.dossier.curated_at)
+    rows = [{**row, "compoundId": linked.by_material.get(row["id"])} for row in plan.part("materials")]
+    return rows, linked.written
 
 
 async def write_records(
@@ -191,12 +182,27 @@ async def write_media_and_terms(
     marked: Select[tuple[uuid.UUID]],
 ) -> dict[str, int]:
     media = {row["id"] for row in plan.part("media")} | previous_media
+    inserted = await insert_missing(session, MediaRef, plan.part("media"))
     return {
-        "media": await insert_missing(session, MediaRef, plan.part("media")),
+        "media": inserted + await _filled_sizes(session, plan.part("media")),
         "mediaClaims": await _media_claims(session, plan.part("mediaClaims"), media, marked),
         "terms": await insert_missing(session, Term, plan.part("terms")),
         "termLinks": await insert_missing(session, TermConcept, plan.part("termConcepts")),
     }
+
+
+async def _filled_sizes(session: AsyncSession, rows: Sequence[dict[str, Any]]) -> int:
+    sized = {row["id"]: row for row in rows if row["width"] is not None}
+    if not sized:
+        return 0
+    stored = await stored_values(session, MediaRef, list(sized), ["width"])
+    fills = [
+        {"id": media_id, "width": row["width"], "height": row["height"]}
+        for media_id, row in sized.items()
+        if media_id in stored and stored[media_id]["width"] is None
+    ]
+    await update_rows(session, MediaRef, fills)
+    return len(fills)
 
 
 async def _media_claims(

@@ -7,7 +7,7 @@ from app.core.errors import InvalidInput
 from app.curation.check_file import CheckFile
 from app.curation.checks import default_context
 from app.curation.dossier import Dossier
-from app.curation.files import checked_dossier
+from app.curation.files import CATEGORIES_DIR_NAME, CURATION_DIR, checked_dossier
 from app.models import MediaRef as MediaRefRow
 from app.research.category_page import CategoryList, CategoryPage
 from app.research.citations import SourceRef
@@ -22,7 +22,12 @@ from .curation_preview import plan_views
 from .knowledge_view import source_ref
 from .media_ref_store import stored_media_ref
 
-__all__ = ["category_list_preview", "category_page_preview", "preview_category_records"]
+__all__ = [
+    "category_dossier_records",
+    "category_list_preview",
+    "category_page_preview",
+    "preview_category_records",
+]
 
 
 def category_page_preview(slug: str, *, dossier: Path | None = None) -> CategoryPage:
@@ -44,6 +49,15 @@ def category_list_preview(dossiers: Sequence[Path] = ()) -> CategoryList:
         for category in register_categories()
     ]
     return category_list(records)
+
+
+def category_dossier_records(slug: str, *, directory: Path = CURATION_DIR) -> CategoryPageRecords:
+    category = _registered(slug)
+    path = directory / CATEGORIES_DIR_NAME / f"{slug}.json"
+    if not path.is_file():
+        raise InvalidInput(f"{slug} has no category dossier in {CATEGORIES_DIR_NAME}/")
+    dossier, check = _checked(path)
+    return preview_category_records(dossier, check, category)
 
 
 def preview_category_records(

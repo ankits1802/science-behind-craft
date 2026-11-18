@@ -56,6 +56,7 @@ def ask(key: str = "media:00000000-0000-4000-8000-000000000001", **changes: obje
     return MediaJobRequest.model_validate(body)
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_options_list_kinds_with_units_left_and_stages_with_two_claims() -> None:
     options = await media_options(deps(store()), learner(), "Kutch-Ajrakh")
     assert [(k.kind, k.remaining_today) for k in options.kinds] == [("IMAGE", 5)]
@@ -64,6 +65,22 @@ async def test_options_list_kinds_with_units_left_and_stages_with_two_claims() -
     assert [(k.kind, k.remaining_today) for k in researcher.kinds] == [("IMAGE", 30), ("VIDEO", 5)]
     admin = await media_options(deps(store()), learner("MASTER_ADMIN"), "Kutch-Ajrakh")
     assert [k.remaining_today for k in admin.kinds] == [None, None]
+
+
+async def test_by_default_every_kind_is_offered_with_no_count_of_what_is_left() -> None:
+    student = await media_options(deps(store()), learner(), "Kutch-Ajrakh")
+    researcher = await media_options(deps(store()), learner("RESEARCHER"), "Kutch-Ajrakh")
+    assert [(k.kind, k.remaining_today) for k in student.kinds] == [("IMAGE", None)]
+    assert [(k.kind, k.remaining_today) for k in researcher.kinds] == [("IMAGE", None), ("VIDEO", None)]
+
+
+async def test_by_default_no_daily_count_refuses_a_job() -> None:
+    memory = store()
+    for n in range(12):
+        view, created = await submit_job(deps(memory), learner(), ask(f"media:key-number-{n:08d}"))
+        memory.jobs[view.id] = replace(memory.jobs[view.id], status="SUCCEEDED")
+        assert created
+    assert len(memory.jobs) == 12
 
 
 async def test_options_offer_nothing_when_media_cannot_be_made() -> None:
@@ -120,6 +137,7 @@ async def test_refusals_follow_the_contract_order() -> None:
     assert (await submit_job(deps(hidden), learner("PROFESSOR"), ask()))[1]
 
 
+@pytest.mark.usefixtures("allowances_an_owner_might_set")
 async def test_a_spent_allowance_refuses_until_midnight_ist() -> None:
     memory = store()
     for n in range(5):

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft, CircleAlert } from "lucide-react";
 
-import { BrandMark } from "@/components/BrandMark";
+import { BrandLockup } from "@/components/BrandMark";
+import { Field, TextInput } from "@/components/FormControls";
 import { Button } from "@/components/ui/button";
-import { GLASS_PANEL, GlassSurface } from "@/components/ui/GlassSurface";
 import { ApiError } from "@/lib/api";
 import { isUnreachable, serverAskedForTime } from "@/lib/failureTriage";
 import { requestForgotPasswordLink, retryAfterWords } from "@/lib/signIn";
@@ -49,17 +49,12 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-bg-0 px-6 py-6 md:px-10">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 grad-mesh opacity-60" />
-        <div className="absolute -left-16 top-12 h-72 w-72 rounded-full bg-purple-300/30 blur-3xl" />
-        <div className="absolute -right-12 bottom-8 h-80 w-80 rounded-full bg-amber-500/15 blur-3xl" />
-      </div>
-      <GlassSurface options={GLASS_PANEL} className="glass-card relative z-10 w-full max-w-md rounded-xl p-6 shadow-lg md:p-8">
+    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-ground px-6 py-6 md:px-10">
+      <div className="relative z-10 w-full max-w-md rounded-card border border-rule bg-raised p-6 md:p-8">
         <div className="mb-5 flex flex-col items-center gap-2 text-center">
-          <BrandMark className="h-12 w-12 rounded-xl shadow-sm" />
-          <h1 className="font-display text-2xl font-bold text-ink-900">Forgot your password?</h1>
-          <p className="text-sm leading-6 text-ink-500">
+          <BrandLockup compact />
+          <h1 className="mt-2 font-headline text-h3 text-ink-1">Forgot your password?</h1>
+          <p className="font-ui text-ui font-normal text-ink-2">
             Enter the email address you sign in with. If it belongs to an account that uses a password, we will email
             it a link to choose a new one. The link works once and lasts 2 hours.
           </p>
@@ -69,64 +64,58 @@ export default function ForgotPasswordPage() {
           <div
             role="alert"
             aria-live="assertive"
-            className={error ? "rounded-md border border-red-200 bg-error-100 px-3 py-2 text-sm text-error-600" : "sr-only"}
+            className={error ? "flex items-start gap-2 rounded-card bg-error-wash px-3 py-2 font-ui text-ui text-error" : "sr-only"}
           >
+            {error ? <CircleAlert aria-hidden className="mt-0.5 h-4 w-4 shrink-0" /> : null}
             {error ?? ""}
           </div>
           <p
             role="status"
             aria-live="polite"
-            className={sent ? "rounded-md border border-line-200 bg-surface-50 px-3 py-2 text-sm leading-6 text-ink-700" : "sr-only"}
+            className={sent ? "rounded-card bg-success-wash px-3 py-2 font-ui text-ui font-normal text-ink-1" : "sr-only"}
           >
             {sent ?? ""}
           </p>
 
-          <div className="grid gap-2">
-            <label htmlFor="forgot-email" className="text-sm font-medium text-ink-900">
-              Email address
-            </label>
-            <div className="relative">
-              <Mail aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-              <input
-                ref={emailRef}
-                id="forgot-email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                autoCapitalize="none"
-                autoCorrect="off"
-                spellCheck={false}
-                inputMode="email"
-                enterKeyHint="send"
-                maxLength={320}
-                disabled={pending}
-                placeholder="you@example.com"
-                className="field-input h-[52px] pl-10"
-              />
-            </div>
-          </div>
+          <Field label="Email address">
+            <TextInput
+              ref={emailRef}
+              id="forgot-email"
+              name="email"
+              type="email"
+              autoComplete="username"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              inputMode="email"
+              enterKeyHint="send"
+              maxLength={320}
+              disabled={pending}
+              placeholder="you@example.com"
+            />
+          </Field>
 
-          <Button type="submit" className="w-full font-display font-bold" size="auth" disabled={pending}>
-            {pending ? "Sending…" : "Email me a link"}
+          <Button type="submit" variant="primary" className="w-full" busy={pending} busyLabel="Sending" disabled={pending}>
+            Email me a link
           </Button>
         </form>
 
-        <p className="mt-5 text-xs leading-5 text-ink-500">
+        <p className="mt-5 font-ui text-caption text-ink-3">
           If two-step verification is on for your account, you will still need your authenticator app to sign in
           afterwards.
         </p>
-        <p className="mt-2 text-xs leading-5 text-ink-500">
+        <p className="mt-2 font-ui text-caption text-ink-3">
           No email? Ask an administrator — they can make you a link. Nobody here can see your password, and nobody will
           ever ask you for it.
         </p>
 
-        <p className="mt-5 text-sm">
-          <Link href="/login" className="inline-flex items-center gap-1.5 font-medium text-purple-700 dark:text-purple-300 hover:underline">
-            <ArrowLeft aria-hidden className="h-4 w-4 shrink-0" />
+        <p className="mt-5 font-ui text-ui">
+          <Link href="/login" className="kv-link inline-flex items-center gap-1.5">
+            <ArrowLeft aria-hidden className="h-4 w-4 shrink-0 rtl:rotate-180" />
             Back to sign in
           </Link>
         </p>
-      </GlassSurface>
+      </div>
     </main>
   );
 }

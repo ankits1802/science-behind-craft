@@ -9,9 +9,9 @@ from app.research.category_page import contract_text
 from app.research.craft_page import craft_page_text
 from app.services.category_import import import_categories
 from app.services.category_preview import category_list_preview, category_page_preview
+from app.services.chapter_preview import chapter_preview
 from app.services.craft_page_preview import register_page
 from app.services.curation_import import import_curation
-from app.services.curation_preview import dossier_preview
 
 
 async def run() -> dict[str, Any]:
@@ -24,14 +24,18 @@ async def run() -> dict[str, Any]:
         await dispose_engine()
 
 
-def preview(craft_slug: str, out: Path) -> dict[str, Any]:
-    page = dossier_preview(craft_slug)
+def preview(
+    craft_slug: str, out: Path, *, family: str | None = None, inputs: Path | None = None
+) -> dict[str, Any]:
+    page = chapter_preview(craft_slug, family=family, inputs=inputs)
     out.write_text(craft_page_text(page), encoding="utf-8", newline="\n")
     return {"preview": craft_slug, "out": str(out), "claims": len(page.claims)}
 
 
-def register_preview(craft_slug: str, dossiers: list[str], out: Path) -> dict[str, Any]:
-    page = register_page(craft_slug, dossiers=dossiers)
+def register_preview(
+    craft_slug: str, dossiers: list[str], out: Path, *, family: str | None = None
+) -> dict[str, Any]:
+    page = register_page(craft_slug, dossiers=dossiers, family=family)
     out.write_text(craft_page_text(page), encoding="utf-8", newline="\n")
     return {"registerPreview": craft_slug, "out": str(out), "relatives": len(page.same_family)}
 
@@ -75,6 +79,12 @@ def _parser() -> argparse.ArgumentParser:
         default=[],
         help="a craft dossier the register preview holds beside the craft",
     )
+    parser.add_argument(
+        "--family", metavar="CATEGORY_SLUG", help="a family dossier whose science a craft preview borrows"
+    )
+    parser.add_argument(
+        "--inputs", type=Path, help="stored rows the craft preview adds: geo values, conformers, explainers"
+    )
     parser.add_argument("--out", type=Path, help="where a preview writes its JSON")
     return parser
 
@@ -86,10 +96,11 @@ def main(argv: list[str] | None = None) -> int:
     if previewing and args.out is None:
         parser.error("a preview needs --out")
     if args.preview:
-        print(json.dumps(preview(args.preview, args.out)))
+        print(json.dumps(preview(args.preview, args.out, family=args.family, inputs=args.inputs)))
         return 0
     if args.register_preview:
-        print(json.dumps(register_preview(args.register_preview, args.with_dossier, args.out)))
+        found = register_preview(args.register_preview, args.with_dossier, args.out, family=args.family)
+        print(json.dumps(found))
         return 0
     if args.category_page:
         print(json.dumps(category_preview(args.category_page, args.dossier, args.out)))

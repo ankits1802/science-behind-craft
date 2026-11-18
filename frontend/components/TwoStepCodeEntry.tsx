@@ -82,7 +82,7 @@ export const TwoStepCodeEntry = forwardRef<
             aria-describedby={`${idPrefix}-recovery-hint`}
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            className={`field-input max-w-64 font-display text-lg tracking-[0.15em] ${error ? "border-error-600" : ""}`}
+            className="field-input max-w-64 font-code tracking-[0.15em]"
           />
           <p id={`${idPrefix}-recovery-hint`} className="text-xs leading-5 text-ink-500">
             One of the recovery codes you saved when you turned this on. Each one works once.

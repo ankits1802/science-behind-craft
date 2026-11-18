@@ -67,7 +67,7 @@ export function AskBox({
           }
         }}
         placeholder="Why does alum fix madder on cotton?"
-        className="min-h-16 w-full resize-none bg-transparent px-1 text-[17px] leading-relaxed text-ink-900 outline-hidden placeholder:text-ink-300 md:text-xl"
+        className="min-h-16 w-full resize-none bg-transparent px-1 text-[17px] leading-relaxed text-ink-900 placeholder:text-ink-300 md:text-xl"
       />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <DictationControl dictation={dictation} language={language} onStart={() => dictation.start(value)} />

@@ -22,6 +22,7 @@ from .turns import TurnAsk, TurnTools, spoken_turn
 __all__ = ["CONVERSATION_ID_MAX_CHARS", "AgentCall", "agent_reply", "authorised_session", "last_question"]
 
 CONVERSATION_ID_MAX_CHARS = 120
+ASK_PURPOSE = "ASK"
 Clock = Callable[[], datetime]
 
 
@@ -42,6 +43,7 @@ async def authorised_session(
     record = await store.by_conversation(conversation_id)
     if (
         record is None
+        or record.purpose != ASK_PURPOSE
         or record.transport != "AGENT"
         or not record.live_at(now)
         or record.turn_count > MAX_TURNS

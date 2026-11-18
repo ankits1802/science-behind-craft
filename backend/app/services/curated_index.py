@@ -14,14 +14,18 @@ from app.research.vocabulary import Discipline, MaterialKind, MaterialRole, Reac
 __all__ = [
     "CURATED_PAGE_SCHEMA_VERSION",
     "CuratedPage",
+    "IndexAfter",
     "IndexCommunity",
     "IndexConflict",
     "IndexEnvironment",
     "IndexFact",
+    "IndexFocal",
     "IndexMaterial",
+    "IndexNativeName",
     "IndexOverview",
     "IndexPicture",
     "IndexPlace",
+    "IndexPlacement",
     "IndexQuestion",
     "IndexReaction",
     "IndexSearch",
@@ -78,6 +82,12 @@ class IndexCommunity(ContractModel):
     claim_ids: ClaimIds
 
 
+class IndexAfter(ContractModel):
+    text: str
+    colours: list[str] = Field(default_factory=list)
+    claim_id: uuid.UUID
+
+
 class IndexStage(ContractModel):
     key: str
     stage_id: uuid.UUID
@@ -88,6 +98,8 @@ class IndexStage(ContractModel):
     duration: IndexTiming | None
     season: IndexTiming | None
     claim_ids: ClaimIds
+    after: IndexAfter | None = None
+    why_claim_id: uuid.UUID | None = None
 
 
 class IndexMaterial(ContractModel):
@@ -139,12 +151,38 @@ class IndexTerm(ContractModel):
     claim_ids: ClaimIds
 
 
+class IndexPlacement(ContractModel):
+    chapter: str
+    role: str
+    stage_key: str | None = None
+    material_key: str | None = None
+
+
+class IndexFocal(ContractModel):
+    x: float = Field(ge=0, le=1)
+    y: float = Field(ge=0, le=1)
+    width: float = Field(gt=0, le=1)
+    height: float = Field(gt=0, le=1)
+
+
 class IndexPicture(ContractModel):
     key: str
     media_ref_id: uuid.UUID
     caption: str
     stage_key: str | None
     claim_ids: ClaimIds
+    placement: IndexPlacement | None = None
+    focal: IndexFocal | None = None
+    width: int | None = None
+    height: int | None = None
+    stand_in: str | None = None
+
+
+class IndexNativeName(ContractModel):
+    text: str
+    language: str
+    script: str | None
+    claim_id: uuid.UUID
 
 
 class IndexEnvironment(ContractModel):
@@ -209,6 +247,8 @@ class CuratedPage(ContractModel):
     glossary: list[IndexTerm]
     pictures: list[IndexPicture]
     environment: list[IndexEnvironment]
+    native_names: list[IndexNativeName] = Field(default_factory=list)
+    claim_order: ClaimIds = Field(default_factory=list)
 
     def concept_kinds(self) -> dict[uuid.UUID, str]:
         kinds = dict.fromkeys(self.craft_concepts.values(), "CRAFT")

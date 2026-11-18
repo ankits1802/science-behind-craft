@@ -13,7 +13,7 @@ from app.core.http_cache import (
     not_modified,
     revalidation_headers,
 )
-from app.core.rate_limit import public_read_attempt, retry_after_value
+from app.core.rate_limit import public_asset_attempt, public_read_attempt, retry_after_value
 from app.core.roles import LOWEST_ROLE
 from app.models import User
 from app.research.retrieval import chunk_acls_for
@@ -22,6 +22,7 @@ __all__ = [
     "READER_VARY",
     "THROTTLED_DETAIL",
     "cached_read",
+    "public_asset_reader",
     "public_reader",
     "read_headers",
     "reader_cache",
@@ -39,11 +40,16 @@ async def public_reader(
 ) -> User | None:
     if user is not None:
         return user
-    allowed, retry = public_read_attempt(connection)
-    if not allowed:
-        raise HTTPException(
-            status.HTTP_429_TOO_MANY_REQUESTS, THROTTLED_DETAIL, {"Retry-After": retry_after_value(retry)}
-        )
+    _refuse_when_spent(public_read_attempt(connection))
+    return None
+
+
+async def public_asset_reader(
+    connection: HTTPConnection, user: User | None = Depends(get_optional_user)
+) -> User | None:
+    if user is not None:
+        return user
+    _refuse_when_spent(public_asset_attempt(connection))
     return None
 
 
@@ -52,7 +58,7 @@ def reading_role(reader: User | None) -> User | str:
 
 
 def reading_acls(reader: User | None) -> tuple[str, ...]:
-    return chunk_acls_for(reading_role(reader))
+    return chunk_acls_for(reader)
 
 
 def reader_cache(reader: User | None) -> str:
@@ -79,3 +85,11 @@ def cached_read(
         return unchanged
     response.headers.update(read_headers(reader, stamp))
     return body
+
+
+def _refuse_when_spent(attempt: tuple[bool, float]) -> None:
+    allowed, retry = attempt
+    if not allowed:
+        raise HTTPException(
+            status.HTTP_429_TOO_MANY_REQUESTS, THROTTLED_DETAIL, {"Retry-After": retry_after_value(retry)}
+        )

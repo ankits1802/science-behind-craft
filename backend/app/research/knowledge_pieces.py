@@ -18,6 +18,7 @@ from .blocks_play import SimulationBlock
 from .depth import depth_at_least
 from .explainer import BUILT_BLOCK_KINDS, Block, with_payload_sentences
 from .piece_topics import FACET_NAMESPACES
+from .reading_style import STYLED_PIECE_KINDS, ReadingStyle
 from .subject_keys import TopicKey, topic_key
 from .vocabulary import CANONICAL_LANGUAGE, AnswerLanguage, BlockKind, Depth, Discipline
 
@@ -44,14 +45,25 @@ __all__ = [
     "region_topic",
     "rests_on",
     "reuse_refusal",
+    "shows_alike",
 ]
 
 PIECE_SCHEMA_VERSION = 1
 PIECE_STALE_CHANGES = ("RETRACTED", "LEVEL_CHANGED", "HIDDEN", "TEXT_CHANGED")
 PLACEMENT_FIELDS = frozenset({"id", "reuse"})
-REUSE_REFUSALS = ("CRAFT", "FACET", "TOPIC", "DEPTH", "STALE", "SUPERSEDED", "HIDDEN", "CLAIM_NOT_VISIBLE")
+REUSE_REFUSALS = (
+    "CRAFT",
+    "FACET",
+    "TOPIC",
+    "DEPTH",
+    "STYLE",
+    "STALE",
+    "SUPERSEDED",
+    "HIDDEN",
+    "CLAIM_NOT_VISIBLE",
+)
 PIECE_SENTENCE_PREFIX_CHARS = 12
-UNSTORED_BLOCK_KINDS = frozenset({"quiz", "compare", "concept_graph", "climate_risk"})
+UNSTORED_BLOCK_KINDS = frozenset({"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice"})
 BASIN_SUBJECT_PREFIX = "basin"
 DISTRICT_SUBJECT_PREFIX = "lgd"
 SIMULATION_NAMESPACE = "concept"
@@ -79,9 +91,12 @@ class KnowledgePiece(ContractModel):
     stale_since: AwareDatetime | None
     superseded_by_id: uuid.UUID | None
     hidden_at: AwareDatetime | None
+    reading_style: ReadingStyle | None = None
 
     @model_validator(mode="after")
     def _payload_and_what_it_rests_on_agree(self) -> Self:
+        if self.reading_style is not None and self.kind not in STYLED_PIECE_KINDS:
+            raise ValueError(f"piece {self.id} is a {self.kind} block, which every reading style shares")
         if self.language != CANONICAL_LANGUAGE:
             raise ValueError(
                 f"piece {self.id} is stored in {CANONICAL_LANGUAGE}; translations are cached apart"
@@ -109,12 +124,17 @@ class ReuseAsk(ContractModel):
     facet: Discipline
     topic_key: TopicKey
     depth: Depth
+    reading_style: ReadingStyle | None = None
 
 
 def piece_content_hash(block: BlockBase) -> str:
     plain = block.model_dump(mode="json", by_alias=True, exclude=PLACEMENT_FIELDS)
     canonical = json.dumps(plain, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def shows_alike(block: BlockBase, other: BlockBase) -> bool:
+    return _shown_content(block) == _shown_content(other)
 
 
 def rests_on(piece: KnowledgePiece, claim_ids: Collection[uuid.UUID]) -> bool:
@@ -129,6 +149,7 @@ def reuse_refusal(
         ("FACET", piece.facet == ask.facet),
         ("TOPIC", piece.topic_key == ask.topic_key),
         ("DEPTH", depth_at_least(piece.depth, ask.depth)),
+        ("STYLE", piece.kind not in STYLED_PIECE_KINDS or piece.reading_style == ask.reading_style),
         ("STALE", piece.stale_since is None),
         ("SUPERSEDED", piece.superseded_by_id is None),
         ("HIDDEN", piece.hidden_at is None),
@@ -152,6 +173,7 @@ def knowledge_piece(
     piece_id: uuid.UUID,
     answer_id: uuid.UUID | None,
     created_at: datetime,
+    reading_style: ReadingStyle | None = None,
 ) -> KnowledgePiece:
     payload = _piece_sentence_ids(block.model_dump(mode="json", by_alias=True) | {"reuse": None}, piece_id)
     stored = BLOCKS.validate_python(payload)
@@ -173,6 +195,7 @@ def knowledge_piece(
         stale_since=None,
         superseded_by_id=None,
         hidden_at=None,
+        reading_style=reading_style if stored.kind in STYLED_PIECE_KINDS else None,
     )
 
 
@@ -213,3 +236,8 @@ def _piece_sentence_ids(payload: dict[str, Any], piece_id: uuid.UUID) -> dict[st
     prefix = f"p{piece_id.hex[:PIECE_SENTENCE_PREFIX_CHARS]}"
     counter = itertools.count(1)
     return with_payload_sentences(payload, lambda sentence: {**sentence, "id": f"{prefix}.{next(counter)}"})
+
+
+def _shown_content(block: BlockBase) -> dict[str, Any]:
+    plain = block.model_dump(mode="json", by_alias=True, exclude=PLACEMENT_FIELDS)
+    return with_payload_sentences(plain, lambda sentence: {**sentence, "id": "", "terms": []})

@@ -230,10 +230,14 @@ class ConsentRecord(Base):
     kind: Mapped[str] = mapped_column(e.ConsentKind, nullable=False)
     noticeVersion: Mapped[str] = mapped_column(String(40), nullable=False)
     acceptedAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    recordedById: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("User.id", ondelete="SET NULL")
+    )
+    withdrawnAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     createdAt: Mapped[datetime] = created_at()
     updatedAt: Mapped[datetime] = updated_at()
 
-    __table_args__ = (Index(None, "userId", "kind"),)
+    __table_args__ = (Index(None, "userId", "kind"), Index(None, "recordedById"))
 
 
 class DataRequest(Base):

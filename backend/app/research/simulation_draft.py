@@ -9,19 +9,33 @@ from datetime import datetime
 from pydantic import Field, ValidationError
 
 from .base import ContractModel
-from .blocks_play import SIMULATION_VALUES_MAX, SimulationBlock, SimulationValue
+from .blocks_play import (
+    SIMULATION_GROUNDS_MAX,
+    SIMULATION_REACTIONS_MAX,
+    SIMULATION_VALUES_MAX,
+    SimulationBlock,
+    SimulationReaction,
+    SimulationValue,
+    simulation_data,
+)
 from .citations import Citation
 from .quotes import normalise_quote_text, numbers_in, quote_occurs
 from .sandbox import SANDBOX_MAX_BYTES, SandboxProblem, sandbox_problems
 
 __all__ = [
     "DRAFT_RULES",
+    "NO_GROUNDING",
     "OFFER_REF_PREFIX",
+    "REACTION_REF_PREFIX",
     "SIMULATION_HTML_MAX_CHARS",
     "STATED_MAX_CHARS",
     "STATED_WORDS_AROUND",
+    "STATEMENT_REF_PREFIX",
     "DraftCheck",
     "DraftValue",
+    "Grounding",
+    "OfferedReaction",
+    "OfferedStatement",
     "OfferedValue",
     "SimulationDraft",
     "checked_draft",
@@ -30,15 +44,17 @@ __all__ = [
     "stated_figures",
 ]
 
-DRAFT_RULES = ("VALUE", "BLOCK")
+DRAFT_RULES = ("VALUE", "GROUND", "BLOCK")
 OFFER_REF_PREFIX = "v"
+STATEMENT_REF_PREFIX = "s"
+REACTION_REF_PREFIX = "r"
 STATED_WORDS_AROUND = 3
 STATED_MAX_CHARS = 200
 CLAUSE_ENDS = (".", ",", ";", ":", "!", "?")
 CLOSING_MARKS = "\"')]}"
 STATED_EDGES = "\"'()[]{},;:.!? "
 DRAFT_TEXT_MAX_CHARS = 200
-SIMULATION_HTML_MAX_CHARS = 12000
+SIMULATION_HTML_MAX_CHARS = 40000
 
 
 @dataclass(frozen=True)
@@ -54,6 +70,28 @@ class OfferedValue:
         return uuid.UUID(self.citation.claim_id)
 
 
+@dataclass(frozen=True)
+class OfferedStatement:
+    ref: str
+    text: str
+    citations: tuple[Citation, ...]
+
+
+@dataclass(frozen=True)
+class OfferedReaction:
+    ref: str
+    reaction: SimulationReaction
+
+
+@dataclass(frozen=True)
+class Grounding:
+    statements: tuple[OfferedStatement, ...] = ()
+    reactions: tuple[OfferedReaction, ...] = ()
+
+
+NO_GROUNDING = Grounding()
+
+
 class DraftValue(ContractModel):
     ref: str = Field(min_length=1, max_length=DRAFT_TEXT_MAX_CHARS)
     key: str = Field(min_length=1, max_length=DRAFT_TEXT_MAX_CHARS)
@@ -67,6 +105,8 @@ class SimulationDraft(ContractModel):
     title: str = Field(max_length=DRAFT_TEXT_MAX_CHARS)
     values: list[DraftValue] = Field(max_length=SIMULATION_VALUES_MAX)
     html: str = Field(max_length=SANDBOX_MAX_BYTES)
+    grounds: list[str] = Field(default_factory=list, max_length=SIMULATION_GROUNDS_MAX)
+    reactions: list[str] = Field(default_factory=list, max_length=SIMULATION_REACTIONS_MAX)
 
 
 @dataclass(frozen=True)
@@ -114,31 +154,40 @@ def checked_draft(
     block_id: str,
     model: str,
     created_at: datetime,
+    grounding: Grounding = NO_GROUNDING,
 ) -> DraftCheck:
     if len(draft.html) > SIMULATION_HTML_MAX_CHARS:
         detail = f"{len(draft.html)} characters, more than {SIMULATION_HTML_MAX_CHARS}"
         return DraftCheck(None, (SandboxProblem("SIZE", detail),))
     values, problems = _draft_values(draft, offers)
+    grounds, reactions, missing = _draft_grounds(draft, grounding)
+    problems += missing
+    if not (values or grounds or reactions):
+        problems.append(SandboxProblem("VALUE", "no offered value, statement or reaction is used"))
     if problems:
         return DraftCheck(None, tuple(problems))
-    sandboxed = sandbox_problems(draft.html, data_object(values))
+    sandboxed = sandbox_problems(draft.html, simulation_data(values, reactions))
     if sandboxed:
         return DraftCheck(None, tuple(sandboxed))
+    block = {"id": block_id, "model": model, "created_at": created_at, "values": values}
+    return _drafted_block(draft, block | {"grounds": grounds, "reactions": reactions})
+
+
+def _drafted_block(draft: SimulationDraft, fields: Mapping[str, object]) -> DraftCheck:
     try:
-        block = SimulationBlock(
-            id=block_id,
-            kind="simulation",
-            version=1,
-            reuse=None,
-            concept=draft.concept,
-            title=draft.title,
-            model=model,
-            created_at=created_at,
-            html=draft.html,
-            html_sha256=hashlib.sha256(draft.html.encode("utf-8")).hexdigest(),
-            values=values,
-            datasets=[],
-            hidden=False,
+        block = SimulationBlock.model_validate(
+            {
+                **fields,
+                "kind": "simulation",
+                "version": 1,
+                "reuse": None,
+                "concept": draft.concept,
+                "title": draft.title,
+                "html": draft.html,
+                "html_sha256": hashlib.sha256(draft.html.encode("utf-8")).hexdigest(),
+                "datasets": [],
+                "hidden": False,
+            }
         )
     except ValidationError as refused:
         return DraftCheck(None, tuple(SandboxProblem("BLOCK", message) for message in _messages(refused)))
@@ -153,8 +202,6 @@ def _draft_values(
     problems = [
         SandboxProblem("VALUE", f"{ref} is used twice") for ref in sorted(set(refs)) if refs.count(ref) > 1
     ]
-    if not refs:
-        problems.append(SandboxProblem("VALUE", "no offered value is used"))
     values: list[SimulationValue] = []
     for chosen in draft.values:
         offer = by_ref.get(chosen.ref)
@@ -166,6 +213,36 @@ def _draft_values(
         except ValueError as refused:
             problems += [SandboxProblem("VALUE", message) for message in _messages(refused)]
     return values, problems
+
+
+def _draft_grounds(
+    draft: SimulationDraft, grounding: Grounding
+) -> tuple[list[Citation], list[SimulationReaction], list[SandboxProblem]]:
+    statements = {statement.ref: statement for statement in grounding.statements}
+    reactions = {offered.ref: offered.reaction for offered in grounding.reactions}
+    problems = [
+        SandboxProblem("GROUND", f"{ref} is used twice")
+        for refs in (draft.grounds, draft.reactions)
+        for ref in sorted(set(refs))
+        if refs.count(ref) > 1
+    ]
+    problems += [
+        SandboxProblem("GROUND", f"{ref} is not an offered statement")
+        for ref in draft.grounds
+        if ref not in statements
+    ]
+    problems += [
+        SandboxProblem("GROUND", f"{ref} is not an offered reaction")
+        for ref in draft.reactions
+        if ref not in reactions
+    ]
+    cited = dict.fromkeys(
+        c for ref in dict.fromkeys(draft.grounds) if ref in statements for c in statements[ref].citations
+    )
+    if len(cited) > SIMULATION_GROUNDS_MAX:
+        problems.append(SandboxProblem("GROUND", f"more than {SIMULATION_GROUNDS_MAX} cited passages"))
+    played = [reactions[ref] for ref in dict.fromkeys(draft.reactions) if ref in reactions]
+    return list(cited), played, problems
 
 
 def _value(chosen: DraftValue, offer: OfferedValue) -> SimulationValue:

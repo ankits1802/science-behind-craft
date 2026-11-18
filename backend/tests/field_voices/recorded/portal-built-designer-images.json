@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 2,
+  "portal": "DESIGNER",
+  "generatedAt": "2026-11-18T23:00:00Z",
+  "stream": "images",
+  "view": "all",
+  "cursor": null,
+  "nextCursor": "eyJzIjoiaW1hZ2VzIiwidiI6ImFsbCIsInUiOiIyMDI2LTExLTE4VDAxOjAwOjAxLjAwMDAwM1oiLCJpIjoiZHItaW1nLWV2ZW50In0.e919875ce4d8529b1477b5e5d42f8133",
+  "hasMore": false,
+  "changes": [
+    {
+      "state": "LIVE",
+      "id": "dr-img-built",
+      "revision": "cc3397a98459b45892a38a8d56197c96",
+      "updatedAt": "2026-11-18T01:00:01.000001Z",
+      "takenAt": "2026-06-24T15:10:00+05:30",
+      "caption": "Third prototype after the indigo trial",
+      "artisanLinked": false,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "belongsTo": [
+        {
+          "kind": "DESIGN_STAGE",
+          "stage": {
+            "key": "PROTOTYPE_DEVELOPMENT",
+            "title": "Prototype Development"
+          },
+          "entity": {
+            "key": "prototype",
+            "label": "Prototypes"
+          },
+          "row": {
+            "id": "dr-row-built",
+            "label": "Indigo dabu table runner"
+          },
+          "field": {
+            "key": "prototypePhotos",
+            "label": "Prototype photographs"
+          },
+          "prototypeId": "dr-row-built"
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-built",
+        "code": "DW-RJ-0012",
+        "title": "Workshop_2026-06-18_Bagru-Jaipur_Hand-Block-Printing_DW-RJ-0012",
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "people": [
+        {
+          "id": "dr-art-built",
+          "kind": "ARTISAN",
+          "craft": {
+            "id": "dr-craft-bagru",
+            "slug": "Bagru-Hand-Block-Print",
+            "code": null,
+            "name": "Bagru Hand Block Print"
+          },
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [],
+          "mergedIds": []
+        },
+        {
+          "id": "dr-user-built",
+          "kind": "DESIGNER",
+          "craft": null,
+          "name": "Meera Demo",
+          "localName": null,
+          "yearsInCraft": null,
+          "area": null,
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "credits": [
+        {
+          "personId": "dr-art-built",
+          "as": "ARTISAN"
+        },
+        {
+          "personId": "dr-user-built",
+          "as": "DESIGNER"
+        }
+      ],
+      "permission": {
+        "statement": "Shown on KalaVigyan with the consent of the people pictured. Not openly licensed: ask the rights holder before any other use.",
+        "rightsHolder": "Design Workshop rights holder",
+        "licence": null
+      },
+      "scrubbing": {
+        "version": 2,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      },
+      "image": {
+        "mimeType": "image/jpeg",
+        "width": 2400,
+        "height": 1600,
+        "bytes": 812345,
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "url": "https://designrepo-media-626159998512.s3.dualstack.ap-south-1.amazonaws.com/field-voices/5555555555555555555555555555555555555555555555555555555555555555.jpg?response-content-disposition=inline%3B%20filename%3D%225555555555555555555555555555555555555555555555555555555555555555.jpg%22&response-content-type=image%2Fjpeg&X-Amz-Expires=900&X-Amz-Signature=recorded",
+        "expiresAt": "2026-11-18T23:10:00Z"
+      }
+    },
+    {
+      "state": "LIVE",
+      "id": "dr-img-portrait",
+      "revision": "aee340cd5c6eea70735345bcf18044aa",
+      "updatedAt": "2026-11-18T01:00:01.000002Z",
+      "takenAt": "2026-06-24T15:10:00+05:30",
+      "caption": "Ravi Demo in his courtyard at Bagru",
+      "artisanLinked": true,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "belongsTo": [
+        {
+          "kind": "ARTISAN",
+          "id": "dr-art-built",
+          "name": "Ravi Demo",
+          "localName": null
+        }
+      ],
+      "workshop": null,
+      "people": [
+        {
+          "id": "dr-art-built",
+          "kind": "ARTISAN",
+          "craft": {
+            "id": "dr-craft-bagru",
+            "slug": "Bagru-Hand-Block-Print",
+            "code": null,
+            "name": "Bagru Hand Block Print"
+          },
+          "name": "Ravi Demo",
+          "localName": null,
+          "yearsInCraft": 22,
+          "area": {
+            "state": "Rajasthan",
+            "district": "Jaipur",
+            "stateLgd": 8,
+            "districtLgd": 102
+          },
+          "samePersonIn": [],
+          "mergedIds": []
+        }
+      ],
+      "credits": [
+        {
+          "personId": "dr-art-built",
+          "as": "ARTISAN"
+        }
+      ],
+      "permission": {
+        "statement": "Shown on KalaVigyan with the consent of the people pictured. Not openly licensed: ask the rights holder before any other use.",
+        "rightsHolder": "Design Workshop rights holder",
+        "licence": null
+      },
+      "scrubbing": {
+        "version": 2,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      },
+      "image": {
+        "mimeType": "image/jpeg",
+        "width": 2400,
+        "height": 1600,
+        "bytes": 812345,
+        "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+        "url": "https://designrepo-media-626159998512.s3.dualstack.ap-south-1.amazonaws.com/field-voices/6666666666666666666666666666666666666666666666666666666666666666.jpg?response-content-disposition=inline%3B%20filename%3D%226666666666666666666666666666666666666666666666666666666666666666.jpg%22&response-content-type=image%2Fjpeg&X-Amz-Expires=900&X-Amz-Signature=recorded",
+        "expiresAt": "2026-11-18T23:10:00Z"
+      }
+    },
+    {
+      "state": "LIVE",
+      "id": "dr-img-event",
+      "revision": "6636a80788de1a15216dd499052f965e",
+      "updatedAt": "2026-11-18T01:00:01.000003Z",
+      "takenAt": "2026-06-24T15:10:00+05:30",
+      "caption": "Opening day at the Bagru community hall",
+      "artisanLinked": false,
+      "crafts": [
+        {
+          "id": "dr-craft-bagru",
+          "slug": "Bagru-Hand-Block-Print",
+          "code": null,
+          "name": "Bagru Hand Block Print"
+        }
+      ],
+      "belongsTo": [
+        {
+          "kind": "DESIGN_STAGE",
+          "stage": {
+            "key": "WORKSHOP_PLAN_PARTICIPANTS_OPENING",
+            "title": "Workshop Plan, Participants & Opening"
+          },
+          "entity": {
+            "key": "workshopPlan",
+            "label": "Workshop plan"
+          },
+          "row": {
+            "id": "dr-row-plan",
+            "label": null
+          },
+          "field": {
+            "key": "eventPhotos",
+            "label": "Event photographs"
+          },
+          "prototypeId": null
+        }
+      ],
+      "workshop": {
+        "kind": "DESIGN_WORKSHOP",
+        "id": "dr-dw-built",
+        "code": "DW-RJ-0012",
+        "title": "Workshop_2026-06-18_Bagru-Jaipur_Hand-Block-Printing_DW-RJ-0012",
+        "startsOn": "2026-06-18",
+        "endsOn": "2026-06-30",
+        "area": {
+          "state": "Rajasthan",
+          "district": "Jaipur",
+          "stateLgd": 8,
+          "districtLgd": 102
+        }
+      },
+      "people": [],
+      "credits": [],
+      "permission": {
+        "statement": "Shown on KalaVigyan with the consent of the people pictured. Not openly licensed: ask the rights holder before any other use.",
+        "rightsHolder": "Design Workshop rights holder",
+        "licence": null
+      },
+      "scrubbing": {
+        "version": 2,
+        "replaced": [
+          {
+            "kind": "EMAIL",
+            "count": 0
+          },
+          {
+            "kind": "NUMBER",
+            "count": 0
+          }
+        ],
+        "nulled": []
+      },
+      "image": {
+        "mimeType": "image/jpeg",
+        "width": 2400,
+        "height": 1600,
+        "bytes": 812345,
+        "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "url": "https://designrepo-media-626159998512.s3.dualstack.ap-south-1.amazonaws.com/field-voices/7777777777777777777777777777777777777777777777777777777777777777.jpg?response-content-disposition=inline%3B%20filename%3D%227777777777777777777777777777777777777777777777777777777777777777.jpg%22&response-content-type=image%2Fjpeg&X-Amz-Expires=900&X-Amz-Signature=recorded",
+        "expiresAt": "2026-11-18T23:10:00Z"
+      }
+    }
+  ]
+}

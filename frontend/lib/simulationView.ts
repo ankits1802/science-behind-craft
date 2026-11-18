@@ -1,7 +1,7 @@
 import { apiFetch } from "@/lib/api";
 import { UUID } from "@/lib/answerShapes";
 import { BLOCK_ID } from "@/lib/explainerBlockBase";
-import type { SimulationBlock, SimulationValue } from "@/lib/explainerPlay";
+import type { SimulationBlock, SimulationReaction, SimulationValue } from "@/lib/explainerPlay";
 import { formatDate } from "@/lib/format";
 import { measureParts } from "@/lib/measure";
 import type { RegionDataset } from "@/lib/regionContract";
@@ -37,8 +37,18 @@ export function valueBases(block: Pick<SimulationBlock, "values" | "datasets">):
   return bases.every((basis): basis is ValueBasis => basis !== null) ? bases : null;
 }
 
-export function keptAsPiece(block: Pick<SimulationBlock, "reuse" | "values">): boolean {
-  return block.reuse !== null || block.values.some((value) => value.citations.length > 0);
+export function keptAsPiece(block: Pick<SimulationBlock, "reuse" | "values" | "grounds" | "reactions">): boolean {
+  const grounded = (block.grounds?.length ?? 0) > 0 || (block.reactions?.length ?? 0) > 0;
+  return block.reuse !== null || grounded || block.values.some((value) => value.citations.length > 0);
+}
+
+export function wordEquation(reaction: Pick<SimulationReaction, "species">): string {
+  const side = (role: "REACTANT" | "PRODUCT") =>
+    reaction.species
+      .filter((species) => species.role === role)
+      .map((species) => species.name ?? species.formula ?? "")
+      .join(" + ");
+  return `${side("REACTANT")} → ${side("PRODUCT")}`;
 }
 
 export function hiddenFrom(block: { kind: string; hidden?: boolean }, canHide: boolean): boolean {
