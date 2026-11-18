@@ -60,8 +60,8 @@ function warmingClimate(): ClimateRiskBlock {
     meanUnit: "degC",
     slopePerDecade: -0.3,
     slopeUnit: "degC per decade",
-    pValue: 0.004,
-    significant: true
+    pValue: 0.31,
+    significant: false
   };
   const groundwater = [
     { district: KACHCHH, datasetCode: "CGWB_LEVELS", variable: "depth_to_water", period: "2023", value: 12.5, valueText: null, unit: "m", resolution: "well" },
@@ -148,8 +148,9 @@ test("a price shows the stated range with what it is per, its place and its date
 });
 
 test("a climate trend is drawn as its slope per decade from zero, with its significance, mean, period, resolution and dataset", () => {
-  expect([niceCeiling(21.6), niceCeiling(0.3), niceCeiling(7), niceCeiling(1), niceCeiling(120), niceCeiling(0)]).toEqual([25, 0.5, 10, 1, 200, 1]);
+  expect([niceCeiling(21.6), niceCeiling(70.760167), niceCeiling(0.3), niceCeiling(7), niceCeiling(1), niceCeiling(120), niceCeiling(0)]).toEqual([25, 100, 0.5, 10, 1, 200, 1]);
   expect(trendBar(21.6, 25)).toEqual({ left: 50, width: 43.2, rising: true });
+  expect(trendBar(70.760167, 100)).toEqual({ left: 50, width: 35.38, rising: true });
   expect(trendBar(-0.3, 0.5)).toEqual({ left: 20, width: 30, rising: false });
   expect([pText(0.12), pText(0.049), pText(0.0004)]).toEqual(["p = 0.12", "p = 0.049", "p < 0.001"]);
   const block = climate();
@@ -158,11 +159,11 @@ test("a climate trend is drawn as its slope per decade from zero, with its signi
   expect(text(html)).toContain("Rainfall trend");
   expect(text(html)).toContain("Drier0Wetter");
   expect(attribute(html, "trend-bar", "data-left")).toEqual(["50"]);
-  expect(attribute(html, "trend-bar", "data-width")).toEqual(["43.2"]);
-  expect(attribute(html, "trend-bar", "data-significant")).toEqual(["false"]);
-  expect(text(html)).toContain("+21.6 mm/year per decade");
-  expect(text(html)).toContain("Not significant · p = 0.12");
-  expect(text(html)).toContain("Mean 383 mm/year · 1981–2025 · 0.05 degree");
+  expect(attribute(html, "trend-bar", "data-width")).toEqual(["35.38"]);
+  expect(attribute(html, "trend-bar", "data-significant")).toEqual(["true"]);
+  expect(text(html)).toContain("+70.76 mm/year per decade");
+  expect(text(html)).toContain("Significant · p = 0.005");
+  expect(text(html)).toContain("Mean 449.36 mm/year · 1981–2025 · 0.05 degree");
   expect(text(html)).toContain(block.datasets[0].title);
   expect(text(html)).toContain("Method: Theil–Sen slope per decade; Mann–Kendall test, significant below p = 0.05");
   for (const sentence of block.meaning) expect(text(html)).toContain(sentence.text);
@@ -175,15 +176,15 @@ test("a climate trend is drawn as its slope per decade from zero, with its signi
 test("trends are grouped by variable in a fixed order, and groundwater is shown only where a dataset gives it", () => {
   const block = warmingClimate();
   expect(trendGroups(block.trends).map((group) => [group.variable, group.domain])).toEqual([
-    ["annual_precipitation", 25],
+    ["annual_precipitation", 100],
     ["annual_mean_temperature", 0.5]
   ]);
   expect([groundwaterReading(block.groundwater[0]), groundwaterReading(block.groundwater[1])]).toEqual(["12.5 m", "Over-exploited"]);
   const html = withReading(createElement(ClimateRiskView, { block, reduce: true }));
   expect(attribute(html, "trend-chart", "data-variable")).toEqual(["annual_precipitation", "annual_mean_temperature"]);
   expect(text(html)).toContain("−0.3 °C per decade");
-  expect(text(html)).toContain("Significant · p = 0.004");
-  expect(attribute(html, "trend-bar", "data-significant")).toEqual(["false", "true"]);
+  expect(text(html)).toContain("Not significant · p = 0.31");
+  expect(attribute(html, "trend-bar", "data-significant")).toEqual(["true", "false"]);
   expect(attribute(html, "groundwater-value", "data-testid")).toHaveLength(2);
   expect(text(html)).toContain("Depth to water · Kachchh");
   expect(attribute(html, "dataset-credit", "data-testid")).toHaveLength(2);

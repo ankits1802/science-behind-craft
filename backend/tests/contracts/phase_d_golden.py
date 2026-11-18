@@ -21,20 +21,9 @@ __all__ = [
 PHASE_D = "explainer.phase-d.golden.json"
 
 
-class TrendPlaceholder(ContractModel):
-    block_id: str
-    district_lgd: int = Field(ge=1)
-    variable: str
-
-
-class PhaseDPlaceholders(ContractModel):
-    climate_trends: list[TrendPlaceholder] = Field(min_length=1)
-
-
 class PhaseDFixture(ContractModel):
     schema_version: Literal[1]
     crafts: list[CraftRef] = Field(min_length=2, max_length=2)
-    placeholders: PhaseDPlaceholders
     sections: list[FixtureSection] = Field(min_length=1)
     pieces: list[FixturePiece]
     sources: list[SourceRef]

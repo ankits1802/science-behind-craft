@@ -196,9 +196,12 @@ def test_the_climate_trend_reads_the_chirps_row_of_kachchh_over_its_period() -> 
         catalog_dataset("CHIRPS_3_0") | {"period": "1981-2025"}
     ]
     assert (trend.period, trend.resolution) == ("1981-2025", "0.05 degree")
-    assert [(p.block_id, p.district_lgd, p.variable) for p in fixture().placeholders.climate_trends] == [
-        ("s6.b1", 449, "annual_precipitation")
-    ]
+    assert (trend.mean, trend.slope_per_decade, trend.p_value, trend.significant) == (
+        449.356389,
+        70.760167,
+        0.004992,
+        True,
+    )
 
 
 def test_each_block_is_stored_as_the_contract_says() -> None:

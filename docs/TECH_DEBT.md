@@ -2302,17 +2302,6 @@ Last reviewed: 2026-11-18.
 - **Clears it:** add C049's price to `s5.b1` by `curation_keys.curated_id` and regenerate the
   goldens built from it, with the APA text of the new source checked by hand.
 
-### The climate trend in the fixture is a placeholder
-
-- **What:** the Kachchh rainfall trend's mean, slope and p-value are written by hand (listed
-  under `placeholders`). Lane 0065 added the stats, their migration (`0021_climate_trend_stats`),
-  the CHIRPS series from 1981 and the GHCN CAMS temperature layer, but no load has run.
-- **Why left:** the series are processed on GitHub Actions by an owner dispatch after the deploy;
-  agents dispatch nothing.
-- **Clears it:** the Geo ETL dispatch in `docs/RUNBOOK.md` (datasets `chirps,ghcncams`), then the
-  loaded Kachchh `CHIRPS_3_0` row (read-only on the box) replaces the placeholders and the fixture
-  test pins it.
-
 ### Quizzes mostly vanish in other languages
 
 - **What:** a quiz option is a glossary term marked in its sentence; a translated sentence keeps a

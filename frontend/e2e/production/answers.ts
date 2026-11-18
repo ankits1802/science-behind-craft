@@ -289,12 +289,12 @@ export function pageSentenceProblems(record: AnswerRecord): string[] {
     return record.pageSentences === shown ? [] : [`the page shows ${record.pageSentences} sentences; the stream sent ${shown}`];
   }
   const onPage = new Set(record.pageSentenceIds);
-  const shownTexts = new Set(cited.filter((sentence) => onPage.has(sentence.id)).map((sentence) => `${sentence.blockId} ${sentence.text}`));
+  const shownTexts = new Set(cited.filter((sentence) => onPage.has(sentence.id)).map((sentence) => `${sentence.blockId}\u0000${sentence.text}`));
   const problems: string[] = [];
   const missing = [
     ...new Set(
       cited
-        .filter((sentence) => !STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "") && !onPage.has(sentence.id) && !shownTexts.has(`${sentence.blockId} ${sentence.text}`))
+        .filter((sentence) => !STEPPED_BLOCK_KINDS.has(sentence.blockKind ?? "") && !onPage.has(sentence.id) && !shownTexts.has(`${sentence.blockId}\u0000${sentence.text}`))
         .map((sentence) => sentence.id)
     )
   ];

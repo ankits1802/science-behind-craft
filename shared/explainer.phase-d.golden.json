@@ -12,15 +12,6 @@
       "path": "/crafts/Bagru-Hand-Block-Print"
     }
   ],
-  "placeholders": {
-    "climateTrends": [
-      {
-        "blockId": "s6.b1",
-        "districtLgd": 449,
-        "variable": "annual_precipitation"
-      }
-    ]
-  },
   "sections": [
     {
       "id": "s1",
@@ -1460,12 +1451,12 @@
               "datasetCode": "CHIRPS_3_0",
               "period": "1981-2025",
               "resolution": "0.05 degree",
-              "mean": 383.0,
+              "mean": 449.356389,
               "meanUnit": "mm/year",
-              "slopePerDecade": 21.6,
+              "slopePerDecade": 70.760167,
               "slopeUnit": "mm/year per decade",
-              "pValue": 0.12,
-              "significant": false
+              "pValue": 0.004992,
+              "significant": true
             }
           ],
           "groundwater": [],

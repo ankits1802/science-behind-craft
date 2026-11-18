@@ -1352,10 +1352,9 @@ water piece of `explainer.piece.golden.json`), a measure (the falling water tabl
 as 3.05 to 4.57 m by the exact foot), the GI records of both crafts (Bagru's with the GI journal's
 sign of fake screen-printed Bagru textiles) and climate and risk for Kachchh (the CHIRPS row over
 1981-2025 and two meaning sentences on the water table and iron in groundwater). Terms are marked
-with the two crafts' seed glossary. The trend's numbers are placeholders, named under
-`placeholders`, until lane 0065 loads the trends; every other id resolves to a seed claim and
-source, a seed concept, the LGD register, the geo ETL catalogue or a golden
-(`tests/contracts/test_explainer_phase_d.py`). It also lists how each block is stored (`pieces`:
+with the two crafts' seed glossary. The trend is the loaded Kachchh `CHIRPS_3_0` row (Geo ETL
+run 44204618054); every other id resolves to a seed claim and source, a seed concept, the LGD
+register, the geo ETL catalogue or a golden (`tests/contracts/test_explainer_phase_d.py`). It also lists how each block is stored (`pieces`:
 the measure and the Ajrakh market block) and its sources in order of first citation. The client
 parses each block with its kind's shape and refuses it in the built-only parser, the stream and
 the renderers (`e2e/explainer-phase-d-unit.spec.ts`). The routes' fixtures are listed in

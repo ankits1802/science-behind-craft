@@ -868,18 +868,23 @@ Last updated: 2026-11-18.
   opened and checked for every streamed source; a lesson pack's PPTX and PDF when the account may
   build one), and its navigation check expects Saved. No migration.
 
+- **Release, data loads and production proof (2026-11-18).** The curation import, the rebuilt
+  craft page and phases C and D are live (migrations to 0024; revision
+  `0020_explainer_versions_alerts` renamed to fit Alembic's 32-character column, which a test now
+  checks). The Geo ETL loaded the river lines, then CHIRPS and GHCN CAMS over `1981-2025` with
+  prune in run 44204618054 (three attempts, the CHIRPS server timing out on some shards): 752
+  districts with twelve monthly normals and a rainfall trend, 752 with a temperature trend, and no
+  ten-year rows left. The loader now matches NOT NULL key columns by equality, so the prune is a
+  join Postgres can hash inside the statement timeout. The phase D fixture's Kachchh trend is the
+  loaded row (mean 449.36 mm/year, +70.76 mm/year per decade, p = 0.005, significant), reproduced
+  from its 45 stored yearly means outside the ETL. E2E production 44202269606 (`questions`,
+  `rivers_loaded`) passes every screen at the three widths, the four known-answer questions
+  (English, Hindi, Water with its river story, Indigo at Expert) and the exports.
+
 ## Next
 
-0. Close phases B and C (every phase B and C kind is in `BUILT_BLOCK_KINDS`; decision 0061 is the
-   phase C review). After the deploy that carries migrations up to 0024, dispatch E2E production
-   with `questions=true` to prove phase C (the Indigo question's generated explainer in the
-   sandboxed frame, plan section 5). For phase B, after the owner applies the river load role and
-   the deploy that carries migration 0016,
-   dispatch Geo ETL with `riverlines` and `load` (region stories wait for it, decision 0044) and
-   then `chirps,ghcncams` with prune once migration 0021 is deployed (`docs/RUNBOOK.md`, Geo ETL;
-   decision 0065); put the traced Kachchh river's ids into the phase B
-   fixture; then dispatch E2E production with `questions` and `rivers_loaded` to prove the water
-   story for Kachchh (plan section 5).
+0. Put the traced Kachchh river's ids into the phase B fixture (`docs/TECH_DEBT.md`, "The phase B
+   fixture's river ids are placeholders"); phases B, C and D are otherwise proven in production.
 
 1. Curation (`docs/plans/dataset-curation.md`): deploy the import (decision 0053) with the rebuilt
    craft page (decision 0071), take the Kutch Ajrakh before and after screenshots from E2E
@@ -889,33 +894,20 @@ Last updated: 2026-11-18.
    PLAN 10.1 on GitHub Actions (lane 0017's open item), which also records a relay turn's real
    billing; the governance lane serves the sharing route of `docs/contracts/media.md`. Science
    engine follow-ups are in `docs/TECH_DEBT.md` (decision 0015).
-3. Run the known-answer questions with **E2E production** (`questions=true`) once deployed (PLAN
-   section 0, decision 0029), and clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher
-   chunk access).
-4. Phase D is built and reviewed (decisions 0062 to 0070). Deploy it with phase C (migrations up
-   to 0024), dispatch Geo ETL `chirps,ghcncams` (Waiting on the owner), then E2E production with
-   `questions=true`: the export proof runs on the English answer. The phase D proof, a professor
-   building a lesson pack from one explainer, needs the owner's E2E choice below; the owner
-   verifies an SES sender before `ALERT_DIGEST_ENABLED` is set.
+3. Clear the answer stream gaps in `docs/TECH_DEBT.md` (answer and trace rows, researcher chunk
+   access).
+4. The phase D proof of a professor building a lesson pack from one explainer needs the owner's
+   E2E choice below; the owner verifies an SES sender before `ALERT_DIGEST_ENABLED` is set.
 5. The `WEB_READ` reader for long documents.
 6. Clear debt as files are touched (`docs/TECH_DEBT.md`), lowering the hygiene baseline.
 
 ## Waiting on the owner
-
-- River load role (decision 0050): `terraform apply` in `infra/terraform` creates
-  `kalavigyan-river-load`; then set the repository variable `AWS_RIVER_LOAD_ROLE_ARN` to the
-  `river_load_role_arn` output (or re-run `infra/scripts/seed_secrets.py`) before the first Geo ETL
-  `riverlines` load.
 
 - Weekly alert digest (decisions 0062, 0063): verify a sender identity in SES (`MAIL_FROM_ADDRESS`,
   region `MAIL_SES_REGION`) and request production access out of the SES sandbox; only then put
   `ALERT_DIGEST_ENABLED=true` at `/kalavigyan/env/ALERT_DIGEST_ENABLED` in Parameter Store and
   re-render the box `.env` (`docs/RUNBOOK.md`, Alert digest). Until then the Monday **Alert
   digest** run sends nothing. In-app notes need nothing.
-
-- Climate trends (decision 0065): after the deploy that carries migration
-  `0021_climate_trend_stats`, dispatch **Geo ETL** with `datasets=chirps,ghcncams`,
-  `states=all`, `shards=24`, `load=true`, `prune=true` (`docs/RUNBOOK.md`, Geo ETL, step 2).
 
 - Lesson pack proof (decision 0070): the E2E account is a Researcher, building a lesson pack
   needs `BUILD_LESSONS` (Professor), and a Professor must use two-step sign-in, which the run cannot
@@ -924,10 +916,6 @@ Last updated: 2026-11-18.
   lesson pack built by hand from the English known answer after the deploy, its PPTX and PDF
   checked against the explainer's sources. Until then each run checks the report PDF and the
   citations and notes the lesson step.
-
-- E2E production run: after the next backend deploy, run `app.scripts.provision_e2e_account` on the
-  box, set `E2E_EMAIL` (`e2e-researcher@kalavigyan.example`) and `E2E_PASSWORD` as GitHub secrets,
-  then dispatch **E2E production** (`docs/RUNBOOK.md`, E2E production run).
 
 - Free OpenAlex, Semantic Scholar and Springer Nature API keys (Settings, API keys); without
   them OpenAlex shares a small daily allowance per IP, Semantic Scholar's shared pool answers
