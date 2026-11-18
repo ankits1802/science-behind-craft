@@ -1,0 +1,260 @@
+# 0101. One knowledge architecture for every craft: facts, sections, components, monographs
+
+Date: 2026-11-19. Status: accepted (owner direction, 2026-11-19).
+
+## Context
+
+The owner: KalaVigyan will be the reference that the government and educational institutions use,
+for 500 or more crafts. What is built for Kutch Ajrakh must repeat for every craft, and be
+maintainable, scalable and reusable. Every section is demarcated by its field, so an agent loads
+only the field a question needs. Every interactive component (map, explainer, reaction player,
+molecule, chart) carries a label and a description, so a model can name a component that already
+exists instead of building it again. Research done for any reader that finds something new and
+non-trivial goes into the craft's article, so the database fills and heals itself. People and
+their agents can contribute. Every craft gets a complete monograph, with What-if and 3D molecules,
+so a reader needs no other source.
+
+What already exists:
+- **Claims** (`Claim`) with verbatim quotes and locators (`ClaimSource`) and graded sources
+  (`Source`).
+- A 14-field vocabulary (`models/enums.DISCIPLINES`).
+- Stored answer blocks (`KnowledgePiece`, keyed by craft, field (`facet`) and topic).
+- Curated dossiers in git, imported on deploy.
+- Page snapshots per curation version (decision 0098).
+- The novelty rule for answer pieces joining a craft page (decision 0096).
+
+The gaps:
+1. A claim's field is recorded only for curated claims (`CuratedClaim.discipline`), not for claims
+   that answers write.
+2. A section's prose exists only inside a page or an answer, not as its own record.
+3. A stored block has no label or description, and is found by topic, not by what it shows.
+4. The approved Ajrakh page is static HTML outside the data (decision 0100).
+5. Curation writes JSON files to git, which contributors and agents cannot use.
+
+## Decision
+
+**The fact is the unit; everything else is a view built from facts.** Nothing reader-facing is
+stored as free text or HTML. Every record is typed, cited, versioned and append-only logged.
+
+1. **Facts carry their fields.**
+   - Every `Claim` gets a primary field and optional secondary fields from one controlled
+     vocabulary.
+   - The vocabulary is today's 14 plus `SOCIETY` (people, communities, livelihoods) and `POLICY`
+     (GI, law, schemes).
+   - Curated claims are backfilled from `CuratedClaim`, and answer claims from the field of the
+     piece they were written for.
+2. **Article sections are records.**
+   - `ArticleSection {subject (craft, family or category), field, version, sentences[{text,
+     claimIds}], status, writtenBy, reviewedBy}` is the monograph's prose for one field.
+   - A model's context receives it rendered as tagged text, for example
+     `<section craft="kutch-ajrakh" field="history" version="3">... [c:<id>]</section>`.
+   - The tags are a rendering of the structure, never the storage.
+3. **Components are a labelled registry.**
+   - `KnowledgePiece` grows into the component registry. It adds:
+     - a stable `label` (e.g. `kutch-ajrakh/chemistry/indigo-redox-player`);
+     - a `title`;
+     - a two- or three-sentence `description` written for a model;
+     - its fields;
+     - links to the subjects it shows: crafts, concepts, places and compounds.
+   - The answer pipeline gives the model a catalogue of the components relevant to the question,
+     one line each: label, kind and description.
+   - The model names a label to place an existing component. A builder runs only when nothing in
+     the catalogue fits, and what it builds is registered.
+   - Components keyed by concept, place or compound are shared by every craft they apply to:
+     - an indigo reduction player by every indigo-dyed craft;
+     - a Kachchh map by every Kachchh craft;
+     - a molecule by every craft that uses that compound.
+4. **One monograph template for every subject.**
+   - Fields map to the fixed chapters of decision 0095.
+   - The approved Ajrakh page is decomposed into its sections and registered components, and its
+     design becomes the one renderer for every craft, family and category.
+   - Parity with the approved page is proven by screenshots before the static file is retired.
+   - Each chapter has a completeness score per craft. Missing What-if, molecules, places or fields
+     become research tasks.
+5. **Self-healing, through one gated write path.**
+   - Every new fact, whatever its origin, is a candidate:
+     - an answer's research;
+     - a curator;
+     - an artisan's testimony;
+     - a contributor;
+     - an agent.
+   - It is published only through these automatic gates, in order:
+     1. every quote is verified verbatim against the fetched source text;
+     2. the source is graded and its licence allows it;
+     3. it is not a duplicate of the subject's facts in that field (embedding neighbours, then a
+        fact-level comparison);
+     4. it is not trivial: it adds to or changes what the section says. The judge's reasons are
+        stored.
+   - A disagreement with an existing fact is published as "sources differ", never resolved.
+   - A fact that passes joins the article section as a new version, marked as added from research
+     with its date, at a provisional level, and enters the professor review queue.
+   - Review raises its level or retracts it, and the page rebuilds.
+   - Nightly upkeep, bounded per night:
+     - re-verifies quotes and archives sources at risk of link rot;
+     - rebuilds sections and components whose facts changed;
+     - turns coverage gaps into targeted research tasks.
+6. **The database is the source of truth.**
+   - The git dossiers become a versioned export (backup, diff and bulk import), not the place
+     curation is written.
+   - The curation skill keeps the method. The writes go through the API below.
+7. **One Knowledge API, with an MCP server on it.**
+   - Read: find crafts, get sections by field, list and get components by label, get facts with
+     quotes and sources.
+   - Write: propose a fact, a source or a component; review.
+   - It is used by the web app, research jobs, Claude Code curation (the skill), institutions'
+     agents and contributors, each with its role's rights.
+   - The MCP server is remote over HTTPS with per-user authentication. It exposes the same
+     operations, so any agent can read the database and propose to it, and every write passes the
+     gates in 5.
+8. **Contribution.**
+   - Readers, researchers and artisans propose through the same path, under a contribution licence
+     and with credit.
+   - Trust follows role and record: a trusted contributor's facts are reviewed sooner, never
+     ungated.
+9. **Open and citable.**
+   - Every craft's monograph is citable by version.
+   - Public read API, MCP read tools, and a per-version bulk export (facts with quotes and sources,
+     sections, component specs).
+   - Closed-licence quotes are withheld from public views and exports.
+
+10. **Retrieval is per fact, not per section** (owner, 2026-11-19).
+    - A question loads only the facts it needs. Hybrid search runs over the facts of the craft
+      and the question's fields:
+      - keyword search on `Claim.tsv`;
+      - vector neighbours on `Claim.embedding`;
+      - entity matches on the question's materials, places and compounds.
+    - The matches are re-ranked, and the top facts are sent with their quotes. A fact's
+      neighbouring sentences come along only when it needs them to read clearly.
+    - A whole section is sent only for a broad question ("tell me about its history").
+    - The component catalogue is filtered the same way: only components whose field, subject and
+      description match are listed.
+11. **Pages are built nightly as static pages** (owner, 2026-11-19).
+    - Every night after upkeep:
+      1. the database rebuilds every changed page snapshot;
+      2. a scheduled job triggers one production build;
+      3. every craft, family and category page is pre-rendered from those snapshots and served
+         from the CDN.
+    - Whatever was added during the day appears the next morning and loads fast.
+    - An admin can trigger the same build at any time.
+    - Answers stay live.
+12. **Review has a switch** (owner, 2026-11-19).
+    - One admin setting, which may be set per origin (research, contribution, agent):
+      - `AUTO`: a fact that passes every gate goes live, marked unreviewed, and stays in the
+        review queue;
+      - `APPROVAL`: a Professor or Admin approves before it goes live.
+13. **No public credit for contributors** (owner, 2026-11-19).
+    - Contributions show no contributor name.
+    - Who proposed what is kept privately, for moderation, withdrawal and audit only.
+    - Contributors accept terms that let the Centre publish their contribution without
+      attribution.
+
+14. **Formatting is a separate layer** (owner question, 2026-11-19). Content and presentation
+    never mix. Formatting is controlled at three levels, and none of them lives in a fact:
+    - **The template** (the design system and the monograph renderer) sets the look of every
+      page. A change there reaches every page at the next nightly build.
+    - **A layout record per page**, `PageLayout {subject, version, entries[{label, chapter,
+      order, role (HERO, OPENER, PLATE, FIGURE, SIDEBAR, PULL_QUOTE, ...), crop, size, caption
+      override}]}`. It refers to sections and components by label and sets:
+      - chapter order;
+      - which component leads;
+      - where pictures sit and how they are cropped;
+      - pull quotes and figure order.
+
+      The dossier's picture placement and focal box (schema 2) move into it. Editing a fact
+      never breaks a layout, and editing a layout never touches a fact.
+    - **Inline marks in sentences**: a small fixed set of italic (native terms, species names),
+      formula (subscripts and charges), term link and citation, stored as structured spans. Never
+      HTML.
+
+    A one-off visual for a single craft is built as a new component kind with its own spec, never
+    as free-form HTML. The approved Ajrakh look is its template plus its layout record, proven by
+    screenshot parity.
+
+    **The Ajrakh switch-over changes nothing a reader sees** (owner, 2026-11-19).
+    - The static page stays live until the page built from data matches it on three counts:
+      1. text: every sentence, citation number and caption is identical (an automated diff);
+      2. screenshots at 360, 834 and 1440, in light and dark;
+      3. interactions: players, popovers, Listen, Ask and the chapter rail.
+    - After the switch, new content never reorders an approved layout. A new fact joins its
+      section in place, marked as added. A new component is placed at the end of its chapter and
+      flagged for a layout review.
+
+15. **The MCP server** (owner, 2026-11-19).
+    - **Remote MCP over HTTPS.** Every tool is backed by the Knowledge API, so a write passes the
+      gates in 5 and the review switch in 12.
+    - **Read tools:**
+      - find crafts;
+      - get facts by craft and field (retrieval as in 10);
+      - get sections;
+      - list and get components by label;
+      - get a page's layout;
+      - search.
+    - **Ask:** the reader's own agent gets an answer from our pipeline. The answer comes back as
+      structured data (cited sentences, component labels and sources) and in our design:
+      - as interactive UI the client renders, through the MCP Apps UI-resource extension where the
+        client supports it;
+      - otherwise as a link to the same answer on our site;
+      - plus a design-kit resource (tokens and component specs) for agents that draw it
+        themselves.
+    - **Contribute:**
+      - propose facts with quotes and sources;
+      - propose components;
+      - propose a page layout for a page not yet in the new form, or a change to one.
+      All of these go through the same gates and the review switch.
+    - **Authentication:** OAuth 2.1 as the MCP authorization spec defines, with our web app as the
+      authorization server. The flow:
+      1. The user adds our server URL in their MCP client.
+      2. The client opens our site.
+      3. The user signs in and accepts the MCP terms of use. The terms are versioned, and
+         acceptance is recorded per user.
+      4. The user approves the scopes (read, ask, contribute, review by role).
+      5. The client receives a token and the user returns to the client.
+      Settings lists every connected client, with revoke. A changed terms version asks again at
+      the next sign-in.
+    - **Guards:**
+      - a rate limit per token, which protects the service and is not a spend cap;
+      - an audit log of reads and proposals per token;
+      - only public-level data: no personal data and no restricted field material;
+      - closed-licence quotes withheld;
+      - contributed and sourced text always returned as data, never as instructions;
+      - new accounts' proposals can be held for approval by the switch;
+      - versioned tool schemas, so institutions' integrations do not break.
+    - Every response carries its citations and source licences, and the terms ask users to name
+      KalaVigyan and the Centre when they show our content.
+    - **Open work** (owner, 2026-11-19): contributors' agents can ask what still needs work.
+      - `list_open_work` takes optional filters (craft, family, category, field, task kind, priority)
+        and returns tasks from each subject's completeness score:
+        - a missing or thin chapter or field;
+        - a missing component (What-if, molecules, map, reaction player, pictures);
+        - a page not yet in the new form or without a layout;
+        - facts awaiting a second source;
+        - sources-differ entries that need a deciding source;
+        - dead or unarchived sources;
+        - review queues, for reviewers only.
+      - Each task carries what is needed, its acceptance rule (from the page checklist and the
+        coverage targets) and its priority. Priority follows reader demand, GI status and the
+        owner's order.
+      - `claim_task` reserves a task for a set time, so two agents do not do the same work.
+        `release_task` gives it back, and an expired reservation returns to the list.
+      - A proposal that completes a task closes it once it passes the gates.
+
+Scale: 500 crafts at about 150 facts each is about 75,000 facts, 200,000 quotes, 10,000 sections
+and 20,000 components. Postgres with pgvector and the page snapshots carry this without new
+infrastructure.
+
+## Build order (each step ships on its own)
+
+1. Schema:
+   - fields on every claim, plus the backfill;
+   - `ArticleSection`;
+   - registry fields and subject links on `KnowledgePiece`;
+   - the two new fields in the vocabulary.
+2. Decompose the Ajrakh page into sections and components, and make its design the template
+   renderer. Prove screenshot parity, then render every curated craft with it.
+3. Answers retrieve by field and place components by label.
+4. The candidate gates, the review queue and nightly upkeep.
+5. The Knowledge API write path and the MCP server; switch the curation skill to it; the dossier
+   export.
+6. Completeness-driven research for every curated craft, then the rest: every chapter, What-if
+   and molecules.
+7. Contribution screens and the bulk export.
