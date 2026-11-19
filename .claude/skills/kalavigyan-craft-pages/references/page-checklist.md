@@ -91,6 +91,23 @@ them.
 22. **A source error stays verbatim and is marked**: [sic], with the correct formula or value
     beside it. The same quote renders the same way everywhere on the page.
 
+## Every field, densely (owner, 2026-11-20)
+
+23. **Every field a source covers is on the page**, in the chapter where a reader looks for it:
+    overview and history in the opening chapters, process and materials with the making, chemistry,
+    physics and botany with the science, geography, geology, climate and ecology with the place,
+    economics, society, design and policy with the people and the market, health beside the stage
+    or material it concerns. An answer page draws on every field its question touches, through one
+    expert seat per field, and its provenance names the fields it consulted.
+24. **Each field is dense**: three or more cited sentences that each add a quantity, a mechanism, a
+    name or a date, plus a figure, table, fact grid or quantity where a source gives numbers. No
+    field is one sentence long.
+25. **Every screen earns its height.** Margin notes, fact grids, small multiples and tables carry
+    detail beside the prose instead of below it; no empty band, no decorative spacer beyond the
+    spacing scale, and no card that repeats a sentence already on screen.
+26. **A missing field is research, not a hole.** It never appears as an empty heading or a "not yet"
+    note; it appears as a question that starts cited research, and as open work on the MCP server.
+
 ## Process
 
 - An owner-approved page is served as built at its route (decision 0100), not rebuilt.

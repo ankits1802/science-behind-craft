@@ -47,6 +47,7 @@ A finished craft page has:
 | Botanical names | on plant materials | every plant material |
 | GI record | full | every GI-registered craft (never a family or category) |
 | Conflicts, open questions | recorded | every disagreement found; never settled |
+| Fields | 13 of 16 (physics, geology and health missing; climate and ecology thin) | every one of the 16 fields a source covers; 12 or more for a curated craft; 3 or more cited claims in each covered field |
 
 A category page has no stages, native names or GI record; it has pictures placed the same way,
 `subCategories` on sentences and questions, and the family's reactions.
@@ -57,6 +58,29 @@ Copy the craft's dossier from `backend/app/data/curation` into your scratchpad a
 dossier, under the same file name (a category's inside a `categories` folder there), and work only
 on that copy. Never edit the dossier in git by hand: it is the export, and the lead refreshes it.
 When the lead says the git copy is behind the database, ask for a fresh export instead.
+
+## Every field, densely (owner, 2026-11-20)
+
+A page is organised by the 16 fields of `research/sections.DISCIPLINE_FIELDS` (overview, process,
+chemistry, physics, materials, geography, geology, climate, ecology, botany, history, economics,
+design, health, society, policy). The owner's bar is information density encompassing every field:
+a reader who opens any craft finds each field a source covers, explained with cited sentences,
+quantities, figures and names, not one long process chapter and a few thin ones.
+
+- **Search every field.** For each field with no claim, search for a source before calling it a
+  gap, and record what you searched in `searched`. The fields most often missing are botany,
+  climate, health, geology, policy and ecology: look for dye and fibre plant monographs, district
+  climate normals and hydrology, occupational health studies of the craft's materials, soil and
+  mineral surveys, the GI journal and scheme documents, and ecological studies of the raw
+  materials.
+- **Density, not padding.** Three or more cited claims per covered field, each saying something the
+  others do not: a quantity with its unit, a mechanism, a named place, person, plant or compound, a
+  date. Never a sentence that only restates the field's name.
+- **Structure counts.** Society is covered by `communities` and their claims, policy by the GI record
+  and its claims; a claim is filed under the field it explains (a mordant's chemistry is
+  CHEMISTRY even when it sits on a stage).
+- **Never admit a gap on the page.** A field without a source stays off the page; the page offers
+  research questions instead (decision 0092's no-gap rule), and the field becomes open work.
 
 ## See the gaps first
 

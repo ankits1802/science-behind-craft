@@ -2,7 +2,11 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4] / "backend" / "app" / "data" / "curation"
+REPO = Path(__file__).resolve().parents[4]
+ROOT = REPO / "backend" / "app" / "data" / "curation"
+SCHEMA = REPO / "shared" / "curation.dossier.schema.json"
+FIELD_CLAIMS = 3
+CURATED_FIELDS = 12
 BAR = {"pictures": 8, "placedShare": 1.0, "chaptersWithPictures": 4, "afterShare": 0.5, "whyShare": 0.66, "nativeNames": 1}
 
 
@@ -11,6 +15,40 @@ def dossiers(args):
         return [Path(a) for a in args]
     files = sorted(ROOT.glob("*.json")) + sorted((ROOT / "categories").glob("*.json"))
     return [f for f in files if not f.name.endswith(".check.json") and f.name != "index.json"]
+
+
+def fields():
+    schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+    return schema["$defs"]["Claim"]["properties"]["discipline"]["enum"]
+
+
+def structure_claims(d):
+    society = {c for g in d.get("communities") or [] for c in g.get("claimIds") or []}
+    policy = set(((d.get("market") or {}).get("gi") or {}).get("claimIds") or [])
+    return {"SOCIETY": society, "POLICY": policy}
+
+
+def field_counts(d):
+    counts = {field: 0 for field in fields()}
+    for claim in d.get("claims") or []:
+        counts[claim.get("discipline")] = counts.get(claim.get("discipline"), 0) + 1
+    for field, ids in structure_claims(d).items():
+        counts[field] += len(ids)
+    return counts
+
+
+def field_gaps(counts):
+    missing = [f for f, n in counts.items() if n == 0]
+    thin = [f"{f} {n}" for f, n in counts.items() if 0 < n < FIELD_CLAIMS]
+    covered = len(counts) - len(missing)
+    gaps = []
+    if covered < CURATED_FIELDS:
+        gaps.append(f"fields covered {covered}/{len(counts)} (bar {CURATED_FIELDS}+)")
+    if missing:
+        gaps.append(f"fields with no claim (search them): {', '.join(missing)}")
+    if thin:
+        gaps.append(f"fields under {FIELD_CLAIMS} claims: {', '.join(thin)}")
+    return gaps
 
 
 def share(part, whole):
@@ -51,10 +89,13 @@ def report(path):
     unnamed = [m["id"] for m in maybe_plants if not m.get("botanicalName")]
     if unnamed:
         gaps.append(f"check for plants without botanicalName: {', '.join(unnamed)}")
+    counts = field_counts(d)
+    gaps.extend(field_gaps(counts))
     ab = sum(1 for s in sources if s.get("reliability") in {"A", "B"})
     return {
         "dossier": path.stem,
         "claims": len(d.get("claims") or []),
+        "fields": counts,
         "sourcesAB": f"{ab}/{len(sources)}",
         "pictures": len(pictures),
         "placed": len(placed),
@@ -72,7 +113,8 @@ def main():
         print(json.dumps(rows, ensure_ascii=False, indent=1))
         return
     for r in rows:
-        head = f"{r['dossier'][:34]:34} claims {r['claims']:3} AB {r['sourcesAB']:>6} pics {r['pictures']:2}/{r['placed']:2} stages {r['stages']:2} rx {r['reactions']} names {r['nativeNames']}"
+        covered = sum(1 for n in r["fields"].values() if n)
+        head = f"{r['dossier'][:34]:34} claims {r['claims']:3} fields {covered:2}/{len(r['fields'])} AB {r['sourcesAB']:>6} pics {r['pictures']:2}/{r['placed']:2} stages {r['stages']:2} rx {r['reactions']} names {r['nativeNames']}"
         print(head)
         print("    " + ("; ".join(r["gaps"]) if r["gaps"] else "meets the bar"))
 

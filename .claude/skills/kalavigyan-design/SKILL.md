@@ -64,6 +64,10 @@ IIT Kharagpur and its Centre of Excellence for Unified AI-Enabled Craft Ecosyste
    this craft.** Never transliterate a name ourselves.
 9. **Pictures are plates.** Caption first, credit after, standard Commons widths, no repeats on a
    page, no stock, shopping or AI imagery.
+10. **Dense with every field** (owner, 2026-11-20). Every field a page's sources cover is on the
+    page with cited quantities, mechanisms, names and dates; margin notes, fact grids, small
+    multiples and tables carry detail beside the prose; every screen earns its height, never at
+    the cost of the measure, the type scale or the citation rules (SYSTEM.md principle 10).
 
 ## 2. Non-negotiables
 

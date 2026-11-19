@@ -25,6 +25,7 @@ Read this file before any frontend task. The companions are the reference:
 7. **Indigo means you can press it.** Indigo is the only interactive colour. Madder means emphasis, a disagreement between sources, or a real hazard. Terracotta means place. Turmeric only highlights. Data never borrows any of them: every ramp step, series colour and family hue sits 10 or more delta E from indigo, indigo-hover, madder, terracotta and turmeric in its theme, and the generator enforces it.
 8. **Names in their own scripts, at equal standing, only where a source states them and names this craft.** Until then the plate and title carry the English name alone. Never transliterate a name ourselves.
 9. **Pictures are plates.** Caption first, credit after, standard Commons thumbnail widths, no repeats on a page, no stock, shopping or AI imagery, no price tags or sale tables.
+10. **Dense with every field** (owner, 2026-11-20). A reading page carries every field its sources cover (the 16 of `research/sections.DISCIPLINE_FIELDS`), each with cited quantities, mechanisms, names and dates, and every screen earns its height: margin notes, fact grids, small multiples, tables and figures hold detail beside the prose instead of below it. No empty band, no spacer beyond the spacing scale, no card that repeats a sentence already on screen. Density never breaks the measure (66ch), the type scale, the citation rules or the floor of 12px; a field with no source stays off the page and becomes a research question (principle 5).
 
 The owner rule against code comments still holds: none of the CSS, TSX or Python a task writes carries comments.
 
@@ -610,6 +611,9 @@ Order of work: generate `tokens.css` and copy `tailwind.config.ts` (2.1, 2.2) in
 ## 9. Decisions
 
 What version 1.1 changed in answer to the two critiques, and where a critique was not followed.
+
+**Amended 20 November 2026 (owner: "information density encompassing all the fields is spectacular on all the pages")**
+- Principle 10, dense with every field, added. It changes no token, component or template; it is the bar every reading page and answer is reviewed against, together with rules 23 to 26 of the craft-pages skill's page checklist.
 
 **Fixed as asked**
 - The chart-grid and chart-series generator bug (pipe-joined hexes) is gone: values are split per theme with their own ratios and classes, and the generator, `tokens.css` and a complete `tailwind.config.ts` now ship in this folder.
