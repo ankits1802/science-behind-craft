@@ -59,7 +59,9 @@ class FormulaChip(SpecModel):
     @model_validator(mode="after")
     def _a_record_or_its_source(self) -> Self:
         if (self.cid is None) == (self.source is None):
-            raise ValueError(f"formula {self.name!r} links its PubChem record or names its source, one of them")
+            raise ValueError(
+                f"formula {self.name!r} links its PubChem record or names its source, one of them"
+            )
         return self
 
 

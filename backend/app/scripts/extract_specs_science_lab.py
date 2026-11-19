@@ -77,7 +77,12 @@ def _option(button: Element, outcome: Element) -> dict[str, Any]:
         differs = note_differs(part)
         if differs is not None:
             parts.append({"part": "differs", "differs": differs})
-    return {"value": value, "label": text_of(button), "heading": unit_of(expect(heading, "h4")), "parts": parts}
+    return {
+        "value": value,
+        "label": text_of(button),
+        "heading": unit_of(expect(heading, "h4")),
+        "parts": parts,
+    }
 
 
 def _panel_part(part: Element, nested: Mapping[int, str]) -> dict[str, Any]:
@@ -102,12 +107,20 @@ def _panel_part(part: Element, nested: Mapping[int, str]) -> dict[str, Any]:
 
 def _formulas(part: Element) -> dict[str, Any]:
     expect(part, "div", "forms")
-    return {"part": "formulas", "option": part.attrs.get("data-forms"), "chips": [_chip(chip) for chip in kids(part)]}
+    return {
+        "part": "formulas",
+        "option": part.attrs.get("data-forms"),
+        "chips": [_chip(chip) for chip in kids(part)],
+    }
 
 
 def _chip(chip: Element) -> dict[str, Any]:
     formula, name, record = kids(expect(chip, "span", "formula"))
-    found = {"formula": rich(expect(formula, "b").children), "name": text_of(expect(name, "span")), "cid": None}
+    found = {
+        "formula": rich(expect(formula, "b").children),
+        "name": text_of(expect(name, "span")),
+        "cid": None,
+    }
     if record.tag == "span":
         return found | {"source": text_of(record)}
     link = PUBCHEM_LINK.fullmatch(expect(record, "a").attrs["href"])

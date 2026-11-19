@@ -10,31 +10,37 @@ const DIAL_TURNS = 359;
 
 export const turnedDegrees = (yaw: number) => Math.round((yaw * 180) / Math.PI);
 
-function Model({ model }: { model: MoleculeModel }) {
+function Stage({ model }: { model: MoleculeModel }) {
   const turned = turnedDegrees(model.yaw);
   return (
-    <figure className="mol" data-cid={model.cid} data-yaw={model.yaw} data-pitch={model.pitch} aria-labelledby={`${model.key}-n`}>
-      <div className="mol-stage">
-        <div
-          className="mol-dial"
-          role="slider"
-          tabIndex={0}
-          aria-label={model.dialLabel}
-          aria-valuemin={0}
-          aria-valuemax={DIAL_TURNS}
-          aria-valuenow={turned}
-          aria-valuetext={`Turned ${turned} degrees`}
-          aria-describedby={`${model.key}-d`}
-        >
-          <Drawing node={model.drawing} />
-        </div>
-        <span className="mol-tag" aria-hidden="true">
-          3D
-        </span>
-        <button className="btn sm mol-turn" type="button">
-          Turn
-        </button>
+    <div className="mol-stage">
+      <div
+        className="mol-dial"
+        role="slider"
+        tabIndex={0}
+        aria-label={model.dialLabel}
+        aria-valuemin={0}
+        aria-valuemax={DIAL_TURNS}
+        aria-valuenow={turned}
+        aria-valuetext={`Turned ${turned} degrees`}
+        aria-describedby={`${model.key}-d`}
+      >
+        <Drawing node={model.drawing} />
       </div>
+      <span className="mol-tag" aria-hidden="true">
+        3D
+      </span>
+      <button className="btn sm mol-turn" type="button">
+        Turn
+      </button>
+    </div>
+  );
+}
+
+function Model({ model }: { model: MoleculeModel }) {
+  return (
+    <figure className="mol" data-cid={model.cid} data-yaw={model.yaw} data-pitch={model.pitch} aria-labelledby={`${model.key}-n`}>
+      <Stage model={model} />
       <figcaption>
         <span className="mn" id={`${model.key}-n`}>
           {model.name}

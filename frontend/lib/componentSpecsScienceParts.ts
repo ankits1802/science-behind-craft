@@ -15,7 +15,7 @@ const COLOUR_TOKEN =
   /^--(ground|raised|sunk|rule|rule-strong|ink-[1-3]|madder|indigo|dye-[a-z]+(-[a-z]+)*|dip-[1-9]|mol-[a-z]+|atom-[a-z]+|map-[a-z]+(-[a-z]+)*|chart-[a-z]+(-[a-z]+)*)$/;
 const DRAWING_ATTRIBUTE = /^(?![oO][nN])[A-Za-z][A-Za-z0-9-]*$/;
 const PAINT_ATTRIBUTES = new Set(["fill", "stroke", "stop-color"]);
-const PAINT_VALUE = /^(none|currentColor|#fff|#000|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$/;
+const PAINT_VALUE = /^(none|currentColor|#(?:fff|000)|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$/;
 const PAINT_TOKEN = /^var\((--[a-z0-9-]+)\)$/;
 const PAINT_MIX = /^color-mix\(in srgb, var\((--[a-z0-9-]+)\) \d{1,3}%, var\((--[a-z0-9-]+)\)\)$/;
 const FOREIGN_URL = /url\((?!#[\w-]+\))/;
