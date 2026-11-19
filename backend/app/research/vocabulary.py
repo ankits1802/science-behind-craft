@@ -6,6 +6,7 @@ from types import MappingProxyType
 from typing import Literal
 
 from app.core.errors import InvalidInput
+from app.models.component_kinds import PIECE_KINDS
 from app.models.enums import (
     ANSWER_MODES,
     BLOCK_KINDS,
@@ -57,6 +58,7 @@ __all__ = [
     "MaterialKind",
     "MaterialRole",
     "MediaKind",
+    "PieceKind",
     "PieceSubjectKind",
     "PlaceRole",
     "QuoteCheck",
@@ -152,6 +154,7 @@ EnvStat = Literal[*ENV_STATS]
 MediaKind = Literal[*MEDIA_KINDS]
 PlaceRole = Literal[*PLACE_ROLES]
 PieceSubjectKind = Literal[*PIECE_SUBJECT_KINDS]
+PieceKind = Literal[*PIECE_KINDS]
 Depth = Literal[*EXPLAINER_DEPTHS]
 BlockKind = Literal[*BLOCK_KINDS]
 Discipline = Literal[*DISCIPLINES]

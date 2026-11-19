@@ -10,9 +10,9 @@ from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, created_at, one_of, subset_of, updated_at, uuid_pk
+from app.models.component_kinds import PIECE_KINDS
 from app.models.crafts import EMBEDDING_DIMENSIONS
 from app.models.enums import (
-    BLOCK_KINDS,
     DISCIPLINES,
     EXPLAINER_DEPTHS,
     PIECE_SUBJECT_KINDS,
@@ -71,7 +71,7 @@ class KnowledgePiece(Base):
     updatedAt: Mapped[datetime] = updated_at()
 
     __table_args__ = (
-        CheckConstraint(one_of("kind", BLOCK_KINDS), name="kind"),
+        CheckConstraint(one_of("kind", PIECE_KINDS), name="kind"),
         CheckConstraint(one_of("facet", DISCIPLINES), name="facet"),
         CheckConstraint(one_of("depth", EXPLAINER_DEPTHS), name="depth"),
         CheckConstraint(

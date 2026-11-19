@@ -44,6 +44,10 @@ edit the served file: change the content or the template, then run
 `cd backend && python -m app.scripts.build_monograph`. `--check` reports a page that differs from its
 build, and the backend tests fail until the two agree.
 
+To put a monograph's content into the database (sections by field and the component registry),
+run `python -m app.scripts.load_monograph` on the box after the deploy that carries it. It can be
+run again at any time and prints what it wrote and what still waits for stored facts.
+
 ## Connection budget
 
 Every process on the box reaches Postgres through the Supabase session pooler, which holds at most

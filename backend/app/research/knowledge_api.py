@@ -8,7 +8,7 @@ from pydantic import Field
 from .article_sections import ArticleSection
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS, SLUG_MAX_CHARS, CraftRef
-from .vocabulary import BlockKind, Discipline, EvidenceLevel, PieceSubjectKind
+from .vocabulary import Discipline, EvidenceLevel, PieceKind, PieceSubjectKind
 
 __all__ = [
     "ATTRIBUTION",
@@ -135,6 +135,6 @@ class CraftComponents(ContractModel):
     schema_version: SchemaVersion = KNOWLEDGE_API_SCHEMA_VERSION
     craft_slug: str | None = Field(max_length=SLUG_MAX_CHARS)
     field: Discipline | None
-    kind: BlockKind | None = None
+    kind: PieceKind | None = None
     query: str | None = Field(default=None, max_length=QUESTION_MAX_CHARS)
     components: list[ComponentSummary]

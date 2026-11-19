@@ -11,7 +11,7 @@ from pydantic import Field
 from app.core.errors import InvalidInput
 
 from .base import ContractModel
-from .vocabulary import Discipline
+from .vocabulary import Discipline, PieceKind
 
 __all__ = [
     "MONOGRAPH_SCHEMA_VERSION",
@@ -28,6 +28,7 @@ __all__ = [
 ]
 
 MONOGRAPH_SCHEMA_VERSION = 1
+COMPONENT_LABEL_PATTERN = r"^[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*){2,}$"
 SLOT_PATTERN = re.compile(r'<kv-slot (unit|data)="([A-Za-z0-9._-]+)"></kv-slot>')
 UNIT_SLOT = "unit"
 DATA_SLOT = "data"
@@ -67,10 +68,10 @@ class TextUnit(ContractModel):
 
 
 class ComponentEntry(ContractModel):
-    label: str
+    label: str = Field(pattern=COMPONENT_LABEL_PATTERN)
     chapter: str
     anchor: str
-    kind: str
+    kind: PieceKind
     title: str
     description: str
     field: Discipline

@@ -47,10 +47,27 @@ The page was a 3 MB hand-built file whose sentences did not point at stored fact
    their quotes (115 of its 135 facts). 97 citations and 48 of the 68 sources are not in the
    dossier yet.
 
+## Loaded into the database (2026-11-19)
+
+- `python -m app.scripts.load_monograph` (`services/monograph_load.py`) writes the content into
+  the database and can be run again at any time: a field whose sentences have not changed is left
+  alone, and a changed field gets a new version while the old one is superseded.
+- **Sections.** One published `ArticleSection` per field. It holds the cited sentences of that
+  field's paragraphs, list items, quotes, captions and table cells, in page order, each with the
+  database facts its citations map to. A sentence must cite a stored fact (`SectionSentence`), so
+  a cited sentence whose facts are not stored yet waits; the load reports how many.
+- **Components.** Each component whose text cites stored facts is registered in `KnowledgePiece`:
+  its label, kind, title, description and fields, the facts and sources it rests on, and a payload
+  naming the monograph, its anchor and its units. A `shared/` label is filed under no craft. Its
+  subjects are linked: crafts by slug, compounds by PubChem id, places by key. Concept subjects
+  wait until concepts have keys; the load reports them.
+- **Component kinds.** `models/component_kinds.COMPONENT_KINDS` names the 37 monograph component
+  kinds that are not answer block kinds. Migration `0034_component_kinds` lets `KnowledgePiece`
+  hold them, and `list_components` filters by any piece kind.
+
 ## What follows
 
-- Load the content into the database: `ArticleSection` rows per field from the units' sentences
-  and claims, the 79 components into the registry, and facts and sources for the 97 unmatched
-  citations through the curation gates. Then `list_components` serves them.
+- Add the facts and sources the dossier lacks (97 citations, 48 sources) through the curation
+  gates, then load again so every cited sentence and component is in the database.
 - Move each component's view from the template into a component spec, so other crafts reuse it.
 - Render other crafts with the same template once their content exists (decision 0101, step 6).

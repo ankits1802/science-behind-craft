@@ -19,7 +19,7 @@ from app.research.knowledge_api import (
     FieldList,
     FoundCrafts,
 )
-from app.research.vocabulary import BlockKind, Discipline
+from app.research.vocabulary import Discipline, PieceKind
 from app.services import component_library, knowledge_api
 from app.services.craft_resolver import CraftIndexStore
 
@@ -93,7 +93,7 @@ class ListComponents(Arguments):
         ),
     )
     field: Discipline | None = Field(default=None, description="One of list_fields")
-    kind: BlockKind | None = Field(default=None, description="One kind of component")
+    kind: PieceKind | None = Field(default=None, description="One kind of component")
 
 
 @dataclass(frozen=True)
