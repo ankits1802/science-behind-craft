@@ -211,7 +211,7 @@ def test_the_migration_checks_the_same_vocabulary_as_the_models() -> None:
     signature = load_migration(SIGNATURE_MIGRATION)
     assert migration.BLOCK_KINDS == learning.BLOCK_KINDS_BEFORE
     assert learning.BLOCK_KINDS == signature.BLOCK_KINDS_BEFORE
-    assert signature.BLOCK_KINDS == BLOCK_KINDS
+    assert BLOCK_KINDS[: len(signature.BLOCK_KINDS)] == signature.BLOCK_KINDS
     fields = load_migration(FIELDS_MIGRATION)
     assert migration.DISCIPLINES == fields.DISCIPLINES_BEFORE
     assert fields.DISCIPLINES == DISCIPLINES

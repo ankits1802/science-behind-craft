@@ -27,6 +27,7 @@ from app.research.understanding import UnderstandAsk, Understanding, UnknownCraf
 from app.research.vocabulary import CANONICAL_LANGUAGE
 from app.science.records import ProcessRecords
 
+from .answer_catalogue import CatalogueLookup, no_catalogue
 from .answer_events import CitedClaims
 from .answer_lede import AnswerOpening, LedeTools, LedeWriting, Opening, lede_plan
 from .answer_sections import (
@@ -48,14 +49,7 @@ from .block_builders import BlockBuilders
 from .explainer_document import explainer_document
 from .explainer_events import ExplainerStream, status_message
 from .explainer_history import STALE_VERSION_DETAIL, StaleVersion
-from .follow_ups import (
-    AnswerLayout,
-    FollowUp,
-    answer_layout,
-    closed_answer,
-    left_open,
-    understood_for,
-)
+from .follow_ups import AnswerLayout, FollowUp, answer_layout, closed_answer, left_open, understood_for
 from .piece_lookup import PieceAsk, PieceLookup, ReusedSection
 from .piece_store import BuiltSection, PieceStore
 from .reuse_enrichment import expert_floors, floor_deepening, floors_by_section
@@ -135,6 +129,7 @@ class AnswerPipeline:
     enrichment: EnrichmentTools
     builders: BlockBuilders = field(default_factory=BlockBuilders)
     lede: LedeTools = field(default_factory=LedeTools)
+    catalogue: CatalogueLookup = no_catalogue
 
 
 @dataclass(frozen=True)
@@ -303,7 +298,9 @@ async def _research(specs: Sequence[SectionSpec], run: _Run) -> list[SectionOutc
     floors = floors_by_section(specs, run.floors, run.enrichment, run.process)
     deepening = {**run.layout.deepening, **{sid: floor_deepening(f.placed) for sid, f in floors.items()}}
     context = SectionContext(
-        tools=SectionTools(pipeline.research, pipeline.compose, pipeline.store, pipeline.translation),
+        tools=SectionTools(
+            pipeline.research, pipeline.compose, pipeline.store, pipeline.translation, pipeline.catalogue
+        ),
         stream=run.stream,
         answer_id=run.answer_id,
         base=base,

@@ -104,7 +104,7 @@ def test_the_ladder_uses_the_seeded_stages_and_the_science_rows() -> None:
 
 def test_the_block_kinds_are_every_plan_kind_with_phase_a_built() -> None:
     assert set(BLOCK_MODELS) == set(BLOCK_KINDS) == set(BLOCK_PHASES)
-    assert len(BLOCK_KINDS) == 29
+    assert len(BLOCK_KINDS) == 30
     assert [kind for kind, phase in BLOCK_PHASES.items() if phase == SIGNATURE_PHASE] == list(SIGNATURE_KINDS)
     assert not set(SIGNATURE_KINDS) & set(BUILT_BLOCK_KINDS)
     assert [kind for kind, phase in BLOCK_PHASES.items() if phase == "D"] == [

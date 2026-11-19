@@ -10,6 +10,7 @@ from typing import Any, Protocol
 
 from app.composer.candidates import compose_request, research_summary
 from app.core.errors import AppError, spend_refusal
+from app.research.blocks_component import stood_for
 from app.research.composition import ComposedAnswer, ComposeFocus, ComposeRequest, searched_note
 from app.research.depth import section_sentence_limit
 from app.research.evidence_pack import EvidencePack, ResearchTrail
@@ -21,6 +22,7 @@ from app.research.stream import ResearchProgress
 from app.science.ladder import ladder_problems, ladder_stage_options, process_ladder
 from app.science.records import ProcessRecords
 
+from .answer_catalogue import CatalogueLookup, SectionCatalogue, no_catalogue
 from .answer_events import CitedClaims, joined_claims
 from .answer_translation import AnswerTranslation
 from .block_builders import AddedBlocks, BlockBuilders, SectionBuilds
@@ -73,6 +75,7 @@ class SectionTools:
     compose: Callable[[ComposeRequest], Awaitable[ComposedAnswer]]
     store: SectionStore
     translation: AnswerTranslation
+    catalogue: CatalogueLookup = no_catalogue
 
 
 @dataclass(frozen=True)
@@ -196,10 +199,10 @@ async def _section(
 async def _built_on(
     spec: SectionSpec, shown: _Attempt, context: SectionContext, ask: BuildAsk
 ) -> tuple[tuple[Block, ...], AddedBlocks]:
-    deepening = context.deepening_of(spec.id)
+    shown_kinds = {*context.deepening_of(spec.id).kinds, *stood_for(shown.blocks)}
     async with (
         context.enrichment.searching() as pictures,
-        context.builders.without(deepening.kinds).building() as builds,
+        context.builders.without(shown_kinds).building() as builds,
     ):
         builds.start(ask)
         return await _shown(spec, shown, context, pictures, builds)
@@ -210,7 +213,8 @@ async def _attempt(
 ) -> _Attempt:
     pack = await _researched(spec, context, share, fresh=fresh)
     await context.stream.section_state(spec.id, "WRITING")
-    focus = _focus(spec, context)
+    offered = await context.tools.catalogue(context.base, spec.discipline)
+    focus = _focus(spec, context, offered)
     request = compose_request(pack, context.base.question, focus=focus, style=context.reading_style)
     if request.candidates:
         await context.stream.status("COMPOSING", len(request.candidates))
@@ -219,7 +223,7 @@ async def _attempt(
     claims_of = await _kept(context, pack, composed)
     cited = await context.tools.store.cited(claim for claims in claims_of for claim in claims)
     sentences = context.deepening_of(spec.id).unshown(kept_sentences(composed, claims_of))
-    return _built(spec, context, pack, composed, sentences=sentences, cited=cited)
+    return _built(spec, context, pack, composed, sentences=sentences, cited=cited, offered=offered)
 
 
 async def _researched(
@@ -255,6 +259,7 @@ def _built(
     *,
     sentences: Sequence[KeptSentence],
     cited: CitedClaims,
+    offered: SectionCatalogue,
 ) -> _Attempt:
     split = section_sentences(sentences, cited)
     deepening = context.deepening_of(spec.id)
@@ -265,6 +270,11 @@ def _built(
     prose = _prose(block_id(spec.id, deepening.number(len(blocks) + 1)), split.facts, cited)
     if prose is not None:
         blocks.append(prose)
+        placed = offered.placed(
+            composed.component_labels, section_id=spec.id, first=deepening.number(len(blocks) + 1)
+        )
+        blocks += placed.blocks
+        cited = joined_claims(cited, placed.cited)
     shown_facts = split.facts if prose is not None else ()
     open_questions = tuple(
         cited_sentence(f"{spec.id}.open.{n}", sentence, cited)
@@ -318,7 +328,9 @@ async def _shown(
 ) -> tuple[tuple[Block, ...], AddedBlocks]:
     sources = _section_sources(attempt.cited, context.process)
     texts = claim_texts(context.process, attempt.cited)
-    in_language = partial(_in_language, context=context, texts=texts)
+    in_language = partial(
+        block_in_language, stream=context.stream, translation=context.tools.translation, claim_texts=texts
+    )
     shown: list[Block] = list(attempt.floored)
     for block in attempt.blocks:
         shown += await context.stream.blocks(spec.id, [block], sources, in_language=in_language)
@@ -333,26 +345,17 @@ async def _shown(
     images = await pictures.sent(spec.id, context.stream, ordinal=ordinal)
     if images is not None:
         shown.append(images)
-    open_questions = await _open_in_language(attempt.open_questions, context, texts)
+    open_questions = await open_questions_in_language(
+        attempt.open_questions,
+        stream=context.stream,
+        translation=context.tools.translation,
+        claim_texts=texts,
+    )
     await context.stream.open_questions(open_questions, sources)
     return tuple(shown), added
 
 
-async def _in_language(block: Block, context: SectionContext, texts: Mapping[uuid.UUID, str]) -> Block:
-    return await block_in_language(
-        block, stream=context.stream, translation=context.tools.translation, claim_texts=texts
-    )
-
-
-async def _open_in_language(
-    sentences: Sequence[dict[str, Any]], context: SectionContext, texts: Mapping[uuid.UUID, str]
-) -> list[dict[str, Any]]:
-    return await open_questions_in_language(
-        sentences, stream=context.stream, translation=context.tools.translation, claim_texts=texts
-    )
-
-
-def _focus(spec: SectionSpec, context: SectionContext) -> ComposeFocus:
+def _focus(spec: SectionSpec, context: SectionContext, offered: SectionCatalogue) -> ComposeFocus:
     records = context.process
     stages = ladder_stage_options(records) if records and spec.discipline == LADDER_DISCIPLINE else []
     return ComposeFocus(
@@ -360,6 +363,7 @@ def _focus(spec: SectionSpec, context: SectionContext) -> ComposeFocus:
         title=DISCIPLINE_TITLES[spec.discipline],
         stages=stages,
         sentences_max=section_sentence_limit(context.base.depth),
+        components=offered.options(),
     )
 
 
