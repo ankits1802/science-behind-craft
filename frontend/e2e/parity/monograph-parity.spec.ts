@@ -58,7 +58,9 @@ test("the React page reads exactly as the approved page", async ({ context }) =>
 async function driftReports(approved: Page, rendered: Page, offsets: { approved: Record<string, string>; rendered: Record<string, string> }): Promise<DriftReport[]> {
   const reports: DriftReport[] = [];
   for (const step of driftSteps(offsets.approved, offsets.rendered).slice(0, 6)) {
-    reports.push({ step, differences: heightDifferences(await sectionHeights(approved, step.after), await sectionHeights(rendered, step.after)) });
+    const after = heightDifferences(await sectionHeights(approved, step.after), await sectionHeights(rendered, step.after));
+    const before = heightDifferences(await sectionHeights(approved, step.before), await sectionHeights(rendered, step.before));
+    reports.push({ step, differences: [...before, ...after] });
   }
   return reports;
 }
