@@ -105,6 +105,12 @@ async def test_loading_an_authored_monograph_stores_its_document_once(
     (tmp_path / SLUG / "content.json").write_bytes(_content().model_dump_json(by_alias=True).encode("utf-8"))
     fragment = tmp_path / SLUG / "fragments" / fragment_file_name(PLATE)
     fragment.write_bytes(b'<figure id="plate"><kv-slot unit="u1"></kv-slot></figure>')
+    shell = (
+        b'<html><body><main id="kv-main"><kv-slot component="'
+        + PLATE.encode()
+        + b'"></kv-slot></main></body></html>'
+    )
+    (tmp_path / SLUG / "template.html").write_bytes(shell)
     first = await load_monograph(session, _content(), now=NOW)
     again = await load_monograph(session, _content(), now=NOW)
     assert (first.document_version, again.document_version) == (1, None)
@@ -112,7 +118,7 @@ async def test_loading_an_authored_monograph_stores_its_document_once(
     stored = await stored_document(session, "craft", SLUG)
     assert stored is not None
     assert (stored.version, stored.title) == (1, NAME)
-    assert stored.fragments == {PLATE: '<figure id="plate">Alum</figure>'}
+    assert (stored.fragments, stored.shell) == ({}, '<figure id="plate">Alum</figure>')
     assert stored.page_url.endswith(f"/crafts/{SLUG}")
 
 
