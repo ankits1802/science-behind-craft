@@ -5,6 +5,7 @@ import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
 import { driftSteps, heightDifferences, sectionHeights, type DriftReport } from "./parityDrift";
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
+import { alignPhase } from "./parityPhase";
 import { ancestorLayers, chapterOffsets, elementStyles, fontReport, selfHostedFaces, servedFaces, styleDifferences, type StyleDifference } from "./parityStyles";
 
 const APPROVED = "/monographs/kutch-ajrakh/index.html";
@@ -65,6 +66,7 @@ async function driftReports(approved: Page, rendered: Page, offsets: { approved:
 test("every chapter of the React page looks as the approved page does", async ({ context }) => {
   test.setTimeout(CHAPTERS_TIMEOUT_MS);
   const { approved, rendered } = await bothPages(context);
+  report("phase.json", { marginPx: await alignPhase(approved, rendered) });
   const ids = chapterIds(await approved.evaluate(() => [...document.querySelectorAll("main [id]")].map((element) => element.id)));
   const differences: Record<string, PixelDifference | "missing"> = {};
   const styles: Record<string, StyleDifference[]> = {};
