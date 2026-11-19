@@ -1,0 +1,277 @@
+{
+ "play": "Watch it being made",
+ "understood": "u1056",
+ "angles": "u1057",
+ "stages": [
+  {
+   "label": "Understood",
+   "detail": "Kutch Ajrakh, Expert",
+   "startMs": 0,
+   "endMs": 600
+  },
+  {
+   "label": "Reading sources",
+   "detail": "44 sources read",
+   "startMs": 600,
+   "endMs": 12100
+  },
+  {
+   "label": "Writing",
+   "detail": "The opening and seven sections",
+   "startMs": 2200,
+   "endMs": 14700
+  },
+  {
+   "label": "Drawing figures",
+   "detail": "Molecule, map, dates and pictures",
+   "startMs": 9400,
+   "endMs": 15200
+  },
+  {
+   "label": "Checking each quote",
+   "detail": "Against its source, word for word",
+   "startMs": 14700,
+   "endMs": 16000
+  }
+ ],
+ "sourcesKicker": "u1058",
+ "sources": [
+  {
+   "title": "GI Journal No. 188: Kutch Ajrakh",
+   "grade": "A"
+  },
+  {
+   "title": "Ajrakh: Rhythm of Blues",
+   "grade": "B"
+  },
+  {
+   "title": "Ajrakh",
+   "grade": "B"
+  },
+  {
+   "title": "GI Registry record, application 1050",
+   "grade": "A"
+  },
+  {
+   "title": "Registration details of Geographical Indications",
+   "grade": "A"
+  },
+  {
+   "title": "Ajrakh: An Introduction",
+   "grade": "B"
+  },
+  {
+   "title": "Ajarkh, the resist printed fabric of Gujarat",
+   "grade": "A"
+  },
+  {
+   "title": "Natural Colorants: Historical, Processing and Sustainable Prospects",
+   "grade": "A"
+  },
+  {
+   "title": "Microbial Communities Associated With Indigo Fermentation",
+   "grade": "A"
+  },
+  {
+   "title": "Indian Block-Printed Textiles: Past and Present",
+   "grade": "B"
+  },
+  {
+   "title": "Ajrakh: From Caste Dress to Catwalk",
+   "grade": "A"
+  },
+  {
+   "title": "AJRAKH- A Textile Tradition in Transition",
+   "grade": "B"
+  },
+  {
+   "title": "Indigo in Kutch, India",
+   "grade": "B"
+  },
+  {
+   "title": "Khatris & Community",
+   "grade": "C"
+  },
+  {
+   "title": "Traditional Indian textile designs for new markets (MA thesis)",
+   "grade": "B"
+  },
+  {
+   "title": "Water woes: Kutch's age-old Ajrakh craft",
+   "grade": "C"
+  },
+  {
+   "title": "Adapting to the present",
+   "grade": "C"
+  },
+  {
+   "title": "GI Journal No. 37: Bagru Hand Block Print",
+   "grade": "A"
+  },
+  {
+   "title": "Application for Registration of a Geographical Indication: Sanganeri Hand Block Printing (Form GI-1 with statement of case)",
+   "grade": "A"
+  },
+  {
+   "title": "Block Printing",
+   "grade": "B"
+  },
+  {
+   "title": "Tyrian purple (PubChem CID 177057)",
+   "grade": "A"
+  },
+  {
+   "title": "Indican (PubChem CID 441564)",
+   "grade": "A"
+  },
+  {
+   "title": "Glucose (PubChem CID 5793)",
+   "grade": "A"
+  },
+  {
+   "title": "Indigo",
+   "grade": "B"
+  },
+  {
+   "title": "Indigo (PubChem CID 5318432)",
+   "grade": "A"
+  },
+  {
+   "title": "Indoxyl (PubChem CID 50591)",
+   "grade": "A"
+  },
+  {
+   "title": "Dyeing cotton fabrics is an ancient Indian art",
+   "grade": "C"
+  },
+  {
+   "title": "Sodium dithionite (PubChem CID 24489)",
+   "grade": "A"
+  },
+  {
+   "title": "Sodium hydroxide (PubChem CID 14798)",
+   "grade": "A"
+  },
+  {
+   "title": "Sodium sulfite (PubChem CID 24437)",
+   "grade": "A"
+  },
+  {
+   "title": "Chintz, eight process samples, Coromandel Coast, c.1919, T.1-1920",
+   "grade": "A"
+  },
+  {
+   "title": "Madder Dye",
+   "grade": "B"
+  },
+  {
+   "title": "Fiber-Safe Extraction of Red Mordant Dyes from Hair Fibers",
+   "grade": "A"
+  },
+  {
+   "title": "Tannic acid (PubChem CID 16129778)",
+   "grade": "A"
+  },
+  {
+   "title": "Alizarin, PubChem CID 6293",
+   "grade": "A"
+  },
+  {
+   "title": "Purpurin, PubChem CID 6683",
+   "grade": "A"
+  },
+  {
+   "title": "Ferrous cation (PubChem CID 27284)",
+   "grade": "A"
+  },
+  {
+   "title": "Ferric cation (PubChem CID 29936)",
+   "grade": "A"
+  },
+  {
+   "title": "Art of Ajrakh",
+   "grade": "C"
+  },
+  {
+   "title": "Ajrak: Cloth from the Soil of Sindh",
+   "grade": "B"
+  },
+  {
+   "title": "Textile (ajrakh), Sind, ca. 1855-1879",
+   "grade": "A"
+  },
+  {
+   "title": "Ajrakh process sample, IS.7:1 to 3-2007",
+   "grade": "A"
+  },
+  {
+   "title": "Shawl (ajrakh), Gujarat, 2006",
+   "grade": "A"
+  },
+  {
+   "title": "Turban cloth (ajrakh), Gujarat, 2006",
+   "grade": "A"
+  }
+ ],
+ "sectionsKicker": "u1059",
+ "sections": [
+  {
+   "title": "Tannin, iron and alum make the colours hold",
+   "made": [
+    "Drawing the molecules: alizarin, C",
+    {
+     "text": "14",
+     "style": "sub"
+    },
+    "H",
+    {
+     "text": "8",
+     "style": "sub"
+    },
+    "O",
+    {
+     "text": "4",
+     "style": "sub"
+    },
+    " · PubChem CID 6293"
+   ]
+  },
+  {
+   "title": "From Sindh to Kutch at a king's invitation",
+   "made": [
+    "Setting out the dates, from Al Fustat to 2024"
+   ]
+  },
+  {
+   "title": "Blue, red, black and white, printed both sides",
+   "made": [
+    "Drawing the cloth after each of its eleven stages"
+   ]
+  },
+  {
+   "title": "When the river died and the iron rose",
+   "made": [
+    "Drawing the map in 8 steps, its river and its rain"
+   ]
+  },
+  {
+   "title": "From barter with herders to running yardage",
+   "made": [
+    "Setting out the GI dates and the yardage"
+   ]
+  },
+  {
+   "title": "Balance, order and the priest-king's cloud motif",
+   "made": [
+    "Finding a picture: the priest-king, Wikimedia Commons"
+   ]
+  },
+  {
+   "title": "Camel dung, myrobalan and lime prepare the cloth",
+   "made": [
+    "Drawing the stages of preparation"
+   ]
+  }
+ ],
+ "ready": "u1060"
+}

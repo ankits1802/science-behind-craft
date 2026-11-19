@@ -1,0 +1,79 @@
+{
+ "id": "materials",
+ "headingId": "mat-h",
+ "heading": "Six materials",
+ "intro": "u0527",
+ "cards": [
+  {
+   "swatch": "--dye-indigo",
+   "role": "u0528",
+   "name": "u0529",
+   "local": "u0530",
+   "botanical": "u0531",
+   "chemistry": "u0532",
+   "facts": [
+    "u0533"
+   ]
+  },
+  {
+   "swatch": "--dye-madder",
+   "role": "u0534",
+   "name": "u0535",
+   "local": "u0536",
+   "botanical": "u0537",
+   "chemistry": "u0538",
+   "facts": [
+    "u0539"
+   ]
+  },
+  {
+   "swatch": "crystal",
+   "role": "u0540",
+   "name": "u0541",
+   "local": "u0542",
+   "botanical": null,
+   "chemistry": "u0543",
+   "facts": [
+    "u0544"
+   ]
+  },
+  {
+   "swatch": "--dye-kut",
+   "role": "u0545",
+   "name": "u0546",
+   "local": "u0547",
+   "botanical": null,
+   "chemistry": "u0548",
+   "facts": [
+    "u0549"
+   ]
+  },
+  {
+   "swatch": "--dye-harda",
+   "role": "u0550",
+   "name": "u0551",
+   "local": "u0552",
+   "botanical": "u0553",
+   "chemistry": "u0554",
+   "facts": [
+    "u0555"
+   ]
+  },
+  {
+   "swatch": "--dye-lime",
+   "role": "u0556",
+   "name": "u0557",
+   "local": "u0558",
+   "botanical": null,
+   "chemistry": "u0559",
+   "facts": [
+    "u0560"
+   ]
+  }
+ ],
+ "after": [
+  {
+   "component": "kutch-ajrakh/materials/natural-dye-materials-photo"
+  }
+ ]
+}
