@@ -99,7 +99,7 @@
    "grade": "A",
    "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
    "extra": "Textiles family monograph",
-   "dossierSourceId": null
+   "dossierSourceId": "S22"
   },
   "g10": {
    "number": 10,
@@ -363,7 +363,7 @@
    "grade": "A",
    "url": "https://cool.culturalheritage.org/jaic/articles/jaic34-03-004_2.html",
    "extra": "KalaVigyan compound library",
-   "dossierSourceId": null
+   "dossierSourceId": "S23"
   },
   "g34": {
    "number": 34,
@@ -759,7 +759,7 @@
    "grade": "A",
    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3631759",
    "extra": "",
-   "dossierSourceId": null
+   "dossierSourceId": "S24"
   }
  },
  "citations": {
@@ -5820,7 +5820,303 @@
   "rm:p7f082824ad69.5": [
    "C090"
   ],
-  "chem:bag13": []
+  "chem:bag13": [
+   "C159"
+  ],
+  "mb:kb:C074": [
+   "craft:Kutch-Bandhani:C074"
+  ],
+  "chem:q130": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "chem:q36": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "chem:q119": [
+   "category:Textiles-Based-Craft-Category:C108"
+  ],
+  "mb:kb:C037": [
+   "craft:Kutch-Bandhani:C037"
+  ],
+  "ask:tx:C110": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "chem:q24": [
+   "category:Textiles-Based-Craft-Category:C105"
+  ],
+  "mb:m3:C075": [
+   "craft:Bagh-Prints-Of-Madhya-Pradesh:C075"
+  ],
+  "chem:q117": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "mb:m19:C103": [
+   "craft:Channapatna-Toys-Dolls:C103"
+  ],
+  "chem:q48": [
+   "category:Textiles-Based-Craft-Category:C084"
+  ],
+  "mb:bg:C080": [
+   "craft:Bagru-Hand-Block-Print:C003",
+   "craft:Bagru-Hand-Block-Print:C008",
+   "craft:Bagru-Hand-Block-Print:C009",
+   "craft:Bagru-Hand-Block-Print:C063",
+   "craft:Bagru-Hand-Block-Print:C080",
+   "craft:Bagru-Hand-Block-Print:C081",
+   "craft:Bagru-Hand-Block-Print:C129",
+   "craft:Bagru-Hand-Block-Print:C130"
+  ],
+  "chem:q93": [
+   "category:Textiles-Based-Craft-Category:C090"
+  ],
+  "rm:f3.purp": [
+   "craft:Bagru-Hand-Block-Print:C080"
+  ],
+  "chem:q30": [
+   "category:Textiles-Based-Craft-Category:C108"
+  ],
+  "chem:q35": [
+   "category:Textiles-Based-Craft-Category:C111"
+  ],
+  "chem:q62": [
+   "craft:Bagru-Hand-Block-Print:C080",
+   "craft:Sanganeri-Hand-Block-Printing:C061"
+  ],
+  "chem:q41": [
+   "category:Textiles-Based-Craft-Category:C215"
+  ],
+  "pt:tx:C111": [
+   "category:Textiles-Based-Craft-Category:C111"
+  ],
+  "mb:m17:C112": [
+   "craft:Madhubani-Paintings:C105",
+   "craft:Madhubani-Paintings:C107",
+   "craft:Madhubani-Paintings:C109",
+   "craft:Madhubani-Paintings:C112",
+   "craft:Madhubani-Paintings:C113",
+   "craft:Madhubani-Paintings:C115",
+   "craft:Madhubani-Paintings:C117"
+  ],
+  "rm:s2.shared.rekh.2": [
+   "craft:Sanganeri-Hand-Block-Printing:C106"
+  ],
+  "mb:mk:C094": [
+   "craft:Machilipatnam-Kalamkari:C094"
+  ],
+  "mb:mk:C085": [
+   "craft:Machilipatnam-Kalamkari:C085"
+  ],
+  "chem:q49": [
+   "category:Textiles-Based-Craft-Category:C085"
+  ],
+  "chem:q29": [
+   "category:Textiles-Based-Craft-Category:C105",
+   "category:Textiles-Based-Craft-Category:C107"
+  ],
+  "chem:q25": [
+   "category:Textiles-Based-Craft-Category:C105"
+  ],
+  "ask:tx:C110+tx:C108": [
+   "category:Textiles-Based-Craft-Category:C108",
+   "category:Textiles-Based-Craft-Category:C110",
+   "craft:Dabu-Hand-Block-Printing:C112"
+  ],
+  "chem:q98": [
+   "category:Textiles-Based-Craft-Category:C119"
+  ],
+  "mb:bg:C081": [
+   "craft:Bagru-Hand-Block-Print:C003",
+   "craft:Bagru-Hand-Block-Print:C008",
+   "craft:Bagru-Hand-Block-Print:C009",
+   "craft:Bagru-Hand-Block-Print:C063",
+   "craft:Bagru-Hand-Block-Print:C080",
+   "craft:Bagru-Hand-Block-Print:C081",
+   "craft:Bagru-Hand-Block-Print:C129",
+   "craft:Bagru-Hand-Block-Print:C130"
+  ],
+  "chem:q22": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "chem:q16": [
+   "category:Textiles-Based-Craft-Category:C108",
+   "craft:Dabu-Hand-Block-Printing:C112"
+  ],
+  "chem:q81": [
+   "category:Textiles-Based-Craft-Category:C088"
+  ],
+  "chem:q15": [
+   "category:Textiles-Based-Craft-Category:C109"
+  ],
+  "mb:bg:C066": [
+   "craft:Bagru-Hand-Block-Print:C066"
+  ],
+  "chem:q40": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "chem:q79": [
+   "category:Textiles-Based-Craft-Category:C088"
+  ],
+  "chem:q21": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "chem:q23": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "mb:tx:C093": [
+   "category:Textiles-Based-Craft-Category:C093"
+  ],
+  "chem:q131": [
+   "category:Textiles-Based-Craft-Category:C215"
+  ],
+  "chem:q63": [
+   "category:Textiles-Based-Craft-Category:C098"
+  ],
+  "ask:tx:C106": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "chem:q14": [
+   "category:Textiles-Based-Craft-Category:C224"
+  ],
+  "chem:q18": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "sa:dte1": [
+   "category:Textiles-Based-Craft-Category:C108"
+  ],
+  "sa:met1": [
+   "category:Textiles-Based-Craft-Category:C108",
+   "craft:Dabu-Hand-Block-Printing:C112"
+  ],
+  "mb:mk:C010": [
+   "craft:Machilipatnam-Kalamkari:C010"
+  ],
+  "mb:mk:C070": [
+   "craft:Machilipatnam-Kalamkari:C070"
+  ],
+  "mb:m3:C058": [
+   "craft:Bagh-Prints-Of-Madhya-Pradesh:C058"
+  ],
+  "mb:m3:C086": [
+   "craft:Bagh-Prints-Of-Madhya-Pradesh:C086"
+  ],
+  "ask:tx:C108": [
+   "category:Textiles-Based-Craft-Category:C108",
+   "craft:Dabu-Hand-Block-Printing:C112"
+  ],
+  "chem:q77": [
+   "craft:Bagru-Hand-Block-Print:C080",
+   "craft:Sanganeri-Hand-Block-Printing:C061"
+  ],
+  "chem:q38": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "mb:m1:C100": [
+   "craft:Sanganeri-Hand-Block-Printing:C022",
+   "craft:Sanganeri-Hand-Block-Printing:C100"
+  ],
+  "ask:tx:C105": [
+   "category:Textiles-Based-Craft-Category:C105"
+  ],
+  "chem:q32": [
+   "category:Textiles-Based-Craft-Category:C110"
+  ],
+  "mb:m3:C077": [
+   "craft:Bagh-Prints-Of-Madhya-Pradesh:C077"
+  ],
+  "chem:q5": [
+   "category:Textiles-Based-Craft-Category:C108"
+  ],
+  "mb:m17:C095": [
+   "craft:Madhubani-Paintings:C095"
+  ],
+  "chem:q17": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "chem:q20": [
+   "category:Textiles-Based-Craft-Category:C106"
+  ],
+  "chem:q61": [
+   "category:Textiles-Based-Craft-Category:C093"
+  ],
+  "mb:bg:C092": [
+   "craft:Bagru-Hand-Block-Print:C092",
+   "craft:Dabu-Hand-Block-Printing:C008",
+   "craft:Dabu-Hand-Block-Printing:C077"
+  ],
+  "pt:bg:C080": [
+   "craft:Bagru-Hand-Block-Print:C080"
+  ],
+  "mb:mk:C061": [
+   "craft:Machilipatnam-Kalamkari:C061"
+  ],
+  "chem:q31": [
+   "category:Textiles-Based-Craft-Category:C108"
+  ],
+  "chem:q76": [
+   "category:Textiles-Based-Craft-Category:C092"
+  ],
+  "chem:q26": [
+   "category:Textiles-Based-Craft-Category:C107"
+  ],
+  "chem:q51": [
+   "category:Textiles-Based-Craft-Category:C087"
+  ],
+  "chem:q43": [
+   "category:Textiles-Based-Craft-Category:C108",
+   "craft:Dabu-Hand-Block-Printing:C112"
+  ],
+  "chem:q28": [
+   "category:Textiles-Based-Craft-Category:C107"
+  ],
+  "mb:m17:C121": [
+   "craft:Madhubani-Paintings:C121"
+  ],
+  "mb:bg:C049": [
+   "craft:Bagru-Hand-Block-Print:C049"
+  ],
+  "mb:m3:C055": [
+   "craft:Bagh-Prints-Of-Madhya-Pradesh:C055"
+  ],
+  "chem:q13": [
+   "craft:Bagru-Hand-Block-Print:C080",
+   "craft:Sanganeri-Hand-Block-Printing:C061"
+  ],
+  "mb:bg:C018": [
+   "craft:Bagru-Hand-Block-Print:C018"
+  ],
+  "mb:mk:C080": [
+   "craft:Machilipatnam-Kalamkari:C080"
+  ],
+  "chem:q83": [
+   "C153"
+  ],
+  "rm:f2.frater": [
+   "C153"
+  ],
+  "chem:q118": [
+   "C154"
+  ],
+  "sa:aino1": [
+   "C154"
+  ],
+  "chem:q120": [
+   "C155"
+  ],
+  "chem:q70": [
+   "C156"
+  ],
+  "rm:f3.chelate": [
+   "C156"
+  ],
+  "chem:q125": [
+   "C157"
+  ],
+  "chem:q33": [
+   "C158"
+  ],
+  "kv:kv:coda": [
+   "C160"
+  ]
  },
  "data": {
   "mol-data": {

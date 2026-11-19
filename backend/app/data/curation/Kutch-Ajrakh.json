@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
   "craftSlug": "Kutch-Ajrakh",
-  "version": 2,
-  "curatedAt": "2026-11-18T17:00:00+00:00",
+  "version": 3,
+  "curatedAt": "2026-11-19T08:00:00+00:00",
   "curator": "claude-code",
   "coverage": "FULL",
   "searched": [
@@ -426,6 +426,49 @@
       "access": "OPEN",
       "reliability": "D",
       "retrievedAt": "2026-11-18"
+    },
+    {
+      "id": "S22",
+      "kind": "PAPER",
+      "title": "Microbial Communities Associated With Indigo Fermentation That Thrive in Anaerobic Alkaline Environments",
+      "publisher": "Frontiers in Microbiology",
+      "year": 2018,
+      "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "doi": "10.3389/fmicb.2018.02196",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-19"
+    },
+    {
+      "id": "S23",
+      "kind": "PAPER",
+      "title": "Fiber-Safe Extraction of Red Mordant Dyes from Hair Fibers",
+      "publisher": "Journal of the American Institute for Conservation",
+      "year": 1995,
+      "url": "https://cool.culturalheritage.org/jaic/articles/jaic34-03-004_2.html",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-19"
+    },
+    {
+      "id": "S24",
+      "kind": "PAPER",
+      "title": "The development of Terminalia chebula Retz. (Combretaceae) in clinical research",
+      "authors": [
+        "Anwesa Bag",
+        "Subir Kumar Bhattacharyya",
+        "Rabi Ranjan Chattopadhyay"
+      ],
+      "publisher": "Asian Pacific Journal of Tropical Biomedicine",
+      "year": 2013,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3631759",
+      "doi": "10.1016/S2221-1691(13)60059-3",
+      "language": "en",
+      "access": "OPEN",
+      "reliability": "A",
+      "retrievedAt": "2026-11-19"
     }
   ],
   "claims": [
@@ -3252,6 +3295,136 @@
           "sourceId": "S21",
           "locator": "lead paragraph",
           "quote": "Ajrak (Sindhi: اجرڪ; Saraiki: اجرک) is a unique form of textile block-printing found primarily among the Sindhi diaspora and in the Sindh region of Pakistan"
+        }
+      ]
+    },
+    {
+      "id": "C153",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Ajrakh's colours come from resist and mordant printing and from dyeing with indigo, madder and iron acetate.",
+      "quotes": [
+        {
+          "sourceId": "S09",
+          "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+          "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3)."
+        }
+      ]
+    },
+    {
+      "id": "C154",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Indigo-reducing bacteria turn indigo, which does not dissolve in water, into leucoindigo, which does.",
+      "quotes": [
+        {
+          "sourceId": "S22",
+          "locator": "Introduction",
+          "quote": "Indigo is transformed to leucoindigo by the action of indigo-reducing bacteria (indigo → leucoindigo) (Figure 1). Although indigo is not soluble in water, leucoindigo is soluble in water."
+        }
+      ]
+    },
+    {
+      "id": "C155",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Leucoindigo penetrates textiles dipped in the indigo fermentation fluid, and a brief exposure to air oxidises it back to indigo.",
+      "quotes": [
+        {
+          "sourceId": "S22",
+          "locator": "§ \"Introduction\"",
+          "quote": "Therefore, leucoindigo penetrates textiles dipped in indigo fermentation fluid, followed by a brief exposure to air to oxidize leucoindigo (leucoindigo → indigo)."
+        }
+      ]
+    },
+    {
+      "id": "C156",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Alizarin molecules can form six-member chelate rings with aluminium ions, and the large complexes are likely trapped within the fibre.",
+      "quotes": [
+        {
+          "sourceId": "S23",
+          "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+          "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions."
+        },
+        {
+          "sourceId": "S23",
+          "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+          "quote": "It is also likely that the large complexes are physically trapped within the fiber."
+        }
+      ]
+    },
+    {
+      "id": "C157",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Alum is used as a mordant in the ajrakh process to fasten the colours.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
+          "quote": "Alum is used as a mordant in the process to fasten the colours."
+        }
+      ]
+    },
+    {
+      "id": "C158",
+      "discipline": "PROCESS",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "In Kutch, natural indigo bought in blocks is ground, soaked and fermented in an underground vat of strong alkaline lime, dates and carbonate of soda.",
+      "quotes": [
+        {
+          "sourceId": "S01",
+          "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+          "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer."
+        }
+      ]
+    },
+    {
+      "id": "C159",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "The fruit of harde holds hydrolysable tannins, with chebulinic acid among its phenolic constituents.",
+      "quotes": [
+        {
+          "sourceId": "S24",
+          "locator": "5. Phytoconstituents of T. chebula Retz.",
+          "quote": "The tannins of T. chebula are of pyrogallol (hydrolysable) type."
+        },
+        {
+          "sourceId": "S24",
+          "locator": "5. Phytoconstituents of T. chebula Retz.",
+          "quote": "Other constituents include phenolics such as chebulinic acid, ellagic acid and anthraquinones."
+        }
+      ]
+    },
+    {
+      "id": "C160",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "type": "CRAFT"
+      },
+      "text": "Good quality water is essential to the survival of ajrakh, an ajrakh craftsman told Mongabay India.",
+      "quotes": [
+        {
+          "sourceId": "S20",
+          "locator": "section 'History repeats itself'",
+          "quote": "Water and good quality water is essential to the survival of Ajrakh"
         }
       ]
     }

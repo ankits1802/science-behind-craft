@@ -65,6 +65,24 @@ The page was a 3 MB hand-built file whose sentences did not point at stored fact
   kinds that are not answer block kinds. Migration `0034_component_kinds` lets `KnowledgePiece`
   hold them, and `list_components` filters by any piece kind.
 
+## Every citation resolved (2026-11-19)
+
+- **Facts across dossiers.** A citation's facts are named in `citationClaims` either by the
+  monograph's own dossier id (`C001`) or across dossiers as `craft:<Slug>:<id>` or
+  `category:<Slug>:<id>`. 77 of the 98 citations without an Ajrakh fact were already stored in
+  other dossiers: 49 in the textile category's, the rest in the kin crafts' (Bagru, Madhubani, Dabu,
+  Sanganeri, Machilipatnam Kalamkari, Bagh, Kutch Bandhani, Channapatna).
+- **Whose section.** A sentence joins the craft's own sections only when at least one of its facts
+  is the craft's or its category's; a sentence resting only on another craft's facts (the kin
+  chapter) stays with that craft. A component may rest on any stored fact.
+- **New facts.** Eight citations became Ajrakh facts in dossier version 3 (C153 to C160), with
+  three new sources (Aino et al. 2018, Tiedemann and Yang 1995, Bag et al. 2013); the verifier
+  passed all 284 quotes and the checker found nothing.
+- **Left as they are.** Five citations quote compound records by name or formula (dithionite,
+  indigo, indican, Tyrian purple, tannic acid): their quotes are under the dossier's 25 characters
+  and the facts they support are PubChem's compound data. Three kin citations belong to Bagh,
+  Pedana and Bagru's dossiers, and two molecule citations carry no quote.
+
 ## What follows
 
 - Add the facts and sources the dossier lacks (97 citations, 48 sources) through the curation

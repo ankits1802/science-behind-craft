@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import uuid
+from collections import defaultdict
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -17,6 +19,8 @@ from app.models import (
     ClaimSource,
     Compound,
     Craft,
+    CraftCategory,
+    CuratedCategoryClaim,
     CuratedClaim,
     KnowledgePiece,
     KnowledgePieceSubject,
@@ -36,6 +40,8 @@ TOPIC_PREFIX = "monograph:"
 TOPIC_KEY_MAX = 200
 LANGUAGE = "en"
 DEPTH = "EXPERT"
+CROSS_REFERENCE = re.compile(r"^(craft|category):([A-Za-z0-9-]+):([A-Za-z0-9]+)$")
+CATEGORY = "category"
 
 
 @dataclass
@@ -65,10 +71,16 @@ class MonographLoad:
 
 
 @dataclass(frozen=True)
+class _Fact:
+    claim_id: uuid.UUID
+    own: bool
+
+
+@dataclass(frozen=True)
 class _Loading:
     craft: Craft
     content: MonographContent
-    claims: Mapping[str, uuid.UUID]
+    claims: Mapping[str, _Fact]
     report: MonographLoad
 
 
@@ -77,7 +89,7 @@ async def load_monograph(session: AsyncSession, content: MonographContent, *, no
     if craft is None:
         raise InvalidInput(f"No craft has the slug {content.craft_slug}")
     report = MonographLoad(craft_slug=craft.slug)
-    claims = await _claim_ids(session, craft.id)
+    claims = await _facts(session, craft.id, content)
     sections = _sections(content, claims, report)
     for discipline, sentences in sections.items():
         written = await _write_section(session, craft.id, discipline, sentences)
@@ -89,15 +101,39 @@ async def load_monograph(session: AsyncSession, content: MonographContent, *, no
     return report
 
 
-async def _claim_ids(session: AsyncSession, craft_id: uuid.UUID) -> dict[str, uuid.UUID]:
+async def _facts(session: AsyncSession, craft_id: uuid.UUID, content: MonographContent) -> dict[str, _Fact]:
     rows = await session.execute(
         select(CuratedClaim.key, CuratedClaim.claimId).where(CuratedClaim.craftId == craft_id)
     )
-    return {str(key): claim_id for key, claim_id in rows.all()}
+    found = {str(key): _Fact(claim_id, own=True) for key, claim_id in rows.all()}
+    grouped: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for refs in content.citation_claims.values():
+        for ref in refs:
+            matched = CROSS_REFERENCE.match(ref)
+            if matched:
+                grouped[(matched.group(1), matched.group(2))].add(matched.group(3))
+    for (kind, slug), keys in grouped.items():
+        for key, claim_id in (await session.execute(_cross_statement(kind, slug, keys))).all():
+            found[f"{kind}:{slug}:{key}"] = _Fact(claim_id, own=kind == CATEGORY)
+    return found
+
+
+def _cross_statement(kind: str, slug: str, keys: set[str]) -> Any:
+    if kind == CATEGORY:
+        return (
+            select(CuratedCategoryClaim.key, CuratedCategoryClaim.claimId)
+            .join(CraftCategory, CraftCategory.id == CuratedCategoryClaim.categoryId)
+            .where(CraftCategory.slug == slug, CuratedCategoryClaim.key.in_(sorted(keys)))
+        )
+    return (
+        select(CuratedClaim.key, CuratedClaim.claimId)
+        .join(Craft, Craft.id == CuratedClaim.craftId)
+        .where(Craft.slug == slug, CuratedClaim.key.in_(sorted(keys)))
+    )
 
 
 def _sections(
-    content: MonographContent, claims: Mapping[str, uuid.UUID], report: MonographLoad
+    content: MonographContent, claims: Mapping[str, _Fact], report: MonographLoad
 ) -> dict[str, list[SectionSentence]]:
     sections: dict[str, list[SectionSentence]] = {}
     for entry in content.layout:
@@ -107,11 +143,14 @@ def _sections(
         for text, keys in _unit_sentences(unit):
             if not keys:
                 continue
-            found = _stored_claims(content, keys, claims)
+            found = _stored_facts(content, keys, claims)
             if not found:
                 report.sentences_awaiting_facts += 1
                 continue
-            sections.setdefault(unit.field, []).append(SectionSentence(text=text, claim_ids=found))
+            if not any(fact.own for fact in found):
+                continue
+            ids = list(dict.fromkeys(fact.claim_id for fact in found))
+            sections.setdefault(unit.field, []).append(SectionSentence(text=text, claim_ids=ids))
             report.sentences += 1
     return sections
 
@@ -137,11 +176,8 @@ def _cites(nodes: Sequence[Any]) -> list[str]:
     return keys
 
 
-def _stored_claims(
-    content: MonographContent, keys: Iterable[str], claims: Mapping[str, uuid.UUID]
-) -> list[uuid.UUID]:
-    found = [claims[key] for cite in keys for key in content.citation_claims.get(cite, []) if key in claims]
-    return list(dict.fromkeys(found))
+def _stored_facts(content: MonographContent, keys: Iterable[str], claims: Mapping[str, _Fact]) -> list[_Fact]:
+    return [claims[ref] for cite in keys for ref in content.citation_claims.get(cite, []) if ref in claims]
 
 
 async def _write_section(
@@ -177,7 +213,7 @@ async def _register(session: AsyncSession, loading: _Loading, component: Compone
     content, report = loading.content, loading.report
     units = [e.ref for e in content.layout if e.kind == "unit" and e.within == component.label]
     keys = [key for ref in units for key in _cites(content.units[ref].nodes)]
-    claim_ids = _stored_claims(content, keys, loading.claims)
+    claim_ids = list(dict.fromkeys(fact.claim_id for fact in _stored_facts(content, keys, loading.claims)))
     if not claim_ids:
         report.components_awaiting_facts.append(component.label)
         return

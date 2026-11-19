@@ -14,6 +14,8 @@ from app.models import (
     Compound,
     Concept,
     Craft,
+    CraftCategory,
+    CuratedCategoryClaim,
     CuratedClaim,
     KnowledgePiece,
     KnowledgePieceSubject,
@@ -183,3 +185,57 @@ async def test_loading_again_changes_nothing_and_a_changed_sentence_supersedes_t
         (1, "SUPERSEDED"),
         (2, "PUBLISHED"),
     ]
+
+
+async def _cross_seed(session: AsyncSession) -> tuple[uuid.UUID, uuid.UUID]:
+    category, kin = uuid.uuid4(), uuid.uuid4()
+    session.add(
+        CraftCategory(
+            id=category,
+            slug="Monograph-Load-Test-Category",
+            name="Monograph Load Test Category",
+            sortOrder=999,
+        )
+    )
+    session.add(Craft(id=kin, name="Monograph Load Kin Craft", slug="Monograph-Load-Kin-Craft"))
+    await session.flush()
+    shared, theirs = uuid.uuid4(), uuid.uuid4()
+    for claim_id, text in (
+        (shared, "Alum binds madder in every block print."),
+        (theirs, "The kin craft prints at dawn."),
+    ):
+        session.add(
+            Claim(
+                id=claim_id,
+                subjectType="CONCEPT",
+                subjectId=ALUM,
+                predicate="states",
+                text=text,
+                evidenceLevel="PROVISIONAL",
+                origin="IMPORT",
+                field="CHEMISTRY",
+            )
+        )
+    await session.flush()
+    session.add(CuratedCategoryClaim(claimId=shared, categoryId=category, key="C010", discipline="CHEMISTRY"))
+    session.add(CuratedClaim(claimId=theirs, craftId=kin, key="C001", discipline="CHEMISTRY"))
+    await session.flush()
+    return shared, theirs
+
+
+async def test_a_category_fact_joins_the_section_and_another_crafts_fact_only_rests_a_component(
+    session: AsyncSession,
+) -> None:
+    shared, theirs = await _cross_seed(session)
+    content = _content().model_dump(by_alias=True)
+    content["citationClaims"] |= {
+        "k1": ["category:Monograph-Load-Test-Category:C010"],
+        "k2": ["craft:Monograph-Load-Kin-Craft:C001"],
+    }
+    loaded = await load_monograph(session, MonographContent.model_validate(content), now=NOW)
+    assert await _sections(session) == [
+        (1, "PUBLISHED", [{"text": "Alum fixes the red.", "claimIds": [str(shared)]}])
+    ]
+    assert loaded.components_written == [PLAYER, CHART]
+    chart = await session.scalar(select(KnowledgePiece).where(KnowledgePiece.label == CHART))
+    assert chart is not None and chart.claimIds == [theirs] and chart.craftId is None
