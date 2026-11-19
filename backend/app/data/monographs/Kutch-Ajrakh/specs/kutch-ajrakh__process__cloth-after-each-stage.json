@@ -1,0 +1,306 @@
+{
+ "key": "a",
+ "head": {
+  "figure": "pt:2",
+  "number": "u0117",
+  "title": "u0118",
+  "titleId": "fig2-t",
+  "dek": "u0119"
+ },
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "class": "lc-bsvg",
+   "viewBox": "0 0 1200 540",
+   "preserveAspectRatio": "xMidYMid slice",
+   "role": "img",
+   "aria-labelledby": "a-big-t"
+  },
+  "children": [
+   {
+    "tag": "title",
+    "attrs": {
+     "id": "a-big-t"
+    },
+    "children": [
+     "The cloth after stage 11"
+    ]
+   },
+   {
+    "tag": "defs",
+    "children": [
+     {
+      "tag": "mask",
+      "attrs": {
+       "id": "a-dipm",
+       "maskUnits": "userSpaceOnUse",
+       "x": "-40",
+       "y": "-40",
+       "width": "1280",
+       "height": "620"
+      },
+      "children": [
+       {
+        "tag": "g",
+        "attrs": {
+         "class": "dipg"
+        },
+        "children": [
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M-40 0 Q300 -14 600 0 T1240 0 V700 H-40 Z",
+           "fill": "#fff"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "mask",
+      "attrs": {
+       "id": "a-oxm",
+       "maskUnits": "userSpaceOnUse",
+       "x": "-40",
+       "y": "-40",
+       "width": "1280",
+       "height": "620"
+      },
+      "children": [
+       {
+        "tag": "g",
+        "attrs": {
+         "class": "oxg"
+        },
+        "children": [
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M-40 -700 H1240 V0 L1210 9 L1180 -3 L1150 11 L1120 2 L1090 13 L1060 -2 L1030 8 L1000 1 L970 12 L940 -4 L910 7 L880 0 L850 10 L820 -3 L790 9 L760 2 L730 12 L700 -2 L670 8 L640 0 L610 11 L580 -3 L550 9 L520 1 L490 12 L460 -2 L430 8 L400 0 L370 10 L340 -3 L310 9 L280 1 L250 12 L220 -4 L190 7 L160 0 L130 10 L100 -2 L70 9 L40 1 L10 11 L-40 4 Z",
+           "fill": "#fff"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "class": "L base",
+     "data-l": "base"
+    }
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "class": "L top",
+     "data-l": "top",
+     "mask": "url(#a-dipm)"
+    }
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "class": "L ox",
+     "data-l": "ox",
+     "mask": "url(#a-oxm)"
+    }
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "0.5",
+     "y": "0.5",
+     "width": "1199",
+     "height": "539",
+     "fill": "none",
+     "stroke": "var(--ink-2)",
+     "stroke-width": "1",
+     "vector-effect": "non-scaling-stroke"
+    }
+   }
+  ]
+ },
+ "restName": "u0120",
+ "play": "Play the stages",
+ "source": "u0121",
+ "stages": [
+  {
+   "name": "saaj",
+   "english": "Scouring",
+   "local": true,
+   "after": "bright white and soft",
+   "number": "u0122",
+   "heading": "u0123",
+   "texts": [
+    "u0124"
+   ],
+   "why": "u0125",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0126"
+  },
+  {
+   "name": "kasanu",
+   "english": "Myrobalan",
+   "local": true,
+   "after": "pale yellow",
+   "number": "u0127",
+   "heading": "u0128",
+   "texts": [
+    "u0129"
+   ],
+   "why": "u0130",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0131"
+  },
+  {
+   "name": "rekh",
+   "english": "Outline resist",
+   "local": true,
+   "after": "white outlines in lime resist",
+   "number": "u0132",
+   "heading": "u0133",
+   "texts": [
+    "u0134"
+   ],
+   "why": "u0135",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0136"
+  },
+  {
+   "name": "Drying",
+   "english": "Drying",
+   "local": false,
+   "after": "dry on both faces",
+   "number": "u0137",
+   "heading": "u0138",
+   "texts": [
+    "u0139"
+   ],
+   "why": "u0140",
+   "differs": null,
+   "afterSentence": null,
+   "materials": null
+  },
+  {
+   "name": "kat",
+   "english": "Iron black",
+   "local": true,
+   "after": "chocolate-black where printed",
+   "number": "u0141",
+   "heading": "u0142",
+   "texts": [
+    "u0143"
+   ],
+   "why": "u0144",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0145"
+  },
+  {
+   "name": "pa",
+   "english": "Alum mordant",
+   "local": true,
+   "after": "kesari-tinted stars of alum",
+   "number": "u0146",
+   "heading": "u0147",
+   "texts": [
+    "u0148"
+   ],
+   "why": "u0149",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0150"
+  },
+  {
+   "name": "gach",
+   "english": "Mud resist",
+   "local": true,
+   "after": "clay over the parts that must stay out of the blue",
+   "number": "u0151",
+   "heading": "u0152",
+   "texts": [
+    "u0153"
+   ],
+   "why": "u0154",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0155"
+  },
+  {
+   "name": "Indigo",
+   "english": "Indigo",
+   "local": false,
+   "after": "green, then blue in the air",
+   "number": "u0156",
+   "heading": "u0157",
+   "texts": [
+    "u0158"
+   ],
+   "why": "u0159",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0160"
+  },
+  {
+   "name": "vichharnu",
+   "english": "Washing",
+   "local": true,
+   "after": "stiff, the khor resist kept",
+   "number": "u0161",
+   "heading": "u0162",
+   "texts": [
+    "u0163"
+   ],
+   "why": null,
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0164"
+  },
+  {
+   "name": "rang",
+   "english": "Red",
+   "local": true,
+   "after": "red where alum was printed",
+   "number": "u0165",
+   "heading": "u0166",
+   "texts": [
+    "u0167"
+   ],
+   "why": "u0168",
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0169"
+  },
+  {
+   "name": "minakari",
+   "english": "Second round",
+   "local": true,
+   "after": "brighter red and blue",
+   "number": "u0170",
+   "heading": "u0171",
+   "texts": [
+    "u0172",
+    "u0173"
+   ],
+   "why": null,
+   "differs": null,
+   "afterSentence": null,
+   "materials": "u0174"
+  }
+ ],
+ "finish": {
+  "heading": "u0175",
+  "paragraphs": [
+   "u0176",
+   "u0177"
+  ]
+ }
+}

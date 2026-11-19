@@ -1,0 +1,29 @@
+{
+ "id": "lab",
+ "figure": "pt:8",
+ "number": "u0862",
+ "pickerLabel": "Experiment",
+ "experiments": [
+  {
+   "key": "blue",
+   "label": "The blue vat",
+   "toggle": {
+    "component": "kutch-ajrakh/chemistry/what-if-indigo-vat"
+   }
+  },
+  {
+   "key": "red",
+   "label": "The red bath",
+   "toggle": {
+    "component": "kutch-ajrakh/chemistry/what-if-red-dye"
+   }
+  },
+  {
+   "key": "water",
+   "label": "The wash water",
+   "toggle": {
+    "component": "kutch-ajrakh/chemistry/what-if-wash-water"
+   }
+  }
+ ]
+}

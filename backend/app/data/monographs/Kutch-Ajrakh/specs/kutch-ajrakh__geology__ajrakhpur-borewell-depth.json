@@ -1,0 +1,280 @@
+{
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "class": "well-svg kv-well",
+   "data-fit": "",
+   "viewBox": "0 0 300 236",
+   "role": "img",
+   "aria-label": "Depth drawn to scale: water once rose at 200 feet below ground at Ajrakhpur; a later private borewell reached 450 feet"
+  },
+  "children": [
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "44",
+     "y": "26",
+     "width": "256",
+     "height": "204",
+     "fill": "var(--sunk)"
+    }
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "44",
+     "y": "26",
+     "width": "256",
+     "height": "204",
+     "fill": "url(#strata)"
+    }
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "44",
+     "y": "24.5",
+     "width": "256",
+     "height": "1.5",
+     "fill": "var(--ink-1)"
+    }
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "26.0",
+     "y2": "26.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "29.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "66.0",
+     "y2": "66.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "69.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "100"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "106.0",
+     "y2": "106.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "109.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "200"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "146.0",
+     "y2": "146.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "149.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "300"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "186.0",
+     "y2": "186.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "189.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "400"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "36",
+     "x2": "44",
+     "y1": "226.0",
+     "y2": "226.0",
+     "stroke": "var(--ink-3)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "kv-ax",
+     "x": "33",
+     "y": "229.5",
+     "text-anchor": "end"
+    },
+    "children": [
+     "500 ft"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "150",
+     "y": "26",
+     "width": "40",
+     "height": "180",
+     "fill": "var(--raised)",
+     "stroke": "var(--ink-1)",
+     "stroke-width": "1.2"
+    }
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "w-water",
+     "x": "151",
+     "y": "192",
+     "width": "38",
+     "height": "13",
+     "fill": "var(--map-river)",
+     "opacity": ".9",
+     "data-w": ""
+    }
+   },
+   {
+    "tag": "path",
+    "attrs": {
+     "d": "M134 106 H206",
+     "stroke": "var(--ink-1)",
+     "stroke-width": "1.2",
+     "stroke-dasharray": "4 3"
+    }
+   },
+   {
+    "tag": "path",
+    "attrs": {
+     "d": "M134 206 H206",
+     "stroke": "var(--ink-1)",
+     "stroke-width": "1.8"
+    }
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "class": "wl"
+    },
+    "children": [
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "128",
+       "y": "20",
+       "text-anchor": "end"
+      },
+      "children": [
+       "ground"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "212",
+       "y": "103"
+      },
+      "children": [
+       "200 ft"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "212",
+       "y": "117",
+       "class": "kv-wl2"
+      },
+      "children": [
+       "water once"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "212",
+       "y": "203"
+      },
+      "children": [
+       "450 ft"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "212",
+       "y": "217",
+       "class": "kv-wl2"
+      },
+      "children": [
+       "borewell now"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "chain": null
+}

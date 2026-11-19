@@ -1,0 +1,59 @@
+{
+ "kicker": "u0332",
+ "title": "u0333",
+ "mark": "u0334",
+ "line": {
+  "reactants": [
+   {
+    "formula": [
+     "C",
+     {
+      "text": "8",
+      "style": "sub"
+     },
+     "H",
+     {
+      "text": "7",
+      "style": "sub"
+     },
+     "NO"
+    ],
+    "name": "indoxyl"
+   },
+   {
+    "formula": [
+     "air"
+    ],
+    "name": "as the source words it"
+   }
+  ],
+  "products": [
+   {
+    "formula": [
+     "C",
+     {
+      "text": "16",
+      "style": "sub"
+     },
+     "H",
+     {
+      "text": "10",
+      "style": "sub"
+     },
+     "N",
+     {
+      "text": "2",
+      "style": "sub"
+     },
+     "O",
+     {
+      "text": "2",
+      "style": "sub"
+     }
+    ],
+    "name": "indigo"
+   }
+  ]
+ },
+ "why": "u0335"
+}

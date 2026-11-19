@@ -1,0 +1,238 @@
+{
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "class": "fig-svg",
+   "data-fit": "",
+   "viewBox": "0 0 360 182",
+   "role": "img",
+   "aria-labelledby": "dst-t"
+  },
+  "children": [
+   {
+    "tag": "title",
+    "attrs": {
+     "id": "dst-t"
+    },
+    "children": [
+     "Distances drawn to scale: Bhuj to Ajrakhpur 12 km; Dhamadka to Ajrakhpur 40 km; Bhuj to Dhamadka 50 km in the GI journal and 60 km in Karolia and Buch."
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "132.0",
+     "x2": "132.0",
+     "y1": "14",
+     "y2": "144",
+     "stroke": "var(--rule)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "132.0",
+     "y": "162",
+     "text-anchor": "middle",
+     "class": "ax"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "202.0",
+     "x2": "202.0",
+     "y1": "14",
+     "y2": "144",
+     "stroke": "var(--rule)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "202.0",
+     "y": "162",
+     "text-anchor": "middle",
+     "class": "ax"
+    },
+    "children": [
+     "20"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "272.0",
+     "x2": "272.0",
+     "y1": "14",
+     "y2": "144",
+     "stroke": "var(--rule)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "272.0",
+     "y": "162",
+     "text-anchor": "middle",
+     "class": "ax"
+    },
+    "children": [
+     "40"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "342.0",
+     "x2": "342.0",
+     "y1": "14",
+     "y2": "144",
+     "stroke": "var(--rule)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "342.0",
+     "y": "162",
+     "text-anchor": "middle",
+     "class": "ax"
+    },
+    "children": [
+     "60 km"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "36",
+     "class": "lab2"
+    },
+    "children": [
+     "Bhuj to Ajrakhpur"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "132",
+     "y": "26",
+     "width": "42.0",
+     "height": "13",
+     "fill": "var(--chart-series)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "180.0",
+     "y": "37",
+     "class": "lab",
+     "font-weight": "600"
+    },
+    "children": [
+     "12"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "78",
+     "class": "lab2"
+    },
+    "children": [
+     "Dhamadka to Ajrakhpur"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "132",
+     "y": "68",
+     "width": "140.0",
+     "height": "13",
+     "fill": "var(--chart-series)"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "278.0",
+     "y": "79",
+     "class": "lab",
+     "font-weight": "600"
+    },
+    "children": [
+     "40"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "120",
+     "class": "lab2"
+    },
+    "children": [
+     "Bhuj to Dhamadka"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "132",
+     "y": "110",
+     "width": "175.0",
+     "height": "13",
+     "fill": "var(--chart-series)"
+    }
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "307.0",
+     "y": "110",
+     "width": "35.0",
+     "height": "13",
+     "fill": "url(#hatch-madder)",
+     "stroke": "var(--madder)",
+     "stroke-width": "1"
+    }
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "303.0",
+     "y": "139",
+     "text-anchor": "middle",
+     "class": "lab",
+     "font-weight": "600"
+    },
+    "children": [
+     "50"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "342.0",
+     "y": "139",
+     "text-anchor": "middle",
+     "class": "lab",
+     "font-weight": "600",
+     "fill": "var(--madder)"
+    },
+    "children": [
+     "60"
+    ]
+   }
+  ]
+ },
+ "chain": null
+}
