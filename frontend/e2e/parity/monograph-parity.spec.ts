@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
+import { elementStyles, fontReport, styleDifferences, type StyleDifference } from "./parityStyles";
 
 const APPROVED = "/monographs/kutch-ajrakh/index.html";
 const RENDERED = "/crafts/Kutch-Ajrakh/monograph";
@@ -56,6 +57,8 @@ test("every chapter of the React page looks as the approved page does", async ({
   const { approved, rendered } = await bothPages(context);
   const ids = chapterIds(await approved.evaluate(() => [...document.querySelectorAll("main [id]")].map((element) => element.id)));
   const differences: Record<string, PixelDifference | "missing"> = {};
+  const styles: Record<string, StyleDifference[]> = {};
+  report("fonts.json", { approved: await fontReport(approved), rendered: await fontReport(rendered) });
   for (const id of ids) {
     const selector = `[id="${id}"]`;
     if (!(await rendered.locator(selector).count())) {
@@ -75,9 +78,11 @@ test("every chapter of the React page looks as the approved page does", async ({
     if (found.ratio > PIXEL_TOLERANCE) {
       report(`${id}.approved.png`, before);
       report(`${id}.rendered.png`, after);
+      styles[id] = styleDifferences(await elementStyles(approved, id), await elementStyles(rendered, id));
     }
   }
   report("pixels.json", differences);
+  report("styles.json", styles);
   const failing = Object.entries(differences).filter(([, found]) => found === "missing" || found.ratio > PIXEL_TOLERANCE);
   expect(failing.map(([id]) => id), "chapters that differ (see pixels.json)").toEqual([]);
 });
