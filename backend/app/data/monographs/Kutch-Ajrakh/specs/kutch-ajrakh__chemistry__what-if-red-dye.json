@@ -1,0 +1,234 @@
+{
+ "experiment": "red",
+ "questionId": "q-red",
+ "question": "u0878",
+ "options": [
+  {
+   "value": "madder",
+   "label": "Madder root",
+   "heading": "u0879",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0880"
+    },
+    {
+     "part": "text",
+     "unit": "u0881"
+    },
+    {
+     "part": "text",
+     "unit": "u0882"
+    }
+   ]
+  },
+  {
+   "value": "alizarin",
+   "label": "Synthetic alizarin",
+   "heading": "u0883",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0884"
+    },
+    {
+     "part": "text",
+     "unit": "u0885"
+    }
+   ]
+  }
+ ],
+ "textParts": [
+  {
+   "part": "formulas",
+   "option": null,
+   "chips": [
+    {
+     "formula": [
+      "C",
+      {
+       "text": "14",
+       "style": "sub"
+      },
+      "H",
+      {
+       "text": "8",
+       "style": "sub"
+      },
+      "O",
+      {
+       "text": "4",
+       "style": "sub"
+      }
+     ],
+     "name": "Alizarin",
+     "cid": 6293,
+     "source": null
+    },
+    {
+     "formula": [
+      "C",
+      {
+       "text": "14",
+       "style": "sub"
+      },
+      "H",
+      {
+       "text": "8",
+       "style": "sub"
+      },
+      "O",
+      {
+       "text": "5",
+       "style": "sub"
+      }
+     ],
+     "name": "Purpurin",
+     "cid": 6683,
+     "source": null
+    },
+    {
+     "formula": [
+      "KAl(SO",
+      {
+       "text": "4",
+       "style": "sub"
+      },
+      ")",
+      {
+       "text": "2",
+       "style": "sub"
+      },
+      "·12H",
+      {
+       "text": "2",
+       "style": "sub"
+      },
+      "O"
+     ],
+     "name": "Potassium alum",
+     "cid": null,
+     "source": "KalaVigyan compound library"
+    }
+   ]
+  },
+  {
+   "part": "same",
+   "label": "u0886",
+   "paragraphs": [
+    "u0887",
+    "u0888"
+   ]
+  },
+  {
+   "part": "text",
+   "text": {
+    "tag": "p",
+    "style": "lab-lime",
+    "unit": "u0889"
+   }
+  }
+ ],
+ "visualParts": [
+  {
+   "part": "stage",
+   "drawing": {
+    "tag": "svg",
+    "attrs": {
+     "viewBox": "0 0 480 300",
+     "role": "img",
+     "aria-label": "Ajrakh after the red bath: red where alum was printed, with a pink cast on the whites that tapano bleaches",
+     "data-redsw": ""
+    },
+    "children": [
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "-20",
+       "y": "-20",
+       "width": "520",
+       "height": "340",
+       "fill": "url(#tile-10)"
+      }
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "300",
+       "class": "pinkw",
+       "data-pink": "",
+       "fill": "var(--dye-pink)",
+       "style": "mix-blend-mode:multiply"
+      }
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "data-pa": "",
+       "style": "display:none"
+      },
+      "children": [
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "250",
+         "cy": "150",
+         "r": "40",
+         "fill": "var(--dye-cloth)",
+         "stroke": "var(--ink-1)",
+         "stroke-width": "1.6",
+         "stroke-dasharray": "5 4"
+        }
+       }
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "300",
+       "fill": "url(#pt-weave)"
+      }
+     }
+    ]
+   },
+   "note": "u0890",
+   "noteHook": "pa-note"
+  },
+  {
+   "part": "stepper",
+   "hook": "tapano",
+   "action": [
+    "Another day of ",
+    {
+     "text": "tapano",
+     "style": "i"
+    }
+   ],
+   "statusHook": "tap-status",
+   "status": "Day 0 of 3 in the sun"
+  },
+  {
+   "part": "switch",
+   "hook": "pa",
+   "label": [
+    "Let the ",
+    {
+     "text": "pa",
+     "style": "i"
+    },
+    " touch the lime outline"
+   ],
+   "description": "What the GI journal warns against"
+  },
+  {
+   "part": "chart",
+   "title": "u0891",
+   "chart": {
+    "component": "kutch-ajrakh/process/red-bath-hours"
+   },
+   "source": "u0892"
+  }
+ ]
+}

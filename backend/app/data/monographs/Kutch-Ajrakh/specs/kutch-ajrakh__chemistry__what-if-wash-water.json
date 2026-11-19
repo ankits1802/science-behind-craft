@@ -1,0 +1,269 @@
+{
+ "experiment": "water",
+ "questionId": "q-w",
+ "question": "u0893",
+ "options": [
+  {
+   "value": "alum",
+   "label": "Water with alum",
+   "heading": "u0894",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0895"
+    },
+    {
+     "part": "text",
+     "unit": "u0896"
+    }
+   ]
+  },
+  {
+   "value": "iron",
+   "label": "Water with iron",
+   "heading": "u0897",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0898"
+    },
+    {
+     "part": "text",
+     "unit": "u0899"
+    }
+   ]
+  }
+ ],
+ "textParts": [
+  {
+   "part": "text",
+   "text": {
+    "tag": "p",
+    "style": "lab-go",
+    "unit": "u0900"
+   }
+  }
+ ],
+ "visualParts": [
+  {
+   "part": "stage",
+   "drawing": {
+    "tag": "svg",
+    "attrs": {
+     "viewBox": "0 0 480 300",
+     "role": "img",
+     "aria-label": "Myrobalan-treated cloth after washing",
+     "data-wsw": ""
+    },
+    "children": [
+     {
+      "tag": "defs",
+      "children": [
+       {
+        "tag": "pattern",
+        "attrs": {
+         "id": "wsw",
+         "width": "96",
+         "height": "96",
+         "patternUnits": "userSpaceOnUse"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "width": "96",
+           "height": "96",
+           "fill": "var(--dye-harda)"
+          }
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M48 14 L56 32 L76 26 L66 44 L82 48 L66 52 L76 70 L56 64 L48 82 L40 64 L20 70 L30 52 L14 48 L30 44 L20 26 L40 32 Z",
+           "fill": "none",
+           "stroke": "var(--dye-kut)",
+           "stroke-width": "3"
+          }
+         }
+        ]
+       },
+       {
+        "tag": "filter",
+        "attrs": {
+         "id": "dull"
+        },
+        "children": [
+         {
+          "tag": "feColorMatrix",
+          "attrs": {
+           "type": "saturate",
+           "values": "0.45"
+          }
+         },
+         {
+          "tag": "feComponentTransfer",
+          "children": [
+           {
+            "tag": "feFuncR",
+            "attrs": {
+             "type": "linear",
+             "slope": "0.8"
+            }
+           },
+           {
+            "tag": "feFuncG",
+            "attrs": {
+             "type": "linear",
+             "slope": "0.8"
+            }
+           },
+           {
+            "tag": "feFuncB",
+            "attrs": {
+             "type": "linear",
+             "slope": "0.8"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "data-wcloth": ""
+      },
+      "children": [
+       {
+        "tag": "rect",
+        "attrs": {
+         "width": "480",
+         "height": "300",
+         "fill": "url(#wsw)"
+        }
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "data-spots": "",
+       "style": "display:none",
+       "fill": "var(--dye-kut)"
+      },
+      "children": [
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "58",
+         "cy": "40",
+         "r": "3.2"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "131",
+         "cy": "118",
+         "r": "2.2"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "205",
+         "cy": "64",
+         "r": "2.8"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "262",
+         "cy": "212",
+         "r": "3.6"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "318",
+         "cy": "98",
+         "r": "2.4"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "402",
+         "cy": "160",
+         "r": "3"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "96",
+         "cy": "242",
+         "r": "2.6"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "176",
+         "cy": "270",
+         "r": "2"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "440",
+         "cy": "52",
+         "r": "2.3"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "352",
+         "cy": "262",
+         "r": "2.8"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "18",
+         "cy": "150",
+         "r": "2.4"
+        }
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "232",
+         "cy": "150",
+         "r": "1.8"
+        }
+       }
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "300",
+       "fill": "url(#pt-weave)"
+      }
+     }
+    ]
+   },
+   "note": null,
+   "noteHook": null
+  }
+ ]
+}

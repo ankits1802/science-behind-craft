@@ -1,0 +1,169 @@
+{
+ "experiment": "blue",
+ "questionId": "q-blue",
+ "question": "u0863",
+ "options": [
+  {
+   "value": "natural",
+   "label": "Natural indigo",
+   "heading": "u0864",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0865"
+    },
+    {
+     "part": "text",
+     "unit": "u0866"
+    },
+    {
+     "part": "text",
+     "unit": "u0867"
+    }
+   ]
+  },
+  {
+   "value": "synthetic",
+   "label": "Hydros and caustic soda",
+   "heading": "u0868",
+   "parts": [
+    {
+     "part": "text",
+     "unit": "u0869"
+    },
+    {
+     "part": "text",
+     "unit": "u0870"
+    },
+    {
+     "part": "text",
+     "unit": "u0871"
+    },
+    {
+     "part": "text",
+     "unit": "u0872"
+    }
+   ]
+  }
+ ],
+ "textParts": [],
+ "visualParts": [
+  {
+   "part": "chart",
+   "title": "u0873",
+   "chart": {
+    "component": "kutch-ajrakh/process/vat-setting-days"
+   },
+   "source": "u0874"
+  },
+  {
+   "part": "more",
+   "parts": [
+    {
+     "part": "formulas",
+     "option": "natural",
+     "chips": [
+      {
+       "formula": [
+        "C",
+        {
+         "text": "16",
+         "style": "sub"
+        },
+        "H",
+        {
+         "text": "10",
+         "style": "sub"
+        },
+        "N",
+        {
+         "text": "2",
+         "style": "sub"
+        },
+        "O",
+        {
+         "text": "2",
+         "style": "sub"
+        }
+       ],
+       "name": "Indigo",
+       "cid": 10215,
+       "source": null
+      }
+     ]
+    },
+    {
+     "part": "formulas",
+     "option": "synthetic",
+     "chips": [
+      {
+       "formula": [
+        "Na",
+        {
+         "text": "2",
+         "style": "sub"
+        },
+        "S",
+        {
+         "text": "2",
+         "style": "sub"
+        },
+        "O",
+        {
+         "text": "4",
+         "style": "sub"
+        }
+       ],
+       "name": "Sodium hydrosulphite, or sodium dithionite",
+       "cid": 24489,
+       "source": null
+      },
+      {
+       "formula": [
+        "NaOH"
+       ],
+       "name": "Caustic soda",
+       "cid": 14798,
+       "source": null
+      },
+      {
+       "formula": [
+        "C",
+        {
+         "text": "16",
+         "style": "sub"
+        },
+        "H",
+        {
+         "text": "10",
+         "style": "sub"
+        },
+        "N",
+        {
+         "text": "2",
+         "style": "sub"
+        },
+        "O",
+        {
+         "text": "2",
+         "style": "sub"
+        }
+       ],
+       "name": "Indigo",
+       "cid": 10215,
+       "source": null
+      }
+     ]
+    },
+    {
+     "part": "same",
+     "label": "u0875",
+     "paragraphs": [
+      "u0876",
+      "u0877"
+     ]
+    }
+   ]
+  }
+ ]
+}

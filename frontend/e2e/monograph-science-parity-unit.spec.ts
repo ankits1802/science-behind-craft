@@ -42,16 +42,36 @@ function nested(label: string): ReactNode {
   return VIEWS[component.kind] ? view(component) : createElement("kv-component", { label });
 }
 
+function pageRange(component: MonographComponent): [number, number] {
+  const [range, ...more] = subtrees(page, anchorTest(component.anchor));
+  expect(more).toEqual([]);
+  return range;
+}
+
+function drawnParent(component: MonographComponent): MonographComponent | null {
+  const [start, end] = pageRange(component);
+  const parents = drawn.filter((other) => {
+    if (other === component) return false;
+    const [from, to] = pageRange(other);
+    return from <= start && end <= to;
+  });
+  return parents.sort((a, b) => pageRange(b)[0] - pageRange(a)[0])[0] ?? null;
+}
+
 function rendered(component: MonographComponent): Token[] {
-  return tokenize(renderToStaticMarkup(createElement(NestedComponents.Provider, { value: nested }, view(component))));
+  const parent = drawnParent(component);
+  const tokens = tokenize(renderToStaticMarkup(createElement(NestedComponents.Provider, { value: nested }, view(parent ?? component))));
+  if (parent === null) return tokens;
+  const [range, ...more] = subtrees(tokens, anchorTest(component.anchor));
+  expect(more).toEqual([]);
+  return tokens.slice(range[0], range[1]);
 }
 
 const holdsUnit = (tokens: Token[], [start, end]: [number, number]) =>
   tokens.slice(start, end).some((token) => token.kind === "open" && token.tag === "kv-slot");
 
 function approved(component: MonographComponent): Token[] {
-  const [range, ...more] = subtrees(page, anchorTest(component.anchor));
-  expect(more).toEqual([]);
+  const range = pageRange(component);
   let tokens = page.slice(range[0], range[1]);
   const foreign = content.components.filter((other) => other !== component && !VIEWS[other.kind]);
   for (const other of foreign) {

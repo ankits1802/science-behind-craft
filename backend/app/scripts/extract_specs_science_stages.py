@@ -7,7 +7,17 @@ from app.core.errors import InvalidInput
 
 from .extract_specs_science_chem import figure_head
 from .extract_specs_science_dom import Element
-from .extract_specs_science_read import drawing, expect, held, holds_unit, kids, one_of, text_of, unit_of
+from .extract_specs_science_read import (
+    drawing,
+    expect,
+    held,
+    holds_unit,
+    kids,
+    note_differs,
+    one_of,
+    text_of,
+    unit_of,
+)
 
 __all__ = ["stage_player", "stage_tile"]
 
@@ -131,7 +141,7 @@ def _stage_part(part: Element, found: dict[str, Any], stage: int) -> None:
     elif part.tag == "p" and style == "lc-after":
         found["afterSentence"] = _after_sentence(part, stage)
     elif part.tag == "details" and style == "differs":
-        found["differs"] = _note_differs(part)
+        found["differs"] = note_differs(part)
     else:
         raise InvalidInput(f"stage {stage} holds an unknown part <{part.tag} {part.attrs}>")
 
@@ -145,13 +155,3 @@ def _after_sentence(part: Element, stage: int) -> str | None:
     if not holds_unit(sentence):
         return held(sentence)
     return one_of(words).attrs["unit"]
-
-
-def _note_differs(details: Element) -> dict[str, Any] | None:
-    summary, body = kids(expect(details, "details", "differs"))
-    if not holds_unit(body):
-        return held(details)
-    return {
-        "summary": text_of(expect(summary, "summary", "differ")),
-        "body": [slot.attrs["unit"] for slot in kids(expect(body, "div", "differs-body"))],
-    }

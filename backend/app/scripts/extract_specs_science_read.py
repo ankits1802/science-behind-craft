@@ -14,6 +14,7 @@ __all__ = [
     "held",
     "holds_unit",
     "kids",
+    "note_differs",
     "one_of",
     "only",
     "rich",
@@ -77,6 +78,16 @@ def held(part: Element) -> None:
     if not any(element.tag == "button" and element.has_class(CITATION_CLASS) for element in part.walk()):
         raise InvalidInput(f"<{part.tag} {part.attrs}> is left out but carries no cited sentence")
     return
+
+
+def note_differs(details: Element) -> dict[str, Any] | None:
+    summary, body = kids(expect(details, "details", "differs"))
+    if not holds_unit(body):
+        return held(details)
+    return {
+        "summary": text_of(expect(summary, "summary", "differ")),
+        "body": [unit.attrs["unit"] for unit in kids(expect(body, "div", "differs-body"))],
+    }
 
 
 def slot_unit(element: Element) -> str | None:
