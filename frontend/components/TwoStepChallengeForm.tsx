@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ShieldCheck } from "lucide-react";
 
+import { LiveAlert } from "@/components/auth/FormAlert";
 import { useAuth } from "@/components/AuthProvider";
 import { TwoStepCodeEntry, type TwoStepCodeEntryHandle, type TwoStepCodeKind } from "@/components/TwoStepCodeEntry";
-import { isCompleteCode } from "@/components/ui/otpCode";
+import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
+import { isCompleteCode } from "@/components/ui/otpCode";
 import { ApiError } from "@/lib/api";
 import { isUnreachable } from "@/lib/failureTriage";
 import { CHALLENGE_ENDED_DETAIL } from "@/lib/twoFactor";
 import type { User } from "@/lib/types";
+
+function challengeError(err: unknown): string {
+  if (isUnreachable(err)) return "Couldn't connect. Check your connection and try again.";
+  return err instanceof Error ? err.message : "That code didn't work. Try again.";
+}
 
 export function TwoStepChallengeForm({
   challengeToken,
@@ -48,13 +54,7 @@ export function TwoStepChallengeForm({
       setCode("");
       setErrorKey((key) => key + 1);
       if (err instanceof ApiError && err.status === 401 && err.message === CHALLENGE_ENDED_DETAIL) setDead(true);
-      setError(
-        isUnreachable(err)
-          ? "Couldn't connect. Check your connection and try again."
-          : err instanceof Error
-            ? err.message
-            : "That code didn't work. Try again."
-      );
+      setError(challengeError(err));
       box.current?.focus();
     } finally {
       setBusy(false);
@@ -62,39 +62,29 @@ export function TwoStepChallengeForm({
   }
 
   return (
-    <div className="grid gap-4">
-      <div className="flex items-start gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-purple-950 text-purple-100">
-          <ShieldCheck className="h-5 w-5" aria-hidden />
-        </span>
-        <div className="min-w-0">
-          <h2 className="font-display text-lg font-bold text-ink-900">Two-step verification</h2>
-          <p className="mt-0.5 text-sm leading-6 text-ink-500">
-            {useRecovery
-              ? "Enter one of the recovery codes you saved. Each code works once."
-              : "Enter the 6-digit code from your authenticator app."}
-          </p>
-        </div>
+    <div className="grid gap-5">
+      <div className="min-w-0">
+        <h2 className="font-headline text-h3 text-ink-1">Two-step verification</h2>
+        <p className="mt-1 font-ui text-ui text-ink-2">
+          {useRecovery ? "Enter one of the recovery codes you saved. Each code works once." : "Enter the 6-digit code from your authenticator app."}
+        </p>
       </div>
 
-      <div
-        role="alert"
-        className={error ? "rounded-md border border-red-200 bg-error-100 px-3 py-2 text-sm text-error-600" : "sr-only"}
-      >
-        {error ?? ""}
-      </div>
+      <LiveAlert message={error} />
 
       {dead ? (
-        <Button type="button" size="auth" onClick={onCancel} className="w-full font-display text-base font-bold">
-          Sign in again
-        </Button>
+        <ActionGroup fill>
+          <Button type="button" variant="primary" onClick={onCancel}>
+            Sign in again
+          </Button>
+        </ActionGroup>
       ) : (
         <form
           onSubmit={(event) => {
             event.preventDefault();
             void submit(code);
           }}
-          className="grid gap-3"
+          className="grid gap-4"
         >
           <TwoStepCodeEntry
             ref={box}
@@ -113,22 +103,19 @@ export function TwoStepChallengeForm({
             errorKey={errorKey}
             disabled={busy}
           />
-          <Button
-            type="submit"
-            size="auth"
-            disabled={busy || (useRecovery ? !code.trim() : !isCompleteCode(code))}
-            className="w-full font-display text-base font-bold"
-          >
-            {busy ? "Checking…" : "Verify"}
-          </Button>
+          <ActionGroup fill>
+            <Button type="submit" variant="primary" busy={busy} busyLabel="Checking" disabled={useRecovery ? !code.trim() : !isCompleteCode(code)}>
+              Verify
+            </Button>
+          </ActionGroup>
         </form>
       )}
 
-      <div className="flex flex-wrap items-center justify-end gap-2 text-sm">
-        <button type="button" onClick={onCancel} className="text-ink-500 hover:text-ink-900">
+      <ActionGroup align="start" inline>
+        <Button type="button" variant="text" onClick={onCancel}>
           Back to sign in
-        </button>
-      </div>
+        </Button>
+      </ActionGroup>
     </div>
   );
 }

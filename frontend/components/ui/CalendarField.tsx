@@ -96,7 +96,7 @@ export function CalendarField({
         ) : null}
       </div>
       {hint ? (
-        <p id={hintId} className="text-xs leading-5 text-ink-500">
+        <p id={hintId} className="kv-field-hint">
           {hint}
         </p>
       ) : null}

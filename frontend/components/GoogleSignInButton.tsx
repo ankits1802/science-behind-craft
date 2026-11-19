@@ -98,7 +98,7 @@ export function GoogleSignInButton({
         className
       )}
     >
-      {drawn ? null : <span aria-hidden className="absolute inset-x-0 top-0.5 mx-auto h-10 max-w-[400px] motion-safe:animate-pulse rounded-[4px] bg-line-200/60" />}
+      {drawn ? null : <span aria-hidden className="absolute inset-x-0 top-0.5 mx-auto h-10 max-w-[400px] rounded-control bg-sunk" />}
       <div ref={host} className="flex min-h-10 justify-center [color-scheme:light]" />
     </div>
   );

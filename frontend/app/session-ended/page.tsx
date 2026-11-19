@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { DeadEndFrame, ErrorState } from "@/components/DeadEnd";
+import { AuthFrame } from "@/components/auth/AuthShell";
+import { ErrorState } from "@/components/DeadEnd";
 import { nextFromSearch } from "@/lib/sessionReturn";
 
 export default function SessionEndedPage() {
@@ -11,8 +12,8 @@ export default function SessionEndedPage() {
     setNext(nextFromSearch(window.location.search));
   }, []);
   return (
-    <DeadEndFrame nav={false}>
+    <AuthFrame>
       <ErrorState kind="session" next={next ?? "/ask"} />
-    </DeadEndFrame>
+    </AuthFrame>
   );
 }

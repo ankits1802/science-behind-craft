@@ -1,79 +1,104 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/AuthProvider";
-import { BrandLockup } from "@/components/BrandMark";
+import { SpecimenLabel } from "@/components/editorial/SpecimenLabel";
+import { CitedText, type CiteMaps } from "@/components/landing/CitedText";
+import { HERO_SPECIMEN, HeroCredit, HeroPhoto } from "@/components/landing/heroPicture";
+import type { LandingContent } from "@/components/landing/landingContent";
+import { VAT_PLAYED_KEY, VatSteps } from "@/components/landing/VatSteps";
+import { useVatMoment } from "@/components/motion/useVatMoment";
 import { ActionGroup } from "@/components/ui/ActionGroup";
 import { buttonLook } from "@/components/ui/button";
 
-const LANDING_POINTS = [
-  { title: "The crafts", body: "The IIT master list, searchable by name, region and family." },
-  { title: "The science", body: "Materials, stages and reactions, each claim with its evidence." },
-  { title: "The place", body: "Where each craft is practised, on the map of India." }
-];
+export const HERO_TITLE_ID = "landing-title";
 
-function craftCountLine(craftCount: number | null): string | null {
-  if (craftCount === null) return null;
-  return `${craftCount} ${craftCount === 1 ? "craft" : "crafts"}`;
+export function craftsLine(craftCount: number | null): string {
+  const reach = craftCount === null ? "India’s crafts" : `${craftCount} ${craftCount === 1 ? "craft" : "crafts"}`;
+  return `Chemistry, history and geography for ${reach}. Every sentence opens to its source’s own words.`;
 }
 
-export function LandingHero({ craftCount }: { craftCount: number | null }) {
+function usePhotoShown(host: React.RefObject<HTMLElement | null>): boolean {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const image = host.current?.querySelector("img");
+    if (!image) return;
+    if (image.complete) {
+      setShown(true);
+      return;
+    }
+    const done = () => setShown(true);
+    image.addEventListener("load", done, { once: true });
+    return () => image.removeEventListener("load", done);
+  }, [host]);
+  return shown;
+}
+
+function HeroActions() {
   const { user } = useAuth();
-  const count = craftCountLine(craftCount);
-
-  return (
-    <div className="min-h-dvh bg-ground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-5">
-        <Link href="/" className="flex items-center text-ink-1">
-          <BrandLockup />
+  if (user) {
+    return (
+      <ActionGroup align="start" inline className="kv-hero-actions">
+        <Link href="/ask" {...buttonLook({ variant: "primary", onPhoto: true })}>
+          Start asking
         </Link>
-        {count ? <p className="font-ui text-ui text-ink-3 tabular-nums">{count}</p> : null}
-      </header>
+      </ActionGroup>
+    );
+  }
+  return (
+    <ActionGroup align="start" className="kv-hero-actions">
+      <Link href="/signup" {...buttonLook({ variant: "primary", onPhoto: true })}>
+        Request access
+      </Link>
+      <Link href="/login" {...buttonLook({ variant: "quiet", onPhoto: true })}>
+        Sign in
+      </Link>
+    </ActionGroup>
+  );
+}
 
-      <main id="main-content" className="mx-auto max-w-6xl px-4 pb-16">
-        <section className="surface-dark relative isolate overflow-hidden px-6 py-16 text-center md:px-12 md:py-24">
-          <p className="kicker">The science behind craft</p>
-          <h1 className="mx-auto mt-4 max-w-3xl font-headline text-h1 text-ink-1">
-            Ask how India&apos;s crafts work, and read the sources.
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl font-reading text-lede text-ink-2">
-            Every sentence carries its citation, the quoted passage and a link to read further.
-          </p>
-          <ActionGroup className="mt-9">
-            {user ? (
-              <Link href="/ask" {...buttonLook({ variant: "primary" })}>
-                Start asking
-              </Link>
-            ) : (
-              <>
-                <Link href="/signup" {...buttonLook({ variant: "primary" })}>
-                  Request access
-                </Link>
-                <Link href="/login" {...buttonLook({ variant: "quiet" })}>
-                  Sign in
-                </Link>
-              </>
-            )}
-          </ActionGroup>
-        </section>
-
-        <ul className="mt-10 grid gap-x-10 gap-y-6 md:grid-cols-3">
-          {LANDING_POINTS.map((point) => (
-            <li key={point.title} className="border-t border-rule pt-4">
-              <h2 className="font-ui text-h4 text-ink-1">{point.title}</h2>
-              <p className="mt-1.5 font-ui text-ui text-ink-2">{point.body}</p>
-            </li>
-          ))}
-        </ul>
-
-        <footer className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-4 font-ui text-caption text-ink-3">
-          <span>KalaVigyan · Science Behind Craft</span>
-          <Link href="/privacy" className="kv-link font-normal">
-            Privacy
-          </Link>
-        </footer>
-      </main>
+function HeroText({ craftCount }: { craftCount: number | null }) {
+  return (
+    <div className="kv-hero-in">
+      <p className="kicker kv-hero-kicker">Science behind craft</p>
+      <h1 id={HERO_TITLE_ID} className="kv-hero-title font-headline text-hero lining-nums">
+        The science in India’s crafts, <em>sourced to the sentence.</em>
+      </h1>
+      <p className="kv-hero-dek font-reading text-lede">{craftsLine(craftCount)}</p>
+      <HeroActions />
+      <p className="kv-hero-audience font-ui text-label">For IIT professors, researchers and design students.</p>
     </div>
+  );
+}
+
+export function LandingHero({ craftCount, content, cite }: { craftCount: number | null; content: LandingContent; cite: CiteMaps }) {
+  const host = useRef<HTMLElement | null>(null);
+  const shown = usePhotoShown(host);
+  const vat = useVatMoment({ autoplayKey: shown ? VAT_PLAYED_KEY : undefined });
+  return (
+    <section ref={host} className="kv-hero" data-vat-phase={vat.phase} aria-labelledby={HERO_TITLE_ID} data-testid="landing-hero">
+      <HeroPhoto priority />
+      <div className="vat-tint kv-hero-tint" aria-hidden />
+      <div className="kv-hero-scrim" aria-hidden />
+      <div className="kv-shell-wrap kv-hero-grid">
+        <HeroText craftCount={craftCount} />
+        <SpecimenLabel
+          variant="landing"
+          onPhoto
+          kicker={HERO_SPECIMEN.kicker}
+          family={content.family ?? undefined}
+          name={content.name}
+          nameId="landing-specimen"
+          sentence={content.vat ? <CitedText sentence={content.vat} cite={cite} /> : undefined}
+          steps={<VatSteps phase={vat.phase} onPlay={vat.play} />}
+          gi={content.gi ? <CitedText sentence={content.gi} cite={cite} /> : undefined}
+          place={content.place ?? undefined}
+          credit={<HeroCredit />}
+          className="kv-hero-label"
+        />
+      </div>
+    </section>
   );
 }

@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff, Lock } from "lucide-react";
 
+import { FormAlert } from "@/components/auth/FormAlert";
+import { PasswordField } from "@/components/auth/PasswordField";
+import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { isUnreachable } from "@/lib/failureTriage";
 import {
@@ -12,6 +14,11 @@ import {
   newPasswordProblem
 } from "@/lib/passwordChange";
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, changeOwnPassword, passwordRuleLine } from "@/lib/signIn";
+
+function changeError(err: unknown): string {
+  if (isUnreachable(err)) return "Couldn't connect. Check your connection and try again.";
+  return err instanceof Error ? err.message : "Could not set the password.";
+}
 
 export function FirstPasswordGate({
   currentPassword,
@@ -53,108 +60,62 @@ export function FirstPasswordGate({
         setCurrent("");
         setCurrentRefusals((count) => count + 1);
       }
-      setError(
-        isUnreachable(err)
-          ? "Couldn't connect. Check your connection and try again."
-          : err instanceof Error
-            ? err.message
-            : "Could not set the password."
-      );
+      setError(changeError(err));
     } finally {
       setSaving(false);
     }
   }
 
   return (
-    <form onSubmit={submit} className="grid gap-3">
-      <div role="status" className="rounded-md border border-line-200 bg-surface-50 p-3 text-sm leading-6 text-ink-700">
+    <form onSubmit={submit} className="grid gap-4">
+      <p role="status" className="m-0 border-s-2 border-rule-strong ps-3 font-reading text-body-sm text-ink-2">
         {PASSWORD_CHANGE_PROMPT}
-      </div>
-      {error ? (
-        <div role="alert" className="rounded-md border border-red-200 bg-error-100 px-3 py-2 text-sm text-error-600">
-          {error}
-        </div>
-      ) : null}
+      </p>
+      {error ? <FormAlert>{error}</FormAlert> : null}
 
       {askCurrent ? (
-        <div className="grid gap-2">
-          <label htmlFor="gate-current-password" className="text-sm font-medium text-ink-900">
-            Current password
-          </label>
-          <div className="relative">
-            <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-            <input
-              id="gate-current-password"
-              ref={currentBox}
-              type={show ? "text" : "password"}
-              autoComplete="current-password"
-              required
-              maxLength={MAX_PASSWORD_LENGTH}
-              value={current}
-              onChange={(event) => setCurrent(event.target.value)}
-              className="field-input h-[52px] pl-10"
-            />
-          </div>
-        </div>
+        <PasswordField
+          id="gate-current-password"
+          label="Current password"
+          inputRef={currentBox}
+          autoComplete="current-password"
+          revealed={show}
+          value={current}
+          onChange={setCurrent}
+          maxLength={MAX_PASSWORD_LENGTH}
+        />
       ) : null}
+      <PasswordField
+        id="gate-new-password"
+        label="New password"
+        autoComplete="new-password"
+        revealed={show}
+        onReveal={() => setShow((value) => !value)}
+        value={next}
+        onChange={setNext}
+        minLength={MIN_PASSWORD_LENGTH}
+        maxLength={MAX_PASSWORD_LENGTH}
+      />
+      <PasswordField
+        id="gate-confirm-password"
+        label="Repeat password"
+        autoComplete="new-password"
+        revealed={show}
+        value={confirm}
+        onChange={setConfirm}
+        minLength={MIN_PASSWORD_LENGTH}
+        maxLength={MAX_PASSWORD_LENGTH}
+        hint={passwordRuleLine(PASSWORD_CHANGE_SESSIONS)}
+      />
 
-      <div className="grid gap-2">
-        <label htmlFor="gate-new-password" className="text-sm font-medium text-ink-900">
-          New password
-        </label>
-        <div className="relative">
-          <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-          <input
-            id="gate-new-password"
-            type={show ? "text" : "password"}
-            autoComplete="new-password"
-            required
-            minLength={MIN_PASSWORD_LENGTH}
-            maxLength={MAX_PASSWORD_LENGTH}
-            value={next}
-            onChange={(event) => setNext(event.target.value)}
-            className="field-input h-[52px] pl-10 pr-11"
-          />
-          <button
-            type="button"
-            aria-label={show ? "Hide password" : "Show password"}
-            aria-pressed={show}
-            onClick={() => setShow((value) => !value)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-300 hover:text-ink-500"
-          >
-            {show ? <EyeOff size={22} aria-hidden /> : <Eye size={22} aria-hidden />}
-          </button>
-        </div>
-      </div>
-
-      <div className="grid gap-2">
-        <label htmlFor="gate-confirm-password" className="text-sm font-medium text-ink-900">
-          Repeat password
-        </label>
-        <div className="relative">
-          <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-          <input
-            id="gate-confirm-password"
-            type={show ? "text" : "password"}
-            autoComplete="new-password"
-            required
-            minLength={MIN_PASSWORD_LENGTH}
-            maxLength={MAX_PASSWORD_LENGTH}
-            value={confirm}
-            onChange={(event) => setConfirm(event.target.value)}
-            className="field-input h-[52px] pl-10"
-          />
-        </div>
-      </div>
-
-      <p className="text-xs leading-5 text-ink-500">{passwordRuleLine(PASSWORD_CHANGE_SESSIONS)}</p>
-
-      <Button type="submit" size="auth" disabled={saving} className="mt-1 w-full font-display text-base font-bold">
-        {saving ? "Saving…" : "Set password and continue"}
-      </Button>
-      <button type="button" className="field-button-secondary w-full" onClick={onSignOut}>
-        Sign out instead
-      </button>
+      <ActionGroup>
+        <Button type="button" variant="quiet" onClick={onSignOut}>
+          Sign out instead
+        </Button>
+        <Button type="submit" variant="primary" busy={saving} busyLabel="Saving">
+          Set password and continue
+        </Button>
+      </ActionGroup>
     </form>
   );
 }

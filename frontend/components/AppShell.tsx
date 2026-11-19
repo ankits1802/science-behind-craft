@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { EyeOff, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 
 import {
   adminChromeRouteFor,
@@ -15,9 +15,12 @@ import { useAuth } from "@/components/AuthProvider";
 import { DeadEndFrame, ErrorState } from "@/components/DeadEnd";
 import { DynamicIslandNav } from "@/components/DynamicIslandNav";
 import { ErrorPanel } from "@/components/ErrorPanel";
+import { Appbar } from "@/components/nav/Appbar";
 import { AccountGate } from "@/components/shell/AccountGate";
 import { ShellFrame } from "@/components/shell/ShellFrame";
 import { ActionGroup } from "@/components/ui/ActionGroup";
+import { Button, buttonLook } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { browserOffline } from "@/lib/errorKind";
 import { hasAdminView, routeGuardFor } from "@/lib/permissions";
 import { signInHref } from "@/lib/sessionReturn";
@@ -33,9 +36,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-bg-0 text-sm text-ink-500">
-        Loading…
-      </main>
+      <ShellFrame nav={<Appbar brandHref="/ask" />} onRetry={null}>
+        <Skeleton shape="lede" label="Opening your account" />
+      </ShellFrame>
     );
   }
 
@@ -58,9 +61,7 @@ function GuardedRoute({ user, children }: { user: User; children: React.ReactNod
   const guard = routeGuardFor(pathname);
   if (guard && !guard.can(user)) return <RouteLocked title={guard.title} message={guard.message} />;
   const chrome = adminChromeRouteFor(pathname);
-  if (chrome && hasAdminView(user) && !adminViewResolved) {
-    return <section className="panel p-6 text-sm text-ink-500">Checking your admin view…</section>;
-  }
+  if (chrome && hasAdminView(user) && !adminViewResolved) return <Skeleton shape="lede" label="Checking your admin view" />;
   if (chrome && !adminChromeVisible(user, adminMode)) return <AdminViewHidden route={chrome} onEnable={() => setAdminView(true)} />;
   return <>{children}</>;
 }
@@ -78,7 +79,7 @@ function Unreachable({ onRetry }: { onRetry: () => void }) {
 function RouteLocked({ title, message }: { title: string; message: string }) {
   return (
     <ErrorPanel screen="forbidden" tone="notice" icon={<Lock className="h-5 w-5" aria-hidden />} title={title} line={message}>
-      <Link href="/ask" className="field-button">
+      <Link href="/ask" {...buttonLook({ variant: "primary" })}>
         Home
       </Link>
     </ErrorPanel>
@@ -87,26 +88,19 @@ function RouteLocked({ title, message }: { title: string; message: string }) {
 
 function AdminViewHidden({ route, onEnable }: { route: AdminChromeRoute; onEnable: () => void }) {
   return (
-    <section className="panel px-6 py-14 text-center" aria-live="polite">
-      <div className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-surface-50 text-ink-500">
-        <EyeOff className="h-5 w-5" aria-hidden />
-      </div>
-      <h1 className="font-display text-xl font-bold tracking-tight text-ink-900">
-        {route.label} is hidden while admin view is off
-      </h1>
-      <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-ink-500">
-        {route.blurb} Turn admin view on to open it.
-      </p>
-      <ActionGroup className="mt-7">
-        <button type="button" onClick={onEnable} className="field-button">
+    <section className="kv-empty mx-auto max-w-2xl" aria-live="polite">
+      <h1 className="font-headline text-h2 text-ink-1">{route.label} is hidden while admin view is off</h1>
+      <p className="max-w-measure font-reading text-body text-ink-2">{route.blurb} Turn admin view on to open it.</p>
+      <ActionGroup className="mt-3">
+        <Button variant="primary" onClick={onEnable}>
           Turn admin view back on
-        </button>
+        </Button>
         {route.alternative ? (
-          <Link href={route.alternative.href} className="field-button-secondary">
+          <Link href={route.alternative.href} {...buttonLook({ variant: "quiet" })}>
             {route.alternative.label}
           </Link>
         ) : null}
-        <Link href="/ask" className="field-button-secondary">
+        <Link href="/ask" {...buttonLook({ variant: "quiet" })}>
           Home
         </Link>
       </ActionGroup>
