@@ -26,8 +26,15 @@ const PROPERTIES = [
   "margin-inline-start",
   "margin-block-start",
   "color",
-  "transform"
+  "transform",
+  "-webkit-font-smoothing",
+  "-webkit-text-size-adjust",
+  "font-variant-ligatures",
+  "font-variant-numeric",
+  "background-color",
+  "opacity"
 ];
+const LAYER_PROPERTIES = ["transform", "will-change", "opacity", "filter", "backdrop-filter", "contain", "isolation", "mix-blend-mode", "position", "overflow", "z-index", "-webkit-font-smoothing", "text-rendering"];
 const MAX_NODES = 40;
 
 export async function elementStyles(page: Page, id: string): Promise<StyleRecord> {
@@ -98,4 +105,27 @@ export async function selfHostedFaces(page: Page): Promise<string> {
 
 export async function servedFaces(page: Page, faces: string): Promise<void> {
   await page.route(GOOGLE_FONT_CSS, (route) => route.fulfill({ status: 200, contentType: "text/css", body: faces }));
+}
+
+export async function chapterOffsets(page: Page): Promise<Record<string, string>> {
+  return page.evaluate(() => {
+    const host = document.getElementById("kv-main")?.getBoundingClientRect().top ?? 0;
+    return Object.fromEntries([...document.querySelectorAll("#kv-main [id]")].map((element) => [element.id, (element.getBoundingClientRect().top - host).toFixed(2)]));
+  });
+}
+
+export async function ancestorLayers(page: Page, id: string): Promise<string[]> {
+  return page.evaluate(
+    ({ target, properties }) => {
+      const chain: string[] = [];
+      for (let node = document.getElementById(target)?.parentElement; node; node = node.parentElement) {
+        const style = getComputedStyle(node);
+        const set = properties.map((name) => `${name}=${style.getPropertyValue(name)}`).join(" ");
+        const classes = typeof node.className === "string" ? node.className.trim().split(/\s+/).filter(Boolean).slice(0, 3).join(".") : "";
+        chain.push(`${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}${classes ? `.${classes}` : ""} ${set}`);
+      }
+      return chain;
+    },
+    { target: id, properties: LAYER_PROPERTIES }
+  );
 }

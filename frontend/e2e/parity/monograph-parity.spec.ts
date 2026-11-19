@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
-import { elementStyles, fontReport, selfHostedFaces, servedFaces, styleDifferences, type StyleDifference } from "./parityStyles";
+import { ancestorLayers, chapterOffsets, elementStyles, fontReport, selfHostedFaces, servedFaces, styleDifferences, type StyleDifference } from "./parityStyles";
 
 const APPROVED = "/monographs/kutch-ajrakh/index.html";
 const RENDERED = "/crafts/Kutch-Ajrakh/monograph";
@@ -60,6 +60,8 @@ test("every chapter of the React page looks as the approved page does", async ({
   const differences: Record<string, PixelDifference | "missing"> = {};
   const styles: Record<string, StyleDifference[]> = {};
   report("fonts.json", { approved: await fontReport(approved), rendered: await fontReport(rendered) });
+  report("offsets.json", { approved: await chapterOffsets(approved), rendered: await chapterOffsets(rendered) });
+  const layers: Record<string, { approved: string[]; rendered: string[] }> = {};
   for (const id of ids) {
     const selector = `[id="${id}"]`;
     if (!(await rendered.locator(selector).count())) {
@@ -80,10 +82,12 @@ test("every chapter of the React page looks as the approved page does", async ({
       report(`${id}.approved.png`, before);
       report(`${id}.rendered.png`, after);
       styles[id] = styleDifferences(await elementStyles(approved, id), await elementStyles(rendered, id));
+      layers[id] = { approved: await ancestorLayers(approved, id), rendered: await ancestorLayers(rendered, id) };
     }
   }
   report("pixels.json", differences);
   report("styles.json", styles);
+  report("layers.json", layers);
   const failing = Object.entries(differences).filter(([, found]) => found === "missing" || found.ratio > PIXEL_TOLERANCE);
   expect(failing.map(([id]) => id), "chapters that differ (see pixels.json)").toEqual([]);
 });
