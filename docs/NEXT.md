@@ -63,11 +63,8 @@ without the owner is recorded below or in decisions 0102 and 0103 for review.
   - The Professor and Admin accounts now pass.
   - Every curated craft page renders.
   - The failures that remain are findings, not regressions from this release:
-    1. **The router's prefetch of `/crafts/Kutch-Ajrakh` answers 404.** The rewrite to the static
-       monograph cannot answer a React Server Components request. Readers are not affected: the
-       router falls back to a full page load. Fix: links to a monograph slug
-       (`next.config.ts` `CRAFT_MONOGRAPHS`) render a plain `<a>`, or an RSC request there gets a
-       redirect that forces a full load.
+    1. **The router's prefetch of `/crafts/Kutch-Ajrakh` answered 404** while the craft was
+       rewritten to its static page. Gone since 2026-11-20: the craft draws its document.
     2. **Sanganeri's Region tab** runs about 70 screens before "All measurements", against a
        limit of 3. This is a design problem of the tabbed craft page; the redesign or track 1,
        step 2 replaces it.

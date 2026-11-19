@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.public_deps import cached_read, public_reader
@@ -11,7 +11,7 @@ from app.core.errors import InvalidInput, Refused
 from app.core.roles import ADMIN, has_rank
 from app.models import User
 from app.research.crafts import SLUG_MAX_CHARS
-from app.research.monograph_document import SUBJECT_KINDS
+from app.research.monograph_document import LANGUAGE_MAX_CHARS, SUBJECT_KINDS
 from app.research.page_layout import LayoutWrite
 from app.services.monograph_generated import generated_document
 from app.services.open_work_subjects import subject_by_key
@@ -23,9 +23,11 @@ ADMIN_ONLY_DETAIL = "Changing a page's layout is for admins."
 NO_DOCUMENT_DETAIL = "There is no monograph for that {kind} yet."
 NO_LAYOUT_DETAIL = "That page has no layout yet."
 CATEGORY, FAMILY = "category", "family"
+CONTENT_LANGUAGE = "Content-Language"
 
 SubjectKind = Literal[*SUBJECT_KINDS]
 Slug = Annotated[str, Path(min_length=1, max_length=SLUG_MAX_CHARS, pattern=r"^[A-Za-z0-9-]+$")]
+AskedLanguage = Annotated[str | None, Query(alias="lang", max_length=LANGUAGE_MAX_CHARS)]
 
 
 @dataclass(frozen=True)
@@ -49,10 +51,11 @@ async def get_category_monograph(
     request: Request,
     response: Response,
     slug: Slug,
+    lang: AskedLanguage = None,
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
-    return cached_read(request, response, reader, await _document(session, CATEGORY, slug))
+    return _served(request, response, reader, await _document(session, CATEGORY, slug))
 
 
 @router.get("/families/{slug}/monograph")
@@ -60,10 +63,11 @@ async def get_family_monograph(
     request: Request,
     response: Response,
     slug: Slug,
+    lang: AskedLanguage = None,
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Any:
-    return cached_read(request, response, reader, await _document(session, FAMILY, slug))
+    return _served(request, response, reader, await _document(session, FAMILY, slug))
 
 
 @router.get("/pages/{kind}/{slug}/layout")
@@ -99,6 +103,11 @@ async def put_page_layout(
         raise HTTPException(status.HTTP_409_CONFLICT, stale.message) from stale
     await session.commit()
     return layout.model_dump(mode="json", by_alias=True)
+
+
+def _served(request: Request, response: Response, reader: User | None, body: dict[str, Any]) -> Any:
+    response.headers[CONTENT_LANGUAGE] = body["language"]
+    return cached_read(request, response, reader, body)
 
 
 async def _document(session: AsyncSession, kind: str, slug: str) -> dict[str, Any]:

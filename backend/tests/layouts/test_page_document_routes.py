@@ -95,6 +95,18 @@ def test_a_category_or_family_monograph_is_a_public_read_with_an_etag(
     assert again.status_code == 304
 
 
+@pytest.mark.parametrize(
+    "path", ["/api/categories/Textile-Craft-Category/monograph", "/api/families/Other-Textiles/monograph"]
+)
+def test_a_category_or_family_monograph_is_served_in_english_whatever_language_is_asked(
+    path: str, held: dict[str, Any]
+) -> None:
+    answer = client(held).get(path, params={"lang": "hi"})
+    assert answer.status_code == 200
+    assert answer.headers["Content-Language"] == "en"
+    assert answer.json()["language"] == "en"
+
+
 def test_an_unknown_subject_or_one_with_nothing_published_is_a_404(held: dict[str, Any]) -> None:
     http = client(held)
     assert http.get("/api/families/No-Such-Family/monograph").status_code == 404

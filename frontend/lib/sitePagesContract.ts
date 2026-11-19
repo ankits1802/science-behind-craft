@@ -32,10 +32,9 @@ export function parseSiteBuildState(raw: unknown): SiteBuildState {
   return parseShape(siteBuildShape, raw);
 }
 
-export function staticCraftParams(pages: StaticPages | null, servedElsewhere: (slug: string) => boolean): CraftParams[] {
+export function staticCraftParams(pages: StaticPages | null): CraftParams[] {
   if (!pages) return [];
-  const slugs = new Set(pages.crafts.filter((slug) => !servedElsewhere(slug)));
-  return [...slugs].map((slug) => ({ slug }));
+  return [...new Set(pages.crafts)].map((slug) => ({ slug }));
 }
 
 export function buildWaitsUntil(state: SiteBuildState, now: Date): Date | null {

@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
 
-import { CRAFT_MONOGRAPHS, ROUTER_REQUEST_HEADER } from "./lib/craftMonographs";
-
 const isProduction = process.env.NODE_ENV === "production";
 
 export const ELEVENLABS_CONNECT_SOURCES = ["wss://livekit.rtc.elevenlabs.io", "https://livekit.rtc.elevenlabs.io"];
@@ -9,6 +7,7 @@ export const GOOGLE_IDENTITY_SOURCE = "https://accounts.google.com/gsi/";
 export const MEDIA_BUCKET_ORIGIN = "https://kalavigyan-media-626159998512.s3.ap-south-1.amazonaws.com";
 
 export const WEB_PICTURE_SOURCE = "https:";
+export const APPROVED_MONOGRAPHS = "/monographs/:path*";
 export const IMAGE_SOURCES = ["'self'", "data:", MEDIA_BUCKET_ORIGIN, WEB_PICTURE_SOURCE];
 export const FRAME_SOURCES = [GOOGLE_IDENTITY_SOURCE];
 
@@ -55,17 +54,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname
   },
-  async rewrites() {
-    return {
-      beforeFiles: Object.entries(CRAFT_MONOGRAPHS).map(([slug, destination]) => ({
-        source: `/crafts/${slug}`,
-        destination,
-        missing: [{ type: "header" as const, key: ROUTER_REQUEST_HEADER }]
-      })),
-      afterFiles: [],
-      fallback: []
-    };
-  },
   async headers() {
     return [
       {
@@ -74,7 +62,8 @@ const nextConfig: NextConfig = {
           ...securityHeaders,
           ...(isProduction ? [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" }] : [])
         ]
-      }
+      },
+      { source: APPROVED_MONOGRAPHS, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }
     ];
   }
 };

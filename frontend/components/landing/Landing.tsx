@@ -7,6 +7,7 @@ import { FourChemistries } from "@/components/landing/FourChemistries";
 import { HowToRead } from "@/components/landing/HowToRead";
 import { LandingHero } from "@/components/landing/LandingHero";
 import type { LandingContent } from "@/components/landing/landingContent";
+import { CraftsMapSection } from "@/components/map/CraftsMapSection";
 import { Appbar } from "@/components/nav/Appbar";
 import { SkipLink } from "@/components/shell/ShellFrame";
 
@@ -29,6 +30,7 @@ export function Landing({ craftCount, content }: { craftCount: number | null; co
         <ClothRibbon stages={content.stages} name={content.name} craftPath={content.craftPath} />
         <FourChemistries content={content} cite={cite} />
         <HowToRead demo={content.demo} cite={cite} />
+        <CraftsMapSection />
       </main>
       <InstitutionFooter />
     </div>

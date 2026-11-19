@@ -79,13 +79,13 @@ export function documentCitation(document: MonographDocument): Citable | null {
   return { kind: "monograph", title: document.title, version: document.version, url: versionedUrl(document.pageUrl, document.version), key: citeKey(document.subjectSlug, document.version) };
 }
 
-function DocumentChapters({ document, plan }: { document: MonographDocument; plan: PagePlan }) {
+function DocumentChapters({ document, plan, masthead }: { document: MonographDocument; plan: PagePlan; masthead: boolean }) {
   const labelled = plan.label !== null;
   const cite = labelled ? documentCitation(document) : null;
   return (
     <div id="kv-main">
       {plan.chapters.map((chapter) => (
-        <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={chapter.index === 0 ? plan.masthead : null} label={chapter.index === 0 ? plan.label : null} labelled={labelled} />
+        <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={masthead && chapter.index === 0 ? plan.masthead : null} label={masthead && chapter.index === 0 ? plan.label : null} labelled={labelled} />
       ))}
       {cite ? (
         <div className="kv-page kv-citethis-place">
@@ -96,13 +96,13 @@ function DocumentChapters({ document, plan }: { document: MonographDocument; pla
   );
 }
 
-export function MonographPage({ document }: { document: MonographDocument }) {
+export function MonographPage({ document, masthead = true }: { document: MonographDocument; masthead?: boolean }) {
   const plan = pagePlan(document);
   return (
     <div className="kv-monograph ms-[calc(50%-50vw)] w-screen" lang={document.language} data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
       <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
       <MonographRail chapters={railChapters(plan)} />
-      {document.shell !== null ? <AuthoredShell document={document} shell={document.shell} /> : <DocumentChapters document={document} plan={plan} />}
+      {document.shell !== null ? <AuthoredShell document={document} shell={document.shell} /> : <DocumentChapters document={document} plan={plan} masthead={masthead} />}
       <KitShellTail document={document} />
       <KitPreferences />
       <KitScript />

@@ -3,7 +3,6 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { isCraftMonograph } from "@/lib/craftMonographs";
 import { ShapeError } from "@/lib/shape";
 import {
   STATIC_PAGE_REVALIDATE_SECONDS,
@@ -39,10 +38,10 @@ test("a static page list off its contract is refused", () => {
   expect(() => parseStaticPages({ ...golden(), extra: true })).toThrow(ShapeError);
 });
 
-test("every listed craft is pre-rendered once except the static monograph", () => {
+test("every listed craft is pre-rendered once, Kutch Ajrakh included", () => {
   const pages = { ...golden(), crafts: [...golden().crafts, "Bagh-Print"] };
-  expect(staticCraftParams(pages, isCraftMonograph)).toEqual([{ slug: "Bagh-Print" }, { slug: "Sanganeri-Block-Print" }]);
-  expect(staticCraftParams(null, isCraftMonograph)).toEqual([]);
+  expect(staticCraftParams(pages)).toEqual([{ slug: "Bagh-Print" }, { slug: "Kutch-Ajrakh" }, { slug: "Sanganeri-Block-Print" }]);
+  expect(staticCraftParams(null)).toEqual([]);
 });
 
 test("the craft route keeps its pages for the day the nightly build refreshes", () => {

@@ -36,3 +36,12 @@ Ajrakh craft page exactly as it looks, now, not rebuilt in React.
 
 `e2e/craft-monograph-unit.spec.ts` checks the rewrite, the title, the pictures and the Ask next
 links, and that other crafts are not rewritten.
+
+## Ended (2026-11-20)
+
+The React renderer of decision 0106 passed the parity proof at 360, 834 and 1440 in light and dark
+(text, all 31 chapters, interactions; run 44617385866), so `/crafts/Kutch-Ajrakh` draws its stored
+document like every other craft and the rewrite is gone. The approved file stays at
+`/monographs/kutch-ajrakh/` as the parity reference, served with `X-Robots-Tag: noindex`;
+`e2e/craft-monograph-unit.spec.ts` checks that arrangement.
+
