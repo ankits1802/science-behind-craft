@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, KeyRound, Route, ShieldCheck, SlidersHorizontal, UserCog, type LucideIcon } from "lucide-react";
+import { ArrowRight, BarChart3, ClipboardCheck, KeyRound, Route, ShieldCheck, SlidersHorizontal, UserCog, type LucideIcon } from "lucide-react";
 
 import { ReviewSwitchCard } from "@/components/admin/ReviewSwitchCard";
 import { SiteBuildCard } from "@/components/admin/SiteBuildCard";
@@ -21,6 +21,7 @@ type HubCard = {
 };
 
 const CARDS: HubCard[] = [
+  { href: "/admin/review", title: "Review", note: "Decide what other people give: facts, testimony, pictures, components.", icon: ClipboardCheck },
   { href: "/admin/access", title: "Who may sign in", note: "Approve requests and add addresses.", icon: ShieldCheck },
   { href: "/admin/users", title: "Manage users", note: "Change roles, suspend accounts.", icon: UserCog },
   { href: "/admin/keys", title: "API keys", note: "Set and test provider keys.", icon: KeyRound },

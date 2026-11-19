@@ -31,6 +31,7 @@ from app.api.routes import (
     password_change,
     profile,
     public,
+    review_queue,
     rivers,
     saved_explainers,
     secrets,
@@ -79,6 +80,7 @@ api_router.include_router(oauth.router)
 api_router.include_router(open_work.router)
 api_router.include_router(profile.router)
 api_router.include_router(public.router)
+api_router.include_router(review_queue.router)
 api_router.include_router(rivers.router)
 api_router.include_router(saved_explainers.router)
 api_router.include_router(secrets.router)

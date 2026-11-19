@@ -25,6 +25,7 @@ from app.models import (
 from app.research.testimony import SPEAKER_ROLE, Speaker, speaker, time_locator
 
 from .field_voices_credit import long_date
+from .orphan_concepts import concept_unlinked
 from .reader_profiles import district_names
 
 __all__ = [
@@ -247,13 +248,16 @@ async def drop_orphans(session: AsyncSession, conversation: ArtisanConversation)
         if not cited:
             conversation.sourceId = None
             await session.execute(delete(Source).where(Source.id == source_id))
-    resting = exists().where(Claim.subjectType == "CONCEPT", Claim.subjectId == Concept.id)
+    resting = exists().where(
+        Claim.subjectType == "CONCEPT", Claim.subjectId == Concept.id, Claim.status != ERASED_STATUS
+    )
     await session.execute(
         delete(Concept).where(
             Concept.craftId == conversation.craftId,
             Concept.originRef == TESTIMONY_CONCEPT_REF,
             Concept.sensitivity == TESTIMONY_SENSITIVITY,
             ~resting,
+            concept_unlinked(),
         )
     )
 
