@@ -194,18 +194,18 @@ test("sources list under their reliability grade with their numbers", () => {
   const numbers = pageSourceNumbers(page, []);
   const html = drawn(page, createElement(CraftSourcesTab, { groups: sourceGroups(page.sources, numbers), numbers }));
   expect(attribute(html, "craft-source-group", "data-reliability")).toEqual(["A", "B", "C", "D"]);
-  expect(count(html, "craft-source")).toBe(21 + 5 + 7);
-  expect(text(html)).toContain("A · peer-reviewed or official 18 sources");
+  expect(count(html, "craft-source")).toBe(24 + 5 + 7);
+  expect(text(html)).toContain("A · peer-reviewed or official 21 sources");
   expect(text(html)).toContain("[1] Geographical Indications Journal No. 188");
 });
 
 test("All evidence lists every claim once by discipline and subject, hypotheses apart, each tagged with where it came from", () => {
   const page = curatedPage();
   const html = drawn(page, createElement(CraftEvidence, { evidence: pageEvidence(page) }));
-  expect(count(html, "evidence-claim")).toBe(135 + 4);
+  expect(count(html, "evidence-claim")).toBe(143 + 4);
   expect(count(html, "evidence-group")).toBe(11);
   expect(count(html, "evidence-hypotheses")).toBe(1);
-  expect(attribute(html, "evidence-provenance", "data-testid")).toHaveLength(135 + 4);
+  expect(attribute(html, "evidence-provenance", "data-testid")).toHaveLength(143 + 4);
   expect(html.split('data-testid="evidence-hypotheses"')[1].split('data-testid="evidence-claim"').length - 1).toBe(5);
   const seed = uncuratedPage();
   expect(text(drawn(seed, createElement(CraftEvidence, { evidence: pageEvidence(seed) })))).toContain("Seed");
@@ -220,7 +220,7 @@ test("near-duplicates fold under the strongest claim", () => {
   const html = drawn(page, createElement(CraftEvidence, { evidence: pageEvidence(page) }));
   expect(count(html, "evidence-folded")).toBe(1);
   expect(text(html)).toContain("1 similar claim");
-  expect(count(html, "evidence-claim")).toBe(135 + 4);
+  expect(count(html, "evidence-claim")).toBe(143 + 4);
 });
 
 test("no grid on the craft page can widen a phone page", () => {
