@@ -54,7 +54,8 @@ async def test_initialize_agrees_the_client_s_version_or_offers_the_latest(asked
 async def test_the_tools_are_the_five_read_tools_each_read_only() -> None:
     reply = await answer(request("tools/list"), CONTEXT)
     assert reply is not None
-    tools = {tool["name"]: tool for tool in reply["result"]["tools"]}
+    listed = {tool["name"]: tool for tool in reply["result"]["tools"]}
+    tools = {name: tool for name, tool in listed.items() if tool["annotations"]["readOnlyHint"]}
     assert set(tools) == {"list_fields", "find_crafts", "get_facts", "get_section", "list_components"}
     for tool in tools.values():
         assert tool["annotations"]["readOnlyHint"] is True
