@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
   apiOrigin,
   csrfRefusal,
+  isMachineRoute,
   refuseCrossSite,
   refuseUnconfigured,
   sessionTokenOf,
@@ -22,10 +23,11 @@ const SESSION_ROUTES = new Set([
 export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   if (SESSION_ROUTES.has(path)) return NextResponse.next();
-  if (csrfRefusal(request)) return refuseCrossSite();
+  const machine = isMachineRoute(path);
+  if (!machine && csrfRefusal(request)) return refuseCrossSite();
   const origin = apiOrigin();
   if (!origin) return refuseUnconfigured();
-  const headers = upstreamHeaders(request, sessionTokenOf(request));
+  const headers = upstreamHeaders(request, machine ? null : sessionTokenOf(request));
   const response = NextResponse.rewrite(new URL(upstreamUrl(request, origin)), { request: { headers } });
   response.headers.set("x-vercel-enable-rewrite-caching", "0");
   return response;
