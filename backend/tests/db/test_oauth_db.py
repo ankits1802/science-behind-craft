@@ -192,6 +192,19 @@ async def test_a_wrong_verifier_or_a_code_older_than_five_minutes_is_invalid_gra
     assert (wrong.value.error, late.value.error) == ("invalid_grant", "invalid_grant")
 
 
+async def test_a_code_dies_when_the_account_signs_out_everywhere_before_it_is_used(
+    session: AsyncSession,
+) -> None:
+    user = await person(session)
+    client_id = await registered(session)
+    code = await approved(session, user, client_id)
+    user.sessionsValidFrom = NOW + timedelta(seconds=30)
+    await session.flush()
+    with pytest.raises(OAuthError) as refused:
+        await exchanged(session, client_id, code, at=NOW + timedelta(minutes=1))
+    assert refused.value.error == "invalid_grant"
+
+
 async def test_refresh_rotates_and_a_replayed_refresh_token_revokes_the_connection(
     session: AsyncSession,
 ) -> None:

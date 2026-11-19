@@ -123,6 +123,7 @@ async def approve(
             scopes=list(scopes),
             resource=checked.resource,
             expiresAt=now + timedelta(seconds=CODE_SECONDS),
+            createdAt=now,
         )
     )
     await session.flush()
