@@ -71,8 +71,12 @@ status, aiMarked, mime, width, height, fileUrl, createdAt, reviewedAt, reviewNot
 a page names the picture: "Photograph", "Drawing" or "Illustration, made with <generator>".
 `fileUrl` is a ten-minute presigned link to view the stored file.
 
+## Screens
+
+- `/contributions/pictures` (Researcher and above): the declaration and the upload in one form (craft, what it is, the AI tool and prompt, the craft's facts to choose from, caption, description, the picture, the declaration), and the contributor's own pictures with Take it back while one still waits.
+- `/admin/pictures` (Admin and Master Admin): the queue by status, each picture with its label, caption, description, prompt, facts and AI mark, Approve, and Refuse with a note.
+
 ## Not yet
 
 - Showing approved pictures on craft pages, with their label (the craft page redesign).
-- The contribute page and the admin review screen in the web app.
 - The MCP tool that opens a declaration and hands back the upload page's link (slice 2).

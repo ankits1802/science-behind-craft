@@ -39,7 +39,7 @@ approval by role (item 12). This records how the first part, the backend, was bu
 
 ## What follows
 
-- The contribute page and the admin review screen in the web app.
+- The contribute page and the admin review screen: built (`/contributions/pictures`, `/admin/pictures`).
 - Showing approved pictures on craft pages with their label ("Illustration, made with ChatGPT").
 - The MCP tool (slice 2) that opens a declaration and returns the upload page's link.
 - The owner's open decisions: the contribution terms' text, and whether a withdrawn approved
