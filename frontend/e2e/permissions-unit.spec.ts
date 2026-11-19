@@ -88,9 +88,9 @@ test("each role sees exactly the admin destinations it is entitled to", () => {
     STUDENT: [],
     ARTISAN: [],
     RESEARCHER: [],
-    PROFESSOR: ["/admin/access", "/admin/users", "/admin/testimony"],
-    ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/testimony", "/admin/usage"],
-    MASTER_ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/testimony", "/admin/keys", "/admin/routing", "/admin/usage"]
+    PROFESSOR: ["/admin/access", "/admin/users", "/admin/review", "/admin/testimony"],
+    ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/review", "/admin/testimony", "/admin/usage"],
+    MASTER_ADMIN: ["/admin", "/admin/access", "/admin/users", "/admin/review", "/admin/testimony", "/admin/keys", "/admin/routing", "/admin/usage"]
   };
   for (const role of LADDER) {
     const visible = ADMIN_NAV_HREFS.filter((href) => canAccessRoute(person(role), href));
