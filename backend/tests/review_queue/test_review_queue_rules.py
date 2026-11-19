@@ -261,6 +261,12 @@ def test_a_page_holds_one_to_fifty_items(limit: int) -> None:
 def test_each_item_names_its_kind_by_the_queue_it_belongs_to() -> None:
     kinds = [
         model.model_fields["kind"].default
-        for model in (contract.FactItem, contract.TestimonyItem, contract.PictureItem, contract.ComponentItem)
+        for model in (
+            contract.FactItem,
+            contract.TestimonyItem,
+            contract.PictureItem,
+            contract.ComponentItem,
+            contract.LayoutItem,
+        )
     ]
     assert kinds == list(ALL_KINDS)
