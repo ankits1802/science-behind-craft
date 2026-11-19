@@ -119,7 +119,9 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
 - **Registered components** that apply: for a craft or family
   `services/component_library.library_components` with its slug; for a category every labelled,
   visible component keyed to a concept its curated or section facts are about, or resting on one of
-  those facts. Each is placed at the end of its field's chapter, sorted by label, and drawn from
+  those facts. Of these only the subject's own components and shared ones (no owning craft) are
+  placed: another craft's own component that shares a place or a concept stays on that craft's
+  page. Each is placed at the end of its field's chapter, sorted by label, and drawn from
   `backend/app/data/monographs/<registering monograph>/specs/<label with / as __>.json` when that
   spec exists, else from that monograph's fragment
   `backend/app/data/monographs/<registering monograph>/fragments/<label with / as __>.html`, its

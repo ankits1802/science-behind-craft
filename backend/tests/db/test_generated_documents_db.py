@@ -15,6 +15,7 @@ from app.services.page_layouts import write_layout
 
 from .page_documents_seed import (
     ADMIN,
+    ALUM,
     BARE_SLUG,
     CATEGORY_SLUG,
     CONCEPT_PLAYER,
@@ -22,6 +23,7 @@ from .page_documents_seed import (
     CRAFT_SLUG,
     CRAFT_TEXT,
     FAMILY_SLUG,
+    OTHER_CRAFTS_PLAYER,
     PICTURE,
     seed,
 )
@@ -80,15 +82,16 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
     assert document.page_url.endswith(f"/crafts/{CRAFT_SLUG}")
 
 
-async def test_the_craft_brings_its_own_and_its_concepts_components_and_draws_the_one_with_a_spec(
+async def test_the_craft_brings_its_own_and_its_concepts_shared_components_and_draws_the_one_with_a_spec(
     session: AsyncSession, tmp_path: Path
 ) -> None:
     parts = await generated_parts(session, await subject_by_key(session, "craft", CRAFT_SLUG))
     assert parts is not None
-    assert [(c.label, c.monograph, c.anchor) for c in parts.components] == [
-        (CRAFT_PLAYER, "Page-Docs-Monograph", "#fig2"),
-        (CONCEPT_PLAYER, "Page-Docs-Monograph", "#fig2"),
+    assert [(c.label, c.monograph, c.anchor, c.subjects) for c in parts.components] == [
+        (CRAFT_PLAYER, "Page-Docs-Monograph", "#fig2", ()),
+        (CONCEPT_PLAYER, "Page-Docs-Monograph", "#fig2", (f"concept:{ALUM}",)),
     ]
+    assert OTHER_CRAFTS_PLAYER not in {c.label for c in parts.components}
     specs = tmp_path / "Page-Docs-Monograph" / "specs"
     specs.mkdir(parents=True)
     (specs / "page-docs-test-craft__chemistry__alum-player.json").write_text(

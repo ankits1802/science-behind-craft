@@ -113,11 +113,13 @@ async def subject_components(
     session: AsyncSession, subject: WorkSubject, claim_ids: Sequence[uuid.UUID]
 ) -> list[RegisteredComponent]:
     if subject.kind == CATEGORY:
-        rows = await _category_pieces(session, subject.id, claim_ids)
+        found = await _category_pieces(session, subject.id, claim_ids)
     else:
         listed = await library_components(session, slug=subject.slug, limit=EXPORT_COMPONENTS_MAX)
         labels = [component.label for component in listed.components]
-        rows = list(await session.scalars(select(KnowledgePiece).where(KnowledgePiece.label.in_(labels))))
+        found = list(await session.scalars(select(KnowledgePiece).where(KnowledgePiece.label.in_(labels))))
+    owner = None if subject.kind == CATEGORY else subject.id
+    rows = [row for row in found if row.craftId is None or row.craftId == owner]
     subjects = await _subject_keys(session, [row.id for row in rows])
     return sorted(
         (_component(row, subjects.get(row.id, ())) for row in rows if row.label is not None),

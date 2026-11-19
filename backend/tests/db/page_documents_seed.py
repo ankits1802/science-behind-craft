@@ -23,6 +23,7 @@ from app.services.curated_index import CuratedPage
 
 __all__ = [
     "ADMIN",
+    "ALUM",
     "BARE_SLUG",
     "CATEGORY_SLUG",
     "CONCEPT_PLAYER",
@@ -31,6 +32,7 @@ __all__ = [
     "CRAFT_SLUG",
     "CRAFT_TEXT",
     "FAMILY_SLUG",
+    "OTHER_CRAFTS_PLAYER",
     "PICTURE",
     "seed",
 ]
@@ -56,6 +58,7 @@ CRAFT_TEXT = "Alum fixes the madder red on the cotton."
 PICTURE = "page-docs-test-craft/pictures/i01"
 CRAFT_PLAYER = "page-docs-test-craft/chemistry/alum-player"
 CONCEPT_PLAYER = "shared/chemistry/page-docs-alum-crystal"
+OTHER_CRAFTS_PLAYER = "page-docs-test-bare/chemistry/alum-photo"
 FOCAL = {"x": 0.1, "y": 0.1, "width": 0.8, "height": 0.6}
 
 
@@ -199,9 +202,15 @@ def _piece(label: str, craft_id: uuid.UUID | None) -> KnowledgePiece:
 
 async def _components(session: AsyncSession) -> None:
     own, shared = _piece(CRAFT_PLAYER, CRAFT), _piece(CONCEPT_PLAYER, None)
-    session.add_all([own, shared])
+    others = _piece(OTHER_CRAFTS_PLAYER, BARE)
+    session.add_all([own, shared, others])
     await session.flush()
-    session.add(KnowledgePieceSubject(pieceId=shared.id, kind="CONCEPT", conceptId=ALUM))
+    session.add_all(
+        [
+            KnowledgePieceSubject(pieceId=piece.id, kind="CONCEPT", conceptId=ALUM)
+            for piece in (shared, others)
+        ]
+    )
     await session.flush()
 
 
