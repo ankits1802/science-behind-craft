@@ -20,7 +20,7 @@ the export. Read the section for a field before writing it, not the whole file.
 | A new fact that stands alone (a claim with its quotes and sources) | proposed through the API: `tools/curation/propose.py`, or MCP `propose_fact` for an agent on the MCP server | the curator |
 | Structure: picture placements and focal boxes, a stage's `after` or `whyClaimId`, native names, reactions, botanical names, the GI record, glossary, conflicts, open questions, and the facts that structure cites | a bulk import: a new dossier version in git, imported on deploy | the lead commits it |
 | A new craft's first dossier | a bulk import | the lead commits it |
-| Reading what the database holds | the export: `export_dossiers --diff`, or MCP `get_facts` | anyone |
+| Reading what the database holds | the export, `export_dossiers --diff` (needs the database); the public facts, MCP `get_facts` | the lead; anyone |
 
 The API takes facts only, about a craft or a category; it has no write for structure yet. A fact
 that structure cites travels with that structure in the bulk import, because a stage's why or a
