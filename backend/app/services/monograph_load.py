@@ -218,6 +218,9 @@ async def _register(session: AsyncSession, loading: _Loading, component: Compone
         report.components_awaiting_facts.append(component.label)
         return
     source_ids = await _source_ids(session, claim_ids)
+    if not source_ids:
+        report.components_awaiting_facts.append(component.label)
+        return
     values = _piece_values(loading.craft, content, component, (claim_ids, source_ids, units))
     row = await session.scalar(select(KnowledgePiece).where(KnowledgePiece.label == component.label))
     if row is not None and row.contentHash == values["contentHash"]:

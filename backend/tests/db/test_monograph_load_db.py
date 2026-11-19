@@ -219,6 +219,10 @@ async def _cross_seed(session: AsyncSession) -> tuple[uuid.UUID, uuid.UUID]:
     await session.flush()
     session.add(CuratedCategoryClaim(claimId=shared, categoryId=category, key="C010", discipline="CHEMISTRY"))
     session.add(CuratedClaim(claimId=theirs, craftId=kin, key="C001", discipline="CHEMISTRY"))
+    for claim_id in (shared, theirs):
+        session.add(
+            ClaimSource(claimId=claim_id, sourceId=SOURCE, quote="alum fixes the red", relation="DIRECT")
+        )
     await session.flush()
     return shared, theirs
 

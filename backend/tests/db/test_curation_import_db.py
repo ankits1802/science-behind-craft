@@ -100,12 +100,12 @@ def imported(report: ImportReport, slug: str) -> Any:
 
 async def test_the_kutch_ajrakh_dossier_imports_in_full(session: AsyncSession) -> None:
     outcome = imported(await import_curation(session), AJRAKH)
-    assert outcome.status == "IMPORTED" and outcome.version == 2
+    assert outcome.status == "IMPORTED" and outcome.version == 3
     craft_id = await ajrakh_id(session)
     curated = select(CuratedClaim.claimId).where(CuratedClaim.craftId == craft_id)
-    assert await count(session, Claim.id.in_(curated)) == 135
+    assert await count(session, Claim.id.in_(curated)) == 143
     assert await count(session, Claim.id.in_(curated), Claim.status != "APPROVED") == 0
-    assert await count(session, ClaimSource.claimId.in_(curated), model=ClaimSource) == 274
+    assert await count(session, ClaimSource.claimId.in_(curated), model=ClaimSource) == 284
     locations = (
         (await session.execute(select(CraftLocation).where(CraftLocation.craftId == craft_id)))
         .scalars()
