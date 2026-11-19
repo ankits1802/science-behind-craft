@@ -35,7 +35,11 @@ def arbitrary(tag: bytes) -> bytes:
 
 
 def sfnt(tags: list[bytes]) -> bytes:
-    return b"\x00\x01\x00\x00" + struct.pack(">HHHH", len(tags), 0, 0, 0) + b"".join(tag + bytes(12) for tag in tags)
+    return (
+        b"\x00\x01\x00\x00"
+        + struct.pack(">HHHH", len(tags), 0, 0, 0)
+        + b"".join(tag + bytes(12) for tag in tags)
+    )
 
 
 def violations(name: str, content: bytes) -> list[str]:
@@ -43,8 +47,16 @@ def violations(name: str, content: bytes) -> list[str]:
 
 
 def test_woff2_tables_are_read_past_transformed_glyf_and_loca() -> None:
-    content = woff2([known(GASP_INDEX), transformed_glyf(), transformed_loca(), known(PREP_INDEX), known(FVAR_INDEX)])
-    assert font_tables(PurePosixPath("frontend/fonts/a.woff2"), content) == {"gasp", "glyf", "loca", "prep", "fvar"}
+    content = woff2(
+        [known(GASP_INDEX), transformed_glyf(), transformed_loca(), known(PREP_INDEX), known(FVAR_INDEX)]
+    )
+    assert font_tables(PurePosixPath("frontend/fonts/a.woff2"), content) == {
+        "gasp",
+        "glyf",
+        "loca",
+        "prep",
+        "fvar",
+    }
 
 
 def test_woff2_arbitrary_tags_are_read() -> None:
@@ -56,7 +68,9 @@ def test_a_web_font_with_outlines_and_no_prep_is_refused() -> None:
     content = woff2([known(GASP_INDEX), transformed_glyf(), transformed_loca(), known(FVAR_INDEX)])
     found = violations("frontend/fonts/newsreader-latin-var.woff2", content)
     assert len(found) == 1
-    assert found[0].startswith("frontend/fonts/newsreader-latin-var.woff2: has TrueType outlines but no prep table")
+    assert found[0].startswith(
+        "frontend/fonts/newsreader-latin-var.woff2: has TrueType outlines but no prep table"
+    )
 
 
 def test_a_web_font_with_prep_passes() -> None:
