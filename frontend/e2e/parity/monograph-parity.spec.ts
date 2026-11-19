@@ -3,6 +3,7 @@ import { join } from "node:path";
 
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
+import { driftSteps, heightDifferences, sectionHeights, type DriftReport } from "./parityDrift";
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
 import { ancestorLayers, chapterOffsets, elementStyles, fontReport, selfHostedFaces, servedFaces, styleDifferences, type StyleDifference } from "./parityStyles";
 
@@ -53,6 +54,14 @@ test("the React page reads exactly as the approved page", async ({ context }) =>
   expect(diff.onlyApproved.length + diff.onlyRendered.length, "lines that differ (see text.json)").toBe(0);
 });
 
+async function driftReports(approved: Page, rendered: Page, offsets: { approved: Record<string, string>; rendered: Record<string, string> }): Promise<DriftReport[]> {
+  const reports: DriftReport[] = [];
+  for (const step of driftSteps(offsets.approved, offsets.rendered).slice(0, 6)) {
+    reports.push({ step, differences: heightDifferences(await sectionHeights(approved, step.after), await sectionHeights(rendered, step.after)) });
+  }
+  return reports;
+}
+
 test("every chapter of the React page looks as the approved page does", async ({ context }) => {
   test.setTimeout(CHAPTERS_TIMEOUT_MS);
   const { approved, rendered } = await bothPages(context);
@@ -60,7 +69,9 @@ test("every chapter of the React page looks as the approved page does", async ({
   const differences: Record<string, PixelDifference | "missing"> = {};
   const styles: Record<string, StyleDifference[]> = {};
   report("fonts.json", { approved: await fontReport(approved), rendered: await fontReport(rendered) });
-  report("offsets.json", { approved: await chapterOffsets(approved), rendered: await chapterOffsets(rendered) });
+  const offsets = { approved: await chapterOffsets(approved), rendered: await chapterOffsets(rendered) };
+  report("offsets.json", offsets);
+  report("drift.json", await driftReports(approved, rendered, offsets));
   const layers: Record<string, { approved: string[]; rendered: string[] }> = {};
   for (const id of ids) {
     const selector = `[id="${id}"]`;
