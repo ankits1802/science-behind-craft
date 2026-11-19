@@ -31,6 +31,7 @@ from app.api.routes import (
     oauth,
     open_work,
     own_proposals,
+    page_documents,
     password_change,
     profile,
     public,
@@ -86,6 +87,7 @@ api_router.include_router(notifications.router)
 api_router.include_router(oauth.router)
 api_router.include_router(open_work.router)
 api_router.include_router(own_proposals.router)
+api_router.include_router(page_documents.router)
 api_router.include_router(profile.router)
 api_router.include_router(public.router)
 api_router.include_router(review_queue.router)

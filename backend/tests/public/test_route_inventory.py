@@ -28,6 +28,9 @@ GUARDED_CLASSES = frozenset({ASKING, OWN_RECORDS, ADMIN, CONSENT})
 PUBLIC_ROUTES = {
     ("GET", "/api/categories"),
     ("GET", "/api/categories/{slug}"),
+    ("GET", "/api/categories/{slug}/monograph"),
+    ("GET", "/api/families/{slug}/monograph"),
+    ("GET", "/api/pages/{kind}/{slug}/layout"),
     ("GET", "/api/compare"),
     ("GET", "/api/crafts/catalogue"),
     ("GET", "/api/crafts/contributed/{contribution_id}"),
@@ -174,6 +177,7 @@ ADMIN_ROUTES = {
     ("PUT", "/api/knowledge/review-switch"),
     ("GET", "/api/site/build"),
     ("POST", "/api/site/build"),
+    ("PUT", "/api/pages/{kind}/{slug}/layout"),
     ("PUT", "/api/contributions/images/{contribution_id}/file"),
     ("GET", "/api/contributions/images/mine"),
     ("POST", "/api/contributions/images/{contribution_id}/withdraw"),
