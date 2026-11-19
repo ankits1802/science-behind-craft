@@ -150,6 +150,13 @@ OWN_RECORD_ROUTES = {
     ("GET", "/api/usage/me"),
 }
 ADMIN_ROUTES = {
+    ("POST", "/api/contributions/images"),
+    ("PUT", "/api/contributions/images/{contribution_id}/file"),
+    ("GET", "/api/contributions/images/mine"),
+    ("POST", "/api/contributions/images/{contribution_id}/withdraw"),
+    ("GET", "/api/contributions/images/review"),
+    ("POST", "/api/contributions/images/review/{contribution_id}/approve"),
+    ("POST", "/api/contributions/images/review/{contribution_id}/reject"),
     ("GET", "/api/access/roster"),
     ("POST", "/api/access/roster"),
     ("GET", "/api/access/roster/pending-count"),

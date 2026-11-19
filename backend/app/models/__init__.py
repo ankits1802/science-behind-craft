@@ -74,6 +74,7 @@ from app.models.identity import (
     User,
     UserPreference,
 )
+from app.models.image_contributions import ImageContribution
 from app.models.knowledge import (
     Chunk,
     Claim,
@@ -169,6 +170,7 @@ __all__ = [
     "FieldSegment",
     "FieldVoiceStream",
     "GiRegistration",
+    "ImageContribution",
     "Invite",
     "Job",
     "KnowledgePiece",

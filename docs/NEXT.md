@@ -79,6 +79,8 @@ without the owner is recorded below or in decisions 0102 and 0103 for review.
 
 ## Owner decisions open
 
+- **Image contributions** (decision 0104): the contribution terms' text behind the declaration's
+  `termsVersion`, and whether an approved picture its contributor withdraws may be kept.
 - **Confirm or change the rights holder** named on every portal image: set to "Centre of Excellence
   for Unified AI-Enabled Craft Ecosystem Platform, IIT Kharagpur" (`FIELD_VOICES_RIGHTS_HOLDER`
   in both portal repositories' Actions variables).

@@ -12,6 +12,7 @@ from app.api.routes import (
     field_voices,
     field_voices_held,
     film,
+    image_contributions,
     knowledge,
     learning_views,
     lessons,
@@ -48,6 +49,7 @@ api_router.include_router(two_factor.router)
 api_router.include_router(access.router)
 api_router.include_router(artisan_contributions.router)
 api_router.include_router(artisan_conversations.router)
+api_router.include_router(image_contributions.router)
 api_router.include_router(users.router)
 api_router.include_router(categories.router)
 api_router.include_router(crafts.router)

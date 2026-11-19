@@ -963,6 +963,11 @@ Last updated: 2026-11-19.
 - **The API's database pool is 12** (from 5), after the owner raised the Supabase pooler from 15
   to 30; the runbook's Connection budget explains the arithmetic.
 
+- **Image contributions, backend (2026-11-19).** Decision 0104, `docs/contracts/image-contributions.md`:
+  a picture is declared, then uploaded; its type, size and AI mark are read from its bytes and its
+  location and camera metadata dropped; it is stored privately and shared on approval, at once for
+  Professors, Admins and Master Admins, by an Admin for everyone else (`REVIEW_CONTRIBUTIONS`).
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

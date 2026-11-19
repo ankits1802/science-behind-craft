@@ -103,6 +103,7 @@ MATRIX = {
     Capability.HIDE_GENERATED: (False, False, False, True, True, True),
     Capability.CONTRIBUTE_TESTIMONY: (False, True, False, False, False, False),
     Capability.REVIEW_TESTIMONY: (False, False, False, True, True, True),
+    Capability.REVIEW_CONTRIBUTIONS: (False, False, False, False, True, True),
     Capability.CONFIRM_GUARDIAN_CONSENT: (False, False, False, True, True, True),
 }
 
