@@ -52,6 +52,11 @@ def texts(document: object) -> list[str]:
     return [str(unit.nodes) for unit in document.content.units.values()]
 
 
+def plate_units(document: object, label: str) -> list[str]:
+    figure = document.specs[label]["figure"]
+    return [caption["unit"] for caption in figure["captions"]] + [figure["credit"]]
+
+
 async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_picture(
     session: AsyncSession,
 ) -> None:
@@ -68,8 +73,10 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
     assert [(key, s.number, s.title) for key, s in document.content.sources.items()] == [
         ("g1", 1, "Alum mordants on cotton")
     ]
-    assert [(e.ref, e.within) for e in document.content.layout[:7]] == [
+    held = plate_units(document, PICTURE)
+    assert [(e.ref, e.within) for e in document.content.layout[: 1 + len(held) + len(MASTHEAD)]] == [
         (PICTURE, None),
+        *[(unit, PICTURE) for unit in held],
         *[(unit, PICTURE) for unit in MASTHEAD],
     ]
     units = document.content.units
@@ -77,8 +84,8 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
         ["Madhya Pradesh"],
         ["Registered geographical indication"],
     )
-    assert document.specs[PICTURE]["role"] == "HERO"
-    assert document.specs[PICTURE]["focal"] == {"x": 0.1, "y": 0.1, "width": 0.8, "height": 0.6}
+    assert document.specs[PICTURE]["setting"] == "figure"
+    assert document.specs[PICTURE]["picture"]["focal"] == {"x": 0.1, "y": 0.1, "width": 0.8, "height": 0.6}
     assert document.page_url.endswith(f"/crafts/{CRAFT_SLUG}")
 
 
@@ -109,7 +116,7 @@ async def test_a_family_and_a_category_get_their_own_documents(session: AsyncSes
     family = await generated_document(session, "family", FAMILY_SLUG)
     assert family is not None
     assert (family.subject_kind, family.page_url.endswith(f"/crafts/{FAMILY_SLUG}")) == ("family", True)
-    assert any("carved wooden blocks" in text for text in texts(family))
+    assert any("print with carved wooden" in text for text in texts(family))
     category = await generated_document(session, "category", CATEGORY_SLUG)
     assert category is not None
     assert (category.subject_kind, category.title) == ("category", "Page Docs Test Category")
@@ -158,6 +165,8 @@ async def test_the_stored_layout_orders_the_page_and_crops_its_picture(session: 
         ("chem", PICTURE),
     ]
     assert after.content.units[sentence].chapter == "glance"
-    assert (after.specs[PICTURE]["role"], after.specs[PICTURE]["focal"]["width"]) == ("PLATE", 0.5)
-    assert after.content.data["page-layout"]["version"] == 1
-    assert all(e.within is None for e in after.content.layout)
+    assert after.specs[PICTURE]["picture"]["focal"]["width"] == 0.5
+    layout = after.content.data["page-layout"]
+    assert layout["version"] == 1
+    assert next(entry["role"] for entry in layout["entries"] if entry["ref"] == PICTURE) == "PLATE"
+    assert all(e.within is None for e in after.content.layout if e.ref not in plate_units(after, PICTURE))

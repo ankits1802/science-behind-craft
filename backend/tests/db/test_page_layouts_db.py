@@ -59,6 +59,7 @@ async def test_an_admin_writes_versions_each_built_on_the_last_and_each_is_audit
         (2, "USER", ADMIN),
     ]
     assert rows[0].entries == [HERO]
+    await session.flush()
     audits = (
         await session.scalars(
             select(AuditLog).where(AuditLog.action == LAYOUT_WRITTEN, AuditLog.actorId == ADMIN)
