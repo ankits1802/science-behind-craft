@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src '__KV_SCRIPT_HASH__'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>KalaVigyan answer</title>
+<style>
+__KV_THEME__
+*{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink-1)}
+body{margin:0;background:var(--ground);color:var(--ink-1);font-family:var(--font-reading);font-size:1.0625rem;line-height:1.63;font-variant-numeric:oldstyle-nums proportional-nums}
+main{max-width:66ch;margin:0 auto;padding:24px 16px 32px}
+.kv-kicker{margin:0 0 8px;font-family:var(--font-ui);font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:0 0 16px;font-family:var(--font-headline);font-size:1.75rem;font-weight:400;line-height:1.2;color:var(--ink-1)}
+h2{margin:0 0 8px;font-family:var(--font-headline);font-size:1.375rem;font-weight:480;line-height:1.25;color:var(--ink-1)}
+h3{margin:0;font-family:var(--font-ui);font-size:1rem;font-weight:600;line-height:1.4;color:var(--ink-1)}
+p{margin:0 0 1.05em}
+.kv-lede{font-size:1.25rem;line-height:1.5}
+section{padding-top:24px;margin-top:24px;border-top:1px solid var(--ink-1)}
+.kv-cite{font-family:var(--font-ui);font-size:max(0.6875rem,0.62em);font-weight:500;font-variant-numeric:lining-nums tabular-nums;line-height:0;vertical-align:super;white-space:nowrap}
+a{color:var(--indigo);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--indigo-hover);text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+.kv-cite a{text-decoration:none}
+.kv-card{display:grid;gap:6px;margin:16px 0;padding:16px;background:var(--raised);border:1px solid var(--rule-strong);border-radius:6px}
+.kv-card .kv-kicker{margin:0}
+.kv-ui{font-family:var(--font-ui);font-size:0.875rem;font-weight:500}
+ol{margin:0;padding-inline-start:1.5em;font-size:1rem}
+li{margin:0 0 12px}
+.kv-meta{display:block;font-family:var(--font-ui);font-size:0.8125rem;color:var(--ink-3)}
+footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--font-ui);font-size:0.75rem;color:var(--ink-3)}
+footer p{margin:0 0 8px}
+.kv-status{font-family:var(--font-ui);font-size:0.875rem;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<main id="kv-answer" aria-live="polite"><p class="kv-status" role="status">Waiting for the answer</p></main>
+<script>
+(function () {
+  "use strict";
+  var root = document.getElementById("kv-answer");
+  var nextId = 1;
+  var initId = null;
+
+  function send(message) {
+    window.parent.postMessage(message, "*");
+  }
+
+  function request(method, params) {
+    var id = nextId;
+    nextId += 1;
+    send({ jsonrpc: "2.0", id: id, method: method, params: params });
+    return id;
+  }
+
+  function notify(method, params) {
+    send({ jsonrpc: "2.0", method: method, params: params || {} });
+  }
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined && text !== null) node.textContent = String(text);
+    return node;
+  }
+
+  function safeUrl(value) {
+    try {
+      var url = new URL(String(value));
+      return url.protocol === "https:" ? url.href : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function outLink(text, href) {
+    var url = safeUrl(href);
+    if (!url) return el("span", "kv-ui", text);
+    var anchor = el("a", "kv-ui", text);
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    anchor.addEventListener("click", function (event) {
+      event.preventDefault();
+      request("ui/open-link", { url: url });
+    });
+    return anchor;
+  }
+
+  function list(value) {
+    return Array.isArray(value) ? value : [];
+  }
+
+  function cluster(numbers) {
+    var shown = list(numbers).filter(function (n) { return Number.isInteger(n) && n > 0; });
+    if (!shown.length) return null;
+    var sup = el("sup", "kv-cite");
+    shown.forEach(function (n, index) {
+      if (index) sup.appendChild(document.createTextNode(","));
+      var anchor = el("a", null, n);
+      anchor.href = "#kv-src-" + n;
+      anchor.setAttribute("aria-label", "Source " + n);
+      sup.appendChild(anchor);
+    });
+    return sup;
+  }
+
+  function paragraph(sentences, className) {
+    var p = el("p", className);
+    list(sentences).forEach(function (sentence, index) {
+      if (index) p.appendChild(document.createTextNode(" "));
+      p.appendChild(document.createTextNode(String(sentence && sentence.text || "")));
+      var cites = cluster(sentence && sentence.cites);
+      if (cites) p.appendChild(cites);
+    });
+    return p;
+  }
+
+  function card(component) {
+    var aside = el("aside", "kv-card");
+    aside.appendChild(el("p", "kv-kicker", String(component.kind || "").replace(/_/g, " ")));
+    aside.appendChild(el("h3", null, component.title));
+    var line = el("p", null);
+    line.appendChild(outLink("Open the figure on KalaVigyan", component.url));
+    aside.appendChild(line);
+    return aside;
+  }
+
+  function section(part, number) {
+    var block = el("section");
+    block.appendChild(el("p", "kv-kicker", "Section " + number));
+    block.appendChild(el("h2", null, part.title));
+    if (list(part.sentences).length) block.appendChild(paragraph(part.sentences));
+    list(part.components).forEach(function (component) { block.appendChild(card(component)); });
+    return block;
+  }
+
+  function entryRights(entry) {
+    var attribution = String(entry.attribution || "").trim();
+    var licence = String(entry.licence || "").trim();
+    var repeated = licence !== "" && attribution.toLowerCase().indexOf(licence.toLowerCase()) !== -1;
+    return [attribution, repeated ? "" : licence].filter(Boolean).join(" · ");
+  }
+
+  function source(entry) {
+    var item = el("li");
+    if (Number.isInteger(entry.number)) item.id = "kv-src-" + entry.number;
+    item.appendChild(el("span", null, entry.title));
+    var meta = [list(entry.authors).join(", "), entry.year, entry.publisher].filter(Boolean).join(" · ");
+    if (meta) item.appendChild(el("span", "kv-meta", meta));
+    var rights = entryRights(entry);
+    if (rights) item.appendChild(el("span", "kv-meta", rights));
+    if (safeUrl(entry.url)) item.appendChild(outLink("Open the source", entry.url));
+    return item;
+  }
+
+  function sources(entries) {
+    var block = el("section");
+    block.appendChild(el("h2", null, "Sources"));
+    var ordered = el("ol");
+    list(entries).forEach(function (entry) { ordered.appendChild(source(entry)); });
+    block.appendChild(ordered);
+    return block;
+  }
+
+  function credit(answer) {
+    var foot = el("footer");
+    foot.appendChild(el("p", null, answer.attribution));
+    var line = el("p", null);
+    line.appendChild(outLink("Open this answer on KalaVigyan", answer.answerUrl));
+    foot.appendChild(line);
+    return foot;
+  }
+
+  function render(answer) {
+    var crafts = list(answer.crafts).map(function (craft) { return craft.name; }).join(" · ");
+    var parts = [el("p", "kv-kicker", crafts ? "KalaVigyan · " + crafts : "KalaVigyan"), el("h1", null, answer.question)];
+    if (list(answer.opening).length) parts.push(paragraph(answer.opening, "kv-lede"));
+    list(answer.sections).forEach(function (part, index) { parts.push(section(part, index + 1)); });
+    if (list(answer.sources).length) parts.push(sources(answer.sources));
+    parts.push(credit(answer));
+    root.replaceChildren.apply(root, parts);
+    report();
+  }
+
+  function theme(context) {
+    var chosen = context && context.theme;
+    if (chosen === "dark" || chosen === "light") document.documentElement.setAttribute("data-theme", chosen);
+  }
+
+  function report() {
+    notify("ui/notifications/size-changed", { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight });
+  }
+
+  window.addEventListener("message", function (event) {
+    if (event.source !== window.parent) return;
+    var message = event.data;
+    if (!message || message.jsonrpc !== "2.0") return;
+    if (message.method === "ui/notifications/tool-result") {
+      var content = message.params && message.params.structuredContent;
+      if (content && typeof content === "object") render(content);
+      return;
+    }
+    if (message.method === "ui/notifications/host-context-changed") {
+      theme(message.params);
+      return;
+    }
+    if (message.id === initId && message.result) {
+      theme(message.result.hostContext);
+      notify("ui/notifications/initialized", {});
+    }
+  });
+
+  initId = request("ui/initialize", {
+    protocolVersion: "2026-01-26",
+    appInfo: { name: "kalavigyan-answer", version: "1.0.0" },
+    appCapabilities: {}
+  });
+})();
+</script>
+</body>
+</html>

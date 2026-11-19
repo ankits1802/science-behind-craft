@@ -111,6 +111,7 @@ from app.models.science import (
 )
 from app.models.source_upkeep import SourceUpkeep
 from app.models.testimony import ArtisanContribution, ArtisanConversation, ArtisanConversationAudio
+from app.models.upload_links import UploadLink
 
 __all__ = [
     "AccessRoster",
@@ -225,6 +226,7 @@ __all__ = [
     "TermCraft",
     "TermSummary",
     "TwoFactorChallenge",
+    "UploadLink",
     "UsageEvent",
     "User",
     "UserPreference",

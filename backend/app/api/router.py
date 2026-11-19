@@ -42,6 +42,7 @@ from app.api.routes import (
     terms,
     testimony_review,
     two_factor,
+    upload_links,
     usage,
     users,
     voice,
@@ -56,6 +57,7 @@ api_router.include_router(access.router)
 api_router.include_router(artisan_contributions.router)
 api_router.include_router(artisan_conversations.router)
 api_router.include_router(image_contributions.router)
+api_router.include_router(upload_links.router)
 api_router.include_router(users.router)
 api_router.include_router(categories.router)
 api_router.include_router(crafts.router)
