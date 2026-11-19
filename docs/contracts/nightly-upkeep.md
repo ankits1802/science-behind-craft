@@ -97,7 +97,8 @@ One `POST` to the Vercel deploy hook starts a production build of `main`. The bu
 `/crafts/{slug}` for every slug of `GET /api/site/pages` (except the static monograph) and keeps
 each page for a day (`revalidate = 86400`); any other craft renders on its first visit and is kept
 the same way. Signed-in readers still load their own variant in the browser, and answers are
-never cached. The admin control refuses a second build within 10 minutes (429 with
+never cached. A change that must reach readers who are not signed in before the next night (a
+hidden piece, a retracted claim) is published by an Admin's Start a build. The admin control refuses a second build within 10 minutes (429 with
 `Retry-After`); the nightly run always triggers.
 
 ## Routes
