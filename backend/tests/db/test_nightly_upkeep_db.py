@@ -8,8 +8,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Claim, ClaimSource, Craft, CraftPageSnapshot, Source, SourceUpkeep
+from app.research.craft_page import CRAFT_PAGE_SCHEMA_VERSION
+from app.services.craft_page_stamp import page_stamp
 from app.services.static_pages import static_pages
 from app.services.upkeep_archive import archive_sources, sources_at_risk
+from app.services.upkeep_pages import stale_crafts
 from app.services.upkeep_quotes import recheck_quotes, sources_due
 
 from ..upkeep.fakes import ScriptedArchiver, ScriptedFetcher, fetched_page, gone
@@ -155,6 +158,40 @@ async def test_the_static_page_list_holds_crafts_with_an_open_snapshot(session: 
     listed = await static_pages(session)
     assert "Upkeep-Test-Craft" in listed.crafts
     assert listed.as_dict()["schemaVersion"] == 1
+
+
+async def snapshot(session: AsyncSession, variant: str, stamp: str) -> None:
+    session.add(
+        CraftPageSnapshot(
+            craftId=CRAFT,
+            variant=variant,
+            stamp=stamp,
+            schemaVersion=CRAFT_PAGE_SCHEMA_VERSION,
+            body={},
+            etag="e",
+            builtAt=NOW,
+        )
+    )
+    await session.flush()
+
+
+async def test_a_page_is_stale_while_a_variant_s_stamp_lags_and_a_monograph_is_skipped(
+    session: AsyncSession,
+) -> None:
+    craft = Craft(id=CRAFT, name="Upkeep Test Craft", slug="Upkeep-Test-Craft")
+    session.add(craft)
+    await session.flush()
+    await snapshot(session, "OPEN", await page_stamp(session, craft, "OPEN"))
+    await snapshot(session, "RESEARCHER", "an older stamp")
+    assert (CRAFT, "Upkeep-Test-Craft") in await stale_crafts(session, skip=frozenset())
+    assert (CRAFT, "Upkeep-Test-Craft") not in await stale_crafts(
+        session, skip=frozenset({"Upkeep-Test-Craft"})
+    )
+    researcher = await session.get(CraftPageSnapshot, (CRAFT, "RESEARCHER"))
+    assert researcher is not None
+    researcher.stamp = await page_stamp(session, craft, "RESEARCHER")
+    await session.flush()
+    assert (CRAFT, "Upkeep-Test-Craft") not in await stale_crafts(session, skip=frozenset())
 
 
 async def signed_in(client: httpx.AsyncClient, role: str) -> str:

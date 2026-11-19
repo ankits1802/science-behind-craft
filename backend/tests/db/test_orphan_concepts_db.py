@@ -70,8 +70,8 @@ async def links(session: AsyncSession) -> None:
         language="en",
         depth="EXPERT",
         payload={},
-        claimIds=[],
-        sourceIds=[],
+        claimIds=[uuid.uuid4()],
+        sourceIds=["orphan-test-source"],
         contentHash="3" * 64,
     )
     session.add_all([term, piece])
