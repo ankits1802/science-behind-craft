@@ -147,6 +147,7 @@ piece ("From earlier research" and its date). Each block says what it rests on:
 | Kind | Phase | Built |
 |---|---|---|
 | `prose`, `process_ladder`, `images` | A | yes |
+| `component` | A | yes (decision 0101, placed by the composer's choice, never a stored piece) |
 | `expert_view` | B | yes (0046) |
 | `region_story`, `map_layer` | B | yes (0044) |
 | `seasons`, `supply_map` | B | yes (0047) |
@@ -191,6 +192,22 @@ both.
 - **`images`** `{items[ImageItem] (1-8)}`, each media once. `ImageItem {media: MediaRef, claimIds
   (at least one, once each), relevance: TEXT | VISION}`: the claims the image illustrates and
   how its relevance was checked (claim text, or a vision call for top candidates).
+- **`component`** (`research/blocks_component.py`, client `lib/explainerComponent.ts`, decision
+  0101 item 3) `{label, componentKind, title, craft: CraftRef, href, sources[{sourceId}] (at least
+  one)}`: a registered component of the library (a `KnowledgePiece` with a `label`) placed in an
+  answer section instead of being built again. `label` is the registry label
+  (`kutch-ajrakh/chemistry/red-alum-madder-player`), `componentKind` the piece's kind (any piece
+  kind but `component`), `craft` the craft whose monograph shows the figure (the piece payload's
+  `monograph`), and `href` that craft's page, `craft.path`, plus the payload's `anchor` when the
+  anchor names an element (`#rp-red`); a selector anchor (`[class="mols"]`) links the page alone.
+  `sources` are the sources the component rests on (the piece's `sourceIds`), cited directly, so
+  they join the answer's source list and numbering; the block carries no sentence. How a section
+  offers and places components is `docs/contracts/answer-components.md`. The kind is in
+  `knowledge_pieces.UNSTORED_BLOCK_KINDS`: an answer's component block is never kept as a piece,
+  since the registered component is the stored thing. The client draws it as a figure card
+  (`components/answer/ComponentFigure.tsx`): the kicker "Figure from the {craft name} monograph",
+  the title as an h4 and one indigo link, "Open the figure", to `href`; complete at rest, no
+  motion.
 
 ### Phase B blocks (decision 0042)
 
@@ -574,7 +591,9 @@ speaking or voiced seat.
 `BLOCK_RENDERERS` maps a kind to its one renderer (`{block}` props); frontend lanes add entries
 and their component modules. `ExplainerBlockView` draws a block only through `renderBlock`; a
 block whose kind has no renderer is not drawn at all. `BLOCK_SHAPES` in `explainerContract.ts`
-types every phase A, B and C kind; `explainerBlockShape` admits the built ones only.
+types every phase A, B and C kind; `explainerBlockShape` admits the built ones only. The
+`component` kind is registered in `blockRenderers.ts` itself (`ComponentFigure`), and
+`explainerView.blockSourceIds` reads its `sources`, so they are numbered with the answer's.
 
 The place kinds (decision 0048) enter through `components/answer/place/placeRenderers.tsx`:
 `region_story` and `map_layer` load their map code on demand (`lazyBlock`), `seasons` and
@@ -1084,8 +1103,9 @@ The kinds of phase D ("Learn and act", plan section 5) with their final version-
 `research/measures.py`), and on the client in `lib/explainerLearning.ts` and
 `lib/explainerInsight.ts`. `quiz` and `compare` had provisional fields since decision 0030 and no
 payload of them ever existed, so version 1 is fixed now; the other four are new kinds
-(`models/enums.BLOCK_KINDS`; migration `0018_learning_block_kinds` widens the `KnowledgePiece`
-check). Conventions as in phase B. Built (decisions 0064 to 0066): `compare`, `concept_graph`,
+(`models/enums.BLOCK_KINDS`, since decision 0101 defined in `models/block_kinds.py` and
+re-exported by `models/enums.py`; migration `0018_learning_block_kinds` widens the
+`KnowledgePiece` check, and `0035_answer_components` widens it again by `component`). Conventions as in phase B. Built (decisions 0064 to 0066): `compare`, `concept_graph`,
 `climate_risk`, `measure` and `market_gi` are in `BUILT_BLOCK_KINDS` on both sides; `quiz` is not
 streamed, only answered by its route and placed in lesson packs.
 The routes around them (versions, saved explainers, lessons, exports, the explorer, the map) are
@@ -1206,8 +1226,9 @@ at least 30 years; `etl/geo/geo_etl/trend.py`, its constants pinned to these by
 `tests/contracts/test_climate_contract.py`). With its renderer (decision 0068) present, the kind
 joined `BUILT_BLOCK_KINDS` on both sides in this lane.
 
-`knowledge_pieces.UNSTORED_BLOCK_KINDS` (`quiz`, `compare`, `concept_graph`, `climate_risk`) are
-refused by `KnowledgePiece` and left out by `piece_store.storable`; `piece_reuse.PIECE_BLOCK_ORDER`
+`knowledge_pieces.UNSTORED_BLOCK_KINDS` (`quiz`, `compare`, `concept_graph`, `climate_risk`,
+`artisan_voice` and, since decision 0101, `component`) are refused by `KnowledgePiece` and left
+out by `piece_store.storable`; `piece_reuse.PIECE_BLOCK_ORDER`
 places `climate_risk` after `seasons`, `measure` and `market_gi` after `supply_map`, and `compare`
 and `concept_graph` after `timeline_map`.
 

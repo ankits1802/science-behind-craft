@@ -36,6 +36,7 @@ from app.retrieval.hybrid import SessionScopedSearch
 from app.science.records import ProcessRecords
 
 from . import knowledge_view
+from .answer_catalogue import catalogue_lookup
 from .answer_events import CitedClaims, cited_claims
 from .answer_lede import LedeTools
 from .answer_models import AnswerModels
@@ -208,11 +209,7 @@ def build_answer_pipeline(
     async def research(
         request: PlanRequest, progress: ResearchProgress, trail: ResearchTrail
     ) -> EvidencePack:
-        planner = ResearchPlanner(
-            model=models.plan,
-            retriever=retriever,
-            sources=await live.get(sessions),
-        )
+        planner = ResearchPlanner(model=models.plan, retriever=retriever, sources=await live.get(sessions))
         return await planner.research(request, progress=progress, trail=trail)
 
     tools = BuilderTools(
@@ -229,6 +226,7 @@ def build_answer_pipeline(
         enrichment=build_answer_enrichment(sessions, live),
         builders=BlockBuilders.from_registry(tools),
         lede=LedeTools(compose=composer.lede, figures=signature_figures(sessions)),
+        catalogue=catalogue_lookup(sessions),
     )
 
 

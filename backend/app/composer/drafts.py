@@ -15,6 +15,7 @@ from app.research.composition import (
     HEADING_MAX_CHARS,
     ComposeCandidate,
     ComposedSentence,
+    ComposeFocus,
     QuotedSpan,
     sentence_violations,
 )
@@ -73,10 +74,18 @@ class DraftAnswer:
     stage_ids: tuple[str, ...] = ()
     heading: str | None = None
     headings: tuple[tuple[str, str], ...] = ()
+    component_labels: tuple[str, ...] = ()
+    unoffered_labels: int = 0
 
     @property
     def failed(self) -> list[DraftSentence]:
         return [s for section in self.sections for s in section.sentences if not s.passes]
+
+
+@dataclass(frozen=True)
+class _Chosen:
+    kept: tuple[str, ...] = ()
+    dropped: int = 0
 
 
 def parsed_answer(reply: Mapping[str, Any], allowed: Mapping[str, ComposeCandidate]) -> DraftAnswer:
@@ -92,17 +101,19 @@ def parsed_section(
     reply: Mapping[str, Any],
     allowed: Mapping[str, ComposeCandidate],
     *,
-    title: str,
-    stage_ids: Sequence[str],
-    limits: tuple[int, int],
+    focus: ComposeFocus,
+    follow_ups_max: int,
 ) -> DraftAnswer:
-    max_sentences, max_follow_ups = limits
-    sentences = _list(reply, "sentences")[:max_sentences]
+    title = focus.title
+    sentences = _list(reply, "sentences")[: focus.sentences_max]
+    labels = _offered_only(reply, "components", focus.component_labels)
     return DraftAnswer(
         sections=(DraftSection(title, tuple(checked_sentence(s, title, allowed) for s in sentences)),),
-        follow_ups=tuple(_usable_follow_ups(_list(reply, "followUps"))[:max_follow_ups]),
-        stage_ids=_chosen_stages(reply, stage_ids),
+        follow_ups=tuple(_usable_follow_ups(_list(reply, "followUps"))[:follow_ups_max]),
+        stage_ids=_chosen_stages(reply, focus.stage_ids),
         heading=checked_heading(reply.get("heading")),
+        component_labels=labels.kept,
+        unoffered_labels=labels.dropped,
     )
 
 
@@ -210,13 +221,18 @@ def _chosen_headings(raw: Any, section_ids: Sequence[str]) -> tuple[tuple[str, s
 
 
 def _chosen_stages(reply: Mapping[str, Any], offered: Sequence[str]) -> tuple[str, ...]:
+    chosen = _offered_only(reply, "stages", offered)
+    if chosen.dropped:
+        logger.warning("compose chose %d process stage(s) that were not offered", chosen.dropped)
+    return chosen.kept
+
+
+def _offered_only(reply: Mapping[str, Any], key: str, offered: Sequence[str]) -> _Chosen:
     if not offered:
-        return ()
-    chosen = [str(stage) for stage in _list(reply, "stages")]
-    unknown = [stage for stage in chosen if stage not in offered]
-    if unknown:
-        logger.warning("compose chose %d process stage(s) that were not offered", len(unknown))
-    return tuple(stage for stage in dict.fromkeys(chosen) if stage in offered)
+        return _Chosen()
+    chosen = [str(item) for item in _list(reply, key)]
+    unknown = [item for item in chosen if item not in offered]
+    return _Chosen(tuple(item for item in dict.fromkeys(chosen) if item in offered), len(unknown))
 
 
 def _list(raw: Mapping[str, Any], key: str) -> list[Any]:

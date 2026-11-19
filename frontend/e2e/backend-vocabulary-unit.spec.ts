@@ -56,7 +56,7 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["schemas/media.py", "MEDIA_JOB_STATUSES", MEDIA_JOB_STATUSES],
   ["models/enums.py", "EXPLAINER_DEPTHS", DEPTHS],
   ["models/enums.py", "DISCIPLINES", DISCIPLINES],
-  ["models/enums.py", "BLOCK_KINDS", BLOCK_KINDS],
+  ["models/block_kinds.py", "BLOCK_KINDS", BLOCK_KINDS],
   ["research/explainer.py", "BUILT_BLOCK_KINDS", BUILT_BLOCK_KINDS],
   ["research/explainer.py", "BUILT_FIGURE_KINDS", BUILT_FIGURE_KINDS],
   ["research/explainer.py", "WORKING_SECTION_STATES", WORKING_SECTION_STATES],

@@ -70,15 +70,10 @@ def reply_form(request: ComposeRequest) -> ReplyForm:
     if focus is None:
         system = styled(COMPOSE_SYSTEM_PROMPT, request.style)
         return ReplyForm(system, compose_schema(), parsed_answer, request.style)
-    stage_ids = [str(stage.id) for stage in focus.stages]
-    parse = partial(
-        parsed_section,
-        title=focus.title,
-        stage_ids=stage_ids,
-        limits=(focus.sentences_max, SECTION_FOLLOW_UPS_MAX),
-    )
+    parse = partial(parsed_section, focus=focus, follow_ups_max=SECTION_FOLLOW_UPS_MAX)
     system = styled(section_system_prompt(focus.sentences_max), request.style)
-    return ReplyForm(system, section_schema(stage_ids), parse, request.style)
+    schema = section_schema(focus.stage_ids, labels=focus.component_labels)
+    return ReplyForm(system, schema, parse, request.style)
 
 
 def lede_form(request: LedeRequest) -> ReplyForm:
@@ -165,6 +160,7 @@ def assembled_answer(draft: DraftAnswer, request: ComposeRequest) -> ComposedAns
         stage_ids=stage_ids,
         follow_ups=list(draft.follow_ups),
         heading=draft.heading if sections else None,
+        component_labels=list(draft.component_labels),
     )
 
 
@@ -203,3 +199,5 @@ def _log_dropped(draft: DraftAnswer) -> None:
     if failed:
         kinds = Counter(kind for sentence in failed for kind in sentence.problem_kinds)
         logger.warning("compose dropped %d sentence(s): %s", len(failed), dict(sorted(kinds.items())))
+    if draft.unoffered_labels:
+        logger.warning("compose dropped %d component label(s) that were not offered", draft.unoffered_labels)

@@ -65,7 +65,9 @@ REUSE_REFUSALS = (
     "CLAIM_NOT_VISIBLE",
 )
 PIECE_SENTENCE_PREFIX_CHARS = 12
-UNSTORED_BLOCK_KINDS = frozenset({"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice"})
+UNSTORED_BLOCK_KINDS = frozenset(
+    {"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice", "component"}
+)
 BASIN_SUBJECT_PREFIX = BASIN_PLACE_PREFIX
 DISTRICT_SUBJECT_PREFIX = DISTRICT_PLACE_PREFIX
 SIMULATION_NAMESPACE = "concept"

@@ -1,4 +1,5 @@
 from app.models.base import pg_enum
+from app.models.block_kinds import BLOCK_KINDS as BLOCK_KINDS
 from app.models.people_vocabulary import (
     AGE_BANDS as AGE_BANDS,
     CONTRIBUTION_STATUSES as CONTRIBUTION_STATUSES,
@@ -240,37 +241,6 @@ IMAGE_CONTRIBUTION_STATUSES = ("AWAITING_FILE", "PENDING", "APPROVED", "REJECTED
 TERM_BASES = ("STORED", "WIKIPEDIA", "WEB_SEARCH")
 EVAL_RUN_STATUSES = ("QUEUED", "RUNNING", "SUCCEEDED", "FAILED")
 EXPLAINER_DEPTHS = ("BASIC", "DETAILED", "EXPERT")
-BLOCK_KINDS = (
-    "prose",
-    "process_ladder",
-    "region_story",
-    "map_layer",
-    "reaction_player",
-    "material_card",
-    "molecule_3d",
-    "images",
-    "simulation",
-    "what_if",
-    "timeline_map",
-    "zoom_story",
-    "expert_view",
-    "seasons",
-    "supply_map",
-    "compare",
-    "in_practice",
-    "quiz",
-    "open_questions",
-    "artisan_voice",
-    "designs",
-    "concept_graph",
-    "measure",
-    "market_gi",
-    "climate_risk",
-    "indigo_vat",
-    "mordant_bath",
-    "lost_wax",
-    "firing",
-)
 NOTIFICATION_KINDS = ("ANSWER_IMPROVED",)
 ENGLISH_SOURCES = ("ORIGINAL", "MACHINE", "EDITED")
 DISCIPLINES = (

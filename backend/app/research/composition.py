@@ -8,6 +8,7 @@ from pydantic import Field, field_validator, model_validator
 
 from app.core.errors import InvalidInput
 from app.models.knowledge import QUOTE_MAX_CHARS
+from app.models.knowledge_pieces import DESCRIPTION_MAX_CHARS, LABEL_COLUMN_CHARS
 
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS, CraftRef
@@ -28,11 +29,13 @@ from .vocabulary import (
     Discipline,
     EvidenceLevel,
     LiveTier,
+    PieceKind,
     weakest_level,
 )
 
 __all__ = [
     "CANDIDATE_KINDS",
+    "COMPONENTS_OFFERED_MAX",
     "COMPOSE_RETRIES",
     "FOLLOW_UPS_MAX",
     "HEADING_MAX_CHARS",
@@ -42,6 +45,7 @@ __all__ = [
     "SECTION_SENTENCES_LIMIT",
     "SENTENCE_MAX_CHARS",
     "VIOLATION_KINDS",
+    "ComponentOption",
     "ComposeCandidate",
     "ComposeFocus",
     "ComposeRequest",
@@ -71,6 +75,7 @@ SECTION_SENTENCES_DEFAULT = 8
 SECTION_SENTENCES_LIMIT = 24
 LEDE_SENTENCES_MIN = 2
 LEDE_SENTENCES_MAX = 3
+COMPONENTS_OFFERED_MAX = 6
 CANDIDATE_KINDS = ("CLAIM", "EVIDENCE")
 VIOLATION_KINDS = (
     "UNCITED",
@@ -131,17 +136,34 @@ class StageOption(ContractModel):
     name: str = Field(min_length=1, max_length=300)
 
 
+class ComponentOption(ContractModel):
+    label: str = Field(min_length=1, max_length=LABEL_COLUMN_CHARS)
+    kind: PieceKind
+    description: str = Field(min_length=1, max_length=DESCRIPTION_MAX_CHARS)
+
+
 class ComposeFocus(ContractModel):
     discipline: Discipline
     title: str = Field(min_length=1, max_length=HEADING_MAX_CHARS)
     stages: list[StageOption] = Field(default_factory=list)
     sentences_max: int = Field(default=SECTION_SENTENCES_DEFAULT, ge=1, le=SECTION_SENTENCES_LIMIT)
+    components: list[ComponentOption] = Field(default_factory=list, max_length=COMPONENTS_OFFERED_MAX)
 
     @model_validator(mode="after")
-    def _stages_once_each(self) -> Self:
-        if len({stage.id for stage in self.stages}) != len(self.stages):
+    def _each_offered_once(self) -> Self:
+        if len(set(self.stage_ids)) != len(self.stages):
             raise ValueError("each process stage is offered once")
+        if len(set(self.component_labels)) != len(self.components):
+            raise ValueError("each component is offered once")
         return self
+
+    @property
+    def stage_ids(self) -> list[str]:
+        return [str(stage.id) for stage in self.stages]
+
+    @property
+    def component_labels(self) -> list[str]:
+        return [component.label for component in self.components]
 
 
 class ComposeRequest(ContractModel):
@@ -205,6 +227,7 @@ class ComposedAnswer(ContractModel):
     follow_ups: list[str] = Field(default_factory=list, max_length=FOLLOW_UPS_MAX)
     not_enough_evidence: ResearchSummary | None = None
     heading: str | None = Field(default=None, min_length=1, max_length=HEADING_MAX_CHARS)
+    component_labels: list[str] = Field(default_factory=list, max_length=COMPONENTS_OFFERED_MAX)
 
     @model_validator(mode="after")
     def _answers_or_says_why_not(self) -> Self:
@@ -213,6 +236,10 @@ class ComposedAnswer(ContractModel):
             raise ValueError("an answer shows something cited or a not-enough-evidence summary, never both")
         if len(set(self.stage_ids)) != len(self.stage_ids):
             raise ValueError("an answer chooses each process stage once")
+        if len(set(self.component_labels)) != len(self.component_labels):
+            raise ValueError("an answer places each component once")
+        if self.component_labels and not answered:
+            raise ValueError("an answer places components only beside what it shows")
         return self
 
 

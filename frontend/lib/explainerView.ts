@@ -1,4 +1,5 @@
 import type { ExplainerSentence, TermSpan } from "@/lib/explainerBlockBase";
+import { componentSourceIds } from "@/lib/explainerComponent";
 import type { BlockByKind, Discipline, ExplainerBlock, LadderStage, LedeBlock, TypedBlockKind, WorkingSectionState } from "@/lib/explainerContract";
 import { reactionPlayerCitations } from "@/lib/explainerMatter";
 import { signatureSentences, signatureSourceIds } from "@/lib/explainerSignature";
@@ -81,6 +82,7 @@ export function blockSourceIds(block: TypedBlock): string[] {
   const cited = blockCitations(block).map((citation) => citation.sourceId);
   if (block.kind === "indigo_vat") return [...cited, ...signatureSourceIds(block)];
   if (block.kind === "zoom_story") return [...cited, ...block.levels.flatMap((level) => (level.compound ? [level.compound.sourceId] : []))];
+  if (block.kind === "component") return componentSourceIds(block);
   return block.kind === "molecule_3d" ? [...cited, block.sourceId] : cited;
 }
 

@@ -19,6 +19,7 @@ from .blocks import (
     with_sentences_in_payload,
 )
 from .blocks_climate import ClimateRiskBlock
+from .blocks_component import ComponentBlock
 from .blocks_insight import MarketGiBlock, MeasureBlock
 from .blocks_journey import TimelineMapBlock, ZoomStoryBlock
 from .blocks_learning import CompareBlock, ConceptGraphBlock, QuizBlock
@@ -112,6 +113,7 @@ BLOCK_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType(
         "mordant_bath": MordantBathBlock,
         "lost_wax": LostWaxBlock,
         "firing": FiringBlock,
+        "component": ComponentBlock,
     }
 )
 BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
@@ -145,6 +147,7 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "mordant_bath": SIGNATURE_PHASE,
         "lost_wax": SIGNATURE_PHASE,
         "firing": SIGNATURE_PHASE,
+        "component": "A",
     }
 )
 SENTENCE_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType({**BLOCK_MODELS, LEDE_KIND: LedeBlock})
@@ -169,6 +172,7 @@ BUILT_BLOCK_KINDS = (
     "what_if",
     "zoom_story",
     "timeline_map",
+    "component",
 )
 BUILT_FIGURE_KINDS = ("indigo_vat", "mordant_bath", "lost_wax", "firing")
 
@@ -201,7 +205,8 @@ Block = Annotated[
     | IndigoVatBlock
     | MordantBathBlock
     | LostWaxBlock
-    | FiringBlock,
+    | FiringBlock
+    | ComponentBlock,
     Field(discriminator="kind"),
 ]
 

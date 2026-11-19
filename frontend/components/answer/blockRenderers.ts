@@ -1,5 +1,6 @@
 import { createElement, type ComponentType, type ReactElement } from "react";
 
+import { ComponentFigure } from "@/components/answer/ComponentFigure";
 import { EXPERT_RENDERERS } from "@/components/answer/experts/expertRenderers";
 import { ImageStrip } from "@/components/answer/ImageStrip";
 import { INSIGHT_RENDERERS } from "@/components/answer/insight/insightRenderers";
@@ -19,6 +20,7 @@ export const BLOCK_RENDERERS: { readonly [K in TypedBlockKind]?: BlockRenderer<K
   prose: ProseBlockView,
   process_ladder: ProcessLadder,
   images: ImageStrip,
+  component: ComponentFigure,
   ...PLACE_RENDERERS,
   ...MATTER_RENDERERS,
   ...EXPERT_RENDERERS,
