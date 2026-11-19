@@ -93,6 +93,14 @@ export function canContributeTestimony(user: User | null | undefined) {
   return Boolean(user?.capabilities?.includes("CONTRIBUTE_TESTIMONY"));
 }
 
+export function canContributeImages(user: User | null | undefined) {
+  return Boolean(user?.capabilities?.includes("PROPOSE_KNOWLEDGE"));
+}
+
+export function canReviewContributions(user: User | null | undefined) {
+  return Boolean(user?.capabilities?.includes("REVIEW_CONTRIBUTIONS"));
+}
+
 export function canReviewTestimony(user: User | null | undefined) {
   return hasRank(user, "PROFESSOR");
 }
@@ -158,6 +166,8 @@ export const ROUTE_GUARDS: RouteGuard[] = [
   { path: "/admin/users", ...PROFESSOR_GUARD },
   { path: "/admin/access", ...PROFESSOR_GUARD, gate: "require_access_roster_manager" },
   { path: "/admin/testimony", ...PROFESSOR_GUARD, can: canReviewTestimony, gate: "require(REVIEW_TESTIMONY)" },
+  { path: "/admin/pictures", ...ADMIN_GUARD, can: canReviewContributions, gate: "require(REVIEW_CONTRIBUTIONS)" },
+  { path: "/contributions/pictures", can: canContributeImages, gate: "require(PROPOSE_KNOWLEDGE)", title: "For researchers and above", message: "Needs Researcher access or above." },
   { path: "/contribute", can: canContributeTestimony, gate: "require(CONTRIBUTE_TESTIMONY)", title: "For artisans", message: "Artisan accounts only." },
   { path: "/lessons", ...PROFESSOR_GUARD, can: canBuildLessons, gate: "require(BUILD_LESSONS)" }
 ];
