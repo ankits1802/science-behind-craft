@@ -38,7 +38,7 @@ __all__ = [
 
 FIGURE_KINDS = ("FIGURE", "TABLE")
 BORROWED_SCOPES = ("FAMILY", "KIN")
-NOT_ON_THE_PAGE = frozenset({"quiz", "compare", "map_layer"})
+NOT_ON_THE_PAGE = frozenset({"quiz", "compare", "map_layer", "component"})
 PAGE_BLOCK_KINDS = (
     frozenset(BUILT_BLOCK_KINDS) - NOT_ON_THE_PAGE | frozenset(BUILT_FIGURE_KINDS) | {"artisan_voice"}
 )

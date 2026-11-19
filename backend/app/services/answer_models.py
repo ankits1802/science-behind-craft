@@ -15,3 +15,4 @@ class AnswerModels:
     builder_compose: StructuredModel
     explainer: StructuredModel
     translate: StructuredModel
+    judge: StructuredModel | None = None

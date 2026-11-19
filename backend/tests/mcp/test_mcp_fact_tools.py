@@ -36,6 +36,17 @@ REPLY = ProposalReply(
 )
 
 
+class EndedSession:
+    def __init__(self) -> None:
+        self.ended: list[str] = []
+
+    async def commit(self) -> None:
+        self.ended.append("commit")
+
+    async def rollback(self) -> None:
+        self.ended.append("rollback")
+
+
 def context(
     role: str | None, scopes: frozenset[str] = frozenset({READ_SCOPE, CONTRIBUTE_SCOPE})
 ) -> ToolContext:
@@ -44,7 +55,7 @@ def context(
         if role is None
         else User(id=uuid.UUID(int=21), name="An Agent's Owner", email="o@example.org", role=role)
     )
-    return ToolContext(session=None, index=CraftIndexStore(), site=SITE, user=user, scopes=scopes)  # type: ignore[arg-type]
+    return ToolContext(session=EndedSession(), index=CraftIndexStore(), site=SITE, user=user, scopes=scopes)  # type: ignore[arg-type]
 
 
 async def call(arguments: dict[str, Any], tool_context: ToolContext) -> dict[str, Any]:

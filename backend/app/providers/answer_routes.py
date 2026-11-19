@@ -48,4 +48,5 @@ def answer_models(depth: str, *, principal: Principal, optional: Principal) -> A
         builder_compose=router_structured_model(AiTask.COMPOSE, optional, tuning=BUILDER_TUNING),
         explainer=router_structured_model(AiTask.COMPOSE, optional, tuning=EXPLAINER_TUNINGS[depth]),
         translate=router_structured_model(AiTask.TRANSLATE, principal),
+        judge=router_structured_model(AiTask.EVAL_JUDGE, optional),
     )

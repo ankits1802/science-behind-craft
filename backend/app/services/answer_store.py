@@ -73,11 +73,17 @@ READING_STYLE_KEY = "readingStyle"
 
 class SqlAnswerStore:
     def __init__(
-        self, sessions: async_sessionmaker[AsyncSession], *, embed: TextEmbedder, shield: ShieldedWork
+        self,
+        sessions: async_sessionmaker[AsyncSession],
+        *,
+        embed: TextEmbedder,
+        shield: ShieldedWork,
+        judge: StructuredModel | None = None,
     ) -> None:
         self._sessions = sessions
         self._embed = embed
         self._shield = shield
+        self._judge = judge
 
     async def stored_claims(self, craft_slug: str, question: str, mode: str) -> CitedClaims:
         async with self._sessions() as session:
@@ -137,7 +143,13 @@ class SqlAnswerStore:
             stored = None
             if writes_back(pack):
                 stored = await store_live_research(
-                    session, pack, composed, embed=self._embed, found_by="ANSWER", answer_id=answer_id
+                    session,
+                    pack,
+                    composed,
+                    embed=self._embed,
+                    found_by="ANSWER",
+                    answer_id=answer_id,
+                    judge=self._judge,
                 )
             await session.commit()
         return sentence_claim_ids(composed, stored)
@@ -220,7 +232,7 @@ def build_answer_pipeline(
         understand=ModelUnderstander(model=models.plan, resolve=resolve).understand,
         research=research,
         compose=composer.compose,
-        store=SqlAnswerStore(sessions, embed=embed, shield=shield),
+        store=SqlAnswerStore(sessions, embed=embed, shield=shield, judge=models.judge),
         translation=build_answer_translation(sessions, model=models.translate),
         pieces=SqlPieceStore(sessions, embed=embed, shield=shield),
         enrichment=build_answer_enrichment(sessions, live),

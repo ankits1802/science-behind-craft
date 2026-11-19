@@ -39,7 +39,11 @@ async def run() -> dict[str, Any]:
                 sources=await live_sources(reader, client),
             )
             pipeline = EnrichmentPipeline(
-                research=planner.research, compose=compose, embed=embed, spent=spent_since
+                research=planner.research,
+                compose=compose,
+                embed=embed,
+                spent=spent_since,
+                judge=router_structured_model(AiTask.EVAL_JUDGE),
             )
             report = await run_coverage_enrichment(writer, pipeline, day_started_at=budget.day_start())
     finally:

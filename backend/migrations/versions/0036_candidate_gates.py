@@ -29,7 +29,7 @@ $do$
 
 def upgrade() -> None:
     op.create_table(
-        TABLE,
+        "CandidateCheck",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("claimId", sa.UUID(), nullable=False),
         sa.Column("gate", sa.String(length=16), nullable=False),

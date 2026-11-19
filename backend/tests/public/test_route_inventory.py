@@ -36,6 +36,8 @@ PUBLIC_ROUTES = {
     ("GET", "/api/crafts/{slug}/region"),
     ("GET", "/api/crafts/{slug}/shared-science"),
     ("GET", "/api/knowledge/crafts/{slug}/export"),
+    ("GET", "/api/knowledge/open-work"),
+    ("GET", "/api/site/pages"),
     ("GET", "/api/field-voices/images/{image_id}"),
     ("GET", "/api/field-voices/recordings/{recording_id}"),
     ("GET", "/api/map/crafts"),
@@ -161,6 +163,13 @@ OWN_RECORD_ROUTES = {
 }
 ADMIN_ROUTES = {
     ("POST", "/api/contributions/images"),
+    ("POST", "/api/knowledge/facts"),
+    ("POST", "/api/knowledge/open-work/claim"),
+    ("POST", "/api/knowledge/open-work/release"),
+    ("GET", "/api/knowledge/review-switch"),
+    ("PUT", "/api/knowledge/review-switch"),
+    ("GET", "/api/site/build"),
+    ("POST", "/api/site/build"),
     ("PUT", "/api/contributions/images/{contribution_id}/file"),
     ("GET", "/api/contributions/images/mine"),
     ("POST", "/api/contributions/images/{contribution_id}/withdraw"),
