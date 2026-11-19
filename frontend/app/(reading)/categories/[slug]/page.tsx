@@ -1,0 +1,37 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { CategoryHub, hubDek } from "@/components/crafts/CategoryHub";
+import { MonographPage } from "@/components/monograph/MonographPage";
+import { familyName, findFamily } from "@/lib/atlasCollection";
+import { previewStaticParams, serverMonographDocument } from "@/lib/monographRenderServer";
+import { serverCraftCatalogue } from "@/lib/server/readingPages";
+import type { CraftParams } from "@/lib/sitePagesContract";
+
+type CategoryRoute = { params: Promise<{ slug: string }> };
+
+export const revalidate = 86400;
+export const dynamicParams = true;
+
+export async function generateStaticParams(): Promise<CraftParams[]> {
+  return previewStaticParams("category");
+}
+
+export async function generateMetadata({ params }: CategoryRoute): Promise<Metadata> {
+  const { slug } = await params;
+  const catalogue = await serverCraftCatalogue();
+  const category = catalogue ? findFamily(catalogue, slug) : null;
+  if (!catalogue || !category) return {};
+  const title = familyName(category);
+  const description = hubDek(catalogue, category);
+  return { title, description, openGraph: { title, description, type: "website", url: `/categories/${category.slug}` } };
+}
+
+export default async function CategoryPage({ params }: CategoryRoute) {
+  const { slug } = await params;
+  const catalogue = await serverCraftCatalogue();
+  const category = catalogue ? findFamily(catalogue, slug) : null;
+  if (!catalogue || !category) notFound();
+  const document = await serverMonographDocument("category", category.slug);
+  return <CategoryHub catalogue={catalogue} category={category} science={document ? <MonographPage document={document} /> : null} />;
+}

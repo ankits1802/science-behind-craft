@@ -7,6 +7,7 @@ import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { failureMessage, useRemote, type Remote } from "@/components/hooks/useRemote";
 import { DistrictView } from "@/components/map/DistrictView";
 import { RetryLine } from "@/components/RemotePanels";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { listedSourceNumbers } from "@/lib/citations";
 import type { DistrictCrafts } from "@/lib/districtCraftsContract";
 import { fetchDistrictCrafts } from "@/lib/learningApi";
@@ -31,7 +32,7 @@ export function DistrictPanel({ district, onClose }: { district: Remote<District
   }, [data]);
 
   return (
-    <div ref={panel} className="mt-4 scroll-mt-28 border-t border-line-200 pt-4" data-testid="district-panel">
+    <div ref={panel} className="mt-6 scroll-mt-28 border-t border-ink-1 pt-4" data-testid="district-panel">
       {district.failure ? (
         <RetryLine message={failureMessage(district.failure, "Couldn't open this district.")} onRetry={district.retry} />
       ) : data ? (
@@ -39,9 +40,7 @@ export function DistrictPanel({ district, onClose }: { district: Remote<District
           <DistrictView district={data} reduce={reduce} onClose={onClose} />
         </CitedReading>
       ) : (
-        <p role="status" className="text-sm text-ink-500">
-          Loading district…
-        </p>
+        <Skeleton shape="lede" label="Opening the district" />
       )}
     </div>
   );

@@ -12,8 +12,8 @@ export const CRAFT_PLACES_LABEL = "Craft places";
 export function LayerPicker({ list, value, onChange }: { list: MapLayerList; value: string | null; onChange: (id: string | null) => void }) {
   const options = useMemo(() => layerOptions(list), [list]);
   return (
-    <div className="mb-4 sm:max-w-sm" data-testid="layer-picker">
-      <FieldBlock label="Layer">
+    <div className="w-full sm:max-w-sm" data-testid="layer-picker">
+      <FieldBlock label="Show on the map">
         <SearchableSelect
           value={value ?? ""}
           options={options}

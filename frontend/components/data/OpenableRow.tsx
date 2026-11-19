@@ -66,7 +66,7 @@ export function OpenableRow({
       {...rest}
       data-openable-row=""
       {...handlers}
-      className={`cursor-pointer transition-colors hover:bg-field-100 ${className}`.trim()}
+      className={`cursor-pointer transition-colors duration-state hover:bg-sunk ${className}`.trim()}
     >
       {children}
     </tr>
@@ -91,7 +91,7 @@ export function OpenableCard({
   const handlers = useOpenOnClick(href, external, onOpen);
   if (!href && !onOpen) return <Tag className={className}>{children}</Tag>;
   return (
-    <Tag data-openable-row="" {...handlers} className={`cursor-pointer transition-colors hover:bg-field-100 ${className}`.trim()}>
+    <Tag data-openable-row="" {...handlers} className={`cursor-pointer transition-colors duration-state hover:bg-sunk ${className}`.trim()}>
       {children}
     </Tag>
   );
@@ -99,7 +99,7 @@ export function OpenableCard({
 
 export function OpenableRowLink({ href, children, className = "" }: { href: string; children: ReactNode; className?: string }) {
   return (
-    <Link href={href} className={`rounded-sm font-medium text-ink-900 underline-offset-2 hover:underline ${className}`.trim()}>
+    <Link href={href} className={`rounded-control font-medium text-ink-1 underline-offset-3 hover:text-indigo-hover hover:underline ${className}`.trim()}>
       {children}
     </Link>
   );

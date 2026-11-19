@@ -23,10 +23,6 @@ export function project(longitude: number, latitude: number): { x: number; y: nu
   };
 }
 
-export function unitsPerKilometre(): number {
-  return UNITS_PER_DEGREE / 111.32;
-}
-
 export function bordersToPath(lines: Array<Array<[number, number]>>): string {
   const parts: string[] = [];
   for (const line of lines) {

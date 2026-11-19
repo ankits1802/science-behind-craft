@@ -21,33 +21,26 @@ function defaultCount(total: number): string {
   return total === 1 ? "1 craft" : `${total} crafts`;
 }
 
-export function MapPlaceList({
-  points,
-  hoveredKey = null,
-  selectedKey = null,
-  flashKey = null,
-  onHover,
-  registerRow,
-  containerRef,
-  countLabel = defaultCount,
-  className
-}: MapPlaceListProps) {
+function rowClass(active: boolean): string {
+  return cn(
+    "flex min-h-target items-baseline gap-3 border-t border-rule px-1 py-2 transition-colors duration-state",
+    active ? "bg-sunk" : "hover:bg-sunk"
+  );
+}
+
+export function MapPlaceList({ points, hoveredKey = null, selectedKey = null, flashKey = null, onHover, registerRow, containerRef, countLabel = defaultCount, className }: MapPlaceListProps) {
   return (
-    <ol ref={containerRef as React.RefObject<HTMLOListElement>} className={cn("flex flex-col gap-0.5", className)}>
+    <ol ref={containerRef as React.RefObject<HTMLOListElement>} className={cn("flex flex-col border-b border-rule", className)}>
       {points.map((point, index) => {
         const active = point.key === hoveredKey || point.key === selectedKey;
-        const rowClass = cn(
-          "flex min-h-11 items-baseline gap-3 rounded-md px-3 py-1.5 transition-colors",
-          active ? "bg-purple-700/10" : "hover:bg-field-100"
-        );
         const body = (
           <>
-            <span className="w-6 shrink-0 text-right font-display text-sm font-bold tabular-nums text-purple-700">{index + 1}</span>
+            <span className="w-6 shrink-0 text-end font-ui text-label text-ink-3 [font-variant-numeric:tabular-nums]">{index + 1}</span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-medium text-ink-900">{point.name}</span>
-              {point.caption ? <span className="block truncate text-xs text-ink-500">{point.caption}</span> : null}
+              <span className="block truncate font-ui text-ui text-ink-1">{point.name}</span>
+              {point.caption ? <span className="block truncate font-ui text-caption text-ink-3">{point.caption}</span> : null}
             </span>
-            <span className="shrink-0 text-xs tabular-nums text-ink-500">{countLabel(point.total)}</span>
+            <span className="shrink-0 font-ui text-caption text-ink-3 [font-variant-numeric:tabular-nums]">{countLabel(point.total)}</span>
           </>
         );
         const handlers = {
@@ -57,13 +50,13 @@ export function MapPlaceList({
           onBlur: () => onHover?.(null)
         };
         return (
-          <li key={point.key} ref={registerRow?.(point.key)} data-flash={flashKey === point.key ? "true" : undefined} className="fr-flash-row rounded-md">
+          <li key={point.key} ref={registerRow?.(point.key)} data-flash={flashKey === point.key ? "true" : undefined} className="fr-flash-row">
             {point.href ? (
-              <Link href={point.href} {...handlers} className={rowClass}>
+              <Link href={point.href} {...handlers} className={rowClass(active)}>
                 {body}
               </Link>
             ) : (
-              <div tabIndex={0} {...handlers} className={rowClass}>
+              <div tabIndex={0} {...handlers} className={rowClass(active)}>
                 {body}
               </div>
             )}
