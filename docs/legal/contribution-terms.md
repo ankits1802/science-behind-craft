@@ -1,7 +1,8 @@
-# Contribution terms (draft, version 2026-11-19)
+# Contribution terms (version 2026-11-19)
 
-Draft for the owner and IIT Kharagpur's legal office to edit. Nothing here is in force until it is
-approved and its version is shown at the moment of contributing.
+Approved by the owner on 2026-11-19. In force for every contribution made where this version is
+shown at the moment of contributing. A change to the text is a new version, shown and accepted
+again.
 
 ## What these terms cover
 

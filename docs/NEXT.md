@@ -88,15 +88,15 @@ Settled:
 - Consent cannot be revoked: an approved contribution stays published.
 - When erased testimony leaves a concept with nothing else, the concept goes (to build with the
   review queue).
+- The contribution terms, the image declaration and the MCP terms of use, version 2026-11-19, are
+  approved (`docs/legal/`). The MCP terms are served from `backend/app/data/mcp_terms_of_use.md`,
+  held equal to the approved text by a test; a new version changes both and
+  `research/oauth_rules.MCP_TERMS_VERSION`.
+- The nightly build's Vercel deploy hook (`nightly-pages`, branch `main`) is created and stored as
+  SecureString at `/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`; the next deploy renders it into the
+  box `.env`.
 
 Open:
-- The terms texts are drafted in `docs/legal/` for the owner and IIT's legal office. The MCP terms
-  are served from `backend/app/data/mcp_terms_of_use.md`, held equal to the draft by a test; a
-  new version changes both and `research/oauth_rules.MCP_TERMS_VERSION`.
-- The nightly build needs a Vercel deploy hook for project `kalavigyan`, branch `main`, stored as
-  SecureString at `/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`, then `sudo kv-render-env` and a
-  restart (`docs/contracts/nightly-upkeep.md`). Until then the nightly run reports the build as
-  not triggered and "Build pages now" answers 503.
 - Artisan testimony can still be withdrawn as built (decision 0083); say whether irrevocable
   consent applies to it too.
 

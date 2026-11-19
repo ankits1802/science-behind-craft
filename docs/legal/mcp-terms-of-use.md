@@ -1,6 +1,6 @@
-# MCP terms of use (draft, version 2026-11-19)
+# MCP terms of use (version 2026-11-19)
 
-Draft for the owner and IIT Kharagpur's legal office to edit. These are the terms a person accepts
+Approved by the owner on 2026-11-19. These are the terms a person accepts
 when they connect an AI agent to KalaVigyan through the MCP server (decision 0101, item 15). They
 are versioned; a new version is asked for again at the next sign-in.
 

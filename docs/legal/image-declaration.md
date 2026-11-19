@@ -1,6 +1,6 @@
-# Image declaration (draft, version 2026-11-19)
+# Image declaration (version 2026-11-19)
 
-Draft for the owner and IIT Kharagpur's legal office to edit. This is the statement a contributor
+Approved by the owner on 2026-11-19. This is the statement a contributor
 confirms when giving a picture (`termsVersion: "2026-11-19"` in `ImageDeclaration`,
 `docs/contracts/image-contributions.md`). It is shown above the confirm box.
 
