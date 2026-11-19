@@ -16,6 +16,7 @@ from .component_proposals import ComponentProposalDraft
 from .crafts import QUESTION_MAX_CHARS, SLUG_MAX_CHARS
 from .knowledge_api import FieldInfo
 from .knowledge_writes import GateReport
+from .open_work import COMPONENT_NEEDS
 from .vocabulary import Discipline, PieceKind, PieceSubjectKind
 
 __all__ = [
@@ -113,6 +114,9 @@ class ProposalForm(ContractModel):
     fields: list[FieldInfo]
     kinds: list[PieceKind] = Field(default_factory=lambda: list(PIECE_KINDS))
     subject_kinds: list[PieceSubjectKind] = Field(default_factory=lambda: list(PIECE_SUBJECT_KINDS))
+    needs: dict[str, list[PieceKind]] = Field(
+        default_factory=lambda: {need: list(kinds) for need, kinds in COMPONENT_NEEDS.items()}
+    )
 
 
 class LibrarySearch(ContractModel):

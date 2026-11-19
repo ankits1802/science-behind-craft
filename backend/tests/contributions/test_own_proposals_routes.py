@@ -14,7 +14,7 @@ from app.main import create_app
 from app.models import User
 from app.research.component_proposals import WAYS_ON, ComponentMatch, ComponentProposalResult
 from app.research.knowledge_api import ComponentSummary, CraftComponents
-from app.research.own_proposals import ComponentProposalBody, OwnProposal
+from app.research.own_proposals import ComponentProposalBody, OwnProposal, TermsStatus
 from app.services.own_proposals import TERMS_NEEDED, UnknownProposal
 
 PROPOSAL = {
@@ -184,6 +184,30 @@ def test_an_unknown_craft_or_kind_in_the_library_search_is_refused(monkeypatch: 
         == 422
     )
     assert searched.get("/api/contributions/proposals/library", params={"kind": "guess"}).status_code == 422
+
+
+def test_the_form_offers_the_terms_every_field_every_kind_and_what_each_need_takes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    async def unaccepted(session: Any, user: User) -> TermsStatus:
+        return TermsStatus(version="2026-11-19", accepted_at=None)
+
+    monkeypatch.setattr(routes.own_proposals, "terms_status", unaccepted)
+    response = client("RESEARCHER", Recorded()).get("/api/contributions/proposals/form")
+    assert response.status_code == 200, response.text
+    form = response.json()
+    assert form["terms"] == {"version": "2026-11-19", "acceptedAt": None}
+    assert len(form["fields"]) == 16
+    assert form["fields"][0] == {
+        "field": "OVERVIEW",
+        "title": "What it is",
+        "covers": "what the craft is, where and by whom it is practised",
+        "chapter": form["fields"][0]["chapter"],
+    }
+    assert {"what_if", "molecule_3d", "reaction_player", "picture_plate"} <= set(form["kinds"])
+    assert form["subjectKinds"] == ["CRAFT", "CONCEPT", "PLACE", "COMPOUND"]
+    assert (form["needs"]["molecules"], form["needs"]["what-if"]) == (["molecule_3d"], ["what_if"])
+    assert form["needs"]["pictures"] == ["images", "picture_plate", "specimen_plate"]
 
 
 def test_terms_of_another_version_are_refused_before_anything_is_stored() -> None:
