@@ -26,6 +26,7 @@ from app.api.routes import (
     media,
     molecules,
     notifications,
+    oauth,
     password_change,
     profile,
     public,
@@ -72,6 +73,7 @@ api_router.include_router(mcp.router)
 api_router.include_router(media.router)
 api_router.include_router(molecules.router)
 api_router.include_router(notifications.router)
+api_router.include_router(oauth.router)
 api_router.include_router(profile.router)
 api_router.include_router(public.router)
 api_router.include_router(rivers.router)

@@ -94,6 +94,7 @@ from app.models.knowledge import (
 from app.models.knowledge_pieces import KnowledgePiece, KnowledgePieceSubject
 from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
+from app.models.oauth import McpTermsAcceptance, McpToolCall, OAuthClient, OAuthCode, OAuthGrant, OAuthToken
 from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
 from app.models.rivers import RiverBasin, RiverReach
 from app.models.science import (
@@ -181,12 +182,18 @@ __all__ = [
     "LiveCandidate",
     "ManagedSecret",
     "Material",
+    "McpTermsAcceptance",
+    "McpToolCall",
     "MediaAsset",
     "MediaJob",
     "MediaRef",
     "MediaRefClaim",
     "Message",
     "Notification",
+    "OAuthClient",
+    "OAuthCode",
+    "OAuthGrant",
+    "OAuthToken",
     "Objection",
     "PasswordResetRequest",
     "PasswordResetToken",

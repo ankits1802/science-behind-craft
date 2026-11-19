@@ -20,6 +20,10 @@ ASSET_READS_PER_COUNTED_READ = 10
 PUBLIC_ASSET_READS_PER_WINDOW = PUBLIC_READS_PER_WINDOW * ASSET_READS_PER_COUNTED_READ
 SERVER_ASSET_READS_PER_WINDOW = SERVER_READS_PER_WINDOW * ASSET_READS_PER_COUNTED_READ
 SERVER_ASSET_READ_KEY = "public-asset:web-server"
+MCP_CALLS_PER_CONNECTION_WINDOW = 1200
+MCP_CONNECTION_WINDOW_SECONDS = 600
+CLIENT_REGISTRATIONS_PER_WINDOW = 20
+CLIENT_REGISTRATION_WINDOW_SECONDS = 3600
 
 
 class SlidingWindow:
@@ -171,6 +175,20 @@ def voice_turn_attempt(user_id: str) -> tuple[bool, float]:
 
 def voice_speech_attempt(user_id: str) -> tuple[bool, float]:
     return _windows.attempt(f"voice-speech:{user_id}", 60, 600)
+
+
+def mcp_connection_attempt(connection_key: str) -> tuple[bool, float]:
+    return _windows.attempt(
+        f"mcp-connection:{connection_key}", MCP_CALLS_PER_CONNECTION_WINDOW, MCP_CONNECTION_WINDOW_SECONDS
+    )
+
+
+def client_registration_attempt(connection: HTTPConnection) -> tuple[bool, float]:
+    return _windows.attempt(
+        f"oauth-register:{client_ip(connection)}",
+        CLIENT_REGISTRATIONS_PER_WINDOW,
+        CLIENT_REGISTRATION_WINDOW_SECONDS,
+    )
 
 
 def public_read_attempt(connection: HTTPConnection) -> tuple[bool, float]:

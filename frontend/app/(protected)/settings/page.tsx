@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/PageHeader";
 import { AlertDigestCard } from "@/components/settings/AlertDigestCard";
 import { ChangePasswordCard } from "@/components/settings/ChangePasswordCard";
+import { ConnectedClientsCard } from "@/components/settings/ConnectedClientsCard";
 import { AccessibilityCard, AppearanceCard } from "@/components/settings/PersonalSettingsCards";
 import { ProfileCards } from "@/components/settings/ProfileCards";
 import { TwoStepVerificationCard } from "@/components/settings/TwoStepVerificationCard";
@@ -28,6 +29,7 @@ export default function SettingsPage() {
         <TwoStepVerificationCard />
         <ChangePasswordCard />
         <AlertDigestCard />
+        <ConnectedClientsCard />
       </div>
     </>
   );
