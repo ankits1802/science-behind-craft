@@ -4,7 +4,7 @@ export type DriftStep = { before: string; after: string; delta: number };
 export type HeightRecord = { path: string; depth: number; height: string; width: string; style: string };
 export type DriftReport = { step: DriftStep; differences: { path: string; approved: HeightRecord; rendered: HeightRecord }[] };
 
-const BOX_PROPERTIES = ["display", "width", "max-width", "aspect-ratio", "height", "line-height", "font-size", "font-family", "padding-block-start", "padding-block-end", "border-block-start-width", "border-block-end-width", "margin-block-start", "margin-block-end", "vertical-align", "box-sizing"];
+const BOX_PROPERTIES = ["font-weight", "font-stretch", "font-style", "letter-spacing", "word-spacing", "font-feature-settings", "font-variation-settings", "font-kerning", "text-transform", "padding-inline-start", "padding-inline-end", "border-inline-start-width", "border-inline-end-width", "gap", "min-width", "display", "width", "max-width", "aspect-ratio", "height", "line-height", "font-size", "font-family", "padding-block-start", "padding-block-end", "border-block-start-width", "border-block-end-width", "margin-block-start", "margin-block-end", "vertical-align", "box-sizing"];
 const MAX_ELEMENTS = 4000;
 const MAX_DIFFERENCES = 12;
 
