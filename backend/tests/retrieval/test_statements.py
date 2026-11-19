@@ -17,6 +17,7 @@ from app.research.retrieval import (
 )
 from app.retrieval.hybrid import CORPUS_TIER, StoredKnowledgeSearch
 from app.retrieval.statements import (
+    ENTITY_NAME_MIN_CHARS,
     EVERY_CRAFT,
     RANKING_DEPTH,
     CraftScope,
@@ -24,6 +25,7 @@ from app.retrieval.statements import (
     chunk_lexical_ranking,
     chunk_vector_ranking,
     claim_conditions,
+    claim_entity_ranking,
     claim_lexical_ranking,
     claim_vector_ranking,
     readable_citations,
@@ -91,6 +93,37 @@ def test_facets_filter_the_concept_types() -> None:
     sql, params = compiled(claim_lexical_ranking(conditions, "alum"))
     assert '"Concept".type IN' in sql
     assert params_with(params, "type_") == [["MATERIAL", "MECHANISM"]]
+
+
+def test_fields_keep_the_fields_claims_their_secondary_fields_and_the_unfielded() -> None:
+    sql, params = compiled(
+        claim_lexical_ranking(claim_conditions(SCOPE, mode="HYBRID", fields=("CHEMISTRY",)), "alum")
+    )
+    assert '("Claim".field IS NULL OR "Claim".field IN (__[POSTCOMPILE_field_1]) OR "Claim".fields && ' in sql
+    assert params["field_1"] == ["CHEMISTRY"] and params["fields_1"] == ["CHEMISTRY"]
+    unfiltered, _ = compiled(claim_lexical_ranking(claim_conditions(SCOPE, mode="HYBRID"), "alum"))
+    assert '"Claim".field' not in unfiltered
+
+
+def test_chunks_follow_the_claims_of_the_asked_fields() -> None:
+    conditions = chunk_conditions(SCOPE, mode="HYBRID", fields=("HISTORY",), acls=("PUBLIC",))
+    sql, params = compiled(chunk_lexical_ranking(conditions, "alum"))
+    assert '"Claim".fields && ' in sql and params["fields_1"] == ["HISTORY"]
+
+
+def test_the_entity_ranking_reads_scoped_concepts_named_in_the_question_longest_name_first() -> None:
+    statement = claim_entity_ranking(claim_conditions(SCOPE, mode="HYBRID"), SCOPE, "Why is alum used?")
+    sql, params = compiled(statement)
+    assert sql.startswith(
+        'WITH named AS (SELECT "Concept".id AS id, length("Concept".name) AS weight FROM "Concept"'
+    )
+    assert 'strpos(lower(%(param_1)s::VARCHAR), lower("Concept".name)) > %(strpos_1)s::INTEGER' in sql
+    assert '"ConceptEdge"."srcId" = named.id OR "ConceptEdge"."dstId" = named.id' in sql
+    assert sql.endswith(
+        'GROUP BY "Claim".id ORDER BY max(subjects.weight) DESC, "Claim".id LIMIT %(param_2)s::INTEGER'
+    )
+    assert params["param_1"] == "Why is alum used?" and params["length_1"] == ENTITY_NAME_MIN_CHARS == 4
+    assert params["strpos_1"] == 0 and params["param_2"] == RANKING_DEPTH
 
 
 def test_the_lexical_ranking_matches_the_or_query_and_orders_by_cover_density() -> None:

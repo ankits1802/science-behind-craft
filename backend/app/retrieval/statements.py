@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from sqlalchemy import ColumnElement, Select, and_, exists, func, or_, select
+from sqlalchemy import ColumnElement, Select, and_, exists, func, literal, or_, select
 
 from app.models import Chunk, Claim, ClaimSource, Concept, ConceptEdge, Source
 from app.research.retrieval import (
@@ -18,6 +18,7 @@ from app.research.retrieval import (
 from .field_scope import field_interview_sources, withheld_field_sources
 
 __all__ = [
+    "ENTITY_NAME_MIN_CHARS",
     "EVERY_CRAFT",
     "RANKING_DEPTH",
     "TEXT_SEARCH_CONFIG",
@@ -26,8 +27,10 @@ __all__ = [
     "chunk_lexical_ranking",
     "chunk_vector_ranking",
     "claim_conditions",
+    "claim_entity_ranking",
     "claim_lexical_ranking",
     "claim_vector_ranking",
+    "field_condition",
     "lexical_rank",
     "readable_citations",
     "scope_claims",
@@ -37,6 +40,7 @@ __all__ = [
 
 RANKING_DEPTH = 30
 TEXT_SEARCH_CONFIG = "english"
+ENTITY_NAME_MIN_CHARS = 4
 
 
 @dataclass(frozen=True)
@@ -75,8 +79,13 @@ def scope_claims(scope: CraftScope, *, facets: Sequence[str] = ()) -> ColumnElem
     )
 
 
+def field_condition(fields: Sequence[str]) -> ColumnElement[bool]:
+    wanted = list(fields)
+    return or_(Claim.field.is_(None), Claim.field.in_(wanted), Claim.fields.overlap(wanted))
+
+
 def claim_conditions(
-    scope: CraftScope, *, mode: str, facets: Sequence[str] = ()
+    scope: CraftScope, *, mode: str, facets: Sequence[str] = (), fields: Sequence[str] = ()
 ) -> list[ColumnElement[bool]]:
     cited = exists().where(
         ClaimSource.claimId == Claim.id,
@@ -84,13 +93,14 @@ def claim_conditions(
         Source.sensitivity != RESTRICTED_SENSITIVITY,
         Source.id.not_in(withheld_field_sources()),
     )
-    return [
+    conditions = [
         scope_claims(scope, facets=facets),
         Claim.status.in_(MODE_CLAIM_STATUSES[mode]),
         Claim.evidenceLevel.in_(MODE_CLAIM_LEVELS[mode]),
         Claim.sensitivity == VISIBLE_SENSITIVITY,
         cited,
     ]
+    return [*conditions, field_condition(fields)] if fields else conditions
 
 
 def readable_citations(claim_ids: Sequence[uuid.UUID], *, acls: Sequence[str]) -> Select[tuple[ClaimSource]]:
@@ -110,9 +120,14 @@ def readable_citations(claim_ids: Sequence[uuid.UUID], *, acls: Sequence[str]) -
 
 
 def chunk_conditions(
-    scope: CraftScope, *, mode: str, facets: Sequence[str] = (), acls: Sequence[str]
+    scope: CraftScope,
+    *,
+    mode: str,
+    facets: Sequence[str] = (),
+    fields: Sequence[str] = (),
+    acls: Sequence[str],
 ) -> list[ColumnElement[bool]]:
-    claims = select(Claim.id).where(*claim_conditions(scope, mode=mode, facets=facets))
+    claims = select(Claim.id).where(*claim_conditions(scope, mode=mode, facets=facets, fields=fields))
     sources = select(Source.id).where(
         Source.id.in_(select(ClaimSource.sourceId).where(ClaimSource.claimId.in_(claims))),
         Source.sensitivity != RESTRICTED_SENSITIVITY,
@@ -135,6 +150,40 @@ def chunk_lexical_ranking(
     conditions: Sequence[ColumnElement[bool]], tsquery: str, *, depth: int = RANKING_DEPTH
 ) -> Select[tuple[uuid.UUID]]:
     return _lexical(Chunk.id, Chunk.tsv, conditions, tsquery, depth)
+
+
+def claim_entity_ranking(
+    conditions: Sequence[ColumnElement[bool]],
+    scope: CraftScope,
+    question: str,
+    *,
+    depth: int = RANKING_DEPTH,
+) -> Select[tuple[uuid.UUID]]:
+    named = _named_concepts(scope, question)
+    edges = select(ConceptEdge.id.label("id"), named.c.weight).join(
+        named, or_(ConceptEdge.srcId == named.c.id, ConceptEdge.dstId == named.c.id)
+    )
+    subjects = select(named.c.id, named.c.weight).union_all(edges).subquery("subjects")
+    weight = func.max(subjects.c.weight).label("weight")
+    return (
+        select(Claim.id)
+        .join(subjects, Claim.subjectId == subjects.c.id)
+        .where(*conditions)
+        .group_by(Claim.id)
+        .order_by(weight.desc(), Claim.id)
+        .limit(depth)
+    )
+
+
+def _named_concepts(scope: CraftScope, question: str) -> Any:
+    name = func.lower(Concept.name)
+    asked = func.lower(literal(question))
+    return (
+        scope_concepts(scope)
+        .add_columns(func.length(Concept.name).label("weight"))
+        .where(func.length(Concept.name) >= ENTITY_NAME_MIN_CHARS, func.strpos(asked, name) > 0)
+        .cte("named")
+    )
 
 
 def claim_vector_ranking(

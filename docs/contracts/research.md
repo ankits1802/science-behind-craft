@@ -376,15 +376,16 @@ inside. Retrieved text never goes into a system or tool message.
 chunks) tiers. `retrieval.hybrid.StoredKnowledgeSearch(session, embed=TextEmbedder)` implements
 it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
-- `KnowledgeQuery {craftSlug | null, text (1-1000), mode, facets[FacetType] (distinct), chunkAcls
-  (distinct, default ["PUBLIC"]), limit (1-50, default 12)}`. The caller passes the ACLs the
+- `KnowledgeQuery {craftSlug | null, text (1-1000), mode, facets[FacetType] (distinct),
+  fields[Discipline] (distinct, default none), chunkAcls (distinct, default ["PUBLIC"]), limit
+  (1-50, default 12)}`. The caller passes the ACLs the
   reader may see (`RESEARCHER` for researchers and above); nothing widens them. An unknown slug
   is `InvalidInput`; a null slug (any craft) reads every visible concept
   (`retrieval/statements.EVERY_CRAFT`), and the hits carry a null `craftSlug`.
 - `KnowledgeHits {craftSlug, claims[ClaimHit], chunks[ChunkHit]}`, each at most `limit`, best
   first. `ClaimHit {claimId, text, level, subjectType (CONCEPT, EDGE), subjectId, score,
-  lexicalRank?, vectorRank?}`; `ChunkHit {chunkId, sourceId, ordinal, locator?, text, score,
-  lexicalRank?, vectorRank?}`. A rank is the 1-based place in that ranking, absent when the row
+  lexicalRank?, vectorRank?, entityRank?}`; `ChunkHit {chunkId, sourceId, ordinal, locator?, text,
+  score, lexicalRank?, vectorRank?}`. A rank is the 1-based place in that ranking, absent when the row
   was not in it.
 - What each mode reads (`MODE_CLAIM_LEVELS`, `MODE_CLAIM_STATUSES`): `VERIFIED` reads
   `VERIFIED` and `REVIEWED` claims with status `APPROVED` and no chunks; `HYBRID` and `DEEP` read
@@ -394,11 +395,17 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   concepts, or on concept edges touching them; concept and claim `OPEN`
   (`VISIBLE_SENSITIVITY`), cited by at least one source that is not `RESTRICTED`. Chunks: of
   the sources those claims cite, within `chunkAcls`, chunk and source not `RESTRICTED`.
-  `facets` keeps concepts of those types (and so the chunks of their sources).
+  `facets` keeps concepts of those types (and so the chunks of their sources). `fields` keeps
+  the claims filed under one of those fields as their field or a secondary field, and claims
+  with no field yet, which a field never hides (decision 0101 item 10); chunks follow the claims
+  kept. The research planner searches a section's stored facts in that section's field
+  (`searched_fields(focus)`), except the overview (`BROAD_FIELDS`), which reads every field.
 - Ranking: full text (the question's distinct Latin words of 3+ characters, at most 40, ORed
   through `to_tsquery('english')`, ordered by `ts_rank_cd`, then id) and vector (cosine distance
   to the embedded question over the scoped rows, exact, then id), each the best
-  `RANKING_DEPTH` (30). Fused by reciprocal rank fusion, `score = sum(1 / (RRF_K + rank))` with
+  `RANKING_DEPTH` (30). Claims have a third ranking, entities: the claims on scoped concepts (or
+  on edges touching them) whose name of 4 or more characters (`ENTITY_NAME_MIN_CHARS`) appears in
+  the question, case-insensitive, the longest name first, then id. Fused by reciprocal rank fusion, `score = sum(1 / (RRF_K + rank))` with
   `RRF_K` 60; equal scores order by the best single rank, then id. A question with no Latin
   words is ranked by the vector alone.
 - The question is embedded as `task: search result | query: <text>`; stored claims as

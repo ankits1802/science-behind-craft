@@ -40,8 +40,9 @@ async def stored_knowledge(
     craft_slug: str | None,
     mode: str,
     question: str,
+    fields: Sequence[str] = (),
     limit: int = STORED_PACK_LIMIT,
 ) -> KnowledgeHits:
     return await retriever.search(
-        KnowledgeQuery(craft_slug=craft_slug, text=question, mode=mode, limit=limit)
+        KnowledgeQuery(craft_slug=craft_slug, text=question, mode=mode, fields=tuple(fields), limit=limit)
     )

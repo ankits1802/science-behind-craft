@@ -20,6 +20,7 @@ from .statements import (
     chunk_lexical_ranking,
     chunk_vector_ranking,
     claim_conditions,
+    claim_entity_ranking,
     claim_lexical_ranking,
     claim_vector_ranking,
 )
@@ -29,6 +30,7 @@ __all__ = ["CORPUS_TIER", "SessionScopedSearch", "StoredKnowledgeSearch", "craft
 
 CORPUS_TIER = "T2"
 SCORE_DIGITS = 9
+RANK_FIELDS = ("lexical_rank", "vector_rank", "entity_rank")
 
 
 class SessionScopedSearch:
@@ -50,18 +52,25 @@ class StoredKnowledgeSearch:
         (vector,) = checked_vectors(await self._embed([query_text(query.text)]), expected=1)
         scope = await craft_scope(self._session, query.craft_slug)
         tsquery = or_tsquery(query.text)
-        conditions = claim_conditions(scope, mode=query.mode, facets=query.facets)
+        conditions = claim_conditions(scope, mode=query.mode, facets=query.facets, fields=query.fields)
         claims = await self._fuse(
-            claim_lexical_ranking(conditions, tsquery) if tsquery else None,
-            claim_vector_ranking(conditions, vector),
+            [
+                claim_lexical_ranking(conditions, tsquery) if tsquery else None,
+                claim_vector_ranking(conditions, vector),
+                claim_entity_ranking(conditions, scope, query.text),
+            ],
             limit=query.limit,
         )
         chunks: list[FusedItem[uuid.UUID]] = []
         if CORPUS_TIER in MODE_POLICIES[query.mode].tiers:
-            conditions = chunk_conditions(scope, mode=query.mode, facets=query.facets, acls=query.chunk_acls)
+            conditions = chunk_conditions(
+                scope, mode=query.mode, facets=query.facets, fields=query.fields, acls=query.chunk_acls
+            )
             chunks = await self._fuse(
-                chunk_lexical_ranking(conditions, tsquery) if tsquery else None,
-                chunk_vector_ranking(conditions, vector),
+                [
+                    chunk_lexical_ranking(conditions, tsquery) if tsquery else None,
+                    chunk_vector_ranking(conditions, vector),
+                ],
                 limit=query.limit,
             )
         return KnowledgeHits(
@@ -71,11 +80,13 @@ class StoredKnowledgeSearch:
         )
 
     async def _fuse(
-        self, lexical: Select[tuple[uuid.UUID]] | None, vector: Select[tuple[uuid.UUID]], *, limit: int
+        self, rankings: Sequence[Select[tuple[uuid.UUID]] | None], *, limit: int
     ) -> list[FusedItem[uuid.UUID]]:
-        lexical_ids = list((await self._session.scalars(lexical)).all()) if lexical is not None else []
-        vector_ids = list((await self._session.scalars(vector)).all())
-        return reciprocal_rank_fusion([lexical_ids, vector_ids])[:limit]
+        found = [
+            list((await self._session.scalars(ranking)).all()) if ranking is not None else []
+            for ranking in rankings
+        ]
+        return reciprocal_rank_fusion(found)[:limit]
 
     async def _claim_hits(self, fused: Sequence[FusedItem[uuid.UUID]]) -> list[ClaimHit]:
         if not fused:
@@ -138,9 +149,5 @@ async def craft_scope(session: AsyncSession, slug: str | None) -> CraftScope:
 
 
 def _ranking_fields(item: FusedItem[uuid.UUID]) -> dict[str, float | int | None]:
-    lexical_rank, vector_rank = item.ranks
-    return {
-        "score": round(item.score, SCORE_DIGITS),
-        "lexical_rank": lexical_rank,
-        "vector_rank": vector_rank,
-    }
+    ranks = dict(zip(RANK_FIELDS, item.ranks, strict=False))
+    return {"score": round(item.score, SCORE_DIGITS), **ranks}

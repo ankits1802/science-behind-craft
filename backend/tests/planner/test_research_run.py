@@ -66,6 +66,21 @@ async def test_stored_knowledge_that_covers_every_facet_runs_no_live_research() 
     ]
 
 
+@pytest.mark.parametrize(("focus", "fields"), [("CHEMISTRY", ("CHEMISTRY",)), ("OVERVIEW", ()), (None, ())])
+async def test_a_sections_stored_facts_are_searched_in_its_field_unless_it_is_the_overview(
+    focus: str | None, fields: tuple[str, ...]
+) -> None:
+    covered = {
+        "alum": [claim("alum one"), claim("alum two")],
+        "mordant binding": [claim("b one"), claim("b two")],
+    }
+    retriever = FakeRetriever(covered)
+    await planner(LiveSources(searchers=()), retriever=retriever).research(
+        request().model_copy(update={"focus": focus})
+    )
+    assert [query.fields for query in retriever.queries] == [(), (), fields]
+
+
 async def test_hybrid_research_dedupes_ranks_and_reads_the_best_per_facet() -> None:
     openalex, crossref, web = hybrid_sources()
     pack = await planner(LiveSources(searchers=(openalex, crossref, web))).research(request())

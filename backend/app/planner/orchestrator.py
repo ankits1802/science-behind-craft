@@ -6,7 +6,7 @@ from app.research.crafts import CraftRef
 from app.research.evidence import SourceDocument
 from app.research.evidence_pack import EvidencePack, PackedEvidence, ResearchTrail
 from app.research.planning import FacetCoverage, PlanRequest, RetrievalPlan
-from app.research.retrieval import KnowledgeRetriever
+from app.research.retrieval import KnowledgeRetriever, searched_fields
 from app.research.stream import ResearchProgress
 from app.research.structured import StructuredModel
 
@@ -85,6 +85,7 @@ class ResearchPlanner:
             craft_slug=_slug(plan.craft),
             mode=plan.mode,
             question=planned.search_question,
+            fields=searched_fields(request.focus),
             limit=stored_pack_limit(request.depth),
         )
         log = FailureLog()

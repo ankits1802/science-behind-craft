@@ -12,9 +12,10 @@ from app.models.enums import CHUNK_ACLS, CLAIM_STATUSES, EVIDENCE_LEVELS
 
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS
-from .vocabulary import AnswerMode, ChunkAcl, EvidenceLevel, FacetType, SourceType
+from .vocabulary import AnswerMode, ChunkAcl, Discipline, EvidenceLevel, FacetType, SourceType
 
 __all__ = [
+    "BROAD_FIELDS",
     "CLAIM_SUBJECT_TYPES",
     "EVERY_CHUNK_ACLS",
     "HIDDEN_CLAIM_STATUSES",
@@ -34,8 +35,10 @@ __all__ = [
     "KnowledgeQuery",
     "KnowledgeRetriever",
     "chunk_acls_for",
+    "searched_fields",
 ]
 
+BROAD_FIELDS = ("OVERVIEW",)
 KNOWLEDGE_RESULT_MAX = 50
 KNOWLEDGE_RESULT_DEFAULT = 12
 CLAIM_SUBJECT_TYPES = ("CONCEPT", "EDGE")
@@ -66,10 +69,11 @@ class KnowledgeQuery(ContractModel):
     text: str = Field(min_length=1, max_length=QUESTION_MAX_CHARS)
     mode: AnswerMode
     facets: tuple[FacetType, ...] = ()
+    fields: tuple[Discipline, ...] = ()
     chunk_acls: tuple[ChunkAcl, ...] = OPEN_CHUNK_ACLS
     limit: int = Field(default=KNOWLEDGE_RESULT_DEFAULT, ge=1, le=KNOWLEDGE_RESULT_MAX)
 
-    @field_validator("facets", "chunk_acls")
+    @field_validator("facets", "fields", "chunk_acls")
     @classmethod
     def _distinct(cls, values: tuple[str, ...]) -> tuple[str, ...]:
         if len(set(values)) != len(values):
@@ -86,6 +90,7 @@ class ClaimHit(ContractModel):
     score: float = Field(gt=0)
     lexical_rank: int | None = Field(default=None, ge=1)
     vector_rank: int | None = Field(default=None, ge=1)
+    entity_rank: int | None = Field(default=None, ge=1)
 
 
 class ChunkHit(ContractModel):
@@ -110,6 +115,12 @@ class KnowledgeHits(ContractModel):
 @runtime_checkable
 class KnowledgeRetriever(Protocol):
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits: ...
+
+
+def searched_fields(focus: str | None) -> tuple[str, ...]:
+    if focus is None or focus in BROAD_FIELDS:
+        return ()
+    return (focus,)
 
 
 def chunk_acls_for(reader: Any) -> tuple[str, ...]:

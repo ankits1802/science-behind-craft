@@ -152,15 +152,15 @@ async def test_hybrid_mode_fuses_the_text_and_vector_rankings_of_the_crafts_clai
         KnowledgeQuery(craft_slug="Zelvar-Print", text=QUESTION, mode="HYBRID")
     )
     assert embed.calls == [["task: search result | query: alum mordant"]]
-    assert [(h.claim_id, h.lexical_rank, h.vector_rank) for h in found.claims] == [
-        (ALUM, 1, 1),
-        (GUESS, 2, 3),
-        (IRON, None, 2),
+    assert [(h.claim_id, h.lexical_rank, h.vector_rank, h.entity_rank) for h in found.claims] == [
+        (ALUM, 1, 1, 1),
+        (GUESS, 2, 3, 2),
+        (IRON, None, 2, None),
     ]
     assert [h.score for h in found.claims] == [
-        pytest.approx(0.032786885, abs=1e-9),
-        pytest.approx(0.032002048, abs=1e-9),
-        pytest.approx(0.016129032, abs=1e-9),
+        pytest.approx(3 / 61, abs=1e-9),
+        pytest.approx(1 / 62 + 1 / 63 + 1 / 62, abs=1e-9),
+        pytest.approx(1 / 62, abs=1e-9),
     ]
     assert [h.level for h in found.claims] == ["PROVISIONAL", "HYPOTHESIS", "REVIEWED"]
     assert found.chunks == ()
@@ -207,6 +207,39 @@ async def test_facets_narrow_claims_and_chunks_to_those_concept_types(session: A
     )
     assert [h.claim_id for h in found.claims] == [IRON]
     assert {h.source_id for h in found.chunks} == {FAMILY_SOURCE}
+
+
+async def test_fields_keep_the_fields_claims_their_secondary_ones_and_the_unfielded(
+    session: AsyncSession,
+) -> None:
+    await session.execute(update(Claim).where(Claim.id == ALUM).values(field="CHEMISTRY"))
+    await session.execute(update(Claim).where(Claim.id == GUESS).values(field="HISTORY"))
+    search = StoredKnowledgeSearch(session, embed=FixedEmbedder())
+
+    async def found(*fields: str) -> set[uuid.UUID]:
+        query = KnowledgeQuery(craft_slug="Zelvar-Print", text=QUESTION, mode="HYBRID", fields=fields)
+        return {hit.claim_id for hit in (await search.search(query)).claims}
+
+    assert await found("CHEMISTRY") == {ALUM, IRON}
+    assert await found("HISTORY") == {GUESS, IRON}
+    await session.execute(update(Claim).where(Claim.id == GUESS).values(fields=["CHEMISTRY"]))
+    assert await found("CHEMISTRY") == {ALUM, IRON, GUESS}
+    assert await found() == {ALUM, IRON, GUESS}
+
+
+async def test_a_concept_the_question_names_ranks_its_claims_and_a_longer_name_ranks_first(
+    session: AsyncSession,
+) -> None:
+    search = StoredKnowledgeSearch(session, embed=FixedEmbedder())
+    named = await search.search(
+        KnowledgeQuery(craft_slug="Zelvar-Print", text="Why does iron tannate need alum?", mode="HYBRID")
+    )
+    ranked = sorted((h.entity_rank, h.claim_id) for h in named.claims if h.entity_rank is not None)
+    assert ranked == [(1, IRON), (2, ALUM), (3, GUESS)]
+    unnamed = await search.search(
+        KnowledgeQuery(craft_slug="Zelvar-Print", text="Why is the cloth washed?", mode="HYBRID")
+    )
+    assert all(hit.entity_rank is None for hit in unnamed.claims)
 
 
 async def test_restricted_text_is_stored_but_never_embedded(session: AsyncSession) -> None:

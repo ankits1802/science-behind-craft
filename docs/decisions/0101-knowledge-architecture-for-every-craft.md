@@ -327,6 +327,11 @@ infrastructure.
 2. Decompose the Ajrakh page into sections and components, and make its design the template
    renderer. Prove screenshot parity, then render every curated craft with it.
 3. Answers retrieve by field and place components by label.
+   - Built 2026-11-19, the retrieval half: `KnowledgeQuery.fields` keeps the claims filed under
+     the asked fields (as field or secondary field) and the claims with no field yet; the
+     research planner searches each section's stored facts in its own field, the overview in
+     every field; claims gain a third ranking, the scoped concepts the question names, fused
+     with full text and vectors (`docs/contracts/research.md`).
 4. The candidate gates, the review queue and nightly upkeep.
 5. The Knowledge API write path and the MCP server; switch the curation skill to it; the dossier
    export.
