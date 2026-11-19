@@ -1,10 +1,11 @@
 import { labelCardShape } from "@/lib/componentSpecsPlates";
-import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { parseShape } from "@/lib/shape";
 
+import { heldComponent, type NestingViewProps } from "./nesting";
 import { SpecDrawing } from "./SpecDrawing";
 
-export function LabelCardView({ spec, renderUnit }: ComponentViewProps) {
+export function LabelCardView(props: NestingViewProps) {
+  const { spec, renderUnit } = props;
   const card = parseShape(labelCardShape, spec);
   const variant = card.variant;
   return (
@@ -14,6 +15,7 @@ export function LabelCardView({ spec, renderUnit }: ComponentViewProps) {
         <SpecDrawing element={card.seal} />
         <p className="lc-s">{renderUnit(card.sentence)}</p>
       </div>
+      {heldComponent(props, card.inset)}
       <dl className={`${variant}-facts`}>
         {card.facts.map((fact) => (
           <div key={fact.term}>

@@ -8,13 +8,14 @@ from typing import Annotated, Any, Literal, Self
 from pydantic import AfterValidator, ConfigDict, Field, model_validator
 
 from .base import ContractModel
-from .monograph_page import ITALIC_ROLES, MARK_TAGS
+from .monograph_page import COMPONENT_LABEL_PATTERN, ITALIC_ROLES, MARK_TAGS
 
 __all__ = [
     "DRAWING_TAGS",
     "DYE_NAMES",
     "ArtFrame",
     "ClassName",
+    "ComponentLabel",
     "DomId",
     "DrawingElement",
     "DyeName",
@@ -96,6 +97,7 @@ VIEW_BOX_PATTERN = r"^-?\d+(\.\d+)? -?\d+(\.\d+)? \d+(\.\d+)? \d+(\.\d+)?$"
 FILE_NAME_PATTERN = r"^[a-z0-9]+(-[a-z0-9]+)*$"
 
 UnitRef = Annotated[str, Field(pattern=UNIT_REF_PATTERN)]
+ComponentLabel = Annotated[str, Field(pattern=COMPONENT_LABEL_PATTERN)]
 ClassName = Annotated[str, Field(pattern=CLASS_PATTERN)]
 DomId = Annotated[str, Field(pattern=DOM_ID_PATTERN)]
 ViewBox = Annotated[str, Field(pattern=VIEW_BOX_PATTERN)]

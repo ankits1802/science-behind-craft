@@ -2,17 +2,19 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { VIEWS as DATA_VIEWS } from "@/components/monograph/kinds/data";
 import { HeldText } from "@/components/monograph/kinds/plates/HeldText";
 import { VIEWS } from "@/components/monograph/kinds/plates";
 import { playerClock } from "@/components/monograph/kinds/plates/mediaCopy";
 import { reliabilityLabel } from "@/components/monograph/kinds/plates/PlateMasthead";
 import { drawingShape, heldTextShape, picturePlateShape, swatchPairShape } from "@/lib/componentSpecsPlates";
+import type { ComponentViews } from "@/lib/componentViewContract";
 import { parseShape, ShapeError } from "@/lib/shape";
 
-import { anchorOf, approvedMarkup, canonical, componentsOfKinds, drawnView, specOf } from "./monographKinds";
+import { anchorOf, anchorsHeldWithoutView, approvedMarkup, canonical, componentsOfKinds, drawnView, specOf } from "./monographKinds";
 
 const PLATE_KINDS = ["picture_plate", "ai_illustration", "specimen_plate", "label_card", "swatch_cards", "swatch_pair", "film", "ai_video", "comic", "audio_player", "voice", "credits"];
-const NESTED: Readonly<Record<string, string[]>> = { "kutch-ajrakh/policy/gi-registration-card": ['[class="gi-ladder"]'] };
+const LANE_VIEWS: ComponentViews = { ...VIEWS, ...DATA_VIEWS };
 
 test("the plates group draws every one of its kinds", () => {
   expect(Object.keys(VIEWS).sort()).toEqual([...PLATE_KINDS].sort());
@@ -22,10 +24,17 @@ for (const component of componentsOfKinds(PLATE_KINDS)) {
   test(`${component.label} draws the approved page's markup from its spec`, () => {
     const view = VIEWS[component.kind];
     if (!view) throw new Error(`no view for ${component.kind}`);
-    const approved = canonical(approvedMarkup(anchorOf(component), NESTED[component.label] ?? []));
-    expect(canonical(drawnView(view, component))).toEqual(approved);
+    const approved = canonical(approvedMarkup(anchorOf(component), anchorsHeldWithoutView(component, LANE_VIEWS)));
+    expect(canonical(drawnView(view, component, LANE_VIEWS))).toEqual(approved);
   });
 }
+
+test("the GI card holds the ladder it names, and draws without it when no renderer passes it in", () => {
+  const card = componentsOfKinds(["label_card"])[0];
+  if (!VIEWS.label_card) throw new Error("the GI card has a view");
+  expect(drawnView(VIEWS.label_card, card, LANE_VIEWS)).toContain('<div class="gi-ladder"><p class="fig-no" data-fig="pt:6">');
+  expect(drawnView(VIEWS.label_card, card)).not.toContain("gi-ladder");
+});
 
 test("the Rann opener draws its picture under the chapter's title, with the units in their places", () => {
   const rann = componentsOfKinds(["picture_plate"]).find((component) => component.label === "shared/geography/great-rann-of-kachchh-photo");

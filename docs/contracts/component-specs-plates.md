@@ -63,10 +63,10 @@ moment is the kit's script: the view keeps `.vat-again`, the status id and `data
 
 ### label_card
 
-A specimen label card of a `variant` (`gi`): kicker, seal drawing beside its sentence, and the
-facts as term and value units. The approved page sets the GI ladder (a `timeline`) inside the card
-between the seal and the facts; the layout lists the two as neighbours, so the card's view draws its
-own parts and the ladder is drawn by its own view (see Open).
+A specimen label card of a `variant` (`gi`): kicker, seal drawing beside its sentence, an optional
+`inset` (the label of a component the card holds between the seal and the facts: the GI ladder, a
+`timeline`) and the facts as term and value units. The view draws the inset through
+`renderComponent` (see Nesting in `component-specs-data.md`).
 
 ### swatch_cards
 
@@ -128,5 +128,7 @@ held text (a credit the template holds with its link).
   `[aria-labelledby="gi-h"]`, which no element of the template has since the card was unframed;
   extraction reads it at `[class="label-card gi"]` (`ANCHOR_CORRECTIONS`). The content's anchor
   should be corrected.
-- **The GI ladder inside the card.** Parity needs the renderer to draw the ladder within the card,
-  or the layout to record that one component sits inside another.
+- **Components inside components.** The GI card holds the ladder and the map sequence holds the
+  iron swatch pair; the layout lists them at the top level. The views draw what they hold through an
+  optional `renderComponent` beside the view contract's props; the renderer has to pass it and skip
+  held components at their layout place, or the contract and layout have to record nesting.

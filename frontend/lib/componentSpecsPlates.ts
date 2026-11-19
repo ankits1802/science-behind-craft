@@ -33,6 +33,7 @@ export type Picture = { src: string; width: number; height: number; alt: string;
 export type ArtFrame = { symbol: string; viewBox: string; width: number; height: number };
 
 export const unitRef = matching(/^u\d{4}$/, "a unit id");
+export const componentLabel = matching(/^[a-z0-9]+(-[a-z0-9]+)*(\/[a-z0-9]+(-[a-z0-9]+)*){2,}$/, "a component label");
 export const className = matching(/^[A-Za-z][A-Za-z0-9_-]*$/, "a class name");
 export const domId = matching(/^[A-Za-z][A-Za-z0-9_:.-]*$/, "an element id");
 export const viewBox = matching(/^-?\d+(\.\d+)? -?\d+(\.\d+)? \d+(\.\d+)? \d+(\.\d+)?$/, "a view box");
@@ -187,12 +188,13 @@ export const specimenPlateShape = object<SpecimenPlateSpec>({
 });
 
 export type LabelFact = { term: string; value: string };
-export type LabelCardSpec = { variant: string; kicker: string; seal: DrawingElement; sentence: string; facts: LabelFact[] };
+export type LabelCardSpec = { variant: string; kicker: string; seal: DrawingElement; sentence: string; inset: string | null; facts: LabelFact[] };
 export const labelCardShape = object<LabelCardSpec>({
   variant: className,
   kicker: unitRef,
   seal: drawingShape,
   sentence: unitRef,
+  inset: nullable(componentLabel),
   facts: list(object<LabelFact>({ term: unitRef, value: unitRef }), 1)
 });
 

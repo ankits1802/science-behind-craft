@@ -1,10 +1,12 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { createElement } from "react";
+import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import type { ComponentView } from "@/lib/componentViewContract";
+import type { NestingViewProps } from "@/components/monograph/kinds/plates/nesting";
+import { componentsHeldBy } from "@/lib/componentSpecsData";
+import type { ComponentView, ComponentViews } from "@/lib/componentViewContract";
 import type { MonographComponent, MonographContent } from "@/lib/monographDocument";
 
 const MONOGRAPH = join(__dirname, "..", "..", "backend", "app", "data", "monographs", "Kutch-Ajrakh");
@@ -110,7 +112,13 @@ export function approvedMarkup(anchor: string, without: readonly string[] = []):
 
 function canonicalValue(name: string, value: string): string {
   if (name === "class") return value.split(/\s+/).filter(Boolean).sort().join(" ");
-  if (name === "style") return value.split(";").map((rule) => rule.split(":").map((part) => part.trim()).join(":")).filter((rule) => rule !== "" && rule !== ":").join(";");
+  if (name === "style")
+    return value
+      .split(";")
+      .map((rule) => rule.split(":").map((part) => part.trim()).join(":"))
+      .filter((rule) => rule !== "" && rule !== ":")
+      .sort()
+      .join(";");
   return value;
 }
 
@@ -138,9 +146,29 @@ export function canonical(markup: string): string[] {
   return out;
 }
 
-export function drawnView(view: ComponentView, component: MonographComponent): string {
-  const props = { component, spec: specOf(component.label), unitRefs: unitsWithin(component.label), renderUnit: (ref: string) => createElement("kv-slot", { unit: ref }) };
-  return renderToStaticMarkup(createElement(() => view(props))).replace(HOISTED_PRELOAD, "");
+function componentNamed(label: string): MonographComponent | undefined {
+  return approvedContent().components.find((component) => component.label === label);
+}
+
+function viewProps(component: MonographComponent, views: ComponentViews): NestingViewProps {
+  const renderComponent = (label: string): ReactNode => {
+    const held = componentNamed(label);
+    const view = held ? views[held.kind] : undefined;
+    return held && view ? createElement(() => view(viewProps(held, views))) : null;
+  };
+  return { component, spec: specOf(component.label), unitRefs: unitsWithin(component.label), renderUnit: (ref: string) => createElement("kv-slot", { unit: ref }), renderComponent };
+}
+
+export function drawnView(view: ComponentView, component: MonographComponent, views: ComponentViews = {}): string {
+  return renderToStaticMarkup(createElement(() => view(viewProps(component, views)))).replace(HOISTED_PRELOAD, "");
+}
+
+export function anchorsHeldWithoutView(component: MonographComponent, views: ComponentViews): string[] {
+  const labels = new Set(approvedContent().components.map((entry) => entry.label));
+  return componentsHeldBy(specOf(component.label), labels)
+    .map(componentNamed)
+    .filter((held): held is MonographComponent => held !== undefined && !views[held.kind])
+    .map(anchorOf);
 }
 
 export function anchorOf(component: MonographComponent): string {

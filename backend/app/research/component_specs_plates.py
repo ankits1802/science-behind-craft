@@ -18,6 +18,7 @@ from .component_specs_plates_media import (
 )
 from .component_specs_plates_parts import (
     ClassName,
+    ComponentLabel,
     DomId,
     DrawingElement,
     DyeName,
@@ -143,6 +144,7 @@ class LabelCardSpec(ContractModel):
     kicker: UnitRef
     seal: DrawingElement
     sentence: UnitRef
+    inset: ComponentLabel | None = None
     facts: list[LabelFact] = Field(min_length=1)
 
 

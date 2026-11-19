@@ -1,0 +1,257 @@
+{
+ "form": "drawing",
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "data-fit": "",
+   "viewBox": "0 0 560 168",
+   "role": "img",
+   "aria-labelledby": "rf1-t"
+  },
+  "children": [
+   {
+    "tag": "title",
+    "attrs": {
+     "id": "rf1-t"
+    },
+    "children": [
+     "Ten to fifteen days, or one to two weeks by season"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "248.0",
+     "y1": "18",
+     "x2": "248.0",
+     "y2": "142",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "248.0",
+     "y": "160",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "322.0",
+     "y1": "18",
+     "x2": "322.0",
+     "y2": "142",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "322.0",
+     "y": "160",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "4"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "396.0",
+     "y1": "18",
+     "x2": "396.0",
+     "y2": "142",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "396.0",
+     "y": "160",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "8"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "470.0",
+     "y1": "18",
+     "x2": "470.0",
+     "y2": "142",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "470.0",
+     "y": "160",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "12"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "544.0",
+     "y1": "18",
+     "x2": "544.0",
+     "y2": "142",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "544.0",
+     "y": "160",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "16"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "377.5",
+     "y": "18",
+     "width": "55.5",
+     "height": "124",
+     "fill": "url(#hatch-differ)",
+     "stroke": "var(--madder)",
+     "stroke-width": "1"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "lab2 ink2",
+     "x": "0",
+     "y": "39"
+    },
+    "children": [
+     "GI journal ",
+     {
+      "tag": "tspan",
+      "attrs": {
+       "class": "w6 ink1"
+      },
+      "children": [
+       "10–15"
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "433.0",
+     "y": "30",
+     "width": "92.5",
+     "height": "11",
+     "fill": "var(--chart-emph)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "lab2 ink2",
+     "x": "0",
+     "y": "75"
+    },
+    "children": [
+     "Clifford, hot season ",
+     {
+      "tag": "tspan",
+      "attrs": {
+       "class": "w6 ink1"
+      },
+      "children": [
+       "7"
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "circle",
+    "attrs": {
+     "cx": "377.5",
+     "cy": "71",
+     "r": "6",
+     "fill": "var(--chart-emph)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "lab2 ink2",
+     "x": "0",
+     "y": "111"
+    },
+    "children": [
+     "Clifford, cold season ",
+     {
+      "tag": "tspan",
+      "attrs": {
+       "class": "w6 ink1"
+      },
+      "children": [
+       "14"
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "circle",
+    "attrs": {
+     "cx": "507.0",
+     "cy": "107",
+     "r": "6",
+     "fill": "var(--chart-emph)"
+    },
+    "children": []
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "248",
+     "y1": "142",
+     "x2": "544",
+     "y2": "142",
+     "stroke": "var(--chart-axis-line)"
+    },
+    "children": []
+   }
+  ]
+ },
+ "dots": null,
+ "rows": null,
+ "figure": null,
+ "series": null
+}

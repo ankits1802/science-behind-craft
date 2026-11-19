@@ -144,11 +144,13 @@ def label_card(found: Found) -> dict[str, Any]:
     variant = " ".join(_other_classes(card, "label-card"))
     seal = card.first(has_classes(f"{variant}-seal"))
     facts = card.first(has_classes(f"{variant}-facts")).elements()
+    insets = [label for part in card.elements() if (label := found.component_at(part))]
     return {
         "variant": variant,
         "kicker": slot_unit(card.first(has_classes("lc-k", f"{variant}-k"))),
         "seal": drawing(seal.first(is_tag("svg"))),
         "sentence": slot_unit(seal.first(has_classes("lc-s"))),
+        "inset": insets[0] if insets else None,
         "facts": [
             {"term": slot_unit(fact.first(is_tag("dt"))), "value": slot_unit(fact.first(is_tag("dd")))}
             for fact in facts

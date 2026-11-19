@@ -1,0 +1,495 @@
+{
+ "title": "u0925",
+ "description": "u0926",
+ "groups": [
+  {
+   "id": "ss-indigo",
+   "title": "u0927",
+   "text": "u0928",
+   "together": "u0929",
+   "first": [
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 14,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0930",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 8,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0931",
+      "text": null
+     }
+    },
+    {
+     "name": "Bagh Prints of Madhya Pradesh",
+     "place": "Madhya Pradesh",
+     "family": "Textiles",
+     "sentences": 2,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0932",
+      "text": null
+     }
+    },
+    {
+     "name": "Kutch Bandhani",
+     "place": "Gujarat",
+     "family": "Textiles",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0933",
+      "text": null
+     }
+    },
+    {
+     "name": "Madhubani Paintings",
+     "place": "Bihar",
+     "family": "Painting, instruments and more",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0934",
+      "text": null
+     }
+    },
+    {
+     "name": "Channapatna Toys and Dolls",
+     "place": "Karnataka",
+     "family": "Painting, instruments and more",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0935",
+      "text": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "ss-madder",
+   "title": "u0936",
+   "text": "u0937",
+   "together": "u0938",
+   "first": [
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 4,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0939",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Kutch Bandhani",
+     "place": "Gujarat",
+     "family": "Textiles",
+     "sentences": 3,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0940",
+      "text": null
+     }
+    },
+    {
+     "name": "Sanganeri Hand Block Printing",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 2,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0941",
+      "text": null
+     }
+    },
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0942",
+      "text": null
+     }
+    },
+    {
+     "name": "Bagh Prints of Madhya Pradesh",
+     "place": "Madhya Pradesh",
+     "family": "Textiles",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0943",
+      "text": null
+     }
+    },
+    {
+     "name": "Madhubani Paintings",
+     "place": "Bihar",
+     "family": "Painting, instruments and more",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": null,
+      "text": [
+       {
+        "m": "s",
+        "src": "m17:S04",
+        "c": [
+         "Paintings of Kayastha families feature hues such as brown, yellow-ochre, turmeric, harada, red ",
+         {
+          "m": "mark",
+          "c": [
+           "madder"
+          ]
+         },
+         " and black, blended with goat's ",
+         {
+          "m": "cite",
+          "key": "mb:m17:C121",
+          "g": [
+           "g60"
+          ],
+          "shown": [
+           {
+            "number": 60,
+            "title": "Revitalizing Mithila painting for sustainable development: A case study of indigenous communities in the Madhubani region, Bihar, India"
+           }
+          ],
+          "c": [
+           "milk."
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "ss-alum",
+   "title": "u0944",
+   "text": "u0945",
+   "together": "u0946",
+   "first": [
+    {
+     "name": "Bagh Prints of Madhya Pradesh",
+     "place": "Madhya Pradesh",
+     "family": "Textiles",
+     "sentences": 10,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0947",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 9,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0948",
+      "text": null
+     }
+    },
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 7,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0949",
+      "text": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "ss-lime",
+   "title": "u0950",
+   "text": "u0951",
+   "together": "u0952",
+   "first": [
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 6,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0953",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Bagh Prints of Madhya Pradesh",
+     "place": "Madhya Pradesh",
+     "family": "Textiles",
+     "sentences": 3,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0954",
+      "text": null
+     }
+    },
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 2,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": null,
+      "text": [
+       {
+        "m": "s",
+        "src": "mk:S01",
+        "c": [
+         "For the GI method's indigo, 6 kilograms of crushed Atta or Annetto seeds called tandipa ginjalu go into the tank, then a paste of 700 grams of indigo cakes, and ",
+         {
+          "m": "mark",
+          "c": [
+           "lime"
+          ]
+         },
+         " ",
+         {
+          "m": "cite",
+          "key": "mb:mk:C094",
+          "g": [
+           "g56"
+          ],
+          "shown": [
+           {
+            "number": 56,
+            "title": "Geographical Indications Journal (Supplementary - 1), 24 March 2008: G.I. Application Number 90, Machilipatnam Kalamkari"
+           }
+          ],
+          "c": [
+           "last."
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "Madhubani Paintings",
+     "place": "Bihar",
+     "family": "Painting, instruments and more",
+     "sentences": 2,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0955",
+      "text": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "ss-mordant",
+   "title": "u0956",
+   "text": "u0957",
+   "together": "u0958",
+   "first": [
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 11,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0959",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 8,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": null,
+      "text": [
+       {
+        "m": "s",
+        "src": "bg:S07",
+        "c": [
+         "A mid-to-late 19th-century cotton from Bagru in the Penn Museum, meant for a woman's kagra, is block printed, mud resisted, resist dyed and ",
+         {
+          "m": "mark",
+          "c": [
+           "mordant"
+          ]
+         },
+         " ",
+         {
+          "m": "cite",
+          "key": "mb:bg:C049",
+          "g": [
+           "g65"
+          ],
+          "shown": [
+           {
+            "number": 65,
+            "title": "Textile, object number 88-16-37 (Bagru, Rajasthan)"
+           }
+          ],
+          "c": [
+           "dyed."
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "Bagh Prints of Madhya Pradesh",
+     "place": "Madhya Pradesh",
+     "family": "Textiles",
+     "sentences": 3,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0960",
+      "text": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "ss-tannin",
+   "title": "u0961",
+   "text": "u0962",
+   "together": "u0963",
+   "first": [
+    {
+     "name": "Bagru Hand Block Print",
+     "place": "Rajasthan",
+     "family": "Textiles",
+     "sentences": 2,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0964",
+      "text": null
+     }
+    }
+   ],
+   "more": [
+    {
+     "name": "Machilipatnam Kalamkari",
+     "place": "Andhra Pradesh",
+     "family": "Textiles",
+     "sentences": 1,
+     "sentence": {
+      "tag": "p",
+      "classes": [
+       "res-s"
+      ],
+      "unit": "u0965",
+      "text": null
+     }
+    }
+   ]
+  }
+ ]
+}

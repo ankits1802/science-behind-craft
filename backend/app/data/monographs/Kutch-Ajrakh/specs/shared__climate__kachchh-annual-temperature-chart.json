@@ -1,0 +1,1002 @@
+{
+ "form": "figure",
+ "drawing": null,
+ "dots": null,
+ "rows": null,
+ "figure": {
+  "classes": [
+   "tmp-fig"
+  ],
+  "head": {
+   "number": {
+    "unit": "u0713",
+    "ref": "mb:6"
+   },
+   "title": "u0714",
+   "titleId": null,
+   "dek": "u0715",
+   "dekId": null
+  },
+  "drawing": {
+   "tag": "svg",
+   "attrs": {
+    "class": "fig-svg",
+    "data-fit": "",
+    "viewBox": "0 0 520 240",
+    "role": "img",
+    "aria-labelledby": "tmp-t"
+   },
+   "children": [
+    {
+     "tag": "title",
+     "attrs": {
+      "id": "tmp-t"
+     },
+     "children": [
+      "Annual mean air temperature over Kachchh, 1981 to 2025, rising about 0.30 °C a decade"
+     ]
+    },
+    {
+     "tag": "line",
+     "attrs": {
+      "x1": "58.0",
+      "x2": "502.0",
+      "y1": "193.8",
+      "y2": "193.8",
+      "stroke": "var(--rule)"
+     },
+     "children": []
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "52.0",
+      "y": "197.8",
+      "text-anchor": "end",
+      "class": "ax"
+     },
+     "children": [
+      "26"
+     ]
+    },
+    {
+     "tag": "line",
+     "attrs": {
+      "x1": "58.0",
+      "x2": "502.0",
+      "y1": "113.0",
+      "y2": "113.0",
+      "stroke": "var(--rule)"
+     },
+     "children": []
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "52.0",
+      "y": "117.0",
+      "text-anchor": "end",
+      "class": "ax"
+     },
+     "children": [
+      "27"
+     ]
+    },
+    {
+     "tag": "line",
+     "attrs": {
+      "x1": "58.0",
+      "x2": "502.0",
+      "y1": "32.2",
+      "y2": "32.2",
+      "stroke": "var(--rule)"
+     },
+     "children": []
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "52.0",
+      "y": "36.2",
+      "text-anchor": "end",
+      "class": "ax"
+     },
+     "children": [
+      "28 °C"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "58.0",
+      "y": "232.0",
+      "text-anchor": "middle",
+      "class": "ax"
+     },
+     "children": [
+      "1981"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "249.7",
+      "y": "232.0",
+      "text-anchor": "middle",
+      "class": "ax"
+     },
+     "children": [
+      "2000"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "x": "502.0",
+      "y": "232.0",
+      "text-anchor": "middle",
+      "class": "ax"
+     },
+     "children": [
+      "2025"
+     ]
+    },
+    {
+     "tag": "polyline",
+     "attrs": {
+      "points": "58.0,140.2 68.1,138.8 78.2,186.2 88.3,189.1 98.4,149.5 108.5,160.6 118.5,81.8 128.6,86.6 138.7,159.6 148.8,145.5 158.9,147.6 169.0,147.9 179.1,82.2 189.2,153.2 199.3,114.4 209.4,129.8 219.5,159.4 229.5,95.1 239.6,117.7 249.7,95.9 259.8,109.8 269.9,89.6 280.0,115.7 290.1,80.2 300.2,138.3 310.3,120.0 320.4,93.9 330.5,127.5 340.5,60.1 350.6,68.1 360.7,117.0 370.8,128.5 380.9,120.8 391.0,91.4 401.1,61.4 411.2,55.0 421.3,81.2 431.4,39.3 441.5,98.7 451.5,68.0 461.6,41.5 471.7,84.4 481.8,68.3 491.9,35.0 502.0,44.9",
+      "fill": "none",
+      "stroke": "var(--series-heat)",
+      "stroke-width": "1.8",
+      "stroke-linejoin": "round"
+     },
+     "children": []
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "58.0",
+      "cy": "140.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1981: 26.66 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "68.1",
+      "cy": "138.8",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1982: 26.68 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "78.2",
+      "cy": "186.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1983: 26.09 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "88.3",
+      "cy": "189.1",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1984: 26.06 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "98.4",
+      "cy": "149.5",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1985: 26.55 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "108.5",
+      "cy": "160.6",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1986: 26.41 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "118.5",
+      "cy": "81.8",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1987: 27.39 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "128.6",
+      "cy": "86.6",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1988: 27.33 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "138.7",
+      "cy": "159.6",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1989: 26.42 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "148.8",
+      "cy": "145.5",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1990: 26.60 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "158.9",
+      "cy": "147.6",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1991: 26.57 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "169.0",
+      "cy": "147.9",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1992: 26.57 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "179.1",
+      "cy": "82.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1993: 27.38 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "189.2",
+      "cy": "153.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1994: 26.50 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "199.3",
+      "cy": "114.4",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1995: 26.98 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "209.4",
+      "cy": "129.8",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1996: 26.79 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "219.5",
+      "cy": "159.4",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1997: 26.43 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "229.5",
+      "cy": "95.1",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1998: 27.22 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "239.6",
+      "cy": "117.7",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "1999: 26.94 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "249.7",
+      "cy": "95.9",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2000: 27.21 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "259.8",
+      "cy": "109.8",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2001: 27.04 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "269.9",
+      "cy": "89.6",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2002: 27.29 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "280.0",
+      "cy": "115.7",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2003: 26.97 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "290.1",
+      "cy": "80.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2004: 27.41 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "300.2",
+      "cy": "138.3",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2005: 26.69 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "310.3",
+      "cy": "120.0",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2006: 26.91 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "320.4",
+      "cy": "93.9",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2007: 27.24 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "330.5",
+      "cy": "127.5",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2008: 26.82 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "340.5",
+      "cy": "60.1",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2009: 27.65 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "350.6",
+      "cy": "68.1",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2010: 27.55 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "360.7",
+      "cy": "117.0",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2011: 26.95 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "370.8",
+      "cy": "128.5",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2012: 26.81 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "380.9",
+      "cy": "120.8",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2013: 26.90 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "391.0",
+      "cy": "91.4",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2014: 27.27 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "401.1",
+      "cy": "61.4",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2015: 27.64 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "411.2",
+      "cy": "55.0",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2016: 27.72 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "421.3",
+      "cy": "81.2",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2017: 27.39 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "431.4",
+      "cy": "39.3",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2018: 27.91 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "441.5",
+      "cy": "98.7",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2019: 27.18 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "451.5",
+      "cy": "68.0",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2020: 27.56 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "461.6",
+      "cy": "41.5",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2021: 27.88 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "471.7",
+      "cy": "84.4",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2022: 27.35 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "481.8",
+      "cy": "68.3",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2023: 27.55 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "491.9",
+      "cy": "35.0",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2024: 27.96 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "502.0",
+      "cy": "44.9",
+      "r": "2.3",
+      "fill": "var(--series-heat)"
+     },
+     "children": [
+      {
+       "tag": "title",
+       "attrs": {},
+       "children": [
+        "2025: 27.84 °C"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "line",
+     "attrs": {
+      "x1": "58.0",
+      "x2": "502.0",
+      "y1": "161.4",
+      "y2": "56.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "2.4",
+      "stroke-linecap": "round"
+     },
+     "children": []
+    },
+    {
+     "tag": "line",
+     "attrs": {
+      "x1": "58.0",
+      "x2": "502.0",
+      "y1": "210.0",
+      "y2": "210.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1"
+     },
+     "children": []
+    }
+   ]
+  },
+  "source": {
+   "tag": "figcaption",
+   "classes": [
+    "src-line"
+   ],
+   "unit": "u0716",
+   "text": null
+  }
+ },
+ "series": null
+}

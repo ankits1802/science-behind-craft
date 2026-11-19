@@ -12,14 +12,19 @@ from .extract_specs_markup import Element, Node
 
 __all__ = [
     "SLOT_TAG",
+    "child_with",
     "drawing",
     "dye_variable",
+    "figure_head",
     "held_nodes",
     "held_text",
     "picture",
+    "placed",
     "shown_day",
     "slot_unit",
     "slot_units",
+    "style_of",
+    "text_line",
     "texts",
     "url_reference",
 ]
@@ -40,7 +45,7 @@ FIGREF_CLASS = "kv-figref"
 
 
 def slot_unit(element: Element) -> str:
-    content = [child for child in element.children if not (isinstance(child, str) and not child.strip())]
+    content = _content(element)
     if len(content) != 1 or not isinstance(content[0], Element) or content[0].name != SLOT_TAG:
         raise InvalidInput(f"<{element.tag} class={element.attrs.get('class')!r}> holds more than one unit")
     return content[0].attrs[SLOT_KIND]
@@ -77,6 +82,54 @@ def drawing(element: Element) -> dict[str, Any]:
 
 def held_text(element: Element, sources: Mapping[str, CitedSource]) -> list[Any]:
     return held_nodes(element.children, sources)
+
+
+def text_line(element: Element, sources: Mapping[str, CitedSource]) -> dict[str, Any]:
+    line: dict[str, Any] = {"tag": element.name, "classes": element.classes}
+    content = _content(element)
+    if not content:
+        return line
+    if len(content) == 1 and isinstance(content[0], Element) and content[0].name == SLOT_TAG:
+        return {**line, "unit": content[0].attrs[SLOT_KIND]}
+    return {**line, "text": held_text(element, sources)}
+
+
+def _content(element: Element) -> list[Node]:
+    return [child for child in element.children if not (isinstance(child, str) and not child.strip())]
+
+
+def child_with(element: Element, cls: str) -> Element | None:
+    return next((child for child in element.elements() if child.has_class(cls)), None)
+
+
+def figure_head(figure: Element) -> dict[str, Any]:
+    number, title, dek = (child_with(figure, cls) for cls in ("fig-no", "chart-title", "chart-dek"))
+    if title is None:
+        raise InvalidInput(f"<{figure.tag} class={figure.attrs.get('class')!r}> has no chart title")
+    return {
+        "number": {"unit": slot_unit(number), "ref": number.attrs["data-fig"]} if number else None,
+        "title": slot_unit(title),
+        "titleId": title.attrs.get("id"),
+        "dek": slot_unit(dek) if dek else None,
+        "dekId": dek.attrs.get("id") if dek else None,
+    }
+
+
+def style_of(element: Element) -> dict[str, str]:
+    rules = (rule.split(":", 1) for rule in element.attrs.get("style", "").split(";") if ":" in rule)
+    return {name.strip(): value.strip() for name, value in rules}
+
+
+def placed(element: Element, sources: Mapping[str, CitedSource]) -> dict[str, Any]:
+    style = style_of(element)
+    return {
+        "classes": element.classes,
+        "left": style.get("left"),
+        "width": style.get("width"),
+        "top": style.get("top"),
+        "hidden": element.attrs.get("aria-hidden") == "true",
+        "text": held_text(element, sources) if element.children else None,
+    }
 
 
 def held_nodes(nodes: Iterable[Node], sources: Mapping[str, CitedSource]) -> list[Any]:

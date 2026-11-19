@@ -8,6 +8,7 @@ from pathlib import Path
 from types import MappingProxyType
 from typing import Any
 
+from app.core.errors import InvalidInput
 from app.research.base import ContractModel
 from app.research.monograph_document import spec_file_name
 from app.research.monograph_page import CitedSource, ComponentEntry, MonographContent
@@ -39,6 +40,21 @@ class Found:
     component: ComponentEntry
     element: Element
     sources: Mapping[str, CitedSource]
+    placed: Mapping[int, str] = MappingProxyType({})
+
+    def component_at(self, element: Element) -> str | None:
+        label = self.placed.get(id(element))
+        return label if label != self.component.label else None
+
+    def held_components(self) -> list[str]:
+        return self._held_within(self.element)
+
+    def _held_within(self, element: Element) -> list[str]:
+        held: list[str] = []
+        for child in element.elements():
+            label = self.component_at(child)
+            held.extend([label] if label else self._held_within(child))
+        return held
 
 
 Extractor = Callable[[Found], dict[str, Any]]
@@ -67,14 +83,37 @@ def component_element(tree: Element, component: ComponentEntry) -> Element:
 
 def extracted_specs(group: SpecGroup, content: MonographContent, template: str) -> dict[str, ContractModel]:
     tree = parse_markup(template)
+    elements = {component.label: component_element(tree, component) for component in content.components}
+    placed = MappingProxyType({id(element): label for label, element in elements.items()})
     specs: dict[str, ContractModel] = {}
     for component in content.components:
         extractor = group.extractors.get(component.kind)
         if extractor is None:
             continue
-        found = Found(component, component_element(tree, component), content.sources)
-        specs[component.label] = group.models[component.kind].model_validate(extractor(found))
+        found = Found(component, elements[component.label], content.sources, placed)
+        spec = group.models[component.kind].model_validate(extractor(found))
+        _names_what_it_holds(found, spec.model_dump(mode="json"))
+        specs[component.label] = spec
     return specs
+
+
+def _names_what_it_holds(found: Found, spec: Any) -> None:
+    held = set(found.held_components())
+    named = _strings(spec) & set(found.placed.values())
+    if held != named:
+        raise InvalidInput(
+            f"{found.component.label} holds the components {sorted(held)} but its spec names {sorted(named)}"
+        )
+
+
+def _strings(value: Any) -> set[str]:
+    if isinstance(value, str):
+        return {value}
+    if isinstance(value, dict):
+        return set().union(set(), *(_strings(item) for item in value.values()))
+    if isinstance(value, list):
+        return set().union(set(), *(_strings(item) for item in value))
+    return set()
 
 
 def _group_specs(group: SpecGroup, slug: str) -> dict[str, ContractModel]:

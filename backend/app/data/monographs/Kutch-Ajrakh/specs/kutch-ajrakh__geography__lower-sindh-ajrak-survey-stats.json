@@ -1,0 +1,22 @@
+{
+ "classes": [
+  "three"
+ ],
+ "tiles": [
+  {
+   "figure": "21",
+   "small": null,
+   "caption": "u0634"
+  },
+  {
+   "figure": "15",
+   "small": null,
+   "caption": "u0635"
+  },
+  {
+   "figure": "78",
+   "small": null,
+   "caption": "u0636"
+  }
+ ]
+}

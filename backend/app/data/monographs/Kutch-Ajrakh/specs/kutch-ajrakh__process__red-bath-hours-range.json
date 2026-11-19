@@ -1,0 +1,251 @@
+{
+ "form": "drawing",
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "data-fit": "",
+   "viewBox": "0 0 560 132",
+   "role": "img",
+   "aria-labelledby": "rf2-t"
+  },
+  "children": [
+   {
+    "tag": "title",
+    "attrs": {
+     "id": "rf2-t"
+    },
+    "children": [
+     "Two to three hours, or up to four"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "248.0",
+     "y1": "18",
+     "x2": "248.0",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "248.0",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "307.2",
+     "y1": "18",
+     "x2": "307.2",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "307.2",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "1"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "366.4",
+     "y1": "18",
+     "x2": "366.4",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "366.4",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "2"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "425.6",
+     "y1": "18",
+     "x2": "425.6",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "425.6",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "3"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "484.8",
+     "y1": "18",
+     "x2": "484.8",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "484.8",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "4"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "544.0",
+     "y1": "18",
+     "x2": "544.0",
+     "y2": "106",
+     "stroke": "var(--chart-grid-c)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "ax",
+     "x": "544.0",
+     "y": "124",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "5"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "425.6",
+     "y": "18",
+     "width": "59.2",
+     "height": "88",
+     "fill": "url(#hatch-differ)",
+     "stroke": "var(--madder)",
+     "stroke-width": "1"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "lab2 ink2",
+     "x": "0",
+     "y": "39"
+    },
+    "children": [
+     "Karolia and Buch ",
+     {
+      "tag": "tspan",
+      "attrs": {
+       "class": "w6 ink1"
+      },
+      "children": [
+       "2–3"
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "366.4",
+     "y": "30",
+     "width": "59.2",
+     "height": "11",
+     "fill": "var(--chart-emph)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "lab2 ink2",
+     "x": "0",
+     "y": "75"
+    },
+    "children": [
+     "GI journal ",
+     {
+      "tag": "tspan",
+      "attrs": {
+       "class": "w6 ink1"
+      },
+      "children": [
+       "up to 4"
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "248.0",
+     "y": "66",
+     "width": "236.8",
+     "height": "11",
+     "fill": "var(--chart-emph)"
+    },
+    "children": []
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "x1": "248",
+     "y1": "106",
+     "x2": "544",
+     "y2": "106",
+     "stroke": "var(--chart-axis-line)"
+    },
+    "children": []
+   }
+  ]
+ },
+ "dots": null,
+ "rows": null,
+ "figure": null,
+ "series": null
+}
