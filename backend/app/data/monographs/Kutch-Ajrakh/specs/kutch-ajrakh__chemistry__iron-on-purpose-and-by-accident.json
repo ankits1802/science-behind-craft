@@ -1,0 +1,131 @@
+{
+ "id": "b-ws-iron",
+ "wide": true,
+ "pairClass": "iron-pair",
+ "description": "Two myrobalan-yellow swatches: one with a black printed star, one with small black spots",
+ "weave": "pt-weave",
+ "swatches": [
+  {
+   "ground": "harda",
+   "motif": [
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M50 16 L57 36 L78 30 L66 48 L84 56 L64 62 L70 84 L50 72 L30 84 L36 62 L16 56 L34 48 L22 30 L43 36 Z",
+      "fill": "var(--dye-kut)"
+     },
+     "children": []
+    }
+   ],
+   "label": "On purpose"
+  },
+  {
+   "ground": "harda",
+   "motif": [
+    {
+     "tag": "g",
+     "attrs": {
+      "fill": "var(--dye-kut)"
+     },
+     "children": [
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "22",
+        "cy": "20",
+        "r": "2.6"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "64",
+        "cy": "28",
+        "r": "2"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "40",
+        "cy": "52",
+        "r": "2.8"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "78",
+        "cy": "62",
+        "r": "2.2"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "18",
+        "cy": "76",
+        "r": "2"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "56",
+        "cy": "84",
+        "r": "2.6"
+       },
+       "children": []
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "86",
+        "cy": "18",
+        "r": "1.8"
+       },
+       "children": []
+      }
+     ]
+    }
+   ],
+   "label": "By accident"
+  }
+ ],
+ "when": "u0640",
+ "title": "u0641",
+ "texts": [
+  "u0642",
+  "u0643"
+ ],
+ "go": {
+  "stage": 5,
+  "label": [
+   {
+    "m": "span",
+    "c": [
+     "Stage 5, ",
+     {
+      "m": "i",
+      "c": [
+       "kat"
+      ]
+     },
+     ", in ",
+     {
+      "m": "figref",
+      "ref": "pt:2",
+      "c": [
+       "Fig. 2"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "setting": "figure",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/printing-block-carving-jaipur.jpg",
+  "width": 1280,
+  "height": 1280,
+  "alt": "A carver holds up a wooden printing block carved with floral and roundel motifs.",
+  "loading": "eager",
+  "fetchPriority": null,
+  "decoding": null
+ },
+ "figure": {
+  "classes": [
+   "pt-plate",
+   "margin-plate",
+   "sq"
+  ],
+  "crop": null,
+  "captions": [
+   {
+    "unit": "u0115",
+    "look": false
+   }
+  ],
+  "credit": "u0116"
+ },
+ "row": null,
+ "pull": null,
+ "opener": null,
+ "masthead": null
+}

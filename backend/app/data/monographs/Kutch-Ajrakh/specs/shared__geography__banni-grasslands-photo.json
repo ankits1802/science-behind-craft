@@ -1,0 +1,70 @@
+{
+ "setting": "pull",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/banni-grasslands-kachchh.jpg",
+  "width": 1280,
+  "height": 853,
+  "alt": "Dry, cracked ground of the Banni grasslands under an overcast sky.",
+  "loading": "eager",
+  "fetchPriority": null,
+  "decoding": "sync"
+ },
+ "figure": {
+  "classes": [],
+  "crop": "r32",
+  "captions": [
+   {
+    "unit": "u0720",
+    "look": false
+   }
+  ],
+  "credit": "u0721"
+ },
+ "row": null,
+ "pull": {
+  "classes": [
+   "kv-banni",
+   "wrap"
+  ],
+  "box": "kv-banni-q",
+  "quote": "u0722",
+  "attribution": [
+   {
+    "m": "s",
+    "c": [
+     "Khamir, ",
+     {
+      "m": "i",
+      "c": [
+       "Khatris & Community"
+      ]
+     },
+     ", “Voices across Kachchh: ",
+     {
+      "m": "cite",
+      "key": "pt:C035",
+      "g": [
+       "g14",
+       "g1"
+      ],
+      "shown": [
+       {
+        "number": 1,
+        "title": "GI Journal No. 188: Kutch Ajrakh"
+       },
+       {
+        "number": 14,
+        "title": "Khatris & Community"
+       }
+      ],
+      "c": [
+       "Dhamadka”"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "opener": null,
+ "masthead": null
+}

@@ -1,0 +1,24 @@
+{
+ "setting": "opener",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/rann-of-kachchh-white-desert.jpg",
+  "width": 1280,
+  "height": 960,
+  "alt": "The white salt flat of the Great Rann of Kachchh under a clear sky.",
+  "loading": "eager",
+  "fetchPriority": "high",
+  "decoding": null
+ },
+ "figure": null,
+ "row": null,
+ "pull": null,
+ "opener": {
+  "chapterNo": "u0585",
+  "kicker": "u0586",
+  "title": "u0587",
+  "titleId": "why-h",
+  "dek": "u0588",
+  "credit": "u0589"
+ },
+ "masthead": null
+}

@@ -1,0 +1,77 @@
+{
+ "title": "u0989",
+ "titleId": "kv-cite-h",
+ "tabsLabel": "What to cite",
+ "panels": [
+  {
+   "key": "answer",
+   "tabId": "kv-ct-a",
+   "panelId": "kv-cp-a",
+   "label": "This answer",
+   "box": [
+    "bx",
+    "bx-rm"
+   ],
+   "aid": "end",
+   "cites": [
+    "kv-cites"
+   ],
+   "boxId": "kv-cite-answer",
+   "styleKey": "style",
+   "styles": [
+    {
+     "value": "apa",
+     "label": "APA",
+     "text": "KalaVigyan. (2026, November 18). <i>Kutch Ajrakh</i> [Answer, version 1]. IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform. https://kalavigyan.vercel.app/ask?explainer=ef92a342-f3ab-4f5b-a728-29112800b2a0&amp;version=1. Accessed 18 November 2026."
+    },
+    {
+     "value": "bibtex",
+     "label": "BibTeX",
+     "text": "@misc{kalavigyan_answer_ef92a342_v1,\n  title = {Kutch Ajrakh},\n  author = {{KalaVigyan}},\n  organization = {IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform},\n  publisher = {IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform},\n  version = {1},\n  date = {2026-11-18},\n  year = {2026},\n  url = {https://kalavigyan.vercel.app/ask?explainer=ef92a342-f3ab-4f5b-a728-29112800b2a0&version=1},\n  urldate = {2026-11-18},\n  howpublished = {\\url{https://kalavigyan.vercel.app/ask?explainer=ef92a342-f3ab-4f5b-a728-29112800b2a0&version=1}},\n  note = {Answer, version 1. Accessed 18 November 2026}\n}"
+    },
+    {
+     "value": "link",
+     "label": "Link",
+     "text": "https://kalavigyan.vercel.app/ask?explainer=ef92a342-f3ab-4f5b-a728-29112800b2a0&version=1"
+    }
+   ],
+   "textId": "cb-text",
+   "text": "u0990",
+   "link": "u0991",
+   "copyLabel": "Copy citation"
+  },
+  {
+   "key": "monograph",
+   "tabId": "kv-ct-m",
+   "panelId": "kv-cp-m",
+   "label": "The monograph",
+   "box": [
+    "bx",
+    "bx-mb"
+   ],
+   "aid": "craft",
+   "cites": [
+    "kv-cites",
+    "kv-cites-mb"
+   ],
+   "boxId": null,
+   "styleKey": "cite-style",
+   "styles": [
+    {
+     "value": "text",
+     "label": "Text",
+     "text": "KalaVigyan. “Kutch Ajrakh.” Monograph, version 1, curated 17 November 2026. IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform. https://kalavigyan.vercel.app/crafts/Kutch-Ajrakh. Accessed 18 November 2026."
+    },
+    {
+     "value": "bibtex",
+     "label": "BibTeX",
+     "text": "@misc{kalavigyan_kutch_ajrakh_v1,\n  title = {Kutch Ajrakh},\n  author = {{KalaVigyan}},\n  organization = {IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform},\n  publisher = {IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform},\n  version = {1},\n  date = {2026-11-17},\n  year = {2026},\n  howpublished = {\\url{https://kalavigyan.vercel.app/crafts/Kutch-Ajrakh}},\n  url = {https://kalavigyan.vercel.app/crafts/Kutch-Ajrakh},\n  urldate = {2026-11-18},\n  note = {Monograph, curated 17 November 2026; drawn from 20 sources. Accessed 18 November 2026}\n}"
+    }
+   ],
+   "textId": "cite-text",
+   "text": "u0992",
+   "link": "u0993",
+   "copyLabel": "Copy citation"
+  }
+ ]
+}

@@ -1,0 +1,4849 @@
+{
+ "label": "Story panels",
+ "panels": [
+  {
+   "layout": "p-wide",
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "In Kachchh, ajrakh was mainly made in Khavda and Dhamadka, villages known for rich blue and red ",
+      {
+       "m": "cite",
+       "key": "sa:khamir10_1,dua1",
+       "g": [
+        "g14",
+        "g12"
+       ],
+       "shown": [
+        {
+         "number": 12,
+         "title": "AJRAKH- A Textile Tradition in Transition"
+        },
+        {
+         "number": 14,
+         "title": "Khatris & Community"
+        }
+       ],
+       "c": [
+        "cloth."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 980 360",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a1"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a1"
+      },
+      "children": [
+       "A wide morning view of a Kachchh village: round huts and thorn trees on a flat horizon, long blue-and-red cloths drying on the ground, a printer stirring a vat. In front, the reader raises a hand and asks how indigo turns blue."
+      ]
+     },
+     {
+      "tag": "defs",
+      "attrs": {},
+      "children": [
+       {
+        "tag": "linearGradient",
+        "attrs": {
+         "id": "d3-sk1",
+         "x1": "0",
+         "y1": "0",
+         "x2": "0",
+         "y2": "1"
+        },
+        "children": [
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "0",
+           "stop-color": "var(--ill-sky-dawn)"
+          },
+          "children": []
+         },
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "1",
+           "stop-color": "var(--ill-sky-warm)"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "980",
+       "height": "360",
+       "fill": "url(#d3-sk1)"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "836",
+       "cy": "112",
+       "r": "104",
+       "fill": "var(--ill-sun)",
+       "opacity": ".12"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "836",
+       "cy": "112",
+       "r": "72",
+       "fill": "var(--ill-sun)",
+       "opacity": ".2"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "836",
+       "cy": "112",
+       "r": "44",
+       "fill": "var(--ill-sun)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M706 58 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M742 78 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M168 66 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M198 52 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 186 H980 V204 H0 Z",
+       "fill": "var(--ill-salt)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 186 H980 V204 H0 Z",
+       "fill": "url(#ill-dots-s)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 186 H980",
+       "class": "ill-line",
+       "stroke-width": "1.4"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 204 C200 198 420 208 640 201 S900 196 980 202 V360 H0 Z",
+       "fill": "var(--ill-ground)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 204 C200 198 420 208 640 201 S900 196 980 202 V360 H0 Z",
+       "fill": "url(#ill-hatch)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 204 C200 198 420 208 640 201 S900 196 980 202",
+       "class": "ill-line",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 203 V185 H57 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M26.4 186.8 L43.5 170.6 L60.6 186.8 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M40.8 203 v-8.1 h5.4 v8.1",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M74 203 V181 H107 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M69.6 183.2 L90.5 163.4 L111.4 183.2 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M87.2 203 v-9.9 h6.6 v9.9",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M122 203 V187 H146 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M118.8 188.6 L134 174.2 L149.2 188.6 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M131.6 203 v-7.2 h4.8 v7.2",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M692 203 V185 H719 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M688.4 186.8 L705.5 170.6 L722.6 186.8 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M702.8 203 v-8.1 h5.4 v8.1",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M736 203 V180 H770.5 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M731.4 182.3 L753.2 161.6 L775.1 182.3 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M749.8 203 v-10.3 h6.9 v10.3",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M786 203 V186 H811.5 V203 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M782.6 187.7 L798.8 172.4 L814.9 187.7 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M796.2 203 v-7.6 h5.1 v7.6",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M186 203 V176.6 M186 187.6 L193.7 181",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "186",
+         "cy": "173.3",
+         "rx": "26.4",
+         "ry": "8.2",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M226 203 V183.8 M226 191.8 L231.6 187",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "226",
+         "cy": "181.4",
+         "rx": "19.2",
+         "ry": "6",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M650 202 V178 M650 188 L657 182",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "650",
+         "cy": "175",
+         "rx": "24",
+         "ry": "7.5",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M936 203 V174.2 M936 186.2 L944.4 179",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "936",
+         "cy": "170.6",
+         "rx": "28.8",
+         "ry": "9",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M40 232 L250 224 L266 240 L30 250 Z",
+       "fill": "url(#aj)",
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M40 232 L250 224 L252 229 L41 237 Z M30 250 L266 240 L263 235 L32 245 Z",
+       "fill": "url(#aj-b)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M690 226 L910 220 L934 240 L700 248 Z",
+       "fill": "var(--dye-madder)",
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M700 232 L916 226 M708 243 L926 236",
+       "stroke": "var(--dye-lime)",
+       "stroke-width": "2",
+       "stroke-dasharray": "3 6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M740 262 L968 252 L980 296 L980 302 L752 312 Z",
+       "fill": "url(#aj)",
+       "class": "ill-line",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M740 262 L968 252 L969 259 L742 269 Z M752 312 L980 302 L980 295 L750 305 Z",
+       "fill": "url(#aj-b)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M10 300 L210 290 L232 330 L0 344 Z",
+       "fill": "url(#aj)",
+       "class": "ill-line",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M10 300 L210 290 L212 297 L12 307 Z",
+       "fill": "url(#aj-b)"
+      },
+      "children": []
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "562",
+       "cy": "292",
+       "rx": "64",
+       "ry": "15",
+       "fill": "var(--ill-naand)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "562",
+       "cy": "290",
+       "rx": "52",
+       "ry": "9.5",
+       "fill": "var(--dye-vat-liquor)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M610 214 L572 288",
+       "stroke": "var(--ill-wood)",
+       "stroke-width": "7",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M610 214 L572 288",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.4",
+       "stroke-linecap": "round",
+       "fill": "none",
+       "opacity": ".7"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M627.6 268 L672.4 268 L675.1 294 L624.9 294 Z",
+       "fill": "var(--ill-lungi)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M627.6 300 h17.9 M654.5 300 h17.9",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "4",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(689.2 202) scale(-0.6 0.6)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M8 120 C10 72 34 52 70 50 C106 52 130 72 132 120 Z",
+         "fill": "var(--ill-pr-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 52 L70 74 L80 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M70 74 V112",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "84",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "96",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L50 120 L22 120 C20 96 22 76 30 60 Z",
+         "fill": "url(#aj-sm)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L73 68 C62 61 50 59 32 66 Z",
+         "fill": "url(#aj-b)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(678.6 168.4) scale(-0.6 0.6)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "href": "#hd-printer",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M61 75 q4 2 8 0",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M626 244 Q614 236 608 220",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "12.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M617 235.9 Q611.5 229.3 608 220",
+       "stroke": "var(--ill-skin-d)",
+       "stroke-width": "8",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M626 244 Q621 240.6 617 235.9",
+       "stroke": "var(--ill-pr-top)",
+       "stroke-width": "10.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "608",
+       "cy": "220",
+       "r": "5.3",
+       "fill": "var(--ill-skin-d)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(250.2 199) scale(1.1 1.1)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 120 C12 72 34 52 70 50 C106 52 128 72 130 120 Z",
+         "fill": "var(--rd-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M11 120 C13 76 30 58 52 52 L46 120 Z",
+         "fill": "url(#ill-dots)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M58 52 L70 68 L82 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(271.9 130.6) scale(1.1 1.1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M59 74 q6 5 12 0",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M381 281 Q430 262 444 204",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "19.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M416 258.2 Q435.9 237.6 444 204",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "15",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M381 281 Q401.6 273 416 258.2",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "17.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "444",
+       "cy": "204",
+       "r": "9.9",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M420 22 H608 A16 16 0 0 1 624 38 V98 A16 16 0 0 1 608 114 L460 114 L384 158 L442 114 H420 A16 16 0 0 1 404 98 V38 A16 16 0 0 1 420 22 Z",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "514",
+       "y": "62.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "How does indigo"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "514",
+       "y": "88.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "turn blue?"
+      ]
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  },
+  {
+   "layout": null,
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "Traditionally, the cloth goes into a naand, a V-shaped vat dug into the ground, for 10 to 15 ",
+      {
+       "m": "cite",
+       "key": "sa:kb_naand1,kb_naand2",
+       "g": [
+        "g7"
+       ],
+       "shown": [
+        {
+         "number": 7,
+         "title": "Ajarkh, the resist printed fabric of Gujarat"
+        }
+       ],
+       "c": [
+        "minutes."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 480 360",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a2"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a2"
+      },
+      "children": [
+       "The printer and the reader hold a printed cloth between them and lower it together into a vat set in the ground. A clock marks ten to fifteen minutes."
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "var(--ill-sky-warm)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 0 H480 V200 L0 60 Z",
+       "fill": "url(#ill-rays)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 236 H480 V360 H0 Z",
+       "fill": "var(--ill-ground)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 236 H480 V360 H0 Z",
+       "fill": "url(#ill-hatch)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 236 H480",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(240 48)"
+      },
+      "children": [
+       {
+        "tag": "circle",
+        "attrs": {
+         "r": "31",
+         "fill": "var(--ill-bubble)",
+         "class": "ill-line"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M0 0 L15.5 -26.85 A31 31 0 0 1 31 0 Z",
+         "fill": "var(--ill-sun)",
+         "opacity": ".85",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.2"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M0 0 V-22 M0 0 L16 9",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.6",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "r": "3",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M0 -31 v5 M31 0 h-5 M0 31 v-5 M-31 0 h5",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "240",
+       "cy": "306",
+       "rx": "136",
+       "ry": "34",
+       "fill": "var(--ill-naand)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "240",
+       "cy": "302",
+       "rx": "114",
+       "ry": "24",
+       "fill": "var(--dye-vat-liquor)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "240",
+       "cy": "302",
+       "rx": "114",
+       "ry": "24",
+       "fill": "url(#ill-dots-s)"
+      },
+      "children": []
+     },
+     {
+      "tag": "defs",
+      "attrs": {},
+      "children": [
+       {
+        "tag": "clipPath",
+        "attrs": {
+         "id": "d3-c2"
+        },
+        "children": [
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M0 0 H480 V298 C420 308 330 312 240 312 C150 312 60 308 0 298 Z"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "clip-path": "url(#d3-c2)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M156 96 L326 96 C328 160 324 240 314 330 L168 330 C158 240 154 160 156 96 Z",
+         "fill": "url(#aj-pre)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M160 250 C210 258 270 258 322 250 L316 330 L166 330 Z",
+         "fill": "var(--dye-leuco)",
+         "opacity": ".85"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M156 96 L326 96 C328 160 324 240 314 330 L168 330 C158 240 154 160 156 96 Z",
+         "fill": "url(#ill-weave)",
+         "class": "ill-line",
+         "stroke-width": "2.4"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M150 302 q10 -6 20 0 M312 302 q10 -6 20 0 M222 316 q10 -5 20 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(8 156) scale(1 1)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M8 120 C10 72 34 52 70 50 C106 52 130 72 132 120 Z",
+         "fill": "var(--ill-pr-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 52 L70 74 L80 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M70 74 V112",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "84",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "96",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L50 120 L22 120 C20 96 22 76 30 60 Z",
+         "fill": "url(#aj-sm)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L73 68 C62 61 50 59 32 66 Z",
+         "fill": "url(#aj-b)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(27 96) scale(1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "href": "#hd-printer",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M59 74 q6 5 12 0",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M32 228 Q88 214 152 154",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "17.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M80.5 208.1 Q114.9 188.8 152 154",
+       "stroke": "var(--ill-skin-d)",
+       "stroke-width": "13",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M32 228 Q55.5 222.1 80.5 208.1",
+       "stroke": "var(--ill-pr-top)",
+       "stroke-width": "15.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "152",
+       "cy": "154",
+       "r": "8.6",
+       "fill": "var(--ill-skin-d)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M124 228 Q150 168 156 104",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "17.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M142.3 176.9 Q152.5 141.1 156 104",
+       "stroke": "var(--ill-skin-d)",
+       "stroke-width": "13",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M124 228 Q134.9 202.8 142.3 176.9",
+       "stroke": "var(--ill-pr-top)",
+       "stroke-width": "15.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "156",
+       "cy": "104",
+       "r": "8.6",
+       "fill": "var(--ill-skin-d)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(469.2 162) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 120 C12 72 34 52 70 50 C106 52 128 72 130 120 Z",
+         "fill": "var(--rd-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M11 120 C13 76 30 58 52 52 L46 120 Z",
+         "fill": "url(#ill-dots)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M58 52 L70 68 L82 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(451 104.4) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M57.5 72.5 q7.5 10 15 0 z",
+         "fill": "var(--ill-ink)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 74 h10",
+         "stroke": "#fff",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M446 231 Q392 214 330 156",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "17.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M399.2 209.5 Q366 189.6 330 156",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "13",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M446 231 Q423.3 223.9 399.2 209.5",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "15.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "330",
+       "cy": "156",
+       "r": "8.6",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M358 231 Q330 170 326 104",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "17.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M338.7 178.9 Q328.3 142.3 326 104",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "13",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M358 231 Q346.2 205.4 338.7 178.9",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "15.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "326",
+       "cy": "104",
+       "r": "8.6",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  },
+  {
+   "layout": null,
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "Bacteria in the vat turn indigo, which will not dissolve in water, into leucoindigo, which ",
+      {
+       "m": "cite",
+       "key": "sa:aino1",
+       "g": [
+        "g9"
+       ],
+       "shown": [
+        {
+         "number": 9,
+         "title": "Microbial Communities Associated With Indigo Fermentation"
+        }
+       ],
+       "c": [
+        "does."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 480 360",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a3"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a3"
+      },
+      "children": [
+       "Seen through a big lens inside the vat: rod-shaped bacteria cling to dark grains of indigo beside cotton fibres, and on the other side of an arrow the grains are gone, dissolved. The reader peers in, mouth open."
+      ]
+     },
+     {
+      "tag": "defs",
+      "attrs": {},
+      "children": [
+       {
+        "tag": "radialGradient",
+        "attrs": {
+         "id": "d3-g3",
+         "cx": ".42",
+         "cy": ".46",
+         "r": ".7"
+        },
+        "children": [
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "0",
+           "stop-color": "var(--ill-liq-hi)"
+          },
+          "children": []
+         },
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "1",
+           "stop-color": "var(--ill-liq-lo)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "clipPath",
+        "attrs": {
+         "id": "d3-l3"
+        },
+        "children": [
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "196",
+           "cy": "176",
+           "r": "158"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "var(--ill-liq-lo)"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "url(#ill-dots-w)",
+       "opacity": ".3"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "clip-path": "url(#d3-l3)"
+      },
+      "children": [
+       {
+        "tag": "rect",
+        "attrs": {
+         "width": "480",
+         "height": "360",
+         "fill": "url(#d3-g3)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 88 C90 70 170 106 250 88 S370 70 420 106",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "34",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 88 C90 70 170 106 250 88 S370 70 420 106",
+         "stroke": "var(--ill-fibre)",
+         "stroke-width": "29",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 88 C90 70 170 106 250 88 S370 70 420 106",
+         "transform": "translate(0 -6)",
+         "stroke": "var(--ill-ink)",
+         "stroke-opacity": ".28",
+         "stroke-width": "1.2",
+         "fill": "none",
+         "stroke-dasharray": "14 10"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 176 C90 190 170 162 250 176 S370 190 420 162",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "34",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 176 C90 190 170 162 250 176 S370 190 420 162",
+         "stroke": "var(--ill-fibre)",
+         "stroke-width": "29",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 176 C90 190 170 162 250 176 S370 190 420 162",
+         "transform": "translate(0 -6)",
+         "stroke": "var(--ill-ink)",
+         "stroke-opacity": ".28",
+         "stroke-width": "1.2",
+         "fill": "none",
+         "stroke-dasharray": "14 10"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 262 C90 252 170 272 250 262 S370 252 420 272",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "34",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 262 C90 252 170 272 250 262 S370 252 420 272",
+         "stroke": "var(--ill-fibre)",
+         "stroke-width": "29",
+         "fill": "none",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 262 C90 252 170 272 250 262 S370 252 420 272",
+         "transform": "translate(0 -6)",
+         "stroke": "var(--ill-ink)",
+         "stroke-opacity": ".28",
+         "stroke-width": "1.2",
+         "fill": "none",
+         "stroke-dasharray": "14 10"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "50",
+         "y": "120",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(0 60 128)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "82",
+         "y": "142",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(24 92 150)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "60",
+         "y": "206",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(-12 70 214)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "106",
+         "y": "224",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(18 116 232)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "46",
+         "y": "288",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(8 56 296)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "120",
+         "y": "48",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(-20 130 56)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "88",
+         "y": "56",
+         "width": "20",
+         "height": "17",
+         "rx": "3",
+         "transform": "rotate(10 98 64)",
+         "fill": "var(--dip-4)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.8"
+        },
+        "children": []
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "transform": "rotate(30 86 118)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "69",
+           "y": "111.5",
+           "width": "34",
+           "height": "13",
+           "rx": "6.5",
+           "fill": "var(--ill-bact)",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "2"
+          },
+          "children": []
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M103 118 q5 -5 9 0 t9 0",
+           "fill": "none",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "1.4"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "79",
+           "cy": "118",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "89",
+           "cy": "118",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "transform": "rotate(-24 126 214)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "109",
+           "y": "207.5",
+           "width": "34",
+           "height": "13",
+           "rx": "6.5",
+           "fill": "var(--ill-bact)",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "2"
+          },
+          "children": []
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M143 214 q5 -5 9 0 t9 0",
+           "fill": "none",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "1.4"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "119",
+           "cy": "214",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "129",
+           "cy": "214",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "transform": "rotate(64 64 184)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "47",
+           "y": "177.5",
+           "width": "34",
+           "height": "13",
+           "rx": "6.5",
+           "fill": "var(--ill-bact)",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "2"
+          },
+          "children": []
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M81 184 q5 -5 9 0 t9 0",
+           "fill": "none",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "1.4"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "57",
+           "cy": "184",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "67",
+           "cy": "184",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "transform": "rotate(-40 144 140)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "127",
+           "y": "133.5",
+           "width": "34",
+           "height": "13",
+           "rx": "6.5",
+           "fill": "var(--ill-bact)",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "2"
+          },
+          "children": []
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M161 140 q5 -5 9 0 t9 0",
+           "fill": "none",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "1.4"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "137",
+           "cy": "140",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "147",
+           "cy": "140",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "transform": "rotate(10 104 288)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "87",
+           "y": "281.5",
+           "width": "34",
+           "height": "13",
+           "rx": "6.5",
+           "fill": "var(--ill-bact)",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "2"
+          },
+          "children": []
+         },
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M121 288 q5 -5 9 0 t9 0",
+           "fill": "none",
+           "stroke": "var(--ill-ink)",
+           "stroke-width": "1.4"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "97",
+           "cy": "288",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "107",
+           "cy": "288",
+           "r": "1.6",
+           "fill": "var(--ill-ink)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M176 176 H232",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "5",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M220 162 L236 176 L220 190",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "5",
+         "stroke-linecap": "round",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M262 112 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M300 148 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M276 202 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M316 238 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M266 266 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M328 102 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M344 186 q7 -7 14 0 t14 0 t14 0",
+         "fill": "none",
+         "stroke": "var(--ill-swirl)",
+         "stroke-width": "4",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "196",
+       "cy": "176",
+       "r": "158",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "9"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "196",
+       "cy": "176",
+       "r": "150",
+       "fill": "none",
+       "stroke": "#fff",
+       "stroke-opacity": ".35",
+       "stroke-width": "3"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M80 62 A 140 140 0 0 1 150 26",
+       "stroke": "#fff",
+       "stroke-opacity": ".7",
+       "stroke-width": "7",
+       "fill": "none",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M318 290 L384 356",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "26",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M318 290 L384 356",
+       "stroke": "var(--ill-wood)",
+       "stroke-width": "20",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M66 31 L70 112",
+       "stroke": "var(--ill-bubble)",
+       "stroke-width": "6",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M66 31 L70 112",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "14",
+       "y": "16",
+       "width": "104",
+       "height": "32",
+       "rx": "4",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "66",
+       "y": "39",
+       "text-anchor": "middle",
+       "class": "ill-lab"
+      },
+      "children": [
+       "indigo"
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M76 333 L100 296",
+       "stroke": "var(--ill-bubble)",
+       "stroke-width": "6",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M76 333 L100 296",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "14",
+       "y": "318",
+       "width": "124",
+       "height": "32",
+       "rx": "4",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "76",
+       "y": "341",
+       "text-anchor": "middle",
+       "class": "ill-lab"
+      },
+      "children": [
+       "bacteria"
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M330 31 L304 96",
+       "stroke": "var(--ill-bubble)",
+       "stroke-width": "6",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M330 31 L304 96",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "266",
+       "y": "16",
+       "width": "128",
+       "height": "32",
+       "rx": "4",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "330",
+       "y": "39",
+       "text-anchor": "middle",
+       "class": "ill-lab"
+      },
+      "children": [
+       "dissolved"
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(478 194) scale(-1.4 1.4)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "64",
+         "cy": "75",
+         "rx": "3.6",
+         "ry": "4.6",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(378 326) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "href": "#ill-hand",
+         "width": "40",
+         "height": "40",
+         "style": "--hand: var(--rd-skin)"
+        },
+        "children": []
+       }
+      ]
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  },
+  {
+   "layout": "panel-ox",
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "It comes out bright green, and turns blue as oxygen in the air meets the ",
+      {
+       "m": "cite",
+       "key": "sa:impart1,gi_green",
+       "g": [
+        "g3",
+        "g1"
+       ],
+       "shown": [
+        {
+         "number": 1,
+         "title": "GI Journal No. 188: Kutch Ajrakh"
+        },
+        {
+         "number": 3,
+         "title": "Ajrakh"
+        }
+       ],
+       "c": [
+        "dye."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 480 360",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a4"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a4"
+      },
+      "children": [
+       "Hands lift the cloth out of the vat. It drips bright green at the bottom and has turned blue from the top down, as pairs of oxygen atoms drift in from the air. The reader throws up both hands."
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "var(--ill-sky)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 0 L260 0 L0 230 Z",
+       "fill": "url(#ill-rays)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M86 338 L394 338 L374 372 L106 372 Z",
+       "fill": "var(--ill-naand)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "ellipse",
+      "attrs": {
+       "cx": "240",
+       "cy": "340",
+       "rx": "156",
+       "ry": "12",
+       "fill": "var(--dye-vat-liquor)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "defs",
+      "attrs": {},
+      "children": [
+       {
+        "tag": "filter",
+        "attrs": {
+         "id": "d3-ox4-soft",
+         "x": "-20%",
+         "y": "-20%",
+         "width": "140%",
+         "height": "140%"
+        },
+        "children": [
+         {
+          "tag": "feGaussianBlur",
+          "attrs": {
+           "stdDeviation": "3.2"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "mask",
+        "attrs": {
+         "id": "d3-ox4-m",
+         "maskUnits": "userSpaceOnUse",
+         "x": "126",
+         "y": "-382",
+         "width": "208",
+         "height": "742"
+        },
+        "children": [
+         {
+          "tag": "g",
+          "attrs": {
+           "class": "ox-wipe"
+          },
+          "children": [
+           {
+            "tag": "path",
+            "attrs": {
+             "d": "M136 -362 L324 -362 L324 203.9 L310.6 219.9 L297.1 208.9 L283.7 219.9 L270.3 203.9 L256.9 224.9 L243.4 203.9 L230 219.9 L216.6 208.9 L203.1 219.9 L189.7 203.9 L176.3 224.9 L162.9 203.9 L149.4 219.9 L136 208.9 L136 -362 Z",
+             "fill": "#fff",
+             "filter": "url(#d3-ox4-soft)"
+            },
+            "children": []
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "tag": "clipPath",
+        "attrs": {
+         "id": "d3-ox4-c"
+        },
+        "children": [
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M146 38 L314 38 L317 300 Q302.5 313 288 305 Q273.5 313 259 300 Q244.5 313 230 305 Q215.5 313 201 300 Q186.5 313 172 305 Q157.5 313 143 300 Z"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "clip-path": "url(#d3-ox4-c)"
+      },
+      "children": [
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "142",
+         "y": "34",
+         "width": "180",
+         "height": "282",
+         "fill": "var(--dye-leuco)"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "class": "ox-blue",
+         "x": "142",
+         "y": "34",
+         "width": "180",
+         "height": "282",
+         "fill": "var(--ox-blue, var(--dip-2))",
+         "mask": "url(#d3-ox4-m)"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "146",
+         "y": "62",
+         "width": "172",
+         "height": "228",
+         "fill": "url(#aj-motif)"
+        },
+        "children": []
+       },
+       {
+        "tag": "rect",
+        "attrs": {
+         "x": "142",
+         "y": "34",
+         "width": "180",
+         "height": "282",
+         "fill": "url(#ill-weave)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M176.2 58 V290 M280.4 58 V290",
+         "stroke": "#fff",
+         "stroke-opacity": ".16",
+         "stroke-width": "7"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M146 38 L314 38 L317 300 Q302.5 313 288 305 Q273.5 313 259 300 Q244.5 313 230 305 Q215.5 313 201 300 Q186.5 313 172 305 Q157.5 313 143 300 Z",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.6",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M184 316 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--dye-leuco)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M230 322 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--dye-leuco)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M282 318 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--dye-leuco)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M124 -4 L132 36 L172 40 L168 -4 Z M336 -4 L328 36 L288 40 L292 -4 Z",
+       "fill": "var(--ill-pr-top)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "use",
+      "attrs": {
+       "href": "#ill-hand",
+       "x": "132",
+       "y": "24",
+       "width": "40",
+       "height": "40",
+       "style": "--hand: var(--ill-skin-d)"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(328 24) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "href": "#ill-hand",
+         "width": "40",
+         "height": "40",
+         "style": "--hand: var(--ill-skin-d)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ox-o2"
+      },
+      "children": [
+       {
+        "tag": "g",
+        "attrs": {
+         "class": "o2",
+         "transform": "translate(86 96) rotate(-10)"
+        },
+        "children": [
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "-6.8",
+           "r": "11"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "6.8",
+           "r": "11"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "class": "o2",
+         "transform": "translate(64 160) rotate(18)"
+        },
+        "children": [
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "-6.8",
+           "r": "11"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "6.8",
+           "r": "11"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "class": "o2",
+         "transform": "translate(104 222) rotate(4)"
+        },
+        "children": [
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "-6.8",
+           "r": "11"
+          },
+          "children": []
+         },
+         {
+          "tag": "circle",
+          "attrs": {
+           "cx": "6.8",
+           "r": "11"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M24 96 h28 M12 160 h26 M46 222 h30",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linecap": "round",
+       "stroke-dasharray": "2 7"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M76 262 L92 240",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "10",
+       "y": "262",
+       "width": "132",
+       "height": "32",
+       "rx": "4",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "76",
+       "y": "285",
+       "text-anchor": "middle",
+       "class": "ill-lab"
+      },
+      "children": [
+       "O",
+       {
+        "tag": "tspan",
+        "attrs": {
+         "class": "ill-sub",
+         "dy": "5"
+        },
+        "children": [
+         "2"
+        ]
+       },
+       {
+        "tag": "tspan",
+        "attrs": {
+         "dy": "-5"
+        },
+        "children": [
+         " in the air"
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(474.2 233) scale(-0.9 0.9)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 120 C12 72 34 52 70 50 C106 52 128 72 130 120 Z",
+         "fill": "var(--rd-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M11 120 C13 76 30 58 52 52 L46 120 Z",
+         "fill": "url(#ill-dots)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M58 52 L70 68 L82 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(457.9 181.4) scale(-0.9 0.9)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "64",
+         "cy": "75",
+         "rx": "3.6",
+         "ry": "4.6",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M375 295 Q352 262 360 214",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "15.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M361.1 264.6 Q355.4 241.8 360 214",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "11",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M375 295 Q365.3 281.1 361.1 264.6",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "13.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "360",
+       "cy": "214",
+       "r": "7.3",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M453 295 Q474 262 462 214",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "15.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M464.8 264.6 Q469 241.8 462 214",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "11",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M453 295 Q461.8 281.1 464.8 264.6",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "13.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "462",
+       "cy": "214",
+       "r": "7.3",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M338 190 l-12 -8 M334 208 l-15 0 M338 226 l-12 8",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M350 14 H458 A16 16 0 0 1 474 30 V74 A16 16 0 0 1 458 90 L418 90 L404 160 L400 90 H350 A16 16 0 0 1 334 74 V30 A16 16 0 0 1 350 14 Z",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "404",
+       "y": "46.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "Green,"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "404",
+       "y": "72.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "then blue?"
+      ]
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  },
+  {
+   "layout": null,
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "For the darkest blue, the cloth goes into the vat three or four times in ",
+      {
+       "m": "cite",
+       "key": "sa:gi_dips",
+       "g": [
+        "g1"
+       ],
+       "shown": [
+        {
+         "number": 1,
+         "title": "GI Journal No. 188: Kutch Ajrakh"
+        }
+       ],
+       "c": [
+        "all."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 480 360",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a5"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a5"
+      },
+      "children": [
+       "Four cloths hang on a line, each a deeper blue than the last, tagged one to four. The reader counts them off on their fingers."
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "var(--ill-sky-warm)"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "480",
+       "height": "360",
+       "fill": "url(#ill-dots-s)",
+       "opacity": ".5"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M6 50 Q240 82 474 50",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M22 66 L116 64 L118 232 Q99.1 242 80.3 234 Q57.7 242 40.8 234 Q28 240 20 232 Z",
+       "fill": "var(--dip-1)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M22 66 L116 64 L118 232 Q99.1 242 80.3 234 Q57.7 242 40.8 234 Q28 240 20 232 Z",
+       "fill": "url(#aj-motif)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M22 66 L116 64 L118 232 Q99.1 242 80.3 234 Q57.7 242 40.8 234 Q28 240 20 232 Z",
+       "fill": "url(#ill-weave)",
+       "class": "ill-line",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "32",
+       "y": "54",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "96",
+       "y": "54",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "69",
+       "cy": "112",
+       "r": "20",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "69",
+       "y": "122",
+       "text-anchor": "middle",
+       "class": "ill-num"
+      },
+      "children": [
+       "1"
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M136 74 L230 72 L232 248 Q213.1 258 194.3 250 Q171.7 258 154.8 250 Q142 256 134 248 Z",
+       "fill": "var(--dip-2)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M136 74 L230 72 L232 248 Q213.1 258 194.3 250 Q171.7 258 154.8 250 Q142 256 134 248 Z",
+       "fill": "url(#aj-motif)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M136 74 L230 72 L232 248 Q213.1 258 194.3 250 Q171.7 258 154.8 250 Q142 256 134 248 Z",
+       "fill": "url(#ill-weave)",
+       "class": "ill-line",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "146",
+       "y": "62",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "210",
+       "y": "62",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "183",
+       "cy": "120",
+       "r": "20",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "183",
+       "y": "130",
+       "text-anchor": "middle",
+       "class": "ill-num"
+      },
+      "children": [
+       "2"
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M250 74 L344 76 L346 256 Q327.1 266 308.3 258 Q285.7 266 268.8 258 Q256 264 248 256 Z",
+       "fill": "var(--dip-3)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M250 74 L344 76 L346 256 Q327.1 266 308.3 258 Q285.7 266 268.8 258 Q256 264 248 256 Z",
+       "fill": "url(#aj-motif)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M250 74 L344 76 L346 256 Q327.1 266 308.3 258 Q285.7 266 268.8 258 Q256 264 248 256 Z",
+       "fill": "url(#ill-weave)",
+       "class": "ill-line",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "260",
+       "y": "62",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "324",
+       "y": "62",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "297",
+       "cy": "120",
+       "r": "20",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "297",
+       "y": "130",
+       "text-anchor": "middle",
+       "class": "ill-num"
+      },
+      "children": [
+       "3"
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M364 66 L458 68 L460 256 Q441.1 266 422.3 258 Q399.7 266 382.8 258 Q370 264 362 256 Z",
+       "fill": "var(--dip-4)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M364 66 L458 68 L460 256 Q441.1 266 422.3 258 Q399.7 266 382.8 258 Q370 264 362 256 Z",
+       "fill": "url(#aj-motif)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M364 66 L458 68 L460 256 Q441.1 266 422.3 258 Q399.7 266 382.8 258 Q370 264 362 256 Z",
+       "fill": "url(#ill-weave)",
+       "class": "ill-line",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "374",
+       "y": "54",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "x": "438",
+       "y": "54",
+       "width": "10",
+       "height": "22",
+       "rx": "2",
+       "fill": "var(--ill-wood)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "411",
+       "cy": "112",
+       "r": "20",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "411",
+       "y": "122",
+       "text-anchor": "middle",
+       "class": "ill-num"
+      },
+      "children": [
+       "4"
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(39.6 246) scale(0.9 0.9)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 120 C12 72 34 52 70 50 C106 52 128 72 130 120 Z",
+         "fill": "var(--rd-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M11 120 C13 76 30 58 52 52 L46 120 Z",
+         "fill": "url(#ill-dots)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M58 52 L70 68 L82 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(57.1 190.8) scale(0.9 0.9)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 75 q5 2.4 10 0",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M146 312 Q186 300 204 262",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "16.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M175.7 297.3 Q193.6 284 204 262",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "12",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M146 312 Q162.8 307 175.7 297.3",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "14.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(204 252)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M-15 8 C-17 -4 -13 -12 -9 -12 L-9 -34 C-9 -40 -3 -40 -3 -34 L-3 -16 L-1 -42 C-1 -48 5 -48 5 -42 L5 -16 L8 -40 C8 -46 14 -46 14 -40 L12 -14 L16 -33 C16 -39 22 -38 21 -32 L17 4 C15 14 5 18 -3 18 C-9 18 -13 14 -15 8 Z",
+         "fill": "var(--rd-skin)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M262 246 H444 A16 16 0 0 1 460 262 V300 A16 16 0 0 1 444 316 H262 A16 16 0 0 1 246 300 V289.4 L222 262 L246 268.4 A16 16 0 0 1 262 246 Z",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "353",
+       "y": "275.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "One, two, three,"
+      ]
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "353",
+       "y": "301.5",
+       "class": "ill-say",
+       "style": "font-size:22px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "four!"
+      ]
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  },
+  {
+   "layout": "p-hero",
+   "caption": [
+    {
+     "m": "s",
+     "c": [
+      "In its blue form the dye does not dissolve, and it stays fixed to the ",
+      {
+       "m": "cite",
+       "key": "sa:met1",
+       "g": [
+        "g10"
+       ],
+       "shown": [
+        {
+         "number": 10,
+         "title": "Indian Block-Printed Textiles: Past and Present"
+        }
+       ],
+       "c": [
+        "fibres."
+       ]
+      }
+     ]
+    }
+   ],
+   "art": {
+    "tag": "svg",
+    "attrs": {
+     "class": "ill pan-art",
+     "viewBox": "0 0 1440 460",
+     "preserveAspectRatio": "xMidYMid slice",
+     "role": "img",
+     "aria-labelledby": "d3-a6"
+    },
+    "children": [
+     {
+      "tag": "title",
+      "attrs": {
+       "id": "d3-a6"
+      },
+      "children": [
+       "Payoff: by a stream, the printer and the reader hold up the finished ajrakh between them, deep blue with red stars and borders. Water drips from it clear, and the blue stays."
+      ]
+     },
+     {
+      "tag": "defs",
+      "attrs": {},
+      "children": [
+       {
+        "tag": "linearGradient",
+        "attrs": {
+         "id": "d3-sk6",
+         "x1": "0",
+         "y1": "0",
+         "x2": "0",
+         "y2": "1"
+        },
+        "children": [
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "0",
+           "stop-color": "var(--ill-sky-dawn)"
+          },
+          "children": []
+         },
+         {
+          "tag": "stop",
+          "attrs": {
+           "offset": "1",
+           "stop-color": "var(--ill-sky-warm)"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "width": "1440",
+       "height": "460",
+       "fill": "url(#d3-sk6)"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "250",
+       "cy": "150",
+       "r": "120",
+       "fill": "var(--ill-sun)",
+       "opacity": ".14"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "250",
+       "cy": "150",
+       "r": "78",
+       "fill": "var(--ill-sun)",
+       "opacity": ".22"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "250",
+       "cy": "150",
+       "r": "48",
+       "fill": "var(--ill-sun)",
+       "class": "ill-line"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M370 70 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M402 92 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M1130 80 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M1162 60 q5 -6 10 0 q5 -6 10 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 252 C300 246 700 256 1000 249 S1300 244 1440 250 V460 H0 Z",
+       "fill": "var(--ill-ground)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 252 C300 246 700 256 1000 249 S1300 244 1440 250 V460 H0 Z",
+       "fill": "url(#ill-hatch)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 252 C300 246 700 256 1000 249 S1300 244 1440 250",
+       "class": "ill-line",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 250 V230 H90 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M56 232 L75 214 L94 232 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M72 250 v-9 h6 v9",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M108 250 V226 H144 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M103.2 228.4 L126 206.8 L148.8 228.4 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M122.4 250 v-10.8 h7.2 v10.8",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M160 250 V232 H187 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M156.4 233.8 L173.5 217.6 L190.6 233.8 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M170.8 250 v-8.1 h5.4 v8.1",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1220 250 V230 H1250 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1216 232 L1235 214 L1254 232 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1232 250 v-9 h6 v9",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1270 250 V226 H1306 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1265.2 228.4 L1288 206.8 L1310.8 228.4 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1284.4 250 v-10.8 h7.2 v10.8",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1330 250 V232 H1357 V250 Z",
+         "fill": "var(--ill-bhunga)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1326.4 233.8 L1343.5 217.6 L1360.6 233.8 Z",
+         "fill": "var(--ill-thatch)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1340.8 250 v-8.1 h5.4 v8.1",
+         "fill": "var(--ill-ink)",
+         "stroke": "none"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1110 250 V218.8 M1110 231.8 L1119.1 224",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "1110",
+         "cy": "214.9",
+         "rx": "31.2",
+         "ry": "9.8",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M1400 250 V226 M1400 236 L1407 230",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "1400",
+         "cy": "223",
+         "rx": "24",
+         "ry": "7.5",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M334 250 V223.6 M334 234.6 L341.7 228",
+         "fill": "none"
+        },
+        "children": []
+       },
+       {
+        "tag": "ellipse",
+        "attrs": {
+         "cx": "334",
+         "cy": "220.3",
+         "rx": "26.4",
+         "ry": "8.2",
+         "fill": "var(--ill-tree)"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M30 286 L320 278 L342 300 L26 310 Z",
+       "fill": "var(--dye-madder)",
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M38 292 L324 284 M34 304 L334 295",
+       "stroke": "var(--dye-lime)",
+       "stroke-width": "2",
+       "stroke-dasharray": "3 6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M1100 282 L1404 276 L1424 300 L1106 308 Z",
+       "fill": "url(#aj)",
+       "class": "ill-line",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M1100 282 L1404 276 L1405 282 L1101 288 Z",
+       "fill": "url(#aj-b)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 378 C240 368 480 386 720 376 S1200 368 1440 380 V460 H0 Z",
+       "fill": "var(--ill-water)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M0 378 C240 368 480 386 720 376 S1200 368 1440 380",
+       "class": "ill-line",
+       "stroke-width": "2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M80 412 q20 -6 40 0 M300 426 q20 -6 40 0 M1100 420 q20 -6 40 0 M1300 406 q20 -6 40 0",
+       "fill": "none",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8",
+       "stroke-linecap": "round",
+       "opacity": ".6"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "fill": "none",
+       "stroke": "var(--dye-indigo)",
+       "stroke-width": "7",
+       "stroke-linecap": "round",
+       "opacity": ".32"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M584 396 q18 -6 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M598 414 q18 -6 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M616 432 q18 -6 36 0 t36 0 t36 0 t36 0 t36 0 t36 0"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "fill": "none",
+       "stroke": "var(--dye-madder)",
+       "stroke-width": "4",
+       "stroke-linecap": "round",
+       "opacity": ".3"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M590 388 q18 -5 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M456 262 L536 262 L540.8 378 L451.2 378 Z",
+       "fill": "var(--ill-lungi)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M456 384 h32 M504 384 h32",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "4",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M904.8 266 L983.2 266 L979.3 380 L947.9 380 L944 295.4 L908.7 380 Z",
+       "fill": "var(--ill-pants)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M904.8 384 h31.4 M951.8 384 h31.4",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "4.5",
+       "stroke-linecap": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(424.6 139) scale(1 1)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M8 120 C10 72 34 52 70 50 C106 52 130 72 132 120 Z",
+         "fill": "var(--ill-pr-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 52 L70 74 L80 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M70 74 V112",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "84",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "circle",
+        "attrs": {
+         "cx": "70",
+         "cy": "96",
+         "r": "1.8",
+         "fill": "var(--ill-ink)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L50 120 L22 120 C20 96 22 76 30 60 Z",
+         "fill": "url(#aj-sm)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M30 60 C52 52 64 54 76 62 L73 68 C62 61 50 59 32 66 Z",
+         "fill": "url(#aj-b)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(444 77.8) scale(1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "href": "#hd-printer",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M59 74 q6 5 12 0",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2",
+         "stroke-linecap": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M566 74 L874 74 C880 150 878 250 870 330 L572 330 C562 250 560 150 566 74 Z",
+       "fill": "url(#aj)",
+       "class": "ill-line",
+       "stroke-width": "2.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M566 74 L874 74 L875 100 L565 100 Z M572 330 L870 330 L872 304 L569 304 Z",
+       "fill": "url(#aj-b)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.8"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M566 74 L874 74 C880 150 878 250 870 330 L572 330 C562 250 560 150 566 74 Z",
+       "fill": "url(#ill-weave)"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M612 348 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--ill-water)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M690 362 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--ill-water)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M762 352 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--ill-water)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M836 364 q-4.5 9 0 12.5 q4.5 -3.5 0 -12.5 z",
+       "fill": "var(--ill-water)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "1.6"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M543 212 Q566 160 570 88",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "18.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M559 164.8 Q567.7 129.8 570 88",
+       "stroke": "var(--ill-skin-d)",
+       "stroke-width": "14",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M543 212 Q552.7 190.2 559 164.8",
+       "stroke": "var(--ill-pr-top)",
+       "stroke-width": "16.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "570",
+       "cy": "88",
+       "r": "9.2",
+       "fill": "var(--ill-skin-d)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M449 212 Q520 250 568 214",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "18.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M504.6 230.9 Q540.2 234.9 568 214",
+       "stroke": "var(--ill-skin-d)",
+       "stroke-width": "14",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M449 212 Q478.8 228 504.6 230.9",
+       "stroke": "var(--ill-pr-top)",
+       "stroke-width": "16.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "568",
+       "cy": "214",
+       "r": "9.2",
+       "fill": "var(--ill-skin-d)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(1014 146) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M10 120 C12 72 34 52 70 50 C106 52 128 72 130 120 Z",
+         "fill": "var(--rd-top)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.4",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M11 120 C13 76 30 58 52 52 L46 120 Z",
+         "fill": "url(#ill-dots)"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M58 52 L70 68 L82 52",
+         "fill": "none",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "2.2",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "g",
+      "attrs": {
+       "transform": "translate(995 86) scale(-1 1)"
+      },
+      "children": [
+       {
+        "tag": "use",
+        "attrs": {
+         "class": "rd",
+         "href": "#hd-plait",
+         "width": "100",
+         "height": "120"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M57.5 72.5 q7.5 10 15 0 z",
+         "fill": "var(--ill-ink)",
+         "stroke": "var(--ill-ink)",
+         "stroke-width": "1.6",
+         "stroke-linejoin": "round"
+        },
+        "children": []
+       },
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M60 74 h10",
+         "stroke": "#fff",
+         "stroke-width": "1.6"
+        },
+        "children": []
+       }
+      ]
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M898 218 Q878 160 872 88",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "18.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M883.7 166.8 Q875.5 129.8 872 88",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "14",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M898 218 Q889.6 193.6 883.7 166.8",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "16.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "872",
+       "cy": "88",
+       "r": "9.2",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M990 218 Q924 254 872 214",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "18.6",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M937 234.8 Q902.2 237.2 872 214",
+       "stroke": "var(--rd-skin)",
+       "stroke-width": "14",
+       "stroke-linecap": "round",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M990 218 Q962.3 233.1 937 234.8",
+       "stroke": "var(--rd-top)",
+       "stroke-width": "16.4",
+       "stroke-linecap": "butt",
+       "fill": "none"
+      },
+      "children": []
+     },
+     {
+      "tag": "circle",
+      "attrs": {
+       "cx": "872",
+       "cy": "214",
+       "r": "9.2",
+       "fill": "var(--rd-skin)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.2"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M1002 40 H1138 A16 16 0 0 1 1154 56 V110 A16 16 0 0 1 1138 126 H1002 A16 16 0 0 1 986 110 V93.3 L968 116 L986 67.5 A16 16 0 0 1 1002 40 Z",
+       "fill": "var(--ill-bubble)",
+       "stroke": "var(--ill-ink)",
+       "stroke-width": "2.4",
+       "stroke-linejoin": "round"
+      },
+      "children": []
+     },
+     {
+      "tag": "text",
+      "attrs": {
+       "x": "1070",
+       "y": "92.2",
+       "class": "ill-say",
+       "style": "font-size:27px",
+       "text-anchor": "middle"
+      },
+      "children": [
+       "Still blue!"
+      ]
+     }
+    ]
+   },
+   "tag": "AI illustration"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "variant": "gi",
+ "number": {
+  "unit": "u0847",
+  "ref": "pt:6"
+ },
+ "title": "u0848",
+ "scale": {
+  "label": "Application on 31 January 2023, journal on 19 December 2023 after 322 days, certificate on 22 April 2024 after 125 more days",
+  "marks": [
+   {
+    "left": "0%",
+    "final": false
+   },
+   {
+    "left": "72.0%",
+    "final": false
+   },
+   {
+    "left": "100%",
+    "final": true
+   }
+  ],
+  "spans": [
+   {
+    "left": "36.0%",
+    "text": "322 days"
+   },
+   {
+    "left": "86.0%",
+    "text": "125 days"
+   }
+  ],
+  "ticks": [
+   {
+    "left": "0",
+    "side": "l",
+    "text": "Jan 2023"
+   },
+   {
+    "left": "72.0%",
+    "side": "mid",
+    "text": "Dec 2023"
+   },
+   {
+    "left": "100%",
+    "side": "r",
+    "text": "Apr 2024"
+   }
+  ]
+ },
+ "steps": [
+  "u0849",
+  "u0850",
+  "u0851"
+ ]
+}

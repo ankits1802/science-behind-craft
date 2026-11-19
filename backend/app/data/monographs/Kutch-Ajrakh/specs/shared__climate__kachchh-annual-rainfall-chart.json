@@ -1,0 +1,1816 @@
+{
+ "form": "series",
+ "drawing": null,
+ "dots": null,
+ "rows": null,
+ "figure": null,
+ "series": {
+  "classes": [
+   "fig",
+   "rain-fig"
+  ],
+  "head": {
+   "number": {
+    "unit": "u0644",
+    "ref": "pt:5"
+   },
+   "title": "u0645",
+   "titleId": "fig5-t",
+   "dek": "u0646",
+   "dekId": "fig5-d"
+  },
+  "plot": {
+   "classes": [
+    "rain2"
+   ],
+   "label": "Bar chart of annual rainfall over Kachchh, 1981 to 2025. Use the arrow keys to read each year.",
+   "comp": "rain",
+   "series": [
+    [
+     1981,
+     518
+    ],
+    [
+     1982,
+     331
+    ],
+    [
+     1983,
+     406
+    ],
+    [
+     1984,
+     412
+    ],
+    [
+     1985,
+     226
+    ],
+    [
+     1986,
+     238
+    ],
+    [
+     1987,
+     69
+    ],
+    [
+     1988,
+     589
+    ],
+    [
+     1989,
+     446
+    ],
+    [
+     1990,
+     410
+    ],
+    [
+     1991,
+     184
+    ],
+    [
+     1992,
+     564
+    ],
+    [
+     1993,
+     338
+    ],
+    [
+     1994,
+     800
+    ],
+    [
+     1995,
+     245
+    ],
+    [
+     1996,
+     309
+    ],
+    [
+     1997,
+     573
+    ],
+    [
+     1998,
+     336
+    ],
+    [
+     1999,
+     201
+    ],
+    [
+     2000,
+     293
+    ],
+    [
+     2001,
+     288
+    ],
+    [
+     2002,
+     100
+    ],
+    [
+     2003,
+     583
+    ],
+    [
+     2004,
+     239
+    ],
+    [
+     2005,
+     407
+    ],
+    [
+     2006,
+     729
+    ],
+    [
+     2007,
+     581
+    ],
+    [
+     2008,
+     338
+    ],
+    [
+     2009,
+     462
+    ],
+    [
+     2010,
+     784
+    ],
+    [
+     2011,
+     707
+    ],
+    [
+     2012,
+     280
+    ],
+    [
+     2013,
+     587
+    ],
+    [
+     2014,
+     309
+    ],
+    [
+     2015,
+     499
+    ],
+    [
+     2016,
+     362
+    ],
+    [
+     2017,
+     570
+    ],
+    [
+     2018,
+     158
+    ],
+    [
+     2019,
+     577
+    ],
+    [
+     2020,
+     844
+    ],
+    [
+     2021,
+     593
+    ],
+    [
+     2022,
+     717
+    ],
+    [
+     2023,
+     606
+    ],
+    [
+     2024,
+     703
+    ],
+    [
+     2025,
+     710
+    ]
+   ],
+   "drawing": {
+    "tag": "svg",
+    "attrs": {
+     "viewBox": "0 0 1000 360",
+     "preserveAspectRatio": "none",
+     "aria-hidden": "true"
+    },
+    "children": [
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "grid",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "280.0",
+       "y2": "280.0"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "grid",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "200.0",
+       "y2": "200.0"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "grid",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "120.0",
+       "y2": "120.0"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "grid",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "40.0",
+       "y2": "40.0"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "0",
+       "x": "3.33",
+       "y": "152.62",
+       "width": "15.56",
+       "height": "207.38"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "1",
+       "x": "25.56",
+       "y": "227.78",
+       "width": "15.56",
+       "height": "132.22"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "2",
+       "x": "47.78",
+       "y": "197.79",
+       "width": "15.56",
+       "height": "162.21"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "3",
+       "x": "70.00",
+       "y": "195.25",
+       "width": "15.56",
+       "height": "164.75"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "4",
+       "x": "92.22",
+       "y": "269.57",
+       "width": "15.56",
+       "height": "90.43"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "5",
+       "x": "114.44",
+       "y": "264.62",
+       "width": "15.56",
+       "height": "95.38"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar ext",
+       "data-i": "6",
+       "x": "136.67",
+       "y": "332.21",
+       "width": "15.56",
+       "height": "27.79"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "7",
+       "x": "158.89",
+       "y": "124.54",
+       "width": "15.56",
+       "height": "235.46"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "8",
+       "x": "181.11",
+       "y": "181.54",
+       "width": "15.56",
+       "height": "178.46"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "9",
+       "x": "203.33",
+       "y": "195.95",
+       "width": "15.56",
+       "height": "164.05"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "10",
+       "x": "225.56",
+       "y": "286.27",
+       "width": "15.56",
+       "height": "73.73"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "11",
+       "x": "247.78",
+       "y": "134.30",
+       "width": "15.56",
+       "height": "225.70"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "12",
+       "x": "270.00",
+       "y": "224.93",
+       "width": "15.56",
+       "height": "135.07"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "13",
+       "x": "292.22",
+       "y": "39.89",
+       "width": "15.56",
+       "height": "320.11"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "14",
+       "x": "314.44",
+       "y": "262.11",
+       "width": "15.56",
+       "height": "97.89"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "15",
+       "x": "336.67",
+       "y": "236.44",
+       "width": "15.56",
+       "height": "123.56"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "16",
+       "x": "358.89",
+       "y": "130.80",
+       "width": "15.56",
+       "height": "229.20"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "17",
+       "x": "381.11",
+       "y": "225.59",
+       "width": "15.56",
+       "height": "134.41"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "18",
+       "x": "403.33",
+       "y": "279.68",
+       "width": "15.56",
+       "height": "80.32"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "19",
+       "x": "425.56",
+       "y": "242.67",
+       "width": "15.56",
+       "height": "117.33"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "20",
+       "x": "447.78",
+       "y": "244.69",
+       "width": "15.56",
+       "height": "115.31"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "21",
+       "x": "470.00",
+       "y": "320.17",
+       "width": "15.56",
+       "height": "39.83"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "22",
+       "x": "492.22",
+       "y": "126.97",
+       "width": "15.56",
+       "height": "233.03"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "23",
+       "x": "514.44",
+       "y": "264.27",
+       "width": "15.56",
+       "height": "95.73"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "24",
+       "x": "536.67",
+       "y": "197.32",
+       "width": "15.56",
+       "height": "162.68"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "25",
+       "x": "558.89",
+       "y": "68.26",
+       "width": "15.56",
+       "height": "291.74"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "26",
+       "x": "581.11",
+       "y": "127.49",
+       "width": "15.56",
+       "height": "232.51"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "27",
+       "x": "603.33",
+       "y": "224.94",
+       "width": "15.56",
+       "height": "135.06"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "28",
+       "x": "625.56",
+       "y": "175.18",
+       "width": "15.56",
+       "height": "184.82"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "29",
+       "x": "647.78",
+       "y": "46.31",
+       "width": "15.56",
+       "height": "313.69"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "30",
+       "x": "670.00",
+       "y": "77.02",
+       "width": "15.56",
+       "height": "282.98"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "31",
+       "x": "692.22",
+       "y": "248.05",
+       "width": "15.56",
+       "height": "111.95"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "32",
+       "x": "714.44",
+       "y": "125.19",
+       "width": "15.56",
+       "height": "234.81"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "33",
+       "x": "736.67",
+       "y": "236.56",
+       "width": "15.56",
+       "height": "123.44"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "34",
+       "x": "758.89",
+       "y": "160.50",
+       "width": "15.56",
+       "height": "199.50"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "35",
+       "x": "781.11",
+       "y": "215.30",
+       "width": "15.56",
+       "height": "144.70"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "36",
+       "x": "803.33",
+       "y": "131.94",
+       "width": "15.56",
+       "height": "228.06"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "37",
+       "x": "825.56",
+       "y": "296.83",
+       "width": "15.56",
+       "height": "63.17"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "38",
+       "x": "847.78",
+       "y": "129.32",
+       "width": "15.56",
+       "height": "230.68"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar ext",
+       "data-i": "39",
+       "x": "870.00",
+       "y": "22.53",
+       "width": "15.56",
+       "height": "337.47"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "40",
+       "x": "892.22",
+       "y": "122.75",
+       "width": "15.56",
+       "height": "237.25"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "41",
+       "x": "914.44",
+       "y": "73.01",
+       "width": "15.56",
+       "height": "286.99"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "42",
+       "x": "936.67",
+       "y": "117.53",
+       "width": "15.56",
+       "height": "242.47"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "43",
+       "x": "958.89",
+       "y": "79.00",
+       "width": "15.56",
+       "height": "281.00"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "bar",
+       "data-i": "44",
+       "x": "981.11",
+       "y": "75.90",
+       "width": "15.56",
+       "height": "284.10"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "mean",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "180.3",
+       "y2": "180.3"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "ev",
+       "x1": "188.9",
+       "x2": "188.9",
+       "y1": "0",
+       "y2": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "ev",
+       "x1": "455.6",
+       "x2": "455.6",
+       "y1": "0",
+       "y2": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "ev",
+       "x1": "588.9",
+       "x2": "588.9",
+       "y1": "0",
+       "y2": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "ev",
+       "x1": "922.2",
+       "x2": "922.2",
+       "y1": "0",
+       "y2": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "ev lead",
+       "x1": "144.4",
+       "x2": "144.4",
+       "y1": "300.0",
+       "y2": "328.0",
+       "style": "stroke-dasharray:none"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "trend-h",
+       "x1": "11.1",
+       "y1": "236.4",
+       "x2": "988.9",
+       "y2": "111.9"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "trend",
+       "x1": "11.1",
+       "y1": "236.4",
+       "x2": "988.9",
+       "y2": "111.9"
+      },
+      "children": []
+     },
+     {
+      "tag": "line",
+      "attrs": {
+       "class": "base",
+       "x1": "0",
+       "x2": "1000",
+       "y1": "360",
+       "y2": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "0",
+       "x": "0.00",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "1",
+       "x": "22.22",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "2",
+       "x": "44.44",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "3",
+       "x": "66.67",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "4",
+       "x": "88.89",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "5",
+       "x": "111.11",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "6",
+       "x": "133.33",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "7",
+       "x": "155.56",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "8",
+       "x": "177.78",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "9",
+       "x": "200.00",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "10",
+       "x": "222.22",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "11",
+       "x": "244.44",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "12",
+       "x": "266.67",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "13",
+       "x": "288.89",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "14",
+       "x": "311.11",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "15",
+       "x": "333.33",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "16",
+       "x": "355.56",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "17",
+       "x": "377.78",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "18",
+       "x": "400.00",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "19",
+       "x": "422.22",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "20",
+       "x": "444.44",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "21",
+       "x": "466.67",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "22",
+       "x": "488.89",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "23",
+       "x": "511.11",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "24",
+       "x": "533.33",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "25",
+       "x": "555.56",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "26",
+       "x": "577.78",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "27",
+       "x": "600.00",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "28",
+       "x": "622.22",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "29",
+       "x": "644.44",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "30",
+       "x": "666.67",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "31",
+       "x": "688.89",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "32",
+       "x": "711.11",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "33",
+       "x": "733.33",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "34",
+       "x": "755.56",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "35",
+       "x": "777.78",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "36",
+       "x": "800.00",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "37",
+       "x": "822.22",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "38",
+       "x": "844.44",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "39",
+       "x": "866.67",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "40",
+       "x": "888.89",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "41",
+       "x": "911.11",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "42",
+       "x": "933.33",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "43",
+       "x": "955.56",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     },
+     {
+      "tag": "rect",
+      "attrs": {
+       "class": "hit",
+       "data-i": "44",
+       "x": "977.78",
+       "y": "0",
+       "width": "22.22",
+       "height": "360"
+      },
+      "children": []
+     }
+    ]
+   },
+   "labels": [
+    {
+     "classes": [
+      "r2l",
+      "y"
+     ],
+     "left": "0.00%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "0"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "y"
+     ],
+     "left": "0.00%",
+     "width": null,
+     "top": "77.78%",
+     "hidden": false,
+     "text": [
+      "200"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "y"
+     ],
+     "left": "0.00%",
+     "width": null,
+     "top": "55.56%",
+     "hidden": false,
+     "text": [
+      "400"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "y"
+     ],
+     "left": "0.00%",
+     "width": null,
+     "top": "33.33%",
+     "hidden": false,
+     "text": [
+      "600"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "y"
+     ],
+     "left": "0.00%",
+     "width": null,
+     "top": "11.11%",
+     "hidden": false,
+     "text": [
+      "800 mm"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x"
+     ],
+     "left": "1.11%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "1981"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x",
+      "mid"
+     ],
+     "left": "21.11%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "1990"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x"
+     ],
+     "left": "43.33%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "2000"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x",
+      "mid"
+     ],
+     "left": "65.56%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "2010"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x"
+     ],
+     "left": "87.78%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "2020"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "x"
+     ],
+     "left": "98.89%",
+     "width": null,
+     "top": "100.00%",
+     "hidden": false,
+     "text": [
+      "2025"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "end"
+     ],
+     "left": "100.00%",
+     "width": null,
+     "top": "31.07%",
+     "hidden": false,
+     "text": [
+      {
+       "m": "b",
+       "c": [
+        "+71 mm a decade"
+       ]
+      },
+      "Theil–Sen trend"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "end"
+     ],
+     "left": "100.00%",
+     "width": null,
+     "top": "55.07%",
+     "hidden": false,
+     "text": [
+      {
+       "m": "b",
+       "c": [
+        "449 mm"
+       ]
+      },
+      "mean, 1981–2025"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "ann"
+     ],
+     "left": "87.78%",
+     "width": null,
+     "top": "6.26%",
+     "hidden": false,
+     "text": [
+      "844 mm, 2020"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "ann",
+      "lo"
+     ],
+     "left": "14.44%",
+     "width": null,
+     "top": "83.33%",
+     "hidden": false,
+     "text": [
+      "69 mm, 1987"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "evk"
+     ],
+     "left": "18.89%",
+     "width": null,
+     "top": null,
+     "hidden": true,
+     "text": [
+      "a"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "evk"
+     ],
+     "left": "45.56%",
+     "width": null,
+     "top": null,
+     "hidden": true,
+     "text": [
+      "b"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "evk"
+     ],
+     "left": "58.89%",
+     "width": null,
+     "top": null,
+     "hidden": true,
+     "text": [
+      "c"
+     ]
+    },
+    {
+     "classes": [
+      "r2l",
+      "evk"
+     ],
+     "left": "92.22%",
+     "width": null,
+     "top": null,
+     "hidden": true,
+     "text": [
+      "d"
+     ]
+    }
+   ]
+  },
+  "events": [
+   "u0647",
+   "u0648",
+   "u0649",
+   "u0650"
+  ],
+  "table": {
+   "summary": "All 45 values",
+   "caption": "Annual rainfall over Kachchh district, millimetres, 1981 to 2025",
+   "head": [
+    "u0651",
+    "u0652",
+    "u0653",
+    "u0654",
+    "u0655",
+    "u0656",
+    "u0657",
+    "u0658",
+    "u0659",
+    "u0660",
+    "u0661"
+   ],
+   "rows": [
+    {
+     "head": "u0662",
+     "cells": [
+      null,
+      "u0663",
+      "u0664",
+      "u0665",
+      "u0666",
+      "u0667",
+      "u0668",
+      "u0669",
+      "u0670",
+      "u0671"
+     ]
+    },
+    {
+     "head": "u0672",
+     "cells": [
+      "u0673",
+      "u0674",
+      "u0675",
+      "u0676",
+      "u0677",
+      "u0678",
+      "u0679",
+      "u0680",
+      "u0681",
+      "u0682"
+     ]
+    },
+    {
+     "head": "u0683",
+     "cells": [
+      "u0684",
+      "u0685",
+      "u0686",
+      "u0687",
+      "u0688",
+      "u0689",
+      "u0690",
+      "u0691",
+      "u0692",
+      "u0693"
+     ]
+    },
+    {
+     "head": "u0694",
+     "cells": [
+      "u0695",
+      "u0696",
+      "u0697",
+      "u0698",
+      "u0699",
+      "u0700",
+      "u0701",
+      "u0702",
+      "u0703",
+      "u0704"
+     ]
+    },
+    {
+     "head": "u0705",
+     "cells": [
+      "u0706",
+      "u0707",
+      "u0708",
+      "u0709",
+      "u0710",
+      "u0711",
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   ]
+  },
+  "download": {
+   "href": "data:text/csv;charset=utf-8,year%2Cannual_rainfall_mm%0A1981%2C518.5%0A1982%2C330.5%0A1983%2C405.5%0A1984%2C411.9%0A1985%2C226.1%0A1986%2C238.4%0A1987%2C69.5%0A1988%2C588.7%0A1989%2C446.1%0A1990%2C410.1%0A1991%2C184.3%0A1992%2C564.2%0A1993%2C337.7%0A1994%2C800.3%0A1995%2C244.7%0A1996%2C308.9%0A1997%2C573.0%0A1998%2C336.0%0A1999%2C200.8%0A2000%2C293.3%0A2001%2C288.3%0A2002%2C99.6%0A2003%2C582.6%0A2004%2C239.3%0A2005%2C406.7%0A2006%2C729.3%0A2007%2C581.3%0A2008%2C337.7%0A2009%2C462.1%0A2010%2C784.2%0A2011%2C707.4%0A2012%2C279.9%0A2013%2C587.0%0A2014%2C308.6%0A2015%2C498.8%0A2016%2C361.7%0A2017%2C570.1%0A2018%2C157.9%0A2019%2C576.7%0A2020%2C843.7%0A2021%2C593.1%0A2022%2C717.5%0A2023%2C606.2%0A2024%2C702.5%0A2025%2C710.2",
+   "fileName": "KalaVigyan_Kachchh_CHIRPS-3-0_annual-rainfall_1981-2025.csv",
+   "label": "Download the 45 values"
+  },
+  "source": "u0712"
+ }
+}

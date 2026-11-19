@@ -1,0 +1,39 @@
+{
+ "setting": "testimony",
+ "testimony": {
+  "kicker": "u0911",
+  "kickerId": "d7-vk",
+  "evidence": "Published testimony",
+  "quote": "u0912",
+  "credit": "u0913",
+  "meta": "u0914",
+  "echo": {
+   "quote": "u0915",
+   "attribution": [
+    {
+     "m": "s",
+     "c": [
+      "The same, in another voice, in Khamir’s Ajrakh ",
+      {
+       "m": "cite",
+       "key": "sa:kh_iron",
+       "g": [
+        "g17"
+       ],
+       "shown": [
+        {
+         "number": 17,
+         "title": "Adapting to the present"
+        }
+       ],
+       "c": [
+        "exhibition."
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "coda": null
+}

@@ -1,0 +1,253 @@
+{
+ "form": "drawing",
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "viewBox": "0 0 480 102",
+   "data-fit": "",
+   "role": "img",
+   "aria-label": "Hours in the red bath: 2 to 3 in Karolia and Buch, up to 4 for the purest reds in the GI journal"
+  },
+  "children": [
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "128.0",
+     "x2": "128.0",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "128.0",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "176.8",
+     "x2": "176.8",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "176.8",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "1"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "225.6",
+     "x2": "225.6",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "225.6",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "2"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "274.4",
+     "x2": "274.4",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "274.4",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "3"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "323.2",
+     "x2": "323.2",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "323.2",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "4"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "372.0",
+     "x2": "372.0",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "372.0",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "5"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "21",
+     "class": "dl"
+    },
+    "children": [
+     "Karolia and Buch"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dbar",
+     "data-row": "kb",
+     "x": "128.0",
+     "y": "9",
+     "width": "146.4",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "dl2",
+     "x": "280.4",
+     "y": "21"
+    },
+    "children": [
+     "2 to 3 hours"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "59",
+     "class": "dl"
+    },
+    "children": [
+     "GI journal"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dbar",
+     "data-row": "gi",
+     "x": "128.0",
+     "y": "47",
+     "width": "146.4",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dhatch",
+     "x": "274.4",
+     "y": "47",
+     "width": "48.8",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "274.4",
+     "y": "47",
+     "width": "48.8",
+     "height": "16",
+     "fill": "none",
+     "stroke": "var(--chart-differ)",
+     "stroke-width": "1"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "dl2",
+     "x": "329.2",
+     "y": "59"
+    },
+    "children": [
+     "up to 4 hours"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dax",
+     "x1": "128",
+     "x2": "128",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   }
+  ]
+ },
+ "dots": null,
+ "rows": null,
+ "figure": null,
+ "series": null
+}

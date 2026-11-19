@@ -1,0 +1,200 @@
+{
+ "section": 1,
+ "art": {
+  "tag": "svg",
+  "attrs": {
+   "viewBox": "0 0 1200 800",
+   "preserveAspectRatio": "xMidYMid slice",
+   "id": "vid-svg",
+   "role": "img",
+   "aria-label": "AI video, 8 seconds: cloth rises out of the vat bright green and turns blue from the top down"
+  },
+  "children": [
+   {
+    "tag": "defs",
+    "attrs": {},
+    "children": [
+     {
+      "tag": "mask",
+      "attrs": {
+       "id": "v-ox-mask",
+       "maskUnits": "userSpaceOnUse",
+       "x": "0",
+       "y": "0",
+       "width": "1200",
+       "height": "800"
+      },
+      "children": [
+       {
+        "tag": "rect",
+        "attrs": {
+         "id": "v-ox",
+         "x": "500",
+         "y": "0",
+         "width": "210",
+         "height": "600",
+         "fill": "url(#ox-front)"
+        },
+        "children": []
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "use",
+    "attrs": {
+     "href": "#ai-vat-back",
+     "width": "1200",
+     "height": "800"
+    },
+    "children": []
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "clip-path": "url(#vat-above)"
+    },
+    "children": [
+     {
+      "tag": "g",
+      "attrs": {
+       "id": "v-cloth"
+      },
+      "children": [
+       {
+        "tag": "path",
+        "attrs": {
+         "d": "M542 560 C534 500 552 420 542 330 C534 250 548 150 540 40 L540 12 L664 12 L664 40 C672 150 660 250 668 330 C676 420 662 500 666 560 Q650 570 634 559 Q618 568 602 558 Q586 569 570 559 Q556 568 542 560 Z",
+         "fill": "url(#vat-green)"
+        },
+        "children": []
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "mask": "url(#v-ox-mask)"
+        },
+        "children": [
+         {
+          "tag": "path",
+          "attrs": {
+           "d": "M542 560 C534 500 552 420 542 330 C534 250 548 150 540 40 L540 12 L664 12 L664 40 C672 150 660 250 668 330 C676 420 662 500 666 560 Q650 570 634 559 Q618 568 602 558 Q586 569 570 559 Q556 568 542 560 Z",
+           "fill": "url(#vat-blue)"
+          },
+          "children": []
+         }
+        ]
+       },
+       {
+        "tag": "g",
+        "attrs": {
+         "clip-path": "url(#vat-cloth-clip)"
+        },
+        "children": [
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "520",
+           "y": "0",
+           "width": "170",
+           "height": "580",
+           "fill": "url(#ai-gach)"
+          },
+          "children": []
+         },
+         {
+          "tag": "rect",
+          "attrs": {
+           "x": "520",
+           "y": "0",
+           "width": "170",
+           "height": "580",
+           "fill": "url(#vat-light)"
+          },
+          "children": []
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "tag": "g",
+    "attrs": {
+     "id": "v-drips",
+     "fill": "#8db54e"
+    },
+    "children": [
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M566 572 q4 9 0 13 q-4 -4 0 -13z"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M598 580 q4 9 0 13 q-4 -4 0 -13z"
+      },
+      "children": []
+     },
+     {
+      "tag": "path",
+      "attrs": {
+       "d": "M630 574 q4 9 0 13 q-4 -4 0 -13z"
+      },
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "use",
+    "attrs": {
+     "href": "#ai-vat-pole",
+     "width": "1200",
+     "height": "800"
+    },
+    "children": []
+   },
+   {
+    "tag": "use",
+    "attrs": {
+     "href": "#ai-vat-front",
+     "width": "1200",
+     "height": "800"
+    },
+    "children": []
+   }
+  ]
+ },
+ "phase": "u1037",
+ "playback": {
+  "durationMs": 8000,
+  "stepMs": 20,
+  "restMs": 8000
+ },
+ "caption": [
+  "The dip of ",
+  {
+   "m": "link",
+   "cls": "inline",
+   "href": "#fig1",
+   "c": [
+    {
+     "m": "figref",
+     "ref": "chem:1",
+     "c": [
+      "Fig. 1"
+     ]
+    }
+   ]
+  },
+  ", moving. Drawn from sentence 4 of this section; not a recording."
+ ],
+ "made": "2026-11-18",
+ "downloadKey": "1",
+ "downloadName": "kutch-ajrakh-answer-section-1-video"
+}

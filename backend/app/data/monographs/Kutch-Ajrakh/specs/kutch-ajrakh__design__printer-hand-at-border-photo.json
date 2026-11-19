@@ -1,0 +1,29 @@
+{
+ "setting": "figure",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/ajrakh-artisan-hand-and-border.jpg",
+  "width": 720,
+  "height": 720,
+  "alt": "An artisan’s hand at the edge of a printed ajrakh, beside its bands of border print.",
+  "loading": "eager",
+  "fetchPriority": null,
+  "decoding": null
+ },
+ "figure": {
+  "classes": [
+   "mk-plate"
+  ],
+  "crop": null,
+  "captions": [
+   {
+    "unit": "u0909",
+    "look": false
+   }
+  ],
+  "credit": "u0910"
+ },
+ "row": null,
+ "pull": null,
+ "opener": null,
+ "masthead": null
+}

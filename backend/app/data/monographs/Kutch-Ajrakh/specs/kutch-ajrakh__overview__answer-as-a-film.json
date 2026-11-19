@@ -1,0 +1,97 @@
+{
+ "title": "u1045",
+ "meta": "u1046",
+ "sceneLabel": "u1047",
+ "subtitle": "u1048",
+ "scenes": [
+  {
+   "art": {
+    "symbol": "ai-vat",
+    "viewBox": "240 214 720 405",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "Tannin, iron and alum make the colours hold",
+   "field": "Chemistry",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-route",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "From Sindh to Kutch at a king's invitation",
+   "field": "History",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-cloth",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "Blue, red, black and white, printed both sides",
+   "field": "Overview",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-river",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "When the river died and the iron rose",
+   "field": "Geography and water",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-bolts",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "From barter with herders to running yardage",
+   "field": "Economics",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-mizan",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "Balance, order and the priest-king's cloud motif",
+   "field": "Design",
+   "forming": false
+  },
+  {
+   "art": {
+    "symbol": "ai-saaj",
+    "viewBox": "60 0 1080 608",
+    "width": 1200,
+    "height": 800
+   },
+   "title": "Camel dung, myrobalan and lime prepare the cloth",
+   "field": "Process",
+   "forming": true
+  }
+ ],
+ "playback": {
+  "durationMs": 56000,
+  "stepMs": 100,
+  "restMs": 0
+ },
+ "tags": [
+  "AI video",
+  "AI music and sound"
+ ],
+ "note": "Subtitles are the cited sentences, one from each section.",
+ "downloadName": "kutch-ajrakh-answer-film",
+ "subtitlesName": "kutch-ajrakh-answer-film-subtitles"
+}

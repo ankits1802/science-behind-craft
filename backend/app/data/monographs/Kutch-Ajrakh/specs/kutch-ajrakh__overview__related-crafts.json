@@ -1,0 +1,106 @@
+{
+ "title": "u0919",
+ "kicker": "Shared materials and methods",
+ "description": "u0920",
+ "weave": "pt-weave",
+ "crafts": [
+  {
+   "tile": 6,
+   "swatch": [
+    "Ajrakh after ",
+    {
+     "m": "i",
+     "c": [
+      "pa"
+     ]
+    },
+    ", the alum"
+   ],
+   "top": "Hand Block Printing",
+   "name": "Bagru Hand Block Print",
+   "place": "Rajasthan",
+   "sources": 12,
+   "monograph": true,
+   "gi": true,
+   "shares": [
+    "Shares Alum"
+   ],
+   "sentence": "u0921"
+  },
+  {
+   "tile": 3,
+   "swatch": [
+    "Ajrakh after ",
+    {
+     "m": "i",
+     "c": [
+      "rekh"
+     ]
+    },
+    ", the outline"
+   ],
+   "top": "Hand Block Printing",
+   "name": "Sanganeri Hand Block Printing",
+   "place": "Rajasthan",
+   "sources": 18,
+   "monograph": true,
+   "gi": true,
+   "shares": [
+    "Shares ",
+    {
+     "m": "i",
+     "c": [
+      "rekh"
+     ]
+    }
+   ],
+   "sentence": "u0922"
+  },
+  {
+   "tile": 10,
+   "swatch": [
+    "Ajrakh after ",
+    {
+     "m": "i",
+     "c": [
+      "rang"
+     ]
+    },
+    ", red on alum"
+   ],
+   "top": "Other Textiles based Craft",
+   "name": "Machilipatnam Kalamkari",
+   "place": "Andhra Pradesh",
+   "sources": 21,
+   "monograph": true,
+   "gi": true,
+   "shares": [
+    "Shares Alum"
+   ],
+   "sentence": "u0923"
+  },
+  {
+   "tile": 11,
+   "swatch": [
+    "Ajrakh after ",
+    {
+     "m": "i",
+     "c": [
+      "minakari"
+     ]
+    },
+    ", madder red"
+   ],
+   "top": "Hand Block Printing",
+   "name": "Bagh Prints of Madhya Pradesh",
+   "place": "Madhya Pradesh",
+   "sources": 24,
+   "monograph": true,
+   "gi": true,
+   "shares": [
+    "Shares Alizarin"
+   ],
+   "sentence": "u0924"
+  }
+ ]
+}

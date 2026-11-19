@@ -1,0 +1,217 @@
+{
+ "form": "drawing",
+ "drawing": {
+  "tag": "svg",
+  "attrs": {
+   "viewBox": "0 0 480 102",
+   "data-fit": "",
+   "role": "img",
+   "aria-label": "Days to set a vat: 3 to 4 for a hydros vat; about one month, or months, for a natural vat"
+  },
+  "children": [
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "128.0",
+     "x2": "128.0",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "128.0",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "0"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "209.3",
+     "x2": "209.3",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "209.3",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "30"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "290.7",
+     "x2": "290.7",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "290.7",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "60"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dgrid",
+     "x1": "372.0",
+     "x2": "372.0",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "372.0",
+     "y": "97",
+     "text-anchor": "middle"
+    },
+    "children": [
+     "90"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "21",
+     "class": "dl"
+    },
+    "children": [
+     "Hydros vat"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dbar",
+     "data-row": "synthetic",
+     "x": "128.0",
+     "y": "9",
+     "width": "10.8",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "dl2",
+     "x": "144.8",
+     "y": "21"
+    },
+    "children": [
+     "3 to 4 days"
+    ]
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "x": "0",
+     "y": "59",
+     "class": "dl"
+    },
+    "children": [
+     "Natural vat"
+    ]
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dbar",
+     "data-row": "natural",
+     "x": "128.0",
+     "y": "47",
+     "width": "81.3",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "class": "dhatch",
+     "x": "209.3",
+     "y": "47",
+     "width": "81.3",
+     "height": "16"
+    },
+    "children": []
+   },
+   {
+    "tag": "rect",
+    "attrs": {
+     "x": "209.3",
+     "y": "47",
+     "width": "81.3",
+     "height": "16",
+     "fill": "none",
+     "stroke": "var(--chart-differ)",
+     "stroke-width": "1"
+    },
+    "children": []
+   },
+   {
+    "tag": "path",
+    "attrs": {
+     "d": "M292.7 47 L300.7 55 L292.7 63 Z",
+     "fill": "var(--chart-differ)"
+    },
+    "children": []
+   },
+   {
+    "tag": "text",
+    "attrs": {
+     "class": "dl2",
+     "x": "306.7",
+     "y": "59"
+    },
+    "children": [
+     "a month, or months"
+    ]
+   },
+   {
+    "tag": "line",
+    "attrs": {
+     "class": "dax",
+     "x1": "128",
+     "x2": "128",
+     "y1": "0",
+     "y2": "82"
+    },
+    "children": []
+   }
+  ]
+ },
+ "dots": null,
+ "rows": null,
+ "figure": null,
+ "series": null
+}

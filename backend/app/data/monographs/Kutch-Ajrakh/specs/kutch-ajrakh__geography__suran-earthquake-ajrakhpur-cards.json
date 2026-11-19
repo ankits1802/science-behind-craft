@@ -1,0 +1,348 @@
+{
+ "head": {
+  "number": {
+   "unit": "u0602",
+   "ref": "pt:4"
+  },
+  "title": "u0603",
+  "titleId": "fig4-t",
+  "dek": "u0604",
+  "dekId": null
+ },
+ "first": [
+  {
+   "card": {
+    "visual": "kutch-ajrakh/geography/suran-flowing-north-map",
+    "when": "u0605",
+    "title": "u0606",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0607",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0608",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0609",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  },
+  {
+   "card": {
+    "visual": "kutch-ajrakh/geography/suran-dry-below-tapar-dam-map",
+    "when": "u0610",
+    "title": "u0611",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0612",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0613",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  },
+  {
+   "card": {
+    "visual": "kutch-ajrakh/geology/dhamadka-epicentre-circle-map",
+    "when": "u0614",
+    "title": "u0615",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0616",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0617",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  }
+ ],
+ "source": {
+  "tag": "p",
+  "classes": [
+   "src-line",
+   "kv-src-13"
+  ],
+  "unit": "u0618",
+  "text": null
+ },
+ "more": [
+  {
+   "card": {
+    "visual": "kutch-ajrakh/history/dhamadka-to-ajrakhpur-move-map",
+    "when": "u0619",
+    "title": "u0620",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0621",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": null,
+      "text": [
+       {
+        "m": "s",
+        "src": "S05",
+        "c": [
+         "Ajrakhpur was established in May 2001 as the Khatri community's model of best craft practice after the Gujarat ",
+         {
+          "m": "cite",
+          "key": "pt:C024",
+          "g": [
+           "g11"
+          ],
+          "shown": [
+           {
+            "number": 11,
+            "title": "Ajrakh: From Caste Dress to Catwalk"
+           }
+          ],
+          "c": [
+           "earthquake."
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0622",
+      "text": null
+     }
+    ],
+    "differs": {
+     "summary": [
+      "Sources differ on whether Dhamadka was left"
+     ],
+     "body": [
+      {
+       "m": "s",
+       "src": "S20",
+       "c": [
+        "Mongabay reports that the entire village of a hundred families moved from Dhamadka after the devastating earthquake of ",
+        {
+         "m": "cite",
+         "key": "pt:C060",
+         "g": [
+          "g16"
+         ],
+         "shown": [
+          {
+           "number": 16,
+           "title": "Water woes: Kutch's age-old Ajrakh craft"
+          }
+         ],
+         "c": [
+          "2001."
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "m": "s",
+       "src": "S08 S01",
+       "c": [
+        "The GI journal still names Dhamadka, with Ajrakhpur and Khavda, as one of the three villages that keep up the ",
+        {
+         "m": "cite",
+         "key": "pt:C003",
+         "g": [
+          "g12",
+          "g1"
+         ],
+         "shown": [
+          {
+           "number": 1,
+           "title": "GI Journal No. 188: Kutch Ajrakh"
+          },
+          {
+           "number": 12,
+           "title": "AJRAKH- A Textile Tradition in Transition"
+          }
+         ],
+         "c": [
+          "tradition."
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "component": null
+  },
+  {
+   "card": {
+    "visual": "kutch-ajrakh/geology/ajrakhpur-borewell-depth",
+    "when": "u0623",
+    "title": "u0624",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "kv-scale"
+      ],
+      "unit": "u0625",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0626",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0627",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  },
+  {
+   "card": {
+    "visual": "kutch-ajrakh/ecology/effluent-treatment-stats",
+    "when": "u0630",
+    "title": "u0631",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0632",
+      "text": null
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0633",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  },
+  {
+   "card": {
+    "visual": "kutch-ajrakh/geography/lower-sindh-ajrak-survey-stats",
+    "when": "u0637",
+    "title": "u0638",
+    "lines": [
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": null,
+      "text": [
+       {
+        "m": "s",
+        "src": "S07",
+        "c": [
+         "Bilgrami's two-year survey of Lower Sindh, published as a book in 1990, recorded 21 stages, 15 centres and 78 master craftsmen of ",
+         {
+          "m": "cite",
+          "key": "pt:C027",
+          "g": [
+           "g40"
+          ],
+          "shown": [
+           {
+            "number": 40,
+            "title": "Ajrak: Cloth from the Soil of Sindh"
+           }
+          ],
+          "c": [
+           "ajrak."
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "tag": "p",
+      "classes": [
+       "ws-t"
+      ],
+      "unit": "u0639",
+      "text": null
+     }
+    ],
+    "differs": null
+   },
+   "component": null
+  },
+  {
+   "card": null,
+   "component": "kutch-ajrakh/chemistry/iron-on-purpose-and-by-accident"
+  }
+ ]
+}

@@ -1,0 +1,136 @@
+{
+ "id": "differ",
+ "titleId": "dif-h",
+ "title": "Experts differ",
+ "intro": "u0564",
+ "items": [
+  {
+   "summary": [
+    "Sources differ: how the vat is reduced"
+   ],
+   "readings": [
+    {
+     "who": "Aino and others, 2018; Mitra, 1992",
+     "unit": "u0565"
+    },
+    {
+     "who": "Impart, 2022",
+     "unit": "u0566"
+    }
+   ],
+   "figure": null
+  },
+  {
+   "summary": [
+    "Sources differ: how long the natural vat ferments"
+   ],
+   "readings": [
+    {
+     "who": "Karolia and Buch, 2008",
+     "unit": "u0567"
+    },
+    {
+     "who": "Clifford, 2012",
+     "unit": "u0568"
+    }
+   ],
+   "figure": null
+  },
+  {
+   "summary": [
+    "Sources differ: how long the iron for ",
+    {
+     "m": "i",
+     "c": [
+      "kut"
+     ]
+    },
+    " ferments"
+   ],
+   "readings": [
+    {
+     "who": "GI Journal No. 188, 2023",
+     "unit": "u0569"
+    },
+    {
+     "who": "Clifford, 2012",
+     "unit": "u0570"
+    }
+   ],
+   "figure": {
+    "number": {
+     "unit": "u0571",
+     "ref": "chem:9"
+    },
+    "title": "u0572",
+    "dek": "u0573",
+    "chart": "kutch-ajrakh/process/kut-fermenting-days-range",
+    "source": "u0574"
+   }
+  },
+  {
+   "summary": [
+    "Sources differ: how long the red bath lasts"
+   ],
+   "readings": [
+    {
+     "who": "Karolia and Buch, 2008",
+     "unit": "u0575"
+    },
+    {
+     "who": "GI Journal No. 188, 2023",
+     "unit": "u0576"
+    }
+   ],
+   "figure": {
+    "number": {
+     "unit": "u0577",
+     "ref": "chem:10"
+    },
+    "title": "u0578",
+    "dek": "u0579",
+    "chart": "kutch-ajrakh/process/red-bath-hours-range",
+    "source": "u0580"
+   }
+  },
+  {
+   "summary": [
+    "Sources differ: the metal of the red pot"
+   ],
+   "readings": [
+    {
+     "who": "GI Journal No. 188, 2023",
+     "unit": "u0581"
+    },
+    {
+     "who": "Karolia and Buch, 2008",
+     "unit": "u0582"
+    }
+   ],
+   "figure": null
+  },
+  {
+   "summary": [
+    "Sources differ: how many times the ",
+    {
+     "m": "i",
+     "c": [
+      "saaj"
+     ]
+    },
+    " is repeated"
+   ],
+   "readings": [
+    {
+     "who": "GI Journal No. 188, 2023",
+     "unit": "u0583"
+    },
+    {
+     "who": "Clifford, 2012",
+     "unit": "u0584"
+    }
+   ],
+   "figure": null
+  }
+ ]
+}
