@@ -107,36 +107,34 @@ def _claim(claim_id: uuid.UUID, text: str, **values: object) -> Claim:
     return Claim(id=claim_id, text=text, **(defaults | values))
 
 
+def _claims() -> list[Claim]:
+    return [
+        _claim(
+            HELD,
+            "A reduced indigo vat is yellow-green.",
+            origin="IMPORT",
+            createdById=None,
+            createdAt=at(90),
+        ),
+        _claim(AGENT_WAITING, "An indigo vat turns blue at its surface.", status="DRAFT", createdAt=at(10)),
+        _claim(LIVE, "Lime keeps the indigo vat alkaline.", status="IN_REVIEW", createdAt=at(30)),
+        _claim(
+            RESEARCHED,
+            "Indigo is reduced to leucoindigo in the vat.",
+            status="IN_REVIEW",
+            origin="LIVE_RESEARCH",
+            createdById=None,
+            createdByKind="SYSTEM",
+            createdAt=at(50),
+        ),
+        _claim(PUBLISHED, "Indigo is insoluble in water.", status="APPROVED", createdAt=at(70)),
+        _claim(UNGATED, "Indigo is a blue dye.", status="DRAFT", createdAt=at(5)),
+        _claim(ADMIN_OWN, "Indigo dyeing needs air.", status="DRAFT", createdById=ADMIN, createdAt=at(15)),
+    ]
+
+
 async def _facts(session: AsyncSession) -> None:
-    session.add_all(
-        [
-            _claim(
-                HELD,
-                "A reduced indigo vat is yellow-green.",
-                origin="IMPORT",
-                createdById=None,
-                createdAt=at(90),
-            ),
-            _claim(
-                AGENT_WAITING, "An indigo vat turns blue at its surface.", status="DRAFT", createdAt=at(10)
-            ),
-            _claim(LIVE, "Lime keeps the indigo vat alkaline.", status="IN_REVIEW", createdAt=at(30)),
-            _claim(
-                RESEARCHED,
-                "Indigo is reduced to leucoindigo in the vat.",
-                status="IN_REVIEW",
-                origin="LIVE_RESEARCH",
-                createdById=None,
-                createdByKind="SYSTEM",
-                createdAt=at(50),
-            ),
-            _claim(PUBLISHED, "Indigo is insoluble in water.", status="APPROVED", createdAt=at(70)),
-            _claim(UNGATED, "Indigo is a blue dye.", status="DRAFT", createdAt=at(5)),
-            _claim(
-                ADMIN_OWN, "Indigo dyeing needs air.", status="DRAFT", createdById=ADMIN, createdAt=at(15)
-            ),
-        ]
-    )
+    session.add_all(_claims())
     await session.flush()
     for claim_id, found_by in ((AGENT_WAITING, "AGENT"), (LIVE, "CONTRIBUTION"), (RESEARCHED, "ANSWER")):
         session.add(
