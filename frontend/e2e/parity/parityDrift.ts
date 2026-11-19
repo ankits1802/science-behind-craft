@@ -5,7 +5,7 @@ export type HeightRecord = { path: string; depth: number; height: string; style:
 export type DriftReport = { step: DriftStep; differences: { path: string; approved: HeightRecord; rendered: HeightRecord }[] };
 
 const BOX_PROPERTIES = ["display", "height", "line-height", "font-size", "font-family", "padding-block-start", "padding-block-end", "border-block-start-width", "border-block-end-width", "margin-block-start", "margin-block-end", "vertical-align", "box-sizing"];
-const MAX_ELEMENTS = 1500;
+const MAX_ELEMENTS = 4000;
 const MAX_DIFFERENCES = 12;
 
 export function driftSteps(approved: Record<string, string>, rendered: Record<string, string>): DriftStep[] {
@@ -24,13 +24,13 @@ export async function sectionHeights(page: Page, id: string): Promise<HeightReco
   return page.evaluate(
     ({ target, properties, max }) => {
       const element = document.getElementById(target);
-      const section = element?.closest("section") ?? element?.parentElement;
+      const section = element?.closest(".kv-ch") ?? element?.closest("section") ?? element?.parentElement;
       if (!section) return [];
-      return [...section.querySelectorAll("*")].slice(0, max).map((node, index) => {
+      return [section, ...section.querySelectorAll("*")].slice(0, max).map((node, index) => {
         const style = getComputedStyle(node);
         const classes = typeof node.className === "string" ? node.className.trim().split(/\s+/).filter(Boolean).slice(0, 3).join(".") : "";
         let depth = 0;
-        for (let up = node.parentElement; up && up !== section; up = up.parentElement) depth += 1;
+        for (let up: Element | null = node; up && up !== section; up = up.parentElement) depth += 1;
         return {
           path: `${index}:${node.tagName.toLowerCase()}${classes ? `.${classes}` : ""}`,
           depth,
