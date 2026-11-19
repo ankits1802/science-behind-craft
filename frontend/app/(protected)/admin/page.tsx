@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, KeyRound, Route, ShieldCheck, SlidersHorizontal, UserCog, type LucideIcon } from "lucide-react";
 
 import { ReviewSwitchCard } from "@/components/admin/ReviewSwitchCard";
+import { SiteBuildCard } from "@/components/admin/SiteBuildCard";
 import { useAuth } from "@/components/AuthProvider";
 import { riseItem, staggerParent } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
@@ -59,6 +60,7 @@ export default function SettingsHubPage() {
         ))}
       </motion.ul>
       <ReviewSwitchCard />
+      <SiteBuildCard />
     </>
   );
 }

@@ -1,0 +1,97 @@
+import uuid
+from typing import Any
+
+import pytest
+
+from app.core.errors import InvalidInput, NotConfigured
+from app.services import upkeep_pages
+from app.services.upkeep_pages import PagesReport, rebuild_monographs, rebuild_stale_pages
+
+from .fakes import NIGHT
+
+
+class Loaded:
+    def __init__(self, slug: str) -> None:
+        self.slug = slug
+
+    def as_dict(self) -> dict[str, Any]:
+        return {"craftSlug": self.slug}
+
+
+class Session:
+    def __init__(self) -> None:
+        self.commits = 0
+        self.rollbacks = 0
+
+    async def commit(self) -> None:
+        self.commits += 1
+
+    async def rollback(self) -> None:
+        self.rollbacks += 1
+
+    async def get(self, model: Any, key: uuid.UUID) -> Any:
+        return type("Craft", (), {"id": key})()
+
+
+async def test_each_monograph_is_loaded_and_a_failing_one_is_rolled_back_alone(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    async def load_monograph(session: Any, content: str, *, now: Any) -> Loaded:
+        if content == "content:b":
+            raise InvalidInput("No craft has the slug b")
+        return Loaded(content.removeprefix("content:"))
+
+    monkeypatch.setattr(upkeep_pages, "load_monograph", load_monograph)
+    session, report = Session(), PagesReport()
+    await rebuild_monographs(
+        session, ["c", "b", "a"], lambda slug: f"content:{slug}", now=NIGHT, report=report
+    )  # type: ignore[arg-type]
+    assert report.monographs == [{"craftSlug": "a"}, {"craftSlug": "c"}]
+    assert report.failed == ["monograph:b"]
+    assert (session.commits, session.rollbacks) == (2, 1)
+
+
+async def test_a_night_loads_only_its_window_of_monographs(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    loaded: list[str] = []
+
+    async def load_monograph(session: Any, content: str, *, now: Any) -> Loaded:
+        loaded.append(content)
+        return Loaded(content)
+
+    monkeypatch.setattr(upkeep_pages, "load_monograph", load_monograph)
+    monkeypatch.setattr(upkeep_pages, "MONOGRAPHS_PER_NIGHT", 2)
+    assert NIGHT.date().toordinal() == 739_940
+    await rebuild_monographs(Session(), list("edcba"), str, now=NIGHT, report=PagesReport())  # type: ignore[arg-type]
+    assert loaded == ["a", "b"]
+
+
+async def test_the_oldest_stale_pages_are_rebuilt_up_to_the_bound(monkeypatch: pytest.MonkeyPatch) -> None:
+    stale = [
+        (uuid.UUID(int=n), slug) for n, slug in enumerate(("Bagh-Print", "Bidri-Ware", "Chanderi"), start=1)
+    ]
+    skipped: list[frozenset[str]] = []
+
+    async def stale_crafts(session: Any, *, skip: frozenset[str]) -> list[tuple[uuid.UUID, str]]:
+        skipped.append(skip)
+        return stale
+
+    async def rebuild_snapshots(session: Any, craft: Any) -> bool:
+        if craft.id == uuid.UUID(int=2):
+            raise NotConfigured("page", "the page could not be built")
+        return craft.id == uuid.UUID(int=1)
+
+    monkeypatch.setattr(upkeep_pages, "stale_crafts", stale_crafts)
+    monkeypatch.setattr(upkeep_pages, "rebuild_snapshots", rebuild_snapshots)
+    session, report = Session(), PagesReport()
+    await rebuild_stale_pages(session, skip=frozenset({"Kutch-Ajrakh"}), report=report, limit=2)  # type: ignore[arg-type]
+    assert skipped == [frozenset({"Kutch-Ajrakh"})]
+    assert report.as_dict() == {
+        "monographs": [],
+        "pagesStale": 3,
+        "pagesRebuilt": 1,
+        "pagesChanged": 1,
+        "pagesFailed": ["page:Bidri-Ware"],
+    }
+    assert (session.commits, session.rollbacks) == (1, 1)
