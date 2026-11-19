@@ -42,5 +42,11 @@ approval by role (item 12). This records how the first part, the backend, was bu
 - The contribute page and the admin review screen in the web app.
 - Showing approved pictures on craft pages with their label ("Illustration, made with ChatGPT").
 - The MCP tool (slice 2) that opens a declaration and returns the upload page's link.
-- The owner's open decisions: the contribution terms' text, and whether a withdrawn approved
-  picture may still be kept (today withdrawal hides it).
+- The owner's approval of the drafted terms texts (`docs/legal/`).
+
+## Amended 2026-11-19 (owner)
+
+- **Consent cannot be revoked.** A contributor can withdraw a picture only while it waits for its
+  file or for review; an approved picture stays published, and `withdraw` refuses with 409.
+- The declaration's text is drafted in `docs/legal/image-declaration.md`, with the contribution
+  terms and the MCP terms of use beside it, for the owner and IIT's legal office.

@@ -207,12 +207,19 @@ async def test_a_declaration_names_a_real_craft_stage_and_shown_facts(
         await images.declare(session, people.researcher, _declaration(claimIds=[str(uuid.uuid4())]), now=NOW)
 
 
-async def test_withdrawing_an_approved_picture_hides_it_again(session: AsyncSession, people: People) -> None:
-    row = await _sent(session, people.professor, _png())
-    await images.withdraw(session, row.id, people.professor)
-    asset = await session.get(MediaAsset, row.assetId)
-    assert (row.status, asset is not None and asset.visibility) == ("WITHDRAWN", "PRIVATE")
-    assert [found.id for found in await images.queue(session, "WITHDRAWN") if found.id == row.id] == [row.id]
+async def test_an_approved_picture_cannot_be_withdrawn_but_a_pending_one_can(
+    session: AsyncSession, people: People
+) -> None:
+    approved = await _sent(session, people.professor, _png())
+    with pytest.raises(images.ContributionRefused):
+        await images.withdraw(session, approved.id, people.professor)
+    asset = await session.get(MediaAsset, approved.assetId)
+    assert (approved.status, asset is not None and asset.visibility) == ("APPROVED", "CRAFT_SHARED")
+    pending = await _sent(session, people.researcher, _png(640, 480))
+    await images.withdraw(session, pending.id, people.researcher)
+    assert [found.id for found in await images.queue(session, "WITHDRAWN") if found.id == pending.id] == [
+        pending.id
+    ]
 
 
 async def test_a_view_labels_an_ai_picture_as_an_illustration_with_its_tool(

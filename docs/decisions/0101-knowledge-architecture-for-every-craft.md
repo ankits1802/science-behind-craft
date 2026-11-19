@@ -142,6 +142,10 @@ stored as free text or HTML. Every record is typed, cited, versioned and append-
       - `AUTO`: a fact that passes every gate goes live, marked unreviewed, and stays in the
         review queue;
       - `APPROVAL`: a Professor or Admin approves before it goes live.
+    - **The default** (owner, 2026-11-19): `AUTO` for our own research, `APPROVAL` for
+      contributors and outside agents.
+    - **Consent cannot be revoked** (owner, 2026-11-19). A published contribution stays
+      published; a contributor can withdraw only what is still waiting for review.
     - **Reviewers' own contributions are approved at once** (owner, 2026-11-19). A proposal made
       by a Professor, Admin or Master Admin account, whether on the site, through the Knowledge
       API or through the MCP server, goes live as approved whatever the switch says. It still

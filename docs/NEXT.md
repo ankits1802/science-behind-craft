@@ -77,34 +77,22 @@ without the owner is recorded below or in decisions 0102 and 0103 for review.
     4. **Occasional 500s from the five-connection database pool** under four parallel browsers
        (`docs/TECH_DEBT.md`, Infrastructure).
 
-## Owner decisions open
+## Owner decisions (2026-11-19)
 
-- **Image contributions** (decision 0104): the contribution terms' text behind the declaration's
-  `termsVersion`, and whether an approved picture its contributor withdraws may be kept.
-- **Confirm or change the rights holder** named on every portal image: set to "Centre of Excellence
-  for Unified AI-Enabled Craft Ecosystem Platform, IIT Kharagpur" (`FIELD_VOICES_RIGHTS_HOLDER`
-  in both portal repositories' Actions variables).
-- **Confirm the MCP server stays on.** It serves only what a signed-out reader sees.
-- **The Ajrakh wording changes.** The critic scored the live page design 7/10 and chemistry 7.5/10.
-  `docs/design/ajrakh-critique-2026-11-19.md` lists 14 wording changes waiting for an OK,
-  including:
-  - "oxidises with the tannic acid", in 7 places;
-  - leucoindigo's colour;
-  - woad;
-  - myrobalan's tannins;
-  - madder recorded as Sources differ;
-  - the Sindhi name in the masthead.
+Settled:
+- The rights holder stays the Centre; the MCP server stays on.
+- Ajrakh: wordings 1 to 6 applied, the question removed from the page, design fixes 6, 7, 8, 11, 12
+  and 13 applied; wordings 8, 9, 11 to 14 left as they are; wording 7 waits for a source
+  (`docs/design/ajrakh-critique-2026-11-19.md`, Applied).
+- The review switch defaults to `AUTO` for research and `APPROVAL` for contributors and agents.
+- Consent cannot be revoked: an approved contribution stays published.
+- When erased testimony leaves a concept with nothing else, the concept goes (to build with the
+  review queue).
 
-  Six design fixes were also left out (SVG label sizes, Fig. 1's rest state, a crop, folding the
-  progress block, numbering, the GI card frame).
-- The default of the review switch (decision 0101, item 12). The recommendation is `AUTO` for
-  research and `APPROVAL` for new contributors. Settled: a Professor's, Admin's or Master Admin's
-  own contribution is approved at once, and Admins review everyone else's in admin settings
-  (decision 0101, item 12, owner, 2026-11-19).
-- Erased testimony leaves a placeholder claim, so its concept stays listed. Should the concept be
-  removed when nothing else is left?
-- The text of the contribution terms and of the MCP terms of use (contributors get no public
-  credit).
+Open:
+- The terms texts are drafted in `docs/legal/` for the owner and IIT's legal office.
+- Artisan testimony can still be withdrawn as built (decision 0083); say whether irrevocable
+  consent applies to it too.
 
 ## The two big tracks
 

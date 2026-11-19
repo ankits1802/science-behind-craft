@@ -749,6 +749,17 @@
    "url": "https://dergipark.org.tr/en/download/article-file/4246551",
    "extra": "Machilipatnam Kalamkari monograph",
    "dossierSourceId": null
+  },
+  "g69": {
+   "number": 69,
+   "title": "The development of Terminalia chebula Retz. (Combretaceae) in clinical research",
+   "fullTitle": "The development of Terminalia chebula Retz. (Combretaceae) in clinical research",
+   "publisher": "Asian Pacific Journal of Tropical Biomedicine 3(3): 244-252",
+   "year": 2013,
+   "grade": "A",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3631759",
+   "extra": "",
+   "dossierSourceId": null
   }
  },
  "citations": {
@@ -5035,6 +5046,18 @@
     "locator": "p. 97",
     "quote": "Steps 7 to 10 are repeated once again to get brighter and more brilliant shades of red and blue."
    }
+  ],
+  "chem:bag13": [
+   {
+    "source": "g69",
+    "locator": "5. Phytoconstituents of T. chebula Retz.",
+    "quote": "The tannins of T. chebula are of pyrogallol (hydrolysable) type."
+   },
+   {
+    "source": "g69",
+    "locator": "5. Phytoconstituents of T. chebula Retz.",
+    "quote": "Other constituents include phenolics such as chebulinic acid, ellagic acid and anthraquinones."
+   }
   ]
  },
  "citationClaims": {
@@ -5796,7 +5819,8 @@
   ],
   "rm:p7f082824ad69.5": [
    "C090"
-  ]
+  ],
+  "chem:bag13": []
  },
  "data": {
   "mol-data": {
@@ -10194,7 +10218,7 @@
    "quiz": [
     {
      "pre": "Printed on harde-treated cloth, ",
-     "post": " develops a deep fast chocolate-black as the iron in the paste oxidises with the tannic acid.",
+     "post": " develops a deep fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic acid.",
      "cite": "<button class=\"kcite\" type=\"button\" data-c=\"rm:p0b399a40611b.2\" data-g=\"g1 g3\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-label=\"Sources 1 and 3\" aria-description=\"GI Journal No. 188: Kutch Ajrakh; Ajrakh\">1,3</button>",
      "opts": [
       {
@@ -10297,31 +10321,9 @@
     {
      "m": "span",
      "c": [
-      "Your question"
-     ]
-    },
-    {
-     "m": "span",
-     "c": [
       "Expert answer"
      ]
     }
-   ],
-   "claimIds": []
-  },
-  "u0002": {
-   "chapter": "answer",
-   "tag": "p",
-   "field": "OVERVIEW",
-   "nodes": [
-    {
-     "m": "span",
-     "cls": "kv-q-l",
-     "c": [
-      "Asked in full"
-     ]
-    },
-    "“Explain how Ajrakh works in the most complete comprehensive exhaustive detailed description manual from all the angles of how the craft evolved the history in the geography the politics the chemistry and everything I require all of that from you”"
    ],
    "claimIds": []
   },
@@ -10379,14 +10381,14 @@
     {
      "m": "s",
      "c": [
-      "On that treated cloth, iron in the ",
+      "On that treated cloth, the iron in the ",
       {
        "m": "i",
        "c": [
         "kut"
        ]
       },
-      " paste oxidises with the tannic acid into a deep, fast chocolate-black, while madder dye links to the alum mordant and develops red where the ",
+      " paste, oxidised by the air, binds the tannic acid into a deep, fast chocolate-black, while madder dye links to the alum mordant and develops red where the ",
       {
        "m": "i",
        "c": [
@@ -10525,7 +10527,7 @@
       {
        "m": "b",
        "c": [
-        "1"
+        "3"
        ]
       },
       {
@@ -10551,7 +10553,7 @@
       {
        "m": "b",
        "c": [
-        "3"
+        "2"
        ]
       },
       {
@@ -10603,7 +10605,7 @@
       {
        "m": "b",
        "c": [
-        "5"
+        "6"
        ]
       },
       {
@@ -10629,7 +10631,7 @@
       {
        "m": "b",
        "c": [
-        "7"
+        "2"
        ]
       },
       {
@@ -10787,7 +10789,7 @@
     {
      "m": "s",
      "c": [
-      "There the dye is leucoindigo, soluble and colourless, and it soaks into the ",
+      "There the dye is leucoindigo, soluble and pale yellow, and it soaks into the ",
       {
        "m": "cite",
        "key": "chem:q5",
@@ -10908,7 +10910,7 @@
    "tag": "p",
    "field": "CHEMISTRY",
    "nodes": [
-    "Dip 1 of 4. In the air the cloth has turned from green to blue."
+    "Dip 4 of 4: the darkest blue. Start again returns to the first dip."
    ],
    "claimIds": []
   },
@@ -11852,7 +11854,7 @@
     {
      "m": "s",
      "c": [
-      "On harde-treated cloth kut turns a deep, fast chocolate-black as the iron in the paste oxidises with the tannic ",
+      "On harde-treated cloth kut turns a deep, fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic ",
       {
        "m": "cite",
        "key": "mb:aj:C078",
@@ -12042,7 +12044,7 @@
    "tag": "p",
    "field": "DESIGN",
    "nodes": [
-    "Ajrak print in blue, black and white: an indigo-ground field of star and lattice motifs."
+    "Ajrak in blue, black and white: a floral field and its border, with red-ground ajrak beside it."
    ],
    "claimIds": []
   },
@@ -12051,7 +12053,7 @@
    "tag": "p",
    "field": "DESIGN",
    "nodes": [
-    "Photo: SMarndi, CC BY-SA 4.0"
+    "Photo: SMarndi, CC BY-SA 4.0, cropped"
    ],
    "claimIds": []
   },
@@ -13038,7 +13040,7 @@
         "kut"
        ]
       },
-      " turns a deep, fast chocolate-black as the iron in the paste oxidises with the tannic ",
+      " turns a deep, fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic ",
       {
        "m": "cite",
        "key": "pt:C078",
@@ -14317,7 +14319,7 @@
     {
      "m": "s",
      "c": [
-      "It is one of only three natural vat dyes, with woad and Tyrian ",
+      "With Tyrian purple it is one of the natural vat dyes; woad, named beside them, is another plant that gives the same ",
       {
        "m": "cite",
        "key": "chem:q15",
@@ -14325,7 +14327,7 @@
         "g8"
        ],
        "c": [
-        "purple."
+        "indigo."
        ]
       }
      ],
@@ -15162,7 +15164,7 @@
     {
      "m": "s",
      "c": [
-      "Reduced, the dye is colourless and soluble, with an affinity for the ",
+      "Reduced, the dye is pale yellow and soluble, with an affinity for the ",
       {
        "m": "cite",
        "key": "chem:q31",
@@ -16896,6 +16898,35 @@
       }
      ],
      "sid": "f3.synth"
+    },
+    " ",
+    {
+     "m": "s",
+     "c": [
+      "Sources differ on how much alizarin Indian madder holds: the GI records for Bagru and Sanganeri name purpurin beside ",
+      {
+       "m": "cite",
+       "key": "chem:q77",
+       "g": [
+        "g19",
+        "g20"
+       ],
+       "c": [
+        "it,"
+       ]
+      },
+      " and the Met finds India’s red dyes chemically different from dyer’s ",
+      {
+       "m": "cite",
+       "key": "chem:q76",
+       "g": [
+        "g10"
+       ],
+       "c": [
+        "madder."
+       ]
+      }
+     ]
     }
    ],
    "claimIds": [
@@ -17998,6 +18029,23 @@
      ],
      "src": "pc:16129778"
     },
+    " ",
+    {
+     "m": "s",
+     "c": [
+      "It stands in here as the model tannin; harde’s own tannins are hydrolysable ones, chebulinic acid among ",
+      {
+       "m": "cite",
+       "key": "chem:bag13",
+       "g": [
+        "g69"
+       ],
+       "c": [
+        "them."
+       ]
+      }
+     ]
+    },
     " No equation is written: the tannin soaks in."
    ],
    "claimIds": []
@@ -18689,7 +18737,7 @@
         "kut"
        ]
       },
-      " develops a deep, fast chocolate-black as the iron in the paste oxidises with the tannic ",
+      " develops a deep, fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic ",
       {
        "m": "cite",
        "key": "chem:q87",
@@ -18731,37 +18779,6 @@
    ],
    "claimIds": [
     "C076",
-    "C078"
-   ]
-  },
-  "u0423": {
-   "chapter": "chemistry",
-   "tag": "p",
-   "field": "CHEMISTRY",
-   "nodes": [
-    "Read “oxidises with the tannic acid” this way: the air is the oxidant. The printed lines “oxidise when exposed to air and the harda and develop a black ",
-    {
-     "m": "cite",
-     "key": "kv:kv:ironair",
-     "g": [
-      "g3",
-      "g37",
-      "g38"
-     ],
-     "c": [
-      "colour”"
-     ]
-    },
-    ": the paste’s iron(II) becomes iron(III), which the tannic acid holds as the black. ",
-    {
-     "m": "span",
-     "cls": "kv-inf",
-     "c": [
-      "Inferred"
-     ]
-    }
-   ],
-   "claimIds": [
     "C078"
    ]
   },
@@ -20231,7 +20248,7 @@
    "tag": "p",
    "field": "CHEMISTRY",
    "nodes": [
-    "In the vat the dye is leucoindigo, soluble and colourless, and it soaks into the fibre. Lifted out, the cloth is green; in the air, oxygen meets the dye on the fibre and it becomes blue indigo that stays put, with water left over."
+    "In the vat the dye is leucoindigo, soluble and pale yellow, and it soaks into the fibre. Lifted out, the cloth is green; in the air, oxygen meets the dye on the fibre and it becomes blue indigo that stays put, with water left over."
    ],
    "claimIds": []
   },
@@ -20316,7 +20333,7 @@
    "tag": "p",
    "field": "CHEMISTRY",
    "nodes": [
-    "In the vat the dye is leucoindigo, soluble and colourless, and it soaks into the fibre. Lifted out, the cloth is green; in the air, oxygen meets the dye on the fibre and it becomes blue indigo that stays put, with water left over."
+    "In the vat the dye is leucoindigo, soluble and pale yellow, and it soaks into the fibre. Lifted out, the cloth is green; in the air, oxygen meets the dye on the fibre and it becomes blue indigo that stays put, with water left over."
    ],
    "claimIds": []
   },
@@ -20467,7 +20484,7 @@
       {
        "m": "s",
        "c": [
-        "Reduced, the dye is colourless and soluble, with an affinity for the ",
+        "Reduced, the dye is pale yellow and soluble, with an affinity for the ",
         {
          "m": "cite",
          "key": "chem:q119",
@@ -21143,7 +21160,7 @@
      "m": "span",
      "cls": "cn",
      "c": [
-      "tannic acid"
+      "tannic acid, the model tannin"
      ]
     },
     {
@@ -22672,7 +22689,7 @@
         "kut"
        ]
       },
-      " paste oxidises with the tannic acid of the ",
+      " paste, oxidised by the air, binds the tannic acid of the ",
       {
        "m": "i",
        "c": [
@@ -25913,15 +25930,6 @@
    ],
    "claimIds": []
   },
-  "u0845": {
-   "chapter": "market",
-   "tag": "p",
-   "field": "POLICY",
-   "nodes": [
-    "Kutch Ajrakh"
-   ],
-   "claimIds": []
-  },
   "u0846": {
    "chapter": "market",
    "tag": "p",
@@ -28971,7 +28979,7 @@
     {
      "m": "i",
      "c": [
-      "How does Ajrakh work?"
+      "Kutch Ajrakh"
      ]
     },
     " [Answer, version 1]. IIT Kharagpur, Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform. https://kalavigyan.vercel.app/ask?explainer=ef92a342-f3ab-4f5b-a728-29112800b2a0&version=1. Accessed 18 November 2026."
@@ -29036,24 +29044,6 @@
      ]
     },
     " on. Choose हिन्दी or اردو to read the opening and its first section in that language, with the same numerals, the same margin and the same figure."
-   ],
-   "claimIds": []
-  },
-  "u0996": {
-   "chapter": "reading",
-   "tag": "p",
-   "field": null,
-   "nodes": [
-    "आपका प्रश्न"
-   ],
-   "claimIds": []
-  },
-  "u0997": {
-   "chapter": "reading",
-   "tag": "p",
-   "field": null,
-   "nodes": [
-    "Explain how Ajrakh works in the most complete comprehensive exhaustive detailed description manual from all the angles of how the craft evolved the history in the geography the politics the chemistry and everything I require all of that from you"
    ],
    "claimIds": []
   },
@@ -29447,24 +29437,6 @@
    ],
    "claimIds": []
   },
-  "u1021": {
-   "chapter": "reading",
-   "tag": "p",
-   "field": null,
-   "nodes": [
-    "آپ کا سوال"
-   ],
-   "claimIds": []
-  },
-  "u1022": {
-   "chapter": "reading",
-   "tag": "p",
-   "field": null,
-   "nodes": [
-    "Explain how Ajrakh works in the most complete comprehensive exhaustive detailed description manual from all the angles of how the craft evolved the history in the geography the politics the chemistry and everything I require all of that from you"
-   ],
-   "claimIds": []
-  },
   "u1023": {
    "chapter": "reading",
    "tag": "h2",
@@ -29776,7 +29748,7 @@
         "kut"
        ]
       },
-      " develops a deep fast chocolate-black as the iron in the paste oxidises with the tannic ",
+      " develops a deep fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic ",
       {
        "m": "cite",
        "key": "rm:p0b399a40611b.2",
@@ -31936,12 +31908,6 @@
    "chapter": "answer",
    "kind": "unit",
    "ref": "u0001",
-   "within": null
-  },
-  {
-   "chapter": "answer",
-   "kind": "unit",
-   "ref": "u0002",
    "within": null
   },
   {
@@ -34564,12 +34530,6 @@
    "chapter": "chemistry",
    "kind": "unit",
    "ref": "u0422",
-   "within": "kutch-ajrakh/chemistry/iron-tannin-black-player"
-  },
-  {
-   "chapter": "chemistry",
-   "kind": "unit",
-   "ref": "u0423",
    "within": "kutch-ajrakh/chemistry/iron-tannin-black-player"
   },
   {
@@ -37257,12 +37217,6 @@
   {
    "chapter": "market",
    "kind": "unit",
-   "ref": "u0845",
-   "within": "kutch-ajrakh/policy/gi-registration-card"
-  },
-  {
-   "chapter": "market",
-   "kind": "unit",
    "ref": "u0846",
    "within": "kutch-ajrakh/policy/gi-registration-card"
   },
@@ -38277,18 +38231,6 @@
   {
    "chapter": "reading",
    "kind": "unit",
-   "ref": "u0996",
-   "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
-  },
-  {
-   "chapter": "reading",
-   "kind": "unit",
-   "ref": "u0997",
-   "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
-  },
-  {
-   "chapter": "reading",
-   "kind": "unit",
    "ref": "u0998",
    "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
   },
@@ -38428,18 +38370,6 @@
    "chapter": "reading",
    "kind": "unit",
    "ref": "u1020",
-   "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
-  },
-  {
-   "chapter": "reading",
-   "kind": "unit",
-   "ref": "u1021",
-   "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
-  },
-  {
-   "chapter": "reading",
-   "kind": "unit",
-   "ref": "u1022",
    "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
   },
   {

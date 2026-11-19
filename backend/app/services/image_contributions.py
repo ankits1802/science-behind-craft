@@ -46,6 +46,8 @@ APPROVED = "APPROVED"
 REJECTED = "REJECTED"
 WITHDRAWN = "WITHDRAWN"
 LIVE = (AWAITING_FILE, PENDING, APPROVED)
+WITHDRAWABLE = (AWAITING_FILE, PENDING)
+APPROVED_STAYS = "An approved picture stays published: the consent to publish it cannot be revoked."
 SHARED = "CRAFT_SHARED"
 PRIVATE = "PRIVATE"
 EXTENSIONS = {"image/png": "png", "image/jpeg": "jpg", "image/webp": "webp"}
@@ -161,13 +163,11 @@ async def reject(
 
 async def withdraw(session: AsyncSession, contribution_id: uuid.UUID, user: User) -> ImageContribution:
     row = await _own(session, contribution_id, user)
-    if row.status not in LIVE:
+    if row.status == APPROVED:
+        raise ContributionRefused(APPROVED_STAYS)
+    if row.status not in WITHDRAWABLE:
         raise ContributionRefused("This contribution is already closed")
     row.status = WITHDRAWN
-    if row.assetId is not None:
-        asset = await session.get(MediaAsset, row.assetId)
-        if asset is not None:
-            asset.visibility = PRIVATE
     await session.flush()
     return row
 

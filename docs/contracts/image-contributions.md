@@ -21,7 +21,7 @@ A reviewer never decides their own picture.
 | `POST ""` | `ImageDeclaration` | 201 `ImageContributionView`, status `AWAITING_FILE` |
 | `PUT /{id}/file` | the picture's bytes (PNG, JPEG or WebP, at most 10 MB) | `ImageContributionView`, `PENDING` or `APPROVED` |
 | `GET /mine` | none | `ImageContributionView[]`, newest first, at most 100 |
-| `POST /{id}/withdraw` | none | `ImageContributionView`, `WITHDRAWN`; the picture goes private again |
+| `POST /{id}/withdraw` | none | `ImageContributionView`, `WITHDRAWN`, only while the picture waits for its file or for review; an approved picture stays (409): consent cannot be revoked |
 | `GET /review?state=PENDING` | none | `ImageQueue {status, items[]}`, oldest first, at most 100 |
 | `POST /review/{id}/approve` | `{note?}` | `ImageContributionView`, `APPROVED`; the picture is shared |
 | `POST /review/{id}/reject` | `{note}` (3 to 500 characters) | `ImageContributionView`, `REJECTED` |
@@ -39,8 +39,9 @@ media bucket is not configured.
 - An AI-made picture names its `generator` (tool and model, 2 to 120 characters), its `prompt`
   (up to 4,000 characters) and at least one fact it shows. Other origins carry neither.
 - `caption` and `altText`, 3 to 300 characters each.
-- `rightsConfirmed: true` and `termsVersion: "2026-11-19"`, the declaration's version: the
-  uploader holds the rights to give the picture under the contribution terms.
+- `rightsConfirmed: true` and `termsVersion: "2026-11-19"`, the declaration's version (its text:
+  `docs/legal/image-declaration.md`): the uploader holds the rights to give the picture under the
+  contribution terms.
 
 ## What the file goes through (`research/image_intake.py`)
 

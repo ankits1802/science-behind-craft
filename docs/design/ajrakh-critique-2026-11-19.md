@@ -184,3 +184,37 @@ Read on 19 Nov 2026 at https://kalavigyan.vercel.app/crafts/Kutch-Ajrakh, at 360
 
 - **Design:** design fixes 1 to 6, which are the system breaches. Fixes 7, 8, 11 and 13 for rest state, repetition and length. Wording changes 9, 10, 11 and 12 for the first minute, true counts and the signature told once.
 - **Chemistry:** wording change 1 in all 7 places. Changes 2 and 3, so the signature figure is chemically consistent. Changes 4, 5 and 8 for ambiguous terms. Change 6 recorded as Sources differ. Change 7: a cited lime mechanism plus an iron–tannin structure, so Black and White reach Blue's and Red's depth.
+
+## Applied on 2026-11-19, with the owner's OK
+
+The page is structured content (decision 0105), so every change below is an edit to its content or
+template, rebuilt by `app.scripts.build_monograph`.
+
+- **Wording 1, iron's oxidant:** done in all 7 places (short answer, Black card, stage 5's Why,
+  Fig. 8 step 3, "The same iron, two jobs", the kin passage and the quiz): the iron, oxidised by
+  the air, binds the tannic acid. Fig. 8's "Read 'oxidises with the tannic acid' this way" note is
+  dropped; the GI quote stays verbatim in its popover.
+- **Wordings 2 and 3, leucoindigo:** pale yellow in all 13 places, including the molecule cards, the
+  round-and-back cycle, the keys, the sealed Fig. 10 and Fig. 4's new caption.
+- **Wording 4, woad:** done.
+- **Wording 5, myrobalan:** tannic acid is labelled the model tannin, and one new sentence says
+  harde's own tannins are hydrolysable ones, chebulinic acid among them, citing Bag, Bhattacharyya
+  and Chattopadhyay (2013), source 69. Chebulagic acid's CID was not added.
+- **Wording 6, madder:** a cited "Sources differ" sentence, from sources already on the page (the
+  GI records name purpurin beside alizarin; the Met finds India's red dyes chemically different
+  from dyer's madder). Mouri and Laursen (2012) could not be read (sign-in) and is not cited; the
+  Madder card is unchanged.
+- **Wording 7, the lime mechanism:** waits for a source.
+- **Wording 10, the question:** removed from the page entirely (owner): the masthead reads "Kutch
+  Ajrakh", the Hindi and Urdu panels no longer open with the raw prompt, and Cite this page titles
+  the page "Kutch Ajrakh".
+- **Wordings 8, 9, 11, 12, 13 and 14:** left as they are (owner).
+- **Design fixes 6, 7, 8, 11, 12 and 13:** done.
+  - SVG labels never render below 12 px: the `data-fit` script raises any smaller label, and the
+    unfitted well chart's axis is set to 12 px. Checked at 360, 834 and 1440.
+  - Fig. 1 rests at dip 4, the deepest blue.
+  - The cloth plate is cropped to its floral field, border and the red cloth beside it, with the
+    caption and credit changed to match ("cropped").
+  - "How this answer was made" is a closed disclosure.
+  - The first screen's list shows each item's chapter number.
+  - The GI card loses its frame and its repeated name line.
