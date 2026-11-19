@@ -22,9 +22,11 @@ from app.models import (
     Source,
 )
 from app.research.monograph_page import MonographContent
+from app.retrieval.indexing import embed_pending
 from app.services.component_library import library_components
 from app.services.monograph_load import load_monograph
 
+from ..craft_fixtures import FixedEmbedder
 from .testimony_seed import rolled_back_session
 
 pytestmark = pytest.mark.db
@@ -171,6 +173,14 @@ async def test_a_component_resting_on_stored_facts_is_registered_with_its_subjec
     assert sorted(kinds) == ["COMPOUND", "CRAFT", "PLACE"]
     listed = await library_components(session, slug=SLUG)
     assert [item.label for item in listed.components] == [PLAYER]
+
+
+async def test_a_registered_component_is_not_embedded_as_an_answer_piece(session: AsyncSession) -> None:
+    await load_monograph(session, _content(), now=NOW)
+    counts = await embed_pending(session, FixedEmbedder(), batch_size=500)
+    assert counts.complete
+    piece = await session.scalar(select(KnowledgePiece).where(KnowledgePiece.label == PLAYER))
+    assert piece is not None and piece.embedding is None
 
 
 async def test_loading_again_changes_nothing_and_a_changed_sentence_supersedes_the_section(

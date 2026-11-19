@@ -232,7 +232,9 @@ async def _pending_chunks(session: AsyncSession, scope: ColumnElement[bool] | No
 
 async def _pending_pieces(session: AsyncSession, scope: ColumnElement[bool] | None) -> list[_Pending]:
     statement = select(KnowledgePiece.id, KnowledgePiece.payload).where(
-        KnowledgePiece.embedding.is_(None), KnowledgePiece.supersededById.is_(None)
+        KnowledgePiece.embedding.is_(None),
+        KnowledgePiece.supersededById.is_(None),
+        KnowledgePiece.label.is_(None),
     )
     rows = await session.execute(_scoped(statement, scope).order_by(KnowledgePiece.id).limit(EMBED_RUN_ROWS))
     return [_Pending(row.id, document_text(piece_text(BLOCKS.validate_python(row.payload)))) for row in rows]
