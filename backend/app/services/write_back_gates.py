@@ -75,7 +75,8 @@ async def record_write_back_runs(
     *,
     live: bool,
     checked_at: datetime,
-) -> None:
+) -> int:
+    vectored = 0
     for result in results:
         run = runs.get(result.dedupe_key)
         if run is None or not result.created:
@@ -85,8 +86,10 @@ async def record_write_back_runs(
             await session.execute(
                 update(Claim).where(Claim.id == result.claim_id).values(embedding=run.vector)
             )
+            vectored += 1
         if live:
             await mark_sources_differ(session, result.claim_id)
+    return vectored
 
 
 async def _runs(

@@ -20,13 +20,16 @@ from app.models import (
 )
 from app.providers.router import tagged_spend
 from app.research.composition import ComposedSentence, QuotedSpan
+from app.research.review_switch import ReviewSwitchUpdate
 from app.research.write_back import ClaimWriteBack
+from app.services import app_settings
 from app.services.answering import AnswerAsk
+from app.services.candidate_writes import checks_of
 from app.services.claim_writer import SqlClaimWriter, write_back_claim_id
 from app.services.coverage_selection import least_covered_crafts
 from app.services.knowledge_view import claims_for
 from app.services.live_source_store import keep_document, live_source_id
-from app.services.research_write_back import store_live_research
+from app.services.research_write_back import sentence_claim_ids, store_live_research
 from app.sources.adapter import build_document
 
 from ..composer.fixtures import ABSTRACT_ITEM, LONG_ITEM, LONG_TEXT
@@ -49,6 +52,7 @@ from .write_back_seed import (
     answer_store,
     expected_claim_id,
     kept_answer,
+    key,
     said,
     seeded_session,
     write,
@@ -100,7 +104,7 @@ async def test_a_write_back_stores_a_cited_claim_with_its_provenance(session: As
         ALUM_CONCEPT,
         "PROVISIONAL",
     )
-    assert (claim.origin, claim.status, claim.createdByKind) == ("LIVE_RESEARCH", "APPROVED", "SYSTEM")
+    assert (claim.origin, claim.status, claim.createdByKind) == ("LIVE_RESEARCH", "IN_REVIEW", "SYSTEM")
     assert (claim.field, claim.fields) == ("MATERIALS", [])
     assert claim.embedding is not None
     (cite,) = await citations(session, claim_id)
@@ -121,7 +125,7 @@ async def test_a_write_back_stores_a_cited_claim_with_its_provenance(session: As
         "SYSTEM",
         "live_research",
         "PROVISIONAL",
-        "APPROVED",
+        "IN_REVIEW",
     )
     assert str(ANSWER) in event.note
     views, _ = await claims_for(session, await session.get(Craft, CRAFT), mode="HYBRID")
@@ -327,3 +331,53 @@ async def test_research_for_any_craft_writes_its_claims_on_shared_concepts(sessi
         "alum",
     )
     assert claim.subjectId != ALUM_CONCEPT
+
+
+async def test_a_new_research_fact_is_written_unreviewed_with_each_gate_s_outcome(
+    session: AsyncSession,
+) -> None:
+    stored = await write(session, answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)))
+    checks = await checks_of(session, stored.results[0].claim_id)
+    assert [(check.gate, check.passed) for check in checks] == [
+        ("QUOTES", True),
+        ("SOURCE", True),
+        ("DUPLICATE", True),
+        ("NOVELTY", True),
+    ]
+    assert checks[3].reasons == ["the subject holds no fact in MATERIALS yet, so it adds to the section"]
+
+
+async def test_research_that_repeats_a_held_fact_cites_the_held_fact_instead(session: AsyncSession) -> None:
+    held = key("held-figure")
+    session.add(
+        Claim(
+            id=held,
+            subjectType="CONCEPT",
+            subjectId=ALUM_CONCEPT,
+            predicate="states",
+            text=FIGURE_TEXT,
+            evidenceLevel="PROVISIONAL",
+            origin="IMPORT",
+            field="MATERIALS",
+        )
+    )
+    await session.flush()
+    composed = answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE))
+    stored = await write(session, composed)
+    assert [(result.claim_id, result.created) for result in stored.results] == [(held, False)]
+    assert (
+        await session.get(Claim, expected_claim_id("mordant baths held 8 g/l alum and were heated to 60 °c"))
+        is None
+    )
+    (skipped,) = stored.skipped
+    assert skipped.reason.startswith("refused at the DUPLICATE gate: the same statement is already held")
+    assert sentence_claim_ids(composed, stored) == ((held,),)
+
+
+async def test_with_research_set_to_approval_a_new_fact_waits_hidden(session: AsyncSession) -> None:
+    await app_settings.set_review_switch(session, ReviewSwitchUpdate(research="APPROVAL"), None)
+    stored = await write(session, answer(said(FIGURE_TEXT, ABSTRACT_ID, FIGURE_QUOTE)))
+    claim = await session.get(Claim, stored.results[0].claim_id)
+    assert claim.status == "DRAFT"
+    views, _ = await claims_for(session, await session.get(Craft, CRAFT), mode="HYBRID")
+    assert claim.id not in {view.id for view in views}

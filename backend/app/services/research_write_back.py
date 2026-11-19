@@ -60,7 +60,9 @@ async def store_live_research(
     gated = await gate_write_back(session, plan.claims, _documents(pack, fields), embed=embed, judge=judge)
     placed = await research_placement(session)
     results = await SqlClaimWriter(session, status=placed.status).write(gated.claims)
-    await record_write_back_runs(session, results, gated.runs, live=placed.live, checked_at=datetime.now(UTC))
+    vectored = await record_write_back_runs(
+        session, results, gated.runs, live=placed.live, checked_at=datetime.now(UTC)
+    )
     await session.commit()
     kept = tuple(dict.fromkeys(source_ids))
     embedded, error = await _embed_written(session, embed, results, kept)
@@ -68,7 +70,7 @@ async def store_live_research(
         source_ids=kept,
         results=(*results, *gated.held_instead),
         skipped=(*plan.skipped, *gated.skipped),
-        embedded=embedded,
+        embedded=EmbeddedCounts(claims=embedded.claims + vectored, chunks=embedded.chunks),
         sentence_keys=plan.sentence_keys,
         embedding_error=error,
     )
