@@ -11,17 +11,21 @@ from .component_specs_science_figures import (
     Molecule3dSpec,
     StructureDiagramSpec,
 )
+from .component_specs_science_players import DipPlayerSpec, ReactionPlayerSpec, StagePlayerSpec
 
 __all__ = ["SCIENCE_KINDS", "SPEC_MODELS_SCIENCE"]
 
 SPEC_MODELS_SCIENCE: Mapping[str, type[ContractModel]] = MappingProxyType(
     {
         "diagram": DiagramSpec,
+        "dip_player": DipPlayerSpec,
         "equation_card": EquationCardSpec,
         "material_cards": MaterialCardsSpec,
         "model_explainer": ModelExplainerSpec,
         "molecule_3d": Molecule3dSpec,
         "process_replay": ProcessReplaySpec,
+        "reaction_player": ReactionPlayerSpec,
+        "stage_player": StagePlayerSpec,
         "structure_diagram": StructureDiagramSpec,
     }
 )

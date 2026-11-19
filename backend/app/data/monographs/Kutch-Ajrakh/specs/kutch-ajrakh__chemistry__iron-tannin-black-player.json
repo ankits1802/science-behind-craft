@@ -1,0 +1,2893 @@
+{
+ "id": "rp-black",
+ "track": "black",
+ "head": {
+  "figure": "chem:6",
+  "number": "u0406",
+  "title": "u0407",
+  "titleId": null,
+  "dek": "u0408"
+ },
+ "current": 3,
+ "steps": [
+  {
+   "name": "Tannin first",
+   "text": {
+    "kicker": "u0410",
+    "heading": "u0411",
+    "paragraphs": [
+     "u0412"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-cloth",
+        "name": [
+         "Cotton"
+        ],
+        "formula": null,
+        "state": [
+         "scoured"
+        ],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-harda",
+        "name": [
+         "Tannic acid"
+        ],
+        "formula": [
+         "C",
+         {
+          "text": "76",
+          "style": "sub"
+         },
+         "H",
+         {
+          "text": "52",
+          "style": "sub"
+         },
+         "O",
+         {
+          "text": "46",
+          "style": "sub"
+         }
+        ],
+        "state": [
+         "model tannin, from harde · "
+        ],
+        "cid": 16129778
+       },
+       {
+        "item": "arrow",
+        "label": "soak and dry"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-harda",
+        "name": [
+         "Cotton with tannin"
+        ],
+        "formula": null,
+        "state": [
+         "pale yellow"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0434"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Iron ferments",
+   "text": {
+    "kicker": "u0413",
+    "heading": "u0414",
+    "paragraphs": [
+     "u0415"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [
+     {
+      "term": "u0416",
+      "value": "u0417"
+     },
+     {
+      "term": "u0418",
+      "value": "u0419"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--rule-strong",
+        "name": [
+         "Iron"
+        ],
+        "formula": [
+         "Fe"
+        ],
+        "state": [
+         "scrap"
+        ],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "clear",
+        "name": [
+         "Acetic acid"
+        ],
+        "formula": [
+         "CH",
+         {
+          "text": "3",
+          "style": "sub"
+         },
+         "COOH"
+        ],
+        "state": [],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "dissolving"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-mud-wet",
+        "name": [
+         "Iron(II) acetate"
+        ],
+        "formula": [
+         "Fe(CH",
+         {
+          "text": "3",
+          "style": "sub"
+         },
+         "COO)",
+         {
+          "text": "2",
+          "style": "sub"
+         }
+        ],
+        "state": [
+         "in the paste · "
+        ],
+        "cid": 18344
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "gas",
+        "name": [
+         "Hydrogen"
+        ],
+        "formula": [
+         "H",
+         {
+          "text": "2",
+          "style": "sub"
+         }
+        ],
+        "state": [],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "equation",
+      "equation": {
+       "label": "Iron plus two acetic acid gives iron(II) acetate plus hydrogen",
+       "style": null,
+       "line": {
+        "reactants": [
+         {
+          "formula": [
+           "Fe"
+          ],
+          "name": "iron"
+         },
+         {
+          "formula": [
+           "2 CH",
+           {
+            "text": "3",
+            "style": "sub"
+           },
+           "COOH"
+          ],
+          "name": "acetic acid"
+         }
+        ],
+        "products": [
+         {
+          "formula": [
+           "Fe(CH",
+           {
+            "text": "3",
+            "style": "sub"
+           },
+           "COO)",
+           {
+            "text": "2",
+            "style": "sub"
+           }
+          ],
+          "name": "iron(II) acetate"
+         },
+         {
+          "formula": [
+           "H",
+           {
+            "text": "2",
+            "style": "sub"
+           }
+          ],
+          "name": "hydrogen"
+         }
+        ]
+       },
+       "atoms": {
+        "caption": "Count the atoms",
+        "head": [
+         "u0435",
+         "u0436",
+         "u0437",
+         "u0438"
+        ],
+        "rows": [
+         {
+          "element": "u0439",
+          "left": "u0440",
+          "right": "u0441"
+         },
+         {
+          "element": "u0442",
+          "left": "u0443",
+          "right": "u0444"
+         },
+         {
+          "element": "u0445",
+          "left": "u0446",
+          "right": "u0447"
+         },
+         {
+          "element": "u0448",
+          "left": "u0449",
+          "right": "u0450"
+         }
+        ]
+       },
+       "notes": [
+        "u0451"
+       ]
+      }
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Printed on tannin",
+   "text": {
+    "kicker": "u0420",
+    "heading": "u0421",
+    "paragraphs": [
+     "u0422"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [
+     {
+      "term": "u0424",
+      "value": "u0425"
+     },
+     {
+      "term": "u0426",
+      "value": "u0427"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-mud-wet",
+        "name": [
+         "Iron in the ",
+         {
+          "text": "kut",
+          "style": "i"
+         }
+        ],
+        "formula": null,
+        "state": [
+         "printed"
+        ],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-harda",
+        "name": [
+         "Tannic acid"
+        ],
+        "formula": [
+         "C",
+         {
+          "text": "76",
+          "style": "sub"
+         },
+         "H",
+         {
+          "text": "52",
+          "style": "sub"
+         },
+         "O",
+         {
+          "text": "46",
+          "style": "sub"
+         }
+        ],
+        "state": [
+         "in the cotton · "
+        ],
+        "cid": 16129778
+       },
+       {
+        "item": "arrow",
+        "label": "oxidation"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-kut",
+        "name": [
+         "Black"
+        ],
+        "formula": null,
+        "state": [
+         "deep, fast, chocolate-black"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "equation",
+      "equation": {
+       "label": "Four iron(II) ions plus oxygen plus four hydrogen ions give four iron(III) ions plus two water",
+       "style": "kv-eq-ox",
+       "line": {
+        "reactants": [
+         {
+          "formula": [
+           "4 Fe",
+           {
+            "text": "2+",
+            "style": "sup"
+           }
+          ],
+          "name": "iron(II), in the paste"
+         },
+         {
+          "formula": [
+           "O",
+           {
+            "text": "2",
+            "style": "sub"
+           }
+          ],
+          "name": "oxygen, from the air"
+         },
+         {
+          "formula": [
+           "4 H",
+           {
+            "text": "+",
+            "style": "sup"
+           }
+          ],
+          "name": "acid"
+         }
+        ],
+        "products": [
+         {
+          "formula": [
+           "4 Fe",
+           {
+            "text": "3+",
+            "style": "sup"
+           }
+          ],
+          "name": "iron(III)"
+         },
+         {
+          "formula": [
+           "2 H",
+           {
+            "text": "2",
+            "style": "sub"
+           },
+           "O"
+          ],
+          "name": "water"
+         }
+        ]
+       },
+       "atoms": {
+        "caption": "Count the atoms",
+        "head": [
+         "u0452",
+         "u0453",
+         "u0454",
+         "u0455"
+        ],
+        "rows": [
+         {
+          "element": "u0456",
+          "left": "u0457",
+          "right": "u0458"
+         },
+         {
+          "element": "u0459",
+          "left": "u0460",
+          "right": "u0461"
+         },
+         {
+          "element": "u0462",
+          "left": "u0463",
+          "right": "u0464"
+         },
+         {
+          "element": "u0465",
+          "left": "u0466",
+          "right": "u0467"
+         }
+        ]
+       },
+       "notes": [
+        "u0468"
+       ]
+      }
+     },
+     {
+      "part": "none",
+      "unit": "u0469"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Iron out of place",
+   "text": {
+    "kicker": "u0428",
+    "heading": "u0429",
+    "paragraphs": [
+     "u0430"
+    ],
+    "bond": null,
+    "link": "u0431",
+    "conditions": [
+     {
+      "term": "u0432",
+      "value": "u0433"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-kut",
+        "name": [
+         "Iron in the water"
+        ],
+        "formula": null,
+        "state": [],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-harda",
+        "name": [
+         "Cotton with tannin"
+        ],
+        "formula": null,
+        "state": [
+         "pale yellow"
+        ],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "washing"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-kut",
+        "name": [
+         "Black spots"
+        ],
+        "formula": null,
+        "state": [
+         "where none were wanted"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0470"
+     }
+    ]
+   },
+   "scene": null
+  }
+ ],
+ "scenes": [
+  {
+   "tag": "svg",
+   "attrs": {
+    "class": "scene desk",
+    "data-fit": "",
+    "viewBox": "0 0 640 360",
+    "role": "img",
+    "aria-labelledby": "rp-black-sc-t"
+   },
+   "children": [
+    {
+     "tag": "title",
+     "attrs": {
+      "id": "rp-black-sc-t"
+     },
+     "children": [
+      "A harda-treated cotton square: iron ferments in jaggery, the kut paste is printed as a lattice, and the brown print develops into chocolate-black on the tannin; iron in wash water leaves black spots on pale cloth."
+     ]
+    },
+    {
+     "tag": "clipPath",
+     "attrs": {
+      "id": "rp-black-sc-rh"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "480.0",
+        "y": "32",
+        "width": "138.0",
+        "height": "296"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "clipPath",
+     "attrs": {
+      "id": "rp-black-sc-a-cc"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "clip-path": "url(#rp-black-sc-a-cc)"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "data-fill": "0=var(--dye-cloth)",
+        "style": "fill:var(--dye-cloth)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "data-fill": "0=var(--dye-harda)",
+        "data-tf": "0=scaleY(0);1=scaleY(1)",
+        "class": "tdip ob",
+        "style": "fill:var(--dye-harda);transform:scaleY(1)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M378.0 65.0 L412.0 103.3 L378.0 141.7 L344.0 103.3 Z M378.0 141.7 L412.0 180.0 L378.0 218.3 L344.0 180.0 Z M378.0 218.3 L412.0 256.7 L378.0 295.0 L344.0 256.7 Z M446.0 65.0 L480.0 103.3 L446.0 141.7 L412.0 103.3 Z M446.0 141.7 L480.0 180.0 L446.0 218.3 L412.0 180.0 Z M446.0 218.3 L480.0 256.7 L446.0 295.0 L412.0 256.7 Z M514.0 65.0 L548.0 103.3 L514.0 141.7 L480.0 103.3 Z M514.0 141.7 L548.0 180.0 L514.0 218.3 L480.0 180.0 Z M514.0 218.3 L548.0 256.7 L514.0 295.0 L480.0 256.7 Z M582.0 65.0 L616.0 103.3 L582.0 141.7 L548.0 103.3 Z M582.0 141.7 L616.0 180.0 L582.0 218.3 L548.0 180.0 Z M582.0 218.3 L616.0 256.7 L582.0 295.0 L548.0 256.7 Z",
+        "fill": "none",
+        "stroke-width": "3.4",
+        "stroke-linejoin": "round",
+        "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+        "data-op": "0=0;3=1",
+        "class": "tfill tox",
+        "style": "stroke:var(--dye-mud-wet);opacity:1"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+        "fill": "none",
+        "stroke-width": "5.1",
+        "stroke-linejoin": "round",
+        "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+        "data-op": "0=0;3=1",
+        "class": "tfill tox",
+        "style": "stroke:var(--dye-mud-wet);opacity:1"
+       }
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-fill": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+        "data-op": "0=0;3=1",
+        "class": "tfill tox",
+        "style": "fill:var(--dye-mud-wet);opacity:1"
+       },
+       "children": [
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-fill": "0=transparent",
+        "class": "tfill",
+        "style": "fill:transparent"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "31.0"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "295.0",
+          "width": "272.0",
+          "height": "31.0"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+        "data-fill": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+        "data-op": "0=0;3=1",
+        "class": "tfill",
+        "style": "fill:var(--dye-mud-wet);opacity:1"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+        "stroke-width": "1",
+        "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+        "data-op": "0=0;3=1",
+        "class": "tfill",
+        "style": "stroke:var(--dye-mud-wet);opacity:1"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "rect",
+     "attrs": {
+      "x": "344.0",
+      "y": "34.0",
+      "width": "272.0",
+      "height": "292.0",
+      "fill": "none",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1"
+     }
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "3"
+     },
+     "children": [
+      {
+       "tag": "g",
+       "attrs": {
+        "clip-path": "url(#rp-black-sc-rh)"
+       },
+       "children": [
+        {
+         "tag": "clipPath",
+         "attrs": {
+          "id": "rp-black-sc-b-cc"
+         },
+         "children": [
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "292.0"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "clip-path": "url(#rp-black-sc-b-cc)"
+         },
+         "children": [
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "292.0",
+            "data-fill": "0=var(--dye-cloth)",
+            "style": "fill:var(--dye-cloth)"
+           }
+          },
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "292.0",
+            "data-fill": "0=var(--dye-harda)",
+            "data-tf": "0=scaleY(0);1=scaleY(1)",
+            "class": "tdip ob",
+            "style": "fill:var(--dye-harda);transform:scaleY(1)"
+           }
+          },
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "292.0",
+            "fill": "url(#chem-weave)"
+           }
+          },
+          {
+           "tag": "path",
+           "attrs": {
+            "d": "M378.0 65.0 L412.0 103.3 L378.0 141.7 L344.0 103.3 Z M378.0 141.7 L412.0 180.0 L378.0 218.3 L344.0 180.0 Z M378.0 218.3 L412.0 256.7 L378.0 295.0 L344.0 256.7 Z M446.0 65.0 L480.0 103.3 L446.0 141.7 L412.0 103.3 Z M446.0 141.7 L480.0 180.0 L446.0 218.3 L412.0 180.0 Z M446.0 218.3 L480.0 256.7 L446.0 295.0 L412.0 256.7 Z M514.0 65.0 L548.0 103.3 L514.0 141.7 L480.0 103.3 Z M514.0 141.7 L548.0 180.0 L514.0 218.3 L480.0 180.0 Z M514.0 218.3 L548.0 256.7 L514.0 295.0 L480.0 256.7 Z M582.0 65.0 L616.0 103.3 L582.0 141.7 L548.0 103.3 Z M582.0 141.7 L616.0 180.0 L582.0 218.3 L548.0 180.0 Z M582.0 218.3 L616.0 256.7 L582.0 295.0 L548.0 256.7 Z",
+            "fill": "none",
+            "stroke-width": "3.4",
+            "stroke-linejoin": "round",
+            "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+            "data-op": "0=0;3=1",
+            "class": "tfill tox",
+            "style": "stroke:var(--dye-kut);opacity:1"
+           }
+          },
+          {
+           "tag": "path",
+           "attrs": {
+            "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+            "fill": "none",
+            "stroke-width": "5.1",
+            "stroke-linejoin": "round",
+            "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+            "data-op": "0=0;3=1",
+            "class": "tfill tox",
+            "style": "stroke:var(--dye-kut);opacity:1"
+           }
+          },
+          {
+           "tag": "g",
+           "attrs": {
+            "data-fill": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+            "data-op": "0=0;3=1",
+            "class": "tfill tox",
+            "style": "fill:var(--dye-kut);opacity:1"
+           },
+           "children": [
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "378.0",
+              "cy": "103.3",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "378.0",
+              "cy": "180.0",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "378.0",
+              "cy": "256.7",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "446.0",
+              "cy": "103.3",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "446.0",
+              "cy": "180.0",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "446.0",
+              "cy": "256.7",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "514.0",
+              "cy": "103.3",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "514.0",
+              "cy": "180.0",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "514.0",
+              "cy": "256.7",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "582.0",
+              "cy": "103.3",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "582.0",
+              "cy": "180.0",
+              "r": "5.8"
+             }
+            },
+            {
+             "tag": "circle",
+             "attrs": {
+              "cx": "582.0",
+              "cy": "256.7",
+              "r": "5.8"
+             }
+            }
+           ]
+          },
+          {
+           "tag": "g",
+           "attrs": {
+            "data-fill": "0=transparent",
+            "class": "tfill",
+            "style": "fill:transparent"
+           },
+           "children": [
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "34.0",
+              "width": "272.0",
+              "height": "31.0"
+             }
+            },
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "295.0",
+              "width": "272.0",
+              "height": "31.0"
+             }
+            }
+           ]
+          },
+          {
+           "tag": "path",
+           "attrs": {
+            "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+            "data-fill": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+            "data-op": "0=0;3=1",
+            "class": "tfill",
+            "style": "fill:var(--dye-kut);opacity:1"
+           }
+          },
+          {
+           "tag": "path",
+           "attrs": {
+            "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+            "stroke-width": "1",
+            "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+            "data-op": "0=0;3=1",
+            "class": "tfill",
+            "style": "stroke:var(--dye-kut);opacity:1"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "style": "fill:var(--dye-kut)",
+      "data-on": "4",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "511.0",
+        "cy": "232.7",
+        "r": "2.9"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "591.5",
+        "cy": "232.3",
+        "r": "3.1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "361.3",
+        "cy": "172.5",
+        "r": "3.1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "517.5",
+        "cy": "267.4",
+        "r": "1.8"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "472.2",
+        "cy": "124.8",
+        "r": "2.5"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "498.6",
+        "cy": "73.9",
+        "r": "1.9"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "424.4",
+        "cy": "270.8",
+        "r": "2.8"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "394.2",
+        "cy": "244.8",
+        "r": "1.8"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "509.6",
+        "cy": "98.6",
+        "r": "1.6"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "573.6",
+        "cy": "116.7",
+        "r": "1.9"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "601.6",
+        "cy": "261.2",
+        "r": "2.1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "596.3",
+        "cy": "188.6",
+        "r": "2.7"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "405.6",
+        "cy": "276.1",
+        "r": "2.7"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "597.6",
+        "cy": "265.8",
+        "r": "2.1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "445.0",
+        "cy": "107.2",
+        "r": "1.8"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "370.4",
+        "cy": "136.7",
+        "r": "2.6"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "0-1"
+     },
+     "children": [
+      "cotton, after harda"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "2"
+     },
+     "children": [
+      "the cloth waits for the iron"
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "3"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M480.0 28 V332",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2",
+        "stroke-dasharray": "5 4"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink1 w6",
+        "x": "412.0",
+        "y": "24",
+        "text-anchor": "middle"
+       },
+       "children": [
+        "just printed"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink1 w6",
+        "x": "548.0",
+        "y": "24",
+        "text-anchor": "middle"
+       },
+       "children": [
+        "developed"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "4"
+     },
+     "children": [
+      "washed in iron-rich water"
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "0-1",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M40 150 L280 150 L262 292 L58 292 Z",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.4"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "var(--dye-harda)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "40",
+        "y": "132"
+       },
+       "children": [
+        "harda bath"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "318"
+       },
+       "children": [
+        "tannic acid into the cotton"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "2",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M74 122 L246 122 L238 140 L250 286 Q160 306 70 286 L82 140 Z",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.4"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M88 160 L232 160 L240 280 Q160 296 80 280 Z",
+        "fill": "var(--dye-mud-wet)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M128 268 L128 222 A32 32 0 0 1 192 222 L192 268",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "10",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "110",
+        "cy": "170",
+        "r": "4",
+        "fill": "none",
+        "stroke": "var(--ink-3)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "150",
+        "cy": "166",
+        "r": "3",
+        "fill": "none",
+        "stroke": "var(--ink-3)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "206",
+        "cy": "172",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-3)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "40",
+        "y": "82"
+       },
+       "children": [
+        "scrap iron in jaggery"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "104"
+       },
+       "children": [
+        "with gram flour, fermenting"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "3"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "40",
+        "y": "226",
+        "width": "240",
+        "height": "54",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "48",
+        "y": "234",
+        "width": "224",
+        "height": "38",
+        "fill": "var(--dye-mud-wet)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "48",
+        "y": "234",
+        "width": "224",
+        "height": "38",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "112",
+        "y": "140",
+        "width": "96",
+        "height": "50",
+        "rx": "2",
+        "fill": "var(--dye-mud)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "112",
+        "y": "140",
+        "width": "96",
+        "height": "50",
+        "rx": "2",
+        "fill": "url(#grain)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "145",
+        "y": "106",
+        "width": "30",
+        "height": "34",
+        "rx": "3",
+        "fill": "var(--dye-mud-wet)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M116 193 h88",
+        "stroke": "var(--dye-mud-wet)",
+        "stroke-width": "5"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab it ink1",
+        "x": "40",
+        "y": "74"
+       },
+       "children": [
+        "kut"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "96"
+       },
+       "children": [
+        "printed in the afternoon"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "4",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M40 150 L280 150 L262 292 L58 292 Z",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.4"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "var(--dye-lime)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "90",
+        "cy": "200",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "130",
+        "cy": "232",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "176",
+        "cy": "214",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "214",
+        "cy": "248",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "236",
+        "cy": "196",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "150",
+        "cy": "268",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "110",
+        "cy": "254",
+        "r": "2.4",
+        "fill": "var(--dye-kut)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "40",
+        "y": "132"
+       },
+       "children": [
+        "iron in the wash water"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "318"
+       },
+       "children": [
+        "black spots on pale cloth"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M298.0 180.0 L330.0 180.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1.2",
+      "fill": "none"
+     }
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M330.0 180.0 L321.8 183.7 L321.8 176.3 Z",
+      "fill": "var(--ink-1)"
+     }
+    }
+   ]
+  },
+  {
+   "tag": "svg",
+   "attrs": {
+    "class": "scene ph",
+    "data-fit": "",
+    "viewBox": "0 0 320 700",
+    "role": "img",
+    "aria-labelledby": "rp-black-sp-t"
+   },
+   "children": [
+    {
+     "tag": "title",
+     "attrs": {
+      "id": "rp-black-sp-t"
+     },
+     "children": [
+      "A harda-treated cotton square: iron ferments in jaggery, the kut paste is printed as a lattice, and the brown print develops into chocolate-black on the tannin; iron in wash water leaves black spots on pale cloth."
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "transform": "translate(10 -40)"
+     },
+     "children": [
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "0-1",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M40 150 L280 150 L262 292 L58 292 Z",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.4"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "var(--dye-harda)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "40",
+          "y": "132"
+         },
+         "children": [
+          "harda bath"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "318"
+         },
+         "children": [
+          "tannic acid into the cotton"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "2",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M74 122 L246 122 L238 140 L250 286 Q160 306 70 286 L82 140 Z",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.4"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M88 160 L232 160 L240 280 Q160 296 80 280 Z",
+          "fill": "var(--dye-mud-wet)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M128 268 L128 222 A32 32 0 0 1 192 222 L192 268",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "10",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "110",
+          "cy": "170",
+          "r": "4",
+          "fill": "none",
+          "stroke": "var(--ink-3)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "150",
+          "cy": "166",
+          "r": "3",
+          "fill": "none",
+          "stroke": "var(--ink-3)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "206",
+          "cy": "172",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-3)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "40",
+          "y": "82"
+         },
+         "children": [
+          "scrap iron in jaggery"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "104"
+         },
+         "children": [
+          "with gram flour, fermenting"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "3"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "40",
+          "y": "226",
+          "width": "240",
+          "height": "54",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "48",
+          "y": "234",
+          "width": "224",
+          "height": "38",
+          "fill": "var(--dye-mud-wet)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "48",
+          "y": "234",
+          "width": "224",
+          "height": "38",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "112",
+          "y": "140",
+          "width": "96",
+          "height": "50",
+          "rx": "2",
+          "fill": "var(--dye-mud)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "112",
+          "y": "140",
+          "width": "96",
+          "height": "50",
+          "rx": "2",
+          "fill": "url(#grain)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "145",
+          "y": "106",
+          "width": "30",
+          "height": "34",
+          "rx": "3",
+          "fill": "var(--dye-mud-wet)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M116 193 h88",
+          "stroke": "var(--dye-mud-wet)",
+          "stroke-width": "5"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab it ink1",
+          "x": "40",
+          "y": "74"
+         },
+         "children": [
+          "kut"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "96"
+         },
+         "children": [
+          "printed in the afternoon"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "4",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M40 150 L280 150 L262 292 L58 292 Z",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.4"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "var(--dye-lime)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "90",
+          "cy": "200",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "130",
+          "cy": "232",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "176",
+          "cy": "214",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "214",
+          "cy": "248",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "236",
+          "cy": "196",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "150",
+          "cy": "268",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "110",
+          "cy": "254",
+          "r": "2.4",
+          "fill": "var(--dye-kut)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "40",
+          "y": "132"
+         },
+         "children": [
+          "iron in the wash water"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "318"
+         },
+         "children": [
+          "black spots on pale cloth"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M160.0 298.0 L160.0 330.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1.2",
+      "fill": "none"
+     }
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M160.0 330.0 L156.3 321.8 L163.7 321.8 Z",
+      "fill": "var(--ink-1)"
+     }
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "transform": "translate(-320 326)"
+     },
+     "children": [
+      {
+       "tag": "clipPath",
+       "attrs": {
+        "id": "rp-black-sp-rh"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "480.0",
+          "y": "32",
+          "width": "138.0",
+          "height": "296"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "clipPath",
+       "attrs": {
+        "id": "rp-black-sp-a-cc"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "clip-path": "url(#rp-black-sp-a-cc)"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "data-fill": "0=var(--dye-cloth)",
+          "style": "fill:var(--dye-cloth)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "data-fill": "0=var(--dye-harda)",
+          "data-tf": "0=scaleY(0);1=scaleY(1)",
+          "class": "tdip ob",
+          "style": "fill:var(--dye-harda);transform:scaleY(1)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M378.0 65.0 L412.0 103.3 L378.0 141.7 L344.0 103.3 Z M378.0 141.7 L412.0 180.0 L378.0 218.3 L344.0 180.0 Z M378.0 218.3 L412.0 256.7 L378.0 295.0 L344.0 256.7 Z M446.0 65.0 L480.0 103.3 L446.0 141.7 L412.0 103.3 Z M446.0 141.7 L480.0 180.0 L446.0 218.3 L412.0 180.0 Z M446.0 218.3 L480.0 256.7 L446.0 295.0 L412.0 256.7 Z M514.0 65.0 L548.0 103.3 L514.0 141.7 L480.0 103.3 Z M514.0 141.7 L548.0 180.0 L514.0 218.3 L480.0 180.0 Z M514.0 218.3 L548.0 256.7 L514.0 295.0 L480.0 256.7 Z M582.0 65.0 L616.0 103.3 L582.0 141.7 L548.0 103.3 Z M582.0 141.7 L616.0 180.0 L582.0 218.3 L548.0 180.0 Z M582.0 218.3 L616.0 256.7 L582.0 295.0 L548.0 256.7 Z",
+          "fill": "none",
+          "stroke-width": "3.4",
+          "stroke-linejoin": "round",
+          "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+          "data-op": "0=0;3=1",
+          "class": "tfill tox",
+          "style": "stroke:var(--dye-mud-wet);opacity:1"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+          "fill": "none",
+          "stroke-width": "5.1",
+          "stroke-linejoin": "round",
+          "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+          "data-op": "0=0;3=1",
+          "class": "tfill tox",
+          "style": "stroke:var(--dye-mud-wet);opacity:1"
+         }
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "data-fill": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+          "data-op": "0=0;3=1",
+          "class": "tfill tox",
+          "style": "fill:var(--dye-mud-wet);opacity:1"
+         },
+         "children": [
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "data-fill": "0=transparent",
+          "class": "tfill",
+          "style": "fill:transparent"
+         },
+         "children": [
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "31.0"
+           }
+          },
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "295.0",
+            "width": "272.0",
+            "height": "31.0"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+          "data-fill": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+          "data-op": "0=0;3=1",
+          "class": "tfill",
+          "style": "fill:var(--dye-mud-wet);opacity:1"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+          "stroke-width": "1",
+          "data-stroke": "0=var(--dye-mud-wet);4=var(--dye-kut)",
+          "data-op": "0=0;3=1",
+          "class": "tfill",
+          "style": "stroke:var(--dye-mud-wet);opacity:1"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "fill": "none",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "3"
+       },
+       "children": [
+        {
+         "tag": "g",
+         "attrs": {
+          "clip-path": "url(#rp-black-sp-rh)"
+         },
+         "children": [
+          {
+           "tag": "clipPath",
+           "attrs": {
+            "id": "rp-black-sp-b-cc"
+           },
+           "children": [
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "34.0",
+              "width": "272.0",
+              "height": "292.0"
+             }
+            }
+           ]
+          },
+          {
+           "tag": "g",
+           "attrs": {
+            "clip-path": "url(#rp-black-sp-b-cc)"
+           },
+           "children": [
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "34.0",
+              "width": "272.0",
+              "height": "292.0",
+              "data-fill": "0=var(--dye-cloth)",
+              "style": "fill:var(--dye-cloth)"
+             }
+            },
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "34.0",
+              "width": "272.0",
+              "height": "292.0",
+              "data-fill": "0=var(--dye-harda)",
+              "data-tf": "0=scaleY(0);1=scaleY(1)",
+              "class": "tdip ob",
+              "style": "fill:var(--dye-harda);transform:scaleY(1)"
+             }
+            },
+            {
+             "tag": "rect",
+             "attrs": {
+              "x": "344.0",
+              "y": "34.0",
+              "width": "272.0",
+              "height": "292.0",
+              "fill": "url(#chem-weave)"
+             }
+            },
+            {
+             "tag": "path",
+             "attrs": {
+              "d": "M378.0 65.0 L412.0 103.3 L378.0 141.7 L344.0 103.3 Z M378.0 141.7 L412.0 180.0 L378.0 218.3 L344.0 180.0 Z M378.0 218.3 L412.0 256.7 L378.0 295.0 L344.0 256.7 Z M446.0 65.0 L480.0 103.3 L446.0 141.7 L412.0 103.3 Z M446.0 141.7 L480.0 180.0 L446.0 218.3 L412.0 180.0 Z M446.0 218.3 L480.0 256.7 L446.0 295.0 L412.0 256.7 Z M514.0 65.0 L548.0 103.3 L514.0 141.7 L480.0 103.3 Z M514.0 141.7 L548.0 180.0 L514.0 218.3 L480.0 180.0 Z M514.0 218.3 L548.0 256.7 L514.0 295.0 L480.0 256.7 Z M582.0 65.0 L616.0 103.3 L582.0 141.7 L548.0 103.3 Z M582.0 141.7 L616.0 180.0 L582.0 218.3 L548.0 180.0 Z M582.0 218.3 L616.0 256.7 L582.0 295.0 L548.0 256.7 Z",
+              "fill": "none",
+              "stroke-width": "3.4",
+              "stroke-linejoin": "round",
+              "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+              "data-op": "0=0;3=1",
+              "class": "tfill tox",
+              "style": "stroke:var(--dye-kut);opacity:1"
+             }
+            },
+            {
+             "tag": "path",
+             "attrs": {
+              "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+              "fill": "none",
+              "stroke-width": "5.1",
+              "stroke-linejoin": "round",
+              "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+              "data-op": "0=0;3=1",
+              "class": "tfill tox",
+              "style": "stroke:var(--dye-kut);opacity:1"
+             }
+            },
+            {
+             "tag": "g",
+             "attrs": {
+              "data-fill": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+              "data-op": "0=0;3=1",
+              "class": "tfill tox",
+              "style": "fill:var(--dye-kut);opacity:1"
+             },
+             "children": [
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "378.0",
+                "cy": "103.3",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "378.0",
+                "cy": "180.0",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "378.0",
+                "cy": "256.7",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "446.0",
+                "cy": "103.3",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "446.0",
+                "cy": "180.0",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "446.0",
+                "cy": "256.7",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "514.0",
+                "cy": "103.3",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "514.0",
+                "cy": "180.0",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "514.0",
+                "cy": "256.7",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "582.0",
+                "cy": "103.3",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "582.0",
+                "cy": "180.0",
+                "r": "5.8"
+               }
+              },
+              {
+               "tag": "circle",
+               "attrs": {
+                "cx": "582.0",
+                "cy": "256.7",
+                "r": "5.8"
+               }
+              }
+             ]
+            },
+            {
+             "tag": "g",
+             "attrs": {
+              "data-fill": "0=transparent",
+              "class": "tfill",
+              "style": "fill:transparent"
+             },
+             "children": [
+              {
+               "tag": "rect",
+               "attrs": {
+                "x": "344.0",
+                "y": "34.0",
+                "width": "272.0",
+                "height": "31.0"
+               }
+              },
+              {
+               "tag": "rect",
+               "attrs": {
+                "x": "344.0",
+                "y": "295.0",
+                "width": "272.0",
+                "height": "31.0"
+               }
+              }
+             ]
+            },
+            {
+             "tag": "path",
+             "attrs": {
+              "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+              "data-fill": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+              "data-op": "0=0;3=1",
+              "class": "tfill",
+              "style": "fill:var(--dye-kut);opacity:1"
+             }
+            },
+            {
+             "tag": "path",
+             "attrs": {
+              "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+              "stroke-width": "1",
+              "data-stroke": "0=var(--dye-mud-wet);3=var(--dye-kut)",
+              "data-op": "0=0;3=1",
+              "class": "tfill",
+              "style": "stroke:var(--dye-kut);opacity:1"
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "style": "fill:var(--dye-kut)",
+        "data-on": "4",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "511.0",
+          "cy": "232.7",
+          "r": "2.9"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "591.5",
+          "cy": "232.3",
+          "r": "3.1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "361.3",
+          "cy": "172.5",
+          "r": "3.1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "517.5",
+          "cy": "267.4",
+          "r": "1.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "472.2",
+          "cy": "124.8",
+          "r": "2.5"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "498.6",
+          "cy": "73.9",
+          "r": "1.9"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "424.4",
+          "cy": "270.8",
+          "r": "2.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "394.2",
+          "cy": "244.8",
+          "r": "1.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "509.6",
+          "cy": "98.6",
+          "r": "1.6"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "573.6",
+          "cy": "116.7",
+          "r": "1.9"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "601.6",
+          "cy": "261.2",
+          "r": "2.1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "596.3",
+          "cy": "188.6",
+          "r": "2.7"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "405.6",
+          "cy": "276.1",
+          "r": "2.7"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "597.6",
+          "cy": "265.8",
+          "r": "2.1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "445.0",
+          "cy": "107.2",
+          "r": "1.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "370.4",
+          "cy": "136.7",
+          "r": "2.6"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "0-1"
+       },
+       "children": [
+        "cotton, after harda"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "2"
+       },
+       "children": [
+        "the cloth waits for the iron"
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "3"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M480.0 28 V332",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2",
+          "stroke-dasharray": "5 4"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink1 w6",
+          "x": "412.0",
+          "y": "24",
+          "text-anchor": "middle"
+         },
+         "children": [
+          "just printed"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink1 w6",
+          "x": "548.0",
+          "y": "24",
+          "text-anchor": "middle"
+         },
+         "children": [
+          "developed"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "4"
+       },
+       "children": [
+        "washed in iron-rich water"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "key": null,
+ "status": "u0409"
+}

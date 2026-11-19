@@ -15,8 +15,9 @@ const COLOUR_TOKEN =
   /^--(ground|raised|sunk|rule|rule-strong|ink-[1-3]|madder|indigo|dye-[a-z]+(-[a-z]+)*|dip-[1-9]|mol-[a-z]+|atom-[a-z]+|map-[a-z]+(-[a-z]+)*|chart-[a-z]+(-[a-z]+)*)$/;
 const DRAWING_ATTRIBUTE = /^(?![oO][nN])[A-Za-z][A-Za-z0-9-]*$/;
 const PAINT_ATTRIBUTES = new Set(["fill", "stroke", "stop-color"]);
-const PAINT_VALUE = /^(none|currentColor|#fff|#000|url\(#[\w-]+\))$/;
+const PAINT_VALUE = /^(none|currentColor|#fff|#000|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$/;
 const PAINT_TOKEN = /^var\((--[a-z0-9-]+)\)$/;
+const PAINT_MIX = /^color-mix\(in srgb, var\((--[a-z0-9-]+)\) \d{1,3}%, var\((--[a-z0-9-]+)\)\)$/;
 const FOREIGN_URL = /url\((?!#[\w-]+\))/;
 
 export type SvgTag = (typeof SVG_TAGS)[number];
@@ -32,6 +33,8 @@ export type AtomRow = { element: string; left: string; right: string };
 export type AtomTable = { caption: string; head: string[]; rows: AtomRow[] };
 export type Equation = { label: string; style: string | null; line: EquationLine; atoms: AtomTable | null; notes: string[] };
 export type Differs = { summary: string; body: string[] };
+export type ColourMix = { first: string; share: number; second: string };
+export type Colour = string | ColourMix;
 
 export const unitRef = matching(UNIT_REF, "a text unit id");
 export const domId = matching(DOM_ID, "an element id");
@@ -66,8 +69,8 @@ export function either<A, B>(first: Shape<A>, second: Shape<B>): Shape<A | B> {
 function refusedAttribute(name: string, value: string): boolean {
   if (!DRAWING_ATTRIBUTE.test(name) || /javascript:/i.test(value) || FOREIGN_URL.test(value)) return true;
   if (!PAINT_ATTRIBUTES.has(name)) return false;
-  const token = PAINT_TOKEN.exec(value);
-  return token ? !COLOUR_TOKEN.test(token[1]) : !PAINT_VALUE.test(value);
+  const tokens = PAINT_TOKEN.exec(value) ?? PAINT_MIX.exec(value);
+  return tokens ? !tokens.slice(1).every((token) => COLOUR_TOKEN.test(token)) : !PAINT_VALUE.test(value);
 }
 
 const drawingAttributes: Shape<Record<string, string>> = {
@@ -112,3 +115,17 @@ export const equationShape: Shape<Equation> = object<Equation>({
   notes: list(unitRef)
 });
 export const differsShape: Shape<Differs> = object<Differs>({ summary: label, body: list(unitRef, 1) });
+
+const share: Shape<number> = {
+  expected: "a share from 1 to 99 per cent",
+  parse(value, path) {
+    const found = integer.parse(value, path);
+    if (found < 1 || found > 99) throw new ShapeError(path, "a share from 1 to 99 per cent");
+    return found;
+  }
+};
+
+export const colourShape: Shape<Colour> = either(colourToken, object<ColourMix>({ first: colourToken, share, second: colourToken }));
+
+export const paint = (colour: Colour) =>
+  typeof colour === "string" ? `var(${colour})` : `color-mix(in srgb, var(${colour.first}) ${colour.share}%, var(${colour.second}))`;

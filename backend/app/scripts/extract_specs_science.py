@@ -16,6 +16,8 @@ from .build_monograph import MONOGRAPHS_DIR, TEMPLATE_FILE, monograph_content
 from .extract_specs_science_dom import Element, anchored, find_anchor, parse_fragment
 from .extract_specs_science_explainers import material_cards, model_explainer, process_replay
 from .extract_specs_science_figures import diagram, equation_card, molecule_3d, structure_diagram
+from .extract_specs_science_players import dip_player, reaction_player
+from .extract_specs_science_stages import stage_player
 
 SPECS_FOLDER = "specs"
 SLUGS = ("Kutch-Ajrakh",)
@@ -31,11 +33,14 @@ def _plain(read: Callable[[Element], dict[str, Any]]) -> Extractor:
 EXTRACTORS: Mapping[str, Extractor] = MappingProxyType(
     {
         "diagram": _plain(diagram),
+        "dip_player": _plain(dip_player),
         "equation_card": _plain(equation_card),
         "material_cards": material_cards,
         "model_explainer": _plain(model_explainer),
         "molecule_3d": _plain(molecule_3d),
         "process_replay": _plain(process_replay),
+        "reaction_player": _plain(reaction_player),
+        "stage_player": _plain(stage_player),
         "structure_diagram": _plain(structure_diagram),
     }
 )

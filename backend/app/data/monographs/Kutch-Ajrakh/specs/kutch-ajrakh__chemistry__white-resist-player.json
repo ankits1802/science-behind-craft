@@ -1,0 +1,2876 @@
+{
+ "id": "rp-white",
+ "track": "white",
+ "head": {
+  "figure": "chem:7",
+  "number": "u0474",
+  "title": "u0475",
+  "titleId": null,
+  "dek": "u0476"
+ },
+ "current": 5,
+ "steps": [
+  {
+   "name": "Saaj",
+   "text": {
+    "kicker": "u0478",
+    "heading": "u0479",
+    "paragraphs": [
+     "u0480"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [
+     {
+      "term": "u0481",
+      "value": "u0482"
+     },
+     {
+      "term": "u0483",
+      "value": "u0484"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": {
+         "first": "--dye-harda-dry",
+         "share": 60,
+         "second": "--dye-cloth"
+        },
+        "name": [
+         "Castor oil"
+        ],
+        "formula": null,
+        "state": [
+         {
+          "text": "Ricinus communis",
+          "style": "i"
+         }
+        ],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "clear",
+        "name": [
+         "Soda ash"
+        ],
+        "formula": [
+         "Na",
+         {
+          "text": "2",
+          "style": "sub"
+         },
+         "CO",
+         {
+          "text": "3",
+          "style": "sub"
+         }
+        ],
+        "state": [
+         " · "
+        ],
+        "cid": 10340
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-mud",
+        "name": [
+         "Camel dung"
+        ],
+        "formula": null,
+        "state": [
+         {
+          "text": "gissi",
+          "style": "i"
+         }
+        ],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "beaten, soaked, dried"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-lime",
+        "name": [
+         "Soap-like solution"
+        ],
+        "formula": null,
+        "state": [
+         "as the sources name it"
+        ],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-cloth",
+        "name": [
+         "Cloth"
+        ],
+        "formula": null,
+        "state": [
+         "white, soft"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0505"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Outline in lime",
+   "text": {
+    "kicker": "u0485",
+    "heading": "u0486",
+    "paragraphs": [
+     "u0487"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [
+     {
+      "term": "u0488",
+      "value": "u0489"
+     },
+     {
+      "term": "u0490",
+      "value": "u0491"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-lime",
+        "name": [
+         "Lime"
+        ],
+        "formula": [
+         "Ca(OH)",
+         {
+          "text": "2",
+          "style": "sub"
+         }
+        ],
+        "state": [
+         "calcium hydroxide · "
+        ],
+        "cid": 6093208
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-mud-wet",
+        "name": [
+         "Babul gum"
+        ],
+        "formula": null,
+        "state": [
+         "the binder"
+        ],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "mixed and printed"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-lime",
+        "name": [
+         "Lime resist"
+        ],
+        "formula": null,
+        "state": [
+         "the white outline"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0506"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Clay keeps indigo out",
+   "text": {
+    "kicker": "u0492",
+    "heading": "u0493",
+    "paragraphs": [
+     "u0494"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-mud",
+        "name": [
+         "Clay"
+        ],
+        "formula": null,
+        "state": [],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-cloth",
+        "name": [
+         "Millet flour"
+        ],
+        "formula": null,
+        "state": [],
+        "cid": null
+       },
+       {
+        "item": "plus"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-lime",
+        "name": [
+         "Alum"
+        ],
+        "formula": [
+         "KAl(SO",
+         {
+          "text": "4",
+          "style": "sub"
+         },
+         ")",
+         {
+          "text": "2",
+          "style": "sub"
+         },
+         "·12H",
+         {
+          "text": "2",
+          "style": "sub"
+         },
+         "O"
+        ],
+        "state": [
+         " · "
+        ],
+        "cid": 62667
+       },
+       {
+        "item": "arrow",
+        "label": "printed, then dyed in indigo"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-mud",
+        "name": [
+         "Covered cloth"
+        ],
+        "formula": null,
+        "state": [
+         "stays undyed"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0507"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "Washed, not rubbed",
+   "text": {
+    "kicker": "u0495",
+    "heading": "u0496",
+    "paragraphs": [
+     "u0497"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-indigo",
+        "name": [
+         "Dyed cloth"
+        ],
+        "formula": null,
+        "state": [
+         "resists still on"
+        ],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "running water"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-indigo",
+        "name": [
+         "Washed cloth"
+        ],
+        "formula": null,
+        "state": [
+         "resists kept, stiff"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0508"
+     }
+    ]
+   },
+   "scene": null
+  },
+  {
+   "name": "The morning wash",
+   "text": {
+    "kicker": "u0498",
+    "heading": "u0499",
+    "paragraphs": [
+     "u0500"
+    ],
+    "bond": null,
+    "link": null,
+    "conditions": [
+     {
+      "term": "u0501",
+      "value": "u0502"
+     },
+     {
+      "term": "u0503",
+      "value": "u0504"
+     }
+    ],
+    "differs": null
+   },
+   "chemistry": {
+    "parts": [
+     {
+      "part": "lane",
+      "label": "Species in this step",
+      "items": [
+       {
+        "item": "species",
+        "swatch": "--dye-lime",
+        "name": [
+         "Resists"
+        ],
+        "formula": null,
+        "state": [
+         "lime and clay"
+        ],
+        "cid": null
+       },
+       {
+        "item": "arrow",
+        "label": "cool water"
+       },
+       {
+        "item": "species",
+        "swatch": "--dye-cloth",
+        "name": [
+         "White"
+        ],
+        "formula": null,
+        "state": [
+         "where no dye reached"
+        ],
+        "cid": null
+       }
+      ]
+     },
+     {
+      "part": "none",
+      "unit": "u0509"
+     }
+    ]
+   },
+   "scene": null
+  }
+ ],
+ "scenes": [
+  {
+   "tag": "svg",
+   "attrs": {
+    "class": "scene desk",
+    "data-fit": "",
+    "viewBox": "0 0 640 360",
+    "role": "img",
+    "aria-labelledby": "rp-white-sc-t"
+   },
+   "children": [
+    {
+     "tag": "title",
+     "attrs": {
+      "id": "rp-white-sc-t"
+     },
+     "children": [
+      "A cotton square scoured white, printed with lime outlines and clay dots, dyed in indigo, washed in running water and then in the cool of the morning, so the outlines and dots come up white on blue; beside it, white where lime held and the pinkish tinge madder leaves on open cloth."
+     ]
+    },
+    {
+     "tag": "clipPath",
+     "attrs": {
+      "id": "rp-white-sc-a-cc"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "clip-path": "url(#rp-white-sc-a-cc)"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "data-fill": "0=color-mix(in srgb, var(--dye-cloth) 70%, var(--dye-mud))",
+        "style": "fill:color-mix(in srgb, var(--dye-cloth) 70%, var(--dye-mud))"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "data-fill": "0=var(--dye-cloth)",
+        "data-tf": "0=scaleY(0);1=scaleY(1)",
+        "class": "tdip ob",
+        "style": "fill:var(--dye-cloth);transform:scaleY(1)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "data-fill": "0=var(--dye-indigo)",
+        "data-tf": "0=scaleY(0);3=scaleY(1)",
+        "class": "tdip ob",
+        "style": "fill:var(--dye-indigo);transform:scaleY(1)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+        "fill": "none",
+        "stroke-width": "10.9",
+        "stroke-linejoin": "round",
+        "data-stroke": "0=var(--dye-lime-edge);5=transparent",
+        "data-op": "0=0;2=1",
+        "class": "tfill",
+        "style": "stroke:transparent;opacity:1"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+        "fill": "none",
+        "stroke-width": "5.1",
+        "stroke-linejoin": "round",
+        "data-stroke": "0=var(--dye-lime);5=var(--dye-cloth)",
+        "data-op": "0=0;2=1",
+        "class": "tfill",
+        "style": "stroke:var(--dye-cloth);opacity:1"
+       }
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-fill": "0=var(--dye-mud);5=var(--dye-cloth)",
+        "data-op": "0=0;3=1",
+        "class": "tfill",
+        "style": "fill:var(--dye-cloth);opacity:1"
+       },
+       "children": [
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "378.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "446.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "514.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "103.3",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "180.0",
+          "r": "5.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "582.0",
+          "cy": "256.7",
+          "r": "5.8"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-fill": "0=var(--dye-mud);5=var(--dye-cloth)",
+        "data-op": "0=0;3=1",
+        "class": "tfill",
+        "style": "fill:var(--dye-cloth);opacity:1"
+       },
+       "children": [
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "344.0",
+          "cy": "65.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "344.0",
+          "cy": "141.7",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "344.0",
+          "cy": "218.3",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "344.0",
+          "cy": "295.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "412.0",
+          "cy": "65.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "412.0",
+          "cy": "141.7",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "412.0",
+          "cy": "218.3",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "412.0",
+          "cy": "295.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "480.0",
+          "cy": "65.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "480.0",
+          "cy": "141.7",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "480.0",
+          "cy": "218.3",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "480.0",
+          "cy": "295.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "548.0",
+          "cy": "65.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "548.0",
+          "cy": "141.7",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "548.0",
+          "cy": "218.3",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "548.0",
+          "cy": "295.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "616.0",
+          "cy": "65.0",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "616.0",
+          "cy": "141.7",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "616.0",
+          "cy": "218.3",
+          "r": "4.8"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "616.0",
+          "cy": "295.0",
+          "r": "4.8"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-fill": "0=transparent",
+        "class": "tfill",
+        "style": "fill:transparent"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "31.0"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "295.0",
+          "width": "272.0",
+          "height": "31.0"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+        "data-fill": "0=var(--dye-lime);5=var(--dye-cloth)",
+        "data-op": "0=0;2=1",
+        "class": "tfill",
+        "style": "fill:var(--dye-cloth);opacity:1"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+        "stroke-width": "1",
+        "data-stroke": "0=var(--dye-lime-edge);5=var(--dye-cloth)",
+        "data-op": "0=0;2=1",
+        "class": "tfill",
+        "style": "stroke:var(--dye-cloth);opacity:1"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "rect",
+     "attrs": {
+      "x": "344.0",
+      "y": "34.0",
+      "width": "272.0",
+      "height": "292.0",
+      "fill": "none",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1"
+     }
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "0-1"
+     },
+     "children": [
+      "scoured until white and soft"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "2"
+     },
+     "children": [
+      "lime outlines on the cloth"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "3"
+     },
+     "children": [
+      "clay dots, then the indigo vat"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "off",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "4"
+     },
+     "children": [
+      "resists still on, cloth stiff"
+     ]
+    },
+    {
+     "tag": "text",
+     "attrs": {
+      "class": "lab2 ink2",
+      "x": "480.0",
+      "y": "24",
+      "text-anchor": "middle",
+      "data-on": "5"
+     },
+     "children": [
+      "washed: the lines come up white"
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "0-1",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M40 150 L280 150 L262 292 L58 292 Z",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.4"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "color-mix(in srgb, var(--dye-cloth) 80%, var(--dye-mud))"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M50 164 L270 164 L254 284 L66 284 Z",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "92",
+        "cy": "196",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "120",
+        "cy": "226",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "168",
+        "cy": "204",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "214",
+        "cy": "236",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "236",
+        "cy": "196",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "150",
+        "cy": "262",
+        "r": "5",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab it ink1",
+        "x": "40",
+        "y": "110"
+       },
+       "children": [
+        "saaj"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "132"
+       },
+       "children": [
+        "castor oil, soda ash, camel dung"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "318"
+       },
+       "children": [
+        "soak, beat, dry, again and again"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "2",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "40",
+        "y": "226",
+        "width": "240",
+        "height": "54",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "48",
+        "y": "234",
+        "width": "224",
+        "height": "38",
+        "fill": "var(--dye-lime)",
+        "stroke": "var(--dye-lime-edge)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "112",
+        "y": "140",
+        "width": "96",
+        "height": "50",
+        "rx": "2",
+        "fill": "var(--dye-mud)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "112",
+        "y": "140",
+        "width": "96",
+        "height": "50",
+        "rx": "2",
+        "fill": "url(#grain)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "145",
+        "y": "106",
+        "width": "30",
+        "height": "34",
+        "rx": "3",
+        "fill": "var(--dye-mud-wet)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M116 193 h88",
+        "stroke": "var(--dye-lime-edge)",
+        "stroke-width": "5"
+       }
+      },
+      {
+       "tag": "circle",
+       "attrs": {
+        "cx": "246",
+        "cy": "64",
+        "r": "15",
+        "fill": "none",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M267.0 64.0 L274.0 64.0",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M260.8 78.8 L265.8 83.8",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M246.0 85.0 L246.0 92.0",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M231.2 78.8 L226.2 83.8",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M225.0 64.0 L218.0 64.0",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M231.2 49.2 L226.2 44.2",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M246.0 43.0 L246.0 36.0",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M260.8 49.2 L265.8 44.2",
+        "stroke": "var(--ink-2)",
+        "stroke-width": "1.4",
+        "stroke-linecap": "round"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "40",
+        "y": "74"
+       },
+       "children": [
+        "lime and babul gum"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "96"
+       },
+       "children": [
+        "printed in the morning"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "3",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "40",
+        "y": "132",
+        "width": "240",
+        "height": "54",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "48",
+        "y": "140",
+        "width": "224",
+        "height": "38",
+        "fill": "var(--dye-mud)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "48",
+        "y": "140",
+        "width": "224",
+        "height": "38",
+        "fill": "url(#chem-grit)"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M94 226 L226 226 L206 292 Q160 304 114 292 Z",
+        "fill": "var(--raised)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M102 236 L218 236 L202 286 Q160 296 118 286 Z",
+        "fill": "var(--dye-vat-liquor)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab it ink1",
+        "x": "40",
+        "y": "74"
+       },
+       "children": [
+        "gach"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "96"
+       },
+       "children": [
+        "clay, millet flour, alum, gum"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink3",
+        "x": "40",
+        "y": "322"
+       },
+       "children": [
+        "then the indigo vat"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "4",
+      "class": "off"
+     },
+     "children": [
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M30 150 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+        "fill": "none",
+        "stroke": "var(--ink-3)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M30 182 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+        "fill": "none",
+        "stroke": "var(--ink-3)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M30 214 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+        "fill": "none",
+        "stroke": "var(--ink-3)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M30 246 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+        "fill": "none",
+        "stroke": "var(--ink-3)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M30 278 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+        "fill": "none",
+        "stroke": "var(--ink-3)",
+        "stroke-width": "1.2"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "70",
+        "y": "196",
+        "width": "180",
+        "height": "12",
+        "fill": "var(--dye-indigo)",
+        "stroke": "var(--ink-1)",
+        "stroke-width": ".8"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M40.0 122.0 L120.0 122.0",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1.2",
+        "fill": "none"
+       }
+      },
+      {
+       "tag": "path",
+       "attrs": {
+        "d": "M120.0 122.0 L111.8 125.7 L111.8 118.3 Z",
+        "fill": "var(--ink-1)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "40",
+        "y": "74"
+       },
+       "children": [
+        "running water"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "40",
+        "y": "96"
+       },
+       "children": [
+        "no hard rubbing"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "data-on": "5"
+     },
+     "children": [
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "34",
+        "y": "96",
+        "width": "118",
+        "height": "118",
+        "fill": "var(--ink-2)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "35",
+        "y": "97",
+        "width": "116",
+        "height": "116",
+        "fill": "var(--raised)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "37",
+        "y": "99",
+        "width": "112",
+        "height": "112",
+        "fill": "var(--dye-cloth)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "37",
+        "y": "99",
+        "width": "112",
+        "height": "112",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "34",
+        "y": "234"
+       },
+       "children": [
+        "where lime held:"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink1 w6",
+        "x": "34",
+        "y": "250"
+       },
+       "children": [
+        "white"
+       ]
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "170",
+        "y": "96",
+        "width": "118",
+        "height": "118",
+        "fill": "var(--ink-2)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "171",
+        "y": "97",
+        "width": "116",
+        "height": "116",
+        "fill": "var(--raised)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "173",
+        "y": "99",
+        "width": "112",
+        "height": "112",
+        "fill": "var(--dye-pink)"
+       }
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "173",
+        "y": "99",
+        "width": "112",
+        "height": "112",
+        "fill": "url(#chem-weave)"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "170",
+        "y": "234"
+       },
+       "children": [
+        "open cloth after"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink1 w6",
+        "x": "170",
+        "y": "250"
+       },
+       "children": [
+        "madder: a pink tinge"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab ink1",
+        "x": "34",
+        "y": "66"
+       },
+       "children": [
+        "early morning, cool water"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "34",
+        "y": "84"
+       },
+       "children": [
+        "the alum stays, the resists wash out"
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M298.0 180.0 L330.0 180.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1.2",
+      "fill": "none"
+     }
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M330.0 180.0 L321.8 183.7 L321.8 176.3 Z",
+      "fill": "var(--ink-1)"
+     }
+    }
+   ]
+  },
+  {
+   "tag": "svg",
+   "attrs": {
+    "class": "scene ph",
+    "data-fit": "",
+    "viewBox": "0 0 320 700",
+    "role": "img",
+    "aria-labelledby": "rp-white-sp-t"
+   },
+   "children": [
+    {
+     "tag": "title",
+     "attrs": {
+      "id": "rp-white-sp-t"
+     },
+     "children": [
+      "A cotton square scoured white, printed with lime outlines and clay dots, dyed in indigo, washed in running water and then in the cool of the morning, so the outlines and dots come up white on blue; beside it, white where lime held and the pinkish tinge madder leaves on open cloth."
+     ]
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "transform": "translate(10 -40)"
+     },
+     "children": [
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "0-1",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M40 150 L280 150 L262 292 L58 292 Z",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.4"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "color-mix(in srgb, var(--dye-cloth) 80%, var(--dye-mud))"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M50 164 L270 164 L254 284 L66 284 Z",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "92",
+          "cy": "196",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "120",
+          "cy": "226",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "168",
+          "cy": "204",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "214",
+          "cy": "236",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "236",
+          "cy": "196",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "150",
+          "cy": "262",
+          "r": "5",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab it ink1",
+          "x": "40",
+          "y": "110"
+         },
+         "children": [
+          "saaj"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "132"
+         },
+         "children": [
+          "castor oil, soda ash, camel dung"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "318"
+         },
+         "children": [
+          "soak, beat, dry, again and again"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "2",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "40",
+          "y": "226",
+          "width": "240",
+          "height": "54",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "48",
+          "y": "234",
+          "width": "224",
+          "height": "38",
+          "fill": "var(--dye-lime)",
+          "stroke": "var(--dye-lime-edge)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "112",
+          "y": "140",
+          "width": "96",
+          "height": "50",
+          "rx": "2",
+          "fill": "var(--dye-mud)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "112",
+          "y": "140",
+          "width": "96",
+          "height": "50",
+          "rx": "2",
+          "fill": "url(#grain)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "145",
+          "y": "106",
+          "width": "30",
+          "height": "34",
+          "rx": "3",
+          "fill": "var(--dye-mud-wet)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M116 193 h88",
+          "stroke": "var(--dye-lime-edge)",
+          "stroke-width": "5"
+         }
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "cx": "246",
+          "cy": "64",
+          "r": "15",
+          "fill": "none",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M267.0 64.0 L274.0 64.0",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M260.8 78.8 L265.8 83.8",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M246.0 85.0 L246.0 92.0",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M231.2 78.8 L226.2 83.8",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M225.0 64.0 L218.0 64.0",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M231.2 49.2 L226.2 44.2",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M246.0 43.0 L246.0 36.0",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M260.8 49.2 L265.8 44.2",
+          "stroke": "var(--ink-2)",
+          "stroke-width": "1.4",
+          "stroke-linecap": "round"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "40",
+          "y": "74"
+         },
+         "children": [
+          "lime and babul gum"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "96"
+         },
+         "children": [
+          "printed in the morning"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "3",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "40",
+          "y": "132",
+          "width": "240",
+          "height": "54",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "48",
+          "y": "140",
+          "width": "224",
+          "height": "38",
+          "fill": "var(--dye-mud)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "48",
+          "y": "140",
+          "width": "224",
+          "height": "38",
+          "fill": "url(#chem-grit)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M94 226 L226 226 L206 292 Q160 304 114 292 Z",
+          "fill": "var(--raised)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M102 236 L218 236 L202 286 Q160 296 118 286 Z",
+          "fill": "var(--dye-vat-liquor)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab it ink1",
+          "x": "40",
+          "y": "74"
+         },
+         "children": [
+          "gach"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "96"
+         },
+         "children": [
+          "clay, millet flour, alum, gum"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink3",
+          "x": "40",
+          "y": "322"
+         },
+         "children": [
+          "then the indigo vat"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "4",
+        "class": "off"
+       },
+       "children": [
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M30 150 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+          "fill": "none",
+          "stroke": "var(--ink-3)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M30 182 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+          "fill": "none",
+          "stroke": "var(--ink-3)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M30 214 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+          "fill": "none",
+          "stroke": "var(--ink-3)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M30 246 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+          "fill": "none",
+          "stroke": "var(--ink-3)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M30 278 q 30 -8 60 0 t 60 0 t 60 0 t 60 0",
+          "fill": "none",
+          "stroke": "var(--ink-3)",
+          "stroke-width": "1.2"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "70",
+          "y": "196",
+          "width": "180",
+          "height": "12",
+          "fill": "var(--dye-indigo)",
+          "stroke": "var(--ink-1)",
+          "stroke-width": ".8"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M40.0 122.0 L120.0 122.0",
+          "stroke": "var(--ink-1)",
+          "stroke-width": "1.2",
+          "fill": "none"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M120.0 122.0 L111.8 125.7 L111.8 118.3 Z",
+          "fill": "var(--ink-1)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "40",
+          "y": "74"
+         },
+         "children": [
+          "running water"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "40",
+          "y": "96"
+         },
+         "children": [
+          "no hard rubbing"
+         ]
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "data-on": "5"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "34",
+          "y": "96",
+          "width": "118",
+          "height": "118",
+          "fill": "var(--ink-2)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "35",
+          "y": "97",
+          "width": "116",
+          "height": "116",
+          "fill": "var(--raised)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "37",
+          "y": "99",
+          "width": "112",
+          "height": "112",
+          "fill": "var(--dye-cloth)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "37",
+          "y": "99",
+          "width": "112",
+          "height": "112",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "34",
+          "y": "234"
+         },
+         "children": [
+          "where lime held:"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink1 w6",
+          "x": "34",
+          "y": "250"
+         },
+         "children": [
+          "white"
+         ]
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "170",
+          "y": "96",
+          "width": "118",
+          "height": "118",
+          "fill": "var(--ink-2)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "171",
+          "y": "97",
+          "width": "116",
+          "height": "116",
+          "fill": "var(--raised)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "173",
+          "y": "99",
+          "width": "112",
+          "height": "112",
+          "fill": "var(--dye-pink)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "173",
+          "y": "99",
+          "width": "112",
+          "height": "112",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "170",
+          "y": "234"
+         },
+         "children": [
+          "open cloth after"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink1 w6",
+          "x": "170",
+          "y": "250"
+         },
+         "children": [
+          "madder: a pink tinge"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab ink1",
+          "x": "34",
+          "y": "66"
+         },
+         "children": [
+          "early morning, cool water"
+         ]
+        },
+        {
+         "tag": "text",
+         "attrs": {
+          "class": "lab2 ink2",
+          "x": "34",
+          "y": "84"
+         },
+         "children": [
+          "the alum stays, the resists wash out"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M160.0 298.0 L160.0 330.0",
+      "stroke": "var(--ink-1)",
+      "stroke-width": "1.2",
+      "fill": "none"
+     }
+    },
+    {
+     "tag": "path",
+     "attrs": {
+      "d": "M160.0 330.0 L156.3 321.8 L163.7 321.8 Z",
+      "fill": "var(--ink-1)"
+     }
+    },
+    {
+     "tag": "g",
+     "attrs": {
+      "transform": "translate(-320 326)"
+     },
+     "children": [
+      {
+       "tag": "clipPath",
+       "attrs": {
+        "id": "rp-white-sp-a-cc"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "g",
+       "attrs": {
+        "clip-path": "url(#rp-white-sp-a-cc)"
+       },
+       "children": [
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "data-fill": "0=color-mix(in srgb, var(--dye-cloth) 70%, var(--dye-mud))",
+          "style": "fill:color-mix(in srgb, var(--dye-cloth) 70%, var(--dye-mud))"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "data-fill": "0=var(--dye-cloth)",
+          "data-tf": "0=scaleY(0);1=scaleY(1)",
+          "class": "tdip ob",
+          "style": "fill:var(--dye-cloth);transform:scaleY(1)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "data-fill": "0=var(--dye-indigo)",
+          "data-tf": "0=scaleY(0);3=scaleY(1)",
+          "class": "tdip ob",
+          "style": "fill:var(--dye-indigo);transform:scaleY(1)"
+         }
+        },
+        {
+         "tag": "rect",
+         "attrs": {
+          "x": "344.0",
+          "y": "34.0",
+          "width": "272.0",
+          "height": "292.0",
+          "fill": "url(#chem-weave)"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+          "fill": "none",
+          "stroke-width": "10.9",
+          "stroke-linejoin": "round",
+          "data-stroke": "0=var(--dye-lime-edge);5=transparent",
+          "data-op": "0=0;2=1",
+          "class": "tfill",
+          "style": "stroke:transparent;opacity:1"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M378.00 80.21 L383.31 90.52 L394.35 86.99 L390.82 98.02 L401.12 103.33 L390.82 108.64 L394.35 119.68 L383.31 116.15 L378.00 126.45 L372.69 116.15 L361.65 119.68 L365.18 108.64 L354.88 103.33 L365.18 98.02 L361.65 86.99 L372.69 90.52 Z M378.00 156.88 L383.31 167.18 L394.35 163.65 L390.82 174.69 L401.12 180.00 L390.82 185.31 L394.35 196.35 L383.31 192.82 L378.00 203.12 L372.69 192.82 L361.65 196.35 L365.18 185.31 L354.88 180.00 L365.18 174.69 L361.65 163.65 L372.69 167.18 Z M378.00 233.55 L383.31 243.85 L394.35 240.32 L390.82 251.36 L401.12 256.67 L390.82 261.98 L394.35 273.01 L383.31 269.48 L378.00 279.79 L372.69 269.48 L361.65 273.01 L365.18 261.98 L354.88 256.67 L365.18 251.36 L361.65 240.32 L372.69 243.85 Z M446.00 80.21 L451.31 90.52 L462.35 86.99 L458.82 98.02 L469.12 103.33 L458.82 108.64 L462.35 119.68 L451.31 116.15 L446.00 126.45 L440.69 116.15 L429.65 119.68 L433.18 108.64 L422.88 103.33 L433.18 98.02 L429.65 86.99 L440.69 90.52 Z M446.00 156.88 L451.31 167.18 L462.35 163.65 L458.82 174.69 L469.12 180.00 L458.82 185.31 L462.35 196.35 L451.31 192.82 L446.00 203.12 L440.69 192.82 L429.65 196.35 L433.18 185.31 L422.88 180.00 L433.18 174.69 L429.65 163.65 L440.69 167.18 Z M446.00 233.55 L451.31 243.85 L462.35 240.32 L458.82 251.36 L469.12 256.67 L458.82 261.98 L462.35 273.01 L451.31 269.48 L446.00 279.79 L440.69 269.48 L429.65 273.01 L433.18 261.98 L422.88 256.67 L433.18 251.36 L429.65 240.32 L440.69 243.85 Z M514.00 80.21 L519.31 90.52 L530.35 86.99 L526.82 98.02 L537.12 103.33 L526.82 108.64 L530.35 119.68 L519.31 116.15 L514.00 126.45 L508.69 116.15 L497.65 119.68 L501.18 108.64 L490.88 103.33 L501.18 98.02 L497.65 86.99 L508.69 90.52 Z M514.00 156.88 L519.31 167.18 L530.35 163.65 L526.82 174.69 L537.12 180.00 L526.82 185.31 L530.35 196.35 L519.31 192.82 L514.00 203.12 L508.69 192.82 L497.65 196.35 L501.18 185.31 L490.88 180.00 L501.18 174.69 L497.65 163.65 L508.69 167.18 Z M514.00 233.55 L519.31 243.85 L530.35 240.32 L526.82 251.36 L537.12 256.67 L526.82 261.98 L530.35 273.01 L519.31 269.48 L514.00 279.79 L508.69 269.48 L497.65 273.01 L501.18 261.98 L490.88 256.67 L501.18 251.36 L497.65 240.32 L508.69 243.85 Z M582.00 80.21 L587.31 90.52 L598.35 86.99 L594.82 98.02 L605.12 103.33 L594.82 108.64 L598.35 119.68 L587.31 116.15 L582.00 126.45 L576.69 116.15 L565.65 119.68 L569.18 108.64 L558.88 103.33 L569.18 98.02 L565.65 86.99 L576.69 90.52 Z M582.00 156.88 L587.31 167.18 L598.35 163.65 L594.82 174.69 L605.12 180.00 L594.82 185.31 L598.35 196.35 L587.31 192.82 L582.00 203.12 L576.69 192.82 L565.65 196.35 L569.18 185.31 L558.88 180.00 L569.18 174.69 L565.65 163.65 L576.69 167.18 Z M582.00 233.55 L587.31 243.85 L598.35 240.32 L594.82 251.36 L605.12 256.67 L594.82 261.98 L598.35 273.01 L587.31 269.48 L582.00 279.79 L576.69 269.48 L565.65 273.01 L569.18 261.98 L558.88 256.67 L569.18 251.36 L565.65 240.32 L576.69 243.85 Z",
+          "fill": "none",
+          "stroke-width": "5.1",
+          "stroke-linejoin": "round",
+          "data-stroke": "0=var(--dye-lime);5=var(--dye-cloth)",
+          "data-op": "0=0;2=1",
+          "class": "tfill",
+          "style": "stroke:var(--dye-cloth);opacity:1"
+         }
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "data-fill": "0=var(--dye-mud);5=var(--dye-cloth)",
+          "data-op": "0=0;3=1",
+          "class": "tfill",
+          "style": "fill:var(--dye-cloth);opacity:1"
+         },
+         "children": [
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "378.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "446.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "514.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "103.3",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "180.0",
+            "r": "5.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "582.0",
+            "cy": "256.7",
+            "r": "5.8"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "data-fill": "0=var(--dye-mud);5=var(--dye-cloth)",
+          "data-op": "0=0;3=1",
+          "class": "tfill",
+          "style": "fill:var(--dye-cloth);opacity:1"
+         },
+         "children": [
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "344.0",
+            "cy": "65.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "344.0",
+            "cy": "141.7",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "344.0",
+            "cy": "218.3",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "344.0",
+            "cy": "295.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "412.0",
+            "cy": "65.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "412.0",
+            "cy": "141.7",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "412.0",
+            "cy": "218.3",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "412.0",
+            "cy": "295.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "480.0",
+            "cy": "65.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "480.0",
+            "cy": "141.7",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "480.0",
+            "cy": "218.3",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "480.0",
+            "cy": "295.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "548.0",
+            "cy": "65.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "548.0",
+            "cy": "141.7",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "548.0",
+            "cy": "218.3",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "548.0",
+            "cy": "295.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "616.0",
+            "cy": "65.0",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "616.0",
+            "cy": "141.7",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "616.0",
+            "cy": "218.3",
+            "r": "4.8"
+           }
+          },
+          {
+           "tag": "circle",
+           "attrs": {
+            "cx": "616.0",
+            "cy": "295.0",
+            "r": "4.8"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "g",
+         "attrs": {
+          "data-fill": "0=transparent",
+          "class": "tfill",
+          "style": "fill:transparent"
+         },
+         "children": [
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "34.0",
+            "width": "272.0",
+            "height": "31.0"
+           }
+          },
+          {
+           "tag": "rect",
+           "attrs": {
+            "x": "344.0",
+            "y": "295.0",
+            "width": "272.0",
+            "height": "31.0"
+           }
+          }
+         ]
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M361.0 39.0 L372.6 49.5 L361.0 60.0 L349.4 49.5 Z M395.0 39.0 L406.6 49.5 L395.0 60.0 L383.4 49.5 Z M429.0 39.0 L440.6 49.5 L429.0 60.0 L417.4 49.5 Z M463.0 39.0 L474.6 49.5 L463.0 60.0 L451.4 49.5 Z M497.0 39.0 L508.6 49.5 L497.0 60.0 L485.4 49.5 Z M531.0 39.0 L542.6 49.5 L531.0 60.0 L519.4 49.5 Z M565.0 39.0 L576.6 49.5 L565.0 60.0 L553.4 49.5 Z M599.0 39.0 L610.6 49.5 L599.0 60.0 L587.4 49.5 Z M361.0 300.0 L372.6 310.5 L361.0 321.0 L349.4 310.5 Z M395.0 300.0 L406.6 310.5 L395.0 321.0 L383.4 310.5 Z M429.0 300.0 L440.6 310.5 L429.0 321.0 L417.4 310.5 Z M463.0 300.0 L474.6 310.5 L463.0 321.0 L451.4 310.5 Z M497.0 300.0 L508.6 310.5 L497.0 321.0 L485.4 310.5 Z M531.0 300.0 L542.6 310.5 L531.0 321.0 L519.4 310.5 Z M565.0 300.0 L576.6 310.5 L565.0 321.0 L553.4 310.5 Z M599.0 300.0 L610.6 310.5 L599.0 321.0 L587.4 310.5 Z",
+          "data-fill": "0=var(--dye-lime);5=var(--dye-cloth)",
+          "data-op": "0=0;2=1",
+          "class": "tfill",
+          "style": "fill:var(--dye-cloth);opacity:1"
+         }
+        },
+        {
+         "tag": "path",
+         "attrs": {
+          "d": "M344.0 65.0 H616.0 M344.0 295.0 H616.0",
+          "stroke-width": "1",
+          "data-stroke": "0=var(--dye-lime-edge);5=var(--dye-cloth)",
+          "data-op": "0=0;2=1",
+          "class": "tfill",
+          "style": "stroke:var(--dye-cloth);opacity:1"
+         }
+        }
+       ]
+      },
+      {
+       "tag": "rect",
+       "attrs": {
+        "x": "344.0",
+        "y": "34.0",
+        "width": "272.0",
+        "height": "292.0",
+        "fill": "none",
+        "stroke": "var(--ink-1)",
+        "stroke-width": "1"
+       }
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "0-1"
+       },
+       "children": [
+        "scoured until white and soft"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "2"
+       },
+       "children": [
+        "lime outlines on the cloth"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "3"
+       },
+       "children": [
+        "clay dots, then the indigo vat"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "off",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "4"
+       },
+       "children": [
+        "resists still on, cloth stiff"
+       ]
+      },
+      {
+       "tag": "text",
+       "attrs": {
+        "class": "lab2 ink2",
+        "x": "480.0",
+        "y": "24",
+        "text-anchor": "middle",
+        "data-on": "5"
+       },
+       "children": [
+        "washed: the lines come up white"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "key": null,
+ "status": "u0477"
+}

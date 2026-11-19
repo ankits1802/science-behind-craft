@@ -83,10 +83,10 @@ export function subtrees(tokens: Token[], test: ElementTest): [number, number][]
 }
 
 export function replaced(tokens: Token[], ranges: [number, number][], by: (range: [number, number]) => Token[]): Token[] {
-  const ordered = [...ranges].sort((a, b) => a[0] - b[0]).filter((range, index, all) => index === 0 || range[0] >= all[index - 1][1]);
   const out: Token[] = [];
   let position = 0;
-  for (const range of ordered) {
+  for (const range of [...ranges].sort((a, b) => a[0] - b[0])) {
+    if (range[0] < position) continue;
     out.push(...tokens.slice(position, range[0]), ...by(range));
     position = range[1];
   }
@@ -101,13 +101,24 @@ function normalStyle(css: string): string {
     .join(";");
 }
 
+function normalJson(value: string): string {
+  if (!/^[[{]/.test(value)) return value;
+  try {
+    return JSON.stringify(JSON.parse(value));
+  } catch {
+    return value;
+  }
+}
+
+function normalValue(name: string, value: string): string {
+  if (name === "style") return normalStyle(value);
+  if (name === "class") return value.trim().split(/\s+/).join(" ");
+  return normalJson(value);
+}
+
 function openLine(open: Open): string {
   const names = Object.keys(open.attrs).sort();
-  const shown = names.map((name) => {
-    const value = open.attrs[name];
-    const normal = name === "style" ? normalStyle(value) : name === "class" ? value.trim().split(/\s+/).join(" ") : value;
-    return `${name}=${JSON.stringify(normal)}`;
-  });
+  const shown = names.map((name) => `${name}=${JSON.stringify(normalValue(name, open.attrs[name]))}`);
   return `<${open.tag.toLowerCase()}${shown.length ? " " + shown.join(" ") : ""}>`;
 }
 

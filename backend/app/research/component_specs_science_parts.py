@@ -13,6 +13,8 @@ __all__ = [
     "UNIT_REF_PATTERN",
     "AtomRow",
     "AtomTable",
+    "Colour",
+    "ColourMix",
     "ColourToken",
     "ComponentSlot",
     "Differs",
@@ -70,8 +72,11 @@ SVG_TAGS = (
 )
 SVG_ATTRIBUTE_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9-]*$")
 PAINT_ATTRIBUTES = frozenset({"fill", "stroke", "stop-color"})
-PAINT_VALUE = re.compile(r"^(none|currentColor|#fff|#000|url\(#[\w-]+\))$")
+PAINT_VALUE = re.compile(
+    r"^(none|currentColor|#fff|#000|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$"
+)
 PAINT_TOKEN = re.compile(r"^var\((--[a-z0-9-]+)\)$")
+PAINT_MIX = re.compile(r"^color-mix\(in srgb, var\((--[a-z0-9-]+)\) \d{1,3}%, var\((--[a-z0-9-]+)\)\)$")
 LOCAL_URL = re.compile(r"url\((?!#[\w-]+\))")
 
 UnitRef = Annotated[str, Field(pattern=UNIT_REF_PATTERN)]
@@ -107,6 +112,15 @@ class SvgNode(SpecModel):
             if refused:
                 raise ValueError(f"drawing attribute {name}={value!r}: {refused}")
         return attrs
+
+
+class ColourMix(SpecModel):
+    first: ColourToken
+    share: int = Field(ge=1, le=99)
+    second: ColourToken
+
+
+Colour = ColourToken | ColourMix
 
 
 class TextBlock(SpecModel):
@@ -173,7 +187,7 @@ def _refused_attribute(name: str, value: str) -> str | None:
 
 
 def _paint(value: str) -> bool:
-    token = PAINT_TOKEN.fullmatch(value)
-    if token:
-        return re.fullmatch(COLOUR_TOKEN_PATTERN, token.group(1)) is not None
+    tokens = PAINT_TOKEN.fullmatch(value) or PAINT_MIX.fullmatch(value)
+    if tokens:
+        return all(re.fullmatch(COLOUR_TOKEN_PATTERN, token) for token in tokens.groups())
     return PAINT_VALUE.fullmatch(value) is not None

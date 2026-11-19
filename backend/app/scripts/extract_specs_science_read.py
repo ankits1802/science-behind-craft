@@ -11,6 +11,8 @@ from .extract_specs_science_dom import Element, Node
 __all__ = [
     "drawing",
     "expect",
+    "held",
+    "holds_unit",
     "kids",
     "one_of",
     "only",
@@ -23,6 +25,7 @@ __all__ = [
 ]
 
 SLOT_TAG = "kv-slot"
+CITATION_CLASS = "kcite"
 RICH_TAGS = frozenset({"i", "b", "sub", "sup"})
 
 
@@ -64,6 +67,16 @@ def slot(element: Element, nested: Mapping[int, str]) -> dict[str, str]:
     if label is None:
         raise InvalidInput(f"<{element.tag} {element.attrs}> is no registered component")
     return {"component": label}
+
+
+def holds_unit(part: Element) -> bool:
+    return any(element.tag == SLOT_TAG for element in part.walk())
+
+
+def held(part: Element) -> None:
+    if not any(element.tag == "button" and element.has_class(CITATION_CLASS) for element in part.walk()):
+        raise InvalidInput(f"<{part.tag} {part.attrs}> is left out but carries no cited sentence")
+    return
 
 
 def slot_unit(element: Element) -> str | None:
