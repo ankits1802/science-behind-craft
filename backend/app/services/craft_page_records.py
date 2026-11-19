@@ -31,6 +31,7 @@ from app.research.retrieval import OPEN_CHUNK_ACLS
 from app.science.records import ProcessRecords
 
 from . import knowledge_view
+from .contributed_pictures import ContributedRecord, approved_pictures
 from .craft_page_family import family_place, family_relatives, reader_name
 from .craft_page_market import MarketFacts, market_facts
 from .craft_page_offers import PageOffers, page_offers
@@ -96,6 +97,7 @@ class CraftPageRecords:
     offers: PageOffers = field(default_factory=PageOffers)
     catch_all: bool = False
     field_voices: FieldVoicesPart = field(default_factory=FieldVoicesPart)
+    contributed: tuple[ContributedRecord, ...] = ()
 
 
 def page_craft(craft: Craft, names: tuple[str | None, str | None]) -> PageCraft:
@@ -140,6 +142,7 @@ async def craft_page_records(
         field_voices=await voices_part(
             session, craft.id, voices=FIELD_VOICES_SHOWN, photos=FIELD_PHOTOS_SHOWN
         ),
+        contributed=await approved_pictures(session, craft.id),
     )
     if curated is None:
         return await _stored_extras(session, craft, records)

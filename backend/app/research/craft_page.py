@@ -13,6 +13,7 @@ from .base import ContractModel
 from .blocks import ExplainerSentence
 from .citations import Citation
 from .craft_chapters import Chapter
+from .craft_contributed import ContributedPlate
 from .craft_masthead import CiteThis, Masthead, PageSource
 from .craft_page_checks import chapters_agree, cited_ids, evidence_covers, listed_once, v2_parts_agree
 from .craft_page_context import (
@@ -28,6 +29,7 @@ from .craft_page_context import (
     PageTabs,
 )
 from .craft_page_process import PageProcess
+from .craft_parts import ContributedPart
 from .crafts import CraftRef
 from .field_voices import FieldVoicesTotals, PageFieldPhoto, PageVoice
 from .media_refs import MediaRef
@@ -313,6 +315,12 @@ class CraftPage(ContractModel):
             for item in chapter.items:
                 if kin or not item.kin:
                     yield from item.citations()
+
+    def contributed_plates(self) -> Iterator[ContributedPlate]:
+        for chapter in self.chapters:
+            for item in chapter.items:
+                if isinstance(item.part, ContributedPart):
+                    yield from item.part.pictures
 
     def _sources_resolve(self) -> None:
         listed = [source.id for source in self.sources]

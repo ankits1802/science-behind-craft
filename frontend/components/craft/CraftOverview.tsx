@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ExplainerSentence } from "@/components/answer/ExplainerSentence";
 import { CitedProse, useCraftClaims } from "@/components/craft/CraftClaims";
 import { CraftGlossary } from "@/components/craft/CraftGlossary";
+import { ContributedPlates } from "@/components/craft/ContributedPlates";
 import { CraftPictures } from "@/components/craft/CraftPictures";
 import { CraftSearched } from "@/components/craft/CraftSearched";
 import { CraftRegister, CraftSummary } from "@/components/craft/CraftSummary";
@@ -12,6 +13,7 @@ import { OpenQuestions } from "@/components/craft/OpenQuestions";
 import { SourcesDiffer } from "@/components/craft/SourcesDiffer";
 import { riseItem, staggerParent } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
+import { NO_PLATES, type ContributedPlate } from "@/lib/craftContributed";
 import type { CraftPage, OverviewSection } from "@/lib/craftPageContract";
 import { overviewPictures, registerFacts, shownSentence } from "@/lib/craftPageView";
 import { cn } from "@/lib/utils";
@@ -30,7 +32,7 @@ function SectionBody({ section }: { section: OverviewSection }) {
   );
 }
 
-export function CraftOverview({ page }: { page: CraftPage }) {
+export function CraftOverview({ page, contributed = NO_PLATES }: { page: CraftPage; contributed?: readonly ContributedPlate[] }) {
   const reduce = useAppReducedMotion();
   const { overview } = page;
   const summarised = overview.lede.length + overview.keyFacts.length > 0;
@@ -40,6 +42,7 @@ export function CraftOverview({ page }: { page: CraftPage }) {
     <div className="grid gap-5" data-testid="craft-overview">
       {summarised ? <CraftSummary lede={overview.lede} keyFacts={overview.keyFacts} /> : <CraftRegister facts={registerFacts(page.craft)} />}
       <CraftPictures pictures={overviewPictures(page.pictures)} />
+      <ContributedPlates plates={contributed} />
       <div className={cn("grid items-start gap-5", aside && "lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]")}>
         <motion.div variants={staggerParent(reduce)} initial="hidden" animate="show" className="grid min-w-0 gap-5">
           {overview.sections.map((section) => (

@@ -8,6 +8,7 @@ from app.research.chapter_keys import CHAPTER_TITLES
 from app.research.craft_chapters import Chapter, ChapterItem, FigureHead, figure_title
 from app.research.craft_parts import (
     CommunitiesPart,
+    ContributedPart,
     OpenQuestionsPart,
     PagePart,
     PagePlate,
@@ -111,6 +112,8 @@ def _part(ledger: PageLedger, part: PagePart | None) -> PagePart | None:
         return part.model_copy(update={"reading": ledger.reading(part.reading)})
     if isinstance(part, OpenQuestionsPart):
         return _questions(ledger, part)
+    if isinstance(part, ContributedPart):
+        return _contributed(ledger, part)
     ledger.note(part.cited_sentences())
     return part
 
@@ -123,6 +126,11 @@ def _questions(ledger: PageLedger, part: OpenQuestionsPart) -> OpenQuestionsPart
         if sentences:
             kept.append(question.model_copy(update={"sentences": sentences}))
     return part.model_copy(update={"questions": kept}) if kept else None
+
+
+def _contributed(ledger: PageLedger, part: ContributedPart) -> ContributedPart:
+    shown = [plate.model_copy(update={"sentences": ledger.fresh(plate.sentences)}) for plate in part.pictures]
+    return part.model_copy(update={"pictures": shown})
 
 
 def _plate(ledger: PageLedger, plate: PagePlate) -> PagePlate:

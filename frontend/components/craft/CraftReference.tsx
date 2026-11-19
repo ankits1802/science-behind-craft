@@ -18,6 +18,7 @@ import { ProcessTimeline } from "@/components/craft/ProcessTimeline";
 import { useCraftReading } from "@/components/craft/useCraftReading";
 import { useRemote } from "@/components/hooks/useRemote";
 import { useRevealRow } from "@/components/hooks/useRevealRow";
+import { contributedPlacement } from "@/lib/craftContributed";
 import type { CraftPage } from "@/lib/craftPageContract";
 import { craftTabs, shownTab, sourceGroups, type CraftTab } from "@/lib/craftPageView";
 import { fetchCraftRegion } from "@/lib/craftRegion";
@@ -58,6 +59,7 @@ export function CraftReference({ page, requested, onTab, voice }: { page: CraftP
     () => craftTabs(page, { sources: page.sources.length + regionSources.length > 0, evidence, science: shared }),
     [evidence, page, regionSources.length, shared]
   );
+  const contributed = useMemo(() => contributedPlacement(page.chapters, tabs, new Set(page.process.stages.map((stage) => stage.id))), [page, tabs]);
   const tab = shownTab(requested, tabs);
   const stages = useStageReveal(tab, onTab);
 
@@ -67,9 +69,9 @@ export function CraftReference({ page, requested, onTab, voice }: { page: CraftP
         <CitationProvider value={reading.lookup}>
           <CraftTabs tabs={tabs} value={tab} onChange={onTab} />
           <section id={craftPanelId(tab)} role="tabpanel" aria-labelledby={craftTabId(tab)} tabIndex={0} className="mt-4 focus-visible:outline-offset-4" data-testid={`craft-panel-${tab}`}>
-            {tab === "overview" ? <CraftOverview page={page} /> : null}
-            {tab === "process" ? <ProcessTimeline process={page.process} pictures={page.pictures} rows={stages.rows} /> : null}
-            {tab === "region" ? <CraftRegionTab page={page} region={region} /> : null}
+            {tab === "overview" ? <CraftOverview page={page} contributed={contributed.tabs.overview} /> : null}
+            {tab === "process" ? <ProcessTimeline process={page.process} pictures={page.pictures} rows={stages.rows} contributed={contributed} /> : null}
+            {tab === "region" ? <CraftRegionTab page={page} region={region} contributed={contributed.tabs.region} /> : null}
             {tab === "science" && science ? <CraftSharedScience science={science} numbered={reading.numbers} /> : null}
             {tab === "sources" ? <CraftSourcesTab groups={sourceGroups(reading.sourcesById.values(), reading.numbers)} numbers={reading.numbers} /> : null}
             {tab === "evidence" && page.evidence ? <CraftEvidence evidence={page.evidence} /> : null}

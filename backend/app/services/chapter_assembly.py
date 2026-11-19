@@ -16,6 +16,7 @@ from app.research.media_refs import MediaRef
 
 from .chapter_chem import chem_chapter
 from .chapter_context import ChapterContext
+from .chapter_contributed import with_contributed
 from .chapter_draft import ChapterDraft
 from .chapter_glance import glance_chapter
 from .chapter_history import history_chapter
@@ -95,6 +96,7 @@ def _drafts(
         kin_chapter(ctx, plan),
     ]
     drafts = with_loose_differ(ctx, drafts, (parts["process"], parts["sources_differ"]))
+    drafts = with_contributed(ctx, drafts)
     drafts = with_answer_pieces(drafts, ctx.rows.answers.pieces, ctx.claims)
     return [*drafts, sources_chapter(ctx, parts["open_questions"])]
 

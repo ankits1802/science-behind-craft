@@ -6,6 +6,7 @@ from app.api.routes import (
     artisan_conversations,
     auth,
     categories,
+    contributed_pictures,
     crafts,
     explainer_exports,
     explainers,
@@ -61,6 +62,7 @@ api_router.include_router(upload_links.router)
 api_router.include_router(users.router)
 api_router.include_router(categories.router)
 api_router.include_router(crafts.router)
+api_router.include_router(contributed_pictures.router)
 api_router.include_router(explainers.router)
 api_router.include_router(explainer_exports.router)
 api_router.include_router(field_voices.router)

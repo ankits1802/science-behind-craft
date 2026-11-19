@@ -9,7 +9,6 @@ import {
   itemCitations,
   itemKind,
   itemSourceIds,
-  originLabel,
   PAGE_BLOCK_KINDS,
   type Chapter,
   type ChapterItem,
@@ -19,6 +18,7 @@ import {
   type PageBlock,
   type PagePart
 } from "@/lib/craftChapters";
+import { originLabel } from "@/lib/craftOrigins";
 import { checkedCraftPage, CRAFT_PAGE_PATH, craftEdition, craftPageShape, type CraftPage, type EvidenceEntry } from "@/lib/craftPageContract";
 import type { ExplainerSentence } from "@/lib/explainerBlockBase";
 import { BLOCK_SHAPES, type LadderStage } from "@/lib/explainerContract";
