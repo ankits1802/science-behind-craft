@@ -11,6 +11,7 @@ from app.models.enums import ENVIRONMENT_FACTORS, PLACE_ROLES
 from .base import ContractModel
 from .blocks import DifferReading, ExplainerSentence, require_facts, require_findings
 from .citations import Citation
+from .craft_contributed import CONTRIBUTED_PER_CHAPTER_MAX, ContributedPlate
 from .craft_origins import PageAiMedia
 from .craft_page_context import SAME_FAMILY_MAX, PageRelative
 from .datasets import DatasetRef
@@ -25,6 +26,7 @@ __all__ = [
     "ChapterCommunity",
     "ChapterPlace",
     "CommunitiesPart",
+    "ContributedPart",
     "EntryPlace",
     "FamilyLink",
     "FieldPhotosPart",
@@ -356,6 +358,22 @@ class AiMediaPart(_Part):
             yield from item.sentences
 
 
+class ContributedPart(_Part):
+    kind: Literal["contributed"]
+    pictures: list[ContributedPlate] = Field(min_length=1, max_length=CONTRIBUTED_PER_CHAPTER_MAX)
+
+    @model_validator(mode="after")
+    def _each_picture_once(self) -> Self:
+        ids = [plate.contribution_id for plate in self.pictures]
+        if len(set(ids)) != len(ids):
+            raise ValueError("a contributed picture is drawn once")
+        return self
+
+    def cited_sentences(self) -> Iterator[ExplainerSentence]:
+        for plate in self.pictures:
+            yield from plate.sentences
+
+
 PagePart = Annotated[
     KeyFactsPart
     | RegisterFactsPart
@@ -370,6 +388,7 @@ PagePart = Annotated[
     | OpenQuestionsPart
     | SearchedPart
     | StartResearchPart
-    | AiMediaPart,
+    | AiMediaPart
+    | ContributedPart,
     Field(discriminator="kind"),
 ]

@@ -62,6 +62,9 @@ def chapters_agree(page: CraftPage) -> None:
             if key in shown:
                 raise ValueError(f"a page shows each picture once; {media.title!r} is shown twice")
             shown[key] = media.title
+    contributed = [plate.contribution_id for plate in page.contributed_plates()]
+    if len(set(contributed)) != len(contributed):
+        raise ValueError("a page shows each contributed picture once")
 
 
 def shown_pictures(page: CraftPage) -> Iterator[MediaRef]:

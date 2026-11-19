@@ -1,4 +1,6 @@
 import { citationShape, UUID } from "@/lib/answerShapes";
+import { CONTRIBUTED_RULE, contributedPlateShape, shelvedRightly, type ContributedPlate } from "@/lib/craftContributed";
+import { DAY, MONTH } from "@/lib/craftOrigins";
 import { pageRelativeShape, SAME_FAMILY_MAX, ENVIRONMENT_FACTORS, type PageRelative } from "@/lib/craftPageContext";
 import { PLACE_ROLES } from "@/lib/districtCraftsContract";
 import { explainerSentenceShape, mediaRefShape, WIKIDATA_ID, type ExplainerSentence, type MediaRef } from "@/lib/explainerBlockBase";
@@ -39,7 +41,8 @@ export const PART_KINDS = [
   "open_questions",
   "searched",
   "start_research",
-  "ai_media"
+  "ai_media",
+  "contributed"
 ] as const;
 export const NOT_ON_THE_PAGE = ["quiz", "compare", "map_layer"] as const;
 export const PAGE_BLOCK_KINDS = [...BUILT_BLOCK_KINDS.filter((kind) => !(NOT_ON_THE_PAGE as readonly string[]).includes(kind)), ...BUILT_FIGURE_KINDS, "artisan_voice"] as const;
@@ -48,13 +51,6 @@ export const QUESTION_SHOWN_MAX_CHARS = 160;
 export const FIELD_PHOTOS_SHOWN = 12;
 export const RESEARCH_QUESTIONS = 3;
 export const TAB_CHAPTERS = { overview: "glance", process: "made", science: "chem", region: "why", sharedScience: "kin", sources: "sources", evidence: "sources" } as const;
-export const ORIGIN_LABELS = {
-  STORED: "From earlier research",
-  READERS: "From a reader's question",
-  MODEL: "Model-built from cited claims",
-  AI_IMAGE: "AI illustration",
-  AI_VIDEO: "AI video"
-} as const;
 
 export type ChapterKey = (typeof CHAPTER_KEYS)[number];
 export type PageBlockKind = (typeof PAGE_BLOCK_KINDS)[number] & TypedBlockKind;
@@ -126,16 +122,12 @@ export type PagePart =
   | { kind: "open_questions"; questions: OpenQuestion[] }
   | { kind: "searched"; searched: { query: string; site: string }[] }
   | { kind: "start_research"; questions: string[] }
-  | { kind: "ai_media"; media: PageAiMedia[] };
+  | { kind: "ai_media"; media: PageAiMedia[] }
+  | { kind: "contributed"; pictures: ContributedPlate[] };
 export type PartKind = PagePart["kind"];
 export type ChapterItem = { block: PageBlock | null; part: PagePart | null; figure: FigureHead | null; origin: ItemOrigin | null; pieceId: string | null };
 export type Chapter = { key: ChapterKey; title: string; opener: PagePlate | null; items: ChapterItem[] };
-export type OriginLines = { basis: string | null; question: string | null; generated: string | null; madeBy: string | null };
 
-const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
-const DAY = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-const MONTH_LABEL = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" });
-const DAY_LABEL = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 const AI_GENERATED = { IMAGE: "AI_IMAGE", VIDEO: "AI_VIDEO" } as const;
 
 export function ruled<T>(inner: Shape<T>, expected: string, rule: (value: T) => boolean): Shape<T> {
@@ -268,7 +260,8 @@ const PART_SHAPES: { readonly [K in PartKind]: Shape<Extract<PagePart, { kind: K
   open_questions: object({ kind: oneOf(["open_questions"] as const), questions: list(object<OpenQuestion>({ key: nullable(text), question: text, settledBy: nullable(text), sentences: sentences(1) }), 1) }),
   searched: object({ kind: oneOf(["searched"] as const), searched: list(object({ query: text, site: text }), 1) }),
   start_research: ruled(object({ kind: oneOf(["start_research"] as const), questions: list(text) }), `${RESEARCH_QUESTIONS} questions`, (part) => part.questions.length === RESEARCH_QUESTIONS),
-  ai_media: ruled(object({ kind: oneOf(["ai_media"] as const), media: list(aiMediaShape, 1) }), "each AI asset drawn once", (part) => unique(part.media.map((item) => item.assetId)))
+  ai_media: ruled(object({ kind: oneOf(["ai_media"] as const), media: list(aiMediaShape, 1) }), "each AI asset drawn once", (part) => unique(part.media.map((item) => item.assetId))),
+  contributed: ruled(object({ kind: oneOf(["contributed"] as const), pictures: list(contributedPlateShape, 1) }), CONTRIBUTED_RULE, (part) => shelvedRightly(part.pictures))
 };
 
 export const pagePartShape: Shape<PagePart> = tagged<PagePart>("kind", PART_SHAPES as Record<string, Shape<PagePart>>);
@@ -343,6 +336,8 @@ export function partSentences(part: PagePart): ExplainerSentence[] {
       return part.questions.flatMap((question) => question.sentences);
     case "ai_media":
       return part.media.flatMap((item) => item.sentences);
+    case "contributed":
+      return part.pictures.flatMap((plate) => plate.sentences);
     default:
       return [];
   }
@@ -419,26 +414,4 @@ export function figureNumbers(chapters: readonly Chapter[]): Map<ChapterItem, st
 
 export function chapterForTab(tab: string | null | undefined): ChapterKey | null {
   return tab && tab in TAB_CHAPTERS ? TAB_CHAPTERS[tab as keyof typeof TAB_CHAPTERS] : null;
-}
-
-export function askedMonth(month: string): string {
-  if (!MONTH.test(month)) throw new RangeError(`not a month: ${month}`);
-  const [year, number] = month.split("-").map(Number);
-  return MONTH_LABEL.format(new Date(Date.UTC(year, number - 1, 1)));
-}
-
-function madeOn(day: string): string {
-  if (!DAY.test(day)) throw new RangeError(`not a day: ${day}`);
-  const [year, month, date] = day.split("-").map(Number);
-  return DAY_LABEL.format(new Date(Date.UTC(year, month - 1, date)));
-}
-
-export function originLabel(origin: ItemOrigin | null): OriginLines {
-  if (origin === null) return { basis: null, question: null, generated: null, madeBy: null };
-  const asked = origin.fromQuestion?.text ?? null;
-  const basis =
-    origin.basis === "CURATED" ? null : origin.basis === "STORED" ? ORIGIN_LABELS.STORED : asked && origin.fromQuestion ? `${ORIGIN_LABELS.READERS}, ${askedMonth(origin.fromQuestion.askedIn)}` : ORIGIN_LABELS.READERS;
-  const generated = origin.generated ? ORIGIN_LABELS[origin.generated] : null;
-  const madeBy = origin.model && origin.generatedOn ? `${origin.model}, ${madeOn(origin.generatedOn)}` : null;
-  return { basis, question: asked, generated, madeBy };
 }

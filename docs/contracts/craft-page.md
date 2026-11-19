@@ -76,6 +76,7 @@ Last reviewed: 2026-11-19 (schema version 3 served; build status above).
 | PUT | `/api/crafts/{slug}/explainers/{pieceId}/hidden` | `HIDE_GENERATED` (Professor and above) | `{hidden}` body; hides or shows a generated explainer the job stored for this craft (`KnowledgePiece.hiddenAt`). A hidden explainer is placed on no page and reused by no answer. |
 | PUT | `/api/crafts/{slug}/pieces/{pieceId}/hidden`, `/api/crafts/{slug}/media/{assetId}/hidden` | `HIDE_GENERATED` | `{hidden}` body; hides or shows a piece from a reader's question or an AI asset on this page (decision 0096). |
 | GET | `/api/crafts/media/{assetId}` | public reading | 302 to a 15-minute presigned GET of the AI asset's page copy (`MediaAsset.pageKey`), as the field image route does; 404 unless the asset is `CRAFT_SHARED` with a page copy; 503 `{detail}` without the bucket. |
+| GET | `/api/crafts/contributed/{contributionId}` | public asset (`public_asset_reader`) | The picture of an approved image contribution (`docs/contracts/image-contributions.md`), its bytes with its stored MIME type, `Cache-Control: private, max-age=300`, an `ETag` of the cleaned file's SHA-256 (304 on a match, without reading the bucket) and `X-Content-Type-Options: nosniff`, as the field image route does. 404 `{detail}` for anything not `APPROVED` and shared, or a file the bucket no longer holds; 503 `{detail}` without the bucket or when it fails. Never names the contributor. |
 | GET | `/api/crafts/{slug}/film-score` | public reading | The `FilmScore` (`schemas/film.py`) the job stored for the page's current film scenes, with fresh one-hour links; 404 when there is none. Never makes one. |
 | GET | `/api/crafts/{slug}/process` | public reading | The science process view (`docs/contracts/science.md`). No web screen calls it since decision 0071; it stays for the voice and science callers and is marked for retirement once nothing reads it. |
 
@@ -88,7 +89,7 @@ is drawn (`/api/molecules/{pubchemCid}/conformer`, `/api/map/layers/{layer}`,
 `/api/field-voices/recordings/{recordingId}` behind the `/voices/<id>` page a field quote links to,
 `/api/terms/{key}` for a stored summary, `/api/crafts/{slug}/shared-science`,
 `/api/shared-science/{termKey}`, `/api/categories/{slug}`, `/api/crafts/media/{assetId}`,
-`/api/crafts/{slug}/film-score`).
+`/api/crafts/contributed/{contributionId}`, `/api/crafts/{slug}/film-score`).
 
 The body depends on the reader in one way only, a licence term, never a role: a reader holding
 `READ_RESEARCHER_QUOTES` gets the `RESEARCHER` variant, which may quote closed-licence full text
@@ -305,6 +306,7 @@ answers may fill them too.
 | `searched` | `searched[{query, site}]` | a THIN dossier's searches |
 | `start_research` | `questions[] (three)` | `suggestedQuestions`, for a craft with no stored claim |
 | `ai_media` | `media[PageAiMedia] (1+)` | AI images and videos made from the craft's claims (decision 0096) |
+| `contributed` | `pictures[ContributedPlate] (1 to 6)` | the craft's approved image contributions placed in this chapter (Contributed pictures, below) |
 
 `SOURCE_GROUPS`: `GOVERNMENT`, `SCHOLARSHIP`, `MUSEUM`, `WEB_AND_PRESS` (the craft's own sources by
 kind), `FIELD` (field interviews and testimony), `FAMILY` ("From the <family> family monograph"),
@@ -321,6 +323,39 @@ whose sentence's text is already shown; a sources-differ reading already shown b
 `shownIn`; once per page: a card per material, a molecule per CID, a node per term, one of each
 craft-level story, an explainer per concept, each picture. A piece left with nothing is not
 placed. Source merging (`services/source_merge`) runs as in answers.
+
+## Contributed pictures (decision 0101 item 17, decision 0104)
+
+`craft_page_records` reads the craft's approved pictures (`services/contributed_pictures.approved_pictures`:
+`ImageContribution` `APPROVED`, its `MediaAsset` `CRAFT_SHARED` with a PNG, JPEG or WebP file and
+its size, in approval order, at most 60) and `services/chapter_contributed.with_contributed` places
+each as a `ContributedPlate` (`research/craft_contributed.py`) in one `contributed` part a chapter:
+
+- a picture of a stage goes to `made`, right after its process ladder, carrying its `stageId`;
+- a picture for facts goes to the chapter of their field (`DISCIPLINE_CHAPTERS`), the field most
+  of its listed facts share, ties to the earlier chapter;
+- any other picture goes to `glance`; a chapter the page lacks is added for it;
+- a chapter shows at most six, the earliest approved first;
+- an AI image is shown only when every fact it was made from is a fact the page lists; a plate
+  shows only the listed facts of its picture, as cited sentences.
+
+`ContributedPlate {contributionId, url, mime, width, height, origin, madeWith, caption, altText,
+credit, stageId, sentences}`. `url` is `/api/crafts/contributed/{contributionId}`. The credit never
+names the contributor (item 13): "Contributed to KalaVigyan" for a photograph or drawing, and for
+an AI image always "Illustration, made with <madeWith>", its tool as declared; `madeWith` is set
+exactly when an AI made the picture. The models refuse any other credit, a plate whose address is
+not its own, a hypothesis among its sentences, and a picture shown twice on a page.
+
+Schema note: the page stays at schema version 3. `contributed` is a new part kind, added beside
+the others; a page with no approved picture has no such part and is byte for byte what it was, so
+neither golden changed. A client that does not know the kind refuses the page, as for any part.
+
+The web client reads the part in `frontend/lib/craftContributed.ts` (shape, credit rule, and
+`contributedPlacement`, which sends a stage's plate to its stage card on Process, `why` and
+`people` plates to Region and the rest to Overview, or to Overview when the page offers no
+Process). `components/craft/ContributedPlates.tsx` draws each with the design system's `Plate`:
+the picture at its own ratio, the caption with the citation numerals of its facts first, the
+credit after, visible at rest, and the Lightbox. Specs: `frontend/e2e/craft-contributed-unit.spec.ts`.
 
 ## Pieces built for readers' questions (decision 0096)
 
@@ -501,7 +536,8 @@ because the stamp moves.
   reactions, materials and compounds with kept conformers, pictures and media refs linked to its or
   its family's claims, places, GI, price and workforce rows, geo values of its mapped districts,
   dataset rows, the Wikidata points of its dossier places, its pieces (stale, superseded and hidden
-  marks) and AI assets, its field recordings, segments and images, the set of portal streams fresh
+  marks) and AI assets, its approved contributed pictures and their files, its field recordings,
+  segments and images, the set of portal streams fresh
   as `field_scope.fresh_portals` reads them, the artisan-images setting, and its testimony
   (approvals and withdrawals) and conversations. The stamp is the SHA-256 of that record and the
   variant.

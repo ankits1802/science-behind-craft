@@ -46,6 +46,7 @@ from app.models import (
     FieldRecordingCraft,
     FieldSegment,
     FieldVoiceStream,
+    ImageContribution,
     KnowledgePiece,
     Material,
     MediaAsset,
@@ -65,6 +66,8 @@ from app.research.craft_page import CRAFT_PAGE_SCHEMA_VERSION
 from app.research.field_voices import ARTISAN_IMAGES_SETTING
 from app.retrieval.field_scope import FIELD_STALE_AFTER
 from app.retrieval.statements import CraftScope, scope_claims, scope_concepts
+
+from .contributed_pictures import shown_contributions
 
 __all__ = ["PAGE_VARIANTS", "craft_compound_ids", "page_stamp", "stamp_terms", "stamp_text"]
 
@@ -102,6 +105,7 @@ def stamp_terms(craft: Craft) -> Select[Any]:
     terms = {**_curation_terms(craft), **_claim_terms(craft, own), **_family_terms(family)}
     terms |= {**_relative_terms(craft), **_science_terms(craft), **_picture_terms(shown)}
     terms |= {**_place_terms(craft), **_piece_terms(craft), **_voice_terms(craft), **_testimony_terms(craft)}
+    terms |= _contributed_terms(craft)
     return select(*(value.label(key) for key, value in terms.items()))
 
 
@@ -264,6 +268,15 @@ def _testimony_terms(craft: Craft) -> Terms:
         "conversationsDeleted": _count(
             ArtisanConversation.id, and_(talks, ArtisanConversation.deletedAt.is_not(None))
         ),
+    }
+
+
+def _contributed_terms(craft: Craft) -> Terms:
+    shown = ImageContribution.id.in_(shown_contributions(craft.id))
+    assets = select(ImageContribution.assetId).where(shown)
+    return {
+        **_counted("contributed", ImageContribution.id, ImageContribution.updatedAt, shown),
+        **_counted("contributedAssets", MediaAsset.id, MediaAsset.updatedAt, MediaAsset.id.in_(assets)),
     }
 
 

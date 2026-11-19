@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 
+import { ContributedPlates } from "@/components/craft/ContributedPlates";
 import { ReactionCard } from "@/components/craft/ReactionCard";
 import { StageCard } from "@/components/craft/StageCard";
 import { riseItem, staggerParent } from "@/components/guide/guideMotion";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
+import { NO_CONTRIBUTIONS, NO_PLATES, type ContributedPlacement, type ContributedPlate } from "@/lib/craftContributed";
 import type { PagePicture, PageProcess, PageStage } from "@/lib/craftPageContract";
 import { stageGroups, stagePictures } from "@/lib/craftPageView";
 
@@ -14,9 +16,10 @@ export type StageRows = {
   flashKey: string | null;
 };
 
-type StageListProps = { stages: readonly PageStage[]; ordered: boolean; pictures: readonly PagePicture[]; rows?: StageRows };
+type StagePlates = ReadonlyMap<string, readonly ContributedPlate[]>;
+type StageListProps = { stages: readonly PageStage[]; ordered: boolean; pictures: readonly PagePicture[]; plates: StagePlates; rows?: StageRows };
 
-function StageList({ stages, ordered, pictures, rows }: StageListProps) {
+function StageList({ stages, ordered, pictures, plates, rows }: StageListProps) {
   const reduce = useAppReducedMotion();
   const List = ordered ? motion.ol : motion.ul;
   return (
@@ -33,7 +36,7 @@ function StageList({ stages, ordered, pictures, rows }: StageListProps) {
             data-testid="process-stage"
             data-ordered={ordered ? "true" : "false"}
           >
-            <StageCard stage={stage} pictures={stagePictures(pictures, stage.id)} />
+            <StageCard stage={stage} pictures={stagePictures(pictures, stage.id)} contributed={plates.get(stage.id) ?? NO_PLATES} />
           </motion.li>
         ))}
       </List>
@@ -41,13 +44,15 @@ function StageList({ stages, ordered, pictures, rows }: StageListProps) {
   );
 }
 
-export function ProcessTimeline({ process, pictures, rows }: { process: PageProcess; pictures: readonly PagePicture[]; rows?: StageRows }) {
+type TimelineProps = { process: PageProcess; pictures: readonly PagePicture[]; rows?: StageRows; contributed?: ContributedPlacement };
+
+export function ProcessTimeline({ process, pictures, rows, contributed = NO_CONTRIBUTIONS }: TimelineProps) {
   const { numbered, unnumbered } = stageGroups(process.stages);
   return (
     <div className="grid gap-8" data-testid="process-timeline">
       {numbered.length > 0 ? (
         <section aria-label="Steps in order">
-          <StageList stages={numbered} ordered pictures={pictures} rows={rows} />
+          <StageList stages={numbered} ordered pictures={pictures} plates={contributed.stages} rows={rows} />
         </section>
       ) : null}
       {unnumbered.length > 0 ? (
@@ -56,9 +61,10 @@ export function ProcessTimeline({ process, pictures, rows }: { process: PageProc
             {numbered.length > 0 ? "Other stages" : "Stages"}
           </h2>
           <p className="mb-3 mt-1 text-sm text-ink-500">The sources don&apos;t place these in the sequence.</p>
-          <StageList stages={unnumbered} ordered={false} pictures={pictures} rows={rows} />
+          <StageList stages={unnumbered} ordered={false} pictures={pictures} plates={contributed.stages} rows={rows} />
         </section>
       ) : null}
+      <ContributedPlates plates={contributed.tabs.process} />
       {process.reactions.length > 0 ? (
         <section aria-labelledby="process-reactions-heading" data-testid="process-reactions">
           <h2 id="process-reactions-heading" className="mb-3 font-display text-lg font-bold text-ink-900">

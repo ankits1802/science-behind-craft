@@ -4,9 +4,11 @@ import type { ReactNode } from "react";
 
 import { ClaimList } from "@/components/craft/ClaimList";
 import { ClaimChips, usePageClaims } from "@/components/craft/CraftClaims";
+import { ContributedPlates } from "@/components/craft/ContributedPlates";
 import { CraftPictures } from "@/components/craft/CraftPictures";
 import { ReactionCard } from "@/components/craft/ReactionCard";
 import { StageMaterials } from "@/components/craft/StageMaterials";
+import { NO_PLATES, type ContributedPlate } from "@/lib/craftContributed";
 import type { PagePicture, PageStage, StageTiming } from "@/lib/craftPageContract";
 import { TIMING_LABEL } from "@/lib/craftPageView";
 import { STAGE_TYPE_LABEL } from "@/lib/processView";
@@ -45,7 +47,7 @@ function StagePart({ title, children }: { title: string; children: ReactNode }) 
   );
 }
 
-export function StageCard({ stage, pictures }: { stage: PageStage; pictures: readonly PagePicture[] }) {
+export function StageCard({ stage, pictures, contributed = NO_PLATES }: { stage: PageStage; pictures: readonly PagePicture[]; contributed?: readonly ContributedPlate[] }) {
   const claims = usePageClaims(stage.claimIds);
   return (
     <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4">
@@ -86,9 +88,12 @@ export function StageCard({ stage, pictures }: { stage: PageStage; pictures: rea
             </div>
           </StagePart>
         ) : null}
-        {pictures.length > 0 ? (
+        {pictures.length + contributed.length > 0 ? (
           <StagePart title="Pictures">
-            <CraftPictures pictures={pictures} layout="stage" />
+            <div className="grid gap-4">
+              <CraftPictures pictures={pictures} layout="stage" />
+              <ContributedPlates plates={contributed} layout="stage" />
+            </div>
           </StagePart>
         ) : null}
       </div>

@@ -18,6 +18,7 @@ import {
   type Chapter,
   type PagePlate
 } from "@/lib/craftChapters";
+import { checkContributed } from "@/lib/craftContributed";
 import { citationShape, CRAFT_PATH, INSTANT, sourceRefShape, storedLevelShape, UUID, type CraftLink, type StoredLevel } from "@/lib/answerShapes";
 import {
   checkDepth,
@@ -499,6 +500,7 @@ export function checkedCraftPage(page: CraftPage): CraftPage {
   }
   checkEvidence(page.evidence, levels);
   checkChapters(page.chapters);
+  checkContributed(page.chapters);
   checkPictures(page);
   checkParts(page);
   return page;

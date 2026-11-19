@@ -77,7 +77,20 @@ a page names the picture: "Photograph", "Drawing" or "Illustration, made with <g
 - `/contributions/pictures` (Researcher and above): the declaration and the upload in one form (craft, what it is, the AI tool and prompt, the craft's facts to choose from, caption, description, the picture, the declaration), and the contributor's own pictures with Take it back while one still waits.
 - `/admin/pictures` (Admin and Master Admin): the queue by status, each picture with its label, caption, description, prompt, facts and AI mark, Approve, and Refuse with a note.
 
+## On craft pages
+
+An approved picture is shown on its craft's page, placed in a chapter (`docs/contracts/craft-page.md`,
+Contributed pictures): a stage's picture beside its stage, a picture for facts in the chapter of
+their field, any other at a glance; an AI image only when every fact it was made from is on the
+page. Each plate shows the caption first and the credit after, with the alt text on the picture.
+The credit never names the contributor: "Contributed to KalaVigyan" for a photograph or drawing,
+"Illustration, made with <generator>" for an AI image, which is never shown as a photograph.
+
+The picture is served by `GET /api/crafts/contributed/{id}` (public asset): the stored bytes with
+their MIME type, `private, max-age=300`, an `ETag` of the SHA-256 and `nosniff`; 404 for a
+contribution that is not approved and shared. Approving a picture moves the page stamp (its count
+and latest change, and its file's), so the page is rebuilt on its next read.
+
 ## Not yet
 
-- Showing approved pictures on craft pages, with their label (the craft page redesign).
 - The MCP tool that opens a declaration and hands back the upload page's link (slice 2).
