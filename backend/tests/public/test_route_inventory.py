@@ -73,6 +73,7 @@ SIGN_IN_ROUTES = {
     ("POST", "/api/auth/set-password/check"),
     ("POST", "/api/auth/signup"),
     ("POST", "/api/auth/two-factor/verify"),
+    ("GET", "/api/oauth/terms"),
 }
 SERVICE_ROUTES = {
     ("GET", "/health"),
@@ -80,6 +81,12 @@ SERVICE_ROUTES = {
     ("POST", "/api/artisan/llm/v1/chat/completions"),
     ("POST", "/api/voice/llm/v1/chat/completions"),
     ("POST", "/api/mcp"),
+    ("GET", "/.well-known/oauth-protected-resource"),
+    ("GET", "/.well-known/oauth-protected-resource/api/mcp"),
+    ("GET", "/.well-known/oauth-authorization-server"),
+    ("POST", "/api/oauth/register"),
+    ("POST", "/api/oauth/token"),
+    ("POST", "/api/oauth/revoke"),
 }
 ASKING_ROUTES = {
     ("GET", "/api/answers/config"),
@@ -148,6 +155,8 @@ OWN_RECORD_ROUTES = {
     ("PUT", "/api/saved-explainers/{explainer_id}"),
     ("DELETE", "/api/saved-explainers/{explainer_id}"),
     ("GET", "/api/usage/me"),
+    ("GET", "/api/oauth/connections"),
+    ("DELETE", "/api/oauth/connections/{connection_id}"),
 }
 ADMIN_ROUTES = {
     ("POST", "/api/contributions/images"),
@@ -206,6 +215,9 @@ CONSENT_ROUTES = {
     ("POST", "/api/profile/me/recording-consent"),
     ("DELETE", "/api/profile/me/recording-consent"),
     ("GET", "/api/voice/notice"),
+    ("GET", "/api/oauth/authorize/request"),
+    ("POST", "/api/oauth/authorize/approve"),
+    ("POST", "/api/oauth/authorize/deny"),
 }
 ROUTE_CLASSES: dict[tuple[str, str], str] = {
     **dict.fromkeys(PUBLIC_ROUTES, PUBLIC),

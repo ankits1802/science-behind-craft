@@ -16,6 +16,7 @@ from app.api.routes.auth import (
     SIGN_IN_HINT_HEADER,
     TWO_FACTOR_REQUIRED_HEADER,
 )
+from app.api.routes.oauth_well_known import router as oauth_well_known_router
 from app.api.routes.password_change import CONFIRM_PROVIDER_HEADER
 from app.core.config import get_settings
 from app.core.db import dispose_engine, ping
@@ -172,6 +173,7 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(api_router)
+    app.include_router(oauth_well_known_router)
     return app
 
 
