@@ -86,11 +86,11 @@ async def _load_rows(session: AsyncSession, craft: Craft) -> _Rows:
             .order_by(Process.name, Process.variant, Process.id)
         )
     ).all()
-    stages = await _stages(session, [p.id for p in processes])
+    stages = await _stage_rows(session, [p.id for p in processes])
     stage_ids = [stage.id for stage in stages]
-    reactions = await _reactions(session, stage_ids)
+    reactions = await _reaction_rows(session, stage_ids)
     reaction_ids = [reaction.id for reaction in reactions]
-    conditions = await _conditions(session, stage_ids, reaction_ids)
+    conditions = await _condition_rows(session, stage_ids, reaction_ids)
     return _Rows(
         processes=processes,
         stages=stages,
@@ -102,7 +102,7 @@ async def _load_rows(session: AsyncSession, craft: Craft) -> _Rows:
     )
 
 
-async def _stages(session: AsyncSession, process_ids: list[uuid.UUID]) -> Sequence[ProcessStage]:
+async def _stage_rows(session: AsyncSession, process_ids: list[uuid.UUID]) -> Sequence[ProcessStage]:
     statement = (
         select(ProcessStage)
         .where(ProcessStage.processId.in_(process_ids))
@@ -111,7 +111,7 @@ async def _stages(session: AsyncSession, process_ids: list[uuid.UUID]) -> Sequen
     return (await session.scalars(statement)).all()
 
 
-async def _reactions(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Sequence[Reaction]:
+async def _reaction_rows(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Sequence[Reaction]:
     statement = (
         select(Reaction)
         .where(Reaction.stageId.in_(stage_ids))
@@ -120,7 +120,7 @@ async def _reactions(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Seque
     return (await session.scalars(statement)).all()
 
 
-async def _conditions(
+async def _condition_rows(
     session: AsyncSession, stage_ids: list[uuid.UUID], reaction_ids: list[uuid.UUID]
 ) -> Sequence[ProcessCondition]:
     statement = (
