@@ -9,6 +9,7 @@ from app.research.component_specs_science_parts import SVG_TAGS
 from .extract_specs_science_dom import Element, Node
 
 __all__ = [
+    "CITATION_CLASS",
     "drawing",
     "expect",
     "held",
@@ -30,14 +31,9 @@ CITATION_CLASS = "kcite"
 RICH_TAGS = frozenset({"i", "b", "sub", "sup"})
 
 
-def expect(element: Element, tag: str, *classes: str, **attrs: str) -> Element:
-    if element.tag != tag or sorted(element.classes) != sorted(classes):
-        raise InvalidInput(
-            f"expected <{tag} class={' '.join(classes)!r}>, found <{element.tag} {element.attrs}>"
-        )
-    for name, value in attrs.items():
-        if element.attrs.get(name.replace("_", "-")) != value:
-            raise InvalidInput(f"<{element.tag}> lacks {name}={value!r}: {element.attrs}")
+def expect(element: Node, tag: str, *classes: str) -> Element:
+    if not isinstance(element, Element) or element.tag != tag or sorted(element.classes) != sorted(classes):
+        raise InvalidInput(f"expected <{tag} class={' '.join(classes)!r}>, found {element!r}")
     return element
 
 

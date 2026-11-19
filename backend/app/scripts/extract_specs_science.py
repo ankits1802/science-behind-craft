@@ -18,11 +18,11 @@ from .extract_specs_science_explainers import material_cards, model_explainer, p
 from .extract_specs_science_figures import diagram, equation_card, molecule_3d, structure_diagram
 from .extract_specs_science_lab import choice_toggle, experiment_lab
 from .extract_specs_science_players import dip_player, reaction_player
+from .extract_specs_science_read import CITATION_CLASS
 from .extract_specs_science_stages import stage_player
 
 SPECS_FOLDER = "specs"
 SLUGS = ("Kutch-Ajrakh",)
-CITATION_CLASS = "kcite"
 
 Extractor = Callable[[Element, Mapping[int, str]], dict[str, Any]]
 

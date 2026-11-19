@@ -50,5 +50,6 @@ function ChainView({ chain, renderUnit }: { chain: Chain; renderUnit: RenderUnit
 
 export function Diagram({ spec, renderUnit }: ComponentViewProps) {
   const diagram = parseShape(diagramShape, spec);
-  return diagram.chain ? <ChainView chain={diagram.chain} renderUnit={renderUnit} /> : <Drawing node={diagram.drawing!} />;
+  if (diagram.chain) return <ChainView chain={diagram.chain} renderUnit={renderUnit} />;
+  return diagram.drawing ? <Drawing node={diagram.drawing} /> : null;
 }

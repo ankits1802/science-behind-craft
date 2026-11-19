@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { VIEWS } from "../components/monograph/kinds/science";
 import { NestedComponents } from "../components/monograph/kinds/science/parts/Slot";
+import { SCIENCE_KINDS, SPEC_SHAPES_SCIENCE, type ScienceKind } from "../lib/componentSpecsScience";
 import { svgNodeShape } from "../lib/componentSpecsScienceParts";
 import type { MonographComponent, MonographContent } from "../lib/monographDocument";
 import { parseShape, ShapeError } from "../lib/shape";
@@ -154,6 +155,22 @@ test("the process replay rests finished, with the sources it read and the sectio
   expect(all(replay, "span", "rel")[13].attrs.class).toBe("rel C");
   expect(all(replay, "li", "kv-mw")).toHaveLength(7);
   expect(texts(replay, "button")).toEqual(["Watch it being made"]);
+});
+
+test("the client knows the same science kinds as the backend, and draws each of them", () => {
+  const registry = readFileSync(join(__dirname, "..", "..", "backend", "app", "research", "component_specs_science.py"), "utf8");
+  const backend = [...registry.matchAll(/^\s+"([a-z0-9_]+)": [A-Z]\w+Spec,$/gm)].map((found) => found[1]);
+  expect([...SCIENCE_KINDS]).toEqual(backend);
+  expect(Object.keys(VIEWS).sort()).toEqual([...SCIENCE_KINDS]);
+});
+
+test("every Ajrakh spec file of a science kind passes the client's shape for its kind", () => {
+  const science = content.components.filter((component) => (SCIENCE_KINDS as readonly string[]).includes(component.kind));
+  expect(science).toHaveLength(21);
+  for (const component of science) {
+    const spec = JSON.parse(readFileSync(join(AJRAKH_DIR, "specs", `${component.label.replaceAll("/", "__")}.json`), "utf8"));
+    expect(() => parseShape(SPEC_SHAPES_SCIENCE[component.kind as ScienceKind], spec), component.label).not.toThrow();
+  }
 });
 
 test("a drawing in a spec refuses handlers, script links, foreign references and untokened paint", () => {

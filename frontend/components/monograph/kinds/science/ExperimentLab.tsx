@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { experimentLabShape } from "@/lib/componentSpecsScienceLab";
 import { parseShape } from "@/lib/shape";
