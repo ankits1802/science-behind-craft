@@ -1,0 +1,33 @@
+{
+ "setting": "figure",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/priest-king-mohenjo-daro-trefoil.jpg",
+  "width": 1280,
+  "height": 1798,
+  "alt": "A stone bust of a bearded man with a headband, his shawl carved with trefoil motifs, on a black ground.",
+  "loading": "eager",
+  "fetchPriority": null,
+  "decoding": null
+ },
+ "figure": {
+  "classes": [
+   "kv-pk"
+  ],
+  "crop": null,
+  "captions": [
+   {
+    "unit": "u0727",
+    "look": true
+   },
+   {
+    "unit": "u0728",
+    "look": false
+   }
+  ],
+  "credit": "u0729"
+ },
+ "row": null,
+ "pull": null,
+ "opener": null,
+ "masthead": null
+}

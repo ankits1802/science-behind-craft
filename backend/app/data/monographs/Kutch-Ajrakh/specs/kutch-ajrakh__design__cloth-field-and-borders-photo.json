@@ -1,0 +1,106 @@
+{
+ "setting": "masthead",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/ajrakh-cloth-field-and-borders.jpg",
+  "width": 1280,
+  "height": 960,
+  "alt": "Two Kutch artisans hold up a whole ajrakh to show its repeated central field and its borders.",
+  "loading": null,
+  "fetchPriority": "high",
+  "decoding": null
+ },
+ "figure": {
+  "classes": [],
+  "crop": null,
+  "captions": [
+   {
+    "unit": "u0007",
+    "look": false
+   }
+  ],
+  "credit": "u0008"
+ },
+ "row": null,
+ "pull": null,
+ "opener": null,
+ "masthead": {
+  "kicker": "u0005",
+  "title": "u0006",
+  "seal": {
+   "tag": "svg",
+   "attrs": {
+    "viewBox": "0 0 32 32",
+    "aria-hidden": "true"
+   },
+   "children": [
+    {
+     "tag": "path",
+     "attrs": {
+      "fill": "none",
+      "stroke": "currentColor",
+      "stroke-width": "1.8",
+      "d": "M16.00 1.58 L20.23 5.80 L26.20 5.80 L26.20 11.77 L30.42 16.00 L26.20 20.23 L26.20 26.20 L20.23 26.20 L16.00 30.42 L11.77 26.20 L5.80 26.20 L5.80 20.23 L1.58 16.00 L5.80 11.77 L5.80 5.80 L11.77 5.80 Z"
+     },
+     "children": []
+    },
+    {
+     "tag": "circle",
+     "attrs": {
+      "cx": "16",
+      "cy": "16",
+      "r": "4",
+      "fill": "currentColor"
+     },
+     "children": []
+    }
+   ]
+  },
+  "registration": [
+   {
+    "m": "s",
+    "src": "aj:S02 aj:S03",
+    "c": [
+     "Registered geographical indication, 22 April ",
+     {
+      "m": "cite",
+      "key": "mb:aj:C134",
+      "g": [
+       "g4",
+       "g5"
+      ],
+      "shown": [
+       {
+        "number": 4,
+        "title": "GI Registry record, application 1050"
+       },
+       {
+        "number": 5,
+        "title": "Registration details of Geographical Indications"
+       }
+      ],
+      "c": [
+       "2024"
+      ]
+     }
+    ]
+   }
+  ],
+  "place": "Kachchh, Gujarat",
+  "sources": 20,
+  "grades": [
+   {
+    "grade": "A",
+    "count": 9
+   },
+   {
+    "grade": "B",
+    "count": 7
+   },
+   {
+    "grade": "C",
+    "count": 4
+   }
+  ],
+  "curated": "2026-11-17"
+ }
+}

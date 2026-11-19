@@ -1,0 +1,29 @@
+{
+ "setting": "figure",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/ajrak-indigo-dyed-cloth.jpg",
+  "width": 1280,
+  "height": 1707,
+  "alt": "Ajrak print in blue, black and white: an indigo-ground field of star and lattice motifs.",
+  "loading": "lazy",
+  "fetchPriority": null,
+  "decoding": null
+ },
+ "figure": {
+  "classes": [
+   "kv-cloth-plate"
+  ],
+  "crop": null,
+  "captions": [
+   {
+    "unit": "u0101",
+    "look": false
+   }
+  ],
+  "credit": "u0102"
+ },
+ "row": null,
+ "pull": null,
+ "opener": null,
+ "masthead": null
+}

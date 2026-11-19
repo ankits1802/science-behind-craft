@@ -1,0 +1,22 @@
+{
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/ajrakh-print-detail-indigo-ground.jpg",
+  "width": 1280,
+  "height": 960,
+  "alt": "Detail of an ajrakh print: dark eight-pointed stars and white-outlined motifs on an indigo ground.",
+  "loading": null,
+  "fetchPriority": "high",
+  "decoding": null
+ },
+ "phase": "rest",
+ "kicker": "u0073",
+ "name": "u0074",
+ "nameId": "hl-name",
+ "sentence": "u0075",
+ "replay": {
+  "label": "Dip it again",
+  "statusId": "vat-status",
+  "status": "u0076"
+ },
+ "credit": "u0077"
+}

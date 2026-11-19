@@ -1,0 +1,65 @@
+{
+ "chapterNo": "u0078",
+ "title": "u0079",
+ "titleId": "four-h",
+ "intro": "u0080",
+ "weave": "mb-weave",
+ "colours": [
+  {
+   "before": {
+    "dye": "leuco",
+    "caption": "u0081"
+   },
+   "join": "becomes",
+   "after": {
+    "dye": "indigo",
+    "caption": "u0082"
+   },
+   "name": "u0083",
+   "agent": "u0084",
+   "text": "u0085"
+  },
+  {
+   "before": {
+    "dye": "harda",
+    "caption": "u0086"
+   },
+   "join": "becomes",
+   "after": {
+    "dye": "kut",
+    "caption": "u0087"
+   },
+   "name": "u0088",
+   "agent": "u0089",
+   "text": "u0090"
+  },
+  {
+   "before": {
+    "dye": "kesari",
+    "caption": "u0091"
+   },
+   "join": "becomes",
+   "after": {
+    "dye": "madder",
+    "caption": "u0092"
+   },
+   "name": "u0093",
+   "agent": "u0094",
+   "text": "u0095"
+  },
+  {
+   "before": {
+    "dye": "lime",
+    "caption": "u0096"
+   },
+   "join": "or",
+   "after": {
+    "dye": "pink",
+    "caption": "u0097"
+   },
+   "name": "u0098",
+   "agent": "u0099",
+   "text": "u0100"
+  }
+ ]
+}

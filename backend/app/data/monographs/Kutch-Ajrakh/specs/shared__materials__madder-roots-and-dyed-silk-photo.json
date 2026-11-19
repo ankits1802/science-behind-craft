@@ -1,0 +1,32 @@
+{
+ "setting": "row",
+ "picture": {
+  "src": "/monographs/kutch-ajrakh/img/madder-root-and-dyed-tasar-yarn.jpg",
+  "width": 1280,
+  "height": 960,
+  "alt": "A clay bowl of thin brown madder roots beside red and pink skeins of silk yarn, above a blue sign reading Madder.",
+  "loading": "eager",
+  "fetchPriority": null,
+  "decoding": null
+ },
+ "figure": {
+  "classes": [],
+  "crop": "r43",
+  "captions": [
+   {
+    "unit": "u0391",
+    "look": false
+   }
+  ],
+  "credit": "u0392"
+ },
+ "row": {
+  "classes": [
+   "lone"
+  ],
+  "note": "u0393"
+ },
+ "pull": null,
+ "opener": null,
+ "masthead": null
+}
