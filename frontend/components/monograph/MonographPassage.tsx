@@ -65,6 +65,10 @@ function MarginNotes({ document, passage }: Omit<PassageProps, "chapter">) {
   );
 }
 
+export function needsNumeral(passage: Passage, number: number | null): boolean {
+  return passage.head && number !== null && !passage.pieces.some((piece) => piece.kind === "unit" && piece.role === "numeral");
+}
+
 function Spread({ document, chapter, passage }: PassageProps) {
   const title = passage.head ? firstTitle(passage) : null;
   return (
@@ -75,6 +79,7 @@ function Spread({ document, chapter, passage }: PassageProps) {
         </div>
       ) : null}
       <div className="main prose">
+        {needsNumeral(passage, chapter.number) ? <p className="chapter-no in-main">{chapter.number}</p> : null}
         {passage.pieces.map((piece, at) => (
           <Piece key={piece.kind === "unit" ? piece.ref : `${piece.kind}-${at}`} document={document} chapter={chapter} piece={piece} titled={piece.kind === "unit" && piece.ref === title} />
         ))}

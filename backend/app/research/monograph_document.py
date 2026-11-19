@@ -8,17 +8,26 @@ from .base import ContractModel
 from .monograph_page import MonographContent
 
 __all__ = [
+    "ENGLISH",
     "FRAGMENT_FILE_SUFFIX",
+    "LANGUAGE_MAX_CHARS",
+    "LANGUAGE_TAG",
     "MONOGRAPH_DOCUMENT_SCHEMA_VERSION",
+    "SERVED_LANGUAGES",
     "SPEC_FILE_SUFFIX",
     "SUBJECT_KINDS",
     "MonographDocument",
     "fragment_file_name",
+    "served_language",
     "spec_file_name",
 ]
 
 MONOGRAPH_DOCUMENT_SCHEMA_VERSION = 1
 SUBJECT_KINDS = ("craft", "family", "category")
+ENGLISH = "en"
+SERVED_LANGUAGES = (ENGLISH,)
+LANGUAGE_TAG = r"^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+LANGUAGE_MAX_CHARS = 16
 SPEC_FILE_SUFFIX = ".json"
 FRAGMENT_FILE_SUFFIX = ".html"
 LABEL_SEPARATOR = "/"
@@ -29,6 +38,7 @@ class MonographDocument(ContractModel):
     schema_version: Literal[1] = MONOGRAPH_DOCUMENT_SCHEMA_VERSION
     subject_kind: Literal[*SUBJECT_KINDS]
     subject_slug: str = Field(min_length=1, max_length=200, pattern=r"^[A-Za-z0-9-]+$")
+    language: str = Field(default=ENGLISH, max_length=LANGUAGE_MAX_CHARS, pattern=LANGUAGE_TAG)
     title: str = Field(min_length=1, max_length=300)
     version: int = Field(ge=1)
     content: MonographContent
@@ -47,6 +57,11 @@ class MonographDocument(ContractModel):
         if both:
             raise ValueError(f"a component is drawn from a spec or a fragment, not both: {sorted(both)}")
         return self
+
+
+def served_language(asked: str | None) -> str:
+    wanted = (asked or ENGLISH).strip().lower()
+    return wanted if wanted in SERVED_LANGUAGES else ENGLISH
 
 
 def spec_file_name(label: str) -> str:

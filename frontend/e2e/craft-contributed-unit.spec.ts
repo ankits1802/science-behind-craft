@@ -1,11 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { createElement } from "react";
-
 import { expect, test } from "@playwright/test";
 
-import { CraftReference } from "@/components/craft/CraftReference";
 import { itemSentences, type ChapterItem, type ChapterKey } from "@/lib/craftChapters";
 import { contributedCredit, contributedPlacement, type ContributedPlate } from "@/lib/craftContributed";
 import { chapterClaimIds, checkedCraftPage, craftPageShape, type CraftPage } from "@/lib/craftPageContract";
@@ -13,7 +10,6 @@ import type { ExplainerSentence } from "@/lib/explainerBlockBase";
 import { parseShape, ShapeError } from "@/lib/shape";
 
 import { curatedPage, rawPage } from "./craftPageFixture";
-import { withApp } from "./explainerRender";
 
 const BACKEND = join(__dirname, "..", "..", "backend", "app", "research");
 const TOOL = "Midjourney v6";
@@ -23,7 +19,6 @@ const AI_CREDIT = `Illustration, made with ${TOOL}`;
 type Shelves = Partial<Record<ChapterKey, ContributedPlate[]>>;
 
 const id = (n: number) => `5c0e0000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-const count = (html: string, testId: string) => html.split(`data-testid="${testId}"`).length - 1;
 
 function fact(): ExplainerSentence {
   const found = rawPage()
@@ -81,10 +76,6 @@ function refused(shelves: Shelves): () => CraftPage {
     shelved(body, shelves);
     return checkedCraftPage(parseShape(craftPageShape, body));
   };
-}
-
-function reference(shown: CraftPage, requested: string): string {
-  return withApp(createElement(CraftReference, { page: shown, requested, onTab: () => undefined, voice: null }));
 }
 
 function backendString(file: string, name: string): string {
@@ -150,41 +141,4 @@ test("each plate goes to the view of its chapter: a stage's to its stage, the pl
   const unprocessed = contributedPlacement(shown.chapters, ["overview", "region"], stages);
   expect(ids(unprocessed.tabs.overview)).toEqual([id(1), id(2), id(3), id(5)]);
   expect(unprocessed.stages.size).toBe(0);
-});
-
-test("the overview draws each plate caption first and credit after, an AI image labelled an illustration at rest", () => {
-  const html = reference(page(SHELVES), "overview");
-  expect(count(html, "contributed-plate")).toBe(2);
-  for (const [n, credit] of [
-    [1, PHOTO_CREDIT],
-    [5, AI_CREDIT]
-  ] as const) {
-    const caption = html.indexOf(`Contributed picture number ${n}`);
-    expect(caption).toBeGreaterThan(-1);
-    expect(html.indexOf(credit, caption)).toBeGreaterThan(caption);
-    expect(html).toContain(`src="/api/crafts/contributed/${id(n)}"`);
-    expect(html).toContain(`alt="What contributed picture number ${n} shows"`);
-  }
-  const ai = html.split('data-origin="AI_GENERATED"')[1].split("</li>")[0];
-  expect(ai).toContain(`<p class="kv-credit">${AI_CREDIT}</p>`);
-  expect(ai).toContain('data-testid="citation-chip"');
-  expect(ai.replace(/<[^>]+>/g, " ")).not.toMatch(/photo/i);
-});
-
-test("the process draws a stage's plate inside its stage and a plate of no listed stage after the steps", () => {
-  const shown = page(SHELVES);
-  const html = reference(shown, "process");
-  expect(count(html, "contributed-plate")).toBe(2);
-  const stages = html.split('data-testid="process-stage"').slice(1);
-  const first = stages[0].split('data-testid="process-stage"')[0];
-  expect(first).toContain(shown.process.stages[0].name);
-  expect(first).toContain("Contributed picture number 2");
-  expect(stages.slice(1).join("")).toContain("Contributed picture number 3");
-  expect(stages.slice(1, -1).join("")).not.toContain("Contributed picture number 3");
-  expect(reference(shown, "region").split('data-testid="contributed-plate"').length - 1).toBe(1);
-});
-
-test("a page with no contributed picture draws no plate shelf", () => {
-  const shown = curatedPage();
-  for (const tab of ["overview", "process", "region"]) expect(count(reference(shown, tab), "contributed-plates")).toBe(0);
 });

@@ -72,6 +72,7 @@ export function fixtureDocument(): MonographDocument {
     schemaVersion: 1,
     subjectKind: "craft",
     subjectSlug: "Test-Craft",
+    language: "en",
     title: "Test Craft",
     version: 2,
     pageUrl: "https://kalavigyan.example/crafts/Test-Craft",

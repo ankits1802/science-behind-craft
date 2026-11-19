@@ -1,4 +1,5 @@
 import {
+  LANGUAGE_TAG,
   MONOGRAPH_DOCUMENT_PATH,
   SUBJECT_KINDS,
   type MonographComponent,
@@ -110,6 +111,7 @@ export const monographDocumentShape: Shape<MonographDocument> = object<Monograph
   schemaVersion: oneOf([1] as const),
   subjectKind: oneOf(SUBJECT_KINDS),
   subjectSlug: SUBJECT_SLUG,
+  language: matching(LANGUAGE_TAG, "a language tag"),
   title: text,
   version: positive(integer),
   content: contentShape,
@@ -131,6 +133,10 @@ export function checkedMonographDocument(document: MonographDocument): Monograph
 
 export function parseMonographDocument(raw: unknown): MonographDocument {
   return checkedMonographDocument(parseShape(monographDocumentShape, raw));
+}
+
+export function versionedDocumentPath(path: string, version: number | null): string {
+  return version === null ? path : `${path}?version=${version}`;
 }
 
 export function monographDocumentPath(subject: MonographPreviewSubject, slug: string): string {

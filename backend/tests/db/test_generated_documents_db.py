@@ -66,7 +66,7 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
         "craft",
         CRAFT_SLUG,
         "Page Docs Test Craft",
-        1,
+        3,
     )
     assert any("Alum fixes the madder red on the" in text for text in texts(document))
     assert not any("proposed history" in text for text in texts(document))
@@ -74,11 +74,17 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
         ("g1", 1, "Alum mordants on cotton")
     ]
     held = plate_units(document, PICTURE)
-    assert [(e.ref, e.within) for e in document.content.layout[: 1 + len(held) + len(MASTHEAD)]] == [
-        (PICTURE, None),
-        *[(unit, PICTURE) for unit in held],
-        *[(unit, PICTURE) for unit in MASTHEAD],
+    assert [
+        (e.chapter, e.ref, e.within) for e in document.content.layout[: 1 + len(held) + len(MASTHEAD)]
+    ] == [
+        ("opening", PICTURE, None),
+        *[("opening", unit, PICTURE) for unit in held],
+        *[("opening", unit, None) for unit in MASTHEAD],
     ]
+    titles = [
+        document.content.units[e.ref].nodes for e in document.content.layout if e.ref.startswith("chapter-")
+    ]
+    assert titles == [["How it is made"], ["The chemistry"], ["Why Madhya Pradesh"], ["Sources"]]
     units = document.content.units
     assert (units["label-place"].nodes, units["label-gi"].nodes) == (
         ["Madhya Pradesh"],

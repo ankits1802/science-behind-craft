@@ -2,61 +2,87 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import Any
+from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.public_deps import public_reader, read_headers, unchanged_read
 from app.core.db import get_session
 from app.models import User
-from app.research.monograph_document import MonographDocument
+from app.research.monograph_document import LANGUAGE_MAX_CHARS, MonographDocument, served_language
 from app.services import knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
-from app.services.monograph_document import CRAFT_SUBJECT, document_body, document_hash, latest_document_row
+from app.services.monograph_document import CRAFT_SUBJECT, document_body, document_hash, document_row
 from app.services.monograph_generated import generated_document
 
 router = APIRouter(prefix="/crafts", tags=["crafts"])
 
 JSON_TYPE = "application/json"
+CONTENT_LANGUAGE = "Content-Language"
 NO_DOCUMENT_DETAIL = "This craft's page is not a monograph document yet."
+NO_VERSION_DETAIL = "This craft's monograph has no such version."
+
+AskedLanguage = Annotated[str | None, Query(alias="lang", max_length=LANGUAGE_MAX_CHARS)]
+AskedVersion = Annotated[int | None, Query(ge=1)]
 
 
 @dataclass(frozen=True)
 class ServedDocument:
     etag: str
+    language: str
     body: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class DocumentAsk:
+    language: str
+    version: int | None = None
+
+
+def document_ask(lang: AskedLanguage = None, version: AskedVersion = None) -> DocumentAsk:
+    return DocumentAsk(language=served_language(lang), version=version)
 
 
 @router.get("/{slug}/monograph")
 async def get_craft_monograph(
     slug: str,
     request: Request,
+    asked: DocumentAsk = Depends(document_ask),
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
     craft = await knowledge_view.resolve_craft(session, slug)
     if craft is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
-    served = await served_document(session, craft.slug)
+    served = await served_document(session, craft.slug, asked)
     if served is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, NO_DOCUMENT_DETAIL)
+        raise HTTPException(
+            status.HTTP_404_NOT_FOUND, NO_VERSION_DETAIL if asked.version else NO_DOCUMENT_DETAIL
+        )
     unchanged = unchanged_read(request, reader, served.etag)
     if unchanged is not None:
+        unchanged.headers[CONTENT_LANGUAGE] = served.language
         return unchanged
     content = json.dumps(served.body, ensure_ascii=False, separators=(",", ":"))
-    return Response(content, media_type=JSON_TYPE, headers=read_headers(reader, served.etag))
+    headers = {**read_headers(reader, served.etag), CONTENT_LANGUAGE: served.language}
+    return Response(content, media_type=JSON_TYPE, headers=headers)
 
 
-async def served_document(session: AsyncSession, slug: str) -> ServedDocument | None:
-    row = await latest_document_row(session, CRAFT_SUBJECT, slug)
+async def served_document(session: AsyncSession, slug: str, asked: DocumentAsk) -> ServedDocument | None:
+    row = await document_row(session, CRAFT_SUBJECT, slug, language=asked.language, version=asked.version)
     if row is not None:
-        return ServedDocument(etag=document_etag(row.version, row.contentHash), body=row.document)
+        body = {**row.document, "language": row.language}
+        return ServedDocument(
+            etag=document_etag(row.version, row.contentHash), language=row.language, body=body
+        )
     generated = await generated_fallback(session, slug)
-    if generated is None:
+    if generated is None or (asked.version is not None and generated.version != asked.version):
         return None
     return ServedDocument(
-        etag=document_etag(generated.version, document_hash(generated)), body=document_body(generated)
+        etag=document_etag(generated.version, document_hash(generated)),
+        language=generated.language,
+        body=document_body(generated),
     )
 
 

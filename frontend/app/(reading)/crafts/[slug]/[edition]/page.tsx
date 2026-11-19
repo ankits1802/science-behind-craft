@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
-import { CraftScreen } from "@/components/craft/CraftScreen";
+import { MonographPage } from "@/components/monograph/MonographPage";
 import { craftEdition } from "@/lib/craftPageContract";
-import { craftPageMetadata } from "@/lib/readingMetadata";
-import { serverCraftPage } from "@/lib/server/readingPages";
+import { monographMetadata } from "@/lib/monographMetadata";
+import { serverCraftDocument } from "@/lib/monographRenderServer";
 
 type CraftEditionRoute = { params: Promise<{ slug: string; edition: string }> };
+
+export const revalidate = 86400;
+export const dynamicParams = true;
 
 async function editionOf(params: CraftEditionRoute["params"]): Promise<{ slug: string; version: number }> {
   const { slug, edition } = await params;
@@ -18,16 +20,13 @@ async function editionOf(params: CraftEditionRoute["params"]): Promise<{ slug: s
 
 export async function generateMetadata({ params }: CraftEditionRoute): Promise<Metadata> {
   const { slug, version } = await editionOf(params);
-  return craftPageMetadata(await serverCraftPage(slug, version));
+  const document = await serverCraftDocument(slug, version);
+  return document ? monographMetadata(document) : {};
 }
 
 export default async function CraftEditionPage({ params }: CraftEditionRoute) {
   const { slug, version } = await editionOf(params);
-  const initial = await serverCraftPage(slug, version);
-  if (!initial) notFound();
-  return (
-    <Suspense fallback={null}>
-      <CraftScreen slug={slug} initial={initial} version={version} />
-    </Suspense>
-  );
+  const document = await serverCraftDocument(slug, version);
+  if (!document) notFound();
+  return <MonographPage document={document} />;
 }

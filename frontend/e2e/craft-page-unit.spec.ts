@@ -250,11 +250,13 @@ test("the production Overview check needs a curated page's lede and key facts on
   expect(overviewNote({ ...served, curated: false })).toBe("not curated");
 });
 
-test("the craft page reads only the page and region routes and mounts no generator", () => {
+test("the craft page reads its monograph document or the craft list's record and mounts no generator", () => {
   const graph = [...eagerModules("@/app/(reading)/crafts/[slug]/page")];
   const texts = graph.map((file) => readFileSync(join(FRONTEND, file), "utf8"));
   expect(graph).toContain("lib/craftPageContract.ts");
-  expect(graph).toContain("lib/craftRegion.ts");
-  expect(graph.filter((file) => /craftMedia|StageMedia|mediaContract/.test(file))).toEqual([]);
+  expect(graph).toContain("lib/monographDocumentShape.ts");
+  expect(graph).toContain("components/monograph/MonographPage.tsx");
+  expect(graph).toContain("components/craft/CraftWithoutMonograph.tsx");
+  expect(graph.filter((file) => /craftMedia|StageMedia|mediaContract|CraftScreen|CraftTabs/.test(file))).toEqual([]);
   expect(texts.filter((text) => /\/(profile|process)`/.test(text))).toEqual([]);
 });

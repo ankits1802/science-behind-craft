@@ -56,8 +56,30 @@ def test_each_published_sentence_is_one_paragraph_in_its_fields_chapter(document
         "CHEMISTRY",
         [str(ALUM)],
     )
-    assert (units["h-chemistry"].tag, units["h-chemistry"].nodes) == ("h3", ["The chemistry"])
     assert not any("hidden measure" in str(unit.nodes) for unit in units.values())
+
+
+def test_each_chapter_opens_with_its_title_and_a_section_title_it_repeats_is_dropped(
+    document: MonographDocument,
+) -> None:
+    units = document.content.units
+    placed_units = [units[e.ref] for e in document.content.layout if e.kind == "unit"]
+    heads = [(unit.chapter, unit.tag, unit.nodes) for unit in placed_units]
+    assert [head for head in heads if head[1] == "h2"] == [
+        ("glance", "h2", ["At a glance"]),
+        ("chem", "h2", ["The chemistry"]),
+        ("sources", "h2", ["Sources"]),
+    ]
+    assert "h-chemistry" not in units and "h-overview" not in units
+    assert document.content.layout[-1].ref == "chapter-sources"
+
+
+def test_the_overview_opens_the_page_as_its_lede_after_the_masthead(document: MonographDocument) -> None:
+    bagh = sentence_id(document, "Bagh print is")
+    opening = [e.ref for e in document.content.layout if e.chapter == "opening" and e.within is None]
+    assert opening == [HERO, *MASTHEAD, bagh]
+    assert document.content.units[bagh].chapter == "opening"
+    assert document.content.citations[bagh][0].source == "g1"
 
 
 def plate_units(document: MonographDocument, label: str) -> list[str]:
@@ -69,21 +91,24 @@ def placed(document: MonographDocument, chapter: str, label: str) -> list[tuple[
     return [(chapter, label, None), *[(chapter, unit, label) for unit in plate_units(document, label)]]
 
 
-def test_the_page_reads_hero_masthead_pictures_text_then_components(document: MonographDocument) -> None:
+def test_the_page_reads_hero_masthead_lede_then_each_chapters_pictures_text_and_components(
+    document: MonographDocument,
+) -> None:
     alum = sentence_id(document, "Alum fixes")
     bagh = sentence_id(document, "Bagh print is")
     assert [(e.chapter, e.ref, e.within) for e in document.content.layout] == [
-        *placed(document, "glance", HERO),
-        *[("glance", unit, HERO) for unit in MASTHEAD],
+        *placed(document, "opening", HERO),
+        *[("opening", unit, None) for unit in MASTHEAD],
+        ("opening", bagh, None),
+        ("glance", "chapter-glance", None),
         *placed(document, "glance", "bagh-print/pictures/i01"),
-        ("glance", "h-overview", None),
-        ("glance", bagh, None),
+        ("chem", "chapter-chem", None),
         *placed(document, "chem", "bagh-print/pictures/i04"),
         *placed(document, "chem", "bagh-print/pictures/i03"),
-        ("chem", "h-chemistry", None),
         ("chem", alum, None),
         ("chem", VAT_DIP, None),
         ("chem", PLAYER, None),
+        ("sources", "chapter-sources", None),
     ]
     assert [c.label for c in document.content.components] == [
         HERO,
@@ -127,7 +152,7 @@ def test_the_masthead_and_label_card_come_from_the_record(document: MonographDoc
         ("dt", ["GI"]),
         ("dd", ["Registered geographical indication"]),
     ]
-    assert all(units[key].claim_ids == [] for key in MASTHEAD)
+    assert all(units[key].claim_ids == [] and units[key].chapter == "opening" for key in MASTHEAD)
 
 
 def test_a_picture_is_drawn_from_its_spec_with_the_layouts_crop_and_caption(
@@ -147,7 +172,7 @@ def test_a_picture_is_drawn_from_its_spec_with_the_layouts_crop_and_caption(
     entry = next(c for c in document.content.components if c.label == HERO)
     assert (entry.kind, entry.chapter, entry.field, entry.subjects) == (
         "picture_plate",
-        "glance",
+        "opening",
         "OVERVIEW",
         ["craft:Bagh-Print"],
     )
@@ -179,6 +204,7 @@ def test_the_document_carries_its_subject_version_and_layout(document: Monograph
         5,
     )
     assert document.page_url == "https://kalavigyan.example/crafts/Bagh-Print"
+    assert document.language == "en"
     assert document.content.data["page-layout"]["version"] == 2
     assert document.content.data["page-layout"]["entries"][0]["ref"] == HERO
 
