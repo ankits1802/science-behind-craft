@@ -105,7 +105,10 @@ async def remove_orphan_concepts(
         return 0
     ids = [orphan.concept_id for orphan in orphans]
     removed = await session.execute(
-        delete(Concept).where(Concept.id.in_(ids), orphaned(now)).returning(Concept.id)
+        delete(Concept)
+        .where(Concept.id.in_(ids), orphaned(now))
+        .returning(Concept.id)
+        .execution_options(synchronize_session=False)
     )
     return len(removed.all())
 

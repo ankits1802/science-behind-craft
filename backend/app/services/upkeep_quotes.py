@@ -19,11 +19,14 @@ from app.research.fetcher import Fetcher, FetchRefused, FetchRequest
 from .upkeep_records import record_fetch
 
 __all__ = [
+    "FETCHER_OUTAGE_MIN",
     "QUOTE_RECHECK_AFTER",
     "QUOTE_SOURCES_PER_NIGHT",
     "CitedQuote",
     "DueSource",
     "QuotesReport",
+    "SourceCheck",
+    "check_source",
     "quote_verdicts",
     "recheck_quotes",
     "sources_due",
@@ -31,10 +34,12 @@ __all__ = [
 
 QUOTE_SOURCES_PER_NIGHT = 50
 QUOTE_RECHECK_AFTER = timedelta(days=30)
+FETCHER_OUTAGE_MIN = 3
 HTTPS_PREFIX = "https://"
 PASS = "PASS"
 FAIL = "FAIL"
 BAD_URL = "BAD_URL"
+UNAVAILABLE = "unavailable"
 
 
 @dataclass(frozen=True)
@@ -50,26 +55,36 @@ class DueSource:
     quotes: tuple[CitedQuote, ...]
 
 
+@dataclass(frozen=True)
+class SourceCheck:
+    source_id: uuid.UUID
+    outcome: str
+    problem: str | None = None
+    verdicts: dict[uuid.UUID, str] = field(default_factory=dict)
+    undecided: int = 0
+    unreachable: bool = False
+
+
 @dataclass
 class QuotesReport:
-    sources: list[str] = field(default_factory=list)
-    fetched: int = 0
-    refused: int = 0
-    failed: int = 0
-    quotes_passed: int = 0
-    quotes_failed: int = 0
-    quotes_undecided: int = 0
+    checks: list[SourceCheck] = field(default_factory=list)
+    fetcher_unavailable: bool = False
 
     def as_dict(self) -> dict[str, Any]:
+        verdicts = [verdict for check in self.checks for verdict in check.verdicts.values()]
         return {
-            "sourcesChecked": len(self.sources),
-            "fetched": self.fetched,
-            "refused": self.refused,
-            "unreachable": self.failed,
-            "quotesPassed": self.quotes_passed,
-            "quotesFailed": self.quotes_failed,
-            "quotesUndecided": self.quotes_undecided,
+            "sourcesChecked": len(self.checks),
+            "fetched": self._count("FETCHED"),
+            "refused": self._count("REFUSED"),
+            "unreachable": self._count("FAILED"),
+            "quotesPassed": verdicts.count(PASS),
+            "quotesFailed": verdicts.count(FAIL),
+            "quotesUndecided": sum(check.undecided for check in self.checks),
+            "fetcherUnavailable": self.fetcher_unavailable,
         }
+
+    def _count(self, outcome: str) -> int:
+        return sum(1 for check in self.checks if check.outcome == outcome)
 
 
 def quote_verdicts(text: str, *, truncated: bool, quotes: Sequence[CitedQuote]) -> dict[uuid.UUID, str]:
@@ -81,6 +96,25 @@ def quote_verdicts(text: str, *, truncated: bool, quotes: Sequence[CitedQuote]) 
         elif not truncated:
             verdicts[cited.claim_source_id] = FAIL
     return verdicts
+
+
+async def check_source(fetcher: Fetcher, due: DueSource) -> SourceCheck:
+    try:
+        page = await fetcher.fetch(FetchRequest(url=due.url))
+    except FetchRefused as refused:
+        return SourceCheck(due.source_id, "REFUSED", refused.reason)
+    except ValidationError:
+        return SourceCheck(due.source_id, "REFUSED", BAD_URL)
+    except ExternalFailure as failure:
+        problem = f"{failure.kind} {failure.status}" if failure.status else failure.kind
+        unreachable = failure.kind == UNAVAILABLE and failure.status is None
+        return SourceCheck(due.source_id, "FAILED", problem, unreachable=unreachable)
+    verdicts = quote_verdicts(page.text, truncated=page.truncated, quotes=due.quotes)
+    return SourceCheck(due.source_id, "FETCHED", verdicts=verdicts, undecided=len(due.quotes) - len(verdicts))
+
+
+def fetcher_down(checks: Sequence[SourceCheck]) -> bool:
+    return len(checks) >= FETCHER_OUTAGE_MIN and all(check.unreachable for check in checks)
 
 
 async def sources_due(session: AsyncSession, *, now: datetime, limit: int) -> list[DueSource]:
@@ -105,35 +139,15 @@ async def recheck_quotes(
 ) -> QuotesReport:
     report = QuotesReport()
     for due in await sources_due(session, now=now, limit=limit):
-        report.sources.append(str(due.source_id))
-        await _recheck(session, fetcher, due, (report, now))
-        await session.commit()
+        report.checks.append(await check_source(fetcher, due))
+    if fetcher_down(report.checks):
+        report.fetcher_unavailable = True
+        return report
+    for check in report.checks:
+        await _record_verdicts(session, check.verdicts, now)
+        await record_fetch(session, check.source_id, outcome=check.outcome, problem=check.problem, now=now)
+    await session.commit()
     return report
-
-
-async def _recheck(
-    session: AsyncSession, fetcher: Fetcher, due: DueSource, run: tuple[QuotesReport, datetime]
-) -> None:
-    report, now = run
-    try:
-        page = await fetcher.fetch(FetchRequest(url=due.url))
-    except (FetchRefused, ValidationError) as refused:
-        report.refused += 1
-        reason = refused.reason if isinstance(refused, FetchRefused) else BAD_URL
-        await record_fetch(session, due.source_id, outcome="REFUSED", problem=reason, now=now)
-        return
-    except ExternalFailure as failure:
-        report.failed += 1
-        problem = f"{failure.kind} {failure.status}" if failure.status else failure.kind
-        await record_fetch(session, due.source_id, outcome="FAILED", problem=problem, now=now)
-        return
-    report.fetched += 1
-    verdicts = quote_verdicts(page.text, truncated=page.truncated, quotes=due.quotes)
-    await _record_verdicts(session, verdicts, now)
-    report.quotes_passed += sum(1 for verdict in verdicts.values() if verdict == PASS)
-    report.quotes_failed += sum(1 for verdict in verdicts.values() if verdict == FAIL)
-    report.quotes_undecided += len(due.quotes) - len(verdicts)
-    await record_fetch(session, due.source_id, outcome="FETCHED", problem=None, now=now)
 
 
 async def _record_verdicts(session: AsyncSession, verdicts: dict[uuid.UUID, str], now: datetime) -> None:

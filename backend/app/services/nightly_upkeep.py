@@ -62,7 +62,7 @@ class UpkeepReport:
 
     @property
     def ok(self) -> bool:
-        return not self.pages.failed
+        return not self.pages.failed and not self.quotes.fetcher_unavailable
 
     def as_dict(self) -> dict[str, Any]:
         return {

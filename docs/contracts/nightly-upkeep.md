@@ -48,6 +48,10 @@ The orchestration is `services/nightly_upkeep.py` (`run_nightly_upkeep`, and the
   fetcher will not read) records `REFUSED` and its reason; a failure (gone, unreachable, rate
   limited) records `FAILED` with its kind and status and adds one to `failures`, which returns to
   0 at the next good fetch. `failures` is the link-rot signal.
+- **A night when the fetcher itself is away** blames no source: when every one of at least
+  `FETCHER_OUTAGE_MIN` = 3 due sources failed as unreachable with no HTTP status, nothing is
+  recorded, the report says `fetcherUnavailable`, and the run is not `ok`. The night's results are
+  written together at the end of the step.
 
 ### 2. Archives
 
@@ -112,15 +116,17 @@ The web client parses both shapes with `frontend/lib/sitePagesContract.ts` (spec
 `python -m app.scripts.nightly_upkeep` prints one JSON object and exits 1 when `ok` is false:
 
 ```
-{ok, quotes {sourcesChecked, fetched, refused, unreachable, quotesPassed, quotesFailed, quotesUndecided},
+{ok, quotes {sourcesChecked, fetched, refused, unreachable, quotesPassed, quotesFailed, quotesUndecided,
+         fetcherUnavailable},
  archive {archived, archiveFailed},
  orphans {orphansFound, orphansRemoved, orphansReported, orphans[{id, name, type, craftId}]},
  pages {monographs[load report], pagesStale, pagesRebuilt, pagesChanged, pagesFailed[]},
  build {ok, triggered, reason?}}
 ```
 
-`ok` is false when a monograph or page failed to rebuild or the deploy hook refused; an
-unreachable source or a failed archive is expected and only counted. An unset deploy hook is
+`ok` is false when a monograph or page failed to rebuild, the fetcher was away or the deploy hook
+refused; an unreachable source or a failed archive is expected and only counted. An unset deploy
+hook is
 reported (`triggered: false`) and is not a failure. `--dry-run` prints `{ok, dryRun, sourcesDue,
 sourcesAtRisk, monographs, pagesStale, orphans[]}` and writes nothing.
 
