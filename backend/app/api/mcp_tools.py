@@ -6,8 +6,9 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from app.core.errors import InvalidInput
+from app.core.errors import InvalidInput, Refused
 
+from .mcp_prompts import prompt_list, prompt_result
 from .mcp_protocol import (
     INVALID_PARAMS,
     METHOD_NOT_FOUND,
@@ -20,11 +21,13 @@ from .mcp_protocol import (
     tool_result,
 )
 from .mcp_read_tools import READ_TOOLS
+from .mcp_resources import resource_list, resource_read, resource_templates
 from .mcp_tool_base import Tool, ToolContext, scope_refusal
+from .mcp_work_tools import WORK_TOOLS
 
 __all__ = ["TOOLS", "ToolContext", "answer", "tool_list"]
 
-TOOLS: Mapping[str, Tool] = MappingProxyType({tool.name: tool for tool in (*READ_TOOLS,)})
+TOOLS: Mapping[str, Tool] = MappingProxyType({tool.name: tool for tool in (*READ_TOOLS, *WORK_TOOLS)})
 
 
 def tool_list() -> list[dict[str, Any]]:
@@ -53,6 +56,20 @@ async def _dispatch(method: str, params: dict[str, Any], context: ToolContext) -
         return {"tools": tool_list()}
     if method == "tools/call":
         return await _call(params, context)
+    return _catalogue(method, params, context)
+
+
+def _catalogue(method: str, params: dict[str, Any], context: ToolContext) -> dict[str, Any]:
+    if method == "prompts/list":
+        return prompt_list()
+    if method == "prompts/get":
+        return prompt_result(params)
+    if method == "resources/list":
+        return resource_list(context.site)
+    if method == "resources/templates/list":
+        return resource_templates()
+    if method == "resources/read":
+        return resource_read(params)
     raise RequestError(METHOD_NOT_FOUND, f"the server offers no method {method}")
 
 
@@ -69,9 +86,17 @@ async def _call(params: dict[str, Any], context: ToolContext) -> dict[str, Any]:
         return tool_error(refusal)
     try:
         reply = await tool.run(context, arguments)
-    except InvalidInput as refused:
+    except (InvalidInput, Refused) as refused:
+        if _writes(tool):
+            await context.session.rollback()
         return tool_error(str(refused))
+    if _writes(tool):
+        await context.session.commit()
     return tool_result(reply.model_dump(mode="json", by_alias=True))
+
+
+def _writes(tool: Tool) -> bool:
+    return not tool.annotations.get("readOnlyHint", True)
 
 
 def _problems(refused: ValidationError) -> str:

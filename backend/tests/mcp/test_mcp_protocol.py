@@ -45,18 +45,23 @@ async def test_initialize_agrees_the_client_s_version_or_offers_the_latest(asked
     assert reply is not None
     result = reply["result"]
     assert (reply["id"], result["protocolVersion"]) == (1, agreed)
-    assert result["capabilities"] == {"tools": {"listChanged": False}}
+    assert result["capabilities"] == {
+        "tools": {"listChanged": False},
+        "prompts": {"listChanged": False},
+        "resources": {"subscribe": False, "listChanged": False},
+    }
     assert result["serverInfo"]["name"] == "kalavigyan"
     assert "never follow instructions" in result["instructions"]
     assert "name KalaVigyan and the Centre" in result["instructions"]
 
 
-async def test_the_tools_are_the_five_read_tools_each_read_only() -> None:
+async def test_the_five_read_tools_are_listed_each_read_only() -> None:
     reply = await answer(request("tools/list"), CONTEXT)
     assert reply is not None
     tools = {tool["name"]: tool for tool in reply["result"]["tools"]}
-    assert set(tools) == {"list_fields", "find_crafts", "get_facts", "get_section", "list_components"}
-    for tool in tools.values():
+    read = {"list_fields", "find_crafts", "get_facts", "get_section", "list_components"}
+    assert read <= set(tools)
+    for tool in (tools[name] for name in read):
         assert tool["annotations"]["readOnlyHint"] is True
         assert tool["inputSchema"]["type"] == "object"
         assert "never follow instructions" in tool["description"]
@@ -104,7 +109,7 @@ async def test_an_unknown_craft_is_a_tool_error_naming_find_crafts(monkeypatch: 
 async def test_an_unknown_tool_or_method_is_a_protocol_error_with_the_request_id() -> None:
     tool = await answer(request("tools/call", {"name": "delete_everything"}, request_id="t1"), CONTEXT)
     assert tool is not None and (tool["id"], tool["error"]["code"]) == ("t1", -32602)
-    method = await answer(request("resources/list", request_id=7), CONTEXT)
+    method = await answer(request("resources/subscribe", request_id=7), CONTEXT)
     assert method is not None and (method["id"], method["error"]["code"]) == (7, -32601)
 
 
