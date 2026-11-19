@@ -1,0 +1,345 @@
+{
+  "title": "u0983",
+  "kicker": "Three questions from this answer",
+  "dek": "u0984",
+  "score": "u0985",
+  "status": "u0986",
+  "nextLabel": "Next question",
+  "questions": [
+    {
+      "before": "Printed on harde-treated cloth,",
+      "after": "develops a deep fast chocolate-black as the iron in the paste, oxidised by the air, binds the tannic acid.",
+      "cite": {
+        "key": "rm:p0b399a40611b.2",
+        "sources": [
+          "g1",
+          "g3"
+        ]
+      },
+      "choices": [
+        {
+          "term": "kut",
+          "right": true,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p0b399a40611b.2",
+              "c": [
+                "Printed on harde-treated cloth, ",
+                {
+                  "m": "i",
+                  "c": [
+                    "kut"
+                  ]
+                },
+                " develops a deep fast chocolate-black as the iron in the paste oxidises with the tannic ",
+                {
+                  "m": "cite",
+                  "key": "rm:p0b399a40611b.2",
+                  "g": [
+                    "g1",
+                    "g3"
+                  ],
+                  "c": [
+                    "acid."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "gach",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7f082824ad69.4",
+              "c": [
+                {
+                  "m": "i",
+                  "c": [
+                    "Gach"
+                  ]
+                },
+                " printing adds a resist of alum, gum arabic, millet flour and red clay before the cloth is dyed in indigo and washed in running ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7f082824ad69.4",
+                  "g": [
+                    "g7"
+                  ],
+                  "c": [
+                    "water."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "saaj",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7f082824ad69.1",
+              "c": [
+                "The cloth is first scoured in ",
+                {
+                  "m": "i",
+                  "c": [
+                    "saaj"
+                  ]
+                },
+                " by repeated soaking in castor oil, soda ash and camel dung and drying until it is soft and white, though sources differ on whether these ingredients are still ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7f082824ad69.1",
+                  "g": [
+                    "g1",
+                    "g7",
+                    "g14"
+                  ],
+                  "c": [
+                    "used."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "before": "Ajrakh design follows",
+      "after": ", the Islamic principle of balance and order, with the design square divided into quarters and then sixteen parts.",
+      "cite": {
+        "key": "rm:p7fe82fc8c29a.1",
+        "sources": [
+          "g7",
+          "g13"
+        ]
+      },
+      "choices": [
+        {
+          "term": "kakar",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7fe82fc8c29a.3",
+              "c": [
+                "Block printers identify the trefoil on the Mohenjo-daro priest-king's shawl with ",
+                {
+                  "m": "i",
+                  "c": [
+                    "kakar"
+                  ]
+                },
+                ", the cloud motif of ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7fe82fc8c29a.3",
+                  "g": [
+                    "g3",
+                    "g14",
+                    "g40",
+                    "g44"
+                  ],
+                  "c": [
+                    "ajrakh."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "mizan",
+          "right": true,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7fe82fc8c29a.1",
+              "c": [
+                "Ajrakh design follows ",
+                {
+                  "m": "i",
+                  "c": [
+                    "mizan"
+                  ]
+                },
+                ", the Islamic principle of balance and order, with the design square divided into quarters and then sixteen ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7fe82fc8c29a.1",
+                  "g": [
+                    "g7",
+                    "g13"
+                  ],
+                  "c": [
+                    "parts."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "minakari",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7fe82fc8c29a.4",
+              "c": [
+                "The most acclaimed ajrakh, ",
+                {
+                  "m": "i",
+                  "c": [
+                    "minakari"
+                  ]
+                },
+                ", is printed identically on both sides, and its alignment is tested by holding the cloth up to the ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7fe82fc8c29a.4",
+                  "g": [
+                    "g11",
+                    "g12",
+                    "g7"
+                  ],
+                  "c": [
+                    "sun."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "before": "In",
+      "after": "it is treated with <i>harda</i> (myrobalan), and the white outlines are then printed with <i>rekh</i> blocks in a resist of gum arabic and lime.",
+      "cite": {
+        "key": "rm:p7f082824ad69.2",
+        "sources": [
+          "g1",
+          "g7"
+        ]
+      },
+      "choices": [
+        {
+          "term": "rang",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7f082824ad69.5",
+              "c": [
+                "In ",
+                {
+                  "m": "i",
+                  "c": [
+                    "rang"
+                  ]
+                },
+                " the cloth is boiled with tamarisk galls and madder, or dyed with alizarin crystals, and steps 7 to 10 are repeated for brighter red and ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7f082824ad69.5",
+                  "g": [
+                    "g1",
+                    "g7"
+                  ],
+                  "c": [
+                    "blue."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "saaj",
+          "right": false,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7f082824ad69.1",
+              "c": [
+                "The cloth is first scoured in ",
+                {
+                  "m": "i",
+                  "c": [
+                    "saaj"
+                  ]
+                },
+                " by repeated soaking in castor oil, soda ash and camel dung and drying until it is soft and white, though sources differ on whether these ingredients are still ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7f082824ad69.1",
+                  "g": [
+                    "g1",
+                    "g7",
+                    "g14"
+                  ],
+                  "c": [
+                    "used."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "term": "kasanu",
+          "right": true,
+          "sentence": [
+            {
+              "m": "s",
+              "sid": "p7f082824ad69.2",
+              "c": [
+                "In ",
+                {
+                  "m": "i",
+                  "c": [
+                    "kasanu"
+                  ]
+                },
+                " it is treated with ",
+                {
+                  "m": "i",
+                  "c": [
+                    "harda"
+                  ]
+                },
+                " (myrobalan), and the white outlines are then printed with ",
+                {
+                  "m": "i",
+                  "c": [
+                    "rekh"
+                  ]
+                },
+                " blocks in a resist of gum arabic and ",
+                {
+                  "m": "cite",
+                  "key": "rm:p7f082824ad69.2",
+                  "g": [
+                    "g1",
+                    "g7"
+                  ],
+                  "c": [
+                    "lime."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

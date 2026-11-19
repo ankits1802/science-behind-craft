@@ -1,0 +1,314 @@
+{
+  "stage": {
+    "state": "Answer written",
+    "detail": "7 sections, 7 illustrations, 1 video and the film"
+  },
+  "switchLabel": "Illustrate as I write",
+  "switchDetail": "Pictures, a short video and a film of this answer, each labelled AI.",
+  "replay": "Watch it being made",
+  "status": "Written",
+  "sections": [
+    {
+      "number": 1,
+      "titleUnit": "u1035",
+      "kind": "Chemistry",
+      "textUnit": "u1036",
+      "media": [
+        "kutch-ajrakh/chemistry/ai-cloth-lifted-from-vat",
+        "kutch-ajrakh/chemistry/ai-video-blue-in-the-air"
+      ],
+      "split": false
+    },
+    {
+      "number": 2,
+      "title": "From Sindh to Kutch at a king's invitation",
+      "kind": "History",
+      "textUnit": "u1038",
+      "media": [
+        "kutch-ajrakh/history/ai-caravan-on-salt-flat"
+      ],
+      "split": true
+    },
+    {
+      "number": 3,
+      "titleUnit": "u1039",
+      "kind": "Overview",
+      "textUnit": "u1040",
+      "media": [
+        "kutch-ajrakh/design/ai-double-sided-ajrakh-drying"
+      ],
+      "split": false
+    },
+    {
+      "number": 4,
+      "titleUnit": "u1041",
+      "kind": "Geography and water",
+      "text": [
+        {
+          "m": "s",
+          "sid": "pe5fed6213bc9.1",
+          "c": [
+            "Edwards writes that the River Suran served Dhamadka until the late 1980s, and the GI journal records that its water stream dried up in ",
+            {
+              "m": "cite",
+              "key": "rm:pe5fed6213bc9.1",
+              "g": [
+                "g1",
+                "g11",
+                "g17"
+              ],
+              "c": [
+                "1989."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "pe5fed6213bc9.2",
+          "c": [
+            "After the 2001 earthquake Dhamadka's water held more iron, which saddens dye colours, and even one percent of iron leaves black spots on myrobalan-dyed ",
+            {
+              "m": "cite",
+              "key": "rm:pe5fed6213bc9.2",
+              "g": [
+                "g11",
+                "g17",
+                "g16"
+              ],
+              "c": [
+                "cloth."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "pe5fed6213bc9.3",
+          "c": [
+            "Ajrakhpur was chosen for good quality groundwater, but its water table is going down and excess iron and rising salinity threaten the craft ",
+            {
+              "m": "cite",
+              "key": "rm:pe5fed6213bc9.3",
+              "g": [
+                "g1",
+                "g17",
+                "g16"
+              ],
+              "c": [
+                "again."
+              ]
+            }
+          ]
+        }
+      ],
+      "media": [
+        "kutch-ajrakh/geography/ai-dry-riverbed-and-well"
+      ],
+      "split": true
+    },
+    {
+      "number": 5,
+      "titleUnit": "u1042",
+      "kind": "Economics",
+      "text": [
+        {
+          "m": "s",
+          "sid": "p86762f969a56.1",
+          "c": [
+            "Khatri printers knew their clients through hereditary relationships and bartered their dyed cloth directly with them for milk, animals and ",
+            {
+              "m": "cite",
+              "key": "rm:p86762f969a56.1",
+              "g": [
+                "g14",
+                "g13"
+              ],
+              "c": [
+                "grain."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "p86762f969a56.2",
+          "c": [
+            "Khatri printers of Kutch have almost stopped printing ajrakh for Maldharis, who buy cheaper screen-printed cloth in chemical dyes, mostly from Pakistan and from ",
+            {
+              "m": "cite",
+              "key": "rm:p86762f969a56.2",
+              "g": [
+                "g2",
+                "g14",
+                "g6"
+              ],
+              "c": [
+                "Khavda."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "p86762f969a56.3",
+          "c": [
+            "In 2014 Abduljabbar M. Khatri's workshop made 70,000 m of running cotton yardage for Fabindia, one of his largest clients with ",
+            {
+              "m": "cite",
+              "key": "rm:p86762f969a56.3",
+              "g": [
+                "g11"
+              ],
+              "c": [
+                "Maiwa."
+              ]
+            }
+          ]
+        }
+      ],
+      "media": [
+        "kutch-ajrakh/economics/ai-stacked-printed-yardage"
+      ],
+      "split": true
+    },
+    {
+      "number": 6,
+      "title": "Balance, order and the priest-king's cloud motif",
+      "kind": "Design",
+      "text": [
+        {
+          "m": "s",
+          "sid": "p7fe82fc8c29a.1",
+          "c": [
+            "Ajrakh design follows ",
+            {
+              "m": "i",
+              "c": [
+                "mizan"
+              ]
+            },
+            ", the Islamic principle of balance and order, with the design square divided into quarters and then sixteen ",
+            {
+              "m": "cite",
+              "key": "rm:p7fe82fc8c29a.1",
+              "g": [
+                "g7",
+                "g13"
+              ],
+              "c": [
+                "parts."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "p7fe82fc8c29a.2",
+          "c": [
+            "A fixed layout sets a large central body of a repeated motif on a tight grid within borders and end ",
+            {
+              "m": "cite",
+              "key": "rm:p7fe82fc8c29a.2",
+              "g": [
+                "g2",
+                "g6"
+              ],
+              "c": [
+                "panels."
+              ]
+            }
+          ]
+        },
+        " ",
+        {
+          "m": "s",
+          "sid": "p7fe82fc8c29a.3",
+          "c": [
+            "Block printers identify the trefoil on the Mohenjo-daro priest-king's shawl with ",
+            {
+              "m": "i",
+              "c": [
+                "kakar"
+              ]
+            },
+            ", the cloud motif of ",
+            {
+              "m": "cite",
+              "key": "rm:p7fe82fc8c29a.3",
+              "g": [
+                "g3",
+                "g14",
+                "g40",
+                "g44"
+              ],
+              "c": [
+                "ajrakh."
+              ]
+            }
+          ]
+        }
+      ],
+      "media": [
+        "kutch-ajrakh/design/ai-block-divided-into-sixteen"
+      ],
+      "split": false
+    },
+    {
+      "number": 7,
+      "titleUnit": "u1043",
+      "kind": "Process",
+      "textUnit": "u1044",
+      "media": [
+        "kutch-ajrakh/process/ai-cloth-steeping-in-saaj"
+      ],
+      "split": true
+    }
+  ],
+  "film": "kutch-ajrakh/overview/answer-as-a-film",
+  "railTitle": "u1049",
+  "railDetail": "u1050",
+  "jobs": [
+    {
+      "title": "Section 1 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 1 · video, 8 seconds",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 2 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 3 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 4 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 5 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 6 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Section 7 · illustration",
+      "state": "Ready"
+    },
+    {
+      "title": "Film · 7 scenes",
+      "state": "Ready, 0:56"
+    }
+  ]
+}

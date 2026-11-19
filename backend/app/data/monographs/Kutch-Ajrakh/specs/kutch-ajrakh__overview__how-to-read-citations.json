@@ -1,0 +1,28 @@
+{
+  "kicker": "u0973",
+  "title": "u0974",
+  "sentence": "u0975",
+  "keys": [
+    "u0976",
+    "u0977",
+    "u0978",
+    "u0979"
+  ],
+  "cardsLabel": "What the numerals open",
+  "cards": [
+    {
+      "source": "g6",
+      "byline": "Khan, Sahapedia",
+      "quote": "“In 2001, an earthquake which caused severe damage in Kutch almost destroyed the village of Dhamadka.”",
+      "locator": "paragraph 13",
+      "keyed": true
+    },
+    {
+      "source": "g11",
+      "byline": "Edwards, Textile History, 2016",
+      "quoteUnit": "u0980",
+      "locator": "p. 156",
+      "keyed": false
+    }
+  ]
+}
