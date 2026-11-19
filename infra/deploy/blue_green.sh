@@ -13,6 +13,8 @@ RUN_AS=kalavigyan
 say() { printf '%s\n' "$*" >&2; }
 die() { say "::error::$*"; exit 1; }
 NGINX_SWITCH_SECONDS="${NGINX_SWITCH_SECONDS:-20}"
+EMBED_SECONDS="${EMBED_SECONDS:-240}"
+EMBED_GRACE="${EMBED_GRACE:-60}"
 
 other() { if [ "$1" = 8000 ]; then echo 8001; else echo 8000; fi; }
 active() { systemctl is-active --quiet "$1" 2>/dev/null; }
@@ -57,7 +59,8 @@ seed() {
     say "$module done"
   done
   sync_portal_crafts "$tree"
-  embed_craft_descriptors "$tree"
+  embed_seeded "$tree" app.scripts.embed_craft_descriptors
+  embed_seeded "$tree" app.scripts.embed_knowledge
 }
 
 sync_portal_crafts() {
@@ -69,12 +72,12 @@ sync_portal_crafts() {
   fi
 }
 
-embed_craft_descriptors() {
-  local tree="$1"
-  if (cd "$tree" && runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m app.scripts.embed_craft_descriptors" >&2); then
-    say "app.scripts.embed_craft_descriptors done"
+embed_seeded() {
+  local tree="$1" module="$2" report
+  if report="$(cd "$tree" && timeout "$((EMBED_SECONDS + EMBED_GRACE))" runuser -u "$RUN_AS" -- bash -c "set -a; . '$ENV_FILE'; set +a; exec ./.venv/bin/python -m $module --seconds $EMBED_SECONDS")"; then
+    say "$module done: $report"
   else
-    say "::warning::craft descriptor embeddings were not filled; the daily Coverage enrichment run fills the missing ones."
+    say "::warning::$module did not finish (${report:-no report}); the release goes on and the daily Coverage enrichment run embeds what is left."
   fi
 }
 

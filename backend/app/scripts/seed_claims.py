@@ -4,20 +4,24 @@ import json
 from typing import Any
 
 from app.services.claim_seed import claim_seed_plan, load_seed_claims
+from app.services.claim_seed_passages import seed_passages
 from app.services.science_seed import load_science_seed, science_seed_plan
 
 
 async def run() -> dict[str, Any]:
     from app.core.db import dispose_engine, session_scope
     from app.services.claim_seed import seed_claims
+    from app.services.claim_seed_passages import store_seed_passages
     from app.services.science_seed import seed_science
     from app.services.term_glossary import seed_terms
 
+    data = load_seed_claims()
     try:
         async with session_scope() as session:
-            claims = await seed_claims(session)
+            claims = await seed_claims(session, data)
+            passages = await store_seed_passages(session, data)
             science = await seed_science(session)
-            return {**claims, "science": science, "terms": await seed_terms(session)}
+            return {**claims, "passages": passages, "science": science, "terms": await seed_terms(session)}
     finally:
         await dispose_engine()
 
@@ -28,6 +32,7 @@ def dry_run() -> dict[str, Any]:
     science = science_seed_plan(load_science_seed(), data)
     return {
         "total": {key: len(rows) for key, rows in plan.items()},
+        "passages": sum(len(passages.chunks) for passages in seed_passages(data)),
         "science": science.totals(),
         "dryRun": True,
     }

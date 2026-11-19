@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import hashlib
 import time
 import uuid
 from collections.abc import Callable, Sequence
+from dataclasses import dataclass
 from itertools import batched
 
 from sqlalchemy import func, select, update
@@ -13,6 +15,8 @@ from app.data.craft_master_loader import ACTIVE
 from app.models import AdminDistrict, AdminState, Craft, CraftAlias, CraftLocation, CraftSpelling
 from app.research.crafts import CraftQuery, CraftResolution
 from app.research.embedding import TextEmbedder, checked_vectors
+from app.retrieval.deadline import Deadline
+from app.retrieval.stamps import current_embedding_model, made_by_current_model, needs_vector
 from app.services.craft_index import AliasRecord, CraftIndex, CraftRecord, SpellingRecord, build_index
 from app.services.craft_matching import (
     SEMANTIC_TOP_K,
@@ -27,6 +31,7 @@ __all__ = [
     "INDEX_TTL_SECONDS",
     "CraftIndexStore",
     "DatabaseCraftResolver",
+    "descriptor_hash",
     "descriptor_text",
     "fill_descriptor_embeddings",
     "load_index",
@@ -84,6 +89,7 @@ class DatabaseCraftResolver:
                     Craft.status == ACTIVE,
                     Craft.isCatchAll.is_(False),
                     Craft.descriptorEmbedding.is_not(None),
+                    made_by_current_model(Craft.embeddingModel),
                 )
                 .order_by(distance, Craft.slug)
                 .limit(SEMANTIC_TOP_K)
@@ -101,28 +107,62 @@ def descriptor_text(name: str, names: Sequence[str]) -> str:
     return DESCRIPTOR_SEPARATOR.join(seen.values())
 
 
+def descriptor_hash(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+@dataclass(frozen=True)
+class _Descriptor:
+    craft_id: uuid.UUID
+    text: str
+    digest: str
+
+
 async def fill_descriptor_embeddings(
-    session: AsyncSession, embed: TextEmbedder, *, batch_size: int = DESCRIPTOR_BATCH
+    session: AsyncSession,
+    embed: TextEmbedder,
+    *,
+    batch_size: int = DESCRIPTOR_BATCH,
+    deadline: Deadline | None = None,
 ) -> int:
-    crafts = (
-        await session.execute(
-            select(Craft.id, Craft.name, Craft.localName)
-            .where(Craft.status == ACTIVE, Craft.isCatchAll.is_(False), Craft.descriptorEmbedding.is_(None))
-            .order_by(Craft.slug)
-        )
-    ).all()
-    names = await _alias_names(session, [craft_id for craft_id, _, _ in crafts])
     filled = 0
-    for chunk in batched(crafts, batch_size, strict=False):
-        texts = [descriptor_text(name, [local or "", *names.get(cid, [])]) for cid, name, local in chunk]
-        vectors = checked_vectors(await embed(texts), expected=len(texts))
-        for (craft_id, _, _), vector in zip(chunk, vectors, strict=True):
+    for chunk in batched(await _stale_descriptors(session), batch_size, strict=False):
+        if deadline is not None and deadline.passed():
+            break
+        await release_connection(session)
+        vectors = checked_vectors(await embed([item.text for item in chunk]), expected=len(chunk))
+        for item, vector in zip(chunk, vectors, strict=True):
             await session.execute(
-                update(Craft).where(Craft.id == craft_id).values(descriptorEmbedding=vector)
+                update(Craft)
+                .where(Craft.id == item.craft_id)
+                .values(
+                    descriptorEmbedding=vector,
+                    descriptorHash=item.digest,
+                    embeddingModel=current_embedding_model(),
+                )
             )
         await session.commit()
         filled += len(chunk)
     return filled
+
+
+async def _stale_descriptors(session: AsyncSession) -> list[_Descriptor]:
+    unstamped = needs_vector(Craft.descriptorEmbedding, Craft.embeddingModel).label("unstamped")
+    rows = (
+        await session.execute(
+            select(Craft.id, Craft.name, Craft.localName, Craft.descriptorHash, unstamped)
+            .where(Craft.status == ACTIVE, Craft.isCatchAll.is_(False))
+            .order_by(Craft.slug)
+        )
+    ).all()
+    names = await _alias_names(session, [row.id for row in rows])
+    stale: list[_Descriptor] = []
+    for row in rows:
+        text = descriptor_text(row.name, [row.localName or "", *names.get(row.id, [])])
+        digest = descriptor_hash(text)
+        if row.unstamped or row.descriptorHash != digest:
+            stale.append(_Descriptor(row.id, text, digest))
+    return stale
 
 
 async def load_index(session: AsyncSession) -> CraftIndex:

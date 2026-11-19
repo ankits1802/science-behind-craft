@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import uuid
 from collections.abc import Collection, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from itertools import batched
+from typing import Any
 
 from pydantic import TypeAdapter
 from sqlalchemy import ColumnElement, Select, delete, select, update
@@ -23,10 +24,13 @@ from app.research.retrieval import (
 )
 
 from .chunking import TextChunk, chunk_text
+from .deadline import Deadline
+from .stamps import current_embedding_model, needs_vector
 from .text import document_text
 
 __all__ = [
     "EMBED_BATCH",
+    "EMBED_RUN_ROWS",
     "EmbeddedCounts",
     "SourceChunk",
     "embed_pending",
@@ -37,6 +41,7 @@ __all__ = [
 ]
 
 EMBED_BATCH = 50
+EMBED_RUN_ROWS = 20000
 BLOCKS = TypeAdapter(Block)
 
 
@@ -45,6 +50,7 @@ class EmbeddedCounts:
     claims: int
     chunks: int
     pieces: int = 0
+    complete: bool = True
 
 
 @dataclass(frozen=True)
@@ -100,11 +106,18 @@ async def replace_planned_chunks(
 
 
 async def embed_pending(
-    session: AsyncSession, embed: TextEmbedder, *, batch_size: int = EMBED_BATCH
+    session: AsyncSession,
+    embed: TextEmbedder,
+    *,
+    batch_size: int = EMBED_BATCH,
+    deadline: Deadline | None = None,
 ) -> EmbeddedCounts:
-    counts = await _embed(session, embed, claim_scope=None, chunk_scope=None, batch_size=batch_size)
-    pieces = await embed_pieces(session, embed, piece_ids=None, batch_size=batch_size)
-    return EmbeddedCounts(claims=counts.claims, chunks=counts.chunks, pieces=pieces)
+    counts = await _embed(
+        session, embed, claim_scope=None, chunk_scope=None, batch_size=batch_size, deadline=deadline
+    )
+    pending = await _pending_pieces(session, None)
+    pieces = await _fill(session, embed, KnowledgePiece, pending, batch_size=batch_size, deadline=deadline)
+    return replace(counts, pieces=pieces, complete=counts.complete and pieces == len(pending))
 
 
 async def embed_pieces(
@@ -113,13 +126,12 @@ async def embed_pieces(
     *,
     piece_ids: Collection[uuid.UUID] | None,
     batch_size: int = EMBED_BATCH,
+    deadline: Deadline | None = None,
 ) -> int:
-    if batch_size < 1:
-        raise InvalidInput(f"An embedding batch holds at least one text, not {batch_size}")
+    _check_batch(batch_size)
     scope = None if piece_ids is None else KnowledgePiece.id.in_(list(piece_ids))
     pending = await _pending_pieces(session, scope)
-    await _fill(session, embed, KnowledgePiece, pending, batch_size=batch_size)
-    return len(pending)
+    return await _fill(session, embed, KnowledgePiece, pending, batch_size=batch_size, deadline=deadline)
 
 
 async def embed_written(
@@ -146,14 +158,25 @@ async def _embed(
     claim_scope: ColumnElement[bool] | None,
     chunk_scope: ColumnElement[bool] | None,
     batch_size: int,
+    deadline: Deadline | None = None,
 ) -> EmbeddedCounts:
+    _check_batch(batch_size)
+    claims = await _pending_claims(session, claim_scope)
+    claimed = await _fill(session, embed, Claim, claims, batch_size=batch_size, deadline=deadline)
+    chunks = await _pending_chunks(session, chunk_scope)
+    chunked = await _fill(session, embed, Chunk, chunks, batch_size=batch_size, deadline=deadline)
+    return EmbeddedCounts(
+        claims=claimed, chunks=chunked, complete=claimed == len(claims) and chunked == len(chunks)
+    )
+
+
+def _check_batch(batch_size: int) -> None:
     if batch_size < 1:
         raise InvalidInput(f"An embedding batch holds at least one text, not {batch_size}")
-    claims = await _pending_claims(session, claim_scope)
-    await _fill(session, embed, Claim, claims, batch_size=batch_size)
-    chunks = await _pending_chunks(session, chunk_scope)
-    await _fill(session, embed, Chunk, chunks, batch_size=batch_size)
-    return EmbeddedCounts(claims=len(claims), chunks=len(chunks))
+
+
+def _over(deadline: Deadline | None) -> bool:
+    return deadline is not None and deadline.passed()
 
 
 def _apply(
@@ -183,11 +206,12 @@ def _apply(
 
 async def _pending_claims(session: AsyncSession, scope: ColumnElement[bool] | None) -> list[_Pending]:
     statement = select(Claim.id, Claim.text).where(
-        Claim.embedding.is_(None),
+        needs_vector(Claim.embedding, Claim.embeddingModel),
         Claim.sensitivity == VISIBLE_SENSITIVITY,
         Claim.status.not_in(HIDDEN_CLAIM_STATUSES),
     )
-    rows = await session.execute(_scoped(statement, scope).order_by(Claim.id))
+    ordered = _scoped(statement, scope).order_by(Claim.embedding.is_not(None), Claim.id)
+    rows = await session.execute(ordered.limit(EMBED_RUN_ROWS))
     return [_Pending(row.id, document_text(row.text)) for row in rows]
 
 
@@ -196,12 +220,13 @@ async def _pending_chunks(session: AsyncSession, scope: ColumnElement[bool] | No
         select(Chunk.id, Chunk.text, Source.title)
         .join(Source, Source.id == Chunk.sourceId)
         .where(
-            Chunk.embedding.is_(None),
+            needs_vector(Chunk.embedding, Chunk.embeddingModel),
             Chunk.sensitivity != RESTRICTED_SENSITIVITY,
             Source.sensitivity != RESTRICTED_SENSITIVITY,
         )
     )
-    rows = await session.execute(_scoped(statement, scope).order_by(Chunk.id))
+    ordered = _scoped(statement, scope).order_by(Chunk.embedding.is_not(None), Chunk.id)
+    rows = await session.execute(ordered.limit(EMBED_RUN_ROWS))
     return [_Pending(row.id, document_text(row.text, title=row.title)) for row in rows]
 
 
@@ -209,7 +234,7 @@ async def _pending_pieces(session: AsyncSession, scope: ColumnElement[bool] | No
     statement = select(KnowledgePiece.id, KnowledgePiece.payload).where(
         KnowledgePiece.embedding.is_(None), KnowledgePiece.supersededById.is_(None)
     )
-    rows = await session.execute(_scoped(statement, scope).order_by(KnowledgePiece.id))
+    rows = await session.execute(_scoped(statement, scope).order_by(KnowledgePiece.id).limit(EMBED_RUN_ROWS))
     return [_Pending(row.id, document_text(piece_text(BLOCKS.validate_python(row.payload)))) for row in rows]
 
 
@@ -224,11 +249,27 @@ async def _fill(
     pending: Sequence[_Pending],
     *,
     batch_size: int,
-) -> None:
+    deadline: Deadline | None = None,
+) -> int:
+    done = 0
     for group in batched(pending, batch_size, strict=False):
+        if _over(deadline):
+            break
         texts = [item.text for item in group]
         await release_connection(session)
         vectors = checked_vectors(await embed(texts), expected=len(texts))
         for item, vector in zip(group, vectors, strict=True):
-            await session.execute(update(model).where(model.id == item.id).values(embedding=vector))
+            await session.execute(
+                update(model).where(model.id == item.id).values(_vector_values(model, vector))
+            )
         await session.commit()
+        done += len(group)
+    return done
+
+
+def _vector_values(
+    model: type[Claim] | type[Chunk] | type[KnowledgePiece], vector: list[float]
+) -> dict[str, Any]:
+    if model is KnowledgePiece:
+        return {"embedding": vector}
+    return {"embedding": vector, "embeddingModel": current_embedding_model()}

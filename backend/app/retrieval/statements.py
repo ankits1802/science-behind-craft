@@ -7,7 +7,7 @@ from typing import Any
 
 from sqlalchemy import ColumnElement, Select, and_, exists, func, literal, or_, select
 
-from app.models import Chunk, Claim, ClaimSource, Concept, ConceptEdge, Source
+from app.models import Chunk, Claim, ClaimSource, Concept, ConceptEdge, FieldRecording, Source
 from app.research.retrieval import (
     MODE_CLAIM_LEVELS,
     MODE_CLAIM_STATUSES,
@@ -16,6 +16,7 @@ from app.research.retrieval import (
 )
 
 from .field_scope import field_interview_sources, withheld_field_sources
+from .stamps import made_by_current_model
 
 __all__ = [
     "ENTITY_NAME_MIN_CHARS",
@@ -31,6 +32,7 @@ __all__ = [
     "claim_lexical_ranking",
     "claim_vector_ranking",
     "field_condition",
+    "field_passages",
     "lexical_rank",
     "readable_citations",
     "scope_claims",
@@ -140,6 +142,10 @@ def chunk_conditions(
     ]
 
 
+def field_passages() -> ColumnElement[bool]:
+    return Chunk.sourceId.in_(select(FieldRecording.sourceId))
+
+
 def claim_lexical_ranking(
     conditions: Sequence[ColumnElement[bool]], tsquery: str, *, depth: int = RANKING_DEPTH
 ) -> Select[tuple[uuid.UUID]]:
@@ -189,13 +195,15 @@ def _named_concepts(scope: CraftScope, question: str) -> Any:
 def claim_vector_ranking(
     conditions: Sequence[ColumnElement[bool]], vector: Sequence[float], *, depth: int = RANKING_DEPTH
 ) -> Select[tuple[uuid.UUID]]:
-    return _vector(Claim.id, Claim.embedding, conditions, vector, depth)
+    stamped = [*conditions, made_by_current_model(Claim.embeddingModel)]
+    return _vector(Claim.id, Claim.embedding, stamped, vector, depth)
 
 
 def chunk_vector_ranking(
     conditions: Sequence[ColumnElement[bool]], vector: Sequence[float], *, depth: int = RANKING_DEPTH
 ) -> Select[tuple[uuid.UUID]]:
-    return _vector(Chunk.id, Chunk.embedding, conditions, vector, depth)
+    stamped = [*conditions, made_by_current_model(Chunk.embeddingModel)]
+    return _vector(Chunk.id, Chunk.embedding, stamped, vector, depth)
 
 
 def text_query(tsquery: str) -> ColumnElement[Any]:
