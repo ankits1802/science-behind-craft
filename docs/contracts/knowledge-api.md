@@ -62,6 +62,27 @@ instructions. Wrong arguments, or a craft slug that does not exist, come back as
   content to name KalaVigyan and the Centre and link the craft's page; the server's
   `instructions` say the same.
 
+## Bulk export (decision 0101, item 9)
+
+`GET /api/knowledge/crafts/{slug}/export` (public, counted like every public read; an unknown slug
+is 404) and `python -m app.scripts.export_knowledge --out <folder> [--craft <slug> ...]` (one
+`<slug>.json` per craft; without `--craft`, every curated craft and every craft with a published
+section) give the same document:
+
+`CraftExport {schemaVersion 1, craft, curationVersion (null for an uncurated craft), exportedAt,
+facts[Fact], sources[FactSource], sections[ArticleSection], components[{label, kind, title,
+description, field, fields[], craftSlug, subjects[], claimIds[], spec}], pageUrl, attribution}`.
+
+- **Facts** are every fact `get_facts` may return for the craft, in the craft page's order, with
+  the same rules: what a signed-out reader sees, never a restricted source or closed text.
+- **Sections** are the published version of each field, keeping only the sentences whose facts
+  are all in `facts`; a section left empty is not listed.
+- **Components** are those `list_components` finds for the craft (its own and the shared ones that
+  apply to it), with no limit, each keeping only the `claimIds` in `facts`; a component left with
+  none is not listed. `spec` is its stored payload (for a monograph component: the monograph, its
+  anchor and chapter, and the text units inside it).
+- A craft's export is citable by `curationVersion` and each section's `version`.
+
 ## Versioning
 
 Results carry `schemaVersion 1`. A change that removes or renames a field, or changes its meaning,

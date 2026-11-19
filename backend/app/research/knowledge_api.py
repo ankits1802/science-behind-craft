@@ -28,6 +28,7 @@ __all__ = [
     "FieldList",
     "FoundCraft",
     "FoundCrafts",
+    "SchemaVersion",
 ]
 
 KNOWLEDGE_API_SCHEMA_VERSION = 1

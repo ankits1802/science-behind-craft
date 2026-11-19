@@ -46,6 +46,7 @@ async def library_components(
     field: str | None = None,
     kind: str | None = None,
     query: str | None = None,
+    limit: int = COMPONENTS_LIMIT_MAX,
 ) -> CraftComponents:
     conditions = [
         KnowledgePiece.label.is_not(None),
@@ -59,7 +60,7 @@ async def library_components(
         conditions.append(or_(KnowledgePiece.facet == field, KnowledgePiece.fields.any(field)))
     if kind is not None:
         conditions.append(KnowledgePiece.kind == kind)
-    rows = (await session.execute(_listing(conditions, query))).all()
+    rows = (await session.execute(_listing(conditions, query).limit(limit))).all()
     subjects = await _subjects(session, [piece.id for piece, _ in rows])
     return CraftComponents(
         craft_slug=slug,
@@ -75,7 +76,6 @@ def _listing(conditions: list[ColumnElement[bool]], query: str | None) -> Select
         select(KnowledgePiece, Craft.slug)
         .outerjoin(Craft, Craft.id == KnowledgePiece.craftId)
         .where(*conditions)
-        .limit(COMPONENTS_LIMIT_MAX)
     )
     terms = or_tsquery(query) if query else None
     if query and terms is None:

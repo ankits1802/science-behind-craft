@@ -338,3 +338,7 @@ infrastructure.
 6. Completeness-driven research for every curated craft, then the rest: every chapter, What-if
    and molecules.
 7. Contribution screens and the bulk export.
+   - Built 2026-11-19, the bulk export: `GET /api/knowledge/crafts/{slug}/export` and
+     `app.scripts.export_knowledge` give each craft's public facts with quotes and sources, its
+     published sections and its components, citable by curation and section version
+     (`docs/contracts/knowledge-api.md`).

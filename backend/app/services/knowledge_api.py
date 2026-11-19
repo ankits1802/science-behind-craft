@@ -36,6 +36,7 @@ __all__ = [
     "UNKNOWN_CRAFT",
     "craft_facts",
     "craft_section",
+    "every_fact",
     "field_list",
     "found_crafts",
     "known_craft",
@@ -92,15 +93,26 @@ async def craft_facts(
     chosen = [view for view in views if field is None or field in placed[view.id]]
     ordered = _ranked(chosen) if query else knowledge_view.order_claims(chosen)
     facts = [_fact(view, placed[view.id]) for view in ordered[:limit]]
-    cited = {citation.source_id for fact in facts for citation in fact.citations}
     return CraftFacts(
         craft=_ref(craft),
         field=field,
         query=query,
         facts=facts,
-        sources=[_source(source) for source_id, source in sorted(sources.items()) if str(source_id) in cited],
+        sources=_cited_sources(facts, sources),
         page_url=f"{site}/crafts/{craft.slug}",
     )
+
+
+async def every_fact(session: AsyncSession, craft: Craft) -> tuple[list[Fact], list[FactSource]]:
+    views, sources = await knowledge_view.claims_for(session, craft, mode=PUBLIC_MODE, acls=OPEN_CHUNK_ACLS)
+    placed = await _claim_fields(session, [view.id for view in views])
+    facts = [_fact(view, placed[view.id]) for view in knowledge_view.order_claims(views)]
+    return facts, _cited_sources(facts, sources)
+
+
+def _cited_sources(facts: Sequence[Fact], sources: dict[uuid.UUID, Source]) -> list[FactSource]:
+    cited = {citation.source_id for fact in facts for citation in fact.citations}
+    return [_source(source) for source_id, source in sorted(sources.items()) if str(source_id) in cited]
 
 
 async def craft_section(session: AsyncSession, slug: str, field: str, *, site: str) -> CraftSection:

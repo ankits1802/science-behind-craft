@@ -1,5 +1,6 @@
 import uuid
 from collections.abc import AsyncIterator
+from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -13,10 +14,12 @@ from app.models import (
     ClaimSource,
     Concept,
     Craft,
+    KnowledgePiece,
     Source,
 )
 from app.services.craft_resolver import CraftIndexStore
 from app.services.knowledge_api import craft_facts, craft_section, found_crafts
+from app.services.knowledge_export import craft_export, exported_slugs
 
 pytestmark = pytest.mark.db
 
@@ -141,3 +144,48 @@ async def test_find_crafts_names_the_craft_by_its_name(session: AsyncSession) ->
     found = await found_crafts(session, CraftIndexStore(), "Knowledge Api Test Craft", site=SITE)
     assert found.crafts and found.crafts[0].craft.slug == SLUG
     assert found.crafts[0].page_url == f"{SITE}/crafts/{SLUG}"
+
+
+def _component(label: str, claim_ids: list[uuid.UUID]) -> KnowledgePiece:
+    return KnowledgePiece(
+        craftId=CRAFT,
+        kind="dip_player",
+        facet="CHEMISTRY",
+        topicKey=f"monograph:{label}",
+        language="en",
+        depth="EXPERT",
+        payload={"monograph": SLUG, "anchor": "#fig1"},
+        claimIds=claim_ids,
+        sourceIds=[str(OPEN_PAPER)],
+        contentHash=label.ljust(64, "0")[:64],
+        label=label,
+        title="Green from the vat",
+        description="An animated vat dip.",
+    )
+
+
+async def test_the_export_holds_every_public_fact_and_only_what_rests_on_them(session: AsyncSession) -> None:
+    sentences = [
+        {"text": "Alum fixes the madder red.", "claimIds": [str(CHEMISTRY)]},
+        {"text": "A secret measure of alum.", "claimIds": [str(HIDDEN)]},
+    ]
+    session.add(
+        ArticleSection(craftId=CRAFT, field="CHEMISTRY", version=1, status="PUBLISHED", sentences=sentences)
+    )
+    session.add(_component("knowledge-api-test-craft/chemistry/vat-dip", [CHEMISTRY, HIDDEN]))
+    session.add(_component("knowledge-api-test-craft/chemistry/secret-measure", [HIDDEN]))
+    await session.flush()
+    now = datetime(2026, 11, 19, 12, 0, tzinfo=UTC)
+    exported = await craft_export(session, SLUG, site=SITE, now=now)
+    assert (exported.craft.slug, exported.curation_version, exported.exported_at) == (SLUG, None, now)
+    assert {fact.id for fact in exported.facts} == {CHEMISTRY, HISTORY}
+    assert [source.id for source in exported.sources] == [str(OPEN_PAPER)]
+    (section,) = exported.sections
+    assert [(s.text, s.claim_ids) for s in section.sentences] == [("Alum fixes the madder red.", [CHEMISTRY])]
+    (component,) = exported.components
+    assert (component.label, component.claim_ids) == (
+        "knowledge-api-test-craft/chemistry/vat-dip",
+        [CHEMISTRY],
+    )
+    assert component.spec == {"monograph": SLUG, "anchor": "#fig1"}
+    assert SLUG in await exported_slugs(session)

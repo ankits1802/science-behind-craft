@@ -35,6 +35,7 @@ PUBLIC_ROUTES = {
     ("GET", "/api/crafts/{slug}/process"),
     ("GET", "/api/crafts/{slug}/region"),
     ("GET", "/api/crafts/{slug}/shared-science"),
+    ("GET", "/api/knowledge/crafts/{slug}/export"),
     ("GET", "/api/field-voices/images/{image_id}"),
     ("GET", "/api/field-voices/recordings/{recording_id}"),
     ("GET", "/api/map/crafts"),
