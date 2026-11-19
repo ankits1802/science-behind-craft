@@ -4,19 +4,19 @@ import { BookPlus } from "lucide-react";
 
 import { FactForm } from "@/components/contributions/FactForm";
 import { FactReply } from "@/components/contributions/FactReply";
-import { MyContributions } from "@/components/contributions/MyContributions";
+import { ContributionsSection } from "@/components/contributions/MyContributions";
 import { OpenWorkStarts } from "@/components/contributions/OpenWorkStarts";
 import { FormPending } from "@/components/contributions/ProposalFields";
 import { useContributions } from "@/components/contributions/useContributions";
 import { useFactProposal } from "@/components/contributions/useFactProposal";
 import { PageHeader } from "@/components/PageHeader";
 import { TextLink } from "@/components/ui/TextLink";
-import { FACT_TASK_KINDS, FACT_TASK_SUBJECTS, itemsOfKind } from "@/lib/ownProposalsContract";
+import { FACT_TASK_KINDS, FACT_TASK_SUBJECTS } from "@/lib/ownProposalsContract";
 
 export default function ProposeFactPage() {
   const contributions = useContributions();
   const proposal = useFactProposal(contributions);
-  const { form, items, error, notice, busy } = contributions;
+  const { form, error, notice } = contributions;
   return (
     <>
       <PageHeader
@@ -33,16 +33,7 @@ export default function ProposeFactPage() {
         <FactReply reply={proposal.reply} />
         {notice ? <p role="status" className="font-ui text-ui text-ink-1">{notice}</p> : null}
         {error ? <p role="alert" className="font-ui text-ui text-error">{error}</p> : null}
-        <section className="grid gap-4" aria-labelledby="my-facts-h">
-          <h2 id="my-facts-h" className="font-reading text-h3 text-ink-1">Your facts</h2>
-          <MyContributions
-            items={items ? itemsOfKind(items, "FACT") : null}
-            form={form}
-            busy={busy}
-            empty="Facts you propose appear here with what the checks and the reviewers said. Withdraw one while it waits for review."
-            onWithdraw={(item) => void contributions.withdraw(item)}
-          />
-        </section>
+        <ContributionsSection title="Your facts" kind="FACT" empty="Facts you propose appear here with what the checks and the reviewers said. Withdraw one while it waits for review." contributions={contributions} />
       </div>
     </>
   );

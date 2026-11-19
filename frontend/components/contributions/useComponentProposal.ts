@@ -17,9 +17,11 @@ import {
   type ComponentSummary,
   type Extension
 } from "@/lib/componentProposalContract";
-import { termsAccepted, withTerms, type OpenTask } from "@/lib/ownProposalsContract";
+import { termsAccepted, withTerms, type OpenTask, type ProposalForm } from "@/lib/ownProposalsContract";
 
 const SEND_FAILED = "Couldn't send the component. Nothing was stored; try again.";
+
+type Shown = readonly ComponentSummary[];
 
 export type ComponentProposal = {
   draft: ComponentDraft;
@@ -32,51 +34,63 @@ export type ComponentProposal = {
   setDraft: (next: ComponentDraft) => void;
   setTicked: (ticked: boolean) => void;
   startFrom: (task: OpenTask) => void;
-  describe: (shown: readonly ComponentSummary[]) => void;
-  extend: (component: ComponentSummary, extension: Extension, shown: readonly ComponentSummary[]) => void;
+  describe: (shown: Shown) => void;
+  extend: (component: ComponentSummary, extension: Extension, shown: Shown) => void;
   send: () => Promise<void>;
 };
 
-export function useComponentProposal(contributions: Contributions): ComponentProposal {
+function useComponentDraft(form: ProposalForm | null) {
   const [draft, setDraft] = useState<ComponentDraft>(emptyComponent);
   const [task, setTask] = useState<OpenTask | null>(null);
   const [describing, setDescribing] = useState(false);
+  const kindsFor = (chosen: OpenTask | null) => taskKinds(form?.kinds ?? [], form?.needs ?? {}, chosen);
+  const consider = (shown: Shown) => setDraft((current) => ({ ...current, consideredLabels: consideredAfter(current.consideredLabels, shown) }));
+  return {
+    draft,
+    describing,
+    setDraft,
+    consider,
+    kinds: kindsFor(task),
+    startFrom: (chosen: OpenTask) => {
+      setTask(chosen);
+      setDraft((current) => componentFromTask(current, chosen, kindsFor(chosen)));
+    },
+    describe: (shown: Shown) => {
+      consider(shown);
+      setDescribing(true);
+    },
+    extend: (component: ComponentSummary, extension: Extension, shown: Shown) => {
+      setDraft((current) => extendedDraft({ ...current, consideredLabels: consideredAfter(current.consideredLabels, shown) }, component, extension));
+      setDescribing(true);
+    },
+    reset: () => {
+      setDraft(emptyComponent());
+      setTask(null);
+      setDescribing(false);
+    }
+  };
+}
+
+export function useComponentProposal(contributions: Contributions): ComponentProposal {
+  const editing = useComponentDraft(contributions.form);
   const [ticked, setTicked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [problems, setProblems] = useState<string[]>([]);
   const [result, setResult] = useState<ComponentProposalResult | null>(null);
-  const form = contributions.form;
-  const kinds = taskKinds(form?.kinds ?? [], form?.needs ?? {}, task);
-
-  function startFrom(chosen: OpenTask) {
-    setTask(chosen);
-    setDraft((current) => componentFromTask(current, chosen, taskKinds(form?.kinds ?? [], form?.needs ?? {}, chosen)));
-    setResult(null);
-  }
-
-  function describe(shown: readonly ComponentSummary[]) {
-    setDraft((current) => ({ ...current, consideredLabels: consideredAfter(current.consideredLabels, shown) }));
-    setDescribing(true);
-  }
-
-  function extend(component: ComponentSummary, extension: Extension, shown: readonly ComponentSummary[]) {
-    setDraft((current) => extendedDraft({ ...current, consideredLabels: consideredAfter(current.consideredLabels, shown) }, component, extension));
-    setDescribing(true);
-    setResult(null);
-  }
 
   async function send() {
-    const terms = form?.terms ?? null;
-    const found = withTerms(componentProblems(draft), terms, ticked);
+    const terms = contributions.form?.terms ?? null;
+    const found = withTerms(componentProblems(editing.draft), terms, ticked);
     setProblems(found);
     if (found.length || !terms) return;
     setBusy(true);
     setResult(null);
     try {
       contributions.setTerms(await termsAccepted(terms));
-      const answer = await proposeComponent(draft);
+      const answer = await proposeComponent(editing.draft);
       setResult(answer);
-      settle(answer);
+      if (answer.outcome === "REFUSED") editing.consider(answer.matches.map((match) => match.component));
+      else editing.reset();
       await contributions.reload();
     } catch (cause) {
       setProblems([apiErrorMessage(cause, SEND_FAILED)]);
@@ -85,15 +99,14 @@ export function useComponentProposal(contributions: Contributions): ComponentPro
     }
   }
 
-  function settle(answer: ComponentProposalResult) {
-    if (answer.outcome === "REFUSED") {
-      setDraft((current) => ({ ...current, consideredLabels: consideredAfter(current.consideredLabels, answer.matches.map((match) => match.component)) }));
-      return;
-    }
-    setDraft(emptyComponent());
-    setTask(null);
-    setDescribing(false);
-  }
-
+  const { draft, kinds, describing, setDraft, describe } = editing;
+  const startFrom = (task: OpenTask) => {
+    editing.startFrom(task);
+    setResult(null);
+  };
+  const extend = (component: ComponentSummary, extension: Extension, shown: Shown) => {
+    editing.extend(component, extension, shown);
+    setResult(null);
+  };
   return { draft, kinds, describing, ticked, busy, problems, result, setDraft, setTicked, startFrom, describe, extend, send };
 }

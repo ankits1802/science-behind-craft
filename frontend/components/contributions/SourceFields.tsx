@@ -49,19 +49,27 @@ export function SourceFields({ source, number, disabled, onChange, onRemove }: S
           onRemove={source.quotes.length > 1 ? () => set({ quotes: removed(source.quotes, index) }) : null}
         />
       ))}
-      <ActionGroup align="start">
-        {canAddQuote(source) ? (
-          <Button type="button" variant="quiet" size="sm" disabled={disabled} onClick={() => set({ quotes: [...source.quotes, emptyQuote()] })}>
-            Add a quote
-          </Button>
-        ) : null}
-        {onRemove ? (
-          <Button type="button" variant="danger" size="sm" disabled={disabled} onClick={onRemove} data-danger="">
-            Remove source {number}
-          </Button>
-        ) : null}
-      </ActionGroup>
+      <SourceActions number={number} disabled={disabled} onAddQuote={canAddQuote(source) ? () => set({ quotes: [...source.quotes, emptyQuote()] }) : null} onRemove={onRemove} />
     </fieldset>
+  );
+}
+
+type ActionsProps = { number: number; disabled: boolean; onAddQuote: (() => void) | null; onRemove: (() => void) | null };
+
+function SourceActions({ number, disabled, onAddQuote, onRemove }: ActionsProps) {
+  return (
+    <ActionGroup align="start">
+      {onAddQuote ? (
+        <Button type="button" variant="quiet" size="sm" disabled={disabled} onClick={onAddQuote}>
+          Add a quote
+        </Button>
+      ) : null}
+      {onRemove ? (
+        <Button type="button" variant="danger" size="sm" disabled={disabled} onClick={onRemove} data-danger="">
+          Remove source {number}
+        </Button>
+      ) : null}
+    </ActionGroup>
   );
 }
 

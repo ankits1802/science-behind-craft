@@ -28,12 +28,31 @@ export type Contributions = {
   setTerms: (terms: TermsStatus) => void;
 };
 
-export function useContributions(): Contributions {
+function useProposalForm(onError: (message: string) => void) {
   const [form, setForm] = useState<ProposalForm | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetchProposalForm()
+      .then((found) => {
+        if (!cancelled) setForm(found);
+      })
+      .catch((cause) => {
+        if (!cancelled) onError(apiErrorMessage(cause, FORM_FAILED));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [onError]);
+  const setTerms = useCallback((terms: TermsStatus) => setForm((current) => (current ? { ...current, terms } : current)), []);
+  return { form, setTerms };
+}
+
+export function useContributions(): Contributions {
   const [items, setItems] = useState<OwnProposal[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const { form, setTerms } = useProposalForm(setError);
 
   const reload = useCallback(async () => {
     try {
@@ -44,18 +63,7 @@ export function useContributions(): Contributions {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    fetchProposalForm()
-      .then((found) => {
-        if (!cancelled) setForm(found);
-      })
-      .catch((cause) => {
-        if (!cancelled) setError(apiErrorMessage(cause, FORM_FAILED));
-      });
     void reload();
-    return () => {
-      cancelled = true;
-    };
   }, [reload]);
 
   const withdraw = useCallback(
@@ -74,8 +82,6 @@ export function useContributions(): Contributions {
     },
     [reload]
   );
-
-  const setTerms = useCallback((terms: TermsStatus) => setForm((current) => (current ? { ...current, terms } : current)), []);
 
   return { form, items, error, busy, notice, reload, withdraw, setTerms };
 }

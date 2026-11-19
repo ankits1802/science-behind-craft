@@ -5,7 +5,7 @@ import { Blocks } from "lucide-react";
 import { ComponentForm } from "@/components/contributions/ComponentForm";
 import { ComponentResult } from "@/components/contributions/ComponentResult";
 import { LibrarySearch } from "@/components/contributions/LibrarySearch";
-import { MyContributions } from "@/components/contributions/MyContributions";
+import { ContributionsSection } from "@/components/contributions/MyContributions";
 import { OpenWorkStarts } from "@/components/contributions/OpenWorkStarts";
 import { FormPending } from "@/components/contributions/ProposalFields";
 import { useComponentProposal } from "@/components/contributions/useComponentProposal";
@@ -13,13 +13,13 @@ import { useContributions } from "@/components/contributions/useContributions";
 import { useLibrarySearch } from "@/components/contributions/useLibrarySearch";
 import { PageHeader } from "@/components/PageHeader";
 import { TextLink } from "@/components/ui/TextLink";
-import { COMPONENT_TASK_KINDS, COMPONENT_TASK_SUBJECTS, itemsOfKind, type OpenTask } from "@/lib/ownProposalsContract";
+import { COMPONENT_TASK_KINDS, COMPONENT_TASK_SUBJECTS, type OpenTask } from "@/lib/ownProposalsContract";
 
 export default function ProposeComponentPage() {
   const contributions = useContributions();
   const proposal = useComponentProposal(contributions);
   const library = useLibrarySearch();
-  const { form, items, error, notice, busy } = contributions;
+  const { form, error, notice } = contributions;
 
   function startFrom(task: OpenTask) {
     proposal.startFrom(task);
@@ -43,16 +43,7 @@ export default function ProposeComponentPage() {
         <ComponentResult proposal={proposal} form={form} />
         {notice ? <p role="status" className="font-ui text-ui text-ink-1">{notice}</p> : null}
         {error ? <p role="alert" className="font-ui text-ui text-error">{error}</p> : null}
-        <section className="grid gap-4" aria-labelledby="my-components-h">
-          <h2 id="my-components-h" className="font-reading text-h3 text-ink-1">Your components</h2>
-          <MyContributions
-            items={items ? itemsOfKind(items, "COMPONENT") : null}
-            form={form}
-            busy={busy}
-            empty="Components you propose appear here with what an Admin decided. Withdraw one while it waits for review."
-            onWithdraw={(item) => void contributions.withdraw(item)}
-          />
-        </section>
+        <ContributionsSection title="Your components" kind="COMPONENT" empty="Components you propose appear here with what an Admin decided. Withdraw one while it waits for review." contributions={contributions} />
       </div>
     </>
   );

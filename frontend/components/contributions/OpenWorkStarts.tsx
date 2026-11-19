@@ -13,10 +13,9 @@ type StartsProps = {
   onPick: (task: OpenTask) => void;
 };
 
-export function OpenWorkStarts({ kinds, subjects, disabled, onPick }: StartsProps) {
+function useOpenTasks(kinds: readonly TaskKind[], subjects: readonly TaskSubject["kind"][]) {
   const [tasks, setTasks] = useState<OpenTask[] | null>(null);
   const [failed, setFailed] = useState(false);
-
   useEffect(() => {
     let cancelled = false;
     fetchOpenTasks(openWorkFilter(kinds))
@@ -30,7 +29,11 @@ export function OpenWorkStarts({ kinds, subjects, disabled, onPick }: StartsProp
       cancelled = true;
     };
   }, [kinds, subjects]);
+  return { tasks, failed };
+}
 
+export function OpenWorkStarts({ kinds, subjects, disabled, onPick }: StartsProps) {
+  const { tasks, failed } = useOpenTasks(kinds, subjects);
   if (failed) return <p className="font-ui text-label text-ink-3">Couldn&apos;t read where help is wanted. Start from your own sources below.</p>;
   if (!tasks) return <p role="status" className="font-ui text-label text-ink-3">Reading where help is wanted</p>;
   if (!tasks.length) return null;
