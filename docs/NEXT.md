@@ -48,16 +48,34 @@ without the owner is recorded below or in decisions 0102 and 0103 for review.
 - **The institution's name** is "Centre of Excellence for Unified AI-Enabled Craft Ecosystem
   Platform", IIT Kharagpur. Never "for Handicrafts".
 
-## Still open from the release
+## Release status
 
-1. **Field voices refresh.** After the portal deploys:
-   1. On each portal box: `python -m app.scripts.refresh_field_voices --dry-run`, then the same
-      without `--dry-run` (portal `docs/RELEASE.md`, Field voices for KalaVigyan).
-   2. Dispatch KalaVigyan's `field-voices-sync.yml` and read its JSON.
-2. **Release gate** (`release-gate.yml`) on both portals for the released commits.
-3. **Never flip `field_voices.artisan_images`** before a person has reviewed the held list. It may
-   contain Aadhaar cards.
-4. **The production E2E** re-run after these fixes (run `44427145752`); read its result.
+- **Done:**
+  - **Field voices refresh on both portal boxes:**
+    - designer portal: 2 images;
+    - documentation portal: 501 transcripts and 613 images, with 3 originals missing from the
+      bucket;
+    - KalaVigyan's `field-voices-sync.yml` applied all of them, ok.
+  - **Both portals' release gates** pass (`44431722874`, `44431727650`).
+- **Never flip `field_voices.artisan_images`** before a person has reviewed the held list. It may
+  contain Aadhaar cards.
+- **The production E2E** (latest run `44432649960`): 17 passed, 10 screen runs failed, 1 skipped.
+  - The Professor and Admin accounts now pass.
+  - Every curated craft page renders.
+  - The failures that remain are findings, not regressions from this release:
+    1. **The router's prefetch of `/crafts/Kutch-Ajrakh` answers 404.** The rewrite to the static
+       monograph cannot answer a React Server Components request. Readers are not affected: the
+       router falls back to a full page load. Fix: links to a monograph slug
+       (`next.config.ts` `CRAFT_MONOGRAPHS`) render a plain `<a>`, or an RSC request there gets a
+       redirect that forces a full load.
+    2. **Sanganeri's Region tab** runs about 70 screens before "All measurements", against a
+       limit of 3. This is a design problem of the tabbed craft page; the redesign or track 1,
+       step 2 replaces it.
+    3. **The monograph** has no app theme attribute, and some small labels spill out of their
+       boxes at some widths ("leucoindigo, on the fibre", the Devanagari brand). These are design
+       details of the approved page; see the critique.
+    4. **Occasional 500s from the five-connection database pool** under four parallel browsers
+       (`docs/TECH_DEBT.md`, Infrastructure).
 
 ## Owner decisions open
 
