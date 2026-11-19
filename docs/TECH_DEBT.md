@@ -43,18 +43,16 @@ Last reviewed: 2026-11-18.
   Deploy backend call a Vercel deploy hook after its CloudFront smoke step, with a frontend-only
   path that fires the same hook after Frontend checks when no backend file changed.
 
-### The API's database pool is capped by the pooler's 15 connections
+### Slow craft page builds hold database connections
 
 - **What:** four concurrent readers exhausted the API's pool of 5 on 2026-11-19 (production E2E:
   `QueuePool limit of size 5 overflow 0 reached`, 500s from `/api/crafts/*/page`,
-  `/shared-science`, `/region`, `/api/answers/config` and `/api/preferences/me`). The limit is
-  now 8, the most the Supabase session pooler's 15 connections allow beside the worker and a
-  script (RUNBOOK, Connection budget).
-- **Why left:** the pooler's size can only be changed in the Supabase dashboard, and a classroom
-  opening craft pages at once can still queue requests behind slow page builds.
-- **Clears it:** the owner raises the pool size to 30 in the dashboard; then
-  `DATABASE_CONNECTION_LIMIT=12`. The nightly static pages of decision 0101, item 11, take the
-  slow page builds out of request time. Re-run the production E2E with four workers.
+  `/shared-science`, `/region`, `/api/answers/config` and `/api/preferences/me`). The pooler now
+  holds 30 and the API 12 (RUNBOOK, Connection budget), but a page build still holds its
+  connection for seconds, so a classroom opening craft pages at once can queue behind them.
+- **Why left:** the cure is to build pages ahead of the reader, which is decision 0101, item 11.
+- **Clears it:** the nightly static pages of decision 0101, item 11. Re-run the production E2E
+  with four workers after each step.
 
 ## Backend structure
 

@@ -267,7 +267,7 @@ def main():
             "PUBLIC_WEB_URL": WEB_ORIGIN,
             "PUBLIC_API_URL": tf["api_base_url"],
             "FORWARDED_CLIENT_HOPS": "2",
-            "DATABASE_CONNECTION_LIMIT": "8",
+            "DATABASE_CONNECTION_LIMIT": "12",
             "REDIS_URL": "redis://127.0.0.1:6379/0",
             "SEARXNG_URL": "http://127.0.0.1:8888",
             "FETCHER_URL": "http://127.0.0.1:8090",

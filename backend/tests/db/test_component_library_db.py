@@ -195,7 +195,7 @@ async def test_field_and_kind_narrow_the_library(session: AsyncSession) -> None:
     await _library(session)
     materials = await library_components(session, slug=SLUG, field="MATERIALS")
     assert [item.label for item in materials.components] == [ALUM_CRYSTAL]
-    assert (await library_components(session, slug=SLUG, kind="map")).components == []
+    assert (await library_components(session, slug=SLUG, kind="molecule_3d")).components == []
 
 
 async def test_words_find_components_by_title_and_description_closest_first(session: AsyncSession) -> None:
