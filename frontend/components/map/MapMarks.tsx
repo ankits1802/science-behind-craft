@@ -23,7 +23,7 @@ export function Pin({ pin, isActive, onSelect, onHover }: { pin: PlacedPin; isAc
       {isActive ? <circle r={radius + 4} fill="none" stroke="var(--map-selection-halo)" strokeWidth={4} /> : null}
       {isActive ? <circle r={radius + 4} fill="none" stroke="var(--map-selection)" strokeWidth={2} /> : null}
       <circle r={radius} fill="var(--map-marker)" stroke="var(--map-marker-ring)" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
-      <text textAnchor="middle" dominantBaseline="central" fontSize={pinFontSize(label, radius)} className="pointer-events-none fill-ink-1 font-ui font-semibold [font-variant-numeric:lining-nums_tabular-nums]">
+      <text textAnchor="middle" dominantBaseline="central" fontSize={pinFontSize(label, radius)} className="pointer-events-none fill-ink-1 font-ui font-semibold [font-variant-numeric:lining-nums_tabular-nums]" data-testid="map-pin-label">
         {label}
       </text>
     </g>

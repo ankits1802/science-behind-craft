@@ -83,7 +83,7 @@ function disabledButtons(html: string): string[] {
 }
 
 function pinLabels(html: string): string[] {
-  return [...html.matchAll(/fill-white font-display font-bold">(\d+)<\/text>/g)].map((found) => found[1]);
+  return [...html.matchAll(/data-testid="map-pin-label">(\d+)<\/text>/g)].map((found) => found[1]);
 }
 
 test("the zoom story and the timeline map are drawn through the renderer registry, their code loaded on demand", () => {
