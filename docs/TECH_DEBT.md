@@ -3244,15 +3244,14 @@ Last reviewed: 2026-11-18.
   parity run; the shell retires when the React shell reproduces the masthead, the table of contents,
   the margin notes and the sources chapter.
 
-### The citation numeral class shares its name with the kit's Cite this block
+### The authored shell keeps the app's CSS out by name
 
-- **What:** the app's citation numeral is `.kv-cite` (`app/editorial.css`, `CitationChip`,
-  `editorial/CitationCluster`), and the approved page's "Cite this monograph" block is
-  `section#kv-cite.kv-cite`. On the React page the numeral's rule (inline-block, raised 0.6em, UI
-  type) also reached the block, so it was not centred.
-  `components/monograph/authoredShell.css` resets it inside `#kv-main`, beside the authored page's
-  `text-rendering: auto` (the approved page's setting; the boards and the app use
-  `optimizeLegibility`).
-- **Clears it:** rename the app's numeral class (for example `.kv-cn`) in its three homes, then
-  drop the reset.
-
+- **What:** the React page draws the approved markup inside the app, so the app's CSS reached it:
+  Tailwind's preflight (heading sizes, sub and sup, button and list resets) and seven class names
+  the shell shares with the app (`kv-btn`, `kv-tabs`, `kv-cite`, `kicker`, `panel` and the
+  utilities `grid`, `inline`, `ring`). `components/monograph/authoredShell.css` reverts preflight
+  in the base layer and gives the colliding names `all: revert` in a layer above the utilities,
+  outside native views (`[data-kind]`). A new app class with a name the shell uses would leak
+  again; the parity run's drift finder names it.
+- **Clears it:** retire the shell (round 3c: every component a native view, the kit's styles in the
+  views), or prefix the kit's classes so no name can collide.

@@ -3,56 +3,35 @@
   -webkit-font-smoothing: auto;
 }
 
-#kv-main section.kv-cite {
-  display: block;
-  position: static;
-  top: auto;
-  padding-inline: 0;
-  color: inherit;
-  font: inherit;
-  letter-spacing: normal;
-  vertical-align: baseline;
-  cursor: auto;
-}
-
-#kv-main section.kv-cite::after {
-  content: none;
-}
-
-#kv-main section.kv-cite:hover {
-  color: inherit;
-  text-decoration: none;
-}
-
 @layer base {
-  :where(#kv-main) *,
-  :where(#kv-main) ::before,
-  :where(#kv-main) ::after {
+  :where(#kv-main) *:where(:not([data-kind], [data-kind] *)),
+  :where(#kv-main) :where(:not([data-kind], [data-kind] *))::before,
+  :where(#kv-main) :where(:not([data-kind], [data-kind] *))::after {
     box-sizing: revert;
     margin: revert;
     padding: revert;
     border: revert;
   }
 
-  :where(#kv-main) :is(h1, h2, h3, h4, h5, h6) {
+  :where(#kv-main) :is(h1, h2, h3, h4, h5, h6):where(:not([data-kind] *)) {
     font-size: revert;
     font-weight: revert;
   }
 
-  :where(#kv-main) :is(a) {
+  :where(#kv-main) :is(a):where(:not([data-kind] *)) {
     color: revert;
     text-decoration: revert;
   }
 
-  :where(#kv-main) :is(b, strong) {
+  :where(#kv-main) :is(b, strong):where(:not([data-kind] *)) {
     font-weight: revert;
   }
 
-  :where(#kv-main) :is(small) {
+  :where(#kv-main) :is(small):where(:not([data-kind] *)) {
     font-size: revert;
   }
 
-  :where(#kv-main) :is(sub, sup) {
+  :where(#kv-main) :is(sub, sup):where(:not([data-kind] *)) {
     font-size: revert;
     line-height: revert;
     position: revert;
@@ -60,21 +39,21 @@
     inset-block: revert;
   }
 
-  :where(#kv-main) :is(ol, ul, menu) {
+  :where(#kv-main) :is(ol, ul, menu):where(:not([data-kind] *)) {
     list-style: revert;
   }
 
-  :where(#kv-main) :is(img, svg, video, canvas, audio, iframe, embed, object) {
+  :where(#kv-main) :is(img, svg, video, canvas, audio, iframe, embed, object):where(:not([data-kind] *)) {
     display: revert;
     vertical-align: revert;
   }
 
-  :where(#kv-main) :is(img, video) {
+  :where(#kv-main) :is(img, video):where(:not([data-kind] *)) {
     max-width: revert;
     height: revert;
   }
 
-  :where(#kv-main) :is(button, input, select, optgroup, textarea) {
+  :where(#kv-main) :is(button, input, select, optgroup, textarea):where(:not([data-kind] *)) {
     font: revert;
     font-feature-settings: revert;
     font-variation-settings: revert;
@@ -85,30 +64,39 @@
     opacity: revert;
   }
 
-  :where(#kv-main) :is(hr) {
+  :where(#kv-main) :is(hr):where(:not([data-kind] *)) {
     height: revert;
     color: revert;
     border-block-start-width: revert;
   }
 
-  :where(#kv-main) :is(code, kbd, samp, pre) {
+  :where(#kv-main) :is(code, kbd, samp, pre):where(:not([data-kind] *)) {
     font-family: revert;
     font-feature-settings: revert;
     font-variation-settings: revert;
     font-size: revert;
   }
 
-  :where(#kv-main) :is(table) {
+  :where(#kv-main) :is(table):where(:not([data-kind] *)) {
     text-indent: revert;
     border-color: revert;
     border-collapse: revert;
   }
 
-  :where(#kv-main) :is(textarea) {
+  :where(#kv-main) :is(textarea):where(:not([data-kind] *)) {
     resize: revert;
   }
 
-  :where(#kv-main) :is(progress) {
+  :where(#kv-main) :is(progress):where(:not([data-kind] *)) {
     vertical-align: revert;
+  }
+}
+
+@layer kv-shell {
+  :where(#kv-main) :is(.kv-btn, .kv-tabs, .kv-cite, .kicker, .panel, .grid, .inline, .ring):where(:not([data-kind], [data-kind] *)),
+  :where(#kv-main) :is(.kv-btn, .kv-tabs, .kv-cite, .kicker, .panel, .grid, .inline, .ring):where(:not([data-kind], [data-kind] *))::before,
+  :where(#kv-main) :is(.kv-btn, .kv-tabs, .kv-cite, .kicker, .panel, .grid, .inline, .ring):where(:not([data-kind], [data-kind] *))::after,
+  :where(#kv-main) :is(.kv-btn, .kv-tabs, .kv-cite, .kicker, .panel):where(:not([data-kind], [data-kind] *)) * {
+    all: revert;
   }
 }
