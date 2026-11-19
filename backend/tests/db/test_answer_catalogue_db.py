@@ -121,17 +121,15 @@ async def test_a_section_is_offered_its_craft_s_own_and_shared_components_with_p
     )
 
 
-async def test_a_component_on_a_restricted_source_or_without_a_page_is_never_offered(
+async def test_a_component_on_a_restricted_source_without_a_page_or_a_title_is_never_offered(
     session: AsyncSession,
 ) -> None:
-    await _library(session)
+    untitled = "answer-catalogue-test-craft/chemistry/indigo-untitled-diagram"
+    await _library(session, _component(untitled, "diagram", "Indigo drawn without a title.", title=""))
     catalogue = await section_catalogue(
         session, craft_slug=SLUG, field="CHEMISTRY", question="indigo dips drawn"
     )
-    labels = [entry.label for entry in catalogue.entries]
-    assert CLOSED not in labels
-    assert NO_PAGE not in labels
-    assert ELSEWHERE not in labels
+    assert sorted(entry.label for entry in catalogue.entries) == sorted([PLAYER, MOLECULE])
 
 
 async def test_the_section_s_field_and_the_question_s_words_narrow_the_catalogue(

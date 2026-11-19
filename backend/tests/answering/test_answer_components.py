@@ -1,11 +1,14 @@
 import dataclasses
 import json
+import logging
 import uuid
 from typing import Any
 
+import pytest
+
 from app.models import Source
 from app.research.planning import PlanRequest
-from app.services.answer_catalogue import NO_CATALOGUE, CatalogueEntry, SectionCatalogue
+from app.services.answer_catalogue import NO_CATALOGUE, CatalogueEntry, SectionCatalogue, catalogue_lookup
 from app.services.block_builders import BlockBuilders
 from app.services.knowledge_view import source_ref
 from app.services.piece_store import storable
@@ -139,6 +142,34 @@ async def test_a_placed_component_stands_for_the_builder_of_its_purpose_and_no_o
     assert player.asks == []
     assert len(cards.asks) == 1
     assert [block["kind"] for block in blocks(found)] == ["prose", "component", "material_card"]
+
+
+@dataclasses.dataclass
+class AwaySession:
+    opened: list[str] = dataclasses.field(default_factory=list)
+
+    def __call__(self) -> AwaySession:
+        return self
+
+    async def __aenter__(self) -> None:
+        self.opened.append("session")
+        raise RuntimeError("the database is away")
+
+    async def __aexit__(self, *exc_info: object) -> bool:
+        return False
+
+
+async def test_a_failing_catalogue_offers_nothing_and_a_question_without_a_craft_asks_nothing(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    sessions = AwaySession()
+    lookup = catalogue_lookup(sessions)
+    asked = PlanRequest(question=QUESTION, mode="HYBRID", craft=AJRAKH)
+    with caplog.at_level(logging.WARNING, logger="app.services.answer_catalogue"):
+        assert await lookup(asked, "CHEMISTRY") is NO_CATALOGUE
+    assert "the component catalogue of Kutch-Ajrakh for CHEMISTRY failed" in caplog.text
+    assert await lookup(asked.model_copy(update={"craft": None}), "CHEMISTRY") is NO_CATALOGUE
+    assert sessions.opened == ["session"]
 
 
 async def test_a_component_of_another_purpose_leaves_every_builder_to_run() -> None:

@@ -6,6 +6,7 @@ from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
+from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 MONOGRAPH_KEY = "monograph"
 ANCHOR_KEY = "anchor"
+PROBE_SECTION = "s1"
 
 SourceRefs = Mapping[str, Mapping[str, Any]]
 
@@ -173,7 +175,7 @@ def _entry(
             "component %s names no page or source a reader can open; it is not offered", summary.label
         )
         return None
-    return CatalogueEntry(
+    entry = CatalogueEntry(
         label=summary.label,
         kind=summary.kind,
         title=summary.title,
@@ -182,6 +184,21 @@ def _entry(
         anchor=str(payload.get(ANCHOR_KEY) or ""),
         sources={source_id: sources[source_id] for source_id in rests_on},
     )
+    return entry if _placeable(entry) else None
+
+
+def _placeable(entry: CatalogueEntry) -> bool:
+    try:
+        entry.option()
+        entry.block(block_id(PROBE_SECTION, 1))
+    except ValidationError as refused:
+        logger.warning(
+            "component %s cannot be placed (%d problems); it is not offered",
+            entry.label,
+            refused.error_count(),
+        )
+        return False
+    return True
 
 
 def _uuid(value: str) -> uuid.UUID | None:
