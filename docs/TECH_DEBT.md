@@ -227,27 +227,19 @@ Last reviewed: 2026-11-18.
   domain trust list; write `WebFetch` rows from the answering service; smoke-test
   `kv-fetcher` on the box after the next deploy.
 
-### Stored-knowledge retrieval: gaps left on 2026-11-16 (decision 0008)
+### Stored-knowledge retrieval: what is left (decision 0008, round 4)
 
-- **What:** (1) Stored claim and chunk vectors carry no model or prompt stamp: if the `EMBED`
-  route changes model, old vectors and new question vectors are no longer comparable and the
-  vector ranking silently degrades. (2) Seeded and imported rows get vectors only from the daily
-  Coverage enrichment workflow, which runs `embed_knowledge` before it enriches; until its first
-  run after a seed, T1/T2 rank those rows by full text only. Each write-back embeds only the
-  claims and chunks it wrote (`embed_written`, decision 0013); when that embedding fails, the
-  rows wait for the next scheduled run. (3) The corpus imports (Wood Handbook,
-  immersive-episteme sources) do not store chunks yet; write-back does
-  (`live_source_store.keep_document`). (4) A claim whose text changes in place keeps its old
-  vector. (5) Full-text ranking reads Latin-script words only; answers search with an English
-  rendering of the question (decision 0023), but a direct caller of `StoredKnowledgeSearch` with
-  Indic text is ranked by the vector alone. (6) The HNSW indexes on `Claim.embedding` and `Chunk.embedding`
-  are unused by the exact craft-scoped scan.
-- **Why left:** the stamp needs a migration; the corpus imports are their own lane.
-- **Clears it:** add `embeddingModel` to `Claim` and `Chunk` (and `Craft`), filter the vector
-  ranking on the route's current model and re-embed on change; also run `embed_knowledge` after
-  the seeds in Deploy backend; store chunks from the corpus imports; clear `embedding` when a
-  claim's text changes; add a transliterated or translated text query for Indic questions; drop
-  or use the HNSW indexes once a scope is large enough to need them.
+- **What:** round 4 cleared stamps per embedding model with re-embedding, cleared vectors on a text
+  change, embedding after the seeds on every release, the Indic text ranking and the seed import's
+  passages (`docs/contracts/retrieval.md`). Left: knowledge pieces carry no stamp, and the
+  candidate gates' neighbour search and the piece store's reuse distance compare vectors without
+  it; the Wood Handbook import has no passages, because the repository holds no text of the cited
+  edition (FPL-GTR-190); the HNSW indexes on `Claim.embedding` and `Chunk.embedding` are unused by
+  the exact craft-scoped scan.
+- **Clears it:** stamp pieces and filter the gates' and the piece store's neighbours on the current
+  model; vendor the pages of FPL-GTR-190, or give FPL-GTR-282 its own source and re-cite the wood
+  claims after a quote check; use or drop the HNSW indexes once a scope is large enough to need
+  them.
 
 ## Checks not automated yet
 
@@ -1509,17 +1501,14 @@ Last reviewed: 2026-11-18.
 - **Why left:** the panel is optional work inside a 90 s wait (decision 0099).
 - **Clears it:** one regenerate of the failing seats' takes when the wait and the headroom allow.
 
-### A seat's own search is a text search over stored claims only
+### A seat's own search reads stored claims only
 
-- **What:** since decision 0099 each seat searches stored claims of its own, but its fields reach
-  the search only as words in the query text (`seat_query`), since `KnowledgeQuery.facets` are
-  concept types, not disciplines; and the seat keeps a found claim only when it cites a source of
-  one of the seat's kinds. Stored chunks the search returns are not offered (a take cites stored
-  claims only), and no live search runs for a seat.
-- **Why left:** stored evidence and the existing retrieval only (owner, 2026-11-19); a discipline
-  filter needs a mapping from fields to concept types that the retriever does not have.
-- **Clears it:** a discipline-to-concept-type mapping in `retrieval/statements` used as the seat's
-  facets, and the live write-back of chunks a seat reads into claims.
+- **What:** since round 4 each seat's search is filtered by its fields (`KnowledgeQuery.fields`),
+  but a seat still keeps a found claim only when it cites a source of one of the seat's kinds;
+  stored chunks the search returns are not offered (a take cites stored claims only), and no live
+  search runs for a seat.
+- **Why left:** stored evidence and the existing retrieval only (owner, 2026-11-19).
+- **Clears it:** the live write-back of chunks a seat reads into claims.
 
 ### Experts differ only on claims stored on one concept
 

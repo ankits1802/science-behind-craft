@@ -407,7 +407,9 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   on edges touching them) whose name of 4 or more characters (`ENTITY_NAME_MIN_CHARS`) appears in
   the question, case-insensitive, the longest name first, then id. Fused by reciprocal rank fusion, `score = sum(1 / (RRF_K + rank))` with
   `RRF_K` 60; equal scores order by the best single rank, then id. A question with no Latin
-  words is ranked by the vector alone.
+  word of 3 or more characters ranks full text and entities on its English rendering when the
+  caller passes one (decision 0023; `docs/contracts/retrieval.md`), the vector on the question as
+  asked. Vectors compare only within the current embedding model's stamp.
 - The question is embedded as `task: search result | query: <text>`; stored claims as
   `title: none | text: <text>` and chunks as `title: <source title> | text: <text>`
   (`retrieval/text.py`). An embedding failure is raised, never replaced by text-only results.
@@ -416,7 +418,7 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
   packed up to 1,200 characters, long ones split at sentences, the last paragraph of a full chunk
   repeated when at most 300 characters, locator `para N` or `paras N-M`), keeps unchanged
   chunks' vectors, and gives chunks the source's sensitivity. `embed_pending(session, embed)`
-  fills missing vectors of `OPEN`, non-hidden claims and of chunks whose chunk and source are
+  fills missing vectors, and re-embeds vectors stamped with another model, of `OPEN`, non-hidden claims and of chunks whose chunk and source are
   not `RESTRICTED` (`python -m app.scripts.embed_knowledge`, run daily by the Coverage
   enrichment workflow before it enriches). `embed_written(session, embed, *, claim_ids,
   source_ids)` applies the same rules to the given claims and the chunks of the given sources

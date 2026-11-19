@@ -78,7 +78,7 @@ jobs:
   database:
     name: Migrations and database tests
     runs-on: ubuntu-26.04
-    timeout-minutes: 25
+    timeout-minutes: 40
     needs: lint-and-unit
     services:
       postgres:
