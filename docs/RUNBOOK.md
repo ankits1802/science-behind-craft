@@ -36,6 +36,14 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | `/usr/local/sbin/kv-blue-green`, `kv-render-env` | Installed from `infra/deploy/` on every release |
 | certbot | Installed, unused: TLS ends at CloudFront. It is there for a custom domain later. |
 
+## Monographs
+
+The served monograph (`frontend/public/monographs/kutch-ajrakh/index.html`) is built from
+`backend/app/data/monographs/Kutch-Ajrakh/content.json` and `template.html` (decision 0105). Never
+edit the served file: change the content or the template, then run
+`cd backend && python -m app.scripts.build_monograph`. `--check` reports a page that differs from its
+build, and the backend tests fail until the two agree.
+
 ## Connection budget
 
 Every process on the box reaches Postgres through the Supabase session pooler, which holds at most

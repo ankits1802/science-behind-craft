@@ -110,8 +110,10 @@ without the owner is recorded below or in decisions 0102 and 0103 for review.
 
 1. **The data architecture**: `docs/decisions/0101-knowledge-architecture-for-every-craft.md`.
    - **Done:** step 1 (schema, decision 0102) and the MCP read slice (decision 0103).
-   - **Next:** step 2 decomposes the Ajrakh page into sections and components and makes its design
-     the template renderer, with screenshot parity. Then steps 3 (retrieval by field, components by
+   - **Step 2, first half done** (decision 0105): the Ajrakh page is structured content plus a
+     template, rebuilt byte for byte by `app.scripts.build_monograph`. **Next:** load it into the
+     database (sections, the 79 components, facts and sources for the 97 citations the dossier
+     lacks), then move component views into specs so other crafts reuse the template. Then steps 3 (retrieval by field, components by
      label) and 4 (the gates, the review queue that grows from `admin/testimony`, nightly upkeep).
    - **MCP slice 2:** OAuth 2.1 with our web app as the authorization server, the versioned MCP
      terms, connected clients in Settings with revoke, then `ask`.

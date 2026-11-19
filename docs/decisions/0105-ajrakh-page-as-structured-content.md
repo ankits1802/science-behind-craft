@@ -1,0 +1,56 @@
+# 0105. The Ajrakh page as structured content, rebuilt by a static build
+
+Date: 2026-11-19. Status: accepted (owner: "port the rest of the things of the Ajrakh page into
+structured content, and do a static build as well").
+
+## Context
+
+Decision 0101, step 2 asks for the approved Kutch Ajrakh page to become sections, registered
+components and a layout, rebuilt by a template renderer with no change a reader can see (item 14).
+The page was a 3 MB hand-built file whose sentences did not point at stored facts.
+
+## Decision
+
+1. **Content, template and a build.** `backend/app/data/monographs/Kutch-Ajrakh/` holds:
+   - `content.json` (`research/monograph_page.MonographContent`, schema 1): the page's 68 sources,
+     its 348 citations with their quotes and locators, each citation's stored dossier facts, its
+     embedded data (molecules, region layers, listening and quiz data, film subtitles), 1,086 text
+     units, 79 registered components and the layout;
+   - `template.html`: the approved page with a `<kv-slot unit="…">` or `<kv-slot data="…">` where
+     each text unit and data block was.
+
+   `python -m app.scripts.build_monograph` writes `frontend/public/monographs/kutch-ajrakh/index.html`
+   from them; `--check` reports a served page that differs from its build.
+2. **Parity by construction.** The port was accepted only because the build reproduces the
+   approved page byte for byte, so text, screenshots and interactions are unchanged.
+   `tests/research/test_monograph_page.py` holds that for every build.
+3. **Text units carry no HTML.** A unit is the text of a paragraph, heading, caption, list item or
+   table cell, as text and a fixed set of marks:
+   - sentence (with its `data-src`, `data-sid` or `data-pair`);
+   - citation (its key and sources; the button, numbers and labels are rebuilt from the source
+     table);
+   - italic (plain, local term, botanical name), bold, subscript, superscript, highlight;
+   - link (in-page or outbound), figure reference, and a named style span.
+
+   Text whose markup falls outside that set stays in the template. 11,742 of the about 20,200
+   words in the chapters are units. The rest is text inside drawings and widgets: SVG labels,
+   grade badges, buttons.
+4. **Fields.** Each unit's field comes from its cited dossier facts where it has them (226 units),
+   otherwise from its chapter. Two agents reviewed the 403 units in chapters that mix fields
+   (231 changes kept after the check). 108 units are page apparatus (reading tools, the source
+   list) and carry no field.
+5. **The component registry.** 79 components (figures, players, maps, charts, molecules, plates,
+   film, reading tools), each with a label, an anchor that matches exactly one element of the
+   page, a kind, a title, a description written for a model, fields and subjects. Their views
+   stay in the template; 953 text units sit inside them and are marked `within` in the layout.
+6. **Citations against the dossier.** 251 of the 348 citations map to stored dossier facts by
+   their quotes (115 of its 135 facts). 97 citations and 48 of the 68 sources are not in the
+   dossier yet.
+
+## What follows
+
+- Load the content into the database: `ArticleSection` rows per field from the units' sentences
+  and claims, the 79 components into the registry, and facts and sources for the 97 unmatched
+  citations through the curation gates. Then `list_components` serves them.
+- Move each component's view from the template into a component spec, so other crafts reuse it.
+- Render other crafts with the same template once their content exists (decision 0101, step 6).

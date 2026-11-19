@@ -968,6 +968,11 @@ Last updated: 2026-11-19.
   location and camera metadata dropped; it is stored privately and shared on approval, at once for
   Professors, Admins and Master Admins, by an Admin for everyone else (`REVIEW_CONTRIBUTIONS`).
 
+- **The Ajrakh page as structured content (2026-11-19, decision 0105).** The approved page is now
+  content (1,086 text units with fields and citations, 68 sources, 348 citations with quotes, 79
+  registered components and a layout) plus a template, and `app.scripts.build_monograph` rebuilds
+  the served page from them byte for byte. Loading it into the database is next.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

@@ -1,0 +1,155 @@
+import re
+from typing import Any
+
+import pytest
+
+from app.core.errors import InvalidInput
+from app.research.monograph_page import (
+    SLOT_PATTERN,
+    CitedSource,
+    MonographContent,
+    TextUnit,
+    render_nodes,
+    render_page,
+    slot,
+)
+from app.scripts.build_monograph import (
+    MONOGRAPHS_DIR,
+    SERVED_FOLDERS,
+    TEMPLATE_FILE,
+    built_page,
+    monograph_content,
+    served_page_path,
+)
+
+GI_JOURNAL = CitedSource(
+    number=1,
+    title="GI Journal No. 188: Kutch Ajrakh",
+    full_title=None,
+    publisher=None,
+    year=2023,
+    grade="A",
+    url=None,
+    extra=None,
+    dossier_source_id="S01",
+)
+RHYTHM = GI_JOURNAL.model_copy(
+    update={"number": 2, "title": "Ajrakh: Rhythm of Blues", "dossier_source_id": None}
+)
+CASTE = GI_JOURNAL.model_copy(update={"number": 11, "title": "Ajrakh: From Caste Dress to Catwalk"})
+SOURCES = {"g1": GI_JOURNAL, "g2": RHYTHM, "g11": CASTE}
+
+
+def _content(units: dict[str, TextUnit], data: dict[str, Any] | None = None) -> MonographContent:
+    return MonographContent(
+        craft_slug="Kutch-Ajrakh",
+        sources=SOURCES,
+        citations={},
+        citation_claims={},
+        data=data or {},
+        units=units,
+        components=[],
+        layout=[],
+    )
+
+
+def test_a_cited_sentence_renders_its_last_word_and_button_unbroken() -> None:
+    nodes = [
+        {
+            "m": "s",
+            "c": [
+                "A resist printing and ",
+                {"m": "cite", "key": "chem:q0", "g": ["g1", "g2"], "c": ["dyeing."]},
+            ],
+        }
+    ]
+    assert render_nodes(nodes, SOURCES) == (
+        '<span class="s">A resist printing and <span class="nw">dyeing.<button class="kcite" type="button" '
+        'data-c="chem:q0" data-g="g1 g2" aria-haspopup="dialog" aria-expanded="false" '
+        'aria-label="Sources 1 and 2" aria-description="GI Journal No. 188: Kutch Ajrakh; Ajrakh: Rhythm of Blues">'
+        "1,2</button></span></span>"
+    )
+
+
+def test_a_citation_numbers_its_sources_in_order_but_keeps_their_given_order_in_data() -> None:
+    nodes = [{"m": "cite", "key": "mb:aj:C001", "g": ["g2", "g1", "g11"], "c": ["catwalk."]}]
+    rendered = render_nodes(nodes, SOURCES)
+    assert 'data-g="g2 g1 g11"' in rendered
+    assert 'aria-label="Sources 1, 2 and 11"' in rendered
+    assert (
+        'aria-description="GI Journal No. 188: Kutch Ajrakh; Ajrakh: Rhythm of Blues; '
+        'Ajrakh: From Caste Dress to Catwalk">1,2,11</button>'
+    ) in rendered
+    assert 'aria-label="Source 1"' in render_nodes(
+        [{"m": "cite", "key": "k", "g": ["g1"], "c": ["x."]}], SOURCES
+    )
+
+
+def test_the_fixed_marks_render_as_the_page_wrote_them() -> None:
+    nodes = [
+        {"m": "i", "role": "bot", "c": ["Rubia cordifolia"]},
+        " and ",
+        {"m": "i", "c": ["kut"]},
+        ", H",
+        {"m": "sub", "c": ["2"]},
+        "O, ",
+        {
+            "m": "link",
+            "cls": "inline",
+            "href": "#fig1",
+            "c": [{"m": "figref", "ref": "chem:1", "c": ["Fig. 1"]}],
+        },
+        ", ",
+        {
+            "m": "link",
+            "href": "https://example.org/a?b=1&c=2",
+            "rel": "noopener",
+            "target": "_blank",
+            "c": ["a page"],
+        },
+        " & ",
+        {"m": "span", "cls": "lk", "c": ["Cloth after"]},
+    ]
+    assert render_nodes(nodes, SOURCES) == (
+        '<i class="bot">Rubia cordifolia</i> and <i>kut</i>, H<sub>2</sub>O, '
+        '<a class="inline" href="#fig1"><span class="kv-figref" data-figref="chem:1">Fig. 1</span></a>, '
+        '<a href="https://example.org/a?b=1&amp;c=2" rel="noopener" target="_blank">a page</a> &amp; '
+        '<span class="lk">Cloth after</span>'
+    )
+
+
+def test_an_unknown_mark_or_source_is_refused() -> None:
+    with pytest.raises(InvalidInput):
+        render_nodes([{"m": "script", "c": []}], SOURCES)
+    with pytest.raises(InvalidInput):
+        render_nodes([{"m": "cite", "key": "k", "g": ["g9"], "c": []}], SOURCES)
+
+
+def test_a_page_fills_its_unit_and_data_slots_and_escapes_closing_tags_in_data() -> None:
+    unit = TextUnit(chapter="answer", tag="p", field="OVERVIEW", nodes=["Ajrakh"], claim_ids=[])
+    template = f"<p>{slot('unit', 'u0001')}</p><script>{slot('data', 'film')}</script>"
+    page = render_page(template, _content({"u0001": unit}, {"film": {"subs": ["<b>x</b>"]}}))
+    assert page == '<p>Ajrakh</p><script>{"subs": ["<b>x<\\/b>"]}</script>'
+    with pytest.raises(InvalidInput):
+        render_page(slot("unit", "u0002"), _content({"u0001": unit}))
+
+
+@pytest.mark.parametrize("slug", sorted(SERVED_FOLDERS))
+def test_the_served_monograph_is_exactly_its_build(slug: str) -> None:
+    assert built_page(slug) == served_page_path(slug).read_bytes().decode("utf-8")
+
+
+@pytest.mark.parametrize("slug", sorted(SERVED_FOLDERS))
+def test_the_content_holds_no_markup_and_every_unit_has_one_slot(slug: str) -> None:
+    content = monograph_content(slug)
+    template = (MONOGRAPHS_DIR / slug / TEMPLATE_FILE).read_bytes().decode("utf-8")
+    slots = [key for kind, key in SLOT_PATTERN.findall(template) if kind == "unit"]
+    assert sorted(slots) == sorted(content.units) and len(slots) == len(set(slots))
+
+    def texts(nodes: list[Any]) -> list[str]:
+        return [n for n in nodes if isinstance(n, str)] + [
+            t for n in nodes if isinstance(n, dict) for t in texts(n.get("c", []))
+        ]
+
+    markup = [t for unit in content.units.values() for t in texts(unit.nodes) if re.search(r"<[a-zA-Z/!]", t)]
+    assert markup == []
