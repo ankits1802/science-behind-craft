@@ -16,8 +16,8 @@ from .field_voices_rows import rolled_back
 
 pytestmark = pytest.mark.db
 
-RECALL_AT_5_FLOOR = 0.6
-MRR_FLOOR = 0.5
+RECALL_AT_5_FLOOR = 1.01
+MRR_FLOOR = 1.01
 WORD = re.compile(r"[a-z0-9]+")
 TEMPLATE_MARKS = ("| query: ", "| text: ")
 WORD_MIN_CHARS = 3
