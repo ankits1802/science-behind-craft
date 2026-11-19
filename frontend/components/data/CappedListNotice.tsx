@@ -20,7 +20,7 @@ export function CappedListNotice({
   return (
     <div className={className ?? "mt-1 grid gap-0.5"} id={sentences.length === 1 ? id : undefined}>
       {sentences.map((sentence) => (
-        <p className="text-xs leading-5 text-ink-500" key={sentence}>
+        <p className="font-ui text-caption text-ink-3" key={sentence}>
           {sentence}
         </p>
       ))}

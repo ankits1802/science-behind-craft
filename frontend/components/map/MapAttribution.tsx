@@ -8,14 +8,14 @@ export const OSM_COPYRIGHT_URL = "https://www.openstreetmap.org/copyright";
 export const BOUNDARY_ATTRIBUTION = "Boundary data: DataMeet.";
 export const MAP_CREDITS_LABEL = "Map credits";
 
-const LINK = "underline-offset-2 hover:text-purple-700 hover:underline dark:hover:text-purple-300";
+const LINK = "underline-offset-3 hover:text-indigo-hover hover:underline";
 
 export function MapAttribution({ districtsIndicative = true, boundary = null }: { districtsIndicative?: boolean; boundary?: BoundaryNote | null }) {
   const caption = boundary ? boundary.caption : `${SURVEY_OF_INDIA_CAPTION}${districtsIndicative ? ` ${DISTRICTS_INDICATIVE}` : ""}`;
   const shapes = boundary?.dataset ?? null;
   const shapesHref = shapes ? safeOutboundUrl(shapes.url) : null;
   return (
-    <figcaption className="mt-3 grid gap-1 text-[11px] leading-4 text-ink-500" data-testid="map-attribution">
+    <figcaption className="mt-3 grid gap-1 font-ui text-caption text-ink-3" data-testid="map-attribution">
       <span>
         {caption}{" "}
         <a href={OSM_COPYRIGHT_URL} target="_blank" rel="noopener noreferrer" className={LINK}>
@@ -23,7 +23,7 @@ export function MapAttribution({ districtsIndicative = true, boundary = null }: 
         </a>
       </span>
       <details className="w-fit max-w-full" data-testid="map-credits">
-        <summary className={`w-fit cursor-pointer rounded-sm font-medium text-ink-700 pointer-coarse:py-2 ${LINK}`}>{MAP_CREDITS_LABEL}</summary>
+        <summary className={`w-fit cursor-pointer rounded-control font-medium text-ink-2 pointer-coarse:py-2 ${LINK}`}>{MAP_CREDITS_LABEL}</summary>
         <span className="mt-1 grid gap-0.5">
           <span>{BOUNDARY_ATTRIBUTION}</span>
           {shapes ? (

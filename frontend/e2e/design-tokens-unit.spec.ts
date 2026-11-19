@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 
 import { CHOROPLETH_TONES } from "@/components/map/DistrictLayer";
 import { PREFERENCES_BOOT_SCRIPT, THEME_COLOR } from "@/lib/preferences";
-import { APPEARANCE_RAMPS, DARK_APPEARANCE_RAMPS, legacyRampToken } from "../tailwind.migration";
+import { APPEARANCE_RAMPS, DARK_APPEARANCE_RAMPS } from "../tailwind.migration";
 import { FRONTEND } from "./moduleGraph";
 
 const read = (...parts: string[]) => readFileSync(join(FRONTEND, ...parts), "utf8");
@@ -164,9 +164,9 @@ test("each metric-matched fallback face, named after its font's const, is named 
 });
 
 test("the five choropleth classes stay five distinct density steps, lowest first, in light and in dark", () => {
-  const shades = CHOROPLETH_TONES.map((tone) => [...tone.matchAll(/fill-purple-(\d+)/g)].map((found) => Number(found[1]) as 300));
-  expect(shades.map(([light]) => legacyRampToken("purple-fill", light, "light"))).toEqual(["density-1", "density-2", "density-3", "density-5", "density-6"]);
-  expect(shades.map(([, dark]) => legacyRampToken("purple-fill", dark, "dark"))).toEqual(["density-1", "density-2", "density-3", "density-5", "density-6"]);
+  const steps = CHOROPLETH_TONES.map((tone) => /^fill-\[var\(--(density-\d)\)\]$/.exec(tone)?.[1]);
+  expect(steps).toEqual(["density-1", "density-2", "density-3", "density-5", "density-6"]);
+  for (const step of steps) expect(TOKENS).toContain(`--${step}:`);
 });
 
 test("the OS contrast setting gives an app-dark page the high-contrast dark tokens, and Standard opts out", async ({ page }) => {

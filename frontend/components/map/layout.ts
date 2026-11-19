@@ -88,20 +88,6 @@ export function layoutPins(points: MapPoint[]): PlacedPin[] {
   return placed.sort((a, b) => b.radius - a.radius);
 }
 
-export function bloomDelays(pins: readonly PlacedPin[], bloom: number): Map<string, number> {
-  const delays = new Map<string, number>();
-  if (pins.length === 0) return delays;
-  const centreX = pins.reduce((sum, pin) => sum + pin.x, 0) / pins.length;
-  const centreY = pins.reduce((sum, pin) => sum + pin.y, 0) / pins.length;
-  let furthest = 0;
-  for (const pin of pins) furthest = Math.max(furthest, Math.hypot(pin.x - centreX, pin.y - centreY));
-  for (const pin of pins) {
-    const share = furthest === 0 ? 0 : Math.hypot(pin.x - centreX, pin.y - centreY) / furthest;
-    delays.set(pin.point.key, share * bloom);
-  }
-  return delays;
-}
-
 function clamp(value: number, low: number, high: number): number {
   return Math.min(high, Math.max(low, value));
 }
