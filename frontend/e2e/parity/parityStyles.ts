@@ -79,11 +79,23 @@ export async function fontReport(page: Page): Promise<FontReport> {
 }
 
 const GOOGLE_FONT_CSS = "https://fonts.googleapis.com/css2**";
-const DESKTOP_FONT_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 
-export async function desktopFonts(page: Page): Promise<void> {
-  await page.route(GOOGLE_FONT_CSS, async (route) => {
-    const response = await route.fetch({ headers: { ...route.request().headers(), "user-agent": DESKTOP_FONT_AGENT } });
-    await route.fulfill({ response });
-  });
+export async function selfHostedFaces(page: Page): Promise<string> {
+  return page.evaluate(() =>
+    [...document.styleSheets]
+      .flatMap((sheet) => {
+        try {
+          return [...sheet.cssRules]
+            .filter((rule) => rule instanceof CSSFontFaceRule)
+            .map((rule) => rule.cssText.replace(/url\("?([^")]+)"?\)/g, (_, url: string) => `url("${new URL(url, sheet.href ?? location.href).href}")`));
+        } catch {
+          return [];
+        }
+      })
+      .join("\n")
+  );
+}
+
+export async function servedFaces(page: Page, faces: string): Promise<void> {
+  await page.route(GOOGLE_FONT_CSS, (route) => route.fulfill({ status: 200, contentType: "text/css", body: faces }));
 }
