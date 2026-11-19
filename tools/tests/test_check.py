@@ -21,7 +21,7 @@ CLEAN_TREE = {
     "backend/app/api/routes/auth.py": "from app.services import audit\n",
     "etl/long.py": function_source("long", 41),
     "frontend/app/page.tsx": "export default function Page() {\n  return null;\n}\n",
-    "frontend/fonts/inter.woff2": b"\x00\x01\r\n",
+    "frontend/public/mark.png": b"\x00\x01\r\n",
     "ignored/bad.txt": b"\xef\xbb\xbfignored\r\n",
 }
 

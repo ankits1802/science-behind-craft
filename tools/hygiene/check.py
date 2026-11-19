@@ -15,6 +15,7 @@ from hygiene.baseline import (
 )
 from hygiene.budgets import BudgetFindings, Overrun, measure_budgets
 from hygiene.comments import CommentViolation, comment_language, comment_violations
+from hygiene.fonts import FontViolation, font_violations
 from hygiene.layers import BACKEND_APP, ImportViolation, import_violations
 from hygiene.text_files import EncodingViolation, encoding_violations
 
@@ -28,6 +29,7 @@ class HygieneReport:
     imports: tuple[ImportViolation, ...]
     encodings: tuple[EncodingViolation, ...]
     comments: tuple[CommentViolation, ...]
+    fonts: tuple[FontViolation, ...]
     budgets: BudgetFindings
     steps: tuple[RatchetStep, ...]
     baseline_written: bool
@@ -35,7 +37,7 @@ class HygieneReport:
     @property
     def passed(self) -> bool:
         ratchet_held = self.baseline_written or not any(step.rose or step.fell for step in self.steps)
-        return not (self.imports or self.encodings or self.comments) and ratchet_held
+        return not (self.imports or self.encodings or self.comments or self.fonts) and ratchet_held
 
 
 def project_files(root: Path) -> list[PurePosixPath]:
@@ -61,6 +63,7 @@ def run_check(root: Path, files: Sequence[PurePosixPath], *, update_baseline: bo
     python = [(path, text) for path, text in texts if path.suffix == ".py"]
     imports = import_violations((path, text) for path, text in python if path.is_relative_to(BACKEND_APP))
     comments = comment_violations(texts)
+    fonts = font_violations(contents.items())
     budgets = measure_budgets(python)
     counts = _counts(budgets)
     baseline_path = root / BASELINE_FILE
@@ -70,7 +73,13 @@ def run_check(root: Path, files: Sequence[PurePosixPath], *, update_baseline: bo
     else:
         steps = tuple(compare(read_baseline(baseline_path), counts))
     return HygieneReport(
-        tuple(imports), tuple(encodings), tuple(comments), budgets, steps, baseline_written=update_baseline
+        tuple(imports),
+        tuple(encodings),
+        tuple(comments),
+        tuple(fonts),
+        budgets,
+        steps,
+        baseline_written=update_baseline,
     )
 
 
@@ -78,6 +87,7 @@ def render(report: HygieneReport) -> list[str]:
     lines = [f"import direction: {violation.describe()}" for violation in report.imports]
     lines += [f"text encoding: {violation.describe()}" for violation in report.encodings]
     lines += [f"code comment: {violation.describe()}" for violation in report.comments]
+    lines += [f"web font: {violation.describe()}" for violation in report.fonts]
     for step, overruns in zip(report.steps, _overruns(report.budgets), strict=True):
         lines.append(_step_line(step, written=report.baseline_written))
         if step.rose:
