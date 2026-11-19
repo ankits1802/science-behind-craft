@@ -214,7 +214,12 @@ Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:1
 
 Running the same sha again re-renders the env and restarts the live colour.
 
-Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there is no Actions deploy.
+Frontend: the API goes first, then the web app. A push to `main` no longer deploys the web app
+(`frontend/vercel.json` turns off Git deployments of `main`); the last step of **Deploy backend**,
+once the API answers through CloudFront, calls the Vercel deploy hook
+(`/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`), which builds `main` and takes the domain when it is
+ready. No watcher or manual promote is needed. A failed backend deploy leaves the web app as it is.
+The nightly build and **Build pages now** use the same hook.
 
 ## MCP server
 

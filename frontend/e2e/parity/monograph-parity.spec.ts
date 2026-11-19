@@ -26,7 +26,7 @@ async function opened(page: Page, path: string): Promise<void> {
 }
 
 async function mainText(page: Page): Promise<string[]> {
-  const text = await page.evaluate(() => (document.querySelector("main") ?? document.body).innerText);
+  const text = await page.evaluate(() => (document.querySelector("#kv-main") as HTMLElement | null)?.innerText ?? "");
   return text.split("\n").map((line) => line.replace(/\s+/g, " ").trim()).filter(Boolean);
 }
 

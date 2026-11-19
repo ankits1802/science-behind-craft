@@ -34,7 +34,7 @@ export function MonographChapter({ document, chapter, masthead }: { document: Mo
 export function MonographPage({ document }: { document: MonographDocument }) {
   const plan = pagePlan(document);
   return (
-    <div className="kv-monograph" data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
+    <div className="kv-monograph ms-[calc(50%-50vw)] w-screen" data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
       <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
       <MonographRail chapters={plan.chapters} />
       {document.shell !== null ? (
