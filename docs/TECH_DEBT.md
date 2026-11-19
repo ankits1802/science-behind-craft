@@ -3091,15 +3091,6 @@ Last reviewed: 2026-11-18.
 
 ## Track 1, round 1 (decision 0101, 2026-11-19)
 
-### Proposed facts carry the RESEARCHER origin
-
-- **What:** a fact proposed on the site, through the Knowledge API or MCP is stored with
-  `ClaimOrigin` `RESEARCHER`; the channel (site, API, agent) is in `ClaimSource.foundBy` and the
-  review note, not in the origin.
-- **Why left:** a new origin needs `models/enums.py` and `services/craft_page.py`
-  `ORIGIN_PROVENANCES`, which were outside the gates lane.
-- **Clears it:** `CONTRIBUTION` and `AGENT` origins with their page provenance, and a migration.
-
 ### Contributed quotes from web pages are researcher-only
 
 - **What:** a fact quoted from a fetched web page keeps the T4 page's researcher-only chunk access,
@@ -3112,12 +3103,6 @@ Last reviewed: 2026-11-18.
 - **What:** the duplicate gate's 0.8 cosine floor and its neighbour counts (8 compared, 12 for
   novelty) were chosen without data; facts with no embedding are matched only by identical text.
 - **Clears it:** tune them on the first month of proposals and record the values in a decision.
-
-### Proposals have no rate limit
-
-- **What:** `POST /api/knowledge/facts` and `propose_fact` cost a fetch per source, an embedding
-  and up to two judge calls each, with no per-account limit (Researchers and above only).
-- **Clears it:** a per-account proposal limit in `core/rate_limit.py`.
 
 ### Open work repeats three rules
 
@@ -3140,28 +3125,14 @@ Last reviewed: 2026-11-18.
 - **Why left:** item 11 (pages built nightly and served from the CDN); signed-in readers reload.
 - **Clears it:** a revalidation call from the hide and retract paths.
 
-### Category pages are not pre-rendered
-
-- **What:** the web app has no category or family page route, so only craft pages are
-  pre-rendered; `GET /api/site/pages` already lists category slugs.
-- **Clears it:** the category page route of the redesign, added to the static params.
-
 ### Small gaps in the MCP slices
 
-- **What:** no CORS on registration and token for MCP clients that run in a browser; registered
-  clients that never finish signing in are not cleaned up; a component card's kicker and title stay
-  English in non-English answers; a failing catalogue lookup is caught broadly and offers nothing,
-  like a failing builder.
+- **What:** a component card's kicker and title stay English in non-English answers; a failing
+  catalogue lookup is caught broadly and offers nothing, like a failing builder. (Browser CORS and
+  the clean-up of abandoned registrations were built in round 4.)
 - **Clears it:** each in the change that next touches its file.
 
 ## Track 1, round 2 (decision 0101, 2026-11-19)
-
-### A long MCP ask can outlive the edge
-
-- **What:** `ask` may run up to 600 seconds, but `POST /api/mcp` answers with one JSON body and the
-  edge times out an idle origin sooner: CloudFront's origin read timeout is 120 seconds and nginx's
-  proxy read timeout 300 seconds. The answer still finishes and is stored; the client loses the reply.
-- **Clears it:** a streamed MCP reply (server-sent progress) or a raised CloudFront origin timeout.
 
 ### Structure still enters by bulk import
 
