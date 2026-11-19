@@ -22,8 +22,8 @@
   },
   "curated": true,
   "curation": {
-    "version": 2,
-    "curatedAt": "2026-11-18T17:00:00Z",
+    "version": 3,
+    "curatedAt": "2026-11-19T08:00:00Z",
     "coverage": "FULL",
     "searched": [
       {
@@ -167,8 +167,8 @@
   "depth": {
     "basis": "CURATED",
     "coverage": "FULL",
-    "claims": 135,
-    "sources": 21,
+    "claims": 143,
+    "sources": 24,
     "stages": 14,
     "pictures": 10
   },
@@ -220,14 +220,14 @@
     "place": "Kachchh, Gujarat",
     "provenance": {
       "basis": "CURATED",
-      "sources": 21,
+      "sources": 24,
       "reliability": {
-        "a": 9,
+        "a": 12,
         "b": 7,
         "c": 4,
         "d": 1
       },
-      "curatedOn": "2026-11-18",
+      "curatedOn": "2026-11-19",
       "updatedOn": null
     },
     "picture": {
@@ -247,7 +247,7 @@
         "licence": "CC BY-SA 3.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "An ajrakh made by Kutch artisans, held up to show its repeated field and multiple borders",
       "standIn": null,
@@ -1085,7 +1085,7 @@
                 "licence": "CC BY-SA 4.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "Detail of an ajrakh print with star-shaped and geometric patterns on an indigo ground",
               "standIn": null,
@@ -4737,7 +4737,7 @@
                       "licence": "CC BY-SA 4.0",
                       "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
                       "sourceId": null,
-                      "retrievedAt": "2026-11-18T17:00:00Z"
+                      "retrievedAt": "2026-11-19T08:00:00Z"
                     },
                     "caption": "A master carver shows the wooden printing block he is carving, at the Anokhi Museum in Jaipur",
                     "standIn": "A Jaipur block, not an ajrakh block"
@@ -6126,7 +6126,7 @@
                 "licence": "CC BY-SA 3.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "Natural dye and printing materials, among them alum and lime, laid out on an ajrakh cloth",
               "standIn": null,
@@ -6189,7 +6189,7 @@
                 "licence": "CC BY-SA 4.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "Madder roots beside skeins of tasar silk yarn coloured with natural dyes",
               "standIn": "Tasar silk yarn, not ajrakh",
@@ -6222,7 +6222,7 @@
                 "licence": "Public domain",
                 "licenceUrl": null,
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "Workers beating the vats at an indigo factory in Allahabad in 1877",
               "standIn": "An indigo factory at Allahabad in 1877, not Kachchh",
@@ -6326,7 +6326,7 @@
           "licence": "CC BY-SA 4.0",
           "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
           "sourceId": null,
-          "retrievedAt": "2026-11-18T17:00:00Z"
+          "retrievedAt": "2026-11-19T08:00:00Z"
         },
         "caption": "The salt marshes of the Great Rann of Kachchh, the white desert of Kutch",
         "standIn": null,
@@ -6645,7 +6645,7 @@
                 "licence": "CC BY-SA 4.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "A landscape of the Banni grasslands of Kachchh in April 2016",
               "standIn": null,
@@ -8737,7 +8737,7 @@
                 "licence": "CC BY-SA 4.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "The priest-king bust of Mohenjo-daro, its shawl carved with trefoil motifs",
               "standIn": null,
@@ -9416,7 +9416,7 @@
                 "licence": "CC BY-SA 3.0",
                 "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
                 "sourceId": null,
-                "retrievedAt": "2026-11-18T17:00:00Z"
+                "retrievedAt": "2026-11-19T08:00:00Z"
               },
               "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
               "standIn": null,
@@ -9581,7 +9581,10 @@
                   "7652c68a-621e-5e6b-aa6f-3c30ccece107",
                   "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
                   "84fe6dc5-da8d-5c60-b637-dab7da8c0450",
-                  "1edf27ec-d318-5426-9192-5f9c2578c9f7"
+                  "1edf27ec-d318-5426-9192-5f9c2578c9f7",
+                  "3163aba8-8af4-5fc8-a3a2-463de9217dd3",
+                  "828f343f-6faf-5e51-99b8-749ffe00c31f",
+                  "10f2058e-0349-5353-a0eb-b306f80a501a"
                 ]
               },
               {
@@ -9984,11 +9987,11 @@
     }
   ],
   "cite": {
-    "url": "/crafts/kutch-ajrakh/v2",
-    "version": 2,
-    "curatedOn": "2026-11-18",
-    "text": "KalaVigyan. Kutch Ajrakh, Kachchh, Gujarat: a monograph of the craft and its science. Curated version 2, 2026-11-18. https://kalavigyan.vercel.app/crafts/kutch-ajrakh/v2",
-    "bibtex": "@misc{kalavigyan-kutch-ajrakh-v2,\n  title = {Kutch Ajrakh},\n  author = {KalaVigyan},\n  year = {2026},\n  note = {Curated version 2, 2026-11-18},\n  howpublished = {\\url{https://kalavigyan.vercel.app/crafts/kutch-ajrakh/v2}}\n}"
+    "url": "/crafts/kutch-ajrakh/v3",
+    "version": 3,
+    "curatedOn": "2026-11-19",
+    "text": "KalaVigyan. Kutch Ajrakh, Kachchh, Gujarat: a monograph of the craft and its science. Curated version 3, 2026-11-19. https://kalavigyan.vercel.app/crafts/kutch-ajrakh/v3",
+    "bibtex": "@misc{kalavigyan-kutch-ajrakh-v3,\n  title = {Kutch Ajrakh},\n  author = {KalaVigyan},\n  year = {2026},\n  note = {Curated version 3, 2026-11-19},\n  howpublished = {\\url{https://kalavigyan.vercel.app/crafts/kutch-ajrakh/v3}}\n}"
   },
   "glossary": [
     {
@@ -10315,6 +10318,10 @@
                 "foldedIds": []
               },
               {
+                "claimId": "1a394c87-e900-5dd9-bef6-f6eac89dddc8",
+                "foldedIds": []
+              },
+              {
                 "claimId": "bd3a7650-0c02-5396-8303-5be039f3b339",
                 "foldedIds": []
               }
@@ -10531,6 +10538,39 @@
         "discipline": "CHEMISTRY",
         "title": "The chemistry",
         "subjects": [
+          {
+            "subject": {
+              "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+              "name": "Kutch Ajrakh",
+              "kind": "CRAFT"
+            },
+            "entries": [
+              {
+                "claimId": "216dce62-25c2-5756-b4cb-087ffce116b0",
+                "foldedIds": []
+              },
+              {
+                "claimId": "d60fb097-a3bd-568f-82d9-37a50758a13f",
+                "foldedIds": []
+              },
+              {
+                "claimId": "0a0bb0a8-0b68-5d02-889d-82ca72341bbc",
+                "foldedIds": []
+              },
+              {
+                "claimId": "9f484ac9-2f4b-54d2-931e-1ebb12af9da4",
+                "foldedIds": []
+              },
+              {
+                "claimId": "512daf80-9d3a-5bf4-ab93-572f0072a85b",
+                "foldedIds": []
+              },
+              {
+                "claimId": "76afc587-a525-5dff-963a-7fb33ee50252",
+                "foldedIds": []
+              }
+            ]
+          },
           {
             "subject": {
               "id": "fc1fb983-e119-5e8c-93f0-fa6e654300b4",
@@ -10927,6 +10967,19 @@
         "discipline": "ECOLOGY",
         "title": "Ecology",
         "subjects": [
+          {
+            "subject": {
+              "id": "02f2b518-761a-5182-926f-a4ca6a77f63f",
+              "name": "Kutch Ajrakh",
+              "kind": "CRAFT"
+            },
+            "entries": [
+              {
+                "claimId": "41ec6381-69b6-530b-81e9-e9d2dd6ce9bc",
+                "foldedIds": []
+              }
+            ]
+          },
           {
             "subject": {
               "id": "a1ffeeca-2dd9-533e-82a5-3289958b62f2",
@@ -12010,6 +12063,31 @@
       ]
     },
     {
+      "id": "1a394c87-e900-5dd9-bef6-f6eac89dddc8",
+      "text": "In Kutch, natural indigo bought in blocks is ground, soaked and fermented in an underground vat of strong alkaline lime, dates and carbonate of soda.",
+      "level": "PROVISIONAL",
+      "discipline": "PROCESS",
+      "subject": {
+        "id": "665aeb7f-25aa-5e1e-82fc-093ba6aadf98",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "f0c4de67-8324-5bb4-8dd4-5239dea0c6d3",
+          "claimId": "1a394c87-e900-5dd9-bef6-f6eac89dddc8",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "Natural Indigo is purchased in blocks or cakes, ground to a powder and soaked before fermenting in an underground vat consisting strong alkaline lime powder, dates and carbonate of soda, plus specialty ingredients unique to each particular dyer.",
+          "locator": "GI Journal No. 188 copy (application 1050), PDF p. 7",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
       "id": "983f9623-a226-5562-8ca4-c7e6dc6ad738",
       "text": "In tapano, madder-dyed cloth was soaked in camel dung, spread on sandy river banks and kept moist for at least three days so sun and dung bleached the whites.",
       "level": "PROVISIONAL",
@@ -12700,6 +12778,66 @@
       ]
     },
     {
+      "id": "0a0bb0a8-0b68-5d02-889d-82ca72341bbc",
+      "text": "Ajrakh's colours come from resist and mordant printing and from dyeing with indigo, madder and iron acetate.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "e771c0b2-2561-593f-b32a-ddfee5e5e2ac",
+          "claimId": "0a0bb0a8-0b68-5d02-889d-82ca72341bbc",
+          "sourceId": "84fe6dc5-da8d-5c60-b637-dab7da8c0450",
+          "quote": "1 The colors are created with a complex process of resist and mordant printing, and dyeing with indigo, madder, and iron acetate (Figure 3).",
+          "locator": "§ \"Indigo in Kutch, India: Art and Science, Environment and Economics\"",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "216dce62-25c2-5756-b4cb-087ffce116b0",
+      "text": "Alizarin molecules can form six-member chelate rings with aluminium ions, and the large complexes are likely trapped within the fibre.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "55f433ea-49db-5259-804b-7d36390d7d9d",
+          "claimId": "216dce62-25c2-5756-b4cb-087ffce116b0",
+          "sourceId": "3163aba8-8af4-5fc8-a3a2-463de9217dd3",
+          "quote": "It is also likely that the large complexes are physically trapped within the fiber.",
+          "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "7ad85461-fe3f-56de-9540-bc274f77d8e9",
+          "claimId": "216dce62-25c2-5756-b4cb-087ffce116b0",
+          "sourceId": "3163aba8-8af4-5fc8-a3a2-463de9217dd3",
+          "quote": "The alizarin molecules are capable of forming six-member chelate rings with aluminum ions.",
+          "locator": "§ \"2 THE MORDANT-DYE COMPLEX\"",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
       "id": "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
       "text": "Alizarin, among the first chemical red dyes, was invented in 1868 by German chemists Graebe and Liebermann and quickly superseded madder.",
       "level": "PROVISIONAL",
@@ -12728,6 +12866,31 @@
           "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
           "quote": "Alizarin was one of the first chemical dyes for red, invented in 1868 by German chemists Graaebe and Liebermann.",
           "locator": "Application 1050, method of production, p. 13",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "9f484ac9-2f4b-54d2-931e-1ebb12af9da4",
+      "text": "Alum is used as a mordant in the ajrakh process to fasten the colours.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "03b7dd17-8aec-581e-8e07-341a78cd0d88",
+          "claimId": "9f484ac9-2f4b-54d2-931e-1ebb12af9da4",
+          "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+          "quote": "Alum is used as a mordant in the process to fasten the colours.",
+          "locator": "GI Journal No. 188 copy (application 1050), PDF p. 2",
           "context": null,
           "evidence": "QUOTED",
           "level": "PROVISIONAL"
@@ -12900,6 +13063,56 @@
       ]
     },
     {
+      "id": "512daf80-9d3a-5bf4-ab93-572f0072a85b",
+      "text": "Indigo-reducing bacteria turn indigo, which does not dissolve in water, into leucoindigo, which does.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "d9826570-c216-51d9-a7bc-b97957f3f9bb",
+          "claimId": "512daf80-9d3a-5bf4-ab93-572f0072a85b",
+          "sourceId": "828f343f-6faf-5e51-99b8-749ffe00c31f",
+          "quote": "Indigo is transformed to leucoindigo by the action of indigo-reducing bacteria (indigo → leucoindigo) (Figure 1). Although indigo is not soluble in water, leucoindigo is soluble in water.",
+          "locator": "Introduction",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "76afc587-a525-5dff-963a-7fb33ee50252",
+      "text": "Leucoindigo penetrates textiles dipped in the indigo fermentation fluid, and a brief exposure to air oxidises it back to indigo.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "7121d355-2dc4-5bb3-97f0-5875c88e333f",
+          "claimId": "76afc587-a525-5dff-963a-7fb33ee50252",
+          "sourceId": "828f343f-6faf-5e51-99b8-749ffe00c31f",
+          "quote": "Therefore, leucoindigo penetrates textiles dipped in indigo fermentation fluid, followed by a brief exposure to air to oxidize leucoindigo (leucoindigo → indigo).",
+          "locator": "§ \"Introduction\"",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
       "id": "6fe93417-24b8-5080-beeb-b1db808bd372",
       "text": "Lime in the outline resist discharges alum, so the pa paste must not touch khariyanu areas or no red will develop in the later dyeing.",
       "level": "PROVISIONAL",
@@ -13048,6 +13261,41 @@
           "sourceId": "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
           "quote": "Today, the synthetic indigo is put along with sodium hydrosuphite and caustic soda in the maat (clay container) containing water. The maat is left to mature for 3-4 days",
           "locator": "p. 97",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "d60fb097-a3bd-568f-82d9-37a50758a13f",
+      "text": "The fruit of harde holds hydrolysable tannins, with chebulinic acid among its phenolic constituents.",
+      "level": "PROVISIONAL",
+      "discipline": "CHEMISTRY",
+      "subject": {
+        "id": "8e842360-2eb6-5be0-a458-7ddb749e385b",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "65980554-9b59-504a-8bd8-89b1d4c1e3a9",
+          "claimId": "d60fb097-a3bd-568f-82d9-37a50758a13f",
+          "sourceId": "10f2058e-0349-5353-a0eb-b306f80a501a",
+          "quote": "Other constituents include phenolics such as chebulinic acid, ellagic acid and anthraquinones.",
+          "locator": "5. Phytoconstituents of T. chebula Retz.",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        },
+        {
+          "id": "ed96c57f-efb4-547b-ae41-77c4d2b642e8",
+          "claimId": "d60fb097-a3bd-568f-82d9-37a50758a13f",
+          "sourceId": "10f2058e-0349-5353-a0eb-b306f80a501a",
+          "quote": "The tannins of T. chebula are of pyrogallol (hydrolysable) type.",
+          "locator": "5. Phytoconstituents of T. chebula Retz.",
           "context": null,
           "evidence": "QUOTED",
           "level": "PROVISIONAL"
@@ -13878,6 +14126,31 @@
           "sourceId": "29ff4c54-3b6b-55b3-94d8-4bf24abb1190",
           "quote": "the active block-printing season is limited to eight or nine months; with the onset of the monsoon, all production stops - in part because the prevailing humidity adversely affects the dyes, and partly because many procedures are carried out in the open",
           "locator": "p. 159",
+          "context": null,
+          "evidence": "QUOTED",
+          "level": "PROVISIONAL"
+        }
+      ]
+    },
+    {
+      "id": "41ec6381-69b6-530b-81e9-e9d2dd6ce9bc",
+      "text": "Good quality water is essential to the survival of ajrakh, an ajrakh craftsman told Mongabay India.",
+      "level": "PROVISIONAL",
+      "discipline": "ECOLOGY",
+      "subject": {
+        "id": "02f2b518-761a-5182-926f-a4ca6a77f63f",
+        "name": "Kutch Ajrakh",
+        "kind": "CRAFT"
+      },
+      "provenance": "CURATED",
+      "sourcesDiffer": false,
+      "citations": [
+        {
+          "id": "b0348d6a-beee-54cb-b89d-0f94d20421b4",
+          "claimId": "41ec6381-69b6-530b-81e9-e9d2dd6ce9bc",
+          "sourceId": "08bb36fb-ebac-59ee-90da-997a6e769e33",
+          "quote": "Water and good quality water is essential to the survival of Ajrakh",
+          "locator": "section 'History repeats itself'",
           "context": null,
           "evidence": "QUOTED",
           "level": "PROVISIONAL"
@@ -17039,6 +17312,58 @@
       "group": "WEB_AND_PRESS",
       "from": null,
       "supports": 0
+    },
+    {
+      "id": "3163aba8-8af4-5fc8-a3a2-463de9217dd3",
+      "kind": "PAPER",
+      "title": "Fiber-Safe Extraction of Red Mordant Dyes from Hair Fibers",
+      "authors": [],
+      "year": 1995,
+      "doi": null,
+      "url": "https://cool.culturalheritage.org/jaic/articles/jaic34-03-004_2.html",
+      "publisher": "Journal of the American Institute for Conservation",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "group": "SCHOLARSHIP",
+      "from": null,
+      "supports": 0
+    },
+    {
+      "id": "828f343f-6faf-5e51-99b8-749ffe00c31f",
+      "kind": "PAPER",
+      "title": "Microbial Communities Associated With Indigo Fermentation That Thrive in Anaerobic Alkaline Environments",
+      "authors": [],
+      "year": 2018,
+      "doi": "10.3389/fmicb.2018.02196",
+      "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2018.02196/full",
+      "publisher": "Frontiers in Microbiology",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "group": "SCHOLARSHIP",
+      "from": null,
+      "supports": 0
+    },
+    {
+      "id": "10f2058e-0349-5353-a0eb-b306f80a501a",
+      "kind": "PAPER",
+      "title": "The development of Terminalia chebula Retz. (Combretaceae) in clinical research",
+      "authors": [
+        "Anwesa Bag",
+        "Subir Kumar Bhattacharyya",
+        "Rabi Ranjan Chattopadhyay"
+      ],
+      "year": 2013,
+      "doi": "10.1016/S2221-1691(13)60059-3",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3631759",
+      "publisher": "Asian Pacific Journal of Tropical Biomedicine",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A",
+      "group": "SCHOLARSHIP",
+      "from": null,
+      "supports": 0
     }
   ],
   "fieldVoicesTotal": {
@@ -19363,7 +19688,7 @@
         "licence": "CC BY-SA 3.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "An ajrakh artisan from Kutch holding up a printed ajrakh with its central field and borders",
       "role": "OVERVIEW",
@@ -19389,7 +19714,7 @@
         "licence": "CC BY-SA 3.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "An ajrakh made by Kutch artisans, held up to show its repeated field and multiple borders",
       "role": "HERO",
@@ -19415,7 +19740,7 @@
         "licence": "CC BY-SA 3.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "Natural dye and printing materials, among them alum and lime, laid out on an ajrakh cloth",
       "role": "OVERVIEW",
@@ -19441,7 +19766,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "Detail of an ajrakh print with star-shaped and geometric patterns on an indigo ground",
       "role": "OVERVIEW",
@@ -19467,7 +19792,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "The priest-king bust of Mohenjo-daro, its shawl carved with trefoil motifs",
       "role": "OVERVIEW",
@@ -19493,7 +19818,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "Madder roots beside skeins of tasar silk yarn coloured with natural dyes",
       "role": "OVERVIEW",
@@ -19519,7 +19844,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "The salt marshes of the Great Rann of Kachchh, the white desert of Kutch",
       "role": "OVERVIEW",
@@ -19545,7 +19870,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "A master carver shows the wooden printing block he is carving, at the Anokhi Museum in Jaipur",
       "role": "STAGE",
@@ -19569,7 +19894,7 @@
         "licence": "CC BY-SA 4.0",
         "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "A landscape of the Banni grasslands of Kachchh in April 2016",
       "role": "OVERVIEW",
@@ -19595,7 +19920,7 @@
         "licence": "Public domain",
         "licenceUrl": null,
         "sourceId": null,
-        "retrievedAt": "2026-11-18T17:00:00Z"
+        "retrievedAt": "2026-11-19T08:00:00Z"
       },
       "caption": "Workers beating the vats at an indigo factory in Allahabad in 1877",
       "role": "OVERVIEW",

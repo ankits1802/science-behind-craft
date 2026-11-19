@@ -19,10 +19,10 @@ def test_claims_and_sources_take_the_plan_ids() -> None:
     plan = plan_of(AJRAKH)
     claims = {row["id"]: row for row in plan.part("claims")}
     assert expected_id("curation:Kutch-Ajrakh:C001") in claims
-    assert len(claims) == len(raw(AJRAKH)["claims"]) == 135
+    assert len(claims) == len(raw(AJRAKH)["claims"]) == 143
     sources = {row["id"] for row in plan.part("sources")}
     assert expected_id("curation:Kutch-Ajrakh:S01") in sources
-    assert len(sources) == 21
+    assert len(sources) == 24
 
 
 def test_each_claim_carries_the_field_its_dossier_gives_it() -> None:
@@ -66,7 +66,7 @@ def test_every_quote_becomes_one_passing_citation() -> None:
         for quote in claim["quotes"]
     }
     citations = plan.part("claimSources")
-    assert len(citations) == len(quotes) == 274
+    assert len(citations) == len(quotes) == 284
     assert {row["quoteCheck"] for row in citations} == {"PASS"}
     claim, source, quote = sorted(quotes)[0]
     assert claim_source_id(AJRAKH, claim, source, quote) in {row["id"] for row in citations}
