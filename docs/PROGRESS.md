@@ -937,6 +937,18 @@ Last updated: 2026-11-19.
   `find_crafts`, `get_facts`, `get_section` and `list_components` to any agent, anonymous and
   counted like a public page read, behind `MCP_SERVER_ENABLED`.
 
+- **Release night of 2026-11-19 (live).**
+  - **Craft page hotfixes:** every curated page answers 200 again. Before, the region story's and
+    the timeline's choices went over their limits, link-card pictures were made into plates, and
+    the ladder cited claims and sources the page did not list.
+  - **Portals 0.0.8** released, with field voices on: KalaVigyan holds 501 field transcripts and
+    615 images.
+  - **The MCP read server** is switched on.
+  - **Switches:** the alert digest and artisan conversations are on.
+  - **Ajrakh:** the critic's design fixes that change no words.
+  - **E2E:** the Professor and Admin accounts are provisioned. The specs read the monograph and
+    type the two-step code at a person's pace.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

@@ -54,6 +54,11 @@ async function signedOutScreens(run: ScreenRun, page: Page): Promise<void> {
     await expect(page.getByTestId("error-session")).toBeVisible();
     return [];
   });
+  await run.visit("Craft monograph", `/crafts/${CRAFT_SLUG}`, async () => {
+    await expect(page.getByRole("heading", { level: 1, name: /Ajrakh/ })).toBeVisible();
+    await expect(page.locator(MONOGRAPH_ASK).first()).toBeVisible();
+    return [];
+  });
   await run.visit("Login", "/login", async () => {
     await expect(page.getByRole("button", { name: "Sign in", exact: true })).toBeVisible();
     return [];
@@ -82,11 +87,6 @@ async function craftTabs(run: ScreenRun, page: Page): Promise<void> {
 async function readingScreens(run: ScreenRun, page: Page, user: User): Promise<void> {
   await run.visit("Ask", "/ask", async () => [...(await barProblems(page, user)), ...(await depthProblems(page, user))]);
   await run.visit("Crafts", "/crafts", heading(page, "Crafts"));
-  await run.visit("Craft monograph", `/crafts/${CRAFT_SLUG}`, async () => {
-    await expect(page.getByRole("heading", { level: 1, name: /Ajrakh/ })).toBeVisible();
-    await expect(page.locator(MONOGRAPH_ASK).first()).toBeVisible();
-    return [];
-  });
   await craftScreens(run, page, PRINTED_CRAFT_SLUG, `Craft ${CRAFT_TAB_LABEL.overview}`);
   await craftTabs(run, page);
   for (const [name, slug] of OTHER_CRAFTS) await craftScreens(run, page, slug, name);

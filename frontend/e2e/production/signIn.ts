@@ -10,6 +10,7 @@ import { totpCode } from "./twoStep";
 const SIGN_IN_PATH = "/api/auth/login";
 const TWO_STEP_PATH = "/api/auth/two-factor/verify";
 const TWO_STEP_CODE = "6-digit code";
+const CODE_KEY_DELAY_MS = 120;
 const SIGN_IN_TIMEOUT_MS = 60_000;
 
 type SignInAnswer = { user?: User; two_factor_required?: boolean; detail?: unknown };
@@ -38,7 +39,7 @@ async function passTwoStep(page: Page, totpSecret: string | undefined): Promise<
   if (!totpSecret) throw new Error("the E2E account asks for two-step verification; run provision_e2e_account again");
   return answerOf(page, TWO_STEP_PATH, async () => {
     await page.getByRole("group", { name: TWO_STEP_CODE }).getByRole("textbox").first().click();
-    await page.keyboard.type(totpCode(totpSecret, Date.now()));
+    await page.keyboard.type(totpCode(totpSecret, Date.now()), { delay: CODE_KEY_DELAY_MS });
   });
 }
 
