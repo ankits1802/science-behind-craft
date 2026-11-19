@@ -5902,32 +5902,42 @@
         },
         {
           "block": {
-            "id": "chem.card-3",
+            "id": "chem.card-2",
             "kind": "material_card",
             "version": 1,
             "reuse": null,
-            "materialId": "d84e8ae5-7a9e-5956-a8df-e7419ee37899",
-            "compoundId": null,
+            "materialId": "e10a1023-aab5-573e-a76d-2ba439ad4db0",
+            "compoundId": "0a9065a3-0b0b-5fdb-a50d-0886acfcb1ae",
             "termKey": null,
-            "name": "Myrobalan (harda)",
-            "materialKind": "MORDANT",
-            "role": "MORDANT",
+            "name": "Alizarin",
+            "materialKind": "DYE",
+            "role": "DYE",
             "formula": null,
-            "pubchemCid": null,
+            "pubchemCid": 6293,
             "wikidataId": null,
             "localNames": [],
             "facts": [
               {
-                "id": "chem.card-3.3",
-                "text": "Harde is a yellow astringent paste from the dried powdered fruits of the myrobalan tree, Terminalia chebula, widely used in ayurvedic medicine.",
+                "id": "chem.card-2.2",
+                "text": "Alizarin, among the first chemical red dyes, was invented in 1868 by German chemists Graebe and Liebermann and quickly superseded madder.",
                 "level": "PROVISIONAL",
                 "citations": [
                   {
-                    "id": "2ade6683-c52a-5ea1-ba65-41d588c00b19",
-                    "claimId": "c8153b0c-45e7-57ce-b149-0990640dacaf",
+                    "id": "1db28925-c01e-5d9e-b956-b3ec9ed71d2a",
+                    "claimId": "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
                     "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
-                    "quote": "The soft cleaned cloth now undergoes a soak in Harde, a yellow astringent paste made from the dried powdered fruits of the Myroballan tree, Terminalia Chebula. Used widely in ayurvedic medicines",
-                    "locator": "Application 1050, method of production, p. 10",
+                    "quote": "Derived from coal tar this crystalline red dye rapidly superseded madder, its natural counterpart.",
+                    "locator": "Application 1050, method of production, p. 13",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  },
+                  {
+                    "id": "d38d59f8-f761-5326-8336-4dc9c11e26dc",
+                    "claimId": "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
+                    "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                    "quote": "Alizarin was one of the first chemical dyes for red, invented in 1868 by German chemists Graaebe and Liebermann.",
+                    "locator": "Application 1050, method of production, p. 13",
                     "context": null,
                     "evidence": "QUOTED",
                     "level": "PROVISIONAL"
@@ -5946,7 +5956,51 @@
         },
         {
           "block": {
-            "id": "chem.card-13",
+            "id": "chem.card-6",
+            "kind": "material_card",
+            "version": 1,
+            "reuse": null,
+            "materialId": "6d3e3850-89cd-552f-8940-6d8293919f99",
+            "compoundId": "48b33dc0-8f88-579a-b5e5-d64737636ca7",
+            "termKey": null,
+            "name": "Caustic soda",
+            "materialKind": "OTHER",
+            "role": "OTHER",
+            "formula": null,
+            "pubchemCid": 14798,
+            "wikidataId": null,
+            "localNames": [],
+            "facts": [
+              {
+                "id": "chem.card-6.1",
+                "text": "Synthetic indigo is set in a clay maat with sodium hydrosulphite and caustic soda and is left to mature for 3 to 4 days.",
+                "level": "PROVISIONAL",
+                "citations": [
+                  {
+                    "id": "dc6fca34-6e0e-5035-9cb0-386fb9aa66d1",
+                    "claimId": "94ec92f4-70e4-53be-80e9-ac0128ee0c10",
+                    "sourceId": "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
+                    "quote": "Today, the synthetic indigo is put along with sodium hydrosuphite and caustic soda in the maat (clay container) containing water. The maat is left to mature for 3-4 days",
+                    "locator": "p. 97",
+                    "context": null,
+                    "evidence": "QUOTED",
+                    "level": "PROVISIONAL"
+                  }
+                ],
+                "translated": false,
+                "terms": []
+              }
+            ],
+            "handling": []
+          },
+          "part": null,
+          "figure": null,
+          "origin": null,
+          "pieceId": null
+        },
+        {
+          "block": {
+            "id": "chem.card-11",
             "kind": "material_card",
             "version": 1,
             "reuse": null,
@@ -5962,7 +6016,7 @@
             "localNames": [],
             "facts": [
               {
-                "id": "chem.card-13.2",
+                "id": "chem.card-11.2",
                 "text": "Ajrakh indigo is either natural indigo from the plant Indigofera tinctoria or a synthesised substitute known as German indigo.",
                 "level": "PROVISIONAL",
                 "citations": [
@@ -5981,7 +6035,7 @@
                 "terms": []
               },
               {
-                "id": "chem.card-13.3",
+                "id": "chem.card-11.3",
                 "text": "Indigofera tinctoria, once cultivated on a vast commercial scale in India, is now confined to a few areas, chiefly around Tindivanam in Tamil Nadu.",
                 "level": "PROVISIONAL",
                 "citations": [
@@ -6013,82 +6067,28 @@
             "kind": "material_card",
             "version": 1,
             "reuse": null,
-            "materialId": "4aaf1037-5194-5f70-b3e0-ff2e6fdf9afa",
-            "compoundId": "898dd421-14e8-5dee-9c55-176b5c1f8abd",
+            "materialId": "d84e8ae5-7a9e-5956-a8df-e7419ee37899",
+            "compoundId": null,
             "termKey": null,
-            "name": "Sodium hydrosulphite (hydros)",
-            "materialKind": "OTHER",
-            "role": "OTHER",
+            "name": "Myrobalan (harda)",
+            "materialKind": "MORDANT",
+            "role": "MORDANT",
             "formula": null,
-            "pubchemCid": 24489,
+            "pubchemCid": null,
             "wikidataId": null,
             "localNames": [],
             "facts": [
               {
-                "id": "chem.card-15.1",
-                "text": "Synthetic indigo is set in a clay maat with sodium hydrosulphite and caustic soda and is left to mature for 3 to 4 days.",
+                "id": "chem.card-15.3",
+                "text": "Harde is a yellow astringent paste from the dried powdered fruits of the myrobalan tree, Terminalia chebula, widely used in ayurvedic medicine.",
                 "level": "PROVISIONAL",
                 "citations": [
                   {
-                    "id": "dc6fca34-6e0e-5035-9cb0-386fb9aa66d1",
-                    "claimId": "94ec92f4-70e4-53be-80e9-ac0128ee0c10",
-                    "sourceId": "822de92d-ff35-52e1-a8dd-faed5a1f46f5",
-                    "quote": "Today, the synthetic indigo is put along with sodium hydrosuphite and caustic soda in the maat (clay container) containing water. The maat is left to mature for 3-4 days",
-                    "locator": "p. 97",
-                    "context": null,
-                    "evidence": "QUOTED",
-                    "level": "PROVISIONAL"
-                  }
-                ],
-                "translated": false,
-                "terms": []
-              }
-            ],
-            "handling": []
-          },
-          "part": null,
-          "figure": null,
-          "origin": null,
-          "pieceId": null
-        },
-        {
-          "block": {
-            "id": "chem.card-19",
-            "kind": "material_card",
-            "version": 1,
-            "reuse": null,
-            "materialId": "e10a1023-aab5-573e-a76d-2ba439ad4db0",
-            "compoundId": "0a9065a3-0b0b-5fdb-a50d-0886acfcb1ae",
-            "termKey": null,
-            "name": "Alizarin",
-            "materialKind": "DYE",
-            "role": "DYE",
-            "formula": null,
-            "pubchemCid": 6293,
-            "wikidataId": null,
-            "localNames": [],
-            "facts": [
-              {
-                "id": "chem.card-19.2",
-                "text": "Alizarin, among the first chemical red dyes, was invented in 1868 by German chemists Graebe and Liebermann and quickly superseded madder.",
-                "level": "PROVISIONAL",
-                "citations": [
-                  {
-                    "id": "1db28925-c01e-5d9e-b956-b3ec9ed71d2a",
-                    "claimId": "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
+                    "id": "2ade6683-c52a-5ea1-ba65-41d588c00b19",
+                    "claimId": "c8153b0c-45e7-57ce-b149-0990640dacaf",
                     "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
-                    "quote": "Derived from coal tar this crystalline red dye rapidly superseded madder, its natural counterpart.",
-                    "locator": "Application 1050, method of production, p. 13",
-                    "context": null,
-                    "evidence": "QUOTED",
-                    "level": "PROVISIONAL"
-                  },
-                  {
-                    "id": "d38d59f8-f761-5326-8336-4dc9c11e26dc",
-                    "claimId": "b7c6f3ad-4d15-57eb-b109-2cb4610c541b",
-                    "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
-                    "quote": "Alizarin was one of the first chemical dyes for red, invented in 1868 by German chemists Graaebe and Liebermann.",
-                    "locator": "Application 1050, method of production, p. 13",
+                    "quote": "The soft cleaned cloth now undergoes a soak in Harde, a yellow astringent paste made from the dried powdered fruits of the Myroballan tree, Terminalia Chebula. Used widely in ayurvedic medicines",
+                    "locator": "Application 1050, method of production, p. 10",
                     "context": null,
                     "evidence": "QUOTED",
                     "level": "PROVISIONAL"

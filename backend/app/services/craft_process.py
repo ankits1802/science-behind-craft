@@ -88,17 +88,27 @@ async def _load_rows(session: AsyncSession, craft: Craft) -> _Rows:
     ).all()
     stages = (
         await session.scalars(
-            select(ProcessStage).where(ProcessStage.processId.in_([p.id for p in processes]))
+            select(ProcessStage)
+            .where(ProcessStage.processId.in_([p.id for p in processes]))
+            .order_by(ProcessStage.processId, ProcessStage.ordinal, ProcessStage.id)
         )
     ).all()
     stage_ids = [stage.id for stage in stages]
-    reactions = (await session.scalars(select(Reaction).where(Reaction.stageId.in_(stage_ids)))).all()
+    reactions = (
+        await session.scalars(
+            select(Reaction)
+            .where(Reaction.stageId.in_(stage_ids))
+            .order_by(Reaction.stageId, Reaction.ordinal, Reaction.id)
+        )
+    ).all()
     reaction_ids = [reaction.id for reaction in reactions]
     conditions = (
         await session.scalars(
-            select(ProcessCondition).where(
+            select(ProcessCondition)
+            .where(
                 or_(ProcessCondition.stageId.in_(stage_ids), ProcessCondition.reactionId.in_(reaction_ids))
             )
+            .order_by(ProcessCondition.id)
         )
     ).all()
     return _Rows(
@@ -118,6 +128,7 @@ async def _materials(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Seque
         .join(Material, Material.id == StageMaterial.materialId)
         .outerjoin(Compound, Compound.id == Material.compoundId)
         .where(StageMaterial.stageId.in_(stage_ids))
+        .order_by(StageMaterial.stageId, Material.name, StageMaterial.id)
     )
     return (await session.execute(statement)).all()
 
@@ -127,6 +138,7 @@ async def _reaction_links(session: AsyncSession, reaction_ids: list[uuid.UUID]) 
         select(ReactionCitation.reactionId, ClaimSource.claimId, ClaimSource.id)
         .join(ClaimSource, ClaimSource.id == ReactionCitation.claimSourceId)
         .where(ReactionCitation.reactionId.in_(reaction_ids))
+        .order_by(ReactionCitation.reactionId, ClaimSource.id)
     )
     return (await session.execute(statement)).all()
 
@@ -136,6 +148,7 @@ async def _readings(session: AsyncSession, condition_ids: list[uuid.UUID]) -> Se
         select(ConditionReading, ClaimSource.claimId)
         .join(ClaimSource, ClaimSource.id == ConditionReading.claimSourceId)
         .where(ConditionReading.conditionId.in_(condition_ids))
+        .order_by(ConditionReading.conditionId, ConditionReading.id)
     )
     return (await session.execute(statement)).all()
 

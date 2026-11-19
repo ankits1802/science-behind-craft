@@ -22,7 +22,7 @@ from .chapter_draft import ChapterDraft, Drafted
 from .chapter_figures import CHEMISTRY_FIGURES, signature_figures
 from .chapter_plates import PicturePlan
 from .chapter_prose import prose_blocks
-from .craft_matter import CraftMatter
+from .craft_matter import CraftMatter, MaterialRows
 from .curated_index import IndexReaction
 from .material_cards import CardOffer, material_card, merged_materials
 
@@ -207,7 +207,7 @@ def _molecules(
 
 def _cards(ctx: ChapterContext, matter: CraftMatter) -> list:
     cards = []
-    for material in merged_materials(matter.materials):
+    for material in sorted(merged_materials(matter.materials), key=_card_order):
         roles = {use.role for use in material.uses}
         botanical = _botanical(ctx, material.material_id)
         if not (roles & CARD_ROLES or material.compound is not None or botanical):
@@ -230,6 +230,10 @@ def _cards(ctx: ChapterContext, matter: CraftMatter) -> list:
         if card is not None:
             cards.append(card)
     return cards
+
+
+def _card_order(material: MaterialRows) -> tuple[str, str]:
+    return material.name.casefold(), str(material.material_id)
 
 
 def _card_claims(ctx: ChapterContext, claim_ids: Sequence[uuid.UUID]) -> list[tuple[str, KnownClaim]]:
