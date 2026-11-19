@@ -33,7 +33,7 @@ function ajrakhDocument(): MonographDocument {
   const specs = Object.fromEntries(
     readdirSync(join(AJRAKH, "specs")).map((file) => [file.replace(/\.json$/, "").replace(/__/g, "/"), JSON.parse(readFileSync(join(AJRAKH, "specs", file), "utf8"))])
   );
-  return parseMonographDocument({ schemaVersion: 1, subjectKind: "craft", subjectSlug: "Kutch-Ajrakh", title: "Kutch Ajrakh", version: 3, content, specs, fragments: {}, pageUrl: "https://kalavigyan.example/crafts/Kutch-Ajrakh" });
+  return parseMonographDocument({ schemaVersion: 1, subjectKind: "craft", subjectSlug: "Kutch-Ajrakh", title: "Kutch Ajrakh", version: 3, content, specs, fragments: {}, shell: null, pageUrl: "https://kalavigyan.example/crafts/Kutch-Ajrakh" });
 }
 
 const document = ajrakhDocument();

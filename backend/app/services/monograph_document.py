@@ -16,8 +16,8 @@ from app.research.monograph_page import (
     KIT_FILES,
     MonographContent,
     PageParts,
+    authored_main,
     keyed_kit,
-    render_fragment,
 )
 
 __all__ = [
@@ -26,6 +26,7 @@ __all__ = [
     "FRAGMENTS_FOLDER",
     "KIT_DIR",
     "MONOGRAPHS_DIR",
+    "NATIVE_FILE",
     "SPECS_FOLDER",
     "TEMPLATE_FILE",
     "authored_document",
@@ -40,6 +41,7 @@ __all__ = [
     "monograph_content",
     "monograph_kit",
     "monograph_shell",
+    "native_views",
     "page_parts",
     "store_document",
     "stored_document",
@@ -51,6 +53,7 @@ CONTENT_FILE = "content.json"
 TEMPLATE_FILE = "template.html"
 FRAGMENTS_FOLDER = "fragments"
 SPECS_FOLDER = "specs"
+NATIVE_FILE = "native.json"
 CRAFT_SUBJECT = "craft"
 CRAFT_PATH = "/crafts/"
 FIRST_VERSION = 1
@@ -88,13 +91,25 @@ def component_specs(content: MonographContent) -> dict[str, dict[str, Any]]:
     return {label: _spec(path) for label, path in found.items() if path.is_file()}
 
 
+def native_views(slug: str) -> frozenset[str]:
+    path = MONOGRAPHS_DIR / slug / NATIVE_FILE
+    if not path.is_file():
+        return frozenset()
+    labels = json.loads(_text(path))
+    if not isinstance(labels, list) or not all(isinstance(label, str) for label in labels):
+        raise InvalidInput(f"{NATIVE_FILE} of {slug} is not a list of component labels")
+    return frozenset(labels)
+
+
 def craft_page_url(site: str, slug: str) -> str:
     return f"{site.rstrip('/')}{CRAFT_PATH}{slug}"
 
 
 def authored_document(content: MonographContent, *, title: str, page_url: str) -> MonographDocument:
-    specs = component_specs(content)
+    native = native_views(content.craft_slug)
+    specs = {label: spec for label, spec in component_specs(content).items() if label in native}
     fragments = _fragments(content)
+    inlined = {label: fragment for label, fragment in fragments.items() if label not in specs}
     return MonographDocument(
         subject_kind=CRAFT_SUBJECT,
         subject_slug=content.craft_slug,
@@ -102,11 +117,7 @@ def authored_document(content: MonographContent, *, title: str, page_url: str) -
         version=FIRST_VERSION,
         content=content,
         specs=specs,
-        fragments={
-            label: render_fragment(fragment, content)
-            for label, fragment in fragments.items()
-            if label not in specs
-        },
+        shell=authored_main(monograph_shell(content.craft_slug), content, inlined, kept=frozenset(specs)),
         page_url=page_url,
     )
 

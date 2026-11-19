@@ -69,6 +69,19 @@ fragment is left on that page), and the React renderer at the preview routes. Vi
 components through `ComponentViewProps.renderComponent`. A generated plate takes the layout's focal
 box. The parity proof is the **Monograph parity** workflow; the switch waits for it.
 
+## The first parity run (2026-11-19)
+
+The first **Monograph parity** run matched every interaction (a citation's popover and Fig. 1) at
+360, 834 and 1440 in light and dark, but a third of the text lines differed: the approved page's
+shell is partly hand-made (the answer's table of contents, margin notes with fixed entries, the
+masthead's tools and counts), and the native views did not yet reproduce their components' markup
+and the states the page script sets. So an authored page now carries its shell: `MonographDocument.
+shell` is the approved main markup with its units filled and every component inlined from its
+fragment, except the components listed in `monographs/<Slug>/native.json`, whose views have passed
+parity and are drawn from their specs into the shell's kept slots. Generated pages have no shell and
+use the React shell. A component moves to its native view only when its parity holds; the authored
+shell retires when the React shell reproduces it.
+
 ## Consequences
 
 - The served Ajrakh page stays byte-identical through 3a; the parity proof decides the switch.

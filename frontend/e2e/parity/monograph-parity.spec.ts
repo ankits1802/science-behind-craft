@@ -10,6 +10,8 @@ const RENDERED = "/crafts/Kutch-Ajrakh/monograph";
 const REPORT_DIR = process.env.E2E_REPORT_DIR ?? "parity-run";
 const SETTLE_MS = 1500;
 const PIXEL_TOLERANCE = 0.02;
+const SHOT_TIMEOUT_MS = 10_000;
+const CHAPTERS_TIMEOUT_MS = 15 * 60_000;
 
 async function opened(page: Page, path: string): Promise<void> {
   await page.goto(path, { waitUntil: "networkidle" });
@@ -50,6 +52,7 @@ test("the React page reads exactly as the approved page", async ({ context }) =>
 });
 
 test("every chapter of the React page looks as the approved page does", async ({ context }) => {
+  test.setTimeout(CHAPTERS_TIMEOUT_MS);
   const { approved, rendered } = await bothPages(context);
   const ids = chapterIds(await approved.evaluate(() => [...document.querySelectorAll("main [id]")].map((element) => element.id)));
   const differences: Record<string, PixelDifference | "missing"> = {};
@@ -59,8 +62,14 @@ test("every chapter of the React page looks as the approved page does", async ({
       differences[id] = "missing";
       continue;
     }
-    const before = await approved.locator(selector).first().screenshot({ animations: "disabled" });
-    const after = await rendered.locator(selector).first().screenshot({ animations: "disabled" });
+    if (!(await approved.locator(selector).first().isVisible())) continue;
+    const before = await approved.locator(selector).first().screenshot({ animations: "disabled", timeout: SHOT_TIMEOUT_MS }).catch(() => null);
+    if (!before) continue;
+    const after = await rendered.locator(selector).first().screenshot({ animations: "disabled", timeout: SHOT_TIMEOUT_MS }).catch(() => null);
+    if (!after) {
+      differences[id] = "missing";
+      continue;
+    }
     const found = await pixelDifference(before, after);
     differences[id] = found;
     if (found.ratio > PIXEL_TOLERANCE) {

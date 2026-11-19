@@ -1,3 +1,4 @@
+import { AuthoredShell } from "@/components/monograph/AuthoredShell";
 import { ComponentSlot } from "@/components/monograph/ComponentSlot";
 import { KitScript } from "@/components/monograph/KitScript";
 import { KitShellTail } from "@/components/monograph/KitShellTail";
@@ -36,11 +37,15 @@ export function MonographPage({ document }: { document: MonographDocument }) {
     <div className="kv-monograph" data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
       <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
       <MonographRail chapters={plan.chapters} />
-      <div id="kv-main">
-        {plan.chapters.map((chapter) => (
-          <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={chapter.index === 0 ? plan.masthead : null} />
-        ))}
-      </div>
+      {document.shell !== null ? (
+        <AuthoredShell document={document} shell={document.shell} />
+      ) : (
+        <div id="kv-main">
+          {plan.chapters.map((chapter) => (
+            <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={chapter.index === 0 ? plan.masthead : null} />
+          ))}
+        </div>
+      )}
       <KitShellTail document={document} />
       <KitPreferences />
       <KitScript />

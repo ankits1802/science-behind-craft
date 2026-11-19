@@ -69,6 +69,8 @@ def folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     }
     for label, text in fragments.items():
         (root / "fragments" / fragment_file_name(label)).write_bytes(text.encode("utf-8"))
+    shell = '<html><body><main id="kv-main"><kv-slot component="authored-test/design/plate"></kv-slot></main></body></html>'
+    (root / "template.html").write_bytes(shell.encode("utf-8"))
     return root
 
 
@@ -76,21 +78,25 @@ def _spec(folder: Path, label: str, value: Any) -> None:
     (folder / "specs" / spec_file_name(label)).write_bytes(json.dumps(value).encode("utf-8"))
 
 
-def test_a_component_with_a_spec_file_is_drawn_from_it_and_every_other_from_its_filled_fragment(
+def test_an_authored_page_carries_its_shell_with_components_inlined_until_their_view_passes_parity(
     folder: Path,
 ) -> None:
     _spec(folder, PLAYER, {"steps": [{"label": "Alum"}]})
-    document = authored.authored_document(
-        authored.monograph_content(SLUG), title="Authored Test", page_url=PAGE_URL
+    content = authored.monograph_content(SLUG)
+    held_back = authored.authored_document(content, title="Authored Test", page_url=PAGE_URL)
+    assert (held_back.subject_kind, held_back.subject_slug, held_back.version) == ("craft", SLUG, 1)
+    assert (held_back.specs, held_back.fragments) == ({}, {})
+    assert held_back.shell == '<figure id="plate">Alum &amp; madder<div id="red">Red</div></figure>'
+    (folder / "native.json").write_text(f'["{PLAYER}"]', encoding="utf-8")
+    document = authored.authored_document(content, title="Authored Test", page_url=PAGE_URL)
+    assert (document.specs, document.fragments) == ({PLAYER: {"steps": [{"label": "Alum"}]}}, {})
+    assert document.shell == (
+        '<figure id="plate">Alum &amp; madder<kv-slot component="authored-test/chemistry/player"></kv-slot></figure>'
     )
-    assert (document.subject_kind, document.subject_slug, document.version) == ("craft", SLUG, 1)
-    assert document.specs == {PLAYER: {"steps": [{"label": "Alum"}]}}
-    assert document.fragments == {
-        PLATE: '<figure id="plate">Alum &amp; madder<kv-slot component="authored-test/chemistry/player"></kv-slot></figure>'
-    }
 
 
 def test_a_spec_that_is_not_an_object_or_a_missing_fragment_is_refused(folder: Path) -> None:
+    (folder / "native.json").write_text(f'["{PLAYER}"]', encoding="utf-8")
     _spec(folder, PLAYER, ["steps"])
     with pytest.raises(InvalidInput, match="not a JSON object"):
         authored.authored_document(authored.monograph_content(SLUG), title="T", page_url=PAGE_URL)
@@ -124,23 +130,16 @@ def test_the_ajrakh_document_draws_every_component_once_and_validates_from_its_j
 ) -> None:
     labels = {c.label for c in ajrakh.content.components}
     assert len(labels) == 79
-    assert set(ajrakh.specs) | set(ajrakh.fragments) == labels
-    assert not set(ajrakh.specs) & set(ajrakh.fragments)
+    assert ajrakh.shell is not None and ajrakh.fragments == {}
+    assert sorted(slot_keys(ajrakh.shell, COMPONENT_SLOT)) == sorted(ajrakh.specs)
     assert MonographDocument.model_validate(json.loads(authored.document_json(ajrakh))) == ajrakh
 
 
-def test_each_ajrakh_fragment_holds_its_units_text_and_only_the_slots_of_components_within_it(
-    ajrakh: MonographDocument,
-) -> None:
-    content = ajrakh.content
-    for label, fragment in ajrakh.fragments.items():
-        within = [entry for entry in content.layout if entry.within == label]
-        nested = sorted(entry.ref for entry in within if entry.kind == "component")
-        assert sorted(slot_keys(fragment, COMPONENT_SLOT)) == nested, label
-        assert len(SLOT_PATTERN.findall(fragment)) == len(nested), label
-        for entry in within:
-            if entry.kind == "unit":
-                assert render_nodes(content.units[entry.ref].nodes, content.sources) in fragment, entry.ref
+def test_the_ajrakh_shell_holds_every_units_text_and_no_other_slot(ajrakh: MonographDocument) -> None:
+    content, shell = ajrakh.content, ajrakh.shell or ""
+    assert len(SLOT_PATTERN.findall(shell)) == len(ajrakh.specs)
+    for ref, unit in content.units.items():
+        assert render_nodes(unit.nodes, content.sources) in shell, ref
 
 
 def test_the_shared_golden_document_is_what_the_documented_command_writes() -> None:

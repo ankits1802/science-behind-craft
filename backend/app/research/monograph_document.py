@@ -34,6 +34,7 @@ class MonographDocument(ContractModel):
     content: MonographContent
     specs: dict[str, dict[str, Any]] = Field(default_factory=dict)
     fragments: dict[str, str] = Field(default_factory=dict)
+    shell: str | None = None
     page_url: str
 
     @model_validator(mode="after")

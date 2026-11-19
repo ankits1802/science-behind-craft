@@ -3234,3 +3234,13 @@ Last reviewed: 2026-11-18.
 - **What:** the plate spec's unit references are `u` and four digits (Ajrakh's ids), so a generated
   page numbers its picture caption and credit units from `u9001`.
 - **Clears it:** one unit id pattern for authored and generated documents.
+
+### Kutch Ajrakh's React page draws the authored shell
+
+- **What:** `MonographDocument.shell` carries the approved page's main markup with every component
+  inlined from its fragment, so the React page matches the approved one by construction while the
+  React shell and the native views catch up (decision 0106, the first parity run).
+- **Clears it:** a component joins `monographs/Kutch-Ajrakh/native.json` when its view passes the
+  parity run; the shell retires when the React shell reproduces the masthead, the table of contents,
+  the margin notes and the sources chapter.
+

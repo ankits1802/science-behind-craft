@@ -75,6 +75,7 @@ export function fixtureDocument(): MonographDocument {
     title: "Test Craft",
     version: 2,
     pageUrl: "https://kalavigyan.example/crafts/Test-Craft",
+    shell: null,
     content: {
       schemaVersion: 1,
       craftSlug: "Test-Craft",

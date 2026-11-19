@@ -115,6 +115,7 @@ export const monographDocumentShape: Shape<MonographDocument> = object<Monograph
   content: contentShape,
   specs: dictionary(ANY_KEY, record),
   fragments: dictionary(ANY_KEY, text),
+  shell: nullable(text),
   pageUrl: text
 });
 

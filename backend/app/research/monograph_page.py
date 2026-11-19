@@ -33,6 +33,7 @@ __all__ = [
     "Quote",
     "TextUnit",
     "assemble_template",
+    "authored_main",
     "keyed_kit",
     "kit_parts",
     "kit_slot_key",
@@ -51,6 +52,8 @@ SLOT_PATTERN = re.compile(r'<kv-slot (unit|data|component|kit)="([A-Za-z0-9._/#-
 UNIT_SLOT = "unit"
 DATA_SLOT = "data"
 COMPONENT_SLOT = "component"
+MAIN_OPEN = '<main id="kv-main">'
+MAIN_CLOSE = "</main>"
 KIT_SLOT = "kit"
 KIT_FILES = ("monograph.css", "monograph.js")
 KIT_PART_MARKERS = MappingProxyType({".css": "@kv-part {name};\n", ".js": '"kv-part {name}";\n'})
@@ -153,6 +156,18 @@ def render_page(template: str, content: MonographContent, *, parts: PageParts = 
     return _filled(_with_components(template, parts.fragments), fills)
 
 
+def authored_main(
+    shell: str, content: MonographContent, fragments: Mapping[str, str], *, kept: frozenset[str] = frozenset()
+) -> str:
+    fills = {UNIT_SLOT: partial(_unit, content), DATA_SLOT: partial(_data, content=content)}
+    page = _filled(_with_components(shell, fragments, kept=kept), fills)
+    start = page.find(MAIN_OPEN)
+    end = page.rfind(MAIN_CLOSE)
+    if start < 0 or end < start:
+        raise InvalidInput("The shell has no main element")
+    return page[start + len(MAIN_OPEN) : end]
+
+
 def render_fragment(fragment: str, content: MonographContent) -> str:
     fills = {
         UNIT_SLOT: partial(_unit, content),
@@ -216,9 +231,11 @@ def _filled(text: str, fills: Mapping[str, SlotFill]) -> str:
     return SLOT_PATTERN.sub(fill, text)
 
 
-def _with_components(text: str, fragments: Mapping[str, str], held: tuple[str, ...] = ()) -> str:
+def _with_components(
+    text: str, fragments: Mapping[str, str], held: tuple[str, ...] = (), *, kept: frozenset[str] = frozenset()
+) -> str:
     def fill(found: re.Match[str]) -> str:
-        if found.group(1) != COMPONENT_SLOT:
+        if found.group(1) != COMPONENT_SLOT or found.group(2) in kept:
             return found.group(0)
         label = found.group(2)
         if label in held:
@@ -226,7 +243,7 @@ def _with_components(text: str, fragments: Mapping[str, str], held: tuple[str, .
         fragment = fragments.get(label)
         if fragment is None:
             raise InvalidInput(f"The template has a slot for component {label}, which has no fragment")
-        return _with_components(fragment, fragments, (*held, label))
+        return _with_components(fragment, fragments, (*held, label), kept=kept)
 
     return SLOT_PATTERN.sub(fill, text)
 

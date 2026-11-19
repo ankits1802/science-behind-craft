@@ -51,5 +51,6 @@ export type MonographDocument = {
   content: MonographContent;
   specs: Record<string, Record<string, unknown>>;
   fragments: Record<string, string>;
+  shell: string | null;
   pageUrl: string;
 };
