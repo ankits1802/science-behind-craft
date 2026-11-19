@@ -15,9 +15,9 @@ Last reviewed: 2026-11-18.
 
 | Path | What | Written by |
 |---|---|---|
-| `backend/app/data/curation/<CraftSlug>.json` | one dossier per craft, named by its `craftSlug` | the curator |
+| `backend/app/data/curation/<CraftSlug>.json` | one dossier per craft, named by its `craftSlug` | the dossier export; by hand only for a bulk import (below) |
 | `backend/app/data/curation/<CraftSlug>.check.json` | the quote verification of that dossier | `tools/curation/verify.py` |
-| `backend/app/data/curation/categories/<CategorySlug>.json` | one dossier per craft category (scope `CATEGORY`, below), named by its `categorySlug` | the curator |
+| `backend/app/data/curation/categories/<CategorySlug>.json` | one dossier per craft category (scope `CATEGORY`, below), named by its `categorySlug` | the dossier export; by hand only for a bulk import (below) |
 | `backend/app/data/curation/categories/<CategorySlug>.check.json` | its quote verification | `tools/curation/verify.py` |
 | `backend/app/data/curation/index.json` | per craft and per category: version, coverage, counts, check status | `tools/curation/check.py --write-index`, once per batch by the lead |
 
@@ -25,6 +25,19 @@ Nothing else lives in those folders: the checker reports any other file, and a c
 dossier is missing. The importer reads craft and family dossiers from the top folder and
 category dossiers from `categories/` (below, and `docs/contracts/category-page.md`). Files are
 UTF-8 without a byte-order mark, LF line endings.
+
+## The database is the source of truth (decision 0101, item 6)
+
+Since 2026-11-19 the database holds curated knowledge and these files are its versioned export:
+a backup, a diff against the database, and the way to bulk import. A new fact is proposed through
+the Knowledge API, where it passes the gates (`tools/curation/propose.py` sends a working
+dossier's new facts; an agent on the MCP server uses `propose_fact`). Structure the API does not
+take yet (picture placements, a stage's `after` or why, native names, reactions, glossary,
+conflicts, open questions, the GI record) and a new craft's first dossier still come in as a new
+dossier version, checked as below and imported on deploy. `app.scripts.export_dossiers` writes the
+dossiers back from the database and reports what differs from git; the export, its guarantee and
+the client are `docs/contracts/dossier-export.md`. The rules on this page apply to every dossier,
+exported or written by hand.
 
 ## Shape conventions
 
