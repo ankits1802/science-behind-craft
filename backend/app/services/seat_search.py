@@ -44,7 +44,7 @@ SeatSearch = Callable[[BuildAsk, Sequence[SeatBrief], Collection[str]], Awaitabl
 def seat_query(ask: BuildAsk, brief: SeatBrief) -> KnowledgeQuery:
     craft = ask.request.craft
     words = [
-        ask.request.question,
+        ask.request.english_question or ask.request.question,
         craft.name if craft else "",
         brief.label,
         *(DISCIPLINE_FIELDS[discipline] for discipline in brief.fields),
@@ -54,6 +54,7 @@ def seat_query(ask: BuildAsk, brief: SeatBrief) -> KnowledgeQuery:
         craft_slug=craft.slug if craft else None,
         text=text,
         mode=ask.request.mode,
+        fields=brief.fields,
         limit=SEAT_SEARCH_LIMIT,
     )
 

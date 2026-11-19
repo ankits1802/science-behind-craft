@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 from app.core.errors import InvalidInput
 
-__all__ = ["RRF_K", "FusedItem", "reciprocal_rank_fusion"]
+__all__ = ["RRF_K", "FusedItem", "fused_order", "reciprocal_rank_fusion"]
 
 RRF_K = 60
 
@@ -36,7 +36,11 @@ def reciprocal_rank_fusion[K: Hashable](
         )
         for key in keys
     ]
-    return sorted(fused, key=lambda item: (-item.score, item.best_rank, str(item.key)))
+    return sorted(fused, key=fused_order)
+
+
+def fused_order[K: Hashable](item: FusedItem[K]) -> tuple[float, int, str]:
+    return (-item.score, item.best_rank, str(item.key))
 
 
 def _positions[K: Hashable](index: int, ranking: Sequence[K]) -> dict[K, int]:

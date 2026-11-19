@@ -31,6 +31,7 @@ __all__ = [
     "VISIBLE_SENSITIVITY",
     "ChunkHit",
     "ClaimHit",
+    "EnglishRendering",
     "KnowledgeHits",
     "KnowledgeQuery",
     "KnowledgeRetriever",
@@ -115,6 +116,10 @@ class KnowledgeHits(ContractModel):
 @runtime_checkable
 class KnowledgeRetriever(Protocol):
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits: ...
+
+
+class EnglishRendering(Protocol):
+    async def __call__(self, text: str) -> str: ...
 
 
 def searched_fields(focus: str | None) -> tuple[str, ...]:

@@ -41,7 +41,7 @@ from .answer_events import CitedClaims, cited_claims
 from .answer_lede import LedeTools
 from .answer_models import AnswerModels
 from .answer_sections import ClaimsOf
-from .answer_translation import AnswerTranslation
+from .answer_translation import AnswerTranslation, english_question
 from .answering import AnswerAsk, AnswerPipeline
 from .block_builders import BlockBuilders
 from .builder_interface import BuilderTools
@@ -212,7 +212,10 @@ def build_answer_pipeline(
     embed: TextEmbedder,
     shield: ShieldedWork,
 ) -> AnswerPipeline:
-    retriever = SessionScopedSearch(sessions, embed=embed)
+    translation = build_answer_translation(sessions, model=models.translate)
+    retriever = SessionScopedSearch(
+        sessions, embed=embed, english=lambda text: english_question(text, translation)
+    )
 
     async def resolve(query: CraftQuery) -> CraftResolution:
         async with sessions() as session:
@@ -233,7 +236,7 @@ def build_answer_pipeline(
         research=research,
         compose=composer.compose,
         store=SqlAnswerStore(sessions, embed=embed, shield=shield, judge=models.judge),
-        translation=build_answer_translation(sessions, model=models.translate),
+        translation=translation,
         pieces=SqlPieceStore(sessions, embed=embed, shield=shield),
         enrichment=build_answer_enrichment(sessions, live),
         builders=BlockBuilders.from_registry(tools),

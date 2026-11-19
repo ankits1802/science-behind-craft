@@ -26,6 +26,8 @@ from app.models import enums as e
 from app.models.base import Base, created_at, one_of, updated_at, uuid_pk
 
 EMBEDDING_DIMENSIONS = 1536
+EMBEDDING_MODEL_CHARS = 120
+DESCRIPTOR_HASH_CHARS = 64
 
 
 class CraftCategory(Base):
@@ -114,6 +116,8 @@ class Craft(Base):
         UUID(as_uuid=True), ForeignKey("Craft.id", ondelete="SET NULL")
     )
     descriptorEmbedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
+    embeddingModel: Mapped[str | None] = mapped_column(String(EMBEDDING_MODEL_CHARS))
+    descriptorHash: Mapped[str | None] = mapped_column(String(DESCRIPTOR_HASH_CHARS))
 
     __table_args__ = (
         UniqueConstraint("subCategoryId", "name"),

@@ -23,7 +23,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import enums as e
 from app.models.base import Base, created_at, one_of, subset_of, updated_at, uuid_pk
-from app.models.crafts import EMBEDDING_DIMENSIONS
+from app.models.crafts import EMBEDDING_DIMENSIONS, EMBEDDING_MODEL_CHARS
 
 QUOTE_MAX_CHARS = 300
 FIELD_COLUMN_CHARS = 16
@@ -81,6 +81,7 @@ class Chunk(Base):
         TSVECTOR, Computed("to_tsvector('english'::regconfig, coalesce(\"text\", ''))", persisted=True)
     )
     embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
+    embeddingModel: Mapped[str | None] = mapped_column(String(EMBEDDING_MODEL_CHARS))
     lang: Mapped[str] = mapped_column(String(16), nullable=False, server_default="en")
     acl: Mapped[str] = mapped_column(e.ChunkAcl, nullable=False, server_default="PUBLIC")
     sensitivity: Mapped[str] = mapped_column(e.Sensitivity, nullable=False, server_default="OPEN")
@@ -172,6 +173,7 @@ class Claim(Base):
         ARRAY(Text), nullable=False, server_default=sql_text("ARRAY[]::text[]")
     )
     embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMENSIONS))
+    embeddingModel: Mapped[str | None] = mapped_column(String(EMBEDDING_MODEL_CHARS))
     tsv: Mapped[Any] = mapped_column(
         TSVECTOR, Computed("to_tsvector('english'::regconfig, coalesce(\"text\", ''))", persisted=True)
     )

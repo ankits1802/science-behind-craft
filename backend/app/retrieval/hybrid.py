@@ -3,16 +3,16 @@ from __future__ import annotations
 import uuid
 from collections.abc import Sequence
 
-from sqlalchemy import Select, select
+from sqlalchemy import ColumnElement, Select, not_, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import InvalidInput
 from app.models import Chunk, Claim, Craft, Source
 from app.research.embedding import TextEmbedder, checked_vectors
 from app.research.planning import MODE_POLICIES
-from app.research.retrieval import ChunkHit, ClaimHit, KnowledgeHits, KnowledgeQuery
+from app.research.retrieval import ChunkHit, ClaimHit, EnglishRendering, KnowledgeHits, KnowledgeQuery
 
-from .fusion import FusedItem, reciprocal_rank_fusion
+from .fusion import FusedItem, fused_order, reciprocal_rank_fusion
 from .statements import (
     EVERY_CRAFT,
     CraftScope,
@@ -23,10 +23,11 @@ from .statements import (
     claim_entity_ranking,
     claim_lexical_ranking,
     claim_vector_ranking,
+    field_passages,
 )
 from .text import or_tsquery, query_text
 
-__all__ = ["CORPUS_TIER", "SessionScopedSearch", "StoredKnowledgeSearch", "craft_scope"]
+__all__ = ["CORPUS_TIER", "SessionScopedSearch", "StoredKnowledgeSearch", "craft_scope", "search_words"]
 
 CORPUS_TIER = "T2"
 SCORE_DIGITS = 9
@@ -34,50 +35,71 @@ RANK_FIELDS = ("lexical_rank", "vector_rank", "entity_rank")
 
 
 class SessionScopedSearch:
-    def __init__(self, sessions: async_sessionmaker[AsyncSession], *, embed: TextEmbedder) -> None:
+    def __init__(
+        self,
+        sessions: async_sessionmaker[AsyncSession],
+        *,
+        embed: TextEmbedder,
+        english: EnglishRendering | None = None,
+    ) -> None:
         self._sessions = sessions
         self._embed = embed
+        self._english = english
 
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits:
         async with self._sessions() as session:
-            return await StoredKnowledgeSearch(session, embed=self._embed).search(query)
+            stored = StoredKnowledgeSearch(session, embed=self._embed, english=self._english)
+            return await stored.search(query)
 
 
 class StoredKnowledgeSearch:
-    def __init__(self, session: AsyncSession, *, embed: TextEmbedder) -> None:
+    def __init__(
+        self, session: AsyncSession, *, embed: TextEmbedder, english: EnglishRendering | None = None
+    ) -> None:
         self._session = session
         self._embed = embed
+        self._english = english
 
     async def search(self, query: KnowledgeQuery) -> KnowledgeHits:
+        words = await search_words(query.text, self._english)
         (vector,) = checked_vectors(await self._embed([query_text(query.text)]), expected=1)
         scope = await craft_scope(self._session, query.craft_slug)
-        tsquery = or_tsquery(query.text)
+        tsquery = or_tsquery(words)
         conditions = claim_conditions(scope, mode=query.mode, facets=query.facets, fields=query.fields)
         claims = await self._fuse(
             [
                 claim_lexical_ranking(conditions, tsquery) if tsquery else None,
                 claim_vector_ranking(conditions, vector),
-                claim_entity_ranking(conditions, scope, query.text),
+                claim_entity_ranking(conditions, scope, words),
             ],
             limit=query.limit,
         )
         chunks: list[FusedItem[uuid.UUID]] = []
         if CORPUS_TIER in MODE_POLICIES[query.mode].tiers:
-            conditions = chunk_conditions(
-                scope, mode=query.mode, facets=query.facets, fields=query.fields, acls=query.chunk_acls
-            )
-            chunks = await self._fuse(
-                [
-                    chunk_lexical_ranking(conditions, tsquery) if tsquery else None,
-                    chunk_vector_ranking(conditions, vector),
-                ],
-                limit=query.limit,
-            )
+            chunks = await self._passages(query, scope, tsquery, vector)
         return KnowledgeHits(
             craft_slug=query.craft_slug,
             claims=tuple(await self._claim_hits(claims)),
             chunks=tuple(await self._chunk_hits(chunks)),
         )
+
+    async def _passages(
+        self, query: KnowledgeQuery, scope: CraftScope, tsquery: str | None, vector: list[float]
+    ) -> list[FusedItem[uuid.UUID]]:
+        conditions = chunk_conditions(
+            scope, mode=query.mode, facets=query.facets, fields=query.fields, acls=query.chunk_acls
+        )
+        found: list[FusedItem[uuid.UUID]] = []
+        for kind in (not_(field_passages()), field_passages()):
+            scoped: list[ColumnElement[bool]] = [*conditions, kind]
+            found += await self._fuse(
+                [
+                    chunk_lexical_ranking(scoped, tsquery) if tsquery else None,
+                    chunk_vector_ranking(scoped, vector),
+                ],
+                limit=query.limit,
+            )
+        return sorted(found, key=fused_order)
 
     async def _fuse(
         self, rankings: Sequence[Select[tuple[uuid.UUID]] | None], *, limit: int
@@ -137,6 +159,12 @@ class StoredKnowledgeSearch:
             )
             for item in fused
         ]
+
+
+async def search_words(text: str, english: EnglishRendering | None) -> str:
+    if english is None or or_tsquery(text) is not None:
+        return text
+    return await english(text)
 
 
 async def craft_scope(session: AsyncSession, slug: str | None) -> CraftScope:
