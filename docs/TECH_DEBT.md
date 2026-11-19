@@ -3244,3 +3244,15 @@ Last reviewed: 2026-11-18.
   parity run; the shell retires when the React shell reproduces the masthead, the table of contents,
   the margin notes and the sources chapter.
 
+### The citation numeral class shares its name with the kit's Cite this block
+
+- **What:** the app's citation numeral is `.kv-cite` (`app/editorial.css`, `CitationChip`,
+  `editorial/CitationCluster`), and the approved page's "Cite this monograph" block is
+  `section#kv-cite.kv-cite`. On the React page the numeral's rule (inline-block, raised 0.6em, UI
+  type) also reached the block, so it was not centred.
+  `components/monograph/authoredShell.css` resets it inside `#kv-main`, beside the authored page's
+  `text-rendering: auto` (the approved page's setting; the boards and the app use
+  `optimizeLegibility`).
+- **Clears it:** rename the app's numeral class (for example `.kv-cn`) in its three homes, then
+  drop the reset.
+

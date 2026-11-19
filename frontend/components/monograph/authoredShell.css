@@ -1,0 +1,24 @@
+#kv-main {
+  text-rendering: auto;
+}
+
+#kv-main section.kv-cite {
+  display: block;
+  position: static;
+  top: auto;
+  padding-inline: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  vertical-align: baseline;
+  cursor: auto;
+}
+
+#kv-main section.kv-cite::after {
+  content: none;
+}
+
+#kv-main section.kv-cite:hover {
+  color: inherit;
+  text-decoration: none;
+}

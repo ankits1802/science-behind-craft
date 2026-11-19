@@ -3,6 +3,8 @@ import type { MonographDocument } from "@/lib/monographDocument";
 import { bundleSources } from "@/lib/monographRenderKit";
 import { componentBundles } from "@/lib/monographRenderLayout";
 
+import "./authoredShell.css";
+
 const SHELL_ID = "kv-main";
 
 export function AuthoredShell({ document, shell }: { document: MonographDocument; shell: string }) {
