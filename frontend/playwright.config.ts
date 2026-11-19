@@ -8,6 +8,8 @@ const LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(BASE_URL);
 const SMOKE = process.env.E2E_SMOKE === "1";
 const PRODUCTION = process.env.E2E_PRODUCTION === "1";
 const PARITY = process.env.E2E_PARITY === "1";
+const CAPTURE = process.env.E2E_CAPTURE === "1";
+const CAPTURE_SPEC = /[\\/]e2e[\\/]capture[\\/]capture\.spec\.ts$/;
 const PARITY_SPEC = /[\\/]e2e[\\/]parity[\\/]monograph-parity\.spec\.ts$/;
 const PARITY_WIDTHS: readonly Width[] = [SMALL_PHONE, TABLET, DESKTOP];
 
@@ -64,6 +66,12 @@ function parityProject(width: Width, scheme: Scheme): Project {
 
 const PARITY_PROJECTS: Project[] = PARITY_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => parityProject(width, scheme)));
 
+function captureProject(width: Width, scheme: Scheme): Project {
+  return { name: `capture-${width.key}-${scheme}`, testMatch: [CAPTURE_SPEC], retries: 0, use: { ...devices[width.device], ...contextOptions(width, scheme), ...RUN_USE } };
+}
+
+const CAPTURE_PROJECTS: Project[] = PARITY_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => captureProject(width, scheme)));
+
 const PRODUCTION_PROJECTS: Project[] = [
   ...SCREEN_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => productionProject(width, scheme, specsFor(width, scheme)))),
   ...ANONYMOUS_WIDTHS.map(anonymousProject),
@@ -89,7 +97,8 @@ export default defineConfig({
     { name: "desktop", testMatch: /smoke\.spec\.ts$/, testIgnore: PRODUCTION_SPECS, use: { ...devices["Desktop Chrome"] } },
     { name: "phone", testMatch: /smoke\.spec\.ts$/, testIgnore: PRODUCTION_SPECS, use: { ...devices["Pixel 7"] } },
     ...(PRODUCTION ? PRODUCTION_PROJECTS : []),
-    ...(PARITY ? PARITY_PROJECTS : [])
+    ...(PARITY ? PARITY_PROJECTS : []),
+    ...(CAPTURE ? CAPTURE_PROJECTS : [])
   ],
   webServer:
     SMOKE && LOCAL

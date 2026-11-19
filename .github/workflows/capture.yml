@@ -1,0 +1,67 @@
+name: Capture screens
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: The site to capture (empty captures production)
+        required: false
+        default: ""
+      paths:
+        description: Comma-separated paths to capture (empty captures the default set)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-screens
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    name: Capture pages and the master board at 360, 834 and 1440 in light and dark
+    if: github.repository == 'cxacraftecosystem-ui/KalaVigyan'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      E2E_CAPTURE: "1"
+      E2E_BASE_URL: ${{ inputs.base_url || vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
+      E2E_SCREEN_PATHS: ${{ inputs.paths }}
+      E2E_REPORT_DIR: capture-run
+      E2E_WORKERS: "3"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install npm 12
+        run: npm install --global npm@12 && npm --version
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture
+        run: npx playwright test --project='capture-*'
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: capture-${{ github.run_id }}
+          path: frontend/capture-run
+          if-no-files-found: warn
+          retention-days: 30
