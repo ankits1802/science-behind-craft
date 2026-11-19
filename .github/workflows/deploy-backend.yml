@@ -189,13 +189,4 @@ jobs:
           exit 1
 
       - name: Build the web app now that the API is live
-        run: |
-          set -euo pipefail
-          hook="$(aws ssm get-parameter --name /kalavigyan/env/VERCEL_DEPLOY_HOOK_URL --with-decryption --query Parameter.Value --output text)"
-          echo "::add-mask::$hook"
-          code="$(curl -s -o /dev/null -w '%{http_code}' -m 30 -X POST "$hook")"
-          echo "the Vercel deploy hook answered $code"
-          case "$code" in
-            200|201) ;;
-            *) echo "::error::the web app build was not started; start it from Build pages now in admin settings"; exit 1 ;;
-          esac
+        uses: ./.github/actions/build-web-app

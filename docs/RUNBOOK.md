@@ -214,12 +214,20 @@ Coverage enrichment (`.github/workflows/coverage-enrichment.yml`): daily at 22:1
 
 Running the same sha again re-renders the env and restarts the live colour.
 
-Frontend: the API goes first, then the web app. A push to `main` no longer deploys the web app
-(`frontend/vercel.json` turns off Git deployments of `main`); the last step of **Deploy backend**,
-once the API answers through CloudFront, calls the Vercel deploy hook
-(`/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`), which builds `main` and takes the domain when it is
-ready. No watcher or manual promote is needed. A failed backend deploy leaves the web app as it is.
-The nightly build and **Build pages now** use the same hook.
+Frontend: the API goes first, then the web app. Vercel never builds `main` from Git
+(`frontend/vercel.json` turns off Git deployments of `main`); the build is started through the
+Vercel deploy hook (`/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`) by the action
+`.github/actions/build-web-app`, which builds `main` and takes the domain when it is ready.
+
+- A push that changes the API (any of the **Backend checks** push paths): the last step of
+  **Deploy backend**, once the API answers through CloudFront, starts the build. A failed backend
+  deploy leaves the web app as it is.
+- A push that changes only the web app (`frontend/**`): **Deploy web app** starts the build at once.
+  It reads the Backend checks push paths from that workflow and leaves the build to Deploy backend
+  when the push touches any of them.
+- By hand: run **Deploy web app** from Actions, or **Build pages now** in admin settings.
+
+No watcher or manual promote is needed. The nightly build uses the same hook.
 
 ## MCP server
 
