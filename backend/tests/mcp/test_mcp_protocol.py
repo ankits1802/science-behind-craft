@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from app.api import mcp_tools
+from app.api import mcp_read_tools
 from app.api.mcp_tools import ToolContext, answer
 from app.core.errors import InvalidInput
 from app.services.craft_resolver import CraftIndexStore
@@ -93,7 +93,7 @@ async def test_an_unknown_craft_is_a_tool_error_naming_find_crafts(monkeypatch: 
     async def no_such_craft(*args: Any, **kwargs: Any) -> Any:
         raise InvalidInput("No craft has the slug Nowhere; find_crafts gives the slugs.")
 
-    monkeypatch.setattr(mcp_tools.knowledge_api, "craft_facts", no_such_craft)
+    monkeypatch.setattr(mcp_read_tools.knowledge_api, "craft_facts", no_such_craft)
     result = await call("get_facts", {"craft_slug": "Nowhere"})
     assert result == {
         "content": [{"type": "text", "text": "No craft has the slug Nowhere; find_crafts gives the slugs."}],
