@@ -2,15 +2,20 @@
 
 The web app draws a `MonographDocument` (`lib/monographDocument.ts`, mirrored from
 `research/monograph_document.py`) with one React renderer, so the approved Kutch Ajrakh page can
-become the template for every craft, family and category page. Until the parity proof (decision
-0106, item 5) the renderer is served only at the preview addresses below and is not indexed.
+become the template for every craft, family and category page. Every craft page is its document
+now (decision 0106, round 3c), except Kutch Ajrakh, whose approved static page is served until the
+parity proof (decision 0106, item 5) switches it.
 
-Last reviewed: 2026-11-19.
+Last reviewed: 2026-11-20.
 
 Code: `lib/monographDocumentShape.ts` (the runtime shape), `lib/monographRender.ts` (the marks, as
 `render_nodes` writes them), `lib/monographRenderElements.ts` (the same marks as React elements),
 `lib/monographRenderLayout.ts` (the page plan), `lib/monographRenderKit.ts` (what the kit's script
 reads), `lib/monographRenderServer.ts` (the server fetch and the preview metadata),
+`lib/monographMasthead.ts` (the generated label masthead), `lib/monographScopes.ts` (the kit scope
+of each kind), `lib/monographCite.ts` (Cite this), `lib/monographMetadata.ts` (a craft page's
+metadata), `lib/craftRecord.ts` and `lib/craftPlate.ts` (the craft without a monograph),
+`components/craft/CiteThis.tsx`, `components/craft/CraftWithoutMonograph.tsx`,
 `components/monograph/` (the page), `components/monograph/kinds/tools/` (the page-tool views),
 `lib/componentSpecsTools.ts` and `backend/app/research/component_specs_tools.py` (the tool specs),
 `backend/app/scripts/extract_specs_tools.py` with `extract_specs_tools_markup.py` (Ajrakh's tool
@@ -20,22 +25,36 @@ specs from its template).
 
 | Page | Route | Reads |
 |---|---|---|
-| a craft's monograph | `/crafts/<slug>/monograph` | `GET /api/crafts/{slug}/monograph` |
+| a craft | `/crafts/<slug>` | `GET /api/crafts/{slug}/monograph`, else `GET /api/crafts/{slug}/page` |
+| a craft's cited edition | `/crafts/<slug>/v<N>` | `GET /api/crafts/{slug}/monograph?version=N` |
+| a craft's monograph (alias) | `/crafts/<slug>/monograph` | `GET /api/crafts/{slug}/monograph` |
 | a category's monograph | `/categories/<slug>/monograph` | `GET /api/categories/{slug}/monograph` |
 
-Both are server components in `app/(reading)`, read through `publicFetch` like the craft page
-(tag `monograph-document:<subject>:<slug>`, revalidated daily, static params from `/site/pages`).
-A document the API does not return, or one off its shape (`parseMonographDocument`, which also
-holds the backend's rule that a component is drawn from a spec or a fragment, never both), is a
-404. Metadata: the document's title, `robots: { index: false, follow: false }` until the switch.
+All are server components in `app/(reading)`, read through `publicFetch` (tag
+`monograph-document:<subject>:<slug>`, revalidated daily, static params from `/site/pages`).
+
+- **`/crafts/<slug>`**: a slug in `CRAFT_MONOGRAPHS` (Kutch Ajrakh) hands over to its static page.
+  Any other craft draws its document (`serverCraftDocument`: 404 is "no document", any other
+  failure is thrown so a cached page stands) with `MonographPage`; without one, the craft list's
+  record from the craft page endpoint draws `CraftWithoutMonograph`; an unknown craft is a 404.
+  Metadata: `monographMetadata` (title, the lede as description, the canonical `/crafts/<slug>`,
+  the masthead photograph at 1280 with its caption and credit as Open Graph and Twitter image), or
+  `craftPageMetadata` for a craft without a monograph.
+- **`/crafts/<slug>/v<N>`**: that version of the document, or a 404.
+- The alias and the category preview keep the document's title and `robots: { index: false,
+  follow: false }`. A document off its shape (`parseMonographDocument`, which also holds the
+  backend's rule that a component is drawn from a spec or a fragment, never both) is a 404.
+- Pages are English (`lang="en"` on the page) and offer no language picker; a document carries its
+  `language` (owner, 2026-11-20).
 
 ## The page
 
 `MonographPage` draws, in this order, with the approved page's landmarks and classes so the kit's
 stylesheet (`MONOGRAPH_KIT_CSS`, loaded once as a React 19 stylesheet) styles it:
 
-1. the chapter rail `nav.kv-rail` (the first chapter unnumbered, the rest numbered 1 to N), the
-   phone menubar and the `#kv-menu` dialog with the reader's display tools;
+1. the chapter rail `nav.kv-rail` (the first chapter unnumbered, the rest numbered 1 to N; a
+   generated document's opening chapter is left out), the phone menubar and the `#kv-menu` dialog
+   with the reader's display tools;
 2. `#kv-main` with one `section.kv-ch` per chapter (`id` the chapter key, `data-ch` its number,
    `data-label` and `aria-label` its name);
 3. the coda line `footer.kv-foot`, the citation popover `#kv-pop`, `#kv-scrim`, the toast zone, the
@@ -68,14 +87,41 @@ The plan (`pagePlan`) is pure and tested:
   `p.t-lede`; an uncited `p` of 60 characters or fewer `p.kicker`; other `p` `p.t-body`; `li` runs
   `ul.kv-list`; `dt`/`dd` runs `dl.kv-terms`. An `li` that starts with a bold source number is a
   margin note: `aside.margin.note > ul > li[data-g=<source key>]`.
+- **Label masthead** (`labelMasthead`, a generated document): when the first chapter holds an
+  `h1` unit, the `p` before it is the kicker, the `dt`/`dd` run after it the place and GI, the
+  cited `p` run after those the lede, and the first `picture_plate` the photograph.
+  `DocumentMasthead` draws it with the editorial `Masthead`: the `SpecimenLabel` (masthead variant,
+  the name as `h1`, "Drawn from N sources" with the A to D strip) over the 16:7.4 photograph cropped
+  from its focal box with its caption and credit under it, the 4:3 photograph first and the label
+  after on paper below 1024px; the typographic plate on the family's ground when there is no
+  photograph. The lede follows in the reading column (`div.spread.mast-lede`, "The monograph" in
+  the rail, its sources as margin notes).
 - **Components** keep their layout place, except one another component places (layout `within`,
   a label named anywhere in a spec, or a `<kv-slot component="<label>"></kv-slot>` in a fragment),
-  which its owner draws.
+  which its owner draws. A top-level component drawn from its spec sits in the frame its kind has
+  on the approved page (`componentPlace`: `div.bx.bx-<scope>`, then `div.screen` and `div.wrap` as
+  the template has them, a plate in the reading column); a fragment brings its own.
 - **Sources**: the chapter keyed `sources` draws every source a unit cites, in number order
   (`div.sources.kv-sources`, rows `li.kv-src-li` with `button.src[data-g][aria-pressed]`, byline,
   grade in words, "Supports N sentences here", "Open the source"). The document does not say which
   group a source belongs to, so a passage of bare headings in that chapter (Ajrakh's five group
-  names) is replaced by the one list.
+  names) is replaced by the one list. A generated document's list (`MonographSources`) groups its
+  sources by reliability, A first, those without a grade last, under a line counting them, with
+  `#kv-src-status` for the kit's lighting; then Cite this monograph (`CiteThis`: Text or BibTeX, the
+  lower-case versioned address `/crafts/<slug>/v<N>`, one Copy citation button, the access date of
+  the reader's day).
+- **A head passage** without a numeral unit gets `p.chapter-no.in-main` with the chapter number.
+
+## A craft without a monograph
+
+`CraftWithoutMonograph` (SYSTEM.md section 4, the master board's fifth screen) draws the craft
+list's record (`craftRecordView` of the craft page response): the typographic plate at the masthead
+ratio on the family's ground (`plateMaterial`), the masthead label (kicker "Craft", family and
+sub-family, the name as `h1` with its own-script name only when sourced and reviewed, the GI line,
+the place, "From the KalaVigyan craft list" and the name's source), "What the craft list records"
+as a `FactGrid` (family, sub-family, home state, practised in) and an `EmptyState` "Start the
+research on {craft}" with the craft's plate and its three suggested questions as an `ActionGroup`
+of links to the ask screen. No chapter rail, no Cite this, no gap admissions.
 
 ## Units
 

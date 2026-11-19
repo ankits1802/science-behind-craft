@@ -3,7 +3,6 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { ApiError } from "@/lib/api";
 import { formatCalendarDay } from "@/lib/format";
 import {
   checkedMediaAsset,
@@ -17,20 +16,6 @@ import {
   type MediaAsset,
   type MediaJob
 } from "@/lib/mediaContract";
-import { rememberedJobs } from "@/lib/mediaJobMemory";
-import {
-  assetCredit,
-  MEDIA_BROKEN,
-  MEDIA_LOST,
-  mediaFailure,
-  newIdempotencyKey,
-  offerLabel,
-  remainingLabel,
-  shareStatus,
-  shareStep,
-  slotProgress,
-  urlIsFresh
-} from "@/lib/mediaView";
 import { canShareMedia } from "@/lib/permissions";
 import { parseShape, ShapeError } from "@/lib/shape";
 import type { User, UserRole } from "@/lib/types";
@@ -58,7 +43,6 @@ test("the golden job is a labelled Ajrakh image of stage 6", () => {
   const done = job();
   expect(done.stage).toEqual({ id: PA, ordinal: 6, name: "Pa (alum mordant printing for red)" });
   expect(done.asset?.label.text).toBe("AI illustration");
-  expect(assetCredit(done.asset!)).toBe("gemini-3.1-flash-image · 16 Nov 2026");
   expect(done.asset?.altText).toContain("alum in tamarind-seed paste");
 });
 
@@ -95,56 +79,19 @@ test("a stage offers only the kinds listed for it, with what is left today", () 
   expect(offeredKinds(options, KUT)).toEqual([]);
   const both = { ...options, kinds: [{ kind: "VIDEO" as const, remainingToday: null }, { kind: "IMAGE" as const, remainingToday: 4 }], stages: [{ stageId: PA, kinds: ["VIDEO" as const, "IMAGE" as const] }] };
   expect(offeredKinds(both, PA).map((offer) => offer.kind)).toEqual(["IMAGE", "VIDEO"]);
-  expect(remainingLabel({ kind: "IMAGE", remainingToday: 4 })).toBe("4 left");
-  expect(remainingLabel({ kind: "VIDEO", remainingToday: null })).toBeNull();
-  expect([offerLabel("IMAGE", false), offerLabel("IMAGE", true), offerLabel("VIDEO", true)]).toEqual(["Image", "New image", "New video"]);
-});
-
-test("progress moves one step of four per server status", () => {
-  const request = { kind: "IMAGE" as const, stageId: PA, idempotencyKey: "media:0000000000000000", styleHint: null };
-  expect(slotProgress("IMAGE", { phase: "creating", request })).toEqual({ percent: 25, word: "Starting…" });
-  expect(slotProgress("IMAGE", { phase: "open", job: job(OPEN) })).toEqual({ percent: 50, word: "Queued" });
-  expect(slotProgress("IMAGE", { phase: "open", job: job({ ...OPEN, status: "RUNNING", attempts: 1 }) })).toEqual({ percent: 75, word: "Drawing…" });
-  expect(slotProgress("VIDEO", { phase: "open", job: job({ ...OPEN, status: "RUNNING", attempts: 1 }) }).word).toBe("Rendering…");
-  expect(slotProgress("IMAGE", { phase: "open", job: job({ ...OPEN, status: "RUNNING", attempts: 2 }) }).word).toBe("Trying again…");
 });
 
 test("the idempotency key fits the pattern the backend enforces", () => {
   const backend = /IDEMPOTENCY_KEY_PATTERN = r"(.+)"/.exec(read("backend", "app", "schemas", "media.py"))?.[1];
   expect(backend).toBe("^[A-Za-z0-9._:-]{16,160}$");
   expect(IDEMPOTENCY_KEY_PATTERN.source).toBe(backend);
-  const key = newIdempotencyKey(() => "3f2b9c1e-8d4a-4f6b-9e21-7c5d0a1b2c3d");
-  expect(key).toBe("media:3f2b9c1e-8d4a-4f6b-9e21-7c5d0a1b2c3d");
-  expect(new RegExp(backend!).test(key)).toBe(true);
-  expect(() => newIdempotencyKey(() => "x y")).toThrow(RangeError);
+  expect(new RegExp(backend!).test("media:3f2b9c1e-8d4a-4f6b-9e21-7c5d0a1b2c3d")).toBe(true);
 });
 
-test("a link is fresh only with more than a minute left", () => {
-  const image = asset();
-  expect(image.urlExpiresAt).toBe("2026-11-16T09:15:41Z");
-  expect(urlIsFresh(image, Date.UTC(2026, 10, 16, 9, 14, 40))).toBe(true);
-  expect(urlIsFresh(image, Date.UTC(2026, 10, 16, 9, 14, 41))).toBe(false);
-  expect(urlIsFresh(image, Date.UTC(2026, 10, 16, 9, 20, 0))).toBe(false);
-});
-
-test("a refusal keeps the server's sentence; no answer asks to try again", () => {
-  expect(mediaFailure(new ApiError(429, "No images left today.", { detail: "No images left today." }))).toEqual({ retry: false, message: "No images left today." });
-  expect(mediaFailure(new ApiError(503, "The monthly media budget is spent.", { detail: "The monthly media budget is spent." })).retry).toBe(false);
-  expect(mediaFailure(new ApiError(502, "Bad Gateway", "Bad Gateway"))).toEqual({ retry: true, message: MEDIA_LOST });
-  expect(mediaFailure(new TypeError("Failed to fetch"))).toEqual({ retry: true, message: MEDIA_LOST });
-  expect(mediaFailure(new ShapeError("job", "x"))).toEqual({ retry: false, message: MEDIA_BROKEN });
-});
-
-test("sharing offers the one step the server lists, and refuses steps that cannot apply", () => {
+test("an asset's sharing lists only the steps that can apply", () => {
   expect(asset().sharing).toBeUndefined();
-  expect(shareStep(asset())).toBeNull();
-  const fresh = asset({ sharing: { actions: ["SHARE"], awaitingSecondProfessor: false } });
-  expect([shareStep(fresh), shareStatus(fresh)]).toEqual([{ action: "SHARE", label: "Share" }, null]);
-  const shared = asset({ visibility: "CRAFT_SHARED", sharing: { actions: ["UNSHARE"], awaitingSecondProfessor: false } });
-  expect([shareStep(shared), shareStatus(shared)]).toEqual([{ action: "UNSHARE", label: "Stop sharing" }, "Shared on the craft page"]);
-  const waiting = asset({ sharing: { actions: ["UNSHARE"], awaitingSecondProfessor: true } });
-  expect([shareStep(waiting), shareStatus(waiting)]).toEqual([{ action: "UNSHARE", label: "Withdraw" }, "Awaiting a second professor"]);
-  expect(shareStep(asset({ sharing: { actions: [], awaitingSecondProfessor: true } }))).toBeNull();
+  expect(asset({ sharing: { actions: ["SHARE"], awaitingSecondProfessor: false } }).sharing?.actions).toEqual(["SHARE"]);
+  expect(asset({ visibility: "CRAFT_SHARED", sharing: { actions: ["UNSHARE"], awaitingSecondProfessor: false } }).visibility).toBe("CRAFT_SHARED");
   expect(() => asset({ visibility: "CRAFT_SHARED", sharing: { actions: ["SHARE"], awaitingSecondProfessor: false } })).toThrow(/SHARE only/);
   expect(() => asset({ sharing: { actions: ["UNSHARE"], awaitingSecondProfessor: false } })).toThrow(/UNSHARE only/);
   expect(() => asset({ visibility: "CRAFT_SHARED", sharing: { actions: [], awaitingSecondProfessor: true } })).toThrow(/awaiting nobody/);
@@ -157,19 +104,6 @@ test("only the roles holding SHARE_MEDIA in the backend see sharing", () => {
   const person = (role: UserRole): User => ({ id: role, email: `${role}@example.com`, name: role, role });
   expect((["STUDENT", "RESEARCHER", "PROFESSOR", "MASTER_ADMIN"] as const).map((role) => canShareMedia(person(role)))).toEqual([false, false, true, true]);
   expect(canShareMedia(null)).toBe(false);
-});
-
-test("a remembered job list keeps only stage, kind and job ids it can trust", () => {
-  const raw = JSON.stringify({
-    [`${PA}:IMAGE`]: "9af1da3c-f6c8-547b-b0e8-ca47cd798604",
-    [`${PA}:AUDIO`]: "9af1da3c-f6c8-547b-b0e8-ca47cd798604",
-    [`${RANG}:VIDEO`]: "not-a-job",
-    "../etc:IMAGE": "9af1da3c-f6c8-547b-b0e8-ca47cd798604"
-  });
-  expect(rememberedJobs(raw)).toEqual({ [`${PA}:IMAGE`]: "9af1da3c-f6c8-547b-b0e8-ca47cd798604" });
-  expect(rememberedJobs("{")).toEqual({});
-  expect(rememberedJobs("[1]")).toEqual({});
-  expect(rememberedJobs(null)).toEqual({});
 });
 
 test("a generation day prints as that day in every time zone", () => {

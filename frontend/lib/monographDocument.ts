@@ -2,6 +2,8 @@ export const MONOGRAPH_DOCUMENT_PATH = (slug: string) => `/crafts/${encodeURICom
 export const MONOGRAPH_KIT_CSS = "/monographs/kit/monograph.css";
 export const MONOGRAPH_KIT_JS = "/monographs/kit/monograph.js";
 export const SUBJECT_KINDS = ["craft", "family", "category"] as const;
+export const ENGLISH = "en";
+export const LANGUAGE_TAG = /^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/;
 
 export type MonographMark = { m: string; c?: MonographNode[] } & Record<string, unknown>;
 export type MonographNode = string | MonographMark;
@@ -46,6 +48,7 @@ export type MonographDocument = {
   schemaVersion: 1;
   subjectKind: (typeof SUBJECT_KINDS)[number];
   subjectSlug: string;
+  language: string;
   title: string;
   version: number;
   content: MonographContent;

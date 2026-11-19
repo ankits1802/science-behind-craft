@@ -163,6 +163,8 @@ async def _sections(session: AsyncSession) -> None:
     session.add_all(
         [
             _section("CHEMISTRY", CRAFT_CLAIM, CRAFT_TEXT, craftId=CRAFT),
+            _section("PROCESS", CRAFT_CLAIM, "The cloth is printed with an alum paste.", craftId=CRAFT),
+            _section("GEOGRAPHY", CRAFT_CLAIM, "The river water rinses the printed cloth.", craftId=CRAFT),
             _section(
                 "HISTORY", CRAFT_CLAIM, "A proposed history sentence.", craftId=CRAFT, status="PROPOSED"
             ),
@@ -222,7 +224,7 @@ async def _curated_picture(session: AsyncSession) -> None:
             display="INLINE",
             provider="curation",
             pageUrl="https://commons.wikimedia.org/wiki/File:Page_docs.jpg",
-            imageUrl="https://upload.wikimedia.org/page-docs.jpg",
+            imageUrl="https://upload.wikimedia.org/wikipedia/commons/a/ab/Page_docs.jpg",
             width=1600,
             height=1200,
             title="A printed cloth",

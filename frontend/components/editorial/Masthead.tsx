@@ -29,23 +29,29 @@ function focalVariables(picture: MastheadPicture): CSSProperties {
   return variables as CSSProperties;
 }
 
+function MastheadFigure({ picture }: { picture: MastheadPicture }) {
+  return (
+    <figure className="kv-masthead-figure">
+      <PlatePicture alt={picture.alt} sources={pictureSources(picture.src, "masthead", picture.originalWidth)} priority className="kv-masthead-picture" />
+      <figcaption className="kv-masthead-caption">
+        <p className="kv-caption">{picture.caption}</p>
+        <p className="kv-credit">{picture.credit}</p>
+      </figcaption>
+    </figure>
+  );
+}
+
 export function Masthead({ label, picture, material, plateKicker }: MastheadProps) {
   return (
     <header data-testid="masthead">
       <div className="kv-masthead" data-photo={picture ? "" : undefined} style={picture ? focalVariables(picture) : undefined}>
         {picture ? (
-          <PlatePicture alt={picture.alt} sources={pictureSources(picture.src, "masthead", picture.originalWidth)} priority className="kv-masthead-picture" />
+          <MastheadFigure picture={picture} />
         ) : (
           <TypographicPlate material={material} englishName={label.name} nativeName={label.nativeName} kicker={plateKicker} size="masthead" decorative className="kv-masthead-picture" />
         )}
         <SpecimenLabel {...label} variant="masthead" />
       </div>
-      {picture ? (
-        <div className="mt-3 lg:ms-auto lg:max-w-[46%]">
-          <p className="kv-caption">{picture.caption}</p>
-          <p className="kv-credit">{picture.credit}</p>
-        </div>
-      ) : null}
     </header>
   );
 }

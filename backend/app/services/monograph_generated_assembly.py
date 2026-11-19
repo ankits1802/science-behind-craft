@@ -6,7 +6,10 @@ from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import Any
 
+from pydantic import ValidationError
+
 from app.research.chapter_keys import CHAPTER_KEYS, DISCIPLINE_CHAPTERS
+from app.research.component_specs import checked_spec
 from app.research.media_refs import MediaRef
 from app.research.monograph_document import MonographDocument
 from app.research.monograph_page import CitedSource, ComponentEntry, LayoutEntry, MonographContent, TextUnit
@@ -16,10 +19,14 @@ from .knowledge_view import ClaimView
 from .monograph_generated_drawings import Drawings
 from .monograph_generated_parts import PlacedPicture, RegisteredComponent, StoredSection
 from .monograph_generated_units import (
+    LEDE_FIELD,
+    LEDE_SENTENCES,
     MASTHEAD_CHAPTER,
+    SOURCES_CHAPTER,
     DraftUnit,
     SourceBook,
     SubjectRecord,
+    chapter_heading,
     cited_unit,
     heading_unit,
     masthead_units,
@@ -69,6 +76,7 @@ class _Page:
     reused: dict[str, str] = field(default_factory=dict)
     default: list[LayoutEntry] = field(default_factory=list)
     held: dict[str, list[str]] = field(default_factory=dict)
+    lede: list[str] = field(default_factory=list)
     hero: str | None = None
 
 
@@ -79,8 +87,10 @@ def assembled_document(parts: GeneratedParts, drawings: Drawings) -> MonographDo
         return None
     pictures = _pictures(parts, page)
     components = _components(parts, page, drawings)
-    _lay_out(parts, page, (texts, pictures, components))
-    arranged = arranged_layout(page.default, parts.layout)
+    _lay_out(page, (texts, pictures, components))
+    arranged = _headed(
+        parts.record, page, [*_opening(parts, page), *arranged_layout(page.default, parts.layout)]
+    )
     book = SourceBook()
     citations, claims = _cite(parts, page, arranged, book)
     for label, monograph in page.reused.items():
@@ -112,19 +122,29 @@ def assembled_document(parts: GeneratedParts, drawings: Drawings) -> MonographDo
 
 def _texts(parts: GeneratedParts, page: _Page) -> dict[str, list[str]]:
     taken: set[str] = set()
+    named = {entry.ref for entry in parts.layout.entries} if parts.layout is not None else set()
     by_chapter: dict[str, list[str]] = {}
     for section in parts.sections:
         drafts = section_units(section.field, section.sentences, parts.visible, taken)
-        if not drafts:
+        page.drafts.update((draft.unit_id, draft) for draft in drafts)
+        if section.field == LEDE_FIELD and not page.lede:
+            page.lede = [draft.unit_id for draft in drafts if draft.unit_id not in named][:LEDE_SENTENCES]
+        body = [draft.unit_id for draft in drafts if draft.unit_id not in page.lede]
+        if not body:
             continue
-        heading_id, heading = heading_unit(section.field)
-        page.units[heading_id] = heading
-        refs = by_chapter.setdefault(heading.chapter, [])
-        refs.append(heading_id)
-        for draft in drafts:
-            page.drafts[draft.unit_id] = draft
-            refs.append(draft.unit_id)
+        refs = by_chapter.setdefault(DISCIPLINE_CHAPTERS[section.field], [])
+        refs.extend(_section_heading(section.field, parts.record, page))
+        refs.extend(body)
     return by_chapter
+
+
+def _section_heading(field: str, record: SubjectRecord, page: _Page) -> list[str]:
+    heading_id, heading = heading_unit(field)
+    chapter = chapter_heading(heading.chapter, record)
+    if chapter is not None and chapter[1].nodes == heading.nodes:
+        return []
+    page.units[heading_id] = heading
+    return [heading_id]
 
 
 def _pictures(parts: GeneratedParts, page: _Page) -> dict[str, list[str]]:
@@ -178,21 +198,42 @@ def _components(parts: GeneratedParts, page: _Page, drawings: Drawings) -> dict[
     return by_chapter
 
 
-def _lay_out(parts: GeneratedParts, page: _Page, found: Sequence[Mapping[str, list[str]]]) -> None:
+def _lay_out(page: _Page, found: Sequence[Mapping[str, list[str]]]) -> None:
     texts, pictures, components = found
-    masthead = masthead_units(parts.record)
-    page.units.update(masthead)
     chapters = dict.fromkeys([*CHAPTER_KEYS, *pictures, *texts, *components])
     for chapter in chapters:
-        refs = [*pictures.get(chapter, []), *texts.get(chapter, [])]
-        if chapter == MASTHEAD_CHAPTER:
-            within = page.hero if page.hero in refs else None
-            heads = [within] if within is not None else []
-            page.default += [e for ref in heads for e in _entry(chapter, ref, None, page)]
-            page.default += [e for ref in masthead for e in _entry(chapter, ref, within, page)]
-            refs = [ref for ref in refs if ref != within]
+        refs = [*(ref for ref in pictures.get(chapter, []) if ref != page.hero), *texts.get(chapter, [])]
         page.default += [e for ref in refs for e in _entry(chapter, ref, None, page)]
         page.default += [e for ref in components.get(chapter, []) for e in _entry(chapter, ref, None, page)]
+
+
+def _opening(parts: GeneratedParts, page: _Page) -> list[LayoutEntry]:
+    masthead = masthead_units(parts.record)
+    page.units.update(masthead)
+    heads = [page.hero] if page.hero is not None else []
+    return [e for ref in (*heads, *masthead, *page.lede) for e in _entry(MASTHEAD_CHAPTER, ref, None, page)]
+
+
+def _headed(record: SubjectRecord, page: _Page, arranged: Sequence[LayoutEntry]) -> list[LayoutEntry]:
+    headed: list[LayoutEntry] = []
+    seen = {MASTHEAD_CHAPTER}
+    for entry in arranged:
+        if entry.chapter not in seen:
+            seen.add(entry.chapter)
+            headed.extend(_chapter_head(entry.chapter, record, page))
+        headed.append(entry)
+    if SOURCES_CHAPTER not in seen:
+        headed.extend(_chapter_head(SOURCES_CHAPTER, record, page))
+    return headed
+
+
+def _chapter_head(chapter: str, record: SubjectRecord, page: _Page) -> list[LayoutEntry]:
+    heading = chapter_heading(chapter, record)
+    if heading is None:
+        return []
+    ref, unit = heading
+    page.units[ref] = unit
+    return [LayoutEntry(chapter=chapter, kind="unit", ref=ref, within=None)]
 
 
 def _entry(chapter: str, ref: str, within: str | None, page: _Page) -> list[LayoutEntry]:
@@ -261,7 +302,11 @@ def _picture_plate(
         "picture": shown,
         "figure": {"classes": [PLATE_CLASS], "captions": [{"unit": caption_id}], "credit": credit_id},
     }
-    return spec, units
+    try:
+        checked = checked_spec(PICTURE_KIND, spec)
+    except ValidationError:
+        return None
+    return checked.model_dump(mode="json", by_alias=True), units
 
 
 def _plain_unit(text: str) -> TextUnit:

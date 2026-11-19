@@ -5,7 +5,7 @@ A page in the monograph form is a document: `research/monograph_document.Monogra
 0105) is split into a shell, one fragment per component and a page-wide kit, and its static build
 reassembles them so the served page stays byte for byte what the owner approved.
 
-Last reviewed: 2026-11-19.
+Last reviewed: 2026-11-20.
 
 Code: `research/monograph_page.py` (slots, `render_page`, `render_fragment`,
 `assemble_template`, the kit file format), `research/monograph_document.py` (the document,
@@ -14,22 +14,33 @@ document builder, storing and reading versions), `services/monograph_load.py` (s
 when it changed), `models/monograph_documents.py` and migration `0041_monograph_documents` (the
 table), `api/routes/craft_monograph.py` (the route), `scripts/build_monograph.py` (the static page,
 the served kit and the golden), `scripts/split_monograph.py` (the split); the web shapes are
-`frontend/lib/monographDocument.ts` and `frontend/lib/componentViewContract.ts`.
+`frontend/lib/monographDocument.ts` and `frontend/lib/componentViewContract.ts`. Migration
+`0045_document_language` keys stored documents by language (all rows English).
 
 ## GET /api/crafts/{slug}/monograph
 
 Public (`public_reader`, the anonymous read limit). The slug resolves like the craft page's (case,
-merges); an unknown craft is 404 with the craft page's detail.
+merges); an unknown craft is 404 with the craft page's detail. Query: `lang` (optional, a language
+tag of at most 16 characters) and `version` (optional, from 1).
 
-- **200**: the latest stored document of that craft as JSON (`MonographDocument`, by alias). With
-  `ETag: "v<version>-<contentHash>"`, `Cache-Control: public, max-age=300` for a signed-out reader
-  (`private, no-cache` signed in) and `Vary: Authorization`, as every public read.
-- **304**: `If-None-Match` names the current tag.
-- **404** `This craft's page is not a monograph document yet.`: nothing is stored and
-  `generated_fallback(session, slug)` (in the route module, the one adapter) returns `None`. It
-  returns `None` until documents are generated for pages without authored content; it is then
-  pointed at `services.monograph_generated.generated_document(session, "craft", slug)`, and a
-  generated document is served with the tag of its own hash and version.
+- **200**: the latest stored document of that craft in the served language as JSON
+  (`MonographDocument`, by alias, its `language` the row's), or, with nothing stored, the generated
+  one (`generated_fallback(session, slug)`, the route's one adapter, which calls
+  `services.monograph_generated.generated_document(session, "craft", slug)`) with the tag of its own
+  hash and version. With `ETag: "v<version>-<contentHash>"`, `Content-Language`,
+  `Cache-Control: public, max-age=300` for a signed-out reader (`private, no-cache` signed in) and
+  `Vary: Authorization`, as every public read.
+- **English only, room for translation** (owner, 2026-11-20): `served_language(lang)` serves only
+  `SERVED_LANGUAGES` (`en`); a request for any other language gets the English document with
+  `Content-Language: en`. Generated documents are English.
+- **`version`**: that stored version, or the generated document when its version is that number;
+  otherwise 404 `This craft's monograph has no such version.`. The web app's `/crafts/<slug>/v<N>`
+  reads it, the address Cite this monograph gives.
+- **304**: `If-None-Match` names the current tag (with `Content-Language`).
+- **404** `This craft's page is not a monograph document yet.`: nothing is stored and nothing is
+  generated. A craft needs `CRAFT_SECTIONS_MIN` (3) published sections for a generated document
+  (`enough_sections`; a family or category needs one). The web app then draws the craft without a
+  monograph.
 
 ## The document
 
@@ -37,6 +48,7 @@ merges); an unknown craft is 404 with the craft page's detail.
 |---|---|
 | `schemaVersion` | 1 |
 | `subjectKind`, `subjectSlug` | `craft` (or `family`, `category`) and its canonical slug |
+| `language` | the document's language, a BCP 47 tag (`LANGUAGE_TAG`), `en` unless written otherwise |
 | `title` | the subject's name (`Craft.name`; the master list's name offline) |
 | `version` | the stored version, from 1; a document built but not stored is version 1 |
 | `content` | the page's `MonographContent` (decision 0105): sources, citations, citation facts, data, text units, components and layout |
@@ -57,21 +69,42 @@ A fragment holds no other slot.
 
 ## Versions
 
-`MonographDocument` (table): `id`, `subjectKind`, `subjectSlug`, `version` (unique per subject,
-at least 1), `document` (JSONB, the document with its version), `contentHash`, `createdAt`. One
-row per version; rows are never changed.
+`MonographDocument` (table): `id`, `subjectKind`, `subjectSlug`, `language` (default `en`),
+`version` (unique per subject and language, at least 1), `document` (JSONB, the document with its
+version and language), `contentHash`, `createdAt`. One row per version of a language; rows are
+never changed. Migration `0045_document_language` added `language` (existing rows `en`, also
+written into their JSON) and moved the unique key to subject, slug, language and version; its
+downgrade keeps only the English rows.
 
 - `store_document(session, document)` is the one writer. `contentHash` is the SHA-256 of the
-  document's JSON (by alias, keys sorted, compact) without `version`. When it equals the latest
-  row's, nothing is stored and it returns `None`; otherwise it stores the next version and returns
-  its number.
-- `stored_document(session, subject_kind, slug)` returns the latest version as a
-  `MonographDocument`, or `None`. `latest_document_row` returns the row (the route serves its JSON
-  without validating it again).
+  document's JSON (by alias, keys sorted, compact) without `version` and `language`, the row's key.
+  When it equals the latest row's of that language, nothing is stored and it returns `None`;
+  otherwise it stores the next version of that language and returns its number.
+- `stored_document(session, subject_kind, slug, language="en")` returns the latest version as a
+  `MonographDocument`, or `None`. `document_row(session, kind, slug, language=, version=)` returns
+  the latest row, or that version's (the route serves its JSON without validating it again);
+  `latest_document_row` is the latest.
 - `load_monograph` (`python -m app.scripts.load_monograph`, and the nightly reload) stores the
   document of a craft with authored content after its sections and components; its report's
   `documentVersion` is the version it stored, or `null` when the document was unchanged or the
   craft has no authored folder. A folder named by another slug than the craft's is refused.
+
+## The generated document
+
+`services/monograph_generated_assembly.assembled_document` builds a page without authored content
+from its published sections, registered components, curated pictures and `PageLayout`:
+
+- chapter `opening` first: the masthead picture (the HERO role, its caption and credit units
+  within it), the label units (`masthead-kicker` `p` with the "Monograph" and family spans,
+  `masthead-title` `h1`, then `dt`/`dd` pairs `Place` and `GI`) and the lede: the first three
+  sentences of the OVERVIEW section that the layout does not place elsewhere;
+- every other chapter opens with its title, an `h2` unit `chapter-<key>` (`chapter_title`: "Why
+  <first state>" or "Where it is made", "Market and GI" only with a GI), then its pictures, its
+  sections (an `h3` section title unless it repeats the chapter's) and its components;
+- a closing `sources` chapter with its `h2`, under which the renderer lists the sources.
+
+A picture's spec is the full `PicturePlateSpec` (`checked_spec`, every field written); a picture
+whose file is off the picture contract is left out.
 
 ## The authored files
 
@@ -136,4 +169,7 @@ per component that is the element its anchor selects, every slot where the layou
 equal in the page and the served files), `tests/research/test_monograph_authored.py` (the builder,
 specs over fragments, the hash, the golden), `tests/research/test_monograph_page.py` (the static
 build byte for byte), `tests/public/test_craft_monograph_route.py` (the route) and
-`tests/db/test_monograph_document_db.py` (a new version stored, an unchanged one not, the load).
+`tests/db/test_monograph_document_db.py` (a new version stored, an unchanged one not, each
+language its own versions, the load), `tests/test_document_language_migration.py` (the key),
+`tests/layouts/test_generated_document.py` and `tests/layouts/test_generated_chapters.py` (the
+generated layout, chapter titles, the lede, the section minimum, the picture specs).

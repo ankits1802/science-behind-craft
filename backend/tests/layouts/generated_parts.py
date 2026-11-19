@@ -17,9 +17,11 @@ from .pictures import picture
 
 __all__ = [
     "ALUM",
+    "BAGH",
     "GI_JOURNAL",
     "HIDDEN",
     "PLAYER",
+    "RECORD",
     "SURVEY",
     "TEXT_ALUM",
     "TEXT_BAGH",
@@ -27,6 +29,7 @@ __all__ = [
     "fragment_monograph",
     "generated",
     "hero_layout",
+    "media",
 ]
 
 ALUM = uuid.UUID("9a1e0000-0000-4000-8000-0000000000a1")

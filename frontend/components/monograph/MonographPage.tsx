@@ -1,51 +1,108 @@
+import type { ReactNode } from "react";
+
+import { CiteThis } from "@/components/craft/CiteThis";
 import { AuthoredShell } from "@/components/monograph/AuthoredShell";
-import { ComponentSlot } from "@/components/monograph/ComponentSlot";
+import { ComponentSlot, slotDrawing } from "@/components/monograph/ComponentSlot";
+import { DocumentMasthead } from "@/components/monograph/DocumentMasthead";
 import { KitScript } from "@/components/monograph/KitScript";
 import { KitShellTail } from "@/components/monograph/KitShellTail";
 import { MonographMasthead } from "@/components/monograph/MonographMasthead";
 import { MonographPassage } from "@/components/monograph/MonographPassage";
 import { MonographRail } from "@/components/monograph/MonographRail";
+import { MonographSources } from "@/components/monograph/MonographSources";
 import { KitPreferences } from "@/components/monograph/ReaderSettings";
 import { SourceList } from "@/components/monograph/SourceList";
+import { citeKey, versionedUrl, type Citable } from "@/lib/monographCite";
 import { MONOGRAPH_KIT_CSS, type MonographDocument } from "@/lib/monographDocument";
-import { pagePlan, type ChapterBlock, type ChapterPlan, type MastheadPlan } from "@/lib/monographRenderLayout";
+import { componentKind, pagePlan, railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
+import { componentPlace, type KitFrame } from "@/lib/monographScopes";
 
-function BlockView({ document, chapter, block }: { document: MonographDocument; chapter: ChapterPlan; block: ChapterBlock }) {
+const CITED_SUBJECT = "craft";
+
+function framed(frame: KitFrame, children: ReactNode): ReactNode {
+  if (frame === "bare") return children;
+  if (frame === "screen") return <div className="screen">{children}</div>;
+  const inner = frame === "column" ? (
+    <div className="spread">
+      <div className="main">{children}</div>
+    </div>
+  ) : (
+    children
+  );
+  return (
+    <div className="screen">
+      <div className="wrap kv-passage">{inner}</div>
+    </div>
+  );
+}
+
+function ComponentScope({ kind, children }: { kind: string | null; children: ReactNode }) {
+  const place = componentPlace(kind);
+  return (
+    <div className={`bx bx-${place.scope}`} data-kind={kind ?? undefined}>
+      {framed(place.frame, children)}
+    </div>
+  );
+}
+
+type BlockProps = { document: MonographDocument; chapter: ChapterPlan; block: ChapterBlock; labelled: boolean };
+
+function BlockView({ document, chapter, block, labelled }: BlockProps) {
   if (block.kind === "passage") return <MonographPassage document={document} chapter={chapter} passage={block} />;
-  if (block.kind === "component") return <ComponentSlot document={document} label={block.label} />;
-  return <SourceList document={document} />;
+  if (block.kind === "component") {
+    const slot = <ComponentSlot document={document} label={block.label} />;
+    if (slotDrawing(document, block.label) !== "view") return slot;
+    return <ComponentScope kind={componentKind(document, block.label)}>{slot}</ComponentScope>;
+  }
+  return labelled ? <MonographSources document={document} /> : <SourceList document={document} />;
 }
 
 function blockKey(block: ChapterBlock, at: number): string {
   return block.kind === "component" ? block.label : `${block.kind}-${at}`;
 }
 
-export function MonographChapter({ document, chapter, masthead }: { document: MonographDocument; chapter: ChapterPlan; masthead: MastheadPlan | null }) {
+type ChapterProps = { document: MonographDocument; chapter: ChapterPlan; masthead: MastheadPlan | null; label?: LabelMasthead | null; labelled?: boolean };
+
+export function MonographChapter({ document, chapter, masthead, label = null, labelled = false }: ChapterProps) {
   return (
     <section className="kv-ch" id={chapter.key} data-ch={chapter.index} data-label={chapter.label} aria-label={chapter.label}>
-      {masthead ? <MonographMasthead document={document} masthead={masthead} /> : null}
+      {label ? <DocumentMasthead document={document} label={label} /> : masthead ? <MonographMasthead document={document} masthead={masthead} /> : null}
       {chapter.blocks.map((block, at) => (
-        <BlockView key={blockKey(block, at)} document={document} chapter={chapter} block={block} />
+        <BlockView key={blockKey(block, at)} document={document} chapter={chapter} block={block} labelled={labelled} />
       ))}
     </section>
+  );
+}
+
+export function documentCitation(document: MonographDocument): Citable | null {
+  if (document.subjectKind !== CITED_SUBJECT) return null;
+  return { kind: "monograph", title: document.title, version: document.version, url: versionedUrl(document.pageUrl, document.version), key: citeKey(document.subjectSlug, document.version) };
+}
+
+function DocumentChapters({ document, plan }: { document: MonographDocument; plan: PagePlan }) {
+  const labelled = plan.label !== null;
+  const cite = labelled ? documentCitation(document) : null;
+  return (
+    <div id="kv-main">
+      {plan.chapters.map((chapter) => (
+        <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={chapter.index === 0 ? plan.masthead : null} label={chapter.index === 0 ? plan.label : null} labelled={labelled} />
+      ))}
+      {cite ? (
+        <div className="kv-page kv-citethis-place">
+          <CiteThis cite={cite} />
+        </div>
+      ) : null}
+    </div>
   );
 }
 
 export function MonographPage({ document }: { document: MonographDocument }) {
   const plan = pagePlan(document);
   return (
-    <div className="kv-monograph ms-[calc(50%-50vw)] w-screen" data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
+    <div className="kv-monograph ms-[calc(50%-50vw)] w-screen" lang={document.language} data-subject={`${document.subjectKind}:${document.subjectSlug}`} data-version={document.version}>
       <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
-      <MonographRail chapters={plan.chapters} />
-      {document.shell !== null ? (
-        <AuthoredShell document={document} shell={document.shell} />
-      ) : (
-        <div id="kv-main">
-          {plan.chapters.map((chapter) => (
-            <MonographChapter key={chapter.key} document={document} chapter={chapter} masthead={chapter.index === 0 ? plan.masthead : null} />
-          ))}
-        </div>
-      )}
+      <MonographRail chapters={railChapters(plan)} />
+      {document.shell !== null ? <AuthoredShell document={document} shell={document.shell} /> : <DocumentChapters document={document} plan={plan} />}
       <KitShellTail document={document} />
       <KitPreferences />
       <KitScript />

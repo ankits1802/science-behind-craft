@@ -6,17 +6,22 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from app.research.chapter_keys import CHAPTER_KEYS, DISCIPLINE_CHAPTERS
+from app.research.chapter_keys import CHAPTER_TITLES, DISCIPLINE_CHAPTERS
 from app.research.monograph_page import CitedSource, Quote, TextUnit
 from app.research.sections import DISCIPLINE_TITLES
 
+from .craft_chapters import chapter_title
 from .knowledge_view import ClaimView
 
 __all__ = [
+    "LEDE_FIELD",
+    "LEDE_SENTENCES",
     "MASTHEAD_CHAPTER",
+    "SOURCES_CHAPTER",
     "DraftUnit",
     "SourceBook",
     "SubjectRecord",
+    "chapter_heading",
     "cited_nodes",
     "cited_unit",
     "heading_unit",
@@ -30,7 +35,13 @@ DIGEST_CHARS = 10
 SOURCE_KEY_PREFIX = "g"
 SENTENCE_TAG = "p"
 HEADING_TAG = "h3"
-MASTHEAD_CHAPTER = CHAPTER_KEYS[0]
+CHAPTER_HEAD_TAG = "h2"
+CHAPTER_HEAD_PREFIX = "chapter-"
+MASTHEAD_CHAPTER = "opening"
+SOURCES_CHAPTER = "sources"
+LEDE_FIELD = "OVERVIEW"
+LEDE_SENTENCES = 3
+PLACE_SEPARATOR = ","
 MASTHEAD_KICKER = "masthead-kicker"
 MASTHEAD_TITLE = "masthead-title"
 LABEL_PLACE = "label-place"
@@ -105,6 +116,15 @@ def section_units(
         unit_id = _unit_id(field, claim_ids, taken)
         units.append(DraftUnit(unit_id, chapter, field, str(sentence["text"]).strip(), claim_ids))
     return units
+
+
+def chapter_heading(chapter: str, record: SubjectRecord) -> tuple[str, TextUnit] | None:
+    if chapter not in CHAPTER_TITLES:
+        return None
+    place = record.place.split(PLACE_SEPARATOR)[0].strip() if record.place else None
+    title = chapter_title(chapter, place=place, gi=record.gi)
+    unit = TextUnit(chapter=chapter, tag=CHAPTER_HEAD_TAG, field=None, nodes=[title], claim_ids=[])
+    return f"{CHAPTER_HEAD_PREFIX}{chapter}", unit
 
 
 def heading_unit(field: str) -> tuple[str, TextUnit]:

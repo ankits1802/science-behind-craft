@@ -17,7 +17,11 @@ export type Passage = { kind: "passage"; head: boolean; pieces: PassagePiece[]; 
 export type ChapterBlock = Passage | { kind: "component"; label: string } | { kind: "sources"; replaces: string[] };
 export type ChapterPlan = { key: string; index: number; number: number | null; label: string; blocks: ChapterBlock[] };
 export type MastheadPlan = { kicker: string | null; standfirst: string[]; lede: string | null; picture: string | null };
-export type PagePlan = { masthead: MastheadPlan; chapters: ChapterPlan[] };
+export type LabelMasthead = { kicker: string | null; title: string; terms: string[]; picture: string | null; lede: string[] };
+export type PagePlan = { masthead: MastheadPlan; label: LabelMasthead | null; chapters: ChapterPlan[] };
+
+const NO_MASTHEAD: MastheadPlan = { kicker: null, standfirst: [], lede: null, picture: null };
+const TERM_TAGS = new Set(["dt", "dd"]);
 
 export function chapterOrder(layout: readonly MonographLayoutEntry[]): string[] {
   return [...new Set(layout.map((entry) => entry.chapter))];
@@ -49,10 +53,37 @@ export function pagePlan(document: MonographDocument): PagePlan {
   const order = chapterOrder(document.content.layout);
   const nested = nestedComponents(document);
   const [first] = order;
-  const masthead = first ? mastheadPlan(document, topLevelEntries(document, first, nested)) : { kicker: null, standfirst: [], lede: null, picture: null };
-  const taken = new Set([masthead.kicker, ...masthead.standfirst, masthead.lede, masthead.picture].filter((ref): ref is string => ref !== null));
+  const opening = first ? topLevelEntries(document, first, nested) : [];
+  const label = labelMasthead(document, opening);
+  const masthead = first && !label ? mastheadPlan(document, opening) : NO_MASTHEAD;
+  const shown = label ? [label.kicker, label.title, ...label.terms, label.picture, ...label.lede] : [masthead.kicker, ...masthead.standfirst, masthead.lede, masthead.picture];
+  const taken = new Set(shown.filter((ref): ref is string => ref !== null));
   const chapters = order.map((key, index) => chapterPlan(document, { key, index, nested }, taken));
-  return { masthead, chapters: chapters.filter((chapter) => chapter.blocks.length > 0 || chapter.index === 0) };
+  return { masthead, label, chapters: chapters.filter((chapter) => chapter.blocks.length > 0 || chapter.index === 0) };
+}
+
+export function railChapters(plan: PagePlan): ChapterPlan[] {
+  return plan.label ? plan.chapters.filter((chapter) => chapter.number !== null) : plan.chapters;
+}
+
+export function labelMasthead(document: MonographDocument, entries: readonly MonographLayoutEntry[]): LabelMasthead | null {
+  const units = document.content.units;
+  const unitAt = (at: number) => (entries[at]?.kind === "unit" ? units[entries[at].ref] : undefined);
+  const titleAt = entries.findIndex((_, at) => unitAt(at)?.tag === "h1");
+  if (titleAt < 0) return null;
+  const before = unitAt(titleAt - 1);
+  const kicker = before?.tag === "p" && !hasSentence(before.nodes) ? entries[titleAt - 1].ref : null;
+  let at = titleAt + 1;
+  const terms: string[] = [];
+  for (; TERM_TAGS.has(unitAt(at)?.tag ?? ""); at += 1) terms.push(entries[at].ref);
+  const lede: string[] = [];
+  for (; unitAt(at)?.tag === "p" && hasSentence(unitAt(at)?.nodes ?? []); at += 1) lede.push(entries[at].ref);
+  const picture = entries.find((entry) => entry.kind === "component" && componentKind(document, entry.ref) === MASTHEAD_PICTURE_KIND)?.ref ?? null;
+  return { kicker, title: entries[titleAt].ref, terms, picture, lede };
+}
+
+export function componentKind(document: MonographDocument, label: string): string | null {
+  return document.content.components.find((component) => component.label === label)?.kind ?? null;
 }
 
 function mastheadPlan(document: MonographDocument, entries: readonly MonographLayoutEntry[]): MastheadPlan {

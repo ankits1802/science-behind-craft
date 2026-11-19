@@ -11,7 +11,7 @@ from app.models import Craft, MonographDocument as DocumentRow
 from app.research.monograph_document import MonographDocument, fragment_file_name
 from app.research.monograph_page import MonographContent
 from app.services import monograph_document as authored
-from app.services.monograph_document import store_document, stored_document
+from app.services.monograph_document import document_row, store_document, stored_document
 from app.services.monograph_load import load_monograph
 
 from .testimony_seed import rolled_back_session
@@ -95,6 +95,25 @@ async def test_a_changed_document_is_stored_as_a_new_version_and_an_unchanged_on
     assert latest is not None
     assert (latest.version, latest.title) == (2, "Monograph Document Test Craft, revised")
     assert await stored_document(session, "category", SLUG) is None
+
+
+async def test_each_language_of_a_subject_keeps_its_own_versions(session: AsyncSession) -> None:
+    english = await store_document(session, _document())
+    hindi = await store_document(session, _document().model_copy(update={"language": "hi"}))
+    again = await store_document(session, _document().model_copy(update={"language": "hi"}))
+    assert (english, hindi, again) == (1, 1, None)
+    rows = await session.execute(
+        select(DocumentRow.language, DocumentRow.version)
+        .where(DocumentRow.subjectSlug == SLUG)
+        .order_by(DocumentRow.language)
+    )
+    assert [tuple(row) for row in rows.all()] == [("en", 1), ("hi", 1)]
+    latest = await stored_document(session, "craft", SLUG)
+    held = await stored_document(session, "craft", SLUG, "hi")
+    assert (latest.language if latest else None, held.language if held else None) == ("en", "hi")
+    first = await document_row(session, "craft", SLUG, version=1)
+    assert first is not None and (first.language, first.document["language"]) == ("en", "en")
+    assert await document_row(session, "craft", SLUG, version=2) is None
 
 
 async def test_loading_an_authored_monograph_stores_its_document_once(

@@ -1,7 +1,12 @@
 import pytest
 from pydantic import ValidationError
 
-from app.research.monograph_document import MonographDocument, fragment_file_name, spec_file_name
+from app.research.monograph_document import (
+    MonographDocument,
+    fragment_file_name,
+    served_language,
+    spec_file_name,
+)
 from app.research.monograph_page import MonographContent
 
 LABEL = "kutch-ajrakh/chemistry/alum-player"
@@ -66,3 +71,19 @@ def test_a_specs_file_name_replaces_the_labels_slashes() -> None:
 
 def test_a_fragments_file_name_replaces_the_labels_slashes() -> None:
     assert fragment_file_name(LABEL) == "kutch-ajrakh__chemistry__alum-player.html"
+
+
+def test_a_document_is_english_unless_it_names_a_language_tag() -> None:
+    assert document().language == "en"
+    assert document().model_dump(by_alias=True)["language"] == "en"
+    assert document(language="kn-Knda").language == "kn-Knda"
+    for bad in ("English", "e", "en_IN", "x" * 17):
+        with pytest.raises(ValidationError):
+            document(language=bad)
+
+
+@pytest.mark.parametrize(
+    ("asked", "served"), [(None, "en"), ("en", "en"), (" EN ", "en"), ("hi", "en"), ("ur", "en")]
+)
+def test_only_english_is_served_for_now(asked: str | None, served: str) -> None:
+    assert served_language(asked) == served

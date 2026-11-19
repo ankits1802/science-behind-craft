@@ -15,7 +15,14 @@ from .monograph_generated_units import stored_source
 from .open_work_subjects import WorkSubject, subject_by_key
 from .page_layouts import layout_of, subject_path
 
-__all__ = ["generated_document", "generated_parts", "page_url"]
+__all__ = ["CRAFT_SECTIONS_MIN", "enough_sections", "generated_document", "generated_parts", "page_url"]
+
+CRAFT_SECTIONS_MIN = 3
+CRAFT = "craft"
+
+
+def enough_sections(subject_kind: str, published: int) -> bool:
+    return subject_kind != CRAFT or published >= CRAFT_SECTIONS_MIN
 
 
 async def generated_document(session: AsyncSession, subject_kind: str, slug: str) -> MonographDocument | None:
@@ -25,6 +32,8 @@ async def generated_document(session: AsyncSession, subject_kind: str, slug: str
 
 async def generated_parts(session: AsyncSession, subject: WorkSubject) -> GeneratedParts | None:
     sections = await subject_sections(session, subject)
+    if not enough_sections(subject.kind, len(sections)):
+        return None
     claim_ids = [
         uuid.UUID(str(claim))
         for section in sections

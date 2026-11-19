@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import InvalidInput
 from app.data.craft_master_loader import DATA_DIR
 from app.models import MonographDocument as DocumentRow
-from app.research.monograph_document import MonographDocument, fragment_file_name, spec_file_name
+from app.research.monograph_document import ENGLISH, MonographDocument, fragment_file_name, spec_file_name
 from app.research.monograph_page import (
     KIT_FILES,
     MonographContent,
@@ -35,6 +35,7 @@ __all__ = [
     "document_body",
     "document_hash",
     "document_json",
+    "document_row",
     "has_authored_content",
     "kit_sources",
     "latest_document_row",
@@ -57,7 +58,7 @@ NATIVE_FILE = "native.json"
 CRAFT_SUBJECT = "craft"
 CRAFT_PATH = "/crafts/"
 FIRST_VERSION = 1
-UNHASHED_FIELDS = frozenset({"version"})
+UNHASHED_FIELDS = frozenset({"version", "language"})
 GOLDEN_INDENT = 1
 
 
@@ -136,22 +137,41 @@ def document_json(document: MonographDocument) -> str:
     return json.dumps(document_body(document), ensure_ascii=False, indent=GOLDEN_INDENT) + "\n"
 
 
-async def latest_document_row(session: AsyncSession, subject_kind: str, slug: str) -> DocumentRow | None:
-    return await session.scalar(
-        select(DocumentRow)
-        .where(DocumentRow.subjectKind == subject_kind, DocumentRow.subjectSlug == slug)
-        .order_by(DocumentRow.version.desc())
-        .limit(1)
+async def document_row(
+    session: AsyncSession,
+    subject_kind: str,
+    slug: str,
+    *,
+    language: str = ENGLISH,
+    version: int | None = None,
+) -> DocumentRow | None:
+    query = select(DocumentRow).where(
+        DocumentRow.subjectKind == subject_kind,
+        DocumentRow.subjectSlug == slug,
+        DocumentRow.language == language,
     )
+    if version is not None:
+        return await session.scalar(query.where(DocumentRow.version == version))
+    return await session.scalar(query.order_by(DocumentRow.version.desc()).limit(1))
 
 
-async def stored_document(session: AsyncSession, subject_kind: str, slug: str) -> MonographDocument | None:
-    row = await latest_document_row(session, subject_kind, slug)
+async def latest_document_row(
+    session: AsyncSession, subject_kind: str, slug: str, language: str = ENGLISH
+) -> DocumentRow | None:
+    return await document_row(session, subject_kind, slug, language=language)
+
+
+async def stored_document(
+    session: AsyncSession, subject_kind: str, slug: str, language: str = ENGLISH
+) -> MonographDocument | None:
+    row = await latest_document_row(session, subject_kind, slug, language)
     return None if row is None else MonographDocument.model_validate(row.document)
 
 
 async def store_document(session: AsyncSession, document: MonographDocument) -> int | None:
-    latest = await latest_document_row(session, document.subject_kind, document.subject_slug)
+    latest = await latest_document_row(
+        session, document.subject_kind, document.subject_slug, document.language
+    )
     digest = document_hash(document)
     if latest is not None and latest.contentHash == digest:
         return None
@@ -161,6 +181,7 @@ async def store_document(session: AsyncSession, document: MonographDocument) -> 
         DocumentRow(
             subjectKind=document.subject_kind,
             subjectSlug=document.subject_slug,
+            language=document.language,
             version=version,
             document=document_body(stamped),
             contentHash=digest,
