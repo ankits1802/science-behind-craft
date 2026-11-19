@@ -30,6 +30,7 @@ __all__ = [
     "chosen_tasks",
     "open_tasks",
     "review_tasks",
+    "reviewed_queues",
     "subject_priority",
     "subject_tasks",
 ]
@@ -64,13 +65,17 @@ def subject_tasks(standing: SubjectStanding) -> list[OpenTask]:
     ]
 
 
+def reviewed_queues(role: str | None) -> tuple[str, ...]:
+    if role is None:
+        return ()
+    return tuple(queue for queue, capability in REVIEW_QUEUES.items() if can(role, capability))
+
+
 def review_tasks(queues: Mapping[str, QueueStanding], viewer: Viewer) -> list[OpenTask]:
-    if viewer.review_role is None:
-        return []
     found = []
-    for queue, capability in REVIEW_QUEUES.items():
+    for queue in reviewed_queues(viewer.review_role):
         waiting = queues.get(queue)
-        if waiting is None or waiting.count == 0 or not can(viewer.review_role, capability):
+        if waiting is None or waiting.count == 0:
             continue
         found.append(
             OpenTask(

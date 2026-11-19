@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
@@ -40,7 +40,7 @@ async def claim_task(
     if current is not None and current.userId != user_id:
         raise Refused(
             TASK_TAKEN,
-            f"{key} is reserved by another account until {current.expiresAt:%Y-%m-%d %H:%M} UTC; "
+            f"{key} is reserved by another account until {current.expiresAt.astimezone(UTC):%Y-%m-%d %H:%M} UTC; "
             "list_open_work gives the tasks still open.",
         )
     if current is not None:
@@ -95,6 +95,7 @@ async def _expire(session: AsyncSession, key: str, *, now: datetime) -> None:
             TaskReservation.expiresAt <= now,
         )
         .values(endedAt=TaskReservation.expiresAt, ending=EXPIRED)
+        .execution_options(synchronize_session="fetch")
     )
 
 

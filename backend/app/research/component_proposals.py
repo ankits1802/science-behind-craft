@@ -13,7 +13,7 @@ from app.models.open_work import PROPOSAL_EXTENSIONS, PROPOSAL_STATUSES
 from .base import ContractModel
 from .crafts import SLUG_MAX_CHARS
 from .knowledge_api import ComponentSummary
-from .open_work import TASK_KEY_MAX_CHARS
+from .open_work import COMPONENT_NEEDS, TASK_KEY_MAX_CHARS, parse_task_key
 from .vocabulary import Discipline, PieceKind, PieceSubjectKind
 
 __all__ = [
@@ -32,12 +32,15 @@ __all__ = [
     "close_matches",
     "content_words",
     "match_reasons",
+    "proposal_crafts",
+    "task_problem",
     "word_overlap",
 ]
 
 COMPONENT_PROPOSAL_SCHEMA_VERSION = 1
 EXTENSIONS = PROPOSAL_EXTENSIONS
 SUBJECT_LINK, VARIANT = PROPOSAL_EXTENSIONS
+COMPONENT_TASK = "MISSING_COMPONENT"
 OUTCOMES = ("STORED", "REFUSED")
 CLOSE_TITLE_OVERLAP = 0.5
 CLOSE_TEXT_OVERLAP = 0.6
@@ -189,6 +192,25 @@ def close_matches(
         if reasons:
             found.append(ComponentMatch(component=candidate, reasons=reasons))
     return found
+
+
+def proposal_crafts(draft: ComponentProposalDraft) -> list[str]:
+    slugs = [draft.craft_slug] if draft.craft_slug else []
+    slugs += [subject.key for subject in draft.subjects if subject.kind == "CRAFT"]
+    return list(dict.fromkeys(slugs))
+
+
+def task_problem(draft: ComponentProposalDraft) -> str | None:
+    if draft.task_key is None:
+        return None
+    key = parse_task_key(draft.task_key)
+    if key.kind != COMPONENT_TASK or key.detail not in COMPONENT_NEEDS:
+        return f"{draft.task_key} is not a missing-component task; only those are completed by a proposal"
+    if draft.kind not in COMPONENT_NEEDS[key.detail]:
+        return f"a {key.detail} task is completed by a component of kind {', '.join(COMPONENT_NEEDS[key.detail])}"
+    if key.slug not in proposal_crafts(draft):
+        return f"the proposal completes {draft.task_key} only when it is keyed to the craft {key.slug}"
+    return None
 
 
 def _words(title: str, description: str) -> frozenset[str]:

@@ -35,7 +35,7 @@ from app.research.open_work import (
     WorkFilters,
 )
 from app.research.open_work_links import DEAD_SOURCE, UNARCHIVED_SOURCE, sources_in_state
-from app.research.open_work_tasks import chosen_tasks, open_tasks, subject_tasks
+from app.research.open_work_tasks import chosen_tasks, open_tasks, reviewed_queues, subject_tasks
 
 from .open_work_components import craft_component_kinds
 from .open_work_counts import Owners, SubjectCounts, subject_counts
@@ -86,8 +86,8 @@ async def list_open_work(
 ) -> OpenWork:
     subjects = await work_subjects(session, filters.subject_filter())
     standings = await subject_standings(session, subjects, site=site)
-    shows_review = viewer.review_role is not None and filters.subject_filter() is None
-    queues = await review_queues(session) if shows_review else {}
+    reviewed = reviewed_queues(viewer.review_role) if filters.subject_filter() is None else ()
+    queues = await review_queues(session, reviewed)
     kept = chosen_tasks(
         open_tasks(standings, queues, viewer),
         filters,
@@ -126,15 +126,14 @@ async def subject_standings(
     return [_standing(subject, gathered) for subject in subjects]
 
 
-async def review_queues(session: AsyncSession) -> dict[str, QueueStanding]:
-    return {
-        "FACTS": await _queue(session, Claim.createdAt, Claim.status.in_(FACT_REVIEW_STATUSES)),
-        "TESTIMONY": await _queue(
-            session, ArtisanContribution.createdAt, ArtisanContribution.status == PENDING
-        ),
-        "IMAGES": await _queue(session, ImageContribution.createdAt, ImageContribution.status == PENDING),
-        "COMPONENTS": await _queue(session, ComponentProposal.createdAt, ComponentProposal.status == PENDING),
+async def review_queues(session: AsyncSession, queues: Sequence[str]) -> dict[str, QueueStanding]:
+    waiting: dict[str, tuple[Any, ColumnElement[bool]]] = {
+        "FACTS": (Claim.createdAt, Claim.status.in_(FACT_REVIEW_STATUSES)),
+        "TESTIMONY": (ArtisanContribution.createdAt, ArtisanContribution.status == PENDING),
+        "IMAGES": (ImageContribution.createdAt, ImageContribution.status == PENDING),
+        "COMPONENTS": (ComponentProposal.createdAt, ComponentProposal.status == PENDING),
     }
+    return {queue: await _queue(session, *waiting[queue]) for queue in queues}
 
 
 async def live_holds(session: AsyncSession, *, now: datetime) -> dict[str, Hold]:

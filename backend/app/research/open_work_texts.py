@@ -147,7 +147,7 @@ def differ_wording(standing: SubjectStanding, discipline: str | None, items: Ite
     return Wording(
         needed=(
             f"{counted(items.count, 'fact')} of {standing.subject.name}{_under(discipline)} "
-            f"{_be(items.count)} marked sources differ and need a deciding source."
+            f"{_be(items.count)} marked sources differ, waiting for a deciding source."
         ),
         acceptance=DIFFER_ACCEPTANCE,
         items=items,

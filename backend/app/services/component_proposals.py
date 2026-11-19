@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import Any
 
 from sqlalchemy import ColumnElement, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
@@ -20,6 +21,8 @@ from app.research.component_proposals import (
     ComponentProposalDraft,
     ComponentProposalResult,
     close_matches,
+    proposal_crafts,
+    task_problem,
 )
 from app.research.crafts import QUESTION_MAX_CHARS
 from app.research.knowledge_api import ComponentSummary
@@ -36,6 +39,7 @@ APPROVED = "APPROVED"
 PENDING = "PENDING"
 OPEN_CONCEPT = "OPEN"
 PLACE_KEY = re.compile(PLACE_KEY_PATTERN)
+WAITING = "A proposal for {label} already waits for review or building."
 NOT_IN_LIBRARY = "{labels} {verb} not in the component library; list_components gives the labels."
 REFUSED = "{count} in the library already {verb} this; nothing was stored. Take one of the two ways on."
 STORED = {
@@ -47,6 +51,9 @@ STORED = {
 async def propose_component(
     session: AsyncSession, user: User, draft: ComponentProposalDraft, *, now: datetime
 ) -> ComponentProposalResult:
+    problem = task_problem(draft)
+    if problem is not None:
+        raise InvalidInput(problem)
     await _check_labels(session, draft)
     owner = None if draft.craft_slug is None else await known_craft(session, draft.craft_slug)
     await _check_subjects(session, draft)
@@ -61,8 +68,11 @@ async def propose_component(
             ways_on=list(WAYS_ON),
         )
     row = _proposal(draft, user, None if owner is None else owner.id, now=now)
-    session.add(row)
-    await session.flush()
+    try:
+        async with session.begin_nested():
+            session.add(row)
+    except IntegrityError as taken:
+        raise InvalidInput(WAITING.format(label=draft.label)) from taken
     if draft.task_key is not None:
         await complete_task(session, user.id, draft.task_key, now=now)
     return ComponentProposalResult(
@@ -91,7 +101,7 @@ async def _check_labels(session: AsyncSession, draft: ComponentProposalDraft) ->
         )
     )
     if waiting is not None:
-        raise InvalidInput(f"A proposal for {draft.label} already waits for review or building.")
+        raise InvalidInput(WAITING.format(label=draft.label))
 
 
 async def _check_subjects(session: AsyncSession, draft: ComponentProposalDraft) -> None:
@@ -130,15 +140,9 @@ async def _candidates(session: AsyncSession, draft: ComponentProposalDraft) -> l
         *await _same_label(session, draft.label),
         *(await library_components(session, query=words)).components,
     ]
-    for slug in _craft_slugs(draft):
+    for slug in proposal_crafts(draft):
         found += (await library_components(session, slug=slug, kind=draft.kind)).components
     return found
-
-
-def _craft_slugs(draft: ComponentProposalDraft) -> list[str]:
-    slugs = [draft.craft_slug] if draft.craft_slug else []
-    slugs += [subject.key for subject in draft.subjects if subject.kind == "CRAFT"]
-    return list(dict.fromkeys(slugs))
 
 
 async def _same_label(session: AsyncSession, label: str) -> Sequence[ComponentSummary]:
