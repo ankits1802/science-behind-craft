@@ -15,7 +15,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | Terraform state | `s3://kalavigyan-tfstate-626159998512/kalavigyan/infra.tfstate` (versioned, private, S3 lockfile). DR's and FR's state are not touched. |
 | IAM | user `kalavigyan-media` (API's S3 key), role + instance profile `kalavigyan-box`, role `kalavigyan-deploy` (GitHub OIDC, `repo:cxacraftecosystem-ui/KalaVigyan:ref:refs/heads/main` only) |
 | Parameter Store | `/kalavigyan/env/*` (SecureString, one parameter per env key, the box's source of truth). `/kalavigyan/db-password` (Supabase DB password backup) |
-| Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11. Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc` |
+| Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11 on Small compute (`max_connections` 90). Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc`, pool size 15 (`max_client_conn` 400); see Connection budget |
 | Web | Vercel project `kalavigyan` (`prj_5hRNy7S9CS4fkhVVBRW5mbmAAUSd`), team `team_pcTf4Alb2DCIwq2IZcdu00dS`, root `frontend`, Node 26.x, no Git link, `https://kalavigyan.vercel.app` |
 | Repository | `github.com/cxacraftecosystem-ui/KalaVigyan` (deploys); mirror `github.com/ankits1802/science-behind-craft` (public, no deploys) |
 
@@ -35,6 +35,24 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | `/opt/cpython/3.14.10+20261110` | Standalone CPython (python-build-standalone 20261110, sha256-checked). uv 0.13.8 in `/usr/local/bin` |
 | `/usr/local/sbin/kv-blue-green`, `kv-render-env` | Installed from `infra/deploy/` on every release |
 | certbot | Installed, unused: TLS ends at CloudFront. It is there for a custom domain later. |
+
+## Connection budget
+
+Every process on the box reaches Postgres through the Supabase session pooler, which holds at most
+15 server connections for our user (the dashboard's Database → Settings → Connection pooling;
+read with `supabase config pull --remote=inqbqiqspgvhfamupwuc`, and only the dashboard can
+change it). Each process's SQLAlchemy pool opens connections as it needs them, up to
+`DATABASE_CONNECTION_LIMIT`, and keeps them.
+
+- **Holders:** the serving API slot (up to the limit), the worker (its peak, a few), and a script
+  run over SSM (one or two). A deploy stops the worker before the swap, so the old and new slots
+  briefly share the budget.
+- **The limit is 8** (2026-11-19, from 5, after four concurrent readers exhausted 5): 8 for the
+  API plus the worker and a script stays under 15.
+- **To go further,** raise the pool size in the dashboard first (30 is safe on Small compute's 90),
+  then `DATABASE_CONNECTION_LIMIT` to 12 at `/kalavigyan/env/`, then `sudo kv-render-env && sudo
+  kv-blue-green restart`. Never raise the limit past what the pooler holds: a slot that cannot
+  connect fails its health check and the deploy rolls back.
 
 ## Shell on the box
 
