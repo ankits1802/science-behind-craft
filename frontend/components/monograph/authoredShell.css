@@ -1,5 +1,6 @@
 #kv-main {
   text-rendering: auto;
+  -webkit-font-smoothing: auto;
 }
 
 #kv-main section.kv-cite {
