@@ -8,16 +8,19 @@ from .base import ContractModel
 from .monograph_page import MonographContent
 
 __all__ = [
+    "FRAGMENT_FILE_SUFFIX",
     "MONOGRAPH_DOCUMENT_SCHEMA_VERSION",
     "SPEC_FILE_SUFFIX",
     "SUBJECT_KINDS",
     "MonographDocument",
+    "fragment_file_name",
     "spec_file_name",
 ]
 
 MONOGRAPH_DOCUMENT_SCHEMA_VERSION = 1
 SUBJECT_KINDS = ("craft", "family", "category")
 SPEC_FILE_SUFFIX = ".json"
+FRAGMENT_FILE_SUFFIX = ".html"
 LABEL_SEPARATOR = "/"
 FILE_SEPARATOR = "__"
 
@@ -47,3 +50,7 @@ class MonographDocument(ContractModel):
 
 def spec_file_name(label: str) -> str:
     return label.replace(LABEL_SEPARATOR, FILE_SEPARATOR) + SPEC_FILE_SUFFIX
+
+
+def fragment_file_name(label: str) -> str:
+    return label.replace(LABEL_SEPARATOR, FILE_SEPARATOR) + FRAGMENT_FILE_SUFFIX

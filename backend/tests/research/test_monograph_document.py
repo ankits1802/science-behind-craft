@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from app.research.monograph_document import MonographDocument, spec_file_name
+from app.research.monograph_document import MonographDocument, fragment_file_name, spec_file_name
 from app.research.monograph_page import MonographContent
 
 LABEL = "kutch-ajrakh/chemistry/alum-player"
@@ -62,3 +62,7 @@ def test_a_spec_for_an_unknown_component_or_both_ways_at_once_is_refused() -> No
 
 def test_a_specs_file_name_replaces_the_labels_slashes() -> None:
     assert spec_file_name(LABEL) == "kutch-ajrakh__chemistry__alum-player.json"
+
+
+def test_a_fragments_file_name_replaces_the_labels_slashes() -> None:
+    assert fragment_file_name(LABEL) == "kutch-ajrakh__chemistry__alum-player.html"

@@ -1,0 +1,177 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+from typing import Any
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.errors import InvalidInput
+from app.data.craft_master_loader import DATA_DIR
+from app.models import MonographDocument as DocumentRow
+from app.research.monograph_document import MonographDocument, fragment_file_name, spec_file_name
+from app.research.monograph_page import (
+    KIT_FILES,
+    MonographContent,
+    PageParts,
+    keyed_kit,
+    render_fragment,
+)
+
+__all__ = [
+    "CONTENT_FILE",
+    "CRAFT_SUBJECT",
+    "FRAGMENTS_FOLDER",
+    "KIT_DIR",
+    "MONOGRAPHS_DIR",
+    "SPECS_FOLDER",
+    "TEMPLATE_FILE",
+    "authored_document",
+    "component_specs",
+    "craft_page_url",
+    "document_body",
+    "document_hash",
+    "document_json",
+    "has_authored_content",
+    "kit_sources",
+    "latest_document_row",
+    "monograph_content",
+    "monograph_kit",
+    "monograph_shell",
+    "page_parts",
+    "store_document",
+    "stored_document",
+]
+
+MONOGRAPHS_DIR = DATA_DIR / "monographs"
+KIT_DIR = MONOGRAPHS_DIR / "kit"
+CONTENT_FILE = "content.json"
+TEMPLATE_FILE = "template.html"
+FRAGMENTS_FOLDER = "fragments"
+SPECS_FOLDER = "specs"
+CRAFT_SUBJECT = "craft"
+CRAFT_PATH = "/crafts/"
+FIRST_VERSION = 1
+UNHASHED_FIELDS = frozenset({"version"})
+GOLDEN_INDENT = 1
+
+
+def has_authored_content(slug: str) -> bool:
+    return (MONOGRAPHS_DIR / slug / CONTENT_FILE).is_file()
+
+
+def monograph_content(slug: str) -> MonographContent:
+    return MonographContent.model_validate_json(_text(MONOGRAPHS_DIR / slug / CONTENT_FILE))
+
+
+def monograph_shell(slug: str) -> str:
+    return _text(MONOGRAPHS_DIR / slug / TEMPLATE_FILE)
+
+
+def kit_sources() -> dict[str, str]:
+    return {name: _text(KIT_DIR / name) for name in KIT_FILES}
+
+
+def monograph_kit() -> dict[str, str]:
+    return keyed_kit(kit_sources())
+
+
+def page_parts(content: MonographContent) -> PageParts:
+    return PageParts(fragments=_fragments(content), kit=monograph_kit())
+
+
+def component_specs(content: MonographContent) -> dict[str, dict[str, Any]]:
+    folder = MONOGRAPHS_DIR / content.craft_slug / SPECS_FOLDER
+    found = {c.label: folder / spec_file_name(c.label) for c in content.components}
+    return {label: _spec(path) for label, path in found.items() if path.is_file()}
+
+
+def craft_page_url(site: str, slug: str) -> str:
+    return f"{site.rstrip('/')}{CRAFT_PATH}{slug}"
+
+
+def authored_document(content: MonographContent, *, title: str, page_url: str) -> MonographDocument:
+    specs = component_specs(content)
+    fragments = _fragments(content)
+    return MonographDocument(
+        subject_kind=CRAFT_SUBJECT,
+        subject_slug=content.craft_slug,
+        title=title,
+        version=FIRST_VERSION,
+        content=content,
+        specs=specs,
+        fragments={
+            label: render_fragment(fragment, content)
+            for label, fragment in fragments.items()
+            if label not in specs
+        },
+        page_url=page_url,
+    )
+
+
+def document_body(document: MonographDocument) -> dict[str, Any]:
+    return document.model_dump(mode="json", by_alias=True)
+
+
+def document_hash(document: MonographDocument) -> str:
+    body = document.model_dump(mode="json", by_alias=True, exclude=set(UNHASHED_FIELDS))
+    text = json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def document_json(document: MonographDocument) -> str:
+    return json.dumps(document_body(document), ensure_ascii=False, indent=GOLDEN_INDENT) + "\n"
+
+
+async def latest_document_row(session: AsyncSession, subject_kind: str, slug: str) -> DocumentRow | None:
+    return await session.scalar(
+        select(DocumentRow)
+        .where(DocumentRow.subjectKind == subject_kind, DocumentRow.subjectSlug == slug)
+        .order_by(DocumentRow.version.desc())
+        .limit(1)
+    )
+
+
+async def stored_document(session: AsyncSession, subject_kind: str, slug: str) -> MonographDocument | None:
+    row = await latest_document_row(session, subject_kind, slug)
+    return None if row is None else MonographDocument.model_validate(row.document)
+
+
+async def store_document(session: AsyncSession, document: MonographDocument) -> int | None:
+    latest = await latest_document_row(session, document.subject_kind, document.subject_slug)
+    digest = document_hash(document)
+    if latest is not None and latest.contentHash == digest:
+        return None
+    version = FIRST_VERSION if latest is None else latest.version + 1
+    stamped = document.model_copy(update={"version": version})
+    session.add(
+        DocumentRow(
+            subjectKind=document.subject_kind,
+            subjectSlug=document.subject_slug,
+            version=version,
+            document=document_body(stamped),
+            contentHash=digest,
+        )
+    )
+    await session.flush()
+    return version
+
+
+def _fragments(content: MonographContent) -> dict[str, str]:
+    folder = MONOGRAPHS_DIR / content.craft_slug / FRAGMENTS_FOLDER
+    return {c.label: _text(folder / fragment_file_name(c.label)) for c in content.components}
+
+
+def _spec(path: Path) -> dict[str, Any]:
+    value = json.loads(_text(path))
+    if not isinstance(value, dict):
+        raise InvalidInput(f"The component spec {path.name} is not a JSON object")
+    return value
+
+
+def _text(path: Path) -> str:
+    if not path.is_file():
+        raise InvalidInput(f"The monograph file {path.name} is missing from {path.parent.name}")
+    return path.read_bytes().decode("utf-8")

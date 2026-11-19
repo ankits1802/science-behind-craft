@@ -3,7 +3,10 @@ from __future__ import annotations
 import html
 import json
 import re
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
+from functools import partial
+from types import MappingProxyType
 from typing import Any, Literal
 
 from pydantic import Field
@@ -14,24 +17,46 @@ from .base import ContractModel
 from .vocabulary import Discipline, PieceKind
 
 __all__ = [
+    "COMPONENT_SLOT",
+    "DATA_SLOT",
+    "KIT_FILES",
+    "KIT_SLOT",
     "MONOGRAPH_SCHEMA_VERSION",
+    "NO_PARTS",
     "SLOT_PATTERN",
+    "UNIT_SLOT",
     "CitedSource",
     "ComponentEntry",
     "LayoutEntry",
     "MonographContent",
+    "PageParts",
     "Quote",
     "TextUnit",
+    "assemble_template",
+    "keyed_kit",
+    "kit_parts",
+    "kit_slot_key",
+    "kit_source",
+    "render_fragment",
     "render_nodes",
     "render_page",
+    "served_kit",
     "slot",
+    "slot_keys",
 ]
 
 MONOGRAPH_SCHEMA_VERSION = 1
 COMPONENT_LABEL_PATTERN = r"^[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*){2,}$"
-SLOT_PATTERN = re.compile(r'<kv-slot (unit|data)="([A-Za-z0-9._-]+)"></kv-slot>')
+SLOT_PATTERN = re.compile(r'<kv-slot (unit|data|component|kit)="([A-Za-z0-9._/#-]+)"></kv-slot>')
 UNIT_SLOT = "unit"
 DATA_SLOT = "data"
+COMPONENT_SLOT = "component"
+KIT_SLOT = "kit"
+KIT_FILES = ("monograph.css", "monograph.js")
+KIT_PART_MARKERS = MappingProxyType({".css": "@kv-part {name};\n", ".js": '"kv-part {name}";\n'})
+KIT_PART_NAME = "[a-z0-9]+(?:-[a-z0-9]+)*"
+KIT_PART_END = "\n"
+KIT_KEY_SEPARATOR = "#"
 CITES_DATA = "kv-cites"
 ITALIC_ROLES = ("loc", "bot", "ring", "on")
 MARK_TAGS = {"b": "b", "sub": "sub", "sup": "sup", "mark": "mark"}
@@ -98,25 +123,142 @@ class MonographContent(ContractModel):
     layout: list[LayoutEntry]
 
 
+NOTHING: Mapping[str, str] = MappingProxyType({})
+
+
+@dataclass(frozen=True)
+class PageParts:
+    fragments: Mapping[str, str] = NOTHING
+    kit: Mapping[str, str] = NOTHING
+
+
+NO_PARTS = PageParts()
+SlotFill = Callable[[str], str]
+
+
 def slot(kind: str, key: str) -> str:
     return f'<kv-slot {kind}="{key}"></kv-slot>'
 
 
-def render_page(template: str, content: MonographContent) -> str:
-    sources = content.sources
+def slot_keys(text: str, kind: str) -> list[str]:
+    return [key for found, key in SLOT_PATTERN.findall(text) if found == kind]
 
+
+def render_page(template: str, content: MonographContent, *, parts: PageParts = NO_PARTS) -> str:
+    fills = {
+        UNIT_SLOT: partial(_unit, content),
+        DATA_SLOT: partial(_data, content=content),
+        KIT_SLOT: partial(_kit_part, parts.kit),
+    }
+    return _filled(_with_components(template, parts.fragments), fills)
+
+
+def render_fragment(fragment: str, content: MonographContent) -> str:
+    fills = {
+        UNIT_SLOT: partial(_unit, content),
+        DATA_SLOT: partial(_data, content=content),
+        KIT_SLOT: _kit_refused,
+    }
+    return _filled(fragment, fills)
+
+
+def assemble_template(shell: str, parts: PageParts) -> str:
+    return _filled(_with_components(shell, parts.fragments), {KIT_SLOT: partial(_kit_part, parts.kit)})
+
+
+def kit_slot_key(file_name: str, part: str) -> str:
+    return f"{file_name}{KIT_KEY_SEPARATOR}{part}"
+
+
+def kit_parts(source: str, *, file_name: str) -> dict[str, str]:
+    marker = _kit_marker(file_name)
+    found = list(marker.finditer(source))
+    if not found or found[0].start() != 0:
+        raise InvalidInput(f"The kit file {file_name} does not open with a part marker")
+    ends = [match.start() for match in found[1:]] + [len(source)]
+    parts: dict[str, str] = {}
+    for match, end in zip(found, ends, strict=True):
+        name, text = match.group("name"), source[match.end() : end]
+        if name in parts:
+            raise InvalidInput(f"The kit file {file_name} names the part {name} twice")
+        if not text.endswith(KIT_PART_END):
+            raise InvalidInput(f"The kit part {name} of {file_name} does not end with its newline")
+        parts[name] = text.removesuffix(KIT_PART_END)
+    return parts
+
+
+def kit_source(parts: Mapping[str, str], *, file_name: str) -> str:
+    template = KIT_PART_MARKERS[_kit_suffix(file_name)]
+    marker = _kit_marker(file_name)
+    held = [name for name, text in parts.items() if marker.search(text)]
+    if held:
+        raise InvalidInput(f"These kit parts of {file_name} hold a part marker: {held}")
+    return "".join(template.format(name=name) + text + KIT_PART_END for name, text in parts.items())
+
+
+def served_kit(source: str, *, file_name: str) -> str:
+    return "".join(kit_parts(source, file_name=file_name).values())
+
+
+def keyed_kit(sources: Mapping[str, str]) -> dict[str, str]:
+    return {
+        kit_slot_key(file_name, part): text
+        for file_name, source in sources.items()
+        for part, text in kit_parts(source, file_name=file_name).items()
+    }
+
+
+def _filled(text: str, fills: Mapping[str, SlotFill]) -> str:
     def fill(found: re.Match[str]) -> str:
-        kind, key = found.group(1), found.group(2)
-        if kind == UNIT_SLOT:
-            unit = content.units.get(key)
-            if unit is None:
-                raise InvalidInput(f"The template has a slot for unit {key}, which the content lacks")
-            return render_nodes(unit.nodes, sources)
-        if kind == DATA_SLOT:
-            return _data(key, content)
-        raise InvalidInput(f"No slot kind {kind!r}")
+        chosen = fills.get(found.group(1))
+        return found.group(0) if chosen is None else chosen(found.group(2))
 
-    return SLOT_PATTERN.sub(fill, template)
+    return SLOT_PATTERN.sub(fill, text)
+
+
+def _with_components(text: str, fragments: Mapping[str, str], held: tuple[str, ...] = ()) -> str:
+    def fill(found: re.Match[str]) -> str:
+        if found.group(1) != COMPONENT_SLOT:
+            return found.group(0)
+        label = found.group(2)
+        if label in held:
+            raise InvalidInput(f"The fragment of component {label} holds its own slot")
+        fragment = fragments.get(label)
+        if fragment is None:
+            raise InvalidInput(f"The template has a slot for component {label}, which has no fragment")
+        return _with_components(fragment, fragments, (*held, label))
+
+    return SLOT_PATTERN.sub(fill, text)
+
+
+def _unit(content: MonographContent, key: str) -> str:
+    unit = content.units.get(key)
+    if unit is None:
+        raise InvalidInput(f"The template has a slot for unit {key}, which the content lacks")
+    return render_nodes(unit.nodes, content.sources)
+
+
+def _kit_part(kit: Mapping[str, str], key: str) -> str:
+    part = kit.get(key)
+    if part is None:
+        raise InvalidInput(f"The template has a slot for the kit part {key}, which the kit lacks")
+    return part
+
+
+def _kit_refused(key: str) -> str:
+    raise InvalidInput(f"A component's fragment holds the kit slot {key}; the kit is page-wide")
+
+
+def _kit_suffix(file_name: str) -> str:
+    suffix = file_name[file_name.rfind(".") :]
+    if suffix not in KIT_PART_MARKERS:
+        raise InvalidInput(f"No kit part marker for {file_name}")
+    return suffix
+
+
+def _kit_marker(file_name: str) -> re.Pattern[str]:
+    template = re.escape(KIT_PART_MARKERS[_kit_suffix(file_name)])
+    return re.compile("^" + template.replace(re.escape("{name}"), f"(?P<name>{KIT_PART_NAME})"), re.M)
 
 
 def render_nodes(nodes: Sequence[Node], sources: Mapping[str, CitedSource]) -> str:

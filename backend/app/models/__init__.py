@@ -94,6 +94,7 @@ from app.models.knowledge import (
 from app.models.knowledge_pieces import KnowledgePiece, KnowledgePieceSubject
 from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
+from app.models.monograph_documents import MonographDocument
 from app.models.oauth import McpTermsAcceptance, McpToolCall, OAuthClient, OAuthCode, OAuthGrant, OAuthToken
 from app.models.open_work import ComponentProposal, TaskReservation
 from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
@@ -193,6 +194,7 @@ __all__ = [
     "MediaRef",
     "MediaRefClaim",
     "Message",
+    "MonographDocument",
     "Notification",
     "OAuthClient",
     "OAuthCode",

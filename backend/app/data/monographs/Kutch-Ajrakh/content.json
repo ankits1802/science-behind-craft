@@ -31601,7 +31601,7 @@
   {
    "label": "kutch-ajrakh/policy/gi-registration-card",
    "chapter": "market",
-   "anchor": "[aria-labelledby=\"gi-h\"]",
+   "anchor": "[class=\"label-card gi\"]",
    "kind": "label_card",
    "title": "Kutch Ajrakh, geographical indication, application 1050",
    "description": "A label card for Kutch Ajrakh's geographical indication: application 1050, a seal, the four-colour rule, the application-to-certificate timeline of Fig. 20, and its proprietor (Ajarakhpur Hastkala Vikas Sangathan), goods (classes 24 and 25) and facilitator (the Textiles Committee). Place it where a page covers ajrakh's legal protection.",
@@ -32149,7 +32149,7 @@
   {
    "label": "kutch-ajrakh/overview/how-this-answer-was-made",
    "chapter": "sources",
-   "anchor": "[class=\"kv-made-how\"]",
+   "anchor": "[class=\"kv-made-fold\"]",
    "kind": "process_replay",
    "title": "How this answer was made",
    "description": "A replayable record of how the answer was made: the question understood, 44 sources read with their grades, the seven sections written with the figure each drew, and every quote checked against its source, with a Watch it being made button. Place it in a page's sources chapter to show provenance.",
@@ -35672,7 +35672,7 @@
    "chapter": "chemistry",
    "kind": "component",
    "ref": "kutch-ajrakh/materials/natural-dye-materials-photo",
-   "within": null
+   "within": "kutch-ajrakh/materials/six-materials"
   },
   {
    "chapter": "chemistry",
@@ -35762,7 +35762,7 @@
    "chapter": "chemistry",
    "kind": "component",
    "ref": "kutch-ajrakh/process/kut-fermenting-days-range",
-   "within": null
+   "within": "kutch-ajrakh/process/experts-differ"
   },
   {
    "chapter": "chemistry",
@@ -35804,7 +35804,7 @@
    "chapter": "chemistry",
    "kind": "component",
    "ref": "kutch-ajrakh/process/red-bath-hours-range",
-   "within": null
+   "within": "kutch-ajrakh/process/experts-differ"
   },
   {
    "chapter": "chemistry",
@@ -35978,7 +35978,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/geography/suran-flowing-north-map",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36014,7 +36014,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/geography/suran-dry-below-tapar-dam-map",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36044,7 +36044,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/geology/dhamadka-epicentre-circle-map",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36080,7 +36080,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/history/dhamadka-to-ajrakhpur-move-map",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36110,7 +36110,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/geology/ajrakhpur-borewell-depth",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36146,7 +36146,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/ecology/effluent-treatment-stats",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36188,7 +36188,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/geography/lower-sindh-ajrak-survey-stats",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -36230,7 +36230,7 @@
    "chapter": "why-kachchh",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/iron-on-purpose-and-by-accident",
-   "within": null
+   "within": "kutch-ajrakh/geography/suran-earthquake-ajrakhpur-cards"
   },
   {
    "chapter": "why-kachchh",
@@ -37520,7 +37520,7 @@
    "chapter": "market",
    "kind": "component",
    "ref": "kutch-ajrakh/policy/gi-application-to-certificate",
-   "within": null
+   "within": "kutch-ajrakh/policy/gi-registration-card"
   },
   {
    "chapter": "market",
@@ -37628,7 +37628,7 @@
    "chapter": "what-if",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/what-if-indigo-vat",
-   "within": null
+   "within": "kutch-ajrakh/chemistry/what-if-lab"
   },
   {
    "chapter": "what-if",
@@ -37700,7 +37700,7 @@
    "chapter": "what-if",
    "kind": "component",
    "ref": "kutch-ajrakh/process/vat-setting-days",
-   "within": null
+   "within": "kutch-ajrakh/chemistry/what-if-indigo-vat"
   },
   {
    "chapter": "what-if",
@@ -37730,7 +37730,7 @@
    "chapter": "what-if",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/what-if-red-dye",
-   "within": null
+   "within": "kutch-ajrakh/chemistry/what-if-lab"
   },
   {
    "chapter": "what-if",
@@ -37820,7 +37820,7 @@
    "chapter": "what-if",
    "kind": "component",
    "ref": "kutch-ajrakh/process/red-bath-hours",
-   "within": null
+   "within": "kutch-ajrakh/chemistry/what-if-red-dye"
   },
   {
    "chapter": "what-if",
@@ -37832,7 +37832,7 @@
    "chapter": "what-if",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/what-if-wash-water",
-   "within": null
+   "within": "kutch-ajrakh/chemistry/what-if-lab"
   },
   {
    "chapter": "what-if",
@@ -38534,7 +38534,7 @@
    "chapter": "reading",
    "kind": "component",
    "ref": "shared/chemistry/alizarin-purpurin-structures-hindi",
-   "within": null
+   "within": "kutch-ajrakh/overview/answer-in-hindi-and-urdu"
   },
   {
    "chapter": "reading",
@@ -38774,13 +38774,13 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/ai-cloth-lifted-from-vat",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/chemistry/ai-video-blue-in-the-air",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
@@ -38798,7 +38798,7 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/history/ai-caravan-on-salt-flat",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
@@ -38816,7 +38816,7 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/design/ai-double-sided-ajrakh-drying",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
@@ -38828,7 +38828,7 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/geography/ai-dry-riverbed-and-well",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
@@ -38840,13 +38840,13 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/economics/ai-stacked-printed-yardage",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/design/ai-block-divided-into-sixteen",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
@@ -38864,13 +38864,13 @@
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/process/ai-cloth-steeping-in-saaj",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
    "kind": "component",
    "ref": "kutch-ajrakh/overview/answer-as-a-film",
-   "within": null
+   "within": "kutch-ajrakh/overview/watch-it-being-made"
   },
   {
    "chapter": "media",
