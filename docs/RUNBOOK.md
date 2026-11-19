@@ -206,13 +206,31 @@ Frontend: Vercel's Git integration builds `main` (`frontend/vercel.json`); there
 
 ## MCP server
 
-The read tools of `docs/contracts/knowledge-api.md` at `POST <PUBLIC_API_URL>/mcp` (decision 0103).
+The tools of `docs/contracts/knowledge-api.md` and `docs/contracts/open-work.md` at
+`POST <PUBLIC_API_URL>/api/mcp`, the address to give an MCP client (decisions 0103 and 0101). The
+same route also answers through the site at `<PUBLIC_WEB_URL>/api/mcp`, anonymously. Signing in
+(OAuth 2.1, `docs/contracts/mcp-oauth.md`) needs `PUBLIC_API_URL` and `PUBLIC_WEB_URL` to be https
+origins; the issuer is the API origin and the consent page is `<PUBLIC_WEB_URL>/oauth/authorize`.
 
 1. Switch on: put `MCP_SERVER_ENABLED=true` at `/kalavigyan/env/MCP_SERVER_ENABLED`, then
    `sudo kv-render-env` on the box (a deploy also re-renders it).
-2. Check: `curl -s -X POST <PUBLIC_API_URL>/mcp -H 'content-type: application/json' -d
-   '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists five tools.
+2. Check: `curl -s -X POST <PUBLIC_API_URL>/api/mcp -H 'content-type: application/json' -d
+   '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists the read, proposal and open-work tools.
 3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
+
+## Nightly upkeep and page builds
+
+`docs/contracts/nightly-upkeep.md` names the schedule, the bounds and the commands. The nightly
+workflow runs `app.scripts.nightly_upkeep` on the box over SSM, then calls the Vercel deploy hook
+for one production build that pre-renders every craft page from the snapshots. The hook is read
+from `/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL` (SecureString; never printed); without it the run
+reports the build as not triggered and "Build pages now" in admin settings answers 503.
+
+## Bulk export
+
+`python -m app.scripts.export_knowledge --out <folder> [--craft <slug> ...]` on the box writes one
+JSON file per craft (`docs/contracts/knowledge-api.md`, Bulk export); the same document is served
+at `GET /api/knowledge/crafts/{slug}/export`.
 
 ## AI spend and token limits
 

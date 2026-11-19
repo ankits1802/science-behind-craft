@@ -18,7 +18,7 @@ need OAuth sign-in and the gates of decision 0101, item 5, and come in later sli
   `2025-03-26`), else 400. `initialize` agrees the client's version when it is one of these and
   offers `2025-11-25` otherwise.
 - JSON-RPC 2.0, one message per request (no batches). Methods: `initialize`, `ping`,
-  `tools/list`, `tools/call`; a notification (no `id`) is accepted with 202 and no body. Any other
+  `tools/list`, `tools/call`, `prompts/*` and `resources/*` (`docs/contracts/open-work.md`); a notification (no `id`) is accepted with 202 and no body. Any other
   method is `-32601`, an unknown tool `-32602`, a body that is not JSON `-32700` with status 400.
 - Code: `api/routes/mcp.py` (the route), `api/mcp_protocol.py` (framing), `api/mcp_tools.py` (the
   tool catalogue), `services/knowledge_api.py` (the reads), `research/knowledge_api.py` (the

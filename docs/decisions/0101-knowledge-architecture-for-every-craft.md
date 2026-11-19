@@ -333,8 +333,15 @@ infrastructure.
      every field; claims gain a third ranking, the scoped concepts the question names, fused
      with full text and vectors (`docs/contracts/research.md`).
 4. The candidate gates, the review queue and nightly upkeep.
+   - Built 2026-11-19: the gates and the review switch (`docs/contracts/knowledge-writes.md`),
+     nightly upkeep with orphaned concepts and the nightly static build
+     (`docs/contracts/nightly-upkeep.md`). The unified review queue is next.
 5. The Knowledge API write path and the MCP server; switch the curation skill to it; the dossier
    export.
+   - Built 2026-11-19: `propose_fact` on the API and MCP, MCP sign-in (`docs/contracts/mcp-oauth.md`),
+     open work, task reservations, `propose_component`, MCP prompts and resources and the
+     contributor skill (`docs/contracts/open-work.md`). Next: `ask`, `start_image_upload`, the
+     curation skill on the write path and the dossier export.
 6. Completeness-driven research for every curated craft, then the rest: every chapter, What-if
    and molecules.
 7. Contribution screens and the bulk export.

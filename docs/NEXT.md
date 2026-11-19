@@ -90,23 +90,32 @@ Settled:
   review queue).
 
 Open:
-- The terms texts are drafted in `docs/legal/` for the owner and IIT's legal office.
+- The terms texts are drafted in `docs/legal/` for the owner and IIT's legal office. The MCP terms
+  are served from `backend/app/data/mcp_terms_of_use.md`, held equal to the draft by a test; a
+  new version changes both and `research/oauth_rules.MCP_TERMS_VERSION`.
+- The nightly build needs a Vercel deploy hook for project `kalavigyan`, branch `main`, stored as
+  SecureString at `/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`, then `sudo kv-render-env` and a
+  restart (`docs/contracts/nightly-upkeep.md`). Until then the nightly run reports the build as
+  not triggered and "Build pages now" answers 503.
 - Artisan testimony can still be withdrawn as built (decision 0083); say whether irrevocable
   consent applies to it too.
 
 ## The two big tracks
 
 1. **The data architecture**: `docs/decisions/0101-knowledge-architecture-for-every-craft.md`.
-   - **Done:** step 1 (schema, decision 0102) and the MCP read slice (decision 0103).
-   - **Step 2, first half done** (decision 0105): the Ajrakh page is structured content plus a
-     template, rebuilt byte for byte by `app.scripts.build_monograph`. **Next:** load it into the
-     database (sections, the 79 components, facts and sources for the 97 citations the dossier
-     lacks), then move component views into specs so other crafts reuse the template. Then steps 3 (retrieval by field, components by
-     label) and 4 (the gates, the review queue that grows from `admin/testimony`, nightly upkeep).
-   - **MCP slice 2:** OAuth 2.1 with our web app as the authorization server, the versioned MCP
-     terms, connected clients in Settings with revoke, then `ask`.
-   - **MCP slice 3, after step 4:** proposals, open work, and the method as MCP prompts and a
-     `kalavigyan-contributor` skill (decision 0101, item 15).
+   - **Done:** step 1 (schema, decision 0102), the MCP read slice (decision 0103), the Ajrakh page
+     as structured content and loaded into the database (decision 0105).
+   - **Round 1, integrated on `track1`:** step 3 (retrieval by field, components by label), step
+     4's gates, review switch and nightly upkeep, MCP slices 2 (OAuth, terms, connected apps) and
+     3 (open work, `propose_fact`, `propose_component`, prompts, the contributor skill), nightly
+     static builds, the bulk export (`docs/PROGRESS.md`).
+   - **Round 2, next:** the unified review queue in admin settings (facts, component proposals,
+     testimony and pictures in one path, with approval flagging sources differ); MCP `ask` and
+     `start_image_upload`; approved pictures on craft pages; contribution screens for facts and
+     components; the curation skill on the write path and the dossier export.
+   - **Round 3:** every craft, family and category page from the one template, with component
+     views moved into specs and a `PageLayout` record (item 14), then completeness-driven research
+     (step 6).
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
    - waves 1B (landing, shell, collection, category, map), 3 (answer page), 4 (the rest) and 5

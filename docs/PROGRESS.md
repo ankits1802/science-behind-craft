@@ -971,7 +971,37 @@ Last updated: 2026-11-19.
 - **The Ajrakh page as structured content (2026-11-19, decision 0105).** The approved page is now
   content (1,086 text units with fields and citations, 68 sources, 348 citations with quotes, 79
   registered components and a layout) plus a template, and `app.scripts.build_monograph` rebuilds
-  the served page from them byte for byte. Loading it into the database is next.
+  the served page from them byte for byte. Loaded into production on 2026-11-19: 11 sections
+  with 262 cited sentences and 35 registered components; 44 components wait for stored facts.
+
+- **Decision 0101 track 1, round 1 (2026-11-19, integrated on `track1`, to release).** Five lanes
+  built in parallel, plus the lead's own steps:
+  - **Step 3, retrieval by field:** each answer section searches stored facts in its own field
+    (primary or secondary; unfielded facts always kept; the overview reads every field), with a
+    third ranking for the concepts a question names (`docs/contracts/research.md`).
+  - **Step 3, components by label:** a section is offered at most six registered components from
+    the library and places the ones it names as `component` blocks linking to the figure; a
+    builder of the same purpose is skipped (`docs/contracts/answer-components.md`, migration
+    0035).
+  - **Step 4, gates and the review switch:** every new fact passes the quote, source and licence,
+    duplicate and novelty gates (each outcome kept in `CandidateCheck`, migration 0036), then the
+    switch per origin (`AUTO` for research, `APPROVAL` for contributions and agents); reviewers'
+    own facts publish at once. `POST /api/knowledge/facts` and the MCP tool `propose_fact`
+    (`docs/contracts/knowledge-writes.md`).
+  - **MCP slice 2:** OAuth 2.1 with the API as issuer and the consent page at `/oauth/authorize`,
+    versioned MCP terms, connected apps with Revoke in Settings, per-connection limits and an
+    audit of every tool call (`docs/contracts/mcp-oauth.md`, migration 0037).
+  - **MCP slice 3:** `list_open_work`, `claim_task`, `release_task`, `propose_component` with
+    duplicate refusal, MCP prompts and resources, and the `kalavigyan-contributor` skill
+    (`docs/contracts/open-work.md`, migration 0038).
+  - **Nightly upkeep and static builds:** quote re-checks, Internet Archive saves, monograph and
+    snapshot rebuilds, orphaned concepts reported then removed, one nightly production build and an
+    admin "Build pages now" (`docs/contracts/nightly-upkeep.md`, migration 0039).
+  - **Bulk export (item 9):** `GET /api/knowledge/crafts/{slug}/export` and
+    `app.scripts.export_knowledge`.
+  - **Fixes:** a craft page now rebuilds identically under an unchanged stamp (the flaky chapters
+    job test: chemistry cards were numbered in an unordered query's order), and MCP clients reach
+    `/api/mcp` through the site's proxy.
 
 ## Next
 
