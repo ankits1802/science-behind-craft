@@ -71,8 +71,8 @@ def served(
             return None
         return SimpleNamespace(version=3, language="en", contentHash=DIGEST, document=document)
 
-    async def generated_fallback(session: Any, slug: str) -> MonographDocument | None:
-        calls.made.append(f"generated {slug}")
+    async def generated_fallback(session: Any, craft: Any) -> MonographDocument | None:
+        calls.made.append(f"generated {craft.slug}")
         return GENERATED if generated else None
 
     async def session() -> AsyncIterator[object]:
@@ -180,7 +180,9 @@ def test_a_craft_without_a_document_is_not_found(
     assert calls.made == asked
 
 
-async def test_the_fallback_asks_for_the_crafts_generated_document(monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_the_fallback_asks_for_a_craft_or_a_family_document_by_the_craft_list_row(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     asked: list[tuple[str, str]] = []
 
     async def generated_document(session: Any, subject_kind: str, slug: str) -> MonographDocument | None:
@@ -188,5 +190,9 @@ async def test_the_fallback_asks_for_the_crafts_generated_document(monkeypatch: 
         return None
 
     monkeypatch.setattr(route, "generated_document", generated_document)
-    assert await route.generated_fallback(object(), "Bagh-Print") is None
-    assert asked == [("craft", "Bagh-Print")]
+    craft = SimpleNamespace(slug="Bagh-Print", isCatchAll=False, stateOfPractice=["Madhya Pradesh"])
+    catch_all = SimpleNamespace(slug="Applique", isCatchAll=True, stateOfPractice=[])
+    all_india = SimpleNamespace(slug="Tie-Dye", isCatchAll=False, stateOfPractice=["All India"])
+    for row in (craft, catch_all, all_india):
+        assert await route.generated_fallback(object(), row) is None
+    assert asked == [("craft", "Bagh-Print"), ("family", "Applique"), ("family", "Tie-Dye")]

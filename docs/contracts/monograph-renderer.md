@@ -33,8 +33,10 @@ specs from its template).
 All are server components in `app/(reading)`, read through `publicFetch` (tag
 `monograph-document:<subject>:<slug>`, revalidated daily, static params from `/site/pages`).
 
-- **`/crafts/<slug>`**: every craft, Kutch Ajrakh included since the parity proof passed
-  (2026-11-20), draws its document (`serverCraftDocument`: 404 is "no document", any other
+- **`/crafts/<slug>`**: a craft with a document (stored or generated; Kutch Ajrakh since the parity
+  proof passed, 2026-11-20) draws it; a curated craft without one keeps the tabbed `CraftScreen` from
+  its page snapshot until its generated document carries its stages, reactions and places (debt);
+  any other craft draws its document (`serverCraftDocument`: 404 is "no document", any other
   failure is thrown so a cached page stands) with `MonographPage`; without one, the craft list's
   record from the craft page endpoint draws `CraftWithoutMonograph`; an unknown craft is a 404.
   Metadata: `monographMetadata` (title, the lede as description, the canonical `/crafts/<slug>`,

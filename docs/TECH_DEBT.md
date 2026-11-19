@@ -3201,3 +3201,15 @@ Last reviewed: 2026-11-18.
   again; the parity run's drift finder names it.
 - **Clears it:** retire the shell (round 3c: every component a native view, the kit's styles in the
   views), or prefix the kit's classes so no name can collide.
+
+### Curated crafts still draw the tabbed page
+
+- **What:** a generated document is built from published sections only, and the curated crafts
+  other than Kutch Ajrakh have none, so `/crafts/<slug>` keeps the tabbed `CraftScreen` (restored
+  on 2026-11-20) for a curated craft without a document. Round 4 had retired it, which would have
+  turned about 40 curated pages into the craft-without-a-monograph template. A generated document
+  would also lack what the tabbed page draws from the dossier's structure: stages, reactions,
+  places and the region story.
+- **Clears it:** generated documents for curated crafts with every field's sections from their
+  claims and their snapshot's blocks as components (round 6), then retire `CraftScreen` again.
+
