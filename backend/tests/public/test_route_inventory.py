@@ -90,6 +90,7 @@ SERVICE_ROUTES = {
     ("POST", "/api/oauth/register"),
     ("POST", "/api/oauth/token"),
     ("POST", "/api/oauth/revoke"),
+    ("PUT", "/api/upload-links/slots/{token}"),
 }
 ASKING_ROUTES = {
     ("GET", "/api/answers/config"),
@@ -176,6 +177,9 @@ ADMIN_ROUTES = {
     ("GET", "/api/contributions/images/review"),
     ("POST", "/api/contributions/images/review/{contribution_id}/approve"),
     ("POST", "/api/contributions/images/review/{contribution_id}/reject"),
+    ("GET", "/api/upload-links/{token}"),
+    ("POST", "/api/upload-links/{token}/picture"),
+    ("POST", "/api/upload-links/{token}/renew"),
     ("GET", "/api/access/roster"),
     ("POST", "/api/access/roster"),
     ("GET", "/api/access/roster/pending-count"),
