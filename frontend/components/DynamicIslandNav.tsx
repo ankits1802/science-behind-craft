@@ -9,6 +9,7 @@ import {
   BarChart3,
   Bookmark,
   BookOpen,
+  BookPlus,
   Eye,
   EyeOff,
   ImagePlus,
@@ -95,6 +96,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/lessons", label: "Lessons", icon: Presentation, group: null, can: routeAllows("/lessons"), gate: "require(BUILD_LESSONS)" },
   { href: "/contribute", label: "Contribute", icon: Mic, group: null, can: routeAllows("/contribute"), gate: "require(CONTRIBUTE_TESTIMONY)" },
   { href: "/contributions/pictures", label: "Give a picture", icon: ImagePlus, group: null, can: routeAllows("/contributions/pictures"), gate: "require(PROPOSE_KNOWLEDGE)" },
+  { href: "/contributions/facts", label: "Propose knowledge", icon: BookPlus, group: null, can: routeAllows("/contributions/facts"), gate: "require(PROPOSE_KNOWLEDGE)" },
 
   { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: routeAllows("/admin"), gate: "require_admin", adminSurface: true },
   { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: routeAllows("/admin/access"), gate: "require_access_roster_manager", adminSurface: true },
