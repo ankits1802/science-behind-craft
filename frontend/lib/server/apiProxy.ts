@@ -21,6 +21,7 @@ const UNCONFIGURED_DETAIL =
 export const CROSS_SITE_DETAIL = "This request didn't come from this site, so it was refused.";
 
 const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
+const MACHINE_ROUTES = new Set(["/api/mcp"]);
 
 const FORWARDED_REQUEST_HEADERS = new Set([
   "accept",
@@ -36,6 +37,7 @@ const FORWARDED_REQUEST_HEADERS = new Set([
   "user-agent",
   "origin",
   "x-forwarded-for",
+  "mcp-protocol-version",
   "idempotency-key",
   "x-client-app",
   "x-confirm-provider",
@@ -119,6 +121,10 @@ export function sessionTokenOf(request: Request): string | null {
 export function sessionMarkerOf(request: Request): string | null {
   const names = cookieNames(isSecureContext(request));
   return readCookie(request.headers, names.marker);
+}
+
+export function isMachineRoute(path: string): boolean {
+  return MACHINE_ROUTES.has(path);
 }
 
 export function csrfRefusal(request: Request): string | null {
