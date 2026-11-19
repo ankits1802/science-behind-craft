@@ -14,6 +14,7 @@ from app.models import User
 from app.services.site_build import BuildTooSoon, SiteBuildState
 from app.services.static_pages import StaticPages
 
+from ..contracts.golden import golden_json
 from .fakes import CountingHook
 
 LAST = datetime(2026, 11, 19, 23, 50, tzinfo=UTC)
@@ -109,16 +110,17 @@ def test_a_refused_hook_is_a_502_that_names_no_address(quiet_build: list[dict[st
     assert "vercel" not in answer.text.lower()
 
 
-def test_the_static_page_list_is_public(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_the_static_page_list_is_public_and_matches_the_shared_golden(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     async def listed(session: Any) -> StaticPages:
-        return StaticPages(crafts=("Bagh-Print", "Kutch-Ajrakh"), categories=("Textile-Craft-Category",))
+        return StaticPages(
+            crafts=("Bagh-Print", "Kutch-Ajrakh", "Sanganeri-Block-Print"),
+            categories=("Textile-Craft-Category", "Leather-Craft-Category"),
+        )
 
     monkeypatch.setattr(site_build, "static_pages", listed)
     answer = client(None).get("/api/site/pages")
     assert answer.status_code == 200
-    assert answer.json() == {
-        "schemaVersion": 1,
-        "crafts": ["Bagh-Print", "Kutch-Ajrakh"],
-        "categories": ["Textile-Craft-Category"],
-    }
+    assert answer.json() == golden_json("site.pages.golden.json")
     assert answer.headers["Cache-Control"] == "public, max-age=300"
