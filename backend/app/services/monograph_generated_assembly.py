@@ -64,6 +64,7 @@ class _Page:
     fragments: dict[str, str] = field(default_factory=dict)
     reused: dict[str, str] = field(default_factory=dict)
     default: list[LayoutEntry] = field(default_factory=list)
+    hero: str | None = None
 
 
 def assembled_document(parts: GeneratedParts, drawings: Drawings) -> MonographDocument | None:
@@ -128,6 +129,8 @@ def _pictures(parts: GeneratedParts, page: _Page) -> dict[str, list[str]]:
         chapter, role = picture_placement(placed.picture)
         entry = parts.layout.entry(label) if parts.layout is not None else None
         role = entry.role if entry is not None else role
+        if role == HERO and page.hero is None:
+            page.hero = label
         page.components[label] = _picture_entry(parts, placed, label, chapter)
         page.specs[label] = _picture_spec(placed, role, entry)
         by_chapter.setdefault(chapter, []).append((role not in LEADING_ROLES, label))
@@ -169,16 +172,15 @@ def _lay_out(parts: GeneratedParts, page: _Page, found: Sequence[Mapping[str, li
     texts, pictures, components = found
     masthead = masthead_units(parts.record)
     page.units.update(masthead)
-    hero = next((label for label, spec in page.specs.items() if spec.get("role") == HERO), None)
-    for chapter in CHAPTER_KEYS:
+    chapters = dict.fromkeys([*CHAPTER_KEYS, *pictures, *texts, *components])
+    for chapter in chapters:
         refs = [*pictures.get(chapter, []), *texts.get(chapter, [])]
         if chapter == MASTHEAD_CHAPTER:
-            within = hero if hero in refs else None
-            heads = [hero] if within is not None else []
-            rest = [ref for ref in refs if ref != within]
+            within = page.hero if page.hero in refs else None
+            heads = [within] if within is not None else []
             page.default += [_entry(chapter, ref, None, page) for ref in heads]
             page.default += [_entry(chapter, ref, within, page) for ref in masthead]
-            refs = rest
+            refs = [ref for ref in refs if ref != within]
         page.default += [_entry(chapter, ref, None, page) for ref in refs]
         page.default += [_entry(chapter, ref, None, page) for ref in components.get(chapter, [])]
 
