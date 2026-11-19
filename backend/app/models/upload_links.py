@@ -30,7 +30,7 @@ class UploadLink(Base):
     claimIds: Mapped[list[uuid.UUID]] = mapped_column(ARRAY(UUID(as_uuid=True)), nullable=False)
     linkHash: Mapped[str] = mapped_column(String(DIGEST_CHARS), nullable=False, unique=True)
     slotHash: Mapped[str | None] = mapped_column(String(DIGEST_CHARS), unique=True)
-    declaration: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    declaration: Mapped[dict[str, Any] | None] = mapped_column(JSONB(none_as_null=True))
     expiresAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     usedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     contributionId: Mapped[uuid.UUID | None] = mapped_column(

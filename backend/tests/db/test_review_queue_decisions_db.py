@@ -58,6 +58,7 @@ async def events(session: AsyncSession, claim_id: uuid.UUID) -> list[tuple[objec
 
 
 async def audited(session: AsyncSession, target: uuid.UUID) -> list[str]:
+    await session.flush()
     rows = await session.scalars(select(AuditLog.action).where(AuditLog.targetId == str(target)))
     return list(rows)
 
