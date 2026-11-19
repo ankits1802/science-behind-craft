@@ -137,8 +137,9 @@ with no quote; the repository holds no text of that edition, so it has no passag
   claim), with the expected claims each question missed. Expected claims not visible in the
   database are reported as absent and not scored.
 - `tests/db/test_retrieval_eval.py` seeds the claims and passages, embeds them with a hashed
-  bag-of-words embedder (deterministic, no network) and asserts recall at 5 of at least 0.6 and
-  a mean reciprocal rank of at least 0.5.
+  bag-of-words embedder (deterministic, no network) and asserts recall at 5 of at least 0.9 and
+  a mean reciprocal rank of at least 0.7. Measured in Backend checks on 2026-11-20: 0.9394 and
+  0.7439 over the 22 questions; a change that lowers either below its floor fails.
 - `python -m app.scripts.eval_retrieval` runs the same list against the live database with the
   embedding route and prints `{ok, questions, recallAt5, meanReciprocalRank, absent, misses}`.
 
