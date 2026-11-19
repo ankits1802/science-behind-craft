@@ -1,10 +1,10 @@
 import type { Page } from "@playwright/test";
 
 export type DriftStep = { before: string; after: string; delta: number };
-export type HeightRecord = { path: string; depth: number; height: string; style: string };
+export type HeightRecord = { path: string; depth: number; height: string; width: string; style: string };
 export type DriftReport = { step: DriftStep; differences: { path: string; approved: HeightRecord; rendered: HeightRecord }[] };
 
-const BOX_PROPERTIES = ["display", "height", "line-height", "font-size", "font-family", "padding-block-start", "padding-block-end", "border-block-start-width", "border-block-end-width", "margin-block-start", "margin-block-end", "vertical-align", "box-sizing"];
+const BOX_PROPERTIES = ["display", "width", "max-width", "aspect-ratio", "height", "line-height", "font-size", "font-family", "padding-block-start", "padding-block-end", "border-block-start-width", "border-block-end-width", "margin-block-start", "margin-block-end", "vertical-align", "box-sizing"];
 const MAX_ELEMENTS = 4000;
 const MAX_DIFFERENCES = 12;
 
@@ -35,6 +35,7 @@ export async function sectionHeights(page: Page, id: string): Promise<HeightReco
           path: `${index}:${node.tagName.toLowerCase()}${classes ? `.${classes}` : ""}`,
           depth,
           height: node.getBoundingClientRect().height.toFixed(2),
+          width: node.getBoundingClientRect().width.toFixed(2),
           style: properties.map((name) => `${name}=${style.getPropertyValue(name)}`).join(" ")
         };
       });
@@ -45,16 +46,21 @@ export async function sectionHeights(page: Page, id: string): Promise<HeightReco
 
 export function heightDifferences(approved: HeightRecord[], rendered: HeightRecord[]): DriftReport["differences"] {
   const byPath = new Map(rendered.map((record) => [record.path, record]));
-  const differs = approved.map((record) => byPath.has(record.path) && Math.abs(Number(record.height) - Number(byPath.get(record.path)?.height)) >= 0.5);
+  const differs = approved.map((record) => {
+    const other = byPath.get(record.path);
+    return !!other && (Math.abs(Number(record.height) - Number(other.height)) >= 0.5 || Math.abs(Number(record.width) - Number(other.width)) >= 0.5);
+  });
+  const parents = parentIndexes(approved);
   return approved
-    .filter((record, index) => differs[index] && !differingDescendant(approved, differs, index))
+    .filter((record, index) => differs[index] && !(parents[index] >= 0 && differs[parents[index]]))
     .slice(0, MAX_DIFFERENCES)
     .map((record) => ({ path: record.path, approved: record, rendered: byPath.get(record.path) as HeightRecord }));
 }
 
-function differingDescendant(records: HeightRecord[], differs: boolean[], index: number): boolean {
-  for (let next = index + 1; next < records.length && records[next].depth > records[index].depth; next += 1) {
-    if (differs[next]) return true;
-  }
-  return false;
+function parentIndexes(records: HeightRecord[]): number[] {
+  const open: number[] = [];
+  return records.map((record, index) => {
+    open[record.depth] = index;
+    return record.depth > 0 ? (open[record.depth - 1] ?? -1) : -1;
+  });
 }
