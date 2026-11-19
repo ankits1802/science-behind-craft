@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { csrfRefusal, isMachineRoute, upstreamHeaders } from "@/lib/server/apiProxy";
+import { csrfRefusal, isMachineRoute, MACHINE_RESPONSE_HEADERS, upstreamHeaders } from "@/lib/server/apiProxy";
 
 const MCP = "https://kalavigyan.example/api/mcp";
 
@@ -22,4 +22,10 @@ test("a machine route goes upstream with the caller's own token and protocol ver
   expect(headers.get("mcp-protocol-version")).toBe("2025-11-25");
   expect(headers.get("cookie")).toBeNull();
   expect(upstreamHeaders(agentPost({}), null, {}).get("authorization")).toBeNull();
+});
+
+test("a machine route's reply is passed on unbuffered and untransformed, so a streamed MCP answer arrives as sent", () => {
+  expect(MACHINE_RESPONSE_HEADERS).toEqual({ "cache-control": "no-store, no-transform", "x-accel-buffering": "no" });
+  const streamed = upstreamHeaders(agentPost({ accept: "application/json, text/event-stream" }), null, {});
+  expect(streamed.get("accept")).toBe("application/json, text/event-stream");
 });

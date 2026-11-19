@@ -15,6 +15,7 @@ from app.research.review_queue import (
     COMPONENTS,
     FACTS,
     IMAGES,
+    LAYOUTS,
     RAISE,
     REJECT,
     RETRACT,
@@ -24,7 +25,6 @@ from app.research.review_queue import (
     QueueKey,
     QueueRejection,
     ReviewFilters,
-    closest_components,
     cursor_text,
     decision_capability,
     fact_move_problem,
@@ -35,8 +35,9 @@ from app.research.review_queue import (
     sees_proposer,
     selected_kinds,
 )
+from app.research.review_queue_components import closest_components
 
-ALL_KINDS = ("FACTS", "TESTIMONY", "IMAGES", "COMPONENTS")
+ALL_KINDS = ("FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS")
 NOON = datetime(2026, 11, 19, 12, 0, 0, 123456, tzinfo=UTC)
 
 
@@ -64,8 +65,8 @@ def test_only_admins_and_master_admins_see_who_proposed(role: str, shown: bool) 
     ("origin", "kinds"),
     [
         ("RESEARCH", ("FACTS",)),
-        ("CONTRIBUTION", ("FACTS", "IMAGES")),
-        ("AGENT", ("FACTS", "COMPONENTS")),
+        ("CONTRIBUTION", ("FACTS", "IMAGES", "LAYOUTS")),
+        ("AGENT", ("FACTS", "COMPONENTS", "LAYOUTS")),
         ("TESTIMONY", ("TESTIMONY",)),
         (None, ALL_KINDS),
     ],
@@ -90,13 +91,17 @@ def test_a_kind_filter_never_reaches_past_the_viewers_kinds() -> None:
         (TESTIMONY, APPROVE, Capability.REVIEW_TESTIMONY),
         (IMAGES, REJECT, Capability.REVIEW_CONTRIBUTIONS),
         (COMPONENTS, APPROVE, Capability.REVIEW_CONTRIBUTIONS),
+        (LAYOUTS, APPROVE, Capability.REVIEW_CONTRIBUTIONS),
+        (LAYOUTS, REJECT, Capability.REVIEW_CONTRIBUTIONS),
     ],
 )
 def test_each_decision_needs_its_kinds_capability(kind: str, action: str, capability: Capability) -> None:
     assert decision_capability(kind, action) == capability
 
 
-@pytest.mark.parametrize(("kind", "action"), [(IMAGES, RAISE), (TESTIMONY, RETRACT), (COMPONENTS, RAISE)])
+@pytest.mark.parametrize(
+    ("kind", "action"), [(IMAGES, RAISE), (TESTIMONY, RETRACT), (COMPONENTS, RAISE), (LAYOUTS, RETRACT)]
+)
 def test_only_a_fact_is_raised_or_retracted(kind: str, action: str) -> None:
     with pytest.raises(InvalidInput):
         decision_capability(kind, action)
@@ -256,6 +261,12 @@ def test_a_page_holds_one_to_fifty_items(limit: int) -> None:
 def test_each_item_names_its_kind_by_the_queue_it_belongs_to() -> None:
     kinds = [
         model.model_fields["kind"].default
-        for model in (contract.FactItem, contract.TestimonyItem, contract.PictureItem, contract.ComponentItem)
+        for model in (
+            contract.FactItem,
+            contract.TestimonyItem,
+            contract.PictureItem,
+            contract.ComponentItem,
+            contract.LayoutItem,
+        )
     ]
     assert kinds == list(ALL_KINDS)

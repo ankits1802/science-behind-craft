@@ -20,7 +20,7 @@ from app.research.open_work import (
 
 from .open_work import open_task, proposed_tasks
 
-__all__ = ["TASKS_HELD", "TASK_TAKEN", "claim_task", "complete_task", "release_task"]
+__all__ = ["TASKS_HELD", "TASK_TAKEN", "claim_task", "complete_task", "give_back_task", "release_task"]
 
 TASK_TAKEN = "task_taken"
 TASKS_HELD = "tasks_held"
@@ -64,7 +64,7 @@ async def release_task(session: AsyncSession, user_id: uuid.UUID, key: str, *, n
     current = await _live(session, key)
     if current is None or current.userId != user_id:
         raise InvalidInput(f"You hold no reservation of {key}.")
-    _end(current, RELEASED if current.expiresAt > now else EXPIRED, now=now)
+    _end(current, _given_back(current, now), now=now)
     await session.flush()
     return TaskHold(task_key=key, held=False, reserved_until=None)
 
@@ -73,6 +73,13 @@ async def complete_task(session: AsyncSession, user_id: uuid.UUID, key: str, *, 
     current = await _live(session, key)
     if current is not None and current.userId == user_id:
         _end(current, COMPLETED, now=now)
+        await session.flush()
+
+
+async def give_back_task(session: AsyncSession, user_id: uuid.UUID, key: str, *, now: datetime) -> None:
+    current = await _live(session, key)
+    if current is not None and current.userId == user_id:
+        _end(current, _given_back(current, now), now=now)
         await session.flush()
 
 
@@ -119,6 +126,10 @@ async def _refuse_too_many(session: AsyncSession, user_id: uuid.UUID, *, now: da
             f"This account holds {held} tasks, the most one account may hold at once; release_task one "
             "before claiming another.",
         )
+
+
+def _given_back(reservation: TaskReservation, now: datetime) -> str:
+    return RELEASED if reservation.expiresAt > now else EXPIRED
 
 
 def _end(reservation: TaskReservation, ending: str, *, now: datetime) -> None:

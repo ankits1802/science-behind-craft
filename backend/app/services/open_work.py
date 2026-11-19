@@ -17,7 +17,14 @@ from app.curation.limits import (
     FULL_CORE_DISCIPLINES,
     SECTION_SENTENCES_MIN,
 )
-from app.models import ArtisanContribution, Claim, ComponentProposal, ImageContribution, TaskReservation
+from app.models import (
+    ArtisanContribution,
+    Claim,
+    ComponentProposal,
+    ImageContribution,
+    LayoutProposal,
+    TaskReservation,
+)
 from app.models.knowledge import QUOTE_MAX_CHARS
 from app.models.open_work import LIVE_PROPOSALS
 from app.research.open_work import (
@@ -132,6 +139,7 @@ async def review_queues(session: AsyncSession, queues: Sequence[str]) -> dict[st
         "TESTIMONY": (ArtisanContribution.createdAt, ArtisanContribution.status == PENDING),
         "IMAGES": (ImageContribution.createdAt, ImageContribution.status == PENDING),
         "COMPONENTS": (ComponentProposal.createdAt, ComponentProposal.status == PENDING),
+        "LAYOUTS": (LayoutProposal.createdAt, LayoutProposal.status == PENDING),
     }
     return {queue: await _queue(session, *waiting[queue]) for queue in queues}
 

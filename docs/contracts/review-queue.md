@@ -1,18 +1,20 @@
-# Review queue (decision 0101, items 5, 12 and 13)
+# Review queue (decision 0101, items 5, 12, 13 and 14)
 
 One review path for everything other people give: proposed and researched facts, artisans'
-testimony, contributed pictures and component proposals, whatever their origin (the site, the
+testimony, contributed pictures, component proposals and page layout proposals, whatever their
+origin (the site, the
 Knowledge API, the MCP server, an artisan's conversation). Reviewers see one page of pending items,
 newest first, and decide each through one route per action. A reviewer's own contribution is
 approved at once by its own write path (`knowledge-writes.md`, `image-contributions.md`,
 `open-work.md`) and never enters the queue; the queue also leaves out anything the viewer proposed.
 
-Contract: `backend/app/research/review_queue.py`. Services: `services/review_queue.py` (the page),
-`review_queue_select.py` (what is pending, per kind), `review_queue_fact_views.py` and
-`review_queue_components.py` (what a reviewer needs to judge an item),
-`review_queue_decisions.py`, `review_queue_facts.py` (decisions) and `review_queue_errors.py`.
-Route: `api/routes/review_queue.py`. No table or column of its own: the queue reads the rows each
-kind already keeps.
+Contract: `backend/app/research/review_queue.py`, with the component body in
+`research/review_queue_components.py` and the layout body in `research/layout_proposals.py`.
+Services: `services/review_queue.py` (the page), `review_queue_select.py` (what is pending, per kind),
+`review_queue_fact_views.py`, `review_queue_components.py` and `review_queue_layouts.py` (what a
+reviewer needs to judge an item, and the component and layout decisions), `review_queue_decisions.py`,
+`review_queue_facts.py` (decisions) and `review_queue_errors.py`. Route: `api/routes/review_queue.py`.
+No table or column of its own: the queue reads the rows each kind already keeps.
 
 ## Who sees which kind
 
@@ -24,6 +26,7 @@ Each kind follows the capability its queue names in `research/open_work.py` (`RE
 | `TESTIMONY` | `REVIEW_TESTIMONY` | Professor and above |
 | `IMAGES` | `REVIEW_CONTRIBUTIONS` | Admin and above |
 | `COMPONENTS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
+| `LAYOUTS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
 
 So an Admin or Master Admin sees every kind (item 12); a Professor sees facts and testimony. An
 account that reviews no kind is refused the route (403).
@@ -42,19 +45,22 @@ review already shows.
 | `TESTIMONY` | `ArtisanContribution` | `status` `PENDING`, not the viewer's |
 | `IMAGES` | `ImageContribution` | `status` `PENDING`, not the viewer's |
 | `COMPONENTS` | `ComponentProposal` | `status` `PENDING`, not the viewer's |
+| `LAYOUTS` | `LayoutProposal` | `status` `PENDING`, not the viewer's |
 
 **Origins.** A fact's origin is `RESEARCH` when it was written back from an answer's research
 (`Claim.origin` `LIVE_RESEARCH`), `AGENT` when a source was found by an agent
 (`ClaimSource.foundBy` `AGENT`), else `CONTRIBUTION`. Testimony is `TESTIMONY`, a picture
-`CONTRIBUTION`, a component proposal `AGENT`.
+`CONTRIBUTION`, a component proposal `AGENT`, a layout proposal its own `origin` (`CONTRIBUTION`
+from the site or the Knowledge API, `AGENT` from the MCP server).
 
 **Craft.** A fact belongs to a craft through its concept (the craft's own concepts and edges, as
 retrieval scopes them); testimony and pictures by `craftId`; a component proposal by `craftId` or a
-`CRAFT` subject naming the craft's slug.
+`CRAFT` subject naming the craft's slug; a layout proposal by `craftId` (a craft's or family's page;
+a category's page has no craft).
 
 ## `GET /api/review-queue`
 
-Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`), `craft` (a craft slug), `origin`
+Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`, `LAYOUTS`), `craft` (a craft slug), `origin`
 (`RESEARCH`, `CONTRIBUTION`, `AGENT`, `TESTIMONY`), `cursor`, `limit` (1 to 50, default 25).
 
 Answer `ReviewQueuePage`:
@@ -79,6 +85,11 @@ Each item has `id`, `kind`, `origin`, `submittedAt`, `craft {slug, name, path}` 
   `subjects`, `consideredLabels`, `extends`, `extension`, `taskKey`) and `closest`: up to three
   library components, most matching reasons first, then the most words shared (`overlap` 0 to 1),
   never the one it extends.
+- `layout`: `subject {kind, slug}`, `subjectName`, `pageUrl`, `baseVersion`, `currentVersion` (the
+  page's layout now, 0 for none), `stale` (the two differ, so approval is refused), `note`,
+  `entryCount` and `changes [{ref, change (ADDED, CHANGED, REMOVED), before, after}]`: the proposal
+  against the current layout, entry by entry, in reading order (chapter, then place), each side a
+  `PageLayoutEntry` (`research/layout_proposals.layout_changes`).
 - `picture`: the `ImageContributionView` of `image-contributions.md`.
 - `testimony`: the review item of the testimony review (`/api/testimony/review/{id}`).
 
@@ -116,6 +127,13 @@ whose page stamps follow the facts' status and level.
 reviewer, the time and the note: it waits for a builder to build and register it in the library;
 nothing is built. Reject records `REJECTED` with the reason. Audit `review.component_<...>`.
 
+**Layout proposals** (`review_queue_layouts.py`): approve writes the proposal's entries as the
+page's next `PageLayout` version through `page_layouts.store_layout`, as the reviewer (audited
+`PAGE_LAYOUT_WRITTEN`), and records `APPROVED` with the reviewer, the time, the note and the version
+written; when the page's layout has moved past `baseVersion` it is refused (409) and the proposal
+can only be rejected. Reject records `REJECTED` with the reason; nothing is written. Audit
+`review.layout_<...>` with the version.
+
 **Pictures** go through `image_contributions.approve` and `.reject` (the reason is the note), with
 an audit entry `review.image_<...>`. **Testimony** goes through `testimony_writes.approve` and
 `.reject`: a testimony decision names the `version` it was read at (422 without it; 409 when the
@@ -147,10 +165,15 @@ kept in the address (`?kind=&origin=&craft=`). A card per item:
   reasons and the facts it was compared with;
 - a component proposal (`ComponentReviewCard.tsx`): the proposal, the labels its proposer
   considered and the closest library components;
+- a layout proposal (`LayoutReviewCard.tsx`, `LayoutChangeList.tsx`): the page (linked from the header
+  for a craft or family, from its name for a category), the kind of page and the number of entries,
+  the proposer's note, which version it builds on and what approving writes, and each change ("Placed",
+  "Moved from ... to ...", "Taken out"), the first 12 and then "Show all N changes"; a stale proposal
+  offers Reject only (`frontend/lib/layoutReviewView.ts`);
 - a picture: `PictureReviewCard.tsx`; testimony: the testimony `ReviewCard.tsx`, both reused with
   their own decision routes.
 
-Facts and proposals decide through `QueueDecisionBar.tsx`: an `ActionGroup` of Approve, Approve as
+Facts, component proposals and layout proposals decide through `QueueDecisionBar.tsx`: an `ActionGroup` of Approve, Approve as
 reviewed (facts), then Reject (waiting) or Retract (live) last as the destructive action, with a
 Reason field required for either. The client contract is `frontend/lib/reviewQueueContract.ts`;
 pure rules are in `frontend/lib/reviewQueueView.ts`. `/admin/pictures` and `/admin/testimony`
@@ -159,4 +182,6 @@ stay, and list decided items.
 ## Tests
 
 `backend/tests/review_queue/` (rules and routes), `backend/tests/db/test_review_queue_db.py` and
-`test_review_queue_decisions_db.py`, `frontend/e2e/review-queue-unit.spec.ts`.
+`test_review_queue_decisions_db.py`, `test_layout_proposals_db.py`, `backend/tests/layouts/`
+(layout proposal rules and routes), `frontend/e2e/review-queue-unit.spec.ts` and
+`review-layouts-unit.spec.ts`.

@@ -86,6 +86,7 @@ REVIEW_QUEUES: Mapping[str, Capability] = MappingProxyType(
         "TESTIMONY": Capability.REVIEW_TESTIMONY,
         "IMAGES": Capability.REVIEW_CONTRIBUTIONS,
         "COMPONENTS": Capability.REVIEW_CONTRIBUTIONS,
+        "LAYOUTS": Capability.REVIEW_CONTRIBUTIONS,
     }
 )
 REVIEW_QUEUE_LABELS: Mapping[str, str] = MappingProxyType(
@@ -94,6 +95,7 @@ REVIEW_QUEUE_LABELS: Mapping[str, str] = MappingProxyType(
         "TESTIMONY": "items of artisans' testimony",
         "IMAGES": "contributed pictures",
         "COMPONENTS": "component proposals",
+        "LAYOUTS": "layout proposals",
     }
 )
 COMPONENT_NEEDS: Mapping[str, tuple[str, ...]] = MappingProxyType(

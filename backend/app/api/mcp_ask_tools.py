@@ -10,6 +10,7 @@ from pydantic import Field, ValidationError, model_validator
 from app.core.db import release_connection
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import ASK_SCOPE, CONTRIBUTE_SCOPE
+from app.core.rate_limit import IMAGE_UPLOADS
 from app.core.roles import role_value
 from app.models import User
 from app.research.crafts import QUESTION_MAX_CHARS, SLUG_MAX_CHARS
@@ -38,6 +39,7 @@ from .mcp_ask_run import (
 )
 from .mcp_tool_base import DATA_NOTE, WRITES, Arguments, Tool, ToolContext
 from .oauth_hosts import endpoints_or_none
+from .proposal_limits import refuse_tool_when_spent
 
 __all__ = ["ASK_TOOLS", "START_IMAGE_UPLOAD", "Ask", "StartImageUpload", "ViewedTool", "ask_tool"]
 
@@ -170,6 +172,7 @@ async def _asked(context: ToolContext, user: User, arguments: Ask) -> AnswerAsk:
 async def _start_image_upload(context: ToolContext, arguments: StartImageUpload) -> UploadStart:
     user = _signed_in(context)
     slot = _slot(arguments)
+    refuse_tool_when_spent(IMAGE_UPLOADS, user)
     issued = await upload_links.start_upload(
         context.session, user, slot, arguments.declaration, now=datetime.now(UTC)
     )

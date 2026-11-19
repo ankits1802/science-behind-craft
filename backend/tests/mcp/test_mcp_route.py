@@ -51,15 +51,13 @@ def test_a_body_that_is_not_json_is_a_parse_error() -> None:
     assert response.json()["error"]["code"] == -32700
 
 
-def test_a_foreign_web_origin_and_an_unknown_protocol_version_are_refused() -> None:
-    foreign = client(enabled=True).post(
-        "/api/mcp", json=INITIALIZE, headers={"origin": "https://evil.example"}
-    )
-    assert foreign.status_code == 403
-    allowed = get_settings().cors_origins[0]
-    assert (
-        client(enabled=True).post("/api/mcp", json=INITIALIZE, headers={"origin": allowed}).status_code == 200
-    )
+def test_an_origin_that_is_no_origin_and_an_unknown_protocol_version_are_refused() -> None:
+    for refused in ("null", "https://evil.example/path", "file://"):
+        answered = client(enabled=True).post("/api/mcp", json=INITIALIZE, headers={"origin": refused})
+        assert answered.status_code == 403, refused
+    for served in ("https://inspector.example", "http://agents.example", get_settings().cors_origins[0]):
+        answered = client(enabled=True).post("/api/mcp", json=INITIALIZE, headers={"origin": served})
+        assert answered.status_code == 200, served
     stale = client(enabled=True).post(
         "/api/mcp", json=INITIALIZE, headers={"mcp-protocol-version": "1999-01-01"}
     )

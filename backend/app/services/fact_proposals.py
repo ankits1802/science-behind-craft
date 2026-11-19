@@ -26,6 +26,7 @@ from .candidate_sources import ReadSource, read_sources
 from .candidate_store import SqlHeldFacts, proposal_subject
 from .candidate_writes import mark_sources_differ, record_checks
 from .proposal_writes import ProposedClaim, cite_proposal, proposal_level, write_proposed_claim
+from .task_reservations import complete_task, give_back_task
 
 __all__ = ["NO_ACCOUNT", "ProposalAdapters", "propose_fact"]
 
@@ -68,6 +69,9 @@ async def propose_fact(
         )
         await _embed_chunks(session, adapters.embed, kept)
     differ = await mark_sources_differ(session, claim_id) if placed.live else []
+    if proposal.task_key is not None:
+        settle = complete_task if run.passed else give_back_task
+        await settle(session, proposer.id, proposal.task_key, now=now)
     return _reply(claim_id, written, differ)
 
 

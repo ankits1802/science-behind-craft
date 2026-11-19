@@ -20,6 +20,7 @@ from .upkeep_archive import (
     archive_sources,
     sources_at_risk,
 )
+from .upkeep_clients import ClientsReport, abandoned_client_count, remove_abandoned_clients
 from .upkeep_pages import (
     MONOGRAPHS_PER_NIGHT,
     MonographLoader,
@@ -58,6 +59,7 @@ class UpkeepReport:
     quotes: QuotesReport = field(default_factory=QuotesReport)
     archive: ArchiveReport = field(default_factory=ArchiveReport)
     orphans: OrphansReport = field(default_factory=OrphansReport)
+    clients: ClientsReport = field(default_factory=ClientsReport)
     pages: PagesReport = field(default_factory=PagesReport)
 
     @property
@@ -70,6 +72,7 @@ class UpkeepReport:
             "quotes": self.quotes.as_dict(),
             "archive": self.archive.as_dict(),
             "orphans": self.orphans.as_dict(),
+            "clients": self.clients.as_dict(),
             "pages": self.pages.as_dict(),
         }
 
@@ -79,6 +82,7 @@ async def run_nightly_upkeep(session: AsyncSession, tools: UpkeepTools, *, now: 
     report.quotes = await recheck_quotes(session, tools.fetcher, now=now)
     report.archive = await archive_sources(session, tools.archiver, now=now)
     report.orphans = await sweep_orphans(session, now=now)
+    report.clients = await remove_abandoned_clients(session, now=now)
     await rebuild_monographs(session, tools.monographs, tools.load_monograph, now=now, report=report.pages)
     await rebuild_stale_pages(session, skip=frozenset(tools.monographs), report=report.pages)
     return report
@@ -98,5 +102,6 @@ async def plan_nightly_upkeep(
         "sourcesAtRisk": len(at_risk),
         "monographs": rotating_window(sorted(monographs), MONOGRAPHS_PER_NIGHT, now.date().toordinal()),
         "pagesStale": len(stale),
+        "clientsAbandoned": await abandoned_client_count(session, now=now),
         "orphans": [orphan.as_dict() for orphan in orphans],
     }

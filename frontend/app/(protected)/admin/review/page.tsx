@@ -20,7 +20,7 @@ import { EVERY_KIND, filtersFromSearch, filtersSearch, isFiltered, kindTabs, NO_
 import { useReviewQueue, type ReviewQueueState } from "./useReviewQueue";
 
 const DESCRIPTION =
-  "Everything other people have given that waits for a decision: facts, artisans' testimony, pictures and component proposals, from the site, the Knowledge API and the MCP server. Your own contributions are approved at once and never wait here.";
+  "Everything other people have given that waits for a decision: facts, artisans' testimony, pictures, component proposals and page layouts, from the site, the Knowledge API and the MCP server. Your own contributions are approved at once and never wait here.";
 
 export default function ReviewPage() {
   return (
@@ -99,7 +99,7 @@ function QueueList({ queue, onClear }: { queue: ReviewQueueState; onClear: (() =
       ) : (
         <div className="grid gap-3">
           <p className="max-w-measure font-reading text-body-sm text-ink-2">
-            What other people give waits here for a decision: facts that passed the automatic checks, artisans&apos; testimony, pictures and component proposals.
+            What other people give waits here for a decision: facts that passed the automatic checks, artisans&apos; testimony, pictures, component proposals and page layouts.
           </p>
           {onClear ? (
             <ActionGroup align="start">

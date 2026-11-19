@@ -70,6 +70,7 @@ ORIGIN_PROVENANCES: Mapping[str, str] = MappingProxyType(
         "ENRICHMENT": "FROM_ANSWERS",
         "MODEL": "FROM_ANSWERS",
         "LIVE_RESEARCH": "FROM_ANSWERS",
+        "CONTRIBUTION": "RESEARCHER",
     }
 )
 

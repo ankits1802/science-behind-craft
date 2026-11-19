@@ -1,8 +1,8 @@
 # Open work, reservations, component proposals and the method on the MCP server
 
-Slice 3 of decision 0101's Knowledge API and MCP server, except `propose_fact`: item 15 "Open work"
-and "The method travels with the server", and item 16's `propose_component`. The endpoint, framing
-and read tools are in `docs/contracts/knowledge-api.md`.
+Decision 0101's Knowledge API and MCP server: item 15 "Open work" and "The method travels with
+the server", and item 16's `propose_component`. The endpoint, framing and read tools are in
+`docs/contracts/knowledge-api.md`; `propose_fact` and `propose_layout` are in `knowledge-writes.md`.
 
 ## Code
 
@@ -88,7 +88,8 @@ becomes a task only once it holds a fact or a section.
 - Review queues and who sees them: `FACTS` (claims `PROPOSED` or `IN_REVIEW`; `MARK_CLAIM_LEVEL`,
   Professor and above), `TESTIMONY` (pending artisans' testimony; `REVIEW_TESTIMONY`), `IMAGES`
   (pending pictures; `REVIEW_CONTRIBUTIONS`, Admin and above), `COMPONENTS` (pending component
-  proposals; `REVIEW_CONTRIBUTIONS`). Queues are listed only without a subject filter.
+  proposals; `REVIEW_CONTRIBUTIONS`), `LAYOUTS` (pending page layout proposals;
+  `REVIEW_CONTRIBUTIONS`). Queues are listed only without a subject filter.
 
 **Priority** per subject, then ordered:
 - `HIGH`: on the owner's first list (`kalavigyan-craft-pages` skill, "Order": Bidriware, Blue Pottery
@@ -119,6 +120,10 @@ its key.
   (`EXPIRED`, at its expiry) by the next claim, and the task returns to the list by itself.
 - `release_task` ends the caller's own reservation (`RELEASED`, or `EXPIRED` once past its time).
 - A `propose_component` naming its `task_key` ends the proposer's reservation `COMPLETED`.
+- A `propose_fact` (or `POST /api/knowledge/facts`) naming a field or corroboration task as its
+  `taskKey` ends the proposer's reservation `COMPLETED` once the fact passes the gates (published or
+  waiting for review), and gives it back (`RELEASED`) when the fact is refused, so the task returns
+  to the list (`knowledge-writes.md`). The `research_field` prompt asks the agent to pass it.
 - One live reservation per key: a partial unique index on `taskKey` where `endedAt` is null.
   `userId` is kept for the reservation only and never shown to another account.
 
@@ -169,7 +174,7 @@ extended label; `VARIANT` takes a new one), `task_key?`.
   {craft_slug, field}`, `propose_component {craft_slug, need?}`. Each returns one user message: the
   task, the steps naming the tools in order (`list_open_work`, `claim_task`, `get_facts` and
   `get_section`, `list_components` first for a component, the agent's own search, then
-  `propose_fact` or `propose_component`) and the method sections of the contributor skill (What
+  `propose_fact` with the claimed task's key, or `propose_component`) and the method sections of the contributor skill (What
   counts as a source, Quotes and locators, One fact per sentence, The fields, The page checklist,
   Never; plus Writing a section or Components). A wrong prompt or argument is `-32602`.
 - `resources/list`, `resources/read`, `resources/templates/list` (empty):
@@ -192,9 +197,13 @@ holds the two byte for byte, the field table equal to the vocabulary, and the to
 to the design skill's `tokens.json`. After editing the skill or regenerating the tokens, copy the
 file to its served place.
 
-## Not built yet
+## Around open work
 
-- `propose_fact` (another lane) closing field and corroboration tasks once a fact passes the gates.
-- Proposing a page layout; reviewing component proposals in admin settings; building and
-  registering an approved proposal.
-- The nightly upkeep that archives sources and re-fetches links.
+- Facts close their tasks (above); page layouts are proposed with `propose_layout` and wait in the
+  `LAYOUTS` queue (`knowledge-writes.md`).
+- Component and layout proposals are decided on the review page, `/admin/review`
+  (`review-queue.md`). An approved component proposal waits for a builder, who builds it and
+  registers it in the library outside the server; an approved layout is written at once.
+- The nightly upkeep re-verifies quotes, archives sources at risk and counts dead links
+  (`nightly-upkeep.md`), which feed the `DEAD_SOURCE` and `UNARCHIVED_SOURCE` tasks.
+- Proposals are limited per account and hour (`knowledge-writes.md`, Proposal limits).

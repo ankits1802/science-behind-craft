@@ -11,15 +11,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import ComponentProposal, Craft, User
 from app.research.component_proposals import ComponentProposalDraft, ProposedSubject
 from app.research.crafts import QUESTION_MAX_CHARS, CraftRef
-from app.research.review_queue import (
-    COMPONENTS,
-    KIND_ORIGINS,
-    ClosestComponent,
-    ComponentItem,
-    ComponentReview,
-    QueueDecision,
-    closest_components,
-)
+from app.research.review_queue import COMPONENTS, KIND_ORIGINS, ComponentItem, QueueDecision
+from app.research.review_queue_components import ClosestComponent, ComponentReview, closest_components
 
 from . import audit
 from .component_library import library_components

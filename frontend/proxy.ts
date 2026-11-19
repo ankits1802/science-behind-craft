@@ -4,6 +4,7 @@ import {
   apiOrigin,
   csrfRefusal,
   isMachineRoute,
+  MACHINE_RESPONSE_HEADERS,
   refuseCrossSite,
   refuseUnconfigured,
   sessionTokenOf,
@@ -30,6 +31,7 @@ export function proxy(request: NextRequest) {
   const headers = upstreamHeaders(request, machine ? null : sessionTokenOf(request));
   const response = NextResponse.rewrite(new URL(upstreamUrl(request, origin)), { request: { headers } });
   response.headers.set("x-vercel-enable-rewrite-caching", "0");
+  if (machine) for (const [name, value] of Object.entries(MACHINE_RESPONSE_HEADERS)) response.headers.set(name, value);
   return response;
 }
 

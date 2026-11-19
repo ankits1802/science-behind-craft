@@ -7,9 +7,11 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.proposal_limits import proposal_limit
 from app.core.db import get_session
 from app.core.deps import require
 from app.core.errors import InvalidInput
+from app.core.rate_limit import IMAGE_UPLOADS
 from app.core.roles import Capability
 from app.models import ImageContribution, User
 from app.research.image_contributions import (
@@ -33,7 +35,11 @@ TOO_LARGE_DETAIL = f"A contributed picture is at most {IMAGE_BYTES_MAX // (1024 
 NO_BUCKET_DETAIL = "Pictures cannot be stored right now."
 
 
-@router.post("", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "",
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(proposal_limit(IMAGE_UPLOADS, contributor))],
+)
 async def declare_image(
     body: ImageDeclaration, user: User = Depends(contributor), session: AsyncSession = Depends(get_session)
 ) -> ImageContributionView:
