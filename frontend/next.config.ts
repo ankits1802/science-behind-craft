@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { CRAFT_MONOGRAPHS, ROUTER_REQUEST_HEADER } from "./lib/craftMonographs";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 export const ELEVENLABS_CONNECT_SOURCES = ["wss://livekit.rtc.elevenlabs.io", "https://livekit.rtc.elevenlabs.io"];
@@ -9,10 +11,6 @@ export const MEDIA_BUCKET_ORIGIN = "https://kalavigyan-media-626159998512.s3.ap-
 export const WEB_PICTURE_SOURCE = "https:";
 export const IMAGE_SOURCES = ["'self'", "data:", MEDIA_BUCKET_ORIGIN, WEB_PICTURE_SOURCE];
 export const FRAME_SOURCES = [GOOGLE_IDENTITY_SOURCE];
-
-export const CRAFT_MONOGRAPHS: Readonly<Record<string, string>> = {
-  "Kutch-Ajrakh": "/monographs/kutch-ajrakh/index.html"
-};
 
 export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
@@ -59,7 +57,11 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return {
-      beforeFiles: Object.entries(CRAFT_MONOGRAPHS).map(([slug, destination]) => ({ source: `/crafts/${slug}`, destination })),
+      beforeFiles: Object.entries(CRAFT_MONOGRAPHS).map(([slug, destination]) => ({
+        source: `/crafts/${slug}`,
+        destination,
+        missing: [{ type: "header" as const, key: ROUTER_REQUEST_HEADER }]
+      })),
       afterFiles: [],
       fallback: []
     };

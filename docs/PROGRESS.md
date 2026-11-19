@@ -955,6 +955,14 @@ Last updated: 2026-11-19.
   (`services/component_library.py`, decision 0101, item 16). Decision 0101, item 17 records how
   contributed images, AI-made ones included, reach the library.
 
+- **The monograph route answers the app's router (2026-11-19).** The rewrite of a craft
+  monograph's address to its static file skips requests from the app's router (the `rsc` header),
+  so the app answers them with a skeleton that reloads the page, and the browser then loads the
+  monograph itself. Before, the router's prefetch of `/crafts/Kutch-Ajrakh` answered 404
+  (`lib/craftMonographs.ts`, `components/craft/MonographHandover.tsx`).
+- **The API's database pool is 8** (from 5); the runbook's Connection budget explains the
+  pooler's 15.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
