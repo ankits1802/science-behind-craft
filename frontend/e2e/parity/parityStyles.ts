@@ -35,6 +35,7 @@ export async function elementStyles(page: Page, id: string): Promise<StyleRecord
     ({ target, properties, max }) => {
       const root = document.getElementById(target);
       if (!root) return {};
+      const host = document.getElementById("kv-main")?.getBoundingClientRect().top ?? 0;
       const nodes = [root, ...root.querySelectorAll("*")].slice(0, max);
       return Object.fromEntries(
         nodes.map((node, index) => {
@@ -45,6 +46,8 @@ export async function elementStyles(page: Page, id: string): Promise<StyleRecord
           record["box-x"] = box.left.toFixed(2);
           record["box-width"] = box.width.toFixed(2);
           record["box-height"] = box.height.toFixed(2);
+          record["box-y-in-main"] = (box.top - host).toFixed(2);
+          record["box-y-fraction"] = ((((box.top + window.scrollY) % 1) + 1) % 1).toFixed(2);
           return [`${index}:${node.tagName.toLowerCase()}${classes ? `.${classes}` : ""}`, record];
         })
       );
@@ -73,4 +76,14 @@ export async function fontReport(page: Page): Promise<FontReport> {
       .filter((face) => face.status === "loaded")
       .map((face) => `${face.family} ${face.style} ${face.weight} ${face.stretch} ${face.unicodeRange.slice(0, 24)}`)
   }));
+}
+
+const GOOGLE_FONT_CSS = "https://fonts.googleapis.com/css2**";
+const DESKTOP_FONT_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+
+export async function desktopFonts(page: Page): Promise<void> {
+  await page.route(GOOGLE_FONT_CSS, async (route) => {
+    const response = await route.fetch({ headers: { ...route.request().headers(), "user-agent": DESKTOP_FONT_AGENT } });
+    await route.fulfill({ response });
+  });
 }

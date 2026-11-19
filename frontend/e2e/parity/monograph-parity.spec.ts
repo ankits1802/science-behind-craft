@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
-import { elementStyles, fontReport, styleDifferences, type StyleDifference } from "./parityStyles";
+import { desktopFonts, elementStyles, fontReport, styleDifferences, type StyleDifference } from "./parityStyles";
 
 const APPROVED = "/monographs/kutch-ajrakh/index.html";
 const RENDERED = "/crafts/Kutch-Ajrakh/monograph";
@@ -15,6 +15,7 @@ const SHOT_TIMEOUT_MS = 10_000;
 const CHAPTERS_TIMEOUT_MS = 15 * 60_000;
 
 async function opened(page: Page, path: string): Promise<void> {
+  await desktopFonts(page);
   await page.goto(path, { waitUntil: "networkidle" });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += window.innerHeight) {
