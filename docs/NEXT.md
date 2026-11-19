@@ -134,17 +134,19 @@ film). Bringing the other crafts and 9 categories to the Ajrakh level is track 1
 ## How to work (owner rules learnt the hard way)
 
 - **Cost.** Agents stay short: one bounded task, about 60 to 100 tool calls, a checkpoint, then
-  stop. Use Sonnet or low effort for mechanical work. Run one or two lanes at a time, and release
-  before starting more. Never message a running agent. Ask before any heavy spend, with an estimate.
+  stop. Use Sonnet or low effort for mechanical work. At most five agents per round, on files that do not
+  conflict (owner, 2026-11-20), each in its own worktree. Never message a running agent. Ask before any heavy spend, with an estimate.
 - **Ship approved work as built.** Do not plan rebuilds of approved pages.
 - **Commits.** Author and committer are `ankits1802 <ankits1802@gmail.com>`. Never a
   Co-Authored-By line. Use `GH_TOKEN=$(gh auth token --user ankits1802)` for each gh command.
 - **No code comments** anywhere; `tools/hygiene_check.py` enforces it.
-- **Nothing heavy runs locally**: no database, no full suites. GitHub runs them through a PR.
-- **Release backend before frontend.**
-  1. Before pushing `main`, start a watcher that runs `vercel rollback <current production>` as
-     soon as the new build takes the domain.
-  2. After Deploy backend passes, run `vercel promote <new deployment>`.
+- **This machine is for development only** (owner, 2026-11-20): no tests, type-checks, builds,
+  dev servers or browsers run locally, only formatters and linters on changed files. Push the
+  branch to `deploy` and open a (draft) PR; Backend checks, Frontend checks and Hygiene run on
+  any PR. Visual checks go through the **Monograph parity** workflow or a Vercel preview.
+- **Release backend before frontend** is automatic: a push to `main` that changes the API runs
+  Deploy backend, whose last step starts the web build through the Vercel deploy hook; a push
+  that changes only the web app runs **Deploy web app** at once (`docs/RUNBOOK.md`).
 - **Portals release together.** Fix everything, then release once.
   - Both portals' terraform state is in the `default` workspace.
   - `REPO_FACTS.md` must be regenerated on a clean tree after the last change.
