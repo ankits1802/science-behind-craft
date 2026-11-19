@@ -157,6 +157,7 @@ def test_admin_holds_everything_a_professor_holds() -> None:
         Capability.VIEW_USAGE,
         Capability.VIEW_AUDIT_LOG,
         Capability.MANAGE_DATASETS,
+        Capability.REVIEW_CONTRIBUTIONS,
     }
     assert professor <= admin
 
