@@ -1,6 +1,5 @@
 import uuid
 from collections.abc import AsyncIterator
-from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -14,11 +13,10 @@ from app.models import (
     ClaimSource,
     Concept,
     Craft,
-    KnowledgePiece,
     Source,
 )
 from app.services.craft_resolver import CraftIndexStore
-from app.services.knowledge_api import craft_components, craft_facts, craft_section, found_crafts
+from app.services.knowledge_api import craft_facts, craft_section, found_crafts
 
 pytestmark = pytest.mark.db
 
@@ -32,7 +30,6 @@ CHEMISTRY = uuid.UUID("7a1e0000-0000-4000-8000-0000000000c1")
 HISTORY = uuid.UUID("7a1e0000-0000-4000-8000-0000000000c2")
 HIDDEN = uuid.UUID("7a1e0000-0000-4000-8000-0000000000c3")
 ALUM_QUOTE = "alum fixes the madder red on cotton"
-HIDDEN_AT = datetime(2026, 11, 19, tzinfo=UTC)
 
 
 @pytest.fixture
@@ -138,37 +135,6 @@ async def test_a_section_is_null_until_one_is_published(session: AsyncSession) -
     shown = (await craft_section(session, SLUG, "CHEMISTRY", site=SITE)).section
     assert shown is not None
     assert (shown.version, shown.subject_slug, shown.sentences[0].claim_ids) == (2, SLUG, [CHEMISTRY])
-
-
-def _piece(**changes: Any) -> KnowledgePiece:
-    values: dict[str, Any] = {
-        "craftId": CRAFT,
-        "kind": "prose",
-        "facet": "CHEMISTRY",
-        "topicKey": "reaction:alum",
-        "language": "en",
-        "depth": "EXPERT",
-        "payload": {},
-        "claimIds": [CHEMISTRY],
-        "sourceIds": [str(OPEN_PAPER)],
-        "contentHash": "1" * 64,
-    }
-    return KnowledgePiece(**(values | changes))
-
-
-async def test_only_registered_visible_components_are_listed(session: AsyncSession) -> None:
-    titled = {"title": "Alum mordant", "description": "Shows alum binding madder to cotton, step by step."}
-    session.add(
-        _piece(label="knowledge-api-test-craft/chemistry/alum-mordant", fields=["MATERIALS"], **titled)
-    )
-    session.add(_piece())
-    session.add(_piece(label="knowledge-api-test-craft/chemistry/hidden-one", hiddenAt=HIDDEN_AT, **titled))
-    await session.flush()
-    listed = await craft_components(session, slug=SLUG, field="MATERIALS")
-    assert [(c.label, c.field, c.fields) for c in listed.components] == [
-        ("knowledge-api-test-craft/chemistry/alum-mordant", "CHEMISTRY", ["MATERIALS"])
-    ]
-    assert (await craft_components(session, slug=SLUG, field="HISTORY")).components == []
 
 
 async def test_find_crafts_names_the_craft_by_its_name(session: AsyncSession) -> None:

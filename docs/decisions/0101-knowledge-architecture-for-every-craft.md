@@ -263,6 +263,52 @@ stored as free text or HTML. Every record is typed, cited, versioned and append-
       gates fetch each source and re-find each quote themselves, and the section prose is
       rebuilt on our side from the facts that pass.
 
+16. **A component is made only when the library has none** (owner question, 2026-11-19).
+    - `list_components` is the library's search: words over label, title and description, and a
+      craft brings its own components plus every shared one keyed to its concepts, compounds and
+      districts. Each result names what it is keyed to. Live in slice 1
+      (`docs/contracts/knowledge-api.md`).
+    - The method's first step, in the MCP prompts and the contributor skill, is that search.
+    - `propose_component` (slice 3) runs the same search on the proposal's title, description and
+      subjects, and the proposal lists the labels its agent considered. A close match refuses the
+      proposal with the matches and two ways on: place the existing component by its label, or
+      propose an extension of it (a new subject link or a variant). Never a copy.
+    - `list_open_work` lists the components a page lacks, computed from the registry, so agents are
+      sent to gaps rather than guessing.
+    - The library is empty until build step 2 registers the Ajrakh page's components; no writer
+      sets a label before then.
+17. **Contributed images, AI-made ones included** (owner question, 2026-11-19).
+    - **The image travels outside the chat.** An agent cannot hand over the bytes of an image it
+      made (ChatGPT cannot pass them into a tool call), and base64 in a tool argument costs over a
+      million characters for a 1 MB picture. So `start_image_upload` (MCP, signed in) returns a
+      single-use link to our site, valid for 30 minutes and tied to the person and to the facts the
+      picture illustrates. The person drops the file there, from a phone too. Agents with a shell
+      get a presigned upload URL for the same slot instead.
+    - **Declared at upload:**
+      - its origin: photograph, drawing or AI-generated;
+      - for an AI image, the tool and model and the prompt;
+      - the stage and facts it shows;
+      - that the uploader holds the rights to give it under the contribution licence.
+    - **Checked on our side:**
+      - the type from the bytes (PNG, JPEG or WebP), the size and dimensions;
+      - location and camera metadata stripped;
+      - Content Credentials (C2PA) read. A file whose credentials say AI-made but which is
+        declared a photograph is refused.
+    - **Stored as a `MediaAsset`**, the table the app's own generated pictures use, with the origin,
+      the generator and the contributor. Private until approved, with the second approval that
+      named-cluster pictures already need.
+    - **Approval follows item 12.** A Professor's, Admin's or Master Admin's picture is approved at
+      once; anyone else's waits in the admin review queue.
+    - **An AI image is an illustration, never evidence.**
+      - It is always labelled "Illustration, made with <tool>", never shown as a photograph.
+      - It may show a mechanism, a diagram or a process step.
+      - It may never stand for a real artisan, a named place, a GI product, a historical object
+        or any real person's likeness.
+      - The reviewer checks it against the facts it illustrates (the colour of leucoindigo, the
+        order of the steps).
+    - **Order of work:** the upload page and the review queue in the web app (they need only
+      today's sign-in), then slice 2's OAuth, then the MCP tool that hands out the upload link.
+
 Scale: 500 crafts at about 150 facts each is about 75,000 facts, 200,000 quotes, 10,000 sections
 and 20,000 components. Postgres with pgvector and the page snapshots carry this without new
 infrastructure.

@@ -949,6 +949,12 @@ Last updated: 2026-11-19.
   - **E2E:** the Professor and Admin accounts are provisioned. The specs read the monograph and
     type the two-step code at a person's pace.
 
+- **The component library search (2026-11-19).** `list_components` searches the registry by words
+  over label, title and description, and a craft brings its own components plus every shared one
+  keyed to its concepts, compounds and districts, each naming what it is keyed to
+  (`services/component_library.py`, decision 0101, item 16). Decision 0101, item 17 records how
+  contributed images, AI-made ones included, reach the library.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

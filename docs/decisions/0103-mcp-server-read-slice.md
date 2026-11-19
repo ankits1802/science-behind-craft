@@ -41,3 +41,6 @@ except asking is readable without signing in (decision 0097).
   Professors', Admins' and Master Admins' proposals approved at once (decision 0101, item 12), the
   MCP prompts and the `kalavigyan-contributor` skill.
 - Turning slice 1 on is one parameter, `/kalavigyan/env/MCP_SERVER_ENABLED=true`.
+- **Amended 2026-11-19:** `list_components` became the component library's search (`query`, `kind`,
+  and a craft's shared components through its concepts, compounds and districts), the step an agent
+  takes before it makes a component (decision 0101, item 16). The change only adds fields.

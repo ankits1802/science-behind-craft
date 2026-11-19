@@ -19,8 +19,8 @@ from app.research.knowledge_api import (
     FieldList,
     FoundCrafts,
 )
-from app.research.vocabulary import Discipline
-from app.services import knowledge_api
+from app.research.vocabulary import BlockKind, Discipline
+from app.services import component_library, knowledge_api
 from app.services.craft_resolver import CraftIndexStore
 
 from .mcp_protocol import (
@@ -77,8 +77,23 @@ class GetSection(Arguments):
 
 
 class ListComponents(Arguments):
-    craft_slug: str | None = Field(default=None, min_length=1, max_length=SLUG_MAX_CHARS)
-    field: Discipline | None = None
+    query: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=QUESTION_MAX_CHARS,
+        description="Words to search labels, titles and descriptions by, such as indigo reduction",
+    )
+    craft_slug: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=SLUG_MAX_CHARS,
+        description=(
+            "A slug from find_crafts; also brings the shared components of its concepts, compounds "
+            "and districts"
+        ),
+    )
+    field: Discipline | None = Field(default=None, description="One of list_fields")
+    kind: BlockKind | None = Field(default=None, description="One kind of component")
 
 
 @dataclass(frozen=True)
@@ -129,8 +144,12 @@ async def _get_section(context: ToolContext, arguments: GetSection) -> CraftSect
 
 
 async def _list_components(context: ToolContext, arguments: ListComponents) -> CraftComponents:
-    return await knowledge_api.craft_components(
-        context.session, slug=arguments.craft_slug, field=arguments.field
+    return await component_library.library_components(
+        context.session,
+        slug=arguments.craft_slug,
+        field=arguments.field,
+        kind=arguments.kind,
+        query=arguments.query,
     )
 
 
@@ -174,9 +193,11 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             ),
             Tool(
                 "list_components",
-                "List components",
-                "Registered interactive components (players, maps, molecules, charts) by label, title and "
-                "description, for one craft, one field or all.",
+                "Search the component library",
+                "The registered interactive components (players, maps, molecules, charts), each with its "
+                "label, title, description, kind, fields and the subjects it is keyed to. Search it before "
+                "making or proposing a component: one keyed to a concept, compound or place is shared by "
+                "every craft it applies to, so place it by its label rather than making another.",
                 ListComponents,
                 CraftComponents,
                 _list_components,

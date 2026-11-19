@@ -38,7 +38,7 @@ instructions. Wrong arguments, or a craft slug that does not exist, come back as
 | `find_crafts` | `query` (1 to 1,000 characters) | `FoundCrafts {schemaVersion 1, query, crafts[{craft {slug, name, path}, score, pageUrl}]}`, at most five, from the craft resolver's lexical match (no embedding call) |
 | `get_facts` | `craft_slug`, `field?`, `query?`, `limit?` (1 to 50, default 20) | `CraftFacts {schemaVersion 1, craft, field, query, facts[{id, text, level, field, fields[], citations[{sourceId, quote, locator}]}], sources[{id, kind, title, authors, year, doi, url, publisher, licence, attribution}], pageUrl, attribution}` |
 | `get_section` | `craft_slug`, `field` | `CraftSection {schemaVersion 1, craft, field, section: ArticleSection or null, pageUrl, attribution}`, the published version only |
-| `list_components` | `craft_slug?`, `field?` | `CraftComponents {schemaVersion 1, craftSlug, field, components[{label, title, description, kind, field, fields[]}]}`, registered, visible and current pieces, at most 100 |
+| `list_components` | `query?`, `craft_slug?`, `field?`, `kind?` | `CraftComponents {schemaVersion 1, craftSlug, field, kind, query, components[{label, title, description, kind, field, fields[], craftSlug, subjects[{kind, key, name}]}]}`, registered, visible and current pieces, at most 100 |
 
 - **Facts** are the claims a signed-out reader of the craft page may see: shown statuses, every
   evidence level (the level is in each fact), open sensitivity, cited by a source that is not
@@ -47,6 +47,17 @@ instructions. Wrong arguments, or a craft slug that does not exist, come back as
   fields. With `query`, facts are ranked by its words, then level; without, in the craft page's
   section order.
 - **Sources** list only those the returned facts cite, with their licence.
+- **The component library.** `list_components` is the search an agent runs before it makes or
+  proposes a component (decision 0101, item 16).
+  - `craft_slug` brings the craft's own components and every shared component that applies to it:
+    those linked to the craft, or keyed to one of its concepts (its own, its stages' and its
+    materials'), its materials' compounds or its districts (`lgd:<code>`).
+  - `query` matches the words of the label, title and description (an OR of words of three
+    characters or more, English stemming), closest first; without it, components come in label
+    order.
+  - Each component names its own craft (`craftSlug`, null for a shared one) and the subjects it is
+    keyed to: a craft by slug, a concept or compound by id, a place by its key with the district's
+    name. A restricted concept is never named.
 - **Attribution.** `CraftFacts` and `CraftSection` carry the sentence asking anyone who shows the
   content to name KalaVigyan and the Centre and link the craft's page; the server's
   `instructions` say the same.

@@ -8,7 +8,7 @@ from pydantic import Field
 from .article_sections import ArticleSection
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS, SLUG_MAX_CHARS, CraftRef
-from .vocabulary import Discipline, EvidenceLevel
+from .vocabulary import BlockKind, Discipline, EvidenceLevel, PieceSubjectKind
 
 __all__ = [
     "ATTRIBUTION",
@@ -16,6 +16,7 @@ __all__ = [
     "FACTS_LIMIT_DEFAULT",
     "FACTS_LIMIT_MAX",
     "KNOWLEDGE_API_SCHEMA_VERSION",
+    "ComponentSubject",
     "ComponentSummary",
     "CraftComponents",
     "CraftFacts",
@@ -113,6 +114,12 @@ class CraftSection(ContractModel):
     attribution: str = ATTRIBUTION
 
 
+class ComponentSubject(ContractModel):
+    kind: PieceSubjectKind
+    key: str
+    name: str
+
+
 class ComponentSummary(ContractModel):
     label: str
     title: str
@@ -120,10 +127,14 @@ class ComponentSummary(ContractModel):
     kind: str
     field: Discipline
     fields: list[Discipline]
+    craft_slug: str | None
+    subjects: list[ComponentSubject]
 
 
 class CraftComponents(ContractModel):
     schema_version: SchemaVersion = KNOWLEDGE_API_SCHEMA_VERSION
     craft_slug: str | None = Field(max_length=SLUG_MAX_CHARS)
     field: Discipline | None
+    kind: BlockKind | None = None
+    query: str | None = Field(default=None, max_length=QUESTION_MAX_CHARS)
     components: list[ComponentSummary]

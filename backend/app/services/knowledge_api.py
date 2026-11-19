@@ -3,20 +3,17 @@ from __future__ import annotations
 import uuid
 from collections.abc import Sequence
 
-from sqlalchemy import or_, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
-from app.models import ArticleSection as SectionRow, Claim, Craft, KnowledgePiece, Source
+from app.models import ArticleSection as SectionRow, Claim, Craft, Source
 from app.models.enums import DISCIPLINES
 from app.research.article_sections import ArticleSection
 from app.research.chapter_keys import DISCIPLINE_CHAPTERS
 from app.research.crafts import CraftRef
 from app.research.knowledge_api import (
-    COMPONENTS_LIMIT_MAX,
     FACTS_LIMIT_DEFAULT,
-    ComponentSummary,
-    CraftComponents,
     CraftFacts,
     CraftSection,
     Fact,
@@ -37,11 +34,11 @@ from .craft_resolver import CraftIndexStore
 
 __all__ = [
     "UNKNOWN_CRAFT",
-    "craft_components",
     "craft_facts",
     "craft_section",
     "field_list",
     "found_crafts",
+    "known_craft",
 ]
 
 UNKNOWN_CRAFT = "No craft has the slug {slug}; find_crafts gives the slugs."
@@ -87,7 +84,7 @@ async def craft_facts(
     query: str | None = None,
     limit: int = FACTS_LIMIT_DEFAULT,
 ) -> CraftFacts:
-    craft = await _known_craft(session, slug)
+    craft = await known_craft(session, slug)
     views, sources = await knowledge_view.claims_for(
         session, craft, mode=PUBLIC_MODE, question=query, acls=OPEN_CHUNK_ACLS
     )
@@ -107,7 +104,7 @@ async def craft_facts(
 
 
 async def craft_section(session: AsyncSession, slug: str, field: str, *, site: str) -> CraftSection:
-    craft = await _known_craft(session, slug)
+    craft = await known_craft(session, slug)
     row = await session.scalar(
         select(SectionRow).where(
             SectionRow.craftId == craft.id, SectionRow.field == field, SectionRow.status == PUBLISHED
@@ -128,39 +125,7 @@ async def craft_section(session: AsyncSession, slug: str, field: str, *, site: s
     )
 
 
-async def craft_components(
-    session: AsyncSession, *, slug: str | None = None, field: str | None = None
-) -> CraftComponents:
-    conditions = [
-        KnowledgePiece.label.is_not(None),
-        KnowledgePiece.hiddenAt.is_(None),
-        KnowledgePiece.supersededById.is_(None),
-    ]
-    if slug is not None:
-        conditions.append(KnowledgePiece.craftId == (await _known_craft(session, slug)).id)
-    if field is not None:
-        conditions.append(or_(KnowledgePiece.facet == field, KnowledgePiece.fields.any(field)))
-    rows = await session.scalars(
-        select(KnowledgePiece).where(*conditions).order_by(KnowledgePiece.label).limit(COMPONENTS_LIMIT_MAX)
-    )
-    return CraftComponents(
-        craft_slug=slug,
-        field=field,
-        components=[
-            ComponentSummary(
-                label=row.label,
-                title=row.title,
-                description=row.description,
-                kind=row.kind,
-                field=row.facet,
-                fields=row.fields,
-            )
-            for row in rows
-        ],
-    )
-
-
-async def _known_craft(session: AsyncSession, slug: str) -> Craft:
+async def known_craft(session: AsyncSession, slug: str) -> Craft:
     craft = await knowledge_view.resolve_craft(session, slug)
     if craft is None:
         raise InvalidInput(UNKNOWN_CRAFT.format(slug=slug))
