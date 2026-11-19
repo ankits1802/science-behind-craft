@@ -1,12 +1,15 @@
 import { defineConfig, devices, type Project } from "@playwright/test";
 
-import { ANONYMOUS_WIDTHS, IPHONE, QUESTIONS_SCHEME, QUESTIONS_WIDTH, SCHEMES, SCREEN_WIDTHS, anonymousProjectName, contextOptions, projectName, runLabel, type Scheme, type Width } from "./e2e/production/matrix";
+import { ANONYMOUS_WIDTHS, DESKTOP, IPHONE, QUESTIONS_SCHEME, QUESTIONS_WIDTH, SCHEMES, SCREEN_WIDTHS, SMALL_PHONE, TABLET, anonymousProjectName, contextOptions, projectName, runLabel, type Scheme, type Width } from "./e2e/production/matrix";
 import { isPreview, siteRefusal } from "./e2e/production/preview";
 
 const BASE_URL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(BASE_URL);
 const SMOKE = process.env.E2E_SMOKE === "1";
 const PRODUCTION = process.env.E2E_PRODUCTION === "1";
+const PARITY = process.env.E2E_PARITY === "1";
+const PARITY_SPEC = /[\\/]e2e[\\/]parity[\\/]monograph-parity\.spec\.ts$/;
+const PARITY_WIDTHS: readonly Width[] = [SMALL_PHONE, TABLET, DESKTOP];
 
 const PRODUCTION_SPECS = /[\\/]e2e[\\/]production[\\/]/;
 const SCREENS_SPEC = /[\\/]e2e[\\/]production[\\/]screens\.spec\.ts$/;
@@ -50,6 +53,17 @@ function anonymousProject(width: Width): Project {
   };
 }
 
+function parityProject(width: Width, scheme: Scheme): Project {
+  return {
+    name: `parity-${width.key}-${scheme}`,
+    testMatch: [PARITY_SPEC],
+    retries: 0,
+    use: { ...devices[width.device], ...contextOptions(width, scheme), ...RUN_USE }
+  };
+}
+
+const PARITY_PROJECTS: Project[] = PARITY_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => parityProject(width, scheme)));
+
 const PRODUCTION_PROJECTS: Project[] = [
   ...SCREEN_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => productionProject(width, scheme, specsFor(width, scheme)))),
   ...ANONYMOUS_WIDTHS.map(anonymousProject),
@@ -74,7 +88,8 @@ export default defineConfig({
     { name: "unit", testMatch: /-unit\.spec\.ts$/, testIgnore: PRODUCTION_SPECS },
     { name: "desktop", testMatch: /smoke\.spec\.ts$/, testIgnore: PRODUCTION_SPECS, use: { ...devices["Desktop Chrome"] } },
     { name: "phone", testMatch: /smoke\.spec\.ts$/, testIgnore: PRODUCTION_SPECS, use: { ...devices["Pixel 7"] } },
-    ...(PRODUCTION ? PRODUCTION_PROJECTS : [])
+    ...(PRODUCTION ? PRODUCTION_PROJECTS : []),
+    ...(PARITY ? PARITY_PROJECTS : [])
   ],
   webServer:
     SMOKE && LOCAL

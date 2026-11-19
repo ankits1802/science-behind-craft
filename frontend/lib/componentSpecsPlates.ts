@@ -1,5 +1,5 @@
 import type { MonographMark, MonographNode } from "@/lib/monographDocument";
-import { boolean, integer, list, matching, nullable, object, oneOf, ShapeError, text, type Shape } from "@/lib/shape";
+import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 
 export const DYE_NAMES = ["cloth", "harda", "harda-dry", "lime", "lime-edge", "kut", "kesari", "mud", "mud-wet", "leuco", "vat-liquor", "indigo", "indigo-deep", "madder", "madder-bright", "pink", "pink-edge"] as const;
 export const DRAWING_TAGS = ["svg", "g", "defs", "title", "desc", "path", "rect", "circle", "ellipse", "line", "polyline", "polygon", "text", "tspan", "use", "linearGradient", "radialGradient", "stop", "pattern", "mask", "clipPath", "filter", "feGaussianBlur"] as const;
@@ -29,7 +29,8 @@ export type DrawingElement = { tag: DrawingTag; attrs: Record<string, string>; c
 export type ShownSource = { number: number; title: string };
 export type HeldMark = MonographMark;
 export type HeldNode = MonographNode;
-export type Picture = { src: string; width: number; height: number; alt: string; loading: "eager" | "lazy" | null; fetchPriority: "high" | null; decoding: "sync" | "async" | null };
+export type PictureFocal = { x: number; y: number; width: number; height: number };
+export type Picture = { src: string; width: number; height: number; alt: string; loading: "eager" | "lazy" | null; fetchPriority: "high" | null; decoding: "sync" | "async" | null; focal?: PictureFocal };
 export type ArtFrame = { symbol: string; viewBox: string; width: number; height: number };
 
 export const unitRef = matching(/^u\d{4}$/, "a unit id");
@@ -40,14 +41,23 @@ export const viewBox = matching(/^-?\d+(\.\d+)? -?\d+(\.\d+)? \d+(\.\d+)? \d+(\.
 export const fileName = matching(/^[a-z0-9]+(-[a-z0-9]+)*$/, "a file name");
 export const calendarDay = matching(/^\d{4}-\d{2}-\d{2}$/, "a calendar day");
 export const dyeName = oneOf(DYE_NAMES);
+const fraction: Shape<number> = {
+  expected: "a fraction from 0 to 1",
+  parse(value, path) {
+    const found = number.parse(value, path);
+    if (found < 0 || found > 1) throw new ShapeError(path, "a fraction from 0 to 1");
+    return found;
+  }
+};
 export const pictureShape = object<Picture>({
-  src: matching(/^\/monographs\/[a-z0-9-]+\/img\/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)$/, "a monograph picture"),
+  src: matching(/^(\/monographs\/[a-z0-9-]+\/img\/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)|https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/[0-9a-f]\/[0-9a-f]{2}\/[^\s/?#]+)$/, "a monograph or Wikimedia Commons picture"),
   width: integer,
   height: integer,
   alt: text,
   loading: nullable(oneOf(["eager", "lazy"] as const)),
   fetchPriority: nullable(oneOf(["high"] as const)),
-  decoding: nullable(oneOf(["sync", "async"] as const))
+  decoding: nullable(oneOf(["sync", "async"] as const)),
+  focal: optional(object<PictureFocal>({ x: fraction, y: fraction, width: fraction, height: fraction }))
 });
 export const artFrameShape = object<ArtFrame>({ symbol: domId, viewBox, width: integer, height: integer });
 

@@ -170,6 +170,27 @@ function withSourceList(document: MonographDocument, blocks: ChapterBlock[]): Ch
   return [...blocks.slice(0, head + 1), { kind: "sources", replaces: [] }, ...blocks.slice(head + 1)];
 }
 
+const SOURCE_LIST_KIND = "source_list";
+
+function listedByComponents(document: MonographDocument): Set<string> {
+  const listed = new Set<string>();
+  for (const component of document.content.components) {
+    const listing = component.kind === SOURCE_LIST_KIND ? document.specs[component.label]?.listing : null;
+    const sources = listing && typeof listing === "object" ? (listing as { sources?: unknown }).sources : null;
+    if (!Array.isArray(sources)) continue;
+    for (const entry of sources) if (entry && typeof entry === "object" && typeof (entry as { key?: unknown }).key === "string") listed.add((entry as { key: string }).key);
+  }
+  return listed;
+}
+
+export function pageSources(document: MonographDocument): string[] {
+  const listed = listedByComponents(document);
+  return Object.entries(document.content.sources)
+    .filter(([key]) => !listed.has(key))
+    .sort(([, a], [, b]) => a.number - b.number)
+    .map(([key]) => key);
+}
+
 export function citedSources(document: MonographDocument): string[] {
   const keys = new Set(Object.values(document.content.units).flatMap((unit) => citedSourceKeys(unit.nodes)));
   return Object.entries(document.content.sources)

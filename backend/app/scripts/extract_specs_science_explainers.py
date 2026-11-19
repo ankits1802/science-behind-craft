@@ -53,7 +53,9 @@ def model_explainer(element: Element) -> dict[str, Any]:
     }
 
 
-def process_replay(element: Element) -> dict[str, Any]:
+def process_replay(fold: Element) -> dict[str, Any]:
+    summary, element = kids(expect(fold, "details", "kv-made-fold"))
+    heading = only(expect(summary, "summary"))
     top, understood, progress, grid, ready = kids(expect(element, "div", "kv-made-how"))
     first, angles = kids(expect(understood, "div", "understood", "kv-understood"))
     stages, _status = kids(expect(progress, "nav", "prog"))
@@ -61,6 +63,7 @@ def process_replay(element: Element) -> dict[str, Any]:
     sources_kicker, source_list = kids(expect(sources, "div", "kv-made-col"))
     sections_kicker, section_list = kids(expect(sections, "div", "kv-made-col"))
     return {
+        "heading": unit_of(expect(heading, "h3", "kv-sub-h")),
         "play": text_of(expect(only(expect(top, "div", "kv-made-top")), "button", "btn", "sm")),
         "understood": unit_of(expect(first, "p")),
         "angles": unit_of(expect(angles, "p", "u-a")),

@@ -1022,6 +1022,23 @@ Last updated: 2026-11-19.
     database, and `tools/curation/propose.py` sends a dossier's new facts through the gates; the
     craft-pages skill now writes through the API (`docs/contracts/dossier-export.md`).
 
+- **Decision 0106, one monograph template (2026-11-19, integrated on `round3`, to release).**
+  - **The split:** the Ajrakh template is a 61-line shell, 79 component fragments and a kit
+    (`monograph.css`, `monograph.js`); the static build still writes the served page byte for
+    byte (`docs/contracts/monograph-document.md`).
+  - **The document:** every page is a `MonographDocument`, stored per version for authored
+    content (migration 0041) and generated for every other craft, family and category from
+    its sections, registered components and dossier, ordered by a `PageLayout` record per page
+    (migration 0042, `docs/contracts/page-layout.md`); `GET /api/crafts|categories|families/
+    {slug}/monograph` serve them and the MCP tool `get_layout` reads a layout.
+  - **Component kinds as specs:** all 42 kinds of Ajrakh's 79 components have a typed spec and a
+    React view (`docs/contracts/component-specs-*.md`); every Ajrakh component now draws from its
+    spec.
+  - **The React renderer** at `/crafts/<slug>/monograph` and `/categories/<slug>/monograph`, not
+    indexed until the parity proof passes (`docs/contracts/monograph-renderer.md`); the proof is
+    the **Monograph parity** workflow (text, chapter screenshots at 360, 834 and 1440 in light
+    and dark, a citation and Fig. 1).
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

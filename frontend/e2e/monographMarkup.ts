@@ -1,6 +1,17 @@
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 export const AJRAKH_DIR = join(__dirname, "..", "..", "backend", "app", "data", "monographs", "Kutch-Ajrakh");
+
+const COMPONENT_SLOT = /<kv-slot component="([^"]+)"><\/kv-slot>/g;
+
+export function fragmentFile(label: string): string {
+  return join(AJRAKH_DIR, "fragments", `${label.replaceAll("/", "__")}.html`);
+}
+
+export function assembledTemplate(shell: string = readFileSync(join(AJRAKH_DIR, "template.html"), "utf8")): string {
+  return shell.replace(COMPONENT_SLOT, (_, label: string) => assembledTemplate(readFileSync(fragmentFile(label), "utf8")));
+}
 
 const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
 const RAW = new Set(["style", "script"]);

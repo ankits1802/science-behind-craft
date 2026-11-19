@@ -7,7 +7,8 @@ from typing import Annotated, Any, Literal, Self
 
 from pydantic import AfterValidator, ConfigDict, Field, model_validator
 
-from .base import ContractModel
+from .base import ContractModel, empty
+from .craft_parts import Focal
 from .monograph_page import COMPONENT_LABEL_PATTERN, ITALIC_ROLES, MARK_TAGS
 
 __all__ = [
@@ -30,7 +31,10 @@ __all__ = [
 UNIT_REF_PATTERN = r"^u\d{4}$"
 CLASS_PATTERN = r"^[A-Za-z][A-Za-z0-9_-]*$"
 DOM_ID_PATTERN = r"^[A-Za-z][A-Za-z0-9_:.-]*$"
-PICTURE_PATTERN = r"^/monographs/[a-z0-9-]+/img/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)$"
+PICTURE_PATTERN = (
+    r"^(/monographs/[a-z0-9-]+/img/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)"
+    r"|https://upload\.wikimedia\.org/wikipedia/commons/[0-9a-f]/[0-9a-f]{2}/[^\s/?#]+)$"
+)
 DRAWING_ATTRIBUTE = re.compile(r"[A-Za-z][A-Za-z0-9:_-]*")
 EVENT_PREFIX = "on"
 SHOWN_SOURCE_KEYS = frozenset({"number", "title"})
@@ -124,6 +128,7 @@ class Picture(ContractModel):
     loading: Literal["eager", "lazy"] | None = None
     fetch_priority: Literal["high"] | None = None
     decoding: Literal["sync", "async"] | None = None
+    focal: Focal | None = Field(default=None, exclude_if=empty)
 
 
 class ArtFrame(ContractModel):

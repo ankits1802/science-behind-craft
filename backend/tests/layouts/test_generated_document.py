@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+from app.research.component_specs import checked_spec
 from app.research.monograph_document import MonographDocument
 from app.research.monograph_page import render_nodes
 from app.services.monograph_generated_assembly import assembled_document
@@ -59,17 +60,26 @@ def test_each_published_sentence_is_one_paragraph_in_its_fields_chapter(document
     assert not any("hidden measure" in str(unit.nodes) for unit in units.values())
 
 
+def plate_units(document: MonographDocument, label: str) -> list[str]:
+    figure = document.specs[label]["figure"]
+    return [caption["unit"] for caption in figure["captions"]] + [figure["credit"]]
+
+
+def placed(document: MonographDocument, chapter: str, label: str) -> list[tuple[str, str, str | None]]:
+    return [(chapter, label, None), *[(chapter, unit, label) for unit in plate_units(document, label)]]
+
+
 def test_the_page_reads_hero_masthead_pictures_text_then_components(document: MonographDocument) -> None:
     alum = sentence_id(document, "Alum fixes")
     bagh = sentence_id(document, "Bagh print is")
     assert [(e.chapter, e.ref, e.within) for e in document.content.layout] == [
-        ("glance", HERO, None),
+        *placed(document, "glance", HERO),
         *[("glance", unit, HERO) for unit in MASTHEAD],
-        ("glance", "bagh-print/pictures/i01", None),
+        *placed(document, "glance", "bagh-print/pictures/i01"),
         ("glance", "h-overview", None),
         ("glance", bagh, None),
-        ("chem", "bagh-print/pictures/i04", None),
-        ("chem", "bagh-print/pictures/i03", None),
+        *placed(document, "chem", "bagh-print/pictures/i04"),
+        *placed(document, "chem", "bagh-print/pictures/i03"),
         ("chem", "h-chemistry", None),
         ("chem", alum, None),
         ("chem", VAT_DIP, None),
@@ -123,21 +133,17 @@ def test_the_masthead_and_label_card_come_from_the_record(document: MonographDoc
 def test_a_picture_is_drawn_from_its_spec_with_the_layouts_crop_and_caption(
     document: MonographDocument,
 ) -> None:
-    hero = document.specs[HERO]
-    assert (hero["caption"], hero["focal"], hero["role"], hero["size"]) == (
-        "Override caption",
-        {"x": 0.2, "y": 0.2, "width": 0.6, "height": 0.6},
-        "HERO",
-        "BLEED",
-    )
+    units = document.content.units
+    for label in (HERO, "bagh-print/pictures/i04"):
+        checked_spec("picture_plate", document.specs[label])
+    caption, credit = plate_units(document, HERO)
+    assert units[caption].nodes == ["Override caption"]
+    assert document.specs[HERO]["picture"]["focal"] == {"x": 0.2, "y": 0.2, "width": 0.6, "height": 0.6}
     opener = document.specs["bagh-print/pictures/i04"]
-    assert (opener["caption"], opener["focal"], opener["role"], opener["size"]) == (
-        "Picture I04",
-        {"x": 0.0, "y": 0.1, "width": 1.0, "height": 0.8},
-        "OPENER",
-        None,
-    )
-    assert opener["media"]["licence"] == "CC BY-SA 4.0"
+    caption, credit = plate_units(document, "bagh-print/pictures/i04")
+    assert units[caption].nodes == ["Picture I04"]
+    assert opener["picture"]["focal"] == {"x": 0.0, "y": 0.1, "width": 1.0, "height": 0.8}
+    assert "CC BY-SA 4.0" in units[credit].nodes[0] and units[credit].nodes[0].startswith("Photo: ")
     entry = next(c for c in document.content.components if c.label == HERO)
     assert (entry.kind, entry.chapter, entry.field, entry.subjects) == (
         "picture_plate",
@@ -188,12 +194,9 @@ def test_a_fragment_source_already_cited_on_the_page_keeps_its_number(tmp_path: 
 def test_without_a_layout_the_dossier_placement_and_focal_box_stand(tmp_path: Path) -> None:
     built = assembled_document(generated(), Drawings(root=fragment_monograph(tmp_path)))
     assert built is not None
-    hero = built.specs[HERO]
-    assert (hero["caption"], hero["focal"], hero["size"]) == (
-        "Picture I02",
-        {"x": 0.0, "y": 0.1, "width": 1.0, "height": 0.8},
-        None,
-    )
+    caption, _ = plate_units(built, HERO)
+    assert built.content.units[caption].nodes == ["Picture I02"]
+    assert built.specs[HERO]["picture"]["focal"] == {"x": 0.0, "y": 0.1, "width": 1.0, "height": 0.8}
     assert built.content.data == {}
     assert built.content.layout[0].ref == HERO
 

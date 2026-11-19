@@ -6,12 +6,12 @@ import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { VIEWS } from "../components/monograph/kinds/science";
-import { NestedComponents } from "../components/monograph/kinds/science/parts/Slot";
+import { NestedComponents } from "../components/monograph/NestedComponents";
 import type { MonographComponent, MonographContent } from "../lib/monographDocument";
-import { AJRAKH_DIR, anchorTest, canonical, replaced, subtrees, tokenize, type ElementTest, type Token } from "./monographMarkup";
+import { AJRAKH_DIR, anchorTest, assembledTemplate, canonical, replaced, subtrees, tokenize, type ElementTest, type Token } from "./monographMarkup";
 
 const content = JSON.parse(readFileSync(join(AJRAKH_DIR, "content.json"), "utf8")) as MonographContent;
-const page = tokenize(readFileSync(join(AJRAKH_DIR, "template.html"), "utf8"));
+const page = tokenize(assembledTemplate());
 const byLabel = new Map(content.components.map((component) => [component.label, component]));
 const drawn = content.components.filter((component) => VIEWS[component.kind]);
 
@@ -33,7 +33,8 @@ function view(component: MonographComponent): ReactNode {
     component,
     spec: specOf(component.label),
     unitRefs: unitsWithin(component.label),
-    renderUnit: (ref: string) => createElement("kv-slot", { unit: ref })
+    renderUnit: (ref: string) => createElement("kv-slot", { unit: ref }),
+    renderComponent: (label: string) => createElement("kv-component", { label })
   });
 }
 

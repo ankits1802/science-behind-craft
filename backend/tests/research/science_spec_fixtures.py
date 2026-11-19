@@ -134,6 +134,7 @@ def model_explainer() -> dict[str, Any]:
 
 def process_replay() -> dict[str, Any]:
     return {
+        "heading": "u1055",
         "play": "Watch it being made",
         "understood": "u0060",
         "angles": "u0061",

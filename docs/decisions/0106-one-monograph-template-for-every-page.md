@@ -60,6 +60,15 @@ and pages on two renderers, against decision 0095's "one renderer for answers an
   documents for every craft, family and category, and the remaining kinds.
 - Round 3c: the last fragments become kinds, and the kit's scripts give way to the views.
 
+## Built (2026-11-19)
+
+Rounds 3a and 3b ran together: the split and the kit (the served page unchanged), the stored and
+generated documents with their routes, `PageLayout` (migration 0042) and `get_layout`, all 42 kinds
+of Ajrakh's components as specs with React views (every Ajrakh component draws from its spec, so no
+fragment is left on that page), and the React renderer at the preview routes. Views place nested
+components through `ComponentViewProps.renderComponent`. A generated plate takes the layout's focal
+box. The parity proof is the **Monograph parity** workflow; the switch waits for it.
+
 ## Consequences
 
 - The served Ajrakh page stays byte-identical through 3a; the parity proof decides the switch.

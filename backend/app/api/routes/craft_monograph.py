@@ -14,6 +14,7 @@ from app.research.monograph_document import MonographDocument
 from app.services import knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
 from app.services.monograph_document import CRAFT_SUBJECT, document_body, document_hash, latest_document_row
+from app.services.monograph_generated import generated_document
 
 router = APIRouter(prefix="/crafts", tags=["crafts"])
 
@@ -60,7 +61,7 @@ async def served_document(session: AsyncSession, slug: str) -> ServedDocument | 
 
 
 async def generated_fallback(session: AsyncSession, slug: str) -> MonographDocument | None:
-    return None
+    return await generated_document(session, CRAFT_SUBJECT, slug)
 
 
 def document_etag(version: int, content_hash: str) -> str:

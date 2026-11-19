@@ -3197,3 +3197,40 @@ Last reviewed: 2026-11-18.
 - **What:** `frontend/lib/craftPageContract.ts` (531 lines) and `frontend/lib/craftChapters.ts` were
   over 400 lines before round 2.
 - **Clears it:** split each by part (the round 3 template work touches both).
+
+## Track 1, round 3 (decision 0106, 2026-11-19)
+
+### Cited passages held outside text units
+
+- **What:** 43 cited passages of the Ajrakh page sit in the template outside any text unit (each
+  stage's "Cloth after" line, sources-differ notes, comic captions, map side panels, the masthead GI
+  line). The specs carry them as held text with their source numbers, so the database's sections and
+  the sources chapter's "Supports N sentences" counts do not see them.
+- **Clears it:** make each a text unit in `content.json`, point the specs at the units, and reload.
+
+### Fragments are a bridge
+
+- **What:** a component without a spec is drawn from its legacy markup, and the kit's script drives
+  some native views by their ids and classes (decision 0106 item 3). Every Ajrakh component has a spec
+  now; a generated page reuses another monograph's fragment for a shared component without one.
+- **Clears it:** round 3c: the kit's behaviour moves into the views and fragments are retired.
+
+### What the document does not carry yet
+
+- **What:** the React page takes chapter names from each chapter's kicker or heading (three differ
+  from the approved rail), shows the page's sources as one numbered list (no source groups), and its
+  masthead counts every cited source (64) where the approved page says 44 plus 24 for the kin crafts.
+- **Clears it:** chapter names, source groups and the masthead counts in the `PageLayout` record or
+  the document, found by the parity proof.
+
+### A plate's crop is a class or a focal box
+
+- **What:** Ajrakh's plates crop with CSS classes; a generated plate carries the layout's focal box,
+  drawn as `object-position`. Two ways to say one thing.
+- **Clears it:** express Ajrakh's crops as focal boxes and drop the crop classes.
+
+### Generated picture units are numbered from u9001
+
+- **What:** the plate spec's unit references are `u` and four digits (Ajrakh's ids), so a generated
+  page numbers its picture caption and credit units from `u9001`.
+- **Clears it:** one unit id pattern for authored and generated documents.

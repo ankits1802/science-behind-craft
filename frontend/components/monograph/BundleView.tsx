@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 
 import { COMPONENT_VIEWS } from "@/components/monograph/componentViews";
 import { MonographSlotProvider, useMonographSlot, type MonographSlotValue } from "@/components/monograph/MonographSlotContext";
+import { NestedComponents } from "@/components/monograph/NestedComponents";
 import type { MonographSources } from "@/lib/monographRender";
 import { nodeElements } from "@/lib/monographRenderElements";
 import { fragmentSlots, slotId, type ComponentBundle } from "@/lib/monographRenderLayout";
@@ -26,12 +27,18 @@ export function BundleView({ label }: { label: string }) {
   if (bundle.spec && View) {
     return (
       <div className={SLOT_CLASS} data-component={label} data-kind={bundle.component.kind}>
-        <View component={bundle.component} spec={bundle.spec} unitRefs={Object.keys(bundle.units)} renderUnit={renderUnit} />
+        <NestedComponents.Provider value={renderNested}>
+          <View component={bundle.component} spec={bundle.spec} unitRefs={Object.keys(bundle.units)} renderUnit={renderUnit} renderComponent={renderNested} />
+        </NestedComponents.Provider>
       </div>
     );
   }
   if (bundle.fragment !== null) return <FragmentHtml label={label} html={bundle.fragment} />;
   return null;
+}
+
+function renderNested(nested: string): ReactNode {
+  return <BundleView key={nested} label={nested} />;
 }
 
 function unitRenderer(bundle: ComponentBundle | undefined, sources: MonographSources): (ref: string) => ReactNode {

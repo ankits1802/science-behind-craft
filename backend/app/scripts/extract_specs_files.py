@@ -12,8 +12,9 @@ from app.core.errors import InvalidInput
 from app.research.base import ContractModel
 from app.research.monograph_document import spec_file_name
 from app.research.monograph_page import CitedSource, ComponentEntry, MonographContent
+from app.services.monograph_document import MONOGRAPHS_DIR
 
-from .build_monograph import MONOGRAPHS_DIR, TEMPLATE_FILE, monograph_content
+from .build_monograph import assembled_template, monograph_content
 from .extract_specs_markup import Element, find_anchor, parse_markup
 
 __all__ = [
@@ -117,7 +118,7 @@ def _strings(value: Any) -> set[str]:
 
 
 def _group_specs(group: SpecGroup, slug: str) -> dict[str, ContractModel]:
-    template = (MONOGRAPHS_DIR / slug / TEMPLATE_FILE).read_bytes().decode("utf-8")
+    template = assembled_template(slug)
     return extracted_specs(group, monograph_content(slug), template)
 
 

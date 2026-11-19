@@ -10,7 +10,7 @@ from urllib.parse import parse_qs, urlsplit
 from app.research.component_specs_tools import SPEC_MODELS_TOOLS
 from app.research.monograph_document import spec_file_name
 from app.research.monograph_page import MonographContent
-from app.scripts.build_monograph import MONOGRAPHS_DIR, TEMPLATE_FILE, monograph_content
+from app.scripts.build_monograph import assembled_template, monograph_content
 from app.scripts.extract_specs_tools_markup import (
     Element,
     anchor_test,
@@ -22,6 +22,7 @@ from app.scripts.extract_specs_tools_markup import (
     slot_ref,
     text_of,
 )
+from app.services.monograph_document import MONOGRAPHS_DIR
 
 SPECS_DIR = "specs"
 TOOL_SLUGS = ("Kutch-Ajrakh",)
@@ -275,7 +276,7 @@ EXTRACTORS: Mapping[str, Callable[[Source, Element], dict[str, Any]]] = MappingP
 
 
 def tool_specs(slug: str) -> dict[str, dict[str, Any]]:
-    template = (MONOGRAPHS_DIR / slug / TEMPLATE_FILE).read_bytes().decode("utf-8")
+    template = assembled_template(slug)
     source = Source(parse_markup(template), monograph_content(slug), template)
     specs: dict[str, dict[str, Any]] = {}
     for component in source.content.components:

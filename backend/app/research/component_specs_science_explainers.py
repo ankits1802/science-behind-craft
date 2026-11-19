@@ -127,6 +127,7 @@ class ReplaySection(SpecModel):
 
 
 class ProcessReplaySpec(SpecModel):
+    heading: UnitRef
     play: Label
     understood: UnitRef
     angles: UnitRef

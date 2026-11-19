@@ -23,7 +23,6 @@ NESTED = {
     "kutch-ajrakh/chemistry/what-if-red-dye": ["kutch-ajrakh/process/red-bath-hours"],
     "kutch-ajrakh/materials/six-materials": ["kutch-ajrakh/materials/natural-dye-materials-photo"],
 }
-UNITS_OUTSIDE_THE_ANCHOR = {"kutch-ajrakh/overview/how-this-answer-was-made": {"u1055"}}
 STAGES = "kutch-ajrakh/process/cloth-after-each-stage"
 HELD = [
     *[
@@ -83,12 +82,12 @@ def test_a_spec_shows_exactly_the_units_the_layout_places_in_its_component(
 ) -> None:
     within: dict[str, set[str]] = {}
     for entry in content.layout:
-        if entry.within is not None:
+        if entry.within is not None and entry.kind == "unit":
             within.setdefault(entry.within, set()).add(entry.ref)
     for label, (_kind, spec) in specs.items():
         shown = units_of(spec)
         assert shown <= set(content.units), label
-        assert shown == within.get(label, set()) - UNITS_OUTSIDE_THE_ANCHOR.get(label, set()), label
+        assert shown == within.get(label, set()), label
 
 
 def test_a_spec_places_its_nested_components_where_the_page_nests_them(

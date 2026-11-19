@@ -6,7 +6,7 @@ import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { VIEWS } from "../components/monograph/kinds/science";
-import { NestedComponents } from "../components/monograph/kinds/science/parts/Slot";
+import { NestedComponents } from "../components/monograph/NestedComponents";
 import { SCIENCE_KINDS, SPEC_SHAPES_SCIENCE, type ScienceKind } from "../lib/componentSpecsScience";
 import { svgNodeShape } from "../lib/componentSpecsScienceParts";
 import type { MonographComponent, MonographContent } from "../lib/monographDocument";
@@ -19,7 +19,7 @@ const byLabel = new Map(content.components.map((component) => [component.label, 
 function view(label: string): ReactNode {
   const component = byLabel.get(label) as MonographComponent;
   const spec = JSON.parse(readFileSync(join(AJRAKH_DIR, "specs", `${label.replaceAll("/", "__")}.json`), "utf8"));
-  return createElement(VIEWS[component.kind]!, { component, spec, unitRefs: [], renderUnit: (ref: string) => createElement("kv-slot", { unit: ref }) });
+  return createElement(VIEWS[component.kind]!, { component, spec, unitRefs: [], renderUnit: (ref: string) => createElement("kv-slot", { unit: ref }), renderComponent: (label: string) => createElement("kv-component", { label }) });
 }
 
 const placeholder = (label: string) => createElement("kv-component", { label });

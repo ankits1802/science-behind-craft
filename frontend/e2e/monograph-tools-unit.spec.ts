@@ -12,7 +12,7 @@ import { writingLine } from "../components/monograph/kinds/tools/GeneratorView";
 import { quizScore, quizVerdict } from "../components/monograph/kinds/tools/QuizView";
 import { MonographPage } from "../components/monograph/MonographPage";
 import { ThemeProvider } from "../components/ThemeProvider";
-import { citedSources, pagePlan } from "../lib/monographRenderLayout";
+import { pagePlan } from "../lib/monographRenderLayout";
 import { generatorSpecShape, languageSwitchSpecShape, quizSpecShape, TOOL_KINDS, TOOL_SPEC_SHAPES, type ToolKind } from "../lib/componentSpecsTools";
 import type { MonographDocument } from "../lib/monographDocument";
 import { parseMonographDocument } from "../lib/monographDocumentShape";
@@ -41,7 +41,7 @@ const slot = (label: string) => renderToStaticMarkup(createElement(AuthProvider,
 const kindOf = (label: string) => document.content.components.find((component) => component.label === label)?.kind as ToolKind;
 
 test("Ajrakh's content and each extracted tool spec parse with the frontend's shapes", () => {
-  const labels = Object.keys(document.specs);
+  const labels = Object.keys(document.specs).filter((label) => (TOOL_KINDS as readonly string[]).includes(kindOf(label)));
   expect(labels.map(kindOf).sort()).toEqual([...TOOL_KINDS].sort());
   for (const label of labels) expect(() => parseShape(TOOL_SPEC_SHAPES[kindOf(label)], document.specs[label]), label).not.toThrow();
 });
@@ -109,7 +109,7 @@ test("the Ajrakh document draws the approved page's thirteen chapters in order, 
   expect(plan.masthead).toEqual({ kicker: "u0001", standfirst: ["u0003"], lede: "u0004", picture: "kutch-ajrakh/design/cloth-field-and-borders-photo" });
   const html = renderToStaticMarkup(createElement(AuthProvider, null, createElement(ThemeProvider, null, createElement(MonographPage, { document }))));
   expect(html.match(/<h1/g)).toHaveLength(1);
-  expect(html.match(/class="kv-src-li"/g)).toHaveLength(citedSources(document).length);
+  expect(html.match(/class="kv-src-li"/g)).toHaveLength(Object.keys(document.content.sources).length);
 });
 
 test("the generator rests finished: seven written sections, its media rail and a replay to start", () => {

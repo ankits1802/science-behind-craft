@@ -44,9 +44,21 @@ edit the served file: change the content or the template, then run
 `cd backend && python -m app.scripts.build_monograph`. `--check` reports a page that differs from its
 build, and the backend tests fail until the two agree.
 
-To put a monograph's content into the database (sections by field and the component registry),
-run `python -m app.scripts.load_monograph` on the box after the deploy that carries it. It can be
-run again at any time and prints what it wrote and what still waits for stored facts.
+To put a monograph's content into the database (sections by field, the component registry and
+its `MonographDocument`), run `python -m app.scripts.load_monograph` on the box after the deploy
+that carries it. It can be run again at any time and prints what it wrote and what still waits for
+stored facts. The template is a shell plus `fragments/` and the kit in `monographs/kit/`; the build
+also writes the kit to `frontend/public/monographs/kit/`. After a change to the content or a spec,
+rewrite the golden document with
+`python -m app.scripts.build_monograph --document Kutch-Ajrakh --out ../shared/monograph.document.golden.json`.
+
+Each curated craft's first `PageLayout` comes from its dossier's picture placements: run
+`python -m app.scripts.backfill_layouts` on the box once after the deploy that adds migration 0042.
+
+The parity proof of decision 0106 is the **Monograph parity** workflow (Actions, run it by hand,
+optionally on a preview URL). It compares `/crafts/Kutch-Ajrakh/monograph` with the approved static
+page at 360, 834 and 1440 in light and dark and keeps `text.json`, `pixels.json`,
+`interactions.json` and the differing chapters' screenshots as its artifact.
 
 ## Connection budget
 

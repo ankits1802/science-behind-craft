@@ -46,6 +46,7 @@ export type ReplayStage = { label: string; detail: string; startMs: number; endM
 export type ReplaySource = { title: string; grade: (typeof REPLAY_GRADES)[number] };
 export type ReplaySection = { title: string; made: Rich };
 export type ProcessReplaySpec = {
+  heading: string;
   play: string;
   understood: string;
   angles: string;
@@ -123,6 +124,7 @@ export const processReplayShape: Shape<ProcessReplaySpec> = {
   expected: "a process replay whose stages end after they start",
   parse(value, path) {
     const replay = object<ProcessReplaySpec>({
+      heading: unitRef,
       play: label,
       understood: unitRef,
       angles: unitRef,

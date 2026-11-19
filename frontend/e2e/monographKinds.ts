@@ -9,6 +9,8 @@ import { componentsHeldBy } from "@/lib/componentSpecsData";
 import type { ComponentView, ComponentViews } from "@/lib/componentViewContract";
 import type { MonographComponent, MonographContent } from "@/lib/monographDocument";
 
+import { assembledTemplate } from "./monographMarkup";
+
 const MONOGRAPH = join(__dirname, "..", "..", "backend", "app", "data", "monographs", "Kutch-Ajrakh");
 const TOKEN = /<!--[\s\S]*?-->|<(\/?)([a-zA-Z][a-zA-Z0-9:-]*)((?:\s+[^\s"'>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?)*)\s*(\/?)>/g;
 const ATTRIBUTE = /([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
@@ -24,7 +26,7 @@ let template: string | null = null;
 let content: MonographContent | null = null;
 
 export function approvedTemplate(): string {
-  template ??= readFileSync(join(MONOGRAPH, "template.html"), "utf8");
+  template ??= assembledTemplate();
   return template;
 }
 

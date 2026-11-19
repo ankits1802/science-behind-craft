@@ -85,7 +85,7 @@ export function fixtureDocument(): MonographDocument {
       citations: { "t:1": [{ source: "g1", locator: "p. 2", quote: "Printed with a resist." }], "t:2": [{ source: "g1", locator: null, quote: null }] },
       citationClaims: {},
       data: { "kv-data": { quiz: [] }, "loose-data": { note: "</script>" } },
-      units: UNITS,
+      units: structuredClone(UNITS),
       components: [component(PICTURE, "answer", "picture_plate", "#photo"), component(QUIZ, "made", "quiz", "#quiz-block"), component(LIST, "sources", "source_list", "#status"), component(ASK, "sources", "ask_next", "[class=\"asknext\"]")],
       layout: [
         layout("answer", "unit", "u0001"),

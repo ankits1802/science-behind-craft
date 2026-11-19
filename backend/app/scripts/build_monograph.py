@@ -6,7 +6,7 @@ from types import MappingProxyType
 
 from app.core.errors import InvalidInput
 from app.data.craft_master_loader import DATA_DIR, load_master
-from app.research.monograph_page import render_page, served_kit
+from app.research.monograph_page import assemble_template, render_page, served_kit
 from app.services.chapter_preview import PREVIEW_SITE
 from app.services.monograph_document import (
     authored_document,
@@ -22,6 +22,7 @@ __all__ = [
     "PUBLIC_KIT_DIR",
     "SERVED_FOLDERS",
     "SERVED_KIT_PREAMBLES",
+    "assembled_template",
     "built_kit",
     "built_page",
     "document_text",
@@ -47,6 +48,10 @@ SERVED_KIT_PREAMBLES: Mapping[str, str] = MappingProxyType(
 def built_page(slug: str) -> str:
     content = monograph_content(slug)
     return render_page(monograph_shell(slug), content, parts=page_parts(content))
+
+
+def assembled_template(slug: str) -> str:
+    return assemble_template(monograph_shell(slug), page_parts(monograph_content(slug)))
 
 
 def built_kit() -> dict[str, str]:

@@ -20,7 +20,7 @@ const provided = (element: ReactElement) => markup(createElement(AuthProvider, n
 test("a component with a spec and a registered view is drawn natively, any other from its fragment", () => {
   const document = fixtureDocument();
   expect([PICTURE, QUIZ, LIST, ASK, "test-craft/overview/nothing"].map((label) => slotDrawing(document, label))).toEqual(["fragment", "view", "fragment", "view", "none"]);
-  document.content.components[1] = { ...document.content.components[1], kind: "film" };
+  document.content.components[1] = { ...document.content.components[1], kind: "prose" };
   expect(slotDrawing(document, QUIZ)).toBe("none");
 });
 

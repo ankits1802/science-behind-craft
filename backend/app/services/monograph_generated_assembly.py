@@ -7,6 +7,7 @@ from types import MappingProxyType
 from typing import Any
 
 from app.research.chapter_keys import CHAPTER_KEYS, DISCIPLINE_CHAPTERS
+from app.research.media_refs import MediaRef
 from app.research.monograph_document import MonographDocument
 from app.research.monograph_page import CitedSource, ComponentEntry, LayoutEntry, MonographContent, TextUnit
 from app.research.page_layout import PageLayout, PageLayoutEntry, arranged_layout, picture_label
@@ -30,6 +31,9 @@ __all__ = ["LAYOUT_DATA", "GeneratedParts", "assembled_document"]
 
 LAYOUT_DATA = "page-layout"
 PICTURE_KIND = "picture_plate"
+PLATE_CLASS = "plate"
+PLATE_UNIT_PREFIX = "u"
+PLATE_UNIT_START = 9001
 HERO = "HERO"
 CRAFT_SUBJECTS = frozenset({"craft", "family"})
 DEFAULT_FIELD = "OVERVIEW"
@@ -64,6 +68,7 @@ class _Page:
     fragments: dict[str, str] = field(default_factory=dict)
     reused: dict[str, str] = field(default_factory=dict)
     default: list[LayoutEntry] = field(default_factory=list)
+    held: dict[str, list[str]] = field(default_factory=dict)
     hero: str | None = None
 
 
@@ -129,10 +134,15 @@ def _pictures(parts: GeneratedParts, page: _Page) -> dict[str, list[str]]:
         chapter, role = picture_placement(placed.picture)
         entry = parts.layout.entry(label) if parts.layout is not None else None
         role = entry.role if entry is not None else role
+        plate = _picture_plate(placed, entry, len(page.held))
+        if plate is None:
+            continue
         if role == HERO and page.hero is None:
             page.hero = label
         page.components[label] = _picture_entry(parts, placed, label, chapter)
-        page.specs[label] = _picture_spec(placed, role, entry)
+        page.specs[label], held = plate
+        page.units.update(held)
+        page.held[label] = list(held)
         by_chapter.setdefault(chapter, []).append((role not in LEADING_ROLES, label))
     return {
         chapter: [label for _, label in sorted(found, key=lambda item: item[0])]
@@ -178,16 +188,20 @@ def _lay_out(parts: GeneratedParts, page: _Page, found: Sequence[Mapping[str, li
         if chapter == MASTHEAD_CHAPTER:
             within = page.hero if page.hero in refs else None
             heads = [within] if within is not None else []
-            page.default += [_entry(chapter, ref, None, page) for ref in heads]
-            page.default += [_entry(chapter, ref, within, page) for ref in masthead]
+            page.default += [e for ref in heads for e in _entry(chapter, ref, None, page)]
+            page.default += [e for ref in masthead for e in _entry(chapter, ref, within, page)]
             refs = [ref for ref in refs if ref != within]
-        page.default += [_entry(chapter, ref, None, page) for ref in refs]
-        page.default += [_entry(chapter, ref, None, page) for ref in components.get(chapter, [])]
+        page.default += [e for ref in refs for e in _entry(chapter, ref, None, page)]
+        page.default += [e for ref in components.get(chapter, []) for e in _entry(chapter, ref, None, page)]
 
 
-def _entry(chapter: str, ref: str, within: str | None, page: _Page) -> LayoutEntry:
+def _entry(chapter: str, ref: str, within: str | None, page: _Page) -> list[LayoutEntry]:
     kind = "component" if ref in page.components else "unit"
-    return LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within)
+    placed = LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within)
+    return [
+        placed,
+        *(LayoutEntry(chapter=chapter, kind="unit", ref=unit, within=ref) for unit in page.held.get(ref, [])),
+    ]
 
 
 def _cite(
@@ -229,18 +243,34 @@ def _picture_entry(parts: GeneratedParts, placed: PlacedPicture, label: str, cha
     )
 
 
-def _picture_spec(placed: PlacedPicture, role: str, entry: PageLayoutEntry | None) -> dict[str, Any]:
-    picture = placed.picture
+def _picture_plate(
+    placed: PlacedPicture, entry: PageLayoutEntry | None, pictures: int
+) -> tuple[dict[str, Any], dict[str, TextUnit]] | None:
+    picture, media = placed.picture, placed.media
+    if media.width is None or media.height is None:
+        return None
+    caption_id, credit_id = (f"{PLATE_UNIT_PREFIX}{PLATE_UNIT_START + 2 * pictures + n}" for n in (0, 1))
+    caption = entry.caption if entry is not None and entry.caption else picture.caption
+    units = {caption_id: _plain_unit(caption), credit_id: _plain_unit(_credit_line(media))}
     crop = entry.crop if entry is not None and entry.crop is not None else picture.focal
-    return {
-        "media": placed.media.model_dump(mode="json", by_alias=True),
-        "caption": entry.caption if entry is not None and entry.caption else picture.caption,
-        "standIn": picture.stand_in,
-        "focal": crop.model_dump(mode="json", by_alias=True) if crop is not None else None,
-        "role": role,
-        "size": entry.size if entry is not None else None,
-        "claimIds": [str(claim_id) for claim_id in picture.claim_ids],
+    shown = {"src": media.image_url, "width": media.width, "height": media.height, "alt": media.alt}
+    if crop is not None:
+        shown["focal"] = crop.model_dump(mode="json")
+    spec = {
+        "setting": "figure",
+        "picture": shown,
+        "figure": {"classes": [PLATE_CLASS], "captions": [{"unit": caption_id}], "credit": credit_id},
     }
+    return spec, units
+
+
+def _plain_unit(text: str) -> TextUnit:
+    return TextUnit(chapter=MASTHEAD_CHAPTER, tag="span", field=None, nodes=[text], claim_ids=[])
+
+
+def _credit_line(media: MediaRef) -> str:
+    named = ", ".join(part for part in (media.author, media.licence) if part)
+    return f"Photo: {named}, via {media.site}" if named else f"Photo: {media.site}"
 
 
 def _anchor(label: str) -> str:

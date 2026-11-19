@@ -73,7 +73,7 @@ def media(key: str) -> MediaRef:
         display="INLINE",
         provider="curation",
         page_url=f"https://commons.wikimedia.org/wiki/File:{key}.jpg",
-        image_url=f"https://upload.wikimedia.org/{key}.jpg",
+        image_url=f"https://upload.wikimedia.org/wikipedia/commons/a/ab/{key}.jpg",
         width=1600,
         height=1200,
         title=f"Picture {key}",

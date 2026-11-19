@@ -74,7 +74,11 @@ function Made({ replay, renderUnit }: { replay: ProcessReplaySpec; renderUnit: R
 export function ProcessReplay({ spec, renderUnit }: ComponentViewProps) {
   const replay = parseShape(processReplayShape, spec);
   return (
-    <div className="kv-made-how" data-kv-made="">
+    <details className="kv-made-fold">
+      <summary>
+        <h3 className="kv-sub-h">{renderUnit(replay.heading)}</h3>
+      </summary>
+      <div className="kv-made-how" data-kv-made="">
       <div className="kv-made-top">
         <button className="btn sm" type="button" data-kv-made-play="">
           {replay.play}
@@ -89,6 +93,7 @@ export function ProcessReplay({ spec, renderUnit }: ComponentViewProps) {
       <p className="kv-made-ready" data-kv-made-ready="">
         {renderUnit(replay.ready)}
       </p>
-    </div>
+      </div>
+    </details>
   );
 }

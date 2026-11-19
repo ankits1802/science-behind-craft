@@ -112,9 +112,12 @@ Open:
    - **Round 2, integrated on `track1`:** the unified review queue, MCP `ask` and
      `start_image_upload`, approved pictures on craft pages, contribution screens, the dossier
      export and the curation skill on the write path (`docs/PROGRESS.md`).
-   - **Round 3:** every craft, family and category page from the one template, with component
-     views moved into specs and a `PageLayout` record (item 14), then completeness-driven research
-     (step 6).
+   - **Round 3 (decision 0106), integrated on `round3`:** the split, the document API, `PageLayout`,
+     generated documents for every page, all 42 component kinds as specs with React views, and the
+     React renderer at a preview route. **Next:** run the **Monograph parity** workflow after the
+     release, fix what it reports until text, screenshots and interactions match, then switch
+     `/crafts/Kutch-Ajrakh` to the React page and every other craft from the tabbed screen to its
+     document; then completeness-driven research (step 6).
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
    - waves 1B (landing, shell, collection, category, map), 3 (answer page), 4 (the rest) and 5

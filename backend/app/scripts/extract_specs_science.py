@@ -11,8 +11,9 @@ from app.research.base import ContractModel
 from app.research.component_specs_science import SPEC_MODELS_SCIENCE
 from app.research.monograph_document import spec_file_name
 from app.research.monograph_page import ComponentEntry
+from app.services.monograph_document import MONOGRAPHS_DIR
 
-from .build_monograph import MONOGRAPHS_DIR, TEMPLATE_FILE, monograph_content
+from .build_monograph import assembled_template, monograph_content
 from .extract_specs_science_dom import Element, anchored, find_anchor, parse_fragment
 from .extract_specs_science_explainers import material_cards, model_explainer, process_replay
 from .extract_specs_science_figures import diagram, equation_card, molecule_3d, structure_diagram
@@ -62,7 +63,7 @@ class Extraction:
 
 
 def extract_specs(slug: str) -> Extraction:
-    template = (MONOGRAPHS_DIR / slug / TEMPLATE_FILE).read_bytes().decode("utf-8")
+    template = assembled_template(slug)
     root = parse_fragment(template)
     content = monograph_content(slug)
     labels = _placed_components(root, content.components)

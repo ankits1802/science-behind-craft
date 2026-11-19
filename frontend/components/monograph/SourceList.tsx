@@ -1,6 +1,6 @@
 import type { MonographDocument, MonographSource } from "@/lib/monographDocument";
 import { sentenceCounts } from "@/lib/monographRenderKit";
-import { citedSources } from "@/lib/monographRenderLayout";
+import { pageSources } from "@/lib/monographRenderLayout";
 import { sourceReliabilityLabel } from "@/lib/citations";
 import type { SourceReliability } from "@/lib/types";
 
@@ -47,7 +47,7 @@ function SourceRow({ sourceKey, source, count }: { sourceKey: string; source: Mo
 
 export function SourceList({ document }: { document: MonographDocument }) {
   const counts = sentenceCounts(document);
-  const keys = citedSources(document);
+  const keys = pageSources(document);
   if (!keys.length) return null;
   return (
     <div className="bx bx-rm">

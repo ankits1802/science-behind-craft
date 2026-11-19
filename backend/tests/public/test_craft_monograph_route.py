@@ -131,5 +131,13 @@ def test_a_craft_without_a_document_is_not_found(
     assert calls.made == asked
 
 
-async def test_the_fallback_generates_nothing_until_generated_documents_exist() -> None:
-    assert await route.generated_fallback(object(), "Kutch-Ajrakh") is None
+async def test_the_fallback_asks_for_the_crafts_generated_document(monkeypatch: pytest.MonkeyPatch) -> None:
+    asked: list[tuple[str, str]] = []
+
+    async def generated_document(session: Any, subject_kind: str, slug: str) -> MonographDocument | None:
+        asked.append((subject_kind, slug))
+        return None
+
+    monkeypatch.setattr(route, "generated_document", generated_document)
+    assert await route.generated_fallback(object(), "Bagh-Print") is None
+    assert asked == [("craft", "Bagh-Print")]
