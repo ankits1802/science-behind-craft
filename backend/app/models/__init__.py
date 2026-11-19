@@ -12,6 +12,7 @@ from app.models.ai import (
 from app.models.alerts import AlertDigestSend, Notification
 from app.models.article_sections import ArticleSection
 from app.models.base import Base
+from app.models.candidate_checks import CandidateCheck
 from app.models.conversation import (
     Answer,
     AnswerCitation,
@@ -127,6 +128,7 @@ __all__ = [
     "AuditLog",
     "AuthNonce",
     "Base",
+    "CandidateCheck",
     "Chunk",
     "Claim",
     "ClaimSource",

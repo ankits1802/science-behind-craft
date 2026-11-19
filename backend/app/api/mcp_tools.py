@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 from app.core.errors import InvalidInput
 
+from .mcp_fact_tools import FACT_TOOLS
 from .mcp_protocol import (
     INVALID_PARAMS,
     METHOD_NOT_FOUND,
@@ -24,7 +25,7 @@ from .mcp_tool_base import Tool, ToolContext, scope_refusal
 
 __all__ = ["TOOLS", "ToolContext", "answer", "tool_list"]
 
-TOOLS: Mapping[str, Tool] = MappingProxyType({tool.name: tool for tool in (*READ_TOOLS,)})
+TOOLS: Mapping[str, Tool] = MappingProxyType({tool.name: tool for tool in (*READ_TOOLS, *FACT_TOOLS)})
 
 
 def tool_list() -> list[dict[str, Any]]:

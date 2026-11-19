@@ -14,6 +14,7 @@ from app.api.routes import (
     film,
     image_contributions,
     knowledge,
+    knowledge_writes,
     learning_views,
     lessons,
     listen,
@@ -59,6 +60,7 @@ api_router.include_router(field_voices.router)
 api_router.include_router(field_voices_held.router)
 api_router.include_router(film.router)
 api_router.include_router(knowledge.router)
+api_router.include_router(knowledge_writes.router)
 api_router.include_router(learning_views.router)
 api_router.include_router(lessons.router)
 api_router.include_router(listen.router)

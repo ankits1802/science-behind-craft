@@ -26,9 +26,13 @@ from .live_source_store import chunk_for_quote, source_for
 
 __all__ = [
     "LIVE_CONCEPT_ORIGIN",
+    "SHARED_CONCEPT_KEYS",
     "WRITE_BACK_ACTOR",
+    "CraftKeys",
     "SqlClaimWriter",
     "citation_id",
+    "concept_id_for",
+    "craft_keys",
     "write_back_claim_id",
 ]
 
@@ -42,12 +46,12 @@ SHARED_OWNER = "shared"
 
 
 @dataclass(frozen=True)
-class _CraftKeys:
+class CraftKeys:
     craft_id: uuid.UUID | None
     sub_category_id: uuid.UUID | None
 
 
-SHARED_CONCEPT_KEYS = _CraftKeys(craft_id=None, sub_category_id=None)
+SHARED_CONCEPT_KEYS = CraftKeys(craft_id=None, sub_category_id=None)
 
 
 def write_back_claim_id(dedupe_key: str) -> uuid.UUID:
@@ -59,8 +63,9 @@ def citation_id(claim_id: uuid.UUID, source_key: str, quote: str | None) -> uuid
 
 
 class SqlClaimWriter:
-    def __init__(self, session: AsyncSession) -> None:
+    def __init__(self, session: AsyncSession, *, status: str = WRITE_BACK_STATUS) -> None:
         self._session = session
+        self._status = status
 
     async def write(self, claims: Sequence[ClaimWriteBack]) -> list[WriteBackResult]:
         results = [await self._write_one(claim) for claim in claims]
@@ -68,8 +73,8 @@ class SqlClaimWriter:
         return results
 
     async def _write_one(self, claim: ClaimWriteBack) -> WriteBackResult:
-        craft = await _craft_keys(self._session, claim.craft_slug)
-        concept_id = await _concept_id_for(self._session, craft, claim.subject)
+        craft = await craft_keys(self._session, claim.craft_slug)
+        concept_id = await concept_id_for(self._session, craft, claim.subject)
         claim_id = write_back_claim_id(claim.dedupe_key)
         created = await self._insert_claim(claim_id, concept_id, claim)
         if not created:
@@ -93,7 +98,7 @@ class SqlClaimWriter:
                 evidenceLevel=claim.evidence_level,
                 levelReason=claim.level_reason,
                 origin=WRITE_BACK_ORIGIN,
-                status=WRITE_BACK_STATUS,
+                status=self._status,
                 createdByKind="SYSTEM",
                 field=CONCEPT_TYPE_DISCIPLINES.get(claim.subject.concept_type),
             )
@@ -102,7 +107,7 @@ class SqlClaimWriter:
         )
         if inserted is None:
             return False
-        self._session.add(_event(claim_id, claim, from_level=None, to_status=WRITE_BACK_STATUS))
+        self._session.add(_event(claim_id, claim, from_level=None, to_status=self._status))
         return True
 
     async def _raise_level(self, claim_id: uuid.UUID, claim: ClaimWriteBack) -> None:
@@ -146,7 +151,7 @@ class SqlClaimWriter:
         )
 
 
-async def _concept_id_for(session: AsyncSession, craft: _CraftKeys, subject: WriteBackSubject) -> uuid.UUID:
+async def concept_id_for(session: AsyncSession, craft: CraftKeys, subject: WriteBackSubject) -> uuid.UUID:
     if subject.concept_id is not None:
         return await _given_concept(session, craft, subject)
     found = await _named_concept(session, craft, subject)
@@ -170,16 +175,16 @@ async def _concept_id_for(session: AsyncSession, craft: _CraftKeys, subject: Wri
     return concept_id
 
 
-async def _craft_keys(session: AsyncSession, slug: str | None) -> _CraftKeys:
+async def craft_keys(session: AsyncSession, slug: str | None) -> CraftKeys:
     if slug is None:
         return SHARED_CONCEPT_KEYS
     row = (await session.execute(select(Craft.id, Craft.subCategoryId).where(Craft.slug == slug))).first()
     if row is None:
         raise InvalidInput(f"No craft has the slug {slug!r}")
-    return _CraftKeys(craft_id=row.id, sub_category_id=row.subCategoryId)
+    return CraftKeys(craft_id=row.id, sub_category_id=row.subCategoryId)
 
 
-async def _given_concept(session: AsyncSession, craft: _CraftKeys, subject: WriteBackSubject) -> uuid.UUID:
+async def _given_concept(session: AsyncSession, craft: CraftKeys, subject: WriteBackSubject) -> uuid.UUID:
     concept = await session.get(Concept, subject.concept_id)
     owned = concept is not None and _owns(craft, concept)
     if not owned or concept.type != subject.concept_type:
@@ -188,7 +193,7 @@ async def _given_concept(session: AsyncSession, craft: _CraftKeys, subject: Writ
 
 
 async def _named_concept(
-    session: AsyncSession, craft: _CraftKeys, subject: WriteBackSubject
+    session: AsyncSession, craft: CraftKeys, subject: WriteBackSubject
 ) -> uuid.UUID | None:
     name = _folded(subject.concept_name)
     if subject.concept_type == STAGE_CONCEPT_TYPE and craft.craft_id is not None:
@@ -241,7 +246,7 @@ def _folded(name: str) -> str:
     return " ".join(name.split()).lower()
 
 
-def _owns(craft: _CraftKeys, concept: Concept) -> bool:
+def _owns(craft: CraftKeys, concept: Concept) -> bool:
     if craft.craft_id is None:
         return concept.craftId is None and concept.subCategoryId is None
     if concept.craftId == craft.craft_id:
@@ -249,7 +254,7 @@ def _owns(craft: _CraftKeys, concept: Concept) -> bool:
     return craft.sub_category_id is not None and concept.subCategoryId == craft.sub_category_id
 
 
-def _owner_conditions(craft: _CraftKeys) -> list[ColumnElement[bool]]:
+def _owner_conditions(craft: CraftKeys) -> list[ColumnElement[bool]]:
     if craft.craft_id is None:
         return [and_(Concept.craftId.is_(None), Concept.subCategoryId.is_(None))]
     owners = [Concept.craftId == craft.craft_id]

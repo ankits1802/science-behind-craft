@@ -10,6 +10,7 @@ from app.core.roles import ROLE_RANK, is_uncapped
 from app.models import AppSetting
 from app.models.enums import EXPLAINER_DEPTHS
 from app.research.field_voices import ARTISAN_IMAGES_HIDDEN, ARTISAN_IMAGES_SETTING
+from app.research.review_switch import SWITCH_DEFAULTS, ReviewSwitch, ReviewSwitchUpdate, stored_switch
 
 MONTHLY_CEILING_USD = "AI_MONTHLY_CEILING_USD"
 MEDIA_CAP_USD = "AI_MEDIA_CAP_USD"
@@ -23,6 +24,7 @@ VOICE_TRANSPORT = "voice.transport"
 VOICE_MAX_LIVE_SESSIONS = "voice.max_live_sessions"
 VOICE_VOICE_ID = "voice.voice_id"
 FIELD_VOICES_ARTISAN_IMAGES = ARTISAN_IMAGES_SETTING
+REVIEW_SWITCH = "knowledge.review_switch"
 BUDGET_FIELDS: dict[str, str] = {
     "monthlyCeilingUsd": MONTHLY_CEILING_USD,
     "mediaCapUsd": MEDIA_CAP_USD,
@@ -51,6 +53,7 @@ DEFAULTS: dict[str, Any] = {
     VOICE_MAX_LIVE_SESSIONS: 5,
     VOICE_VOICE_ID: "JBFqnCBsd6RMkjVDRZzb",
     FIELD_VOICES_ARTISAN_IMAGES: ARTISAN_IMAGES_HIDDEN,
+    REVIEW_SWITCH: dict(SWITCH_DEFAULTS),
 }
 
 
@@ -75,6 +78,18 @@ async def set_value(session: AsyncSession, key: str, value: Any, updated_by_id: 
             index_elements=[AppSetting.key], set_={"value": value, "updatedById": updated_by_id}
         )
     )
+
+
+async def review_switch(session: AsyncSession) -> ReviewSwitch:
+    return stored_switch(await get_value(session, REVIEW_SWITCH))
+
+
+async def set_review_switch(
+    session: AsyncSession, update: ReviewSwitchUpdate, updated_by_id: Any
+) -> ReviewSwitch:
+    switch = update.applied_to(await review_switch(session))
+    await set_value(session, REVIEW_SWITCH, switch.stored(), updated_by_id)
+    return switch
 
 
 def public_view(values: dict[str, Any]) -> dict[str, Any]:

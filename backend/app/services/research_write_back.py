@@ -2,20 +2,25 @@ from __future__ import annotations
 
 import logging
 import uuid
+from collections.abc import Mapping
 from dataclasses import dataclass
+from datetime import UTC, datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import AppError, InvalidInput
 from app.research.composition import ComposedAnswer
 from app.research.embedding import TextEmbedder
+from app.research.evidence import SourceDocument
 from app.research.evidence_pack import EvidencePack
+from app.research.structured import StructuredModel
 from app.research.write_back import FoundBy, WriteBackResult
 from app.retrieval.indexing import EmbeddedCounts, embed_written
 
 from .claim_writer import SqlClaimWriter
 from .field_voices_citations import field_documents
 from .live_source_store import keep_document
+from .write_back_gates import gate_write_back, record_write_back_runs, research_placement
 from .write_back_plan import SkippedSentence, composed_sentences, write_back_plan
 
 __all__ = ["NOTHING_EMBEDDED", "StoredResearch", "sentence_claim_ids", "store_live_research"]
@@ -47,22 +52,30 @@ async def store_live_research(
     embed: TextEmbedder,
     found_by: FoundBy,
     answer_id: uuid.UUID | None = None,
+    judge: StructuredModel | None = None,
 ) -> StoredResearch:
     source_ids = [await keep_document(session, document) for document in pack.documents]
     fields = await field_documents(session, pack)
     plan = write_back_plan(pack, answer, found_by=found_by, answer_id=answer_id, field_documents=fields)
-    results = await SqlClaimWriter(session).write(plan.claims)
+    gated = await gate_write_back(session, plan.claims, _documents(pack, fields), embed=embed, judge=judge)
+    placed = await research_placement(session)
+    results = await SqlClaimWriter(session, status=placed.status).write(gated.claims)
+    await record_write_back_runs(session, results, gated.runs, live=placed.live, checked_at=datetime.now(UTC))
     await session.commit()
     kept = tuple(dict.fromkeys(source_ids))
     embedded, error = await _embed_written(session, embed, results, kept)
     return StoredResearch(
         source_ids=kept,
-        results=tuple(results),
-        skipped=plan.skipped,
+        results=(*results, *gated.held_instead),
+        skipped=(*plan.skipped, *gated.skipped),
         embedded=embedded,
         sentence_keys=plan.sentence_keys,
         embedding_error=error,
     )
+
+
+def _documents(pack: EvidencePack, fields: Mapping[str, SourceDocument]) -> dict[str, SourceDocument]:
+    return {document.item.id: document for document in pack.documents} | dict(fields)
 
 
 async def _embed_written(
