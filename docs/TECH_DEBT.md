@@ -3167,3 +3167,33 @@ Last reviewed: 2026-11-18.
   English in non-English answers; a failing catalogue lookup is caught broadly and offers nothing,
   like a failing builder.
 - **Clears it:** each in the change that next touches its file.
+
+## Track 1, round 2 (decision 0101, 2026-11-19)
+
+### A long MCP ask can outlive the edge
+
+- **What:** `ask` may run up to 600 seconds, but `POST /api/mcp` answers with one JSON body and the
+  edge times out an idle origin sooner: CloudFront's origin read timeout is 120 seconds and nginx's
+  proxy read timeout 300 seconds. The answer still finishes and is stored; the client loses the reply.
+- **Clears it:** a streamed MCP reply (server-sent progress) or a raised CloudFront origin timeout.
+
+### Structure still enters by bulk import
+
+- **What:** the write path takes facts only, so picture placements, focal boxes, a stage's after or
+  why, native names, reactions, botanical names, the glossary, conflicts, open questions and the GI
+  record still enter through a new dossier version and its import.
+- **Clears it:** a structure write path (or the `PageLayout` record of item 14 for placements).
+
+### The review page's picture and testimony cards use their old routes
+
+- **What:** on `/admin/review`, pictures and testimony are decided through
+  `/api/contributions/images/review/...` and `/api/testimony/review/...`, which reach the same
+  services as `/api/review-queue/{kind}/{id}/{action}`.
+- **Clears it:** an optional decide prop on `PictureReviewCard` and the testimony card, then retire the
+  old routes.
+
+### Two frontend files over budget
+
+- **What:** `frontend/lib/craftPageContract.ts` (531 lines) and `frontend/lib/craftChapters.ts` were
+  over 400 lines before round 2.
+- **Clears it:** split each by part (the round 3 template work touches both).

@@ -12,6 +12,7 @@ from app.models import User
 from app.research.knowledge_writes import FactProposal, ProposalReply
 from app.research.review_switch import CONTRIBUTION, ReviewSwitchUpdate, ReviewSwitchView
 from app.services import app_settings, audit
+from app.services.own_proposals import require_terms
 
 router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 proposer = require(Capability.PROPOSE_KNOWLEDGE)
@@ -26,6 +27,7 @@ async def propose(
     body: FactProposal, user: User = Depends(proposer), session: AsyncSession = Depends(get_session)
 ) -> ProposalReply:
     try:
+        await require_terms(session, user)
         return await proposed(session, body, user, CONTRIBUTION)
     except InvalidInput as error:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, str(error)) from None

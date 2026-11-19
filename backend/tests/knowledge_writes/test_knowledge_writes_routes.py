@@ -66,6 +66,28 @@ def answered(outcome: Any, seen: list[tuple[FactProposal, str]]) -> Any:
     return proposed
 
 
+@pytest.fixture(autouse=True)
+def terms_accepted(monkeypatch: pytest.MonkeyPatch) -> None:
+    async def accepted(session: Any, user: User) -> None:
+        return None
+
+    monkeypatch.setattr(knowledge_writes, "require_terms", accepted)
+
+
+def test_a_proposal_before_the_contribution_terms_are_accepted_is_refused(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    async def not_accepted(session: Any, user: User) -> None:
+        raise Refused("terms", "Accept the contribution terms, version 2026-11-19, before proposing.")
+
+    seen: list[tuple[FactProposal, str]] = []
+    monkeypatch.setattr(knowledge_writes, "require_terms", not_accepted)
+    monkeypatch.setattr(knowledge_writes, "proposed", answered(REPLY, seen))
+    response = client("RESEARCHER").post("/api/knowledge/facts", json=PROPOSAL)
+    assert response.status_code == 403 and "contribution terms" in response.json()["detail"]
+    assert seen == []
+
+
 def test_a_student_may_not_propose_a_fact() -> None:
     assert client("STUDENT").post("/api/knowledge/facts", json=PROPOSAL).status_code == 403
 

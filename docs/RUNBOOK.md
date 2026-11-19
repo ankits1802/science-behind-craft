@@ -378,7 +378,7 @@ to the Kutch Ajrakh dossier, the Textiles family dossier, the inputs file or the
 craft with no dossier, beside the Kutch Ajrakh one, is the second fixture:
 
 ```bash
-.venv/Scripts/python.exe -m app.scripts.import_curation --register-preview Farrukhabad-Prints --with-dossier Kutch-Ajrakh --out ../shared/craft.page.register.golden.json
+.venv/Scripts/python.exe -m app.scripts.import_curation --register-preview Farrukhabad-Prints --with-dossier Kutch-Ajrakh --family Textiles-Based-Craft-Category --out ../shared/craft.page.register.golden.json
 ```
 
 The same run imports the category dossiers of `curation/categories/` and reports them under

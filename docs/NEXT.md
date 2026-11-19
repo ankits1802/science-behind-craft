@@ -109,10 +109,9 @@ Open:
      4's gates, review switch and nightly upkeep, MCP slices 2 (OAuth, terms, connected apps) and
      3 (open work, `propose_fact`, `propose_component`, prompts, the contributor skill), nightly
      static builds, the bulk export (`docs/PROGRESS.md`).
-   - **Round 2, next:** the unified review queue in admin settings (facts, component proposals,
-     testimony and pictures in one path, with approval flagging sources differ); MCP `ask` and
-     `start_image_upload`; approved pictures on craft pages; contribution screens for facts and
-     components; the curation skill on the write path and the dossier export.
+   - **Round 2, integrated on `track1`:** the unified review queue, MCP `ask` and
+     `start_image_upload`, approved pictures on craft pages, contribution screens, the dossier
+     export and the curation skill on the write path (`docs/PROGRESS.md`).
    - **Round 3:** every craft, family and category page from the one template, with component
      views moved into specs and a `PageLayout` record (item 14), then completeness-driven research
      (step 6).

@@ -335,17 +335,19 @@ infrastructure.
 4. The candidate gates, the review queue and nightly upkeep.
    - Built 2026-11-19: the gates and the review switch (`docs/contracts/knowledge-writes.md`),
      nightly upkeep with orphaned concepts and the nightly static build
-     (`docs/contracts/nightly-upkeep.md`). The unified review queue is next.
+     (`docs/contracts/nightly-upkeep.md`); the unified review queue (`docs/contracts/review-queue.md`).
 5. The Knowledge API write path and the MCP server; switch the curation skill to it; the dossier
    export.
    - Built 2026-11-19: `propose_fact` on the API and MCP, MCP sign-in (`docs/contracts/mcp-oauth.md`),
      open work, task reservations, `propose_component`, MCP prompts and resources and the
-     contributor skill (`docs/contracts/open-work.md`). Next: `ask`, `start_image_upload`, the
-     curation skill on the write path and the dossier export.
+     contributor skill (`docs/contracts/open-work.md`); `ask` and `start_image_upload`
+     (`docs/contracts/mcp-ask-and-upload.md`); the curation skill on the write path and the dossier
+     export (`docs/contracts/dossier-export.md`).
 6. Completeness-driven research for every curated craft, then the rest: every chapter, What-if
    and molecules.
 7. Contribution screens and the bulk export.
    - Built 2026-11-19, the bulk export: `GET /api/knowledge/crafts/{slug}/export` and
      `app.scripts.export_knowledge` give each craft's public facts with quotes and sources, its
      published sections and its components, citable by curation and section version
-     (`docs/contracts/knowledge-api.md`).
+     (`docs/contracts/knowledge-api.md`); the contribution screens for facts and components
+     (`docs/contracts/contribution-screens.md`).

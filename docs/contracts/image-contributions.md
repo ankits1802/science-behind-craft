@@ -93,4 +93,5 @@ and latest change, and its file's), so the page is rebuilt on its next read.
 
 ## Not yet
 
-- The MCP tool that opens a declaration and hands back the upload page's link (slice 2).
+- Nothing for the MCP side: `start_image_upload` hands back the upload page's link and a presigned
+  slot (`docs/contracts/mcp-ask-and-upload.md`).

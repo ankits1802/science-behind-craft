@@ -1003,6 +1003,25 @@ Last updated: 2026-11-19.
     job test: chemistry cards were numbered in an unordered query's order), and MCP clients reach
     `/api/mcp` through the site's proxy.
 
+- **Decision 0101 track 1, round 2 (2026-11-19, integrated on `track1`, to release).**
+  - **The review queue:** `/admin/review` and `GET /api/review-queue` list every pending fact,
+    component proposal, picture and piece of testimony from other people, with approve, reject
+    (reason kept), raise and retract; erased testimony removes the concepts nothing else rests on
+    (`docs/contracts/review-queue.md`).
+  - **MCP `ask` and `start_image_upload`:** an agent gets our answer as structured data with its
+    link and a drawn view, plus the answer design kit; a single-use upload link (and a presigned
+    slot) lets a person add the picture an agent made (`docs/contracts/mcp-ask-and-upload.md`,
+    migration 0040).
+  - **Approved pictures on craft pages:** contributed plates in their chapters, credited without a
+    name and an AI image always labelled an illustration, served from a public asset route
+    (`docs/contracts/craft-page.md`).
+  - **Contribution screens:** propose a fact, propose a component after searching the library,
+    accept the contribution terms, list and withdraw one's own waiting proposals
+    (`docs/contracts/contribution-screens.md`); the site's fact route now requires the terms.
+  - **The dossier export:** `app.scripts.export_dossiers` writes each curated dossier from the
+    database, and `tools/curation/propose.py` sends a dossier's new facts through the gates; the
+    craft-pages skill now writes through the API (`docs/contracts/dossier-export.md`).
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
