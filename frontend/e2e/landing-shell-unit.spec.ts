@@ -65,7 +65,8 @@ test("without the stored page the landing still stands and shows no sentence it 
   expect(markup.match(/<h1/g)).toHaveLength(1);
   expect(markup).toContain('data-testid="institution-footer"');
   expect(markup).not.toContain("kv-four");
-  expect(markup).not.toMatch(/Loading|coming soon|no data/i);
+  expect(markup.replace(/<[^>]+>/g, " ")).not.toMatch(/loading|coming soon|no data/i);
+  expect(markup).toContain('rel="preload" as="image" href="/landing/ajrakh-print-detail-indigo-ground.jpg" fetchPriority="high"');
 });
 
 test("the stored page fills the label, the four colours and how to read a page, each sentence cited", () => {
