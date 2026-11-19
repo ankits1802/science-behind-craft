@@ -33,6 +33,7 @@ from app.api.routes import (
     settings,
     shared,
     simulations,
+    site_build,
     terms,
     testimony_review,
     two_factor,
@@ -76,6 +77,7 @@ api_router.include_router(secrets.router)
 api_router.include_router(settings.router)
 api_router.include_router(shared.router)
 api_router.include_router(simulations.router)
+api_router.include_router(site_build.router)
 api_router.include_router(terms.router)
 api_router.include_router(testimony_review.router)
 api_router.include_router(usage.router)

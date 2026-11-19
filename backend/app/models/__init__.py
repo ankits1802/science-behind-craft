@@ -106,6 +106,7 @@ from app.models.science import (
     ReactionCitation,
     StageMaterial,
 )
+from app.models.source_upkeep import SourceUpkeep
 from app.models.testimony import ArtisanContribution, ArtisanConversation, ArtisanConversationAudio
 
 __all__ = [
@@ -204,6 +205,7 @@ __all__ = [
     "SavedItem",
     "SecretTestResult",
     "Source",
+    "SourceUpkeep",
     "StageMaterial",
     "StudentProfile",
     "Term",

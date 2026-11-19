@@ -1,0 +1,133 @@
+from __future__ import annotations
+
+import logging
+import uuid
+from collections.abc import Callable, Collection, Sequence
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from typing import Any
+
+from pydantic import ValidationError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.errors import AppError
+from app.models import Craft, CraftPageSnapshot
+from app.research.craft_page import CRAFT_PAGE_SCHEMA_VERSION
+from app.research.monograph_page import MonographContent
+
+from .craft_chapters_job import chapter_crafts
+from .craft_page_snapshots import rebuild_snapshots
+from .craft_page_stamp import PAGE_VARIANTS, page_stamp
+from .monograph_load import load_monograph
+
+__all__ = [
+    "MONOGRAPHS_PER_NIGHT",
+    "PAGES_PER_NIGHT",
+    "MonographLoader",
+    "PagesReport",
+    "rebuild_monographs",
+    "rebuild_stale_pages",
+    "rotating_window",
+    "stale_crafts",
+]
+
+logger = logging.getLogger(__name__)
+
+MONOGRAPHS_PER_NIGHT = 20
+PAGES_PER_NIGHT = 60
+NEVER_BUILT = datetime.min.replace(tzinfo=UTC)
+
+MonographLoader = Callable[[str], MonographContent]
+
+
+@dataclass
+class PagesReport:
+    monographs: list[dict[str, Any]] = field(default_factory=list)
+    pages_stale: int = 0
+    pages_rebuilt: list[str] = field(default_factory=list)
+    pages_changed: int = 0
+    failed: list[str] = field(default_factory=list)
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "monographs": self.monographs,
+            "pagesStale": self.pages_stale,
+            "pagesRebuilt": len(self.pages_rebuilt),
+            "pagesChanged": self.pages_changed,
+            "pagesFailed": self.failed,
+        }
+
+
+def rotating_window[Item](items: Sequence[Item], size: int, night: int) -> list[Item]:
+    if size < 1:
+        raise ValueError(f"a nightly window holds at least one item, not {size}")
+    if len(items) <= size:
+        return list(items)
+    start = (night * size) % len(items)
+    return [items[(start + offset) % len(items)] for offset in range(size)]
+
+
+async def rebuild_monographs(
+    session: AsyncSession,
+    slugs: Sequence[str],
+    load: MonographLoader,
+    *,
+    now: datetime,
+    report: PagesReport,
+) -> None:
+    for slug in rotating_window(sorted(slugs), MONOGRAPHS_PER_NIGHT, now.date().toordinal()):
+        try:
+            loaded = await load_monograph(session, load(slug), now=now)
+            await session.commit()
+        except (AppError, ValidationError, OSError) as error:
+            await session.rollback()
+            logger.error("the monograph of %s could not be loaded: %s", slug, error)
+            report.failed.append(f"monograph:{slug}")
+            continue
+        report.monographs.append(loaded.as_dict())
+
+
+async def stale_crafts(session: AsyncSession, *, skip: Collection[str]) -> list[tuple[uuid.UUID, str]]:
+    found: list[tuple[datetime, str, uuid.UUID]] = []
+    for craft in await chapter_crafts(session, None):
+        if craft.slug in skip:
+            continue
+        built = await _stale_since(session, craft)
+        if built is not None:
+            found.append((built, craft.slug, craft.id))
+    found.sort(key=lambda row: (row[0], row[1]))
+    return [(craft_id, slug) for _, slug, craft_id in found]
+
+
+async def rebuild_stale_pages(
+    session: AsyncSession, *, skip: Collection[str], report: PagesReport, limit: int = PAGES_PER_NIGHT
+) -> None:
+    stale = await stale_crafts(session, skip=skip)
+    report.pages_stale = len(stale)
+    for craft_id, slug in stale[:limit]:
+        craft = await session.get(Craft, craft_id)
+        if craft is None:
+            continue
+        try:
+            changed = await rebuild_snapshots(session, craft)
+            await session.commit()
+        except (AppError, ValidationError) as error:
+            await session.rollback()
+            logger.error("the page of %s could not be rebuilt: %s", slug, error)
+            report.failed.append(f"page:{slug}")
+            continue
+        report.pages_rebuilt.append(slug)
+        report.pages_changed += int(changed)
+
+
+async def _stale_since(session: AsyncSession, craft: Craft) -> datetime | None:
+    oldest: datetime | None = None
+    for variant in PAGE_VARIANTS:
+        stored = await session.get(CraftPageSnapshot, (craft.id, variant), populate_existing=True)
+        if stored is None:
+            return NEVER_BUILT
+        current = stored.schemaVersion == CRAFT_PAGE_SCHEMA_VERSION
+        if current and stored.stamp == await page_stamp(session, craft, variant):
+            continue
+        oldest = stored.builtAt if oldest is None else min(oldest, stored.builtAt)
+    return oldest
