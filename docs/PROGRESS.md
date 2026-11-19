@@ -1049,6 +1049,29 @@ Last updated: 2026-11-19.
   - the parity run draws both pages with the site's faces, aligns their device-pixel phase, and
     names the cause of any difference (`styles.json`, `layers.json`, `offsets.json`, `drift.json`).
 
+- **Round 4 (2026-11-20): MCP and retrieval finished, every craft as its English document,
+  redesign wave 1B.** Five lanes, one worktree each, every test on GitHub.
+  - **Retrieval** (`docs/contracts/retrieval.md`): vectors stamped with their embedding model and
+    re-embedded on a change (migration 0043), vectors dropped when text changes, the release embeds
+    what its seeds wrote, expert seats filtered by their fields, Indic questions ranked on their
+    English rendering, about 1,930 seed passages searchable, and an evaluation (22 golden questions,
+    recall at 5 0.94, MRR 0.74, floors 0.9 and 0.7) with `eval_retrieval` for the live database.
+  - **MCP and writes:** facts close the task they answer, per-account proposal limits, streamed
+    `ask` replies (Streamable HTTP with progress every 15 s), CORS for browser MCP clients, nightly
+    removal of abandoned OAuth registrations, a `CONTRIBUTION` claim origin and layout proposals
+    (`propose_layout`, review kind `LAYOUT`, migration 0044), one copy of the MCP terms, and
+    contracts rewritten to the built state.
+  - **Craft pages:** every craft reads as its stored or generated document at `/crafts/<slug>`,
+    Kutch Ajrakh included after the parity proof; a craft without a monograph gets its template;
+    documents carry their language and are served in English (decision 0107, migration 0045);
+    CraftScreen, its tabs and 29 other craft components are retired.
+  - **Redesign wave 1B:** the appbar and its sheet replace the island navigation, the institution
+    footer and shells on ground with the grain, the landing as the master board's first screen
+    (photograph and dyed-region mask, vat moment, ribbon, four chemistries, how to read, where the
+    crafts are practised), the sign-in screens, the atlas (search, index, collection shelves), the
+    category hub, the paper map with its variables, legend, ranked list and table, and the compare
+    page.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
