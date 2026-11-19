@@ -37,9 +37,15 @@ export function MapText({ x, y, anchor = "start", tone = "var(--map-label)", ita
   );
 }
 
+const RANN_LABEL = { x: 36.6, y: 276.7, width: 0, height: 0 };
+
 function WaterLabels() {
+  const rann = boardBox(RANN_LABEL);
   return (
     <>
+      <MapText x={rann.x} y={rann.y} anchor="end" tone="var(--ink-2)" italic>
+        Great Rann
+      </MapText>
       {WATER_LABELS.map((label) => {
         const at = project(label.longitude, label.latitude);
         return (

@@ -54,9 +54,9 @@ function MapFigure({ ranking }: { ranking: StateRanking }) {
       <MapCanvas
         title="Where India's crafts are practised"
         description={mapDescription(ranking.circles, true)}
-        under={<KachchhPlace />}
         over={(scene) => (
           <>
+            <KachchhPlace />
             <StateCircles circles={ranking.circles} emphKey={emph} scene={scene} />
             <KachchhPin lines={PIN_LINES} scene={scene} />
           </>
