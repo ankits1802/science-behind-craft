@@ -5,22 +5,18 @@ import pytest
 
 from app.core.errors import InvalidInput
 from app.research.monograph_page import (
-    SLOT_PATTERN,
+    UNIT_SLOT,
     CitedSource,
     MonographContent,
     TextUnit,
+    assemble_template,
     render_nodes,
     render_page,
     slot,
+    slot_keys,
 )
-from app.scripts.build_monograph import (
-    MONOGRAPHS_DIR,
-    SERVED_FOLDERS,
-    TEMPLATE_FILE,
-    built_page,
-    monograph_content,
-    served_page_path,
-)
+from app.scripts.build_monograph import SERVED_FOLDERS, built_page, served_page_path
+from app.services.monograph_document import monograph_content, monograph_shell, page_parts
 
 GI_JOURNAL = CitedSource(
     number=1,
@@ -142,8 +138,8 @@ def test_the_served_monograph_is_exactly_its_build(slug: str) -> None:
 @pytest.mark.parametrize("slug", sorted(SERVED_FOLDERS))
 def test_the_content_holds_no_markup_and_every_unit_has_one_slot(slug: str) -> None:
     content = monograph_content(slug)
-    template = (MONOGRAPHS_DIR / slug / TEMPLATE_FILE).read_bytes().decode("utf-8")
-    slots = [key for kind, key in SLOT_PATTERN.findall(template) if kind == "unit"]
+    template = assemble_template(monograph_shell(slug), page_parts(content))
+    slots = slot_keys(template, UNIT_SLOT)
     assert sorted(slots) == sorted(content.units) and len(slots) == len(set(slots))
 
     def texts(nodes: list[Any]) -> list[str]:

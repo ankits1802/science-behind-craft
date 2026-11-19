@@ -13,6 +13,7 @@ from typing import Any
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.config import get_settings
 from app.core.errors import InvalidInput
 from app.models import (
     ArticleSection,
@@ -29,6 +30,7 @@ from app.research.article_sections import SectionSentence
 from app.research.monograph_page import ComponentEntry, MonographContent, TextUnit
 
 from . import knowledge_view
+from .monograph_document import authored_document, craft_page_url, has_authored_content, store_document
 
 __all__ = ["SECTION_TAGS", "MonographLoad", "load_monograph"]
 
@@ -55,6 +57,7 @@ class MonographLoad:
     components_unchanged: int = 0
     components_awaiting_facts: list[str] = field(default_factory=list)
     unresolved_subjects: list[str] = field(default_factory=list)
+    document_version: int | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -67,6 +70,7 @@ class MonographLoad:
             "componentsUnchanged": self.components_unchanged,
             "componentsAwaitingFacts": self.components_awaiting_facts,
             "unresolvedSubjects": sorted(set(self.unresolved_subjects)),
+            "documentVersion": self.document_version,
         }
 
 
@@ -98,7 +102,19 @@ async def load_monograph(session: AsyncSession, content: MonographContent, *, no
     for component in content.components:
         await _register(session, loading, component)
     await session.flush()
+    report.document_version = await _store_document(session, craft, content)
     return report
+
+
+async def _store_document(session: AsyncSession, craft: Craft, content: MonographContent) -> int | None:
+    if not has_authored_content(content.craft_slug):
+        return None
+    if craft.slug != content.craft_slug:
+        raise InvalidInput(
+            f"The monograph {content.craft_slug} names its craft by another slug than {craft.slug}"
+        )
+    page_url = craft_page_url(get_settings().public_web_url, craft.slug)
+    return await store_document(session, authored_document(content, title=craft.name, page_url=page_url))
 
 
 async def _facts(session: AsyncSession, craft_id: uuid.UUID, content: MonographContent) -> dict[str, _Fact]:
