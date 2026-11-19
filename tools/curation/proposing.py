@@ -48,7 +48,6 @@ __all__ = [
 FACTS_PATH = "/api/knowledge/facts"
 TOKEN_ENV = "KALAVIGYAN_TOKEN"
 API_ENV = "KALAVIGYAN_API"
-DEFAULT_API = "https://kalavigyan.vercel.app"
 USER_AGENT = "kalavigyan-curation-propose/1"
 RECEIPT_SUFFIX = ".proposals.json"
 TIMEOUT_SECONDS = 300
@@ -270,7 +269,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--stored", type=Path, help="the dossier the database exported (default: the one in git)"
     )
-    parser.add_argument("--api", help=f"the site or API address (default: {API_ENV} or {DEFAULT_API})")
+    parser.add_argument("--api", help=f"the API origin, PUBLIC_API_URL, not the site (default: {API_ENV})")
     parser.add_argument(
         "--receipt", type=Path, help="where the replies are kept (default: beside the dossier)"
     )
@@ -286,6 +285,17 @@ def _dossier(path: Path) -> Dossier:
         raise Stop(f"{relative_label(path)} is not a readable dossier: {error}") from error
 
 
+def _inputs(args: argparse.Namespace, environ: Mapping[str, str]) -> tuple[Dossier, Dossier | None, str]:
+    working = _dossier(args.dossier)
+    stored_file = args.stored or stored_path(working)
+    if stored_file.resolve() == args.dossier.resolve():
+        raise Stop("the working dossier is the stored one; work on a copy of the export")
+    api = args.api or environ.get(API_ENV) or ""
+    if not args.dry_run and not (api and environ.get(TOKEN_ENV)):
+        raise Stop(f"set {API_ENV} to the API origin and {TOKEN_ENV} to a signed-in session token")
+    return working, _dossier(stored_file) if stored_file.is_file() else None, api
+
+
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -294,22 +304,15 @@ def main(
 ) -> int:
     utf8_console()
     args = _parser().parse_args(argv)
-    token = environ.get(TOKEN_ENV)
     try:
-        working = _dossier(args.dossier)
-        stored_file = args.stored or stored_path(working)
-        if stored_file.resolve() == args.dossier.resolve():
-            raise Stop("the working dossier is the stored one; work on a copy of the export")
-        if not args.dry_run and not token:
-            raise Stop(f"set {TOKEN_ENV} to a signed-in session token")
-        stored = _dossier(stored_file) if stored_file.is_file() else None
+        working, stored, api = _inputs(args, environ)
     except Stop as stop:
         print(stop)
         return USAGE
     claims = [claim for claim in new_claims(working, stored) if not args.only or claim.id in args.only]
     receipt_file = args.receipt or receipt_path(args.dossier, working)
     run = ProposalRun(receipt=Receipt.read(receipt_file, working.slug), sender=None)
-    with api_client(args.api or environ.get(API_ENV) or DEFAULT_API, token, transport) as client:
+    with api_client(api, environ.get(TOKEN_ENV), transport) as client:
         if not args.dry_run:
             run.sender = partial(send, client)
         try:
@@ -317,9 +320,6 @@ def main(
         finally:
             if run.receipt.proposals:
                 write_text_atomically(receipt_file, run.receipt.text())
-    print(
-        "\n".join(
-            [*run.lines, f"{len(claims)} new facts in {relative_label(args.dossier)}, {run.failed} failed"]
-        )
-    )
+    summary = f"{len(claims)} new facts in {relative_label(args.dossier)}, {run.failed} failed"
+    print("\n".join([*run.lines, summary]))
     return USAGE if run.stopped else int(run.failed > 0)

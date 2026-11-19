@@ -197,7 +197,13 @@ def test_a_dry_run_needs_no_token_and_sends_nothing(
     )
 
 
-def test_without_a_token_or_with_the_stored_file_itself_nothing_is_sent(tmp_path: Path) -> None:
+def test_without_a_token_an_address_or_a_copy_nothing_is_sent(tmp_path: Path) -> None:
     working, stored = _files(tmp_path, [_plain()["claims"][-1]["id"]])
-    assert _run([str(working), "--stored", str(stored)], lambda _: httpx.Response(500), {}) == (2, [])
+    no_address = {"KALAVIGYAN_TOKEN": TOKEN}
+    no_token = {"KALAVIGYAN_API": ENVIRON["KALAVIGYAN_API"]}
+    for environ in (no_address, no_token):
+        assert _run([str(working), "--stored", str(stored)], lambda _: httpx.Response(500), environ) == (
+            2,
+            [],
+        )
     assert _run([str(stored), "--stored", str(stored)], lambda _: httpx.Response(500)) == (2, [])
