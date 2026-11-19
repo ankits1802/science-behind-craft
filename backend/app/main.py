@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
+from app.api.mcp_cors import OpenCorsMiddleware
 from app.api.router import api_router
 from app.api.routes.auth import (
     ACCESS_STATUS_HEADER,
@@ -145,6 +146,7 @@ def create_app() -> FastAPI:
         ],
         max_age=600,
     )
+    app.add_middleware(OpenCorsMiddleware)
     app.add_middleware(SecurityHeadersMiddleware, hsts=settings.is_production)
     app.add_middleware(RequestContextMiddleware)
 

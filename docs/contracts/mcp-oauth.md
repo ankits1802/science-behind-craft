@@ -34,8 +34,10 @@ PKCE S256 only, rotating refresh tokens, token revocation (RFC 7009), resource i
 | Registration endpoint | `<API>/api/oauth/register` |
 | Revocation endpoint | `<API>/api/oauth/revoke` |
 
-The metadata documents are public, cached five minutes and sent with
-`Access-Control-Allow-Origin: *`. The authorization server metadata lists `scopes_supported`
+The metadata documents are public and cached five minutes. They, the registration, token and
+revocation endpoints and `/api/mcp` answer browser clients from any origin without credentials,
+preflight included (`api/mcp_cors.py`, `knowledge-api.md`), as the MCP authorization specification
+expects of clients that run in a browser; the consent routes keep the site's configured origins. The authorization server metadata lists `scopes_supported`
 (read, ask, contribute, review), `response_types_supported` `code`, `grant_types_supported`
 `authorization_code` and `refresh_token`, `token_endpoint_auth_methods_supported` and
 `revocation_endpoint_auth_methods_supported` `none`, `code_challenge_methods_supported` `S256`
@@ -56,6 +58,11 @@ and `authorization_response_iss_parameter_supported` true.
 - Errors are `400 {error, error_description}` with `invalid_redirect_uri` or
   `invalid_client_metadata`. At most 20 registrations an hour from one address
   (`core/rate_limit.client_registration_attempt`), then 429 with `Retry-After`.
+- A client registered more than 30 days ago that never completed a sign-in (no connection, so no
+  token; an unexchanged code goes with it) is removed by the nightly upkeep, at most 1,000 a night
+  (`services/upkeep_clients.py`, `ABANDONED_CLIENT_AGE`, `ABANDONED_CLIENTS_PER_NIGHT`; counted in
+  the report's `clients.abandonedRemoved`, `nightly-upkeep.md`). Its `client_id` then answers as an
+  unknown client.
 
 ## Authorization
 
@@ -145,9 +152,10 @@ The rule is `research/oauth_rules.may_hold`; the words shown are `research/oauth
 
 ## Terms of use
 
-- The served text is `backend/app/data/mcp_terms_of_use.md`, version `MCP_TERMS_VERSION`
-  (`2026-11-19`, `research/oauth_rules.py`), from the draft in `docs/legal/mcp-terms-of-use.md`.
-  `GET /api/oauth/terms` answers `{version, title, body}`.
+- The one copy of the text is `backend/app/data/mcp_terms_of_use.md`, version `MCP_TERMS_VERSION`
+  (`2026-11-19`, `research/oauth_rules.py`); `docs/legal/mcp-terms-of-use.md` keeps the approval and
+  points to it, and `tests/mcp/test_mcp_terms_copy.py` holds the pointer and keeps the text out of
+  it. `GET /api/oauth/terms` answers `{version, title, body}`.
 - Acceptance is a `McpTermsAcceptance` row per account and version. A new version is asked for at
   the next authorization; a connection already made is not ended by it.
 
@@ -189,13 +197,7 @@ SHA-256; they are never logged.
   `oauth_connections`.
 - Routes: `api/routes/oauth_well_known.py`, `api/routes/oauth.py`, `api/routes/oauth_consent.py`,
   `api/routes/mcp.py`; `api/oauth_hosts.py` (paths and URLs), `api/oauth_wire.py` (form and error
-  bodies), `api/mcp_auth.py` (the bearer, the challenges and the audit).
+  bodies), `api/mcp_auth.py` (the bearer, the challenges and the audit), `api/mcp_cors.py` (browser
+  clients); the clean-up `services/upkeep_clients.py`.
 - Web: `app/oauth/authorize/page.tsx`, `components/oauth/*`, `lib/oauthContract.ts`,
   `lib/oauthConsent.ts`.
-
-## Not yet
-
-- Browser-based MCP clients: the registration and token endpoints send no CORS headers beyond the
-  configured origins.
-- Registered clients that never complete a sign-in are kept; a clean-up job is not written.
-- The served terms and the legal draft are two copies until one points at the other.

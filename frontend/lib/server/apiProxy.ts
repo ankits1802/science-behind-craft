@@ -23,6 +23,11 @@ export const CROSS_SITE_DETAIL = "This request didn't come from this site, so it
 const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 const MACHINE_ROUTES = new Set(["/api/mcp"]);
 
+export const MACHINE_RESPONSE_HEADERS: Readonly<Record<string, string>> = {
+  "cache-control": "no-store, no-transform",
+  "x-accel-buffering": "no"
+};
+
 const FORWARDED_REQUEST_HEADERS = new Set([
   "accept",
   "accept-encoding",

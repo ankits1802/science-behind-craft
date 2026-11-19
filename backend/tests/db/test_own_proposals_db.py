@@ -93,7 +93,7 @@ def _fact(
     *,
     minutes: int,
     proposer: uuid.UUID = RESEARCHER,
-    origin: str = "RESEARCHER",
+    origin: str = "CONTRIBUTION",
 ) -> Claim:
     return Claim(
         id=claim_id,

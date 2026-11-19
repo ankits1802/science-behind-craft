@@ -136,7 +136,9 @@ def _research_steps(values: Mapping[str, str]) -> list[str]:
         f'Call `get_facts` with craft_slug "{craft}" and field "{field}", and `get_section` with the same, to see '
         "what is held. Never propose a held fact: a second source for one is a second quote on that fact.",
         OWN_SEARCH,
-        "Call `propose_fact` once for each new fact, with its quotes, locators and sources.",
+        "Call `propose_fact` once for each new fact, with its quotes, locators and sources, and the key of the "
+        "task you claimed as taskKey: a fact that passes the gates completes the task, a refused one gives it "
+        "back.",
     ]
 
 

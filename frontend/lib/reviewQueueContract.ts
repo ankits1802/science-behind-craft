@@ -1,13 +1,14 @@
 import { apiFetch } from "@/lib/api";
 import { craftLinkShape, INSTANT, storedLevelShape, type CraftLink, type StoredLevel } from "@/lib/answerShapes";
 import { imageContributionShape, type ImageContribution } from "@/lib/imageContributionContract";
-import { boolean, dictionary, integer, list, nullable, number, object, oneOf, parseShape, tagged, text, type Shape } from "@/lib/shape";
+import { boolean, dictionary, integer, list, nullable, number, object, oneOf, optional, parseShape, tagged, text, type Shape } from "@/lib/shape";
 import { reviewEntryShape, type ClosedReviewItem, type ReviewItem } from "@/lib/testimonyContract";
 
 export const REVIEW_QUEUE_PATH = "/review-queue";
-export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS"] as const;
+export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS"] as const;
 export const REVIEW_ORIGINS = ["RESEARCH", "CONTRIBUTION", "AGENT", "TESTIMONY"] as const;
 export const QUEUE_ACTIONS = ["approve", "raise", "reject", "retract"] as const;
+export const LAYOUT_CHANGES = ["ADDED", "CHANGED", "REMOVED"] as const;
 export const REASON_MIN = 3;
 export const REASON_MAX = 500;
 export const PAGE_SIZE = 25;
@@ -15,6 +16,7 @@ export const PAGE_SIZE = 25;
 export type QueueKind = (typeof QUEUE_KINDS)[number];
 export type ReviewOrigin = (typeof REVIEW_ORIGINS)[number];
 export type QueueAction = (typeof QUEUE_ACTIONS)[number];
+export type LayoutChangeKind = (typeof LAYOUT_CHANGES)[number];
 
 export type Proposer = { name: string; role: string };
 export type SourceQuote = { text: string; locator: string | null };
@@ -64,13 +66,39 @@ export type ComponentReview = {
   closest: ClosestComponent[];
 };
 
+export type LayoutCrop = { x: number; y: number; width: number; height: number };
+export type LayoutEntry = {
+  ref: string;
+  chapter: string;
+  order: number;
+  role: string;
+  crop?: LayoutCrop | null;
+  size?: string | null;
+  caption?: string | null;
+};
+export type LayoutChange = { ref: string; change: LayoutChangeKind; before: LayoutEntry | null; after: LayoutEntry | null };
+export type LayoutSubject = { kind: string; slug: string };
+
+export type LayoutReview = {
+  subject: LayoutSubject;
+  subjectName: string;
+  pageUrl: string;
+  baseVersion: number;
+  currentVersion: number;
+  stale: boolean;
+  note: string | null;
+  entryCount: number;
+  changes: LayoutChange[];
+};
+
 type ItemBase = { id: string; origin: ReviewOrigin; submittedAt: string; craft: CraftLink | null; proposer: Proposer | null };
 
 export type FactItem = ItemBase & { kind: "FACTS"; fact: FactReview };
 export type TestimonyItem = ItemBase & { kind: "TESTIMONY"; testimony: ReviewItem | ClosedReviewItem };
 export type PictureItem = ItemBase & { kind: "IMAGES"; picture: ImageContribution };
 export type ComponentItem = ItemBase & { kind: "COMPONENTS"; component: ComponentReview };
-export type QueueItem = FactItem | TestimonyItem | PictureItem | ComponentItem;
+export type LayoutItem = ItemBase & { kind: "LAYOUTS"; layout: LayoutReview };
+export type QueueItem = FactItem | TestimonyItem | PictureItem | ComponentItem | LayoutItem;
 
 export type ReviewQueuePage = {
   schemaVersion: 1;
@@ -152,13 +180,40 @@ const componentShape: Shape<ComponentReview> = object<ComponentReview>({
   closest: list(object<ClosestComponent>({ component: libraryShape, overlap: number, reasons: list(text) }))
 });
 
+const cropShape: Shape<LayoutCrop> = object<LayoutCrop>({ x: number, y: number, width: number, height: number });
+
+const layoutEntryShape: Shape<LayoutEntry> = object<LayoutEntry>({
+  ref: text,
+  chapter: text,
+  order: integer,
+  role: text,
+  crop: optional(nullable(cropShape)),
+  size: optional(nullable(text)),
+  caption: optional(nullable(text))
+});
+
+const layoutShape: Shape<LayoutReview> = object<LayoutReview>({
+  subject: object<LayoutSubject>({ kind: text, slug: text }),
+  subjectName: text,
+  pageUrl: text,
+  baseVersion: integer,
+  currentVersion: integer,
+  stale: boolean,
+  note: nullable(text),
+  entryCount: integer,
+  changes: list(
+    object<LayoutChange>({ ref: text, change: oneOf(LAYOUT_CHANGES), before: nullable(layoutEntryShape), after: nullable(layoutEntryShape) })
+  )
+});
+
 const base = { id: text, origin: originShape, submittedAt: INSTANT, craft: nullable(craftLinkShape), proposer: nullable(proposerShape) };
 
 export const queueItemShape: Shape<QueueItem> = tagged<QueueItem>("kind", {
   FACTS: object<FactItem>({ ...base, kind: oneOf(["FACTS"] as const), fact: factShape }),
   TESTIMONY: object<TestimonyItem>({ ...base, kind: oneOf(["TESTIMONY"] as const), testimony: reviewEntryShape }),
   IMAGES: object<PictureItem>({ ...base, kind: oneOf(["IMAGES"] as const), picture: imageContributionShape }),
-  COMPONENTS: object<ComponentItem>({ ...base, kind: oneOf(["COMPONENTS"] as const), component: componentShape })
+  COMPONENTS: object<ComponentItem>({ ...base, kind: oneOf(["COMPONENTS"] as const), component: componentShape }),
+  LAYOUTS: object<LayoutItem>({ ...base, kind: oneOf(["LAYOUTS"] as const), layout: layoutShape })
 });
 
 export const reviewQueuePageShape: Shape<ReviewQueuePage> = object<ReviewQueuePage>({

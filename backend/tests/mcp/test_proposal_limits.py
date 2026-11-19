@@ -1,0 +1,200 @@
+import uuid
+from collections.abc import AsyncIterator
+from typing import Any
+
+import pytest
+from fastapi.testclient import TestClient
+
+from app.api import mcp_ask_tools, mcp_fact_tools, mcp_layout_tools, mcp_work_tools
+from app.api.mcp_tools import ToolContext, answer
+from app.api.proposal_limits import wait_words
+from app.api.routes import knowledge_writes
+from app.core.db import get_session
+from app.core.deps import get_current_user
+from app.core.mcp_scopes import CONTRIBUTE_SCOPE, READ_SCOPE
+from app.core.rate_limit import (
+    COMPONENT_PROPOSALS,
+    FACT_PROPOSALS,
+    IMAGE_UPLOADS,
+    LAYOUT_PROPOSALS,
+    proposal_attempt,
+)
+from app.main import create_app
+from app.models import User
+from app.services import upload_links
+from app.services.craft_resolver import CraftIndexStore
+
+HOUR = 3600
+LIMITS = {FACT_PROPOSALS: 30, COMPONENT_PROPOSALS: 10, LAYOUT_PROPOSALS: 10, IMAGE_UPLOADS: 20}
+
+
+def person(role: str, number: int = 31) -> User:
+    return User(id=uuid.UUID(int=number), name=f"{role} person", email=f"{number}@example.org", role=role)
+
+
+def spend(kind: str, user: User) -> None:
+    for _ in range(LIMITS[kind]):
+        assert proposal_attempt(kind, user)[0] is True
+
+
+class FakeSession:
+    async def commit(self) -> None:
+        return None
+
+    async def rollback(self) -> None:
+        return None
+
+
+def context(user: User) -> ToolContext:
+    session: Any = FakeSession()
+    scopes = frozenset({READ_SCOPE, CONTRIBUTE_SCOPE})
+    return ToolContext(
+        session=session, index=CraftIndexStore(), site="https://k.example", user=user, scopes=scopes
+    )
+
+
+async def tool_text(name: str, arguments: dict[str, Any], user: User) -> dict[str, Any]:
+    message = {
+        "jsonrpc": "2.0",
+        "id": 9,
+        "method": "tools/call",
+        "params": {"name": name, "arguments": arguments},
+    }
+    reply = await answer(message, context(user))
+    assert reply is not None and "result" in reply, reply
+    return reply["result"]
+
+
+def client(user: User) -> TestClient:
+    app = create_app()
+    app.dependency_overrides[get_current_user] = lambda: user
+
+    async def opened() -> AsyncIterator[Any]:
+        yield FakeSession()
+
+    app.dependency_overrides[get_session] = opened
+    return TestClient(app)
+
+
+def never_called(*_: Any, **__: Any) -> Any:
+    raise AssertionError("the limited work ran")
+
+
+@pytest.mark.parametrize("kind", sorted(LIMITS))
+def test_an_account_makes_its_kind_s_limit_in_an_hour_then_waits(kind: str) -> None:
+    researcher = person("RESEARCHER")
+    spend(kind, researcher)
+    allowed, wait = proposal_attempt(kind, researcher)
+    assert allowed is False and 0 < wait <= HOUR
+    assert proposal_attempt(kind, person("RESEARCHER", 32))[0] is True
+    other = next(each for each in LIMITS if each != kind)
+    assert proposal_attempt(other, researcher)[0] is True
+
+
+@pytest.mark.parametrize("role", ["ADMIN", "MASTER_ADMIN"])
+def test_admins_are_never_limited(role: str) -> None:
+    admin = person(role)
+    for _ in range(LIMITS[FACT_PROPOSALS] + 5):
+        assert proposal_attempt(FACT_PROPOSALS, admin) == (True, 0.0)
+
+
+@pytest.mark.parametrize(
+    ("seconds", "words"),
+    [
+        (0.2, "1 second"),
+        (59.0, "59 seconds"),
+        (60.0, "1 minute"),
+        (61.0, "2 minutes"),
+        (3599.0, "60 minutes"),
+    ],
+)
+def test_the_wait_is_said_in_whole_seconds_or_minutes(seconds: float, words: str) -> None:
+    assert wait_words(seconds) == words
+
+
+async def test_a_spent_fact_limit_is_a_tool_error_and_runs_no_gates(monkeypatch: pytest.MonkeyPatch) -> None:
+    researcher = person("RESEARCHER")
+    monkeypatch.setattr(mcp_fact_tools, "proposed", never_called)
+    spend(FACT_PROPOSALS, researcher)
+    proposal = {
+        "subject": {"kind": "craft", "slug": "Kutch-Ajrakh"},
+        "field": "PROCESS",
+        "statement": "The cloth is printed with a lime and gum resist before dyeing.",
+        "sources": [
+            {"url": "https://example.org/a", "title": "A", "quotes": [{"text": "lime and gum resist"}]}
+        ],
+    }
+    spent = await tool_text("propose_fact", {"proposal": proposal}, researcher)
+    assert spent["isError"] is True
+    assert spent["content"][0]["text"].startswith("This account made 30 fact proposals in the last hour")
+
+
+async def test_spent_component_layout_and_picture_limits_are_tool_errors(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    researcher = person("RESEARCHER")
+    monkeypatch.setattr(mcp_work_tools.component_proposals, "propose_component", never_called)
+    monkeypatch.setattr(mcp_layout_tools, "propose_layout", never_called)
+    monkeypatch.setattr(upload_links, "start_upload", never_called)
+    monkeypatch.setattr(mcp_ask_tools, "endpoints_or_none", lambda: None)
+    for kind in (COMPONENT_PROPOSALS, LAYOUT_PROPOSALS, IMAGE_UPLOADS):
+        spend(kind, researcher)
+    component = {
+        "label": "kutch-ajrakh/chemistry/vat-surface",
+        "title": "Indigo vat surface",
+        "description": "Shows the blue film forming where the vat meets the air, step by step, with its reaction.",
+        "kind": "molecule_3d",
+        "field": "CHEMISTRY",
+        "subjects": [{"kind": "CRAFT", "key": "Kutch-Ajrakh"}],
+    }
+    layout = {
+        "proposal": {"subject": {"kind": "craft", "slug": "Kutch-Ajrakh"}, "baseVersion": 0, "entries": []}
+    }
+    picture = {"craft_slug": "Kutch-Ajrakh", "claim_ids": [str(uuid.UUID(int=5))]}
+    for name, arguments, noun in (
+        ("propose_component", component, "10 component proposals"),
+        ("propose_layout", layout, "10 layout proposals"),
+        ("start_image_upload", picture, "20 picture uploads"),
+    ):
+        result = await tool_text(name, arguments, researcher)
+        assert result["isError"] is True and noun in result["content"][0]["text"], (name, result)
+
+
+def test_a_spent_fact_limit_answers_429_with_retry_after(monkeypatch: pytest.MonkeyPatch) -> None:
+    researcher = person("RESEARCHER")
+
+    async def accepted(session: Any, user: User) -> None:
+        return None
+
+    monkeypatch.setattr(knowledge_writes, "require_terms", accepted)
+    monkeypatch.setattr(knowledge_writes, "proposed", never_called)
+    spend(FACT_PROPOSALS, researcher)
+    proposal = {
+        "subject": {"kind": "craft", "slug": "Kutch-Ajrakh"},
+        "field": "PROCESS",
+        "statement": "The cloth is printed with a lime and gum resist before dyeing.",
+        "sources": [
+            {"url": "https://example.org/a", "title": "A", "quotes": [{"text": "lime and gum resist"}]}
+        ],
+    }
+    response = client(researcher).post("/api/knowledge/facts", json=proposal)
+    assert response.status_code == 429
+    assert 1 <= int(response.headers["retry-after"]) <= HOUR
+    assert "30 fact proposals" in response.json()["detail"]
+
+
+@pytest.mark.parametrize(
+    ("path", "kind"),
+    [
+        ("/api/contributions/images", IMAGE_UPLOADS),
+        ("/api/contributions/proposals/components", COMPONENT_PROPOSALS),
+    ],
+)
+def test_the_site_s_picture_and_component_routes_share_the_limits(path: str, kind: str) -> None:
+    researcher = person("RESEARCHER")
+    spend(kind, researcher)
+    response = client(researcher).post(path, json={})
+    assert response.status_code == 429 and "retry-after" in response.headers
+    student = person("STUDENT", 33)
+    assert client(student).post(path, json={}).status_code == 403
+    assert proposal_attempt(kind, student)[0] is True

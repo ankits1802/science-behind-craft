@@ -8,9 +8,11 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.proposal_limits import proposal_limit
 from app.core.db import get_session
 from app.core.deps import require
 from app.core.errors import InvalidInput, Refused
+from app.core.rate_limit import COMPONENT_PROPOSALS
 from app.core.roles import Capability
 from app.models import User
 from app.research.component_proposals import ComponentProposalResult
@@ -51,7 +53,7 @@ async def withdraw_component(
     return await _written(session, own_proposals.withdraw_component(session, user, proposal_id))
 
 
-@router.post("/components")
+@router.post("/components", dependencies=[Depends(proposal_limit(COMPONENT_PROPOSALS, contributor))])
 async def propose_component(
     body: ComponentProposalBody,
     user: User = Depends(contributor),

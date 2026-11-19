@@ -7,6 +7,7 @@ from pydantic import Field, model_validator
 
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE, REVIEW_SCOPE
+from app.core.rate_limit import COMPONENT_PROPOSALS
 from app.core.roles import role_value
 from app.models import User
 from app.research.component_proposals import ComponentProposalDraft, ComponentProposalResult
@@ -27,6 +28,7 @@ from app.research.vocabulary import Discipline
 from app.services import component_proposals, open_work, task_reservations
 
 from .mcp_tool_base import WRITES, Arguments, Tool, ToolContext
+from .proposal_limits import refuse_tool_when_spent
 
 __all__ = ["WORK_TOOLS"]
 
@@ -95,8 +97,10 @@ async def _release_task(context: ToolContext, arguments: TaskKeyArguments) -> Ta
 
 
 async def _propose_component(context: ToolContext, arguments: ProposeComponent) -> ComponentProposalResult:
+    user = _signed_in(context)
+    refuse_tool_when_spent(COMPONENT_PROPOSALS, user)
     return await component_proposals.propose_component(
-        context.session, _signed_in(context), arguments, now=datetime.now(UTC)
+        context.session, user, arguments, now=datetime.now(UTC)
     )
 
 

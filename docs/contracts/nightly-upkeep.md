@@ -2,12 +2,13 @@
 
 Every night the database looks after what it already holds, then the web app is rebuilt from it:
 quotes are re-verified against their sources, live open sources are archived before their links
-rot, orphaned research concepts are swept, the monograph sections and components and the craft
+rot, orphaned research concepts are swept, MCP client registrations that never signed anyone in are
+removed, the monograph sections and components and the craft
 page snapshots whose facts moved are rebuilt, and one production build pre-renders the craft pages
 from those snapshots onto the CDN. Answers stay live. Every step is bounded per night by a named
 constant, so a night's work and its load on other sites are known in advance.
 
-Last reviewed: 2026-11-19.
+Last reviewed: 2026-11-20.
 
 ## Schedule
 
@@ -27,6 +28,7 @@ The workflow runs `python -m app.scripts.nightly_upkeep` as the `kalavigyan` use
 | 1. Re-verify quotes | `services/upkeep_quotes.py` | `QUOTE_SOURCES_PER_NIGHT` = 50 sources; a source is due again after `QUOTE_RECHECK_AFTER` = 30 days | `ClaimSource.quoteCheck` (`PASS`/`FAIL`) and `checkedAt`; `SourceUpkeep` (outcome, failures, problem) |
 | 2. Archive sources at risk | `services/upkeep_archive.py`, adapter `sources/wayback_save.py` | `ARCHIVES_PER_NIGHT` = 10; a failed save is retried after `ARCHIVE_RETRY_AFTER` = 30 days | `SourceUpkeep.archiveUrl`, `archivedAt`, `archiveTriedAt` |
 | 3. Sweep orphaned concepts | `services/orphan_concepts.py` | `ORPHANS_PER_NIGHT` = 500; a concept stands at least `ORPHAN_MIN_AGE` = 7 days | `AuditLog` action `upkeep.orphans_reported` with the ids reported |
+| 3a. Remove abandoned MCP client registrations | `services/upkeep_clients.py` | `ABANDONED_CLIENTS_PER_NIGHT` = 1,000, oldest first; a client is abandoned `ABANDONED_CLIENT_AGE` = 30 days after registering | the `OAuthClient` rows deleted (their unexchanged codes go with them) |
 | 4. Reload monographs | `services/upkeep_pages.py` through `services/monograph_load.py` | `MONOGRAPHS_PER_NIGHT` = 20, a window that rotates by night | `ArticleSection`, `KnowledgePiece` (only what changed) |
 | 5. Rebuild stale craft pages | `services/upkeep_pages.py` through `services/craft_page_snapshots.py` | `PAGES_PER_NIGHT` = 60, oldest snapshot first | `CraftPageSnapshot` |
 | 6. Trigger the site build | `services/site_build.py` | one deploy-hook call | `AuditLog` action `site_build.triggered` |
@@ -81,6 +83,13 @@ audit log; the next night removes only those an earlier night reported that are 
 The delete re-checks the rule in the same statement, so a concept linked in between is kept.
 Artisan testimony concepts keep their own removal (`services/testimony_claims.drop_orphans`).
 
+### 3a. Abandoned client registrations
+
+An MCP client registered more than 30 days ago that never completed a sign-in (no `OAuthGrant`, so
+no token) is deleted; the delete re-checks the rule in the same statement, so a client that connects
+in between is kept. A client with a connection, even an expired or revoked one, stays: Settings and
+the audit still name it (`mcp-oauth.md`).
+
 ### 4 and 5. Pages
 
 - Monographs (today Kutch Ajrakh, `scripts/build_monograph.SERVED_FOLDERS`) are reloaded from
@@ -121,6 +130,7 @@ The web client parses both shapes with `frontend/lib/sitePagesContract.ts` (spec
          fetcherUnavailable},
  archive {archived, archiveFailed},
  orphans {orphansFound, orphansRemoved, orphansReported, orphans[{id, name, type, craftId}]},
+ clients {abandonedRemoved},
  pages {monographs[load report], pagesStale, pagesRebuilt, pagesChanged, pagesFailed[]},
  build {ok, triggered, reason?}}
 ```
@@ -129,7 +139,7 @@ The web client parses both shapes with `frontend/lib/sitePagesContract.ts` (spec
 refused; an unreachable source or a failed archive is expected and only counted. An unset deploy
 hook is
 reported (`triggered: false`) and is not a failure. `--dry-run` prints `{ok, dryRun, sourcesDue,
-sourcesAtRisk, monographs, pagesStale, orphans[]}` and writes nothing.
+sourcesAtRisk, monographs, pagesStale, clientsAbandoned, orphans[]}` and writes nothing.
 
 ## What the owner sets
 

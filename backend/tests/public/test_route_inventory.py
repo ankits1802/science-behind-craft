@@ -171,6 +171,7 @@ OWN_RECORD_ROUTES = {
 ADMIN_ROUTES = {
     ("POST", "/api/contributions/images"),
     ("POST", "/api/knowledge/facts"),
+    ("POST", "/api/knowledge/layouts"),
     ("POST", "/api/knowledge/open-work/claim"),
     ("POST", "/api/knowledge/open-work/release"),
     ("GET", "/api/knowledge/review-switch"),

@@ -21,14 +21,16 @@ export const KIND_LABELS: Record<QueueKind, string> = {
   FACTS: "Facts",
   TESTIMONY: "Testimony",
   IMAGES: "Pictures",
-  COMPONENTS: "Components"
+  COMPONENTS: "Components",
+  LAYOUTS: "Layouts"
 };
 
 export const KIND_NOUNS: Record<QueueKind, string> = {
   FACTS: "Fact",
   TESTIMONY: "Testimony",
   IMAGES: "Picture",
-  COMPONENTS: "Component proposal"
+  COMPONENTS: "Component proposal",
+  LAYOUTS: "Layout proposal"
 };
 
 export const ORIGIN_LABELS: Record<ReviewOrigin, string> = {

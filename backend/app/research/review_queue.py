@@ -14,17 +14,11 @@ from app.core.errors import InvalidInput
 from app.core.roles import Capability, can
 
 from .base import ContractModel
-from .component_proposals import (
-    ComponentProposalDraft,
-    ProposedSubject,
-    content_words,
-    match_reasons,
-    word_overlap,
-)
 from .crafts import SLUG_MAX_CHARS, CraftRef
 from .image_contributions import REVIEW_NOTE_MAX_CHARS as PICTURE_NOTE_MAX_CHARS, ImageContributionView
-from .knowledge_api import ComponentSummary
+from .layout_proposals import LayoutReview
 from .open_work import REVIEW_QUEUES
+from .review_queue_components import ComponentReview
 from .review_switch import (
     AGENT,
     APPROVED_STATUS,
@@ -42,7 +36,6 @@ from .write_back import WRITE_BACK_ORIGIN
 __all__ = [
     "ACTIONS",
     "APPROVE",
-    "CLOSEST_SHOWN",
     "COMPONENTS",
     "CURSOR_MAX_CHARS",
     "FACTS",
@@ -50,6 +43,7 @@ __all__ = [
     "IMAGES",
     "KIND_ACTIONS",
     "KIND_ORIGINS",
+    "LAYOUTS",
     "PAGE_DEFAULT",
     "PAGE_MAX",
     "PAST_TENSE",
@@ -65,9 +59,7 @@ __all__ = [
     "REVIEW_QUEUE_SCHEMA_VERSION",
     "TESTIMONY",
     "TESTIMONY_ORIGIN",
-    "ClosestComponent",
     "ComponentItem",
-    "ComponentReview",
     "FactConcept",
     "FactItem",
     "FactLevelRaise",
@@ -76,6 +68,7 @@ __all__ = [
     "FactReview",
     "FactSource",
     "GateCheck",
+    "LayoutItem",
     "PictureItem",
     "Proposer",
     "QueueApproval",
@@ -91,7 +84,6 @@ __all__ = [
     "ReviewQueuePage",
     "SourceQuote",
     "TestimonyItem",
-    "closest_components",
     "cursor_text",
     "decision_capability",
     "fact_move_problem",
@@ -105,7 +97,7 @@ __all__ = [
 
 REVIEW_QUEUE_SCHEMA_VERSION = 1
 QUEUE_KINDS: tuple[str, ...] = tuple(REVIEW_QUEUES)
-FACTS, TESTIMONY, IMAGES, COMPONENTS = QUEUE_KINDS
+FACTS, TESTIMONY, IMAGES, COMPONENTS, LAYOUTS = QUEUE_KINDS
 TESTIMONY_ORIGIN = "TESTIMONY"
 REVIEW_ORIGINS: tuple[str, ...] = (*PROPOSAL_ORIGINS, TESTIMONY_ORIGIN)
 KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
@@ -114,6 +106,7 @@ KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
         TESTIMONY: (TESTIMONY_ORIGIN,),
         IMAGES: (CONTRIBUTION,),
         COMPONENTS: (AGENT,),
+        LAYOUTS: (CONTRIBUTION, AGENT),
     }
 )
 APPROVE, REJECT, RAISE, RETRACT = "approve", "reject", "raise", "retract"
@@ -133,8 +126,6 @@ PAGE_MAX = 50
 REASON_MIN_CHARS = 3
 REASON_MAX_CHARS = min(PICTURE_NOTE_MAX_CHARS, TESTIMONY_NOTE_MAX_CHARS)
 CURSOR_MAX_CHARS = 60
-CLOSEST_SHOWN = 3
-OVERLAP_DIGITS = 3
 EPOCH = datetime(1970, 1, 1, tzinfo=UTC)
 MICROSECOND = timedelta(microseconds=1)
 CURSOR_PATTERN = re.compile(r"^(\d{1,19})~([0-9a-f]{32})$")
@@ -288,47 +279,6 @@ class FactReview(ContractModel):
     gates: list[GateCheck]
 
 
-class ClosestComponent(ContractModel):
-    component: ComponentSummary
-    overlap: float = Field(ge=0.0, le=1.0)
-    reasons: list[str]
-
-
-def closest_components(
-    draft: ComponentProposalDraft, candidates: Iterable[ComponentSummary], *, limit: int = CLOSEST_SHOWN
-) -> list[ClosestComponent]:
-    proposed = content_words(f"{draft.title} {draft.description}")
-    seen: set[str] = set()
-    ranked: list[ClosestComponent] = []
-    for candidate in candidates:
-        if candidate.label in seen or candidate.label == draft.extends:
-            continue
-        seen.add(candidate.label)
-        overlap = word_overlap(proposed, content_words(f"{candidate.title} {candidate.description}"))
-        reasons = match_reasons(draft, candidate)
-        ranked.append(
-            ClosestComponent(component=candidate, overlap=round(overlap, OVERLAP_DIGITS), reasons=reasons)
-        )
-    return sorted(ranked, key=lambda found: (-len(found.reasons), -found.overlap, found.component.label))[
-        :limit
-    ]
-
-
-class ComponentReview(ContractModel):
-    label: str
-    title: str
-    description: str
-    kind: str
-    field: Discipline
-    fields: list[Discipline]
-    subjects: list[ProposedSubject]
-    considered_labels: list[str]
-    extends: str | None
-    extension: str | None
-    task_key: str | None
-    closest: list[ClosestComponent]
-
-
 class _QueueItem(ContractModel):
     id: uuid.UUID
     origin: ReviewOrigin
@@ -357,7 +307,14 @@ class ComponentItem(_QueueItem):
     component: ComponentReview
 
 
-QueueItem = Annotated[FactItem | TestimonyItem | PictureItem | ComponentItem, Field(discriminator="kind")]
+class LayoutItem(_QueueItem):
+    kind: Literal["LAYOUTS"] = "LAYOUTS"
+    layout: LayoutReview
+
+
+QueueItem = Annotated[
+    FactItem | TestimonyItem | PictureItem | ComponentItem | LayoutItem, Field(discriminator="kind")
+]
 
 
 class ReviewQueuePage(ContractModel):

@@ -92,6 +92,7 @@ from app.models.knowledge import (
     WebFetch,
 )
 from app.models.knowledge_pieces import KnowledgePiece, KnowledgePieceSubject
+from app.models.layout_proposals import LayoutProposal
 from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim
 from app.models.monograph_documents import MonographDocument
@@ -184,6 +185,7 @@ __all__ = [
     "Job",
     "KnowledgePiece",
     "KnowledgePieceSubject",
+    "LayoutProposal",
     "LessonPack",
     "LiveCandidate",
     "ManagedSecret",

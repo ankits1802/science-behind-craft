@@ -14,7 +14,7 @@ from app.research.oauth_metadata import authorization_server_metadata, protected
 
 router = APIRouter(tags=["oauth"], dependencies=[Depends(mcp_enabled)])
 
-METADATA_HEADERS = {"Cache-Control": "public, max-age=300", "Access-Control-Allow-Origin": "*"}
+METADATA_HEADERS = {"Cache-Control": "public, max-age=300"}
 
 
 @router.get(f"{PROTECTED_RESOURCE_PATH}{MCP_RESOURCE_PATH}")

@@ -44,11 +44,13 @@ site.
 
 **Timeout.** The run is bounded at 600 seconds (`ASK_TIMEOUT_SECONDS`); past it the tool refuses
 ("The answer was not finished within 10 minutes") and returns nothing. The tool's description tells
-agents to allow up to ten minutes. The MCP route answers with one JSON body, and the edge in front
-of it closes an idle origin response sooner (CloudFront `origin_read_timeout` 120 s, nginx
-`proxy_read_timeout` 300 s): a longer run still finishes and is kept with the person's answers on
-the site, but the agent's call ends at the edge. Streaming the reply (Streamable HTTP with progress
-notifications) or raising those timeouts lifts that limit.
+agents to allow up to ten minutes. A client that accepts an event stream gets the call as one
+(`knowledge-api.md`): progress notifications for its `progressToken`, or comment heartbeats, at least
+every 15 seconds while the answer is written, then the result, so the edge in front of the API
+(CloudFront's 120-second and nginx's 300-second idle timeouts) never sees an idle origin. A client
+that takes only JSON gets one body when the answer is done; the edge may end such a call first, and
+the answer still finishes and is kept with the person's answers on the site. A streamed call that
+loses its client also runs to the end and is kept.
 
 ### `AskedAnswer`
 
@@ -101,7 +103,8 @@ uploadMaxBytes, craft, stage, facts[{id, text}], declared, nextStep}`.
   when the API origin is configured: PUT the picture's bytes to it.
 - Link and slot are one slot: whichever is used first closes both.
 
-Rules: Researcher and above (`PROPOSE_KNOWLEDGE`); at most 10 open links a person; the craft, stage
+Rules: Researcher and above (`PROPOSE_KNOWLEDGE`); at most 10 open links a person, and at most 20
+picture uploads started an hour (`IMAGE_UPLOADS`, Admins exempt, `knowledge-writes.md`); the craft, stage
 and facts are checked when the link is made and again when the picture is declared. Tokens are
 `kvup_pg_` (page) and `kvup_sl_` (slot) followed by 32 random bytes; only their SHA-256 is stored.
 A slot stops working when its account's sessions are ended (signing out everywhere, for one) or

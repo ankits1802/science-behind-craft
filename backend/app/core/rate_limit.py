@@ -3,11 +3,15 @@ import hmac
 import threading
 import time
 from collections import OrderedDict, deque
+from collections.abc import Mapping
 from ipaddress import ip_address
+from types import MappingProxyType
+from typing import Any
 
 from starlette.requests import HTTPConnection
 
 from app.core.config import get_settings
+from app.core.roles import ADMIN, has_rank
 
 _MAX_KEYS = 50_000
 CAMPUS_PAGE_VIEWS_PER_WINDOW = 30
@@ -24,6 +28,23 @@ MCP_CALLS_PER_CONNECTION_WINDOW = 1200
 MCP_CONNECTION_WINDOW_SECONDS = 600
 CLIENT_REGISTRATIONS_PER_WINDOW = 20
 CLIENT_REGISTRATION_WINDOW_SECONDS = 3600
+FACT_PROPOSALS = "facts"
+COMPONENT_PROPOSALS = "components"
+LAYOUT_PROPOSALS = "layouts"
+IMAGE_UPLOADS = "pictures"
+FACT_PROPOSALS_PER_WINDOW = 30
+COMPONENT_PROPOSALS_PER_WINDOW = 10
+LAYOUT_PROPOSALS_PER_WINDOW = 10
+IMAGE_UPLOADS_PER_WINDOW = 20
+PROPOSAL_WINDOW_SECONDS = 3600
+PROPOSAL_LIMITS: Mapping[str, int] = MappingProxyType(
+    {
+        FACT_PROPOSALS: FACT_PROPOSALS_PER_WINDOW,
+        COMPONENT_PROPOSALS: COMPONENT_PROPOSALS_PER_WINDOW,
+        LAYOUT_PROPOSALS: LAYOUT_PROPOSALS_PER_WINDOW,
+        IMAGE_UPLOADS: IMAGE_UPLOADS_PER_WINDOW,
+    }
+)
 
 
 class SlidingWindow:
@@ -189,6 +210,12 @@ def client_registration_attempt(connection: HTTPConnection) -> tuple[bool, float
         CLIENT_REGISTRATIONS_PER_WINDOW,
         CLIENT_REGISTRATION_WINDOW_SECONDS,
     )
+
+
+def proposal_attempt(kind: str, user: Any) -> tuple[bool, float]:
+    if has_rank(user, ADMIN):
+        return True, 0.0
+    return _windows.attempt(f"propose-{kind}:{user.id}", PROPOSAL_LIMITS[kind], PROPOSAL_WINDOW_SECONDS)
 
 
 def public_read_attempt(connection: HTTPConnection) -> tuple[bool, float]:

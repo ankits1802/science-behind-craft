@@ -1,4 +1,4 @@
-# Knowledge writes: proposals, candidate gates and the review switch (decision 0101, items 5, 8, 12)
+# Knowledge writes: proposals, gates, the review switch and limits (decision 0101, items 5, 8, 12, 14)
 
 Every new fact, whatever its origin, is a candidate. It is published only through four automatic
 gates, run in order, and the review switch then decides whether it goes live at once or waits for
@@ -13,18 +13,22 @@ rules), `research/review_switch.py` (the switch and where a fact is placed);
 `services/candidate_writes.py` (the stored outcomes and sources differ),
 `services/proposal_writes.py` and `services/fact_proposals.py` (`propose_fact`),
 `services/write_back_gates.py` (the research write-back), `services/app_settings.py` (the switch
-setting); `api/routes/knowledge_writes.py`, `api/mcp_fact_tools.py`, `api/proposal_deps.py`.
+setting); `api/routes/knowledge_writes.py`, `api/mcp_fact_tools.py`, `api/proposal_deps.py`; the
+limits `core/rate_limit.py` and `api/proposal_limits.py`; layout proposals `research/layout_proposals.py`,
+`services/page_layout_proposals.py`, `services/review_queue_layouts.py`, `api/mcp_layout_tools.py`,
+`models/layout_proposals.py`.
 
 ## Who may do what
 
 | Action | Capability | Roles |
 |---|---|---|
 | Propose a fact (`POST /api/knowledge/facts`, MCP `propose_fact`) | `PROPOSE_KNOWLEDGE` | Researcher and above |
+| Propose a page layout (`POST /api/knowledge/layouts`, MCP `propose_layout`) | `PROPOSE_KNOWLEDGE` | Researcher and above |
 | Read and set the review switch (`/api/knowledge/review-switch`) | `REVIEW_CONTRIBUTIONS` | Admin, Master Admin |
 
-The MCP tool also needs a signed-in connection holding the `contribute` scope
-(`core/mcp_scopes.CONTRIBUTE_SCOPE`); until OAuth sign-in reaches the MCP route the tool answers
-with a tool error naming that.
+The MCP tools also need a signed-in connection holding the `contribute` scope
+(`core/mcp_scopes.CONTRIBUTE_SCOPE`); without it the call is challenged (`mcp-oauth.md`) or answered
+with a tool error naming the scope. The site's routes ask for the contribution terms first.
 
 ## The proposal (`FactProposal`, schema version 1, camelCase on the wire)
 
@@ -36,6 +40,16 @@ with a tool error naming that.
   Aadhaar-like numbers are refused).
 - `sources`: 1 to 5, each named once (by canonical URL): `{url (https), title, licence?, quotes:
   [{text (at most 300 characters), locator?}] (1 to 6, each once)}`.
+- `taskKey` (optional): the open-work task the proposer claimed for this fact
+  (`docs/contracts/open-work.md`). It must be a field or corroboration task (`MISSING_FIELD`,
+  `THIN_FIELD`, `SECOND_SOURCE`, `SOURCES_DIFFER`) of the same page (a craft subject takes a craft or
+  family key, a category a category key) and name the primary field or a secondary one
+  (`SECOND_SOURCE` and `SOURCES_DIFFER` may name none); otherwise the proposal is malformed
+  (`research/knowledge_writes.fact_task_problem`). Once the gates have run, a fact that passed
+  (published or waiting for review) ends the proposer's live reservation of that key `COMPLETED`, and a
+  refused one gives it back (`RELEASED`, or `EXPIRED` past its time), so the task returns to the list
+  (`services/task_reservations.complete_task`, `give_back_task`). Another account's reservation is
+  never touched, and without a reservation nothing changes.
 
 A malformed proposal is refused before any gate (422 on the site; a tool error on MCP).
 
@@ -102,7 +116,11 @@ One admin setting, `knowledge.review_switch`, per origin:
   DUPLICATE outcome.
 - Who proposed it is kept privately: `Claim.createdById`, a `ReviewEvent` by the proposer whose
   note names the origin and the placement, and `ClaimSource.foundBy` (`CONTRIBUTION` or `AGENT`).
-  A proposed claim's `origin` is `RESEARCHER`, so the craft page shows it as a researcher's.
+  A proposed claim's `origin` is `CONTRIBUTION` (`services/proposal_writes.PROPOSAL_CLAIM_ORIGIN`),
+  whatever the channel: the channel stays in `ClaimSource.foundBy`. Migration `0044_contributed_origin`
+  adds the value and moves the facts proposed before it (`RESEARCHER` claims written by a user with
+  candidate checks) to it. The craft page shows a contributed fact with the provenance `RESEARCHER`
+  (`services/craft_page.ORIGIN_PROVENANCES`): every proposer is a Researcher or above.
   A newly stored source is marked `origin CONTRIBUTION` with `addedById`.
 
 ## Routes
@@ -110,12 +128,14 @@ One admin setting, `knowledge.review_switch`, per origin:
 | Route | Body | Answer |
 |---|---|---|
 | `POST /api/knowledge/facts` | `FactProposal` | 200 `ProposalReply` (origin `CONTRIBUTION`) |
+| `POST /api/knowledge/layouts` | `LayoutProposalDraft` | 200 `LayoutProposalResult` (origin `CONTRIBUTION`) |
 | `GET /api/knowledge/review-switch` | none | `ReviewSwitchView {current, defaults}`, each `{research, contribution, agent}` of `AUTO` or `APPROVAL` |
 | `PUT /api/knowledge/review-switch` | `ReviewSwitchUpdate`, any of `research`, `contribution`, `agent` | `ReviewSwitchView`; audited as `settings.review_switch_updated` |
 
-Refusals: 401 or 403 without the capability; 422 for a malformed proposal or an unknown subject;
-403 when the proposer's account no longer exists; 503 when the fetcher, the embedding route or
-the judge could not run (nothing is stored).
+Refusals: 401 or 403 without the capability or the contribution terms; 422 for a malformed proposal
+or an unknown subject; 403 when the proposer's account no longer exists; 409 for a layout built on a
+version the page has left; 429 with `Retry-After` when the account's proposal limit is spent; 503
+when the fetcher, the embedding route or the judge could not run (nothing is stored).
 
 `ProposalReply {schemaVersion 1, outcome, claimId, status, level, approvedAtOnce, inReviewQueue,
 sourcesDiffer, differsFrom[], gates[{gate, passed, reasons[]}], message}`. A refused proposal is
@@ -125,8 +145,60 @@ still a 200: the reply's outcome and the failing gate's reasons say why.
 
 `propose_fact` (`api/mcp_fact_tools.py`, in `FACT_TOOLS`), scope `contribute`, annotations
 `readOnlyHint false`. Arguments `{proposal: FactProposal}`; the result is `ProposalReply` as
-structured content. Origin `AGENT`. A missing sign-in, scope or rank, a malformed proposal or an
-outage comes back as a tool error the agent can act on.
+structured content. Origin `AGENT`. A missing sign-in, scope or rank, a malformed proposal, a spent
+limit or an outage comes back as a tool error the agent can act on. The `research_field` prompt tells
+the agent to pass the task key it claimed.
+
+## Proposal limits
+
+Every proposal costs work (a fact a fetch per source, an embedding and up to two judge calls), so each
+account has a sliding hour per kind (`core/rate_limit.proposal_attempt`, `PROPOSAL_WINDOW_SECONDS` =
+3,600), counted in the API process like the other limits there:
+
+| Kind (`core/rate_limit`) | Per hour (constant) | Counted at |
+|---|---|---|
+| `FACT_PROPOSALS` | `FACT_PROPOSALS_PER_WINDOW` = 30 | `POST /api/knowledge/facts` (after the terms), MCP `propose_fact` |
+| `COMPONENT_PROPOSALS` | `COMPONENT_PROPOSALS_PER_WINDOW` = 10 | `POST /api/contributions/proposals/components`, MCP `propose_component` |
+| `LAYOUT_PROPOSALS` | `LAYOUT_PROPOSALS_PER_WINDOW` = 10 | `POST /api/knowledge/layouts` (after the terms), MCP `propose_layout` |
+| `IMAGE_UPLOADS` | `IMAGE_UPLOADS_PER_WINDOW` = 20 | `POST /api/contributions/images` (a picture declared on the site), MCP `start_image_upload` (a link and slot issued; the picture given through it is not counted again) |
+
+- Admins and Master Admins are never limited. A proposal refused at a gate still counts. A request
+  without the capability never counts; on the Knowledge API routes and over MCP neither does a
+  malformed body or missing terms, while the site's component and picture routes count a request once
+  the capability is checked, before its body.
+- On HTTP a spent limit is 429 with `Retry-After` (whole seconds) and a detail such as "This account
+  made 30 fact proposals in the last hour, the most one account may. Try again in 12 minutes."; over
+  MCP the same sentence is a tool error (`api/proposal_limits.py`: `proposal_limit` for routes,
+  `refuse_tool_when_spent` for tools).
+
+## Layout proposals (decision 0101, item 14)
+
+A page layout (`docs/contracts/page-layout.md`) can be proposed by anyone who may propose facts; it
+waits in the review queue as kind `LAYOUTS`, and an Admin's approval writes it as the page's next
+version.
+
+- `LayoutProposalDraft` (schema version 1, camelCase): `subject {kind craft | family | category,
+  slug}`, `baseVersion` (the version the proposer read, 0 when the page has none), `entries[]` (the
+  whole layout, each a `PageLayoutEntry`, checked by the layout rules), `note?` (1 to 500 characters,
+  why). MCP `propose_layout` (`api/mcp_layout_tools.py`, scope `contribute`, a write) takes
+  `{proposal: LayoutProposalDraft}`, origin `AGENT`; the route's origin is `CONTRIBUTION`.
+- `services/page_layout_proposals.propose_layout`: the subject is found as `get_layout` finds it (a
+  family asked for as a craft is refused like an unknown slug: 422, or a tool error); a `baseVersion`
+  that is not the page's current version is refused (`Refused("stale_layout")`: 409, or a tool error
+  naming the current version). An account that reviews layouts (`REVIEW_CONTRIBUTIONS`, Admin and
+  above) has its proposal written at once through `page_layouts.store_layout` (audited
+  `PAGE_LAYOUT_WRITTEN`) and recorded `APPROVED` with the version; everyone else's waits `PENDING`.
+- `LayoutProposalResult {schemaVersion 1, outcome STORED | WRITTEN, proposalId, status, subject,
+  baseVersion, version (the written version, null while waiting), pageUrl, message}`.
+- Table `LayoutProposal` (migration `0044_contributed_origin`): `proposerId`, `subjectKind`,
+  `craftId` or `categoryId` (exactly one, matching the kind), `baseVersion`, `entries` (JSONB),
+  `note`, `origin` (`CONTRIBUTION`, `AGENT`), `status` (`PENDING`, `APPROVED`, `REJECTED`),
+  `reviewedById`, `reviewedAt`, `reviewNote`, `layoutVersion` (set exactly when approved), with row
+  level security on and no grants to the public roles. Who proposed it is kept for moderation only.
+- Review (`review-queue.md`): approving writes the next version through `store_layout` as the
+  reviewer (audited `PAGE_LAYOUT_WRITTEN` and `review.layout_approved`) while the page is still at
+  `baseVersion`, else 409 and the proposal can only be rejected; rejecting keeps the reason
+  (`review.layout_rejected`).
 
 ## The research write-back
 

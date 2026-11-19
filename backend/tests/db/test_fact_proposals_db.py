@@ -1,7 +1,7 @@
 import uuid
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import pytest
@@ -17,6 +17,7 @@ from app.models import (
     CraftSubCategory,
     ReviewEvent,
     Source,
+    TaskReservation,
     User,
 )
 from app.research.knowledge_writes import FactProposal
@@ -158,7 +159,7 @@ async def test_a_contributor_s_fact_passes_every_gate_and_waits_hidden_by_defaul
     claim = await session.get(Claim, reply.claim_id)
     assert (claim.subjectId, claim.origin, claim.createdById, claim.createdByKind) == (
         CONCEPT,
-        "RESEARCHER",
+        "CONTRIBUTION",
         people.researcher.id,
         "USER",
     )
@@ -325,3 +326,41 @@ async def test_the_review_switch_is_stored_and_read_back(session: AsyncSession, 
     )
     stored = (await app_settings.review_switch(session)).stored()
     assert stored == {"RESEARCH": "APPROVAL", "CONTRIBUTION": "APPROVAL", "AGENT": "APPROVAL"}
+
+
+def held_task(user: User, task: str) -> TaskReservation:
+    hour = timedelta(hours=1)
+    return TaskReservation(taskKey=task, userId=user.id, reservedAt=NOW - hour, expiresAt=NOW + hour)
+
+
+async def test_a_fact_that_passes_completes_the_task_its_proposer_claimed(
+    session: AsyncSession, people: People
+) -> None:
+    task = f"THIN_FIELD:craft:{SLUG}:PROCESS"
+    reservation = held_task(people.researcher, task)
+    session.add(reservation)
+    await session.flush()
+    reply = await proposed(session, people.researcher, "AGENT", adapters(ADDS), taskKey=task)
+    assert reply.outcome == "WAITING"
+    assert (reservation.ending, reservation.endedAt) == ("COMPLETED", NOW)
+
+
+async def test_a_refused_fact_gives_the_task_back_and_leaves_another_account_s_alone(
+    session: AsyncSession, people: People
+) -> None:
+    mine, theirs = f"SECOND_SOURCE:craft:{SLUG}:PROCESS", f"THIN_FIELD:craft:{SLUG}:CHEMISTRY"
+    held, other = held_task(people.researcher, mine), held_task(people.professor, theirs)
+    session.add_all([held, other])
+    await session.flush()
+    refused = await proposed(
+        session,
+        people.researcher,
+        "AGENT",
+        adapters(),
+        quote="The cloth is dipped nine times in a row",
+        taskKey=mine,
+    )
+    assert refused.outcome == "REFUSED"
+    assert (held.ending, held.endedAt) == ("RELEASED", NOW)
+    passed = await proposed(session, people.researcher, "AGENT", adapters(ADDS), taskKey=theirs)
+    assert passed.outcome == "WAITING" and (other.ending, other.endedAt) == (None, None)

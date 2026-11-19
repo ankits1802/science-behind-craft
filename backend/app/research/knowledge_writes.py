@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Mapping
+from types import MappingProxyType
 from typing import Literal, Self
 
 from pydantic import Field, field_validator, model_validator
@@ -10,10 +12,12 @@ from app.models.knowledge import QUOTE_MAX_CHARS
 from .base import ContractModel, HttpsUrl
 from .candidate_gates import Gate, GateOutcome
 from .evidence import canonical_url, personal_data_in
+from .open_work import TASK_KEY_MAX_CHARS, parse_task_key
 from .review_switch import ProposalOutcome
 from .vocabulary import Discipline, EvidenceLevel
 
 __all__ = [
+    "FACT_TASK_KINDS",
     "KNOWLEDGE_WRITES_SCHEMA_VERSION",
     "PROPOSAL_FIELDS_MAX",
     "PROPOSAL_QUOTES_MAX",
@@ -26,6 +30,7 @@ __all__ = [
     "ProposalSubject",
     "ProposedQuote",
     "ProposedSource",
+    "fact_task_problem",
     "gate_reports",
 ]
 
@@ -40,6 +45,11 @@ SUBJECT_SLUG_MAX_CHARS = 200
 TITLE_MAX_CHARS = 1000
 LICENCE_MAX_CHARS = 200
 LOCATOR_MAX_CHARS = 300
+FACT_TASK_KINDS = ("MISSING_FIELD", "THIN_FIELD", "SECOND_SOURCE", "SOURCES_DIFFER")
+FIELDLESS_TASK_KINDS = frozenset({"SECOND_SOURCE", "SOURCES_DIFFER"})
+TASK_SUBJECTS: Mapping[str, tuple[str, ...]] = MappingProxyType(
+    {"craft": ("craft", "family"), "category": ("category",)}
+)
 
 SubjectKind = Literal[*PROPOSAL_SUBJECT_KINDS]
 
@@ -75,6 +85,7 @@ class FactProposal(ContractModel):
     fields: list[Discipline] = Field(default_factory=list, max_length=PROPOSAL_FIELDS_MAX)
     statement: str = Field(min_length=STATEMENT_MIN_CHARS, max_length=STATEMENT_MAX_CHARS)
     sources: list[ProposedSource] = Field(min_length=1, max_length=PROPOSAL_SOURCES_MAX)
+    task_key: str | None = Field(default=None, min_length=1, max_length=TASK_KEY_MAX_CHARS)
 
     @field_validator("statement")
     @classmethod
@@ -91,6 +102,14 @@ class FactProposal(ContractModel):
         urls = [canonical_url(source.url) for source in self.sources]
         if len(set(urls)) != len(urls):
             raise ValueError("each source is named once; give all its quotes under it")
+        return self
+
+    @model_validator(mode="after")
+    def _task_is_this_fact_s(self) -> Self:
+        if self.task_key is not None:
+            problem = fact_task_problem(self.task_key, self.subject, (self.field, *self.fields))
+            if problem is not None:
+                raise ValueError(problem)
         return self
 
 
@@ -112,6 +131,19 @@ class ProposalReply(ContractModel):
     differs_from: list[uuid.UUID]
     gates: list[GateReport]
     message: str
+
+
+def fact_task_problem(key: str, subject: ProposalSubject, fields: tuple[str, ...]) -> str | None:
+    task = parse_task_key(key)
+    if task.kind not in FACT_TASK_KINDS:
+        return f"{key} is not a task a fact completes; a fact completes a {', '.join(FACT_TASK_KINDS)} task"
+    if task.subject_kind not in TASK_SUBJECTS[subject.kind] or task.slug != subject.slug:
+        return f"{key} is a task of another page than {subject.kind} {subject.slug}"
+    if task.detail is None:
+        return None if task.kind in FIELDLESS_TASK_KINDS else f"{key} names no field"
+    if task.detail not in fields:
+        return f"{key} asks for {task.detail}; the fact is filed under {', '.join(fields)}"
+    return None
 
 
 def gate_reports(outcomes: list[GateOutcome]) -> list[GateReport]:

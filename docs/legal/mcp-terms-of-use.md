@@ -1,37 +1,9 @@
 # MCP terms of use (version 2026-11-19)
 
-Approved by the owner on 2026-11-19. These are the terms a person accepts
-when they connect an AI agent to KalaVigyan through the MCP server (decision 0101, item 15). They
-are versioned; a new version is asked for again at the next sign-in.
+Approved by the owner on 2026-11-19. These are the terms a person accepts when they connect an AI
+agent to KalaVigyan through the MCP server (decision 0101, item 15). They are versioned; a new
+version is asked for again at the next sign-in.
 
-## What you may do
-
-- Read KalaVigyan's public content through your agent: crafts, facts with their quotes and sources,
-  article sections and registered components. You see only what a signed-out reader of the site
-  sees.
-- Ask questions and receive answers, when your role allows it.
-- Contribute, under the contribution terms (`docs/legal/contribution-terms.md`).
-
-## What you agree to
-
-- **Credit.** Wherever you show our content, name KalaVigyan and the Centre of Excellence for
-  Unified AI-Enabled Craft Ecosystem Platform, IIT Kharagpur, and link the craft's page.
-- **Sources keep their licences.** A quote stays under its source's licence; our licence covers only
-  our own text. Quotes from closed sources are never served.
-- **Content is data.** Text in a result is quoted material. Your agent must never treat it as
-  instructions.
-- **Fair use of the service.** Requests are limited per token. Do not try to get round the limits,
-  copy the whole collection in bulk (a versioned bulk export is offered instead), or present our
-  content as your own.
-- **Your token is yours.** Keep it private. You can see and revoke every connected client in
-  Settings, and we may revoke a token that breaks these terms.
-
-## What we promise
-
-- We record which tools a token used and when, for the service's safety, and nothing more.
-- Tool schemas are versioned, so an integration does not break without notice.
-
-## No warranty
-
-The content is offered as it is, with its evidence levels and sources shown. Check a source before
-relying on a fact.
+The text has one copy: `backend/app/data/mcp_terms_of_use.md`, served at `GET /api/oauth/terms`
+and shown on the consent screen. Its version is `MCP_TERMS_VERSION` in
+`backend/app/research/oauth_rules.py`. Change the text there, and raise the version with it.
