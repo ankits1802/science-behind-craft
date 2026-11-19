@@ -22,3 +22,92 @@
   color: inherit;
   text-decoration: none;
 }
+
+@layer base {
+  :where(#kv-main) *,
+  :where(#kv-main) ::before,
+  :where(#kv-main) ::after {
+    box-sizing: revert;
+    margin: revert;
+    padding: revert;
+    border: revert;
+  }
+
+  :where(#kv-main) :is(h1, h2, h3, h4, h5, h6) {
+    font-size: revert;
+    font-weight: revert;
+  }
+
+  :where(#kv-main) :is(a) {
+    color: revert;
+    text-decoration: revert;
+  }
+
+  :where(#kv-main) :is(b, strong) {
+    font-weight: revert;
+  }
+
+  :where(#kv-main) :is(small) {
+    font-size: revert;
+  }
+
+  :where(#kv-main) :is(sub, sup) {
+    font-size: revert;
+    line-height: revert;
+    position: revert;
+    vertical-align: revert;
+    inset-block: revert;
+  }
+
+  :where(#kv-main) :is(ol, ul, menu) {
+    list-style: revert;
+  }
+
+  :where(#kv-main) :is(img, svg, video, canvas, audio, iframe, embed, object) {
+    display: revert;
+    vertical-align: revert;
+  }
+
+  :where(#kv-main) :is(img, video) {
+    max-width: revert;
+    height: revert;
+  }
+
+  :where(#kv-main) :is(button, input, select, optgroup, textarea) {
+    font: revert;
+    font-feature-settings: revert;
+    font-variation-settings: revert;
+    letter-spacing: revert;
+    color: revert;
+    border-radius: revert;
+    background-color: revert;
+    opacity: revert;
+  }
+
+  :where(#kv-main) :is(hr) {
+    height: revert;
+    color: revert;
+    border-block-start-width: revert;
+  }
+
+  :where(#kv-main) :is(code, kbd, samp, pre) {
+    font-family: revert;
+    font-feature-settings: revert;
+    font-variation-settings: revert;
+    font-size: revert;
+  }
+
+  :where(#kv-main) :is(table) {
+    text-indent: revert;
+    border-color: revert;
+    border-collapse: revert;
+  }
+
+  :where(#kv-main) :is(textarea) {
+    resize: revert;
+  }
+
+  :where(#kv-main) :is(progress) {
+    vertical-align: revert;
+  }
+}
