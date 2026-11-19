@@ -1039,6 +1039,16 @@ Last updated: 2026-11-19.
     the **Monograph parity** workflow (text, chapter screenshots at 360, 834 and 1440 in light
     and dark, a citation and Fig. 1).
 
+- **The parity proof passes (2026-11-20, run 44617385866).** `/crafts/Kutch-Ajrakh/monograph`
+  matches the approved page at 360, 834 and 1440 in light and dark: no line of text differs, all
+  31 chapters match (pixel tolerance 2 per cent), the citation popover and Fig. 1 answer alike, and
+  no chapter drifts. What it took:
+  - the self-hosted web fonts carry the fix-unhinted `prep`, which the hygiene check now requires;
+  - the authored shell draws as the approved page does (`text-rendering` and font smoothing
+    `auto`) and keeps the app's CSS out (preflight reverted, seven shared class names reverted);
+  - the parity run draws both pages with the site's faces, aligns their device-pixel phase, and
+    names the cause of any difference (`styles.json`, `layers.json`, `offsets.json`, `drift.json`).
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
