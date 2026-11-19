@@ -29,6 +29,7 @@ __all__ = [
     "REMOVABLE_ORIGINS",
     "OrphanConcept",
     "OrphansReport",
+    "concept_unlinked",
     "orphan_concepts",
     "remove_orphan_concepts",
     "sweep_orphans",
@@ -73,16 +74,22 @@ class OrphansReport:
         }
 
 
-def orphaned(now: datetime) -> ColumnElement[bool]:
+def concept_unlinked() -> ColumnElement[bool]:
     return and_(
-        Concept.originRef.in_(REMOVABLE_ORIGINS),
-        Concept.createdAt < now - ORPHAN_MIN_AGE,
-        ~exists().where(Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId == Concept.id),
         ~exists().where(or_(ConceptEdge.srcId == Concept.id, ConceptEdge.dstId == Concept.id)),
         ~exists().where(ProcessStage.conceptId == Concept.id),
         ~exists().where(Material.conceptId == Concept.id),
         ~exists().where(KnowledgePieceSubject.conceptId == Concept.id),
         ~exists().where(TermConcept.conceptId == Concept.id),
+    )
+
+
+def orphaned(now: datetime) -> ColumnElement[bool]:
+    return and_(
+        Concept.originRef.in_(REMOVABLE_ORIGINS),
+        Concept.createdAt < now - ORPHAN_MIN_AGE,
+        ~exists().where(Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId == Concept.id),
+        concept_unlinked(),
     )
 
 
