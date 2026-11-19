@@ -86,31 +86,11 @@ async def _load_rows(session: AsyncSession, craft: Craft) -> _Rows:
             .order_by(Process.name, Process.variant, Process.id)
         )
     ).all()
-    stages = (
-        await session.scalars(
-            select(ProcessStage)
-            .where(ProcessStage.processId.in_([p.id for p in processes]))
-            .order_by(ProcessStage.processId, ProcessStage.ordinal, ProcessStage.id)
-        )
-    ).all()
+    stages = await _stages(session, [p.id for p in processes])
     stage_ids = [stage.id for stage in stages]
-    reactions = (
-        await session.scalars(
-            select(Reaction)
-            .where(Reaction.stageId.in_(stage_ids))
-            .order_by(Reaction.stageId, Reaction.ordinal, Reaction.id)
-        )
-    ).all()
+    reactions = await _reactions(session, stage_ids)
     reaction_ids = [reaction.id for reaction in reactions]
-    conditions = (
-        await session.scalars(
-            select(ProcessCondition)
-            .where(
-                or_(ProcessCondition.stageId.in_(stage_ids), ProcessCondition.reactionId.in_(reaction_ids))
-            )
-            .order_by(ProcessCondition.id)
-        )
-    ).all()
+    conditions = await _conditions(session, stage_ids, reaction_ids)
     return _Rows(
         processes=processes,
         stages=stages,
@@ -120,6 +100,35 @@ async def _load_rows(session: AsyncSession, craft: Craft) -> _Rows:
         conditions=conditions,
         readings=await _readings(session, [condition.id for condition in conditions]),
     )
+
+
+async def _stages(session: AsyncSession, process_ids: list[uuid.UUID]) -> Sequence[ProcessStage]:
+    statement = (
+        select(ProcessStage)
+        .where(ProcessStage.processId.in_(process_ids))
+        .order_by(ProcessStage.processId, ProcessStage.ordinal, ProcessStage.id)
+    )
+    return (await session.scalars(statement)).all()
+
+
+async def _reactions(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Sequence[Reaction]:
+    statement = (
+        select(Reaction)
+        .where(Reaction.stageId.in_(stage_ids))
+        .order_by(Reaction.stageId, Reaction.ordinal, Reaction.id)
+    )
+    return (await session.scalars(statement)).all()
+
+
+async def _conditions(
+    session: AsyncSession, stage_ids: list[uuid.UUID], reaction_ids: list[uuid.UUID]
+) -> Sequence[ProcessCondition]:
+    statement = (
+        select(ProcessCondition)
+        .where(or_(ProcessCondition.stageId.in_(stage_ids), ProcessCondition.reactionId.in_(reaction_ids)))
+        .order_by(ProcessCondition.id)
+    )
+    return (await session.scalars(statement)).all()
 
 
 async def _materials(session: AsyncSession, stage_ids: list[uuid.UUID]) -> Sequence[Any]:
